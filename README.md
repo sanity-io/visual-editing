@@ -2,7 +2,7 @@
 
 Sanity Visual Editing highlights elements on your website that are editable in Sanity Studio.
 
-Learn more about this feature, and how to use it, in our [Visual Editing documentation](https://www.sanity.io/docs/visual_editing).
+Learn more about this feature, and how to use it, in our [Visual Editing documentation](http://sanity.io/docs/vercel-visual-editing).
 
 > **Note**
 > Visual Editing requires [Content Source Maps](https://www.sanity.io/blog/content-source-maps-announce), a feature available on a Sanity Enterprise plan. If you are an existing enterprise customer, [contact our sales team](https://www.sanity.io/contact/sales?ref=vercel-visual-editing-docs) to have Content Source Maps enabled on your project. [Learn more about Sanity for Enterprise organizations here](https://www.sanity.io/enterprise?ref=vercel-visual-editing-docs).
