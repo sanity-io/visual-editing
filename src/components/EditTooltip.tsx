@@ -144,11 +144,6 @@ export function EditTooltip({
           onClick={() => {
             if (typeof window === 'undefined') return
 
-            if (!data) {
-              document.location = href
-              return
-            }
-
             const event = new CustomEvent('edit:open', {
               detail: {
                 data,
