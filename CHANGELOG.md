@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/sanity-io/overlays/compare/v1.0.2...v1.0.3) (2023-07-20)
+
+### Bug Fixes
+
+- **deps:** use @vercel/stega 0.1.0 ([0f26889](https://github.com/sanity-io/overlays/commit/0f268897eeabc67476f272a3fb586389852b2776))
+
 ## [1.0.2](https://github.com/sanity-io/overlays/compare/v1.0.1...v1.0.2) (2023-07-13)
 
 ### Bug Fixes
