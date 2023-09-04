@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/sanity-io/overlays/compare/v1.0.3...v1.0.4) (2023-09-04)
+
+### Bug Fixes
+
+- add `node.module` condition ([0625af8](https://github.com/sanity-io/overlays/commit/0625af845bd2db73862219a45018ee92faef071a))
+- remove `zod` import ([df06ab0](https://github.com/sanity-io/overlays/commit/df06ab078542c9779bb940379a9b0cab29e090bf))
+
 ## [1.0.3](https://github.com/sanity-io/overlays/compare/v1.0.2...v1.0.3) (2023-07-20)
 
 ### Bug Fixes
