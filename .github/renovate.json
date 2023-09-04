@@ -1,4 +1,34 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>sanity-io/renovate-config"]
+  "extends": ["local>sanity-io/renovate-config"],
+  "ignorePresets": [
+    ":ignoreModulesAndTests",
+    "github>sanity-io/renovate-config:group-non-major"
+  ],
+  "packageRules": [
+    {
+      "group": { "semanticCommitType": "chore" },
+      "matchDepTypes": [
+        "dependencies",
+        "engines",
+        "optionalDependencies",
+        "peerDependencies"
+      ],
+      "matchManagers": ["npm"],
+      "semanticCommitType": "chore",
+      "description": "Group all dependencies from the app directory",
+      "matchFileNames": ["apps/**/package.json"],
+      "groupName": "App dependencies"
+    },
+    {
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "matchPackageNames": ["styled-components"],
+      "rangeStrategy": "bump",
+      "semanticCommitType": "fix"
+    }
+  ]
 }
