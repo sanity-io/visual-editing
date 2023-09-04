@@ -1,5 +1,4 @@
 import { vercelStegaDecode } from '@vercel/stega'
-import { undefined } from 'zod'
 
 import { testVercelStegaRegex } from './testVercelStegaRegex'
 
