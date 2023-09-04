@@ -34,7 +34,7 @@ export function VisualEditingOverlay(): JSX.Element {
             if (!entry.isIntersecting) {
               if (exists && !iframe) {
                 setElementRefs((prev) =>
-                  prev.filter((el) => el.element !== target)
+                  prev.filter((el) => el.element !== target),
                 )
               }
 
@@ -62,9 +62,9 @@ export function VisualEditingOverlay(): JSX.Element {
         },
         {
           threshold: 0.3,
-        }
+        },
       ),
-    [elementRefs, iframe]
+    [elementRefs, iframe],
   )
 
   const recursivelyObserveChildren = useMemo(
@@ -76,7 +76,7 @@ export function VisualEditingOverlay(): JSX.Element {
         })
       }
     },
-    [intersectionObserver]
+    [intersectionObserver],
   )
 
   const mutationObserver = useMemo(
@@ -92,7 +92,7 @@ export function VisualEditingOverlay(): JSX.Element {
           }
         }
       }),
-    []
+    [],
   )
 
   useEffect(() => {
