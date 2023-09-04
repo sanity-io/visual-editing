@@ -1,155 +1,17 @@
 {
-  "name": "@sanity/overlays",
-  "version": "1.0.3",
-  "homepage": "https://github.com/sanity-io/overlays#readme",
-  "bugs": {
-    "url": "https://github.com/sanity-io/overlays/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/sanity-io/overlays.git"
-  },
-  "license": "MIT",
-  "author": "Sanity.io <hello@sanity.io>",
-  "sideEffects": false,
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
-      "node": {
-        "import": "./dist/index.cjs.js",
-        "require": "./dist/index.cjs"
-      },
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist",
-    "CHANGELOG.md"
-  ],
+  "private": true,
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "pkg build --strict && pkg --strict",
-    "lint": "eslint --max-warnings 0 .",
-    "prepublishOnly": "npm run build",
-    "release": "semantic-release || semantic-release --dry-run --debug",
-    "test": "tsc --noEmit",
-    "watch": "pkg watch --strict"
-  },
-  "browserslist": [
-    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
-    "maintained node versions"
-  ],
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "react",
-      "react-hooks",
-      "simple-import-sort",
-      "prettier"
-    ],
-    "extends": [
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:react/jsx-runtime",
-      "eslint:recommended",
-      "plugin:prettier/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "rules": {
-      "no-console": "error",
-      "no-warning-comments": [
-        "warn",
-        {
-          "location": "start",
-          "terms": [
-            "todo",
-            "@todo",
-            "fixme"
-          ]
-        }
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/member-delimiter-style": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "prettier/prettier": "warn",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react/prop-types": "off",
-      "simple-import-sort/exports": "warn",
-      "simple-import-sort/imports": "warn"
-    },
-    "root": true
-  },
-  "dependencies": {
-    "@floating-ui/react-dom": "^2.0.1",
-    "@sanity/icons": "^2.4.1",
-    "@sanity/ui": "^1.7.1",
-    "@vercel/stega": "0.1.0",
-    "nanoid": "^4.0.2",
-    "react-intersection-observer": "^9.4.4",
-    "scroll-into-view-if-needed": "^3.0.10"
+    "build": "turbo run build --filter=./packages/*",
+    "dev": "turbo run dev --filter=./apps/*",
+    "format": "prettier --cache --write .",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "^2.3.3",
-    "@sanity/semantic-release-preset": "^4.1.1",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "@types/styled-components": "^5.1.26",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.44.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "ls-engines": "^0.9.0",
-    "react": "^18.2.0",
-    "react-dom": "^18",
-    "react-is": "^18",
-    "rimraf": "^5.0.1",
-    "styled-components": "^5.2.3",
-    "typescript": "^5.1.6"
-  },
-  "peerDependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "react-is": "^18",
-    "styled-components": "^5.2"
-  },
-  "engines": {
-    "node": ">=16.14"
-  },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "@sanity/cli": "^3.16.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-packagejson": "^2.4.5",
+    "turbo": "1.10.13"
   },
   "packageManager": "pnpm@8.7.1"
 }
