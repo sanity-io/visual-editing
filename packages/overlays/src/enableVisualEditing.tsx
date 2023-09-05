@@ -2,6 +2,20 @@ import { Root } from 'react-dom/client'
 
 export type DisableVisualEditing = () => void
 
+let node: HTMLElement | null = null
+let root: Root | null = null
+
+function cleanup() {
+  if (root) {
+    root.unmount()
+    root = null
+  }
+  if (node) {
+    document.body.removeChild(node)
+    node = null
+  }
+}
+
 /**
  * Enables Visual Editing overlay in a page with sourcemap encoding.
  *
@@ -10,9 +24,8 @@ export type DisableVisualEditing = () => void
  * @public
  */
 export function enableVisualEditing(): DisableVisualEditing {
+  if (root || node) return cleanup
   let cancelled = false
-  let node: HTMLElement | null = null
-  let root: Root | null = null
 
   // Lazy load everything needed to render the app
   Promise.all([
@@ -33,7 +46,6 @@ export function enableVisualEditing(): DisableVisualEditing {
 
   return () => {
     cancelled = true
-    if (root) root.unmount()
-    if (node) document.body.removeChild(node)
+    cleanup()
   }
 }
