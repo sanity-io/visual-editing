@@ -116,7 +116,7 @@ export function VisualEditingOverlay(): JSX.Element {
     recursivelyFindStegaNodes(document.body)
 
     return () => {
-      // mutationObserver.disconnect()
+      mutationObserver.disconnect()
       intersectionObserver.disconnect()
     }
   }, [
