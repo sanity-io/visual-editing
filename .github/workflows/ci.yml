@@ -38,8 +38,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      TURBO_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      TURBO_TEAM: sanity-io
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
       - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
@@ -77,8 +77,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       NODE_VERSION: ${{ matrix.node }}
-      TURBO_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      TURBO_TEAM: sanity-io
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       # It's only necessary to do this for windows, as mac and ubuntu are sane OS's that already use LF
       - if: matrix.os == 'windows-latest'
