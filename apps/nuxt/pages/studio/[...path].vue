@@ -1,0 +1,38 @@
+<template>
+  <div id="app" ref="studioEl" />
+</template>
+
+<script lang="ts" setup>
+import getSanityConfig from '../../sanity.config'
+import { renderStudio } from 'sanity'
+
+const nuxtConfig = useRuntimeConfig()
+const sanityConfig = getSanityConfig(nuxtConfig.public.sanity)
+
+const studioEl = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if (!studioEl.value) return
+  // N.B. This doesn’t return a cleanup fn
+  renderStudio(studioEl.value, sanityConfig, {
+    reactStrictMode: true,
+  })
+})
+
+// These are copied from the definition in next-sanity/studio/metadata
+useSeoMeta({
+  viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
+  referrer: 'same-origin',
+  robots: 'noindex',
+})
+</script>
+
+<style scoped>
+#app {
+  height: 100vh;
+  max-height: 100dvh;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  overflow: auto;
+}
+</style>
