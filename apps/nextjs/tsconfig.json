@@ -18,10 +18,20 @@
         "name": "next"
       }
     ],
+    "rootDir": "../..",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@sanity/composer": ["../../packages/composer/src"],
+      "@sanity/overlays": ["../../packages/overlays/src"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "../../packages/composer/src",
+    "../../packages/overlays/src",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

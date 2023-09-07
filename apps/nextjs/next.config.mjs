@@ -5,6 +5,9 @@ const nextConfig = {
   experimental: {
     logging: 'verbose',
   },
+
+  // todo: maybe remove this in production mode?
+  transpilePackages: ['@sanity/composer', '@sanity/overlays'],
 }
 
 export default withBundleAnalyzer({

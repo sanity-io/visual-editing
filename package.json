@@ -12,5 +12,10 @@
     "prettier-plugin-packagejson": "^2.4.5",
     "turbo": "1.10.13"
   },
-  "packageManager": "pnpm@8.7.1"
+  "packageManager": "pnpm@8.7.1",
+  "pnpm": {
+    "overrides": {
+      "sanity": "file:./.npm-registry/sanity-v3.16.4.tgz"
+    }
+  }
 }
