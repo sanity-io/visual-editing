@@ -58,7 +58,7 @@ importers:
         version: 13.4.19(@babel/core@7.22.11)(react-dom@18.2.0)(react@18.2.0)
       next-sanity:
         specifier: ^5.4.6
-        version: 5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.2)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.4)(styled-components@5.3.11)
+        version: 5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.4)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.4)(styled-components@5.3.11)
       postcss:
         specifier: 8.4.29
         version: 8.4.29
@@ -102,9 +102,6 @@ importers:
       sanity:
         specifier: file:/Users/mariuslundgard/Code/@sanity/visual-editing/.npm-registry/sanity-v3.16.4.tgz
         version: file:.npm-registry/sanity-v3.16.4.tgz(@types/node@20.5.9)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
     devDependencies:
       react:
         specifier: ^18.2.0
@@ -118,6 +115,9 @@ importers:
       styled-components:
         specifier: ^5.3.11
         version: 5.3.11(@babel/core@7.22.11)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
 
   packages/overlays:
     dependencies:
@@ -10021,7 +10021,7 @@ packages:
     resolution: {integrity: sha512-EZSPZB70jiVsivaBLYDCyntd5eH8NTSMOn3rB+HxwdmKThGELLdYv8qVIMWvZEFy9w8ZZpW9h9OB32l1rGtj7g==}
     dev: true
 
-  /next-sanity@5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.2)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.4)(styled-components@5.3.11):
+  /next-sanity@5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.4)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.4)(styled-components@5.3.11):
     resolution: {integrity: sha512-VgbLxYfgzLETNXKuvShhtaYKlz7DDb5QlFvvjf0eF82lIevI1c0jGHgPRhOTRuv0csvy9FVFCyMlxoc+BkAVmQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -10037,7 +10037,7 @@ packages:
       '@sanity/client': 6.4.11
       '@sanity/icons': 2.4.1(react@18.2.0)
       '@sanity/preview-kit': 3.1.6(@sanity/client@6.4.11)(react@18.2.0)
-      '@sanity/types': 3.16.2
+      '@sanity/types': 3.16.4
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       '@sanity/webhook': 3.0.1
       groq: 3.16.4
