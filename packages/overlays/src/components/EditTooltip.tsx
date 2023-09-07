@@ -4,8 +4,10 @@ import { type JSX, useEffect, useRef } from 'react'
 
 export function EditTooltip({
   element,
+  decodedData,
 }: {
   element: HTMLElement
+  decodedData: string
 }): JSX.Element | null {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const areaRef = useRef<HTMLDivElement>(null)
@@ -78,10 +80,8 @@ export function EditTooltip({
     areaRef.current?.addEventListener('mouseleave', onLeave)
   }, [areaRef, refs.floating])
 
-  if (!element.dataset.sanityStega) return null
-
   const { width, height } = element.getBoundingClientRect()
-  const { href, origin, data } = JSON.parse(element.dataset.sanityStega)
+  const { href, origin, data } = JSON.parse(decodedData)
 
   return (
     <div style={{ position: 'relative' }}>

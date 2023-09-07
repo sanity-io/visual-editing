@@ -1,109 +1,40 @@
 import { studioTheme, ThemeProvider } from '@sanity/ui'
-import { nanoid } from 'nanoid'
-import { type JSX, useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { recursivelyFindStegaNodes } from '../recursivelyFindStegaNodes'
+import { OVERLAY_ID } from '../constants'
+import { ElementReference } from '../types'
+import { findEditableElements } from '../util/traverse'
 import { EditTooltip } from './EditTooltip'
 
-interface ElementRef {
-  element: HTMLElement
-  id: string
-}
-
 export function VisualEditingOverlay(): JSX.Element {
-  const [elementRefs, setElementRefs] = useState<ElementRef[]>([])
+  const [elements, setElements] = useState<ElementReference[]>([])
+  const [activeElementIds, setActiveElementIds] = useState<string[]>([])
 
-  const [mounted, setMounted] = useState(false)
-  const [iframe, setIframe] = useState(false)
-
-  const intersectionObserver = useMemo(
-    () =>
-      new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            const { target } = entry
-
-            // if the target is not an html element, we can't do anything with it
-            if (!(target instanceof HTMLElement)) {
-              continue
-            }
-
-            const exists = elementRefs.find((ref) => ref.element === target)
-
-            // if the entry is not intersecting, we can remove it from the elementRefs list
-            if (!entry.isIntersecting) {
-              if (exists && !iframe) {
-                setElementRefs((prev) =>
-                  prev.filter((el) => el.element !== target),
-                )
-              }
-
-              continue
-            }
-
-            if (entry.isIntersecting && target.dataset.sanityStega) {
-              const decoded = JSON.parse(target.dataset.sanityStega)
-
-              if (decoded.origin !== 'sanity.io') {
-                continue
-              }
-
-              if (!exists && !iframe) {
-                setElementRefs((prev) => [
-                  ...prev,
-                  { element: target, id: nanoid(5) },
-                ])
-              }
-            }
-
-            // scan the target node to check if its a stega node
-            recursivelyFindStegaNodes(target)
-          }
-        },
-        {
-          threshold: 0.3,
-        },
-      ),
-    [elementRefs, iframe],
+  const elementsToRender = elements.filter((element) =>
+    activeElementIds.includes(element.id),
   )
 
-  const recursivelyObserveChildren = useMemo(
-    () => (node: HTMLElement) => {
-      if (node instanceof HTMLElement) {
-        intersectionObserver.observe(node)
-        node.childNodes.forEach((child) => {
-          recursivelyObserveChildren(child as HTMLElement)
-        })
-      }
-    },
-    [intersectionObserver],
-  )
+  function findAndSetElements() {
+    // Traverses the DOM and finds elements that are editable
+    // i.e. where an overlay element should be rendered
+    const els = findEditableElements(document.body)
+    setElements(els)
+  }
 
-  const mutationObserver = useMemo(
-    () =>
-      new MutationObserver((entries) => {
-        // remove all previous tooltips
-        for (const entry of entries) {
-          if (entry.type === 'childList') {
-            for (const node of entry.addedNodes) {
-              recursivelyFindStegaNodes(node as HTMLElement)
-              // recursivelyObserveChildren(node as HTMLElement)
-            }
-          }
-        }
-      }),
-    [],
-  )
-
+  // On mount
   useEffect(() => {
-    if (!mounted) {
-      setMounted(true)
-      return
-    }
+    findAndSetElements()
 
-    document.body.childNodes.forEach((node) => {
-      if (node instanceof HTMLElement) {
-        recursivelyObserveChildren(node)
+    const mutationObserver = new MutationObserver((entries) => {
+      for (const entry of entries) {
+        // If the mutation occured within the overlay, ignore it
+        if ((entry.target as HTMLElement).id === OVERLAY_ID) {
+          continue
+        }
+        // Only care about mutations where some child element changed
+        if (entry.type === 'childList') {
+          findAndSetElements()
+        }
       }
     })
 
@@ -112,32 +43,43 @@ export function VisualEditingOverlay(): JSX.Element {
       subtree: true,
     })
 
-    // on initial load
-    recursivelyFindStegaNodes(document.body)
-
     return () => {
       mutationObserver.disconnect()
-      intersectionObserver.disconnect()
     }
-  }, [
-    mounted,
-    intersectionObserver,
-    mutationObserver,
-    recursivelyObserveChildren,
-  ])
+  }, [])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const { target } = entry
+          const match = elements.find(({ element }) => element === target)
+          if (!match) continue
+          if (entry.isIntersecting) {
+            setActiveElementIds((prev) => [...prev, match.id])
+          } else {
+            setActiveElementIds((prev) => prev.filter((id) => id !== match.id))
+          }
+        }
+      },
+      {
+        threshold: 0.3,
+      },
+    )
 
-    if (window.self !== window.top) {
-      setIframe(true)
+    elements.forEach(({ element }) => {
+      intersectionObserver.observe(element)
+    })
+
+    return () => {
+      intersectionObserver.disconnect()
     }
-  }, [mounted])
+  }, [elements])
 
   return (
     <ThemeProvider theme={studioTheme}>
-      {elementRefs.map((elementRef) => {
-        return <EditTooltip key={elementRef.id} element={elementRef.element} />
+      {elementsToRender.map(({ id, data, element }) => {
+        return <EditTooltip key={id} element={element} decodedData={data} />
       })}
     </ThemeProvider>
   )

@@ -1,5 +1,7 @@
 import { Root } from 'react-dom/client'
 
+import { OVERLAY_ID } from './constants'
+
 export type DisableVisualEditing = () => void
 
 let node: HTMLElement | null = null
@@ -35,7 +37,7 @@ export function enableVisualEditing(): DisableVisualEditing {
     if (cancelled) return
 
     node = document.createElement('div')
-    node.id = 'sanity-visual-editing'
+    node.id = OVERLAY_ID
     document.body.appendChild(node)
 
     const { createRoot } =
