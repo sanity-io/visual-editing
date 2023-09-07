@@ -1,15 +1,24 @@
 <template>
-  <main class="flex min-h-screen flex-col items-center justify-between p-24">
+  <main
+    class="flex min-h-screen flex-col items-center justify-between p-8 lg:p-24"
+  >
     <div
-      class="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex"
+      class="w-full lg:max-w-5xl items-center justify-start font-mono text-sm flex flex-col lg:flex-row gap-4"
     >
-      <p
-        class="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
+      <button
+        class="text-center p-4 w-full lg:w-auto rounded-xl border border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:from-inherit bg-gray-200 dark:bg-zinc-800/30"
+        type="button"
+        @click.prevent="enabled = !enabled"
       >
-        <input type="checkbox" v-model="enabled" />&nbsp; Visual Editing ({{
-          enabled ? 'Enabled' : 'Disabled'
-        }})
-      </p>
+        {{ enabled ? 'Disable' : 'Enable' }} Visual Editing
+      </button>
+      <button
+        class="text-center p-4 w-full lg:w-auto rounded-xl border border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:from-inherit bg-gray-200 dark:bg-zinc-800/30"
+        type="button"
+        @click.prevent="elementAdded = !elementAdded"
+      >
+        {{ elementAdded ? 'Remove' : 'Add' }} Dynamic Element
+      </button>
     </div>
 
     <ClientOnly>
@@ -33,9 +42,9 @@
           </a>
         </div>
         <div
-          class="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left"
+          class="mb-32 grid text-center w-full lg:max-w-5xl lg:mb-0 lg:grid-cols-3 lg:text-left"
         >
-          <a
+          <div
             class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
             :data-sanity-edit-info="
               JSON.stringify({
@@ -44,37 +53,46 @@
               })
             "
           >
-            <h2 class="mb-3 text-2xl font-semibold">
-              data-sanity-edit-info
-              <span
-                class="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
-                >{{ ' ' }}&rarr;
-              </span>
-            </h2>
+            <h2 class="mb-3 text-2xl font-semibold">Data attribute</h2>
             <p class="m-0 max-w-[30ch] text-sm opacity-50">
-              Test a hard-coded link.
+              data-sanity-edit-info
             </p>
-          </a>
+          </div>
 
-          <a
+          <div
             class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           >
-            <h2 class="mb-3 text-2xl font-semibold">
-              Manual stega
-              <span
-                class="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
-                >{{ ' ' }}&rarr;
-              </span>
-            </h2>
+            <h2 class="mb-3 text-2xl font-semibold">Stega string</h2>
             <p class="m-0 max-w-[30ch] text-sm opacity-50">
               {{
-                vercelStegaCombine('Calling vercelStegaCombine directly', {
+                vercelStegaCombine('Calling vercelStegaCombine', {
+                  origin: 'sanity.io',
+                  href: 'https://next.sanity.build/studio/desk',
+                })
+              }}
+            </p>
+          </div>
+
+          <div
+            v-if="elementAdded"
+            class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            :data-sanity-edit-info="
+              JSON.stringify({
+                origin: 'sanity.io',
+                href: 'https://next.sanity.build/studio/desk',
+              })
+            "
+          >
+            <h2 class="mb-3 text-2xl font-semibold">Dynamic element</h2>
+            <p class="m-0 max-w-[30ch] text-sm opacity-50">
+              {{
+                vercelStegaCombine('With nested editables', {
                   origin: 'sanity.io',
                   href: '/studio/desk',
                 })
               }}
             </p>
-          </a>
+          </div>
         </div>
       </VisualEditing>
     </ClientOnly>
@@ -84,6 +102,7 @@
 <script lang="ts" setup>
 import { vercelStegaCombine } from '@vercel/stega'
 const enabled = ref(true)
+const elementAdded = ref(false)
 
 useHead({
   bodyAttrs: {
