@@ -39,7 +39,7 @@ jobs:
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
       - name: install deps & build
-        run: corepack enable && pnpm --version && pnpm install --ignore-scripts && pnpm build -- --filter=./packages/*
+        run: corepack enable && pnpm --version && pnpm install --ignore-scripts --no-frozen-lockfile && pnpm build -- --filter=./packages/*
         if: ${{ steps.release.outputs.releases_created }}
       - name: Set publishing config
         run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
