@@ -72,7 +72,7 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       sanity:
-        specifier: file:/tmp/worker/560c8f/76a4e5/repos/github/sanity-io/visual-editing/.npm-registry/sanity-v3.16.4.tgz
+        specifier: file:/home/runner/work/visual-editing/visual-editing/.npm-registry/sanity-v3.16.4.tgz
         version: file:.npm-registry/sanity-v3.16.4.tgz(@types/node@20.5.9)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       styled-components:
         specifier: ^5.3.11
@@ -99,7 +99,7 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       sanity:
-        specifier: file:/tmp/worker/560c8f/76a4e5/repos/github/sanity-io/visual-editing/.npm-registry/sanity-v3.16.4.tgz
+        specifier: file:/home/runner/work/visual-editing/visual-editing/.npm-registry/sanity-v3.16.4.tgz
         version: file:.npm-registry/sanity-v3.16.4.tgz(@types/node@20.5.9)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
     devDependencies:
       '@nuxt/devtools':
@@ -112,7 +112,7 @@ importers:
   packages/composer:
     dependencies:
       sanity:
-        specifier: file:/tmp/worker/560c8f/76a4e5/repos/github/sanity-io/visual-editing/.npm-registry/sanity-v3.16.4.tgz
+        specifier: file:/home/runner/work/visual-editing/visual-editing/.npm-registry/sanity-v3.16.4.tgz
         version: file:.npm-registry/sanity-v3.16.4.tgz(@types/node@20.5.9)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
     devDependencies:
       react:
@@ -3020,6 +3020,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -9264,6 +9265,10 @@ packages:
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: true
+
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -9285,7 +9290,7 @@ packages:
       '@sanity/ui': ^1.0.0
       next: ^13.0.0
       react: ^18.0.0
-      sanity: file:/tmp/worker/560c8f/76a4e5/repos/github/sanity-io/visual-editing/.npm-registry/sanity-v3.16.4.tgz
+      sanity: file:/home/runner/work/visual-editing/visual-editing/.npm-registry/sanity-v3.16.4.tgz
       styled-components: ^5.2.0 || ^6.0.0
     dependencies:
       '@sanity/client': 6.4.11
