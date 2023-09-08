@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter=./packages/*",
+    "build": "turbo run build",
     "dev": "turbo run dev --filter=./apps/*",
     "format": "prettier --cache --write .",
     "lint": "turbo run lint",
