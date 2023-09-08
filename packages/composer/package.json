@@ -32,7 +32,6 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint --max-warnings 0 .",
     "prepublishOnly": "npm run build",
-    "release": "semantic-release || semantic-release --dry-run --debug",
     "test": "tsc --noEmit",
     "watch": "pkg watch --strict"
   },
