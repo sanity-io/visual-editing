@@ -1,5 +1,5 @@
 ---
-name: Prettier
+name: Fix linting issues
 
 on:
   push:
@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   run:
-    name: Can the code be prettier? 🤔
+    name: Are there issues that linters can fix? 🤔
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,13 +26,8 @@ jobs:
           node-version: lts/*
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
-      - run: pnpm install --dev --ignore-scripts
-      - uses: actions/cache@v3
-        with:
-          path: node_modules/.cache/prettier/.prettier-cache
-          key: prettier-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('.prettierignore') }}-${{ hashFiles('package.json') }}
-      - run: pnpm format
-      - run: git restore .github/workflows
+      - run: pnpm install --ignore-scripts
+      - run: pnpm lint:fix
       - uses: tibdex/github-app-token@0d49dd721133f900ebd5e0dff2810704e8defbc6 # v1
         id: generate-token
         with:
@@ -41,10 +36,10 @@ jobs:
       - uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
         with:
           author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>
-          body: I ran `pnpm format` 🧑‍💻
-          branch: actions/prettier
-          commit-message: 'chore(prettier): 🤖 ✨'
+          body: I ran `pnpm lint:fix` 🧑‍💻
+          branch: actions/lint-fix
+          commit-message: 'chore(lint): --fix 🤖 ✨'
           labels: 🤖 bot
-          title: 'chore(prettier): 🤖 ✨'
+          title: 'chore(lint): --fix 🤖 ✨'
           token: ${{ steps.generate-token.outputs.token }}
   

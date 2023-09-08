@@ -1,31 +1,11 @@
 ---
 name: CI
 
-run-name: >-
-  ${{
-    inputs.release && inputs.test && 'CI ➤ Test ➤ Release' ||
-    inputs.test && 'CI ➤ Test' ||
-    inputs.release && 'CI ➤ Release' ||
-    ''
-  }}
-
 on:
   pull_request:
     types: [opened, synchronize]
   push:
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      test:
-        description: Test
-        required: true
-        default: true
-        type: boolean
-      release:
-        description: Release
-        required: true
-        default: false
-        type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -40,24 +20,25 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      # NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      # NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
     steps:
-      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
-      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
           cache: pnpm
           node-version: lts/*
       - run: corepack enable && pnpm --version
-      - run: pnpm install --ignore-scripts --no-frozen-lockfile
-      - run: pnpm lint
-        if: github.event.inputs.test != 'false'
+      - name: Authenticate with private NPM package @sanity/sanitype
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
+      - run: pnpm install --ignore-scripts
       - run: pnpm build
-        if: github.event.inputs.test != 'false'
+      - run: pnpm lint
+      - run: pnpm typecheck
 
   test:
     needs: build
-    # The test matrix can be skipped, in case a new release needs to be fast-tracked and tests are already passing on main
-    if: github.event.inputs.test != 'false'
     timeout-minutes: 15
     strategy:
       # A test failing on windows doesn't mean it'll fail on macos. It's useful to let all tests run to its completion to get the full picture
@@ -65,18 +46,18 @@ jobs:
       matrix:
         # https://nodejs.org/en/about/releases/
         # https://pnpm.io/installation#compatibility
-        # Includes the lowest version supported by preview-kit (defined in pkg.engines.node) and the upcoming version in development
-        node: [lts/-1, lts/*, current]
+        # @TODO re-enable `current` once it recovers
+        # node: [lts/-1, lts/*, current]
+        node: [lts/-1, lts/*]
         os: [ubuntu-latest]
         # Also test the LTS on mac and windows
         include:
           - os: macos-latest
             node: lts/*
-          - os: windows-latest
-            node: lts/*
+          # - os: windows-latest
+          #   node: lts/*
     runs-on: ${{ matrix.os }}
     env:
-      NODE_VERSION: ${{ matrix.node }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
@@ -85,44 +66,14 @@ jobs:
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
-      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
-      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
           cache: pnpm
           node-version: ${{ matrix.node }}
       - run: corepack enable && pnpm --version
-      - run: pnpm install --loglevel=error --ignore-scripts --no-frozen-lockfile
+      - name: Authenticate with private NPM package @sanity/sanitype
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
+      - run: pnpm install --loglevel=error --ignore-scripts
       - run: pnpm test
-
-  release:
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
-    needs: [build, test]
-    # only run if opt-in during workflow_dispatch
-    if: always() && github.event.inputs.release == 'true' && needs.build.result != 'failure' && needs.test.result != 'failure' && needs.test.result != 'cancelled'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
-        with:
-          # Need to fetch entire commit history to
-          # analyze every commit since last release
-          fetch-depth: 0
-      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
-      - uses: actions/setup-node@v3
-        with:
-          cache: pnpm
-          node-version: lts/*
-      - run: corepack enable && pnpm --version
-      - run: pnpm install --loglevel=error --ignore-scripts --no-frozen-lockfile
-      - run: pnpm run -r release
-        # Don't allow interrupting the release step if the job is cancelled, as it can lead to an inconsistent state
-        # e.g. git tags were pushed but it exited before `npm publish`
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-  

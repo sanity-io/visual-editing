@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "packages": {
+    "composer": {
+      "release-as": "0.0.1"
+    },
+    "packages/overlays": {
+      "prerelease": true
+    }
+  }
+}

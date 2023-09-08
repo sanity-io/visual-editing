@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>sanity-io/renovate-config"],
+  "extends": ["github>sanity-io/renovate-config"],
   "ignorePresets": [
     ":ignoreModulesAndTests",
     "github>sanity-io/renovate-config:group-non-major"
@@ -23,12 +23,6 @@
     {
       "matchDepTypes": ["dependencies"],
       "rangeStrategy": "bump"
-    },
-    {
-      "matchDepTypes": ["peerDependencies"],
-      "matchPackageNames": ["styled-components"],
-      "rangeStrategy": "bump",
-      "semanticCommitType": "fix"
     }
   ]
 }

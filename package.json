@@ -5,13 +5,24 @@
     "dev": "turbo run dev --filter=./apps/*",
     "format": "prettier --cache --write .",
     "lint": "turbo run lint",
+    "lint:fix": "pnpm lint -- --fix",
     "preview": "turbo run preview",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "prettier": "^3.0.3",
     "prettier-plugin-packagejson": "^2.4.5",
+    "prettier-plugin-tailwindcss": "^0.5.4",
     "turbo": "1.10.13"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson",
+      "prettier-plugin-tailwindcss"
+    ],
+    "semi": false,
+    "singleQuote": true
   },
   "packageManager": "pnpm@8.7.1",
   "pnpm": {
