@@ -10,12 +10,6 @@
     "test": "turbo run test",
     "typecheck": "turbo run typecheck"
   },
-  "devDependencies": {
-    "prettier": "^3.0.3",
-    "prettier-plugin-packagejson": "2.4.5",
-    "prettier-plugin-tailwindcss": "^0.5.4",
-    "turbo": "1.10.13"
-  },
   "prettier": {
     "plugins": [
       "prettier-plugin-packagejson",
@@ -23,6 +17,29 @@
     ],
     "semi": false,
     "singleQuote": true
+  },
+  "dependencies": {
+    "@sanity/block-tools": "$@sanity/block-tools",
+    "@sanity/cli": "$@sanity/cli",
+    "@sanity/diff": "$@sanity/diff",
+    "@sanity/export": "$@sanity/export",
+    "@sanity/import": "$@sanity/import",
+    "@sanity/import-cli": "$@sanity/import-cli",
+    "@sanity/mutator": "$@sanity/mutator",
+    "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
+    "@sanity/schema": "$@sanity/schema",
+    "@sanity/types": "$@sanity/types",
+    "@sanity/util": "$@sanity/util",
+    "@sanity/vision": "$@sanity/vision",
+    "create-sanity": "$create-sanity",
+    "groq": "$groq",
+    "sanity": "$sanity"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3",
+    "prettier-plugin-packagejson": "2.4.5",
+    "prettier-plugin-tailwindcss": "^0.5.4",
+    "turbo": "1.10.13"
   },
   "packageManager": "pnpm@8.7.5",
   "pnpm": {
@@ -43,22 +60,5 @@
       "groq": "3.16.5-pink-lizard.22+5a2f9bcd91",
       "sanity": "3.16.5-pink-lizard.22+5a2f9bcd91"
     }
-  },
-  "dependencies": {
-    "@sanity/block-tools": "$@sanity/block-tools",
-    "@sanity/cli": "$@sanity/cli",
-    "@sanity/diff": "$@sanity/diff",
-    "@sanity/export": "$@sanity/export",
-    "@sanity/import": "$@sanity/import",
-    "@sanity/import-cli": "$@sanity/import-cli",
-    "@sanity/mutator": "$@sanity/mutator",
-    "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
-    "@sanity/schema": "$@sanity/schema",
-    "@sanity/types": "$@sanity/types",
-    "@sanity/util": "$@sanity/util",
-    "@sanity/vision": "$@sanity/vision",
-    "create-sanity": "$create-sanity",
-    "groq": "$groq",
-    "sanity": "$sanity"
   }
 }
