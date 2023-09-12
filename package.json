@@ -13,6 +13,7 @@
   "prettier": {
     "plugins": [
       "prettier-plugin-packagejson",
+      "prettier-plugin-svelte",
       "prettier-plugin-tailwindcss"
     ],
     "semi": false,
@@ -33,12 +34,13 @@
     "@sanity/vision": "$@sanity/vision",
     "create-sanity": "$create-sanity",
     "groq": "$groq",
+    "prettier-plugin-svelte": "3.0.3",
     "sanity": "$sanity"
   },
   "devDependencies": {
-    "prettier": "^3.0.3",
+    "prettier": "3.0.3",
     "prettier-plugin-packagejson": "2.4.5",
-    "prettier-plugin-tailwindcss": "^0.5.4",
+    "prettier-plugin-tailwindcss": "0.5.4",
     "turbo": "1.10.13"
   },
   "packageManager": "pnpm@8.7.5",
