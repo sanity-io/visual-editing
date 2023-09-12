@@ -32,7 +32,7 @@ jobs:
       - run: corepack enable && pnpm --version
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
-      - run: pnpm install --ignore-scripts --no-frozen-lockfile
+      - run: pnpm install --ignore-scripts
       - run: pnpm build
       - run: pnpm lint
       - run: pnpm typecheck
@@ -75,5 +75,5 @@ jobs:
       - run: corepack enable && pnpm --version
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
-      - run: pnpm install --loglevel=error --ignore-scripts --no-frozen-lockfile
+      - run: pnpm install --loglevel=error --ignore-scripts
       - run: pnpm test

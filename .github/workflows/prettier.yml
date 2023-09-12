@@ -27,9 +27,7 @@ jobs:
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
 
-      - run: pnpm install --ignore-scripts --no-frozen-lockfile
-      # Can't be used due to --no-frozen-lockfile
-      # - run: pnpm install --dev --ignore-scripts --no-frozen-lockfile
+      - run: pnpm install --dev --ignore-scripts
       - uses: actions/cache@v3
         with:
           path: node_modules/.cache/prettier/.prettier-cache
