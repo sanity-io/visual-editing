@@ -3034,7 +3034,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -3566,9 +3565,9 @@ packages:
     resolution: {integrity: sha512-3Krbj93YVXwQ39hiEYxF/JtR6VB4wPRTDe2uo8g8eEaDW9dvrWhvutoSKge3BjTrJ0pOkwNzTFlbouiAPBMIbw==}
     engines: {node: '>=14.18.0'}
     peerDependencies:
-      react: ^18.2.0
-      rxjs: ^7.8.1
-      styled-components: ^5.3.11
+      react: ^16.9 || ^17 || ^18
+      rxjs: ^7
+      styled-components: ^5.2
     dependencies:
       '@sanity/block-tools': 3.16.5-pink-lizard.22
       '@sanity/schema': 3.16.5-pink-lizard.22
@@ -9279,10 +9278,6 @@ packages:
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
 
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
-    dev: true
-
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -11837,9 +11832,9 @@ packages:
     engines: {node: '>=14.18.0'}
     hasBin: true
     peerDependencies:
-      react: ^18.2.0
-      react-dom: ^18.2.0
-      styled-components: ^5.3.11
+      react: ^18
+      react-dom: ^18
+      styled-components: ^5.2
     dependencies:
       '@dnd-kit/core': 6.0.8(react-dom@18.2.0)(react@18.2.0)
       '@dnd-kit/modifiers': 6.0.1(@dnd-kit/core@6.0.8)(react@18.2.0)
