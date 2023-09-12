@@ -1,0 +1,16 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "pipeline": {
+    "build": {
+      "outputs": [
+        "dist/**",
+        "internal/**",
+        "!internal/.gitkeep",
+        "client.js",
+        "csm.js",
+        "live-query.js"
+      ]
+    }
+  }
+}

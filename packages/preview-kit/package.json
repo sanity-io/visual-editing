@@ -1,0 +1,203 @@
+{
+  "name": "@sanity/preview-kit",
+  "version": "3.1.6",
+  "description": "General purpose utils for live content and visual editing",
+  "keywords": [
+    "groq",
+    "live",
+    "preview",
+    "react",
+    "sanity.io",
+    "sanity",
+    "studio",
+    "svelte",
+    "vue"
+  ],
+  "homepage": "https://github.com/sanity-io/preview-kit#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/preview-kit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/preview-kit.git",
+    "directory": "packages/preview-kit"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/_exports/index.ts",
+      "require": "./dist/index.cjs",
+      "node": {
+        "module": "./dist/index.js",
+        "import": "./dist/index.cjs.js"
+      },
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./internals/create-conditional-live-query": {
+      "types": "./dist/internals/create-conditional-live-query.d.ts",
+      "source": "./src/_exports/internals/_create-conditional-live-query.ts",
+      "require": "./dist/internals/create-conditional-live-query.cjs",
+      "node": {
+        "module": "./dist/internals/create-conditional-live-query.js",
+        "import": "./dist/internals/create-conditional-live-query.cjs.js"
+      },
+      "import": "./dist/internals/create-conditional-live-query.js",
+      "default": "./dist/internals/create-conditional-live-query.js"
+    },
+    "./internals/live-query": {
+      "types": "./dist/internals/live-query.d.ts",
+      "source": "./src/_exports/internals/_live-query.ts",
+      "require": "./dist/internals/live-query.cjs",
+      "node": {
+        "module": "./dist/internals/live-query.js",
+        "import": "./dist/internals/live-query.cjs.js"
+      },
+      "import": "./dist/internals/live-query.js",
+      "default": "./dist/internals/live-query.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "source": "./src/_exports/client.ts",
+      "require": "./dist/client.cjs",
+      "node": {
+        "module": "./dist/client.js",
+        "import": "./dist/client.cjs.js"
+      },
+      "import": "./dist/client.js",
+      "default": "./dist/client.js"
+    },
+    "./csm": {
+      "types": "./dist/csm.d.ts",
+      "source": "./src/_exports/csm.ts",
+      "require": "./dist/csm.cjs",
+      "node": {
+        "module": "./dist/csm.js",
+        "import": "./dist/csm.cjs.js"
+      },
+      "import": "./dist/csm.js",
+      "default": "./dist/csm.js"
+    },
+    "./live-query": {
+      "types": "./dist/live-query.d.ts",
+      "source": "./src/_exports/live-query.ts",
+      "require": "./dist/live-query.cjs",
+      "node": {
+        "module": "./dist/live-query.js",
+        "import": "./dist/live-query.cjs.js"
+      },
+      "import": "./dist/live-query.js",
+      "default": "./dist/live-query.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "source": "./src/_exports/index.ts",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "internals/create-conditional-live-query": [
+        "./dist/internals/create-conditional-live-query.d.ts"
+      ],
+      "internals/live-query": [
+        "./dist/internals/live-query.d.ts"
+      ],
+      "client": [
+        "./dist/client.d.ts"
+      ],
+      "csm": [
+        "./dist/csm.d.ts"
+      ],
+      "live-query": [
+        "./dist/live-query.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "internals",
+    "!internals/.gitkeep",
+    "client.js",
+    "csm.js",
+    "live-query.js"
+  ],
+  "scripts": {
+    "prebuild": "rimraf coverage dist internals/*.js client.js csm.js live-query.js",
+    "build": "pkg build --strict && pkg --strict",
+    "watch": "pnpm build watch",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --max-warnings 0 .",
+    "prepublishOnly": "pnpm run build",
+    "release": "semantic-release || semantic-release --dry-run --debug",
+    "test": "vitest",
+    "pretest:esm": "pnpm run build",
+    "test:esm": "node test.mjs && node test.cjs"
+  },
+  "browserslist": [
+    "> 0.2% and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
+    "maintained node versions"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "dependencies": {
+    "@sanity/eventsource": "5.0.0",
+    "@sanity/groq-store": "4.1.1",
+    "@vercel/stega": "0.1.0",
+    "lodash.get": "4.4.2",
+    "lodash.isplainobject": "4.0.6",
+    "lru-cache": "10.0.1",
+    "mendoza": "3.0.3",
+    "react-fast-compare": "3.2.2",
+    "use-sync-external-store": "1.2.0"
+  },
+  "devDependencies": {
+    "@sanity/client": "^6.4.9",
+    "@sanity/pkg-utils": "^2.4.8",
+    "@sanity/semantic-release-preset": "^4.1.4",
+    "@types/lodash.get": "^4.4.7",
+    "@types/lodash.isplainobject": "^4.0.7",
+    "@types/node": "^18.17.14",
+    "@types/react": "^18.2.21",
+    "@types/use-sync-external-store": "^0.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "@vitest/coverage-v8": "^0.34.3",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-gitignore": "^0.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.1",
+    "semantic-release": "^21.1.1",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.3",
+    "vitest-github-actions-reporter": "^0.10.0"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^6.4.9",
+    "react": "^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "provenance": false
+  }
+}
