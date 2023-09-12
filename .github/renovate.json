@@ -23,6 +23,30 @@
     {
       "matchDepTypes": ["dependencies"],
       "rangeStrategy": "bump"
+    },
+    {
+      "matchDepNames": [
+        "@sanity/block-tools",
+"@sanity/cli",
+"@sanity/diff",
+"@sanity/export",
+"@sanity/import",
+"@sanity/import-cli",
+"@sanity/mutator",
+"@sanity/portable-text-editor",
+"@sanity/schema",
+"@sanity/types",
+"@sanity/util",
+"@sanity/vision",
+"create-sanity",
+"groq",
+"sanity"
+      ],
+      "followTag": "pink-lizard",
+      "schedule": ["at any time"],
+      "rangeStrategy": "pin",
+      "groupSlug": "pink-lizard",
+      "automerge": true
     }
   ]
 }
