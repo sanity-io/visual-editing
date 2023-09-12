@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [
     composerTool({
       name: 'composer',
-      previewUrl: '/previews?',
+      previewUrl: '/preview',
     }),
     deskTool(),
   ],
