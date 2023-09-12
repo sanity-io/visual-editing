@@ -6,10 +6,7 @@ const nextConfig = {
     logging: 'verbose',
   },
 
-  transpilePackages:
-    process.env.NODE_ENV === 'production'
-      ? []
-      : ['@sanity/composer', '@sanity/overlays'],
+  transpilePackages: ['@sanity/composer', '@sanity/overlays'],
 
   // We run these checks in the CI pipeline, so we don't need to run them on Vercel
   typescript: { ignoreBuildErrors: true },
