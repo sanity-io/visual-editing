@@ -40,7 +40,7 @@
             :data-sanity-edit-info="
               JSON.stringify({
                 origin: 'sanity.io',
-                href: 'https://next.sanity.build/studio/desk',
+                href: '/studio/desk',
               })
             "
           >
@@ -70,7 +70,7 @@
               {{
                 vercelStegaCombine('Calling vercelStegaCombine directly', {
                   origin: 'sanity.io',
-                  href: 'https://next.sanity.build/studio/desk',
+                  href: '/studio/desk',
                 })
               }}
             </p>
