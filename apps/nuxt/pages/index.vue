@@ -1,23 +1,27 @@
 <template>
   <main
-    class="flex min-h-screen flex-col items-center justify-between p-8 lg:p-24"
+    class="flex flex-col items-center justify-between p-8 lg:p-24"
+    :class="expandedDocument ? 'min-h-[200vh]' : 'min-h-screen'"
   >
     <div
-      class="w-full lg:max-w-5xl items-center justify-start font-mono text-sm flex flex-col lg:flex-row gap-4"
+      class="flex w-full flex-col items-center justify-start gap-4 font-mono text-sm lg:max-w-5xl lg:flex-row"
     >
-      <button
-        class="text-center p-4 w-full lg:w-auto rounded-xl border border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:from-inherit bg-gray-200 dark:bg-zinc-800/30"
-        type="button"
-        @click.prevent="enabled = !enabled"
-      >
+      <button class="button" type="button" @click.prevent="enabled = !enabled">
         {{ enabled ? 'Disable' : 'Enable' }} Visual Editing
       </button>
       <button
-        class="text-center p-4 w-full lg:w-auto rounded-xl border border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:from-inherit bg-gray-200 dark:bg-zinc-800/30"
+        class="button"
         type="button"
         @click.prevent="elementAdded = !elementAdded"
       >
         {{ elementAdded ? 'Remove' : 'Add' }} Dynamic Element
+      </button>
+      <button
+        class="button"
+        type="button"
+        @click.prevent="expandedDocument = !expandedDocument"
+      >
+        {{ expandedDocument ? 'Contract' : 'Expand' }} Document
       </button>
     </div>
 
@@ -42,10 +46,10 @@
           </a>
         </div>
         <div
-          class="mb-32 grid text-center w-full lg:max-w-5xl lg:mb-0 lg:grid-cols-3 lg:text-left"
+          class="mb-32 grid w-full text-center lg:mb-0 lg:max-w-5xl lg:grid-cols-3 lg:text-left"
         >
           <div
-            class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            class="block"
             :data-sanity-edit-info="
               JSON.stringify({
                 origin: 'sanity.io',
@@ -53,17 +57,42 @@
               })
             "
           >
-            <h2 class="mb-3 text-2xl font-semibold">Data attribute</h2>
-            <p class="m-0 max-w-[30ch] text-sm opacity-50">
-              data-sanity-edit-info
-            </p>
+            <h2>JSON data attribute</h2>
+            <p>data-sanity-edit-info</p>
           </div>
 
           <div
-            class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            class="block"
+            :data-sanity="
+              JSON.stringify({
+                dataset: 'abc',
+                projectId: 'def',
+                document: {
+                  id: 'sanity.io',
+                  path: 'sanity.io',
+                },
+                studio: {
+                  baseUrl: 'https://next.sanity.build/studio/desk',
+                },
+              })
+            "
           >
-            <h2 class="mb-3 text-2xl font-semibold">Stega string</h2>
-            <p class="m-0 max-w-[30ch] text-sm opacity-50">
+            <h2>JSON data attribute</h2>
+            <p>data-sanity</p>
+          </div>
+
+          <div
+            class="block"
+            data-sanity="id=<document.id>;type=<document.type>;path=<document.path>;project-id=<projectId>;dataset=<dataset>;tool=desk;workspace=docs;
+            "
+          >
+            <h2>String data attribute</h2>
+            <p>data-sanity</p>
+          </div>
+
+          <div class="block">
+            <h2>Stega string</h2>
+            <p>
               {{
                 vercelStegaCombine('Calling vercelStegaCombine', {
                   origin: 'sanity.io',
@@ -75,7 +104,7 @@
 
           <div
             v-if="elementAdded"
-            class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            class="block"
             :data-sanity-edit-info="
               JSON.stringify({
                 origin: 'sanity.io',
@@ -83,8 +112,8 @@
               })
             "
           >
-            <h2 class="mb-3 text-2xl font-semibold">Dynamic element</h2>
-            <p class="m-0 max-w-[30ch] text-sm opacity-50">
+            <h2>Dynamic element</h2>
+            <p>
               {{
                 vercelStegaCombine('With nested editables', {
                   origin: 'sanity.io',
@@ -103,6 +132,7 @@
 import { vercelStegaCombine } from '@vercel/stega'
 const enabled = ref(true)
 const elementAdded = ref(false)
+const expandedDocument = ref(false)
 
 useHead({
   bodyAttrs: {
@@ -110,3 +140,19 @@ useHead({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+.button {
+  @apply w-full rounded-xl border border-gray-300 bg-gray-200 bg-gradient-to-b from-zinc-200 p-4 text-center backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:w-auto;
+}
+.block {
+  @apply rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30;
+}
+
+.block h2 {
+  @apply mb-3 text-2xl font-semibold;
+}
+.block p {
+  @apply m-0 text-sm opacity-50;
+}
+</style>

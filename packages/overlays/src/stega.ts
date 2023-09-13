@@ -1,6 +1,6 @@
 import { vercelStegaDecode } from '@vercel/stega'
 
-import { VERCEL_STEGA_REGEX } from '../constants'
+import { VERCEL_STEGA_REGEX } from './constants'
 
 /**
  * JavaScript regexps are stateful. Have to reset lastIndex between runs to ensure consistent behaviour for the same string
