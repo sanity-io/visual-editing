@@ -19,23 +19,23 @@
     "semi": false,
     "singleQuote": true
   },
-  "pnpm": {"overrides": {
-    "@sanity/block-tools": "$@sanity/block-tools",
-    "@sanity/cli": "$@sanity/cli",
-    "@sanity/diff": "$@sanity/diff",
-    "@sanity/export": "$@sanity/export",
-    "@sanity/import": "$@sanity/import",
-    "@sanity/import-cli": "$@sanity/import-cli",
-    "@sanity/mutator": "$@sanity/mutator",
-    "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
-    "@sanity/schema": "$@sanity/schema",
-    "@sanity/types": "$@sanity/types",
-    "@sanity/util": "$@sanity/util",
-    "@sanity/vision": "$@sanity/vision",
-    "create-sanity": "$create-sanity",
-    "groq": "$groq",
-    "sanity": "$sanity"
-  }},
+  "dependencies": {
+    "@sanity/block-tools": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/cli": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/diff": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/export": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/import": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/import-cli": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/mutator": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/portable-text-editor": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/schema": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/types": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/util": "3.16.5-pink-lizard.27+d9fa25b867",
+    "@sanity/vision": "3.16.5-pink-lizard.27+d9fa25b867",
+    "create-sanity": "3.16.5-pink-lizard.27+d9fa25b867",
+    "groq": "3.16.5-pink-lizard.27+d9fa25b867",
+    "sanity": "3.16.5-pink-lizard.27+d9fa25b867"
+  },
   "devDependencies": {
     "prettier": "3.0.3",
     "prettier-plugin-packagejson": "2.4.5",
@@ -44,21 +44,23 @@
     "turbo": "1.10.13"
   },
   "packageManager": "pnpm@8.7.5",
-  "dependencies": {
-      "@sanity/block-tools": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/cli": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/diff": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/export": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/import": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/import-cli": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/mutator": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/portable-text-editor": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/schema": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/types": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/util": "3.16.5-pink-lizard.27+d9fa25b867",
-      "@sanity/vision": "3.16.5-pink-lizard.27+d9fa25b867",
-      "create-sanity": "3.16.5-pink-lizard.27+d9fa25b867",
-      "groq": "3.16.5-pink-lizard.27+d9fa25b867",
-      "sanity": "3.16.5-pink-lizard.27+d9fa25b867"
+  "pnpm": {
+    "overrides": {
+      "@sanity/block-tools": "$@sanity/block-tools",
+      "@sanity/cli": "$@sanity/cli",
+      "@sanity/diff": "$@sanity/diff",
+      "@sanity/export": "$@sanity/export",
+      "@sanity/import": "$@sanity/import",
+      "@sanity/import-cli": "$@sanity/import-cli",
+      "@sanity/mutator": "$@sanity/mutator",
+      "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
+      "@sanity/schema": "$@sanity/schema",
+      "@sanity/types": "$@sanity/types",
+      "@sanity/util": "$@sanity/util",
+      "@sanity/vision": "$@sanity/vision",
+      "create-sanity": "$create-sanity",
+      "groq": "$groq",
+      "sanity": "$sanity"
     }
+  }
 }
