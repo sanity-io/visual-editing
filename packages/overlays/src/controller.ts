@@ -40,7 +40,7 @@ export function createOverlayController({
   //
   // When we want to know which element is currently hovered, we take the element at the top of the
   // stack. Since JavaScript does not have a Stack type, we use an array and take the last element.
-  let hoverStack: HTMLElement[] = []
+  const hoverStack: HTMLElement[] = []
   const getHoveredElement = () =>
     hoverStack[hoverStack.length - 1] as HTMLElement | undefined
 
@@ -309,7 +309,7 @@ export function createOverlayController({
     elementIdMap.clear()
     elementSet.clear()
 
-    hoverStack = []
+    hoverStack.splice(0, hoverStack.length)
   }
 
   function activate() {
