@@ -19,7 +19,7 @@
     "semi": false,
     "singleQuote": true
   },
-  "dependencies": {
+  "pnpm": {"overrides": {
     "@sanity/block-tools": "$@sanity/block-tools",
     "@sanity/cli": "$@sanity/cli",
     "@sanity/diff": "$@sanity/diff",
@@ -35,7 +35,7 @@
     "create-sanity": "$create-sanity",
     "groq": "$groq",
     "sanity": "$sanity"
-  },
+  }},
   "devDependencies": {
     "prettier": "3.0.3",
     "prettier-plugin-packagejson": "2.4.5",
@@ -44,8 +44,7 @@
     "turbo": "1.10.13"
   },
   "packageManager": "pnpm@8.7.5",
-  "pnpm": {
-    "overrides": {
+  "dependencies": {
       "@sanity/block-tools": "3.16.5-pink-lizard.27+d9fa25b867",
       "@sanity/cli": "3.16.5-pink-lizard.27+d9fa25b867",
       "@sanity/diff": "3.16.5-pink-lizard.27+d9fa25b867",
@@ -62,5 +61,4 @@
       "groq": "3.16.5-pink-lizard.27+d9fa25b867",
       "sanity": "3.16.5-pink-lizard.27+d9fa25b867"
     }
-  }
 }
