@@ -20,8 +20,6 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      # NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-      # NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -33,7 +31,7 @@ jobs:
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
       - run: pnpm install --ignore-scripts
-      - run: pnpm build
+      - run: pnpm build --filter=./packages/*
       - run: pnpm lint
       - run: pnpm typecheck
 
