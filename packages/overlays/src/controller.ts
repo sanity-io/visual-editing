@@ -30,6 +30,16 @@ export function createOverlayController({
   // Weakmap keyed by measureElement to find associated element
   const measureElements = new WeakMap<HTMLElement, HTMLElement>()
 
+  // The `hoverStack` is used as a container for tracking which elements are hovered at any time.
+  // The browser supports hovering multiple nested elements simultanously, but we only want to
+  // highlight the "outer most" element.
+  //
+  // This is how it works:
+  // - Whenever the mouse enters an element, we add it to the stack.
+  // - Whenever the mouse leaves an element, we remove it from the stack.
+  //
+  // When we want to know which element is currently hovered, we take the element at the top of the
+  // stack. Since JavaScript does not have a Stack type, we use an array and take the last element.
   let hoverStack: HTMLElement[] = []
   const getHoveredElement = () =>
     hoverStack[hoverStack.length - 1] as HTMLElement | undefined
@@ -151,7 +161,8 @@ export function createOverlayController({
         }
 
         /**
-         * If moving to an element within the overlay which handles pointer events, attach a new event handler to that element and defer the original leave event
+         * If moving to an element within the overlay which handles pointer events, attach a new
+         * event handler to that element and defer the original leave event
          */
         const { relatedTarget } = e
         const isInteractiveOverlayElement =
