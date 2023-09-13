@@ -29,8 +29,11 @@ export function findSanityNodes(
     if (!sanity) {
       return
     }
+
     const measureElement = findNonInlineElement(element)
-    if (!measureElement) return
+    if (!measureElement) {
+      return
+    }
 
     elements.push({
       elements: {
