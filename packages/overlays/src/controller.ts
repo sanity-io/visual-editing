@@ -228,7 +228,9 @@ export function createOverlayController({
 
     if (needsUpdate) {
       for (const element of elementSet) {
-        if (!element.isConnected) {
+        if (element.isConnected) {
+          updateRect(element)
+        } else {
           unregisterElement(element)
         }
       }
