@@ -152,8 +152,16 @@ export interface ElementState {
  * Object returned by node traversal
  * @internal
  */
-export interface _ResolvedElement {
+export interface _SanityNodeElements {
   element: HTMLElement
+  measureElement: HTMLElement
+}
+/**
+ * Object returned by node traversal
+ * @internal
+ */
+export interface _ResolvedElement {
+  elements: _SanityNodeElements
   sanity: OverlayElementSanityData
 }
 
@@ -163,7 +171,7 @@ export interface _ResolvedElement {
  */
 export interface _OverlayElement {
   id: string
-  element: HTMLElement
+  elements: _SanityNodeElements
   handlers: _EventHandlers
   sanity: OverlayElementSanityData
 }

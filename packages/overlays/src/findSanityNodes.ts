@@ -1,5 +1,6 @@
 import { OVERLAY_ID } from './constants'
 import { decodeSanityDataAttributeValue } from './decodeSanityNodes'
+import { findNonInlineElement } from './findNonInlineElement'
 import { testAndDecodeStega } from './stega'
 import { _ResolvedElement } from './types'
 
@@ -11,11 +12,6 @@ const isImgElement = (el: HTMLElement): el is HTMLImageElement =>
 
 const isTimeElement = (el: HTMLElement): el is HTMLTimeElement =>
   el.tagName === 'TIME'
-
-const isTypographicElement = (
-  el: HTMLElement,
-): el is HTMLSpanElement | HTMLElement =>
-  ['SPAN', 'B', 'STRONG'].includes(el.tagName)
 
 /**
  * Finds nodes containing sanity specific data
@@ -33,8 +29,14 @@ export function findSanityNodes(
     if (!sanity) {
       return
     }
+    const measureElement = findNonInlineElement(element)
+    if (!measureElement) return
+
     elements.push({
-      element,
+      elements: {
+        element,
+        measureElement,
+      },
       sanity,
     })
   }
@@ -42,20 +44,11 @@ export function findSanityNodes(
   if (el) {
     for (const node of el.childNodes) {
       const { nodeType, parentElement, textContent } = node
-      // Scenario 1
       // Check non-empty, child-only text nodes for stega strings
       if (nodeType === Node.TEXT_NODE && parentElement && textContent) {
         const data = testAndDecodeStega(textContent)
         if (!data) continue
-        // @todo Should spans not be targeted?
-        if (
-          isTypographicElement(parentElement) &&
-          parentElement.parentElement
-        ) {
-          addElement(parentElement.parentElement, data)
-        } else {
-          addElement(parentElement, data)
-        }
+        addElement(parentElement, data)
         // No need to recurse for text nodes
         continue
       }

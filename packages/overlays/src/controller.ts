@@ -24,9 +24,11 @@ export function createOverlayController({
   // Map for getting element by ID
   const elementIdMap = new Map<string, HTMLElement>()
   // WeakMap for getting data by element
-  const elements = new WeakMap<HTMLElement, _OverlayElement>()
+  const elementsMap = new WeakMap<HTMLElement, _OverlayElement>()
   // Set for iterating over elements
   const elementSet = new Set<HTMLElement>()
+  // Weakmap keyed by measureElement to find associated element
+  const measureElements = new WeakMap<HTMLElement, HTMLElement>()
 
   let hoverStack: HTMLElement[] = []
   const getHoveredElement = () =>
@@ -52,9 +54,15 @@ export function createOverlayController({
    * Executed when element enters the viewport
    * Enables an element’s event handlers
    */
-  function activateElement({ id, element, handlers, sanity }: _OverlayElement) {
+  function activateElement({
+    id,
+    elements,
+    handlers,
+    sanity,
+  }: _OverlayElement) {
+    const { element, measureElement } = elements
     addEventHandlers(element, handlers)
-    ro.observe(element)
+    ro.observe(measureElement)
     const rect = getRect(element)
     dispatch({
       type: 'element/activate',
@@ -68,9 +76,10 @@ export function createOverlayController({
    * Executed when element leaves the viewport
    * Disables an element’s event handlers
    */
-  function deactivateElement({ id, element, handlers }: _OverlayElement) {
+  function deactivateElement({ id, elements, handlers }: _OverlayElement) {
+    const { element, measureElement } = elements
     removeEventHandlers(element, handlers)
-    ro.unobserve(element)
+    ro.unobserve(measureElement)
     dispatch({
       type: 'element/deactivate',
       id,
@@ -81,7 +90,7 @@ export function createOverlayController({
     (entries) => {
       for (const entry of entries) {
         const { target } = entry
-        const match = target instanceof HTMLElement && elements.get(target)
+        const match = target instanceof HTMLElement && elementsMap.get(target)
         if (!match) continue
         if (entry.isIntersecting) {
           activateElement(match)
@@ -98,7 +107,8 @@ export function createOverlayController({
   /**
    * Stores an element’s DOM node and decoded sanity data in state and sets up event handlers
    */
-  function registerElement({ element, sanity }: _ResolvedElement) {
+  function registerElement({ elements, sanity }: _ResolvedElement) {
+    const { element, measureElement } = elements
     const eventHandlers: _EventHandlers = {
       click(event) {
         const target = event.target as HTMLElement | null
@@ -130,7 +140,7 @@ export function createOverlayController({
           })
 
           if (hoveredElement) {
-            const overlayElement = elements.get(hoveredElement)
+            const overlayElement = elementsMap.get(hoveredElement)
             if (overlayElement) {
               dispatch({
                 type: 'element/mouseenter',
@@ -163,16 +173,17 @@ export function createOverlayController({
 
     const id = uuid()
     elementSet.add(element)
+    measureElements.set(measureElement, element)
     elementIdMap.set(id, element)
-    elements.set(element, {
+    elementsMap.set(element, {
       id,
-      element,
+      elements,
       sanity,
       handlers: eventHandlers,
     })
 
     io.observe(element)
-    ro.observe(element)
+    ro.observe(measureElement)
 
     const rect = getRect(element)
     dispatch({
@@ -187,8 +198,8 @@ export function createOverlayController({
     const sanityNodes = findSanityNodes(node)
     for (const sanityNode of sanityNodes) {
       if (
-        sanityNode.element instanceof HTMLElement &&
-        !elements.has(sanityNode.element)
+        sanityNode.elements.element instanceof HTMLElement &&
+        !elementsMap.has(sanityNode.elements.element)
       ) {
         registerElement(sanityNode)
       }
@@ -196,12 +207,12 @@ export function createOverlayController({
   }
 
   function unregisterElement(element: HTMLElement) {
-    const overlayElement = elements.get(element)
+    const overlayElement = elementsMap.get(element)
     if (overlayElement) {
       const { id, handlers } = overlayElement
       removeEventHandlers(element, handlers)
       ro.unobserve(element)
-      elements.delete(element)
+      elementsMap.delete(element)
       elementSet.delete(element)
       elementIdMap.delete(id)
       dispatch({
@@ -220,7 +231,7 @@ export function createOverlayController({
         return false
       }
 
-      if (node instanceof HTMLElement && !elements.has(node)) {
+      if (node instanceof HTMLElement && !elementsMap.has(node)) {
         registerElements(node)
       }
       return true
@@ -250,7 +261,7 @@ export function createOverlayController({
    * @param el - Element to dispatch rect information for
    */
   function updateRect(el: HTMLElement) {
-    const overlayElement = elements.get(el)
+    const overlayElement = elementsMap.get(el)
     if (overlayElement) {
       const rect = getRect(el)
 
@@ -267,7 +278,9 @@ export function createOverlayController({
       const target = entry.target
 
       if (target instanceof HTMLElement) {
-        updateRect(target)
+        const element = measureElements.get(target)
+        if (!element) return
+        updateRect(element)
       }
     }
   }

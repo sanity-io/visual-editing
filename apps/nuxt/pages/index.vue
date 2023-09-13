@@ -93,12 +93,16 @@
           <div class="block">
             <h2>Stega string</h2>
             <p>
-              {{
-                vercelStegaCombine('Calling vercelStegaCombine', {
-                  origin: 'sanity.io',
-                  href: 'https://next.sanity.build/studio/desk',
-                })
-              }}
+              <span>
+                <span>
+                  {{
+                    vercelStegaCombine('Nested inline elements', {
+                      origin: 'sanity.io',
+                      href: 'https://next.sanity.build/studio/desk',
+                    })
+                  }}
+                </span>
+              </span>
             </p>
           </div>
 
