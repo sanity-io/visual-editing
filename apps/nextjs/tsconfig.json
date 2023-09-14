@@ -22,12 +22,14 @@
     "paths": {
       "@/*": ["./src/*"],
       "@sanity/composer": ["../../packages/composer/src"],
-      "@sanity/overlays": ["../../packages/overlays/src"]
+      "@sanity/overlays": ["../../packages/overlays/src"],
+      "apps-common": ["../apps-common/src"]
     }
   },
   "include": [
     "../../packages/composer/src",
     "../../packages/overlays/src",
+    "../apps-common/src",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
