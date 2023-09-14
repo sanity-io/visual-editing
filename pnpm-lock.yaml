@@ -87,6 +87,31 @@ importers:
         specifier: 1.10.13
         version: 1.10.13
 
+  apps/common:
+    dependencies:
+      '@sanity/ui':
+        specifier: ^1.8.2
+        version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+      sanity:
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+    devDependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-is:
+        specifier: ^18.2.0
+        version: 18.2.0
+      styled-components:
+        specifier: ^5.3.11
+        version: 5.3.11(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   apps/nextjs:
     dependencies:
       '@next/bundle-analyzer':
@@ -3489,6 +3514,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -5007,7 +5033,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.15)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.15)
       react-refresh: 0.14.0
-      vite: 4.4.9(@types/node@20.6.0)
+      vite: 4.4.9(@types/node@18.17.15)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10900,6 +10926,10 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
     dev: false
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: true
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
