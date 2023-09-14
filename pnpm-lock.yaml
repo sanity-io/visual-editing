@@ -253,6 +253,9 @@ importers:
 
   packages/composer:
     dependencies:
+      '@sanity/ui':
+        specifier: ^1.8.2
+        version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       sanity:
         specifier: 3.16.5-pink-lizard.35
         version: 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
