@@ -1,4 +1,5 @@
 import { composerTool } from '@sanity/composer'
+import { schema } from 'apps-common'
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
@@ -16,4 +17,5 @@ export default defineConfig({
     }),
     deskTool(),
   ],
+  schema,
 })

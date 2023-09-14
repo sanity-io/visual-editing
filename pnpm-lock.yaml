@@ -5,71 +5,71 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@sanity/block-tools': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/cli': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/diff': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/export': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/import': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/import-cli': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/mutator': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/portable-text-editor': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/schema': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/types': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/util': 3.16.5-pink-lizard.27+d9fa25b867
-  '@sanity/vision': 3.16.5-pink-lizard.27+d9fa25b867
-  create-sanity: 3.16.5-pink-lizard.27+d9fa25b867
-  groq: 3.16.5-pink-lizard.27+d9fa25b867
-  sanity: 3.16.5-pink-lizard.27+d9fa25b867
+  '@sanity/block-tools': 3.16.5-pink-lizard.35
+  '@sanity/cli': 3.16.5-pink-lizard.35
+  '@sanity/diff': 3.16.5-pink-lizard.35
+  '@sanity/export': 3.16.5-pink-lizard.35
+  '@sanity/import': 3.16.5-pink-lizard.35
+  '@sanity/import-cli': 3.16.5-pink-lizard.35
+  '@sanity/mutator': 3.16.5-pink-lizard.35
+  '@sanity/portable-text-editor': 3.16.5-pink-lizard.35
+  '@sanity/schema': 3.16.5-pink-lizard.35
+  '@sanity/types': 3.16.5-pink-lizard.35
+  '@sanity/util': 3.16.5-pink-lizard.35
+  '@sanity/vision': 3.16.5-pink-lizard.35
+  create-sanity: 3.16.5-pink-lizard.35
+  groq: 3.16.5-pink-lizard.35
+  sanity: 3.16.5-pink-lizard.35
 
 importers:
 
   .:
     dependencies:
       '@sanity/block-tools':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/cli':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/diff':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/export':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/import':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/import-cli':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/mutator':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/portable-text-editor':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
       '@sanity/schema':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/types':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/util':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       '@sanity/vision':
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27(@babel/runtime@7.22.15)(@codemirror/lint@6.4.1)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.4)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(@babel/runtime@7.22.15)(@codemirror/lint@6.4.1)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.4)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       create-sanity:
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       groq:
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35
       sanity:
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
     devDependencies:
       prettier:
         specifier: 3.0.3
@@ -86,6 +86,31 @@ importers:
       turbo:
         specifier: 1.10.13
         version: 1.10.13
+
+  apps/common:
+    dependencies:
+      '@sanity/ui':
+        specifier: ^1.8.2
+        version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+      sanity:
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+    devDependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-is:
+        specifier: ^18.2.0
+        version: 18.2.0
+      styled-components:
+        specifier: ^5.3.11
+        version: 5.3.11(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
 
   apps/nextjs:
     dependencies:
@@ -110,6 +135,9 @@ importers:
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
+      apps-common:
+        specifier: workspace:*
+        version: link:../common
       autoprefixer:
         specifier: 10.4.15
         version: 10.4.15(postcss@8.4.29)
@@ -124,7 +152,7 @@ importers:
         version: 13.4.19(@babel/core@7.22.15)(react-dom@18.2.0)(react@18.2.0)
       next-sanity:
         specifier: ^5.4.6
-        version: 5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.27)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.5-pink-lizard.27)(styled-components@5.3.11)
+        version: 5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.35)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.5-pink-lizard.35)(styled-components@5.3.11)
       postcss:
         specifier: 8.4.29
         version: 8.4.29
@@ -135,8 +163,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       sanity:
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27(@types/node@20.6.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(@types/node@20.6.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       styled-components:
         specifier: ^5.3.11
         version: 5.3.11(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
@@ -162,8 +190,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       sanity:
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
     devDependencies:
       '@nuxt/devtools':
         specifier: latest
@@ -229,8 +257,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       sanity:
-        specifier: 3.16.5-pink-lizard.27+d9fa25b867
-        version: 3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+        specifier: 3.16.5-pink-lizard.35
+        version: 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
     devDependencies:
       react:
         specifier: ^18.2.0
@@ -3823,15 +3851,15 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@sanity/block-tools@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-1jlUC4IyrVLvUBV7rmNsMC5cGUdMiso2vQ0KTq0RdH6ndWsHJvmKBlIHeijbmD69j1jErBPuDY6bzY2LR73y3A==}
+  /@sanity/block-tools@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-1n9tDj/Ui6REexJl805DzPBbqfzN6PVbVQybwbBgvc2N6yCYMkN44iayFTuHPnvezvF0wNsrTycVHT+h+L6Mkw==}
     dependencies:
       get-random-values-esm: 1.0.0
       lodash: 4.17.21
     dev: false
 
-  /@sanity/cli@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-Xs+6KZzXx7p47YDCzBzr0ROZcwaIvxYQH07A3WbMQ5rMf6IFBbVdEqq1jMERUvzl1QBSZoguuJlyCI+2XpeTeQ==}
+  /@sanity/cli@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-1Wyxe8QkVKqR6V4o1Yr76TDWFGPXfMwCLh4//aPf1Hw+4d+FqbSrQWNTCQoZsgfyLfDuNeIU2/m3tw1s3bnGfg==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     dependencies:
@@ -3865,8 +3893,8 @@ packages:
     engines: {node: '>=14.18'}
     dev: false
 
-  /@sanity/diff@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-Mx9Ze9CNPhvwKLykTBQjLXVohHTe9uFnLCeWuFKguqFVTFKZl8W7aZsS0iL068ABDY7+2+Owkp4Dc2inWUfPwQ==}
+  /@sanity/diff@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-ZaKwScoNlziS4l0YUxCGrtTF8dVqdsY6D2iI+Lf5j10EFnDvdpB1kNaY7sOkMrHDRZacJr0+8Ysz++YtPaFpLw==}
     engines: {node: '>=14.18.0'}
     dependencies:
       '@sanity/diff-match-patch': 3.1.1
@@ -3880,8 +3908,8 @@ packages:
       event-source-polyfill: 1.0.31
       eventsource: 2.0.2
 
-  /@sanity/export@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-QiNsIZDMHRZZDSSbYBhsm1yBpbubTbgcjgR60JQkOhA4Yega4HSpd1edALbYkWN1RU5ACGx7AKLjIwf/7Aydcw==}
+  /@sanity/export@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-x1A8tHhQl96s/wgrURUlNRlBi6kSoLp/WjG5xyFLFXFYdgB1rPav/qL7coFsV2p812qpSkm+t0sXpB23/EllzQ==}
     engines: {node: '>=14.18.0'}
     dependencies:
       archiver: 5.3.2
@@ -3905,9 +3933,9 @@ packages:
     engines: {node: '>=14.18'}
     dependencies:
       '@sanity/eventsource': 5.0.0
-      '@sanity/types': 3.16.5-pink-lizard.27
+      '@sanity/types': 3.16.5-pink-lizard.35
       fast-deep-equal: 3.1.3
-      groq: 3.16.5-pink-lizard.27
+      groq: 3.16.5-pink-lizard.35
       groq-js: 1.2.0
       mendoza: 3.0.3
       simple-get: 4.0.1
@@ -3931,13 +3959,13 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: false
 
-  /@sanity/import-cli@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-WtuS77+CktVnxndxapAwaSICeryejMuj8IGJEZGlED3tvJE2EVLUvwN/d9cbkD1yQK8Tm2SBtze2Tu49dbuBiQ==}
+  /@sanity/import-cli@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-GuGBdQibfXfCGEs6/RK1BcJZ7JBs6Wxb634r+PMDx7TS6BnL6HXwKrFkgZfv7feEiDDiCBUr9ICSN84M+gI3Zg==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     dependencies:
       '@sanity/client': 6.4.11
-      '@sanity/import': 3.16.5-pink-lizard.27
+      '@sanity/import': 3.16.5-pink-lizard.35
       get-it: 8.4.3
       meow: 9.0.0
       ora: 5.4.1
@@ -3946,13 +3974,13 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/import@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-yhcuFJEh88k0DAmO2e4BoWVJFWsNEZuEXP1wOsUl2kmQI5qWiWf4fGYmOmEeyjq1v0+dazgAI/3h3fY98xxj6w==}
+  /@sanity/import@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-nagx1HB39NtnhV1ZMzBkt6UHmGF9fNl2U/HcCkKuT3DyuW4M7eDVtceo+4nDbhRxAlEdAaDmg3qgN+MP2J2M8Q==}
     engines: {node: '>=14.18.0'}
     dependencies:
       '@sanity/asset-utils': 1.3.0
       '@sanity/generate-help-url': 3.0.0
-      '@sanity/mutator': 3.16.5-pink-lizard.27
+      '@sanity/mutator': 3.16.5-pink-lizard.35
       '@sanity/uuid': 3.0.2
       debug: 3.2.7
       file-url: 2.0.2
@@ -3983,8 +4011,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@sanity/mutator@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-FhXaZxPWnA4jYl610lrjWJVoCsDqDILqeOL06vSAAb8ay50O8SD0X9AwT5H92t67xEPvwAndvMAOVxd+Ekoq2Q==}
+  /@sanity/mutator@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-dxOL1hYif/aTjmigfGgjZ4i2kJ+nqCgbDZy4ec91SVlE74qiS9I/eIX6779HPEdrKZbuG4r2ehmD873xGUuRog==}
     dependencies:
       '@sanity/diff-match-patch': 3.1.1
       '@sanity/uuid': 3.0.2
@@ -4047,18 +4075,18 @@ packages:
       - supports-color
     dev: true
 
-  /@sanity/portable-text-editor@3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11):
-    resolution: {integrity: sha512-vRJEj9UKWyszS0MgKoQjhfBdzINOcgZwjpPnOJ+CI9egS/yyGIxKeIMoeKRio4R4uUN1cLDXj1TSi1MSXpttvA==}
+  /@sanity/portable-text-editor@3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11):
+    resolution: {integrity: sha512-ngddaAav2Q13ZXI7L/TfuS92XEKXTdDi9Gm9La9U19Tf3dCImaxNc6NjgBPA0INiG0WVhnWfSo00nuGCr/XBGg==}
     engines: {node: '>=14.18.0'}
     peerDependencies:
       react: ^16.9 || ^17 || ^18
       rxjs: ^7
       styled-components: ^5.2
     dependencies:
-      '@sanity/block-tools': 3.16.5-pink-lizard.27
-      '@sanity/schema': 3.16.5-pink-lizard.27
-      '@sanity/types': 3.16.5-pink-lizard.27
-      '@sanity/util': 3.16.5-pink-lizard.27
+      '@sanity/block-tools': 3.16.5-pink-lizard.35
+      '@sanity/schema': 3.16.5-pink-lizard.35
+      '@sanity/types': 3.16.5-pink-lizard.35
+      '@sanity/util': 3.16.5-pink-lizard.35
       debug: 3.2.7
       is-hotkey: 0.1.8
       lodash: 4.17.21
@@ -4097,11 +4125,11 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/schema@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-aZi7UNZax9wkPn8Bj+VV66U7gTOz0xo63zkF39Pbri+PNp172ilxhy5psW+WDfjaAB9tEwaAK5Mzadq2TQwzxw==}
+  /@sanity/schema@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-O6q9DGQ/NripVWWxGXJIkVcftCx56cziCYKuWQyf4PwOX+aJADOwWciLOV4oz3xSkMAE9whydJRWKlHGrJmVzg==}
     dependencies:
       '@sanity/generate-help-url': 3.0.0
-      '@sanity/types': 3.16.5-pink-lizard.27
+      '@sanity/types': 3.16.5-pink-lizard.35
       arrify: 1.0.1
       humanize-list: 1.0.1
       leven: 3.1.0
@@ -4127,8 +4155,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sanity/types@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-tj+YO8VPucRjNnWjlD4Nii1txahxZEX3LbY4LP498D2SdH0y5mMx/bcr9qyeCaZURhMKG3Et8RrZZz1QekoAIg==}
+  /@sanity/types@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-XN1x4YhQ+NT3ZmgImOLYD23ZQDcmfTpec6PsSofqjfSnm0nRo0SYnD51HeQPVvof16GTXochEJ1ggwv4xshEYg==}
     dependencies:
       '@sanity/client': 6.4.11
       '@types/react': 18.2.21
@@ -4157,11 +4185,11 @@ packages:
       styled-components: 5.3.11(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
     dev: false
 
-  /@sanity/util@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-+Ry6mWuvrN7Ed0zF9XG2gTYKkj+AQo5TmiVaE8VnLMRQL2vRmWC2poAa/8JMX316rMNF8+IR9cZmfs8/jjtD3A==}
+  /@sanity/util@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-6z5oufRk1NW4YG0McsJuTCJqgYOicakNvZ/O2RRW3Jv3L5Uzw/5Is5OtLWyzujhpIxA9TbPne18CT9XymbOHKw==}
     engines: {node: '>=14.18.0'}
     dependencies:
-      '@sanity/types': 3.16.5-pink-lizard.27
+      '@sanity/types': 3.16.5-pink-lizard.35
       get-random-values-esm: 1.0.0
       moment: 2.29.4
     transitivePeerDependencies:
@@ -4175,8 +4203,8 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /@sanity/vision@3.16.5-pink-lizard.27(@babel/runtime@7.22.15)(@codemirror/lint@6.4.1)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.4)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11):
-    resolution: {integrity: sha512-Ztcye6PtmQPDO1Pd86y2/51H63HZgJ39EnAky1lG7tjucMzieXuVwQ44hXSEsSoe2Z/159W7EdnEzu1oZ33epw==}
+  /@sanity/vision@3.16.5-pink-lizard.35(@babel/runtime@7.22.15)(@codemirror/lint@6.4.1)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.4)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11):
+    resolution: {integrity: sha512-zUWLK9bCEWsA6Y9wtw2fsFoh2N4ERblIeCm96BXWQNoqUKPMfh/U36SKDbZCoeNapqYtbrcd4SvwbQefdEkS4w==}
     peerDependencies:
       react: ^18
       styled-components: ^5.2
@@ -5011,7 +5039,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.15)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.15)
       react-refresh: 0.14.0
-      vite: 4.4.9(@types/node@20.6.0)
+      vite: 4.4.9(@types/node@18.17.15)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6814,12 +6842,12 @@ packages:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
     dev: true
 
-  /create-sanity@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-HxCI/EaZZYYtQz250i58zDIqa4SnJLmVXa3f0PprbqeRb6yE+To+RH8XMJH2egHxBCZpQcs6RQHUw2tiaoX3wg==}
+  /create-sanity@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-Fb38jb57v0ZFuWOnuba/FIAV0gPRvy97wagDvBEesHncnI5hTlL1RVg0D7uTxhqJIODxvxsFQl66QJrSKeFRyg==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     dependencies:
-      '@sanity/cli': 3.16.5-pink-lizard.27
+      '@sanity/cli': 3.16.5-pink-lizard.35
       resolve-pkg: 2.0.0
     transitivePeerDependencies:
       - supports-color
@@ -8887,8 +8915,8 @@ packages:
     engines: {node: '>= 14'}
     dev: false
 
-  /groq@3.16.5-pink-lizard.27:
-    resolution: {integrity: sha512-25UQXf/pQK6KNG7fbgIAi5QSrn0gO4H4BQy7v4pJ1QRLYhcgSNq71gBhOoPGirVC14vXE4u03LgPW6p80e8uIA==}
+  /groq@3.16.5-pink-lizard.35:
+    resolution: {integrity: sha512-NX34ZeoWqD+m6t1pZsD2/UoRCtaA1+jkslRReHDHKpqD227Ibf30fiNUdG4OujobEnQ29YE5Pfw+QSIHeJrrYQ==}
     engines: {node: '>=14.18.0'}
     dev: false
 
@@ -10923,29 +10951,29 @@ packages:
     resolution: {integrity: sha512-EZSPZB70jiVsivaBLYDCyntd5eH8NTSMOn3rB+HxwdmKThGELLdYv8qVIMWvZEFy9w8ZZpW9h9OB32l1rGtj7g==}
     dev: true
 
-  /next-sanity@5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.27)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.5-pink-lizard.27)(styled-components@5.3.11):
+  /next-sanity@5.4.6(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.35)(@sanity/ui@1.8.2)(next@13.4.19)(react@18.2.0)(sanity@3.16.5-pink-lizard.35)(styled-components@5.3.11):
     resolution: {integrity: sha512-VgbLxYfgzLETNXKuvShhtaYKlz7DDb5QlFvvjf0eF82lIevI1c0jGHgPRhOTRuv0csvy9FVFCyMlxoc+BkAVmQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
       '@sanity/client': ^6.4.9
       '@sanity/icons': ^2.0.0
-      '@sanity/types': 3.16.5-pink-lizard.27+d9fa25b867
+      '@sanity/types': 3.16.5-pink-lizard.35
       '@sanity/ui': ^1.0.0
       next: ^13.0.0
       react: ^18.0.0
-      sanity: 3.16.5-pink-lizard.27+d9fa25b867
+      sanity: 3.16.5-pink-lizard.35
       styled-components: ^5.2.0 || ^6.0.0
     dependencies:
       '@sanity/client': 6.4.11
       '@sanity/icons': 2.4.1(react@18.2.0)
       '@sanity/preview-kit': 3.1.6(@sanity/client@6.4.11)(react@18.2.0)
-      '@sanity/types': 3.16.5-pink-lizard.27
+      '@sanity/types': 3.16.5-pink-lizard.35
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       '@sanity/webhook': 3.0.1
-      groq: 3.16.5-pink-lizard.27
+      groq: 3.16.5-pink-lizard.35
       next: 13.4.19(@babel/core@7.22.15)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      sanity: 3.16.5-pink-lizard.27(@types/node@20.6.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+      sanity: 3.16.5-pink-lizard.35(@types/node@20.6.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       styled-components: 5.3.11(@babel/core@7.22.15)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - supports-color
@@ -13814,8 +13842,8 @@ packages:
       '@sanity/diff-match-patch': 3.1.1
     dev: false
 
-  /sanity@3.16.5-pink-lizard.27(@types/node@20.6.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11):
-    resolution: {integrity: sha512-TN9HueDNgFuSYb9ohEE8aTpayBnnE3ZbAJ2A1KyZzGT5CF7YcYuaqevRv7HU5CqHxFCGZIihrYa52Qvuu8iosw==}
+  /sanity@3.16.5-pink-lizard.35(@types/node@20.6.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11):
+    resolution: {integrity: sha512-YudjmaT1KUBfCZKUFmq6uP0ZDSbYL54+7Qbb+r2mDV3KZx0R9Aro0021VK5llGV/eOa7WuEKkxQHDy85ovCd9g==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     peerDependencies:
@@ -13831,25 +13859,25 @@ packages:
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
-      '@sanity/block-tools': 3.16.5-pink-lizard.27
-      '@sanity/cli': 3.16.5-pink-lizard.27
+      '@sanity/block-tools': 3.16.5-pink-lizard.35
+      '@sanity/cli': 3.16.5-pink-lizard.35
       '@sanity/client': 6.4.11
       '@sanity/color': 2.2.5
-      '@sanity/diff': 3.16.5-pink-lizard.27
+      '@sanity/diff': 3.16.5-pink-lizard.35
       '@sanity/diff-match-patch': 3.1.1
       '@sanity/eventsource': 5.0.0
-      '@sanity/export': 3.16.5-pink-lizard.27
+      '@sanity/export': 3.16.5-pink-lizard.35
       '@sanity/generate-help-url': 3.0.0
       '@sanity/icons': 2.4.1(react@18.2.0)
       '@sanity/image-url': 1.0.2
-      '@sanity/import': 3.16.5-pink-lizard.27
+      '@sanity/import': 3.16.5-pink-lizard.35
       '@sanity/logos': 2.1.2(@sanity/color@2.2.5)(react@18.2.0)
-      '@sanity/mutator': 3.16.5-pink-lizard.27
-      '@sanity/portable-text-editor': 3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
-      '@sanity/schema': 3.16.5-pink-lizard.27
-      '@sanity/types': 3.16.5-pink-lizard.27
+      '@sanity/mutator': 3.16.5-pink-lizard.35
+      '@sanity/portable-text-editor': 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
+      '@sanity/schema': 3.16.5-pink-lizard.35
+      '@sanity/types': 3.16.5-pink-lizard.35
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
-      '@sanity/util': 3.16.5-pink-lizard.27
+      '@sanity/util': 3.16.5-pink-lizard.35
       '@sanity/uuid': 3.0.2
       '@tanstack/react-virtual': 3.0.0-beta.54(react@18.2.0)
       '@types/is-hotkey': 0.1.7
@@ -13942,8 +13970,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /sanity@3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11):
-    resolution: {integrity: sha512-TN9HueDNgFuSYb9ohEE8aTpayBnnE3ZbAJ2A1KyZzGT5CF7YcYuaqevRv7HU5CqHxFCGZIihrYa52Qvuu8iosw==}
+  /sanity@3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11):
+    resolution: {integrity: sha512-YudjmaT1KUBfCZKUFmq6uP0ZDSbYL54+7Qbb+r2mDV3KZx0R9Aro0021VK5llGV/eOa7WuEKkxQHDy85ovCd9g==}
     engines: {node: '>=14.18.0'}
     hasBin: true
     peerDependencies:
@@ -13959,25 +13987,25 @@ packages:
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
-      '@sanity/block-tools': 3.16.5-pink-lizard.27
-      '@sanity/cli': 3.16.5-pink-lizard.27
+      '@sanity/block-tools': 3.16.5-pink-lizard.35
+      '@sanity/cli': 3.16.5-pink-lizard.35
       '@sanity/client': 6.4.11
       '@sanity/color': 2.2.5
-      '@sanity/diff': 3.16.5-pink-lizard.27
+      '@sanity/diff': 3.16.5-pink-lizard.35
       '@sanity/diff-match-patch': 3.1.1
       '@sanity/eventsource': 5.0.0
-      '@sanity/export': 3.16.5-pink-lizard.27
+      '@sanity/export': 3.16.5-pink-lizard.35
       '@sanity/generate-help-url': 3.0.0
       '@sanity/icons': 2.4.1(react@18.2.0)
       '@sanity/image-url': 1.0.2
-      '@sanity/import': 3.16.5-pink-lizard.27
+      '@sanity/import': 3.16.5-pink-lizard.35
       '@sanity/logos': 2.1.2(@sanity/color@2.2.5)(react@18.2.0)
-      '@sanity/mutator': 3.16.5-pink-lizard.27
-      '@sanity/portable-text-editor': 3.16.5-pink-lizard.27(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
-      '@sanity/schema': 3.16.5-pink-lizard.27
-      '@sanity/types': 3.16.5-pink-lizard.27
+      '@sanity/mutator': 3.16.5-pink-lizard.35
+      '@sanity/portable-text-editor': 3.16.5-pink-lizard.35(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
+      '@sanity/schema': 3.16.5-pink-lizard.35
+      '@sanity/types': 3.16.5-pink-lizard.35
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
-      '@sanity/util': 3.16.5-pink-lizard.27
+      '@sanity/util': 3.16.5-pink-lizard.35
       '@sanity/uuid': 3.0.2
       '@tanstack/react-virtual': 3.0.0-beta.54(react@18.2.0)
       '@types/is-hotkey': 0.1.7
