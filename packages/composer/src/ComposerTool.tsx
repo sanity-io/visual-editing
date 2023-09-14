@@ -3,6 +3,7 @@ import { ReactElement, useEffect, useRef, useState } from 'react'
 import { isRecord, Tool } from 'sanity'
 import styled from 'styled-components'
 
+import { DocumentPane } from './editor/DocumentPane'
 import { ComposerPluginOptions } from './types'
 
 const IFrame = styled.iframe`
@@ -50,6 +51,16 @@ export default function ComposerTool(props: {
         <Code language="json" size={1}>
           {JSON.stringify(log, null, 2)}
         </Code>
+      </Card>
+      <Card borderLeft flex={1} overflow="auto">
+        <DocumentPane
+          documentId="siteSettings"
+          documentType="siteSettings"
+          onFocusPath={(path) => {
+            // eslint-disable-next-line no-console
+            console.log('focus', path)
+          }}
+        />
       </Card>
     </Flex>
   )
