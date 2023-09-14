@@ -80,7 +80,9 @@ export type OverlayMsgElementEdit = OverlayMsgElement<'edit'> & {
 }
 
 /** @public */
-export type OverlayMsgElementMouseEnter = OverlayMsgElement<'mouseenter'>
+export type OverlayMsgElementMouseEnter = OverlayMsgElement<'mouseenter'> & {
+  rect: OverlayRect
+}
 
 /** @public */
 export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>

@@ -27,7 +27,7 @@ export const elementsReducer = (
   } else if (message.type === 'element/mouseenter') {
     return elements.map((e) => {
       if (e.id === message.id) {
-        return { ...e, hovered: true }
+        return { ...e, rect: message.rect, hovered: true }
       }
       return { ...e, hovered: false }
     })

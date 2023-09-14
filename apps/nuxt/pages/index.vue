@@ -1,7 +1,10 @@
 <template>
   <main
     class="flex flex-col items-center justify-between p-8 lg:p-24"
-    :class="expandedDocument ? 'min-h-[200vh]' : 'min-h-screen'"
+    :class="[
+      expandedDocument ? 'min-h-[200vh]' : 'min-h-screen',
+      { 'transition-all duration-500': animateDocument },
+    ]"
   >
     <div
       class="flex w-full flex-col items-center justify-start gap-4 font-mono text-sm lg:max-w-5xl lg:flex-row"
@@ -22,6 +25,13 @@
         @click.prevent="expandedDocument = !expandedDocument"
       >
         {{ expandedDocument ? 'Contract' : 'Expand' }} Document
+      </button>
+      <button
+        class="button"
+        type="button"
+        @click.prevent="animateDocument = !animateDocument"
+      >
+        {{ animateDocument ? 'Disable' : 'Enable' }} Animation
       </button>
     </div>
 
@@ -137,6 +147,7 @@ import { vercelStegaCombine } from '@vercel/stega'
 const enabled = ref(true)
 const elementAdded = ref(false)
 const expandedDocument = ref(false)
+const animateDocument = ref(false)
 
 useHead({
   bodyAttrs: {

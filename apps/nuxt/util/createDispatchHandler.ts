@@ -23,7 +23,7 @@ export const createDispatchHandler =
     } else if (message.type === 'element/mouseenter') {
       elements.value = elements.value.map((e) => {
         if (e.id === message.id) {
-          return { ...e, hovered: true }
+          return { ...e, rect: message.rect, hovered: true }
         }
         return { ...e, hovered: false }
       })

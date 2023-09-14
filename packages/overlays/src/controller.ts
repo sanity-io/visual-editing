@@ -73,11 +73,10 @@ export function createOverlayController({
     const { element, measureElement } = elements
     addEventHandlers(element, handlers)
     ro.observe(measureElement)
-    const rect = getRect(element)
     dispatch({
       type: 'element/activate',
       id,
-      rect,
+      rect: getRect(element),
       sanity,
     })
   }
@@ -137,6 +136,7 @@ export function createOverlayController({
         dispatch({
           type: 'element/mouseenter',
           id,
+          rect: getRect(element),
         })
       },
       mouseleave(e) {
@@ -155,6 +155,7 @@ export function createOverlayController({
               dispatch({
                 type: 'element/mouseenter',
                 id: overlayElement.id,
+                rect: getRect(hoveredElement),
               })
             }
           }
@@ -196,11 +197,10 @@ export function createOverlayController({
     io.observe(element)
     ro.observe(measureElement)
 
-    const rect = getRect(element)
     dispatch({
       type: 'element/register',
       id,
-      rect,
+      rect: getRect(element),
       sanity,
     })
   }
@@ -274,12 +274,10 @@ export function createOverlayController({
   function updateRect(el: HTMLElement) {
     const overlayElement = elementsMap.get(el)
     if (overlayElement) {
-      const rect = getRect(el)
-
       dispatch({
         type: 'element/updateRect',
         id: overlayElement.id,
-        rect,
+        rect: getRect(el),
       })
     }
   }
