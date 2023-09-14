@@ -24,6 +24,7 @@ export interface SanityNode {
 export interface SanityNodeLegacy {
   origin: string
   href: string
+  data?: string
 }
 
 /**
