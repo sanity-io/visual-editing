@@ -2,8 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import VisualEditing from './VisualEditing'
-import PreviewProvider from './PreviewProvider'
-import { token } from './sanity.fetch'
+import { SanityLoaderProvider } from './sanity.loader'
+import { token } from './sanity.server'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <PreviewProvider token={token}>{children}</PreviewProvider>
+        <SanityLoaderProvider token={token}>{children}</SanityLoaderProvider>
       </body>
       <VisualEditing />
     </html>

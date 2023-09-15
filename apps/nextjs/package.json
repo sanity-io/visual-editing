@@ -9,8 +9,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@nanostores/logger": "^0.2.3",
+    "@nanostores/react": "^0.7.1",
     "@next/bundle-analyzer": "13.4.19",
     "@sanity/composer": "workspace:*",
+    "@sanity/groq-store": "workspace:*",
     "@sanity/overlays": "workspace:*",
     "@sanity/preview-kit": "workspace:*",
     "@types/node": "20.6.0",
@@ -21,6 +24,7 @@
     "autoprefixer": "10.4.15",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
+    "nanostores": "0.9.3",
     "next": "13.4.19",
     "next-sanity": "^5.4.6",
     "postcss": "8.4.29",
