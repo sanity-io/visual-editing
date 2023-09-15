@@ -5,16 +5,12 @@
 export interface SanityNode {
   projectId: string
   dataset: string
-  document: {
-    id: string
-    type?: string
-    path: string
-  }
-  studio: {
-    baseUrl: string
-    workspace?: string
-    tool?: string
-  }
+  id: string
+  path: string
+  type?: string
+  baseUrl: string
+  tool?: string
+  workspace?: string
 }
 
 /**
@@ -26,20 +22,6 @@ export interface SanityNodeLegacy {
   href: string
   data?: string
 }
-
-/**
- * Wrappers to differentiate supported node types
- * @public
- */
-export type OverlayElementSanityData =
-  | {
-      type: 'sanity'
-      data: SanityNode
-    }
-  | {
-      type: 'sanity-edit-info'
-      data: SanityNodeLegacy
-    }
 
 /**
  * Element positioning and size, similiar to DOMRect
@@ -69,7 +51,7 @@ export interface OverlayMsgElement<T extends string>
 
 /** @public */
 export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
-  sanity: OverlayElementSanityData
+  sanity: SanityNode | SanityNodeLegacy
   rect: OverlayRect
 }
 
@@ -77,7 +59,7 @@ export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
 export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
 /** @public */
 export type OverlayMsgElementEdit = OverlayMsgElement<'edit'> & {
-  sanity: OverlayElementSanityData
+  sanity: SanityNode | SanityNodeLegacy
 }
 
 /** @public */
@@ -90,7 +72,7 @@ export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>
 
 /** @public */
 export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
-  sanity: OverlayElementSanityData
+  sanity: SanityNode | SanityNodeLegacy
   rect: OverlayRect
 }
 
@@ -147,7 +129,7 @@ export interface OverlayController {
 export interface ElementState {
   id: string
   rect: OverlayRect
-  sanity: OverlayElementSanityData
+  sanity: SanityNode | SanityNodeLegacy
   hovered: boolean
 }
 
@@ -165,7 +147,7 @@ export interface _SanityNodeElements {
  */
 export interface _ResolvedElement {
   elements: _SanityNodeElements
-  sanity: OverlayElementSanityData
+  sanity: SanityNode | SanityNodeLegacy
 }
 
 /**
@@ -176,7 +158,7 @@ export interface _OverlayElement {
   id: string
   elements: _SanityNodeElements
   handlers: _EventHandlers
-  sanity: OverlayElementSanityData
+  sanity: SanityNode | SanityNodeLegacy
 }
 
 /**
