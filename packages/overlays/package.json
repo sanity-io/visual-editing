@@ -40,7 +40,7 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint --max-warnings 0 .",
     "prepublishOnly": "npm run build",
-    "test": "tsc --noEmit",
+    "test": "vitest",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
@@ -133,7 +133,8 @@
     "react-is": "^18.2.0",
     "rimraf": "^5.0.1",
     "styled-components": "^5.3.11",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.4"
   },
   "peerDependencies": {
     "react": "^18",
