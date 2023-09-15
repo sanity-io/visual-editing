@@ -23,12 +23,14 @@
       "@/*": ["./src/*"],
       "@sanity/composer": ["../../packages/composer/src"],
       "@sanity/overlays": ["../../packages/overlays/src"],
+      "@sanity/preview-kit": ["../../packages/preview-kit/src"],
       "apps-common": ["../apps-common/src"]
     }
   },
   "include": [
     "../../packages/composer/src",
     "../../packages/overlays/src",
+    "../../packages/preview-kit/src",
     "../apps-common/src",
     "next-env.d.ts",
     "**/*.ts",

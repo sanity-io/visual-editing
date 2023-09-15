@@ -30,7 +30,7 @@ export default function ComposerTool(props: {
       if (event.origin !== location.origin) return
 
       if (isRecord(event.data) && event.data.sanity === true) {
-        setLog((l) => l.concat(event.data))
+        setLog((l) => [{ logId: l.length, ...event.data }, ...l])
       }
     }
 
