@@ -11,6 +11,7 @@
         :key="element.id"
         :rect="element.rect"
         :hovered="element.hovered"
+        :sanity="element.sanity"
       />
     </div>
   </Teleport>

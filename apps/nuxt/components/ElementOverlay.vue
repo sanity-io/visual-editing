@@ -9,18 +9,28 @@
     }"
   >
     <div class="actions">
-      <a href="" @click.prevent>Open in Studio</a>
+      <a href="" @click.prevent="handleClick">Open in Studio</a>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { OverlayRect } from '@sanity/overlays'
+import { SanityNode, SanityNodeLegacy, OverlayRect } from '@sanity/overlays'
 
-defineProps<{
+const props = defineProps<{
   hovered: boolean
   rect: OverlayRect
+  sanity: SanityNode | SanityNodeLegacy
 }>()
+
+const handleClick = () => {
+  const payload = {
+    sanity: true,
+    type: 'overlays/focus',
+    data: toRaw(props.sanity),
+  }
+  parent.postMessage(payload, location.origin)
+}
 </script>
 
 <style scoped>

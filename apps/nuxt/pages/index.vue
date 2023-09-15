@@ -38,7 +38,7 @@
     <ClientOnly>
       <VisualEditing :enabled="enabled">
         <div
-          class="before:bg-gradient-radial after:bg-gradient-conic relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]"
+          class="before:bg-gradient-radial after:bg-gradient-conic relative z-[-1] my-12 flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]"
         >
           <a href="https://nuxt.com" target="_blank">
             <svg
@@ -60,42 +60,18 @@
         >
           <div
             class="block"
-            :data-sanity-edit-info="
-              JSON.stringify({
-                origin: 'sanity.io',
-                href: '/studio/desk',
-              })
-            "
+            :data-sanity-edit-info="JSON.stringify(sanityEditData)"
           >
             <h2>JSON data attribute</h2>
             <p>data-sanity-edit-info</p>
           </div>
 
-          <div
-            class="block"
-            :data-sanity="
-              JSON.stringify({
-                dataset: 'abc',
-                projectId: 'def',
-                document: {
-                  id: 'sanity.io',
-                  path: 'sanity.io',
-                },
-                studio: {
-                  baseUrl: 'https://next.sanity.build/studio/desk',
-                },
-              })
-            "
-          >
+          <div class="block" :data-sanity="JSON.stringify(sanityData)">
             <h2>JSON data attribute</h2>
             <p>data-sanity</p>
           </div>
 
-          <div
-            class="block"
-            data-sanity="id=<document.id>;type=<document.type>;path=<document.path>;project-id=<projectId>;dataset=<dataset>;tool=desk;workspace=docs;
-            "
-          >
+          <div class="block" :data-sanity="encodedSanityData">
             <h2>String data attribute</h2>
             <p>data-sanity</p>
           </div>
@@ -106,34 +82,46 @@
               <span>
                 <span>
                   {{
-                    vercelStegaCombine('Nested inline elements', {
-                      origin: 'sanity.io',
-                      href: 'https://next.sanity.build/studio/desk',
-                    })
+                    vercelStegaCombine(
+                      'Nested stega in inline element',
+                      sanityEditData,
+                    )
                   }}
                 </span>
               </span>
             </p>
           </div>
 
+          <div class="block" data-sanity-edit-target>
+            <h2>Target</h2>
+            <p>
+              {{ vercelStegaCombine('First stega', sanityEditData) }}
+            </p>
+            <p>
+              {{ vercelStegaCombine('Second stega', sanityEditData) }}
+            </p>
+          </div>
+
+          <div class="block" data-sanity-edit-target>
+            <h2>Target (Info)</h2>
+            <div class="m-0 text-sm opacity-50">
+              <div :data-sanity="JSON.stringify(sanityData)">
+                First data-sanity
+              </div>
+              <div :data-sanity="JSON.stringify(sanityDataDiff)">
+                Second data-sanity
+              </div>
+            </div>
+          </div>
+
           <div
             v-if="elementAdded"
             class="block"
-            :data-sanity-edit-info="
-              JSON.stringify({
-                origin: 'sanity.io',
-                href: 'https://next.sanity.build/studio/desk',
-              })
-            "
+            :data-sanity-edit-info="JSON.stringify(sanityEditData)"
           >
             <h2>Dynamic element</h2>
             <p>
-              {{
-                vercelStegaCombine('With nested editables', {
-                  origin: 'sanity.io',
-                  href: '/studio/desk',
-                })
-              }}
+              {{ vercelStegaCombine('Nested stega', sanityEditData) }}
             </p>
           </div>
         </div>
@@ -144,6 +132,7 @@
 
 <script lang="ts" setup>
 import { vercelStegaCombine } from '@vercel/stega'
+import { encodeSanityNodeData } from '@sanity/overlays'
 const enabled = ref(true)
 const elementAdded = ref(false)
 const expandedDocument = ref(false)
@@ -154,6 +143,33 @@ useHead({
     class: 'nextStyle',
   },
 })
+
+const sanityEditData = {
+  origin: 'sanity.io',
+  href: 'https://next.sanity.build/studio/desk',
+}
+
+const sanityData = {
+  projectId: 'projectId',
+  dataset: 'dataset',
+  id: 'documentId',
+  path: 'sections[_key=="abcdef"].object.primary.common',
+  baseUrl: 'https://some.sanity.studio',
+  workspace: 'docs',
+  tool: 'desk',
+}
+
+const sanityDataDiff = {
+  projectId: 'projectId',
+  dataset: 'dataset',
+  id: 'documentId',
+  path: 'sections[_key=="abcdef"].object.secondary.common.ext',
+  baseUrl: 'https://some.sanity.studio',
+  tool: 'desk',
+  workspace: 'docs',
+}
+
+const encodedSanityData = encodeSanityNodeData(sanityData)
 </script>
 
 <style lang="postcss" scoped>

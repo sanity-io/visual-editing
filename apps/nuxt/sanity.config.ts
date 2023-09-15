@@ -8,7 +8,7 @@ export default function getSanityConfig(config: Config) {
     plugins: [
       composerTool({
         name: 'composer',
-        previewUrl: '/previews?',
+        previewUrl: '/',
       }),
       deskTool(),
     ],
