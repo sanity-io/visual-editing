@@ -324,8 +324,6 @@ export function createOverlayController({
 
   return {
     destroy,
-    toggle() {
-      // @todo toggle
-    },
+    toggle() {},
   }
 }
