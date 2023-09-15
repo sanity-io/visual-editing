@@ -1,21 +1,44 @@
 <template>
-  <main class="flex min-h-screen flex-col items-center justify-between p-24">
+  <main
+    class="flex flex-col items-center justify-between p-8 lg:p-24"
+    :class="[
+      expandedDocument ? 'min-h-[200vh]' : 'min-h-screen',
+      { 'transition-all duration-500': animateDocument },
+    ]"
+  >
     <div
-      class="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex"
+      class="flex w-full flex-col items-center justify-start gap-4 font-mono text-sm lg:max-w-5xl lg:flex-row"
     >
-      <p
-        class="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
+      <button class="button" type="button" @click.prevent="enabled = !enabled">
+        {{ enabled ? 'Disable' : 'Enable' }} Visual Editing
+      </button>
+      <button
+        class="button"
+        type="button"
+        @click.prevent="elementAdded = !elementAdded"
       >
-        <input type="checkbox" v-model="enabled" />&nbsp; Visual Editing ({{
-          enabled ? 'Enabled' : 'Disabled'
-        }})
-      </p>
+        {{ elementAdded ? 'Remove' : 'Add' }} Dynamic Element
+      </button>
+      <button
+        class="button"
+        type="button"
+        @click.prevent="expandedDocument = !expandedDocument"
+      >
+        {{ expandedDocument ? 'Contract' : 'Expand' }} Document
+      </button>
+      <button
+        class="button"
+        type="button"
+        @click.prevent="animateDocument = !animateDocument"
+      >
+        {{ animateDocument ? 'Disable' : 'Enable' }} Animation
+      </button>
     </div>
 
     <ClientOnly>
       <VisualEditing :enabled="enabled">
         <div
-          class="before:bg-gradient-radial after:bg-gradient-conic relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]"
+          class="before:bg-gradient-radial after:bg-gradient-conic relative z-[-1] my-12 flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]"
         >
           <a href="https://nuxt.com" target="_blank">
             <svg
@@ -33,48 +56,74 @@
           </a>
         </div>
         <div
-          class="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left"
+          class="mb-32 grid w-full text-center lg:mb-0 lg:max-w-5xl lg:grid-cols-3 lg:text-left"
         >
-          <a
-            class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            :data-sanity-edit-info="
-              JSON.stringify({
-                origin: 'sanity.io',
-                href: '/studio/desk',
-              })
-            "
+          <div
+            class="block"
+            :data-sanity-edit-info="JSON.stringify(sanityEditData)"
           >
-            <h2 class="mb-3 text-2xl font-semibold">
-              data-sanity-edit-info
-              <span
-                class="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
-                >{{ ' ' }}&rarr;
-              </span>
-            </h2>
-            <p class="m-0 max-w-[30ch] text-sm opacity-50">
-              Test a hard-coded link.
-            </p>
-          </a>
+            <h2>JSON data attribute</h2>
+            <p>data-sanity-edit-info</p>
+          </div>
 
-          <a
-            class="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
-            <h2 class="mb-3 text-2xl font-semibold">
-              Manual stega
-              <span
-                class="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
-                >{{ ' ' }}&rarr;
+          <div class="block" :data-sanity="JSON.stringify(sanityData)">
+            <h2>JSON data attribute</h2>
+            <p>data-sanity</p>
+          </div>
+
+          <div class="block" :data-sanity="encodedSanityData">
+            <h2>String data attribute</h2>
+            <p>data-sanity</p>
+          </div>
+
+          <div class="block">
+            <h2>Stega string</h2>
+            <p>
+              <span>
+                <span>
+                  {{
+                    vercelStegaCombine(
+                      'Nested stega in inline element',
+                      sanityEditData,
+                    )
+                  }}
+                </span>
               </span>
-            </h2>
-            <p class="m-0 max-w-[30ch] text-sm opacity-50">
-              {{
-                vercelStegaCombine('Calling vercelStegaCombine directly', {
-                  origin: 'sanity.io',
-                  href: '/studio/desk',
-                })
-              }}
             </p>
-          </a>
+          </div>
+
+          <div class="block" data-sanity-edit-target>
+            <h2>Target</h2>
+            <p>
+              {{ vercelStegaCombine('First stega', sanityEditData) }}
+            </p>
+            <p>
+              {{ vercelStegaCombine('Second stega', sanityEditData) }}
+            </p>
+          </div>
+
+          <div class="block" data-sanity-edit-target>
+            <h2>Target (Info)</h2>
+            <div class="m-0 text-sm opacity-50">
+              <div :data-sanity="JSON.stringify(sanityData)">
+                First data-sanity
+              </div>
+              <div :data-sanity="JSON.stringify(sanityDataDiff)">
+                Second data-sanity
+              </div>
+            </div>
+          </div>
+
+          <div
+            v-if="elementAdded"
+            class="block"
+            :data-sanity-edit-info="JSON.stringify(sanityEditData)"
+          >
+            <h2>Dynamic element</h2>
+            <p>
+              {{ vercelStegaCombine('Nested stega', sanityEditData) }}
+            </p>
+          </div>
         </div>
       </VisualEditing>
     </ClientOnly>
@@ -83,11 +132,58 @@
 
 <script lang="ts" setup>
 import { vercelStegaCombine } from '@vercel/stega'
+import { encodeSanityNodeData } from '@sanity/overlays'
 const enabled = ref(true)
+const elementAdded = ref(false)
+const expandedDocument = ref(false)
+const animateDocument = ref(false)
 
 useHead({
   bodyAttrs: {
     class: 'nextStyle',
   },
 })
+
+const sanityEditData = {
+  origin: 'sanity.io',
+  href: 'https://next.sanity.build/studio/desk',
+}
+
+const sanityData = {
+  projectId: 'projectId',
+  dataset: 'dataset',
+  id: 'documentId',
+  path: 'sections[_key=="abcdef"].object.primary.common',
+  baseUrl: 'https://some.sanity.studio',
+  workspace: 'docs',
+  tool: 'desk',
+}
+
+const sanityDataDiff = {
+  projectId: 'projectId',
+  dataset: 'dataset',
+  id: 'documentId',
+  path: 'sections[_key=="abcdef"].object.secondary.common.ext',
+  baseUrl: 'https://some.sanity.studio',
+  tool: 'desk',
+  workspace: 'docs',
+}
+
+const encodedSanityData = encodeSanityNodeData(sanityData)
 </script>
+
+<style lang="postcss" scoped>
+.button {
+  @apply w-full rounded-xl border border-gray-300 bg-gray-200 bg-gradient-to-b from-zinc-200 p-4 text-center backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:w-auto;
+}
+.block {
+  @apply rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30;
+}
+
+.block h2 {
+  @apply mb-3 text-2xl font-semibold;
+}
+.block p {
+  @apply m-0 text-sm opacity-50;
+}
+</style>

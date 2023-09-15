@@ -1,5 +1,10 @@
-import { Root } from 'react-dom/client'
+import type { Root } from 'react-dom/client'
 
+import { OVERLAY_ID } from '../constants'
+
+/**
+ * @public
+ */
 export type DisableVisualEditing = () => void
 
 let node: HTMLElement | null = null
@@ -28,21 +33,20 @@ export function enableVisualEditing(): DisableVisualEditing {
   let cancelled = false
 
   // Lazy load everything needed to render the app
-  Promise.all([
-    import('react-dom/client'),
-    import('./components/VisualEditingOverlay'),
-  ]).then(([reactClient, { VisualEditingOverlay }]) => {
-    if (cancelled) return
+  Promise.all([import('react-dom/client'), import('./VisualEditing')]).then(
+    ([reactClient, { VisualEditing }]) => {
+      if (cancelled) return
 
-    node = document.createElement('div')
-    node.id = 'sanity-visual-editing'
-    document.body.appendChild(node)
+      node = document.createElement('div')
+      node.id = OVERLAY_ID
+      document.body.appendChild(node)
 
-    const { createRoot } =
-      'default' in reactClient ? reactClient.default : reactClient
-    root = createRoot(node)
-    root.render(<VisualEditingOverlay />)
-  })
+      const { createRoot } =
+        'default' in reactClient ? reactClient.default : reactClient
+      root = createRoot(node)
+      root.render(<VisualEditing />)
+    },
+  )
 
   return () => {
     cancelled = true
