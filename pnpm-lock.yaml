@@ -147,6 +147,9 @@ importers:
       autoprefixer:
         specifier: 10.4.15
         version: 10.4.15(postcss@8.4.29)
+      channels:
+        specifier: workspace:*
+        version: link:../../packages/channels
       eslint:
         specifier: 8.49.0
         version: 8.49.0
@@ -201,6 +204,9 @@ importers:
       apps-common:
         specifier: workspace:*
         version: link:../common
+      channels:
+        specifier: workspace:*
+        version: link:../../packages/channels
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
