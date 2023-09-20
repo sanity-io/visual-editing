@@ -10,6 +10,7 @@ const nextConfig = {
     '@sanity/composer',
     '@sanity/overlays',
     '@sanity/preview-kit',
+    'channels',
     'apps-common',
   ],
 

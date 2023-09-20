@@ -147,6 +147,9 @@ importers:
       autoprefixer:
         specifier: 10.4.15
         version: 10.4.15(postcss@8.4.29)
+      channels:
+        specifier: workspace:*
+        version: link:../../packages/channels
       eslint:
         specifier: 8.49.0
         version: 8.49.0
@@ -201,6 +204,9 @@ importers:
       apps-common:
         specifier: workspace:*
         version: link:../common
+      channels:
+        specifier: workspace:*
+        version: link:../../packages/channels
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -265,6 +271,43 @@ importers:
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@18.17.15)
+
+  packages/channels:
+    dependencies:
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
+    devDependencies:
+      '@sanity/pkg-utils':
+        specifier: ^2.4.8
+        version: 2.4.8(@types/node@18.17.15)(typescript@5.2.2)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.7.0
+        version: 6.7.0(@typescript-eslint/parser@6.7.0)(eslint@8.49.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: ^6.7.0
+        version: 6.7.0(eslint@8.49.0)(typescript@5.2.2)
+      eslint:
+        specifier: ^8.49.0
+        version: 8.49.0
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.49.0)
+      eslint-plugin-prettier:
+        specifier: ^5.0.0
+        version: 5.0.0(eslint-config-prettier@9.0.0)(eslint@8.49.0)(prettier@3.0.3)
+      eslint-plugin-simple-import-sort:
+        specifier: ^10.0.0
+        version: 10.0.0(eslint@8.49.0)
+      ls-engines:
+        specifier: ^0.9.0
+        version: 0.9.0
+      rimraf:
+        specifier: ^5.0.1
+        version: 5.0.1
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
 
   packages/composer:
     dependencies:
@@ -4091,7 +4134,7 @@ packages:
       rxjs: 7.8.1
       treeify: 1.1.0
       typescript: 5.2.2
-      uuid: 9.0.0
+      uuid: 9.0.1
       zod: 3.22.2
     transitivePeerDependencies:
       - '@types/babel__core'
@@ -16044,10 +16087,9 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
 
-  /uuid@9.0.0:
-    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
-    dev: true
 
   /v8-to-istanbul@9.1.0:
     resolution: {integrity: sha512-6z3GW9x8G1gd+JIIgQQQxXuiJtCXeAjp6RaPEPLv62mH3iPHPxV6W3robxtCzNErRo6ZwTmzWhsbNvjyEBKzKA==}
