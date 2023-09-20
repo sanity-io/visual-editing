@@ -2,10 +2,10 @@ import { v4 as uuid } from 'uuid'
 
 import { isHandshake, isInternalMessage, isObject } from './helper'
 import type {
+  BufferMessage,
   ChannelOptions,
   ChannelReturns,
   Connection,
-  EventMsg,
   Msg,
   MsgBody,
   MsgType,
@@ -23,10 +23,18 @@ export function createChannel<T extends MsgBody>(
   const clientId = config.id || uuid()
   const inFrame = window.self !== window.top
   const activeConnections: Connection[] = []
-  const bus: EventMsg[] = []
+  const messageBuffer: BufferMessage<T>[] = []
 
-  function addToBus(msg: EventMsg) {
-    bus.push(msg)
+  function addToBuffer(msg: BufferMessage<T>) {
+    messageBuffer.push(msg)
+  }
+
+  function flush() {
+    const toFlush = [...messageBuffer]
+    messageBuffer.splice(0, messageBuffer.length)
+    toFlush.forEach(({ connection, type, data }) => {
+      post(connection, type, data)
+    })
   }
 
   function connectionIsActive(connection: Connection) {
@@ -45,6 +53,7 @@ export function createChannel<T extends MsgBody>(
     if (connected && activeIndex < 0) {
       activeConnections.push(connection)
       config.onConnect?.(connection)
+      flush()
     } else if (!connected && activeIndex) {
       activeConnections.splice(activeIndex, 1)
       config.onDisconnect?.(connection)
@@ -86,7 +95,11 @@ export function createChannel<T extends MsgBody>(
       })
     }
     // If not connected, add to bus
-    addToBus(msg as EventMsg)
+    addToBuffer({
+      connection,
+      type,
+      data,
+    })
   }
 
   function postMany(connections: Connection[], type: MsgType, data?: T) {
@@ -158,7 +171,7 @@ export function createChannel<T extends MsgBody>(
         }
       }
       window.addEventListener('message', transact, false)
-      postMany(activeConnections, type, data)
+      postMany(connections, type, data)
     })
   }
 

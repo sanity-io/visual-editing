@@ -50,6 +50,15 @@ export interface EventMsg extends InternalMsg {
 export type Msg = ProtocolMsg | EventMsg
 
 /**
+ * @internal
+ */
+export interface BufferMessage<T extends MsgBody> {
+  connection: Connection
+  type: MsgType
+  data?: T
+}
+
+/**
  * @public
  */
 export interface Connection {
