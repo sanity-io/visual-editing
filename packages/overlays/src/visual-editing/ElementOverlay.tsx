@@ -1,15 +1,19 @@
-import { Card, Flex, Text } from '@sanity/ui'
-import { memo, useMemo } from 'react'
+import { Box, Card, Flex, Text } from '@sanity/ui'
+import { memo, useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 
-import { OverlayRect } from '../types'
+import { OverlayRect, SanityNode, SanityNodeLegacy } from '../types'
+import { encodeSanityNodeData } from '../transformSanityNodeData'
+import { pathToUrlString } from '../pathToUrlString'
+import { stringToPath } from 'sanity'
 
 const Root = styled(Card)<{
   $hovered: boolean
+  $focused: boolean
 }>`
   background-color: transparent;
   border-radius: 3px;
-  opacity: ${({ $hovered }) => ($hovered ? 1 : 0)};
+  opacity: ${({ $focused, $hovered }) => ($hovered ? 1 : $focused ? 0.75 : 0)};
   outline-color: var(--card-focus-ring-color);
   outline-offset: 0px;
   outline-style: solid;
@@ -39,11 +43,45 @@ const ActionOpen = styled(Card)`
   }
 `
 
+function createIntentLink(node: SanityNode) {
+  const { projectId, dataset, id, path, baseUrl, tool, workspace } = node
+
+  const parts = [
+    ['project', projectId],
+    ['dataset', dataset],
+    ['id', id],
+    ['path', pathToUrlString(stringToPath(path))],
+    ['workspace', workspace],
+    ['tool', tool],
+  ]
+
+  const intent = parts
+    .filter(([, value]) => !!value)
+    .map((part) => part.join('='))
+    .join(';')
+
+  return `${baseUrl}/intent/focus/${intent}}`
+}
+
 export const ElementOverlay = memo(function ElementOverlay(props: {
+  focused: boolean
   hovered: boolean
   rect: OverlayRect
+  showActions: boolean
+  sanity: SanityNode | SanityNodeLegacy
 }) {
-  const { hovered, rect } = props
+  const { focused, hovered, rect, showActions, sanity } = props
+
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (focused) {
+      ref.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
+  }, [focused])
 
   const style = useMemo(
     () => ({
@@ -54,15 +92,21 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     [rect],
   )
 
+  const href = 'path' in sanity ? createIntentLink(sanity) : ''
+
   return (
-    <Root $hovered={hovered} style={style}>
-      <Actions $hovered={hovered} gap={1} paddingBottom={1}>
-        <ActionOpen padding={2}>
-          <Text size={1} weight="medium">
-            Open in Studio
-          </Text>
-        </ActionOpen>
-      </Actions>
+    <Root ref={ref} $focused={focused} $hovered={hovered} style={style}>
+      {showActions && hovered ? (
+        <Actions $hovered={hovered} gap={1} paddingBottom={1}>
+          <Box as="a" href={href}>
+            <ActionOpen padding={2}>
+              <Text size={1} weight="medium">
+                Open in Studio
+              </Text>
+            </ActionOpen>
+          </Box>
+        </Actions>
+      ) : null}
     </Root>
   )
 })
