@@ -3,29 +3,29 @@ import { v4 as uuid } from 'uuid'
 import { isHandshake, isInternalMessage, isObject } from './helper'
 import type {
   BufferMessage,
+  ChannelMsg,
   ChannelOptions,
   ChannelReturns,
   Connection,
   Msg,
-  MsgBody,
-  MsgType,
   ProtocolMsg,
+  ToArgs,
 } from './types'
 
 /**
  *
  * @public
  */
-export function createChannel<T extends MsgBody>(
+export function createChannel<T extends ChannelMsg>(
   config: ChannelOptions<T>,
 ): ChannelReturns<T> {
   const { connections, handle } = config
   const clientId = config.id || uuid()
   const inFrame = window.self !== window.top
   const activeConnections: Connection[] = []
-  const messageBuffer: BufferMessage<T>[] = []
+  const messageBuffer: BufferMessage[] = []
 
-  function addToBuffer(msg: BufferMessage<T>) {
+  function addToBuffer(msg: BufferMessage) {
     messageBuffer.push(msg)
   }
 
@@ -75,8 +75,12 @@ export function createChannel<T extends MsgBody>(
     return undefined
   }
 
-  function post(connection: Connection, type: MsgType, data?: T) {
-    const msg: Msg = {
+  function post<K extends T['type']>(
+    connection: Connection,
+    type: K,
+    data?: Extract<T, { type: K }>['data'],
+  ) {
+    const msg = {
       id: uuid(),
       type,
       from: clientId,
@@ -102,7 +106,11 @@ export function createChannel<T extends MsgBody>(
     })
   }
 
-  function postMany(connections: Connection[], type: MsgType, data?: T) {
+  function postMany<K extends T['type']>(
+    connections: Connection[],
+    type: K,
+    data?: Extract<T, { type: K }>['data'],
+  ) {
     return connections.forEach((connection) => {
       post(connection, type, data)
     })
@@ -135,7 +143,10 @@ export function createChannel<T extends MsgBody>(
     } else if (data.type === 'channel/response') {
       // Do nothing for now
     } else {
-      handle(data.type, data.data)
+      // @todo Ugly type casting
+      const args = [data.type, data.data] as ToArgs<T>
+      handle(...args)
+      // handle(data.type, data.data)
       post(connection, 'channel/response')
     }
   }
@@ -161,7 +172,7 @@ export function createChannel<T extends MsgBody>(
    * @param data The message body
    * @returns void
    */
-  function send(type: MsgType, data?: T) {
+  function send(type: T['type'], data?: T['data']) {
     return new Promise<void>((resolve) => {
       const transact = (e: MessageEvent<Msg>) => {
         const { data: eventData } = e
