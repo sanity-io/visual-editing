@@ -2,7 +2,7 @@
  * Data resolved from a Sanity node
  * @public
  */
-export interface SanityNode {
+export type SanityNode = {
   projectId: string
   dataset: string
   id: string
@@ -17,7 +17,7 @@ export interface SanityNode {
  * Data resolved from a (legacy) Sanity node
  * @public
  */
-export interface SanityNodeLegacy {
+export type SanityNodeLegacy = {
   origin: string
   href: string
   data?: string
@@ -56,9 +56,13 @@ export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
 }
 
 /** @public */
-export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
+export type OverlayMsgElementBlur = Msg<'overlay/blur'>
+
 /** @public */
-export type OverlayMsgElementEdit = OverlayMsgElement<'edit'> & {
+export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
+
+/** @public */
+export type OverlayMsgElementClick = OverlayMsgElement<'click'> & {
   sanity: SanityNode | SanityNodeLegacy
 }
 
@@ -90,8 +94,9 @@ export type OverlayMsgElementUpdateRect = OverlayMsgElement<'updateRect'> & {
  */
 export type OverlayMsg =
   | OverlayMsgElementActivate
+  | OverlayMsgElementBlur
+  | OverlayMsgElementClick
   | OverlayMsgElementDeactivate
-  | OverlayMsgElementEdit
   | OverlayMsgElementMouseEnter
   | OverlayMsgElementMouseLeave
   | OverlayMsgElementRegister
@@ -109,7 +114,7 @@ export type OverlayDispatchHandler = (message: OverlayMsg) => void
  * @public
  */
 export interface OverlayOptions {
-  dispatch: OverlayDispatchHandler
+  handler: OverlayDispatchHandler
   overlayElement: HTMLElement
 }
 
@@ -128,9 +133,11 @@ export interface OverlayController {
  */
 export interface ElementState {
   id: string
+  activated: boolean
+  focused: boolean
+  hovered: boolean
   rect: OverlayRect
   sanity: SanityNode | SanityNodeLegacy
-  hovered: boolean
 }
 
 /**
