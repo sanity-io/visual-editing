@@ -15,21 +15,19 @@
 </template>
 
 <script lang="ts" setup>
-import { SanityNode, SanityNodeLegacy, OverlayRect } from '@sanity/overlays'
+import { OverlayRect } from '@sanity/overlays'
+
+const emit = defineEmits<{
+  (e: 'open'): void
+}>()
 
 const props = defineProps<{
   hovered: boolean
   rect: OverlayRect
-  sanity: SanityNode | SanityNodeLegacy
 }>()
 
 const handleClick = () => {
-  const payload = {
-    sanity: true,
-    type: 'overlays/focus',
-    data: toRaw(props.sanity),
-  }
-  parent.postMessage(payload, location.origin)
+  emit('open')
 }
 </script>
 
