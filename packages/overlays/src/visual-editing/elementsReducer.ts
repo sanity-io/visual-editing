@@ -32,7 +32,7 @@ export const elementsReducer = (
   } else if (type === 'element/deactivate') {
     return elements.map((e) => {
       if (e.id === message.id) {
-        return { ...e, activated: false }
+        return { ...e, activated: false, hovered: false }
       }
       return e
     })

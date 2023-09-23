@@ -40,7 +40,7 @@ export function createOverlayController({
   //
   // When we want to know which element is currently hovered, we take the element at the top of the
   // stack. Since JavaScript does not have a Stack type, we use an array and take the last element.
-  const hoverStack: HTMLElement[] = []
+  let hoverStack: HTMLElement[] = []
   const getHoveredElement = () =>
     hoverStack[hoverStack.length - 1] as HTMLElement | undefined
 
@@ -89,6 +89,8 @@ export function createOverlayController({
     const { element, measureElement } = elements
     removeEventHandlers(element, handlers)
     ro.unobserve(measureElement)
+    // Scrolling from a hovered element will not trigger mouseleave event, so filter the stack
+    hoverStack = hoverStack.filter((el) => el !== element)
     handler({
       type: 'element/deactivate',
       id,
@@ -297,6 +299,7 @@ export function createOverlayController({
   const ro = new ResizeObserver(handleResize)
 
   function handleBlur() {
+    hoverStack = []
     handler({
       type: 'overlay/blur',
     })
@@ -314,7 +317,7 @@ export function createOverlayController({
     elementIdMap.clear()
     elementSet.clear()
 
-    hoverStack.splice(0, hoverStack.length)
+    hoverStack = []
   }
 
   function activate() {
