@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <VisualEditing>
-      <div class="flex flex-col justify-center p-8">
+      <div class="mx-auto flex max-w-lg flex-col justify-center p-16">
         <div
           class="rounded border p-4"
           :data-sanity="encodeSanityNodeData(sanityTitleData)"
