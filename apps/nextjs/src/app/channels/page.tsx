@@ -67,12 +67,10 @@ export default function ParentPage() {
     }
   }, [])
 
-  const sendMessage = async () => {
-    console.log('Send!')
-    const value = await channel?.send('parent/event', {
+  const sendMessage = () => {
+    channel?.send('parent/event', {
       foo: 'bar',
     })
-    console.log('Done!', value)
   }
 
   return (
