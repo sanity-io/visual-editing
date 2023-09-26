@@ -2,7 +2,7 @@ import { studioTheme, ThemeProvider } from '@sanity/ui'
 import { useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 
-import { OverlayRect, SanityNode, SanityNodeLegacy } from '../types'
+import { SanityNode, SanityNodeLegacy } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { elementsReducer } from './elementsReducer'
 import { useChannel } from './useChannel'
@@ -28,20 +28,6 @@ type OverlayMsg = {
 }
 
 type ChannelMsg = OverlayMsg | ComposerMsg
-
-function isInViewport(rect: OverlayRect) {
-  const { x, y, w: width, h: height } = rect
-  const top = y - window.scrollY
-  const left = x - window.scrollX
-  const bottom = top + height
-  const right = left + width
-  return (
-    top >= 0 &&
-    left >= 0 &&
-    bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    right <= (window.innerWidth || document.documentElement.clientWidth)
-  )
-}
 
 export function VisualEditing(): JSX.Element {
   const [elements, dispatch] = useReducer(elementsReducer, [])
