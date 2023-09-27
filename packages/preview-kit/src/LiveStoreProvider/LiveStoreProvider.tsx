@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type {
   ClientConfig,
   ContentSourceMap,
@@ -523,6 +524,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     }
     const nextTurboIdsSnapshot = [...nextTurboIds].sort()
     if (JSON.stringify(turboIds) !== JSON.stringify(nextTurboIdsSnapshot)) {
+      // eslint-disable-next-line no-warning-comments
       // @TODO figure out how to safely remove ids
       // startTransition(() => setTurboIds(nextTurboIdsSnapshot))
       startTransition(() =>

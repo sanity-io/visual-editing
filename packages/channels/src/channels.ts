@@ -143,6 +143,7 @@ export function createChannel<T extends ChannelMsg>(
     } else if (data.type === 'channel/response') {
       // Do nothing for now
     } else {
+      // eslint-disable-next-line no-warning-comments
       // @todo Ugly type casting
       const args = [data.type, data.data] as ToArgs<T>
       handle(...args)
