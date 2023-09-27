@@ -187,6 +187,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
           />
         )
       })}
+      <PostMessage turboIds={turboIds} />
     </Context.Provider>
   )
 })
@@ -485,6 +486,8 @@ function useHooks(
   return useMemo(() => ({ cache, subscribe }), [cache, subscribe])
 }
 
+const TEMP_DISABLE = false
+
 interface TurboProps extends Pick<LiveStoreProviderProps, 'client'> {
   turboIds: string[]
   setTurboIds: React.Dispatch<React.SetStateAction<string[]>>
@@ -503,6 +506,9 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     >
   }, [client])
 
+  // eslint-disable-next-line no-console
+  console.debug({ turboIds })
+
   // Keep track of document ids that the active `useLiveQuery` hooks care about
   useEffect(() => {
     const nextTurboIds = new Set<string>()
@@ -517,7 +523,11 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     }
     const nextTurboIdsSnapshot = [...nextTurboIds].sort()
     if (JSON.stringify(turboIds) !== JSON.stringify(nextTurboIdsSnapshot)) {
-      startTransition(() => setTurboIds(nextTurboIdsSnapshot))
+      // @TODO figure out how to safely remove ids
+      // startTransition(() => setTurboIds(nextTurboIdsSnapshot))
+      startTransition(() =>
+        setTurboIds((prev) => [...new Set([...prev, ...nextTurboIdsSnapshot])]),
+      )
     }
   }, [cache, setTurboIds, snapshots, turboIds])
 
@@ -544,6 +554,9 @@ const Turbo = memo(function Turbo(props: TurboProps) {
   const [lastMutatedDocumentId, setLastMutatedDocumentId] = useState<string>()
   // Use the same listen instance and patch documents as they come in
   useEffect(() => {
+    if (TEMP_DISABLE) {
+      return
+    }
     const subscription = client
       .listen(
         `*`,
@@ -557,7 +570,12 @@ const Turbo = memo(function Turbo(props: TurboProps) {
         },
       )
       .subscribe((update) => {
-        if (update.type !== 'mutation' || !update.effects?.apply?.length) return
+        if (
+          update.type !== 'mutation' ||
+          !update.effects?.apply?.length ||
+          window.parent.TEMP_DISABLE
+        )
+          return
         // Schedule a reach state update with the ID of the document that were mutated
         // This react handler will apply the document to related source map snapshots
         const key = getTurboCacheKey(projectId, dataset, update.documentId)
@@ -567,7 +585,10 @@ const Turbo = memo(function Turbo(props: TurboProps) {
           const patchDoc = { ...cachedDocument } as any
           delete patchDoc._rev
           const patchedDocument = applyPatch(patchDoc, update.effects.apply)
+          console.debug('live', update.documentId, patchedDocument)
           documentsCache.set(key, patchedDocument)
+          // eslint-disable-next-line no-console
+          console.debug('Mendoza patching doc', key)
         }
 
         startTransition(() => setLastMutatedDocumentId(update.documentId))
@@ -575,10 +596,72 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     return () => subscription.unsubscribe()
   }, [client, dataset, projectId])
 
+  useEffect(() => {
+    function handleMessage(event: MessageEvent) {
+      if (
+        !isRecord(event.data) ||
+        !event.data.sanity ||
+        event.data.type !== 'editState'
+      ) {
+        return
+      }
+      if (isRecord(event.data.draft)) {
+        const key = getTurboCacheKey(
+          projectId,
+          dataset,
+          event.data.draft._id as string,
+        )
+        const cachedDocument = documentsCache.peek(key)
+        const patchDoc = cachedDocument
+          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ({ ...cachedDocument, ...event.data.draft } as any)
+          : { ...event.data.draft }
+        delete patchDoc._rev
+
+        console.debug('postMessage.draft', patchDoc)
+        documentsCache.set(key, patchDoc)
+        startTransition(() => setLastMutatedDocumentId(patchDoc._id))
+        // eslint-disable-next-line no-console
+        console.debug('postMessage patching draft doc', key)
+      }
+      if (isRecord(event.data.published)) {
+        const key = getTurboCacheKey(
+          projectId,
+          dataset,
+          event.data.published._id as string,
+        )
+        const cachedDocument = documentsCache.peek(key)
+        const patchDoc = cachedDocument
+          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ({ ...cachedDocument, ...event.data.published } as any)
+          : { ...event.data.published }
+        delete patchDoc._rev
+
+        console.debug('postMessage.published', patchDoc)
+        documentsCache.set(key, patchDoc)
+        startTransition(() => setLastMutatedDocumentId(patchDoc._id))
+        // eslint-disable-next-line no-console
+        console.debug('postMessage patching published doc', key)
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [dataset, projectId, turboIds])
+
   // If the last mutated document is in the list over turboIds then lets apply the source map
   useEffect(() => {
-    if (!lastMutatedDocumentId || !turboIds.includes(lastMutatedDocumentId))
+    if (!lastMutatedDocumentId || !turboIds.includes(lastMutatedDocumentId)) {
+      console.log('SKIP turboChargeResultIfSourceMap')
+      if (lastMutatedDocumentId) {
+        const timeout = setTimeout(
+          () => setLastMutatedDocumentId(undefined),
+          1000,
+        )
+        return () => clearTimeout(timeout)
+      }
       return
+    }
+    console.log('HIT turboChargeResultIfSourceMap')
 
     const updatedKeys: QueryCacheKey[] = []
     for (const [key, snapshot] of snapshots.entries()) {
@@ -694,4 +777,27 @@ function turboChargeResultIfSourceMap(
 
     return value
   })
+}
+
+// PostMessage comp
+interface PostMessageProps {
+  turboIds: string[]
+}
+function PostMessage(props: PostMessageProps) {
+  useEffect(() => {
+    parent.postMessage(
+      {
+        type: 'ids',
+        ids: props.turboIds,
+        sanity: true,
+      },
+      location.origin,
+    )
+  }, [props.turboIds])
+
+  return null
+}
+
+function isRecord(value: unknown): value is { [key: string]: unknown } {
+  return value !== null && typeof value === 'object'
 }

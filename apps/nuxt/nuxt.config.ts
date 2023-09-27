@@ -7,6 +7,11 @@ export default defineNuxtConfig({
   devServer: {
     port: 3001,
   },
+  imports: {
+    transform: {
+      exclude: [/\bpackages\/.+\b/],
+    },
+  },
   modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {
     public: {
