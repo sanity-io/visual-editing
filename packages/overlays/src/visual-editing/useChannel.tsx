@@ -4,32 +4,12 @@ import {
   ChannelReturns,
   createChannel,
 } from 'channels'
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
-
-// @todo This seems like a hacky way of avoiding dependencies?
-function useStableHandler<T extends ChannelMsg>(
-  handler: ChannelEventHandler<T>,
-): ChannelEventHandler<T> {
-  // Store the handler as a ref
-  const handlerRef = useRef<ChannelEventHandler<T> | null>(null)
-
-  // Set the ref before render
-  useLayoutEffect(() => {
-    handlerRef.current = handler
-  })
-
-  // Return a stable function
-  return useCallback<ChannelEventHandler<T>>(
-    (...args) => handlerRef.current?.(...args),
-    [],
-  )
-}
+import { useEffect, useRef } from 'react'
 
 export function useChannel<T extends ChannelMsg>(
   handler: ChannelEventHandler<T>,
 ): ChannelReturns<T> | undefined {
   const channelRef = useRef<ChannelReturns<T>>()
-  const stableHandler = useStableHandler<T>(handler)
 
   useEffect(() => {
     const channel = createChannel<T>({
@@ -40,14 +20,14 @@ export function useChannel<T extends ChannelMsg>(
           id: 'composer',
         },
       ],
-      handle: stableHandler,
+      handle: handler,
     })
     channelRef.current = channel
     return () => {
       channel.disconnect()
       channelRef.current = undefined
     }
-  }, [stableHandler])
+  }, [handler])
 
   return channelRef.current
 }

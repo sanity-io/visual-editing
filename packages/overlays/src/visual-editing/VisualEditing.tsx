@@ -1,8 +1,9 @@
 import { studioTheme, ThemeProvider } from '@sanity/ui'
-import { useMemo, useReducer, useState } from 'react'
+import { ChannelEventHandler } from 'channels'
+import { useCallback, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 
-import { SanityNode, SanityNodeLegacy } from '../types'
+import { OverlayDispatchHandler, SanityNode, SanityNodeLegacy } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { elementsReducer } from './elementsReducer'
 import { useChannel } from './useChannel'
@@ -38,18 +39,28 @@ export function VisualEditing(): JSX.Element {
     [elements],
   )
 
-  const channel = useChannel<ChannelMsg>((type, data) => {
-    if (type === 'composer/focus' && data.path?.length) {
-      dispatch({ type, data })
-    }
-  })
+  const channelEventHandler = useCallback<ChannelEventHandler<ChannelMsg>>(
+    (type, data) => {
+      if (type === 'composer/focus' && data.path?.length) {
+        dispatch({ type, data })
+      }
+    },
+    [],
+  )
 
-  useOverlay(rootElement, (message) => {
-    if (message.type === 'element/click') {
-      channel?.send('overlays/focus', message.sanity)
-    }
-    dispatch(message)
-  })
+  const channel = useChannel<ChannelMsg>(channelEventHandler)
+
+  const overlayEventHandler: OverlayDispatchHandler = useCallback(
+    (message) => {
+      if (message.type === 'element/click') {
+        channel?.send('overlays/focus', message.sanity)
+      }
+      dispatch(message)
+    },
+    [channel],
+  )
+
+  useOverlay(rootElement, overlayEventHandler)
 
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
