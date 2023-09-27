@@ -87,6 +87,7 @@ export function ComposerPaneRouterProvider(props: {
         console.warn('setView', viewId)
       },
       setParams: () => {
+        // eslint-disable-next-line no-warning-comments
         // todo
       },
       setPayload: (payload) => {
