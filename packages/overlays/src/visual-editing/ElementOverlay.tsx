@@ -1,11 +1,10 @@
 import { Box, Card, Flex, Text } from '@sanity/ui'
 import { memo, useEffect, useMemo, useRef } from 'react'
+import { stringToPath } from 'sanity'
 import styled from 'styled-components'
 
-import { OverlayRect, SanityNode, SanityNodeLegacy } from '../types'
-import { encodeSanityNodeData } from '../transformSanityNodeData'
 import { pathToUrlString } from '../pathToUrlString'
-import { stringToPath } from 'sanity'
+import { OverlayRect, SanityNode, SanityNodeLegacy } from '../types'
 
 const Root = styled(Card)<{
   $hovered: boolean
