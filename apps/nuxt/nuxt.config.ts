@@ -10,8 +10,7 @@ export default defineNuxtConfig({
   imports: {
     transform: {
       exclude: [/\bpackages\/.+\b/],
-      
-    }
+    },
   },
   modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {

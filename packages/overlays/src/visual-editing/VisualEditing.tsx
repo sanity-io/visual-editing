@@ -1,11 +1,13 @@
 import { studioTheme, ThemeProvider } from '@sanity/ui'
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { ChannelEventHandler } from 'channels'
+import { useCallback, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 
-import { createOverlayController } from '../controller'
-import type { OverlayController } from '../types'
+import { OverlayDispatchHandler, SanityNode, SanityNodeLegacy } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { elementsReducer } from './elementsReducer'
+import { useChannel } from './useChannel'
+import { useOverlay } from './useOverlay'
 
 const Root = styled.div`
   background-color: transparent;
@@ -17,26 +19,63 @@ const Root = styled.div`
   z-index: 9999999;
 `
 
+export type ComposerMsg = {
+  type: 'composer/focus'
+  data: { path: string[] }
+}
+type OverlayMsg = {
+  type: 'overlays/focus'
+  data: SanityNode | SanityNodeLegacy
+}
+
+type ChannelMsg = OverlayMsg | ComposerMsg
+
 export function VisualEditing(): JSX.Element {
   const [elements, dispatch] = useReducer(elementsReducer, [])
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
-  const overlayController = useRef<OverlayController | undefined>()
 
-  // On mount
-  useEffect(() => {
-    if (!rootElement) return undefined
+  const elementsToRender = useMemo(
+    () => elements.filter((e) => e.activated || e.focused),
+    [elements],
+  )
 
-    overlayController.current = createOverlayController({
-      dispatch,
-      overlayElement: rootElement,
-    })
-  }, [rootElement])
+  const channelEventHandler = useCallback<ChannelEventHandler<ChannelMsg>>(
+    (type, data) => {
+      if (type === 'composer/focus' && data.path?.length) {
+        dispatch({ type, data })
+      }
+    },
+    [],
+  )
+
+  const channel = useChannel<ChannelMsg>(channelEventHandler)
+
+  const overlayEventHandler: OverlayDispatchHandler = useCallback(
+    (message) => {
+      if (message.type === 'element/click') {
+        channel?.send('overlays/focus', message.sanity)
+      }
+      dispatch(message)
+    },
+    [channel],
+  )
+
+  useOverlay(rootElement, overlayEventHandler)
 
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
       <Root ref={setRootElement}>
-        {elements.map(({ id, hovered, rect }) => {
-          return <ElementOverlay key={id} rect={rect} hovered={hovered} />
+        {elementsToRender.map(({ id, focused, hovered, rect, sanity }) => {
+          return (
+            <ElementOverlay
+              key={id}
+              rect={rect}
+              focused={focused}
+              hovered={hovered}
+              showActions={!channel?.inFrame}
+              sanity={sanity}
+            />
+          )
         })}
       </Root>
     </ThemeProvider>

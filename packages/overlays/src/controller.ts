@@ -13,12 +13,12 @@ import type {
 /**
  * Creates a controller which dispatches overlay related events
  *
- * @param dispatch - Dispatched event handler
+ * @param handler - Dispatched event handler
  * @param overlayElement - Parent element containing rendered overlay elements
  * @public
  */
 export function createOverlayController({
-  dispatch,
+  handler,
   overlayElement,
 }: OverlayOptions): OverlayController {
   // Map for getting element by ID
@@ -40,7 +40,7 @@ export function createOverlayController({
   //
   // When we want to know which element is currently hovered, we take the element at the top of the
   // stack. Since JavaScript does not have a Stack type, we use an array and take the last element.
-  const hoverStack: HTMLElement[] = []
+  let hoverStack: HTMLElement[] = []
   const getHoveredElement = () =>
     hoverStack[hoverStack.length - 1] as HTMLElement | undefined
 
@@ -73,7 +73,7 @@ export function createOverlayController({
     const { element, measureElement } = elements
     addEventHandlers(element, handlers)
     ro.observe(measureElement)
-    dispatch({
+    handler({
       type: 'element/activate',
       id,
       rect: getRect(element),
@@ -89,7 +89,9 @@ export function createOverlayController({
     const { element, measureElement } = elements
     removeEventHandlers(element, handlers)
     ro.unobserve(measureElement)
-    dispatch({
+    // Scrolling from a hovered element will not trigger mouseleave event, so filter the stack
+    hoverStack = hoverStack.filter((el) => el !== element)
+    handler({
       type: 'element/deactivate',
       id,
     })
@@ -124,8 +126,8 @@ export function createOverlayController({
         if (element === getHoveredElement() && element.contains(target)) {
           event.preventDefault()
           event.stopPropagation()
-          dispatch({
-            type: 'element/edit',
+          handler({
+            type: 'element/click',
             id,
             sanity,
           })
@@ -133,7 +135,7 @@ export function createOverlayController({
       },
       mouseenter() {
         hoverStack.push(element)
-        dispatch({
+        handler({
           type: 'element/mouseenter',
           id,
           rect: getRect(element),
@@ -144,7 +146,7 @@ export function createOverlayController({
           hoverStack.pop()
           const hoveredElement = getHoveredElement()
 
-          dispatch({
+          handler({
             type: 'element/mouseleave',
             id,
           })
@@ -152,7 +154,7 @@ export function createOverlayController({
           if (hoveredElement) {
             const overlayElement = elementsMap.get(hoveredElement)
             if (overlayElement) {
-              dispatch({
+              handler({
                 type: 'element/mouseenter',
                 id: overlayElement.id,
                 rect: getRect(hoveredElement),
@@ -197,7 +199,7 @@ export function createOverlayController({
     io.observe(element)
     ro.observe(measureElement)
 
-    dispatch({
+    handler({
       type: 'element/register',
       id,
       rect: getRect(element),
@@ -226,7 +228,7 @@ export function createOverlayController({
       elementsMap.delete(element)
       elementSet.delete(element)
       elementIdMap.delete(id)
-      dispatch({
+      handler({
         type: 'element/unregister',
         id,
       })
@@ -274,7 +276,7 @@ export function createOverlayController({
   function updateRect(el: HTMLElement) {
     const overlayElement = elementsMap.get(el)
     if (overlayElement) {
-      dispatch({
+      handler({
         type: 'element/updateRect',
         id: overlayElement.id,
         rect: getRect(el),
@@ -296,7 +298,15 @@ export function createOverlayController({
 
   const ro = new ResizeObserver(handleResize)
 
+  function handleBlur() {
+    hoverStack = []
+    handler({
+      type: 'overlay/blur',
+    })
+  }
+
   function destroy() {
+    window.removeEventListener('click', handleBlur)
     io.disconnect()
     mo.disconnect()
 
@@ -307,10 +317,11 @@ export function createOverlayController({
     elementIdMap.clear()
     elementSet.clear()
 
-    hoverStack.splice(0, hoverStack.length)
+    hoverStack = []
   }
 
   function activate() {
+    window.addEventListener('click', handleBlur)
     registerElements(document.body)
   }
 

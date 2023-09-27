@@ -1,7 +1,8 @@
 import { lazy } from 'react'
 import { definePlugin } from 'sanity'
 
-// import { route } from 'sanity/router'
+import { getIntentState } from './getIntentState'
+import { router } from './router'
 import { ComposerPluginOptions } from './types'
 
 export const composerTool = definePlugin<ComposerPluginOptions>((options) => {
@@ -11,9 +12,14 @@ export const composerTool = definePlugin<ComposerPluginOptions>((options) => {
         name: options.name || 'composer',
         component: lazy(() => import('./ComposerTool')),
         options,
-
-        // TODO: implement router
-        // router: route.create( ... )
+        canHandleIntent(intent, params) {
+          if (intent === 'focus' && params.id && params.path) {
+            return true
+          }
+          return false
+        },
+        getIntentState,
+        router,
       },
     ],
 
