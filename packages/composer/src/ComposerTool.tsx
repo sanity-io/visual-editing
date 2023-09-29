@@ -1,17 +1,36 @@
-import { ResetIcon } from '@sanity/icons'
-import { Button, Card, Code, Flex, Text } from '@sanity/ui'
+import { Card, Code, Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
-import { ReactElement, useEffect, useRef, useState } from 'react'
-import { Path, Tool } from 'sanity'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import { Path, pathToString, Tool } from 'sanity'
 import styled from 'styled-components'
 
-import { DocumentPane } from './editor/DocumentPane'
+import { ComposerProvider } from './ComposerProvider'
+import { ContentEditor } from './editor/ContentEditor'
 import { ComposerPluginOptions } from './types'
+import { useComposerParams } from './useComposerParams'
 
-type Messages = {
-  type: 'composer/focus'
-  data: { path: Path }
-}
+type Messages =
+  | {
+      type: 'composer/focus'
+      data: { id: string; path: string }
+    }
+  | {
+      type: 'composer/blur'
+      data: undefined
+    }
+  | {
+      type: 'overlay/focus'
+      data: {
+        projectId: string
+        dataset: string
+        id: string
+        path: string
+        type?: string
+        baseUrl: string
+        tool?: string
+        workspace?: string
+      }
+    }
 
 const IFrame = styled.iframe`
   border: 0;
@@ -28,7 +47,7 @@ export default function ComposerTool(props: {
   const [channel, setChannel] = useState<ChannelReturns<Messages>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  const [log, setLog] = useState<any[]>([])
+  const { setParams, params, deskParams } = useComposerParams()
 
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
@@ -43,8 +62,15 @@ export default function ComposerTool(props: {
           id: 'overlays',
         },
       ],
-      handle(type, data) {
-        setLog((l) => [{ type, data }, ...l])
+      handler(type, data) {
+        if (type === 'overlay/focus') {
+          setParams((p) => ({
+            ...p,
+            id: data.id,
+            path: data.path,
+            type: data.type,
+          }))
+        }
       },
     })
     setChannel(channel)
@@ -52,52 +78,50 @@ export default function ComposerTool(props: {
     return () => {
       channel.disconnect()
     }
-  }, [])
+  }, [setParams])
+
+  const focusPathHandler = useCallback(
+    // @todo nextDocumentId may not be needed with this strategy
+    (nextDocumentId: string, path: Path) => {
+      setParams((p) => {
+        return {
+          ...p,
+          // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
+          path: pathToString(path),
+        }
+      })
+    },
+    [setParams],
+  )
+
+  useEffect(() => {
+    if (params.id && params.path) {
+      channel?.send('composer/focus', { id: params.id, path: params.path })
+    } else {
+      channel?.send('composer/blur', undefined)
+    }
+  }, [channel, params])
 
   return (
-    <Flex height="fill">
-      <Card flex={1}>
-        <IFrame ref={iframeRef} src={tool.options?.previewUrl || '/'} />
-      </Card>
-      <Card borderLeft flex={1} overflow="hidden">
-        <Flex direction={'column'} height={'fill'}>
+    <ComposerProvider deskParams={deskParams} params={params}>
+      <Flex height="fill">
+        <Card flex={1}>
+          <IFrame ref={iframeRef} src={tool.options?.previewUrl || '/'} />
+        </Card>
+        <Card borderLeft flex={1} overflow="auto">
           <Card borderBottom flex={1} overflow="auto" padding={4}>
             <Code language="json" size={1}>
-              {JSON.stringify(log, null, 2)}
+              {JSON.stringify(params, null, 2)}
             </Code>
           </Card>
-          <Flex
-            paddingX={4}
-            paddingY={2}
-            justify={'space-between'}
-            gap={3}
-            align={'center'}
-          >
-            <Text size={1}>
-              {log.length} Item{log.length !== 1 && 's'}
-            </Text>
-            <Button
-              icon={ResetIcon}
-              fontSize={2}
-              mode="ghost"
-              padding={3}
-              text="Clear"
-              onClick={() => setLog([])}
-              disabled={!log.length}
-            />
-          </Flex>
-        </Flex>
-      </Card>
-      <Card borderLeft flex={1} overflow="auto">
-        <DocumentPane
-          documentId="siteSettings"
-          documentType="siteSettings"
-          onFocusPath={(path) => {
-            if (!path) return
-            channel?.send('composer/focus', { path })
-          }}
-        />
-      </Card>
-    </Flex>
+          <ContentEditor
+            deskParams={deskParams}
+            documentId={params.id}
+            documentType={params.type}
+            onFocusPath={focusPathHandler}
+          />
+        </Card>
+      </Flex>
+    </ComposerProvider>
   )
 }

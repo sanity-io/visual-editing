@@ -1,28 +1,32 @@
 /* eslint-disable no-console */
 
-import { forwardRef, ReactElement, ReactNode, useMemo } from 'react'
+import { forwardRef, PropsWithChildren, ReactElement, useMemo } from 'react'
 import {
   BackLinkProps,
   PaneRouterContext,
   PaneRouterContextValue,
   ReferenceChildLinkProps,
 } from 'sanity/desk'
-// import { StateLink } from 'sanity/router'
+import { StateLink } from 'sanity/router'
+
+import { DeskDocumentPaneParams } from '../types'
+import { useComposer } from '../useComposer'
 
 const BackLink = forwardRef(function BackLink(
   props: BackLinkProps,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  return <a {...props} ref={ref} />
+  const { deskParams, params } = useComposer()
 
-  // return (
-  //   <StateLink
-  //     {...props}
-  //     ref={ref}
-  //     state={{ type: undefined }}
-  //     title={undefined}
-  //   />
-  // )
+  return (
+    <StateLink
+      {...props}
+      ref={ref}
+      searchParams={{ ...deskParams, preview: params.preview }}
+      state={{ type: undefined }}
+      title={undefined}
+    />
+  )
 })
 
 const ReferenceChildLink = forwardRef(function ReferenceChildLink(
@@ -49,10 +53,12 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
   // )
 })
 
-export function ComposerPaneRouterProvider(props: {
-  children: ReactNode
-}): ReactElement {
-  const { children } = props
+export function ComposerPaneRouterProvider(
+  props: PropsWithChildren<{
+    params: DeskDocumentPaneParams
+  }>,
+): ReactElement {
+  const { children, params } = props
 
   const context: PaneRouterContextValue = useMemo(() => {
     return {
@@ -60,7 +66,7 @@ export function ComposerPaneRouterProvider(props: {
       groupIndex: 0,
       siblingIndex: 0,
       payload: {},
-      params: {},
+      params: params as any,
       hasGroupSiblings: false,
       groupLength: 1,
       routerPanesState: [],
@@ -86,7 +92,8 @@ export function ComposerPaneRouterProvider(props: {
       setView: (viewId) => {
         console.warn('setView', viewId)
       },
-      setParams: () => {
+      setParams: (nextParams) => {
+        console.log('setParams, nextParams:', nextParams)
         // eslint-disable-next-line no-warning-comments
         // todo
       },
@@ -97,7 +104,7 @@ export function ComposerPaneRouterProvider(props: {
         console.warn('navigateIntent', intentName, intentParams, options)
       },
     }
-  }, [])
+  }, [params])
 
   return (
     <PaneRouterContext.Provider value={context}>

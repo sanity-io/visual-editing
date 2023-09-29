@@ -6,13 +6,14 @@ import { getPublishedId } from 'sanity'
 export function getIntentState(
   intent: string,
   params: Record<string, string>,
-  routerState: undefined,
+  _routerState: undefined,
   payload: unknown,
 ):
-  | { path: string }
+  | { type: string; path: string }
   | { intent: string; params: Record<string, string>; payload: unknown } {
-  if (intent === 'focus' && params.id && params.path) {
+  if (intent === 'edit' && params.id) {
     return {
+      type: params.type || '*',
       path: [getPublishedId(params.id), params.path].filter(Boolean).join('.'),
     }
   }

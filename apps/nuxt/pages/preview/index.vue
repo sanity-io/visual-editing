@@ -33,16 +33,19 @@ import { encodeSanityNodeData } from '@sanity/overlays'
 const sanityTitleData = {
   projectId: 'projectId',
   dataset: 'dataset',
-  id: 'documentId',
+  id: 'siteSettings',
+  type: 'siteSettings',
   path: 'title',
   baseUrl: '/studio',
   workspace: 'docs',
   tool: 'composer',
 }
+
 const sanityDescData = {
   projectId: 'projectId',
   dataset: 'dataset',
-  id: 'documentId',
+  id: 'siteSettings',
+  type: 'siteSettings',
   path: 'description',
   baseUrl: '/studio',
   workspace: 'docs',
@@ -51,7 +54,8 @@ const sanityDescData = {
 const sanityCopyrightData = {
   projectId: 'projectId',
   dataset: 'dataset',
-  id: 'documentId',
+  id: 'siteSettings',
+  type: 'siteSettings',
   path: 'copyrightText',
   baseUrl: '/studio',
   workspace: 'docs',

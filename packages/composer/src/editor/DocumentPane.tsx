@@ -7,15 +7,17 @@ import {
   DocumentPaneNode,
   PaneLayout,
 } from 'sanity/desk'
+import { DeskDocumentPaneParams } from 'src/types'
 
 import { ComposerPaneRouterProvider } from './ComposerPaneRouterProvider'
 
 export function DocumentPane(props: {
   documentId: string
   documentType: string
+  params: DeskDocumentPaneParams
   onFocusPath: (path: Path) => void
 }): ReactElement {
-  const { documentId, documentType, onFocusPath } = props
+  const { documentId, documentType, params, onFocusPath } = props
 
   const pane: DocumentPaneNode = useMemo(
     () => ({
@@ -49,7 +51,7 @@ export function DocumentPane(props: {
     <ErrorBoundary onCatch={setErrorParams}>
       <PaneLayout style={{ height: '100%' }}>
         <DeskToolProvider>
-          <ComposerPaneRouterProvider>
+          <ComposerPaneRouterProvider params={params}>
             <DeskDocumentPane
               paneKey="document"
               index={1}
