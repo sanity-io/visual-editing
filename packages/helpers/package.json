@@ -1,15 +1,7 @@
 {
-  "name": "@sanity/overlays",
+  "name": "visual-editing-helpers",
   "version": "0.0.0",
-  "homepage": "https://github.com/sanity-io/overlays#readme",
-  "bugs": {
-    "url": "https://github.com/sanity-io/overlays/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/sanity-io/overlays.git",
-    "directory": "packages/overlays"
-  },
+  "private": true,
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
@@ -40,7 +32,6 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint --max-warnings 0 .",
     "prepublishOnly": "npm run build",
-    "test": "vitest",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
@@ -73,9 +64,6 @@
       "prettier"
     ],
     "extends": [
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:react/jsx-runtime",
       "eslint:recommended",
       "plugin:prettier/recommended",
       "plugin:@typescript-eslint/eslint-recommended",
@@ -98,58 +86,27 @@
       "@typescript-eslint/member-delimiter-style": "off",
       "@typescript-eslint/no-empty-interface": "off",
       "prettier/prettier": "warn",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react/prop-types": "off",
       "simple-import-sort/exports": "warn",
       "simple-import-sort/imports": "warn"
     },
     "root": true
   },
   "dependencies": {
-    "@sanity/icons": "^2.4.1",
-    "@sanity/ui": "^1.8.2",
-    "@vercel/stega": "0.1.0",
-    "channels": "workspace:*",
-    "nanoid": "^5.0.1",
-    "sanity": "3.16.5-pink-lizard.39",
-    "valibot": "^0.17.1",
-    "visual-editing-helpers": "workspace:*"
+    "sanity": "3.16.5-pink-lizard.35"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "^2.4.8",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
-    "@types/styled-components": "^5.1.27",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "ls-engines": "^0.9.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0",
     "rimraf": "^5.0.1",
-    "styled-components": "^5.3.11",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.4"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0",
-    "styled-components": "^5.3.11"
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=16.14"
-  },
-  "publishConfig": {
-    "access": "public",
-    "tag": "canary",
-    "provenance": false
   }
 }

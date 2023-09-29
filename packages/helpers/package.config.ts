@@ -1,7 +1,5 @@
 import { defineConfig } from '@sanity/pkg-utils'
 
-const noExternal = new Set(['visual-editing-helpers'])
-
 export default defineConfig({
   extract: {
     rules: {
@@ -11,7 +9,5 @@ export default defineConfig({
     },
   },
   minify: true,
-  external: (externals) =>
-    externals.filter((external) => !noExternal.has(external)),
   tsconfig: 'tsconfig.build.json',
 })
