@@ -107,14 +107,14 @@ export type OverlayMsg =
  * Callback function used for handling dispatched controller messages
  * @public
  */
-export type OverlayDispatchHandler = (message: OverlayMsg) => void
+export type OverlayEventHandler = (message: OverlayMsg) => void
 
 /**
  * Options passed when instantiating an overlay controller
  * @public
  */
 export interface OverlayOptions {
-  handler: OverlayDispatchHandler
+  handler: OverlayEventHandler
   overlayElement: HTMLElement
 }
 

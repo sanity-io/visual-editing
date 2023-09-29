@@ -3,7 +3,7 @@ import { ChannelEventHandler } from 'channels'
 import { useCallback, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 
-import { OverlayDispatchHandler, SanityNode, SanityNodeLegacy } from '../types'
+import { OverlayEventHandler, SanityNode, SanityNodeLegacy } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { elementsReducer } from './elementsReducer'
 import { useChannel } from './useChannel'
@@ -24,7 +24,7 @@ export type ComposerMsg = {
   data: { path: string[] }
 }
 type OverlayMsg = {
-  type: 'overlays/focus'
+  type: 'overlay/focus'
   data: SanityNode | SanityNodeLegacy
 }
 
@@ -50,10 +50,10 @@ export function VisualEditing(): JSX.Element {
 
   const channel = useChannel<ChannelMsg>(channelEventHandler)
 
-  const overlayEventHandler: OverlayDispatchHandler = useCallback(
+  const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
       if (message.type === 'element/click') {
-        channel?.send('overlays/focus', message.sanity)
+        channel?.send('overlay/focus', message.sanity)
       }
       dispatch(message)
     },

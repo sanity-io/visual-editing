@@ -20,7 +20,7 @@ export function useChannel<T extends ChannelMsg>(
           id: 'composer',
         },
       ],
-      handle: handler,
+      handler,
     })
     channelRef.current = channel
     return () => {

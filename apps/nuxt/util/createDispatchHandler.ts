@@ -1,7 +1,7 @@
-import type { ElementState, OverlayDispatchHandler } from '@sanity/overlays'
+import type { ElementState, OverlayEventHandler } from '@sanity/overlays'
 
 export const createDispatchHandler =
-  (elements: Ref<ElementState[]>): OverlayDispatchHandler =>
+  (elements: Ref<ElementState[]>): OverlayEventHandler =>
   (message) => {
     if (
       message.type === 'element/register' ||

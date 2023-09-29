@@ -19,7 +19,7 @@ import type {
 export function createChannel<T extends ChannelMsg>(
   config: ChannelOptions<T>,
 ): ChannelReturns<T> {
-  const { connections, handle } = config
+  const { connections, handler } = config
   const clientId = config.id || uuid()
   const inFrame = window.self !== window.top
   const activeConnections: Connection[] = []
@@ -146,7 +146,7 @@ export function createChannel<T extends ChannelMsg>(
       // eslint-disable-next-line no-warning-comments
       // @todo Ugly type casting
       const args = [data.type, data.data] as ToArgs<T>
-      handle(...args)
+      handler(...args)
       // handle(data.type, data.data)
       post(connection, 'channel/response')
     }

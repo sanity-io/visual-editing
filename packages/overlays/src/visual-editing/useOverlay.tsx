@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
-import { OverlayController, OverlayDispatchHandler } from 'src/types'
 
 import { createOverlayController } from '../controller'
+import { OverlayController, OverlayEventHandler } from '../types'
 
 export function useOverlay(
   element: HTMLElement | null,
-  handler: OverlayDispatchHandler,
+  handler: OverlayEventHandler,
 ): OverlayController | undefined {
   const overlayController = useRef<OverlayController | undefined>()
 
