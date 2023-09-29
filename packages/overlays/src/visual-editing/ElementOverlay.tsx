@@ -43,12 +43,13 @@ const ActionOpen = styled(Card)`
 `
 
 function createIntentLink(node: SanityNode) {
-  const { projectId, dataset, id, path, baseUrl, tool, workspace } = node
+  const { projectId, dataset, id, type, path, baseUrl, tool, workspace } = node
 
   const parts = [
     ['project', projectId],
     ['dataset', dataset],
     ['id', id],
+    ['type', type],
     ['path', pathToUrlString(stringToPath(path))],
     ['workspace', workspace],
     ['tool', tool],

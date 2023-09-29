@@ -43,10 +43,8 @@ export function isValidSanityLegacyNode(
  * @returns An encoded string of sanity data
  * @public
  */
-export function encodeSanityNodeData(
-  node: Omit<SanityNode, 'type'>,
-): string | undefined {
-  const { projectId, dataset, id, path, baseUrl, tool, workspace } = node
+export function encodeSanityNodeData(node: SanityNode): string | undefined {
+  const { projectId, dataset, id, path, baseUrl, tool, workspace, type } = node
 
   if (!isValidSanityNode(node)) {
     return undefined
@@ -56,6 +54,7 @@ export function encodeSanityNodeData(
     ['project', projectId],
     ['dataset', dataset],
     ['id', id],
+    ['type', type],
     ['path', pathToUrlString(stringToPath(path))],
     ['base', encodeURIComponent(baseUrl)],
     ['workspace', workspace],
@@ -88,6 +87,9 @@ export function decodeSanityString(str: string): SanityNode | undefined {
         break
       case 'id':
         acc.id = value
+        break
+      case 'type':
+        acc.type = value
         break
       case 'path':
         acc.path = pathToString(urlStringToPath(value))
