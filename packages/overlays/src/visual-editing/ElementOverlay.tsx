@@ -60,7 +60,7 @@ function createIntentLink(node: SanityNode) {
     .map((part) => part.join('='))
     .join(';')
 
-  return `${baseUrl}/intent/focus/${intent}}`
+  return `${baseUrl}/intent/edit/${intent}`
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: {

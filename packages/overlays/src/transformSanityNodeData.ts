@@ -1,9 +1,9 @@
 import { pathToString, stringToPath } from 'sanity'
 import { is, minLength, object, optional, safeParse, string } from 'valibot'
+import { urlStringToPath } from 'visual-editing-helpers'
 
 import { pathToUrlString } from './pathToUrlString'
 import { SanityNode, SanityNodeLegacy } from './types'
-import { urlStringToPath } from './urlStringToPath'
 
 const lengthyStr = string([minLength(1)])
 const optionalLengthyStr = optional(lengthyStr)

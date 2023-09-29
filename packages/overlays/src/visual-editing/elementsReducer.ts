@@ -67,11 +67,18 @@ export const elementsReducer = (
       return elements.map((e) => {
         return { ...e, focused: false }
       })
+    case 'composer/blur':
+      return elements.map((e) => {
+        return { ...e, focused: false }
+      })
     case 'composer/focus':
       return elements.map((e) => {
         return {
           ...e,
-          focused: 'path' in e.sanity && e.sanity.path === message.data.path[0],
+          focused:
+            'path' in e.sanity &&
+            e.sanity.id === message.data.id &&
+            e.sanity.path === message.data.path,
         }
       })
     default:

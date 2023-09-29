@@ -19,10 +19,16 @@ const Root = styled.div`
   z-index: 9999999;
 `
 
-export type ComposerMsg = {
-  type: 'composer/focus'
-  data: { path: string[] }
-}
+export type ComposerMsg =
+  | {
+      type: 'composer/focus'
+      data: { id: string; path: string }
+    }
+  | {
+      type: 'composer/blur'
+      data: undefined
+    }
+
 type OverlayMsg = {
   type: 'overlay/focus'
   data: SanityNode | SanityNodeLegacy
@@ -42,6 +48,9 @@ export function VisualEditing(): JSX.Element {
   const channelEventHandler = useCallback<ChannelEventHandler<ChannelMsg>>(
     (type, data) => {
       if (type === 'composer/focus' && data.path?.length) {
+        dispatch({ type, data })
+      }
+      if (type === 'composer/blur') {
         dispatch({ type, data })
       }
     },
