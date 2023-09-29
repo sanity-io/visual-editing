@@ -147,7 +147,6 @@ export function createChannel<T extends ChannelMsg>(
       // @todo Ugly type casting
       const args = [data.type, data.data] as ToArgs<T>
       handler(...args)
-      // handle(data.type, data.data)
       post(connection, 'channel/response')
     }
   }
