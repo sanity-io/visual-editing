@@ -2,11 +2,10 @@ import { Card, Code, Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Path, pathToString, Tool } from 'sanity'
-import styled from 'styled-components'
 
 import { ComposerProvider } from './ComposerProvider'
 import { ContentEditor } from './editor/ContentEditor'
-import { ComposerPluginOptions } from './types'
+import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
 import { useComposerParams } from './useComposerParams'
 
 type Messages =
@@ -80,7 +79,7 @@ export default function ComposerTool(props: {
     }
   }, [setParams])
 
-  const focusPathHandler = useCallback(
+  const handleFocusPath = useCallback(
     // @todo nextDocumentId may not be needed with this strategy
     (nextDocumentId: string, path: Path) => {
       setParams((p) => {
@@ -90,6 +89,13 @@ export default function ComposerTool(props: {
           path: pathToString(path),
         }
       })
+    },
+    [setParams],
+  )
+
+  const handleDeskParams = useCallback(
+    (deskParams: DeskDocumentPaneParams) => {
+      setParams((p) => ({ ...p, ...deskParams }))
     },
     [setParams],
   )
@@ -118,7 +124,8 @@ export default function ComposerTool(props: {
             deskParams={deskParams}
             documentId={params.id}
             documentType={params.type}
-            onFocusPath={focusPathHandler}
+            onDeskParams={handleDeskParams}
+            onFocusPath={handleFocusPath}
           />
         </Card>
       </Flex>

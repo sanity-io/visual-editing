@@ -56,9 +56,10 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
 export function ComposerPaneRouterProvider(
   props: PropsWithChildren<{
     params: DeskDocumentPaneParams
+    onDeskParams: (params: DeskDocumentPaneParams) => void
   }>,
 ): ReactElement {
-  const { children, params } = props
+  const { children, params, onDeskParams } = props
 
   const context: PaneRouterContextValue = useMemo(() => {
     return {
@@ -93,9 +94,11 @@ export function ComposerPaneRouterProvider(
         console.warn('setView', viewId)
       },
       setParams: (nextParams) => {
-        console.log('setParams, nextParams:', nextParams)
-        // eslint-disable-next-line no-warning-comments
-        // todo
+        onDeskParams({
+          ...nextParams,
+          // @todo inspect param set manually as it does not seem to be returned
+          inspect: nextParams.inspect ?? undefined,
+        } as DeskDocumentPaneParams)
       },
       setPayload: (payload) => {
         console.warn('setPayload', payload)
@@ -104,7 +107,7 @@ export function ComposerPaneRouterProvider(
         console.warn('navigateIntent', intentName, intentParams, options)
       },
     }
-  }, [params])
+  }, [onDeskParams, params])
 
   return (
     <PaneRouterContext.Provider value={context}>

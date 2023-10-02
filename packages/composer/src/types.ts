@@ -4,7 +4,6 @@ export interface ComposerPluginOptions {
 }
 
 export interface ComposerStateParams {
-  id?: string
   type?: string
   path?: string
 }
@@ -22,10 +21,9 @@ export interface ComposerParams
   extends ComposerStateParams,
     DeskDocumentPaneParams {
   id?: string
-  preview: string
+  preview?: string
 }
 
 export type SetComposerParams = (
   reducer: (prev: ComposerParams) => ComposerParams,
-  // replace: boolean,
 ) => void

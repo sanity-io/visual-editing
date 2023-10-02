@@ -17,7 +17,14 @@ import {
   SetComposerParams,
 } from './types'
 
-export function useComposerParams(): {
+function pruneObject<T = any>(obj: T): T {
+  return Object.fromEntries(
+    Object.entries(obj as any).filter(([, value]) => value !== undefined),
+  ) as T
+}
+
+export function useComposerParams({ previewUrl }: { previewUrl: string }): {
+  defaultPreviewUrl: URL
   deskParams: DeskDocumentPaneParams
   navigate: (nextState: RouterState, options?: NavigateOptions) => void
   params: ComposerParams
@@ -29,6 +36,11 @@ export function useComposerParams(): {
     state: routerState,
   } = useRouter() as RouterContextValue & { state: ComposerStateParams }
 
+  const defaultPreviewUrl = useMemo(
+    () => new URL(previewUrl, window.location.origin),
+    [previewUrl],
+  )
+
   const [params, setParams] = useState<ComposerParams>(() => {
     const { id, path } = parsePath(
       routerState.path && decodeURIComponent(routerState.path),
@@ -37,7 +49,7 @@ export function useComposerParams(): {
       id,
       type: routerState.type,
       path,
-      preview: routerSearchParams.preview || '/', // @todo
+      preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
       inspect: routerSearchParams.inspect,
       rev: routerSearchParams.rev,
       since: routerSearchParams.since,
@@ -75,7 +87,7 @@ export function useComposerParams(): {
         id,
         type: type === '*' ? undefined : type,
         path,
-        preview: routerSearchParams.preview || '/', // @todo
+        preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
         inspect: routerSearchParams.inspect,
         rev: routerSearchParams.rev,
         since: routerSearchParams.since,
@@ -83,12 +95,13 @@ export function useComposerParams(): {
         view: routerSearchParams.view,
       }
     })
-  }, [routerSearchParams, routerState, setParams])
+  }, [defaultPreviewUrl, routerSearchParams, routerState, setParams])
 
   const navigate = useMemo(() => {
     // Debounce navigation to mitigate various event related race conditions
     return debounce((nextState: RouterState, options?: NavigateOptions) => {
-      routerNavigate(nextState, options)
+      const state = pruneObject(nextState)
+      routerNavigate(state, options)
     }, 50)
   }, [routerNavigate])
 
@@ -106,17 +119,28 @@ export function useComposerParams(): {
 
     paramsRef.current = params
 
-    const type = params.type || '*'
+    const type = params.type
     const path = params.id
       ? pathToUrlString(
           stringToPath([params.id, params.path].filter(Boolean).join('.')),
         )
       : undefined
+
+    const searchParams = {
+      preview: params.preview,
+      inspect: params.inspect,
+      rev: params.rev,
+      since: params.since,
+      template: params.template,
+      view: params.view,
+    } as DeskDocumentPaneParams as Record<string, string>
+
     const replace = params.preview === prevParams.preview
-    navigate({ type, path }, { replace })
+    navigate({ type, path }, { replace, searchParams })
   }, [navigate, params])
 
   return {
+    defaultPreviewUrl,
     navigate,
     setParams,
     deskParams,
