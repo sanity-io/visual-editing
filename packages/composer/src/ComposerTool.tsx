@@ -5,6 +5,7 @@ import { Path, pathToString, Tool } from 'sanity'
 
 import { ComposerProvider } from './ComposerProvider'
 import { ContentEditor } from './editor/ContentEditor'
+import { PreviewFrame } from './preview/PreviewFrame'
 import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
 import { useComposerParams } from './useComposerParams'
 
@@ -31,22 +32,18 @@ type Messages =
       }
     }
 
-const IFrame = styled.iframe`
-  border: 0;
-  height: 100%;
-  width: 100%;
-  display: block;
-`
-
 export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
 }): ReactElement {
-  const { tool } = props
+  const { previewUrl = '/' } = props.tool.options ?? {}
 
   const [channel, setChannel] = useState<ChannelReturns<Messages>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  const { setParams, params, deskParams } = useComposerParams()
+  const { defaultPreviewUrl, setParams, params, deskParams } =
+    useComposerParams({
+      previewUrl,
+    })
 
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
@@ -93,6 +90,20 @@ export default function ComposerTool(props: {
     [setParams],
   )
 
+  const handlePreviewPath = useCallback(
+    (nextPath: string) => {
+      const url = new URL(nextPath, defaultPreviewUrl.origin)
+      const preview = url.pathname + url.search
+      if (
+        url.origin === defaultPreviewUrl.origin &&
+        preview !== params.preview
+      ) {
+        setParams(() => ({ preview }))
+      }
+    },
+    [defaultPreviewUrl, params, setParams],
+  )
+
   const handleDeskParams = useCallback(
     (deskParams: DeskDocumentPaneParams) => {
       setParams((p) => ({ ...p, ...deskParams }))
@@ -111,9 +122,15 @@ export default function ComposerTool(props: {
   return (
     <ComposerProvider deskParams={deskParams} params={params}>
       <Flex height="fill">
-        <Card flex={1}>
-          <IFrame ref={iframeRef} src={tool.options?.previewUrl || '/'} />
-        </Card>
+        <Flex direction="column" flex={1} overflow="hidden">
+          <PreviewFrame
+            ref={iframeRef}
+            initialUrl={`${defaultPreviewUrl.origin}${params.preview}`}
+            onPathChange={handlePreviewPath}
+            params={params}
+            pointerEvents={undefined}
+          />
+        </Flex>
         <Card borderLeft flex={1} overflow="auto">
           <Card borderBottom flex={1} overflow="auto" padding={4}>
             <Code language="json" size={1}>
