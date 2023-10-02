@@ -12,14 +12,15 @@ const Root = styled(Card)<{
 }>`
   background-color: transparent;
   border-radius: 3px;
-  opacity: ${({ $focused, $hovered }) => ($hovered ? 1 : $focused ? 0.75 : 0)};
-  outline-color: var(--card-focus-ring-color);
-  outline-offset: 0px;
-  outline-style: solid;
-  outline-width: 1px;
   pointer-events: none;
   position: absolute;
   will-change: transform;
+  box-shadow: ${({ $focused, $hovered }) =>
+    $focused
+      ? 'inset 0 0 0 2px var(--card-focus-ring-color)'
+      : $hovered
+      ? 'inset 0 0 0 1px var(--card-focus-ring-color)'
+      : undefined};
 `
 
 const Actions = styled(Flex)<{
