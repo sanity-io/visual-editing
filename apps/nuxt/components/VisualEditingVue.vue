@@ -76,7 +76,7 @@ onMounted(() => {
         id: 'composer',
       },
     ],
-    handle(type, data) {
+    handler(type, data) {
       console.log(type, data)
     },
   })

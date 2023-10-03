@@ -40,7 +40,7 @@ onMounted(() => {
         id: 'parent',
       },
     ],
-    handle(type, data) {
+    handler(type, data) {
       log.value.unshift({ ...data, type })
     },
   })

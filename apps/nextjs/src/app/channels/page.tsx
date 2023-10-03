@@ -47,7 +47,7 @@ export default function ParentPage() {
         },
       ],
       id: 'parent',
-      handle(type, data) {
+      handler(type, data) {
         setLog((l) => [{ ...data, type }, ...l])
       },
       onConnect: (added) => {
