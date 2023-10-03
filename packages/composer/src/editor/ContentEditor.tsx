@@ -62,7 +62,7 @@ export const ContentEditor: FunctionComponent<{
           onFocusPath={onFocusPath}
         />
       ) : (
-        <div>Nothing</div>
+        <div></div>
       )}
     </>
   )
