@@ -186,15 +186,16 @@ export function createOverlayController({
     }
 
     const id = uuid()
-    elementSet.add(element)
-    measureElements.set(measureElement, element)
-    elementIdMap.set(id, element)
-    elementsMap.set(element, {
+    const sanityNode = {
       id,
       elements,
       sanity,
       handlers: eventHandlers,
-    })
+    }
+    elementSet.add(element)
+    measureElements.set(measureElement, element)
+    elementIdMap.set(id, element)
+    elementsMap.set(element, sanityNode)
 
     io.observe(element)
     ro.observe(measureElement)
@@ -205,6 +206,8 @@ export function createOverlayController({
       rect: getRect(element),
       sanity,
     })
+
+    activateElement(sanityNode)
   }
 
   function registerElements(node: HTMLElement) {
@@ -240,13 +243,23 @@ export function createOverlayController({
     const needsUpdate = !!mutations.filter((mutation) => {
       const node: Node | null = mutation.target
 
+      // Ignore overlay elements and container
       if (node === overlayElement || overlayElement.contains(node)) {
         return false
       }
 
-      if (node instanceof HTMLElement && !elementsMap.has(node)) {
-        registerElements(node)
+      if (node instanceof HTMLElement) {
+        if (elementsMap.has(node)) {
+          const sanityNodes = findSanityNodes({ childNodes: [node] })
+          // Check existing nodes are still valid
+          if (!sanityNodes.length) {
+            unregisterElement(node)
+          }
+        } else {
+          registerElements(node)
+        }
       }
+
       return true
     }).length
 
@@ -343,6 +356,8 @@ export function createOverlayController({
 
   return {
     destroy,
-    toggle() {},
+    toggle() {
+      // @todo
+    },
   }
 }

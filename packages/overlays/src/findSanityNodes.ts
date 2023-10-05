@@ -90,7 +90,7 @@ export function findCommonSanityData(
  * @internal
  */
 export function findSanityNodes(
-  el: HTMLElement | ChildNode,
+  el: HTMLElement | ChildNode | { childNodes: HTMLElement[] },
 ): _ResolvedElement[] {
   const elements: _ResolvedElement[] = []
 
