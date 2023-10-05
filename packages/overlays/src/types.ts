@@ -103,13 +103,19 @@ export interface OverlayController {
 }
 
 /**
+ * Element focus state
+ * @public
+ */
+export type ElementFocusedState = 'clicked' | 'duplicate' | boolean
+
+/**
  * Element state for consuming applications
  * @public
  */
 export interface ElementState {
   id: string
   activated: boolean
-  focused: boolean
+  focused: ElementFocusedState
   hovered: boolean
   rect: OverlayRect
   sanity: SanityNode | SanityNodeLegacy

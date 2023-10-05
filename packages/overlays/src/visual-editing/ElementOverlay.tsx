@@ -4,7 +4,12 @@ import { stringToPath } from 'sanity'
 import styled from 'styled-components'
 
 import { pathToUrlString } from '../pathToUrlString'
-import { OverlayRect, SanityNode, SanityNodeLegacy } from '../types'
+import {
+  ElementFocusedState,
+  OverlayRect,
+  SanityNode,
+  SanityNodeLegacy,
+} from '../types'
 
 const Root = styled(Card)<{
   $hovered: boolean
@@ -65,7 +70,7 @@ function createIntentLink(node: SanityNode) {
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: {
-  focused: boolean
+  focused: ElementFocusedState
   hovered: boolean
   rect: OverlayRect
   showActions: boolean
@@ -76,7 +81,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (focused) {
+    if (focused === true) {
       ref.current?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',

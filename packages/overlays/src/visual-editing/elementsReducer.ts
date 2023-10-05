@@ -1,5 +1,6 @@
+import { ComposerMsg } from 'visual-editing-helpers'
+
 import { ElementState, OverlayMsg } from '../types'
-import { ComposerMsg } from './VisualEditing'
 
 export const elementsReducer = (
   elements: ElementState[],
@@ -61,7 +62,7 @@ export const elementsReducer = (
       })
     case 'element/click':
       return elements.map((e) => {
-        return { ...e, focused: e.id === message.id }
+        return { ...e, focused: e.id === message.id && 'clicked' }
       })
     case 'overlay/blur':
       return elements.map((e) => {
@@ -71,16 +72,25 @@ export const elementsReducer = (
       return elements.map((e) => {
         return { ...e, focused: false }
       })
-    case 'composer/focus':
+    case 'composer/focus': {
+      // This event will be reflected from the composer after a click event, so check if an element has been clicked
+      const clickedElement = elements.find((e) => e.focused === 'clicked')
       return elements.map((e) => {
+        if (e === clickedElement) {
+          return e
+        }
+        // We want to focus any element which matches the id and path...
+        const focused =
+          'path' in e.sanity &&
+          e.sanity.id === message.data.id &&
+          e.sanity.path === message.data.path
         return {
           ...e,
-          focused:
-            'path' in e.sanity &&
-            e.sanity.id === message.data.id &&
-            e.sanity.path === message.data.path,
+          // ... but mark as a dupe if another matching item has been clicked to prevent scrolling
+          focused: focused && clickedElement ? 'duplicate' : focused,
         }
       })
+    }
     default:
       return elements
   }
