@@ -43,13 +43,12 @@ export default function ComposerTool(props: {
         },
       ],
       handler(type, data) {
-        if (type === 'overlay/focus') {
-          setParams((p) => ({
-            ...p,
+        if (type === 'overlay/focus' && 'id' in data) {
+          setParams({
             id: data.id,
             path: data.path,
             type: data.type,
-          }))
+          })
         }
       },
     })
@@ -62,13 +61,10 @@ export default function ComposerTool(props: {
 
   const handleFocusPath = useCallback(
     // @todo nextDocumentId may not be needed with this strategy
-    (nextDocumentId: string, path: Path) => {
-      setParams((p) => {
-        return {
-          ...p,
-          // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
-          path: pathToString(path),
-        }
+    (nextDocumentId: string, nextPath: Path) => {
+      setParams({
+        // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
+        path: pathToString(nextPath),
       })
     },
     [setParams],
@@ -82,7 +78,7 @@ export default function ComposerTool(props: {
         url.origin === defaultPreviewUrl.origin &&
         preview !== params.preview
       ) {
-        setParams(() => ({ preview }))
+        setParams({ preview })
       }
     },
     [defaultPreviewUrl, params, setParams],
@@ -90,7 +86,7 @@ export default function ComposerTool(props: {
 
   const handleDeskParams = useCallback(
     (deskParams: DeskDocumentPaneParams) => {
-      setParams((p) => ({ ...p, ...deskParams }))
+      setParams({ ...deskParams })
     },
     [setParams],
   )

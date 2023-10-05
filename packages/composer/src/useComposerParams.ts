@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { isEqual } from 'lodash'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { stringToPath } from 'sanity'
 import {
   NavigateOptions,
@@ -17,9 +18,11 @@ import {
   SetComposerParams,
 } from './types'
 
-function pruneObject<T = any>(obj: T): T {
+function pruneObject<T extends RouterState | ComposerParams>(obj: T): T {
   return Object.fromEntries(
-    Object.entries(obj as any).filter(([, value]) => value !== undefined),
+    Object.entries(obj).filter(
+      ([, value]) => value !== undefined && value !== '',
+    ),
   ) as T
 }
 
@@ -41,7 +44,7 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
     [previewUrl],
   )
 
-  const [params, setParams] = useState<ComposerParams>(() => {
+  const [params, setParamsState] = useState<ComposerParams>(() => {
     const { id, path } = parsePath(
       routerState.path && decodeURIComponent(routerState.path),
     )
@@ -57,6 +60,16 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
       view: routerSearchParams.view,
     }
   })
+
+  const setParams = useCallback((newParams: Partial<ComposerParams>) => {
+    setParamsState((state) => {
+      const nextState = { ...state, ...newParams }
+      if (isEqual(pruneObject(state), pruneObject(nextState))) {
+        return state
+      }
+      return nextState
+    })
+  }, [])
 
   const deskParams = useMemo<DeskDocumentPaneParams>(
     () => ({
@@ -82,18 +95,16 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
     // decodeURI param in path?
     const { id, path } = parsePath(routerState.path)
 
-    setParams(() => {
-      return {
-        id,
-        type: type === '*' ? undefined : type,
-        path,
-        preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
-        inspect: routerSearchParams.inspect,
-        rev: routerSearchParams.rev,
-        since: routerSearchParams.since,
-        template: routerSearchParams.template,
-        view: routerSearchParams.view,
-      }
+    setParams({
+      id,
+      type: type === '*' ? undefined : type,
+      path,
+      preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
+      inspect: routerSearchParams.inspect,
+      rev: routerSearchParams.rev,
+      since: routerSearchParams.since,
+      template: routerSearchParams.template,
+      view: routerSearchParams.view,
     })
   }, [defaultPreviewUrl, routerSearchParams, routerState, setParams])
 
@@ -105,19 +116,11 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
     }, 50)
   }, [routerNavigate])
 
-  const paramsRef = useRef(params)
+  const previewRef = useRef(params.preview)
 
   useEffect(() => {
-    const prevParams = {
-      ...paramsRef.current,
-      path: [paramsRef.current.id, paramsRef.current.path].join('.'),
-    }
-    // @todo improve comparison
-    if (params.type === prevParams.type && params.path === prevParams.path) {
-      return
-    }
-
-    paramsRef.current = params
+    const previousPreview = previewRef.current
+    previewRef.current = params.preview
 
     const type = params.type
     const path = params.id
@@ -135,7 +138,7 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
       view: params.view,
     } as DeskDocumentPaneParams as Record<string, string>
 
-    const replace = params.preview === prevParams.preview
+    const replace = params.preview === previousPreview
     navigate({ type, path }, { replace, searchParams })
   }, [navigate, params])
 

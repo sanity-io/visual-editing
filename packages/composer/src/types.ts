@@ -24,6 +24,4 @@ export interface ComposerParams
   preview?: string
 }
 
-export type SetComposerParams = (
-  reducer: (prev: ComposerParams) => ComposerParams,
-) => void
+export type SetComposerParams = (prev: ComposerParams) => void

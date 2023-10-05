@@ -19,12 +19,8 @@ const DocumentPanel: FunctionComponent<{
 
   const handleFocusPath = useCallback(
     (path: Path) => {
-      if (documentValue) {
-        const _id = documentValue._id
-
-        if (_id) {
-          onFocusPath(_id, path)
-        }
+      if (documentValue?._id) {
+        onFocusPath(documentValue._id, path)
       }
     },
     [documentValue, onFocusPath],
