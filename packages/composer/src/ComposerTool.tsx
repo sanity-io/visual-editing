@@ -1,14 +1,20 @@
-import { Card, Code, Flex } from '@sanity/ui'
+import { Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Path, pathToString, Tool } from 'sanity'
+import styled from 'styled-components'
 import type { VisualEditingMsg } from 'visual-editing-helpers'
 
+import { Resizable } from './components/Resizable'
 import { ComposerProvider } from './ComposerProvider'
 import { ContentEditor } from './editor/ContentEditor'
 import { PreviewFrame } from './preview/PreviewFrame'
 import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
 import { useComposerParams } from './useComposerParams'
+
+const Container = styled(Flex)`
+  overflow-x: auto;
+`
 
 export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
@@ -97,24 +103,48 @@ export default function ComposerTool(props: {
     }
   }, [channel, params])
 
+  const minWidth = 320
+  const [maxWidth, setMaxWidth] = useState(
+    Math.max(window.innerWidth - minWidth, minWidth),
+  )
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setMaxWidth(Math.max(window.innerWidth - minWidth, minWidth))
+    }
+
+    window.addEventListener('resize', handleWindowResize)
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [])
+  const [resizing, setResizing] = useState(false)
+  const handleResizeStart = useCallback(() => setResizing(true), [])
+  const handleResizeEnd = useCallback(() => setResizing(false), [])
+
   return (
     <ComposerProvider deskParams={deskParams} params={params}>
-      <Flex height="fill">
-        <Flex direction="column" flex={1} overflow="hidden">
+      <Container height="fill">
+        <Flex
+          direction="column"
+          flex={1}
+          overflow="hidden"
+          style={{ minWidth }}
+        >
           <PreviewFrame
             ref={iframeRef}
             initialUrl={`${defaultPreviewUrl.origin}${params.preview}`}
             onPathChange={handlePreviewPath}
             params={params}
-            pointerEvents={undefined}
+            pointerEvents={resizing ? 'none' : undefined}
           />
         </Flex>
-        <Card borderLeft flex={1} overflow="auto">
-          <Card borderBottom flex={1} overflow="auto" padding={4}>
-            <Code language="json" size={1}>
-              {JSON.stringify(params, null, 2)}
-            </Code>
-          </Card>
+        <Resizable
+          minWidth={minWidth}
+          maxWidth={maxWidth}
+          onResizeStart={handleResizeStart}
+          onResizeEnd={handleResizeEnd}
+        >
           <ContentEditor
             deskParams={deskParams}
             documentId={params.id}
@@ -122,8 +152,8 @@ export default function ComposerTool(props: {
             onDeskParams={handleDeskParams}
             onFocusPath={handleFocusPath}
           />
-        </Card>
-      </Flex>
+        </Resizable>
+      </Container>
     </ComposerProvider>
   )
 }
