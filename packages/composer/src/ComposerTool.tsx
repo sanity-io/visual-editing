@@ -2,6 +2,7 @@ import { Card, Code, Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { Path, pathToString, Tool } from 'sanity'
+import type { VisualEditingMsg } from 'visual-editing-helpers'
 
 import { ComposerProvider } from './ComposerProvider'
 import { ContentEditor } from './editor/ContentEditor'
@@ -9,35 +10,12 @@ import { PreviewFrame } from './preview/PreviewFrame'
 import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
 import { useComposerParams } from './useComposerParams'
 
-type Messages =
-  | {
-      type: 'composer/focus'
-      data: { id: string; path: string }
-    }
-  | {
-      type: 'composer/blur'
-      data: undefined
-    }
-  | {
-      type: 'overlay/focus'
-      data: {
-        projectId: string
-        dataset: string
-        id: string
-        path: string
-        type?: string
-        baseUrl: string
-        tool?: string
-        workspace?: string
-      }
-    }
-
 export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
 }): ReactElement {
   const { previewUrl = '/' } = props.tool.options ?? {}
 
-  const [channel, setChannel] = useState<ChannelReturns<Messages>>()
+  const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const { defaultPreviewUrl, setParams, params, deskParams } =
@@ -50,7 +28,7 @@ export default function ComposerTool(props: {
 
     if (!iframe) return
 
-    const channel = createChannel<Messages>({
+    const channel = createChannel<VisualEditingMsg>({
       id: 'composer',
       connections: [
         {
