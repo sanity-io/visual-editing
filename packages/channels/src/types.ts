@@ -97,7 +97,7 @@ export interface ChannelOptions<T extends ChannelMsg = ChannelMsg> {
   connections: Connection[]
   onConnect?: (connection: Connection) => void
   onDisconnect?: (connection: Connection) => void
-  handle: ChannelEventHandler<T>
+  handler: ChannelEventHandler<T>
 }
 
 /**

@@ -2,8 +2,9 @@ import { studioTheme, ThemeProvider } from '@sanity/ui'
 import { ChannelEventHandler } from 'channels'
 import { useCallback, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
+import type { VisualEditingMsg } from 'visual-editing-helpers'
 
-import { OverlayDispatchHandler, SanityNode, SanityNodeLegacy } from '../types'
+import { OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { elementsReducer } from './elementsReducer'
 import { useChannel } from './useChannel'
@@ -19,17 +20,6 @@ const Root = styled.div`
   z-index: 9999999;
 `
 
-export type ComposerMsg = {
-  type: 'composer/focus'
-  data: { path: string[] }
-}
-type OverlayMsg = {
-  type: 'overlays/focus'
-  data: SanityNode | SanityNodeLegacy
-}
-
-type ChannelMsg = OverlayMsg | ComposerMsg
-
 export function VisualEditing(): JSX.Element {
   const [elements, dispatch] = useReducer(elementsReducer, [])
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
@@ -39,21 +29,23 @@ export function VisualEditing(): JSX.Element {
     [elements],
   )
 
-  const channelEventHandler = useCallback<ChannelEventHandler<ChannelMsg>>(
-    (type, data) => {
-      if (type === 'composer/focus' && data.path?.length) {
-        dispatch({ type, data })
-      }
-    },
-    [],
-  )
+  const channelEventHandler = useCallback<
+    ChannelEventHandler<VisualEditingMsg>
+  >((type, data) => {
+    if (type === 'composer/focus' && data.path?.length) {
+      dispatch({ type, data })
+    }
+    if (type === 'composer/blur') {
+      dispatch({ type, data })
+    }
+  }, [])
 
-  const channel = useChannel<ChannelMsg>(channelEventHandler)
+  const channel = useChannel<VisualEditingMsg>(channelEventHandler)
 
-  const overlayEventHandler: OverlayDispatchHandler = useCallback(
+  const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
       if (message.type === 'element/click') {
-        channel?.send('overlays/focus', message.sanity)
+        channel?.send('overlay/focus', message.sanity)
       }
       dispatch(message)
     },

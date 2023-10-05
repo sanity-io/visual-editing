@@ -29,7 +29,7 @@ function ChannelDisplay({ clientId }: { clientId: string }) {
           id: 'parent',
         },
       ],
-      handle(type, data) {
+      handler(type, data) {
         setLog((l) => [{ ...data, type }, ...l])
       },
       onConnect: (added) => setConnections((cs) => [...cs, added]),

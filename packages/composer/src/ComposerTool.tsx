@@ -1,41 +1,40 @@
-import { ResetIcon } from '@sanity/icons'
-import { Button, Card, Code, Flex, Text } from '@sanity/ui'
+import { Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
-import { ReactElement, useEffect, useRef, useState } from 'react'
-import { Path, Tool } from 'sanity'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import { Path, pathToString, Tool } from 'sanity'
 import styled from 'styled-components'
+import type { VisualEditingMsg } from 'visual-editing-helpers'
 
-import { DocumentPane } from './editor/DocumentPane'
-import { ComposerPluginOptions } from './types'
+import { Resizable } from './components/Resizable'
+import { ComposerProvider } from './ComposerProvider'
+import { ContentEditor } from './editor/ContentEditor'
+import { PreviewFrame } from './preview/PreviewFrame'
+import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
+import { useComposerParams } from './useComposerParams'
 
-type Messages = {
-  type: 'composer/focus'
-  data: { path: Path }
-}
-
-const IFrame = styled.iframe`
-  border: 0;
-  height: 100%;
-  width: 100%;
-  display: block;
+const Container = styled(Flex)`
+  overflow-x: auto;
 `
 
 export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
 }): ReactElement {
-  const { tool } = props
+  const { previewUrl = '/' } = props.tool.options ?? {}
 
-  const [channel, setChannel] = useState<ChannelReturns<Messages>>()
+  const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  const [log, setLog] = useState<any[]>([])
+  const { defaultPreviewUrl, setParams, params, deskParams } =
+    useComposerParams({
+      previewUrl,
+    })
 
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
 
     if (!iframe) return
 
-    const channel = createChannel<Messages>({
+    const channel = createChannel<VisualEditingMsg>({
       id: 'composer',
       connections: [
         {
@@ -43,8 +42,15 @@ export default function ComposerTool(props: {
           id: 'overlays',
         },
       ],
-      handle(type, data) {
-        setLog((l) => [{ type, data }, ...l])
+      handler(type, data) {
+        if (type === 'overlay/focus') {
+          setParams((p) => ({
+            ...p,
+            id: data.id,
+            path: data.path,
+            type: data.type,
+          }))
+        }
       },
     })
     setChannel(channel)
@@ -52,52 +58,102 @@ export default function ComposerTool(props: {
     return () => {
       channel.disconnect()
     }
+  }, [setParams])
+
+  const handleFocusPath = useCallback(
+    // @todo nextDocumentId may not be needed with this strategy
+    (nextDocumentId: string, path: Path) => {
+      setParams((p) => {
+        return {
+          ...p,
+          // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
+          path: pathToString(path),
+        }
+      })
+    },
+    [setParams],
+  )
+
+  const handlePreviewPath = useCallback(
+    (nextPath: string) => {
+      const url = new URL(nextPath, defaultPreviewUrl.origin)
+      const preview = url.pathname + url.search
+      if (
+        url.origin === defaultPreviewUrl.origin &&
+        preview !== params.preview
+      ) {
+        setParams(() => ({ preview }))
+      }
+    },
+    [defaultPreviewUrl, params, setParams],
+  )
+
+  const handleDeskParams = useCallback(
+    (deskParams: DeskDocumentPaneParams) => {
+      setParams((p) => ({ ...p, ...deskParams }))
+    },
+    [setParams],
+  )
+
+  useEffect(() => {
+    if (params.id && params.path) {
+      channel?.send('composer/focus', { id: params.id, path: params.path })
+    } else {
+      channel?.send('composer/blur', undefined)
+    }
+  }, [channel, params])
+
+  const minWidth = 320
+  const [maxWidth, setMaxWidth] = useState(
+    Math.max(window.innerWidth - minWidth, minWidth),
+  )
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setMaxWidth(Math.max(window.innerWidth - minWidth, minWidth))
+    }
+
+    window.addEventListener('resize', handleWindowResize)
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
   }, [])
+  const [resizing, setResizing] = useState(false)
+  const handleResizeStart = useCallback(() => setResizing(true), [])
+  const handleResizeEnd = useCallback(() => setResizing(false), [])
 
   return (
-    <Flex height="fill">
-      <Card flex={1}>
-        <IFrame ref={iframeRef} src={tool.options?.previewUrl || '/'} />
-      </Card>
-      <Card borderLeft flex={1} overflow="hidden">
-        <Flex direction={'column'} height={'fill'}>
-          <Card borderBottom flex={1} overflow="auto" padding={4}>
-            <Code language="json" size={1}>
-              {JSON.stringify(log, null, 2)}
-            </Code>
-          </Card>
-          <Flex
-            paddingX={4}
-            paddingY={2}
-            justify={'space-between'}
-            gap={3}
-            align={'center'}
-          >
-            <Text size={1}>
-              {log.length} Item{log.length !== 1 && 's'}
-            </Text>
-            <Button
-              icon={ResetIcon}
-              fontSize={2}
-              mode="ghost"
-              padding={3}
-              text="Clear"
-              onClick={() => setLog([])}
-              disabled={!log.length}
-            />
-          </Flex>
+    <ComposerProvider deskParams={deskParams} params={params}>
+      <Container height="fill">
+        <Flex
+          direction="column"
+          flex={1}
+          overflow="hidden"
+          style={{ minWidth }}
+        >
+          <PreviewFrame
+            ref={iframeRef}
+            initialUrl={`${defaultPreviewUrl.origin}${params.preview}`}
+            onPathChange={handlePreviewPath}
+            params={params}
+            pointerEvents={resizing ? 'none' : undefined}
+          />
         </Flex>
-      </Card>
-      <Card borderLeft flex={1} overflow="auto">
-        <DocumentPane
-          documentId="siteSettings"
-          documentType="siteSettings"
-          onFocusPath={(path) => {
-            if (!path) return
-            channel?.send('composer/focus', { path })
-          }}
-        />
-      </Card>
-    </Flex>
+        <Resizable
+          minWidth={minWidth}
+          maxWidth={maxWidth}
+          onResizeStart={handleResizeStart}
+          onResizeEnd={handleResizeEnd}
+        >
+          <ContentEditor
+            deskParams={deskParams}
+            documentId={params.id}
+            documentType={params.type}
+            onDeskParams={handleDeskParams}
+            onFocusPath={handleFocusPath}
+          />
+        </Resizable>
+      </Container>
+    </ComposerProvider>
   )
 }

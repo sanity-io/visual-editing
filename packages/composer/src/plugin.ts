@@ -13,7 +13,7 @@ export const composerTool = definePlugin<ComposerPluginOptions>((options) => {
         component: lazy(() => import('./ComposerTool')),
         options,
         canHandleIntent(intent, params) {
-          if (intent === 'focus' && params.id && params.path) {
+          if (intent === 'edit' && params.id) {
             return true
           }
           return false

@@ -1,6 +1,7 @@
 {
-  "name": "@sanity/composer",
-  "version": "0.0.1",
+  "name": "visual-editing-helpers",
+  "version": "0.0.0",
+  "private": true,
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
@@ -29,10 +30,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "pkg build --strict && pkg --strict",
-    "lint#re-enable once warnings are fixed": "eslint --max-warnings 0 .",
-    "lint": "eslint .",
+    "lint": "eslint --max-warnings 0 .",
     "prepublishOnly": "npm run build",
-    "test": "tsc --noEmit",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
@@ -65,9 +64,6 @@
       "prettier"
     ],
     "extends": [
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:react/jsx-runtime",
       "eslint:recommended",
       "plugin:prettier/recommended",
       "plugin:@typescript-eslint/eslint-recommended",
@@ -89,42 +85,28 @@
       "@typescript-eslint/explicit-module-boundary-types": "error",
       "@typescript-eslint/member-delimiter-style": "off",
       "@typescript-eslint/no-empty-interface": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
       "prettier/prettier": "warn",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react/prop-types": "off",
       "simple-import-sort/exports": "warn",
       "simple-import-sort/imports": "warn"
     },
     "root": true
   },
   "dependencies": {
-    "@sanity/ui": "^1.8.2"
+    "sanity": "3.16.5-pink-lizard.39"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "^2.4.9",
-    "channels": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0",
-    "styled-components": "^5.3.11",
-    "sanity": "3.16.5-pink-lizard.39",
-    "typescript": "^5.2.2",
-    "visual-editing-helpers": "workspace:*"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0",
-    "sanity": "3.16.5-pink-lizard.39",
-    "styled-components": "^5.3.11"
+    "@sanity/pkg-utils": "^2.4.8",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "ls-engines": "^0.9.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=16.14"
-  },
-  "publishConfig": {
-    "access": "restricted",
-    "provenance": false
   }
 }

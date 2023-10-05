@@ -34,7 +34,7 @@ import { ChannelReturns, createChannel } from 'channels'
 import { createDispatchHandler } from '@/util/createDispatchHandler'
 
 type ChannelMsg = {
-  type: 'overlays/focus'
+  type: 'overlay/focus'
   data: any
 }
 
@@ -76,7 +76,7 @@ onMounted(() => {
         id: 'composer',
       },
     ],
-    handle(type, data) {
+    handler(type, data) {
       console.log(type, data)
     },
   })
@@ -98,6 +98,6 @@ watch(
 )
 
 const onOpen = (sanityData: SanityNode | SanityNodeLegacy) => {
-  channel?.value?.send('overlays/focus', { data: toRaw(sanityData) })
+  channel?.value?.send('overlay/focus', { data: toRaw(sanityData) })
 }
 </script>

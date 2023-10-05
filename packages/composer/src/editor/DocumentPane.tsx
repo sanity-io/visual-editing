@@ -1,5 +1,11 @@
 import { Button, ErrorBoundary } from '@sanity/ui'
-import { ErrorInfo, ReactElement, useCallback, useMemo, useState } from 'react'
+import {
+  ErrorInfo,
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react'
 import { Path } from 'sanity'
 import {
   DeskToolProvider,
@@ -7,15 +13,18 @@ import {
   DocumentPaneNode,
   PaneLayout,
 } from 'sanity/desk'
+import { DeskDocumentPaneParams } from 'src/types'
 
 import { ComposerPaneRouterProvider } from './ComposerPaneRouterProvider'
 
-export function DocumentPane(props: {
+export const DocumentPane: FunctionComponent<{
   documentId: string
   documentType: string
+  params: DeskDocumentPaneParams
+  onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
-}): ReactElement {
-  const { documentId, documentType, onFocusPath } = props
+}> = function (props) {
+  const { documentId, documentType, params, onDeskParams, onFocusPath } = props
 
   const pane: DocumentPaneNode = useMemo(
     () => ({
@@ -49,7 +58,10 @@ export function DocumentPane(props: {
     <ErrorBoundary onCatch={setErrorParams}>
       <PaneLayout style={{ height: '100%' }}>
         <DeskToolProvider>
-          <ComposerPaneRouterProvider>
+          <ComposerPaneRouterProvider
+            params={params}
+            onDeskParams={onDeskParams}
+          >
             <DeskDocumentPane
               paneKey="document"
               index={1}

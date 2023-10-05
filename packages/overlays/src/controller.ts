@@ -305,8 +305,15 @@ export function createOverlayController({
     })
   }
 
+  function handleWindowResize() {
+    for (const element of elementSet) {
+      updateRect(element)
+    }
+  }
+
   function destroy() {
     window.removeEventListener('click', handleBlur)
+    window.removeEventListener('resize', handleWindowResize)
     io.disconnect()
     mo.disconnect()
 
@@ -322,6 +329,7 @@ export function createOverlayController({
 
   function activate() {
     window.addEventListener('click', handleBlur)
+    window.addEventListener('resize', handleWindowResize)
     registerElements(document.body)
   }
 

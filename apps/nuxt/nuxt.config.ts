@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
   imports: {
     transform: {
-      exclude: [/\bpackages\/.+\b/],
+      exclude: [/\bpackages\/.+\b/, /\bapps\/common\/.+\b/],
     },
   },
   modules: ['@nuxtjs/tailwindcss'],
