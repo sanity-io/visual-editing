@@ -94,7 +94,7 @@ importers:
     dependencies:
       '@sanity/icons':
         specifier: ^2.4.1
-        version: 2.4.1(react@18.2.0)
+        version: 2.5.0(react@18.2.0)
       '@sanity/ui':
         specifier: ^1.8.2
         version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
@@ -173,7 +173,7 @@ importers:
         version: 13.5.3(@babel/core@7.22.20)(react-dom@18.2.0)(react@18.2.0)
       next-sanity:
         specifier: ^5.5.4
-        version: 5.5.4(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11)
+        version: 5.5.4(@sanity/client@6.4.11)(@sanity/icons@2.5.0)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11)
       postcss:
         specifier: 8.4.30
         version: 8.4.30
@@ -465,8 +465,8 @@ importers:
   packages/overlays:
     dependencies:
       '@sanity/icons':
-        specifier: ^2.4.1
-        version: 2.4.1(react@18.2.0)
+        specifier: ^2.5.0
+        version: 2.5.0(react@18.2.0)
       '@sanity/ui':
         specifier: ^1.8.2
         version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
@@ -4113,7 +4113,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -4767,8 +4766,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@sanity/icons@2.4.1(react@18.2.0):
-    resolution: {integrity: sha512-/yxcIT0k1RxStI/pP/oHM44fHI6Oxiygf0jPcdV06Ce0xfFo+51UEqJSfE8hQ3fh+uFkat8ZZObZjq5v1ceJzw==}
+  /@sanity/icons@2.5.0(react@18.2.0):
+    resolution: {integrity: sha512-be5wS/rpT9RZh/+ETc1zIgH41xGafWHdDnRgd1/QIF63swztzc92pFK+24kZzXBmG7A5Flt+TPo8yF0yrL5Z+g==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18
@@ -5001,7 +5000,7 @@ packages:
     dependencies:
       '@floating-ui/react-dom': 2.0.0(react-dom@18.2.0)(react@18.2.0)
       '@sanity/color': 2.2.5
-      '@sanity/icons': 2.4.1(react@18.2.0)
+      '@sanity/icons': 2.5.0(react@18.2.0)
       csstype: 3.1.2
       framer-motion: 10.16.4(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
@@ -5043,7 +5042,7 @@ packages:
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@rexxars/react-split-pane': 0.1.93(react-dom@18.2.0)(react@18.2.0)
       '@sanity/color': 2.2.5
-      '@sanity/icons': 2.4.1(react@18.2.0)
+      '@sanity/icons': 2.5.0(react@18.2.0)
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       '@uiw/react-codemirror': 4.21.13(@babel/runtime@7.22.15)(@codemirror/autocomplete@6.9.0)(@codemirror/language@6.9.0)(@codemirror/lint@6.4.1)(@codemirror/search@6.5.2)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.18.1)(codemirror@6.0.1)(react-dom@18.2.0)(react@18.2.0)
       hashlru: 2.3.0
@@ -13571,10 +13570,6 @@ packages:
     hasBin: true
     dev: false
 
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
-    dev: true
-
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: true
@@ -13598,7 +13593,7 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: true
 
-  /next-sanity@5.5.4(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11):
+  /next-sanity@5.5.4(@sanity/client@6.4.11)(@sanity/icons@2.5.0)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11):
     resolution: {integrity: sha512-hXpTbubgazoJO1cSb+OuGCtRbq7Fby/MYpZnU9IRoiPZS50UVz8lPWflFUfTq/j+pCerPpp31qDwCjY+Op6KcA==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -13612,7 +13607,7 @@ packages:
       styled-components: ^5.2.0 || ^6.0.0
     dependencies:
       '@sanity/client': 6.4.11
-      '@sanity/icons': 2.4.1(react@18.2.0)
+      '@sanity/icons': 2.5.0(react@18.2.0)
       '@sanity/preview-kit': 3.1.6(@sanity/client@6.4.11)(react@18.2.0)
       '@sanity/types': 3.16.5-pink-lizard.39
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
@@ -16742,7 +16737,7 @@ packages:
       sanity: 3.16.5-pink-lizard.39
       styled-components: ^5.2
     dependencies:
-      '@sanity/icons': 2.4.1(react@18.2.0)
+      '@sanity/icons': 2.5.0(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       framer-motion: 10.16.4(react-dom@18.2.0)(react@18.2.0)
@@ -16781,7 +16776,7 @@ packages:
       '@sanity/eventsource': 5.0.0
       '@sanity/export': 3.16.5-pink-lizard.39
       '@sanity/generate-help-url': 3.0.0
-      '@sanity/icons': 2.4.1(react@18.2.0)
+      '@sanity/icons': 2.5.0(react@18.2.0)
       '@sanity/image-url': 1.0.2
       '@sanity/import': 3.16.5-pink-lizard.39
       '@sanity/logos': 2.1.2(@sanity/color@2.2.5)(react@18.2.0)
@@ -16909,7 +16904,7 @@ packages:
       '@sanity/eventsource': 5.0.0
       '@sanity/export': 3.16.5-pink-lizard.39
       '@sanity/generate-help-url': 3.0.0
-      '@sanity/icons': 2.4.1(react@18.2.0)
+      '@sanity/icons': 2.5.0(react@18.2.0)
       '@sanity/image-url': 1.0.2
       '@sanity/import': 3.16.5-pink-lizard.39
       '@sanity/logos': 2.1.2(@sanity/color@2.2.5)(react@18.2.0)
@@ -17037,7 +17032,7 @@ packages:
       '@sanity/eventsource': 5.0.0
       '@sanity/export': 3.16.5-pink-lizard.39
       '@sanity/generate-help-url': 3.0.0
-      '@sanity/icons': 2.4.1(react@18.2.0)
+      '@sanity/icons': 2.5.0(react@18.2.0)
       '@sanity/image-url': 1.0.2
       '@sanity/import': 3.16.5-pink-lizard.39
       '@sanity/logos': 2.1.2(@sanity/color@2.2.5)(react@18.2.0)
