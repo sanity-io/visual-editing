@@ -49,6 +49,10 @@ export default function ComposerTool(props: {
             path: data.path,
             type: data.type,
           })
+        } else if (type === 'overlay/navigate') {
+          setParams({
+            preview: data.url,
+          })
         }
       },
     })
@@ -60,6 +64,7 @@ export default function ComposerTool(props: {
   }, [setParams])
 
   const handleFocusPath = useCallback(
+    // eslint-disable-next-line no-warning-comments
     // @todo nextDocumentId may not be needed with this strategy
     (nextDocumentId: string, nextPath: Path) => {
       setParams({
@@ -78,10 +83,14 @@ export default function ComposerTool(props: {
         url.origin === defaultPreviewUrl.origin &&
         preview !== params.preview
       ) {
-        setParams({ preview })
+        setParams({ id: undefined, path: undefined, preview })
+        channel?.send('composer/navigate', {
+          url: preview,
+          type: 'push',
+        })
       }
     },
-    [defaultPreviewUrl, params, setParams],
+    [channel, defaultPreviewUrl, params, setParams],
   )
 
   const handleDeskParams = useCallback(
@@ -97,7 +106,7 @@ export default function ComposerTool(props: {
     } else {
       channel?.send('composer/blur', undefined)
     }
-  }, [channel, params])
+  }, [channel, params.id, params.path])
 
   const minWidth = 320
   const [maxWidth, setMaxWidth] = useState(
@@ -118,6 +127,8 @@ export default function ComposerTool(props: {
   const handleResizeStart = useCallback(() => setResizing(true), [])
   const handleResizeEnd = useCallback(() => setResizing(false), [])
 
+  const initialUrl = useRef(`${defaultPreviewUrl.origin}${params.preview}`)
+
   return (
     <ComposerProvider deskParams={deskParams} params={params}>
       <Container height="fill">
@@ -129,7 +140,7 @@ export default function ComposerTool(props: {
         >
           <PreviewFrame
             ref={iframeRef}
-            initialUrl={`${defaultPreviewUrl.origin}${params.preview}`}
+            initialUrl={initialUrl.current}
             onPathChange={handlePreviewPath}
             params={params}
             pointerEvents={resizing ? 'none' : undefined}

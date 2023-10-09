@@ -23,6 +23,11 @@ export type SanityNodeLegacy = {
   data?: string
 }
 
+export type HistoryUpdate = {
+  type: 'push' | 'pop' | 'replace'
+  url: string
+}
+
 export type ComposerMsg =
   | {
       type: 'composer/focus'
@@ -32,10 +37,19 @@ export type ComposerMsg =
       type: 'composer/blur'
       data: undefined
     }
+  | {
+      type: 'composer/navigate'
+      data: HistoryUpdate
+    }
 
-export type OverlayMsg = {
-  type: 'overlay/focus'
-  data: SanityNode | SanityNodeLegacy
-}
+export type OverlayMsg =
+  | {
+      type: 'overlay/focus'
+      data: SanityNode | SanityNodeLegacy
+    }
+  | {
+      type: 'overlay/navigate'
+      data: HistoryUpdate
+    }
 
 export type VisualEditingMsg = ComposerMsg | OverlayMsg

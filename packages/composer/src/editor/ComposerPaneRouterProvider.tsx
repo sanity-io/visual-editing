@@ -96,6 +96,7 @@ export function ComposerPaneRouterProvider(
       setParams: (nextParams) => {
         onDeskParams({
           ...nextParams,
+          // eslint-disable-next-line no-warning-comments
           // @todo inspect param set manually as it does not seem to be returned
           inspect: nextParams.inspect ?? undefined,
         } as DeskDocumentPaneParams)

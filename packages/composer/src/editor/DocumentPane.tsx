@@ -13,8 +13,8 @@ import {
   DocumentPaneNode,
   PaneLayout,
 } from 'sanity/desk'
-import { DeskDocumentPaneParams } from 'src/types'
 
+import { DeskDocumentPaneParams } from '../types'
 import { ComposerPaneRouterProvider } from './ComposerPaneRouterProvider'
 
 export const DocumentPane: FunctionComponent<{

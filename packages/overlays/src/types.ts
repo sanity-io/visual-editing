@@ -1,4 +1,8 @@
-import type { SanityNode, SanityNodeLegacy } from 'visual-editing-helpers'
+import type {
+  HistoryUpdate,
+  SanityNode,
+  SanityNodeLegacy,
+} from 'visual-editing-helpers'
 
 export type { SanityNode, SanityNodeLegacy } from 'visual-editing-helpers'
 
@@ -157,4 +161,9 @@ export interface _EventHandlers {
   click: (event: MouseEvent) => void
   mouseenter: (event: MouseEvent) => void
   mouseleave: (event: MouseEvent) => void
+}
+
+export interface HistoryAdapter {
+  push: (url: string) => void
+  subscribe: (navigate: (update: HistoryUpdate) => void) => () => void
 }

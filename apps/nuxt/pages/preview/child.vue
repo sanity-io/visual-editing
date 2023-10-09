@@ -4,28 +4,21 @@
       class="rounded border p-4"
       :data-sanity="encodeSanityNodeData(sanityTitleData)"
     >
-      Title Element
+      Foo
     </div>
-    <div class="mx-auto my-8 h-[50vh] w-8 bg-neutral-200"></div>
+    <div class="mx-auto my-8 h-[50vh] w-px bg-neutral-200"></div>
     <div
       class="rounded border p-4"
       :data-sanity="encodeSanityNodeData(sanityDescData)"
     >
       Description Element
     </div>
-    <div class="mx-auto my-8 h-[50vh] w-8 bg-neutral-200"></div>
+    <div class="mx-auto my-8 h-[50vh] w-px bg-neutral-200"></div>
     <div
       class="rounded border p-4"
       :data-sanity="encodeSanityNodeData(sanityCopyrightData)"
     >
       Copyright Element
-    </div>
-    <div class="mx-auto my-8 h-[50vh] w-8 bg-neutral-200"></div>
-    <div
-      class="rounded border p-4"
-      :data-sanity="encodeSanityNodeData(sanityDescData)"
-    >
-      Description Element
     </div>
   </div>
 </template>

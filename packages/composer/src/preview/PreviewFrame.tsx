@@ -37,6 +37,12 @@ export const PreviewFrame = forwardRef<
   const setDesktopMode = useCallback(() => setMode('desktop'), [setMode])
   const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
 
+  const onIFrameLoad = useCallback(() => {
+    if (typeof ref !== 'function' && ref?.current?.contentWindow) {
+      onPathChange(ref.current.contentWindow.location.pathname)
+    }
+  }, [onPathChange, ref])
+
   return (
     <>
       <Card flex="none" padding={2} shadow={1} style={{ position: 'relative' }}>
@@ -78,7 +84,12 @@ export const PreviewFrame = forwardRef<
               maxHeight: mode === 'desktop' ? undefined : 650,
             }}
           >
-            <IFrame ref={ref} src={initialUrl} style={{ pointerEvents }} />
+            <IFrame
+              ref={ref}
+              src={initialUrl}
+              style={{ pointerEvents }}
+              onLoad={onIFrameLoad}
+            />
           </IFrameContainerCard>
         </Flex>
       </Card>

@@ -1,6 +1,7 @@
 import type { Root } from 'react-dom/client'
 
 import { OVERLAY_ID } from '../constants'
+import { HistoryAdapter } from '../types'
 
 /**
  * @public
@@ -28,7 +29,11 @@ function cleanup() {
  *
  * @public
  */
-export function enableVisualEditing(): DisableVisualEditing {
+export function enableVisualEditing({
+  history,
+}: {
+  history?: HistoryAdapter
+}): DisableVisualEditing {
   if (root || node) return cleanup
   let cancelled = false
 
@@ -44,7 +49,7 @@ export function enableVisualEditing(): DisableVisualEditing {
       const { createRoot } =
         'default' in reactClient ? reactClient.default : reactClient
       root = createRoot(node)
-      root.render(<VisualEditing />)
+      root.render(<VisualEditing history={history} />)
     },
   )
 

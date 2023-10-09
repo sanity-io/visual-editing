@@ -357,6 +357,7 @@ export function createOverlayController({
   return {
     destroy,
     toggle() {
+      // eslint-disable-next-line no-warning-comments
       // @todo
     },
   }
