@@ -4,7 +4,11 @@ import type {
   SanityNodeLegacy,
 } from 'visual-editing-helpers'
 
-export type { SanityNode, SanityNodeLegacy } from 'visual-editing-helpers'
+export type {
+  HistoryUpdate,
+  SanityNode,
+  SanityNodeLegacy,
+} from 'visual-editing-helpers'
 
 export interface OverlayRect {
   x: number
@@ -126,6 +130,15 @@ export interface ElementState {
 }
 
 /**
+ *
+ * @public
+ */
+export interface HistoryAdapter {
+  subscribe: (navigate: (update: HistoryUpdate) => void) => () => void
+  update: (update: HistoryUpdate) => void
+}
+
+/**
  * Object returned by node traversal
  * @internal
  */
@@ -161,9 +174,4 @@ export interface _EventHandlers {
   click: (event: MouseEvent) => void
   mouseenter: (event: MouseEvent) => void
   mouseleave: (event: MouseEvent) => void
-}
-
-export interface HistoryAdapter {
-  push: (url: string) => void
-  subscribe: (navigate: (update: HistoryUpdate) => void) => () => void
 }

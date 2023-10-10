@@ -49,7 +49,7 @@ export const VisualEditing: FunctionComponent<{ history?: HistoryAdapter }> =
           dispatch({ type, data })
         }
         if (type === 'composer/navigate') {
-          history?.push(data.url)
+          history?.update(data)
         }
       },
       [history],

@@ -23,11 +23,19 @@ export type SanityNodeLegacy = {
   data?: string
 }
 
+/**
+ * Preview frame history update
+ * @public
+ */
 export type HistoryUpdate = {
   type: 'push' | 'pop' | 'replace'
   url: string
 }
 
+/**
+ * Messages emitted by the composer package
+ * @public
+ */
 export type ComposerMsg =
   | {
       type: 'composer/focus'
@@ -42,6 +50,10 @@ export type ComposerMsg =
       data: HistoryUpdate
     }
 
+/**
+ * Messages emitted by the overlays package
+ * @public
+ */
 export type OverlayMsg =
   | {
       type: 'overlay/focus'
@@ -52,4 +64,8 @@ export type OverlayMsg =
       data: HistoryUpdate
     }
 
+/**
+ * Union type of visual editing related messages
+ * @public
+ */
 export type VisualEditingMsg = ComposerMsg | OverlayMsg
