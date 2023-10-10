@@ -3,6 +3,7 @@ import {
   FunctionComponent,
   HTMLProps,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -71,6 +72,12 @@ export const Resizable: FunctionComponent<
         : { ...styleProp, minWidth, maxWidth },
     [disabled, minWidth, maxWidth, styleProp, targetWidth],
   )
+
+  useEffect(() => {
+    setTargetWidth((width) => {
+      return maxWidth && width > maxWidth ? maxWidth : width
+    })
+  }, [maxWidth, setTargetWidth])
 
   return (
     <Root as={forwardedAs} {...restProps} ref={setElement} style={style}>
