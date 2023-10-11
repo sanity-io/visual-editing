@@ -1,4 +1,4 @@
-import { DesktopIcon, MobileDeviceIcon } from '@sanity/icons'
+import { DesktopIcon, EditIcon, MobileDeviceIcon } from '@sanity/icons'
 import { Box, Button, Card, Flex } from '@sanity/ui'
 import { forwardRef, useCallback, useState } from 'react'
 import styled from 'styled-components'
@@ -26,11 +26,20 @@ export const PreviewFrame = forwardRef<
   {
     initialUrl: string
     onPathChange: (nextPath: string) => void
+    overlayEnabled: boolean
     params: ComposerParams
     pointerEvents?: 'none'
+    toggleOverlay: () => void
   }
 >(function PreviewFrame(props, ref) {
-  const { initialUrl, onPathChange, params, pointerEvents } = props
+  const {
+    initialUrl,
+    onPathChange,
+    overlayEnabled,
+    params,
+    pointerEvents,
+    toggleOverlay,
+  } = props
 
   const [mode, setMode] = useState<'desktop' | 'mobile'>('desktop')
 
@@ -47,7 +56,17 @@ export const PreviewFrame = forwardRef<
   return (
     <>
       <Card flex="none" padding={2} shadow={1} style={{ position: 'relative' }}>
-        <Flex align="center" gap={2} style={{ minHeight: 0 }}>
+        <Flex align="center" gap={1} style={{ minHeight: 0 }}>
+          <Flex flex="none">
+            <Button
+              fontSize={1}
+              icon={EditIcon}
+              mode="bleed"
+              onClick={toggleOverlay}
+              padding={2}
+              selected={overlayEnabled}
+            />
+          </Flex>
           <Box flex={1}>
             <PreviewLocationInput
               onChange={onPathChange}

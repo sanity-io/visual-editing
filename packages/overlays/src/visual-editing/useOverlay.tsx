@@ -18,7 +18,7 @@ export function useOverlay(
     })
 
     return () => {
-      overlayController.current?.destroy()
+      overlayController.current?.deactivate()
     }
   }, [element, handler])
 

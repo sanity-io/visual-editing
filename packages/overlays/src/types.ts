@@ -39,7 +39,13 @@ export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
 }
 
 /** @public */
-export type OverlayMsgElementBlur = Msg<'overlay/blur'>
+export type OverlayMsgBlur = Msg<'overlay/blur'>
+
+/** @public */
+export type OverlayMsgActivate = Msg<'overlay/activate'>
+
+/** @public */
+export type OverlayMsgDeactivate = Msg<'overlay/deactivate'>
 
 /** @public */
 export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
@@ -76,8 +82,10 @@ export type OverlayMsgElementUpdateRect = OverlayMsgElement<'updateRect'> & {
  * @public
  */
 export type OverlayMsg =
+  | OverlayMsgBlur
+  | OverlayMsgActivate
+  | OverlayMsgDeactivate
   | OverlayMsgElementActivate
-  | OverlayMsgElementBlur
   | OverlayMsgElementClick
   | OverlayMsgElementDeactivate
   | OverlayMsgElementMouseEnter
@@ -106,8 +114,8 @@ export interface OverlayOptions {
  * @public
  */
 export interface OverlayController {
-  destroy: () => void
-  toggle: () => void
+  activate: () => void
+  deactivate: () => void
 }
 
 /**

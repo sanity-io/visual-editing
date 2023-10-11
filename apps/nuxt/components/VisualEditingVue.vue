@@ -54,7 +54,7 @@ const props = withDefaults(
 )
 
 function disable() {
-  overlayController?.destroy()
+  overlayController?.deactivate()
 }
 
 function enable() {

@@ -32,6 +32,7 @@ export const VisualEditing: FunctionComponent<{ history?: HistoryAdapter }> =
     const { history } = props
     const [elements, dispatch] = useReducer(elementsReducer, [])
     const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
+    const [overlayEnabled, setOverlayEnabled] = useState(true)
 
     const elementsToRender = useMemo(
       () => elements.filter((e) => e.activated || e.focused),
@@ -51,6 +52,9 @@ export const VisualEditing: FunctionComponent<{ history?: HistoryAdapter }> =
         if (type === 'composer/navigate') {
           history?.update(data)
         }
+        if (type === 'composer/toggleOverlay') {
+          setOverlayEnabled((enabled) => !enabled)
+        }
       },
       [history],
     )
@@ -61,13 +65,25 @@ export const VisualEditing: FunctionComponent<{ history?: HistoryAdapter }> =
       (message) => {
         if (message.type === 'element/click') {
           channel?.send('overlay/focus', message.sanity)
+        } else if (message.type === 'overlay/activate') {
+          channel?.send('overlay/toggle', { enabled: true })
+        } else if (message.type === 'overlay/deactivate') {
+          channel?.send('overlay/toggle', { enabled: false })
         }
         dispatch(message)
       },
       [channel],
     )
 
-    useOverlay(rootElement, overlayEventHandler)
+    const overlay = useOverlay(rootElement, overlayEventHandler)
+
+    useEffect(() => {
+      if (overlayEnabled) {
+        overlay?.activate()
+      } else {
+        overlay?.deactivate()
+      }
+    }, [channel, overlay, overlayEnabled])
 
     useEffect(() => {
       return history?.subscribe((update) => {

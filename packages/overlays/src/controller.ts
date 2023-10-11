@@ -21,6 +21,7 @@ export function createOverlayController({
   handler,
   overlayElement,
 }: OverlayOptions): OverlayController {
+  let activated = false
   // Map for getting element by ID
   const elementIdMap = new Map<string, HTMLElement>()
   // WeakMap for getting data by element
@@ -324,7 +325,8 @@ export function createOverlayController({
     }
   }
 
-  function destroy() {
+  function deactivate() {
+    if (!activated) return
     window.removeEventListener('click', handleBlur)
     window.removeEventListener('resize', handleWindowResize)
     io.disconnect()
@@ -338,12 +340,21 @@ export function createOverlayController({
     elementSet.clear()
 
     hoverStack = []
+    activated = false
+    handler({
+      type: 'overlay/deactivate',
+    })
   }
 
   function activate() {
+    if (activated) return
     window.addEventListener('click', handleBlur)
     window.addEventListener('resize', handleWindowResize)
     registerElements(document.body)
+    activated = true
+    handler({
+      type: 'overlay/activate',
+    })
   }
 
   window.document.fonts.ready.then(() => {
@@ -355,10 +366,7 @@ export function createOverlayController({
   activate()
 
   return {
-    destroy,
-    toggle() {
-      // eslint-disable-next-line no-warning-comments
-      // @todo
-    },
+    activate,
+    deactivate,
   }
 }

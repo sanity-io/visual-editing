@@ -49,6 +49,10 @@ export type ComposerMsg =
       type: 'composer/navigate'
       data: HistoryUpdate
     }
+  | {
+      type: 'composer/toggleOverlay'
+      data: undefined
+    }
 
 /**
  * Messages emitted by the overlays package
@@ -62,6 +66,12 @@ export type OverlayMsg =
   | {
       type: 'overlay/navigate'
       data: HistoryUpdate
+    }
+  | {
+      type: 'overlay/toggle'
+      data: {
+        enabled: boolean
+      }
     }
 
 /**

@@ -9,10 +9,12 @@ export const createDispatchHandler =
     ) {
       if (!elements.value.find((e) => e.id === message.id)) {
         elements.value.push({
+          activated: false,
+          focused: false,
+          hovered: false,
           id: message.id,
           rect: message.rect,
           sanity: message.sanity,
-          hovered: false,
         })
       }
     } else if (

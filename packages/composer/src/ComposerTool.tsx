@@ -44,6 +44,8 @@ export default function ComposerTool(props: {
       previewUrl,
     })
 
+  const [overlayEnabled, setOverlayEnabled] = useState(true)
+
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
 
@@ -68,6 +70,8 @@ export default function ComposerTool(props: {
           setParams({
             preview: data.url,
           })
+        } else if (type === 'overlay/toggle') {
+          setOverlayEnabled(data.enabled)
         }
       },
     })
@@ -123,6 +127,7 @@ export default function ComposerTool(props: {
     }
   }, [channel, params.id, params.path])
 
+  // Resizing
   const minWidth = 320
   const [maxWidth, setMaxWidth] = useState(
     Math.max(window.innerWidth - minWidth, minWidth),
@@ -142,7 +147,16 @@ export default function ComposerTool(props: {
   const handleResizeStart = useCallback(() => setResizing(true), [])
   const handleResizeEnd = useCallback(() => setResizing(false), [])
 
-  const initialUrl = useRef(`${defaultPreviewUrl.origin}${params.preview}`)
+  // The URL that should be loaded by the preview iframe
+  // useRef to prevent iframe reloading when preview param changes
+  const initialPreviewUrl = useRef(
+    `${defaultPreviewUrl.origin}${params.preview}`,
+  )
+
+  const toggleOverlay = useCallback(
+    () => channel?.send('composer/toggleOverlay', undefined),
+    [channel],
+  )
 
   return (
     <ComposerProvider deskParams={deskParams} params={params}>
@@ -155,10 +169,12 @@ export default function ComposerTool(props: {
         >
           <PreviewFrame
             ref={iframeRef}
-            initialUrl={initialUrl.current}
+            initialUrl={initialPreviewUrl.current}
             onPathChange={handlePreviewPath}
             params={params}
             pointerEvents={resizing ? 'none' : undefined}
+            toggleOverlay={toggleOverlay}
+            overlayEnabled={overlayEnabled}
           />
         </Flex>
         <Resizable
