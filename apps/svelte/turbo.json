@@ -3,6 +3,8 @@
   "extends": ["//"],
   "pipeline": {
     "build": {
+      "dotEnv": [".env", ".env.local"],
+      "env": ["VERCEL_ENV"],
       "outputs": [".svelte-kit/**", ".vercel/**"]
     }
   }

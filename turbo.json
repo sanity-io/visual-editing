@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["RUNNER_OS", "*VERCEL_ENV"],
+  "globalEnv": ["RUNNER_OS"],
   "pipeline": {
     "build": {
       "outputs": ["dist/**"],

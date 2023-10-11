@@ -3,6 +3,8 @@
   "extends": ["//"],
   "pipeline": {
     "build": {
+      "dotEnv": [".env", ".env.local"],
+      "env": ["SANITY_STUDIO_*"],
       "outputs": [".sanity/**", "dist/**"]
     }
   }
