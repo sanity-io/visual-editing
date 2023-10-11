@@ -13,6 +13,12 @@ const sharedSettings = definePlugin({
   schema,
 })
 
+console.log(
+  process.env.SANITY_STUDIO_VERCEL_URL,
+  process.env.SANITY_STUDIO_VERCEL_BRANCH_URL,
+  process.env.SANITY_STUDIO_VERCEL_ENV,
+)
+
 const composerWorkspaces = Object.entries({
   remix:
     process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
