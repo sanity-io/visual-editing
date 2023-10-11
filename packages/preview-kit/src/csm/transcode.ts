@@ -82,8 +82,16 @@ export function createTranscoder(config: CreateTranscoderConfig): Transcoder {
     // Allow userland to control when to opt-out of encoding
     if (
       (typeof encodeSourceMapAtPath === 'function'
-        ? encodeSourceMapAtPath({ path: sourcePath, filterDefault })
-        : filterDefault({ path: sourcePath, filterDefault })) === false
+        ? encodeSourceMapAtPath({
+            path: sourcePath,
+            filterDefault,
+            sourceDocument,
+          })
+        : filterDefault({
+            path: sourcePath,
+            filterDefault,
+            sourceDocument,
+          })) === false
     ) {
       if (logger) {
         report.skipped.push({

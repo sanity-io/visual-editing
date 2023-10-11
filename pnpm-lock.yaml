@@ -247,15 +247,24 @@ importers:
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@sanity/preview-kit':
+        specifier: workspace:*
+        version: link:../../packages/preview-kit
       '@vercel/node':
         specifier: ^2.15.10
         version: 2.15.10
+      '@vercel/stega':
+        specifier: 0.1.0
+        version: 0.1.0
       apps-common:
         specifier: workspace:*
         version: link:../common
       isbot:
         specifier: ^3.7.0
         version: 3.7.0
+      lodash.get:
+        specifier: ^4.4.2
+        version: 4.4.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -275,6 +284,9 @@ importers:
       '@remix-run/serve':
         specifier: ^1.19.3
         version: 1.19.3
+      '@types/lodash.get':
+        specifier: ^4.4.7
+        version: 4.4.7
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.23
@@ -608,7 +620,7 @@ importers:
         version: 1.2.0(react@18.2.0)
     devDependencies:
       '@sanity/client':
-        specifier: ^6.5.0
+        specifier: ^6.6.0
         version: 6.6.0
       '@sanity/pkg-utils':
         specifier: ^2.4.8
@@ -4104,6 +4116,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -4683,6 +4696,16 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@sanity/client@6.4.11:
+    resolution: {integrity: sha512-A8s5odg9b8ioamKDdfrfsp5rHsE8J+BOpknw6eRtIHF5BBkNGAYdS78NdS1m3R+llHotdpyS/X2+la4YgzU5/w==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sanity/eventsource': 5.0.0
+      get-it: 8.4.3
+      rxjs: 7.8.1
+    transitivePeerDependencies:
+      - supports-color
+
   /@sanity/client@6.6.0:
     resolution: {integrity: sha512-AZNtl1/BSRNOsjy5k/1q1feIHPuExugWsG0ZuNj4/etOddFMaXfUvCHHuv89pHb6l/3CWv+UPysvMNU0+qS2Ig==}
     engines: {node: '>=14.18'}
@@ -4876,7 +4899,7 @@ packages:
       parse-git-config: 3.0.0
       pkg-up: 3.1.0
       prettier: 3.0.3
-      prettier-plugin-packagejson: 2.4.6(prettier@3.0.3)
+      prettier-plugin-packagejson: 2.4.5(prettier@3.0.3)
       pretty-bytes: 5.6.0
       prompts: 2.4.2
       rimraf: 4.4.1
@@ -13531,6 +13554,10 @@ packages:
     hasBin: true
     dev: false
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: true
+
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: true
@@ -15600,6 +15627,19 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
+  /prettier-plugin-packagejson@2.4.5(prettier@3.0.3):
+    resolution: {integrity: sha512-glG71jE1gO3y5+JNAhC8X+4yrlN28rub6Aj461SKbaPie9RgMiHKcInH2Moi2VGOfkTXaEHBhg4uVMBqa+kBUA==}
+    peerDependencies:
+      prettier: '>= 1.16.0'
+    peerDependenciesMeta:
+      prettier:
+        optional: true
+    dependencies:
+      prettier: 3.0.3
+      sort-package-json: 2.5.1
+      synckit: 0.8.5
+    dev: true
+
   /prettier-plugin-packagejson@2.4.6(prettier@3.0.3):
     resolution: {integrity: sha512-5JGfzkJRL0DLNyhwmiAV9mV0hZLHDwddFCs2lc9CNxOChpoWUQVe8K4qTMktmevmDlMpok2uT10nvHUyU59sNw==}
     peerDependencies:
@@ -16718,7 +16758,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.16.5-pink-lizard.39
       '@sanity/cli': 3.16.5-pink-lizard.39
-      '@sanity/client': 6.6.0
+      '@sanity/client': 6.4.11
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.16.5-pink-lizard.39
       '@sanity/diff-match-patch': 3.1.1
@@ -16846,7 +16886,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.16.5-pink-lizard.39
       '@sanity/cli': 3.16.5-pink-lizard.39
-      '@sanity/client': 6.6.0
+      '@sanity/client': 6.4.11
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.16.5-pink-lizard.39
       '@sanity/diff-match-patch': 3.1.1
@@ -17346,6 +17386,19 @@ packages:
       git-hooks-list: 1.0.3
       globby: 10.0.0
       is-plain-obj: 2.1.0
+      sort-object-keys: 1.1.3
+    dev: true
+
+  /sort-package-json@2.5.1:
+    resolution: {integrity: sha512-vx/KoZxm8YNMUqdlw7SGTfqR5pqZ/sUfgOuRtDILiOy/3AvzhAibyUe2cY3OpLs3oRSow9up4yLVtQaM24rbDQ==}
+    hasBin: true
+    dependencies:
+      detect-indent: 7.0.1
+      detect-newline: 4.0.0
+      get-stdin: 9.0.0
+      git-hooks-list: 3.1.0
+      globby: 13.2.2
+      is-plain-obj: 4.1.0
       sort-object-keys: 1.1.3
     dev: true
 

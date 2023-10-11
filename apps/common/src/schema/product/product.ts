@@ -19,7 +19,18 @@ export const productType = defineType({
       type: 'array',
       name: 'media',
       title: 'Media',
-      of: [{ type: 'image' }],
+      of: [
+        {
+          type: 'image',
+          fields: [
+            defineField({
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text',
+            }),
+          ],
+        },
+      ],
       options: { layout: 'grid' },
     }),
     defineField({

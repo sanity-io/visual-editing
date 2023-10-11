@@ -69,7 +69,8 @@ export function createChannel<T extends ChannelMsg>(
           data.to === clientId &&
           connection.id === data.from &&
           connection.target === source &&
-          connection.target.origin === origin,
+          (connection.targetOrigin === origin ||
+            connection.targetOrigin === '*'),
       )
     }
     return undefined
@@ -94,8 +95,19 @@ export function createChannel<T extends ChannelMsg>(
       isInternalMessage(type) ||
       activeConnections.find(connectionIsActive(connection))
     ) {
+      // eslint-disable-next-line no-console
+      console.groupCollapsed('postMessage')
+      // eslint-disable-next-line no-console
+      console.log('targetOrigin', connection.targetOrigin)
+      // eslint-disable-next-line no-console
+      console.log('target', connection.target)
+      // eslint-disable-next-line no-console
+      console.log('sourceOrigin', connection.sourceOrigin)
+      // eslint-disable-next-line no-console
+      console.groupEnd()
       return connection.target.postMessage(msg, {
-        targetOrigin: connection.target.origin,
+        // targetOrigin: connection.targetOrigin,
+        targetOrigin: '*',
       })
     }
     // If not connected, add to bus

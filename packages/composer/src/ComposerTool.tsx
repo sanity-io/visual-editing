@@ -56,6 +56,8 @@ export default function ComposerTool(props: {
       connections: [
         {
           target: iframe,
+          targetOrigin,
+          sourceOrigin: location.origin,
           id: 'overlays',
         },
       ],
@@ -80,7 +82,7 @@ export default function ComposerTool(props: {
     return () => {
       channel.disconnect()
     }
-  }, [setParams])
+  }, [setParams, targetOrigin])
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments
@@ -169,6 +171,7 @@ export default function ComposerTool(props: {
         >
           <PreviewFrame
             ref={iframeRef}
+            targetOrigin={targetOrigin}
             initialUrl={initialPreviewUrl.current}
             onPathChange={handlePreviewPath}
             params={params}

@@ -3,9 +3,7 @@ import { defineConfig, definePlugin, defineType, defineField } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { composerTool } from '@sanity/composer'
 import { schema } from 'apps-common'
-import { projectId, datasets } from 'apps-common/env'
-
-const dataset = datasets.development
+import { workspaces } from 'apps-common/env'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -50,34 +48,59 @@ const composerWorkspaces = Object.entries({
   svelte:
     process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL ||
     'http://localhost:3004/products',
-}).map(([name, previewUrl]) => {
-  const plugins =
-    typeof previewUrl === 'string'
-      ? [
-          composerTool({
-            name: 'composer',
-            previewUrl: maybeGitBranchUrl(previewUrl),
-          }),
-        ]
-      : Object.entries(previewUrl).map(([name, previewUrl]) =>
-          composerTool({ name, previewUrl: maybeGitBranchUrl(previewUrl) }),
-        )
-  return defineConfig({
-    name,
-    basePath: `/${name}`,
+} as const).map(([name, previewUrl]) => {
+  const {
     projectId,
     dataset,
-    plugins: [...plugins, sharedSettings()],
+    tool: toolName,
+    workspace: workspaceName,
+  } = Object.values(workspaces).find(
+    (workspace) => workspace.workspace === name,
+  )!
+
+  if (typeof previewUrl === 'string') {
+    return defineConfig({
+      name: workspaceName,
+      basePath: `/${workspaceName}`,
+      projectId,
+      dataset,
+      plugins: [
+        composerTool({
+          name: toolName,
+          previewUrl: maybeGitBranchUrl(previewUrl),
+        }),
+        sharedSettings(),
+      ],
+    })
+  }
+
+  return defineConfig({
+    name: workspaceName,
+    basePath: `/${workspaceName}`,
+    projectId,
+    dataset,
+    plugins: [
+      ...Object.entries(previewUrl).map(([name, previewUrl]) => {
+        const { tool: toolName } = Object.values(workspaces).find(
+          (workspace) => workspace.tool === name,
+        )!
+        return composerTool({
+          name: toolName,
+          previewUrl: maybeGitBranchUrl(previewUrl),
+        })
+      }),
+      sharedSettings(),
+    ],
   })
 })
 
 export default [
   ...composerWorkspaces,
   defineConfig({
-    name: datasets['cross-dataset-references'],
-    basePath: `/${datasets['cross-dataset-references']}`,
-    projectId,
-    dataset: datasets['cross-dataset-references'],
+    name: workspaces['cross-dataset-references'].workspace,
+    basePath: `/${workspaces['cross-dataset-references'].workspace}`,
+    projectId: workspaces['cross-dataset-references'].projectId,
+    dataset: workspaces['cross-dataset-references'].dataset,
     plugins: [deskTool(), visionTool()],
     schema: {
       types: [
@@ -104,6 +127,13 @@ export default [
               options: {
                 hotspot: true,
               },
+              fields: [
+                defineField({
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alt text',
+                }),
+              ],
             }),
           ],
         }),

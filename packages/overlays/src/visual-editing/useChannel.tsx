@@ -17,6 +17,10 @@ export function useChannel<T extends ChannelMsg>(
       connections: [
         {
           target: parent,
+          // @TODO using parent.origin fails if the parent is on a different origin
+          // targetOrigin: parent.origin,
+          targetOrigin: '*',
+          sourceOrigin: location.origin,
           id: 'composer',
         },
       ],
