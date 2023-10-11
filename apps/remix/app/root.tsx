@@ -9,6 +9,7 @@ import {
 } from '@remix-run/react'
 
 import stylesheet from '~/tailwind.css'
+import VisualEditing from './VisualEditing'
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
@@ -25,6 +26,7 @@ export default function App() {
       </head>
       <body>
         <Outlet />
+        <VisualEditing />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

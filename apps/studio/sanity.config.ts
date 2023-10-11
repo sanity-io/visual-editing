@@ -53,7 +53,12 @@ const composerWorkspaces = Object.entries({
 }).map(([name, previewUrl]) => {
   const plugins =
     typeof previewUrl === 'string'
-      ? [composerTool({ previewUrl: maybeGitBranchUrl(previewUrl) })]
+      ? [
+          composerTool({
+            name: 'composer',
+            previewUrl: maybeGitBranchUrl(previewUrl),
+          }),
+        ]
       : Object.entries(previewUrl).map(([name, previewUrl]) =>
           composerTool({ name, previewUrl: maybeGitBranchUrl(previewUrl) }),
         )
