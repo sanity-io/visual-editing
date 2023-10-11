@@ -18,12 +18,25 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "source": "./src/env.ts",
+      "require": "./dist/env.cjs",
+      "import": "./dist/env.js",
+      "default": "./dist/env.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "env": [
+        "./dist/env.d.ts"
+      ]}
+  },
   "files": [
     "dist"
   ],

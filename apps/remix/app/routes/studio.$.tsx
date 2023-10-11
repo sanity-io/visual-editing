@@ -3,10 +3,10 @@ import { Studio } from 'sanity'
 import { getSanityConfig } from '../../sanity.config'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { projectId, datasets } from 'apps-common/env'
 
 export async function loader() {
-  const projectId = process.env.SANITY_PROJECT_ID
-  const dataset = process.env.SANITY_DATASET
+  const dataset = datasets.development
 
   if (!projectId) {
     throw new Error('Missing environment variable: SANITY_PROJECT_ID')

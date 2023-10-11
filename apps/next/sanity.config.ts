@@ -1,5 +1,6 @@
 import { composerTool } from '@sanity/composer'
 import { schema } from 'apps-common'
+import { projectId, datasets } from 'apps-common/env'
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import Iframe, {
@@ -7,8 +8,7 @@ import Iframe, {
   IframeOptions,
 } from 'sanity-plugin-iframe-pane'
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
+const dataset = datasets.development
 
 const urlResolver = defineUrlResolver({
   base: '/preview',

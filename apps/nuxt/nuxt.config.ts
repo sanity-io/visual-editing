@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { projectId, datasets } from 'apps-common/env'
+
 export default defineNuxtConfig({
   build: {
     transpile: ['rxjs'],
@@ -13,8 +15,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       sanity: {
-        projectId: process.env.NUXT_PUBLIC_SANITY_PROJECT_ID,
-        dataset: process.env.NUXT_PUBLIC_SANITY_DATASET!,
+        projectId,
+        dataset: datasets.development,
       },
     },
   },

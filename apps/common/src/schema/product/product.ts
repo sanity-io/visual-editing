@@ -29,6 +29,28 @@ export const productType = defineType({
       of: [{ type: 'block' }],
     }),
     defineField({
+      title: 'Brand',
+      name: 'brandReference',
+      type: 'crossDatasetReference',
+      dataset: 'cross-dataset-references',
+      studioUrl: ({ type, id }) =>
+        new URL(
+          `/cross-dataset-references/desk/intent/edit/id=${id};type=${type}/`,
+          location.href,
+        ).toString(),
+      to: [
+        {
+          type: 'brand',
+          preview: {
+            select: {
+              title: 'name',
+              media: 'logo',
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
       type: 'object',
       name: 'details',
       title: 'Details',
