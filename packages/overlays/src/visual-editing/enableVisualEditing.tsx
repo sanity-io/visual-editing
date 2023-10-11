@@ -33,7 +33,7 @@ export function enableVisualEditing({
   history,
 }: {
   history?: HistoryAdapter
-}): DisableVisualEditing {
+} = {}): DisableVisualEditing {
   if (root || node) return cleanup
   let cancelled = false
 
