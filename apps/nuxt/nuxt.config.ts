@@ -14,6 +14,9 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {
     public: {
+      vercel: {
+        env: process.env.NUXT_ENV_VERCEL_ENV,
+      },
       sanity: {
         projectId,
         dataset: datasets.development,

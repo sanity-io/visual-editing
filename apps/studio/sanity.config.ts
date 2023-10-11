@@ -13,11 +13,21 @@ const sharedSettings = definePlugin({
   schema,
 })
 
-console.log(
-  process.env.SANITY_STUDIO_VERCEL_URL,
-  process.env.SANITY_STUDIO_VERCEL_BRANCH_URL,
-  process.env.SANITY_STUDIO_VERCEL_ENV,
-)
+// If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
+function maybeGitBranchUrl(url: string) {
+  if (
+    !url.endsWith('sanity.build') ||
+    process.env.SANITY_STUDIO_VERCEL_ENV !== 'preview' ||
+    !process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
+  ) {
+    return url
+  }
+  const branchUrl = process.env.SANITY_STUDIO_VERCEL_BRANCH_URL.replace(
+    'visual-editing-studio-git-',
+    '',
+  )
+  return url.replace('.sanity.build', `-git-${branchUrl}`)
+}
 
 const composerWorkspaces = Object.entries({
   remix:
@@ -40,9 +50,9 @@ const composerWorkspaces = Object.entries({
 }).map(([name, previewUrl]) => {
   const plugins =
     typeof previewUrl === 'string'
-      ? [composerTool({ previewUrl })]
+      ? [composerTool({ previewUrl: maybeGitBranchUrl(previewUrl) })]
       : Object.entries(previewUrl).map(([name, previewUrl]) =>
-          composerTool({ name, previewUrl }),
+          composerTool({ name, previewUrl: maybeGitBranchUrl(previewUrl) }),
         )
   return defineConfig({
     name,
