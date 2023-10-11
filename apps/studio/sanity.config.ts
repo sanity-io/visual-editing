@@ -17,7 +17,7 @@ const sharedSettings = definePlugin({
 function maybeGitBranchUrl(url: string) {
   console.log('maybeGitBranchUrl', url)
   if (
-    !url.endsWith('sanity.build') ||
+    !url.includes('.sanity.build') ||
     process.env.SANITY_STUDIO_VERCEL_ENV !== 'preview' ||
     !process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
   ) {
