@@ -4,9 +4,6 @@ export default defineNuxtConfig({
     transpile: ['rxjs'],
   },
   devtools: { enabled: false },
-  devServer: {
-    port: 3001,
-  },
   imports: {
     transform: {
       exclude: [/\bpackages\/.+\b/, /\bapps\/common\/.+\b/],
