@@ -14,18 +14,23 @@ const sharedSettings = definePlugin({
 })
 
 const composerWorkspaces = Object.entries({
-  remix: process.env.SANITY_STUDIO_REMIX_PREVIEW_URL || 'http://localhost:3000',
+  remix:
+    process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
+    'http://localhost:3000/products',
   next: {
     'app-router':
       process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/app',
+      'http://localhost:3001/products',
     'pages-router':
       process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/pages',
+      'http://localhost:3001/pages-router/products',
   },
-  nuxt: process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003',
+  nuxt:
+    process.env.SANITY_STUDIO_NUXT_PREVIEW_URL ||
+    'http://localhost:3003/products',
   svelte:
-    process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
+    process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL ||
+    'http://localhost:3004/products',
 }).map(([name, previewUrl]) => {
   const plugins =
     typeof previewUrl === 'string'
