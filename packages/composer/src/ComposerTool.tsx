@@ -1,6 +1,13 @@
 import { Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
-import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { Path, pathToString, Tool } from 'sanity'
 import styled from 'styled-components'
 import type { VisualEditingMsg } from 'visual-editing-helpers'
@@ -20,6 +27,14 @@ export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
 }): ReactElement {
   const { previewUrl = '/' } = props.tool.options ?? {}
+  // @TODO The iframe URL might change, we have to make sure we don't post Studio state to unknown origins
+  // see https://medium.com/@chiragrai3666/exploiting-postmessage-e2b01349c205
+  const targetOrigin = useMemo(() => {
+    // previewUrl might be relative, if it is we set `targetOrigin` to the same origin as the Studio
+    // if it's an absolute URL we extract the origin from it
+    const url = new URL(previewUrl, location.href)
+    return url.origin
+  }, [previewUrl])
 
   const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)

@@ -37,6 +37,7 @@ export const PreviewFrame = forwardRef<
   const setDesktopMode = useCallback(() => setMode('desktop'), [setMode])
   const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
 
+  // @TODO handle targetOrigin, or another way of asking for the current location when CORS doesn't allow reading `location.pathname` directly
   const onIFrameLoad = useCallback(() => {
     if (typeof ref !== 'function' && ref?.current?.contentWindow) {
       onPathChange(ref.current.contentWindow.location.pathname)
