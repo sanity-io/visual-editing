@@ -1,22 +1,27 @@
-import type { ImageCrop, ImageHotspot, PortableTextTextBlock } from 'sanity'
+import type {
+  ImageAsset,
+  ImageCrop,
+  ImageHotspot,
+  PortableTextTextBlock,
+} from 'sanity'
 
-export const shoesList = /* groq */ `*[_type == "shoe"]{
+export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]{
   title,
   slug,
   price,
-  "media": media[0]{alt, hotspot,crop,"url": asset->url},
+  "media": media[0]{ alt, asset, crop, hotspot },
   description,
-  "brand": brandReference->{name, slug, logo{alt, hotspot,crop,"url": asset->url}},
+  "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
 }`
 export type ShoesListResult = {
   title?: string | null
-  slug?: { current?: string | null } | null
+  slug: { current: string }
   price?: number | null
   media?: {
     alt?: string | null
-    hotspot?: ImageHotspot | null
+    asset?: ImageAsset | null
     crop?: ImageCrop | null
-    url?: string | null
+    hotspot?: ImageHotspot | null
   } | null
   description?: PortableTextTextBlock[] | null
   brand?: {
@@ -24,9 +29,9 @@ export type ShoesListResult = {
     slug?: { current?: string | null } | null
     logo?: {
       alt?: string | null
-      hotspot?: ImageHotspot | null
+      asset?: ImageAsset | null
       crop?: ImageCrop | null
-      url?: string | null
+      hotspot?: ImageHotspot | null
     } | null
   } | null
 }[]

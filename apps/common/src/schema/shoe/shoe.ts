@@ -13,7 +13,26 @@ export const shoeType = defineType({
       type: 'slug',
       name: 'slug',
       title: 'Slug',
-      options: { source: 'title' },
+      options: {
+        source: 'title',
+        isUnique: async (slug, context) => {
+          const { document, getClient } = context
+          if (!document?._type) {
+            return true
+          }
+          const client = getClient({ apiVersion: '2023-10-12' })
+          const query = /* groq */ `!defined(*[_type == $type && slug.current == $slug][0]._id)`
+          const result = await client.fetch(
+            query,
+            {
+              _type: document._type,
+              slug,
+            },
+            { perspective: 'previewDrafts' },
+          )
+          return result
+        },
+      },
     }),
     defineField({
       type: 'array',

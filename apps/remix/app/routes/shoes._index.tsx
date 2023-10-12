@@ -1,5 +1,5 @@
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 import {
   type SanityNode,
   encodeSanityNodeData as _encodeSanityNodeData,
@@ -13,6 +13,7 @@ import {
 } from '@sanity/preview-kit/csm'
 import { workspaces, baseUrl, apiVersion } from 'apps-common/env'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
+import imageUrlBuilder from '@sanity/image-url'
 
 const { projectId, dataset, tool, workspace } = workspaces['remix']
 const studioUrl = `${baseUrl}/${workspace}`
@@ -31,6 +32,28 @@ function encodeSanityNodeData(
     dataset: node?.dataset || dataset,
   })
 }
+
+const builder = imageUrlBuilder({ projectId, dataset })
+
+function urlFor(source: any) {
+  return builder.image(source).auto('format').fit('max')
+}
+
+const builder2 = imageUrlBuilder({
+  projectId,
+  dataset: workspaces['cross-dataset-references'].dataset,
+})
+
+function urlFor2(source: any) {
+  return builder2.image(source).auto('format').fit('max')
+}
+
+const currency = new Intl.NumberFormat('en', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+})
 
 export async function loader() {
   const client = createClient({
@@ -151,73 +174,93 @@ export default function ProductsRoute() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 px-2 py-10">
-      {data.result.map((product, i) => {
-        return (
-          <article
-            key={product?.slug?.current || i}
-            className="block rounded bg-slate-50 px-2 py-4"
-            data-sanity={encodeSanityNodeFromResultPath(
-              [i, 'slug'],
-              data.resultSourceMap!,
-            )}
-          >
-            <h1
+    <div className="bg-white">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h1 className="sr-only">Products</h1>
+
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          {data.result.map((product, i) => (
+            <Link
+              key={product.slug.current}
+              to={`/shoes/${product.slug.current}`}
               data-sanity={encodeSanityNodeFromResultPath(
-                [i, 'title'],
+                [i, 'slug'],
                 data.resultSourceMap!,
               )}
+              className="group relative"
             >
-              {product.title}
-            </h1>
-            <p
-              className="flex items-center gap-2 rounded bg-slate-100 px-2 py-1"
-              data-sanity={encodeSanityNodeFromResultPath(
-                [i, 'brand', 'name'],
-                data.resultSourceMap!,
-              )}
-            >
-              <img
-                src={
-                  product?.brand?.logo?.url ||
-                  'https://source.unsplash.com/featured/?shoes'
-                }
-                width={64}
-                height={64}
+              <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
+                <img
+                  className="h-full w-full object-cover object-center group-hover:opacity-75"
+                  src={
+                    product.media?.asset
+                      ? urlFor(product.media).height(1280).width(1280).url()
+                      : 'https://source.unsplash.com/featured/?shoes'
+                  }
+                  width={1280}
+                  height={1280}
+                  data-sanity={
+                    encodeSanityNodeFromResultPath(
+                      [i, 'media', 'alt'],
+                      data.resultSourceMap!,
+                    ) ||
+                    encodeSanityNodeFromResultPath(
+                      [i, 'media', 'asset'],
+                      data.resultSourceMap!,
+                    ) ||
+                    encodeSanityNodeFromResultPath(
+                      [i, 'media'],
+                      data.resultSourceMap!,
+                    )
+                  }
+                  alt={product.media?.alt || ''}
+                />
+              </div>
+              <h2
+                className="mb-8 mt-4 text-sm text-gray-700"
                 data-sanity={encodeSanityNodeFromResultPath(
-                  [i, 'brand', 'logo', 'alt'],
+                  [i, 'title'],
                   data.resultSourceMap!,
                 )}
-                alt={product?.brand?.logo?.alt || ''}
-              />
-              <span>{product?.brand?.name || 'Untitled brand'}</span>
-            </p>
-            <img
-              src={
-                product?.media?.url ||
-                'https://source.unsplash.com/featured/?shoes'
-              }
-              width={200}
-              height={200}
-              data-sanity={encodeSanityNodeFromResultPath(
-                // @TODO fun side-effect, it opens the sanity.imageAsset
-                // [i, 'media', 'url'],
-                [i, 'media', 'alt'],
-                data.resultSourceMap!,
+                style={{ ['textWrap' as any]: 'balance' }}
+              >
+                {product.title}
+              </h2>
+              <p
+                className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
+                data-sanity={encodeSanityNodeFromResultPath(
+                  [i, 'price'],
+                  data.resultSourceMap!,
+                )}
+              >
+                {product.price ? currency.format(product.price) : 'FREE'}
+              </p>
+              {product.brand && (
+                <div className="absolute bottom-0.5 right-0 flex items-center gap-x-2">
+                  <img
+                    className="h-6 w-6 rounded-full bg-gray-50"
+                    src={
+                      product.brand?.logo?.asset
+                        ? urlFor2(product.brand.logo).height(48).width(48).url()
+                        : 'https://source.unsplash.com/featured/?brand'
+                    }
+                    width={24}
+                    height={24}
+                    data-sanity={encodeSanityNodeFromResultPath(
+                      [i, 'brand', 'logo', 'alt'],
+                      data.resultSourceMap!,
+                    )}
+                    alt={product.brand?.logo?.alt || ''}
+                  />
+                  <span className="font-bold text-gray-600">
+                    {product.brand.name}
+                  </span>
+                </div>
               )}
-              alt={product?.media?.alt || ''}
-            />
-            <p
-              data-sanity={encodeSanityNodeFromResultPath(
-                [i, 'price'],
-                data.resultSourceMap!,
-              )}
-            >
-              {product?.price}
-            </p>
-          </article>
-        )
-      })}
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
