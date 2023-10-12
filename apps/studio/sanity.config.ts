@@ -33,21 +33,20 @@ function maybeGitBranchUrl(url: string) {
 const composerWorkspaces = Object.entries({
   remix:
     process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
-    'http://localhost:3000/products',
+    'http://localhost:3000/shoes',
   next: {
     'app-router':
       process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/products',
+      'http://localhost:3001/shoes',
     'pages-router':
       process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/pages-router/products',
+      'http://localhost:3001/pages-router/shoes',
   },
   nuxt:
-    process.env.SANITY_STUDIO_NUXT_PREVIEW_URL ||
-    'http://localhost:3003/products',
+    process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
   svelte:
     process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL ||
-    'http://localhost:3004/products',
+    'http://localhost:3004/shoes',
 } as const).map(([name, previewUrl]) => {
   const {
     projectId,

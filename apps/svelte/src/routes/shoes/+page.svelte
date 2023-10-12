@@ -4,7 +4,7 @@ export let data;
 </script>
 
 <svelte:head>
-	<title>Products</title>
+	<title>Shoes</title>
 </svelte:head>
 
 <p>{data.vercelEnv}</p>

@@ -1,5 +1,5 @@
 import { json } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import {
   type SanityNode,
   encodeSanityNodeData as _encodeSanityNodeData,
@@ -12,7 +12,7 @@ import {
   parseNormalisedJsonPath,
 } from '@sanity/preview-kit/csm'
 import { workspaces, baseUrl, apiVersion } from 'apps-common/env'
-import { productsList } from 'apps-common/queries'
+import { shoesList, type ShoesListResult } from 'apps-common/queries'
 
 const { projectId, dataset, tool, workspace } = workspaces['remix']
 const studioUrl = `${baseUrl}/${workspace}`
@@ -65,8 +65,8 @@ export async function loader() {
     // */
     studioUrl,
   })
-  const { result, resultSourceMap } = await client.fetch<any[]>(
-    productsList,
+  const { result, resultSourceMap } = await client.fetch<ShoesListResult>(
+    shoesList,
     {},
     { filterResponse: false },
   )
@@ -152,17 +152,24 @@ export default function ProductsRoute() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-3 px-2 py-10">
-      {data.result.map((product: any, i) => {
+      {data.result.map((product, i) => {
         return (
           <article
-            key={product.slug.current || i}
-            className="rounded bg-slate-50 px-2 py-4"
+            key={product?.slug?.current || i}
+            className="block rounded bg-slate-50 px-2 py-4"
             data-sanity={encodeSanityNodeFromResultPath(
               [i, 'slug'],
               data.resultSourceMap!,
             )}
           >
-            <h1>{product.title}</h1>
+            <h1
+              data-sanity={encodeSanityNodeFromResultPath(
+                [i, 'title'],
+                data.resultSourceMap!,
+              )}
+            >
+              {product.title}
+            </h1>
             <p
               className="flex items-center gap-2 rounded bg-slate-100 px-2 py-1"
               data-sanity={encodeSanityNodeFromResultPath(
@@ -171,29 +178,25 @@ export default function ProductsRoute() {
               )}
             >
               <img
-                src={product.brand.logo.url}
+                src={
+                  product?.brand?.logo?.url ||
+                  'https://source.unsplash.com/featured/?shoes'
+                }
                 width={64}
                 height={64}
                 data-sanity={encodeSanityNodeFromResultPath(
                   [i, 'brand', 'logo', 'alt'],
                   data.resultSourceMap!,
                 )}
-                alt={product.brand.logo.alt || ''}
+                alt={product?.brand?.logo?.alt || ''}
               />
-              {product.brand.name}
-              <img
-                src={product.brand.logo.url}
-                width={64}
-                height={64}
-                data-sanity={encodeSanityNodeFromResultPath(
-                  [i, 'brand', 'logo', 'url'],
-                  data.resultSourceMap!,
-                )}
-                alt=""
-              />
+              <span>{product?.brand?.name || 'Untitled brand'}</span>
             </p>
             <img
-              src={product.media.url}
+              src={
+                product?.media?.url ||
+                'https://source.unsplash.com/featured/?shoes'
+              }
               width={200}
               height={200}
               data-sanity={encodeSanityNodeFromResultPath(
@@ -202,16 +205,19 @@ export default function ProductsRoute() {
                 [i, 'media', 'alt'],
                 data.resultSourceMap!,
               )}
-              alt={product.media.alt || ''}
+              alt={product?.media?.alt || ''}
             />
+            <p
+              data-sanity={encodeSanityNodeFromResultPath(
+                [i, 'price'],
+                data.resultSourceMap!,
+              )}
+            >
+              {product?.price}
+            </p>
           </article>
         )
       })}
-      <hr className="max-w-32 my-8 h-px w-full border-0 bg-slate-200 dark:bg-slate-700" />
-      <Link to="/">Debug</Link>
-      <span className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-slate-100">
-        {data.vercelEnv}
-      </span>
     </div>
   )
 }
