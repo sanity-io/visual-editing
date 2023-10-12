@@ -32,6 +32,13 @@
       "import": "./dist/queries.js",
       "default": "./dist/queries.js"
     },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "source": "./src/utils.ts",
+      "require": "./dist/utils.cjs",
+      "import": "./dist/utils.js",
+      "default": "./dist/utils.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -45,6 +52,9 @@
       ],
       "queries": [
         "./dist/queries.d.ts"
+      ],
+      "utils": [
+        "./dist/utils.d.ts"
       ]
     }
   },

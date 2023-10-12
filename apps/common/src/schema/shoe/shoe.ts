@@ -8,6 +8,7 @@ export const shoeType = defineType({
       type: 'string',
       name: 'title',
       title: 'Title',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       type: 'slug',
@@ -21,18 +22,19 @@ export const shoeType = defineType({
             return true
           }
           const client = getClient({ apiVersion: '2023-10-12' })
-          const query = /* groq */ `!defined(*[_type == $type && slug.current == $slug][0]._id)`
-          const result = await client.fetch(
+          const query = /* groq */ `count(*[_type == $type && slug.current == $slug])`
+          const result = await client.fetch<number>(
             query,
             {
-              _type: document._type,
+              type: document._type,
               slug,
             },
             { perspective: 'previewDrafts' },
           )
-          return result
+          return result < 2
         },
       },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       type: 'array',

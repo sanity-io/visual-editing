@@ -4,16 +4,17 @@ import {
   type SanityNode,
   encodeSanityNodeData as _encodeSanityNodeData,
 } from '@sanity/overlays'
-import { type ContentSourceMap, createClient } from '@sanity/preview-kit/client'
+import { type ContentSourceMap } from '@sanity/preview-kit/client'
 import {
   resolveMapping,
   encodeJsonPathToUriComponent,
   type PathSegment,
   parseNormalisedJsonPath,
 } from '@sanity/preview-kit/csm'
-import { workspaces, baseUrl, apiVersion } from 'apps-common/env'
+import { workspaces, baseUrl } from 'apps-common/env'
+import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import imageUrlBuilder from '@sanity/image-url'
+import { getClient, urlFor, urlForCrossDatasetReference } from '~/utils'
 
 const { projectId, dataset, tool, workspace } = workspaces['remix']
 const studioUrl = `${baseUrl}/${workspace}`
@@ -33,61 +34,8 @@ function encodeSanityNodeData(
   })
 }
 
-const builder = imageUrlBuilder({ projectId, dataset })
-
-function urlFor(source: any) {
-  return builder.image(source).auto('format').fit('max')
-}
-
-const builder2 = imageUrlBuilder({
-  projectId,
-  dataset: workspaces['cross-dataset-references'].dataset,
-})
-
-function urlFor2(source: any) {
-  return builder2.image(source).auto('format').fit('max')
-}
-
-const currency = new Intl.NumberFormat('en', {
-  style: 'currency',
-  currency: 'USD',
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0,
-})
-
 export async function loader() {
-  const client = createClient({
-    projectId,
-    dataset,
-    useCdn: false,
-    apiVersion,
-    logger: console,
-    encodeSourceMap: true,
-    /*
-    // @TODO fix cross dataset reference links
-    encodeSourceMapAtPath: (props) => {
-      if (
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._projectId &&
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._projectId !== projectId
-      ) {
-        return false
-      }
-      if (
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._dataset &&
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._dataset !== dataset
-      ) {
-        return false
-      }
-
-      return props.filterDefault(props)
-    },
-    // */
-    studioUrl,
-  })
+  const client = getClient()
   const { result, resultSourceMap } = await client.fetch<ShoesListResult>(
     shoesList,
     {},
@@ -233,7 +181,7 @@ export default function ProductsRoute() {
                   data.resultSourceMap!,
                 )}
               >
-                {product.price ? currency.format(product.price) : 'FREE'}
+                {product.price ? formatCurrency(product.price) : 'FREE'}
               </p>
               {product.brand && (
                 <div className="absolute bottom-0.5 right-0 flex items-center gap-x-2">
@@ -241,7 +189,10 @@ export default function ProductsRoute() {
                     className="h-6 w-6 rounded-full bg-gray-50"
                     src={
                       product.brand?.logo?.asset
-                        ? urlFor2(product.brand.logo).height(48).width(48).url()
+                        ? urlForCrossDatasetReference(product.brand.logo)
+                            .height(48)
+                            .width(48)
+                            .url()
                         : 'https://source.unsplash.com/featured/?brand'
                     }
                     width={24}

@@ -4,10 +4,11 @@ import { deskTool } from 'sanity/desk'
 import { composerTool } from '@sanity/composer'
 import { schema } from 'apps-common'
 import { workspaces } from 'apps-common/env'
+import { assist } from '@sanity/assist'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
-  plugins: [deskTool(), visionTool()],
+  plugins: [deskTool(), visionTool(), assist()],
   schema,
 })
 
@@ -100,7 +101,7 @@ export default [
     basePath: `/${workspaces['cross-dataset-references'].workspace}`,
     projectId: workspaces['cross-dataset-references'].projectId,
     dataset: workspaces['cross-dataset-references'].dataset,
-    plugins: [deskTool(), visionTool()],
+    plugins: [deskTool(), visionTool(), assist()],
     schema: {
       types: [
         defineType({
