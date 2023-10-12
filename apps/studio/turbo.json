@@ -3,9 +3,16 @@
   "extends": ["//"],
   "pipeline": {
     "build": {
-      "cache": false,
       "dotEnv": [".env", ".env.local"],
-      "env": ["SANITY_STUDIO_*"],
+      "env": [
+        "SANITY_STUDIO_VERCEL_ENV",
+        "SANITY_STUDIO_VERCEL_BRANCH_URL",
+        "SANITY_STUDIO_REMIX_PREVIEW_URL",
+        "SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL",
+        "SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL",
+        "SANITY_STUDIO_NUXT_PREVIEW_URL",
+        "SANITY_STUDIO_SVELTE_PREVIEW_URL"
+      ],
       "outputs": [".sanity/**", "dist/**"]
     }
   }
