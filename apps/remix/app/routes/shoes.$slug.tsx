@@ -29,7 +29,7 @@ export default function ShoePage() {
   useSourceDocuments(data.resultSourceMap)
 
   const slug = data.params.slug
-  const name = data.params.slug || 'Shoe'
+  const name = result.title || slug
 
   if (!slug) {
     throw new Error('No slug, 404?')
