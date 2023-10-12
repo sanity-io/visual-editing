@@ -38,6 +38,9 @@ export default function ComposerTool(props: {
 
   const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [overlayDocuments, setOverlayDocuments] = useState<
+    { _id: string; _type: string; _projectId?: string; dataset?: string }[]
+  >([])
 
   const { defaultPreviewUrl, setParams, params, deskParams } =
     useComposerParams({
@@ -74,6 +77,9 @@ export default function ComposerTool(props: {
           })
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
+        } else if (type === 'overlay/documents') {
+          console.log('received documents', data)
+          setOverlayDocuments(data)
         }
       },
     })
@@ -187,6 +193,7 @@ export default function ComposerTool(props: {
           onResizeEnd={handleResizeEnd}
         >
           <ContentEditor
+            refs={overlayDocuments}
             deskParams={deskParams}
             documentId={params.id}
             documentType={params.type}

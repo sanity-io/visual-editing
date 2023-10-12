@@ -10,9 +10,16 @@ const DocumentPanel: FunctionComponent<{
   documentType: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (documentId: string, path: Path) => void
+  refs: { _id: string; _type: string }[]
 }> = function (props) {
-  const { deskParams, documentId, documentType, onDeskParams, onFocusPath } =
-    props
+  const {
+    deskParams,
+    documentId,
+    documentType,
+    onDeskParams,
+    onFocusPath,
+    refs,
+  } = props
 
   const editState = useEditState(documentId, documentType)
   const documentValue = editState.draft || editState.published
@@ -28,6 +35,7 @@ const DocumentPanel: FunctionComponent<{
 
   return (
     <DocumentPane
+      refs={refs}
       documentId={documentId}
       documentType={documentType}
       params={deskParams}
@@ -43,14 +51,22 @@ export const ContentEditor: FunctionComponent<{
   documentType?: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (documentId: string, path: Path) => void
+  refs: { _id: string; _type: string }[]
 }> = function (props) {
-  const { deskParams, documentId, documentType, onDeskParams, onFocusPath } =
-    props
+  const {
+    deskParams,
+    documentId,
+    documentType,
+    onDeskParams,
+    onFocusPath,
+    refs,
+  } = props
 
   return (
     <>
       {documentId && documentType ? (
         <DocumentPanel
+          refs={refs}
           deskParams={deskParams}
           documentId={documentId}
           documentType={documentType}

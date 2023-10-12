@@ -35,3 +35,24 @@ export type ShoesListResult = {
     } | null
   } | null
 }[]
+
+export const shoe = /* groq */ `*[_type == "shoe" && slug.current == $slug]{
+  title,
+  slug,
+  price,
+  "media": media{ alt, asset, crop, hotspot },
+  description,
+}[0]`
+export type ShoeParams = { slug: string }
+export type ShoeResult = {
+  title?: string | null
+  slug: { current: string }
+  price?: number | null
+  media?: {
+    alt?: string | null
+    asset?: ImageAsset | null
+    crop?: ImageCrop | null
+    hotspot?: ImageHotspot | null
+  }[]
+  description?: PortableTextTextBlock[] | null
+}

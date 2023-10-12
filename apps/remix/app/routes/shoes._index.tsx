@@ -8,6 +8,7 @@ import {
   urlForCrossDatasetReference,
   defineDataAttribute,
 } from '~/utils'
+import { useSourceDocuments } from '~/useChannel'
 
 export async function loader() {
   const client = getClient()
@@ -27,6 +28,7 @@ export async function loader() {
 export default function ProductsRoute() {
   const data = useLoaderData<typeof loader>()
   const dataAttribute = defineDataAttribute(data.resultSourceMap)
+  useSourceDocuments(data.resultSourceMap)
 
   return (
     <div className="bg-white">

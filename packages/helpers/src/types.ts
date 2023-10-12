@@ -73,6 +73,16 @@ export type OverlayMsg =
         enabled: boolean
       }
     }
+  // @TODO move to `loaders/documents`
+  | {
+      type: 'overlay/documents'
+      data: {
+        _id: string
+        _type: string
+        projectId?: string
+        dataset?: string
+      }[]
+    }
 
 /**
  * Union type of visual editing related messages
