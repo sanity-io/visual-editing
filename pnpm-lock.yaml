@@ -5,20 +5,20 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@sanity/block-tools': 3.16.5-pink-lizard.39
+  '@sanity/block-tools': 3.18.1-pink-lizard.13
   '@sanity/cli': 3.16.5-pink-lizard.39
   '@sanity/diff': 3.16.5-pink-lizard.39
-  '@sanity/export': 3.16.5-pink-lizard.39
-  '@sanity/import': 3.16.5-pink-lizard.39
+  '@sanity/export': 3.18.1-pink-lizard.13
+  '@sanity/import': 3.18.1-pink-lizard.13
   '@sanity/import-cli': 3.16.5-pink-lizard.39
   '@sanity/mutator': 3.16.5-pink-lizard.39
   '@sanity/portable-text-editor': 3.16.5-pink-lizard.39
-  '@sanity/schema': 3.16.5-pink-lizard.39
+  '@sanity/schema': 3.18.1-pink-lizard.13
   '@sanity/types': 3.16.5-pink-lizard.39
   '@sanity/util': 3.16.5-pink-lizard.39
   '@sanity/vision': 3.16.5-pink-lizard.39
   create-sanity: 3.16.5-pink-lizard.39
-  groq: 3.16.5-pink-lizard.39
+  groq: 3.18.1-pink-lizard.13
   sanity: 3.16.5-pink-lizard.39
 
 importers:
@@ -26,8 +26,8 @@ importers:
   .:
     dependencies:
       '@sanity/block-tools':
-        specifier: 3.16.5-pink-lizard.39
-        version: 3.16.5-pink-lizard.39
+        specifier: 3.18.1-pink-lizard.13
+        version: 3.18.1-pink-lizard.13
       '@sanity/cli':
         specifier: 3.16.5-pink-lizard.39
         version: 3.16.5-pink-lizard.39
@@ -35,11 +35,11 @@ importers:
         specifier: 3.16.5-pink-lizard.39
         version: 3.16.5-pink-lizard.39
       '@sanity/export':
-        specifier: 3.16.5-pink-lizard.39
-        version: 3.16.5-pink-lizard.39
+        specifier: 3.18.1-pink-lizard.13
+        version: 3.18.1-pink-lizard.13
       '@sanity/import':
-        specifier: 3.16.5-pink-lizard.39
-        version: 3.16.5-pink-lizard.39
+        specifier: 3.18.1-pink-lizard.13
+        version: 3.18.1-pink-lizard.13
       '@sanity/import-cli':
         specifier: 3.16.5-pink-lizard.39
         version: 3.16.5-pink-lizard.39
@@ -50,8 +50,8 @@ importers:
         specifier: 3.16.5-pink-lizard.39
         version: 3.16.5-pink-lizard.39(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
       '@sanity/schema':
-        specifier: 3.16.5-pink-lizard.39
-        version: 3.16.5-pink-lizard.39
+        specifier: 3.18.1-pink-lizard.13
+        version: 3.18.1-pink-lizard.13
       '@sanity/types':
         specifier: 3.16.5-pink-lizard.39
         version: 3.16.5-pink-lizard.39
@@ -65,8 +65,8 @@ importers:
         specifier: 3.16.5-pink-lizard.39
         version: 3.16.5-pink-lizard.39
       groq:
-        specifier: 3.16.5-pink-lizard.39
-        version: 3.16.5-pink-lizard.39
+        specifier: 3.18.1-pink-lizard.13
+        version: 3.18.1-pink-lizard.13
       sanity:
         specifier: 3.16.5-pink-lizard.39
         version: 3.16.5-pink-lizard.39(@types/react@18.2.28)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
@@ -4110,7 +4110,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -4893,8 +4892,8 @@ packages:
       nanoid: 3.3.6
       rxjs: 7.8.1
 
-  /@sanity/block-tools@3.16.5-pink-lizard.39:
-    resolution: {integrity: sha512-r9NWgqwE/CrVx2+4aOuKXeE8xipFLuIcxbpuCZ8LvZ2XLFiYg3V1UlNJuk5/Vfmv7kdTv0KhTop/WiuP27coSw==}
+  /@sanity/block-tools@3.18.1-pink-lizard.13:
+    resolution: {integrity: sha512-L5GR8F+WWcJv0Qul0vj24EpWG8WSb28PANHRS1rV5GytlDB5k6mXtmo2WBya5EUPUZ63TNOOLyEhyWBiYMqAkw==}
     dependencies:
       get-random-values-esm: 1.0.0
       lodash: 4.17.21
@@ -4945,9 +4944,9 @@ packages:
       event-source-polyfill: 1.0.31
       eventsource: 2.0.2
 
-  /@sanity/export@3.16.5-pink-lizard.39:
-    resolution: {integrity: sha512-Qe34Id4b1nJiHnY5EEtjgWUN619UCL9cMvNoTuS5gNu50wH/paDp3qglwz7uOTXFizRcOiL4tsW04U0PSG7Y2w==}
-    engines: {node: '>=14.18.0'}
+  /@sanity/export@3.18.1-pink-lizard.13:
+    resolution: {integrity: sha512-LCkqLegjF1oQyUYuAdeDxj5GBOhIY1pljcD4puob9me+Bc2hPOPWydaumGBI8vZw0PIWmjMECHVYhVH5w3IBgQ==}
+    engines: {node: '>=18'}
     dependencies:
       archiver: 5.3.2
       debug: 3.2.7
@@ -4970,7 +4969,7 @@ packages:
       '@sanity/eventsource': 5.0.0
       '@sanity/types': 3.16.5-pink-lizard.39
       fast-deep-equal: 3.1.3
-      groq: 3.16.5-pink-lizard.39
+      groq: 3.18.1-pink-lizard.13
       groq-js: 1.2.0
       mendoza: 3.0.3
       simple-get: 4.0.1
@@ -5006,7 +5005,7 @@ packages:
     hasBin: true
     dependencies:
       '@sanity/client': 6.6.0
-      '@sanity/import': 3.16.5-pink-lizard.39
+      '@sanity/import': 3.18.1-pink-lizard.13
       get-it: 8.4.3
       meow: 9.0.0
       ora: 5.4.1
@@ -5015,9 +5014,9 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/import@3.16.5-pink-lizard.39:
-    resolution: {integrity: sha512-pWudLKVXkbVm+77ox9SyhNE4DbETJz8CE+ipvZwR1SfrnxGAfZw6Ehr0Mm8239S7DySatjaFT0A2qa0berEGrA==}
-    engines: {node: '>=14.18.0'}
+  /@sanity/import@3.18.1-pink-lizard.13:
+    resolution: {integrity: sha512-ZYLzNA74Fa4grt4Z+J1LhLnzt54/eE3f8dR8VzYAj+/JWJbTpvCTvGCvc6HczqiObfwr+o8oNWvUGaluub0p0w==}
+    engines: {node: '>=18'}
     dependencies:
       '@sanity/asset-utils': 1.3.0
       '@sanity/generate-help-url': 3.0.0
@@ -5133,8 +5132,8 @@ packages:
       rxjs: ^7
       styled-components: ^5.2
     dependencies:
-      '@sanity/block-tools': 3.16.5-pink-lizard.39
-      '@sanity/schema': 3.16.5-pink-lizard.39
+      '@sanity/block-tools': 3.18.1-pink-lizard.13
+      '@sanity/schema': 3.18.1-pink-lizard.13
       '@sanity/types': 3.16.5-pink-lizard.39
       '@sanity/util': 3.16.5-pink-lizard.39
       debug: 3.2.7
@@ -5149,8 +5148,8 @@ packages:
       - react-dom
       - supports-color
 
-  /@sanity/schema@3.16.5-pink-lizard.39:
-    resolution: {integrity: sha512-2k9udeB/ZeKj86xaUqqOk/aLMO7uGrHO8AfXa6lRgbhSXY3KcoeUxXUCKVfEG96I6+9lCFtIQEUPxrJCA+IEsQ==}
+  /@sanity/schema@3.18.1-pink-lizard.13:
+    resolution: {integrity: sha512-qGNrwLnDNPiyG5fxdkORqvtmwEQgWFLrJaxyjnqihjiDP2P1EmTpu9EPDqnTbcc3U2IrVFAwiIau8TjM9lzxSA==}
     dependencies:
       '@sanity/generate-help-url': 3.0.0
       '@sanity/types': 3.16.5-pink-lizard.39
@@ -11186,9 +11185,9 @@ packages:
     resolution: {integrity: sha512-J7+JcxM0OvoowSkhNZAabCLueldEMkKzd9ufCEDRjKvkD1PcBUwyfsGvxUI59UojRCqFqp0y76LLzPzwSZTetw==}
     engines: {node: '>= 14'}
 
-  /groq@3.16.5-pink-lizard.39:
-    resolution: {integrity: sha512-dXF4EKJm5f4nwhBuvsn/c5EcUArgRkftfoezbcv+cYm6aCS+wVYMLZiCFdtz9l3pXEYG2U7RMRDFSAELlWVbSA==}
-    engines: {node: '>=14.18.0'}
+  /groq@3.18.1-pink-lizard.13:
+    resolution: {integrity: sha512-QEGOwLYE6pkCSv4m6et1JmmLO2qzQg6tmTGwE39bWX7dE2vAt9tM6uPu9ADy4lxlNbobOH2z1jtceRcQp1JZag==}
+    engines: {node: '>=18'}
     dev: false
 
   /gunzip-maybe@1.4.2:
@@ -13734,10 +13733,6 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
     dev: false
-
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
-    dev: true
 
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
@@ -16880,22 +16875,22 @@ packages:
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
-      '@sanity/block-tools': 3.16.5-pink-lizard.39
+      '@sanity/block-tools': 3.18.1-pink-lizard.13
       '@sanity/cli': 3.16.5-pink-lizard.39
       '@sanity/client': 6.6.0
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.16.5-pink-lizard.39
       '@sanity/diff-match-patch': 3.1.1
       '@sanity/eventsource': 5.0.0
-      '@sanity/export': 3.16.5-pink-lizard.39
+      '@sanity/export': 3.18.1-pink-lizard.13
       '@sanity/generate-help-url': 3.0.0
       '@sanity/icons': 2.5.0(react@18.2.0)
       '@sanity/image-url': 1.0.2
-      '@sanity/import': 3.16.5-pink-lizard.39
+      '@sanity/import': 3.18.1-pink-lizard.13
       '@sanity/logos': 2.1.2(@sanity/color@2.2.5)(react@18.2.0)
       '@sanity/mutator': 3.16.5-pink-lizard.39
       '@sanity/portable-text-editor': 3.16.5-pink-lizard.39(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@5.3.11)
-      '@sanity/schema': 3.16.5-pink-lizard.39
+      '@sanity/schema': 3.18.1-pink-lizard.13
       '@sanity/types': 3.16.5-pink-lizard.39
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       '@sanity/util': 3.16.5-pink-lizard.39
