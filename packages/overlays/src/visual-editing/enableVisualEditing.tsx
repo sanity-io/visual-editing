@@ -17,7 +17,9 @@ function cleanup() {
     root = null
   }
   if (node) {
-    document.body.removeChild(node)
+    if (document.body.contains(node)) {
+      document.body.removeChild(node)
+    }
     node = null
   }
 }

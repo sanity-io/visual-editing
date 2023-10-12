@@ -1,38 +1,13 @@
 import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
-import {
-  type SanityNode,
-  encodeSanityNodeData as _encodeSanityNodeData,
-} from '@sanity/overlays'
-import { type ContentSourceMap } from '@sanity/preview-kit/client'
-import {
-  resolveMapping,
-  encodeJsonPathToUriComponent,
-  type PathSegment,
-  parseNormalisedJsonPath,
-} from '@sanity/preview-kit/csm'
-import { workspaces, baseUrl } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import { getClient, urlFor, urlForCrossDatasetReference } from '~/utils'
-
-const { projectId, dataset, tool, workspace } = workspaces['remix']
-const studioUrl = `${baseUrl}/${workspace}`
-
-function encodeSanityNodeData(
-  node: Partial<SanityNode> & Pick<SanityNode, 'id' | 'type' | 'path'>,
-) {
-  return _encodeSanityNodeData({
-    // baseUrl,
-    // @TODO temporary workaround as overlays fails to find the right workspace
-    baseUrl: studioUrl,
-    workspace,
-    tool,
-    ...node,
-    projectId: node?.projectId || projectId,
-    dataset: node?.dataset || dataset,
-  })
-}
+import {
+  getClient,
+  urlFor,
+  urlForCrossDatasetReference,
+  defineDataAttribute,
+} from '~/utils'
 
 export async function loader() {
   const client = getClient()
@@ -49,77 +24,9 @@ export async function loader() {
   })
 }
 
-function resolveSanityNodeFromResultSourceMapPath(
-  resultPath: PathSegment[],
-  csm: ContentSourceMap,
-): Partial<SanityNode> | null {
-  const resolveMappingResult = resolveMapping(resultPath, csm)
-
-  if (!resolveMappingResult) {
-    console.warn('resolveMappingResult not found', {
-      resultPath,
-      csm,
-      resolveMappingResult,
-    })
-    return null
-  }
-
-  const [mapping, tmpDebug, pathSuffix] = resolveMappingResult
-  if (mapping.type !== 'value') {
-    console.warn('mapping.type !== value', {
-      resultPath,
-      csm,
-      resolveMappingResult,
-      mapping,
-      pathSuffix,
-      tmpDebug,
-    })
-    return null
-  }
-
-  if (mapping.source.type !== 'documentValue') {
-    console.warn('mapping.source.type !== documentValue', {
-      resultPath,
-      csm,
-      resolveMappingResult,
-      mapping,
-      pathSuffix,
-      tmpDebug,
-    })
-    return null
-  }
-
-  const sourceDocument =
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    csm.documents[mapping.source.document!]
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const sourcePath = csm.paths[mapping.source.path]
-
-  if (sourceDocument._projectId) {
-    console.log(sourceDocument._dataset)
-  }
-
-  return {
-    projectId: sourceDocument._projectId,
-    dataset: sourceDocument._dataset,
-    type: sourceDocument._type,
-    id: sourceDocument._id,
-    path: encodeJsonPathToUriComponent(
-      parseNormalisedJsonPath(sourcePath + pathSuffix),
-    ),
-  }
-}
-
-function encodeSanityNodeFromResultPath(
-  resultPath: PathSegment[],
-  csm: ContentSourceMap,
-) {
-  const resolvedNode = resolveSanityNodeFromResultSourceMapPath(resultPath, csm)
-  return encodeSanityNodeData(resolvedNode! as any)
-}
-
 export default function ProductsRoute() {
   const data = useLoaderData<typeof loader>()
+  const dataAttribute = defineDataAttribute(data.resultSourceMap)
 
   return (
     <div className="bg-white">
@@ -131,10 +38,7 @@ export default function ProductsRoute() {
             <Link
               key={product.slug.current}
               to={`/shoes/${product.slug.current}`}
-              data-sanity={encodeSanityNodeFromResultPath(
-                [i, 'slug'],
-                data.resultSourceMap!,
-              )}
+              data-sanity={dataAttribute([i, 'slug'])}
               className="group relative"
             >
               <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
@@ -142,44 +46,25 @@ export default function ProductsRoute() {
                   className="h-full w-full object-cover object-center group-hover:opacity-75"
                   src={
                     product.media?.asset
-                      ? urlFor(product.media).height(1280).width(1280).url()
-                      : 'https://source.unsplash.com/featured/?shoes'
+                      ? urlFor(product.media).height(1440).width(1440).url()
+                      : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`
                   }
-                  width={1280}
-                  height={1280}
-                  data-sanity={
-                    encodeSanityNodeFromResultPath(
-                      [i, 'media', 'alt'],
-                      data.resultSourceMap!,
-                    ) ||
-                    encodeSanityNodeFromResultPath(
-                      [i, 'media', 'asset'],
-                      data.resultSourceMap!,
-                    ) ||
-                    encodeSanityNodeFromResultPath(
-                      [i, 'media'],
-                      data.resultSourceMap!,
-                    )
-                  }
+                  width={720}
+                  height={720}
+                  data-sanity={dataAttribute([i, 'media', 'alt'])}
                   alt={product.media?.alt || ''}
                 />
               </div>
               <h2
                 className="mb-8 mt-4 text-sm text-gray-700"
-                data-sanity={encodeSanityNodeFromResultPath(
-                  [i, 'title'],
-                  data.resultSourceMap!,
-                )}
+                data-sanity={dataAttribute([i, 'title'])}
                 style={{ ['textWrap' as any]: 'balance' }}
               >
                 {product.title}
               </h2>
               <p
                 className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
-                data-sanity={encodeSanityNodeFromResultPath(
-                  [i, 'price'],
-                  data.resultSourceMap!,
-                )}
+                data-sanity={dataAttribute([i, 'price'])}
               >
                 {product.price ? formatCurrency(product.price) : 'FREE'}
               </p>
@@ -193,14 +78,15 @@ export default function ProductsRoute() {
                             .height(48)
                             .width(48)
                             .url()
-                        : 'https://source.unsplash.com/featured/?brand'
+                        : `https://source.unsplash.com/featured/48x48?${
+                            product.brand.name
+                              ? encodeURIComponent(product.brand.name)
+                              : `brand&r=${i}`
+                          }`
                     }
                     width={24}
                     height={24}
-                    data-sanity={encodeSanityNodeFromResultPath(
-                      [i, 'brand', 'logo', 'alt'],
-                      data.resultSourceMap!,
-                    )}
+                    data-sanity={dataAttribute([i, 'brand', 'logo', 'alt'])}
                     alt={product.brand?.logo?.alt || ''}
                   />
                   <span className="font-bold text-gray-600">
@@ -212,6 +98,9 @@ export default function ProductsRoute() {
           ))}
         </div>
       </div>
+      <span className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100">
+        {data.vercelEnv}
+      </span>
     </div>
   )
 }

@@ -92,6 +92,12 @@ importers:
       '@sanity/icons':
         specifier: ^2.5.0
         version: 2.5.0(react@18.2.0)
+      '@sanity/overlays':
+        specifier: workspace:*
+        version: link:../../packages/overlays
+      '@sanity/preview-kit':
+        specifier: workspace:*
+        version: link:../../packages/preview-kit
       '@sanity/ui':
         specifier: ^1.8.2
         version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)

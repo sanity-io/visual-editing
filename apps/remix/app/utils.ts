@@ -1,19 +1,7 @@
-import { json } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
-import {
-  type SanityNode,
-  encodeSanityNodeData as _encodeSanityNodeData,
-} from '@sanity/overlays'
 import { type ContentSourceMap, createClient } from '@sanity/preview-kit/client'
-import {
-  resolveMapping,
-  encodeJsonPathToUriComponent,
-  type PathSegment,
-  parseNormalisedJsonPath,
-} from '@sanity/preview-kit/csm'
 import { workspaces, baseUrl, apiVersion } from 'apps-common/env'
-import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import imageUrlBuilder from '@sanity/image-url'
+import { defineDataAttribute as _defineDataAttribute } from 'apps-common/utils'
 
 const { projectId, dataset, tool, workspace } = workspaces['remix']
 const studioUrl = `${baseUrl}/${workspace}`
@@ -64,4 +52,11 @@ const crossDatasetBuilder = imageUrlBuilder({
 })
 export function urlForCrossDatasetReference(source: any) {
   return crossDatasetBuilder.image(source).auto('format').fit('max')
+}
+
+export function defineDataAttribute(csm?: ContentSourceMap) {
+  return _defineDataAttribute(
+    { baseUrl, projectId, dataset, tool, workspace },
+    csm,
+  )
 }
