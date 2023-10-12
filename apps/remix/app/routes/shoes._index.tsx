@@ -30,6 +30,22 @@ export default function ProductsRoute() {
 
   return (
     <div className="bg-white">
+      <nav aria-label="Breadcrumb" className="py-4">
+        <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <li>
+            <div className="flex items-center">
+              <Link
+                to="/shoes"
+                aria-current="page"
+                className="mr-2 text-sm font-medium text-gray-900"
+              >
+                Shoes
+              </Link>
+            </div>
+          </li>
+        </ol>
+      </nav>
+
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h1 className="sr-only">Products</h1>
 
