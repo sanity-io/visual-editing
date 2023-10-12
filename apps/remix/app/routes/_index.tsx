@@ -27,8 +27,8 @@ export default function Index() {
     <div className="flex flex-col items-center justify-center px-2 py-10">
       <h1
         data-sanity={encodeSanityNodeData({
-          id: '279d8ab4-a46b-40bc-aeb7-89cfbe013ae4',
-          type: 'product',
+          id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
+          type: 'shoe',
           path: 'title',
         })}
       >
@@ -37,13 +37,13 @@ export default function Index() {
       <h1>
         {vercelStegaCombine('vercelStegaCombine', {
           origin: 'sanity.io',
-          href: `${baseUrl}/intent/edit/id=279d8ab4-a46b-40bc-aeb7-89cfbe013ae4;path=title`,
+          href: `${baseUrl}/intent/edit/id=0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2;path=title`,
         })}
       </h1>
       <h1
         data-sanity={encodeSanityNodeData({
-          id: '279d8ab4-a46b-40bc-aeb7-89cfbe013ae4',
-          // type: 'product',
+          id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
+          // type: 'shoe',
           path: 'title',
         })}
       >
@@ -51,8 +51,8 @@ export default function Index() {
       </h1>
       <h1
         data-sanity={encodeSanityNodeData({
-          id: '279d8ab4-a46b-40bc-aeb7-89cfbe013ae4',
-          type: 'product',
+          id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
+          type: 'shoe',
           path: 'slug',
         })}
       >
@@ -60,8 +60,8 @@ export default function Index() {
       </h1>
       <h1
         data-sanity={encodeSanityNodeData({
-          id: '279d8ab4-a46b-40bc-aeb7-89cfbe013ae4',
-          type: 'product',
+          id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
+          type: 'shoe',
           path: 'slug.current',
         })}
       >
@@ -69,8 +69,8 @@ export default function Index() {
       </h1>
       <h1
         data-sanity={encodeSanityNodeData({
-          id: '279d8ab4-a46b-40bc-aeb7-89cfbe013ae4',
-          type: 'product',
+          id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
+          type: 'shoe',
           path: '',
         })}
       >
@@ -78,8 +78,8 @@ export default function Index() {
       </h1>
       <h1
         data-sanity={encodeSanityNodeData({
-          id: '279d8ab4-a46b-40bc-aeb7-89cfbe013ae4',
-          type: 'product',
+          id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
+          type: 'shoe',
           path: 'details.ledLifespan',
         })}
       >
@@ -99,7 +99,7 @@ export default function Index() {
         Cross Dataset Reference
       </h1>
       <hr className="max-w-32 my-8 h-px w-full border-0 bg-slate-200 dark:bg-slate-700" />
-      <Link to="/products">Products</Link>
+      <Link to="/shoes">Shoes</Link>
     </div>
   )
 }
