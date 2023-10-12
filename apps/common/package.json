@@ -25,6 +25,13 @@
       "import": "./dist/env.js",
       "default": "./dist/env.js"
     },
+    "./queries": {
+      "types": "./dist/queries.d.ts",
+      "source": "./src/queries.ts",
+      "require": "./dist/queries.cjs",
+      "import": "./dist/queries.js",
+      "default": "./dist/queries.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -35,6 +42,9 @@
     "*": {
       "env": [
         "./dist/env.d.ts"
+      ],
+      "queries": [
+        "./dist/queries.d.ts"
       ]
     }
   },

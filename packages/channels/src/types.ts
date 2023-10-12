@@ -69,6 +69,8 @@ export interface BufferMessage extends ChannelMsg {
  */
 export interface Connection {
   target: Window
+  targetOrigin: string
+  sourceOrigin: string
   id: string
 }
 

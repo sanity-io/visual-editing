@@ -1,6 +1,6 @@
 import { DesktopIcon, EditIcon, MobileDeviceIcon } from '@sanity/icons'
-import { Box, Button, Card, Flex } from '@sanity/ui'
-import { forwardRef, useCallback, useState } from 'react'
+import { Box, Button, Card, Flex, Inline, Text } from '@sanity/ui'
+import { forwardRef, useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { ComposerParams } from '../types'
@@ -25,6 +25,7 @@ export const PreviewFrame = forwardRef<
   HTMLIFrameElement,
   {
     initialUrl: string
+    targetOrigin: string
     onPathChange: (nextPath: string) => void
     overlayEnabled: boolean
     params: ComposerParams
@@ -34,6 +35,7 @@ export const PreviewFrame = forwardRef<
 >(function PreviewFrame(props, ref) {
   const {
     initialUrl,
+    targetOrigin,
     onPathChange,
     overlayEnabled,
     params,
@@ -47,11 +49,20 @@ export const PreviewFrame = forwardRef<
   const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
 
   // @TODO handle targetOrigin, or another way of asking for the current location when CORS doesn't allow reading `location.pathname` directly
-  const onIFrameLoad = useCallback(() => {
-    if (typeof ref !== 'function' && ref?.current?.contentWindow) {
-      onPathChange(ref.current.contentWindow.location.pathname)
-    }
-  }, [onPathChange, ref])
+  // const onIFrameLoad = useCallback(() => {
+  //   if (typeof ref !== 'function' && ref?.current?.contentWindow) {
+  //     onPathChange(ref.current.contentWindow.location.pathname)
+  //   }
+  // }, [onPathChange, ref])
+
+  const previewLocationOrigin = useMemo(() => {
+    const { origin: parsedTargetOrigin } = new URL(targetOrigin, location.href)
+    const { origin: previewOrigin } = new URL(
+      params.preview || '/',
+      parsedTargetOrigin,
+    )
+    return previewOrigin === location.origin ? undefined : previewOrigin
+  }, [params.preview, targetOrigin])
 
   return (
     <>
@@ -68,10 +79,21 @@ export const PreviewFrame = forwardRef<
             />
           </Flex>
           <Box flex={1}>
-            <PreviewLocationInput
-              onChange={onPathChange}
-              value={params.preview || '/'}
-            />
+            <Inline space={1}>
+              {previewLocationOrigin && (
+                <Text
+                  muted
+                  size={1}
+                  style={{ transform: 'translate(0.3rem, 0.3rem)' }}
+                >
+                  {previewLocationOrigin}
+                </Text>
+              )}
+              <PreviewLocationInput
+                onChange={onPathChange}
+                value={params.preview || '/'}
+              />
+            </Inline>
           </Box>
           <Flex align="center" flex="none" gap={1}>
             <Button
@@ -108,7 +130,7 @@ export const PreviewFrame = forwardRef<
               ref={ref}
               src={initialUrl}
               style={{ pointerEvents }}
-              onLoad={onIFrameLoad}
+              // onLoad={onIFrameLoad}
             />
           </IFrameContainerCard>
         </Flex>

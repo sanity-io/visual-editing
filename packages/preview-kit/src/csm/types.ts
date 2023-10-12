@@ -1,4 +1,7 @@
-import type { ContentSourceMap } from '@sanity/client'
+import type {
+  ContentSourceMap,
+  ContentSourceMapDocuments,
+} from '@sanity/client'
 
 /** @public */
 export interface CreateTranscoderConfig {
@@ -51,6 +54,7 @@ export type StudioUrl =
 export type FilterDefault = (props: {
   path: PathSegment[]
   filterDefault: FilterDefault
+  sourceDocument: ContentSourceMapDocuments[number]
 }) => boolean
 
 export type Logger =
