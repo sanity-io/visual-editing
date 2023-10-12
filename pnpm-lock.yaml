@@ -170,7 +170,7 @@ importers:
         version: 13.5.3(@babel/core@7.22.20)(react-dom@18.2.0)(react@18.2.0)
       next-sanity:
         specifier: ^5.5.4
-        version: 5.5.4(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11)
+        version: 5.5.4(@sanity/client@6.6.0)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11)
       postcss:
         specifier: 8.4.30
         version: 8.4.30
@@ -608,8 +608,8 @@ importers:
         version: 1.2.0(react@18.2.0)
     devDependencies:
       '@sanity/client':
-        specifier: ^6.4.11
-        version: 6.4.11
+        specifier: ^6.5.0
+        version: 6.6.0
       '@sanity/pkg-utils':
         specifier: ^2.4.8
         version: 2.4.9(@types/node@18.17.15)(typescript@5.2.2)
@@ -4104,7 +4104,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -4684,8 +4683,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/client@6.4.11:
-    resolution: {integrity: sha512-A8s5odg9b8ioamKDdfrfsp5rHsE8J+BOpknw6eRtIHF5BBkNGAYdS78NdS1m3R+llHotdpyS/X2+la4YgzU5/w==}
+  /@sanity/client@6.6.0:
+    resolution: {integrity: sha512-AZNtl1/BSRNOsjy5k/1q1feIHPuExugWsG0ZuNj4/etOddFMaXfUvCHHuv89pHb6l/3CWv+UPysvMNU0+qS2Ig==}
     engines: {node: '>=14.18'}
     dependencies:
       '@sanity/eventsource': 5.0.0
@@ -4775,7 +4774,7 @@ packages:
     engines: {node: '>=14.18.0'}
     hasBin: true
     dependencies:
-      '@sanity/client': 6.4.11
+      '@sanity/client': 6.6.0
       '@sanity/import': 3.16.5-pink-lizard.39
       get-it: 8.4.3
       meow: 9.0.0
@@ -4877,7 +4876,7 @@ packages:
       parse-git-config: 3.0.0
       pkg-up: 3.1.0
       prettier: 3.0.3
-      prettier-plugin-packagejson: 2.4.5(prettier@3.0.3)
+      prettier-plugin-packagejson: 2.4.6(prettier@3.0.3)
       pretty-bytes: 5.6.0
       prompts: 2.4.2
       rimraf: 4.4.1
@@ -4919,7 +4918,7 @@ packages:
       - react-dom
       - supports-color
 
-  /@sanity/preview-kit@3.1.6(@sanity/client@6.4.11)(react@18.2.0):
+  /@sanity/preview-kit@3.1.6(@sanity/client@6.6.0)(react@18.2.0):
     resolution: {integrity: sha512-V8gZlIcyqqMr1WDAzrNXntrgYVeR56EKEZHbXOoHIr3qjgCRXPogVJ5w09DJ6cMhv2NKClOpAqmA9MWzt81wXw==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -4929,7 +4928,7 @@ packages:
       react:
         optional: true
     dependencies:
-      '@sanity/client': 6.4.11
+      '@sanity/client': 6.6.0
       '@sanity/eventsource': 5.0.0
       '@sanity/groq-store': 4.1.1
       '@vercel/stega': 0.1.0
@@ -4976,7 +4975,7 @@ packages:
   /@sanity/types@3.16.5-pink-lizard.39:
     resolution: {integrity: sha512-sfoRAMzQdV1TMniJk+HC0JB14y+WyLCvtOtO5Isynx6zCMbJ1D73hFVo3M6BOKz5sNCe74xu6MOYwB7ftCCS4A==}
     dependencies:
-      '@sanity/client': 6.4.11
+      '@sanity/client': 6.6.0
       '@types/react': 18.2.23
     transitivePeerDependencies:
       - supports-color
@@ -13532,10 +13531,6 @@ packages:
     hasBin: true
     dev: false
 
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
-    dev: true
-
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: true
@@ -13559,7 +13554,7 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: true
 
-  /next-sanity@5.5.4(@sanity/client@6.4.11)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11):
+  /next-sanity@5.5.4(@sanity/client@6.6.0)(@sanity/icons@2.4.1)(@sanity/types@3.16.5-pink-lizard.39)(@sanity/ui@1.8.2)(next@13.5.3)(react@18.2.0)(sanity@3.16.5-pink-lizard.39)(styled-components@5.3.11):
     resolution: {integrity: sha512-hXpTbubgazoJO1cSb+OuGCtRbq7Fby/MYpZnU9IRoiPZS50UVz8lPWflFUfTq/j+pCerPpp31qDwCjY+Op6KcA==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -13572,9 +13567,9 @@ packages:
       sanity: 3.16.5-pink-lizard.39
       styled-components: ^5.2.0 || ^6.0.0
     dependencies:
-      '@sanity/client': 6.4.11
+      '@sanity/client': 6.6.0
       '@sanity/icons': 2.4.1(react@18.2.0)
-      '@sanity/preview-kit': 3.1.6(@sanity/client@6.4.11)(react@18.2.0)
+      '@sanity/preview-kit': 3.1.6(@sanity/client@6.6.0)(react@18.2.0)
       '@sanity/types': 3.16.5-pink-lizard.39
       '@sanity/ui': 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
       '@sanity/webhook': 3.0.1
@@ -15605,19 +15600,6 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
-  /prettier-plugin-packagejson@2.4.5(prettier@3.0.3):
-    resolution: {integrity: sha512-glG71jE1gO3y5+JNAhC8X+4yrlN28rub6Aj461SKbaPie9RgMiHKcInH2Moi2VGOfkTXaEHBhg4uVMBqa+kBUA==}
-    peerDependencies:
-      prettier: '>= 1.16.0'
-    peerDependenciesMeta:
-      prettier:
-        optional: true
-    dependencies:
-      prettier: 3.0.3
-      sort-package-json: 2.5.1
-      synckit: 0.8.5
-    dev: true
-
   /prettier-plugin-packagejson@2.4.6(prettier@3.0.3):
     resolution: {integrity: sha512-5JGfzkJRL0DLNyhwmiAV9mV0hZLHDwddFCs2lc9CNxOChpoWUQVe8K4qTMktmevmDlMpok2uT10nvHUyU59sNw==}
     peerDependencies:
@@ -16736,7 +16718,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.16.5-pink-lizard.39
       '@sanity/cli': 3.16.5-pink-lizard.39
-      '@sanity/client': 6.4.11
+      '@sanity/client': 6.6.0
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.16.5-pink-lizard.39
       '@sanity/diff-match-patch': 3.1.1
@@ -16864,7 +16846,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.16.5-pink-lizard.39
       '@sanity/cli': 3.16.5-pink-lizard.39
-      '@sanity/client': 6.4.11
+      '@sanity/client': 6.6.0
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.16.5-pink-lizard.39
       '@sanity/diff-match-patch': 3.1.1
@@ -17364,19 +17346,6 @@ packages:
       git-hooks-list: 1.0.3
       globby: 10.0.0
       is-plain-obj: 2.1.0
-      sort-object-keys: 1.1.3
-    dev: true
-
-  /sort-package-json@2.5.1:
-    resolution: {integrity: sha512-vx/KoZxm8YNMUqdlw7SGTfqR5pqZ/sUfgOuRtDILiOy/3AvzhAibyUe2cY3OpLs3oRSow9up4yLVtQaM24rbDQ==}
-    hasBin: true
-    dependencies:
-      detect-indent: 7.0.1
-      detect-newline: 4.0.0
-      get-stdin: 9.0.0
-      git-hooks-list: 3.1.0
-      globby: 13.2.2
-      is-plain-obj: 4.1.0
       sort-object-keys: 1.1.3
     dev: true
 
