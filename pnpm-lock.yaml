@@ -98,7 +98,7 @@ importers:
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^3.0.0
-        version: 3.0.0(@types/node@18.17.15)(typescript@5.2.2)
+        version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -388,7 +388,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ^4.4.9
-        version: 4.4.9(@types/node@18.17.15)
+        version: 4.4.9(@types/node@18.18.4)
 
   packages/channels:
     dependencies:
@@ -398,7 +398,7 @@ importers:
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^3.0.0
-        version: 3.0.0(@types/node@18.17.15)(typescript@5.2.2)
+        version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.5
         version: 6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.51.0)(typescript@5.2.2)
@@ -435,7 +435,7 @@ importers:
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^3.0.0
-        version: 3.0.0(@types/node@18.17.15)(typescript@5.2.2)
+        version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
       channels:
         specifier: workspace:*
         version: link:../channels
@@ -469,7 +469,7 @@ importers:
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^3.0.0
-        version: 3.0.0(@types/node@18.17.15)(typescript@5.2.2)
+        version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.5
         version: 6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.51.0)(typescript@5.2.2)
@@ -524,7 +524,7 @@ importers:
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^3.0.0
-        version: 3.0.0(@types/node@18.17.15)(typescript@5.2.2)
+        version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
       '@types/react':
         specifier: ^18.2.28
         version: 18.2.28
@@ -624,7 +624,7 @@ importers:
         version: 6.6.0
       '@sanity/pkg-utils':
         specifier: ^3.0.0
-        version: 3.0.0(@types/node@18.17.15)(typescript@5.2.2)
+        version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
       '@sanity/semantic-release-preset':
         specifier: ^4.1.4
         version: 4.1.4(semantic-release@21.1.1)
@@ -635,8 +635,8 @@ importers:
         specifier: ^4.0.7
         version: 4.0.7
       '@types/node':
-        specifier: ^18.17.15
-        version: 18.17.15
+        specifier: ^18.18.4
+        version: 18.18.4
       '@types/react':
         specifier: ^18.2.28
         version: 18.2.28
@@ -3096,24 +3096,24 @@ packages:
       - supports-color
     dev: true
 
-  /@microsoft/api-extractor-model@7.28.2(@types/node@18.17.15):
+  /@microsoft/api-extractor-model@7.28.2(@types/node@18.18.4):
     resolution: {integrity: sha512-vkojrM2fo3q4n4oPh4uUZdjJ2DxQ2+RnDQL/xhTWSRUNPF6P4QyrvY357HBxbnltKcYu+nNNolVqc6TIGQ73Ig==}
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.61.0(@types/node@18.17.15)
+      '@rushstack/node-core-library': 3.61.0(@types/node@18.18.4)
     transitivePeerDependencies:
       - '@types/node'
     dev: true
 
-  /@microsoft/api-extractor@7.38.0(@types/node@18.17.15):
+  /@microsoft/api-extractor@7.38.0(@types/node@18.18.4):
     resolution: {integrity: sha512-e1LhZYnfw+JEebuY2bzhw0imDCl1nwjSThTrQqBXl40hrVo6xm3j/1EpUr89QyzgjqmAwek2ZkIVZbrhaR+cqg==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.28.2(@types/node@18.17.15)
+      '@microsoft/api-extractor-model': 7.28.2(@types/node@18.18.4)
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.61.0(@types/node@18.17.15)
+      '@rushstack/node-core-library': 3.61.0(@types/node@18.18.4)
       '@rushstack/rig-package': 0.5.1
       '@rushstack/ts-command-line': 4.16.1
       colors: 1.2.5
@@ -3674,7 +3674,7 @@ packages:
       '@nuxt/schema': 3.7.4
       execa: 7.2.0
       nuxt: 3.7.4
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -3735,7 +3735,7 @@ packages:
       simple-git: 3.19.1
       sirv: 2.0.3
       unimport: 3.3.0(rollup@3.29.0)
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
       vite-plugin-inspect: 0.7.38(@nuxt/kit@3.7.4)(vite@4.4.9)
       vite-plugin-vue-inspector: 3.7.1(vite@4.4.9)
       wait-on: 7.0.1
@@ -3879,7 +3879,7 @@ packages:
       strip-literal: 1.3.0
       ufo: 1.3.0
       unplugin: 1.5.0
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
       vite-node: 0.33.0
       vite-plugin-checker: 0.6.2(vite@4.4.9)
       vue: 3.3.4
@@ -4837,7 +4837,7 @@ packages:
   /@rushstack/eslint-patch@1.3.3:
     resolution: {integrity: sha512-0xd7qez0AQ+MbHatZTlI1gu5vkG8r7MYRUJAHPAHJBmGLs16zpkrpAVLvjQKQOqaXPDUBwOiJzNc00znHSCVBw==}
 
-  /@rushstack/node-core-library@3.61.0(@types/node@18.17.15):
+  /@rushstack/node-core-library@3.61.0(@types/node@18.18.4):
     resolution: {integrity: sha512-tdOjdErme+/YOu4gPed3sFS72GhtWCgNV9oDsHDnoLY5oDfwjKUc9Z+JOZZ37uAxcm/OCahDHfuu2ugqrfWAVQ==}
     peerDependencies:
       '@types/node': '*'
@@ -4845,7 +4845,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
       colors: 1.2.5
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -5060,7 +5060,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/pkg-utils@3.0.0(@types/node@18.17.15)(typescript@5.2.2):
+  /@sanity/pkg-utils@3.0.0(@types/node@18.18.4)(typescript@5.2.2):
     resolution: {integrity: sha512-yoxhC6Imekrcyy+M2FLMrbkCX+fuV6AU9wNyK6jWAl565vtU7L2LZzTA6JO3/dxjNxxF5n0A/AButJ66b9OZNw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
@@ -5070,7 +5070,7 @@ packages:
       '@babel/core': 7.23.2
       '@babel/preset-env': 7.23.2(@babel/core@7.23.2)
       '@babel/types': 7.23.0
-      '@microsoft/api-extractor': 7.38.0(@types/node@18.17.15)
+      '@microsoft/api-extractor': 7.38.0(@types/node@18.18.4)
       '@microsoft/tsdoc-config': 0.16.2
       '@rollup/plugin-alias': 5.0.1(rollup@4.0.2)
       '@rollup/plugin-babel': 6.0.4(@babel/core@7.23.2)(rollup@4.0.2)
@@ -5542,7 +5542,7 @@ packages:
       svelte: 4.2.0
       tiny-glob: 0.2.9
       undici: 5.25.4
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5558,7 +5558,7 @@ packages:
       '@sveltejs/vite-plugin-svelte': 2.4.5(svelte@4.2.0)(vite@4.4.9)
       debug: 4.3.4(supports-color@5.5.0)
       svelte: 4.2.0
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5577,7 +5577,7 @@ packages:
       magic-string: 0.30.3
       svelte: 4.2.0
       svelte-hmr: 0.15.3(svelte@4.2.0)
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
       vitefu: 0.2.4(vite@4.4.9)
     transitivePeerDependencies:
       - supports-color
@@ -5704,7 +5704,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
       '@types/responselike': 1.0.0
     dev: true
 
@@ -5770,7 +5770,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
 
   /@types/hast@2.3.5:
     resolution: {integrity: sha512-SvQi0L/lNpThgPoleH53cdjB3y9zpLlVjRbqB3rH8hx1jiRSBGAhyjV3H+URFjNVRqt2EdYNrbZE5IsGlNfpRg==}
@@ -5791,7 +5791,7 @@ packages:
   /@types/http-proxy@1.17.11:
     resolution: {integrity: sha512-HC8G7c1WmaF2ekqpnFq626xd3Zz0uvaqFmBJNRZCGEZCXkvSdJoNFn/8Ygbd9fKNQj8UzLdCETaI0UWPAjK7IA==}
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
     dev: true
 
   /@types/is-hotkey@0.1.7:
@@ -5810,7 +5810,7 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
     dev: true
 
   /@types/lodash.get@4.4.7:
@@ -5851,15 +5851,15 @@ packages:
   /@types/node-fetch@2.6.3:
     resolution: {integrity: sha512-ETTL1mOEdq/sxUtgtOhKjyB2Irra4cjxksvcMUR5Zr4n+PxVhsCD9WS46oPbHL3et9Zde7CNRr+WUNlcHvsX+w==}
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
       form-data: 3.0.1
     dev: false
 
   /@types/node@14.18.33:
     resolution: {integrity: sha512-qelS/Ra6sacc4loe/3MSjXNL1dNQ/GjxNHVzuChwMfmk7HuycRLVQN2qNY3XahK+fZc5E2szqQSKUyAF0E+2bg==}
 
-  /@types/node@18.17.15:
-    resolution: {integrity: sha512-2yrWpBk32tvV/JAd3HNHWuZn/VDN1P+72hWirHnvsvTGSqbANi+kSeuQR9yAHnbvaBvHDsoTdXV0Fe+iRtHLKA==}
+  /@types/node@18.18.4:
+    resolution: {integrity: sha512-t3rNFBgJRugIhackit2mVcLfF6IRc0JE4oeizPQL8Zrm8n2WY/0wOdpOPhdtG0V9Q2TlW/axbF1MJ6z+Yj/kKQ==}
 
   /@types/node@20.8.4:
     resolution: {integrity: sha512-ZVPnqU58giiCjSxjVUESDtdPk4QR5WQhhINbc9UBrKLU68MX5BF6kbQzTrkwbolyr0X8ChBpXfavr5mZFKZQ5A==}
@@ -5910,7 +5910,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
     dev: true
 
   /@types/scheduler@0.16.3:
@@ -6423,7 +6423,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.23.2)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.23.2)
       react-refresh: 0.14.0
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - supports-color
 
@@ -6437,7 +6437,7 @@ packages:
       '@babel/core': 7.23.2
       '@babel/plugin-transform-typescript': 7.22.15(@babel/core@7.23.2)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.23.2)
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
       vue: 3.3.4
     transitivePeerDependencies:
       - supports-color
@@ -6450,7 +6450,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
       vue: 3.3.4
     dev: true
 
@@ -10220,7 +10220,7 @@ packages:
     resolution: {integrity: sha512-EzV94NYKoO09GLXGjXj9JIlXijVck4ONSr5wiCWDvhsvj5jxSrzTmRU/9C1DyB6uToszLs8aifA6NQ7lEQdvFw==}
     engines: {node: '>= 0.8'}
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
       require-like: 0.1.2
     dev: true
 
@@ -12187,7 +12187,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -17170,7 +17170,7 @@ packages:
       use-device-pixel-ratio: 1.1.2(react@18.2.0)
       use-hot-module-reload: 1.0.3(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
       yargs: 17.7.2
     transitivePeerDependencies:
       - '@types/node'
@@ -19400,7 +19400,7 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -19412,7 +19412,7 @@ packages:
       - terser
     dev: true
 
-  /vite-node@0.34.6(@types/node@18.17.15):
+  /vite-node@0.34.6(@types/node@18.18.4):
     resolution: {integrity: sha512-nlBMJ9x6n7/Amaz6F3zJ97EBwR2FkzhBRxF5e+jE6LA3yi6Wtc2lyTij1OnDMIr34v5g/tVQtsVAzhT0jc5ygA==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -19422,7 +19422,7 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -19478,7 +19478,7 @@ packages:
       semver: 7.5.4
       strip-ansi: 6.0.1
       tiny-invariant: 1.3.1
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
       vscode-languageclient: 7.0.0
       vscode-languageserver: 7.0.0
       vscode-languageserver-textdocument: 1.0.8
@@ -19504,7 +19504,7 @@ packages:
       open: 9.1.0
       picocolors: 1.0.0
       sirv: 2.0.3
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -19526,7 +19526,7 @@ packages:
       kolorist: 1.8.0
       magic-string: 0.30.3
       shell-quote: 1.8.1
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -19567,7 +19567,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@4.4.9(@types/node@18.17.15):
+  /vite@4.4.9(@types/node@18.18.4):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -19595,7 +19595,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
       esbuild: 0.18.20
       postcss: 8.4.31
       rollup: 3.29.0
@@ -19646,7 +19646,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.4.9(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
     dev: true
 
   /vitest-github-actions-reporter@0.10.0(vitest@0.34.6):
@@ -19692,7 +19692,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.6
       '@types/chai-subset': 1.3.3
-      '@types/node': 18.17.15
+      '@types/node': 18.18.4
       '@vitest/expect': 0.34.6
       '@vitest/runner': 0.34.6
       '@vitest/snapshot': 0.34.6
@@ -19712,8 +19712,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.7.0
-      vite: 4.4.9(@types/node@18.17.15)
-      vite-node: 0.34.6(@types/node@18.17.15)
+      vite: 4.4.9(@types/node@18.18.4)
+      vite-node: 0.34.6(@types/node@18.18.4)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
