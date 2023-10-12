@@ -10,7 +10,6 @@ const nextConfig = {
   },
 
   transpilePackages: [
-    '@sanity/composer',
     '@sanity/overlays',
     '@sanity/preview-kit',
     'channels',
