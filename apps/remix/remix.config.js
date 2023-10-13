@@ -25,4 +25,5 @@ module.exports = {
     v2_routeConvention: true,
   },
   tailwind: true,
+  watchPaths: ['../common/src/**'],
 }
