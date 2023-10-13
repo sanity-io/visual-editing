@@ -6,6 +6,7 @@ import { schema } from 'apps-common'
 import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import { locate } from './locate'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -69,6 +70,7 @@ const composerWorkspaces = Object.entries({
         composerTool({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
+          locate,
         }),
         sharedSettings(),
       ],
