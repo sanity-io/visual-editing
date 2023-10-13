@@ -15,6 +15,7 @@ module.exports = {
   serverDependenciesToBundle: [
     // ...getDependenciesToBundle('apps-common')
     /^apps-common.*/,
+    /^@sanity\/react-loader.*/,
   ],
   future: {
     v2_dev: true,
@@ -25,5 +26,5 @@ module.exports = {
     v2_routeConvention: true,
   },
   tailwind: true,
-  watchPaths: ['../common/src/**'],
+  watchPaths: ['../common/src/**', '../../packages/react-loader/dist/**'],
 }

@@ -95,16 +95,6 @@ export function createChannel<T extends ChannelMsg>(
       isInternalMessage(type) ||
       activeConnections.find(connectionIsActive(connection))
     ) {
-      // eslint-disable-next-line no-console
-      console.groupCollapsed('postMessage')
-      // eslint-disable-next-line no-console
-      console.log('targetOrigin', connection.targetOrigin)
-      // eslint-disable-next-line no-console
-      console.log('target', connection.target)
-      // eslint-disable-next-line no-console
-      console.log('sourceOrigin', connection.sourceOrigin)
-      // eslint-disable-next-line no-console
-      console.groupEnd()
       return connection.target.postMessage(msg, {
         // targetOrigin: connection.targetOrigin,
         targetOrigin: '*',

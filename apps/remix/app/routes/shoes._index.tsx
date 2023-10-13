@@ -9,6 +9,7 @@ import {
   defineDataAttribute,
 } from '~/utils'
 import { useSourceDocuments } from '~/useChannel'
+import { useQuery } from '~/useSanityLoader'
 
 export async function loader() {
   const client = getClient()
@@ -29,6 +30,10 @@ export default function ProductsRoute() {
   const data = useLoaderData<typeof loader>()
   const dataAttribute = defineDataAttribute(data.resultSourceMap)
   useSourceDocuments(data.resultSourceMap)
+
+  useQuery(shoesList, {})
+  console.log({ getClient })
+  const products = data.result
 
   return (
     <div className="min-h-screen bg-white">
@@ -52,7 +57,7 @@ export default function ProductsRoute() {
         <h1 className="sr-only">Products</h1>
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {data.result.map((product, i) => (
+          {products.map((product, i) => (
             <Link
               key={product.slug.current}
               to={`/shoes/${product.slug.current}`}

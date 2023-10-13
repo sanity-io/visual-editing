@@ -32,7 +32,7 @@
     "lint": "eslint .",
     "prepublishOnly": "npm run build",
     "test": "tsc --noEmit",
-    "watch": "pkg watch --strict"
+    "dev": "pkg watch --strict"
   },
   "browserslist": [
     "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
@@ -91,20 +91,23 @@
     "root": true
   },
   "dependencies": {
+    "@nanostores/query": "0.2.4",
+    "@nanostores/react": "0.7.1",
+    "@sanity/core-loader": "workspace:*",
     "@sanity/groq-store": "workspace:*",
-    "@sanity/core-loader": "workspace:*"
+    "nanostores": "0.9.3"
   },
   "devDependencies": {
     "@sanity/client": "^6.6.0",
     "@sanity/pkg-utils": "^3.0.0",
-    "channels": "workspace:*",
-    "typescript": "^5.2.2",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "channels": "workspace:*",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "typescript": "^5.2.2",
     "visual-editing-helpers": "workspace:*"
   },
   "peerDependencies": {

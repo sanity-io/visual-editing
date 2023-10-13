@@ -55,7 +55,7 @@ export const PreviewFrame = forwardRef<
   //   }
   // }, [onPathChange, ref])
 
-  const previewLocationOrigin = useMemo(() => {
+  let previewLocationOrigin = useMemo(() => {
     const { origin: parsedTargetOrigin } = new URL(targetOrigin, location.href)
     const { origin: previewOrigin } = new URL(
       params.preview || '/',
@@ -63,6 +63,9 @@ export const PreviewFrame = forwardRef<
     )
     return previewOrigin === location.origin ? undefined : previewOrigin
   }, [params.preview, targetOrigin])
+
+  // @TODO fix the layout
+  previewLocationOrigin = undefined
 
   return (
     <>
@@ -79,21 +82,26 @@ export const PreviewFrame = forwardRef<
             />
           </Flex>
           <Box flex={1}>
-            <Inline space={1}>
-              {previewLocationOrigin && (
+            {previewLocationOrigin ? (
+              <Inline space={1}>
                 <Text
                   muted
                   size={1}
                   style={{ transform: 'translate(0.3rem, 0.3rem)' }}
                 >
                   {previewLocationOrigin}
-                </Text>
-              )}
+                </Text>{' '}
+                <PreviewLocationInput
+                  onChange={onPathChange}
+                  value={params.preview || '/'}
+                />
+              </Inline>
+            ) : (
               <PreviewLocationInput
                 onChange={onPathChange}
                 value={params.preview || '/'}
               />
-            </Inline>
+            )}
           </Box>
           <Flex align="center" flex="none" gap={1}>
             <Button

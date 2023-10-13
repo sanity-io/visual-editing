@@ -64,11 +64,13 @@ function resolveSanityNodeFromResultSourceMapPath(
   const resolveMappingResult = resolveMapping(resultPath, csm)
 
   if (!resolveMappingResult) {
+    /*
     console.warn('resolveMappingResult not found', {
       resultPath,
       csm,
       resolveMappingResult,
     })
+    // */
     return null
   }
 
@@ -104,7 +106,7 @@ function resolveSanityNodeFromResultSourceMapPath(
   const sourcePath = csm.paths[mapping.source.path]
 
   if (sourceDocument._projectId) {
-    console.log(sourceDocument._dataset)
+    // console.log(sourceDocument._dataset)
   }
 
   return {

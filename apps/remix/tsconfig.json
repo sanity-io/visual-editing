@@ -5,6 +5,7 @@
     "tailwind.config.ts",
     "**/*.ts",
     "**/*.tsx",
+    "../../packages/react-loader/src",
   ],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -20,7 +21,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+      "@sanity/react-loader": ["../../packages/react-loader/src"],
     },
 
     // Remix takes care of building everything in `remix build`.

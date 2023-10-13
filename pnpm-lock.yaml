@@ -244,6 +244,9 @@ importers:
       '@sanity/preview-kit':
         specifier: workspace:*
         version: link:../../packages/preview-kit
+      '@sanity/react-loader':
+        specifier: workspace:*
+        version: link:../../packages/react-loader
       '@vercel/node':
         specifier: ^3.0.7
         version: 3.0.7
@@ -828,12 +831,21 @@ importers:
 
   packages/react-loader:
     dependencies:
+      '@nanostores/query':
+        specifier: 0.2.4
+        version: 0.2.4(nanostores@0.9.3)
+      '@nanostores/react':
+        specifier: 0.7.1
+        version: 0.7.1(nanostores@0.9.3)(react@18.2.0)
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
+      nanostores:
+        specifier: 0.9.3
+        version: 0.9.3
     devDependencies:
       '@sanity/client':
         specifier: ^6.6.0
@@ -3344,6 +3356,27 @@ packages:
   /@microsoft/tsdoc@0.14.2:
     resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
     dev: true
+
+  /@nanostores/query@0.2.4(nanostores@0.9.3):
+    resolution: {integrity: sha512-DCQWQsqjABf4/5eN4opGt9MbD6opNxGyewmR/yRAEB999WCl+Cgz6G6WTy37KiKNRjkBP0yK6GN6BEvgnhDoIQ==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      nanostores: '>0.7'
+    dependencies:
+      nanoevents: 7.0.1
+      nanostores: 0.9.3
+    dev: false
+
+  /@nanostores/react@0.7.1(nanostores@0.9.3)(react@18.2.0):
+    resolution: {integrity: sha512-EXQg9N4MdI4eJQz/AZLIx3hxQ6BuBmV4Q55bCd5YCSgEOAW7tGTsIZxpRXxvxLXzflNvHTBvfrDNY38TlSVBkQ==}
+    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      nanostores: ^0.9.0
+      react: '>=18.0.0'
+    dependencies:
+      nanostores: 0.9.3
+      react: 18.2.0
+    dev: false
 
   /@neoconfetti/svelte@1.0.0:
     resolution: {integrity: sha512-SmksyaJAdSlMa9cTidVSIqYo1qti+WTsviNDwgjNVm+KQ3DRP2Df9umDIzC4vCcpEYY+chQe0i2IKnLw03AT8Q==}
@@ -13946,6 +13979,11 @@ packages:
   /nano-pubsub@2.0.1:
     resolution: {integrity: sha512-RWgGP2TdeKZLx+guR5a7/BzYs85sj6yrXXyj0o/znbgzPlz/Ez9wQuKDpwUZ8q+u2RxXpqZ1iTkPXCIU+GHhpA==}
 
+  /nanoevents@7.0.1:
+    resolution: {integrity: sha512-o6lpKiCxLeijK4hgsqfR6CNToPyRU3keKyyI6uwuHRvpRTbZ0wXw51WRgyldVugZqoJfkGFrjrIenYH3bfEO3Q==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+    dev: false
+
   /nanoid@3.3.6:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -13961,6 +13999,11 @@ packages:
     resolution: {integrity: sha512-vWeVtV5Cw68aML/QaZvqN/3QQXc6fBfIieAlu05m7FZW2Dgb+3f0xc0TTxuJW+7u30t7iSDTV/j3kVI0oJqIfQ==}
     engines: {node: ^18 || >=20}
     hasBin: true
+    dev: false
+
+  /nanostores@0.9.3:
+    resolution: {integrity: sha512-KobZjcVyNndNrb5DAjfs0WG0lRcZu5Q1BOrfTOxokFLi25zFrWPjg+joXC6kuDqNfSt9fQwppyjUBkRPtsL+8w==}
+    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: false
 
   /napi-wasm@1.1.0:
