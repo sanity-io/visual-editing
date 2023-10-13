@@ -3,7 +3,6 @@
   "extends": ["//"],
   "pipeline": {
     "build": {
-      "cache": false,
       "dotEnv": [".env", ".env.local"],
       "env": ["NUXT_ENV_VERCEL_ENV"]
     },
