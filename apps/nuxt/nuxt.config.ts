@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   imports: {
     transform: {
-      exclude: [/\bpackages\/.+\b/, /\bapps\/common\/.+\b/],
+      exclude: [/\bpackages\/.+\b/],
     },
   },
   modules: ['@nuxtjs/tailwindcss'],
