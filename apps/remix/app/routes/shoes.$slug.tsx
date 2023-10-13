@@ -78,7 +78,7 @@ export default function ShoePage() {
 
       <article data-sanity={dataAttribute(['slug'])}>
         {coverImage?.asset && (
-          <div className="mx-auto max-w-2xl px-4 pt-10 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-16">
+          <div className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
             <img
               className="aspect-video w-full rounded-lg object-cover object-center group-hover:opacity-75"
               src={urlFor(coverImage)
@@ -93,31 +93,33 @@ export default function ShoePage() {
           </div>
         )}
         {otherImages?.length > 0 && (
-          <div className="relative mx-auto flex w-full max-w-2xl snap-x snap-mandatory gap-6 overflow-x-auto px-4 pt-5 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-8">
-            {otherImages.map((image, _i) => {
-              if (!image.asset?._ref) return null
-              // The index is wrong due to slicing out `coverImage`
-              const i = _i + 1
+          <div className="mx-auto max-w-2xl px-4 pt-5 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-8">
+            <div className="relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto">
+              {otherImages.map((image, _i) => {
+                if (!image.asset?._ref) return null
+                // The index is wrong due to slicing out `coverImage`
+                const i = _i + 1
 
-              return (
-                <div
-                  key={(image.asset._ref as string) || i}
-                  className="shrink-0 snap-center"
-                >
-                  <img
-                    className="h-40 w-80 shrink-0 rounded-lg bg-white shadow-xl"
-                    src={urlFor(image)
-                      .width(1280 * 2)
-                      .height(720 * 2)
-                      .url()}
-                    width={1280}
-                    height={720}
-                    data-sanity={dataAttribute(['media', i, 'alt'])}
-                    alt={image.alt || ''}
-                  />
-                </div>
-              )
-            })}
+                return (
+                  <div
+                    key={(image.asset._ref as string) || i}
+                    className="shrink-0 snap-start"
+                  >
+                    <img
+                      className="h-40 w-80 shrink-0 rounded-lg bg-white shadow-xl"
+                      src={urlFor(image)
+                        .width(1280 * 2)
+                        .height(720 * 2)
+                        .url()}
+                      width={1280}
+                      height={720}
+                      data-sanity={dataAttribute(['media', i, 'alt'])}
+                      alt={image.alt || ''}
+                    />
+                  </div>
+                )
+              })}
+            </div>
           </div>
         )}
         {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
