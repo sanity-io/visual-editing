@@ -92,6 +92,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@sanity/client": "^6.6.0",
     "@sanity/pkg-utils": "^3.0.0",
     "channels": "workspace:*",
     "typescript": "^5.2.2",
@@ -102,6 +103,9 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "visual-editing-helpers": "workspace:*"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^6.6.0"
   },
   "engines": {
     "node": ">=18"
