@@ -22,9 +22,9 @@ const Root = styled(Card)<{
   will-change: transform;
   box-shadow: ${({ $focused, $hovered }) =>
     $focused
-      ? 'inset 0 0 0 2px var(--card-focus-ring-color)'
-      : $hovered
       ? 'inset 0 0 0 1px var(--card-focus-ring-color)'
+      : $hovered
+      ? 'inset 0 0 0 2px var(--card-focus-ring-color)'
       : undefined};
 `
 
