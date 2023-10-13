@@ -110,10 +110,6 @@ export default function ComposerTool(props: {
         preview !== params.preview
       ) {
         setParams({ id: undefined, path: undefined, preview })
-        channel?.send('composer/navigate', {
-          url: preview,
-          type: 'push',
-        })
       }
     },
     [channel, defaultPreviewUrl, params, setParams],
@@ -133,6 +129,17 @@ export default function ComposerTool(props: {
       channel?.send('composer/blur', undefined)
     }
   }, [channel, params.id, params.path])
+
+  // Dispatch a navigation message whenever the preview param changes
+  // @todo This will cause a reflection of received navigation messages which could be problematic
+  useEffect(() => {
+    if (params.preview) {
+      channel?.send('composer/navigate', {
+        url: params.preview,
+        type: 'push',
+      })
+    }
+  }, [params.preview])
 
   // Resizing
   const minWidth = 320
