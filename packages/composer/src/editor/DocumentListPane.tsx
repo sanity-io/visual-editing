@@ -1,4 +1,4 @@
-import { Button, ErrorBoundary } from '@sanity/ui'
+import { Button, ErrorBoundary, Flex } from '@sanity/ui'
 import {
   ErrorInfo,
   FunctionComponent,
@@ -6,36 +6,42 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { Path } from 'sanity'
 import {
   DeskToolProvider,
-  DocumentPane as DeskDocumentPane,
-  DocumentPaneNode,
+  DocumentListPane as DeskDocumentListPane,
   PaneLayout,
+  PaneNode,
 } from 'sanity/desk'
+import styled from 'styled-components'
 
 import { DeskDocumentPaneParams } from '../types'
 import { ComposerPaneRouterProvider } from './ComposerPaneRouterProvider'
 
-export const DocumentPane: FunctionComponent<{
-  documentId: string
-  documentType: string
-  params: DeskDocumentPaneParams
+const Root = styled(Flex)`
+  & > div {
+    min-width: none !important;
+    max-width: none !important;
+  }
+`
+export const DocumentListPane: FunctionComponent<{
   onDeskParams: (params: DeskDocumentPaneParams) => void
-  onFocusPath: (path: Path) => void
+  previewUrl?: string
+  refs: { _id: string; _type: string }[]
 }> = function (props) {
-  const { documentId, documentType, params, onDeskParams, onFocusPath } = props
+  const { onDeskParams, previewUrl, refs } = props
 
-  const paneDocumentNode: DocumentPaneNode = useMemo(
+  const pane: Extract<PaneNode, { type: 'documentList' }> = useMemo(
     () => ({
-      id: documentId,
+      id: '$root',
       options: {
-        id: documentId,
-        type: documentType,
+        filter: '_id in $ids',
+        params: { ids: refs.map((r) => r._id) },
       },
-      type: 'document',
+      schemaTypeName: '',
+      title: 'Documents on page',
+      type: 'documentList',
     }),
-    [documentId, documentType],
+    [refs],
   )
 
   const [errorParams, setErrorParams] = useState<{
@@ -44,6 +50,8 @@ export const DocumentPane: FunctionComponent<{
   } | null>(null)
 
   const handleRetry = useCallback(() => setErrorParams(null), [])
+
+  const deskParams = useMemo(() => ({}), [])
 
   if (errorParams) {
     return (
@@ -59,16 +67,19 @@ export const DocumentPane: FunctionComponent<{
       <PaneLayout style={{ height: '100%' }}>
         <DeskToolProvider>
           <ComposerPaneRouterProvider
+            params={deskParams}
             onDeskParams={onDeskParams}
-            params={params}
+            previewUrl={previewUrl}
+            refs={refs}
           >
-            <DeskDocumentPane
-              paneKey="document"
-              index={1}
-              itemId="document"
-              pane={paneDocumentNode}
-              onFocusPath={onFocusPath}
-            />
+            <Root direction="column" flex={1}>
+              <DeskDocumentListPane
+                index={0}
+                itemId="$root"
+                pane={pane}
+                paneKey="$root"
+              />
+            </Root>
           </ComposerPaneRouterProvider>
         </DeskToolProvider>
       </PaneLayout>

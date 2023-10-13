@@ -199,6 +199,7 @@ export default function ComposerTool(props: {
             documentType={params.type}
             onDeskParams={handleDeskParams}
             onFocusPath={handleFocusPath}
+            previewUrl={params.preview}
           />
         </Resizable>
       </Container>

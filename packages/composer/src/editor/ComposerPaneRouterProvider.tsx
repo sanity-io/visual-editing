@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import { forwardRef, PropsWithChildren, ReactElement, useMemo } from 'react'
+import { getPublishedId } from 'sanity'
 import {
   BackLinkProps,
   PaneRouterContext,
@@ -55,11 +56,13 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
 
 export function ComposerPaneRouterProvider(
   props: PropsWithChildren<{
-    params: DeskDocumentPaneParams
     onDeskParams: (params: DeskDocumentPaneParams) => void
+    params: DeskDocumentPaneParams
+    previewUrl?: string
+    refs?: { _id: string; _type: string }[]
   }>,
 ): ReactElement {
-  const { children, params, onDeskParams } = props
+  const { children, params, onDeskParams, previewUrl, refs } = props
 
   const context: PaneRouterContextValue = useMemo(() => {
     return {
@@ -71,7 +74,22 @@ export function ComposerPaneRouterProvider(
       hasGroupSiblings: false,
       groupLength: 1,
       routerPanesState: [],
-      ChildLink: () => <>ChildLink</>,
+      ChildLink: (childLinkProps) => {
+        const { childId, ...restProps } = childLinkProps
+        const ref = refs?.find((r) => getPublishedId(r._id) === childId)
+
+        if (ref) {
+          return (
+            <StateLink
+              {...restProps}
+              searchParams={{ preview: previewUrl }}
+              state={{ path: ref._id, type: ref._type }}
+            />
+          )
+        }
+
+        return <div {...restProps} />
+      },
       BackLink,
       ReferenceChildLink,
       ParameterizedLink: () => <>ParameterizedLink</>,
@@ -108,7 +126,7 @@ export function ComposerPaneRouterProvider(
         console.warn('navigateIntent', intentName, intentParams, options)
       },
     }
-  }, [onDeskParams, params])
+  }, [onDeskParams, params, previewUrl, refs])
 
   return (
     <PaneRouterContext.Provider value={context}>
