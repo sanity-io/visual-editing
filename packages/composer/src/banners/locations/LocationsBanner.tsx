@@ -1,6 +1,12 @@
-import { DesktopIcon } from '@sanity/icons'
-import { Box, Card, Flex, Stack, Text } from '@sanity/ui'
-import { ComponentProps, ReactNode, useContext } from 'react'
+import { ChevronRightIcon, DesktopIcon } from '@sanity/icons'
+import { Box, Card, Container, Flex, Stack, Text } from '@sanity/ui'
+import {
+  ComponentProps,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from 'react'
 import { DocumentBanner } from 'sanity'
 import { useIntentLink } from 'sanity/router'
 
@@ -36,34 +42,56 @@ export function LocationsBanner(
 
   const len = locations.length
 
+  const [expanded, setExpanded] = useState(false)
+
+  const toggle = useCallback(() => setExpanded((v) => !v), [])
+
   if (len === 0) {
     return null
   }
 
   return (
-    <Card borderBottom tone={tone}>
-      <Box padding={4} paddingBottom={1}>
-        <Text size={1} weight="semibold">
-          {message || (
-            <>
-              Used on {LENGTH_FORMAT[len] || len}{' '}
-              {len === 1 ? <>page</> : <>pages</>}
-            </>
-          )}
-        </Text>
-      </Box>
+    <Card tone={tone}>
+      <Container width={1}>
+        <Box padding={2} paddingBottom={expanded ? 0 : 2}>
+          <Card as="button" onClick={toggle} padding={3} radius={2}>
+            <Flex gap={3}>
+              <Box flex="none">
+                <Text size={1}>
+                  <ChevronRightIcon
+                    style={{
+                      transform: `rotate(${expanded ? '90deg' : 0})`,
+                      transition: 'transform 100ms ease-in-out',
+                    }}
+                  />
+                </Text>
+              </Box>
+              <Box flex={1}>
+                <Text size={1} weight="semibold">
+                  {message || (
+                    <>
+                      Used on {LENGTH_FORMAT[len] || len}{' '}
+                      {len === 1 ? <>page</> : <>pages</>}
+                    </>
+                  )}
+                </Text>
+              </Box>
+            </Flex>
+          </Card>
+        </Box>
 
-      <Stack padding={2} space={1}>
-        {locations.map((l, index) => (
-          <LocationItem
-            active={l.href === composer?.params.preview}
-            documentId={documentId}
-            documentType={schemaType.name}
-            key={index}
-            node={l}
-          />
-        ))}
-      </Stack>
+        <Stack hidden={!expanded} padding={2} paddingTop={1} space={1}>
+          {locations.map((l, index) => (
+            <LocationItem
+              active={l.href === composer?.params.preview}
+              documentId={documentId}
+              documentType={schemaType.name}
+              key={index}
+              node={l}
+            />
+          ))}
+        </Stack>
+      </Container>
     </Card>
   )
 }
@@ -102,7 +130,7 @@ function LocationItem(props: {
       tone="inherit"
     >
       <Flex gap={3}>
-        <Box flex="none" hidden>
+        <Box flex="none">
           <Text size={1}>
             <DesktopIcon />
           </Text>
