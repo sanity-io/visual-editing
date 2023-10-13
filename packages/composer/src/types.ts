@@ -15,6 +15,10 @@ export interface DeskDocumentPaneParams {
   since?: string
   template?: string
   view?: string
+
+  // assist
+  pathKey?: string
+  instruction?: string
 }
 
 export interface ComposerParams

@@ -58,6 +58,9 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
       since: routerSearchParams.since,
       template: routerSearchParams.template,
       view: routerSearchParams.view,
+      // assist
+      pathKey: routerSearchParams.pathKey,
+      instruction: routerSearchParams.instruction,
     }
   })
 
@@ -79,6 +82,9 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
       since: params.since,
       template: params.template,
       view: params.view,
+      // assist
+      pathKey: params.pathKey,
+      instruction: params.instruction,
     }),
     [
       params.inspect,
@@ -87,6 +93,8 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
       params.since,
       params.template,
       params.view,
+      params.pathKey,
+      params.instruction,
     ],
   )
 
@@ -136,6 +144,8 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
       since: params.since,
       template: params.template,
       view: params.view,
+      pathKey: params.pathKey,
+      instruction: params.instruction,
     } as DeskDocumentPaneParams as Record<string, string>
 
     const replace = params.preview === previousPreview
