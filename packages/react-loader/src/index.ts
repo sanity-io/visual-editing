@@ -73,7 +73,7 @@ export const createQueryStore = (
   const config = _client.config()
 
   if (!config.token) {
-    throw new Error('No token provided')
+    throw new Error('No SANITY_API_READ_TOKEN provided')
   }
   const client = _client.withConfig({
     requestTagPrefix: options.client.config().requestTagPrefix || DEFAULT_TAG,
