@@ -831,28 +831,28 @@ importers:
 
   packages/react-loader:
     dependencies:
-      '@nanostores/query':
-        specifier: 0.2.4
-        version: 0.2.4(nanostores@0.9.3)
-      '@nanostores/react':
-        specifier: 0.7.1
-        version: 0.7.1(nanostores@0.9.3)(react@18.2.0)
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
-      nanostores:
-        specifier: 0.9.3
-        version: 0.9.3
     devDependencies:
+      '@nanostores/query':
+        specifier: 0.2.4
+        version: 0.2.4(nanostores@0.9.3)
+      '@nanostores/react':
+        specifier: 0.7.1
+        version: 0.7.1(nanostores@0.9.3)(react@18.2.0)
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
       '@sanity/pkg-utils':
         specifier: ^3.0.0
         version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
+      '@types/react':
+        specifier: ^18.2.28
+        version: 18.2.28
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.5
         version: 6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.51.0)(typescript@5.2.2)
@@ -874,6 +874,12 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^10.0.0
         version: 10.0.0(eslint@8.51.0)
+      nanostores:
+        specifier: 0.9.3
+        version: 0.9.3
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -3365,7 +3371,7 @@ packages:
     dependencies:
       nanoevents: 7.0.1
       nanostores: 0.9.3
-    dev: false
+    dev: true
 
   /@nanostores/react@0.7.1(nanostores@0.9.3)(react@18.2.0):
     resolution: {integrity: sha512-EXQg9N4MdI4eJQz/AZLIx3hxQ6BuBmV4Q55bCd5YCSgEOAW7tGTsIZxpRXxvxLXzflNvHTBvfrDNY38TlSVBkQ==}
@@ -3376,7 +3382,7 @@ packages:
     dependencies:
       nanostores: 0.9.3
       react: 18.2.0
-    dev: false
+    dev: true
 
   /@neoconfetti/svelte@1.0.0:
     resolution: {integrity: sha512-SmksyaJAdSlMa9cTidVSIqYo1qti+WTsviNDwgjNVm+KQ3DRP2Df9umDIzC4vCcpEYY+chQe0i2IKnLw03AT8Q==}
@@ -13982,7 +13988,7 @@ packages:
   /nanoevents@7.0.1:
     resolution: {integrity: sha512-o6lpKiCxLeijK4hgsqfR6CNToPyRU3keKyyI6uwuHRvpRTbZ0wXw51WRgyldVugZqoJfkGFrjrIenYH3bfEO3Q==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
-    dev: false
+    dev: true
 
   /nanoid@3.3.6:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
@@ -14004,7 +14010,7 @@ packages:
   /nanostores@0.9.3:
     resolution: {integrity: sha512-KobZjcVyNndNrb5DAjfs0WG0lRcZu5Q1BOrfTOxokFLi25zFrWPjg+joXC6kuDqNfSt9fQwppyjUBkRPtsL+8w==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    dev: false
+    dev: true
 
   /napi-wasm@1.1.0:
     resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}

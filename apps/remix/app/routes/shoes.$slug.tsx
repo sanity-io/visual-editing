@@ -2,7 +2,6 @@ import { type LoaderFunction, json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
-import { useSourceDocuments } from '~/useChannel'
 import {
   defineDataAttribute,
   getClient,
@@ -10,6 +9,8 @@ import {
   urlForCrossDatasetReference,
 } from '~/utils'
 import { PortableText } from '@portabletext/react'
+import { createQueryStore } from '@sanity/react-loader'
+import { useEffect, useState } from 'react'
 
 export const loader: LoaderFunction = async ({ params }) => {
   const client = getClient()
@@ -24,6 +25,8 @@ export const loader: LoaderFunction = async ({ params }) => {
     vercelEnv: process.env.VERCEL_ENV || 'development',
     result,
     resultSourceMap,
+    // @TODO temp, pass token over composer channel instead
+    token: process.env.SANITY_API_READ_TOKEN,
   })
 }
 
@@ -31,15 +34,30 @@ export default function ShoePage() {
   const data = useLoaderData<typeof loader>()
   console.log({ data })
   const dataAttribute = defineDataAttribute(data.resultSourceMap)
-  const product: ShoeResult = data.result
-  useSourceDocuments(data.resultSourceMap)
 
   const slug = data.params.slug
-  const name = product.title || slug
 
   if (!slug) {
     throw new Error('No slug, 404?')
   }
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  const [client] = useState(() =>
+    getClient().withConfig({ token: data.token! }),
+  )
+  const [{ useQuery }] = useState(() => createQueryStore({ client }))
+  // const useQuery = defineUseQuery(client)
+  const draftProduct = useQuery(shoe, { slug })
+
+  const product = (
+    mounted && !draftProduct.loading
+      ? draftProduct.data
+      : draftProduct.data || data.result
+  ) as ShoeResult
+  console.log({ draftProduct })
 
   const [coverImage, ...otherImages] = product.media || []
 
@@ -75,7 +93,7 @@ export default function ShoePage() {
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
-              {name}
+              {product.title}
             </Link>
           </li>
         </ol>

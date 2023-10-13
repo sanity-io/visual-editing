@@ -8,8 +8,8 @@ import {
   urlForCrossDatasetReference,
   defineDataAttribute,
 } from '~/utils'
-import { useSourceDocuments } from '~/useChannel'
-import { useQuery } from '~/useSanityLoader'
+import { useEffect, useState } from 'react'
+import { createQueryStore } from '@sanity/react-loader'
 
 export async function loader() {
   const client = getClient()
@@ -23,17 +23,31 @@ export async function loader() {
     vercelEnv: process.env.VERCEL_ENV || 'development',
     result,
     resultSourceMap,
+    // @TODO temp, pass token over composer channel instead
+    token: process.env.SANITY_API_READ_TOKEN,
   })
 }
 
 export default function ProductsRoute() {
   const data = useLoaderData<typeof loader>()
   const dataAttribute = defineDataAttribute(data.resultSourceMap)
-  useSourceDocuments(data.resultSourceMap)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  const [client] = useState(() =>
+    getClient().withConfig({ token: data.token! }),
+  )
+  const [{ useQuery }] = useState(() => createQueryStore({ client }))
+  // const useQuery = defineUseQuery(client)
+  const draftProducts = useQuery(shoesList, {})
 
-  useQuery(shoesList, {})
-  console.log({ getClient })
-  const products = data.result
+  const products = (
+    mounted && !draftProducts.loading
+      ? draftProducts.data
+      : draftProducts.data || data.result
+  ) as ShoesListResult
+  console.log({ draftProducts })
 
   return (
     <div className="min-h-screen bg-white">

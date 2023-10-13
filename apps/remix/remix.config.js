@@ -16,6 +16,10 @@ module.exports = {
     // ...getDependenciesToBundle('apps-common')
     /^apps-common.*/,
     /^@sanity\/react-loader.*/,
+    '@nanostores/query',
+    '@nanostores/react',
+    'nanostores',
+    'nanoevents',
   ],
   future: {
     v2_dev: true,
@@ -26,5 +30,5 @@ module.exports = {
     v2_routeConvention: true,
   },
   tailwind: true,
-  watchPaths: ['../common/src/**', '../../packages/react-loader/dist/**'],
+  watchPaths: ['../common/src/**', '../../packages/react-loader/src/**'],
 }

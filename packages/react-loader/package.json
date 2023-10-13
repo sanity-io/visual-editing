@@ -91,26 +91,29 @@
     "root": true
   },
   "dependencies": {
-    "@nanostores/query": "0.2.4",
-    "@nanostores/react": "0.7.1",
     "@sanity/core-loader": "workspace:*",
-    "@sanity/groq-store": "workspace:*",
-    "nanostores": "0.9.3"
+    "@sanity/groq-store": "workspace:*"
   },
   "devDependencies": {
+    "@nanostores/query": "0.2.4",
+    "@nanostores/react": "0.7.1",
     "@sanity/client": "^6.6.0",
     "@sanity/pkg-utils": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "@types/react": "^18.2.28",
     "channels": "workspace:*",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "react": "^18.2.0",
     "typescript": "^5.2.2",
+    "nanostores": "0.9.3",
     "visual-editing-helpers": "workspace:*"
   },
   "peerDependencies": {
+    "react": "^18.2.0",
     "@sanity/client": "^6.6.0"
   },
   "engines": {
