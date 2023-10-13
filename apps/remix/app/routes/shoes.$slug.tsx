@@ -3,7 +3,12 @@ import { Link, useLoaderData } from '@remix-run/react'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import { useSourceDocuments } from '~/useChannel'
-import { defineDataAttribute, getClient, urlFor } from '~/utils'
+import {
+  defineDataAttribute,
+  getClient,
+  urlFor,
+  urlForCrossDatasetReference,
+} from '~/utils'
 import { PortableText } from '@portabletext/react'
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -26,17 +31,17 @@ export default function ShoePage() {
   const data = useLoaderData<typeof loader>()
   console.log({ data })
   const dataAttribute = defineDataAttribute(data.resultSourceMap)
-  const result: ShoeResult = data.result
+  const product: ShoeResult = data.result
   useSourceDocuments(data.resultSourceMap)
 
   const slug = data.params.slug
-  const name = result.title || slug
+  const name = product.title || slug
 
   if (!slug) {
     throw new Error('No slug, 404?')
   }
 
-  const [coverImage, ...otherImages] = result.media || []
+  const [coverImage, ...otherImages] = product.media || []
 
   console.log({ coverImage }, otherImages)
 
@@ -64,7 +69,7 @@ export default function ShoePage() {
               </svg>
             </div>
           </li>
-          <li className="text-sm">
+          <li className="text-sm" style={{ ['textWrap' as any]: 'balance' }}>
             <Link
               to={`/shoes/${slug}`}
               aria-current="page"
@@ -80,7 +85,7 @@ export default function ShoePage() {
         {coverImage?.asset && (
           <div className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
             <img
-              className="aspect-video w-full rounded-lg object-cover object-center group-hover:opacity-75"
+              className="aspect-video w-full rounded-md object-cover object-center group-hover:opacity-75 lg:rounded-lg"
               src={urlFor(coverImage)
                 .width(1280 * 2)
                 .height(720 * 2)
@@ -106,13 +111,13 @@ export default function ShoePage() {
                     className="shrink-0 snap-start"
                   >
                     <img
-                      className="h-40 w-80 shrink-0 rounded-lg bg-white shadow-xl"
+                      className="h-32 w-40 shrink-0 rounded bg-white shadow-xl lg:rounded-lg"
                       src={urlFor(image)
-                        .width(1280 * 2)
-                        .height(720 * 2)
+                        .width(1280 / 2)
+                        .height(720 / 2)
                         .url()}
-                      width={1280}
-                      height={720}
+                      width={1280 / 2}
+                      height={720 / 2}
                       data-sanity={dataAttribute(['media', i, 'alt'])}
                       alt={image.alt || ''}
                     />
@@ -122,38 +127,6 @@ export default function ShoePage() {
             </div>
           </div>
         )}
-        {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-        {result.media?.[0] && <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-          <img
-            src={result.images[0].src}
-            alt={product.images[0].alt}
-            className="h-full w-full object-cover object-center"
-          />
-        </div>}
-        <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-          <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-            <img
-              src={product.images[1].src}
-              alt={product.images[1].alt}
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-          <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-            <img
-              src={product.images[2].src}
-              alt={product.images[2].alt}
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-        </div>
-        <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-          <img
-            src={product.images[3].src}
-            alt={product.images[3].alt}
-            className="h-full w-full object-cover object-center"
-          />
-        </div>
-      </div> */}
 
         {/* Product info */}
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
@@ -163,24 +136,52 @@ export default function ShoePage() {
               data-sanity={dataAttribute(['title'])}
               style={{ ['textWrap' as any]: 'balance' }}
             >
-              {result.title}
+              {product.title}
             </h1>
           </div>
 
           {/* Options */}
-          <div className="mt-4 lg:row-span-3 lg:mt-0">
+          <div className="mt-4 flex flex-col lg:row-span-3 lg:mt-0 lg:gap-y-6">
             <h2 className="sr-only">Product information</h2>
             <p
               className="text-3xl tracking-tight text-gray-900"
               data-sanity={dataAttribute(['price'])}
             >
-              {result.price ? formatCurrency(result.price) : 'FREE'}
+              {product.price ? formatCurrency(product.price) : 'FREE'}
             </p>
 
-            <form className="mt-10">
+            {product.brand?.name && (
+              <div data-sanity={dataAttribute(['brand', 'name'])}>
+                <h2 className="text-sm font-medium text-gray-900">Brand</h2>
+                <div className="flex items-center gap-x-2">
+                  <img
+                    className="h-10 w-10 rounded-full bg-gray-50"
+                    src={
+                      product.brand?.logo?.asset
+                        ? urlForCrossDatasetReference(product.brand.logo)
+                            .width(48)
+                            .height(48)
+                            .url()
+                        : `https://source.unsplash.com/featured/48x48?${encodeURIComponent(
+                            product.brand.name,
+                          )}`
+                    }
+                    width={24}
+                    height={24}
+                    data-sanity={dataAttribute(['brand', 'logo', 'alt'])}
+                    alt={product.brand?.logo?.alt || ''}
+                  />
+                  <span className="text-lg font-bold">
+                    {product.brand.name}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <form className="mt-3">
               <button
                 type="button"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Add to bag
               </button>
@@ -196,8 +197,8 @@ export default function ShoePage() {
                 className="space-y-6 text-base text-gray-900"
                 data-sanity={dataAttribute(['description'])}
               >
-                {(result.description && (
-                  <PortableText value={result.description} />
+                {(product.description && (
+                  <PortableText value={product.description} />
                 )) ||
                   'No description'}
               </div>
