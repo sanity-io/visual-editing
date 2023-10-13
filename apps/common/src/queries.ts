@@ -10,7 +10,6 @@ export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]
   slug,
   price,
   "media": media[0]{ alt, asset, crop, hotspot },
-  description,
   "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
 }`
 export type ShoesListResult = {
@@ -41,6 +40,7 @@ export const shoe = /* groq */ `*[_type == "shoe" && slug.current == $slug]{
   slug,
   price,
   "media": media{ alt, asset, crop, hotspot },
+  "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
   description,
 }[0]`
 export type ShoeParams = { slug: string }
@@ -54,5 +54,15 @@ export type ShoeResult = {
     crop?: ImageCrop | null
     hotspot?: ImageHotspot | null
   }[]
+  brand?: {
+    name?: string | null
+    slug?: { current?: string | null } | null
+    logo?: {
+      alt?: string | null
+      asset?: ImageAsset | null
+      crop?: ImageCrop | null
+      hotspot?: ImageHotspot | null
+    } | null
+  } | null
   description?: PortableTextTextBlock[] | null
 }
