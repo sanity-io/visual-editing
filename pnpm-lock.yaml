@@ -473,6 +473,39 @@ importers:
         specifier: workspace:*
         version: link:../helpers
 
+  packages/groq-store:
+    devDependencies:
+      '@sanity/pkg-utils':
+        specifier: ^3.0.0
+        version: 3.0.0(@types/node@18.18.4)(typescript@5.2.2)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.7.5
+        version: 6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.51.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: ^6.7.5
+        version: 6.7.5(eslint@8.51.0)(typescript@5.2.2)
+      channels:
+        specifier: workspace:*
+        version: link:../channels
+      eslint:
+        specifier: ^8.51.0
+        version: 8.51.0
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.51.0)
+      eslint-plugin-prettier:
+        specifier: ^5.0.1
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
+      eslint-plugin-simple-import-sort:
+        specifier: ^10.0.0
+        version: 10.0.0(eslint@8.51.0)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      visual-editing-helpers:
+        specifier: workspace:*
+        version: link:../helpers
+
   packages/helpers:
     dependencies:
       sanity:
