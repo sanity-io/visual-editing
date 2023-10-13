@@ -126,6 +126,7 @@ export default [
               title: 'Logo',
               options: {
                 hotspot: true,
+                captionField: 'alt',
               },
               fields: [
                 defineField({

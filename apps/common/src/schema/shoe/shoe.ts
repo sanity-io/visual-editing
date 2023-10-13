@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export const shoeType = defineType({
   type: 'document',
@@ -41,8 +41,12 @@ export const shoeType = defineType({
       name: 'media',
       title: 'Media',
       of: [
-        {
+        defineArrayMember({
           type: 'image',
+          options: {
+            // @ts-expect-error - @TODO add types
+            captionField: 'alt',
+          },
           fields: [
             defineField({
               name: 'alt',
@@ -50,7 +54,7 @@ export const shoeType = defineType({
               title: 'Alt text',
             }),
           ],
-        },
+        }),
       ],
       options: { layout: 'grid' },
     }),
