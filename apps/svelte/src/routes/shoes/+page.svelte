@@ -8,3 +8,4 @@ export let data;
 </svelte:head>
 
 <p>{data.vercelEnv}</p>
+<p>{data.projectId}</p>

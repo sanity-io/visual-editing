@@ -78,7 +78,6 @@ export default function ComposerTool(props: {
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
         } else if (type === 'overlay/documents') {
-          console.log('received documents', data)
           setOverlayDocuments(data)
         }
       },
