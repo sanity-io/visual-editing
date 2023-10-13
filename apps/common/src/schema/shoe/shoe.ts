@@ -44,6 +44,7 @@ export const shoeType = defineType({
         defineArrayMember({
           type: 'image',
           options: {
+            hotspot: true,
             // @ts-expect-error - @TODO add types
             captionField: 'alt',
           },

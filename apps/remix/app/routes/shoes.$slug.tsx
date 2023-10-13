@@ -3,7 +3,8 @@ import { Link, useLoaderData } from '@remix-run/react'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import { useSourceDocuments } from '~/useChannel'
-import { defineDataAttribute, getClient } from '~/utils'
+import { defineDataAttribute, getClient, urlFor } from '~/utils'
+import { PortableText } from '@portabletext/react'
 
 export const loader: LoaderFunction = async ({ params }) => {
   const client = getClient()
@@ -35,9 +36,13 @@ export default function ShoePage() {
     throw new Error('No slug, 404?')
   }
 
+  const [coverImage, ...otherImages] = result.media || []
+
+  console.log({ coverImage }, otherImages)
+
   return (
-    <div className="bg-white">
-      <nav aria-label="Breadcrumb" className="py-4">
+    <div className="min-h-screen bg-white">
+      <nav aria-label="Breadcrumb" className="pt-16 sm:pt-24">
         <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <li>
             <div className="flex items-center">
@@ -72,6 +77,49 @@ export default function ShoePage() {
       </nav>
 
       <article data-sanity={dataAttribute(['slug'])}>
+        {coverImage?.asset && (
+          <div className="mx-auto max-w-2xl px-4 pt-10 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-16">
+            <img
+              className="aspect-video w-full rounded-lg object-cover object-center group-hover:opacity-75"
+              src={urlFor(coverImage)
+                .width(1280 * 2)
+                .height(720 * 2)
+                .url()}
+              width={1280}
+              height={720}
+              data-sanity={dataAttribute(['media', 0, 'alt'])}
+              alt={coverImage.alt || ''}
+            />
+          </div>
+        )}
+        {otherImages?.length > 0 && (
+          <div className="relative mx-auto flex w-full max-w-2xl snap-x snap-mandatory gap-6 overflow-x-auto px-4 pt-5 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-8">
+            {otherImages.map((image, _i) => {
+              if (!image.asset?._ref) return null
+              // The index is wrong due to slicing out `coverImage`
+              const i = _i + 1
+
+              return (
+                <div
+                  key={(image.asset._ref as string) || i}
+                  className="shrink-0 snap-center"
+                >
+                  <img
+                    className="h-40 w-80 shrink-0 rounded-lg bg-white shadow-xl"
+                    src={urlFor(image)
+                      .width(1280 * 2)
+                      .height(720 * 2)
+                      .url()}
+                    width={1280}
+                    height={720}
+                    data-sanity={dataAttribute(['media', i, 'alt'])}
+                    alt={image.alt || ''}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        )}
         {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
         {result.media?.[0] && <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
           <img
@@ -142,15 +190,14 @@ export default function ShoePage() {
             <div>
               <h3 className="sr-only">Description</h3>
 
-              <div className="space-y-6">
-                <p
-                  className="text-base text-gray-900"
-                  data-sanity={dataAttribute(['description'])}
-                >
-                  <pre className="overflow-auto">
-                    {JSON.stringify(result.description, null, 2)}
-                  </pre>
-                </p>
+              <div
+                className="space-y-6 text-base text-gray-900"
+                data-sanity={dataAttribute(['description'])}
+              >
+                {(result.description && (
+                  <PortableText value={result.description} />
+                )) ||
+                  'No description'}
               </div>
             </div>
           </div>

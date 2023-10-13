@@ -39,7 +39,7 @@ export const shoe = /* groq */ `*[_type == "shoe" && slug.current == $slug]{
   title,
   slug,
   price,
-  "media": media{ alt, asset, crop, hotspot },
+  "media": media[]{ alt, asset, crop, hotspot },
   "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
   description,
 }[0]`

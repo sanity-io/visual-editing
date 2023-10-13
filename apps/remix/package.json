@@ -8,6 +8,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@portabletext/react": "^3.0.11",
     "@remix-run/css-bundle": "^1.19.3",
     "@remix-run/node": "^1.19.3",
     "@remix-run/react": "^1.19.3",
@@ -16,7 +17,6 @@
     "@sanity/overlays": "workspace:*",
     "@sanity/preview-kit": "workspace:*",
     "@vercel/node": "^3.0.7",
-    "visual-editing-helpers": "workspace:*",
     "@vercel/stega": "0.1.0",
     "apps-common": "workspace:*",
     "channels": "workspace:*",
@@ -24,7 +24,8 @@
     "lodash.get": "^4.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "visual-editing-helpers": "workspace:*"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.19.3",

@@ -31,8 +31,8 @@ export default function ProductsRoute() {
   useSourceDocuments(data.resultSourceMap)
 
   return (
-    <div className="bg-white">
-      <nav aria-label="Breadcrumb" className="py-4">
+    <div className="min-h-screen bg-white">
+      <nav aria-label="Breadcrumb" className="pt-16 sm:pt-24">
         <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <li>
             <div className="flex items-center">
@@ -64,7 +64,7 @@ export default function ProductsRoute() {
                   className="h-full w-full object-cover object-center group-hover:opacity-75"
                   src={
                     product.media?.asset
-                      ? urlFor(product.media).height(1440).width(1440).url()
+                      ? urlFor(product.media).width(1440).height(1440).url()
                       : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`
                   }
                   width={720}
@@ -93,8 +93,8 @@ export default function ProductsRoute() {
                     src={
                       product.brand?.logo?.asset
                         ? urlForCrossDatasetReference(product.brand.logo)
-                            .height(48)
                             .width(48)
+                            .height(48)
                             .url()
                         : `https://source.unsplash.com/featured/48x48?${
                             product.brand.name
