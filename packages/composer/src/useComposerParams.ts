@@ -113,6 +113,9 @@ export function useComposerParams({ previewUrl }: { previewUrl: string }): {
       since: routerSearchParams.since,
       template: routerSearchParams.template,
       view: routerSearchParams.view,
+      // assist
+      pathKey: routerSearchParams.pathKey,
+      instruction: routerSearchParams.instruction,
     })
   }, [defaultPreviewUrl, routerSearchParams, routerState, setParams])
 
