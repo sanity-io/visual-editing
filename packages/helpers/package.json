@@ -7,37 +7,16 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
-      "node": {
-        "module": "./dist/index.js",
-        "import": "./dist/index.cjs.js"
-      },
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
+    ".": "./src/index.ts",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "src"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build",
-    "watch": "pkg watch --strict"
+    "test": "tsc --noEmit"
   },
-  "browserslist": [
-    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
-    "maintained node versions"
-  ],
   "prettier": {
     "semi": false,
     "singleQuote": true
@@ -91,22 +70,20 @@
     },
     "root": true
   },
-  "dependencies": {
-    "sanity": "^3.18.0"
-  },
   "devDependencies": {
-    "@sanity/pkg-utils": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "ls-engines": "^0.9.0",
-    "rimraf": "^5.0.1",
+    "sanity": "^3.18.0",
     "typescript": "^5.2.2"
   },
+  "peerDependencies": {
+    "sanity": "^3.18.0"
+  },
   "engines": {
-    "node": ">=16.14"
+    "node": ">=18"
   }
 }
