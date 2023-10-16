@@ -1,3 +1,4 @@
+import { ComponentType } from 'react'
 import { Observable } from 'rxjs'
 import { DocumentStore } from 'sanity'
 
@@ -23,6 +24,7 @@ export type DocumentLocationResolver = (
 
 export interface ComposerPluginOptions {
   name?: string
+  icon?: ComponentType
   locate?: DocumentLocationResolver
   previewUrl: string
 }

@@ -1,3 +1,4 @@
+import { ComposeIcon } from '@sanity/icons'
 import { lazy } from 'react'
 import { definePlugin, DocumentBanner } from 'sanity'
 
@@ -25,6 +26,7 @@ export const composerTool = definePlugin<ComposerPluginOptions>((options) => {
     tools: [
       {
         name: options.name || 'composer',
+        icon: options.icon || ComposeIcon,
         component: lazy(() => import('./ComposerTool')),
         options,
         canHandleIntent(intent, params) {
