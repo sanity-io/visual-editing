@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.0.0 (2023-10-16)
+
+
+### Features
+
+* common schema ([#50](https://github.com/sanity-io/visual-editing/issues/50)) ([73aa91e](https://github.com/sanity-io/visual-editing/commit/73aa91e09811864b001cb4370fb3f9af6eeb16ba))
+* **live-query:** add experimental PostMessage ([#47](https://github.com/sanity-io/visual-editing/issues/47)) ([9196a28](https://github.com/sanity-io/visual-editing/commit/9196a2853065ffdd6dbd93390b9692693cf42d4f))
+
 ## [3.1.6](https://github.com/sanity-io/preview-kit/compare/v3.1.5...v3.1.6) (2023-08-23)
 
 ### Bug Fixes

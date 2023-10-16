@@ -5,6 +5,30 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.0](https://github.com/sanity-io/visual-editing/compare/overlays-v0.0.0...overlays-v0.1.0) (2023-10-16)
+
+
+### Features
+
+* basic e2e event dispatching ([#59](https://github.com/sanity-io/visual-editing/issues/59)) ([4217a69](https://github.com/sanity-io/visual-editing/commit/4217a69f2f01d19f5391960c23dc74b05d6fc19b))
+* common schema ([#50](https://github.com/sanity-io/visual-editing/issues/50)) ([73aa91e](https://github.com/sanity-io/visual-editing/commit/73aa91e09811864b001cb4370fb3f9af6eeb16ba))
+* composer routing ([#68](https://github.com/sanity-io/visual-editing/issues/68)) ([053d7e2](https://github.com/sanity-io/visual-editing/commit/053d7e2949ac9f54dee0421e4bc3e28c979c8fb6))
+* overlay toggling ([4918656](https://github.com/sanity-io/visual-editing/commit/4918656fb7d5d979ce831b00e88c8fa66e5f196e))
+* **overlays:** implement controller ([#46](https://github.com/sanity-io/visual-editing/issues/46)) ([a3b74f3](https://github.com/sanity-io/visual-editing/commit/a3b74f3060271635f1dc08e01533e6775e892dbb))
+* sync preview location ([e4fe2c9](https://github.com/sanity-io/visual-editing/commit/e4fe2c997bebd9524398af16c3bb7b9edb678566))
+
+
+### Bug Fixes
+
+* add `@sanity/client` to peer deps ([acf0bd0](https://github.com/sanity-io/visual-editing/commit/acf0bd09eced687de5ffbc4afa79dee576e1cc72))
+* **deps:** Update dependency @sanity/icons to ^2.5.0 ([#92](https://github.com/sanity-io/visual-editing/issues/92)) ([c6ae743](https://github.com/sanity-io/visual-editing/commit/c6ae7435c6c0e51cdfadd0e79635ba119559e676))
+* **deps:** Update dependency nanoid to v5 ([#36](https://github.com/sanity-io/visual-editing/issues/36)) ([c887ea0](https://github.com/sanity-io/visual-editing/commit/c887ea04efd13f2aedf6232db9d98a2f973a344c))
+* **deps:** Update dependency valibot to ^0.17.1 ([#56](https://github.com/sanity-io/visual-editing/issues/56)) ([3ff8e2b](https://github.com/sanity-io/visual-editing/commit/3ff8e2b52aab65e54ad24cc76d5a08224fac8721))
+* **deps:** Update dependency valibot to ^0.19.0 ([#96](https://github.com/sanity-io/visual-editing/issues/96)) ([98c9198](https://github.com/sanity-io/visual-editing/commit/98c91981993d9bf6685635b8bd0af51b0d6e8789))
+* **overlays:** improve element registration/activation on mutation ([af52162](https://github.com/sanity-io/visual-editing/commit/af5216254034fa7efa0eedeadc337e567e40c10e))
+* **overlays:** prevent scroll on clicked elements ([1fb65b6](https://github.com/sanity-io/visual-editing/commit/1fb65b68b0930a69f3b5da016701c932b06b9594))
+* **overlays:** use correct styling for element borders ([1baf4ef](https://github.com/sanity-io/visual-editing/commit/1baf4ef48807e743554046f013e95214b3e81953))
+
 ## 0.0.0 (2023-09-08)
 
 
