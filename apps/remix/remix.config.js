@@ -18,6 +18,7 @@ module.exports = {
     /^@sanity\/react-loader.*/,
     '@nanostores/query',
     '@nanostores/react',
+    'channels',
     'nanostores',
     'nanoevents',
   ],

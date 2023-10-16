@@ -11,6 +11,10 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react'
+import type {
+  VisualEditingConnectionIds,
+  VisualEditingMsg,
+} from 'visual-editing-helpers'
 
 function useParams(params?: undefined | null | any): any {
   const stringifiedParams = useMemo(
@@ -115,8 +119,8 @@ export const createQueryStore = (
   const channel =
     typeof document === 'undefined'
       ? null
-      : createChannel({
-          id: 'overlays',
+      : createChannel<VisualEditingMsg>({
+          id: 'loaders' satisfies VisualEditingConnectionIds,
           connections: [
             {
               target: parent,
@@ -124,7 +128,7 @@ export const createQueryStore = (
               // targetOrigin: parent.origin,
               targetOrigin: '*',
               sourceOrigin: location.origin,
-              id: 'composer',
+              id: 'composer' satisfies VisualEditingConnectionIds,
             },
           ],
           handler: () => {},
@@ -153,7 +157,7 @@ export const createQueryStore = (
     const documents = useMemo(() => JSON.parse(jsonDocuments), [jsonDocuments])
     useEffect(() => {
       if (channel?.send) {
-        channel?.send('overlay/documents', documents)
+        channel?.send('loader/documents', { documents })
       }
     }, [channel?.send, documents])
     return {

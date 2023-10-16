@@ -1,3 +1,5 @@
+import type { ClientPerspective } from '@sanity/client'
+
 /**
  * Data resolved from a Sanity node
  * @public
@@ -73,19 +75,43 @@ export type OverlayMsg =
         enabled: boolean
       }
     }
-  // @TODO move to `loaders/documents`
+
+/**
+ * Messages emitted by the loader packages
+ * @public
+ */
+export type LoaderMsg =
   | {
-      type: 'overlay/documents'
+      type: 'loader/perspective'
       data: {
-        _id: string
-        _type: string
-        projectId?: string
-        dataset?: string
-      }[]
+        token: string
+        perspective: ClientPerspective
+      }
+    }
+  | {
+      /**
+       * Sends over the CSM reported documents in use on the page. If there are multiple queries and thus
+       * multiple CSM's, they're all deduped and concatenated into a single list.
+       */
+      type: 'loader/documents'
+      data: {
+        documents: {
+          _id: string
+          _type: string
+          projectId?: string
+          dataset?: string
+        }[]
+      }
     }
 
 /**
  * Union type of visual editing related messages
  * @public
  */
-export type VisualEditingMsg = ComposerMsg | OverlayMsg
+export type VisualEditingMsg = ComposerMsg | LoaderMsg | OverlayMsg
+
+/**
+ * Known Channel connection IDs
+ * @public
+ */
+export type VisualEditingConnectionIds = 'composer' | 'loaders' | 'overlays'

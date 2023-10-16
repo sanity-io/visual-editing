@@ -133,8 +133,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/overlays
       '@sanity/preview-kit':
-        specifier: ^3.2.3
-        version: 3.2.3(@sanity/client@6.6.0)(react@18.2.0)
+        specifier: 3.2.4-canary.0
+        version: 3.2.4-canary.0(@sanity/client@6.6.0)(react@18.2.0)
       '@types/node':
         specifier: 20.8.4
         version: 20.8.4
@@ -242,8 +242,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/overlays
       '@sanity/preview-kit':
-        specifier: ^3.2.3
-        version: 3.2.3(@sanity/client@6.6.0)(react@18.2.0)
+        specifier: 3.2.4-canary.0
+        version: 3.2.4-canary.0(@sanity/client@6.6.0)(react@18.2.0)
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -551,6 +551,9 @@ importers:
 
   packages/helpers:
     devDependencies:
+      '@sanity/client':
+        specifier: ^6.6.0
+        version: 6.6.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.5
         version: 6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.51.0)(typescript@5.2.2)
@@ -5190,31 +5193,6 @@ packages:
     transitivePeerDependencies:
       - react-dom
       - supports-color
-
-  /@sanity/preview-kit@3.2.3(@sanity/client@6.6.0)(react@18.2.0):
-    resolution: {integrity: sha512-+wgo4bDWI9zvrXYmq/4sqhxoKruViKHVRpz6fwPMSXAszVtSRHxtF1UbIXo23mvBE+5tZZdWKTy5Dlti5BqODA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@sanity/client': ^6.6.0
-      react: ^18.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-    dependencies:
-      '@sanity/client': 6.6.0
-      '@sanity/eventsource': 5.0.1
-      '@sanity/groq-store': 4.1.3
-      '@vercel/stega': 0.1.0
-      lodash.get: 4.4.2
-      lodash.isplainobject: 4.0.6
-      lru-cache: 10.0.1
-      mendoza: 3.0.3
-      react: 18.2.0
-      react-fast-compare: 3.2.2
-      use-sync-external-store: 1.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /@sanity/preview-kit@3.2.4-canary.0(@sanity/client@6.6.0)(react@18.2.0):
     resolution: {integrity: sha512-8qPI0J2zLqkOjdZewr87TPY6BzEPUICdBTunX3ADPLBThqlTCJdbVn3Ank61eq+BFTIBCQQuhMQKXrh5B7HhBA==}

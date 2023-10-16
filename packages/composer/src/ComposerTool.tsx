@@ -10,7 +10,10 @@ import {
 } from 'react'
 import { Path, pathToString, Tool } from 'sanity'
 import styled from 'styled-components'
-import type { VisualEditingMsg } from 'visual-editing-helpers'
+import type {
+  VisualEditingConnectionIds,
+  VisualEditingMsg,
+} from 'visual-editing-helpers'
 
 import { Resizable } from './components/Resizable'
 import { ComposerProvider } from './ComposerProvider'
@@ -55,13 +58,19 @@ export default function ComposerTool(props: {
     if (!iframe) return
 
     const channel = createChannel<VisualEditingMsg>({
-      id: 'composer',
+      id: 'composer' satisfies VisualEditingConnectionIds,
       connections: [
         {
           target: iframe,
           targetOrigin,
           sourceOrigin: location.origin,
-          id: 'overlays',
+          id: 'overlays' satisfies VisualEditingConnectionIds,
+        },
+        {
+          target: iframe,
+          targetOrigin,
+          sourceOrigin: location.origin,
+          id: 'loaders' satisfies VisualEditingConnectionIds,
         },
       ],
       handler(type, data) {
@@ -77,8 +86,8 @@ export default function ComposerTool(props: {
           })
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
-        } else if (type === 'overlay/documents') {
-          setOverlayDocuments(data)
+        } else if (type === 'loader/documents') {
+          setOverlayDocuments(data.documents)
         }
       },
     })
