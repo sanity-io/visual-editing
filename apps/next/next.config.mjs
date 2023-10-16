@@ -12,8 +12,9 @@ const nextConfig = {
   transpilePackages: [
     '@sanity/overlays',
     '@sanity/preview-kit',
-    'channels',
     'apps-common',
+    'channels',
+    'visual-editing-helpers',
   ],
 
   // We run these checks in the CI pipeline, so we don't need to run them on Vercel
