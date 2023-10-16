@@ -445,6 +445,9 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
     devDependencies:
+      '@sanity/client':
+        specifier: ^6.6.0
+        version: 6.6.0
       '@sanity/pkg-utils':
         specifier: ^3.1.0
         version: 3.1.0(typescript@5.2.2)
@@ -728,9 +731,6 @@ importers:
       '@nanostores/query':
         specifier: 0.2.4
         version: 0.2.4(nanostores@0.9.3)
-      '@nanostores/react':
-        specifier: 0.7.1
-        version: 0.7.1(nanostores@0.9.3)(react@18.2.0)
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
@@ -3229,17 +3229,6 @@ packages:
     dependencies:
       nanoevents: 7.0.1
       nanostores: 0.9.3
-    dev: true
-
-  /@nanostores/react@0.7.1(nanostores@0.9.3)(react@18.2.0):
-    resolution: {integrity: sha512-EXQg9N4MdI4eJQz/AZLIx3hxQ6BuBmV4Q55bCd5YCSgEOAW7tGTsIZxpRXxvxLXzflNvHTBvfrDNY38TlSVBkQ==}
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    peerDependencies:
-      nanostores: ^0.9.0
-      react: '>=18.0.0'
-    dependencies:
-      nanostores: 0.9.3
-      react: 18.2.0
     dev: true
 
   /@neoconfetti/svelte@1.0.0:

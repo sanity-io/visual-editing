@@ -96,8 +96,7 @@ export function createChannel<T extends ChannelMsg>(
       activeConnections.find(connectionIsActive(connection))
     ) {
       return connection.target.postMessage(msg, {
-        // targetOrigin: connection.targetOrigin,
-        targetOrigin: '*',
+        targetOrigin: connection.targetOrigin,
       })
     }
     // If not connected, add to bus

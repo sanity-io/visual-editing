@@ -2,7 +2,6 @@ import { nanoquery } from '@nanostores/query'
 import type { ContentSourceMap, SanityClient } from '@sanity/client'
 //  import type { ChannelEventHandler, ChannelMsg, ChannelReturns } from 'channels'
 import { createChannel } from 'channels'
-// import { useStore } from '@nanostores/react'
 import { listenKeys } from 'nanostores'
 import {
   useCallback,
@@ -69,6 +68,7 @@ export const createQueryStore = (
     loading: boolean
     error: any
   }
+  useVisualEditing: () => void
   invalidate: any
   mutate: any
 } => {
@@ -176,5 +176,7 @@ export const createQueryStore = (
     mutateCache(query, data)
   }
 
-  return { useQuery, invalidate, mutate }
+  function useVisualEditing() {}
+
+  return { useQuery, invalidate, mutate, useVisualEditing }
 }

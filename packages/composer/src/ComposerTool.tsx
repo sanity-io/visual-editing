@@ -1,3 +1,4 @@
+import { ClientPerspective } from '@sanity/client'
 import { Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
@@ -21,6 +22,7 @@ import { ContentEditor } from './editor/ContentEditor'
 import { PreviewFrame } from './preview/PreviewFrame'
 import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
 import { useComposerParams } from './useComposerParams'
+import { useLoaders } from './useLoaders'
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -38,6 +40,7 @@ export default function ComposerTool(props: {
     const url = new URL(previewUrl, location.href)
     return url.origin
   }, [previewUrl])
+  const [perspective] = useState<ClientPerspective>('published')
 
   const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -51,6 +54,8 @@ export default function ComposerTool(props: {
     })
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
+
+  useLoaders({ perspective, channel })
 
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
@@ -87,6 +92,7 @@ export default function ComposerTool(props: {
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
         } else if (type === 'loader/documents') {
+          // @TODO match projectId and dataset in `data` before setting
           setOverlayDocuments(data.documents)
         }
       },

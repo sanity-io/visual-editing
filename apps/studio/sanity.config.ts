@@ -62,6 +62,8 @@ const composerWorkspaces = Object.entries({
 
   if (typeof previewUrl === 'string') {
     return defineConfig({
+      // @TODO handled in https://linear.app/sanity/issue/ECO-174/handle-tokens-auth-in-a-consistent-way
+      auth: { loginMethod: 'token' },
       name: workspaceName,
       basePath: `/${workspaceName}`,
       projectId,

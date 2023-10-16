@@ -84,6 +84,8 @@ export type LoaderMsg =
   | {
       type: 'loader/perspective'
       data: {
+        projectId: string
+        dataset: string
         token: string
         perspective: ClientPerspective
       }
@@ -95,6 +97,8 @@ export type LoaderMsg =
        */
       type: 'loader/documents'
       data: {
+        projectId: string
+        dataset: string
         documents: {
           _id: string
           _type: string
