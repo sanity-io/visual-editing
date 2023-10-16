@@ -112,7 +112,7 @@ export default function ComposerTool(props: {
         setParams({ id: undefined, path: undefined, preview })
       }
     },
-    [channel, defaultPreviewUrl, params, setParams],
+    [defaultPreviewUrl, params, setParams],
   )
 
   const handleDeskParams = useCallback(
@@ -139,7 +139,7 @@ export default function ComposerTool(props: {
         type: 'push',
       })
     }
-  }, [params.preview])
+  }, [channel, params.preview])
 
   // Resizing
   const minWidth = 320

@@ -1,5 +1,7 @@
 import { nanoquery } from '@nanostores/query'
 import type { ContentSourceMap, SanityClient } from '@sanity/client'
+//  import type { ChannelEventHandler, ChannelMsg, ChannelReturns } from 'channels'
+import { createChannel } from 'channels'
 // import { useStore } from '@nanostores/react'
 import { listenKeys } from 'nanostores'
 import {
@@ -9,8 +11,6 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react'
-import type { ChannelEventHandler, ChannelMsg, ChannelReturns } from 'channels'
-import { createChannel } from 'channels'
 
 function useParams(params?: undefined | null | any): any {
   const stringifiedParams = useMemo(
@@ -111,7 +111,7 @@ export const createQueryStore = (
   })
   // const $query = atom<string>('')
   // const $params = atom<any>({})
-  const sourceDocuments = new Map<string, any>()
+  // const sourceDocuments = new Map<string, any>()
   const channel =
     typeof document === 'undefined'
       ? null
