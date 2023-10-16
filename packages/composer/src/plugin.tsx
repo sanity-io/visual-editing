@@ -25,8 +25,9 @@ export const composerTool = definePlugin<ComposerPluginOptions>((options) => {
 
     tools: [
       {
-        name: options.name || 'composer',
         icon: options.icon || ComposeIcon,
+        name: options.name || 'composer',
+        title: options.title || 'Composer',
         component: lazy(() => import('./ComposerTool')),
         options,
         canHandleIntent(intent, params) {

@@ -23,8 +23,9 @@ export type DocumentLocationResolver = (
   | Observable<DocumentLocationsState | null | undefined>
 
 export interface ComposerPluginOptions {
-  name?: string
   icon?: ComponentType
+  name?: string
+  title?: string
   locate?: DocumentLocationResolver
   previewUrl: string
 }
