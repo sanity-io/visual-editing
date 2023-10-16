@@ -17,10 +17,10 @@ module.exports = {
     /^apps-common.*/,
     /^@sanity\/react-loader.*/,
     '@nanostores/query',
-    '@nanostores/react',
     'channels',
     'nanostores',
     'nanoevents',
+    'visual-editing-helpers',
   ],
   future: {
     v2_dev: true,

@@ -62,6 +62,9 @@
       "prettier"
     ],
     "extends": [
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:react/jsx-runtime",
       "eslint:recommended",
       "plugin:prettier/recommended",
       "plugin:@typescript-eslint/eslint-recommended",
@@ -85,6 +88,9 @@
       "@typescript-eslint/no-empty-interface": "off",
       "@typescript-eslint/no-explicit-any": "warn",
       "prettier/prettier": "warn",
+      "react-hooks/exhaustive-deps": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react/prop-types": "off",
       "simple-import-sort/exports": "warn",
       "simple-import-sort/imports": "warn"
     },

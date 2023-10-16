@@ -92,6 +92,7 @@ export default function ComposerTool(props: {
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
         } else if (type === 'loader/documents') {
+          console.log('loader/documents', data)
           // @TODO match projectId and dataset in `data` before setting
           setOverlayDocuments(data.documents)
         }
