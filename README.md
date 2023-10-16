@@ -1,1 +1,1 @@
-./packages/overlays/README.md
+packages/composer/README.md

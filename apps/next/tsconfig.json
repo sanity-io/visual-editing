@@ -21,15 +21,11 @@
     "rootDir": "../..",
     "paths": {
       "@/*": ["./src/*"],
-      "@sanity/overlays": ["../../packages/overlays/src"],
-      "@sanity/preview-kit": ["../../packages/preview-kit/src"],
-      "channels": ["../../packages/channels/src"]
+      "@sanity/overlays": ["../../packages/overlays/src"]
     }
   },
   "include": [
     "../../packages/overlays/src",
-    "../../packages/preview-kit/src",
-    "../../packages/channels/src",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
