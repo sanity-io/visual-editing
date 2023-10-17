@@ -15,7 +15,6 @@ export type UseQueryHook = <Response>(
   data?: Response
   sourceMap?: ContentSourceMap
   loading: boolean
-  refreshing: boolean
   error: any
 }
 export type UseLiveModeHook = () => LiveModeState
@@ -59,8 +58,7 @@ export const createQueryStore = (
     return {
       data: (data as any)?.result,
       sourceMap: (data as any)?.resultSourceMap,
-      loading: 'data' in snapshot ? false : loading,
-      refreshing: loading,
+      loading,
       error,
     }
   }
