@@ -1,4 +1,7 @@
 import { Link } from '@remix-run/react'
+import { unwrapData, wrapData } from '@sanity/csm'
+import { sanity } from '@sanity/react-loader/jsx'
+import { workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import {
@@ -10,12 +13,17 @@ import { useMemo } from 'react'
 import { useQuery } from '~/useQuery'
 
 export default function ProductsRoute() {
-  const {
-    data: products,
-    error,
-    loading,
-    sourceMap,
-  } = useQuery<ShoesListResult>(shoesList)
+  const { data, error, loading, sourceMap } =
+    useQuery<ShoesListResult>(shoesList)
+  const products = useMemo(
+    () =>
+      wrapData(
+        { ...workspaces['remix'], baseUrl: 'http://localhost:3333' },
+        data,
+        sourceMap || null,
+      ),
+    [data, sourceMap],
+  )
   if (error) {
     throw error
   }
@@ -51,8 +59,8 @@ export default function ProductsRoute() {
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products?.map((product, i) => (
               <Link
-                key={product.slug.current}
-                to={`/shoes/${product.slug.current}`}
+                key={product.slug.current.value}
+                to={`/shoes/${product.slug.current.value}`}
                 data-sanity={dataAttribute([i, 'slug'])}
                 className="group relative"
               >
@@ -61,27 +69,31 @@ export default function ProductsRoute() {
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
                     src={
                       product.media?.asset
-                        ? urlFor(product.media).width(1440).height(1440).url()
+                        ? urlFor(unwrapData(product.media))
+                            .width(1440)
+                            .height(1440)
+                            .url()
                         : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`
                     }
                     width={720}
                     height={720}
-                    data-sanity={dataAttribute([i, 'media', 'alt'])}
-                    alt={product.media?.alt || ''}
+                    data-sanity={dataAttribute([i, 'media'])}
+                    alt={product.media?.alt?.value || ''}
                   />
                 </div>
-                <h2
+                <sanity.h2
                   className="mb-8 mt-4 text-sm text-gray-700"
-                  data-sanity={dataAttribute([i, 'title'])}
                   style={{ ['textWrap' as any]: 'balance' }}
                 >
                   {product.title}
-                </h2>
+                </sanity.h2>
                 <p
                   className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
                   data-sanity={dataAttribute([i, 'price'])}
                 >
-                  {product.price ? formatCurrency(product.price) : 'FREE'}
+                  {product.price?.value
+                    ? formatCurrency(product.price.value)
+                    : 'FREE'}
                 </p>
                 {product.brand && (
                   <div className="absolute bottom-0.5 right-0 flex items-center gap-x-2">
@@ -89,24 +101,26 @@ export default function ProductsRoute() {
                       className="h-6 w-6 rounded-full bg-gray-50"
                       src={
                         product.brand?.logo?.asset
-                          ? urlForCrossDatasetReference(product.brand.logo)
+                          ? urlForCrossDatasetReference(
+                              unwrapData(product.brand.logo),
+                            )
                               .width(48)
                               .height(48)
                               .url()
                           : `https://source.unsplash.com/featured/48x48?${
                               product.brand.name
-                                ? encodeURIComponent(product.brand.name)
+                                ? encodeURIComponent(product.brand.name.value)
                                 : `brand&r=${i}`
                             }`
                       }
                       width={24}
                       height={24}
-                      data-sanity={dataAttribute([i, 'brand', 'logo', 'alt'])}
-                      alt={product.brand?.logo?.alt || ''}
+                      data-sanity={dataAttribute([i, 'brand', 'logo'])}
+                      alt={product.brand?.logo?.alt?.value || ''}
                     />
-                    <span className="font-bold text-gray-600">
+                    <sanity.span className="font-bold text-gray-600">
                       {product.brand.name}
-                    </span>
+                    </sanity.span>
                   </div>
                 )}
               </Link>

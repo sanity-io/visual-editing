@@ -5,6 +5,7 @@
     "tailwind.config.ts",
     "**/*.ts",
     "**/*.tsx",
+    "../../packages/csm/src",
     "../../packages/react-loader/src"
   ],
   "compilerOptions": {
@@ -22,6 +23,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
+      "@sanity/csm": ["../../packages/csm/src"],
+      "@sanity/react-loader/jsx": ["../../packages/react-loader/src/jsx"],
       "@sanity/react-loader": ["../../packages/react-loader/src"]
     },
 

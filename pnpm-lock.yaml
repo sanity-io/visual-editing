@@ -235,6 +235,9 @@ importers:
       '@remix-run/vercel':
         specifier: ^1.19.3
         version: 1.19.3(@vercel/node@3.0.7)
+      '@sanity/csm':
+        specifier: workspace:*
+        version: link:../../packages/csm
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
