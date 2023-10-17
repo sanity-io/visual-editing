@@ -93,4 +93,10 @@ export const shoeType = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'media.0.asset',
+    },
+  },
 })
