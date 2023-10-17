@@ -13,7 +13,7 @@ export const datasets = {
   'cross-dataset-references': 'cross-dataset-references',
 } as const
 
-export const baseUrl =
+export const studioUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://visual-editing-studio.sanity.build'
     : 'http://localhost:3333'

@@ -65,7 +65,6 @@ export function createChannel<T extends ChannelMsg>(
     if (isObject(data)) {
       return connections.find(
         (connection) =>
-          data &&
           data.to === clientId &&
           connection.id === data.from &&
           connection.target === source &&
@@ -91,13 +90,15 @@ export function createChannel<T extends ChannelMsg>(
 
     // Always send internal messages
     // Otherwise send if connection is active
-    if (
-      isInternalMessage(type) ||
-      activeConnections.find(connectionIsActive(connection))
-    ) {
-      return connection.target.postMessage(msg, {
-        targetOrigin: connection.targetOrigin,
-      })
+    const isInternal = isInternalMessage(type)
+    const activeConnection = activeConnections.find(
+      connectionIsActive(connection),
+    )
+    if (isInternal || activeConnection) {
+      // Handshakes may be dispatched before an iframe has loaded in which case
+      // the targetOrigin will not match, so send internal messages using '*'
+      const targetOrigin = isInternal ? '*' : connection.targetOrigin
+      return connection.target.postMessage(msg, { targetOrigin })
     }
     // If not connected, add to bus
     addToBuffer({

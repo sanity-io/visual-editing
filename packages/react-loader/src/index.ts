@@ -18,6 +18,7 @@ import {
 
 export interface CreateQueryStoreOptions {
   client: SanityClient
+  studioUrl: string
 }
 
 // // @TODO move this into the options somehow
@@ -47,7 +48,7 @@ export const createQueryStore = (
   }
   useLiveMode: () => void
 } => {
-  const { client: _client } = options
+  const { client: _client, studioUrl } = options
   const client = _client.withConfig({
     requestTagPrefix: options.client.config().requestTagPrefix || DEFAULT_TAG,
     resultSourceMap: true,
@@ -199,9 +200,7 @@ export const createQueryStore = (
       connections: [
         {
           target: parent,
-          // @TODO using parent.origin fails if the parent is on a different origin
-          // targetOrigin: parent.origin,
-          targetOrigin: '*',
+          targetOrigin: studioUrl,
           sourceOrigin: location.origin,
           id: 'composer' satisfies VisualEditingConnectionIds,
         },
