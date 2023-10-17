@@ -18,7 +18,7 @@ import {
 
 export interface CreateQueryStoreOptions {
   client: SanityClient
-  targetOrigin?: string
+  targetOrigin: string
 }
 
 // // @TODO move this into the options somehow
