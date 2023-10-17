@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from '@remix-run/react'
 import { enableVisualEditing, type HistoryUpdate } from '@sanity/overlays'
 import { useEffect, useRef } from 'react'
+import { useLiveMode } from './useQuery'
 
 export default function VisualEditing() {
   const navigateRemix = useNavigate()
@@ -38,6 +39,8 @@ export default function VisualEditing() {
       })
     }
   }, [location.hash, location.pathname, location.search])
+
+  useLiveMode()
 
   return null
 }

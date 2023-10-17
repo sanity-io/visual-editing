@@ -1,4 +1,13 @@
-import type { ClientPerspective } from '@sanity/client'
+import type {
+  ContentSourceMap,
+  ContentSourceMapDocuments,
+  QueryParams,
+} from '@sanity/client'
+
+/**
+ * @internal
+ */
+export type QueryCacheKey = `${string}-${string}`
 
 /**
  * Data resolved from a Sanity node
@@ -82,12 +91,24 @@ export type OverlayMsg =
  */
 export type LoaderMsg =
   | {
-      type: 'loader/perspective'
+      type: 'loader/query-change'
       data: {
         projectId: string
         dataset: string
-        token: string
-        perspective: ClientPerspective
+        query: string
+        params: QueryParams
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        result: any
+        resultSourceMap?: ContentSourceMap
+      }
+    }
+  | {
+      type: 'loader/query-listen'
+      data: {
+        projectId: string
+        dataset: string
+        query: string
+        params: QueryParams
       }
     }
   | {
@@ -99,12 +120,7 @@ export type LoaderMsg =
       data: {
         projectId: string
         dataset: string
-        documents: {
-          _id: string
-          _type: string
-          projectId?: string
-          dataset?: string
-        }[]
+        documents: ContentSourceMapDocuments
       }
     }
 
