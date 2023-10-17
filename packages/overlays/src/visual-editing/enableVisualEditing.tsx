@@ -35,6 +35,7 @@ export function enableVisualEditing(
   options: {
     history?: HistoryAdapter
     studioUrl?: string
+    zIndex?: string | number
   } = {},
 ): DisableVisualEditing {
   if (root || node) return cleanup
@@ -45,7 +46,7 @@ export function enableVisualEditing(
     ([reactClient, { VisualEditing }]) => {
       if (cancelled) return
 
-      const { history } = options
+      const { history, zIndex } = options
       const studioUrl = options.studioUrl || parent.origin
 
       node = document.createElement('div')
@@ -55,7 +56,13 @@ export function enableVisualEditing(
       const { createRoot } =
         'default' in reactClient ? reactClient.default : reactClient
       root = createRoot(node)
-      root.render(<VisualEditing history={history} studioUrl={studioUrl} />)
+      root.render(
+        <VisualEditing
+          history={history}
+          studioUrl={studioUrl}
+          zIndex={zIndex}
+        />,
+      )
     },
   )
 

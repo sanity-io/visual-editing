@@ -17,21 +17,24 @@ import { elementsReducer } from './elementsReducer'
 import { useChannel } from './useChannel'
 import { useOverlay } from './useOverlay'
 
-const Root = styled.div`
+const Root = styled.div<{
+  $zIndex?: string | number
+}>`
   background-color: transparent;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   pointer-events: none;
-  z-index: 9999999;
+  z-index: ${({ $zIndex }) => $zIndex ?? '9999999'};
 `
 
 export const VisualEditing: FunctionComponent<{
   history?: HistoryAdapter
   studioUrl: string
+  zIndex?: string | number
 }> = function (props) {
-  const { history, studioUrl } = props
+  const { history, studioUrl, zIndex } = props
   const [elements, dispatch] = useReducer(elementsReducer, [])
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -105,7 +108,7 @@ export const VisualEditing: FunctionComponent<{
 
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
-      <Root ref={setRootElement}>
+      <Root ref={setRootElement} $zIndex={zIndex}>
         {elementsToRender.map(({ id, focused, hovered, rect, sanity }) => {
           return (
             <ElementOverlay
