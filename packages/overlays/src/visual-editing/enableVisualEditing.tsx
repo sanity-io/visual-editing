@@ -31,11 +31,12 @@ function cleanup() {
  *
  * @public
  */
-export function enableVisualEditing({
-  history,
-}: {
-  history?: HistoryAdapter
-} = {}): DisableVisualEditing {
+export function enableVisualEditing(
+  options: {
+    history?: HistoryAdapter
+    studioUrl?: string
+  } = {},
+): DisableVisualEditing {
   if (root || node) return cleanup
   let cancelled = false
 
@@ -44,6 +45,9 @@ export function enableVisualEditing({
     ([reactClient, { VisualEditing }]) => {
       if (cancelled) return
 
+      const { history } = options
+      const studioUrl = options.studioUrl || parent.origin
+
       node = document.createElement('div')
       node.id = OVERLAY_ID
       document.body.appendChild(node)
@@ -51,7 +55,7 @@ export function enableVisualEditing({
       const { createRoot } =
         'default' in reactClient ? reactClient.default : reactClient
       root = createRoot(node)
-      root.render(<VisualEditing history={history} />)
+      root.render(<VisualEditing history={history} studioUrl={studioUrl} />)
     },
   )
 

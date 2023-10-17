@@ -11,6 +11,7 @@ export default function VisualEditing() {
 
   useEffect(() => {
     const disable = enableVisualEditing({
+      studioUrl: 'http://localhost:3333/',
       history: {
         subscribe: (navigate) => {
           navigateComposerRef.current = navigate

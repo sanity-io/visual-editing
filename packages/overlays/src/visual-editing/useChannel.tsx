@@ -8,6 +8,7 @@ import { useEffect, useRef } from 'react'
 
 export function useChannel<T extends ChannelMsg>(
   handler: ChannelEventHandler<T>,
+  targetOrigin: string,
 ): ChannelReturns<T> | undefined {
   const channelRef = useRef<ChannelReturns<T>>()
 
@@ -17,9 +18,7 @@ export function useChannel<T extends ChannelMsg>(
       connections: [
         {
           target: parent,
-          // @TODO using parent.origin fails if the parent is on a different origin
-          // targetOrigin: parent.origin,
-          targetOrigin: '*',
+          targetOrigin,
           sourceOrigin: location.origin,
           id: 'composer',
         },
@@ -31,7 +30,7 @@ export function useChannel<T extends ChannelMsg>(
       channel.disconnect()
       channelRef.current = undefined
     }
-  }, [handler])
+  }, [handler, targetOrigin])
 
   return channelRef.current
 }
