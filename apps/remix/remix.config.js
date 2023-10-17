@@ -15,6 +15,7 @@ module.exports = {
   serverDependenciesToBundle: [
     // ...getDependenciesToBundle('apps-common')
     /^apps-common.*/,
+    /^@sanity\/core-loader.*/,
     /^@sanity\/react-loader.*/,
     '@nanostores/query',
     'channels',

@@ -3,8 +3,11 @@
   "compilerOptions": {
     "incremental": true,
     "noEmit": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "paths": {
+      "@sanity/core-loader": ["../core-loader/src"],
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx","../core-loader/src",],
   "exclude": ["dist", "node_modules"]
 }

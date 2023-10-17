@@ -91,10 +91,11 @@
     "root": true
   },
   "dependencies": {
-    "@sanity/groq-store": "workspace:*",
-    "@sanity/core-loader": "workspace:*"
+    "@sanity/core-loader": "workspace:*",
+    "@sanity/groq-store": "workspace:*"
   },
   "devDependencies": {
+    "@nanostores/vue": "0.10.0",
     "@sanity/client": "^6.6.0",
     "@sanity/pkg-utils": "^3.1.0",
     "channels": "workspace:*",
@@ -105,10 +106,12 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "visual-editing-helpers": "workspace:*"
+    "visual-editing-helpers": "workspace:*",
+    "vue": "^3.3.4"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.6.0"
+    "@sanity/client": "^6.6.0",
+    "vue": "^3.3.4"
   },
   "engines": {
     "node": ">=18"

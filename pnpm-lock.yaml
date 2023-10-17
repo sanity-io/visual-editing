@@ -488,6 +488,9 @@ importers:
         specifier: workspace:*
         version: link:../groq-store
     devDependencies:
+      '@nanostores/query':
+        specifier: 0.2.4
+        version: 0.2.4(nanostores@0.9.3)
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
@@ -515,6 +518,9 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^10.0.0
         version: 10.0.0(eslint@8.51.0)
+      nanostores:
+        specifier: 0.9.3
+        version: 0.9.3
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -640,6 +646,9 @@ importers:
         specifier: workspace:*
         version: link:../groq-store
     devDependencies:
+      '@nanostores/vue':
+        specifier: 0.10.0
+        version: 0.10.0(nanostores@0.9.3)(vue@3.3.4)
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
@@ -673,6 +682,9 @@ importers:
       visual-editing-helpers:
         specifier: workspace:*
         version: link:../helpers
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
 
   packages/overlays:
     dependencies:
@@ -780,9 +792,6 @@ importers:
         specifier: workspace:*
         version: link:../groq-store
     devDependencies:
-      '@nanostores/query':
-        specifier: 0.2.4
-        version: 0.2.4(nanostores@0.9.3)
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
@@ -816,9 +825,6 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^10.0.0
         version: 10.0.0(eslint@8.51.0)
-      nanostores:
-        specifier: 0.9.3
-        version: 0.9.3
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -3284,6 +3290,24 @@ packages:
     dependencies:
       nanoevents: 7.0.1
       nanostores: 0.9.3
+    dev: true
+
+  /@nanostores/vue@0.10.0(nanostores@0.9.3)(vue@3.3.4):
+    resolution: {integrity: sha512-832RAUbzRfHPs1CdqVEwfvgB2+RD/INji4Zo8bUSEfRO2pQRMMeq479gydnohGpRaa0oNwlfKo7TGFXCghq/1g==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      '@nanostores/logger': '>=0.2.3'
+      '@vue/devtools-api': '>=6.5.0'
+      nanostores: '>=0.9.2'
+      vue: '>=3.3.1'
+    peerDependenciesMeta:
+      '@nanostores/logger':
+        optional: true
+      '@vue/devtools-api':
+        optional: true
+    dependencies:
+      nanostores: 0.9.3
+      vue: 3.3.4
     dev: true
 
   /@neoconfetti/svelte@1.0.0:
