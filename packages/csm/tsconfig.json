@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base",
+  "include": ["**/*.ts", "**/*.tsx", "../visual-editing-helpers/src"],
+  "compilerOptions": {
+    "rootDir": "../..",
+    "incremental": true,
+    "noEmit": true,
+    "strictNullChecks": true,
+    "paths": {
+      "visual-editing-helpers": ["../visual-editing-helpers/src"]
+    }
+  },
+  "exclude": ["dist", "node_modules"]
+}

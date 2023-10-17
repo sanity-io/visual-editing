@@ -1,0 +1,124 @@
+{
+  "name": "@sanity/csm",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sanity-io/visual-editing#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/visual-editing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
+    "directory": "packages/csm"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "require": "./dist/index.cjs",
+      "node": {
+        "module": "./dist/index.js",
+        "import": "./dist/index.cjs.js"
+      },
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "pkg build --strict && pkg --strict",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "watch": "pkg watch --strict"
+  },
+  "browserslist": [
+    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
+    "maintained node versions"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort",
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "no-console": "error",
+      "no-warning-comments": [
+        "warn",
+        {
+          "location": "start",
+          "terms": [
+            "todo",
+            "@todo",
+            "fixme"
+          ]
+        }
+      ],
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/member-delimiter-style": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "prettier/prettier": "warn",
+      "simple-import-sort/exports": "warn",
+      "simple-import-sort/imports": "warn"
+    },
+    "root": true
+  },
+  "dependencies": {
+    "@vercel/stega": "0.1.0"
+  },
+  "devDependencies": {
+    "@sanity/client": "^6.6.0",
+    "@sanity/pkg-utils": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2",
+    "visual-editing-helpers": "workspace:*",
+    "vitest": "^0.34.6"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^6"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": false,
+    "tag": "canary"
+  }
+}

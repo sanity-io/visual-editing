@@ -519,6 +519,49 @@ importers:
         specifier: workspace:*
         version: link:../helpers
 
+  packages/csm:
+    dependencies:
+      '@vercel/stega':
+        specifier: 0.1.0
+        version: 0.1.0
+    devDependencies:
+      '@sanity/client':
+        specifier: ^6.6.0
+        version: 6.6.0
+      '@sanity/pkg-utils':
+        specifier: ^3.1.0
+        version: 3.1.0(typescript@5.2.2)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.7.5
+        version: 6.8.0(@typescript-eslint/parser@6.8.0)(eslint@8.51.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: ^6.7.5
+        version: 6.8.0(eslint@8.51.0)(typescript@5.2.2)
+      eslint:
+        specifier: ^8.51.0
+        version: 8.51.0
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.51.0)
+      eslint-plugin-prettier:
+        specifier: ^5.0.1
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
+      eslint-plugin-simple-import-sort:
+        specifier: ^10.0.0
+        version: 10.0.0(eslint@8.51.0)
+      rimraf:
+        specifier: ^5.0.1
+        version: 5.0.5
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      visual-editing-helpers:
+        specifier: workspace:*
+        version: link:../helpers
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6(jsdom@20.0.3)
+
   packages/groq-store:
     devDependencies:
       '@sanity/client':
