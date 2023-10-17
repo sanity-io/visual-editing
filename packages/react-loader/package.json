@@ -17,6 +17,17 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./jsx": {
+      "types": "./dist/jsx.d.ts",
+      "source": "./src/jsx/index.ts",
+      "require": "./dist/jsx.cjs",
+      "node": {
+        "module": "./dist/jsx.js",
+        "import": "./dist/jsx.cjs.js"
+      },
+      "import": "./dist/jsx.js",
+      "default": "./dist/jsx.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -98,11 +109,13 @@
   },
   "dependencies": {
     "@sanity/core-loader": "workspace:*",
+    "@sanity/csm": "workspace:*",
     "@sanity/groq-store": "workspace:*"
   },
   "devDependencies": {
     "@nanostores/query": "0.2.4",
     "@sanity/client": "^6.6.0",
+    "@sanity/overlays": "workspace:*",
     "@sanity/pkg-utils": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
@@ -119,7 +132,8 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "@sanity/client": "^6.6.0"
+    "@sanity/client": "^6.6.0",
+    "@sanity/overlays": "0.0.0"
   },
   "engines": {
     "node": ">=18"
