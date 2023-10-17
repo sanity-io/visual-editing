@@ -1,5 +1,5 @@
 import { type ContentSourceMap, createClient } from '@sanity/preview-kit/client'
-import { workspaces, baseUrl, apiVersion } from 'apps-common/env'
+import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
 import { defineDataAttribute as _defineDataAttribute } from 'apps-common/utils'
 

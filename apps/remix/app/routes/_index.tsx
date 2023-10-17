@@ -2,7 +2,7 @@ import {
   type SanityNode,
   encodeSanityNodeData as _encodeSanityNodeData,
 } from '@sanity/overlays'
-import { workspaces, baseUrl } from 'apps-common/env'
+import { workspaces, studioUrl } from 'apps-common/env'
 import { vercelStegaCombine } from '@vercel/stega'
 import { Link } from '@remix-run/react'
 
@@ -15,7 +15,7 @@ function encodeSanityNodeData(
     projectId,
     dataset,
     // @TODO temporary workaround as overlays fails to find the right workspace
-    baseUrl: `${baseUrl}/${workspace}`,
+    baseUrl: `${studioUrl}/${workspace}`,
     workspace,
     tool,
     ...node,

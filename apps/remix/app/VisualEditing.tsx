@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from '@remix-run/react'
 import { enableVisualEditing, type HistoryUpdate } from '@sanity/overlays'
+import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef } from 'react'
 import { useLiveMode } from './useQuery'
 
@@ -11,7 +12,7 @@ export default function VisualEditing() {
 
   useEffect(() => {
     const disable = enableVisualEditing({
-      studioUrl: 'http://localhost:3333/',
+      studioUrl,
       history: {
         subscribe: (navigate) => {
           navigateComposerRef.current = navigate
