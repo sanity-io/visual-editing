@@ -12,7 +12,7 @@ import { SanityKey, SanityNodeContext, SourceNode, WrappedValue } from './types'
 export function wrapData<T>(
   context: SanityNodeContext & { logger?: Logger },
   value: T,
-  sourceMap: ContentSourceMap | null,
+  sourceMap: ContentSourceMap | undefined,
   path: PathSegment[] = [],
 ): WrappedValue<T> {
   if (isRecord(value)) {
@@ -38,7 +38,7 @@ export function wrapData<T>(
   const node: SourceNode<T> = {
     $$type$$: 'sanity',
     value,
-    source: sourceMap && getValueSource(context, sourceMap, path),
+    source: sourceMap ? getValueSource(context, sourceMap, path) : undefined,
   }
 
   return node as unknown as WrappedValue<T>
@@ -48,7 +48,7 @@ function getValueSource(
   context: SanityNodeContext & { logger?: Logger },
   sourceMap: ContentSourceMap,
   path: PathSegment[],
-): SanityNode | null {
+): SanityNode | undefined {
   const [
     mapping,
     // matchedPath,
@@ -57,15 +57,15 @@ function getValueSource(
 
   if (!mapping) {
     // console.warn('no mapping for path', {path, sourceMap})
-    return null
+    return undefined
   }
 
   if (mapping.source.type === 'literal') {
-    return null
+    return undefined
   }
 
   if (mapping.source.type === 'unknown') {
-    return null
+    return undefined
   }
 
   const sourceDoc = sourceMap.documents[mapping.source.document]
@@ -84,5 +84,5 @@ function getValueSource(
     }
   }
 
-  return null
+  return undefined
 }

@@ -10,7 +10,7 @@ export type SanityValue = SanityPrimitive | SanityArray | SanityObject
 export interface SourceNode<T = Primitive> {
   $$type$$: 'sanity'
   value: T
-  source: SanityNode | null
+  source: SanityNode | undefined
 }
 
 export type Primitive = string | boolean | number | null
