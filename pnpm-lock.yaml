@@ -490,7 +490,7 @@ importers:
     devDependencies:
       '@nanostores/query':
         specifier: 0.2.4
-        version: 0.2.4(nanostores@0.9.3)
+        version: 0.2.4(nanostores@0.9.4)
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
@@ -519,8 +519,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(eslint@8.51.0)
       nanostores:
-        specifier: 0.9.3
-        version: 0.9.3
+        specifier: 0.9.4
+        version: 0.9.4
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -648,7 +648,7 @@ importers:
     devDependencies:
       '@nanostores/vue':
         specifier: 0.10.0
-        version: 0.10.0(nanostores@0.9.3)(vue@3.3.4)
+        version: 0.10.0(nanostores@0.9.4)(vue@3.3.4)
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
@@ -3262,17 +3262,17 @@ packages:
     resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
     dev: true
 
-  /@nanostores/query@0.2.4(nanostores@0.9.3):
+  /@nanostores/query@0.2.4(nanostores@0.9.4):
     resolution: {integrity: sha512-DCQWQsqjABf4/5eN4opGt9MbD6opNxGyewmR/yRAEB999WCl+Cgz6G6WTy37KiKNRjkBP0yK6GN6BEvgnhDoIQ==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     peerDependencies:
       nanostores: '>0.7'
     dependencies:
       nanoevents: 7.0.1
-      nanostores: 0.9.3
+      nanostores: 0.9.4
     dev: true
 
-  /@nanostores/vue@0.10.0(nanostores@0.9.3)(vue@3.3.4):
+  /@nanostores/vue@0.10.0(nanostores@0.9.4)(vue@3.3.4):
     resolution: {integrity: sha512-832RAUbzRfHPs1CdqVEwfvgB2+RD/INji4Zo8bUSEfRO2pQRMMeq479gydnohGpRaa0oNwlfKo7TGFXCghq/1g==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
@@ -3286,7 +3286,7 @@ packages:
       '@vue/devtools-api':
         optional: true
     dependencies:
-      nanostores: 0.9.3
+      nanostores: 0.9.4
       vue: 3.3.4
     dev: true
 
@@ -13187,8 +13187,8 @@ packages:
     hasBin: true
     dev: false
 
-  /nanostores@0.9.3:
-    resolution: {integrity: sha512-KobZjcVyNndNrb5DAjfs0WG0lRcZu5Q1BOrfTOxokFLi25zFrWPjg+joXC6kuDqNfSt9fQwppyjUBkRPtsL+8w==}
+  /nanostores@0.9.4:
+    resolution: {integrity: sha512-BVFzKt6K5P8tYQLL7MItqcev7jpspA5pIjv+Ck3k6wBnUlwCJcpkGTIinj4APvx8SvdP9fXDGoMRCTY6DO/9QA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: true
 
