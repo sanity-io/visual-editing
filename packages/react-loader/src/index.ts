@@ -73,7 +73,7 @@ export const createQueryStore = (
     _createFetcherStore,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _createMutatorStore,
-    { invalidateKeys, mutateCache },
+    { mutateCache },
   ] = nanoquery({
     // dedupeTime: DEDUPE_TIME,
     // refetchOnFocus: REFETCH_ON_FOCUS,
@@ -88,6 +88,9 @@ export const createQueryStore = (
       result: Response
       resultSourceMap?: ContentSourceMap
     }> => {
+      // @TODO we might need to write our own `@nanostoores/query` as our needs doesn't neetly fit into its API
+      if (cache.has(keys.join(''))) return cache.get(keys.join(''))
+
       const [query, _params] = keys as [query: string, _params?: string]
       const params = _params ? JSON.parse(_params) : {}
 
@@ -211,11 +214,14 @@ export const createQueryStore = (
           data.projectId === projectId &&
           data.dataset === dataset
         ) {
-          mutateCache([data.query, JSON.stringify(data.params)], {
+          const cacheKey = [data.query, JSON.stringify(data.params)].join('')
+          const prevCache = cache.has(cacheKey) ? cache.get(cacheKey) : {}
+          mutateCache(cacheKey, {
             query: data.query,
             params: data.params,
             result: data.result,
-            resultSourceMap: data.resultSourceMap,
+            // @TODO workaround limitation in live queries not sending source maps
+            resultSourceMap: data.resultSourceMap || prevCache.resultSourceMap,
           })
         }
       },
@@ -227,7 +233,7 @@ export const createQueryStore = (
         JSON.stringify([...cache]),
       )
       // Revalidate if the connection status changes
-      invalidateKeys(() => true)
+      // invalidateKeys(() => true)
     })
     const unlistenQueries = $documentsInUse.subscribe((documents) => {
       if (!channel) {

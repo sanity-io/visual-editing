@@ -1,4 +1,4 @@
-import { ClientPerspective } from '@sanity/client'
+import { ClientPerspective, QueryParams } from '@sanity/client'
 import { Flex } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
@@ -11,18 +11,19 @@ import {
 } from 'react'
 import { Path, pathToString, Tool } from 'sanity'
 import styled from 'styled-components'
-import type {
-  VisualEditingConnectionIds,
-  VisualEditingMsg,
+import {
+  getQueryCacheKey,
+  type VisualEditingConnectionIds,
+  type VisualEditingMsg,
 } from 'visual-editing-helpers'
 
 import { Resizable } from './components/Resizable'
 import { ComposerProvider } from './ComposerProvider'
 import { ContentEditor } from './editor/ContentEditor'
+import LoaderQueries from './LoaderQueries'
 import { PreviewFrame } from './preview/PreviewFrame'
 import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
 import { useComposerParams } from './useComposerParams'
-import { useLoaders } from './useLoaders'
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -40,13 +41,16 @@ export default function ComposerTool(props: {
     const url = new URL(previewUrl, location.href)
     return url.origin
   }, [previewUrl])
-  const [perspective] = useState<ClientPerspective>('published')
+  const [perspective] = useState<ClientPerspective>('previewDrafts')
 
   const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [overlayDocuments, setOverlayDocuments] = useState<
     { _id: string; _type: string; _projectId?: string; dataset?: string }[]
   >([])
+  const [liveQueries, setLiveQueries] = useState<
+    Record<string, { query: string; params: QueryParams }>
+  >({})
 
   const { defaultPreviewUrl, setParams, params, deskParams } =
     useComposerParams({
@@ -54,8 +58,6 @@ export default function ComposerTool(props: {
     })
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
-
-  useLoaders({ perspective, channel })
 
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
@@ -92,9 +94,17 @@ export default function ComposerTool(props: {
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
         } else if (type === 'loader/documents') {
-          console.log('loader/documents', data)
           // @TODO match projectId and dataset in `data` before setting
           setOverlayDocuments(data.documents)
+        } else if (type === 'loader/query-listen') {
+          // @TODO match projectId and dataset in `data` before setting
+          setLiveQueries((prev) => ({
+            ...prev,
+            [getQueryCacheKey(data.query, data.params)]: {
+              query: data.query,
+              params: data.params,
+            },
+          }))
         }
       },
     })
@@ -189,42 +199,51 @@ export default function ComposerTool(props: {
   )
 
   return (
-    <ComposerProvider deskParams={deskParams} params={params}>
-      <Container height="fill">
-        <Flex
-          direction="column"
-          flex={1}
-          overflow="hidden"
-          style={{ minWidth }}
-        >
-          <PreviewFrame
-            ref={iframeRef}
-            targetOrigin={targetOrigin}
-            initialUrl={initialPreviewUrl.current}
-            onPathChange={handlePreviewPath}
-            params={params}
-            pointerEvents={resizing ? 'none' : undefined}
-            toggleOverlay={toggleOverlay}
-            overlayEnabled={overlayEnabled}
-          />
-        </Flex>
-        <Resizable
-          minWidth={minWidth}
-          maxWidth={maxWidth}
-          onResizeStart={handleResizeStart}
-          onResizeEnd={handleResizeEnd}
-        >
-          <ContentEditor
-            refs={overlayDocuments}
-            deskParams={deskParams}
-            documentId={params.id}
-            documentType={params.type}
-            onDeskParams={handleDeskParams}
-            onFocusPath={handleFocusPath}
-            previewUrl={params.preview}
-          />
-        </Resizable>
-      </Container>
-    </ComposerProvider>
+    <>
+      <ComposerProvider deskParams={deskParams} params={params}>
+        <Container height="fill">
+          <Flex
+            direction="column"
+            flex={1}
+            overflow="hidden"
+            style={{ minWidth }}
+          >
+            <PreviewFrame
+              ref={iframeRef}
+              targetOrigin={targetOrigin}
+              initialUrl={initialPreviewUrl.current}
+              onPathChange={handlePreviewPath}
+              params={params}
+              pointerEvents={resizing ? 'none' : undefined}
+              toggleOverlay={toggleOverlay}
+              overlayEnabled={overlayEnabled}
+            />
+          </Flex>
+          <Resizable
+            minWidth={minWidth}
+            maxWidth={maxWidth}
+            onResizeStart={handleResizeStart}
+            onResizeEnd={handleResizeEnd}
+          >
+            <ContentEditor
+              refs={overlayDocuments}
+              deskParams={deskParams}
+              documentId={params.id}
+              documentType={params.type}
+              onDeskParams={handleDeskParams}
+              onFocusPath={handleFocusPath}
+              previewUrl={params.preview}
+            />
+          </Resizable>
+        </Container>
+      </ComposerProvider>
+      {channel && (
+        <LoaderQueries
+          channel={channel}
+          liveQueries={liveQueries}
+          perspective={perspective}
+        />
+      )}
+    </>
   )
 }
