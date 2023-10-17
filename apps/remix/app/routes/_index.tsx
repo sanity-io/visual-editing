@@ -1,26 +1,7 @@
-import {
-  type SanityNode,
-  encodeSanityNodeData as _encodeSanityNodeData,
-} from '@sanity/overlays'
-import { workspaces, studioUrl } from 'apps-common/env'
+import { studioUrl, workspaces } from 'apps-common/env'
 import { vercelStegaCombine } from '@vercel/stega'
 import { Link } from '@remix-run/react'
-
-const { projectId, dataset, tool, workspace } = workspaces['remix']
-
-function encodeSanityNodeData(
-  node: Partial<SanityNode> & Pick<SanityNode, 'id' | 'type' | 'path'>,
-) {
-  return _encodeSanityNodeData({
-    projectId,
-    dataset,
-    // @TODO temporary workaround as overlays fails to find the right workspace
-    baseUrl: `${studioUrl}/${workspace}`,
-    workspace,
-    tool,
-    ...node,
-  })
-}
+import { encodeSanityNodeData } from '~/sanity'
 
 export default function Index() {
   return (
@@ -37,7 +18,7 @@ export default function Index() {
       <h1>
         {vercelStegaCombine('vercelStegaCombine', {
           origin: 'sanity.io',
-          href: `${baseUrl}/intent/edit/id=0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2;path=title`,
+          href: `${studioUrl}/intent/edit/id=0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2;path=title`,
         })}
       </h1>
       <h1
