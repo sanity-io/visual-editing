@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react'
 import { unwrapData, wrapData } from '@sanity/csm'
 import { sanity } from '@sanity/react-loader/jsx'
-import { workspaces } from 'apps-common/env'
+import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import {
@@ -15,18 +15,17 @@ import { useQuery } from '~/useQuery'
 export default function ProductsRoute() {
   const { data, error, loading, sourceMap } =
     useQuery<ShoesListResult>(shoesList)
+
   const products = useMemo(
     () =>
-      wrapData(
-        { ...workspaces['remix'], baseUrl: 'http://localhost:3333' },
-        data,
-        sourceMap || null,
-      ),
+      wrapData({ ...workspaces['remix'], baseUrl: studioUrl }, data, sourceMap),
     [data, sourceMap],
   )
+
   if (error) {
     throw error
   }
+
   const dataAttribute = useMemo(
     () => defineDataAttribute(sourceMap),
     [sourceMap],

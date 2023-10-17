@@ -1,4 +1,8 @@
+import { PortableText } from '@portabletext/react'
 import { Link, useParams } from '@remix-run/react'
+import { unwrapData, wrapData } from '@sanity/csm'
+import { sanity } from '@sanity/react-loader/jsx'
+import { studioUrl, workspaces } from 'apps-common/env'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import {
@@ -6,7 +10,6 @@ import {
   urlFor,
   urlForCrossDatasetReference,
 } from '~/utils'
-import { PortableText } from '@portabletext/react'
 import { useMemo } from 'react'
 import { useQuery } from '~/useQuery'
 
@@ -18,15 +21,20 @@ export default function ShoePage() {
     throw new Error('No slug, 404?')
   }
 
-  const {
-    data: product,
-    error,
-    loading,
-    sourceMap,
-  } = useQuery<ShoeResult>(shoe, { slug } satisfies ShoeParams)
+  const { data, error, loading, sourceMap } = useQuery<ShoeResult>(shoe, {
+    slug,
+  } satisfies ShoeParams)
+
+  const product = useMemo(
+    () =>
+      wrapData({ ...workspaces['remix'], baseUrl: studioUrl }, data, sourceMap),
+    [data, sourceMap],
+  )
+
   if (error) {
     throw error
   }
+
   const dataAttribute = useMemo(
     () => defineDataAttribute(sourceMap),
     [sourceMap],
@@ -64,7 +72,9 @@ export default function ShoePage() {
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
-              {loading ? 'Loading' : product?.title || 'Untitled'}
+              {loading
+                ? 'Loading'
+                : <sanity.span>{product?.title}</sanity.span> || 'Untitled'}
             </Link>
           </li>
         </ol>
@@ -76,14 +86,14 @@ export default function ShoePage() {
             <div className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
               <img
                 className="aspect-video w-full rounded-md object-cover object-center group-hover:opacity-75 lg:rounded-lg"
-                src={urlFor(coverImage)
+                src={urlFor(unwrapData(coverImage))
                   .width(1280 * 2)
                   .height(720 * 2)
                   .url()}
                 width={1280}
                 height={720}
                 data-sanity={dataAttribute(['media', 0, 'alt'])}
-                alt={coverImage.alt || ''}
+                alt={coverImage.alt?.value || ''}
               />
             </div>
           )}
@@ -102,14 +112,14 @@ export default function ShoePage() {
                     >
                       <img
                         className="h-32 w-40 shrink-0 rounded bg-white shadow-xl lg:rounded-lg"
-                        src={urlFor(image)
+                        src={urlFor(unwrapData(image))
                           .width(1280 / 2)
                           .height(720 / 2)
                           .url()}
                         width={1280 / 2}
                         height={720 / 2}
                         data-sanity={dataAttribute(['media', i, 'alt'])}
-                        alt={image.alt || ''}
+                        alt={image.alt?.value || ''}
                       />
                     </div>
                   )
@@ -121,13 +131,12 @@ export default function ShoePage() {
           {/* Product info */}
           <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-              <h1
+              <sanity.h1
                 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-                data-sanity={dataAttribute(['title'])}
                 style={{ ['textWrap' as any]: 'balance' }}
               >
                 {product.title}
-              </h1>
+              </sanity.h1>
             </div>
 
             {/* Options */}
@@ -137,7 +146,7 @@ export default function ShoePage() {
                 className="text-3xl tracking-tight text-gray-900"
                 data-sanity={dataAttribute(['price'])}
               >
-                {product.price ? formatCurrency(product.price) : 'FREE'}
+                {product.price ? formatCurrency(product.price.value) : 'FREE'}
               </p>
 
               {product.brand?.name && (
@@ -148,22 +157,24 @@ export default function ShoePage() {
                       className="h-10 w-10 rounded-full bg-gray-50"
                       src={
                         product.brand?.logo?.asset
-                          ? urlForCrossDatasetReference(product.brand.logo)
+                          ? urlForCrossDatasetReference(
+                              unwrapData(product.brand.logo),
+                            )
                               .width(48)
                               .height(48)
                               .url()
                           : `https://source.unsplash.com/featured/48x48?${encodeURIComponent(
-                              product.brand.name,
+                              product.brand.name.value,
                             )}`
                       }
                       width={24}
                       height={24}
                       data-sanity={dataAttribute(['brand', 'logo', 'alt'])}
-                      alt={product.brand?.logo?.alt || ''}
+                      alt={product.brand?.logo?.alt?.value || ''}
                     />
-                    <span className="text-lg font-bold">
+                    <sanity.span className="text-lg font-bold">
                       {product.brand.name}
-                    </span>
+                    </sanity.span>
                   </div>
                 </div>
               )}
@@ -187,10 +198,11 @@ export default function ShoePage() {
                   className="space-y-6 text-base text-gray-900"
                   data-sanity={dataAttribute(['description'])}
                 >
-                  {(product.description && (
-                    <PortableText value={product.description} />
-                  )) ||
-                    'No description'}
+                  {product.description ? (
+                    <PortableText value={unwrapData(product.description)} />
+                  ) : (
+                    'No description'
+                  )}
                 </div>
               </div>
             </div>
