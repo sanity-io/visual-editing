@@ -300,8 +300,8 @@ export default function ComposerTool(props: {
                   pointerEvents={resizing ? 'none' : undefined}
                   toggleOverlay={toggleOverlay}
                   overlayEnabled={overlayEnabled}
-              perspective={perspective}
-              setPerspective={setPerspective}
+                  perspective={perspective}
+                  setPerspective={setPerspective}
                 />
               </Flex>
               <Resizable
