@@ -1,5 +1,7 @@
 import { ClientPerspective, QueryParams } from '@sanity/client'
-import { Flex, useToast } from '@sanity/ui'
+import { Flex } from '@sanity/ui'
+import { ChannelReturns, createChannel } from 'channels'
+import { Card, Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, Connection, createChannel } from 'channels'
 import {
   ReactElement,
@@ -21,12 +23,14 @@ import {
 } from 'visual-editing-helpers'
 
 import { Resizable } from './components/Resizable'
+import { ComposerNavigateProvider } from './ComposerNavigateProvider'
+import { ComposerParamsProvider } from './ComposerParamsProvider'
 import { ComposerProvider } from './ComposerProvider'
 import { ContentEditor } from './editor/ContentEditor'
 import LoaderQueries from './loader/LoaderQueries'
 import { PreviewFrame } from './preview/PreviewFrame'
 import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
-import { useComposerParams } from './useComposerParams'
+import { useParams } from './useParams'
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -35,7 +39,7 @@ const Container = styled(Flex)`
 export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
 }): ReactElement {
-  const { previewUrl = '/' } = props.tool.options ?? {}
+  const { previewUrl = '/', components } = props.tool.options ?? {}
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode
@@ -68,10 +72,9 @@ export default function ComposerTool(props: {
     Record<string, { query: string; params: QueryParams }>
   >({})
 
-  const { defaultPreviewUrl, setParams, params, deskParams } =
-    useComposerParams({
-      previewUrl,
-    })
+  const { defaultPreviewUrl, setParams, params, deskParams } = useParams({
+    previewUrl,
+  })
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -273,43 +276,53 @@ export default function ComposerTool(props: {
         devMode={devMode}
         params={params}
       >
-        <Container height="fill">
-          <Flex
-            direction="column"
-            flex={1}
-            overflow="hidden"
-            style={{ minWidth }}
-          >
-            <PreviewFrame
-              ref={iframeRef}
-              targetOrigin={targetOrigin}
-              initialUrl={initialPreviewUrl.current}
-              onPathChange={handlePreviewPath}
-              params={params}
-              pointerEvents={resizing ? 'none' : undefined}
-              toggleOverlay={toggleOverlay}
-              overlayEnabled={overlayEnabled}
+        <ComposerNavigateProvider setParams={setParams}>
+          <ComposerParamsProvider params={params}>
+            <Container height="fill">
+              {components?.unstable_navigator && (
+                <Card borderRight flex="none">
+                  <components.unstable_navigator />
+                </Card>
+              )}
+
+              <Flex
+                direction="column"
+                flex={1}
+                overflow="hidden"
+                style={{ minWidth }}
+              >
+                <PreviewFrame
+                  ref={iframeRef}
+                  targetOrigin={targetOrigin}
+                  initialUrl={initialPreviewUrl.current}
+                  onPathChange={handlePreviewPath}
+                  params={params}
+                  pointerEvents={resizing ? 'none' : undefined}
+                  toggleOverlay={toggleOverlay}
+                  overlayEnabled={overlayEnabled}
               perspective={perspective}
               setPerspective={setPerspective}
-            />
-          </Flex>
-          <Resizable
-            minWidth={minWidth}
-            maxWidth={maxWidth}
-            onResizeStart={handleResizeStart}
-            onResizeEnd={handleResizeEnd}
-          >
-            <ContentEditor
-              refs={overlayDocuments}
-              deskParams={deskParams}
-              documentId={params.id}
-              documentType={params.type}
-              onDeskParams={handleDeskParams}
-              onFocusPath={handleFocusPath}
-              previewUrl={params.preview}
-            />
-          </Resizable>
-        </Container>
+                />
+              </Flex>
+              <Resizable
+                minWidth={minWidth}
+                maxWidth={maxWidth}
+                onResizeStart={handleResizeStart}
+                onResizeEnd={handleResizeEnd}
+              >
+                <ContentEditor
+                  refs={overlayDocuments}
+                  deskParams={deskParams}
+                  documentId={params.id}
+                  documentType={params.type}
+                  onDeskParams={handleDeskParams}
+                  onFocusPath={handleFocusPath}
+                  previewUrl={params.preview}
+                />
+              </Resizable>
+            </Container>
+          </ComposerParamsProvider>
+        </ComposerNavigateProvider>
       </ComposerProvider>
       {channel && (
         <LoaderQueries

@@ -29,6 +29,9 @@ export interface ComposerPluginOptions {
   title?: string
   locate?: DocumentLocationResolver
   previewUrl: string
+  components: {
+    unstable_navigator?: ComponentType
+  }
 }
 
 export interface ComposerStateParams {
