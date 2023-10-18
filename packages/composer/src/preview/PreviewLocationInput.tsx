@@ -1,4 +1,4 @@
-import { TextInput } from '@sanity/ui'
+import { Box, Text, TextInput } from '@sanity/ui'
 import {
   ChangeEvent,
   FunctionComponent,
@@ -10,10 +10,11 @@ import {
 } from 'react'
 
 export const PreviewLocationInput: FunctionComponent<{
+  host?: string
   onChange: (value: string) => void
   value: string
 }> = function (props) {
-  const { onChange, value } = props
+  const { host, onChange, value } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [sessionValue, setSessionValue] = useState(value)
 
@@ -41,12 +42,20 @@ export const PreviewLocationInput: FunctionComponent<{
 
   return (
     <TextInput
-      border={false}
       fontSize={1}
       onBlur={handleBlur}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       padding={2}
+      prefix={
+        host && (
+          <Box padding={2}>
+            <Text muted size={1}>
+              {host}
+            </Text>
+          </Box>
+        )
+      }
       radius={2}
       ref={inputRef}
       value={sessionValue}

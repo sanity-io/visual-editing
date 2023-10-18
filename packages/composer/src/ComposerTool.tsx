@@ -53,7 +53,8 @@ export default function ComposerTool(props: {
     const url = new URL(previewUrl, location.href)
     return url.origin
   }, [previewUrl])
-  const [perspective] = useState<ClientPerspective>('previewDrafts')
+  const [perspective, setPerspective] =
+    useState<ClientPerspective>('previewDrafts')
 
   const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -233,6 +234,8 @@ export default function ComposerTool(props: {
               pointerEvents={resizing ? 'none' : undefined}
               toggleOverlay={toggleOverlay}
               overlayEnabled={overlayEnabled}
+              perspective={perspective}
+              setPerspective={setPerspective}
             />
           </Flex>
           <Resizable

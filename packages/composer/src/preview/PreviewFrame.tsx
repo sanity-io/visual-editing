@@ -1,9 +1,24 @@
-import { DesktopIcon, EditIcon, MobileDeviceIcon } from '@sanity/icons'
-import { Box, Button, Card, Flex, Inline, Text } from '@sanity/ui'
-import { forwardRef, useCallback, useMemo, useState } from 'react'
+import { ClientPerspective } from '@sanity/client'
+import {
+  ChevronDownIcon,
+  DesktopIcon,
+  EditIcon,
+  MobileDeviceIcon,
+  RefreshIcon,
+} from '@sanity/icons'
+import { Box, Button, Card, Flex, Menu, MenuButton, MenuItem } from '@sanity/ui'
+import {
+  Dispatch,
+  forwardRef,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react'
 import styled from 'styled-components'
 
 import { ComposerParams } from '../types'
+import { useComposer } from '../useComposer'
 import { PreviewLocationInput } from './PreviewLocationInput'
 
 const IFrame = styled.iframe`
@@ -21,6 +36,12 @@ const IFrameContainerCard = styled(Card)`
     max-height 100ms ease;
 `
 
+const PERSPECTIVE_TITLES: Record<ClientPerspective, string> = {
+  previewDrafts: 'Preview drafts',
+  published: 'Published',
+  raw: 'Raw',
+}
+
 export const PreviewFrame = forwardRef<
   HTMLIFrameElement,
   {
@@ -29,7 +50,9 @@ export const PreviewFrame = forwardRef<
     onPathChange: (nextPath: string) => void
     overlayEnabled: boolean
     params: ComposerParams
+    perspective: ClientPerspective
     pointerEvents?: 'none'
+    setPerspective: Dispatch<SetStateAction<ClientPerspective>>
     toggleOverlay: () => void
   }
 >(function PreviewFrame(props, ref) {
@@ -39,9 +62,13 @@ export const PreviewFrame = forwardRef<
     onPathChange,
     overlayEnabled,
     params,
+    perspective,
     pointerEvents,
+    setPerspective,
     toggleOverlay,
   } = props
+
+  const { devMode } = useComposer()
 
   const [mode, setMode] = useState<'desktop' | 'mobile'>('desktop')
 
@@ -55,7 +82,7 @@ export const PreviewFrame = forwardRef<
   //   }
   // }, [onPathChange, ref])
 
-  let previewLocationOrigin = useMemo(() => {
+  const previewLocationOrigin = useMemo(() => {
     const { origin: parsedTargetOrigin } = new URL(targetOrigin, location.href)
     const { origin: previewOrigin } = new URL(
       params.preview || '/',
@@ -64,15 +91,13 @@ export const PreviewFrame = forwardRef<
     return previewOrigin === location.origin ? undefined : previewOrigin
   }, [params.preview, targetOrigin])
 
-  // @TODO fix the layout
-  previewLocationOrigin = undefined
-
   return (
     <>
       <Card flex="none" padding={2} shadow={1} style={{ position: 'relative' }}>
         <Flex align="center" gap={1} style={{ minHeight: 0 }}>
-          <Flex flex="none">
+          <Flex align="center" flex="none" gap={1}>
             <Button
+              aria-label="Toggle edit mode"
               fontSize={1}
               icon={EditIcon}
               mode="bleed"
@@ -80,29 +105,64 @@ export const PreviewFrame = forwardRef<
               padding={2}
               selected={overlayEnabled}
             />
-          </Flex>
-          <Box flex={1}>
-            {previewLocationOrigin ? (
-              <Inline space={1}>
-                <Text
-                  muted
-                  size={1}
-                  style={{ transform: 'translate(0.3rem, 0.3rem)' }}
-                >
-                  {previewLocationOrigin}
-                </Text>{' '}
-                <PreviewLocationInput
-                  onChange={onPathChange}
-                  value={params.preview || '/'}
-                />
-              </Inline>
-            ) : (
-              <PreviewLocationInput
-                onChange={onPathChange}
-                value={params.preview || '/'}
+            {devMode && (
+              <Button
+                aria-label="Refresh preview"
+                fontSize={1}
+                icon={RefreshIcon}
+                mode="bleed"
+                // todo
+                // onClick={handleRefresh}
+                padding={2}
               />
             )}
+          </Flex>
+          <Box flex={1}>
+            <PreviewLocationInput
+              host={devMode ? previewLocationOrigin : undefined}
+              onChange={onPathChange}
+              value={params.preview || '/'}
+            />
           </Box>
+          <Flex align="center" flex="none" gap={1}>
+            <MenuButton
+              button={
+                <Button
+                  fontSize={1}
+                  iconRight={ChevronDownIcon}
+                  mode="bleed"
+                  padding={2}
+                  space={2}
+                  text={PERSPECTIVE_TITLES[perspective]}
+                />
+              }
+              id="perspective-menu"
+              menu={
+                <Menu>
+                  <MenuItem
+                    fontSize={1}
+                    onClick={() => setPerspective('previewDrafts')}
+                    padding={2}
+                    pressed={perspective === 'previewDrafts'}
+                    text="Preview drafts"
+                  />
+                  <MenuItem
+                    fontSize={1}
+                    onClick={() => setPerspective('published')}
+                    padding={2}
+                    pressed={perspective === 'published'}
+                    text="Published"
+                  />
+                </Menu>
+              }
+              popover={{
+                arrow: false,
+                constrainSize: true,
+                placement: 'bottom-start',
+                portal: true,
+              }}
+            />
+          </Flex>
           <Flex align="center" flex="none" gap={1}>
             <Button
               fontSize={1}

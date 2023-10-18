@@ -77,7 +77,13 @@ export const DocumentPane: FunctionComponent<{
             </Text>
           </Stack>
           {devMode && (
-            <Card border marginTop={4} overflow="auto" padding={3} radius={2}>
+            <Card
+              marginTop={4}
+              overflow="auto"
+              padding={3}
+              radius={2}
+              tone="critical"
+            >
               <Stack space={3}>
                 <Label muted size={0}>
                   Error message
