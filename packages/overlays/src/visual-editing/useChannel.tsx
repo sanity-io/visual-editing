@@ -16,13 +16,18 @@ export function useChannel<T extends ChannelMsg>(
   useEffect(() => {
     const channel = createChannel<T>({
       id: 'overlays',
-      onConnect: () => startTransition(() => setConnected(true)),
-      onDisconnect: () => startTransition(() => setConnected(false)),
+      onConnect: (connection) => {
+        console.warn('overlays onConnect', { connection })
+        startTransition(() => setConnected(true))
+      },
+      onDisconnect: (connection) => {
+        console.error('overlays onDisconnect', { connection })
+        startTransition(() => setConnected(false))
+      },
       connections: [
         {
           target: parent,
           targetOrigin,
-          sourceOrigin: location.origin,
           id: 'composer',
         },
       ],

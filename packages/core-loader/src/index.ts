@@ -202,19 +202,20 @@ export const createQueryStore = (
 
     channel = createChannel<VisualEditingMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
-      onConnect: () => {
+      onConnect: (connection) => {
+        console.warn('loaders onConnect', { connection })
         if ($LiveMode.get().enabled) {
           $LiveMode.setKey('connected', true)
         }
       },
-      onDisconnect: () => {
+      onDisconnect: (connection) => {
+        console.error('loaders onDisconnect', { connection })
         $LiveMode.setKey('connected', false)
       },
       connections: [
         {
           target: parent,
           targetOrigin: studioUrl,
-          sourceOrigin: location.origin,
           id: 'composer' satisfies VisualEditingConnectionIds,
         },
       ],

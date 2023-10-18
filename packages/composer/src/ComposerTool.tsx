@@ -79,17 +79,21 @@ export default function ComposerTool(props: {
 
     const channel = createChannel<VisualEditingMsg>({
       id: 'composer' satisfies VisualEditingConnectionIds,
+      onConnect(connection) {
+        console.warn('ComposerTool onConnect', { connection })
+      },
+      onDisconnect(connection) {
+        console.error('ComposerTool onDisconnect', { connection })
+      },
       connections: [
         {
           target: iframe,
           targetOrigin,
-          sourceOrigin: location.origin,
           id: 'overlays' satisfies VisualEditingConnectionIds,
         },
         {
           target: iframe,
           targetOrigin,
-          sourceOrigin: location.origin,
           id: 'loaders' satisfies VisualEditingConnectionIds,
         },
       ],
@@ -125,6 +129,7 @@ export default function ComposerTool(props: {
 
     return () => {
       channel.disconnect()
+      setChannel(undefined)
     }
   }, [setParams, targetOrigin])
 
