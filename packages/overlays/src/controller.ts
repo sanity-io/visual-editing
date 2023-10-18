@@ -20,6 +20,7 @@ import type {
 export function createOverlayController({
   handler,
   overlayElement,
+  preventDefault,
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
@@ -125,8 +126,10 @@ export function createOverlayController({
       click(event) {
         const target = event.target as HTMLElement | null
         if (element === getHoveredElement() && element.contains(target)) {
-          event.preventDefault()
-          event.stopPropagation()
+          if (preventDefault) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
           handler({
             type: 'element/click',
             id,
@@ -283,7 +286,7 @@ export function createOverlayController({
   })
 
   /**
-    
+
    * Dispatches an event containing the size and position (rect) of an element
    * @param el - Element to dispatch rect information for
    */

@@ -6,6 +6,7 @@ import { OverlayController, OverlayEventHandler } from '../types'
 export function useOverlay(
   element: HTMLElement | null,
   handler: OverlayEventHandler,
+  preventDefault: boolean,
 ): OverlayController | undefined {
   const overlayController = useRef<OverlayController | undefined>()
 
@@ -15,12 +16,13 @@ export function useOverlay(
     overlayController.current = createOverlayController({
       handler,
       overlayElement: element,
+      preventDefault,
     })
 
     return () => {
       overlayController.current?.deactivate()
     }
-  }, [element, handler])
+  }, [element, handler, preventDefault])
 
   return overlayController.current
 }

@@ -90,7 +90,11 @@ export const VisualEditing: FunctionComponent<{
     [channel],
   )
 
-  const overlay = useOverlay(rootElement, overlayEventHandler)
+  const overlay = useOverlay(
+    rootElement,
+    overlayEventHandler,
+    !!channel?.inFrame,
+  )
 
   useEffect(() => {
     if (overlayEnabled) {
