@@ -152,22 +152,20 @@ export default function ComposerTool(props: {
   useEffect(() => {
     if (!healthy.loaders) {
       toast.push({
-        closable: true,
+        closable: false,
         description: `The connection to the preview iframe stopped responding. This means further draft changes won't be reflected in the preview.`,
         status: 'error',
         title: 'Loader channel unhealthy',
-        duration: Infinity,
       })
     }
   }, [healthy.loaders, toast])
   useEffect(() => {
     if (!healthy.overlays) {
       toast.push({
-        closable: true,
+        closable: false,
         description: `The connection to the preview iframe stopped responding. This means overlay's are unable to route clicks and focus path changes.`,
         status: 'error',
         title: 'Overlay channel unhealthy',
-        duration: Infinity,
       })
     }
   }, [healthy.overlays, toast])
