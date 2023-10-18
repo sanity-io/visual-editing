@@ -15,6 +15,7 @@ import {
   onMount,
   onStart,
   onStop,
+  atom,
 } from 'nanostores'
 import {
   getQueryCacheKey,
@@ -197,6 +198,7 @@ export const createQueryStore = (
     return $fetch
   }
 
+  const $shouldPong = atom<boolean>(false)
   onMount($LiveMode, () => {
     $LiveMode.setKey('enabled', true)
     channel = createChannel<VisualEditingMsg>({
@@ -234,7 +236,18 @@ export const createQueryStore = (
             resultSourceMap: data.resultSourceMap || prevCache.resultSourceMap,
           })
         }
+        if (type === 'loader/ping') {
+          console.log('loader/ping')
+          $shouldPong.set(true)
+        }
       },
+    })
+    const unlistenPong = $shouldPong.subscribe((shouldPong) => {
+      if (channel && shouldPong) {
+        console.log('loader/pong')
+        channel.send('loader/pong', undefined)
+        $shouldPong.set(false)
+      }
     })
 
     const unlistenConnection = listenKeys($LiveMode, ['connected'], () => {
@@ -257,6 +270,7 @@ export const createQueryStore = (
     })
 
     return () => {
+      unlistenPong()
       unlistenQueries()
       unlistenConnection()
       $LiveMode.setKey('enabled', false)

@@ -98,9 +98,14 @@ export function createChannel<T extends ChannelMsg>(
       // Handshakes may be dispatched before an iframe has loaded in which case
       // the targetOrigin will not match, so send internal messages using '*'
       const targetOrigin = isInternal ? '*' : connection.targetOrigin
-      return connection.target.postMessage(msg, { targetOrigin })
+      try {
+        return connection.target.postMessage(msg, { targetOrigin })
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to postMessage', e, { msg, connection })
+      }
     }
-    // If not connected, add to bus
+    // If not connected or it errors, add to bus
     addToBuffer({
       connection,
       type,

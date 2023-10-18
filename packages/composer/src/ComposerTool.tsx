@@ -1,6 +1,6 @@
 import { ClientPerspective, QueryParams } from '@sanity/client'
 import { Flex } from '@sanity/ui'
-import { ChannelReturns, createChannel } from 'channels'
+import { ChannelReturns, Connection, createChannel } from 'channels'
 import {
   ReactElement,
   useCallback,
@@ -13,6 +13,8 @@ import { Path, pathToString, Tool } from 'sanity'
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
+  HEARTBEAT_INTERVAL,
+  HEARTBEAT_TIMEOUT,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
@@ -72,6 +74,8 @@ export default function ComposerTool(props: {
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
+  const { onConnect, onDisconnect, connected, handlePongEvent, lastPong } =
+    useChannelConnectionsStatus()
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
 
@@ -79,12 +83,8 @@ export default function ComposerTool(props: {
 
     const channel = createChannel<VisualEditingMsg>({
       id: 'composer' satisfies VisualEditingConnectionIds,
-      onConnect(connection) {
-        console.warn('ComposerTool onConnect', { connection })
-      },
-      onDisconnect(connection) {
-        console.error('ComposerTool onDisconnect', { connection })
-      },
+      onConnect,
+      onDisconnect,
       connections: [
         {
           target: iframe,
@@ -98,7 +98,9 @@ export default function ComposerTool(props: {
         },
       ],
       handler(type, data) {
-        if (type === 'overlay/focus' && 'id' in data) {
+        if (handlePongEvent(type)) {
+          // handled
+        } else if (type === 'overlay/focus' && 'id' in data) {
           setParams({
             id: data.id,
             path: data.path,
@@ -131,7 +133,7 @@ export default function ComposerTool(props: {
       channel.disconnect()
       setChannel(undefined)
     }
-  }, [setParams, targetOrigin])
+  }, [handlePongEvent, onConnect, onDisconnect, setParams, targetOrigin])
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments
@@ -144,6 +146,11 @@ export default function ComposerTool(props: {
     },
     [setParams],
   )
+
+  const healthy = useChannelsHeartbeat({ channel, connected, lastPong })
+  useEffect(() => {
+    console.log('HERE', { healthy })
+  }, [healthy])
 
   const handlePreviewPath = useCallback(
     (nextPath: string) => {
@@ -270,4 +277,119 @@ export default function ComposerTool(props: {
       )}
     </>
   )
+}
+
+function useChannelConnectionsStatus() {
+  const [connected, setConnectionStatus] = useState({
+    loaders: false,
+    overlays: false,
+  } satisfies Partial<Record<VisualEditingConnectionIds, boolean>>)
+  const [lastPong, setLastPong] = useState(
+    () =>
+      ({
+        loaders: 0,
+        overlays: 0,
+      }) satisfies Partial<Record<VisualEditingConnectionIds, number>>,
+  )
+  const onConnect = useCallback(
+    (connection: Connection) =>
+      setConnectionStatus((prev) => ({ ...prev, [connection.id]: true })),
+    [],
+  )
+  const onDisconnect = useCallback(
+    (connection: Connection) =>
+      setConnectionStatus((prev) => ({ ...prev, [connection.id]: false })),
+    [],
+  )
+
+  const handlePongEvent = useCallback((event: VisualEditingMsg['type']) => {
+    let id: VisualEditingConnectionIds | undefined = undefined
+    if (event === 'overlay/pong') {
+      id = 'overlays'
+    }
+    if (event === 'loader/pong') {
+      id = 'loaders'
+    }
+    if (id) {
+      setLastPong((prev) => ({ ...prev, [id as string]: Date.now() }))
+      return true
+    }
+
+    return false
+  }, [])
+
+  return { onConnect, onDisconnect, connected, lastPong, handlePongEvent }
+}
+
+function useChannelsHeartbeat(props: {
+  channel?: ChannelReturns<VisualEditingMsg>
+  connected: ReturnType<typeof useChannelConnectionsStatus>['connected']
+  lastPong: ReturnType<typeof useChannelConnectionsStatus>['lastPong']
+}) {
+  const { channel, connected, lastPong } = props
+
+  const loaders = useChannelHeartbeat({
+    channel,
+    pingType: 'loader/ping',
+    connected: connected.loaders,
+    lastPong: lastPong.loaders,
+  })
+  const overlays = useChannelHeartbeat({
+    channel,
+    pingType: 'overlay/ping',
+    connected: connected.overlays,
+    lastPong: lastPong.overlays,
+  })
+
+  return useMemo(
+    () =>
+      ({
+        loaders,
+        overlays,
+      }) satisfies Partial<Record<VisualEditingConnectionIds, boolean>>,
+    [loaders, overlays],
+  )
+}
+
+function useChannelHeartbeat(props: {
+  channel?: ChannelReturns<VisualEditingMsg>
+  pingType: 'overlay/ping' | 'loader/ping'
+  connected: boolean
+  lastPong: number
+}) {
+  const { channel, pingType, connected, lastPong } = props
+
+  const [healthy, setHealthy] = useState(true)
+
+  useEffect(() => {
+    if (healthy && lastPong) {
+      const timeout = setTimeout(
+        () => setHealthy(false),
+        Math.max(0, lastPong + HEARTBEAT_TIMEOUT - Date.now()),
+      )
+      return () => clearTimeout(timeout)
+    }
+    if (!healthy && lastPong + HEARTBEAT_INTERVAL > Date.now()) {
+      setHealthy(true)
+    }
+  }, [healthy, lastPong])
+  useEffect(() => {
+    if (!channel || !connected) return
+    // We are connected, but haven't received the first pong yet
+    if (!lastPong) {
+      channel.send(pingType, undefined)
+    } else if (lastPong + HEARTBEAT_INTERVAL < Date.now()) {
+      channel.send(pingType, undefined)
+    } else {
+      const deadline = Math.max(0, lastPong + HEARTBEAT_INTERVAL - Date.now())
+      const timeout = setTimeout(
+        () => channel.send(pingType, undefined),
+        deadline,
+      )
+      return () => clearTimeout(timeout)
+    }
+    return
+  }, [channel, connected, lastPong, pingType])
+
+  return healthy
 }

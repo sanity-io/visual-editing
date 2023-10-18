@@ -37,6 +37,7 @@ export function useChannel<T extends ChannelMsg>(
     return () => {
       channel.disconnect()
       channelRef.current = undefined
+      startTransition(() => setConnected(false))
     }
   }, [handler, targetOrigin])
 

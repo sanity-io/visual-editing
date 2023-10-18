@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import styled from 'styled-components'
-import type { VisualEditingMsg } from 'visual-editing-helpers'
+import { type VisualEditingMsg } from 'visual-editing-helpers'
 
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
@@ -38,6 +38,7 @@ export const VisualEditing: FunctionComponent<{
   const [elements, dispatch] = useReducer(elementsReducer, [])
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
+  const [shouldPong, setShouldPong] = useState(false)
 
   const elementsToRender = useMemo(
     () => elements.filter((e) => e.activated || e.focused),
@@ -60,6 +61,10 @@ export const VisualEditing: FunctionComponent<{
       if (type === 'composer/toggleOverlay') {
         setOverlayEnabled((enabled) => !enabled)
       }
+      if (type === 'overlay/ping') {
+        console.log('overlay/ping')
+        setShouldPong(true)
+      }
     },
     [history],
   )
@@ -75,6 +80,13 @@ export const VisualEditing: FunctionComponent<{
     channelEventHandler,
     studioOrigin,
   )
+  useEffect(() => {
+    if (shouldPong && channel) {
+      console.log('overlay/pong')
+      channel.send('overlay/pong', undefined)
+      setShouldPong(false)
+    }
+  }, [shouldPong, channel])
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
