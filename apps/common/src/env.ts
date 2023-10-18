@@ -13,10 +13,20 @@ export const datasets = {
   'cross-dataset-references': 'cross-dataset-references',
 } as const
 
-export const studioUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://visual-editing-studio.sanity.build'
-    : 'http://localhost:3333'
+function maybeGitBranchStudioUrl(url: string) {
+  if (typeof document === 'undefined') return url
+  const { hostname } = document.location
+
+  if (hostname.endsWith('.sanity.build') && hostname.includes('-git-')) {
+    return `https://visual-editing-studio-git-${hostname.split('-git-')[1]}`
+  }
+  return url
+}
+export const studioUrl = maybeGitBranchStudioUrl(
+  process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:3333'
+    : 'https://visual-editing-studio.sanity.build',
+)
 
 export const apiVersion = '2023-10-11'
 
