@@ -30,7 +30,11 @@ export default function ShoePage() {
 
   const product = useMemo(
     () =>
-      wrapData({ ...workspaces['next-app-router'], baseUrl: studioUrl }, data, sourceMap),
+      wrapData(
+        { ...workspaces['next-app-router'], baseUrl: studioUrl },
+        data,
+        sourceMap,
+      ),
     [data, sourceMap],
   )
 
