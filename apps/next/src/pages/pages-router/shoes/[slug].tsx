@@ -25,10 +25,10 @@ export const getServerSideProps = (async (context) => {
   return { props: { params: { slug } } }
 }) satisfies GetServerSideProps<Props>
 
-
-
-export default function ShoePage(props: InferGetServerSidePropsType<typeof getServerSideProps>,) {
-  const {slug} = props.params
+export default function ShoePage(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
+) {
+  const { slug } = props.params
 
   if (!slug) {
     throw new Error('No slug, 404?')

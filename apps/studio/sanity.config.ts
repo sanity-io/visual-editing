@@ -16,9 +16,11 @@ const sharedSettings = definePlugin({
 
 const devMode = (() => {
   const vercelEnv = process.env.SANITY_STUDIO_VERCEL_ENV
-  if(vercelEnv === 'development' || vercelEnv === 'preview') return true
+  if (vercelEnv === 'development' || vercelEnv === 'preview') return true
 
-  return typeof document === 'undefined' ? false : location.hostname === 'localhost'
+  return typeof document === 'undefined'
+    ? false
+    : location.hostname === 'localhost'
 }) satisfies ComposerPluginOptions['devMode']
 
 // If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
