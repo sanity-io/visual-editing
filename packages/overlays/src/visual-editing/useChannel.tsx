@@ -4,17 +4,20 @@ import {
   ChannelReturns,
   createChannel,
 } from 'channels'
-import { useEffect, useRef } from 'react'
+import { startTransition, useEffect, useRef, useState } from 'react'
 
 export function useChannel<T extends ChannelMsg>(
   handler: ChannelEventHandler<T>,
   targetOrigin: string,
-): ChannelReturns<T> | undefined {
+): [channel: ChannelReturns<T> | undefined, connected: boolean] {
   const channelRef = useRef<ChannelReturns<T>>()
+  const [connected, setConnected] = useState(false)
 
   useEffect(() => {
     const channel = createChannel<T>({
       id: 'overlays',
+      onConnect: () => startTransition(() => setConnected(true)),
+      onDisconnect: () => startTransition(() => setConnected(false)),
       connections: [
         {
           target: parent,
@@ -32,5 +35,5 @@ export function useChannel<T extends ChannelMsg>(
     }
   }, [handler, targetOrigin])
 
-  return channelRef.current
+  return [channelRef.current, connected]
 }

@@ -71,7 +71,7 @@ export const VisualEditing: FunctionComponent<{
     return url.origin
   }, [studioUrl])
 
-  const channel = useChannel<VisualEditingMsg>(
+  const [channel, channelConnected] = useChannel<VisualEditingMsg>(
     channelEventHandler,
     studioOrigin,
   )
@@ -90,11 +90,7 @@ export const VisualEditing: FunctionComponent<{
     [channel],
   )
 
-  const overlay = useOverlay(
-    rootElement,
-    overlayEventHandler,
-    !!channel?.inFrame,
-  )
+  const overlay = useOverlay(rootElement, overlayEventHandler, channelConnected)
 
   useEffect(() => {
     if (overlayEnabled) {
