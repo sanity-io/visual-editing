@@ -20,7 +20,11 @@ export default function ShoesPage() {
 
   const products = useMemo(
     () =>
-      wrapData({ ...workspaces['next-app-router'], baseUrl: studioUrl }, data, sourceMap),
+      wrapData(
+        { ...workspaces['next-app-router'], baseUrl: studioUrl },
+        data,
+        sourceMap,
+      ),
     [data, sourceMap],
   )
 

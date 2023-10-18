@@ -4,12 +4,11 @@ import { useEffect } from 'react'
 import { useLiveMode } from './useQuery'
 import { useRouter } from 'next/router'
 
-
 export default function VisualEditing() {
   const router = useRouter()
 
   useEffect(() => {
-    if(!router.isReady) return
+    if (!router.isReady) return
     const disable = enableVisualEditing({
       studioUrl,
       history: {
@@ -37,7 +36,14 @@ export default function VisualEditing() {
       },
     })
     return () => disable()
-  }, [router.isReady, router?.events?.on, router?.events?.off, router?.push,  router?.back, router?.replace])
+  }, [
+    router.isReady,
+    router?.events?.on,
+    router?.events?.off,
+    router?.push,
+    router?.back,
+    router?.replace,
+  ])
 
   useLiveMode()
 
