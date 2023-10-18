@@ -12,6 +12,7 @@ import {
   ErrorInfo,
   FunctionComponent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
@@ -54,6 +55,11 @@ export const DocumentPane: FunctionComponent<{
   } | null>(null)
 
   const handleRetry = useCallback(() => setErrorParams(null), [])
+
+  // Reset error state when parameters change
+  useEffect(() => {
+    setErrorParams(null)
+  }, [documentId, documentType, params])
 
   if (errorParams) {
     return (

@@ -13,6 +13,7 @@ import {
   ErrorInfo,
   FunctionComponent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
@@ -63,6 +64,11 @@ export const DocumentListPane: FunctionComponent<{
   const handleRetry = useCallback(() => setErrorParams(null), [])
 
   const deskParams = useMemo(() => ({}), [])
+
+  // Reset error state when refs change
+  useEffect(() => {
+    setErrorParams(null)
+  }, [refs])
 
   if (errorParams) {
     return (
