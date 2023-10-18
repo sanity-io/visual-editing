@@ -230,6 +230,90 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4
 
+  apps/page-builder-demo:
+    dependencies:
+      '@next/bundle-analyzer':
+        specifier: 13.5.5
+        version: 13.5.5
+      '@portabletext/react':
+        specifier: ^3.0.11
+        version: 3.0.11(react@18.2.0)
+      '@sanity/csm':
+        specifier: workspace:*
+        version: link:../../packages/csm
+      '@sanity/demo':
+        specifier: ^1.0.2
+        version: 1.0.2(@sanity/color@2.2.5)(tailwindcss@3.3.3)
+      '@sanity/image-url':
+        specifier: ^1.0.2
+        version: 1.0.2
+      '@sanity/overlays':
+        specifier: workspace:*
+        version: link:../../packages/overlays
+      '@sanity/preview-kit':
+        specifier: 3.2.4
+        version: 3.2.4(@sanity/client@6.6.0)(react@18.2.0)
+      '@sanity/react-loader':
+        specifier: workspace:*
+        version: link:../../packages/react-loader
+      '@tailwindcss/typography':
+        specifier: ^0.5.10
+        version: 0.5.10(tailwindcss@3.3.3)
+      '@types/node':
+        specifier: 20.8.7
+        version: 20.8.7
+      '@types/react':
+        specifier: ^18.2.29
+        version: 18.2.29
+      '@types/react-dom':
+        specifier: ^18.2.13
+        version: 18.2.13
+      '@vercel/stega':
+        specifier: 0.1.0
+        version: 0.1.0
+      apps-common:
+        specifier: workspace:*
+        version: link:../common
+      autoprefixer:
+        specifier: 10.4.16
+        version: 10.4.16(postcss@8.4.31)
+      channels:
+        specifier: workspace:*
+        version: link:../../packages/channels
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
+      eslint:
+        specifier: ^8.51.0
+        version: 8.51.0
+      eslint-config-next:
+        specifier: 13.5.5
+        version: 13.5.5(eslint@8.51.0)(typescript@5.2.2)
+      next:
+        specifier: 13.5.5
+        version: 13.5.5(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      postcss:
+        specifier: 8.4.31
+        version: 8.4.31
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      styled-components:
+        specifier: ^5.3.11
+        version: 5.3.11(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+      suspend-react:
+        specifier: 0.1.3
+        version: 0.1.3(react@18.2.0)
+      tailwindcss:
+        specifier: ^3.3.3
+        version: 3.3.3
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   apps/remix:
     dependencies:
       '@portabletext/react':
@@ -4183,6 +4267,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -5011,6 +5096,16 @@ packages:
   /@sanity/color@2.2.5:
     resolution: {integrity: sha512-tTi22KoKuER3sldXYl4c1Dq2zU7tMLDkljFiaUKVkBbu4PBvRGCFw75kXZnD2b4Bsp6vin+7sI+AKdCKRhfRuw==}
 
+  /@sanity/demo@1.0.2(@sanity/color@2.2.5)(tailwindcss@3.3.3):
+    resolution: {integrity: sha512-GJoW1WuE6sAZmgpVLeZ06FHPTOJesrpzrKky6etJV3HvqFJa7xvjJRdjazYQTcXGHCFftjXVNNGNfCXA+h5wWA==}
+    peerDependencies:
+      '@sanity/color': ^2
+      tailwindcss: ^3
+    dependencies:
+      '@sanity/color': 2.2.5
+      tailwindcss: 3.3.3
+    dev: false
+
   /@sanity/diff-match-patch@3.1.1:
     resolution: {integrity: sha512-dSZqGeYjHKGIkqAzGqLcG92LZyJGX+nYbs/FWawhBbTBDWi21kvQ0hsL3DJThuFVWtZMWTQijN3z6Cnd44Pf2g==}
     engines: {node: '>=14.18'}
@@ -5520,6 +5615,18 @@ packages:
     dependencies:
       defer-to-connect: 2.0.1
     dev: true
+
+  /@tailwindcss/typography@0.5.10(tailwindcss@3.3.3):
+    resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+    dependencies:
+      lodash.castarray: 4.4.0
+      lodash.isplainobject: 4.0.6
+      lodash.merge: 4.6.2
+      postcss-selector-parser: 6.0.10
+      tailwindcss: 3.3.3
+    dev: false
 
   /@tanstack/react-virtual@3.0.0-beta.54(react@18.2.0):
     resolution: {integrity: sha512-D1mDMf4UPbrtHRZZriCly5bXTBMhylslm4dhcHqTtDJ6brQcgGmk8YD9JdWBGWfGSWPKoh2x1H3e7eh+hgPXtQ==}
@@ -7829,6 +7936,11 @@ packages:
   /clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  /clsx@2.0.0:
+    resolution: {integrity: sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==}
+    engines: {node: '>=6'}
+    dev: false
 
   /cluster-key-slot@1.1.2:
     resolution: {integrity: sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA==}
@@ -12168,6 +12280,10 @@ packages:
     resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
     dev: true
 
+  /lodash.castarray@4.4.0:
+    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
+    dev: false
+
   /lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
     dev: true
@@ -13202,6 +13318,10 @@ packages:
   /nanostores@0.9.4:
     resolution: {integrity: sha512-BVFzKt6K5P8tYQLL7MItqcev7jpspA5pIjv+Ck3k6wBnUlwCJcpkGTIinj4APvx8SvdP9fXDGoMRCTY6DO/9QA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
@@ -14974,6 +15094,14 @@ packages:
     dependencies:
       postcss: 8.4.31
     dev: true
+
+  /postcss-selector-parser@6.0.10:
+    resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
+    engines: {node: '>=4'}
+    dependencies:
+      cssesc: 3.0.0
+      util-deprecate: 1.0.2
+    dev: false
 
   /postcss-selector-parser@6.0.13:
     resolution: {integrity: sha512-EaV1Gl4mUEV4ddhDnv/xtj7sxwrwxdetHdWUGnT4VJQf+4d05v6lHYZr8N573k5Z0BViss7BDhfWtKS3+sfAqQ==}

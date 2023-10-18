@@ -6,6 +6,7 @@
     "format": "prettier --cache --write .",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
+    "page-builder-demo:dev": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
     "preview": "turbo run preview",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",

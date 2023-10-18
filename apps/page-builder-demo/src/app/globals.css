@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon {
+  display: block;
+  font-size: calc(24 / 16 * 1rem);
+}
+
+.leading-none .icon {
+  margin: -4px;
+}

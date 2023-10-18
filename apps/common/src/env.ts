@@ -5,12 +5,12 @@ export const projectId = 'hiomol4a'
 export const datasets = {
   // @TODO unknown, demo data?
   production: 'production',
-  // @TODO unknown, cody branch?
-  'preview-poc': 'preview-poc',
   // Test data, used for e2e during development
   development: 'development',
   // Also test data, used with cross dataset references to ensure we fully support it
   'cross-dataset-references': 'cross-dataset-references',
+  // demo dataset used for early prototyping
+  'page-builder-demo': 'preview-poc',
 } as const
 
 function maybeGitBranchStudioUrl(url: string) {
@@ -66,5 +66,11 @@ export const workspaces = {
     dataset: datasets['cross-dataset-references'],
     workspace: datasets['cross-dataset-references'],
     tool: 'desk',
+  },
+  'page-builder-demo': {
+    projectId: projectId,
+    dataset: datasets['page-builder-demo'],
+    workspace: 'page-builder-demo',
+    tool: 'composer',
   },
 } as const

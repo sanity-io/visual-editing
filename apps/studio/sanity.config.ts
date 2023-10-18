@@ -59,6 +59,9 @@ const composerWorkspaces = Object.entries({
   svelte:
     process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL ||
     'http://localhost:3004/shoes',
+  'page-builder-demo':
+    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL ||
+    'http://localhost:3005/',
 } as const).map(([name, previewUrl]) => {
   const {
     projectId,
