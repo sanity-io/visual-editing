@@ -33,6 +33,18 @@ export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
 }): ReactElement {
   const { previewUrl = '/' } = props.tool.options ?? {}
+
+  const [devMode] = useState(() => {
+    const option = props.tool.options?.devMode
+
+    if (typeof option === 'function') return option()
+    if (typeof option === 'boolean') return option
+
+    return (
+      typeof window !== 'undefined' && window.location.hostname === 'localhost'
+    )
+  })
+
   // @TODO The iframe URL might change, we have to make sure we don't post Studio state to unknown origins
   // see https://medium.com/@chiragrai3666/exploiting-postmessage-e2b01349c205
   const targetOrigin = useMemo(() => {
@@ -200,7 +212,11 @@ export default function ComposerTool(props: {
 
   return (
     <>
-      <ComposerProvider deskParams={deskParams} params={params}>
+      <ComposerProvider
+        deskParams={deskParams}
+        devMode={devMode}
+        params={params}
+      >
         <Container height="fill">
           <Flex
             direction="column"

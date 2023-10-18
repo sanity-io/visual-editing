@@ -6,17 +6,19 @@ import { ComposerParams, DeskDocumentPaneParams } from './types'
 export const ComposerProvider: FunctionComponent<
   PropsWithChildren<{
     deskParams: DeskDocumentPaneParams
+    devMode: boolean
     params: ComposerParams
   }>
 > = function (props) {
-  const { children, deskParams, params } = props
+  const { children, deskParams, devMode, params } = props
 
   const context = useMemo<ComposerContextValue>(
     () => ({
       deskParams,
+      devMode,
       params,
     }),
-    [deskParams, params],
+    [deskParams, devMode, params],
   )
 
   return (

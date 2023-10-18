@@ -27,6 +27,7 @@ import {
 } from 'sanity/desk'
 
 import { DeskDocumentPaneParams } from '../types'
+import { useComposer } from '../useComposer'
 import { ComposerPaneRouterProvider } from './ComposerPaneRouterProvider'
 
 export const DocumentPane: FunctionComponent<{
@@ -37,7 +38,7 @@ export const DocumentPane: FunctionComponent<{
   onFocusPath: (path: Path) => void
 }> = function (props) {
   const { documentId, documentType, params, onDeskParams, onFocusPath } = props
-  const localhost = useMemo(() => window.location.hostname === 'localhost', [])
+  const { devMode } = useComposer()
 
   const paneDocumentNode: DocumentPaneNode = useMemo(
     () => ({
@@ -75,7 +76,7 @@ export const DocumentPane: FunctionComponent<{
               Could not render the document editor
             </Text>
           </Stack>
-          {localhost && (
+          {devMode && (
             <Card border marginTop={4} overflow="auto" padding={3} radius={2}>
               <Stack space={3}>
                 <Label muted size={0}>

@@ -27,6 +27,7 @@ import {
 import styled from 'styled-components'
 
 import { DeskDocumentPaneParams } from '../types'
+import { useComposer } from '../useComposer'
 import { ComposerPaneRouterProvider } from './ComposerPaneRouterProvider'
 
 const Root = styled(Flex)`
@@ -41,7 +42,7 @@ export const DocumentListPane: FunctionComponent<{
   refs: { _id: string; _type: string }[]
 }> = function (props) {
   const { onDeskParams, previewUrl, refs } = props
-  const localhost = useMemo(() => window.location.hostname === 'localhost', [])
+  const { devMode } = useComposer()
 
   const pane: Extract<PaneNode, { type: 'documentList' }> = useMemo(
     () => ({
@@ -83,7 +84,8 @@ export const DocumentListPane: FunctionComponent<{
               Could not render the document list
             </Text>
           </Stack>
-          {localhost && (
+
+          {devMode && (
             <Card border marginTop={4} overflow="auto" padding={3} radius={2}>
               <Stack space={3}>
                 <Label muted size={0}>
@@ -95,6 +97,7 @@ export const DocumentListPane: FunctionComponent<{
               </Stack>
             </Card>
           )}
+
           <Box marginTop={4}>
             <Button
               fontSize={1}

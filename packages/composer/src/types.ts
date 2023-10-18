@@ -23,6 +23,7 @@ export type DocumentLocationResolver = (
   | Observable<DocumentLocationsState | null | undefined>
 
 export interface ComposerPluginOptions {
+  devMode?: boolean | (() => boolean)
   icon?: ComponentType
   name?: string
   title?: string
