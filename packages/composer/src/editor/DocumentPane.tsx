@@ -3,7 +3,9 @@ import {
   Button,
   Card,
   Code,
+  Container,
   ErrorBoundary,
+  Flex,
   Label,
   Stack,
   Text,
@@ -63,36 +65,38 @@ export const DocumentPane: FunctionComponent<{
 
   if (errorParams) {
     return (
-      <Box padding={4}>
-        <Stack space={3}>
-          <Text size={1} weight="semibold">
-            An error occured
-          </Text>
-          <Text muted size={1}>
-            Could not render the document editor
-          </Text>
-        </Stack>
-        {localhost && (
-          <Card border marginTop={4} overflow="auto" padding={3} radius={2}>
-            <Stack space={3}>
-              <Label muted size={0}>
-                Error message
-              </Label>
-              <Code size={1} style={{ whiteSpace: 'pre-wrap' }}>
-                {errorParams.error.message}
-              </Code>
-            </Stack>
-          </Card>
-        )}
-        <Box marginTop={4}>
-          <Button
-            fontSize={1}
-            mode="ghost"
-            onClick={handleRetry}
-            text="Retry"
-          />
-        </Box>
-      </Box>
+      <Flex align="center" height="fill" justify="center">
+        <Container padding={4} sizing="border" width={0}>
+          <Stack space={3}>
+            <Text size={1} weight="semibold">
+              An error occured
+            </Text>
+            <Text muted size={1}>
+              Could not render the document editor
+            </Text>
+          </Stack>
+          {localhost && (
+            <Card border marginTop={4} overflow="auto" padding={3} radius={2}>
+              <Stack space={3}>
+                <Label muted size={0}>
+                  Error message
+                </Label>
+                <Code size={1} style={{ whiteSpace: 'pre-wrap' }}>
+                  {errorParams.error.message}
+                </Code>
+              </Stack>
+            </Card>
+          )}
+          <Box marginTop={4}>
+            <Button
+              fontSize={1}
+              mode="ghost"
+              onClick={handleRetry}
+              text="Retry"
+            />
+          </Box>
+        </Container>
+      </Flex>
     )
   }
 
