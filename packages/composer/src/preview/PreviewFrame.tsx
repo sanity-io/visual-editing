@@ -6,7 +6,17 @@ import {
   MobileDeviceIcon,
   RefreshIcon,
 } from '@sanity/icons'
-import { Box, Button, Card, Flex, Menu, MenuButton, MenuItem } from '@sanity/ui'
+import {
+  Box,
+  Button,
+  Card,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  Text,
+  Tooltip,
+} from '@sanity/ui'
 import {
   Dispatch,
   forwardRef,
@@ -96,25 +106,41 @@ export const PreviewFrame = forwardRef<
       <Card flex="none" padding={2} shadow={1} style={{ position: 'relative' }}>
         <Flex align="center" gap={1} style={{ minHeight: 0 }}>
           <Flex align="center" flex="none" gap={1}>
-            <Button
-              aria-label="Toggle edit mode"
-              fontSize={1}
-              icon={EditIcon}
-              mode="bleed"
-              onClick={toggleOverlay}
+            <Tooltip
+              content={<Text size={1}>Toogle edit mode</Text>}
+              fallbackPlacements={['bottom-start']}
               padding={2}
-              selected={overlayEnabled}
-            />
-            {devMode && (
+              placement="bottom"
+              portal
+            >
               <Button
-                aria-label="Refresh preview"
+                aria-label="Toggle edit mode"
                 fontSize={1}
-                icon={RefreshIcon}
+                icon={EditIcon}
                 mode="bleed"
-                // todo
-                // onClick={handleRefresh}
+                onClick={toggleOverlay}
                 padding={2}
+                selected={overlayEnabled}
               />
+            </Tooltip>
+            {devMode && (
+              <Tooltip
+                content={<Text size={1}>Refresh preview</Text>}
+                fallbackPlacements={['bottom-start']}
+                padding={2}
+                placement="bottom"
+                portal
+              >
+                <Button
+                  aria-label="Refresh preview"
+                  fontSize={1}
+                  icon={RefreshIcon}
+                  mode="bleed"
+                  // todo
+                  // onClick={handleRefresh}
+                  padding={2}
+                />
+              </Tooltip>
             )}
           </Flex>
           <Box flex={1}>
@@ -164,22 +190,40 @@ export const PreviewFrame = forwardRef<
             />
           </Flex>
           <Flex align="center" flex="none" gap={1}>
-            <Button
-              fontSize={1}
-              icon={DesktopIcon}
-              mode="bleed"
-              onClick={setDesktopMode}
+            <Tooltip
+              content={<Text size={1}>Desktop viewport</Text>}
+              fallbackPlacements={['bottom-start']}
               padding={2}
-              selected={mode === 'desktop'}
-            />
-            <Button
-              fontSize={1}
-              icon={MobileDeviceIcon}
-              mode="bleed"
-              onClick={setMobileMode}
+              placement="bottom"
+              portal
+            >
+              <Button
+                aria-label="Desktop viewport"
+                fontSize={1}
+                icon={DesktopIcon}
+                mode="bleed"
+                onClick={setDesktopMode}
+                padding={2}
+                selected={mode === 'desktop'}
+              />
+            </Tooltip>
+            <Tooltip
+              content={<Text size={1}>Mobile viewport</Text>}
+              fallbackPlacements={['bottom-start']}
               padding={2}
-              selected={mode === 'mobile'}
-            />
+              placement="bottom"
+              portal
+            >
+              <Button
+                aria-label="Mobile viewport"
+                fontSize={1}
+                icon={MobileDeviceIcon}
+                mode="bleed"
+                onClick={setMobileMode}
+                padding={2}
+                selected={mode === 'mobile'}
+              />
+            </Tooltip>
           </Flex>
         </Flex>
       </Card>

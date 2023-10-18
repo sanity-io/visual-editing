@@ -12,7 +12,7 @@ const Root = styled.div`
   left: -5px;
   bottom: 0;
   width: 9px;
-  z-index: 201;
+  z-index: 1;
   cursor: ew-resize;
 
   /* Border */
