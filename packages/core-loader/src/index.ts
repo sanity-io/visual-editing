@@ -199,7 +199,6 @@ export const createQueryStore = (
 
   onMount($LiveMode, () => {
     $LiveMode.setKey('enabled', true)
-
     channel = createChannel<VisualEditingMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
       onConnect: (connection) => {

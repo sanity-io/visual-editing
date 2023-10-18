@@ -98,7 +98,8 @@ const composerWorkspaces = Object.entries({
         return composerTool({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
-          locate,
+          // @TODO fix the locator for the pages-router
+          locate: toolName === 'pages-router' ? undefined : locate,
           devMode,
         })
       }),
