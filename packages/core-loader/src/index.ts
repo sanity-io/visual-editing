@@ -237,14 +237,14 @@ export const createQueryStore = (
           })
         }
         if (type === 'loader/ping') {
-          console.log('loader/ping')
+          console.debug('loader/ping')
           $shouldPong.set(true)
         }
       },
     })
     const unlistenPong = $shouldPong.subscribe((shouldPong) => {
       if (channel && shouldPong) {
-        console.log('loader/pong')
+        console.debug('loader/pong')
         channel.send('loader/pong', undefined)
         $shouldPong.set(false)
       }

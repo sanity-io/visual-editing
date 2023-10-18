@@ -1,5 +1,5 @@
 import { ClientPerspective, QueryParams } from '@sanity/client'
-import { Flex } from '@sanity/ui'
+import { Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, Connection, createChannel } from 'channels'
 import {
   ReactElement,
@@ -148,9 +148,29 @@ export default function ComposerTool(props: {
   )
 
   const healthy = useChannelsHeartbeat({ channel, connected, lastPong })
+  const toast = useToast()
   useEffect(() => {
-    console.log('HERE', { healthy })
-  }, [healthy])
+    if (!healthy.loaders) {
+      toast.push({
+        closable: true,
+        description: `The connection to the preview iframe stopped responding. This means further draft changes won't be reflected in the preview.`,
+        status: 'error',
+        title: 'Loader channel unhealthy',
+        duration: Infinity,
+      })
+    }
+  }, [healthy.loaders, toast])
+  useEffect(() => {
+    if (!healthy.overlays) {
+      toast.push({
+        closable: true,
+        description: `The connection to the preview iframe stopped responding. This means overlay's are unable to route clicks and focus path changes.`,
+        status: 'error',
+        title: 'Overlay channel unhealthy',
+        duration: Infinity,
+      })
+    }
+  }, [healthy.overlays, toast])
 
   const handlePreviewPath = useCallback(
     (nextPath: string) => {
@@ -371,6 +391,8 @@ function useChannelHeartbeat(props: {
     }
     if (!healthy && lastPong + HEARTBEAT_INTERVAL > Date.now()) {
       setHealthy(true)
+      const timeout = setTimeout(() => setHealthy(false), HEARTBEAT_INTERVAL)
+      return () => clearTimeout(timeout)
     }
   }, [healthy, lastPong])
   useEffect(() => {
