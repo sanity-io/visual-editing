@@ -1,4 +1,14 @@
-import { Button, ErrorBoundary, Flex } from '@sanity/ui'
+import {
+  Box,
+  Button,
+  Card,
+  Code,
+  ErrorBoundary,
+  Flex,
+  Label,
+  Stack,
+  Text,
+} from '@sanity/ui'
 import {
   ErrorInfo,
   FunctionComponent,
@@ -29,6 +39,7 @@ export const DocumentListPane: FunctionComponent<{
   refs: { _id: string; _type: string }[]
 }> = function (props) {
   const { onDeskParams, previewUrl, refs } = props
+  const localhost = useMemo(() => window.location.hostname === 'localhost', [])
 
   const pane: Extract<PaneNode, { type: 'documentList' }> = useMemo(
     () => ({
@@ -55,10 +66,36 @@ export const DocumentListPane: FunctionComponent<{
 
   if (errorParams) {
     return (
-      <div>
-        <div>{errorParams.error.message}</div>
-        <Button onClick={handleRetry} text="Retry" />
-      </div>
+      <Box padding={4}>
+        <Stack space={3}>
+          <Text size={1} weight="semibold">
+            An error occured
+          </Text>
+          <Text muted size={1}>
+            Could not render the document list
+          </Text>
+        </Stack>
+        {localhost && (
+          <Card border marginTop={4} overflow="auto" padding={3} radius={2}>
+            <Stack space={3}>
+              <Label muted size={0}>
+                Error message
+              </Label>
+              <Code size={1} style={{ whiteSpace: 'pre-wrap' }}>
+                {errorParams.error.message}
+              </Code>
+            </Stack>
+          </Card>
+        )}
+        <Box marginTop={4}>
+          <Button
+            fontSize={1}
+            mode="ghost"
+            onClick={handleRetry}
+            text="Retry"
+          />
+        </Box>
+      </Box>
     )
   }
 
