@@ -44,11 +44,23 @@ export function isValidSanityLegacyNode(
  * @public
  */
 export function encodeSanityNodeData(node: SanityNode): string | undefined {
-  const { projectId, dataset, id, path, baseUrl, tool, workspace, type } = node
+  const {
+    projectId,
+    dataset,
+    id: _id,
+    path,
+    baseUrl,
+    tool,
+    workspace,
+    type,
+  } = node
 
   if (!isValidSanityNode(node)) {
     return undefined
   }
+
+  // @TODO figure out why this workaround is needed
+  const id = _id.startsWith('drafts.') ? _id.slice(7) : _id
 
   const parts = [
     ['project', projectId],
