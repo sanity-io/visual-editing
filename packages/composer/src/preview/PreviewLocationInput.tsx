@@ -8,11 +8,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import styled from 'styled-components'
-
-const StyledTextInput = styled(TextInput)`
-  font-family: ${({ theme }) => theme.sanity.fonts.code.family};
-`
 
 export const PreviewLocationInput: FunctionComponent<{
   onChange: (value: string) => void
@@ -45,7 +40,7 @@ export const PreviewLocationInput: FunctionComponent<{
   }, [value])
 
   return (
-    <StyledTextInput
+    <TextInput
       border={false}
       fontSize={1}
       onBlur={handleBlur}
