@@ -1,11 +1,13 @@
-import { useLocation, useNavigate } from '@remix-run/react'
+'use client'
+
 import { enableVisualEditing, type HistoryUpdate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef } from 'react'
 import { useLiveMode } from './useQuery'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 
 export default function VisualEditing() {
-  const navigateRemix = useNavigate()
+  const router = useRouter()
   const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
     null,
   )
@@ -21,25 +23,32 @@ export default function VisualEditing() {
           }
         },
         update: (update) => {
-          if (update.type === 'push' || update.type === 'replace') {
-            navigateRemix(update.url, { replace: update.type === 'replace' })
-          } else if (update.type === 'pop') {
-            navigateRemix(-1)
+          switch (update.type) {
+            case 'push':
+              return router.push(update.url)
+            case 'pop':
+              return router.back()
+            case 'replace':
+              return router.replace(update.url)
+            default:
+              throw new Error(`Unknown update type: ${update.type}`)
           }
         },
       },
     })
     return () => disable()
-  }, [navigateRemix])
-  const location = useLocation()
+  }, [router])
+
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   useEffect(() => {
     if (navigateComposerRef.current) {
       navigateComposerRef.current({
         type: 'push',
-        url: `${location.pathname}${location.search}${location.hash}`,
+        url: `${pathname}${searchParams?.size ? `?${searchParams}` : ''}`,
       })
     }
-  }, [location.hash, location.pathname, location.search])
+  }, [pathname, searchParams])
 
   useLiveMode()
 

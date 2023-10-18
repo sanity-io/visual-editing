@@ -90,6 +90,7 @@ const composerWorkspaces = Object.entries({
         return composerTool({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
+          locate,
         })
       }),
       sharedSettings(),

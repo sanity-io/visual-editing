@@ -12,7 +12,7 @@ import {
 import { useMemo } from 'react'
 import { useQuery } from '~/useQuery'
 
-export default function ProductsRoute() {
+export default function ShoesPage() {
   const { data, error, loading, sourceMap } =
     useQuery<ShoesListResult>(shoesList)
 
