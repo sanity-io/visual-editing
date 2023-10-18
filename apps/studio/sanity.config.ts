@@ -1,7 +1,7 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig, definePlugin, defineType, defineField } from 'sanity'
 import { deskTool } from 'sanity/desk'
-import { composerTool } from '@sanity/composer'
+import { composerTool, type ComposerPluginOptions } from '@sanity/composer'
 import { schema } from 'apps-common'
 import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
@@ -13,6 +13,13 @@ const sharedSettings = definePlugin({
   plugins: [deskTool(), visionTool(), assist(), unsplashImageAsset()],
   schema,
 })
+
+const devMode = (() => {
+  const vercelEnv = process.env.SANITY_STUDIO_VERCEL_ENV
+  if(vercelEnv === 'development' || vercelEnv === 'preview') return true
+
+  return typeof document === 'undefined' ? false : location.hostname === 'localhost'
+}) satisfies ComposerPluginOptions['devMode']
 
 // If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
 function maybeGitBranchUrl(url: string) {
@@ -71,6 +78,7 @@ const composerWorkspaces = Object.entries({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
+          devMode,
         }),
         sharedSettings(),
       ],
@@ -91,6 +99,7 @@ const composerWorkspaces = Object.entries({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
+          devMode,
         })
       }),
       sharedSettings(),
