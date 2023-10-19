@@ -207,6 +207,12 @@ importers:
       '@sanity/composer':
         specifier: workspace:*
         version: link:../../packages/composer
+      '@sanity/csm':
+        specifier: workspace:*
+        version: link:../../packages/csm
+      '@sanity/nuxt-loader':
+        specifier: workspace:*
+        version: link:../../packages/nuxt-loader
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -749,6 +755,9 @@ importers:
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
+      '@sanity/overlays':
+        specifier: workspace:*
+        version: link:../overlays
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)

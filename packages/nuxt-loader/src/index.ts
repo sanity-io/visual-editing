@@ -12,29 +12,19 @@ export type * from '@sanity/core-loader'
 export type UseQueryHook = <Response>(
   query: string,
   params?: QueryParams,
-) => DeepReadonly<
-  Ref<{
-    data?: Response
-    sourceMap?: ContentSourceMap
-    loading: boolean
-    refreshing: boolean
-    error: any
-  }>
->
+) => {
+  data: Ref<Response>
+  sourceMap: Ref<ContentSourceMap>
+  loading: Ref<boolean>
+  refreshing: Ref<boolean>
+  error: Ref<any>
+}
 export type UseLiveModeHook = () => DeepReadonly<Ref<LiveModeState>>
 
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): {
-  useQuery: <Response>(
-    query: string,
-    params?: any,
-  ) => {
-    data?: Response
-    sourceMap?: ContentSourceMap
-    loading: boolean
-    error: any
-  }
+  useQuery: UseQueryHook
   useLiveMode: () => void
 } => {
   const { createFetcherStore, $LiveMode } = createCoreQueryStore(options)
@@ -45,22 +35,20 @@ export const createQueryStore = (
     const $fetch = createFetcherStore([query, $params])
     const snapshot = useStore($fetch)
 
-    return computed(() => {
-      const { data, loading, error } = snapshot.value
-      return {
-        data: (data as any)?.result,
-        sourceMap: (data as any)?.resultSourceMap,
-        loading: 'data' in snapshot ? false : loading,
-        refreshing: loading,
-        error,
-      }
-    })
+    return {
+      data: computed(() => (snapshot.value.data as any)?.result),
+      sourceMap: computed(() => (snapshot.value.data as any)?.resultSourceMap),
+      loading: computed(() =>
+        'data' in snapshot.value ? false : snapshot.value.loading,
+      ),
+      refreshing: computed(() => snapshot.value.loading),
+      error: computed(() => snapshot.value.error),
+    }
   }
 
   const useLiveMode: UseLiveModeHook = () => {
     return useStore($LiveMode)
   }
 
-  // @ts-expect-error -- @TODO fix
   return { useQuery, useLiveMode }
 }

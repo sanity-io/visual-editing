@@ -17,12 +17,30 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./directive": {
+      "types": "./dist/directive.d.ts",
+      "source": "./src/directive/index.ts",
+      "require": "./dist/directive.cjs",
+      "node": {
+        "module": "./dist/directive.js",
+        "import": "./dist/directive.cjs.js"
+      },
+      "import": "./dist/directive.js",
+      "default": "./dist/directive.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "jsx": [
+        "./dist/directive.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist",
     "CHANGELOG.md"
@@ -97,6 +115,7 @@
     "@sanity/groq-store": "workspace:*",
     "@nanostores/vue": "0.10.0",
     "@sanity/client": "^6.7.0",
+    "@sanity/overlays": "workspace:*",
     "@sanity/pkg-utils": "^3.1.1",
     "channels": "workspace:*",
     "typescript": "^5.2.2",
@@ -111,6 +130,7 @@
   },
   "peerDependencies": {
     "@sanity/client": "^6.7.0",
+    "@sanity/overlays": "workspace:*",
     "vue": "^3.3.4"
   },
   "engines": {
