@@ -30,7 +30,7 @@ jobs:
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
       - run: pnpm install --ignore-scripts
-      - run: pnpm build
+      - run: pnpm build --filter=./packages/*
       - run: pnpm artifact
       - uses: actions/upload-artifact@v3
         with:
