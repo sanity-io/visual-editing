@@ -65,7 +65,7 @@ export const createQueryStore = (
   // const $token = atom(token || '')
   if (!resultSourceMap) {
     // Enable source maps if not already enabled
-    client.config({ resultSourceMap: true })
+    client.config({ resultSourceMap: 'withKeyArraySelector' })
   }
 
   const initialLiveMode = {
