@@ -1,0 +1,37 @@
+---
+name: Artifact
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v3
+        with:
+          cache: pnpm
+          node-version: lts/*
+      - run: corepack enable && pnpm --version
+      - name: Authenticate with private NPM package @sanity/sanitype
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
+      - run: pnpm install --ignore-scripts
+      - run: pnpm artifact
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tarballs
+          path: packages/*/artifact/*.tgz

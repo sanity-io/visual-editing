@@ -48,7 +48,7 @@
     "prebuild": "rimraf dist",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build",
+    "preapck": "npm run build",
     "test": "tsc --noEmit",
     "dev": "pkg watch --strict"
   },

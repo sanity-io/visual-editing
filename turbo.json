@@ -13,6 +13,7 @@
       "cache": false
     },
     "lint": {},
+    "artifact": {"dependsOn": ["^build"], "outputs": ["artifact/*.tgz"]},
     "typecheck": {
       "env": ["GITHUB_ACTIONS"],
       "dependsOn": ["^build"]

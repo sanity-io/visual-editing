@@ -30,7 +30,7 @@
     "prebuild": "rimraf dist",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build",
+    "prepack": "npm run build",
     "test": "tsc --noEmit",
     "watch": "pkg watch --strict"
   },

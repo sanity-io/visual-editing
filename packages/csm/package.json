@@ -39,7 +39,7 @@
     "prebuild": "rimraf dist",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build",
+    "prepack": "npm run build",
     "test": "vitest",
     "watch": "pkg watch --strict"
   },
