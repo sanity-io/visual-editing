@@ -61,5 +61,6 @@ export const createQueryStore = (
     return useStore($LiveMode)
   }
 
+  // @ts-expect-error -- @TODO fix
   return { useQuery, useLiveMode }
 }

@@ -171,7 +171,7 @@ export default function ComposerTool(props: {
         title: 'Loader channel unhealthy',
         duration: 1000 * 60 * 60,
       })
-      return () =>
+      return () => {
         toast.push({
           id: 'loader-channel-unhealthy',
           closable: true,
@@ -179,7 +179,9 @@ export default function ComposerTool(props: {
           status: 'success',
           title: 'Loader channel restored',
         })
+      }
     }
+    return
   }, [healthy.loaders, toast])
   useEffect(() => {
     if (!healthy.overlays) {
@@ -191,7 +193,7 @@ export default function ComposerTool(props: {
         title: 'Overlay channel unhealthy',
         duration: 1000 * 60 * 60,
       })
-      return () =>
+      return () => {
         toast.push({
           id: 'overlay-channel-unhealthy',
           closable: true,
@@ -199,7 +201,9 @@ export default function ComposerTool(props: {
           status: 'success',
           title: 'Overlay channel restored',
         })
+      }
     }
+    return
   }, [healthy.overlays, toast])
 
   const handlePreviewPath = useCallback(
@@ -436,6 +440,7 @@ function useChannelHeartbeat(props: {
       const timeout = setTimeout(() => setHealthy(false), HEARTBEAT_INTERVAL)
       return () => clearTimeout(timeout)
     }
+    return
   }, [healthy, lastPong])
   useEffect(() => {
     if (!channel) return

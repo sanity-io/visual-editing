@@ -85,6 +85,7 @@ export const createQueryStore = (
           console.log('useLiveMode disconnected')
         }
       }
+      return
     }, [store.connected])
 
     return store
