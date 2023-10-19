@@ -8,10 +8,10 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const links = [
-  {
-    href: '/projects',
-    title: 'Projects',
-  },
+  // {
+  //   href: '/projects',
+  //   title: 'Projects',
+  // },
   {
     href: '/products',
     title: 'Products',
