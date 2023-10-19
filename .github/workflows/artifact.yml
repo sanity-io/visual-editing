@@ -33,5 +33,5 @@ jobs:
       - run: pnpm artifact
       - uses: actions/upload-artifact@v3
         with:
-          name: tarballs
+          name: visual-editing-packages
           path: packages/*/artifact/*.tgz
