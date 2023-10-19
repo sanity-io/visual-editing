@@ -7,6 +7,7 @@ import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
+import { CustomNavigator } from './composer/CustomNavigator'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -84,6 +85,7 @@ const composerWorkspaces = Object.entries({
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
           devMode,
+          unstable_navigator: CustomNavigator,
         }),
         sharedSettings(),
       ],
