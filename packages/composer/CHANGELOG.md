@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.2.2-pink-lizard.0...composer-v0.2.3-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* **composer:** resolve reference links ([6675ac5](https://github.com/sanity-io/visual-editing/commit/6675ac56ddd2f834702470710d5510ae3a0efd9b))
+
 ## [0.2.2-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.2.1-pink-lizard.0...composer-v0.2.2-pink-lizard.0) (2023-10-19)
 
 

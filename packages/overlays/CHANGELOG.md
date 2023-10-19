@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.1-pink-lizard.0...overlays-v0.1.2-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* **overlays:** calculate rect on element scroll ([70101f8](https://github.com/sanity-io/visual-editing/commit/70101f8aec06f75a9730b3308c27c927ad4fde35))
+
 ## [0.1.1-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.0-pink-lizard.0...overlays-v0.1.1-pink-lizard.0) (2023-10-19)
 
 
