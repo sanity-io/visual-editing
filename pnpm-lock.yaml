@@ -97,7 +97,7 @@ importers:
         version: link:../../packages/overlays
       '@sanity/preview-kit':
         specifier: 3.2.5
-        version: 3.2.5(@sanity/client@6.6.0)(react@18.2.0)
+        version: 3.2.5(@sanity/client@6.7.0)(react@18.2.0)
       '@sanity/ui':
         specifier: ^1.8.2
         version: 1.8.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
@@ -143,7 +143,7 @@ importers:
         version: link:../../packages/overlays
       '@sanity/preview-kit':
         specifier: 3.2.5
-        version: 3.2.5(@sanity/client@6.6.0)(react@18.2.0)
+        version: 3.2.5(@sanity/client@6.7.0)(react@18.2.0)
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -336,7 +336,7 @@ importers:
         version: link:../../packages/overlays
       '@sanity/preview-kit':
         specifier: ^3.2.5
-        version: 3.2.5(@sanity/client@6.6.0)(react@18.2.0)
+        version: 3.2.5(@sanity/client@6.7.0)(react@18.2.0)
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -542,14 +542,14 @@ importers:
         version: 7.8.1
     devDependencies:
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)
       '@sanity/preview-kit':
         specifier: ^3.2.5
-        version: 3.2.5(@sanity/client@6.6.0)(react@18.2.0)
+        version: 3.2.5(@sanity/client@6.7.0)(react@18.2.0)
       channels:
         specifier: workspace:*
         version: link:../channels
@@ -581,8 +581,8 @@ importers:
         specifier: 0.2.4
         version: 0.2.4(nanostores@0.9.4)
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
@@ -627,8 +627,8 @@ importers:
         version: 0.1.0
     devDependencies:
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)
@@ -666,8 +666,8 @@ importers:
   packages/groq-store:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)
@@ -702,8 +702,8 @@ importers:
   packages/helpers:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.8.0
         version: 6.8.0(@typescript-eslint/parser@6.8.0)(eslint@8.51.0)(typescript@5.2.2)
@@ -735,8 +735,8 @@ importers:
         specifier: 0.10.0
         version: 0.10.0(nanostores@0.9.4)(vue@3.3.4)
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
@@ -802,8 +802,8 @@ importers:
         version: 0.19.0
     devDependencies:
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)
@@ -874,8 +874,8 @@ importers:
   packages/react-loader:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
@@ -928,8 +928,8 @@ importers:
   packages/svelte-loader:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
@@ -5079,8 +5079,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/client@6.6.0:
-    resolution: {integrity: sha512-AZNtl1/BSRNOsjy5k/1q1feIHPuExugWsG0ZuNj4/etOddFMaXfUvCHHuv89pHb6l/3CWv+UPysvMNU0+qS2Ig==}
+  /@sanity/client@6.7.0:
+    resolution: {integrity: sha512-nQGIuXXhdtP5FDsdBjuPRpeV6jOHU6Eq5xr52KyUUi29SgC5h5XUzRIu7d1sF8N+ONqTngYueFuB8JDsdSo1Ng==}
     engines: {node: '>=14.18'}
     dependencies:
       '@sanity/eventsource': 5.0.1
@@ -5179,7 +5179,7 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@sanity/client': 6.6.0
+      '@sanity/client': 6.7.0
       '@sanity/import': 3.18.2-pink-lizard.21
       get-it: 8.4.3
       meow: 9.0.0
@@ -5322,7 +5322,7 @@ packages:
       - react-dom
       - supports-color
 
-  /@sanity/preview-kit@3.2.5(@sanity/client@6.6.0)(react@18.2.0):
+  /@sanity/preview-kit@3.2.5(@sanity/client@6.7.0)(react@18.2.0):
     resolution: {integrity: sha512-7czWlFoVRrEhKVRcuR6pYiRkk0AxC7PHLpTd0iq9MkzQ38EQdvmWT0Ewgf5mXD7rFINUb8Dy6nF/uMSqZUJ98A==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -5332,7 +5332,7 @@ packages:
       react:
         optional: true
     dependencies:
-      '@sanity/client': 6.6.0
+      '@sanity/client': 6.7.0
       '@sanity/eventsource': 5.0.1
       '@sanity/groq-store': 4.1.3
       '@vercel/stega': 0.1.0
@@ -5362,7 +5362,7 @@ packages:
   /@sanity/types@3.18.2-pink-lizard.21:
     resolution: {integrity: sha512-PriZhBY/IkcIS/catOEisXhJ9kH8EArBb1a5w7zkDyYQzW7tBkeVJLlXMiD22By97iczb0CI3/fL+/htIYdlSg==}
     dependencies:
-      '@sanity/client': 6.6.0
+      '@sanity/client': 6.7.0
       '@types/react': 18.2.29
     transitivePeerDependencies:
       - supports-color
@@ -16250,7 +16250,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.18.2-pink-lizard.21
       '@sanity/cli': 3.18.2-pink-lizard.21
-      '@sanity/client': 6.6.0
+      '@sanity/client': 6.7.0
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.18.2-pink-lizard.21
       '@sanity/diff-match-patch': 3.1.1
