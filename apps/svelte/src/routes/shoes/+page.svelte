@@ -2,7 +2,7 @@
 import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 import {createClient} from '@sanity/client'
 import {createQueryStore} from '@sanity/svelte-loader'
-import { shoesList, type ShoesListResult } from 'apps-common/queries'
+import { shoesList } from 'apps-common/queries'
 
 const { projectId, dataset, workspace } = workspaces['svelte']
 const studioUrl = `${baseUrl}/${workspace}`
