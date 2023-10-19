@@ -84,13 +84,7 @@ export const PreviewFrame = forwardRef<
 
   const setDesktopMode = useCallback(() => setMode('desktop'), [setMode])
   const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
-
-  // @TODO handle targetOrigin, or another way of asking for the current location when CORS doesn't allow reading `location.pathname` directly
-  // const onIFrameLoad = useCallback(() => {
-  //   if (typeof ref !== 'function' && ref?.current?.contentWindow) {
-  //     onPathChange(ref.current.contentWindow.location.pathname)
-  //   }
-  // }, [onPathChange, ref])
+  const [refreshing, setRefreshing] = useState(false)
 
   const previewLocationOrigin = useMemo(() => {
     const { origin: parsedTargetOrigin } = new URL(targetOrigin, location.href)
@@ -101,6 +95,22 @@ export const PreviewFrame = forwardRef<
     return previewOrigin === location.origin ? undefined : previewOrigin
   }, [params.preview, targetOrigin])
 
+  const handleRefresh = useCallback(() => {
+    if (typeof ref === 'function' || !ref?.current) {
+      return
+    }
+
+    // Funky way to reload an iframe without CORS issues
+    // eslint-disable-next-line no-self-assign
+    // ref.current.src = ref.current.src
+    ref.current.src = `${previewLocationOrigin}${params.preview || '/'}`
+
+    setRefreshing(true)
+  }, [params.preview, previewLocationOrigin, ref])
+
+  const onIFrameLoad = useCallback(() => {
+    setRefreshing(false)
+  }, [])
   return (
     <>
       <Card flex="none" padding={2} shadow={1} style={{ position: 'relative' }}>
@@ -125,7 +135,11 @@ export const PreviewFrame = forwardRef<
             </Tooltip>
             {devMode && (
               <Tooltip
-                content={<Text size={1}>Refresh preview</Text>}
+                content={
+                  <Text size={1}>
+                    {refreshing ? 'Refreshing…' : 'Refresh preview'}
+                  </Text>
+                }
                 fallbackPlacements={['bottom-start']}
                 padding={2}
                 placement="bottom"
@@ -136,8 +150,8 @@ export const PreviewFrame = forwardRef<
                   fontSize={1}
                   icon={RefreshIcon}
                   mode="bleed"
-                  // todo
-                  // onClick={handleRefresh}
+                  loading={refreshing}
+                  onClick={handleRefresh}
                   padding={2}
                 />
               </Tooltip>
@@ -241,8 +255,9 @@ export const PreviewFrame = forwardRef<
             <IFrame
               ref={ref}
               src={initialUrl}
+              // src={`${previewLocationOrigin}${params.preview || '/'}`}
               style={{ pointerEvents }}
-              // onLoad={onIFrameLoad}
+              onLoad={onIFrameLoad}
             />
           </IFrameContainerCard>
         </Flex>

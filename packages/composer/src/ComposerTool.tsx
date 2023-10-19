@@ -3,6 +3,7 @@ import { Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, Connection, createChannel } from 'channels'
 import {
   ReactElement,
+  startTransition,
   useCallback,
   useEffect,
   useMemo,
@@ -74,14 +75,14 @@ export default function ComposerTool(props: {
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
-  const { onConnect, onDisconnect, connected, handlePongEvent, lastPong } =
+  const { onConnect, onDisconnect, handlePongEvent, lastPong, connected } =
     useChannelConnectionsStatus()
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
 
     if (!iframe) return
 
-    const channel = createChannel<VisualEditingMsg>({
+    const nextChannel = createChannel<VisualEditingMsg>({
       id: 'composer' satisfies VisualEditingConnectionIds,
       onConnect,
       onDisconnect,
@@ -127,13 +128,17 @@ export default function ComposerTool(props: {
         }
       },
     })
-    setChannel(channel)
+    setChannel(nextChannel)
 
     return () => {
-      channel.disconnect()
+      nextChannel.disconnect()
       setChannel(undefined)
     }
   }, [handlePongEvent, onConnect, onDisconnect, setParams, targetOrigin])
+  // const reconnectChannel = useCallback(
+  //   () => startTransition(() => setChannel(undefined)),
+  //   [],
+  // )
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments
@@ -147,28 +152,46 @@ export default function ComposerTool(props: {
     [setParams],
   )
 
-  const healthy = useChannelsHeartbeat({ channel, connected, lastPong })
+  const healthy = useChannelsHeartbeat({ channel, lastPong, connected })
   const toast = useToast()
   useEffect(() => {
     if (!healthy.loaders) {
       toast.push({
+        id: 'loader-channel-unhealthy',
         closable: true,
         description: `The connection to the preview iframe stopped responding. This means further draft changes won't be reflected in the preview.`,
         status: 'error',
         title: 'Loader channel unhealthy',
-        duration: Number.MAX_SAFE_INTEGER,
+        duration: 1000 * 60 * 60,
       })
+      return () =>
+        toast.push({
+          id: 'loader-channel-unhealthy',
+          closable: true,
+          description: `The connection to the preview iframe is working again.`,
+          status: 'success',
+          title: 'Loader channel restored',
+        })
     }
   }, [healthy.loaders, toast])
   useEffect(() => {
     if (!healthy.overlays) {
       toast.push({
+        id: 'overlay-channel-unhealthy',
         closable: true,
         description: `The connection to the preview iframe stopped responding. This means overlay's are unable to route clicks and focus path changes.`,
         status: 'error',
         title: 'Overlay channel unhealthy',
-        duration: Number.MAX_SAFE_INTEGER,
+        duration: 1000 * 60 * 60,
       })
+      return () =>
+        toast.push({
+          id: 'overlay-channel-unhealthy',
+          closable: true,
+          description: `The connection to the preview iframe is working again.`,
+          status: 'success',
+          title: 'Overlay channel restored',
+        })
     }
   }, [healthy.overlays, toast])
 
@@ -351,14 +374,14 @@ function useChannelsHeartbeat(props: {
   const loaders = useChannelHeartbeat({
     channel,
     pingType: 'loader/ping',
-    connected: connected.loaders,
     lastPong: lastPong.loaders,
+    connected: connected.loaders,
   })
   const overlays = useChannelHeartbeat({
     channel,
     pingType: 'overlay/ping',
-    connected: connected.overlays,
     lastPong: lastPong.overlays,
+    connected: connected.overlays,
   })
 
   return useMemo(
@@ -377,7 +400,7 @@ function useChannelHeartbeat(props: {
   connected: boolean
   lastPong: number
 }) {
-  const { channel, pingType, connected, lastPong } = props
+  const { channel, pingType, lastPong } = props
 
   const [healthy, setHealthy] = useState(true)
 
@@ -396,7 +419,7 @@ function useChannelHeartbeat(props: {
     }
   }, [healthy, lastPong])
   useEffect(() => {
-    if (!channel || !connected) return
+    if (!channel) return
     // We are connected, but haven't received the first pong yet
     if (!lastPong) {
       channel.send(pingType, undefined)
@@ -411,7 +434,7 @@ function useChannelHeartbeat(props: {
       return () => clearTimeout(timeout)
     }
     return
-  }, [channel, connected, lastPong, pingType])
+  }, [channel, lastPong, pingType])
 
   return healthy
 }

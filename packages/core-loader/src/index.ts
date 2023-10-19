@@ -8,6 +8,7 @@ import type {
 //  import type { ChannelEventHandler, ChannelMsg, ChannelReturns } from 'channels'
 import { ChannelReturns, createChannel } from 'channels'
 import {
+  atom,
   computed,
   listenKeys,
   map,
@@ -15,7 +16,6 @@ import {
   onMount,
   onStart,
   onStop,
-  atom,
 } from 'nanostores'
 import {
   getQueryCacheKey,
