@@ -40,7 +40,7 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "prepack": "npm run build",
-    "artifact": "pnpm pack --pack-destination artifact && cp CHANGELOG.md artifact/CHANGELOG.md",
+    "artifact": "pnpm pack --pack-destination artifact && cp CHANGELOG.md artifact/CHANGELOG.md && cp RESTRICTED-README.md artifact/README.md",
     "test": "vitest",
     "watch": "pkg watch --strict"
   },
