@@ -1,10 +1,12 @@
 import type { ClientPerspective, QueryParams } from '@sanity/client'
-import { LiveQueryProvider, useLiveQuery } from '@sanity/preview-kit'
 import { ChannelReturns } from 'channels'
 import { useEffect, useMemo } from 'react'
 import { useClient } from 'sanity'
 import { VisualEditingMsg } from 'visual-editing-helpers'
+
 // import { createClient } from '@sanity/preview-kit/client'
+import LiveStoreProvider from './LiveStoreProvider'
+import { useLiveQuery } from './useLiveQuery'
 
 export default function LoaderQueries(props: {
   channel: ChannelReturns<VisualEditingMsg> | undefined
@@ -21,15 +23,16 @@ export default function LoaderQueries(props: {
     [perspective, studioClient],
   )
 
-  useEffect(() => {
-    console.log({ clientConfig, liveQueries, perspective, channel })
-  }, [channel, clientConfig, liveQueries, perspective])
-
   return (
-    <LiveQueryProvider client={client} turboSourceMap logger={console}>
+    <LiveStoreProvider
+      client={client}
+      turboSourceMap
+      logger={console}
+      perspective={perspective}
+    >
       {Object.entries(liveQueries).map(([key, { query, params }]) => (
         <QuerySubscription
-          key={key}
+          key={`${key}${perspective}`}
           projectId={clientConfig.projectId!}
           dataset={clientConfig.dataset!}
           query={query}
@@ -37,7 +40,7 @@ export default function LoaderQueries(props: {
           channel={channel}
         />
       ))}
-    </LiveQueryProvider>
+    </LiveStoreProvider>
   )
 }
 
@@ -52,10 +55,11 @@ function QuerySubscription(props: {
 }) {
   const { projectId, dataset, query, params, channel } = props
 
-  const [result, loading] = useLiveQuery(initialData, query, params)
+  const data = useLiveQuery(initialData, query, params)
+  const { result, resultSourceMap } = data || ({} as any)
   const shouldSend = useMemo(
-    () => channel && !loading && initialData !== result,
-    [channel, loading, result],
+    () => channel && initialData !== result,
+    [channel, result],
   )
 
   useEffect(() => {
@@ -71,12 +75,23 @@ function QuerySubscription(props: {
       channel!.send('loader/query-change', {
         projectId,
         dataset,
+        // perspective,
         query,
         params,
         result,
+        resultSourceMap,
       })
     }
-  }, [channel, dataset, params, projectId, query, result, shouldSend])
+  }, [
+    channel,
+    dataset,
+    params,
+    projectId,
+    query,
+    result,
+    shouldSend,
+    resultSourceMap,
+  ])
 
   return null
 }

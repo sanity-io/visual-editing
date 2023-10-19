@@ -23,7 +23,7 @@ import {
 import { Resizable } from './components/Resizable'
 import { ComposerProvider } from './ComposerProvider'
 import { ContentEditor } from './editor/ContentEditor'
-import LoaderQueries from './LoaderQueries'
+import LoaderQueries from './loader/LoaderQueries'
 import { PreviewFrame } from './preview/PreviewFrame'
 import { ComposerPluginOptions, DeskDocumentPaneParams } from './types'
 import { useComposerParams } from './useComposerParams'
