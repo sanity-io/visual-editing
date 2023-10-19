@@ -57,16 +57,16 @@ export interface QueryStore {
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): QueryStore => {
-  const { client: _client, studioUrl } = options
-  const client = _client.withConfig({
-    resultSourceMap: true,
-  })
-
-  const { projectId, dataset } = client.config()
+  const { client, studioUrl } = options
+  const { projectId, dataset, resultSourceMap } = client.config()
   if (!projectId) throw new Error('Missing projectId')
   if (!dataset) throw new Error('Missing dataset')
   // const $perspective = atom(client.config().perspective || 'previewDrafts')
   // const $token = atom(token || '')
+  if (!resultSourceMap) {
+    // Enable source maps if not already enabled
+    client.config({ resultSourceMap: true })
+  }
 
   const initialLiveMode = {
     enabled: false,
