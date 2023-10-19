@@ -18,7 +18,11 @@ export default function LoaderQueries(props: {
   const studioClient = useClient({ apiVersion: '2023-10-16' })
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])
   const client = useMemo(
-    () => studioClient.withConfig({ perspective, resultSourceMap: true }),
+    () =>
+      studioClient.withConfig({
+        perspective,
+        resultSourceMap: 'withKeyArraySelector',
+      }),
     [perspective, studioClient],
   )
 
