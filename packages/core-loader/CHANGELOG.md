@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.3-pink-lizard.0...core-loader-v0.1.4-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* add barebones svelte loader ([d4b9409](https://github.com/sanity-io/visual-editing/commit/d4b9409051823627ffe7aa0693fefdca666bd0d7))
+
 ## [0.1.3-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.2-pink-lizard.0...core-loader-v0.1.3-pink-lizard.0) (2023-10-19)
 
 
