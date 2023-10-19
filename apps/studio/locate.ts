@@ -1,5 +1,8 @@
-import { DocumentLocationResolver } from '@sanity/composer'
-import { Observable, map } from 'rxjs'
+import {
+  DocumentLocationResolver,
+  DocumentLocationsState,
+} from '@sanity/composer'
+import { Observable, combineLatest, map, switchMap } from 'rxjs'
 
 export const locate: DocumentLocationResolver = (params, context) => {
   const { documentStore } = context
@@ -31,6 +34,76 @@ export const locate: DocumentLocationResolver = (params, context) => {
             },
           ],
         }
+      }),
+    )
+  }
+
+  if (params.type === 'siteSettings') {
+    return {
+      message: 'This document is used on all pages',
+      locations: [
+        {
+          title: 'Home',
+          href: '/',
+        },
+      ],
+    } satisfies DocumentLocationsState
+  }
+
+  if (params.type === 'product') {
+    const doc$ = context.documentStore.listenQuery(
+      `*[_id==$id]{slug,title}[0]`,
+      params,
+      { perspective: 'previewDrafts' },
+    ) as Observable<{
+      slug: { current: string }
+      title: string | null
+    } | null>
+
+    return doc$.pipe(
+      map((doc) => {
+        return {
+          locations: [
+            {
+              title: doc?.title || 'Untitled',
+              href: `/product/${doc?.slug?.current}`,
+            },
+            {
+              title: 'Products',
+              href: '/products',
+            },
+          ],
+          // message: 'This document is used on multiple pages',
+        } satisfies DocumentLocationsState
+      }),
+    )
+  }
+
+  if (params.type === 'project') {
+    const doc$ = context.documentStore.listenQuery(
+      `*[_id==$id]{slug,title}[0]`,
+      params,
+      { perspective: 'previewDrafts' },
+    ) as Observable<{
+      slug: { current: string }
+      title: string | null
+    } | null>
+
+    return doc$.pipe(
+      map((doc) => {
+        return {
+          locations: [
+            {
+              title: doc?.title || 'Untitled',
+              href: `/product/${doc?.slug?.current}`,
+            },
+            {
+              title: 'Projects',
+              href: '/projects',
+            },
+          ],
+          // message: 'This document is used on multiple pages',
+        } satisfies DocumentLocationsState
       }),
     )
   }
