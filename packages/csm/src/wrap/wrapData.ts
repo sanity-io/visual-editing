@@ -7,6 +7,7 @@ import { parseJsonPath } from '../legacy/jsonpath'
 import { resolveMapping } from '../legacy/resolveMapping'
 import { simplifyPath } from '../legacy/simplifyPath'
 import { SANITY_KEYS } from './constants'
+import { getPublishedId } from './getPublishedId'
 import { SanityKey, SanityNodeContext, SourceNode, WrappedValue } from './types'
 
 export function wrapData<T>(
@@ -75,7 +76,7 @@ function getValueSource(
     return {
       baseUrl: context.baseUrl,
       dataset: context.dataset,
-      id: sourceDoc._id,
+      id: getPublishedId(sourceDoc._id),
       path: simplifyPath(parseJsonPath(sourcePath)),
       projectId: context.projectId,
       tool: context.tool,
