@@ -250,9 +250,6 @@ importers:
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
-      '@sanity/preview-kit':
-        specifier: 3.2.5
-        version: 3.2.5(@sanity/client@6.6.0)(react@18.2.0)
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -277,9 +274,6 @@ importers:
       autoprefixer:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.31)
-      channels:
-        specifier: workspace:*
-        version: link:../../packages/channels
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
@@ -4271,6 +4265,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -13296,6 +13291,10 @@ packages:
   /nanostores@0.9.4:
     resolution: {integrity: sha512-BVFzKt6K5P8tYQLL7MItqcev7jpspA5pIjv+Ck3k6wBnUlwCJcpkGTIinj4APvx8SvdP9fXDGoMRCTY6DO/9QA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:

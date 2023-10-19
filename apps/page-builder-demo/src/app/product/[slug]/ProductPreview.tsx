@@ -1,8 +1,9 @@
 'use client'
 
+import groq from 'groq'
+
 import { SITE_SETTINGS_QUERY } from '@/app/queries'
 import { useQuery } from '@/sanity'
-import groq from 'groq'
 import { ProductPage, ProductPageData } from './ProductPage'
 
 const PAGE_QUERY = groq`{
