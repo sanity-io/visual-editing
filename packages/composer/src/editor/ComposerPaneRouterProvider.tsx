@@ -34,24 +34,16 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
   props: ReferenceChildLinkProps,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    documentId,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    documentType,
-    ...restProps
-  } = props
+  const { documentId, documentType, ...restProps } = props
 
-  return <a {...restProps} ref={ref} />
-
-  // return (
-  //   <StateLink
-  //     {...restProps}
-  //     ref={ref}
-  //     state={{ path: documentId, type: documentType }}
-  //     title={undefined}
-  //   />
-  // )
+  return (
+    <StateLink
+      {...restProps}
+      ref={ref}
+      state={{ path: documentId, type: documentType }}
+      title={undefined}
+    />
+  )
 })
 
 export function ComposerPaneRouterProvider(
