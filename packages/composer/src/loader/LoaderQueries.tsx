@@ -62,6 +62,7 @@ function QuerySubscription(props: {
   )
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
     console.log('QuerySubscription', {
       shouldSend,
       projectId,

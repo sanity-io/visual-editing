@@ -3,7 +3,6 @@ import { Card, Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, Connection, createChannel } from 'channels'
 import {
   ReactElement,
-  startTransition,
   useCallback,
   useEffect,
   useMemo,

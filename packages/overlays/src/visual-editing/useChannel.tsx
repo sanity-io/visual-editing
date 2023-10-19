@@ -17,10 +17,12 @@ export function useChannel<T extends ChannelMsg>(
     const channel = createChannel<T>({
       id: 'overlays',
       onConnect: (connection) => {
+        // eslint-disable-next-line no-console
         console.warn('overlays onConnect', { connection })
         startTransition(() => setConnected(true))
       },
       onDisconnect: (connection) => {
+        // eslint-disable-next-line no-console
         console.error('overlays onDisconnect', { connection })
         startTransition(() => setConnected(false))
       },

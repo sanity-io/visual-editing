@@ -204,12 +204,14 @@ export const createQueryStore = (
     channel = createChannel<VisualEditingMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
       onConnect: (connection) => {
+        // eslint-disable-next-line no-console
         console.warn('loaders onConnect', { connection })
         if ($LiveMode.get().enabled) {
           $LiveMode.setKey('connected', true)
         }
       },
       onDisconnect: (connection) => {
+        // eslint-disable-next-line no-console
         console.error('loaders onDisconnect', { connection })
         $LiveMode.setKey('connected', false)
       },
@@ -237,6 +239,7 @@ export const createQueryStore = (
           })
         }
         if (type === 'loader/ping') {
+          // eslint-disable-next-line no-console
           console.debug('loader/ping')
           $shouldPong.set(true)
         }
@@ -244,6 +247,7 @@ export const createQueryStore = (
     })
     const unlistenPong = $shouldPong.subscribe((shouldPong) => {
       if (channel && shouldPong) {
+        // eslint-disable-next-line no-console
         console.debug('loader/pong')
         channel.send('loader/pong', undefined)
         $shouldPong.set(false)
@@ -251,6 +255,7 @@ export const createQueryStore = (
     })
 
     const unlistenConnection = listenKeys($LiveMode, ['connected'], () => {
+      // eslint-disable-next-line no-console
       console.warn(
         "listenKeys($LiveMode, ['connected'] invalidateKeys",
         JSON.stringify([...cache]),

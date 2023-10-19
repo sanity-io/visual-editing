@@ -71,9 +71,11 @@ export const createQueryStore = (
     )
 
     useEffect(() => {
+      // eslint-disable-next-line no-console
       console.log('useLiveMode enabled', store.enabled)
     }, [store.enabled])
     useEffect(() => {
+      // eslint-disable-next-line no-console
       console.log('useLiveMode connected', store.connected)
     }, [store.connected])
 
