@@ -9,7 +9,5 @@ export function getClient() {
     dataset,
     useCdn: false,
     apiVersion,
-    resultSourceMap: true,
-    // resultSourceMap: 'withKeyArraySelector',
   })
 }

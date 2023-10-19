@@ -17,7 +17,7 @@ const { useQuery: _useQuery, useLiveMode } = createQueryStore({
 const context: SanityNodeContext = {
   projectId: workspace.projectId,
   dataset: workspace.dataset,
-  baseUrl: `${studioUrl}/${workspace.workspace}/${workspace.tool}`,
+  baseUrl: `${studioUrl}/${workspace.workspace}`,
 }
 
 export function useQuery<T>(query: string, params?: QueryParams) {
