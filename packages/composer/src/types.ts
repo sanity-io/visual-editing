@@ -29,7 +29,7 @@ export interface ComposerPluginOptions {
   title?: string
   locate?: DocumentLocationResolver
   previewUrl: string
-  components: {
+  components?: {
     unstable_navigator?: ComponentType
   }
 }
