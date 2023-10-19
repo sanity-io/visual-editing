@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.3-pink-lizard.0...groq-store-v0.0.4-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* include `CHANGELOG.md` files in private packages ([9967f1c](https://github.com/sanity-io/visual-editing/commit/9967f1c8edca69737842e1807cf8f9e725fbcd07))
+
 ## [0.0.3-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.2-pink-lizard.0...groq-store-v0.0.3-pink-lizard.0) (2023-10-19)
 
 
