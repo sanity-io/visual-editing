@@ -45,10 +45,11 @@
     "dist"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist artifact",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "preapck": "npm run build",
+    "artifact": "pnpm pack --pack-destination artifact",
     "test": "tsc --noEmit",
     "dev": "pkg watch --strict"
   },
