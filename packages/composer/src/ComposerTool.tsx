@@ -37,6 +37,7 @@ export default function ComposerTool(props: {
   tool: Tool<ComposerPluginOptions>
 }): ReactElement {
   const { previewUrl = '/', components } = props.tool.options ?? {}
+  const { unstable_navigator: UnstableNavigator } = components || {}
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode
@@ -74,6 +75,12 @@ export default function ComposerTool(props: {
   })
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
+  const [navigatorEnabled, setNavigatorEnabled] = useState(!!UnstableNavigator)
+  const toggleNavigator = useMemo(
+    () =>
+      UnstableNavigator && (() => setNavigatorEnabled((enabled) => !enabled)),
+    [UnstableNavigator, setNavigatorEnabled],
+  )
 
   const { onConnect, onDisconnect, handlePongEvent, lastPong, connected } =
     useChannelConnectionsStatus()
@@ -276,9 +283,9 @@ export default function ComposerTool(props: {
         <ComposerNavigateProvider setParams={setParams}>
           <ComposerParamsProvider params={params}>
             <Container height="fill">
-              {components?.unstable_navigator && (
+              {UnstableNavigator && navigatorEnabled && (
                 <Card borderRight flex="none">
-                  <components.unstable_navigator />
+                  <UnstableNavigator />
                 </Card>
               )}
 
@@ -289,16 +296,18 @@ export default function ComposerTool(props: {
                 style={{ minWidth }}
               >
                 <PreviewFrame
-                  ref={iframeRef}
-                  targetOrigin={targetOrigin}
                   initialUrl={initialPreviewUrl.current}
+                  navigatorEnabled={navigatorEnabled}
                   onPathChange={handlePreviewPath}
-                  params={params}
-                  pointerEvents={resizing ? 'none' : undefined}
-                  toggleOverlay={toggleOverlay}
                   overlayEnabled={overlayEnabled}
+                  params={params}
                   perspective={perspective}
+                  pointerEvents={resizing ? 'none' : undefined}
+                  ref={iframeRef}
                   setPerspective={setPerspective}
+                  targetOrigin={targetOrigin}
+                  toggleNavigator={toggleNavigator}
+                  toggleOverlay={toggleOverlay}
                 />
               </Flex>
               <Resizable

@@ -4,6 +4,7 @@ import {
   DesktopIcon,
   EditIcon,
   MobileDeviceIcon,
+  PanelLeftIcon,
   RefreshIcon,
 } from '@sanity/icons'
 import {
@@ -57,24 +58,28 @@ export const PreviewFrame = forwardRef<
   {
     initialUrl: string
     targetOrigin: string
+    navigatorEnabled: boolean
     onPathChange: (nextPath: string) => void
     overlayEnabled: boolean
     params: ComposerParams
     perspective: ClientPerspective
     pointerEvents?: 'none'
     setPerspective: Dispatch<SetStateAction<ClientPerspective>>
+    toggleNavigator?: () => void
     toggleOverlay: () => void
   }
 >(function PreviewFrame(props, ref) {
   const {
     initialUrl,
     targetOrigin,
+    navigatorEnabled,
     onPathChange,
     overlayEnabled,
     params,
     perspective,
     pointerEvents,
     setPerspective,
+    toggleNavigator,
     toggleOverlay,
   } = props
 
@@ -116,8 +121,27 @@ export const PreviewFrame = forwardRef<
       <Card flex="none" padding={2} shadow={1} style={{ position: 'relative' }}>
         <Flex align="center" gap={1} style={{ minHeight: 0 }}>
           <Flex align="center" flex="none" gap={1}>
+            {toggleNavigator && (
+              <Tooltip
+                content={<Text size={1}>Toggle navigator</Text>}
+                fallbackPlacements={['bottom-start']}
+                padding={2}
+                placement="bottom"
+                portal
+              >
+                <Button
+                  aria-label="Toggle navigator"
+                  fontSize={1}
+                  icon={PanelLeftIcon}
+                  mode="bleed"
+                  onClick={toggleNavigator}
+                  padding={2}
+                  selected={navigatorEnabled}
+                />
+              </Tooltip>
+            )}
             <Tooltip
-              content={<Text size={1}>Toogle edit mode</Text>}
+              content={<Text size={1}>Toggle edit mode</Text>}
               fallbackPlacements={['bottom-start']}
               padding={2}
               placement="bottom"
