@@ -169,10 +169,13 @@ test('wrap a data structure with source maps', () => {
     _id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
     title: {
       value: 'Nike Pegasus 39 Shield',
+      $$type$$: 'sanity',
       source: {
         baseUrl: 'http://localhost:3333',
         dataset: 'test',
         projectId: 'test',
+        tool: undefined,
+        workspace: undefined,
         id: '0e6fa235-3bd5-41cc-9f25-53dc0a5ff7d2',
         type: 'shoe',
         path: 'title',
