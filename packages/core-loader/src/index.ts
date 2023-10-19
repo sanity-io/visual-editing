@@ -24,6 +24,8 @@ import {
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
 
+export type { FetcherStore } from '@nanostores/query'
+
 export interface CreateQueryStoreOptions {
   client: SanityClient
   studioUrl: string

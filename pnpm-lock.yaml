@@ -455,12 +455,18 @@ importers:
       '@neoconfetti/svelte':
         specifier: ^1.0.0
         version: 1.0.0
+      '@sanity/client':
+        specifier: ^6.7.0
+        version: 6.7.0
       '@sanity/composer':
         specifier: workspace:*
         version: link:../../packages/composer
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@sanity/svelte-loader':
+        specifier: workspace:*
+        version: link:../../packages/svelte-loader
       '@sveltejs/adapter-auto':
         specifier: ^2.1.0
         version: 2.1.0(@sveltejs/kit@1.26.0)
