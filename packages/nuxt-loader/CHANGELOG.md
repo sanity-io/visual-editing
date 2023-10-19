@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.1.2-pink-lizard.0...nuxt-loader-v0.2.0-pink-lizard.0) (2023-10-19)
+
+
+### Features
+
+* **nuxt:** shoes ([24ce492](https://github.com/sanity-io/visual-editing/commit/24ce492e57383b91881ffc03338f95fcd42e0d35))
+
 ## [0.1.2-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.1.1-pink-lizard.0...nuxt-loader-v0.1.2-pink-lizard.0) (2023-10-19)
 
 

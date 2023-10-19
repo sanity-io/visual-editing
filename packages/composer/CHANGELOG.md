@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.2.3-pink-lizard.0...composer-v0.3.0-pink-lizard.0) (2023-10-19)
+
+
+### Features
+
+* **composer:** meta banner ([cbd779f](https://github.com/sanity-io/visual-editing/commit/cbd779f1f13704c5c70998833d2b2d00b378223d))
+
 ## [0.2.3-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.2.2-pink-lizard.0...composer-v0.2.3-pink-lizard.0) (2023-10-19)
 
 
