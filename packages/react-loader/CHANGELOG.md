@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.0-pink-lizard.0...react-loader-v0.1.1-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* replace `useSyncExternalStore` with `useEffect` ([c680240](https://github.com/sanity-io/visual-editing/commit/c680240a7b927c123a487a05aabd900f0e36b1c3))
+
 ## [0.1.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.0.1-pink-lizard.0...react-loader-v0.1.0-pink-lizard.0) (2023-10-19)
 
 

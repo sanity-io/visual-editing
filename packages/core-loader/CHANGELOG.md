@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.0-pink-lizard.0...core-loader-v0.1.1-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* allow setting `resultSourceMap` to other options ([0af005f](https://github.com/sanity-io/visual-editing/commit/0af005fdac8693e2e893de80f7f761b13cf068c3))
+
 ## [0.1.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.0.1-pink-lizard.0...core-loader-v0.1.0-pink-lizard.0) (2023-10-19)
 
 
