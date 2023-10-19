@@ -50,11 +50,8 @@ function getValueSource(
   sourceMap: ContentSourceMap,
   path: PathSegment[],
 ): SanityNode | undefined {
-  const [
-    mapping,
-    // matchedPath,
-    // pathSuffix,
-  ] = resolveMapping(path, sourceMap, context.logger) || []
+  const [mapping, matchedPath] =
+    resolveMapping(path, sourceMap, context.logger) || []
 
   if (!mapping) {
     // console.warn('no mapping for path', {path, sourceMap})
@@ -73,11 +70,19 @@ function getValueSource(
   const sourcePath = sourceMap.paths[mapping.source.path]
 
   if (sourceDoc && sourcePath) {
+    let p = simplifyPath(parseJsonPath(sourcePath))
+
+    if (!p && matchedPath) {
+      const m = parseJsonPath(matchedPath)
+
+      p = simplifyPath(path.slice(m.length))
+    }
+
     return {
       baseUrl: context.baseUrl,
       dataset: context.dataset,
       id: getPublishedId(sourceDoc._id),
-      path: simplifyPath(parseJsonPath(sourcePath)),
+      path: p,
       projectId: context.projectId,
       tool: context.tool,
       type: sourceDoc._type,
