@@ -100,7 +100,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
   useEffect(() => {
     if (logger) {
       logger.log(
-        `[@sanity/preview-kit]: With the current configuration you can expect that: ${report}`,
+        `[@sanity/composer]: With the current configuration you can expect that: ${report}`,
       )
     }
   }, [logger, report])

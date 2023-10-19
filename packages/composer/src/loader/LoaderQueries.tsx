@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react'
 import { useClient } from 'sanity'
 import { VisualEditingMsg } from 'visual-editing-helpers'
 
-// import { createClient } from '@sanity/preview-kit/client'
 import LiveStoreProvider from './LiveStoreProvider'
 import { useLiveQuery } from './useLiveQuery'
 
