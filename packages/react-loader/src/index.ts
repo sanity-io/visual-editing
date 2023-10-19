@@ -4,7 +4,13 @@ import {
   type CreateQueryStoreOptions,
   type LiveModeState,
 } from '@sanity/core-loader'
-import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 
 export type * from '@sanity/core-loader'
 
@@ -45,15 +51,15 @@ export const createQueryStore = (
   const DEFAULT_PARAMS = {}
   const useQuery: UseQueryHook = (query, params = DEFAULT_PARAMS) => {
     const $params = useMemo(() => JSON.stringify(params), [params])
-    const $fetch = useMemo(
-      () => createFetcherStore([query, $params]),
-      [query, $params],
-    )
-    const snapshot = useSyncExternalStore(
-      useCallback((onStoreChange) => $fetch.listen(onStoreChange), [$fetch]),
-      () => $fetch.get(),
-      () => initialFetch as any,
-    )
+    const [snapshot, setSnapshot] = useState(() => initialFetch)
+    useEffect(() => {
+      const $fetch = createFetcherStore([query, $params])
+      const unlisten = $fetch.listen((snapshot) => {
+        setSnapshot(snapshot)
+      })
+      return () => unlisten()
+    }, [$params, query])
+    // @ts-expect-error -- @TODO fix
     const { data, loading, error } = snapshot
     return {
       data: (data as any)?.result,
@@ -71,12 +77,14 @@ export const createQueryStore = (
     )
 
     useEffect(() => {
-      // eslint-disable-next-line no-console
-      console.log('useLiveMode enabled', store.enabled)
-    }, [store.enabled])
-    useEffect(() => {
-      // eslint-disable-next-line no-console
-      console.log('useLiveMode connected', store.connected)
+      if (store.connected) {
+        // eslint-disable-next-line no-console
+        console.log('useLiveMode connected')
+        return () => {
+          // eslint-disable-next-line no-console
+          console.log('useLiveMode disconnected')
+        }
+      }
     }, [store.connected])
 
     return store
