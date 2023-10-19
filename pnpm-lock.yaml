@@ -573,10 +573,6 @@ importers:
         version: link:../helpers
 
   packages/core-loader:
-    dependencies:
-      '@sanity/groq-store':
-        specifier: workspace:*
-        version: link:../groq-store
     devDependencies:
       '@nanostores/query':
         specifier: 0.2.4
@@ -584,6 +580,9 @@ importers:
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
+      '@sanity/groq-store':
+        specifier: workspace:*
+        version: link:../groq-store
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)
@@ -728,13 +727,6 @@ importers:
         version: 5.2.2
 
   packages/nuxt-loader:
-    dependencies:
-      '@sanity/core-loader':
-        specifier: workspace:*
-        version: link:../core-loader
-      '@sanity/groq-store':
-        specifier: workspace:*
-        version: link:../groq-store
     devDependencies:
       '@nanostores/vue':
         specifier: 0.10.0
@@ -742,6 +734,12 @@ importers:
       '@sanity/client':
         specifier: ^6.6.0
         version: 6.6.0
+      '@sanity/core-loader':
+        specifier: workspace:*
+        version: link:../core-loader
+      '@sanity/groq-store':
+        specifier: workspace:*
+        version: link:../groq-store
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)
@@ -871,7 +869,10 @@ importers:
         version: 0.34.6(jsdom@20.0.3)
 
   packages/react-loader:
-    dependencies:
+    devDependencies:
+      '@sanity/client':
+        specifier: ^6.6.0
+        version: 6.6.0
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
@@ -881,10 +882,6 @@ importers:
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
-    devDependencies:
-      '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../overlays
@@ -926,17 +923,16 @@ importers:
         version: link:../helpers
 
   packages/svelte-loader:
-    dependencies:
+    devDependencies:
+      '@sanity/client':
+        specifier: ^6.6.0
+        version: 6.6.0
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
-    devDependencies:
-      '@sanity/client':
-        specifier: ^6.6.0
-        version: 6.6.0
       '@sanity/pkg-utils':
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.2.2)

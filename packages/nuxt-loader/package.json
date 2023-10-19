@@ -1,6 +1,6 @@
 {
   "name": "@sanity/nuxt-loader",
-  "version": "0.0.1",
+  "version": "0.0.1-pink-lizard.0",
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
@@ -90,11 +90,9 @@
     },
     "root": true
   },
-  "dependencies": {
-    "@sanity/core-loader": "workspace:*",
-    "@sanity/groq-store": "workspace:*"
-  },
   "devDependencies": {
+    "@sanity/core-loader": "workspace:*",
+    "@sanity/groq-store": "workspace:*",
     "@nanostores/vue": "0.10.0",
     "@sanity/client": "^6.6.0",
     "@sanity/pkg-utils": "^3.1.1",
@@ -118,6 +116,6 @@
   },
   "publishConfig": {
     "access": "restricted",
-    "provenance": false
+    "tag": "pink-lizard"
   }
 }
