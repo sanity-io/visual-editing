@@ -328,10 +328,25 @@ export function createOverlayController({
     }
   }
 
+  function handleWindowScroll(event: Event) {
+    const { target } = event
+
+    if (target === window.document || !(target instanceof HTMLElement)) {
+      return
+    }
+
+    for (const element of elementSet) {
+      if (target.contains(element)) {
+        updateRect(element)
+      }
+    }
+  }
+
   function deactivate() {
     if (!activated) return
     window.removeEventListener('click', handleBlur)
     window.removeEventListener('resize', handleWindowResize)
+    window.removeEventListener('scroll', handleWindowScroll)
     io.disconnect()
     mo.disconnect()
 
@@ -353,6 +368,10 @@ export function createOverlayController({
     if (activated) return
     window.addEventListener('click', handleBlur)
     window.addEventListener('resize', handleWindowResize)
+    window.addEventListener('scroll', handleWindowScroll, {
+      capture: true,
+      passive: true,
+    })
     registerElements(document.body)
     activated = true
     handler({
