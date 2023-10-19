@@ -34,4 +34,6 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: visual-editing-packages
-          path: packages/*/artifact/*.tgz
+          path: |
+            packages/*/artifact/*.tgz
+            packages/*/artifact/CHANGELOG.md
