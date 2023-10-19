@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.1.0-pink-lizard.0...composer-v0.2.0-pink-lizard.0) (2023-10-19)
+
+
+### Features
+
+* **composer:** navigator toggle ([a320299](https://github.com/sanity-io/visual-editing/commit/a320299c060ad872bd2bfa8cbe93fb903c67646b))
+
+
+### Bug Fixes
+
+* **composer:** optional components option ([05cfc2f](https://github.com/sanity-io/visual-editing/commit/05cfc2f494f6a1edfda3f2f75c77d3a2ba0cff36))
+* **deps:** update dependency @sanity/client to ^6.7.0 ([85d542f](https://github.com/sanity-io/visual-editing/commit/85d542f75888361bebf80ca7c84f6400ae311a63))
+
 ## [0.1.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.0.1-pink-lizard.0...composer-v0.1.0-pink-lizard.0) (2023-10-19)
 
 
