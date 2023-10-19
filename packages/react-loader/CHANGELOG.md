@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.2-pink-lizard.0...react-loader-v0.1.3-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* include dist folder ([3155e9d](https://github.com/sanity-io/visual-editing/commit/3155e9d6b116a07be9193b479f772a91b424426f))
+
 ## [0.1.2-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.1-pink-lizard.0...react-loader-v0.1.2-pink-lizard.0) (2023-10-19)
 
 

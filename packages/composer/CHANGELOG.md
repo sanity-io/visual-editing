@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.2.1-pink-lizard.0...composer-v0.2.2-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* use `withKeyArraySelector` ([664ca27](https://github.com/sanity-io/visual-editing/commit/664ca2709c65d79a4e524ebc6e3cd7c43fedbab0))
+
 ## [0.2.1-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.2.0-pink-lizard.0...composer-v0.2.1-pink-lizard.0) (2023-10-19)
 
 
