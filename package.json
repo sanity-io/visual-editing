@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "artifact": "turbo run artifact",
     "build": "turbo run build",
     "dev": "turbo run dev --filter=./apps/*",
     "format": "prettier --cache --write .",
@@ -9,7 +10,6 @@
     "page-builder-demo:dev": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
     "preview": "turbo run preview",
     "test": "turbo run test",
-    "artifact": "turbo run artifact",
     "typecheck": "turbo run typecheck",
     "watch": "turbo run watch"
   },
