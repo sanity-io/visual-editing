@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.1-pink-lizard.0...csm-v0.1.2-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* **csm:** resolve path ([092dcbb](https://github.com/sanity-io/visual-editing/commit/092dcbb132fe479cff759a18c5d144a137cc6e37))
+
 ## [0.1.1-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.0-pink-lizard.0...csm-v0.1.1-pink-lizard.0) (2023-10-19)
 
 
