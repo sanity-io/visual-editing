@@ -1,6 +1,4 @@
 import { ClientPerspective, QueryParams } from '@sanity/client'
-import { Flex } from '@sanity/ui'
-import { ChannelReturns, createChannel } from 'channels'
 import { Card, Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, Connection, createChannel } from 'channels'
 import {
