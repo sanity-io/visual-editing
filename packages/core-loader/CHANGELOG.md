@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.2-pink-lizard.0...core-loader-v0.1.3-pink-lizard.0) (2023-10-19)
+
+
+### Bug Fixes
+
+* make `withKeyArraySelector` the default ([7985233](https://github.com/sanity-io/visual-editing/commit/79852338036dbbd3ac12723ff00250bf41154bff))
+
 ## [0.1.2-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.1-pink-lizard.0...core-loader-v0.1.2-pink-lizard.0) (2023-10-19)
 
 
