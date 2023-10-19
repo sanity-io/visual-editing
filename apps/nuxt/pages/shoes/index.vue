@@ -59,9 +59,7 @@
               class="mb-8 mt-4 text-sm text-gray-700"
               :style="{ ['textWrap' as any]: 'balance' }"
               v-sanity="product.title"
-            >
-              {{ product.title }}
-            </h2>
+            />
             <p
               class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
               :data-sanity="dataAttribute([i, 'price'])"
@@ -100,9 +98,7 @@
               <span
                 class="font-bold text-gray-600"
                 v-sanity="product.brand.name"
-              >
-                {{ product.brand.name }}
-              </span>
+              />
             </div>
           </NuxtLink>
         </div>
