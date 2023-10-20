@@ -108,9 +108,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-is:
-        specifier: ^18.2.0
-        version: 18.2.0
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -571,9 +568,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-is:
-        specifier: ^18.2.0
-        version: 18.2.0
       sanity:
         specifier: 3.18.2-pink-lizard.21
         version: 3.18.2-pink-lizard.21(@types/react@18.2.31)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.0)
@@ -828,9 +822,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.14
         version: 18.2.14
-      '@types/styled-components':
-        specifier: ^5.1.29
-        version: 5.1.29
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.8.0
         version: 6.8.0(@typescript-eslint/parser@6.8.0)(eslint@8.51.0)(typescript@5.2.2)
@@ -867,9 +858,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-is:
-        specifier: ^18.2.0
-        version: 18.2.0
       rimraf:
         specifier: ^5.0.1
         version: 5.0.5
@@ -5876,13 +5864,6 @@ packages:
     dependencies:
       '@types/unist': 2.0.8
 
-  /@types/hoist-non-react-statics@3.3.3:
-    resolution: {integrity: sha512-Wny3a2UXn5FEA1l7gc6BbpoV5mD1XijZqgkp4TRgDCDL5r3B5ieOFGUX5h3n78Tr1MEG7BfvoM8qeztdvNU0fw==}
-    dependencies:
-      '@types/react': 18.2.31
-      hoist-non-react-statics: 3.3.2
-    dev: true
-
   /@types/http-cache-semantics@4.0.2:
     resolution: {integrity: sha512-FD+nQWA2zJjh4L9+pFXqWOi0Hs1ryBCfI+985NjluQ1p8EYtoLvjLOKidXBtZ4/IcxDX4o8/E8qDS3540tNliw==}
     dev: true
@@ -6010,14 +5991,6 @@ packages:
 
   /@types/speakingurl@13.0.4:
     resolution: {integrity: sha512-lJ7UUtcz0Qsx83osI4zXfXlbCMVNM540XhvnwT69SUn1zIRgc0WPU4eyxu762a0+EMGKMR4NH5D1j3Bbpakr5Q==}
-
-  /@types/styled-components@5.1.29:
-    resolution: {integrity: sha512-5h/ah9PAblggQ6Laa4peplT4iY5ddA8qM1LMD4HzwToUWs3hftfy0fayeRgbtH1JZUdw5CCaowmz7Lnb8SjIxQ==}
-    dependencies:
-      '@types/hoist-non-react-statics': 3.3.3
-      '@types/react': 18.2.31
-      csstype: 3.1.2
-    dev: true
 
   /@types/stylis@4.2.2:
     resolution: {integrity: sha512-Rm17MsTpQQP5Jq4BF7CdrxJsDufoiL/q5IbJZYZmOZAJALyijgF7BzLgobXUqraNcQdqFYLYGeglDp6QzaxPpg==}

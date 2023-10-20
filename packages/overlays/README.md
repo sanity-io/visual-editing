@@ -25,12 +25,12 @@ The other peer dependencies are required and will be loaded asynchronously when 
 
 ```sh
 # For Next.js applications
-npm install @sanity/overlays next-sanity react react-dom react-is styled-components
+npm install @sanity/overlays next-sanity react react-dom styled-components
 ```
 
 ```sh
 # Framework agnostic JavaScript libraries
-npm install @sanity/overlays @sanity/preview-kit react react-dom react-is styled-components
+npm install @sanity/overlays @sanity/preview-kit react react-dom styled-components
 ```
 
 ### 2. Configure an enhanced Sanity client
