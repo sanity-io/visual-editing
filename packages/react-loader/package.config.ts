@@ -2,6 +2,7 @@ import { defineConfig } from '@sanity/pkg-utils'
 
 export default defineConfig({
   extract: {
+    bundledPackages: ['@sanity/core-loader', '@sanity/csm'],
     rules: {
       'ae-forgotten-export': 'warn',
       'ae-incompatible-release-tags': 'warn',
