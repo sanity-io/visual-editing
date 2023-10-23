@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.2-pink-lizard...composer-v0.3.3-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/ui to ^1.8.3 ([#171](https://github.com/sanity-io/visual-editing/issues/171)) ([7612ac4](https://github.com/sanity-io/visual-editing/commit/7612ac4799468f3f15f0ea66e6f09902b11dfb80))
+* resolve keyed array paths correctly ([4a83fe6](https://github.com/sanity-io/visual-editing/commit/4a83fe60845f2d6bbafd3c0f877bede5050368e4))
+
 ## [0.3.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.1-pink-lizard...composer-v0.3.2-pink-lizard) (2023-10-23)
 
 

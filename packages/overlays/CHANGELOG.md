@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.3-pink-lizard...overlays-v0.1.4-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/ui to ^1.8.3 ([#171](https://github.com/sanity-io/visual-editing/issues/171)) ([7612ac4](https://github.com/sanity-io/visual-editing/commit/7612ac4799468f3f15f0ea66e6f09902b11dfb80))
+* remove debug console loggers ([84f4b1d](https://github.com/sanity-io/visual-editing/commit/84f4b1d06196161e94aa2333fbf5f9cbef0cc51c))
+
 ## [0.1.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.2-pink-lizard...overlays-v0.1.3-pink-lizard) (2023-10-23)
 
 

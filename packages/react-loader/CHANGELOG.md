@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.5-pink-lizard...react-loader-v0.1.6-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* add typings for `options` ([88e27e4](https://github.com/sanity-io/visual-editing/commit/88e27e47edc07cd08a1f1d8740ce035b687d2b1e))
+* remove debug console loggers ([84f4b1d](https://github.com/sanity-io/visual-editing/commit/84f4b1d06196161e94aa2333fbf5f9cbef0cc51c))
+* resolve keyed array paths correctly ([4a83fe6](https://github.com/sanity-io/visual-editing/commit/4a83fe60845f2d6bbafd3c0f877bede5050368e4))
+
 ## [0.1.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.4-pink-lizard...react-loader-v0.1.5-pink-lizard) (2023-10-23)
 
 

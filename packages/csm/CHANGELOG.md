@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.3-pink-lizard...csm-v0.1.4-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* resolve keyed array paths correctly ([4a83fe6](https://github.com/sanity-io/visual-editing/commit/4a83fe60845f2d6bbafd3c0f877bede5050368e4))
+
 ## [0.1.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.2-pink-lizard...csm-v0.1.3-pink-lizard) (2023-10-23)
 
 
