@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.4-pink-lizard...composer-v0.3.5-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* better bundling ([6a0dbf0](https://github.com/sanity-io/visual-editing/commit/6a0dbf082dba9876ede396d1b8f2ceaafa67e924))
+
 ## [0.3.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.3-pink-lizard...composer-v0.3.4-pink-lizard) (2023-10-23)
 
 
