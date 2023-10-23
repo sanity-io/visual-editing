@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.4-pink-lizard...react-loader-v0.1.5-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* add support for `initialData` and `initialSourceMap` ([808dc00](https://github.com/sanity-io/visual-editing/commit/808dc00be44b57560fe1abea1d858375296ad5dd))
+
 ## [0.1.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.3-pink-lizard...react-loader-v0.1.4-pink-lizard) (2023-10-23)
 
 
