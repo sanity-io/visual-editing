@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.4-pink-lizard...groq-store-v0.0.5-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* **pink-lizard:** remove unnecessary suffix ([c7409aa](https://github.com/sanity-io/visual-editing/commit/c7409aa698a5f6e332b05537441efd0df8d33b95))
+
 ## [0.0.4-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.3-pink-lizard.0...groq-store-v0.0.4-pink-lizard.0) (2023-10-19)
 
 
