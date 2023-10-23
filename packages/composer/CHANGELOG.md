@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.3-pink-lizard...composer-v0.3.4-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* disable minification to ease debugging ([666f8e0](https://github.com/sanity-io/visual-editing/commit/666f8e07565a566291c7a19b7dfe65a12aed49a5))
+
 ## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.2-pink-lizard...composer-v0.3.3-pink-lizard) (2023-10-23)
 
 
