@@ -49,6 +49,7 @@ export interface QueryStoreFetcherData<Response = unknown> {
 export interface LiveModeState {
   enabled: boolean
   connected: boolean
+  studioOrigin: string
 }
 
 export interface QueryStore {
@@ -73,6 +74,7 @@ export const createQueryStore = (
   const initialLiveMode = {
     enabled: false,
     connected: false,
+    studioOrigin: '',
   } satisfies LiveModeState
   const $LiveMode = map<LiveModeState>(initialLiveMode)
   const $resultSourceMapDocuments = map<
@@ -203,6 +205,8 @@ export const createQueryStore = (
   const $shouldPong = atom<boolean>(false)
   onMount($LiveMode, () => {
     $LiveMode.setKey('enabled', true)
+    const studioOrigin = new URL(studioUrl, location.origin).origin
+    $LiveMode.setKey('studioOrigin', studioOrigin)
     channel = createChannel<VisualEditingMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
       onConnect: () => {
