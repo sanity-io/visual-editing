@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash'
+import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { stringToPath } from 'sanity'
 import {
