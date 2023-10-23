@@ -43,8 +43,8 @@
         "groq",
         "sanity"
       ],
-      "matchFileNames": ["package.json"],
-      "matchDepTypes": ["dependencies"],
+      "matchFileNames": ["package.json", "packages/**/package.json"],
+      "matchDepTypes": ["dependencies", "peerDependencies"],
       "followTag": "pink-lizard",
       "schedule": ["at any time"],
       "rangeStrategy": "pin",
