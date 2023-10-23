@@ -37,8 +37,6 @@ export type WrappedValue<T = SanityValue> = T extends null
   ? SourceNode<number> // number
   : T extends boolean
   ? SourceNode<boolean> // boolean
-  : T extends null
-  ? SourceNode<null> // null
   : T extends {}
   ? {
       [Prop in keyof T]: Prop extends SanityKey

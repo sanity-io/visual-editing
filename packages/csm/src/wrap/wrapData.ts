@@ -14,16 +14,26 @@ export function wrapData<T>(
   context: SanityNodeContext & { logger?: Logger },
   value: T,
   sourceMap: ContentSourceMap | undefined,
+  path?: PathSegment[],
+): WrappedValue<T>
+export function wrapData<T>(
+  context: SanityNodeContext & { logger?: Logger },
+  value: T | undefined,
+  sourceMap: ContentSourceMap | undefined,
   path: PathSegment[] = [],
-): WrappedValue<T> {
+): WrappedValue<T> | undefined {
+  if (value === null || value === undefined) {
+    return value as WrappedValue<T> | undefined
+  }
+
   if (isRecord(value)) {
     const map = Object.fromEntries(
-      Object.entries(value).map(([key, _value]) => {
-        if (SANITY_KEYS.includes(key as SanityKey)) {
-          return [key, _value]
+      Object.entries(value).map(([k, v]) => {
+        if (SANITY_KEYS.includes(k as SanityKey)) {
+          return [k, v]
         }
 
-        return [key, wrapData(context, _value, sourceMap, path.concat(key))]
+        return [k, wrapData(context, v, sourceMap, path.concat(k))]
       }),
     )
 
@@ -50,7 +60,7 @@ function getValueSource(
   sourceMap: ContentSourceMap,
   path: PathSegment[],
 ): SanityNode | undefined {
-  const [mapping, matchedPath] =
+  const [mapping, , pathSuffix] =
     resolveMapping(path, sourceMap, context.logger) || []
 
   if (!mapping) {
@@ -70,19 +80,11 @@ function getValueSource(
   const sourcePath = sourceMap.paths[mapping.source.path]
 
   if (sourceDoc && sourcePath) {
-    let p = simplifyPath(parseJsonPath(sourcePath))
-
-    if (!p && matchedPath) {
-      const m = parseJsonPath(matchedPath)
-
-      p = simplifyPath(path.slice(m.length))
-    }
-
     return {
       baseUrl: context.baseUrl,
       dataset: context.dataset,
       id: getPublishedId(sourceDoc._id),
-      path: p,
+      path: simplifyPath(parseJsonPath(sourcePath + pathSuffix)),
       projectId: context.projectId,
       tool: context.tool,
       type: sourceDoc._type,
