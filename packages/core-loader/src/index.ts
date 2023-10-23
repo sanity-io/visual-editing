@@ -205,16 +205,10 @@ export const createQueryStore = (
     $LiveMode.setKey('enabled', true)
     channel = createChannel<VisualEditingMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
-      onConnect: (connection) => {
-        // eslint-disable-next-line no-console
-        console.warn('loaders onConnect', { connection })
-        if ($LiveMode.get().enabled) {
-          $LiveMode.setKey('connected', true)
-        }
+      onConnect: () => {
+        $LiveMode.setKey('connected', true)
       },
-      onDisconnect: (connection) => {
-        // eslint-disable-next-line no-console
-        console.error('loaders onDisconnect', { connection })
+      onDisconnect: () => {
         $LiveMode.setKey('connected', false)
       },
       connections: [
@@ -241,27 +235,19 @@ export const createQueryStore = (
           })
         }
         if (type === 'loader/ping') {
-          // eslint-disable-next-line no-console
-          console.debug('loader/ping')
           $shouldPong.set(true)
         }
       },
     })
     const unlistenPong = $shouldPong.subscribe((shouldPong) => {
       if (channel && shouldPong) {
-        // eslint-disable-next-line no-console
-        console.debug('loader/pong')
         channel.send('loader/pong', undefined)
         $shouldPong.set(false)
       }
     })
 
     const unlistenConnection = listenKeys($LiveMode, ['connected'], () => {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "listenKeys($LiveMode, ['connected'] invalidateKeys",
-        JSON.stringify([...cache]),
-      )
+      // @TODO handle reconnection and invalidation
       // Revalidate if the connection status changes
       // invalidateKeys(() => true)
     })

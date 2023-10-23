@@ -16,16 +16,8 @@ export function useChannel<T extends ChannelMsg>(
   useEffect(() => {
     const channel = createChannel<T>({
       id: 'overlays',
-      onConnect: (connection) => {
-        // eslint-disable-next-line no-console
-        console.warn('overlays onConnect', { connection })
-        startTransition(() => setConnected(true))
-      },
-      onDisconnect: (connection) => {
-        // eslint-disable-next-line no-console
-        console.error('overlays onDisconnect', { connection })
-        startTransition(() => setConnected(false))
-      },
+      onConnect: () => startTransition(() => setConnected(true)),
+      onDisconnect: () => startTransition(() => setConnected(false)),
       connections: [
         {
           target: parent,
@@ -39,7 +31,7 @@ export function useChannel<T extends ChannelMsg>(
     return () => {
       channel.disconnect()
       channelRef.current = undefined
-      startTransition(() => setConnected(false))
+      setConnected(false)
     }
   }, [handler, targetOrigin])
 

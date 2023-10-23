@@ -62,8 +62,6 @@ export const VisualEditing: FunctionComponent<{
         setOverlayEnabled((enabled) => !enabled)
       }
       if (type === 'overlay/ping') {
-        // eslint-disable-next-line no-console
-        console.debug('overlay/ping')
         setShouldPong(true)
       }
     },
@@ -83,8 +81,6 @@ export const VisualEditing: FunctionComponent<{
   )
   useEffect(() => {
     if (shouldPong && channel) {
-      // eslint-disable-next-line no-console
-      console.debug('overlay/pong')
       channel.send('overlay/pong', undefined)
       setShouldPong(false)
     }
