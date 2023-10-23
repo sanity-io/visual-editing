@@ -6,11 +6,7 @@ import type {
   SanityClient,
   SanityDocument,
 } from '@sanity/client'
-import {
-  parseNormalisedJsonPath,
-  resolveMapping,
-  walkMap,
-} from '@sanity/preview-kit/csm'
+import { parseJsonPath, resolveMapping, walkMap } from '@sanity/csm'
 import { vercelStegaSplit } from '@vercel/stega'
 import get from 'lodash.get'
 import { LRUCache } from 'lru-cache'
@@ -76,6 +72,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
     children,
     client,
     refreshInterval = 10000,
+    // refreshInterval = 0,
     turboSourceMap = true,
     logger,
     perspective,
@@ -742,11 +739,8 @@ function turboChargeResultIfSourceMap(
       )
 
       const cachedValue = cachedDocument
-        ? get(
-            cachedDocument,
-            parseNormalisedJsonPath(sourcePath + pathSuffix),
-            value,
-          )
+        ? // @ts-expect-error -- @TODO fix parseJsonPath typings mismatch
+          get(cachedDocument, parseJsonPath(sourcePath + pathSuffix), value)
         : value
       // Preserve stega encoded strings, if they exist
       if (typeof cachedValue === 'string' && typeof value === 'string') {

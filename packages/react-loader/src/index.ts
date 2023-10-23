@@ -71,7 +71,9 @@ export const createQueryStore = (
     useEffect(() => {
       const $fetch = createFetcherStore([query, $params])
       const unlisten = $fetch.listen((snapshot) => {
-        setSnapshot((prev) => ({ ...prev, snapshot }))
+        // setSnapshot((prev) => ({ ...prev, snapshot }))
+        // @ts-expect-error -- @TODO circle back and find out what's happening in @nanostores/query that causes inconsistencies
+        setSnapshot(snapshot)
       })
       return () => unlisten()
     }, [$params, query])
