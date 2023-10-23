@@ -28,7 +28,7 @@ export function FeaturedProducts(props: {
           <sanity.span>{section.headline}</sanity.span>
         </h1>
 
-        {section.products?.map((product) => (
+        {section.products?.map?.((product) => (
           <Link
             className="block w-96 flex-none border border-white p-5 hover:border-gray-100 dark:border-black dark:hover:border-gray-800"
             href={`/product/${product.slug?.current?.value}`}

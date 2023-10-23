@@ -117,7 +117,7 @@ export default function ShoePage(
           {otherImages?.length > 0 && (
             <div className="mx-auto max-w-2xl px-4 pt-5 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-8">
               <div className="relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto">
-                {otherImages.map((image, _i) => {
+                {otherImages.map?.((image, _i) => {
                   if (!image.asset?._ref) return null
                   // The index is wrong due to slicing out `coverImage`
                   const i = _i + 1
