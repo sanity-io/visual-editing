@@ -92,10 +92,9 @@ export const PreviewFrame = forwardRef<
   const [refreshing, setRefreshing] = useState(false)
 
   const previewLocationOrigin = useMemo(() => {
-    const { origin: parsedTargetOrigin } = new URL(targetOrigin, location.href)
     const { origin: previewOrigin } = new URL(
       params.preview || '/',
-      parsedTargetOrigin,
+      targetOrigin,
     )
     return previewOrigin === location.origin ? undefined : previewOrigin
   }, [params.preview, targetOrigin])
@@ -108,10 +107,10 @@ export const PreviewFrame = forwardRef<
     // Funky way to reload an iframe without CORS issues
     // eslint-disable-next-line no-self-assign
     // ref.current.src = ref.current.src
-    ref.current.src = `${previewLocationOrigin}${params.preview || '/'}`
+    ref.current.src = `${targetOrigin}${params.preview || '/'}`
 
     setRefreshing(true)
-  }, [params.preview, previewLocationOrigin, ref])
+  }, [params.preview, targetOrigin, ref])
 
   const onIFrameLoad = useCallback(() => {
     setRefreshing(false)
