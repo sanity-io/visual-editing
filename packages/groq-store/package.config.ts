@@ -8,6 +8,5 @@ export default defineConfig({
       'ae-missing-release-tag': 'warn',
     },
   },
-  minify: true,
   tsconfig: 'tsconfig.build.json',
 })
