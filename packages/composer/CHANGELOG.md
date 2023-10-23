@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.1-pink-lizard...composer-v0.3.2-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* always use `targetOrigin` on preview frame ([b96c699](https://github.com/sanity-io/visual-editing/commit/b96c699ef8b3c62d10cd40e57554055c788a654e))
+
 ## [0.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.0-pink-lizard...composer-v0.3.1-pink-lizard) (2023-10-23)
 
 
