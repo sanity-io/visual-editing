@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.7-pink-lizard...core-loader-v0.1.8-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* disable minification to ease debugging ([666f8e0](https://github.com/sanity-io/visual-editing/commit/666f8e07565a566291c7a19b7dfe65a12aed49a5))
+* track studio origin ([209d5f2](https://github.com/sanity-io/visual-editing/commit/209d5f24a38c9dbbe21c882043bcd9ae177321a8))
+
 ## [0.1.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.6-pink-lizard...core-loader-v0.1.7-pink-lizard) (2023-10-23)
 
 
