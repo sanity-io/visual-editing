@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.3.0-pink-lizard...composer-v0.3.1-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update sanity monorepo ([#166](https://github.com/sanity-io/visual-editing/issues/166)) ([2f6232f](https://github.com/sanity-io/visual-editing/commit/2f6232fb3384bb1ad29273434e54659b344d6e49))
+* **pink-lizard:** remove unnecessary suffix ([c7409aa](https://github.com/sanity-io/visual-editing/commit/c7409aa698a5f6e332b05537441efd0df8d33b95))
+
 ## [0.3.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/composer-v0.2.3-pink-lizard.0...composer-v0.3.0-pink-lizard.0) (2023-10-19)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.2.0-pink-lizard...nuxt-loader-v0.2.1-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* **pink-lizard:** remove unnecessary suffix ([c7409aa](https://github.com/sanity-io/visual-editing/commit/c7409aa698a5f6e332b05537441efd0df8d33b95))
+
 ## [0.2.0-pink-lizard.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.1.2-pink-lizard.0...nuxt-loader-v0.2.0-pink-lizard.0) (2023-10-19)
 
 
