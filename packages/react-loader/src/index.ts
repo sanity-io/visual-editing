@@ -17,11 +17,16 @@ export type * from '@sanity/core-loader'
 export type UseQueryHook = <Response>(
   query: string,
   params?: QueryParams,
+  options?: UseQueryOptions<Response>,
 ) => {
   data?: Response
   sourceMap?: ContentSourceMap
   loading: boolean
   error: any
+}
+export interface UseQueryOptions<Response> {
+  initialData?: Response
+  initialSourceMap?: ContentSourceMap
 }
 export type UseLiveModeHook = () => LiveModeState
 
@@ -49,13 +54,24 @@ export const createQueryStore = (
   const initialLiveMode = $LiveMode.value!
 
   const DEFAULT_PARAMS = {}
-  const useQuery: UseQueryHook = (query, params = DEFAULT_PARAMS) => {
+  const useQuery: UseQueryHook = (
+    query,
+    params = DEFAULT_PARAMS,
+    options = {},
+  ) => {
+    const { initialData, initialSourceMap } = options
     const $params = useMemo(() => JSON.stringify(params), [params])
-    const [snapshot, setSnapshot] = useState(() => initialFetch)
+    const [snapshot, setSnapshot] = useState(() => ({
+      ...initialFetch,
+      data:
+        initialData || initialSourceMap
+          ? { result: initialData, sourceMap: initialSourceMap }
+          : undefined,
+    }))
     useEffect(() => {
       const $fetch = createFetcherStore([query, $params])
       const unlisten = $fetch.listen((snapshot) => {
-        setSnapshot(snapshot)
+        setSnapshot((prev) => ({ ...prev, snapshot }))
       })
       return () => unlisten()
     }, [$params, query])
