@@ -41,6 +41,7 @@ export const createQueryStore = (
   useQuery: <Response>(
     query: string,
     params?: any,
+    options?: UseQueryOptions<Response>,
   ) => {
     data?: Response
     sourceMap?: ContentSourceMap
