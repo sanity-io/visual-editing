@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.0.6-pink-lizard...svelte-loader-v0.0.7-pink-lizard) (2023-10-23)
+
+
+### Bug Fixes
+
+* generate typings from bundled packages ([8201fa7](https://github.com/sanity-io/visual-editing/commit/8201fa7895c8511b44c7a7344d29a183ef2cf87b))
+
 ## [0.0.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.0.5-pink-lizard...svelte-loader-v0.0.6-pink-lizard) (2023-10-23)
 
 
