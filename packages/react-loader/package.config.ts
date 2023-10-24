@@ -1,6 +1,7 @@
 import { defineConfig } from '@sanity/pkg-utils'
 
 export default defineConfig({
+  minify: false,
   extract: {
     bundledPackages: ['@sanity/core-loader', '@sanity/csm'],
     rules: {
