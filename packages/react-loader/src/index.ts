@@ -63,7 +63,6 @@ export const createQueryStore = (
         ...initialFetch,
         data: initialData,
         sourceMap: initialSourceMap,
-        loading: initialData === undefined,
       }),
     )
     useEffect(() => {
