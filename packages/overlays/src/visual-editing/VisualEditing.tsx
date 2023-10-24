@@ -38,7 +38,6 @@ export const VisualEditing: FunctionComponent<{
   const [elements, dispatch] = useReducer(elementsReducer, [])
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
-  const [shouldPong, setShouldPong] = useState(false)
 
   const elementsToRender = useMemo(
     () => elements.filter((e) => e.activated || e.focused),
@@ -61,9 +60,6 @@ export const VisualEditing: FunctionComponent<{
       if (type === 'composer/toggleOverlay') {
         setOverlayEnabled((enabled) => !enabled)
       }
-      if (type === 'overlay/ping') {
-        setShouldPong(true)
-      }
     },
     [history],
   )
@@ -75,16 +71,10 @@ export const VisualEditing: FunctionComponent<{
     return url.origin
   }, [studioUrl])
 
-  const [channel, channelConnected] = useChannel<VisualEditingMsg>(
+  const channel = useChannel<VisualEditingMsg>(
     channelEventHandler,
     studioOrigin,
   )
-  useEffect(() => {
-    if (shouldPong && channel) {
-      channel.send('overlay/pong', undefined)
-      setShouldPong(false)
-    }
-  }, [shouldPong, channel])
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
@@ -100,7 +90,11 @@ export const VisualEditing: FunctionComponent<{
     [channel],
   )
 
-  const overlay = useOverlay(rootElement, overlayEventHandler, channelConnected)
+  const overlay = useOverlay(
+    rootElement,
+    overlayEventHandler,
+    !!channel?.inFrame,
+  )
 
   useEffect(() => {
     if (overlayEnabled) {

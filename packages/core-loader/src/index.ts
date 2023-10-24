@@ -8,7 +8,6 @@ import type {
 //  import type { ChannelEventHandler, ChannelMsg, ChannelReturns } from 'channels'
 import { ChannelReturns, createChannel } from 'channels'
 import {
-  atom,
   computed,
   listenKeys,
   map,
@@ -202,18 +201,18 @@ export const createQueryStore = (
     return $fetch
   }
 
-  const $shouldPong = atom<boolean>(false)
   onMount($LiveMode, () => {
     $LiveMode.setKey('enabled', true)
     const studioOrigin = new URL(studioUrl, location.origin).origin
     $LiveMode.setKey('studioOrigin', studioOrigin)
     channel = createChannel<VisualEditingMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
-      onConnect: () => {
-        $LiveMode.setKey('connected', true)
-      },
-      onDisconnect: () => {
-        $LiveMode.setKey('connected', false)
+      onStatusUpdate(status) {
+        if (status === 'connected') {
+          $LiveMode.setKey('connected', true)
+        } else if (status === 'disconnected' || status === 'unhealthy') {
+          $LiveMode.setKey('connected', false)
+        }
       },
       connections: [
         {
@@ -238,16 +237,7 @@ export const createQueryStore = (
             resultSourceMap: data.resultSourceMap || prevCache.resultSourceMap,
           })
         }
-        if (type === 'loader/ping') {
-          $shouldPong.set(true)
-        }
       },
-    })
-    const unlistenPong = $shouldPong.subscribe((shouldPong) => {
-      if (channel && shouldPong) {
-        channel.send('loader/pong', undefined)
-        $shouldPong.set(false)
-      }
     })
 
     const unlistenConnection = listenKeys($LiveMode, ['connected'], () => {
@@ -267,7 +257,6 @@ export const createQueryStore = (
     })
 
     return () => {
-      unlistenPong()
       unlistenQueries()
       unlistenConnection()
       $LiveMode.setKey('enabled', false)

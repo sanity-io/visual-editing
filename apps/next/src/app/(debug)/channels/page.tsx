@@ -50,13 +50,19 @@ export default function ParentPage() {
       handler(type, data) {
         setLog((l) => [{ ...data, type }, ...l])
       },
-      onConnect: (added) => {
-        setConnections((cs) => [...cs, added])
-      },
-      onDisconnect: (removed) => {
-        setConnections((cs) =>
-          cs.filter((c) => c.id === removed.id && c.target === removed.target),
-        )
+      onStatusUpdate(status, _prevStatus, connection) {
+        if (status === 'connected') {
+          setConnections((cs) => [...cs, connection])
+        }
+        if (status === 'disconnected' || status === 'unhealthy') {
+          setConnections((cs) =>
+            cs.filter(
+              ({ config }) =>
+                config.id === connection.config.id &&
+                config.target === connection.config.target,
+            ),
+          )
+        }
       },
     })
     setChannel(channel)

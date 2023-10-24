@@ -4,7 +4,10 @@
 
 <script lang="ts" setup>
 import { studioUrl } from 'apps-common/env'
-import { DisableVisualEditing, enableVisualEditing } from '@sanity/overlays'
+import {
+  type DisableVisualEditing,
+  enableVisualEditing,
+} from '@sanity/overlays'
 
 let disable: DisableVisualEditing
 const router = useRouter()

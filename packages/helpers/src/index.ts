@@ -1,5 +1,4 @@
 export { getQueryCacheKey } from './getQueryCacheKey'
-export * from './heartbeat'
 export { pathToUrlString } from './pathToUrlString'
 export * from './types'
 export { urlStringToPath } from './urlStringToPath'

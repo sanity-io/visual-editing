@@ -1,6 +1,6 @@
 import { ClientPerspective, QueryParams } from '@sanity/client'
 import { Card, Flex, useToast } from '@sanity/ui'
-import { ChannelReturns, Connection, createChannel } from 'channels'
+import { ChannelReturns, createChannel } from 'channels'
 import {
   ReactElement,
   useCallback,
@@ -13,8 +13,6 @@ import { Path, pathToString, Tool } from 'sanity'
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
-  HEARTBEAT_INTERVAL,
-  HEARTBEAT_TIMEOUT,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
@@ -82,8 +80,8 @@ export default function ComposerTool(props: {
     [UnstableNavigator, setNavigatorEnabled],
   )
 
-  const { onConnect, onDisconnect, handlePongEvent, lastPong, connected } =
-    useChannelConnectionsStatus()
+  const toast = useToast()
+
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
 
@@ -91,24 +89,45 @@ export default function ComposerTool(props: {
 
     const nextChannel = createChannel<VisualEditingMsg>({
       id: 'composer' satisfies VisualEditingConnectionIds,
-      onConnect,
-      onDisconnect,
+      onStatusUpdate(status, prevStatus, connection) {
+        if (status === 'unhealthy') {
+          toast.push({
+            id: connection.config.id,
+            closable: true,
+            description: `The connection '${connection.config.id}' stopped responding. This means further changes might not be reflected in the preview.`,
+            status: 'error',
+            title: `Connection unhealthy`,
+            duration: 1000 * 60 * 60,
+          })
+        }
+        if (status === 'connected' && prevStatus === 'unhealthy') {
+          toast.push({
+            id: connection.config.id,
+            closable: true,
+            description: `The connection '${connection.config.id}' was restored.`,
+            status: 'success',
+            title: `Connection restored`,
+          })
+        }
+      },
+      // onConnect,
+      // onDisconnect,
       connections: [
         {
           target: iframe,
           targetOrigin,
           id: 'overlays' satisfies VisualEditingConnectionIds,
+          heartbeat: true,
         },
         {
           target: iframe,
           targetOrigin,
           id: 'loaders' satisfies VisualEditingConnectionIds,
+          heartbeat: true,
         },
       ],
       handler(type, data) {
-        if (handlePongEvent(type)) {
-          // handled
-        } else if (type === 'overlay/focus' && 'id' in data) {
+        if (type === 'overlay/focus' && 'id' in data) {
           setParams({
             id: data.id,
             path: data.path,
@@ -141,11 +160,7 @@ export default function ComposerTool(props: {
       nextChannel.disconnect()
       setChannel(undefined)
     }
-  }, [handlePongEvent, onConnect, onDisconnect, setParams, targetOrigin])
-  // const reconnectChannel = useCallback(
-  //   () => startTransition(() => setChannel(undefined)),
-  //   [],
-  // )
+  }, [setParams, targetOrigin, toast])
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments
@@ -158,53 +173,6 @@ export default function ComposerTool(props: {
     },
     [setParams],
   )
-
-  const healthy = useChannelsHeartbeat({ channel, lastPong, connected })
-  const toast = useToast()
-  useEffect(() => {
-    if (!healthy.loaders) {
-      toast.push({
-        id: 'loader-channel-unhealthy',
-        closable: true,
-        description: `The connection to the preview iframe stopped responding. This means further draft changes won't be reflected in the preview.`,
-        status: 'error',
-        title: 'Loader channel unhealthy',
-        duration: 1000 * 60 * 60,
-      })
-      return () => {
-        toast.push({
-          id: 'loader-channel-unhealthy',
-          closable: true,
-          description: `The connection to the preview iframe is working again.`,
-          status: 'success',
-          title: 'Loader channel restored',
-        })
-      }
-    }
-    return
-  }, [healthy.loaders, toast])
-  useEffect(() => {
-    if (!healthy.overlays) {
-      toast.push({
-        id: 'overlay-channel-unhealthy',
-        closable: true,
-        description: `The connection to the preview iframe stopped responding. This means overlay's are unable to route clicks and focus path changes.`,
-        status: 'error',
-        title: 'Overlay channel unhealthy',
-        duration: 1000 * 60 * 60,
-      })
-      return () => {
-        toast.push({
-          id: 'overlay-channel-unhealthy',
-          closable: true,
-          description: `The connection to the preview iframe is working again.`,
-          status: 'success',
-          title: 'Overlay channel restored',
-        })
-      }
-    }
-    return
-  }, [healthy.overlays, toast])
 
   const handlePreviewPath = useCallback(
     (nextPath: string) => {
@@ -343,122 +311,4 @@ export default function ComposerTool(props: {
       )}
     </>
   )
-}
-
-function useChannelConnectionsStatus() {
-  const [connected, setConnectionStatus] = useState({
-    loaders: false,
-    overlays: false,
-  } satisfies Partial<Record<VisualEditingConnectionIds, boolean>>)
-  const [lastPong, setLastPong] = useState(
-    () =>
-      ({
-        loaders: 0,
-        overlays: 0,
-      }) satisfies Partial<Record<VisualEditingConnectionIds, number>>,
-  )
-  const onConnect = useCallback(
-    (connection: Connection) =>
-      setConnectionStatus((prev) => ({ ...prev, [connection.id]: true })),
-    [],
-  )
-  const onDisconnect = useCallback(
-    (connection: Connection) =>
-      setConnectionStatus((prev) => ({ ...prev, [connection.id]: false })),
-    [],
-  )
-
-  const handlePongEvent = useCallback((event: VisualEditingMsg['type']) => {
-    let id: VisualEditingConnectionIds | undefined = undefined
-    if (event === 'overlay/pong') {
-      id = 'overlays'
-    }
-    if (event === 'loader/pong') {
-      id = 'loaders'
-    }
-    if (id) {
-      setLastPong((prev) => ({ ...prev, [id as string]: Date.now() }))
-      return true
-    }
-
-    return false
-  }, [])
-
-  return { onConnect, onDisconnect, connected, lastPong, handlePongEvent }
-}
-
-function useChannelsHeartbeat(props: {
-  channel?: ChannelReturns<VisualEditingMsg>
-  connected: ReturnType<typeof useChannelConnectionsStatus>['connected']
-  lastPong: ReturnType<typeof useChannelConnectionsStatus>['lastPong']
-}) {
-  const { channel, connected, lastPong } = props
-
-  const loaders = useChannelHeartbeat({
-    channel,
-    pingType: 'loader/ping',
-    lastPong: lastPong.loaders,
-    connected: connected.loaders,
-  })
-  const overlays = useChannelHeartbeat({
-    channel,
-    pingType: 'overlay/ping',
-    lastPong: lastPong.overlays,
-    connected: connected.overlays,
-  })
-
-  return useMemo(
-    () =>
-      ({
-        loaders,
-        overlays,
-      }) satisfies Partial<Record<VisualEditingConnectionIds, boolean>>,
-    [loaders, overlays],
-  )
-}
-
-function useChannelHeartbeat(props: {
-  channel?: ChannelReturns<VisualEditingMsg>
-  pingType: 'overlay/ping' | 'loader/ping'
-  connected: boolean
-  lastPong: number
-}) {
-  const { channel, pingType, lastPong } = props
-
-  const [healthy, setHealthy] = useState(true)
-
-  useEffect(() => {
-    if (healthy && lastPong) {
-      const timeout = setTimeout(
-        () => setHealthy(false),
-        Math.max(0, lastPong + HEARTBEAT_TIMEOUT - Date.now()),
-      )
-      return () => clearTimeout(timeout)
-    }
-    if (!healthy && lastPong + HEARTBEAT_INTERVAL > Date.now()) {
-      setHealthy(true)
-      const timeout = setTimeout(() => setHealthy(false), HEARTBEAT_INTERVAL)
-      return () => clearTimeout(timeout)
-    }
-    return
-  }, [healthy, lastPong])
-  useEffect(() => {
-    if (!channel) return
-    // We are connected, but haven't received the first pong yet
-    if (!lastPong) {
-      channel.send(pingType, undefined)
-    } else if (lastPong + HEARTBEAT_INTERVAL < Date.now()) {
-      channel.send(pingType, undefined)
-    } else {
-      const deadline = Math.max(0, lastPong + HEARTBEAT_INTERVAL - Date.now())
-      const timeout = setTimeout(
-        () => channel.send(pingType, undefined),
-        deadline,
-      )
-      return () => clearTimeout(timeout)
-    }
-    return
-  }, [channel, lastPong, pingType])
-
-  return healthy
 }

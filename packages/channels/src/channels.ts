@@ -1,13 +1,20 @@
 import { v4 as uuid } from 'uuid'
 
-import { isHandshake, isInternalMessage, isObject } from './helper'
+import { HEARTBEAT_INTERVAL, RESPONSE_TIMEOUT } from './constants'
+import {
+  isHandshakeMessage,
+  isHeartbeatMessage,
+  isInternalMessage,
+  isObject,
+} from './helper'
 import type {
-  BufferMessage,
   ChannelMsg,
   ChannelOptions,
   ChannelReturns,
   Connection,
+  ConnectionStatus,
   Msg,
+  MsgType,
   ProtocolMsg,
   ToArgs,
 } from './types'
@@ -19,58 +26,81 @@ import type {
 export function createChannel<T extends ChannelMsg>(
   config: ChannelOptions<T>,
 ): ChannelReturns<T> {
-  const { connections, handler } = config
-  const clientId = config.id || uuid()
   const inFrame = window.self !== window.top
-  const activeConnections: Connection[] = []
-  const messageBuffer: BufferMessage[] = []
 
-  function addToBuffer(msg: BufferMessage) {
-    messageBuffer.push(msg)
-  }
+  const connections: Connection[] = config.connections.map((connection) => {
+    // const { target, targetOrigin, id: targetId } = connection
+    return {
+      buffer: [],
+      config: connection,
+      heartbeat: null,
+      id: null,
+      status: 'fresh',
+      // target,
+      // targetId,
+      // targetOrigin,
+    }
+  })
 
-  function flush() {
-    const toFlush = [...messageBuffer]
-    messageBuffer.splice(0, messageBuffer.length)
-    toFlush.forEach(({ connection, type, data }) => {
+  function flush(connection: Connection) {
+    const toFlush = [...connection.buffer]
+    connection.buffer.splice(0, connection.buffer.length)
+    toFlush.forEach(({ type, data }) => {
       post(connection, type, data)
     })
   }
 
-  function connectionIsActive(connection: Connection) {
-    return function (activeConnection: Connection) {
-      return (
-        activeConnection.id === connection.id &&
-        activeConnection.target === connection.target
-      )
+  function startHeartbeat(connection: Connection) {
+    stopHeartbeat(connection)
+    if (connection.config.heartbeat) {
+      const heartbeatInverval =
+        typeof connection.config.heartbeat === 'number'
+          ? connection.config.heartbeat
+          : HEARTBEAT_INTERVAL
+      connection.heartbeat = window.setInterval(() => {
+        send('channel/heartbeat', undefined, [connection])
+      }, heartbeatInverval)
+    }
+  }
+  function stopHeartbeat(connection: Connection) {
+    if (connection.heartbeat) {
+      window.clearInterval(connection.heartbeat)
     }
   }
 
-  function setConnectionState(connection: Connection, connected = true) {
-    const activeIndex = activeConnections.findIndex(
-      connectionIsActive(connection),
-    )
-    if (connected && activeIndex < 0) {
-      activeConnections.push(connection)
-      config.onConnect?.(connection)
-      flush()
-    } else if (!connected && activeIndex) {
-      activeConnections.splice(activeIndex, 1)
-      config.onDisconnect?.(connection)
+  function setConnectionStatus(
+    connection: Connection,
+    newStatus: ConnectionStatus,
+  ) {
+    const prevStatus = connection.status
+    if (prevStatus !== newStatus) {
+      connection.status = newStatus
+      config.onStatusUpdate?.(newStatus, prevStatus, connection)
+      if (newStatus === 'connected') {
+        flush(connection)
+        startHeartbeat(connection)
+      }
+      if (newStatus === 'disconnected') {
+        stopHeartbeat(connection)
+      }
     }
   }
 
   function findConnection(e: MessageEvent<unknown>) {
     const { source, origin, data } = e
     if (isObject(data)) {
-      return connections.find(
-        (connection) =>
-          data.to === clientId &&
-          connection.id === data.from &&
-          connection.target === source &&
-          (connection.targetOrigin === origin ||
-            connection.targetOrigin === '*'),
-      )
+      return connections.find((connection) => {
+        return (
+          config.id === data.to &&
+          connection.config.id === data.from &&
+          connection.config.target === source &&
+          (connection.config.targetOrigin === origin ||
+            connection.config.targetOrigin === '*') &&
+          // Must match the connection id or be a handshake
+          (connection.id === data.connectionId ||
+            isHandshakeMessage(data.type as MsgType))
+        )
+      })
     }
     return undefined
   }
@@ -80,36 +110,90 @@ export function createChannel<T extends ChannelMsg>(
     type: K,
     data?: Extract<T, { type: K }>['data'],
   ) {
-    const msg = {
-      id: uuid(),
-      type,
-      from: clientId,
-      to: connection.id,
-      data,
-    }
-
-    // Always send internal messages
-    // Otherwise send if connection is active
-    const isInternal = isInternalMessage(type)
-    const activeConnection = activeConnections.find(
-      connectionIsActive(connection),
-    )
-    if (isInternal || activeConnection) {
-      // Handshakes may be dispatched before an iframe has loaded in which case
-      // the targetOrigin will not match, so send internal messages using '*'
-      const targetOrigin = isInternal ? '*' : connection.targetOrigin
-      try {
-        return connection.target.postMessage(msg, { targetOrigin })
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to postMessage', e, { msg, connection })
+    return new Promise<string>((resolve, reject) => {
+      const msg: Msg = {
+        id: uuid(),
+        type,
+        connectionId: connection.id,
+        from: config.id,
+        to: connection.config.id,
+        data,
       }
-    }
-    // If not connected or it errors, add to bus
-    addToBuffer({
-      connection,
-      type,
-      data,
+
+      const isInternal = isInternalMessage(type)
+      const isHandshake = isHandshakeMessage(type)
+      const isHeartbeat = isHeartbeatMessage(type)
+      const activeConnection = connections.find(
+        (c) => c.id === connection.id && c.status === 'connected',
+      )
+
+      // Always send internal messages
+      // Otherwise send if connection is active
+      if (isInternal || isHandshake || isHeartbeat || activeConnection) {
+        if (!isInternal || isHeartbeat) {
+          // If the message isn’t internal, and the connection is active, we should receive a response. If we don't, reject, as the channel is unhealthy
+          const maxWait = setTimeout(() => {
+            // The connection may have changed, so only reject if the IDs match
+            if (msg.connectionId === connection.id) {
+              reject({
+                reason: `Received no response to message '${msg.id}' on client '${config.id}'`,
+                msg,
+                connection,
+              })
+            } else {
+              resolve(msg.id)
+            }
+          }, RESPONSE_TIMEOUT)
+
+          const transact = (e: MessageEvent<Msg>) => {
+            const { data: eventData } = e
+            if (
+              eventData.type === 'channel/response' &&
+              eventData.data?.responseTo &&
+              eventData.data.responseTo === msg.id
+            ) {
+              window.removeEventListener('message', transact, false)
+              clearTimeout(maxWait)
+              resolve(msg.id)
+            }
+          }
+          window.addEventListener('message', transact, false)
+        }
+
+        try {
+          // Handshakes may be dispatched before an iframe has loaded in which case the targetOrigin will not match, so send handshakes using '*'
+          const targetOrigin = isHandshake
+            ? '*'
+            : connection.config.targetOrigin
+          connection.config.target.postMessage(msg, { targetOrigin })
+          // Don't wait for internal message or handshake responses
+          if (isInternal || isHandshake) resolve(msg.id)
+          return
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to postMessage', e, { msg, connection })
+          reject({
+            reason: `Failed to postMessage '${msg.id}' on client '${config.id}'`,
+            msg,
+            connection,
+          })
+        }
+      }
+
+      // Buffer messages if we have a fresh connection or connecting
+      if (connection.status === 'fresh' || connection.status === 'connecting') {
+        connection.buffer.push({
+          type,
+          data,
+        })
+        resolve(msg.id)
+      }
+
+      reject({
+        reason: `Will not send message '${msg.id}' on client '${config.id}'`,
+        msg,
+        connection,
+      })
     })
   }
 
@@ -118,9 +202,9 @@ export function createChannel<T extends ChannelMsg>(
     type: K,
     data?: Extract<T, { type: K }>['data'],
   ) {
-    return connections.forEach((connection) => {
-      post(connection, type, data)
-    })
+    return Promise.allSettled(
+      connections.map((connection) => post(connection, type, data)),
+    )
   }
 
   function handleHandshake(
@@ -128,14 +212,20 @@ export function createChannel<T extends ChannelMsg>(
     e: MessageEvent<ProtocolMsg>,
   ) {
     if (e.data.type === 'handshake/syn') {
-      post(connection, 'handshake/syn-ack')
+      const id = e.data.data.id || connection.id
+      connection.id = id
+      post(connection, 'handshake/syn-ack', { id })
     }
     if (e.data.type === 'handshake/syn-ack') {
-      setConnectionState(connection, true)
-      post(connection, 'handshake/ack')
+      const id = e.data.data.id || connection.id
+      connection.id = id
+      setConnectionStatus(connection, 'connected')
+      post(connection, 'handshake/ack', { id })
     }
     if (e.data.type === 'handshake/ack') {
-      setConnectionState(connection, true)
+      const id = e.data.data.id || connection.id
+      connection.id = id
+      setConnectionStatus(connection, 'connected')
     }
   }
 
@@ -143,54 +233,71 @@ export function createChannel<T extends ChannelMsg>(
     const connection = findConnection(e)
     if (!connection) return
     const { data } = e
-    if (isHandshake(data.type)) {
+    if (isHandshakeMessage(data.type)) {
       handleHandshake(connection, e)
     } else if (data.type === 'channel/disconnect') {
-      setConnectionState(connection, false)
+      setConnectionStatus(connection, 'disconnected')
     } else if (data.type === 'channel/response') {
       // Do nothing for now
     } else {
       // eslint-disable-next-line no-warning-comments
       // @todo Ugly type casting
       const args = [data.type, data.data] as ToArgs<T>
-      handler(...args)
-      post(connection, 'channel/response')
+      config.handler(...args)
+      post(connection, 'channel/response', { responseTo: data.id })
     }
   }
 
   function disconnect() {
     window.removeEventListener('message', handleEvents, false)
-    if (!activeConnections.length) return
-    postMany(activeConnections, 'channel/disconnect')
-    activeConnections.forEach((connection) => {
-      setConnectionState(connection, false)
+    const connectionsToDisconnect = connections.filter(
+      ({ status }) => status === 'connecting' || status === 'connected',
+    )
+    if (!connectionsToDisconnect.length) return
+    postMany(connectionsToDisconnect, 'channel/disconnect')
+    connectionsToDisconnect.forEach((connection) => {
+      setConnectionStatus(connection, 'disconnected')
     })
   }
 
   function connect() {
     window.addEventListener('message', handleEvents, false)
-    // Should this post to only inactive connections?
-    postMany(connections, 'handshake/syn')
+    const inactiveConnections = connections.filter((connection) =>
+      ['disconnected', 'fresh', 'unhealthy'].includes(connection.status),
+    )
+    return Promise.all(
+      inactiveConnections.map((connection) => {
+        setConnectionStatus(connection, 'connecting')
+        return post(connection, 'handshake/syn', { id: uuid() })
+      }),
+    )
   }
 
   /**
-   * Dispatch a message to all active connections
+   * Dispatch a message to all connections
    * @param type The message type
    * @param data The message body
    * @returns void
    */
-  function send(type: T['type'], data?: T['data']) {
-    return new Promise<void>((resolve) => {
-      const transact = (e: MessageEvent<Msg>) => {
-        const { data: eventData } = e
-        if (eventData.type === 'channel/response') {
-          window.removeEventListener('message', transact, false)
-          resolve()
+  async function send(
+    type: T['type'],
+    data?: T['data'],
+    connectionSubset?: Connection[],
+  ) {
+    const results = await postMany(connectionSubset || connections, type, data)
+    results.forEach((result) => {
+      if (result.status === 'rejected') {
+        const connection = connections.find(
+          (connection) =>
+            connection.status === 'connected' &&
+            connection.id === result.reason.connection.id,
+        )
+        if (connection) {
+          setConnectionStatus(connection, 'unhealthy')
         }
       }
-      window.addEventListener('message', transact, false)
-      postMany(connections, type, data)
     })
+    return results
   }
 
   connect()
