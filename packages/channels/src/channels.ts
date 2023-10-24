@@ -14,6 +14,7 @@ import type {
   Connection,
   ConnectionStatus,
   Msg,
+  MsgType,
   ProtocolMsg,
   ToArgs,
 } from './types'
@@ -97,8 +98,7 @@ export function createChannel<T extends ChannelMsg>(
             connection.config.targetOrigin === '*') &&
           // Must match the connection id or be a handshake
           (connection.id === data.connectionId ||
-            (typeof data.type === 'string' &&
-              data.type.startsWith('handshake/')))
+            isHandshakeMessage(data.type as MsgType))
         )
       })
     }
