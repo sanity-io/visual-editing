@@ -212,18 +212,18 @@ export function createChannel<T extends ChannelMsg>(
     e: MessageEvent<ProtocolMsg>,
   ) {
     if (e.data.type === 'handshake/syn') {
-      const id = e.data.data.id || connection.id
+      const id = e.data.data?.id || connection.id
       connection.id = id
       post(connection, 'handshake/syn-ack', { id })
     }
     if (e.data.type === 'handshake/syn-ack') {
-      const id = e.data.data.id || connection.id
+      const id = e.data.data?.id || connection.id
       connection.id = id
       setConnectionStatus(connection, 'connected')
       post(connection, 'handshake/ack', { id })
     }
     if (e.data.type === 'handshake/ack') {
-      const id = e.data.data.id || connection.id
+      const id = e.data.data?.id || connection.id
       connection.id = id
       setConnectionStatus(connection, 'connected')
     }
