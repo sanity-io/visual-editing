@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.8-pink-lizard...core-loader-v0.2.0-pink-lizard) (2023-10-24)
+
+
+### Features
+
+* enable warp speed editing ([#181](https://github.com/sanity-io/visual-editing/issues/181)) ([6438f25](https://github.com/sanity-io/visual-editing/commit/6438f25d1421268fbf269ae8bc95f624e363be24))
+
+
+### Bug Fixes
+
+* channels improvements ([#180](https://github.com/sanity-io/visual-editing/issues/180)) ([182cb48](https://github.com/sanity-io/visual-editing/commit/182cb489efb6e5413303fa60d33e8b6c012a0cd3))
+
 ## [0.1.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.1.7-pink-lizard...core-loader-v0.1.8-pink-lizard) (2023-10-23)
 
 
