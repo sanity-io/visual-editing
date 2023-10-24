@@ -1,4 +1,5 @@
 import type {
+  ClientPerspective,
   ContentSourceMap,
   ContentSourceMapDocuments,
   QueryParams,
@@ -6,8 +7,10 @@ import type {
 
 /**
  * @internal
+ * client.fetch(query, params) => `${query}-${JSON.stringify(params)}`
  */
 export type QueryCacheKey = `${string}-${string}`
+// export type QueryCacheKey = `${ClientPerspective}-${string}-${string}`
 
 /**
  * Data resolved from a Sanity node
@@ -91,10 +94,19 @@ export type OverlayMsg =
  */
 export type LoaderMsg =
   | {
+      type: 'loader/perspective'
+      data: {
+        projectId: string
+        dataset: string
+        perspective: ClientPerspective
+      }
+    }
+  | {
       type: 'loader/query-change'
       data: {
         projectId: string
         dataset: string
+        perspective: ClientPerspective
         query: string
         params: QueryParams
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -107,6 +119,7 @@ export type LoaderMsg =
       data: {
         projectId: string
         dataset: string
+        perspective: ClientPerspective
         query: string
         params: QueryParams
       }
@@ -120,6 +133,7 @@ export type LoaderMsg =
       data: {
         projectId: string
         dataset: string
+        perspective: ClientPerspective
         documents: ContentSourceMapDocuments
       }
     }

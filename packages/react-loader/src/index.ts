@@ -3,6 +3,7 @@ import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
   type LiveModeState,
+  type QueryStoreState,
 } from '@sanity/core-loader'
 import {
   useCallback,
@@ -14,17 +15,12 @@ import {
 
 export type * from '@sanity/core-loader'
 
-export type UseQueryHook = <Response>(
+export type UseQueryHook = <Response = unknown, Error = unknown>(
   query: string,
   params?: QueryParams,
   options?: UseQueryOptions<Response>,
-) => {
-  data?: Response
-  sourceMap?: ContentSourceMap
-  loading: boolean
-  error: any
-}
-export interface UseQueryOptions<Response> {
+) => QueryStoreState<Response, Error>
+export interface UseQueryOptions<Response = unknown> {
   initialData?: Response
   initialSourceMap?: ContentSourceMap
 }
@@ -38,54 +34,49 @@ export interface QueryStore {
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): {
-  useQuery: <Response>(
+  useQuery: <Response = unknown, Error = unknown>(
     query: string,
-    params?: any,
+    params?: QueryParams,
     options?: UseQueryOptions<Response>,
-  ) => {
-    data?: Response
-    sourceMap?: ContentSourceMap
-    loading: boolean
-    error: any
-  }
+  ) => QueryStoreState<Response, Error>
   useLiveMode: () => void
 } => {
   const { createFetcherStore, $LiveMode } = createCoreQueryStore(options)
-  const initialFetch = { loading: true }
+  const initialFetch = {
+    loading: true,
+    data: undefined,
+    error: undefined,
+    sourceMap: undefined,
+  } satisfies QueryStoreState<Response, Error>
   const initialLiveMode = $LiveMode.value!
 
   const DEFAULT_PARAMS = {}
-  const useQuery: UseQueryHook = (
-    query,
-    params = DEFAULT_PARAMS,
-    options = {},
+  const useQuery = <Response, Error>(
+    query: string,
+    params: QueryParams = DEFAULT_PARAMS,
+    options: UseQueryOptions<Response> = {},
   ) => {
     const { initialData, initialSourceMap } = options
     const $params = useMemo(() => JSON.stringify(params), [params])
-    const [snapshot, setSnapshot] = useState(() => ({
-      ...initialFetch,
-      data:
-        initialData || initialSourceMap
-          ? { result: initialData, sourceMap: initialSourceMap }
-          : undefined,
-    }))
+    const [snapshot, setSnapshot] = useState<QueryStoreState<Response, Error>>(
+      () => ({
+        ...initialFetch,
+        data: initialData,
+        sourceMap: initialSourceMap,
+        loading: initialData === undefined,
+      }),
+    )
     useEffect(() => {
-      const $fetch = createFetcherStore([query, $params])
-      const unlisten = $fetch.listen((snapshot) => {
-        // setSnapshot((prev) => ({ ...prev, snapshot }))
-        // @ts-expect-error -- @TODO circle back and find out what's happening in @nanostores/query that causes inconsistencies
+      const fetcher = createFetcherStore<Response, Error>(
+        query,
+        JSON.parse($params),
+      )
+      const unlisten = fetcher.listen((snapshot) => {
         setSnapshot(snapshot)
       })
       return () => unlisten()
     }, [$params, query])
-    // @ts-expect-error -- @TODO fix
-    const { data, loading, error } = snapshot
-    return {
-      data: (data as any)?.result,
-      sourceMap: (data as any)?.resultSourceMap,
-      loading,
-      error,
-    }
+    return snapshot
   }
 
   const useLiveMode: UseLiveModeHook = () => {

@@ -61,6 +61,7 @@ export interface LiveStoreProviderProps {
   turboSourceMap?: boolean
   logger?: Logger
   perspective: ClientPerspective
+  draft: SanityDocument
 }
 /**
  * @internal
@@ -69,6 +70,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
   props: LiveStoreProviderProps,
 ) {
   const {
+    draft,
     children,
     client,
     refreshInterval = 10000,
@@ -178,6 +180,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
       <IsEnabledContext.Provider value>{children}</IsEnabledContext.Provider>
       {turboSourceMap && (
         <Turbo
+          draft={draft}
           cache={hooks.cache}
           client={client}
           setTurboIds={setTurboIds}
@@ -193,6 +196,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
         return (
           <QuerySubscription
             key={key}
+            draft={draft}
             client={client}
             listeners={listeners}
             params={params}
@@ -212,6 +216,7 @@ export default LiveStoreProvider
 
 interface QuerySubscriptionProps
   extends Required<Pick<LiveStoreProviderProps, 'client' | 'refreshInterval'>> {
+  draft: SanityDocument
   query: string
   params: QueryParams
   listeners: Set<() => void>
@@ -223,6 +228,7 @@ const QuerySubscription = memo(function QuerySubscription(
   props: QuerySubscriptionProps,
 ) {
   const {
+    draft,
     client,
     refreshInterval,
     query,
@@ -264,6 +270,7 @@ const QuerySubscription = memo(function QuerySubscription(
       if (!signal.aborted) {
         snapshots.set(getQueryCacheKey(perspective, query, params), {
           result: turboChargeResultIfSourceMap(
+            draft,
             projectId,
             dataset,
             result,
@@ -298,6 +305,7 @@ const QuerySubscription = memo(function QuerySubscription(
       }
     }
   }, [
+    draft,
     client,
     dataset,
     listeners,
@@ -522,6 +530,7 @@ function useHooks(
 }
 
 interface TurboProps extends Pick<LiveStoreProviderProps, 'client'> {
+  draft: SanityDocument
   turboIds: string[]
   setTurboIds: React.Dispatch<React.SetStateAction<string[]>>
   cache: LiveStoreQueryCacheMap
@@ -532,7 +541,15 @@ interface TurboProps extends Pick<LiveStoreProviderProps, 'client'> {
  * A turbo-charged mutation observer that uses Content Source Maps to apply mendoza patches on your queries
  */
 const Turbo = memo(function Turbo(props: TurboProps) {
-  const { client, snapshots, cache, turboIds, setTurboIds, perspective } = props
+  const {
+    draft,
+    client,
+    snapshots,
+    cache,
+    turboIds,
+    setTurboIds,
+    perspective,
+  } = props
   const { projectId, dataset } = useMemo(() => {
     const { projectId, dataset } = client.config()
     return { projectId, dataset } as Required<
@@ -558,7 +575,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     }
   }, [cache, setTurboIds, snapshots, turboIds])
 
-  // Figure out which documents are misssing from the cache
+  // Figure out which documents are missing from the cache
   const [batch, setBatch] = useState<string[][]>([])
   useEffect(() => {
     const batchSet = new Set(batch.flat())
@@ -585,7 +602,9 @@ const Turbo = memo(function Turbo(props: TurboProps) {
   useEffect(() => {
     const subscription = client
       .listen(
-        `*`,
+        perspective === 'published'
+          ? `*[!(_id in path("drafts.**"))]`
+          : `*[_id in path("drafts.**")]`,
         {},
         {
           events: ['mutation'],
@@ -628,6 +647,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     for (const [key, snapshot] of snapshots.entries()) {
       if (snapshot.resultSourceMap?.documents?.length) {
         snapshot.result = turboChargeResultIfSourceMap(
+          draft,
           projectId,
           dataset,
           snapshot.result,
@@ -647,6 +667,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     }
     startTransition(() => setLastMutatedDocumentId(undefined))
   }, [
+    draft,
     cache,
     dataset,
     lastMutatedDocumentId,
@@ -655,6 +676,47 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     snapshots,
     turboIds,
   ])
+
+  const [lastDraftDocumentRev, setLastDraftDocumentRev] = useState<string>()
+  useEffect(() => {
+    if (!lastDraftDocumentRev) return
+
+    const updatedKeys: QueryCacheKey[] = []
+    for (const [key, snapshot] of snapshots.entries()) {
+      if (snapshot.resultSourceMap?.documents?.length) {
+        snapshot.result = turboChargeResultIfSourceMap(
+          draft,
+          projectId,
+          dataset,
+          snapshot.result,
+          perspective,
+          snapshot.resultSourceMap,
+        )
+        updatedKeys.push(key)
+      }
+    }
+    for (const updatedKey of updatedKeys) {
+      const listeners = cache.get(updatedKey)?.listeners
+      if (listeners) {
+        for (const listener of listeners) {
+          listener()
+        }
+      }
+    }
+  }, [
+    cache,
+    dataset,
+    draft,
+    lastDraftDocumentRev,
+    perspective,
+    projectId,
+    snapshots,
+  ])
+  useEffect(() => {
+    if (draft) {
+      startTransition(() => setLastDraftDocumentRev(draft._rev))
+    }
+  }, [draft])
 
   return (
     <>
@@ -708,6 +770,7 @@ const GetDocuments = memo(function GetDocuments(props: GetDocumentsProps) {
 GetDocuments.displayName = 'GetDocuments'
 
 function turboChargeResultIfSourceMap(
+  draft: SanityDocument,
   projectId: string,
   dataset: string,
   result: unknown,
@@ -734,9 +797,17 @@ function turboChargeResultIfSourceMap(
     const sourceDocument = resultSourceMap.documents[mapping.source.document]
     const sourcePath = resultSourceMap.paths[mapping.source.path]
     if (sourceDocument && sourceDocument._id) {
-      const cachedDocument = documentsCache.get(
-        getTurboCacheKey(projectId, dataset, perspective, sourceDocument._id),
-      )
+      const cachedDocument =
+        draft?._id === sourceDocument._id
+          ? draft
+          : documentsCache.get(
+              getTurboCacheKey(
+                projectId,
+                dataset,
+                perspective,
+                sourceDocument._id,
+              ),
+            )
 
       const cachedValue = cachedDocument
         ? // @ts-expect-error -- @TODO fix parseJsonPath typings mismatch

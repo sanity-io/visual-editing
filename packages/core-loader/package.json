@@ -93,19 +93,18 @@
     "root": true
   },
   "devDependencies": {
-    "@sanity/groq-store": "workspace:*",
-    "@nanostores/query": "0.2.4",
     "@sanity/client": "^6.7.0",
+    "@sanity/groq-store": "workspace:*",
     "@sanity/pkg-utils": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "channels": "workspace:*",
     "eslint": "^8.52.0",
-    "nanostores": "0.9.4",
-    "typescript": "^5.2.2",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "nanostores": "0.9.4",
+    "typescript": "^5.2.2",
     "visual-editing-helpers": "workspace:*"
   },
   "peerDependencies": {
@@ -117,5 +116,8 @@
   "publishConfig": {
     "access": "restricted",
     "tag": "pink-lizard"
+  },
+  "dependencies": {
+    "async-cache-dedupe": "2.0.0"
   }
 }

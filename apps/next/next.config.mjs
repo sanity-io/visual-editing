@@ -11,8 +11,9 @@ const nextConfig = {
   },
 
   transpilePackages: [
+    '@sanity/csm',
     '@sanity/overlays',
-    '@sanity/preview-kit',
+    '@sanity/react-loader',
     'apps-common',
     'channels',
     'visual-editing-helpers',
