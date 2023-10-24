@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.6-pink-lizard...overlays-v0.1.7-pink-lizard) (2023-10-24)
+
+
+### Bug Fixes
+
+* **overlays:** initialise observers on activate method ([475b4bf](https://github.com/sanity-io/visual-editing/commit/475b4bf22c6dcd3b8c00263c1978aa1af3edf7f0))
+
 ## [0.1.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.5-pink-lizard...overlays-v0.1.6-pink-lizard) (2023-10-23)
 
 
