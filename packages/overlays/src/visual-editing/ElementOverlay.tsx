@@ -101,7 +101,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
 
   return (
-    <Root ref={ref} $focused={focused} $hovered={hovered} style={style}>
+    <Root ref={ref} $focused={!!focused} $hovered={hovered} style={style}>
       {showActions && hovered ? (
         <Actions $hovered={hovered} gap={1} paddingBottom={1}>
           <Box as="a" href={href}>
