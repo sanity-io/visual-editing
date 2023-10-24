@@ -1,4 +1,4 @@
-import { INTERNAL_MSG_TYPES } from './constants'
+import { HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES } from './constants'
 
 /**
  * @public
@@ -21,6 +21,15 @@ export type MsgBody = Record<string, unknown> | undefined
 /**
  * @internal
  */
+export type HandshakeMsgTypeTuple = typeof HANDSHAKE_MSG_TYPES
+
+/**
+ * @internal
+ */
+export type HandshakeMsgType = HandshakeMsgTypeTuple[number]
+/**
+ * @internal
+ */
 export type InternalMsgTypeTuple = typeof INTERNAL_MSG_TYPES
 
 /**
@@ -33,6 +42,7 @@ export type InternalMsgType = InternalMsgTypeTuple[number]
  */
 export interface InternalMsg {
   id: string
+  connectionId: string | null
   type: MsgType
   from: string
   to: string
@@ -41,9 +51,34 @@ export interface InternalMsg {
 /**
  * @internal
  */
-export interface ProtocolMsg extends InternalMsg {
-  type: InternalMsgType
+export interface HandshakeMsg extends InternalMsg {
+  type: 'handshake/syn' | 'handshake/syn-ack' | 'handshake/ack'
+  data: {
+    id: string
+  }
 }
+
+/**
+ * @internal
+ */
+export interface DisconnectMsg extends InternalMsg {
+  type: 'channel/disconnect'
+}
+
+/**
+ * @internal
+ */
+export interface ResponseMsg extends InternalMsg {
+  type: 'channel/response'
+  data: {
+    responseTo: string
+  }
+}
+
+/**
+ * @internal
+ */
+export type ProtocolMsg = HandshakeMsg | ResponseMsg | DisconnectMsg
 
 /**
  * @internal
@@ -67,10 +102,32 @@ export interface BufferMessage extends ChannelMsg {
 /**
  * @public
  */
-export interface Connection {
+export interface ChannelConnection {
+  id: string
   target: Window
   targetOrigin: string
-  id: string
+  heartbeat?: boolean | number
+}
+
+/**
+ * @internal
+ */
+export type ConnectionStatus =
+  | 'fresh'
+  | 'connecting'
+  | 'connected'
+  | 'unhealthy'
+  | 'disconnected'
+
+/**
+ * @internal
+ */
+export interface Connection {
+  buffer: ChannelMsg[]
+  config: ChannelConnection
+  heartbeat: number | null
+  id: string | null
+  status: ConnectionStatus
 }
 
 export type ToArgs<T extends ChannelMsg> = T extends T
@@ -89,15 +146,18 @@ export type ChannelEventHandler<T extends ChannelMsg = ChannelMsg> = (
  */
 export interface ChannelOptions<T extends ChannelMsg = ChannelMsg> {
   /**
-   * A client identifier that should be unique amongst all clients, a UUID will be generated if left blank
+   * An identifier that should be unique amongst all clients
    */
   id: string
   /**
    * The connections that should be established
    */
-  connections: Connection[]
-  onConnect?: (connection: Connection) => void
-  onDisconnect?: (connection: Connection) => void
+  connections: ChannelConnection[]
+  onStatusUpdate?: (
+    newStatus: ConnectionStatus,
+    prevStatus: ConnectionStatus,
+    connection: Connection,
+  ) => void
   handler: ChannelEventHandler<T>
 }
 

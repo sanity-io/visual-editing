@@ -64,14 +64,6 @@ export type ComposerMsg =
       type: 'composer/toggleOverlay'
       data: undefined
     }
-  | {
-      type: 'composer/ping'
-      data: undefined
-    }
-  | {
-      type: 'composer/pong'
-      data: undefined
-    }
 
 /**
  * Messages emitted by the overlays package
@@ -91,14 +83,6 @@ export type OverlayMsg =
       data: {
         enabled: boolean
       }
-    }
-  | {
-      type: 'overlay/ping'
-      data: undefined
-    }
-  | {
-      type: 'overlay/pong'
-      data: undefined
     }
 
 /**
@@ -138,14 +122,6 @@ export type LoaderMsg =
         dataset: string
         documents: ContentSourceMapDocuments
       }
-    }
-  | {
-      type: 'loader/ping'
-      data: undefined
-    }
-  | {
-      type: 'loader/pong'
-      data: undefined
     }
 
 /**
