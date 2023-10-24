@@ -65,7 +65,10 @@ export default function ComposerTool(props: {
     { _id: string; _type: string; _projectId?: string; dataset?: string }[]
   >([])
   const [liveQueries, setLiveQueries] = useState<
-    Record<string, { query: string; params: QueryParams }>
+    Record<
+      string,
+      { query: string; params: QueryParams; perspective: ClientPerspective }
+    >
   >({})
 
   const { defaultPreviewUrl, setParams, params, deskParams } = useParams({
@@ -147,6 +150,7 @@ export default function ComposerTool(props: {
           setLiveQueries((prev) => ({
             ...prev,
             [getQueryCacheKey(data.query, data.params)]: {
+              perspective: data.perspective,
               query: data.query,
               params: data.params,
             },
@@ -303,11 +307,26 @@ export default function ComposerTool(props: {
         </ComposerNavigateProvider>
       </ComposerProvider>
       {channel && (
-        <LoaderQueries
-          channel={channel}
-          liveQueries={liveQueries}
-          perspective={perspective}
-        />
+        <>
+          <LoaderQueries
+            key="published"
+            activePerspective={perspective === 'published'}
+            channel={channel}
+            liveQueries={liveQueries}
+            perspective="published"
+            documentId={params.id}
+            documentType={params.type}
+          />
+          <LoaderQueries
+            key="previewDrafts"
+            activePerspective={perspective === 'previewDrafts'}
+            channel={channel}
+            liveQueries={liveQueries}
+            perspective="previewDrafts"
+            documentId={params.id}
+            documentType={params.type}
+          />
+        </>
       )}
     </>
   )

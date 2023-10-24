@@ -9,15 +9,14 @@ import { computed, type DeepReadonly, type Ref } from 'vue'
 
 export type * from '@sanity/core-loader'
 
-export type UseQueryHook = <Response>(
+export type UseQueryHook = <Response = unknown, Error = unknown>(
   query: string,
   params?: QueryParams,
 ) => {
   data: Ref<Response>
   sourceMap: Ref<ContentSourceMap>
   loading: Ref<boolean>
-  refreshing: Ref<boolean>
-  error: Ref<any>
+  error: Ref<Error>
 }
 export type UseLiveModeHook = () => DeepReadonly<Ref<LiveModeState>>
 
@@ -30,20 +29,19 @@ export const createQueryStore = (
   const { createFetcherStore, $LiveMode } = createCoreQueryStore(options)
 
   const DEFAULT_PARAMS = {}
-  const useQuery: UseQueryHook = (query, params = DEFAULT_PARAMS) => {
-    const $params = JSON.stringify(params)
-    const $fetch = createFetcherStore([query, $params])
+  const useQuery: UseQueryHook = <Response = unknown, Error = unknown>(
+    query: string,
+    params: QueryParams = DEFAULT_PARAMS,
+  ) => {
+    const $fetch = createFetcherStore<Response, Error>(query, params)
     const snapshot = useStore($fetch)
 
     return {
-      data: computed(() => (snapshot.value.data as any)?.result),
-      sourceMap: computed(() => (snapshot.value.data as any)?.resultSourceMap),
-      loading: computed(() =>
-        'data' in snapshot.value ? false : snapshot.value.loading,
-      ),
-      refreshing: computed(() => snapshot.value.loading),
+      data: computed(() => snapshot.value.data as any),
+      sourceMap: computed(() => snapshot.value.sourceMap as any),
+      loading: computed(() => snapshot.value.loading),
       error: computed(() => snapshot.value.error),
-    }
+    } as any
   }
 
   const useLiveMode: UseLiveModeHook = () => {

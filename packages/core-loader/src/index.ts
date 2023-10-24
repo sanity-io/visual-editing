@@ -1,58 +1,31 @@
-import { type FetcherStoreCreator, nanoquery } from '@nanostores/query'
-import type {
-  ContentSourceMap,
-  ContentSourceMapDocuments,
-  QueryParams,
-  SanityClient,
-} from '@sanity/client'
-//  import type { ChannelEventHandler, ChannelMsg, ChannelReturns } from 'channels'
-import { ChannelReturns, createChannel } from 'channels'
+import type { QueryParams, SanityClient } from '@sanity/client'
+import { createCache } from 'async-cache-dedupe'
 import {
-  computed,
+  atom,
   listenKeys,
   map,
   type MapStore,
   onMount,
-  onStart,
-  onStop,
+  startTask,
 } from 'nanostores'
-import {
-  getQueryCacheKey,
-  type QueryCacheKey,
-  type VisualEditingConnectionIds,
-  type VisualEditingMsg,
-} from 'visual-editing-helpers'
 
-export type { FetcherStore } from '@nanostores/query'
+import { createLiveModeStore } from './live-mode'
+import { LiveModeState, QueryStoreState } from './types'
+
+export type { MapStore }
+
+export type * from './types'
 
 export interface CreateQueryStoreOptions {
   client: SanityClient
   studioUrl: string
 }
 
-// // @TODO move this into the options somehow
-// const DEDUPE_TIME = 4000 // 4s
-// const REFETCH_ON_FOCUS = true // false
-// const REFETCH_ON_RECONNECT = true // false
-// // const REFETCH_INTERVAL = 10000 // 0
-// // @TODO temporarily very high
-// const REFETCH_INTERVAL = 1000
-
-export interface QueryStoreFetcherData<Response = unknown> {
-  query: string
-  params: QueryParams
-  result: Response
-  resultSourceMap?: ContentSourceMap
-}
-
-export interface LiveModeState {
-  enabled: boolean
-  connected: boolean
-  studioOrigin: string
-}
-
 export interface QueryStore {
-  createFetcherStore: FetcherStoreCreator<QueryStoreFetcherData>
+  createFetcherStore: <Response = unknown, Error = unknown>(
+    query: string,
+    params?: QueryParams,
+  ) => MapStore<QueryStoreState<Response, Error>>
   $LiveMode: MapStore<LiveModeState>
 }
 
@@ -60,7 +33,7 @@ export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): QueryStore => {
   const { client, studioUrl } = options
-  const { projectId, dataset, resultSourceMap } = client.config()
+  const { projectId, dataset, resultSourceMap, perspective } = client.config()
   if (!projectId) throw new Error('Missing projectId')
   if (!dataset) throw new Error('Missing dataset')
   // const $perspective = atom(client.config().perspective || 'previewDrafts')
@@ -69,208 +42,187 @@ export const createQueryStore = (
     // Enable source maps if not already enabled
     client.config({ resultSourceMap: 'withKeyArraySelector' })
   }
+  // Handle the perspective setting, it has to be 'published' or 'previewDrafts'
+  if (perspective !== 'published' && perspective !== 'previewDrafts') {
+    client.config({ perspective: 'published' })
+  }
 
-  const initialLiveMode = {
-    enabled: false,
-    connected: false,
-    studioOrigin: '',
-  } satisfies LiveModeState
-  const $LiveMode = map<LiveModeState>(initialLiveMode)
-  const $resultSourceMapDocuments = map<
-    Record<QueryCacheKey, ContentSourceMapDocuments | undefined>
-  >({})
+  const $perspective = atom(client.config().perspective!)
+  // const $queries = map<Record<string, QueryStoreState<any, any>>>()
 
-  let channel: ChannelReturns<VisualEditingMsg> | null = null
-
-  const cache = new Map<string, any>()
-  const [
-    _createFetcherStore,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _createMutatorStore,
-    { mutateCache },
-  ] = nanoquery({
-    // dedupeTime: DEDUPE_TIME,
-    // refetchOnFocus: REFETCH_ON_FOCUS,
-    // refetchOnReconnect: REFETCH_ON_RECONNECT,
-    // refetchInterval: REFETCH_INTERVAL,
-    cache,
-    fetcher: async (
-      ...keys: (string | number)[]
-    ): Promise<{
-      query: string
-      params: any
-      result: Response
-      resultSourceMap?: ContentSourceMap
-    }> => {
-      // @TODO we might need to write our own `@nanostores/query` as our needs doesn't neetly fit into its API
-      if (cache.has(keys.join(''))) return cache.get(keys.join(''))
-
-      const [query, _params] = keys as [query: string, _params?: string]
-      const params = _params ? JSON.parse(_params) : {}
-
-      if ($LiveMode.get().enabled) {
-        if (!channel) throw new Error('No channel')
-        channel.send('loader/query-listen', {
-          projectId,
-          dataset,
-          query,
-          params,
-        })
-      }
-
-      const { result, resultSourceMap } = await client.fetch(query, params, {
-        filterResponse: false,
-        // token: $token.get(),
-        // perspective: $perspective.get(),
-      })
-      // console.log('fetcher', { result, resultSourceMap, ...rest })
-
-      if ($LiveMode.get().enabled) {
-        $resultSourceMapDocuments.setKey(
-          getQueryCacheKey(query, params),
-          resultSourceMap?.documents,
-        )
-      }
-
-      return { query, params, result, resultSourceMap }
-    },
+  const { $LiveMode, runLiveFetch } = createLiveModeStore({
+    client,
+    studioUrl,
+    $perspective,
   })
 
-  const $queriesInUse = map<
-    Record<
-      string,
-      { query: string; params: QueryParams; listeners: number } | undefined
-    >
-  >({})
-  const $documentsInUse = computed(
-    [$resultSourceMapDocuments, $queriesInUse],
-    (resultSourceMapDocuments, _queriesInUse) => {
-      const queriesInUse = Object.values(_queriesInUse).filter((snapshot) =>
-        snapshot?.listeners ? snapshot.listeners > 0 : false,
-      ) as { query: string; params: QueryParams }[]
-      const documentsOnPage: ContentSourceMapDocuments = []
-      for (const { query, params } of queriesInUse) {
-        const key = getQueryCacheKey(query, params)
-        if (resultSourceMapDocuments[key]) {
-          documentsOnPage.push(...resultSourceMapDocuments[key]!)
-        }
-      }
-
-      return documentsOnPage
-    },
-  )
-
-  const createFetcherStore: typeof _createFetcherStore = (keys, settings) => {
-    const $fetch = _createFetcherStore(keys, settings)
-
-    onStart($fetch, () => {
-      const [query, _params] = keys as [query: string, _params?: string]
-      const params = _params ? JSON.parse(_params) : {}
-      const key = getQueryCacheKey(query, params)
-      const value = $queriesInUse.get()[key]
-      const listeners = value?.listeners || 0
-      $queriesInUse.setKey(key, {
-        ...value,
-        query,
-        params,
-        listeners: listeners + 1,
-      })
+  const cache2 = createCache().define('fetch', async (key: string) => {
+    const { query, params = {} } = JSON.parse(key)
+    const { result, resultSourceMap } = await client.fetch(query, params, {
+      filterResponse: false,
     })
-    onStop($fetch, () => {
-      const [query, _params] = keys as [query: string, _params?: string]
-      const params = _params ? JSON.parse(_params) : {}
-      const key = getQueryCacheKey(query, params)
-      const value = $queriesInUse.get()[key]
-      const listeners = value?.listeners || 1
-      if (listeners > 1) {
-        $queriesInUse.setKey(key, {
-          ...value,
-          query,
-          params,
-          listeners: listeners - 1,
-        })
-      } else {
-        $queriesInUse.setKey(key, undefined)
-      }
+    return { result, resultSourceMap }
+  })
+
+  const runFetch = async <Response, Error>(
+    query: string,
+    params: QueryParams,
+    $fetch: MapStore<QueryStoreState<Response, Error>>,
+    controller: AbortController,
+  ) => {
+    if (controller.signal.aborted) return
+    if ($LiveMode.get().connected) {
+      return runLiveFetch<Response, Error>(query, params, $fetch, controller)
+    }
+    const finishTask = startTask()
+    try {
+      $fetch.setKey('loading', true)
+      $fetch.setKey('error', undefined)
+      const response = await cache2.fetch(JSON.stringify({ query, params }))
+      if (controller.signal.aborted) return
+      $fetch.setKey('data', response.result)
+      $fetch.setKey('sourceMap', response.resultSourceMap)
+    } catch (error: unknown) {
+      $fetch.setKey('error', error as Error)
+    } finally {
+      $fetch.setKey('loading', false)
+      finishTask()
+    }
+  }
+
+  // const [
+  //   _createFetcherStore,
+  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   _createMutatorStore,
+  //   { mutateCache },
+  // ] = nanoquery({
+  //   // dedupeTime: DEDUPE_TIME,
+  //   // refetchOnFocus: REFETCH_ON_FOCUS,
+  //   // refetchOnReconnect: REFETCH_ON_RECONNECT,
+  //   // refetchInterval: REFETCH_INTERVAL,
+  //   fetcher: async (
+  //     ...keys: (string | number)[]
+  //   ): Promise<{
+  //     query: string
+  //     params: any
+  //     result: Response
+  //     resultSourceMap?: ContentSourceMap
+  //   }> => {
+  //     // @TODO we might need to write our own `@nanostores/query` as our needs doesn't neetly fit into its API
+  //     // if (cache.has(keys.join(''))) return cache.get(keys.join(''))
+
+  //     const [query, _params] = keys as [query: string, _params?: string]
+  //     const params = _params ? JSON.parse(_params) : {}
+
+  //     if ($LiveMode.get().enabled) {
+  //       if (!channel) throw new Error('No channel')
+  //       channel.send('loader/query-listen', {
+  //         projectId,
+  //         dataset,
+  //         perspective: $perspective.get(),
+  //         query,
+  //         params,
+  //       })
+  //     }
+
+  //     const { result, resultSourceMap } = await client.fetch(query, params, {
+  //       filterResponse: false,
+  //       // token: $token.get(),
+  //       // perspective: $perspective.get(),
+  //     })
+  //     // console.log('fetcher', { result, resultSourceMap, ...rest })
+
+  //     if ($LiveMode.get().enabled) {
+  //       $resultSourceMapDocuments.setKey(
+  //         getQueryCacheKey(query, params),
+  //         resultSourceMap?.documents,
+  //       )
+  //     }
+
+  //     return { query, params, result, resultSourceMap }
+  //   },
+  // })
+
+  const createFetcherStore: QueryStore['createFetcherStore'] = <
+    Response,
+    Error,
+  >(
+    query: string,
+    params: QueryParams = {},
+  ): MapStore<QueryStoreState<Response, Error>> => {
+    const $fetch = map<QueryStoreState<Response, Error>>({
+      loading: true,
+      error: undefined,
+      data: undefined,
+      sourceMap: undefined,
     })
 
-    // onSet($fetch, ({ newValue, ...rest }) => {
-    //   console.log('$fetch onSet', { newValue, ...rest })
-    // })
+    onMount($fetch, () => {
+      let controller = new AbortController()
+      // const key = JSON.stringify({ query, params })
+      // const value = $queries.get()[key]
+
+      // const unsub = listenKeys($queries, [key], (value, changed) => {
+      //   console.log('listenKeys', {value, changed})
+      // })
+      runFetch<Response, Error>(query, params, $fetch, controller)
+      const unListenKeys = listenKeys(
+        $LiveMode,
+        ['enabled', 'connected'],
+        () => {
+          controller.abort()
+          controller = new AbortController()
+          runFetch<Response, Error>(query, params, $fetch, controller)
+        },
+      )
+      return () => {
+        unListenKeys()
+        controller.abort()
+      }
+    })
 
     return $fetch
   }
+  // const createFetcherStore: typeof _createFetcherStore = (keys, settings) => {
+  //   const $fetch = _createFetcherStore(keys, settings)
 
-  onMount($LiveMode, () => {
-    $LiveMode.setKey('enabled', true)
-    const studioOrigin = new URL(studioUrl, location.origin).origin
-    $LiveMode.setKey('studioOrigin', studioOrigin)
-    channel = createChannel<VisualEditingMsg>({
-      id: 'loaders' satisfies VisualEditingConnectionIds,
-      onStatusUpdate(status) {
-        if (status === 'connected') {
-          $LiveMode.setKey('connected', true)
-        } else if (status === 'disconnected' || status === 'unhealthy') {
-          $LiveMode.setKey('connected', false)
-        }
-      },
-      connections: [
-        {
-          target: parent,
-          targetOrigin: studioUrl,
-          id: 'composer' satisfies VisualEditingConnectionIds,
-        },
-      ],
-      handler: (type, data) => {
-        if (
-          type === 'loader/query-change' &&
-          data.projectId === projectId &&
-          data.dataset === dataset
-        ) {
-          const cacheKey = [data.query, JSON.stringify(data.params)].join('')
-          const prevCache = cache.has(cacheKey) ? cache.get(cacheKey) : {}
-          mutateCache(cacheKey, {
-            query: data.query,
-            params: data.params,
-            result: data.result,
-            // @TODO workaround limitation in live queries not sending source maps
-            resultSourceMap: data.resultSourceMap || prevCache.resultSourceMap,
-          })
-        }
-      },
-    })
+  //   onStart($fetch, () => {
+  //     const [query, _params] = keys as [query: string, _params?: string]
+  //     const params = _params ? JSON.parse(_params) : {}
+  //     const key = getQueryCacheKey(query, params)
+  //     const value = $queriesInUse.get()[key]
+  //     const listeners = value?.listeners || 0
+  //     $queriesInUse.setKey(key, {
+  //       ...value,
+  //       query,
+  //       params,
+  //       listeners: listeners + 1,
+  //     })
+  //   })
+  //   onStop($fetch, () => {
+  //     const [query, _params] = keys as [query: string, _params?: string]
+  //     const params = _params ? JSON.parse(_params) : {}
+  //     const key = getQueryCacheKey(query, params)
+  //     const value = $queriesInUse.get()[key]
+  //     const listeners = value?.listeners || 1
+  //     if (listeners > 1) {
+  //       $queriesInUse.setKey(key, {
+  //         ...value,
+  //         query,
+  //         params,
+  //         listeners: listeners - 1,
+  //       })
+  //     } else {
+  //       $queriesInUse.setKey(key, undefined)
+  //     }
+  //   })
 
-    const unlistenConnection = listenKeys($LiveMode, ['connected'], () => {
-      // @TODO handle reconnection and invalidation
-      // Revalidate if the connection status changes
-      // invalidateKeys(() => true)
-    })
-    const unlistenQueries = $documentsInUse.subscribe((documents) => {
-      if (!channel) {
-        throw new Error('No channel')
-      }
-      channel.send('loader/documents', {
-        projectId: projectId!,
-        dataset: dataset!,
-        documents: documents as ContentSourceMapDocuments,
-      })
-    })
+  //   // onSet($fetch, ({ newValue, ...rest }) => {
+  //   //   console.log('$fetch onSet', { newValue, ...rest })
+  //   // })
 
-    return () => {
-      unlistenQueries()
-      unlistenConnection()
-      $LiveMode.setKey('enabled', false)
-      $LiveMode.setKey('connected', false)
-      channel?.disconnect()
-      channel = null
-    }
-  })
-  // onSet($documentsOnPage)
-  // onSet($token, () => invalidateKeys(() => true))
-
-  // const $query = atom<string>('')
-  // const $params = atom<any>({})
-  // const sourceDocuments = new Map<string, any>()
+  //   return $fetch
+  // }
 
   return { createFetcherStore, $LiveMode }
 }

@@ -204,20 +204,14 @@ export const PreviewFrame = forwardRef<
                 <Menu>
                   <MenuItem
                     fontSize={1}
-                    onClick={() => {
-                      setPerspective('previewDrafts')
-                      handleRefresh()
-                    }}
+                    onClick={() => setPerspective('previewDrafts')}
                     padding={2}
                     pressed={perspective === 'previewDrafts'}
                     text="Preview drafts"
                   />
                   <MenuItem
                     fontSize={1}
-                    onClick={() => {
-                      setPerspective('published')
-                      handleRefresh()
-                    }}
+                    onClick={() => setPerspective('published')}
                     padding={2}
                     pressed={perspective === 'published'}
                     text="Published"

@@ -17,7 +17,6 @@ module.exports = {
     /^apps-common.*/,
     /^@sanity\/core-loader.*/,
     /^@sanity\/react-loader.*/,
-    '@nanostores/query',
     'channels',
     'nanostores',
     'nanoevents',
@@ -32,5 +31,9 @@ module.exports = {
     v2_routeConvention: true,
   },
   tailwind: true,
-  watchPaths: ['../common/src/**', '../../packages/react-loader/src/**'],
+  watchPaths: [
+    '../common/src/**',
+    '../../packages/core-loader/src/**',
+    '../../packages/react-loader/src/**',
+  ],
 }
