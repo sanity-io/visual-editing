@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.0.8-pink-lizard...svelte-loader-v0.1.0-pink-lizard) (2023-10-24)
+
+
+### Features
+
+* enable warp speed editing ([#181](https://github.com/sanity-io/visual-editing/issues/181)) ([6438f25](https://github.com/sanity-io/visual-editing/commit/6438f25d1421268fbf269ae8bc95f624e363be24))
+
 ## [0.0.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.0.7-pink-lizard...svelte-loader-v0.0.8-pink-lizard) (2023-10-23)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.2.3-pink-lizard...nuxt-loader-v0.3.0-pink-lizard) (2023-10-24)
+
+
+### Features
+
+* enable warp speed editing ([#181](https://github.com/sanity-io/visual-editing/issues/181)) ([6438f25](https://github.com/sanity-io/visual-editing/commit/6438f25d1421268fbf269ae8bc95f624e363be24))
+
 ## [0.2.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.2.2-pink-lizard...nuxt-loader-v0.2.3-pink-lizard) (2023-10-23)
 
 
