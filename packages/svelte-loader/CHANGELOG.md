@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.1.0-pink-lizard...svelte-loader-v0.1.1-pink-lizard) (2023-10-24)
+
+
+### Bug Fixes
+
+* temp disable minify for debugging ([93265ae](https://github.com/sanity-io/visual-editing/commit/93265ae870ec204a2753665a3e435a573ab5d862))
+
 ## [0.1.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.0.8-pink-lizard...svelte-loader-v0.1.0-pink-lizard) (2023-10-24)
 
 

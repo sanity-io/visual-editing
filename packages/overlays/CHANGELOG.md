@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.8-pink-lizard...overlays-v0.1.9-pink-lizard) (2023-10-24)
+
+
+### Bug Fixes
+
+* temp disable minify for debugging ([93265ae](https://github.com/sanity-io/visual-editing/commit/93265ae870ec204a2753665a3e435a573ab5d862))
+
 ## [0.1.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.7-pink-lizard...overlays-v0.1.8-pink-lizard) (2023-10-24)
 
 

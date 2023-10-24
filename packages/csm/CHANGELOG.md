@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.6-pink-lizard...csm-v0.1.7-pink-lizard) (2023-10-24)
+
+
+### Bug Fixes
+
+* temp disable minify for debugging ([93265ae](https://github.com/sanity-io/visual-editing/commit/93265ae870ec204a2753665a3e435a573ab5d862))
+
 ## [0.1.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.5-pink-lizard...csm-v0.1.6-pink-lizard) (2023-10-23)
 
 

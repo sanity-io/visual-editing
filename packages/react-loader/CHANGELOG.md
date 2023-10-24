@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.2.0-pink-lizard...react-loader-v0.2.1-pink-lizard) (2023-10-24)
+
+
+### Bug Fixes
+
+* set loading to `true` even when initial data is used ([cd4ce21](https://github.com/sanity-io/visual-editing/commit/cd4ce21fbd2f75b9de559e0ad5a6f18f963a525f))
+* temp disable minify for debugging ([93265ae](https://github.com/sanity-io/visual-editing/commit/93265ae870ec204a2753665a3e435a573ab5d862))
+
 ## [0.2.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.1.8-pink-lizard...react-loader-v0.2.0-pink-lizard) (2023-10-24)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.3.0-pink-lizard...nuxt-loader-v0.3.1-pink-lizard) (2023-10-24)
+
+
+### Bug Fixes
+
+* temp disable minify for debugging ([93265ae](https://github.com/sanity-io/visual-editing/commit/93265ae870ec204a2753665a3e435a573ab5d862))
+
 ## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.2.3-pink-lizard...nuxt-loader-v0.3.0-pink-lizard) (2023-10-24)
 
 
