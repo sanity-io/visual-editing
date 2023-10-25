@@ -93,15 +93,15 @@ importers:
 
   apps/common:
     dependencies:
+      '@sanity/csm':
+        specifier: workspace:*
+        version: link:../../packages/csm
       '@sanity/icons':
         specifier: ^2.6.0
         version: 2.6.0(react@18.2.0)
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
-      '@sanity/preview-kit':
-        specifier: 3.2.6
-        version: 3.2.6(@sanity/client@6.7.0)(react@18.2.0)
       '@sanity/ui':
         specifier: ^1.8.3
         version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)

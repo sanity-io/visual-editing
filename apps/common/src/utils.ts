@@ -2,15 +2,14 @@
 // Common utils used in templates, demos and tests.
 // The JS in here needs to be able to run server side, browser side, in any fw
 
-import { encodeSanityNodeData, type SanityNode } from '@sanity/overlays'
-// @TODO move the ContentSourceMap export to `@sanity/preview-kit/csm`
-import type { ContentSourceMap } from '@sanity/preview-kit/client'
 import {
   encodeJsonPathToUriComponent,
-  parseNormalisedJsonPath,
+  parseJsonPath,
   type PathSegment,
   resolveMapping,
-} from '@sanity/preview-kit/csm'
+} from '@sanity/csm'
+import { encodeSanityNodeData, type SanityNode } from '@sanity/overlays'
+import type { ContentSourceMap } from '@sanity/preview-kit/client'
 
 export function formatCurrency(value: number): string {
   const formatter = new Intl.NumberFormat('en', {
@@ -74,7 +73,11 @@ function resolveSanityNodeFromResultSourceMapPath(
     return null
   }
 
-  const [mapping, tmpDebug, pathSuffix] = resolveMappingResult
+  const {
+    mapping,
+    matchedPath: tmpDebug,
+    pathSuffix,
+  } = resolveMappingResult || []
   if (mapping.type !== 'value') {
     console.warn('mapping.type !== value', {
       resultPath,
@@ -114,8 +117,6 @@ function resolveSanityNodeFromResultSourceMapPath(
     dataset: sourceDocument._dataset,
     type: sourceDocument._type,
     id: sourceDocument._id,
-    path: encodeJsonPathToUriComponent(
-      parseNormalisedJsonPath(sourcePath + pathSuffix),
-    ),
+    path: encodeJsonPathToUriComponent(parseJsonPath(sourcePath + pathSuffix)),
   }
 }
