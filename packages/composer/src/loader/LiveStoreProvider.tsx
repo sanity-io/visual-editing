@@ -785,7 +785,7 @@ function turboChargeResultIfSourceMap(
       return value
     }
 
-    const [mapping, , pathSuffix] = resolveMappingResult
+    const { mapping, pathSuffix } = resolveMappingResult
     if (mapping.type !== 'value') {
       return value
     }
