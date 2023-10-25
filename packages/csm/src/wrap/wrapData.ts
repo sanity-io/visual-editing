@@ -1,96 +1,74 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ContentSourceMap } from '@sanity/client'
-import { SanityNode } from 'visual-editing-helpers'
 
 import { Logger, PathSegment } from '../legacy'
 import { isArray, isRecord } from '../legacy/helpers'
-import { parseJsonPath } from '../legacy/jsonpath'
-import { resolveMapping } from '../legacy/resolveMapping'
 import { simplifyPath } from '../legacy/simplifyPath'
 import { SANITY_KEYS } from './constants'
-import { getPublishedId } from './getPublishedId'
-import { SanityKey, SanityNodeContext, SourceNode, WrappedValue } from './types'
+import { getValueSource } from './getValueSource'
+import { SanityKey, SanityNodeContext, WrappedValue } from './types'
 
+/** @public */
 export function wrapData<T>(
-  context: SanityNodeContext & { logger?: Logger },
+  context: SanityNodeContext,
   value: T,
   sourceMap: ContentSourceMap | undefined,
-  path?: PathSegment[],
-): WrappedValue<T>
-export function wrapData<T>(
-  context: SanityNodeContext & { logger?: Logger },
-  value: T | undefined,
-  sourceMap: ContentSourceMap | undefined,
-  path: PathSegment[] = [],
-): WrappedValue<T> | undefined {
-  if (value === null || value === undefined) {
-    return value as WrappedValue<T> | undefined
+  resultPath: PathSegment[] = [],
+  keyedResultPath: PathSegment[] = [],
+  logger?: Logger,
+): WrappedValue<T> {
+  if (value === undefined) {
+    return undefined as WrappedValue<T>
   }
 
-  if (isRecord(value)) {
-    const map = Object.fromEntries(
-      Object.entries(value).map(([k, v]) => {
-        if (SANITY_KEYS.includes(k as SanityKey)) {
-          return [k, v]
-        }
-
-        return [k, wrapData(context, v, sourceMap, path.concat(k))]
-      }),
-    )
-
-    return map as WrappedValue<T>
+  if (value === null) {
+    return null as WrappedValue<T>
   }
 
   if (isArray(value)) {
-    return value.map((item, idx) =>
-      wrapData(context, item, sourceMap, path.concat(idx)),
-    ) as unknown as WrappedValue<T>
+    return value.map((t, idx) =>
+      wrapData(
+        context,
+        t as T,
+        sourceMap,
+        resultPath.concat(idx),
+        keyedResultPath.concat(
+          isRecord(t) && '_key' in t && typeof t._key === 'string'
+            ? { key: t._key, index: idx }
+            : idx,
+        ),
+        logger,
+      ),
+    ) as WrappedValue<T>
   }
 
-  const node: SourceNode<T> = {
-    $$type$$: 'sanity',
+  if (isRecord(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([k, v]) =>
+        SANITY_KEYS.includes(k as SanityKey)
+          ? [k, v]
+          : [
+              k,
+              wrapData(
+                context,
+                v,
+                sourceMap,
+                resultPath.concat(k),
+                keyedResultPath.concat(k),
+                logger,
+              ),
+            ],
+      ),
+    ) as WrappedValue<T>
+  }
+
+  return {
+    $$typeof: 'sanity',
+    path: simplifyPath(resultPath) || undefined,
+    source: sourceMap
+      ? getValueSource(context, sourceMap, resultPath, keyedResultPath, logger)
+      : undefined,
     value,
-    source: sourceMap ? getValueSource(context, sourceMap, path) : undefined,
-  }
-
-  return node as unknown as WrappedValue<T>
-}
-
-function getValueSource(
-  context: SanityNodeContext & { logger?: Logger },
-  sourceMap: ContentSourceMap,
-  path: PathSegment[],
-): SanityNode | undefined {
-  const [mapping, , pathSuffix] =
-    resolveMapping(path, sourceMap, context.logger) || []
-
-  if (!mapping) {
-    // console.warn('no mapping for path', {path, sourceMap})
-    return undefined
-  }
-
-  if (mapping.source.type === 'literal') {
-    return undefined
-  }
-
-  if (mapping.source.type === 'unknown') {
-    return undefined
-  }
-
-  const sourceDoc = sourceMap.documents[mapping.source.document]
-  const sourcePath = sourceMap.paths[mapping.source.path]
-
-  if (sourceDoc && sourcePath) {
-    return {
-      baseUrl: context.baseUrl,
-      dataset: context.dataset,
-      id: getPublishedId(sourceDoc._id),
-      path: simplifyPath(parseJsonPath(sourcePath + pathSuffix)),
-      projectId: context.projectId,
-      tool: context.tool,
-      type: sourceDoc._type,
-      workspace: context.workspace,
-    }
-  }
-
-  return undefined
+  } as unknown as WrappedValue<T>
 }

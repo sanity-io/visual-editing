@@ -1,32 +1,41 @@
 import { isArray, isRecord } from '../legacy/helpers'
-import { SourceNode, WrappedValue } from './types'
+import { SANITY_KEYS } from './constants'
+import { isSourceNode } from './isSourceNode'
+import { SanityKey, UnwrappedValue, WrappedValue } from './types'
 
-function isSourceNode(n: unknown): n is SourceNode<unknown> {
-  return isRecord(n) && n.$$type$$ === 'sanity'
-}
-
-export function unwrapData<T, W = WrappedValue<T>>(
-  wrapped: W,
-): T | null | undefined {
-  if (wrapped === null || wrapped === undefined) {
-    return wrapped as null | undefined
+/** @public */
+export function unwrapData<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T = any,
+  S extends WrappedValue<T> = WrappedValue<T>,
+>(wrapper: S): UnwrappedValue<S> {
+  if (wrapper === undefined) {
+    return undefined as UnwrappedValue<S>
   }
 
-  if (isSourceNode(wrapped)) {
-    return wrapped.value as T
+  if (wrapper === null) {
+    return null as UnwrappedValue<S>
   }
 
-  if (isRecord(wrapped)) {
+  if (isSourceNode(wrapper)) {
+    return wrapper.value as UnwrappedValue<S>
+  }
+
+  if (isArray(wrapper)) {
+    return wrapper.map((item) =>
+      unwrapData(item as WrappedValue<unknown>),
+    ) as UnwrappedValue<S>
+  }
+
+  if (isRecord(wrapper)) {
     return Object.fromEntries(
-      Object.entries(wrapped).map(([key, value]) => {
-        return [key, unwrapData(value as WrappedValue<unknown>)]
-      }),
-    ) as T
+      Object.entries(wrapper).map(([k, v]) =>
+        SANITY_KEYS.includes(k as SanityKey)
+          ? [k, v]
+          : [k, unwrapData(v as WrappedValue<unknown>)],
+      ),
+    ) as UnwrappedValue<S>
   }
 
-  if (isArray(wrapped)) {
-    return wrapped.map((item) => unwrapData(item)) as T
-  }
-
-  return wrapped as T
+  throw new Error('invalid wrapped value')
 }

@@ -7,7 +7,13 @@ export function resolveMapping(
   resultPath: PathSegment[],
   csm: ContentSourceMap,
   logger?: Logger,
-): [ContentSourceMapMapping, string, string] | undefined {
+):
+  | {
+      mapping: ContentSourceMapMapping
+      matchedPath: string
+      pathSuffix: string
+    }
+  | undefined {
   const resultJsonPath = compileJsonPath(resultPath)
 
   if (!csm.mappings) {
@@ -18,7 +24,11 @@ export function resolveMapping(
   }
 
   if (csm.mappings[resultJsonPath] !== undefined) {
-    return [csm.mappings[resultJsonPath], resultJsonPath, '']
+    return {
+      mapping: csm.mappings[resultJsonPath],
+      matchedPath: resultJsonPath,
+      pathSuffix: '',
+    }
   }
 
   const mappings = Object.entries(csm.mappings)
@@ -30,6 +40,10 @@ export function resolveMapping(
   }
 
   const [matchedPath, mapping] = mappings[0]
-  const pathSuffix = resultJsonPath.substring(matchedPath.length)
-  return [mapping, matchedPath, pathSuffix]
+
+  return {
+    mapping,
+    matchedPath,
+    pathSuffix: resultJsonPath.substring(matchedPath.length),
+  }
 }

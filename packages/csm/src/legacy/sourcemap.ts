@@ -44,7 +44,7 @@ export function encodeIntoResult<R>(
       return value
     }
 
-    const [mapping, matchedPath, pathSuffix] = resolveMappingResult
+    const { mapping, matchedPath, pathSuffix } = resolveMappingResult
     if (mapping.type !== 'value') {
       return value
     }
