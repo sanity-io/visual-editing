@@ -39,7 +39,7 @@
     "prebuild": "rimraf dist",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepack": "npm run build",
+    "prepack": "pnpm build",
     "artifact": "pnpm pack --pack-destination artifact && cp CHANGELOG.md artifact/CHANGELOG.md && cp RESTRICTED-README.md artifact/README.md",
     "test": "vitest",
     "watch": "pkg watch --strict"
@@ -117,7 +117,7 @@
   },
   "devDependencies": {
     "@sanity/client": "^6.7.0",
-    "@sanity/pkg-utils": "^3.2.0",
+    "@sanity/pkg-utils": "^3.2.1",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.9.0",

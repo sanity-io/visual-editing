@@ -49,7 +49,7 @@
     "prebuild": "rimraf dist artifact",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepack": "npm run build",
+    "prepack": "pnpm build",
     "artifact": "pnpm pack --pack-destination artifact",
     "test": "tsc --noEmit",
     "dev": "pkg watch --strict"
@@ -122,7 +122,7 @@
     "@sanity/groq-store": "workspace:*",
     "@sanity/client": "^6.7.0",
     "@sanity/overlays": "workspace:*",
-    "@sanity/pkg-utils": "^3.2.0",
+    "@sanity/pkg-utils": "^3.2.1",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "@types/react": "^18.2.31",
