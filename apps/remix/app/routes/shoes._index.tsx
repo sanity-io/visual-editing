@@ -21,8 +21,12 @@ export const loader = async () => {
 
 export default function ShoesPage() {
   const { initialData } = useLoaderData<typeof loader>()
-  const { data, error, loading: _loading, sourceMap } =
-    useQuery<ShoesListResult>(shoesList, {}, {initialData})
+  const {
+    data,
+    error,
+    loading: _loading,
+    sourceMap,
+  } = useQuery<ShoesListResult>(shoesList, {}, { initialData })
   const loading = !data?.length && _loading
 
   const products = useMemo(
