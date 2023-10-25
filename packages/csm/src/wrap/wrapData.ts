@@ -64,7 +64,7 @@ export function wrapData<T>(
   }
 
   return {
-    $$typeof: 'sanity',
+    $$type$$: 'sanity',
     path: simplifyPath(resultPath) || undefined,
     source: sourceMap
       ? getValueSource(context, sourceMap, resultPath, keyedResultPath, logger)
