@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.7-pink-lizard...groq-store-v0.0.8-pink-lizard) (2023-10-25)
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/pkg-utils` ([9236c86](https://github.com/sanity-io/visual-editing/commit/9236c86fd37a2e4dff4d5a8142846fc2a96bc538))
+
 ## [0.0.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.6-pink-lizard...groq-store-v0.0.7-pink-lizard) (2023-10-24)
 
 

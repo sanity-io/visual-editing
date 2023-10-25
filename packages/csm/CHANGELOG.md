@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.7-pink-lizard...csm-v0.1.8-pink-lizard) (2023-10-25)
+
+
+### Bug Fixes
+
+* **csm:** fix various issues ([15cd569](https://github.com/sanity-io/visual-editing/commit/15cd569f583add519c6c30e49f61a099d4900c15))
+* **csm:** use correct type symbol ([3e1b374](https://github.com/sanity-io/visual-editing/commit/3e1b3741224bf66a8f561e8fa3bd6d2fd50cdc91))
+* **csm:** various issues ([343dba6](https://github.com/sanity-io/visual-editing/commit/343dba69aaf1f5acdc1bbfbad2c2675a2ed9122a))
+* **deps:** upgrade `@sanity/pkg-utils` ([9236c86](https://github.com/sanity-io/visual-editing/commit/9236c86fd37a2e4dff4d5a8142846fc2a96bc538))
+
 ## [0.1.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.6-pink-lizard...csm-v0.1.7-pink-lizard) (2023-10-24)
 
 

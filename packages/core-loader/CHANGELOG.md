@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.2.1-pink-lizard...core-loader-v0.3.0-pink-lizard) (2023-10-25)
+
+
+### Features
+
+* add `query` API for React SSR ([e86ce61](https://github.com/sanity-io/visual-editing/commit/e86ce6151d21ce12a302d62c8346035eb78cdfc3))
+* expose `unstable__cache` API for SSR ([9300036](https://github.com/sanity-io/visual-editing/commit/9300036adcdb6a7de60cfafaab58fed67c558200))
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/pkg-utils` ([9236c86](https://github.com/sanity-io/visual-editing/commit/9236c86fd37a2e4dff4d5a8142846fc2a96bc538))
+* update live queries whenever adding a new query ([fafb057](https://github.com/sanity-io/visual-editing/commit/fafb057c5dcd73fc08b30ae7e80ccf57be26e301))
+
 ## [0.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.2.0-pink-lizard...core-loader-v0.2.1-pink-lizard) (2023-10-24)
 
 
