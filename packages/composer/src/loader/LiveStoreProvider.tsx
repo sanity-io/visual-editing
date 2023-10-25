@@ -53,13 +53,6 @@ export interface LiveStoreProviderProps {
    * @defaultValue 10000
    */
   refreshInterval?: number
-  /**
-   * Listen to mutations on the documents used by your queries, and apply patches directly to the result.
-   * Requires Content Source Maps to work.
-   * @defaultValue true
-   */
-  turboSourceMap?: boolean
-  logger?: Logger
   perspective: ClientPerspective
   draft: SanityDocument
 }
@@ -69,40 +62,7 @@ export interface LiveStoreProviderProps {
 const LiveStoreProvider = memo(function LiveStoreProvider(
   props: LiveStoreProviderProps,
 ) {
-  const {
-    draft,
-    children,
-    client,
-    refreshInterval = 10000,
-    // refreshInterval = 0,
-    turboSourceMap = true,
-    logger,
-    perspective,
-  } = props
-
-  // Check if the client is configured to use Content Source Maps if turbo is enabled
-  // It's wrapped inside `useMemo` so it doesn't call `client.config` more than it needs to, but unlike `useEffect` sooner rather than later
-  useMemo(() => {
-    if (turboSourceMap && !client.config().resultSourceMap) {
-      logger?.error(
-        'The client needs to be configured with `resultSourceMap: true` to enable turbo mode.`',
-      )
-    }
-  }, [client, turboSourceMap, logger])
-
-  const report = useMemo(() => {
-    if (turboSourceMap && client.config().resultSourceMap) {
-      return `Updates that can be traced using Content Source Maps will be applied in real-time. Other updates will be applied every ${refreshInterval}ms.`
-    }
-    return `Updates will be applied every ${refreshInterval}ms.`
-  }, [client, refreshInterval, turboSourceMap])
-  useEffect(() => {
-    if (logger) {
-      logger.log(
-        `[@sanity/composer]: With the current configuration you can expect that: ${report}`,
-      )
-    }
-  }, [logger, report])
+  const { draft, children, client, refreshInterval = 2000, perspective } = props
 
   const [subscriptions, setSubscriptions] = useState<QueryCacheKey[]>([])
   const [snapshots] = useState<QuerySnapshotsCache>(() => new Map())
@@ -149,7 +109,6 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
   const [turboIds, setTurboIds] = useState<string[]>([])
   const turboIdsFromSourceMap = useCallback(
     (contentSourceMap: ContentSourceMap) => {
-      if (!turboSourceMap) return
       // This handler only adds ids, on each query fetch. But that's ok since <Turbo /> purges ids that are unused
       const nextTurboIds = new Set<string>()
       if (contentSourceMap.documents?.length) {
@@ -172,23 +131,21 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
         }),
       )
     },
-    [turboSourceMap],
+    [],
   )
 
   return (
     <Context.Provider value={context}>
       <IsEnabledContext.Provider value>{children}</IsEnabledContext.Provider>
-      {turboSourceMap && (
-        <Turbo
-          draft={draft}
-          cache={hooks.cache}
-          client={client}
-          setTurboIds={setTurboIds}
-          snapshots={snapshots}
-          turboIds={turboIds}
-          perspective={perspective}
-        />
-      )}
+      <Turbo
+        draft={draft}
+        cache={hooks.cache}
+        client={client}
+        setTurboIds={setTurboIds}
+        snapshots={snapshots}
+        turboIds={turboIds}
+        perspective={perspective}
+      />
       {subscriptions.map((key) => {
         if (!hooks.cache.has(key)) return null
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

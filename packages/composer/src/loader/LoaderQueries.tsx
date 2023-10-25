@@ -92,13 +92,7 @@ export default function LoaderQueries(props: {
   }, [cachedDraft, documentId, documentType, perspective])
 
   return (
-    <LiveStoreProvider
-      draft={draft!}
-      client={client}
-      turboSourceMap
-      logger={console}
-      perspective={perspective}
-    >
+    <LiveStoreProvider draft={draft!} client={client} perspective={perspective}>
       {Object.entries(liveQueries).map(([key, { query, params }]) => (
         <QuerySubscription
           key={`${key}${perspective}`}
@@ -130,15 +124,6 @@ function QuerySubscription(props: {
   const { result, resultSourceMap } = data || ({} as any)
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('QuerySubscription', {
-      projectId,
-      dataset,
-      perspective,
-      query,
-      params,
-      result,
-    })
     channel!.send('loader/query-change', {
       projectId,
       dataset,

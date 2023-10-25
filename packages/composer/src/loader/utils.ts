@@ -27,5 +27,8 @@ export function useParams(
     () => JSON.stringify(params || {}),
     [params],
   )
-  return useMemo(() => JSON.parse(stringifiedParams), [stringifiedParams])
+  return useMemo(
+    () => JSON.parse(stringifiedParams) as QueryParams,
+    [stringifiedParams],
+  )
 }
