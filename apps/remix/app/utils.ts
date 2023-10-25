@@ -1,10 +1,9 @@
-import { type ContentSourceMap, createClient } from '@sanity/preview-kit/client'
+import { type ContentSourceMap, createClient } from '@sanity/client'
 import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
 import { defineDataAttribute as _defineDataAttribute } from 'apps-common/utils'
 
 const { projectId, dataset, tool, workspace } = workspaces['remix']
-const studioUrl = `${baseUrl}/${workspace}`
 
 export function getClient() {
   return createClient({
@@ -12,32 +11,6 @@ export function getClient() {
     dataset,
     useCdn: false,
     apiVersion,
-    logger: console,
-    encodeSourceMap: true,
-    /*
-    // @TODO fix cross dataset reference links
-    encodeSourceMapAtPath: (props) => {
-      if (
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._projectId &&
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._projectId !== projectId
-      ) {
-        return false
-      }
-      if (
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._dataset &&
-        // @ts-expect-error - @sanity/client lack typings
-        props.sourceDocument._dataset !== dataset
-      ) {
-        return false
-      }
-
-      return props.filterDefault(props)
-    },
-    // */
-    studioUrl,
   })
 }
 

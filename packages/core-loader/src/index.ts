@@ -29,11 +29,13 @@ export interface QueryStore {
   createFetcherStore: <Response = unknown, Error = unknown>(
     query: string,
     params?: QueryParams,
+    initialData?: Response,
+    initialSourceMap?: ContentSourceMap,
   ) => MapStore<QueryStoreState<Response, Error>>
   $LiveMode: MapStore<LiveModeState>
   unstable__cache: Cache & {
-    fetch: (key: string) => Promise<{
-      result: any
+    fetch: <Response>(key: string) => Promise<{
+      result: Response
       resultSourceMap: ContentSourceMap | undefined
     }>
   }
@@ -66,7 +68,7 @@ export const createQueryStore = (
     $perspective,
   })
 
-  const cache2 = createCache().define('fetch', async (key: string) => {
+  const cache = createCache().define('fetch', async (key: string) => {
     const { query, params = {} } = JSON.parse(key)
     const { result, resultSourceMap } = await client.fetch(query, params, {
       filterResponse: false,
@@ -88,7 +90,7 @@ export const createQueryStore = (
     try {
       $fetch.setKey('loading', true)
       $fetch.setKey('error', undefined)
-      const response = await cache2.fetch(JSON.stringify({ query, params }))
+      const response = await cache.fetch(JSON.stringify({ query, params }))
       if (controller.signal.aborted) return
       $fetch.setKey('data', response.result)
       $fetch.setKey('sourceMap', response.resultSourceMap)
@@ -159,12 +161,14 @@ export const createQueryStore = (
   >(
     query: string,
     params: QueryParams = {},
+    initialData?: Response,
+    initialSourceMap?: ContentSourceMap,
   ): MapStore<QueryStoreState<Response, Error>> => {
     const $fetch = map<QueryStoreState<Response, Error>>({
       loading: true,
       error: undefined,
-      data: undefined,
-      sourceMap: undefined,
+      data: initialData,
+      sourceMap: initialSourceMap,
     })
 
     onMount($fetch, () => {
@@ -234,5 +238,5 @@ export const createQueryStore = (
   //   return $fetch
   // }
 
-  return { createFetcherStore, $LiveMode }
+  return { createFetcherStore, $LiveMode, unstable__cache: cache }
 }

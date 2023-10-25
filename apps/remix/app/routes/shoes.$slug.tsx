@@ -1,5 +1,5 @@
 import { PortableText } from '@portabletext/react'
-import { Link, useParams } from '@remix-run/react'
+import { Link, useLoaderData, useParams } from '@remix-run/react'
 import { unwrapData, wrapData } from '@sanity/csm'
 import { sanity } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
@@ -11,7 +11,14 @@ import {
   urlForCrossDatasetReference,
 } from '~/utils'
 import { useMemo } from 'react'
-import { useQuery } from '~/useQuery'
+import { query, useQuery } from '~/useQuery'
+import { json, type LoaderFunction } from '@remix-run/node'
+
+export const loader: LoaderFunction = async ({ params }) => {
+  return json({
+    initialData: await query<ShoeResult>(shoe, params),
+  })
+}
 
 export default function ShoePage() {
   const params = useParams()
@@ -21,9 +28,11 @@ export default function ShoePage() {
     throw new Error('No slug, 404?')
   }
 
-  const { data, error, loading, sourceMap } = useQuery<ShoeResult>(shoe, {
+  const { initialData } = useLoaderData<typeof loader>()
+  const { data, error, loading: _loading, sourceMap } = useQuery<ShoeResult>(shoe, {
     slug,
-  } satisfies ShoeParams)
+  } satisfies ShoeParams, {initialData})
+  const loading = !data && _loading
 
   const product = useMemo(
     () =>

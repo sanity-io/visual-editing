@@ -1,4 +1,4 @@
-import { Link } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 import { unwrapData, wrapData } from '@sanity/csm'
 import { sanity } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
@@ -10,11 +10,20 @@ import {
   defineDataAttribute,
 } from '~/utils'
 import { useMemo } from 'react'
-import { useQuery } from '~/useQuery'
+import { useQuery, query } from '~/useQuery'
+import { json } from '@remix-run/node'
+
+export const loader = async () => {
+  return json({
+    initialData: await query<ShoesListResult>(shoesList),
+  })
+}
 
 export default function ShoesPage() {
-  const { data, error, loading, sourceMap } =
-    useQuery<ShoesListResult>(shoesList)
+  const { initialData } = useLoaderData<typeof loader>()
+  const { data, error, loading: _loading, sourceMap } =
+    useQuery<ShoesListResult>(shoesList, {}, {initialData})
+  const loading = !data?.length && _loading
 
   const products = useMemo(
     () =>
