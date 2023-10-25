@@ -29,9 +29,18 @@ export default function ShoePage() {
   }
 
   const { initialData } = useLoaderData<typeof loader>()
-  const { data, error, loading: _loading, sourceMap } = useQuery<ShoeResult>(shoe, {
-    slug,
-  } satisfies ShoeParams, {initialData})
+  const {
+    data,
+    error,
+    loading: _loading,
+    sourceMap,
+  } = useQuery<ShoeResult>(
+    shoe,
+    {
+      slug,
+    } satisfies ShoeParams,
+    { initialData },
+  )
   const loading = !data && _loading
 
   const product = useMemo(
