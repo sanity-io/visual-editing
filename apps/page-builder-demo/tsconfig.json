@@ -21,11 +21,13 @@
     "rootDir": "../..",
     "paths": {
       "@/*": ["./src/*"],
+      "@sanity/csm": ["../../packages/csm/src"],
       "@sanity/overlays": ["../../packages/overlays/src"],
       "@sanity/react-loader": ["../../packages/react-loader/src"]
     }
   },
   "include": [
+    "../../packages/csm/src",
     "../../packages/overlays/src",
     "../../packages/react-loader/src",
     "next-env.d.ts",
