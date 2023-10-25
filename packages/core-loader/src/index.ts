@@ -1,5 +1,9 @@
-import type { QueryParams, SanityClient } from '@sanity/client'
-import { createCache } from 'async-cache-dedupe'
+import type {
+  ContentSourceMap,
+  QueryParams,
+  SanityClient,
+} from '@sanity/client'
+import { type Cache, createCache } from 'async-cache-dedupe'
 import {
   atom,
   listenKeys,
@@ -27,6 +31,12 @@ export interface QueryStore {
     params?: QueryParams,
   ) => MapStore<QueryStoreState<Response, Error>>
   $LiveMode: MapStore<LiveModeState>
+  unstable__cache: Cache & {
+    fetch: (key: string) => Promise<{
+      result: any
+      resultSourceMap: ContentSourceMap | undefined
+    }>
+  }
 }
 
 export const createQueryStore = (
