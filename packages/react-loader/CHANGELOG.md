@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.2.1-pink-lizard...react-loader-v0.3.0-pink-lizard) (2023-10-25)
+
+
+### Features
+
+* add `query` API for React SSR ([e86ce61](https://github.com/sanity-io/visual-editing/commit/e86ce6151d21ce12a302d62c8346035eb78cdfc3))
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/pkg-utils` ([9236c86](https://github.com/sanity-io/visual-editing/commit/9236c86fd37a2e4dff4d5a8142846fc2a96bc538))
+
 ## [0.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.2.0-pink-lizard...react-loader-v0.2.1-pink-lizard) (2023-10-24)
 
 

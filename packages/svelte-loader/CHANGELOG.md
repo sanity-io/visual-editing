@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.1.1-pink-lizard...svelte-loader-v0.1.2-pink-lizard) (2023-10-25)
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/pkg-utils` ([9236c86](https://github.com/sanity-io/visual-editing/commit/9236c86fd37a2e4dff4d5a8142846fc2a96bc538))
+
 ## [0.1.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.1.0-pink-lizard...svelte-loader-v0.1.1-pink-lizard) (2023-10-24)
 
 

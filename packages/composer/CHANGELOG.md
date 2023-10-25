@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.4.1-pink-lizard...composer-v0.4.2-pink-lizard) (2023-10-25)
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/pkg-utils` ([9236c86](https://github.com/sanity-io/visual-editing/commit/9236c86fd37a2e4dff4d5a8142846fc2a96bc538))
+* set refreshInterval to 2s, from 10s ([397cb24](https://github.com/sanity-io/visual-editing/commit/397cb248f7f9b2fbbf203df5b35bcf1c035ad45c))
+* update `@sanity/csm` ([b987e82](https://github.com/sanity-io/visual-editing/commit/b987e82e99f8bd9b1f2a7f39be146be18145a089))
+
 ## [0.4.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.4.0-pink-lizard...composer-v0.4.1-pink-lizard) (2023-10-24)
 
 
