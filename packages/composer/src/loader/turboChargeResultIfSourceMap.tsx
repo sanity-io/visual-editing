@@ -6,8 +6,8 @@ import type {
 import { parseJsonPath, resolveMapping, walkMap } from '@sanity/csm'
 import { vercelStegaSplit } from '@vercel/stega'
 
-import { getTurboCacheKey } from './getTurboCacheKey'
 import { documentsCache } from './documentsCache'
+import { getTurboCacheKey } from './getTurboCacheKey'
 
 export function turboChargeResultIfSourceMap(
   draft: SanityDocument,

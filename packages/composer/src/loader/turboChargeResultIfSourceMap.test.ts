@@ -1,7 +1,7 @@
+import { ContentSourceMap } from '@sanity/client'
 import { expect, test } from 'vitest'
 
 import { turboChargeResultIfSourceMap } from './turboChargeResultIfSourceMap'
-import { ContentSourceMap } from '@sanity/client'
 
 const projectId = 'hiomol4a'
 const dataset = 'preview-poc'
