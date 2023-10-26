@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.4.3-pink-lizard...composer-v0.4.4-pink-lizard) (2023-10-26)
+
+
+### Bug Fixes
+
+* handle turbo charging of fields within arrays ([b2bfc4b](https://github.com/sanity-io/visual-editing/commit/b2bfc4b0932649852cae4d3bb3a26e7c37438e9a))
+
 ## [0.4.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.4.2-pink-lizard...composer-v0.4.3-pink-lizard) (2023-10-26)
 
 
