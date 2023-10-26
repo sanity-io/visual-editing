@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.4.2-pink-lizard...composer-v0.4.3-pink-lizard) (2023-10-26)
+
+
+### Bug Fixes
+
+* stable "documents in use" rendering ([6e66f1d](https://github.com/sanity-io/visual-editing/commit/6e66f1dfb7838a08559579c925e04ab0bec76ecf))
+
 ## [0.4.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.4.1-pink-lizard...composer-v0.4.2-pink-lizard) (2023-10-25)
 
 

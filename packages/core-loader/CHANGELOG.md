@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.3.0-pink-lizard...core-loader-v0.3.1-pink-lizard) (2023-10-26)
+
+
+### Bug Fixes
+
+* remove unused code ([00e1366](https://github.com/sanity-io/visual-editing/commit/00e1366f161960d4ac58890c388f236432b6f981))
+* stable "documents in use" rendering ([6e66f1d](https://github.com/sanity-io/visual-editing/commit/6e66f1dfb7838a08559579c925e04ab0bec76ecf))
+
 ## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.2.1-pink-lizard...core-loader-v0.3.0-pink-lizard) (2023-10-25)
 
 
