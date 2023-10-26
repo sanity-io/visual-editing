@@ -211,9 +211,16 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
   ) => {
     try {
       const removeLiveQuery = addLiveQuery(query, params, $fetch)
-      controller.signal.addEventListener('abort', removeLiveQuery, {
-        once: true,
-      })
+      controller.signal.addEventListener(
+        'abort',
+        () => {
+          removeLiveQuery()
+          updateLiveQueries()
+        },
+        {
+          once: true,
+        },
+      )
       updateLiveQueries()
       $fetch.setKey('error', undefined)
       if (controller.signal.aborted) return

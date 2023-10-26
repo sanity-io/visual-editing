@@ -3,13 +3,21 @@ import { Card, Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
   ReactElement,
+  startTransition,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
-import { Path, pathToString, Tool } from 'sanity'
+import {
+  Path,
+  pathToString,
+  Tool,
+  useClient,
+  useDataset,
+  useProjectId,
+} from 'sanity'
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
@@ -61,9 +69,7 @@ export default function ComposerTool(props: {
 
   const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [overlayDocuments, setOverlayDocuments] = useState<
-    { _id: string; _type: string; _projectId?: string; dataset?: string }[]
-  >([])
+  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(perspective)
   const [liveQueries, setLiveQueries] = useState<
     Record<
       string,
@@ -84,6 +90,8 @@ export default function ComposerTool(props: {
   )
 
   const toast = useToast()
+  const projectId = useProjectId()
+  const dataset = useDataset()
 
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
@@ -142,11 +150,17 @@ export default function ComposerTool(props: {
           })
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
-        } else if (type === 'loader/documents') {
-          // @TODO match projectId and dataset in `data` before setting
-          setOverlayDocuments(data.documents)
-        } else if (type === 'loader/query-listen') {
-          // @TODO match projectId and dataset in `data` before setting
+        } else if (
+          type === 'loader/documents' &&
+          data.projectId === projectId &&
+          data.dataset === dataset
+        ) {
+          setDocumentsOnPage(data.perspective, data.documents)
+        } else if (
+          type === 'loader/query-listen' &&
+          data.projectId === projectId &&
+          data.dataset === dataset
+        ) {
           setLiveQueries((prev) => ({
             ...prev,
             [getQueryCacheKey(data.query, data.params)]: {
@@ -164,7 +178,7 @@ export default function ComposerTool(props: {
       nextChannel.disconnect()
       setChannel(undefined)
     }
-  }, [setParams, targetOrigin, toast])
+  }, [setParams, targetOrigin, toast, dataset, projectId, setDocumentsOnPage])
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments
@@ -293,7 +307,7 @@ export default function ComposerTool(props: {
                 onResizeEnd={handleResizeEnd}
               >
                 <ContentEditor
-                  refs={overlayDocuments}
+                  refs={documentsOnPage}
                   deskParams={deskParams}
                   documentId={params.id}
                   documentType={params.type}
@@ -330,4 +344,68 @@ export default function ComposerTool(props: {
       )}
     </>
   )
+}
+
+type DocumentsOnPage = {
+  _id: string
+  _type: string
+  _projectId?: string
+  dataset?: string
+}[]
+function useDocumentsOnPage(
+  perspective: ClientPerspective,
+): [
+  DocumentsOnPage,
+  (perspective: ClientPerspective, state: DocumentsOnPage) => void,
+] {
+  const [state, setState] = useState<
+    Record<ClientPerspective, Map<string, DocumentsOnPage[number]>>
+  >(() => ({ published: new Map(), previewDrafts: new Map(), raw: new Map() }))
+
+  const setDocumentsOnPage = useCallback(
+    (perspective: ClientPerspective, documents: DocumentsOnPage) =>
+      startTransition(() =>
+        setState((state) => {
+          let changed = false
+          let map = state[perspective]
+          const getKey = (document: DocumentsOnPage[number]) => {
+            return `${document._projectId}-${document.dataset}-${document._type}-${document._id}`
+          }
+          const knownKeys = new Set<ReturnType<typeof getKey>>()
+          // Add anything new, and track all keys
+          for (const document of documents) {
+            const key = getKey(document)
+            knownKeys.add(key)
+            if (!map.has(key)) {
+              map.set(key, document)
+              changed = true
+            }
+          }
+          // Remove anything that is no longer on the page
+          for (const key of map.keys()) {
+            if (!knownKeys.has(key)) {
+              map.delete(key)
+              changed = true
+            }
+          }
+
+          if (changed) {
+            map = new Map(map)
+            return { ...state, [perspective]: new Map(map) }
+          }
+
+          return state
+        }),
+      ),
+    [],
+  )
+
+  const documentsOnPageMap = useMemo(() => {
+    return state[perspective]
+  }, [perspective, state])
+  const documentsOnPage = useMemo(() => {
+    return [...documentsOnPageMap.values()]
+  }, [documentsOnPageMap])
+
+  return [documentsOnPage, setDocumentsOnPage]
 }
