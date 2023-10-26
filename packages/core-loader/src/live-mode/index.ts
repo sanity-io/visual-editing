@@ -5,19 +5,8 @@ import type {
   SanityClient,
 } from '@sanity/client'
 import { ChannelReturns, createChannel } from 'channels'
+import { listenKeys, map, MapStore, onMount, WritableAtom } from 'nanostores'
 import {
-  computed,
-  listenKeys,
-  map,
-  MapStore,
-  onMount,
-  WritableAtom,
-  // startTask,
-  // task,
-} from 'nanostores'
-import {
-  getQueryCacheKey,
-  QueryCacheKey,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
@@ -41,32 +30,6 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
 } {
   const { client, studioUrl, $perspective } = options
   const { projectId, dataset } = client.config()
-  const $resultSourceMapDocuments = map<
-    Record<QueryCacheKey, ContentSourceMapDocuments | undefined>
-  >({})
-  const $queriesInUse = map<
-    Record<
-      string,
-      { query: string; params: QueryParams; listeners: number } | undefined
-    >
-  >({})
-  const $documentsInUse = computed(
-    [$resultSourceMapDocuments, $queriesInUse],
-    (resultSourceMapDocuments, _queriesInUse) => {
-      const queriesInUse = Object.values(_queriesInUse).filter((snapshot) =>
-        snapshot?.listeners ? snapshot.listeners > 0 : false,
-      ) as { query: string; params: QueryParams }[]
-      const documentsOnPage: ContentSourceMapDocuments = []
-      for (const { query, params } of queriesInUse) {
-        const key = getQueryCacheKey(query, params)
-        if (resultSourceMapDocuments[key]) {
-          documentsOnPage.push(...resultSourceMapDocuments[key]!)
-        }
-      }
-
-      return documentsOnPage
-    },
-  )
 
   let channel: ChannelReturns<VisualEditingMsg> | null = null
 
@@ -125,20 +88,8 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
       // Revalidate if the connection status changes
       // invalidateKeys(() => true)
     })
-    const unlistenQueries = $documentsInUse.subscribe((documents) => {
-      if (!channel) {
-        throw new Error('No channel')
-      }
-      channel.send('loader/documents', {
-        projectId: projectId!,
-        dataset: dataset!,
-        perspective: $perspective.get(),
-        documents: documents as ContentSourceMapDocuments,
-      })
-    })
 
     return () => {
-      unlistenQueries()
       unlistenConnection()
       $LiveMode.setKey('enabled', false)
       $LiveMode.setKey('connected', false)
