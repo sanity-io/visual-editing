@@ -6,10 +6,6 @@ import type {
   SanityClient,
   SanityDocument,
 } from '@sanity/client'
-import { parseJsonPath, resolveMapping, walkMap } from '@sanity/csm'
-import { vercelStegaSplit } from '@vercel/stega'
-import get from 'lodash.get'
-import { LRUCache } from 'lru-cache'
 import { applyPatch } from 'mendoza'
 import {
   memo,
@@ -22,6 +18,9 @@ import {
 } from 'react'
 
 import { defineListenerContext as Context, IsEnabledContext } from './context'
+import { documentsCache } from './documentsCache'
+import { getTurboCacheKey } from './getTurboCacheKey'
+import { turboChargeResultIfSourceMap } from './turboChargeResultIfSourceMap'
 import type {
   DefineListenerContext,
   ListenerGetSnapshot,
@@ -31,12 +30,6 @@ import type {
 import { getQueryCacheKey, type QueryCacheKey } from './utils'
 
 export type { Logger }
-
-// Documents share the same cache even if there are nested providers, with a Least Recently Used (LRU) cache
-const documentsCache = new LRUCache({
-  // Max 500 documents in memory, no big deal if a document is evicted it just means the eventual consistency might take longer
-  max: 500,
-})
 
 /**
  * @internal
@@ -284,16 +277,6 @@ type QuerySnapshotsCache = Map<
   QueryCacheKey,
   { result: unknown; resultSourceMap: ContentSourceMap }
 >
-
-function getTurboCacheKey(
-  projectId: string,
-  dataset: string,
-  perspective: ClientPerspective,
-  // type: string,
-  id: string,
-): `${string}-${string}-${string}` {
-  return `${projectId}-${dataset}-${perspective}-${id}`
-}
 
 function onVisibilityChange(onStoreChange: () => void): () => void {
   document.addEventListener('visibilitychange', onStoreChange)
@@ -725,60 +708,3 @@ const GetDocuments = memo(function GetDocuments(props: GetDocumentsProps) {
   return null
 })
 GetDocuments.displayName = 'GetDocuments'
-
-function turboChargeResultIfSourceMap(
-  draft: SanityDocument,
-  projectId: string,
-  dataset: string,
-  result: unknown,
-  perspective: ClientPerspective,
-  resultSourceMap?: ContentSourceMap,
-) {
-  if (!resultSourceMap) return result
-
-  return walkMap(result, (value, path) => {
-    const resolveMappingResult = resolveMapping(path, resultSourceMap)
-    if (!resolveMappingResult) {
-      return value
-    }
-
-    const { mapping, pathSuffix } = resolveMappingResult
-    if (mapping.type !== 'value') {
-      return value
-    }
-
-    if (mapping.source.type !== 'documentValue') {
-      return value
-    }
-
-    const sourceDocument = resultSourceMap.documents[mapping.source.document]
-    const sourcePath = resultSourceMap.paths[mapping.source.path]
-    if (sourceDocument && sourceDocument._id) {
-      const cachedDocument =
-        draft?._id === sourceDocument._id
-          ? draft
-          : documentsCache.get(
-              getTurboCacheKey(
-                projectId,
-                dataset,
-                perspective,
-                sourceDocument._id,
-              ),
-            )
-
-      const cachedValue = cachedDocument
-        ? // @ts-expect-error -- @TODO fix parseJsonPath typings mismatch
-          get(cachedDocument, parseJsonPath(sourcePath + pathSuffix), value)
-        : value
-      // Preserve stega encoded strings, if they exist
-      if (typeof cachedValue === 'string' && typeof value === 'string') {
-        const { encoded } = vercelStegaSplit(value)
-        const { cleaned } = vercelStegaSplit(cachedValue)
-        return `${encoded}${cleaned}`
-      }
-      return cachedValue
-    }
-
-    return value
-  })
-}

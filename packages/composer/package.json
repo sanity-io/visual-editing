@@ -34,7 +34,7 @@
     "lint": "eslint .",
     "prepack": "pnpm build",
     "artifact": "pnpm pack --pack-destination artifact",
-    "test": "tsc --noEmit",
+    "test": "vitest --pass-with-no-tests",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
@@ -104,10 +104,8 @@
   "dependencies": {
     "@sanity/icons": "^2.6.0",
     "@sanity/ui": "^1.8.3",
-    "@types/lodash.get": "^4.4.8",
     "@types/lodash.isequal": "^4.5.7",
     "@vercel/stega": "0.1.0",
-    "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
     "lru-cache": "10.0.1",
     "mendoza": "3.0.3",
@@ -123,7 +121,8 @@
     "sanity": "^3.18.1",
     "styled-components": "^6.1.0",
     "typescript": "^5.2.2",
-    "visual-editing-helpers": "workspace:*"
+    "visual-editing-helpers": "workspace:*",
+    "vitest": "^0.34.6"
   },
   "peerDependencies": {
     "@sanity/client": "^6.7.0",

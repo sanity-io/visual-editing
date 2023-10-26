@@ -547,18 +547,12 @@ importers:
       '@sanity/ui':
         specifier: ^1.8.3
         version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
-      '@types/lodash.get':
-        specifier: ^4.4.8
-        version: 4.4.8
       '@types/lodash.isequal':
         specifier: ^4.5.7
         version: 4.5.7
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
-      lodash.get:
-        specifier: ^4.4.2
-        version: 4.4.2
       lodash.isequal:
         specifier: ^4.5.0
         version: 4.5.0
@@ -602,6 +596,9 @@ importers:
       visual-editing-helpers:
         specifier: workspace:*
         version: link:../helpers
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6(jsdom@20.0.3)
 
   packages/core-loader:
     dependencies:
@@ -4279,6 +4276,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -5860,6 +5858,7 @@ packages:
     resolution: {integrity: sha512-XK+co6sBkJxh1vaVP8al6cAA17dX//RNCknGG8JhpHFJfxq/GXKAYB9NKheG22pu2xpWpxfFd65W08EhH2IFlg==}
     dependencies:
       '@types/lodash': 4.14.200
+    dev: true
 
   /@types/lodash.isequal@4.5.7:
     resolution: {integrity: sha512-UJQsb7aW8JU/h3fivQXVRDp9EKi98T9iQcVeTXBxcD4jApgGgbrET/0hVS6vH/YoYpqkcToMU5fSNPEiWVZgDg==}
@@ -13289,6 +13288,10 @@ packages:
   /nanostores@0.9.4:
     resolution: {integrity: sha512-BVFzKt6K5P8tYQLL7MItqcev7jpspA5pIjv+Ck3k6wBnUlwCJcpkGTIinj4APvx8SvdP9fXDGoMRCTY6DO/9QA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
