@@ -10,14 +10,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import {
-  Path,
-  pathToString,
-  Tool,
-  useClient,
-  useDataset,
-  useProjectId,
-} from 'sanity'
+import { Path, pathToString, Tool, useDataset, useProjectId } from 'sanity'
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
