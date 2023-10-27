@@ -3,7 +3,11 @@ import { useEffect, useRef } from 'react'
 import { createOverlayController } from '../controller'
 import { OverlayController, OverlayEventHandler } from '../types'
 
-export function useOverlay(
+/**
+ * Hook for using an overlay controller
+ * @internal
+ */
+export function useController(
   element: HTMLElement | null,
   handler: OverlayEventHandler,
   preventDefault: boolean,

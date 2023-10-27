@@ -1,6 +1,6 @@
 'use client'
 
-import { enableVisualEditing, type HistoryUpdate } from '@sanity/overlays'
+import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef } from 'react'
 import { useLiveMode } from './useQuery'
@@ -13,7 +13,7 @@ export default function VisualEditing() {
   )
 
   useEffect(() => {
-    const disable = enableVisualEditing({
+    const disable = enableOverlays({
       studioUrl,
       history: {
         subscribe: (navigate) => {

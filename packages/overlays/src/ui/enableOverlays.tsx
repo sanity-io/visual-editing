@@ -4,9 +4,10 @@ import { OVERLAY_ID } from '../constants'
 import { HistoryAdapter } from '../types'
 
 /**
+ * Cleanup function used when e.g. unmounting
  * @public
  */
-export type DisableVisualEditing = () => void
+export type DisableOverlays = () => void
 
 let node: HTMLElement | null = null
 let root: Root | null = null
@@ -16,22 +17,21 @@ let cleanup: number | null = null
  * Enables Visual Editing overlay in a page with sourcemap encoding.
  *
  * This will overlay UI on hovered elements that deep-links to Sanity Studio.
- *
  * @public
  */
-export function enableVisualEditing(
+export function enableOverlays(
   options: {
     history?: HistoryAdapter
     studioUrl?: string
     zIndex?: string | number
   } = {},
-): DisableVisualEditing {
+): DisableOverlays {
   if (cleanup) clearTimeout(cleanup)
   const controller = new AbortController()
 
   // Lazy load everything needed to render the app
-  Promise.all([import('react-dom/client'), import('./VisualEditing')]).then(
-    ([reactClient, { VisualEditing }]) => {
+  Promise.all([import('react-dom/client'), import('./Overlays')]).then(
+    ([reactClient, { Overlays }]) => {
       if (controller.signal.aborted) return
 
       const { history, zIndex } = options
@@ -50,11 +50,7 @@ export function enableVisualEditing(
       }
 
       root.render(
-        <VisualEditing
-          history={history}
-          studioUrl={studioUrl}
-          zIndex={zIndex}
-        />,
+        <Overlays history={history} studioUrl={studioUrl} zIndex={zIndex} />,
       )
     },
   )
@@ -73,4 +69,15 @@ export function enableVisualEditing(
       }
     }, 1000)
   }
+}
+
+/**
+ * @deprecated Use `enableOverlays` instead
+ */
+export const enableVisualEditing: typeof enableOverlays = (...args) => {
+  // eslint-disable-next-line no-console
+  console.warn(
+    `'enableVisualEditing' is deprecated, use 'enableOverlays' instead.`,
+  )
+  return enableOverlays(...args)
 }

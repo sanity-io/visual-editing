@@ -1,7 +1,4 @@
 export { createOverlayController } from './controller'
-export { encodeSanityNodeData } from './transformSanityNodeData'
 export type * from './types'
-export {
-  type DisableVisualEditing,
-  enableVisualEditing,
-} from './visual-editing/enableVisualEditing'
+export { type DisableOverlays, enableOverlays } from './ui/enableOverlays'
+export { encodeSanityNodeData } from './util/transformSanityNodeData'

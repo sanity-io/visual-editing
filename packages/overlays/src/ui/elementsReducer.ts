@@ -2,6 +2,10 @@ import { PagesMsg } from 'visual-editing-helpers'
 
 import { ElementState, OverlayMsg } from '../types'
 
+/**
+ * Reducer for managing element state from received channel messages
+ * @internal
+ */
 export const elementsReducer = (
   elements: ElementState[],
   message: OverlayMsg | PagesMsg,

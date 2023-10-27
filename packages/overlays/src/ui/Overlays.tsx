@@ -15,7 +15,7 @@ import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { elementsReducer } from './elementsReducer'
 import { useChannel } from './useChannel'
-import { useOverlay } from './useOverlay'
+import { useController } from './useController'
 
 const Root = styled.div<{
   $zIndex?: string | number
@@ -29,7 +29,11 @@ const Root = styled.div<{
   z-index: ${({ $zIndex }) => $zIndex ?? '9999999'};
 `
 
-export const VisualEditing: FunctionComponent<{
+/**
+ * Hook for maintaining a channel between overlays and the pages tool
+ * @internal
+ */
+export const Overlays: FunctionComponent<{
   history?: HistoryAdapter
   studioUrl: string
   zIndex?: string | number
@@ -90,7 +94,7 @@ export const VisualEditing: FunctionComponent<{
     [channel],
   )
 
-  const overlay = useOverlay(
+  const controller = useController(
     rootElement,
     overlayEventHandler,
     !!channel?.inFrame,
@@ -98,11 +102,11 @@ export const VisualEditing: FunctionComponent<{
 
   useEffect(() => {
     if (overlayEnabled) {
-      overlay?.activate()
+      controller?.activate()
     } else {
-      overlay?.deactivate()
+      controller?.deactivate()
     }
-  }, [channel, overlay, overlayEnabled])
+  }, [channel, controller, overlayEnabled])
 
   useEffect(() => {
     return history?.subscribe((update) => {

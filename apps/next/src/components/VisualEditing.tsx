@@ -1,4 +1,4 @@
-import { enableVisualEditing } from '@sanity/overlays'
+import { enableOverlays } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useEffect } from 'react'
 import { useLiveMode } from './useQuery'
@@ -9,7 +9,7 @@ export default function VisualEditing() {
 
   useEffect(() => {
     if (!router.isReady) return
-    const disable = enableVisualEditing({
+    const disable = enableOverlays({
       studioUrl,
       history: {
         subscribe: (navigate) => {

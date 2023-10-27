@@ -6,6 +6,10 @@ import {
 } from 'channels'
 import { useEffect, useRef } from 'react'
 
+/**
+ * Hook for maintaining a channel between overlays and the pages tool
+ * @internal
+ */
 export function useChannel<T extends ChannelMsg>(
   handler: ChannelEventHandler<T>,
   targetOrigin: string,

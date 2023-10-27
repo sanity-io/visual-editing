@@ -1,7 +1,5 @@
 import { v4 as uuid } from 'uuid'
 
-import { findSanityNodes } from './findSanityNodes'
-import { getRect } from './getRect'
 import type {
   _EventHandlers,
   _OverlayElement,
@@ -9,6 +7,8 @@ import type {
   OverlayController,
   OverlayOptions,
 } from './types'
+import { findSanityNodes } from './util/findSanityNodes'
+import { getRect } from './util/getRect'
 
 /**
  * Creates a controller which dispatches overlay related events

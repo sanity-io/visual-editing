@@ -1,8 +1,8 @@
-import { OVERLAY_ID } from './constants'
+import { OVERLAY_ID } from '../constants'
+import { _ResolvedElement, SanityNode, SanityNodeLegacy } from '../types'
 import { findNonInlineElement } from './findNonInlineElement'
 import { testAndDecodeStega } from './stega'
 import { decodeSanityNodeData } from './transformSanityNodeData'
-import { _ResolvedElement, SanityNode, SanityNodeLegacy } from './types'
 
 const isElementNode = (node: ChildNode): node is HTMLElement =>
   node.nodeType === Node.ELEMENT_NODE

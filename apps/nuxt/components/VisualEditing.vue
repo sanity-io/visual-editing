@@ -4,16 +4,13 @@
 
 <script lang="ts" setup>
 import { studioUrl } from 'apps-common/env'
-import {
-  type DisableVisualEditing,
-  enableVisualEditing,
-} from '@sanity/overlays'
+import { type DisableOverlays, enableOverlays } from '@sanity/overlays'
 
-let disable: DisableVisualEditing
+let disable: DisableOverlays
 const router = useRouter()
 
 onMounted(() => {
-  disable = enableVisualEditing({
+  disable = enableOverlays({
     studioUrl,
     history: {
       subscribe: (navigate) => {
