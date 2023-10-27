@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.11-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.10-pink-lizard...overlays-v0.1.11-pink-lizard) (2023-10-27)
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to v3.18.2-pink-lizard.162 ([#197](https://github.com/sanity-io/visual-editing/issues/197)) ([6d962b1](https://github.com/sanity-io/visual-editing/commit/6d962b15f5f876c91cfd8df1856d4ffd8f05d83c))
+* **refactor:** composer to pages ([#202](https://github.com/sanity-io/visual-editing/issues/202)) ([e46f475](https://github.com/sanity-io/visual-editing/commit/e46f475c50438339f5c95ccf3930f9d16c43dc4b))
+
 ## [0.1.10-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.9-pink-lizard...overlays-v0.1.10-pink-lizard) (2023-10-25)
 
 
