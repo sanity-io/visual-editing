@@ -1,1 +1,1 @@
-packages/composer/README.md
+./packages/pages/README.md
