@@ -13,6 +13,7 @@ import {
 import {
   ErrorInfo,
   FunctionComponent,
+  PropsWithChildren,
   useCallback,
   useEffect,
   useMemo,
@@ -24,11 +25,18 @@ import {
   DocumentPane as DeskDocumentPane,
   DocumentPaneNode,
   PaneLayout,
+  useDeskTool,
 } from 'sanity/desk'
 
 import { DeskDocumentPaneParams } from '../types'
 import { usePagesTool } from '../usePagesTool'
 import { PagesPaneRouterProvider } from './PagesPaneRouterProvider'
+
+const DocumentPaneWrappers: FunctionComponent<PropsWithChildren> = function ({
+  children,
+}) {
+  return <DeskToolProvider>{children}</DeskToolProvider>
+}
 
 export const DocumentPane: FunctionComponent<{
   documentId: string
@@ -63,6 +71,16 @@ export const DocumentPane: FunctionComponent<{
   useEffect(() => {
     setErrorParams(null)
   }, [documentId, documentType, params])
+
+  const { setLayoutCollapsed } = useDeskTool()
+  const handleRootCollapse = useCallback(
+    () => setLayoutCollapsed(true),
+    [setLayoutCollapsed],
+  )
+  const handleRootExpand = useCallback(
+    () => setLayoutCollapsed(false),
+    [setLayoutCollapsed],
+  )
 
   if (errorParams) {
     return (
@@ -108,9 +126,14 @@ export const DocumentPane: FunctionComponent<{
   }
 
   return (
-    <ErrorBoundary onCatch={setErrorParams}>
-      <PaneLayout style={{ height: '100%' }}>
-        <DeskToolProvider>
+    <DocumentPaneWrappers>
+      <ErrorBoundary onCatch={setErrorParams}>
+        <PaneLayout
+          style={{ height: '100%' }}
+          minWidth={640}
+          onExpand={handleRootExpand}
+          onCollapse={handleRootCollapse}
+        >
           <PagesPaneRouterProvider onDeskParams={onDeskParams} params={params}>
             <DeskDocumentPane
               paneKey="document"
@@ -120,8 +143,8 @@ export const DocumentPane: FunctionComponent<{
               onFocusPath={onFocusPath}
             />
           </PagesPaneRouterProvider>
-        </DeskToolProvider>
-      </PaneLayout>
-    </ErrorBoundary>
+        </PaneLayout>
+      </ErrorBoundary>
+    </DocumentPaneWrappers>
   )
 }
