@@ -1,5 +1,5 @@
 export { encodeJsonPathToUriComponent } from './editIntent'
-export { parseJsonPath } from './jsonpath'
+export { compileJsonPath, parseJsonPath } from './jsonpath'
 export * from './mapToEditLinks'
 export { resolveMapping } from './resolveMapping'
 export * from './transcode'
