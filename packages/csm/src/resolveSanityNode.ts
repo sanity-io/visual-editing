@@ -1,14 +1,14 @@
 import { ContentSourceMap } from '@sanity/client'
 import { SanityNode } from 'visual-editing-helpers'
 
-import { Logger, PathSegment } from '../legacy'
-import { compileJsonPath, parseJsonPath } from '../legacy/jsonpath'
-import { resolveMapping } from '../legacy/resolveMapping'
-import { simplifyPath } from '../legacy/simplifyPath'
-import { getPublishedId } from './getPublishedId'
-import { SanityNodeContext } from './types'
+import { Logger, PathSegment } from './legacy'
+import { resolveMapping } from './legacy/resolveMapping'
+import { simplifyPath } from './legacy/simplifyPath'
+import { resolvedKeyedSourcePath } from './resolveKeyedSourcePath'
+import { getPublishedId } from './wrap/getPublishedId'
+import { SanityNodeContext } from './wrap/types'
 
-export function getValueSource(
+export function resolveSanityNode(
   context: SanityNodeContext,
   csm: ContentSourceMap,
   resultPath: PathSegment[],
@@ -34,20 +34,17 @@ export function getValueSource(
   const sourceBasePath = csm.paths[mapping.source.path]
 
   if (sourceDoc && sourceBasePath) {
-    const inferredResultPath = pathSuffix ? parseJsonPath(pathSuffix) : []
-    const inferredPath = keyedResultPath.slice(
-      keyedResultPath.length - inferredResultPath.length,
-    )
-    const inferredPathSuffix = inferredPath.length
-      ? compileJsonPath(inferredPath, { keyArraySelectors: true }).slice(1)
-      : ''
-    const sourcePath = parseJsonPath(sourceBasePath + inferredPathSuffix)
-
     return {
       baseUrl: context.baseUrl,
       dataset: context.dataset,
       id: getPublishedId(sourceDoc._id),
-      path: simplifyPath(sourcePath),
+      path: simplifyPath(
+        resolvedKeyedSourcePath({
+          keyedResultPath,
+          pathSuffix,
+          sourceBasePath,
+        }),
+      ),
       projectId: context.projectId,
       tool: context.tool,
       type: sourceDoc._type,

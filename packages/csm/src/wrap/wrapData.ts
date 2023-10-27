@@ -5,8 +5,8 @@ import { ContentSourceMap } from '@sanity/client'
 import { Logger, PathSegment } from '../legacy'
 import { isArray, isRecord } from '../legacy/helpers'
 import { simplifyPath } from '../legacy/simplifyPath'
+import { resolveSanityNode } from '../resolveSanityNode'
 import { SANITY_KEYS } from './constants'
-import { getValueSource } from './getValueSource'
 import { SanityKey, SanityNodeContext, WrappedValue } from './types'
 
 /** @public */
@@ -67,7 +67,13 @@ export function wrapData<T>(
     $$type$$: 'sanity',
     path: simplifyPath(resultPath) || undefined,
     source: sourceMap
-      ? getValueSource(context, sourceMap, resultPath, keyedResultPath, logger)
+      ? resolveSanityNode(
+          context,
+          sourceMap,
+          resultPath,
+          keyedResultPath,
+          logger,
+        )
       : undefined,
     value,
   } as unknown as WrappedValue<T>
