@@ -1,3 +1,0 @@
-# @sanity/composer
-
-@TODO

@@ -48,16 +48,16 @@ export const VisualEditing: FunctionComponent<{
     ChannelEventHandler<VisualEditingMsg>
   >(
     (type, data) => {
-      if (type === 'composer/focus' && data.path?.length) {
+      if (type === 'pages/focus' && data.path?.length) {
         dispatch({ type, data })
       }
-      if (type === 'composer/blur') {
+      if (type === 'pages/blur') {
         dispatch({ type, data })
       }
-      if (type === 'composer/navigate') {
+      if (type === 'pages/navigate') {
         history?.update(data)
       }
-      if (type === 'composer/toggleOverlay') {
+      if (type === 'pages/toggleOverlay') {
         setOverlayEnabled((enabled) => !enabled)
       }
     },

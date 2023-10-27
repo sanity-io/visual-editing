@@ -8,7 +8,7 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 
 export default function VisualEditing() {
   const router = useRouter()
-  const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
+  const navigatePagesRef = useRef<null | ((update: HistoryUpdate) => void)>(
     null,
   )
 
@@ -17,9 +17,9 @@ export default function VisualEditing() {
       studioUrl,
       history: {
         subscribe: (navigate) => {
-          navigateComposerRef.current = navigate
+          navigatePagesRef.current = navigate
           return () => {
-            navigateComposerRef.current = null
+            navigatePagesRef.current = null
           }
         },
         update: (update) => {
@@ -42,8 +42,8 @@ export default function VisualEditing() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   useEffect(() => {
-    if (navigateComposerRef.current) {
-      navigateComposerRef.current({
+    if (navigatePagesRef.current) {
+      navigatePagesRef.current({
         type: 'push',
         url: `${pathname}${searchParams?.size ? `?${searchParams}` : ''}`,
       })

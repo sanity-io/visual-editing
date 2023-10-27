@@ -90,7 +90,7 @@ export default function ParentPage() {
           <Card borderBottom>
             <Flex justify={'space-between'} align={'center'} padding={3}>
               <Heading as="h1" size={1}>
-                Composer
+                Pages
               </Heading>
               <Flex gap={2} align={'center'}>
                 <Text size={0}>{connections.length} Connections</Text>

@@ -6,7 +6,7 @@ import { useLiveMode } from './useQuery'
 
 export default function VisualEditing() {
   const navigateRemix = useNavigate()
-  const navigateComposerRef = useRef<null | ((update: HistoryUpdate) => void)>(
+  const navigatePagesRef = useRef<null | ((update: HistoryUpdate) => void)>(
     null,
   )
 
@@ -15,9 +15,9 @@ export default function VisualEditing() {
       studioUrl,
       history: {
         subscribe: (navigate) => {
-          navigateComposerRef.current = navigate
+          navigatePagesRef.current = navigate
           return () => {
-            navigateComposerRef.current = null
+            navigatePagesRef.current = null
           }
         },
         update: (update) => {
@@ -33,8 +33,8 @@ export default function VisualEditing() {
   }, [navigateRemix])
   const location = useLocation()
   useEffect(() => {
-    if (navigateComposerRef.current) {
-      navigateComposerRef.current({
+    if (navigatePagesRef.current) {
+      navigatePagesRef.current({
         type: 'push',
         url: `${location.pathname}${location.search}${location.hash}`,
       })

@@ -1,13 +1,13 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig, definePlugin, defineType, defineField } from 'sanity'
 import { deskTool } from 'sanity/desk'
-import { composerTool, type ComposerPluginOptions } from '@sanity/composer'
+import { pagesTool, type PagesPluginOptions } from '@sanity/pages'
 import { schema } from 'apps-common'
 import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
-// import { CustomNavigator } from './composer/CustomNavigator'
+// import { CustomNavigator } from './pages/CustomNavigator'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -22,7 +22,7 @@ const devMode = (() => {
   return typeof document === 'undefined'
     ? false
     : location.hostname === 'localhost'
-}) satisfies ComposerPluginOptions['devMode']
+}) satisfies PagesPluginOptions['devMode']
 
 // If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
 function maybeGitBranchUrl(url: string) {
@@ -43,7 +43,7 @@ function maybeGitBranchUrl(url: string) {
   return previewUrl
 }
 
-const composerWorkspaces = Object.entries({
+const pagesWorkspaces = Object.entries({
   remix:
     process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
     'http://localhost:3000/shoes',
@@ -80,7 +80,7 @@ const composerWorkspaces = Object.entries({
       projectId,
       dataset,
       plugins: [
-        composerTool({
+        pagesTool({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
@@ -104,7 +104,7 @@ const composerWorkspaces = Object.entries({
         const { tool: toolName } = Object.values(workspaces).find(
           (workspace) => workspace.tool === name,
         )!
-        return composerTool({
+        return pagesTool({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
           // @TODO fix the locator for the pages-router
@@ -121,7 +121,7 @@ const composerWorkspaces = Object.entries({
 })
 
 export default [
-  ...composerWorkspaces,
+  ...pagesWorkspaces,
   defineConfig({
     name: workspaces['cross-dataset-references'].workspace,
     basePath: `/${workspaces['cross-dataset-references'].workspace}`,

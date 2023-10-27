@@ -1,10 +1,10 @@
-import { ComposerMsg } from 'visual-editing-helpers'
+import { PagesMsg } from 'visual-editing-helpers'
 
 import { ElementState, OverlayMsg } from '../types'
 
 export const elementsReducer = (
   elements: ElementState[],
-  message: OverlayMsg | ComposerMsg,
+  message: OverlayMsg | PagesMsg,
 ): ElementState[] => {
   const { type } = message
   switch (type) {
@@ -68,12 +68,12 @@ export const elementsReducer = (
       return elements.map((e) => {
         return { ...e, focused: false }
       })
-    case 'composer/blur':
+    case 'pages/blur':
       return elements.map((e) => {
         return { ...e, focused: false }
       })
-    case 'composer/focus': {
-      // This event will be reflected from the composer after a click event, so check if an element has been clicked
+    case 'pages/focus': {
+      // This event will be reflected from the pages tool after a click event, so check if an element has been clicked
       const clickedElement = elements.find((e) => e.focused === 'clicked')
       return elements.map((e) => {
         if (e === clickedElement) {

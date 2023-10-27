@@ -1,7 +1,4 @@
-import {
-  DocumentLocationResolver,
-  DocumentLocationsState,
-} from '@sanity/composer'
+import { DocumentLocationResolver, DocumentLocationsState } from '@sanity/pages'
 import { Observable, combineLatest, map, switchMap } from 'rxjs'
 
 export const locate: DocumentLocationResolver = (params, context) => {

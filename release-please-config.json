@@ -2,9 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "bump-minor-pre-major": true,
   "packages": {
-    "packages/composer": {
-      "prerelease": true
-    },
     "packages/core-loader": {
       "prerelease": true
     },
@@ -19,6 +16,10 @@
     },
     "packages/overlays": {
       "prerelease": true
+    },
+    "packages/pages": {
+      "prerelease": true,
+      "release-as": "0.4.4"
     },
     "packages/react-loader": {
       "prerelease": true
