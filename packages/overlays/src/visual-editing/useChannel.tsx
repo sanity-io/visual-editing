@@ -19,7 +19,7 @@ export function useChannel<T extends ChannelMsg>(
         {
           target: parent,
           targetOrigin,
-          id: 'composer',
+          id: 'pages',
         },
       ],
       handler,

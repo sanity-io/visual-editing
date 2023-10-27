@@ -205,9 +205,6 @@ importers:
       '@nuxtjs/tailwindcss':
         specifier: ^6.8.1
         version: 6.8.1(webpack@5.89.0)
-      '@sanity/composer':
-        specifier: workspace:*
-        version: link:../../packages/composer
       '@sanity/csm':
         specifier: workspace:*
         version: link:../../packages/csm
@@ -217,6 +214,9 @@ importers:
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@sanity/pages':
+        specifier: workspace:*
+        version: link:../../packages/pages
       apps-common:
         specifier: workspace:*
         version: link:../common
@@ -413,7 +413,7 @@ importers:
         version: 1.2.11(react-dom@18.2.0)(react@18.2.0)(sanity@3.18.2-pink-lizard.162)(styled-components@6.1.0)
       '@sanity/composer':
         specifier: workspace:*
-        version: link:../../packages/composer
+        version: link:../../packages/pages
       '@sanity/ui':
         specifier: ^1.8.3
         version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
@@ -462,12 +462,12 @@ importers:
       '@sanity/client':
         specifier: ^6.7.0
         version: 6.7.0
-      '@sanity/composer':
-        specifier: workspace:*
-        version: link:../../packages/composer
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@sanity/pages':
+        specifier: workspace:*
+        version: link:../../packages/pages
       '@sanity/svelte-loader':
         specifier: workspace:*
         version: link:../../packages/svelte-loader
@@ -538,67 +538,6 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
-
-  packages/composer:
-    dependencies:
-      '@sanity/icons':
-        specifier: ^2.6.0
-        version: 2.6.0(react@18.2.0)
-      '@sanity/ui':
-        specifier: ^1.8.3
-        version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
-      '@types/lodash.isequal':
-        specifier: ^4.5.7
-        version: 4.5.7
-      '@vercel/stega':
-        specifier: 0.1.0
-        version: 0.1.0
-      lodash.isequal:
-        specifier: ^4.5.0
-        version: 4.5.0
-      lru-cache:
-        specifier: 10.0.1
-        version: 10.0.1
-      mendoza:
-        specifier: 3.0.3
-        version: 3.0.3
-      rxjs:
-        specifier: ^7.8.1
-        version: 7.8.1
-    devDependencies:
-      '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../csm
-      '@sanity/pkg-utils':
-        specifier: ^3.2.1
-        version: 3.2.1(typescript@5.2.2)
-      channels:
-        specifier: workspace:*
-        version: link:../channels
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      sanity:
-        specifier: 3.18.2-pink-lizard.162
-        version: 3.18.2-pink-lizard.162(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.0)
-      styled-components:
-        specifier: 6.1.0
-        version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-      visual-editing-helpers:
-        specifier: workspace:*
-        version: link:../helpers
-      vitest:
-        specifier: ^0.34.6
-        version: 0.34.6(jsdom@20.0.3)
 
   packages/core-loader:
     dependencies:
@@ -881,6 +820,67 @@ importers:
       rimraf:
         specifier: ^5.0.1
         version: 5.0.5
+      styled-components:
+        specifier: 6.1.0
+        version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      visual-editing-helpers:
+        specifier: workspace:*
+        version: link:../helpers
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6(jsdom@20.0.3)
+
+  packages/pages:
+    dependencies:
+      '@sanity/icons':
+        specifier: ^2.6.0
+        version: 2.6.0(react@18.2.0)
+      '@sanity/ui':
+        specifier: ^1.8.3
+        version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
+      '@types/lodash.isequal':
+        specifier: ^4.5.7
+        version: 4.5.7
+      '@vercel/stega':
+        specifier: 0.1.0
+        version: 0.1.0
+      lodash.isequal:
+        specifier: ^4.5.0
+        version: 4.5.0
+      lru-cache:
+        specifier: 10.0.1
+        version: 10.0.1
+      mendoza:
+        specifier: 3.0.3
+        version: 3.0.3
+      rxjs:
+        specifier: ^7.8.1
+        version: 7.8.1
+    devDependencies:
+      '@sanity/client':
+        specifier: ^6.7.0
+        version: 6.7.0
+      '@sanity/csm':
+        specifier: workspace:*
+        version: link:../csm
+      '@sanity/pkg-utils':
+        specifier: ^3.2.1
+        version: 3.2.1(typescript@5.2.2)
+      channels:
+        specifier: workspace:*
+        version: link:../channels
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      sanity:
+        specifier: 3.18.2-pink-lizard.162
+        version: 3.18.2-pink-lizard.162(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.0)
       styled-components:
         specifier: 6.1.0
         version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -4276,6 +4276,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -13284,6 +13285,10 @@ packages:
   /nanostores@0.9.4:
     resolution: {integrity: sha512-BVFzKt6K5P8tYQLL7MItqcev7jpspA5pIjv+Ck3k6wBnUlwCJcpkGTIinj4APvx8SvdP9fXDGoMRCTY6DO/9QA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:

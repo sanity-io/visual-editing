@@ -12,7 +12,7 @@ export default defineCliConfig({
         'apps-common/queries': require.resolve('../common/src/queries'),
         'apps-common/utils': require.resolve('../common/src/utils'),
         'apps-common': require.resolve('../common/src'),
-        '@sanity/composer': require.resolve('../../packages/composer/src'),
+        '@sanity/pages': require.resolve('../../packages/pages/src'),
       },
     },
   }),
