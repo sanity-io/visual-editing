@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.8-pink-lizard...csm-v0.2.0-pink-lizard) (2023-10-27)
+
+
+### Features
+
+* expose resolvers ([#199](https://github.com/sanity-io/visual-editing/issues/199)) ([b96ede1](https://github.com/sanity-io/visual-editing/commit/b96ede10313781ae4e4f5683a3969ed97171176c))
+
 ## [0.1.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.7-pink-lizard...csm-v0.1.8-pink-lizard) (2023-10-25)
 
 

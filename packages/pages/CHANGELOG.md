@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.5-pink-lizard (2023-10-27)
+
+
+### Bug Fixes
+
+* **refactor:** composer to pages ([#202](https://github.com/sanity-io/visual-editing/issues/202)) ([e46f475](https://github.com/sanity-io/visual-editing/commit/e46f475c50438339f5c95ccf3930f9d16c43dc4b))
+
 ## [0.4.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/composer-v0.4.3-pink-lizard...composer-v0.4.4-pink-lizard) (2023-10-26)
 
 
