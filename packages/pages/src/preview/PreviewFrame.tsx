@@ -63,7 +63,6 @@ export const PreviewFrame = forwardRef<
     overlayEnabled: boolean
     params: PagesParams
     perspective: ClientPerspective
-    pointerEvents?: 'none'
     setPerspective: Dispatch<SetStateAction<ClientPerspective>>
     toggleNavigator?: () => void
     toggleOverlay: () => void
@@ -77,7 +76,6 @@ export const PreviewFrame = forwardRef<
     overlayEnabled,
     params,
     perspective,
-    pointerEvents,
     setPerspective,
     toggleNavigator,
     toggleOverlay,
@@ -275,13 +273,7 @@ export const PreviewFrame = forwardRef<
               maxHeight: mode === 'desktop' ? undefined : 650,
             }}
           >
-            <IFrame
-              ref={ref}
-              src={initialUrl}
-              // src={`${previewLocationOrigin}${params.preview || '/'}`}
-              style={{ pointerEvents }}
-              onLoad={onIFrameLoad}
-            />
+            <IFrame ref={ref} src={initialUrl} onLoad={onIFrameLoad} />
           </IFrameContainerCard>
         </Flex>
       </Card>

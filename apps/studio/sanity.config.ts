@@ -7,7 +7,7 @@ import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
-// import { CustomNavigator } from './pages/CustomNavigator'
+import { CustomNavigator } from './pages/CustomNavigator'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -85,9 +85,13 @@ const pagesWorkspaces = Object.entries({
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
           devMode,
-          // components: {
-          //   unstable_navigator: CustomNavigator,
-          // },
+          components: {
+            unstable_navigator: {
+              minWidth: 120,
+              maxWidth: 240,
+              component: CustomNavigator,
+            },
+          },
         }),
         sharedSettings(),
       ],
@@ -110,9 +114,13 @@ const pagesWorkspaces = Object.entries({
           // @TODO fix the locator for the pages-router
           locate: toolName === 'pages-router' ? undefined : locate,
           devMode,
-          // components: {
-          //   unstable_navigator: CustomNavigator,
-          // },
+          components: {
+            unstable_navigator: {
+              minWidth: 120,
+              maxWidth: 240,
+              component: CustomNavigator,
+            },
+          },
         })
       }),
       sharedSettings(),

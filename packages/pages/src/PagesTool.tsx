@@ -1,5 +1,5 @@
 import { ClientPerspective, QueryParams } from '@sanity/client'
-import { Card, Flex, useToast } from '@sanity/ui'
+import { Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
   ReactElement,
@@ -18,15 +18,36 @@ import {
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
 
-import { Resizable } from './components/Resizable'
 import { ContentEditor } from './editor/ContentEditor'
 import LoaderQueries from './loader/LoaderQueries'
 import { PagesNavigateProvider } from './PagesNavigateProvider'
 import { PagesParamsProvider } from './PagesParamsProvider'
 import { PagesProvider } from './PagesProvider'
+import { Panel } from './panels/Panel'
+import { PanelResizer } from './panels/PanelResizer'
+import { Panels } from './panels/Panels'
 import { PreviewFrame } from './preview/PreviewFrame'
-import { DeskDocumentPaneParams, PagesPluginOptions } from './types'
+import {
+  DeskDocumentPaneParams,
+  NavigatorOptions,
+  PagesPluginOptions,
+} from './types'
+import { useLocalState } from './useLocalState'
 import { useParams } from './useParams'
+
+function Navigator(props: NavigatorOptions) {
+  const { minWidth, maxWidth, component: NavigatorComponent } = props
+  const navigatorDisabled =
+    minWidth != null && maxWidth != null && minWidth === maxWidth
+  return (
+    <>
+      <Panel id="navigator" minWidth={minWidth} maxWidth={maxWidth} order={1}>
+        <NavigatorComponent />
+      </Panel>
+      <PanelResizer order={2} disabled={navigatorDisabled} />
+    </>
+  )
+}
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -36,7 +57,7 @@ export default function PagesTool(props: {
   tool: Tool<PagesPluginOptions>
 }): ReactElement {
   const { previewUrl = '/', components } = props.tool.options ?? {}
-  const { unstable_navigator: UnstableNavigator } = components || {}
+  const { unstable_navigator } = components || {}
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode
@@ -75,11 +96,17 @@ export default function PagesTool(props: {
   })
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
-  const [navigatorEnabled, setNavigatorEnabled] = useState(!!UnstableNavigator)
+
+  const [navigatorEnabled, setNavigatorEnabled] = useLocalState<boolean>(
+    'pages/navigator',
+    !!unstable_navigator?.component,
+  )
+
   const toggleNavigator = useMemo(
     () =>
-      UnstableNavigator && (() => setNavigatorEnabled((enabled) => !enabled)),
-    [UnstableNavigator, setNavigatorEnabled],
+      unstable_navigator?.component &&
+      (() => setNavigatorEnabled((enabled) => !enabled)),
+    [unstable_navigator, setNavigatorEnabled],
   )
 
   const toast = useToast()
@@ -225,26 +252,6 @@ export default function PagesTool(props: {
     }
   }, [channel, params.preview])
 
-  // Resizing
-  const minWidth = 320
-  const [maxWidth, setMaxWidth] = useState(
-    Math.max(window.innerWidth - minWidth, minWidth),
-  )
-
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setMaxWidth(Math.max(window.innerWidth - minWidth, minWidth))
-    }
-
-    window.addEventListener('resize', handleWindowResize)
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [])
-  const [resizing, setResizing] = useState(false)
-  const handleResizeStart = useCallback(() => setResizing(true), [])
-  const handleResizeEnd = useCallback(() => setResizing(false), [])
-
   // The URL that should be loaded by the preview iframe
   // useRef to prevent iframe reloading when preview param changes
   const initialPreviewUrl = useRef(
@@ -262,49 +269,43 @@ export default function PagesTool(props: {
         <PagesNavigateProvider setParams={setParams}>
           <PagesParamsProvider params={params}>
             <Container height="fill">
-              {UnstableNavigator && navigatorEnabled && (
-                <Card borderRight flex="none">
-                  <UnstableNavigator />
-                </Card>
-              )}
-
-              <Flex
-                direction="column"
-                flex={1}
-                overflow="hidden"
-                style={{ minWidth }}
-              >
-                <PreviewFrame
-                  initialUrl={initialPreviewUrl.current}
-                  navigatorEnabled={navigatorEnabled}
-                  onPathChange={handlePreviewPath}
-                  overlayEnabled={overlayEnabled}
-                  params={params}
-                  perspective={perspective}
-                  pointerEvents={resizing ? 'none' : undefined}
-                  ref={iframeRef}
-                  setPerspective={setPerspective}
-                  targetOrigin={targetOrigin}
-                  toggleNavigator={toggleNavigator}
-                  toggleOverlay={toggleOverlay}
-                />
-              </Flex>
-              <Resizable
-                minWidth={minWidth}
-                maxWidth={maxWidth}
-                onResizeStart={handleResizeStart}
-                onResizeEnd={handleResizeEnd}
-              >
-                <ContentEditor
-                  refs={documentsOnPage}
-                  deskParams={deskParams}
-                  documentId={params.id}
-                  documentType={params.type}
-                  onDeskParams={handleDeskParams}
-                  onFocusPath={handleFocusPath}
-                  previewUrl={params.preview}
-                />
-              </Resizable>
+              <Panels>
+                {showNavigator && <Navigator {...unstable_navigator} />}
+                <Panel
+                  id="preview"
+                  minWidth={325}
+                  defaultSize={showNavigator ? 50 : 75}
+                  order={3}
+                >
+                  <Flex direction="column" flex={1} height="fill">
+                    <PreviewFrame
+                      initialUrl={initialPreviewUrl.current}
+                      navigatorEnabled={navigatorEnabled}
+                      onPathChange={handlePreviewPath}
+                      overlayEnabled={overlayEnabled}
+                      params={params}
+                      perspective={perspective}
+                      ref={iframeRef}
+                      setPerspective={setPerspective}
+                      targetOrigin={targetOrigin}
+                      toggleNavigator={toggleNavigator}
+                      toggleOverlay={toggleOverlay}
+                    />
+                  </Flex>
+                </Panel>
+                <PanelResizer order={4} />
+                <Panel id="content" minWidth={325} order={5}>
+                  <ContentEditor
+                    refs={documentsOnPage}
+                    deskParams={deskParams}
+                    documentId={params.id}
+                    documentType={params.type}
+                    onDeskParams={handleDeskParams}
+                    onFocusPath={handleFocusPath}
+                    previewUrl={params.preview}
+                  />
+                </Panel>
+              </Panels>
             </Container>
           </PagesParamsProvider>
         </PagesNavigateProvider>
