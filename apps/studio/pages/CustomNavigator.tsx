@@ -6,7 +6,7 @@ export function CustomNavigator() {
   const { preview } = usePagesParams()
 
   return (
-    <Card style={{ width: 300 }}>
+    <Card>
       <Stack padding={2} space={1}>
         <Card
           as="button"
