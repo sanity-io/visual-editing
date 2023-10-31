@@ -25,6 +25,9 @@ export const pagesTool = definePlugin<PagesPluginOptions>((options) => {
 
   return {
     document: {
+      unstable_comments: {
+        enabled: true,
+      },
       unstable_banners: (prev) => [
         ...prev.filter(
           (b) => b.name !== locationsBanner.name && b.name !== metaBanner.name,
@@ -33,6 +36,8 @@ export const pagesTool = definePlugin<PagesPluginOptions>((options) => {
         metaBanner,
       ],
     },
+
+    plugins: [],
 
     tools: [
       {

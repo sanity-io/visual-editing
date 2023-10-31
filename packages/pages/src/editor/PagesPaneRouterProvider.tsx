@@ -1,6 +1,12 @@
 /* eslint-disable no-console */
 
-import { forwardRef, PropsWithChildren, ReactElement, useMemo } from 'react'
+import {
+  forwardRef,
+  PropsWithChildren,
+  ReactElement,
+  useCallback,
+  useMemo,
+} from 'react'
 import { getPublishedId } from 'sanity'
 import {
   BackLinkProps,
@@ -8,10 +14,42 @@ import {
   PaneRouterContextValue,
   ReferenceChildLinkProps,
 } from 'sanity/desk'
-import { StateLink } from 'sanity/router'
+import { StateLink, useRouter } from 'sanity/router'
 
-import { DeskDocumentPaneParams } from '../types'
+import { DeskDocumentPaneParams, PagesParams } from '../types'
 import { usePagesTool } from '../usePagesTool'
+
+function encodeQueryString(params: Record<string, unknown> = {}): string {
+  const parts = Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')
+
+  return parts.length ? `?${parts}` : ''
+}
+
+function resolveQueryStringFromParams(
+  nextParams: Record<string, string | undefined>,
+) {
+  const allowed = [
+    'comment',
+    'inspect',
+    'instruction',
+    'pathKey',
+    'rev',
+    'since',
+    'template',
+    'view',
+  ] satisfies Array<keyof PagesParams> as string[]
+
+  const safeNextParams = Object.entries(nextParams)
+    .filter(([key]) => allowed.includes(key))
+    .reduce((obj, [key, value]) => {
+      if (value == undefined) return obj
+      return { ...obj, [key]: value }
+    }, {})
+
+  return encodeQueryString(safeNextParams)
+}
 
 const BackLink = forwardRef(function BackLink(
   props: BackLinkProps,
@@ -55,6 +93,25 @@ export function PagesPaneRouterProvider(
   }>,
 ): ReactElement {
   const { children, params, onDeskParams, previewUrl, refs } = props
+
+  const {
+    state: routerState,
+    searchParams: routerSearchParams,
+    resolvePathFromState,
+  } = useRouter()
+
+  const createPathWithParams: PaneRouterContextValue['createPathWithParams'] =
+    useCallback(
+      (nextParams) => {
+        const path = resolvePathFromState(routerState)
+        const qs = resolveQueryStringFromParams({
+          ...routerSearchParams,
+          ...nextParams,
+        })
+        return `${path}${qs}`
+      },
+      [resolvePathFromState, routerSearchParams, routerState],
+    )
 
   const context: PaneRouterContextValue = useMemo(() => {
     return {
@@ -107,7 +164,7 @@ export function PagesPaneRouterProvider(
         onDeskParams({
           ...nextParams,
           // eslint-disable-next-line no-warning-comments
-          // @todo inspect param set manually as it does not seem to be returned
+          // @todo set inspect param to undefined manually as param is missing from object when closing inspector
           inspect: nextParams.inspect ?? undefined,
         } as DeskDocumentPaneParams)
       },
@@ -117,8 +174,9 @@ export function PagesPaneRouterProvider(
       navigateIntent: (intentName, intentParams, options) => {
         console.warn('navigateIntent', intentName, intentParams, options)
       },
+      createPathWithParams,
     }
-  }, [onDeskParams, params, previewUrl, refs])
+  }, [createPathWithParams, onDeskParams, params, previewUrl, refs])
 
   return (
     <PaneRouterContext.Provider value={context}>

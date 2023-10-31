@@ -20,10 +20,10 @@ import {
 } from 'react'
 import { Path } from 'sanity'
 import {
-  DeskToolProvider,
   DocumentPane as DeskDocumentPane,
   DocumentPaneNode,
   PaneLayout,
+  useDeskTool,
 } from 'sanity/desk'
 
 import { DeskDocumentPaneParams } from '../types'
@@ -63,6 +63,16 @@ export const DocumentPane: FunctionComponent<{
   useEffect(() => {
     setErrorParams(null)
   }, [documentId, documentType, params])
+
+  const { setLayoutCollapsed } = useDeskTool()
+  const handleRootCollapse = useCallback(
+    () => setLayoutCollapsed(true),
+    [setLayoutCollapsed],
+  )
+  const handleRootExpand = useCallback(
+    () => setLayoutCollapsed(false),
+    [setLayoutCollapsed],
+  )
 
   if (errorParams) {
     return (
@@ -109,18 +119,21 @@ export const DocumentPane: FunctionComponent<{
 
   return (
     <ErrorBoundary onCatch={setErrorParams}>
-      <PaneLayout style={{ height: '100%' }}>
-        <DeskToolProvider>
-          <PagesPaneRouterProvider onDeskParams={onDeskParams} params={params}>
-            <DeskDocumentPane
-              paneKey="document"
-              index={1}
-              itemId="document"
-              pane={paneDocumentNode}
-              onFocusPath={onFocusPath}
-            />
-          </PagesPaneRouterProvider>
-        </DeskToolProvider>
+      <PaneLayout
+        style={{ height: '100%' }}
+        minWidth={640}
+        onExpand={handleRootExpand}
+        onCollapse={handleRootCollapse}
+      >
+        <PagesPaneRouterProvider onDeskParams={onDeskParams} params={params}>
+          <DeskDocumentPane
+            paneKey="document"
+            index={1}
+            itemId="document"
+            pane={paneDocumentNode}
+            onFocusPath={onFocusPath}
+          />
+        </PagesPaneRouterProvider>
       </PaneLayout>
     </ErrorBoundary>
   )

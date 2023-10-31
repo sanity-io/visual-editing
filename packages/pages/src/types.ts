@@ -56,6 +56,9 @@ export interface DeskDocumentPaneParams {
   // assist
   pathKey?: string
   instruction?: string
+
+  // comments
+  comment?: string
 }
 
 export interface PagesParams extends PagesStateParams, DeskDocumentPaneParams {

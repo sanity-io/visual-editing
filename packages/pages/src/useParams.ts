@@ -61,6 +61,8 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       // assist
       pathKey: routerSearchParams.pathKey,
       instruction: routerSearchParams.instruction,
+      // comments
+      comment: routerSearchParams.comment,
     }
   })
 
@@ -85,6 +87,8 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       // assist
       pathKey: params.pathKey,
       instruction: params.instruction,
+      // comments
+      comment: params.comment,
     }),
     [
       params.inspect,
@@ -95,6 +99,7 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       params.view,
       params.pathKey,
       params.instruction,
+      params.comment,
     ],
   )
 
@@ -116,6 +121,8 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       // assist
       pathKey: routerSearchParams.pathKey,
       instruction: routerSearchParams.instruction,
+      // comments
+      comment: routerSearchParams.comment,
     })
   }, [defaultPreviewUrl, routerSearchParams, routerState, setParams])
 
@@ -147,9 +154,12 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       since: params.since,
       template: params.template,
       view: params.view,
+      // assist
       pathKey: params.pathKey,
       instruction: params.instruction,
-    } as DeskDocumentPaneParams as Record<string, string>
+      // comments
+      comment: params.comment,
+    } satisfies PagesParams as Record<string, string>
 
     const replace = params.preview === previousPreview
     navigate({ type, path }, { replace, searchParams })

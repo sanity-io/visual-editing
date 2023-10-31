@@ -4,6 +4,7 @@ import { Path, useEditState } from 'sanity'
 import { DeskDocumentPaneParams } from '../types'
 import { DocumentListPane } from './DocumentListPane'
 import { DocumentPane } from './DocumentPane'
+import { DeskToolProvider } from 'sanity/desk'
 
 const DocumentPanel: FunctionComponent<{
   deskParams: DeskDocumentPaneParams
@@ -28,13 +29,15 @@ const DocumentPanel: FunctionComponent<{
   )
 
   return (
-    <DocumentPane
-      documentId={documentId}
-      documentType={documentType}
-      params={deskParams}
-      onDeskParams={onDeskParams}
-      onFocusPath={handleFocusPath}
-    />
+    <DeskToolProvider>
+      <DocumentPane
+        documentId={documentId}
+        documentType={documentType}
+        params={deskParams}
+        onDeskParams={onDeskParams}
+        onFocusPath={handleFocusPath}
+      />
+    </DeskToolProvider>
   )
 }
 
