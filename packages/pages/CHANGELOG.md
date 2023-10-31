@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/pages-v0.4.5-pink-lizard...pages-v0.5.0-pink-lizard) (2023-10-31)
+
+
+### Features
+
+* **pages:** comments ([#207](https://github.com/sanity-io/visual-editing/issues/207)) ([5d473ff](https://github.com/sanity-io/visual-editing/commit/5d473ff07b9134a57b9297ec297fb79810e20f4f))
+* **pages:** resizable panels ([#206](https://github.com/sanity-io/visual-editing/issues/206)) ([15d9719](https://github.com/sanity-io/visual-editing/commit/15d97198223b23d349795791241ee759333907fb))
+
+
+### Bug Fixes
+
+* add missing `showNavigator` const ([3bd936d](https://github.com/sanity-io/visual-editing/commit/3bd936df537a0d6993320507617e010d881d01f4))
+* use the new `@sanity/client/csm` utils ([7ffb21a](https://github.com/sanity-io/visual-editing/commit/7ffb21aaefea780690835cad07363ef995bb239b))
+
 ## 0.4.5-pink-lizard (2023-10-27)
 
 
