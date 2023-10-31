@@ -1,7 +1,6 @@
 import { ComposeIcon } from '@sanity/icons'
 import { lazy } from 'react'
 import { definePlugin, DocumentBanner } from 'sanity'
-import { comments } from 'sanity/desk'
 
 import { LocationsBanner } from './banners/locations'
 import { MetaBanner } from './banners/meta'
@@ -38,7 +37,7 @@ export const pagesTool = definePlugin<PagesPluginOptions>((options) => {
       ],
     },
 
-    plugins: [comments()],
+    plugins: [],
 
     tools: [
       {
