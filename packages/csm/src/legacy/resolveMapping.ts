@@ -1,7 +1,11 @@
-import { ContentSourceMap, ContentSourceMapMapping } from '@sanity/client'
+import type {
+  ContentSourceMap,
+  ContentSourceMapMapping,
+  PathSegment,
+} from '@sanity/client/csm'
 
 import { compileJsonPath } from './jsonpath'
-import { Logger, PathSegment } from './types'
+import { Logger } from './types'
 
 export function resolveMapping(
   resultPath: PathSegment[],

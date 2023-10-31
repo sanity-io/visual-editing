@@ -1,5 +1,5 @@
 /* eslint-disable no-irregular-whitespace */
-import type { ContentSourceMap } from '@sanity/client'
+import type { ContentSourceMap } from '@sanity/client/csm'
 import { vercelStegaDecode } from '@vercel/stega'
 import { expect, test } from 'vitest'
 

@@ -1,18 +1,14 @@
-import type {
-  ContentSourceMap,
-  ContentSourceMapDocuments,
-} from '@sanity/client'
+import {
+  type ContentSourceMap,
+  type ContentSourceMapDocuments,
+  encode,
+  type PathSegment,
+} from '@sanity/client/csm'
 import { vercelStegaCombine } from '@vercel/stega'
 
 import { defineEditLink } from './editIntent'
 import { simplifyPath } from './simplifyPath'
-import { encode } from './sourcemap'
-import type {
-  CreateTranscoderConfig,
-  FilterDefault,
-  PathSegment,
-  Transcoder,
-} from './types'
+import type { CreateTranscoderConfig, FilterDefault, Transcoder } from './types'
 
 const filterDefault: FilterDefault = ({ path }) => {
   const endPath = path.at(-1)

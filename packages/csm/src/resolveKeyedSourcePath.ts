@@ -1,4 +1,6 @@
-import { compileJsonPath, parseJsonPath, PathSegment } from './legacy'
+import { parseJsonPath, type PathSegment } from '@sanity/client/csm'
+
+import { compileJsonPath } from './legacy'
 
 export function resolvedKeyedSourcePath(options: {
   keyedResultPath: PathSegment[]

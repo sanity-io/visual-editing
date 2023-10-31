@@ -1,4 +1,4 @@
-import { PathSegment } from './types'
+import type { PathSegment } from '@sanity/client/csm'
 
 export function simplifyPath(path: PathSegment[]): string {
   return path

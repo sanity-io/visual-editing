@@ -1,7 +1,7 @@
-import { ContentSourceMap } from '@sanity/client'
+import type { ContentSourceMap, PathSegment } from '@sanity/client/csm'
 import { SanityNode } from 'visual-editing-helpers'
 
-import { Logger, PathSegment } from './legacy'
+import { Logger } from './legacy'
 import { resolveMapping } from './legacy/resolveMapping'
 import { simplifyPath } from './legacy/simplifyPath'
 import { resolvedKeyedSourcePath } from './resolveKeyedSourcePath'

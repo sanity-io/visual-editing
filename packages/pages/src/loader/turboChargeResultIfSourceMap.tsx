@@ -3,7 +3,8 @@ import type {
   ContentSourceMap,
   SanityDocument,
 } from '@sanity/client'
-import { parseJsonPath, resolveMapping, walkMap } from '@sanity/csm'
+import { parseJsonPath, walkMap } from '@sanity/client/csm'
+import { resolveMapping } from '@sanity/csm'
 import { vercelStegaSplit } from '@vercel/stega'
 
 import { documentsCache } from './documentsCache'

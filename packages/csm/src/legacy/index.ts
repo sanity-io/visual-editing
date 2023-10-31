@@ -1,7 +1,4 @@
-export { encodeJsonPathToUriComponent } from './editIntent'
-export { compileJsonPath, parseJsonPath } from './jsonpath'
-export * from './mapToEditLinks'
+export { compileJsonPath } from './jsonpath'
 export { resolveMapping } from './resolveMapping'
 export * from './transcode'
 export type * from './types'
-export { walkMap, type WalkMapFn } from './walkMap'

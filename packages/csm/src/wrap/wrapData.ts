@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ContentSourceMap } from '@sanity/client'
+import type { ContentSourceMap, PathSegment } from '@sanity/client/csm'
 
-import { Logger, PathSegment } from '../legacy'
+import { Logger } from '../legacy'
 import { isArray, isRecord } from '../legacy/helpers'
 import { simplifyPath } from '../legacy/simplifyPath'
 import { resolveSanityNode } from '../resolveSanityNode'

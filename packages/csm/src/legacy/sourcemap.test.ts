@@ -1,7 +1,5 @@
-import { ContentSourceMap } from '@sanity/client'
+import { type ContentSourceMap, encode } from '@sanity/client/csm'
 import { expect, test, vi } from 'vitest'
-
-import { encode } from './sourcemap'
 
 const encodeTestCases: {
   name: string
