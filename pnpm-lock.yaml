@@ -7,6 +7,7 @@ settings:
 overrides:
   '@sanity/block-tools': 3.18.2-pink-lizard.162
   '@sanity/cli': 3.18.2-pink-lizard.162
+  '@sanity/client': 6.7.1-canary.1
   '@sanity/diff': 3.18.2-pink-lizard.162
   '@sanity/export': 3.18.2-pink-lizard.162
   '@sanity/import': 3.18.2-pink-lizard.162
@@ -32,6 +33,9 @@ importers:
       '@sanity/cli':
         specifier: 3.18.2-pink-lizard.162
         version: 3.18.2-pink-lizard.162
+      '@sanity/client':
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/diff':
         specifier: 3.18.2-pink-lizard.162
         version: 3.18.2-pink-lizard.162
@@ -144,7 +148,7 @@ importers:
         version: link:../../packages/overlays
       '@sanity/preview-kit':
         specifier: 3.2.6
-        version: 3.2.6(@sanity/client@6.7.0)(react@18.2.0)
+        version: 3.2.6(@sanity/client@6.7.1-canary.1)(react@18.2.0)
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -460,8 +464,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -546,8 +550,8 @@ importers:
         version: 2.0.0
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
@@ -592,8 +596,8 @@ importers:
         version: 0.1.0
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -631,8 +635,8 @@ importers:
   packages/groq-store:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -667,8 +671,8 @@ importers:
   packages/helpers:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.9.1
         version: 6.9.1(@typescript-eslint/parser@6.9.1)(eslint@8.52.0)(typescript@5.2.2)
@@ -700,8 +704,8 @@ importers:
         specifier: 0.10.0
         version: 0.10.0(nanostores@0.9.4)(vue@3.3.7)
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
@@ -770,8 +774,8 @@ importers:
         version: 0.20.0
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -861,8 +865,8 @@ importers:
         version: 7.8.1
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/csm':
         specifier: workspace:*
         version: link:../csm
@@ -897,8 +901,8 @@ importers:
   packages/react-loader:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
@@ -951,8 +955,8 @@ importers:
   packages/svelte-loader:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.7.0
-        version: 6.7.0
+        specifier: 6.7.1-canary.1
+        version: 6.7.1-canary.1
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
@@ -4103,7 +4107,7 @@ packages:
       vue: ^3.3.4
     dependencies:
       '@nuxt/kit': 3.8.0
-      '@rollup/plugin-replace': 5.0.5(rollup@4.2.0)
+      '@rollup/plugin-replace': 5.0.4
       '@vitejs/plugin-vue': 4.4.0(vite@4.5.0)(vue@3.3.7)
       '@vitejs/plugin-vue-jsx': 3.0.2(vite@4.5.0)(vue@3.3.7)
       autoprefixer: 10.4.16(postcss@8.4.31)
@@ -4276,6 +4280,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -4807,8 +4812,21 @@ packages:
       rollup: 4.2.0
     dev: true
 
-  /@rollup/plugin-replace@5.0.5(rollup@3.29.4):
-    resolution: {integrity: sha512-rYO4fOi8lMaTg/z5Jb+hKnrHHVn8j2lwkqwyS4kTRhKyWOLf2wST2sWXr4WzWiTcoHTp2sTjqUbqIj2E39slKQ==}
+  /@rollup/plugin-replace@5.0.4:
+    resolution: {integrity: sha512-E2hmRnlh09K8HGT0rOnnri9OTh+BILGr7NVJGB30S4E3cLRn3J0xjdiyOZ74adPs4NiAMgrjUMGAZNJDBgsdmQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.0.5(rollup@4.2.0)
+      magic-string: 0.30.5
+    dev: true
+
+  /@rollup/plugin-replace@5.0.4(rollup@3.29.4):
+    resolution: {integrity: sha512-E2hmRnlh09K8HGT0rOnnri9OTh+BILGr7NVJGB30S4E3cLRn3J0xjdiyOZ74adPs4NiAMgrjUMGAZNJDBgsdmQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
@@ -5088,8 +5106,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/client@6.7.0:
-    resolution: {integrity: sha512-nQGIuXXhdtP5FDsdBjuPRpeV6jOHU6Eq5xr52KyUUi29SgC5h5XUzRIu7d1sF8N+ONqTngYueFuB8JDsdSo1Ng==}
+  /@sanity/client@6.7.1-canary.1:
+    resolution: {integrity: sha512-7JbZt9vUbsUfypGUD5Zb0IfSZG7VL+7E6iDVDASevFIRVqAou8VPYOTBU/eO1C5cSLldwU3zYuphZm84nmsCYA==}
     engines: {node: '>=14.18'}
     dependencies:
       '@sanity/eventsource': 5.0.1
@@ -5189,7 +5207,7 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@sanity/client': 6.7.0
+      '@sanity/client': 6.7.1-canary.1
       '@sanity/import': 3.18.2-pink-lizard.162
       get-it: 8.4.4
       meow: 9.0.0
@@ -5332,17 +5350,17 @@ packages:
       - react-dom
       - supports-color
 
-  /@sanity/preview-kit@3.2.6(@sanity/client@6.7.0)(react@18.2.0):
+  /@sanity/preview-kit@3.2.6(@sanity/client@6.7.1-canary.1)(react@18.2.0):
     resolution: {integrity: sha512-TsqAbw/YikixLQ6Brphc8fkldBS3aTRWU5i+pAW4Lk9ywNCYqarKyXfMXGHjhb8eK7QQBnKQoQ93sPzKB9tz3w==}
     engines: {node: '>=14'}
     peerDependencies:
-      '@sanity/client': ^6.7.0
+      '@sanity/client': 6.7.1-canary.1
       react: ^18.0.0
     peerDependenciesMeta:
       react:
         optional: true
     dependencies:
-      '@sanity/client': 6.7.0
+      '@sanity/client': 6.7.1-canary.1
       '@sanity/eventsource': 5.0.1
       '@sanity/groq-store': 4.1.3
       '@vercel/stega': 0.1.0
@@ -5373,7 +5391,7 @@ packages:
   /@sanity/types@3.18.2-pink-lizard.162:
     resolution: {integrity: sha512-D8ujMjUKeNvY4wWXfHQrSi6JvQ2vXA9k/x7KGIeBZUjL20Hvej/eDrHTJuKwbforXLB/h+org/GZGVAmXhAUow==}
     dependencies:
-      '@sanity/client': 6.7.0
+      '@sanity/client': 6.7.1-canary.1
       '@types/react': 18.2.33
     transitivePeerDependencies:
       - supports-color
@@ -13298,6 +13316,10 @@ packages:
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: true
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: true
+
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: true
@@ -13374,7 +13396,7 @@ packages:
       '@rollup/plugin-inject': 5.0.5(rollup@3.29.4)
       '@rollup/plugin-json': 6.0.1(rollup@3.29.4)
       '@rollup/plugin-node-resolve': 15.2.3(rollup@3.29.4)
-      '@rollup/plugin-replace': 5.0.5(rollup@3.29.4)
+      '@rollup/plugin-replace': 5.0.4(rollup@3.29.4)
       '@rollup/plugin-terser': 0.4.4(rollup@3.29.4)
       '@rollup/plugin-wasm': 6.2.2(rollup@3.29.4)
       '@rollup/pluginutils': 5.0.5(rollup@3.29.4)
@@ -16276,7 +16298,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.18.2-pink-lizard.162
       '@sanity/cli': 3.18.2-pink-lizard.162
-      '@sanity/client': 6.7.0
+      '@sanity/client': 6.7.1-canary.1
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.18.2-pink-lizard.162
       '@sanity/diff-match-patch': 3.1.1
