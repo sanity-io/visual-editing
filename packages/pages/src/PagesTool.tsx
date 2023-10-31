@@ -58,6 +58,7 @@ export default function PagesTool(props: {
 }): ReactElement {
   const { previewUrl = '/', components } = props.tool.options ?? {}
   const { unstable_navigator } = components || {}
+  const showNavigator = !!unstable_navigator?.component
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode
