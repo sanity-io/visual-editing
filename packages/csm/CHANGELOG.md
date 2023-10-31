@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.2.0-pink-lizard...csm-v0.2.1-pink-lizard) (2023-10-31)
+
+
+### Bug Fixes
+
+* use canary version of `@sanity/client` ([2575715](https://github.com/sanity-io/visual-editing/commit/25757156fd25b5562070196ae054c4deeeb2cd1d))
+* use the new `@sanity/client/csm` utils ([7ffb21a](https://github.com/sanity-io/visual-editing/commit/7ffb21aaefea780690835cad07363ef995bb239b))
+
 ## [0.2.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.1.8-pink-lizard...csm-v0.2.0-pink-lizard) (2023-10-27)
 
 

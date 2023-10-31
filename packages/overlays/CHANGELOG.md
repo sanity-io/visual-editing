@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.12-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.11-pink-lizard...overlays-v0.1.12-pink-lizard) (2023-10-31)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency valibot to ^0.20.0 ([#211](https://github.com/sanity-io/visual-editing/issues/211)) ([8fe3fc1](https://github.com/sanity-io/visual-editing/commit/8fe3fc170533bac3e223c0a4885aa0656c454c2f))
+
 ## [0.1.11-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.10-pink-lizard...overlays-v0.1.11-pink-lizard) (2023-10-27)
 
 
