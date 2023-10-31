@@ -13,7 +13,6 @@ import {
 import {
   ErrorInfo,
   FunctionComponent,
-  PropsWithChildren,
   useCallback,
   useEffect,
   useMemo,
@@ -21,7 +20,6 @@ import {
 } from 'react'
 import { Path } from 'sanity'
 import {
-  DeskToolProvider,
   DocumentPane as DeskDocumentPane,
   DocumentPaneNode,
   PaneLayout,
@@ -31,12 +29,6 @@ import {
 import { DeskDocumentPaneParams } from '../types'
 import { usePagesTool } from '../usePagesTool'
 import { PagesPaneRouterProvider } from './PagesPaneRouterProvider'
-
-const DocumentPaneWrappers: FunctionComponent<PropsWithChildren> = function ({
-  children,
-}) {
-  return <DeskToolProvider>{children}</DeskToolProvider>
-}
 
 export const DocumentPane: FunctionComponent<{
   documentId: string
@@ -126,25 +118,23 @@ export const DocumentPane: FunctionComponent<{
   }
 
   return (
-    <DocumentPaneWrappers>
-      <ErrorBoundary onCatch={setErrorParams}>
-        <PaneLayout
-          style={{ height: '100%' }}
-          minWidth={640}
-          onExpand={handleRootExpand}
-          onCollapse={handleRootCollapse}
-        >
-          <PagesPaneRouterProvider onDeskParams={onDeskParams} params={params}>
-            <DeskDocumentPane
-              paneKey="document"
-              index={1}
-              itemId="document"
-              pane={paneDocumentNode}
-              onFocusPath={onFocusPath}
-            />
-          </PagesPaneRouterProvider>
-        </PaneLayout>
-      </ErrorBoundary>
-    </DocumentPaneWrappers>
+    <ErrorBoundary onCatch={setErrorParams}>
+      <PaneLayout
+        style={{ height: '100%' }}
+        minWidth={640}
+        onExpand={handleRootExpand}
+        onCollapse={handleRootCollapse}
+      >
+        <PagesPaneRouterProvider onDeskParams={onDeskParams} params={params}>
+          <DeskDocumentPane
+            paneKey="document"
+            index={1}
+            itemId="document"
+            pane={paneDocumentNode}
+            onFocusPath={onFocusPath}
+          />
+        </PagesPaneRouterProvider>
+      </PaneLayout>
+    </ErrorBoundary>
   )
 }
