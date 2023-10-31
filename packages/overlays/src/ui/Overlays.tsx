@@ -30,7 +30,6 @@ const Root = styled.div<{
 `
 
 /**
- * Hook for maintaining a channel between overlays and the pages tool
  * @internal
  */
 export const Overlays: FunctionComponent<{
@@ -52,16 +51,16 @@ export const Overlays: FunctionComponent<{
     ChannelEventHandler<VisualEditingMsg>
   >(
     (type, data) => {
-      if (type === 'pages/focus' && data.path?.length) {
+      if (type === 'presentation/focus' && data.path?.length) {
         dispatch({ type, data })
       }
-      if (type === 'pages/blur') {
+      if (type === 'presentation/blur') {
         dispatch({ type, data })
       }
-      if (type === 'pages/navigate') {
+      if (type === 'presentation/navigate') {
         history?.update(data)
       }
-      if (type === 'pages/toggleOverlay') {
+      if (type === 'presentation/toggleOverlay') {
         setOverlayEnabled((enabled) => !enabled)
       }
     },

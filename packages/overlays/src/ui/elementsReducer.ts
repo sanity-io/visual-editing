@@ -1,4 +1,4 @@
-import { PagesMsg } from 'visual-editing-helpers'
+import { PresentationMsg } from 'visual-editing-helpers'
 
 import { ElementState, OverlayMsg } from '../types'
 
@@ -8,7 +8,7 @@ import { ElementState, OverlayMsg } from '../types'
  */
 export const elementsReducer = (
   elements: ElementState[],
-  message: OverlayMsg | PagesMsg,
+  message: OverlayMsg | PresentationMsg,
 ): ElementState[] => {
   const { type } = message
   switch (type) {
@@ -72,12 +72,12 @@ export const elementsReducer = (
       return elements.map((e) => {
         return { ...e, focused: false }
       })
-    case 'pages/blur':
+    case 'presentation/blur':
       return elements.map((e) => {
         return { ...e, focused: false }
       })
-    case 'pages/focus': {
-      // This event will be reflected from the pages tool after a click event, so check if an element has been clicked
+    case 'presentation/focus': {
+      // This event will be reflected from the presentation tool after a click event, so check if an element has been clicked
       const clickedElement = elements.find((e) => e.focused === 'clicked')
       return elements.map((e) => {
         if (e === clickedElement) {

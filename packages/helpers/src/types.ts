@@ -47,24 +47,24 @@ export type HistoryUpdate = {
 }
 
 /**
- * Messages emitted by the pages package
+ * Messages emitted by the presentation package
  * @public
  */
-export type PagesMsg =
+export type PresentationMsg =
   | {
-      type: 'pages/focus'
+      type: 'presentation/focus'
       data: { id: string; path: string }
     }
   | {
-      type: 'pages/blur'
+      type: 'presentation/blur'
       data: undefined
     }
   | {
-      type: 'pages/navigate'
+      type: 'presentation/navigate'
       data: HistoryUpdate
     }
   | {
-      type: 'pages/toggleOverlay'
+      type: 'presentation/toggleOverlay'
       data: undefined
     }
 
@@ -142,10 +142,10 @@ export type LoaderMsg =
  * Union type of visual editing related messages
  * @public
  */
-export type VisualEditingMsg = PagesMsg | LoaderMsg | OverlayMsg
+export type VisualEditingMsg = PresentationMsg | LoaderMsg | OverlayMsg
 
 /**
  * Known Channel connection IDs
  * @public
  */
-export type VisualEditingConnectionIds = 'pages' | 'loaders' | 'overlays'
+export type VisualEditingConnectionIds = 'presentation' | 'loaders' | 'overlays'

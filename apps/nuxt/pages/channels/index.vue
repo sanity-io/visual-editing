@@ -7,7 +7,7 @@
     />
     <div class="h-full w-full bg-white p-8">
       <div class="flex items-center justify-between">
-        <h1 class="text-lg font-bold">Pages</h1>
+        <h1 class="text-lg font-bold">Presentation</h1>
         <button
           class="rounded bg-green-500 p-2 leading-none text-white"
           type="button"

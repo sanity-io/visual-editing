@@ -1,0 +1,141 @@
+{
+  "name": "@sanity/presentation",
+  "version": "0.4.5-pink-lizard",
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "require": "./dist/index.cjs",
+      "node": {
+        "module": "./dist/index.js",
+        "import": "./dist/index.cjs.js"
+      },
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist artifact",
+    "build": "pkg build --strict && pkg --strict",
+    "lint": "eslint .",
+    "prepack": "pnpm build",
+    "artifact": "pnpm pack --pack-destination artifact",
+    "test": "vitest --pass-with-no-tests",
+    "watch": "pkg watch --strict"
+  },
+  "browserslist": [
+    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
+    "maintained node versions"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "react",
+      "react-hooks",
+      "simple-import-sort",
+      "prettier"
+    ],
+    "extends": [
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:react/jsx-runtime",
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "no-console": "error",
+      "no-warning-comments": [
+        "warn",
+        {
+          "location": "start",
+          "terms": [
+            "todo",
+            "@todo",
+            "fixme"
+          ]
+        }
+      ],
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/member-delimiter-style": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "prettier/prettier": "warn",
+      "react-hooks/exhaustive-deps": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react/prop-types": "off",
+      "simple-import-sort/exports": "warn",
+      "simple-import-sort/imports": "warn"
+    },
+    "root": true
+  },
+  "dependencies": {
+    "@sanity/icons": "^2.6.0",
+    "@sanity/ui": "^1.8.3",
+    "@types/lodash.isequal": "^4.5.7",
+    "@vercel/stega": "0.1.0",
+    "lodash.isequal": "^4.5.0",
+    "lru-cache": "10.0.1",
+    "mendoza": "3.0.3",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@sanity/client": "^6.7.0",
+    "@sanity/csm": "workspace:*",
+    "@sanity/pkg-utils": "^3.2.2",
+    "channels": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sanity": "^3.18.1",
+    "styled-components": "^6.1.0",
+    "typescript": "^5.2.2",
+    "visual-editing-helpers": "workspace:*",
+    "vitest": "^0.34.6"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^6.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sanity": "3.18.2-pink-lizard.162",
+    "styled-components": "^6.1.0"
+  },
+  "engines": {
+    "node": ">=16.14"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "tag": "pink-lizard"
+  }
+}

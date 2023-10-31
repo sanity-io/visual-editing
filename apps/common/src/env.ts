@@ -35,7 +35,7 @@ export const workspaces = {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'remix',
-    tool: 'pages',
+    tool: 'presentation',
   },
   'next-app-router': {
     projectId: projectId,
@@ -53,13 +53,13 @@ export const workspaces = {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'nuxt',
-    tool: 'pages',
+    tool: 'presentation',
   },
   svelte: {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'svelte',
-    tool: 'pages',
+    tool: 'presentation',
   },
   'cross-dataset-references': {
     projectId: projectId,
@@ -71,6 +71,6 @@ export const workspaces = {
     projectId: projectId,
     dataset: datasets['page-builder-demo'],
     workspace: 'page-builder-demo',
-    tool: 'pages',
+    tool: 'presentation',
   },
 } as const

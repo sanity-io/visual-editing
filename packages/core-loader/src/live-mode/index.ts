@@ -60,7 +60,7 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
         {
           target: parent,
           targetOrigin: studioUrl,
-          id: 'pages' satisfies VisualEditingConnectionIds,
+          id: 'presentation' satisfies VisualEditingConnectionIds,
         },
       ],
       handler: (type, data) => {

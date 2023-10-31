@@ -7,7 +7,7 @@ import {
 import { useEffect, useRef } from 'react'
 
 /**
- * Hook for maintaining a channel between overlays and the pages tool
+ * Hook for maintaining a channel between overlays and the presentation tool
  * @internal
  */
 export function useChannel<T extends ChannelMsg>(
@@ -23,7 +23,7 @@ export function useChannel<T extends ChannelMsg>(
         {
           target: parent,
           targetOrigin,
-          id: 'pages',
+          id: 'presentation',
         },
       ],
       handler,
