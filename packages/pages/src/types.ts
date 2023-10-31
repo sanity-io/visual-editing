@@ -22,6 +22,12 @@ export type DocumentLocationResolver = (
   | undefined
   | Observable<DocumentLocationsState | null | undefined>
 
+export interface NavigatorOptions {
+  minWidth?: number
+  maxWidth?: number
+  component: ComponentType
+}
+
 export interface PagesPluginOptions {
   devMode?: boolean | (() => boolean)
   icon?: ComponentType
@@ -30,7 +36,7 @@ export interface PagesPluginOptions {
   locate?: DocumentLocationResolver
   previewUrl: string
   components?: {
-    unstable_navigator?: ComponentType
+    unstable_navigator?: NavigatorOptions
   }
 }
 
