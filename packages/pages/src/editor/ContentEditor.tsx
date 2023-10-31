@@ -1,10 +1,10 @@
 import { FunctionComponent, useCallback } from 'react'
 import { Path, useEditState } from 'sanity'
+import { DeskToolProvider } from 'sanity/desk'
 
 import { DeskDocumentPaneParams } from '../types'
 import { DocumentListPane } from './DocumentListPane'
 import { DocumentPane } from './DocumentPane'
-import { DeskToolProvider } from 'sanity/desk'
 
 const DocumentPanel: FunctionComponent<{
   deskParams: DeskDocumentPaneParams
