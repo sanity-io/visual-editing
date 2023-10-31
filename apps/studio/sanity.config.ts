@@ -85,13 +85,16 @@ const pagesWorkspaces = Object.entries({
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
           devMode,
-          components: {
-            unstable_navigator: {
-              minWidth: 120,
-              maxWidth: 240,
-              component: CustomNavigator,
-            },
-          },
+          components:
+            name === 'page-builder-demo'
+              ? {
+                  unstable_navigator: {
+                    minWidth: 120,
+                    maxWidth: 240,
+                    component: CustomNavigator,
+                  },
+                }
+              : {},
         }),
         sharedSettings(),
       ],
