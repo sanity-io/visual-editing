@@ -117,13 +117,6 @@ const pagesWorkspaces = Object.entries({
           // @TODO fix the locator for the pages-router
           locate: toolName === 'pages-router' ? undefined : locate,
           devMode,
-          components: {
-            unstable_navigator: {
-              minWidth: 120,
-              maxWidth: 240,
-              component: CustomNavigator,
-            },
-          },
         })
       }),
       sharedSettings(),
