@@ -218,9 +218,9 @@ importers:
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
-      '@sanity/pages':
+      '@sanity/presentation':
         specifier: workspace:*
-        version: link:../../packages/pages
+        version: link:../../packages/presentation
       apps-common:
         specifier: workspace:*
         version: link:../common
@@ -415,9 +415,9 @@ importers:
       '@sanity/assist':
         specifier: ^1.2.11
         version: 1.2.11(react-dom@18.2.0)(react@18.2.0)(sanity@3.18.2-pink-lizard.162)(styled-components@6.1.0)
-      '@sanity/pages':
+      '@sanity/presentation':
         specifier: workspace:*
-        version: link:../../packages/pages
+        version: link:../../packages/presentation
       '@sanity/ui':
         specifier: ^1.8.3
         version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
@@ -469,9 +469,9 @@ importers:
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
-      '@sanity/pages':
+      '@sanity/presentation':
         specifier: workspace:*
-        version: link:../../packages/pages
+        version: link:../../packages/presentation
       '@sanity/svelte-loader':
         specifier: workspace:*
         version: link:../../packages/svelte-loader
@@ -837,7 +837,7 @@ importers:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@20.0.3)
 
-  packages/pages:
+  packages/presentation:
     dependencies:
       '@sanity/icons':
         specifier: ^2.6.0

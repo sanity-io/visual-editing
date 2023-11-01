@@ -1,13 +1,16 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig, definePlugin, defineType, defineField } from 'sanity'
 import { deskTool } from 'sanity/desk'
-import { pagesTool, type PagesPluginOptions } from '@sanity/pages'
+import {
+  presentationTool,
+  type PresentationPluginOptions,
+} from '@sanity/presentation'
 import { schema } from 'apps-common'
 import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
-import { CustomNavigator } from './pages/CustomNavigator'
+import { CustomNavigator } from './presentation/CustomNavigator'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -22,7 +25,7 @@ const devMode = (() => {
   return typeof document === 'undefined'
     ? false
     : location.hostname === 'localhost'
-}) satisfies PagesPluginOptions['devMode']
+}) satisfies PresentationPluginOptions['devMode']
 
 // If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
 function maybeGitBranchUrl(url: string) {
@@ -43,7 +46,7 @@ function maybeGitBranchUrl(url: string) {
   return previewUrl
 }
 
-const pagesWorkspaces = Object.entries({
+const presentationWorkspaces = Object.entries({
   remix:
     process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
     'http://localhost:3000/shoes',
@@ -80,7 +83,7 @@ const pagesWorkspaces = Object.entries({
       projectId,
       dataset,
       plugins: [
-        pagesTool({
+        presentationTool({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
@@ -111,7 +114,7 @@ const pagesWorkspaces = Object.entries({
         const { tool: toolName } = Object.values(workspaces).find(
           (workspace) => workspace.tool === name,
         )!
-        return pagesTool({
+        return presentationTool({
           name: toolName,
           previewUrl: maybeGitBranchUrl(previewUrl),
           // @TODO fix the locator for the pages-router
@@ -125,7 +128,7 @@ const pagesWorkspaces = Object.entries({
 })
 
 export default [
-  ...pagesWorkspaces,
+  ...presentationWorkspaces,
   defineConfig({
     name: workspaces['cross-dataset-references'].workspace,
     basePath: `/${workspaces['cross-dataset-references'].workspace}`,

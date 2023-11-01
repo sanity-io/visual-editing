@@ -34,7 +34,7 @@ const sanityTitleData = {
   path: 'title',
   baseUrl: '/studio',
   workspace: 'docs',
-  tool: 'pages',
+  tool: 'presentation',
 }
 
 const sanityDescData = {
@@ -45,7 +45,7 @@ const sanityDescData = {
   path: 'description',
   baseUrl: '/studio',
   workspace: 'docs',
-  tool: 'pages',
+  tool: 'presentation',
 }
 const sanityCopyrightData = {
   projectId: 'projectId',
@@ -55,6 +55,6 @@ const sanityCopyrightData = {
   path: 'copyrightText',
   baseUrl: '/studio',
   workspace: 'docs',
-  tool: 'pages',
+  tool: 'presentation',
 }
 </script>

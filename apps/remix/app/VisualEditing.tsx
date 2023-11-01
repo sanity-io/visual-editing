@@ -6,18 +6,18 @@ import { useLiveMode } from './useQuery'
 
 export default function VisualEditing() {
   const navigateRemix = useNavigate()
-  const navigatePagesRef = useRef<null | ((update: HistoryUpdate) => void)>(
-    null,
-  )
+  const navigatePresentationRef = useRef<
+    null | ((update: HistoryUpdate) => void)
+  >(null)
 
   useEffect(() => {
     const disable = enableOverlays({
       studioUrl,
       history: {
         subscribe: (navigate) => {
-          navigatePagesRef.current = navigate
+          navigatePresentationRef.current = navigate
           return () => {
-            navigatePagesRef.current = null
+            navigatePresentationRef.current = null
           }
         },
         update: (update) => {
@@ -33,8 +33,8 @@ export default function VisualEditing() {
   }, [navigateRemix])
   const location = useLocation()
   useEffect(() => {
-    if (navigatePagesRef.current) {
-      navigatePagesRef.current({
+    if (navigatePresentationRef.current) {
+      navigatePresentationRef.current({
         type: 'push',
         url: `${location.pathname}${location.search}${location.hash}`,
       })

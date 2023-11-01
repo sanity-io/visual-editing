@@ -1,5 +1,5 @@
 import { schema } from 'apps-common'
-import { pagesTool } from '@sanity/pages'
+import { presentationTool } from '@sanity/presentation'
 import { Config, defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
@@ -7,8 +7,8 @@ export default function getSanityConfig(config: Config) {
   return defineConfig({
     basePath: '/studio',
     plugins: [
-      pagesTool({
-        name: 'pages',
+      presentationTool({
+        name: 'presentation',
         previewUrl: '/preview',
       }),
       deskTool(),
