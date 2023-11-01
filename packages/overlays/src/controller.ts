@@ -200,7 +200,7 @@ export function createOverlayController({
     activateElement(sanityNode)
   }
 
-  function registerElements(node: HTMLElement) {
+  function registerElements(node: HTMLElement | { childNodes: HTMLElement[] }) {
     const sanityNodes = findSanityNodes(node)
     for (const sanityNode of sanityNodes) {
       if (
@@ -246,7 +246,7 @@ export function createOverlayController({
             unregisterElement(node)
           }
         } else {
-          registerElements(node)
+          registerElements({ childNodes: [node] })
         }
       }
 
