@@ -1,1 +1,1 @@
-export default '@TODO'
+export * from './documentsCache'

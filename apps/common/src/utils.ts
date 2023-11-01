@@ -57,6 +57,9 @@ function resolveSanityNodeFromResultSourceMapPath(
   | (Partial<Pick<SanityNode, 'projectId' | 'dataset'>> &
       Pick<SanityNode, 'id' | 'type' | 'path'>)
   | null {
+  if (!csm) {
+    return null
+  }
   const resolveMappingResult = resolveMapping(resultPath, csm)
 
   if (!resolveMappingResult) {

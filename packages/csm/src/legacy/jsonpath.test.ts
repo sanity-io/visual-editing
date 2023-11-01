@@ -1,7 +1,5 @@
-import { parseJsonPath } from '@sanity/client/csm'
+import { jsonPath as compileJsonPath, parseJsonPath } from '@sanity/client/csm'
 import { expect, test } from 'vitest'
-
-import { compileJsonPath } from './jsonpath'
 
 test('formats normalised JSON Paths', () => {
   expect(compileJsonPath(['foo', 'bar', 0, 'baz'])).toBe(

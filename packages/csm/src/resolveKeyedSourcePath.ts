@@ -1,6 +1,4 @@
-import { parseJsonPath, type PathSegment } from '@sanity/client/csm'
-
-import { compileJsonPath } from './legacy'
+import { jsonPath, parseJsonPath, type PathSegment } from '@sanity/client/csm'
 
 export function resolvedKeyedSourcePath(options: {
   keyedResultPath: PathSegment[]
@@ -17,7 +15,7 @@ export function resolvedKeyedSourcePath(options: {
   )
 
   const inferredPathSuffix = inferredPath.length
-    ? compileJsonPath(inferredPath, { keyArraySelectors: true }).slice(1)
+    ? jsonPath(inferredPath, { keyArraySelectors: true }).slice(1)
     : ''
 
   return parseJsonPath(sourceBasePath + inferredPathSuffix)

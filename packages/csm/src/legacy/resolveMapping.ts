@@ -1,12 +1,13 @@
-import type {
-  ContentSourceMap,
-  ContentSourceMapMapping,
-  PathSegment,
+import {
+  type ContentSourceMap,
+  type ContentSourceMapMapping,
+  type PathSegment,
+  resolveMapping as _resolveMapping,
 } from '@sanity/client/csm'
 
-import { compileJsonPath } from './jsonpath'
 import { Logger } from './types'
 
+// @TODO make this function the default behavior in `@sanity/client/csm`, and apply a legacy backwards compatible version in `@sanity/preview-kit/csm`
 export function resolveMapping(
   resultPath: PathSegment[],
   csm: ContentSourceMap,
@@ -18,7 +19,10 @@ export function resolveMapping(
       pathSuffix: string
     }
   | undefined {
-  const resultJsonPath = compileJsonPath(resultPath)
+  if (!csm) {
+    return undefined
+  }
+  const resolved = _resolveMapping(resultPath, csm)
 
   if (!csm.mappings) {
     logger?.error?.('Missing mappings', {
@@ -27,27 +31,14 @@ export function resolveMapping(
     return undefined
   }
 
-  if (csm.mappings[resultJsonPath] !== undefined) {
+  if (Array.isArray(resolved)) {
+    const [mapping, matchedPath, pathSuffix] = resolved
     return {
-      mapping: csm.mappings[resultJsonPath],
-      matchedPath: resultJsonPath,
-      pathSuffix: '',
+      mapping,
+      matchedPath,
+      pathSuffix,
     }
   }
 
-  const mappings = Object.entries(csm.mappings)
-    .filter(([key]) => resultJsonPath.startsWith(key))
-    .sort(([key1], [key2]) => key2.length - key1.length)
-
-  if (mappings.length == 0) {
-    return undefined
-  }
-
-  const [matchedPath, mapping] = mappings[0]
-
-  return {
-    mapping,
-    matchedPath,
-    pathSuffix: resultJsonPath.substring(matchedPath.length),
-  }
+  return undefined
 }

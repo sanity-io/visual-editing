@@ -6,6 +6,11 @@ import type {
   SanityClient,
   SanityDocument,
 } from '@sanity/client'
+import {
+  DocumentCachePerspective,
+  unstable__documentsCache,
+  unstable__getDocumentCacheKey,
+} from '@sanity/groq-store'
 import { applyPatch } from 'mendoza'
 import {
   memo,
@@ -18,8 +23,6 @@ import {
 } from 'react'
 
 import { defineListenerContext as Context, IsEnabledContext } from './context'
-import { documentsCache } from './documentsCache'
-import { getTurboCacheKey } from './getTurboCacheKey'
 import { turboChargeResultIfSourceMap } from './turboChargeResultIfSourceMap'
 import type {
   DefineListenerContext,
@@ -56,6 +59,9 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
   props: LiveStoreProviderProps,
 ) {
   const { draft, children, client, refreshInterval = 2000, perspective } = props
+  if (perspective === 'raw') {
+    throw new Error('LiveStoreProvider does not support the raw perspective')
+  }
 
   const [subscriptions, setSubscriptions] = useState<QueryCacheKey[]>([])
   const [snapshots] = useState<QuerySnapshotsCache>(() => new Map())
@@ -106,6 +112,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
       const nextTurboIds = new Set<string>()
       if (contentSourceMap.documents?.length) {
         for (const { _id } of contentSourceMap.documents) {
+          // @TODO only add local ids, not remote ones
           nextTurboIds.add(_id)
         }
       }
@@ -475,7 +482,7 @@ interface TurboProps extends Pick<LiveStoreProviderProps, 'client'> {
   setTurboIds: React.Dispatch<React.SetStateAction<string[]>>
   cache: LiveStoreQueryCacheMap
   snapshots: QuerySnapshotsCache
-  perspective: ClientPerspective
+  perspective: DocumentCachePerspective
 }
 /**
  * A turbo-charged mutation observer that uses Content Source Maps to apply mendoza patches on your queries
@@ -523,8 +530,11 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     for (const turboId of turboIds) {
       if (
         !batchSet.has(turboId) &&
-        !documentsCache.has(
-          getTurboCacheKey(projectId, dataset, perspective, turboId),
+        !unstable__documentsCache.has(
+          unstable__getDocumentCacheKey(
+            { projectId, dataset, perspective },
+            { _id: turboId },
+          ),
         )
       ) {
         nextBatch.add(turboId)
@@ -558,19 +568,17 @@ const Turbo = memo(function Turbo(props: TurboProps) {
         if (update.type !== 'mutation' || !update.effects?.apply?.length) return
         // Schedule a reach state update with the ID of the document that were mutated
         // This react handler will apply the document to related source map snapshots
-        const key = getTurboCacheKey(
-          projectId,
-          dataset,
-          perspective,
-          update.documentId,
+        const key = unstable__getDocumentCacheKey(
+          { projectId, dataset, perspective },
+          { _id: update.documentId },
         )
-        const cachedDocument = documentsCache.peek(key)
+        const cachedDocument = unstable__documentsCache.peek(key)
         if (cachedDocument as SanityDocument) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const patchDoc = { ...cachedDocument } as any
           delete patchDoc._rev
           const patchedDocument = applyPatch(patchDoc, update.effects.apply)
-          documentsCache.set(key, patchedDocument)
+          unstable__documentsCache.set(key, patchedDocument)
         }
 
         startTransition(() => setLastMutatedDocumentId(update.documentId))
@@ -679,7 +687,7 @@ interface GetDocumentsProps extends Pick<LiveStoreProviderProps, 'client'> {
   projectId: string
   dataset: string
   ids: string[]
-  perspective: ClientPerspective
+  perspective: DocumentCachePerspective
 }
 const GetDocuments = memo(function GetDocuments(props: GetDocumentsProps) {
   const { client, projectId, dataset, ids, perspective } = props
@@ -687,16 +695,22 @@ const GetDocuments = memo(function GetDocuments(props: GetDocumentsProps) {
   useEffect(() => {
     const missingIds = ids.filter(
       (id) =>
-        !documentsCache.has(
-          getTurboCacheKey(projectId, dataset, perspective, id),
+        !unstable__documentsCache.has(
+          unstable__getDocumentCacheKey(
+            { projectId, dataset, perspective },
+            { _id: id },
+          ),
         ),
     )
     if (missingIds.length === 0) return
     client.getDocuments(missingIds).then((documents) => {
       for (const doc of documents) {
         if (doc && doc?._id) {
-          documentsCache.set(
-            getTurboCacheKey(projectId, dataset, perspective, doc._id),
+          unstable__documentsCache.set(
+            unstable__getDocumentCacheKey(
+              { projectId, dataset, perspective },
+              doc,
+            ),
             doc,
           )
         }

@@ -3,85 +3,52 @@ import type {
   ContentSourceMap,
   SanityDocument,
 } from '@sanity/client'
-import { parseJsonPath, walkMap } from '@sanity/client/csm'
-import { resolveMapping } from '@sanity/csm'
-import { vercelStegaSplit } from '@vercel/stega'
+import { applySourceDocuments } from '@sanity/client/csm'
+import {
+  unstable__documentsCache,
+  unstable__getDocumentCacheKey,
+} from '@sanity/groq-store'
 
-import { documentsCache } from './documentsCache'
-import { getTurboCacheKey } from './getTurboCacheKey'
+let warnedAboutCrossDatasetReference = false
 
 export function turboChargeResultIfSourceMap(
-  draft: SanityDocument,
+  draft: SanityDocument | undefined,
   projectId: string,
   dataset: string,
   result: unknown,
   perspective: ClientPerspective,
   resultSourceMap?: ContentSourceMap,
 ): any {
-  if (!resultSourceMap) return result
-
-  return walkMap(result, (value, path) => {
-    const resolveMappingResult = resolveMapping(path, resultSourceMap)
-    if (!resolveMappingResult) {
-      return value
-    }
-
-    const { mapping, pathSuffix } = resolveMappingResult
-    if (mapping.type !== 'value') {
-      return value
-    }
-
-    if (mapping.source.type !== 'documentValue') {
-      return value
-    }
-
-    const sourceDocument = resultSourceMap.documents[mapping.source.document]
-    const sourcePath = resultSourceMap.paths[mapping.source.path]
-
-    if (sourceDocument && sourceDocument._id) {
-      const cachedDocument =
-        draft?._id === sourceDocument._id
-          ? draft
-          : documentsCache.get(
-              getTurboCacheKey(
-                projectId,
-                dataset,
-                perspective,
-                sourceDocument._id,
-              ),
-            )
-
-      const cachedValue = cachedDocument
-        ? getField(
-            cachedDocument,
-            parseJsonPath(sourcePath + pathSuffix) as any,
-          ) ?? value
-        : value
-      // Preserve stega encoded strings, if they exist
-      if (typeof cachedValue === 'string' && typeof value === 'string') {
-        const { encoded } = vercelStegaSplit(value)
-        const { cleaned } = vercelStegaSplit(cachedValue)
-        return `${encoded}${cleaned}`
-      }
-      return cachedValue
-    }
-
-    return value
-  })
-}
-
-function getField(obj: any, path: (string | { key: string })[]): any {
-  let value = obj
-  for (const segment of path) {
-    if (typeof segment === 'string') {
-      value = value[segment]
-    } else {
-      const match = value.find((item: any) => item._key === segment.key)
-      value = match || null
-    }
-    if (value === null || value === undefined) {
-      break
-    }
+  if (perspective === 'raw') {
+    throw new Error(
+      'turboChargeResultIfSourceMap does not support raw perspective',
+    )
   }
-  return value
+  return applySourceDocuments(result, resultSourceMap, (sourceDocument) => {
+    if (sourceDocument._projectId) {
+      // @TODO Handle cross dataset references
+      if (!warnedAboutCrossDatasetReference) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'Cross dataset references are not supported yet, ignoring source document',
+          sourceDocument,
+        )
+        warnedAboutCrossDatasetReference = true
+      }
+      return undefined
+    }
+    // If the draft matches, use that as it's the most up to date
+    if (
+      draft?._id === sourceDocument._id &&
+      draft?._type === sourceDocument._type
+    ) {
+      return draft
+    }
+    // Fallback to general documents cache
+    const key = unstable__getDocumentCacheKey(
+      { projectId, dataset, perspective },
+      sourceDocument,
+    )
+    return unstable__documentsCache.get(key)
+  })
 }
