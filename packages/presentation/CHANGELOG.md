@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.0-pink-lizard...presentation-v0.5.0-pink-lizard) (2023-11-01)
+
+
+### Bug Fixes
+
+* **presentation:** show navigator toggle correctly ([7c3e63c](https://github.com/sanity-io/visual-editing/commit/7c3e63c8ef99a2f26a2f754e5036a3d01a12fd13))
+* use shared utils from `@sanity/client` and `@sanity/groq-store` ([a4ba102](https://github.com/sanity-io/visual-editing/commit/a4ba10260982731e1929ce08dec414450233d549))
+
 ## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/pages-v0.4.5-pink-lizard...pages-v0.5.0-pink-lizard) (2023-10-31)
 
 

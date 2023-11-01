@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.2.1-pink-lizard...csm-v0.2.2-pink-lizard) (2023-11-01)
+
+
+### Bug Fixes
+
+* use shared utils from `@sanity/client` and `@sanity/groq-store` ([a4ba102](https://github.com/sanity-io/visual-editing/commit/a4ba10260982731e1929ce08dec414450233d549))
+
 ## [0.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.2.0-pink-lizard...csm-v0.2.1-pink-lizard) (2023-10-31)
 
 
