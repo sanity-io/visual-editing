@@ -6,6 +6,6 @@ export function getTurboCacheKey(
   perspective: ClientPerspective,
   // type: string,
   id: string,
-): `${string}-${string}-${string}` {
+): `${string}-${string}-${string}-${string}` {
   return `${projectId}-${dataset}-${perspective}-${id}`
 }
