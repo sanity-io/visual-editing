@@ -58,7 +58,6 @@ export default function PresentationTool(props: {
 }): ReactElement {
   const { previewUrl = '/', components } = props.tool.options ?? {}
   const { unstable_navigator } = components || {}
-  const showNavigator = !!unstable_navigator?.component
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode
@@ -98,16 +97,19 @@ export default function PresentationTool(props: {
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
+  const navigatorProvided = !!unstable_navigator?.component
+
   const [navigatorEnabled, setNavigatorEnabled] = useLocalState<boolean>(
     'presentation/navigator',
-    !!unstable_navigator?.component,
+    navigatorProvided,
   )
 
   const toggleNavigator = useMemo(
     () =>
-      unstable_navigator?.component &&
-      (() => setNavigatorEnabled((enabled) => !enabled)),
-    [unstable_navigator, setNavigatorEnabled],
+      (navigatorProvided &&
+        (() => setNavigatorEnabled((enabled) => !enabled))) ||
+      undefined,
+    [navigatorProvided, setNavigatorEnabled],
   )
 
   const toast = useToast()
@@ -142,8 +144,6 @@ export default function PresentationTool(props: {
           })
         }
       },
-      // onConnect,
-      // onDisconnect,
       connections: [
         {
           target: iframe,
@@ -275,11 +275,13 @@ export default function PresentationTool(props: {
           <PresentationParamsProvider params={params}>
             <Container height="fill">
               <Panels>
-                {showNavigator && <Navigator {...unstable_navigator} />}
+                {navigatorProvided && navigatorEnabled && (
+                  <Navigator {...unstable_navigator} />
+                )}
                 <Panel
                   id="preview"
                   minWidth={325}
-                  defaultSize={showNavigator ? 50 : 75}
+                  defaultSize={navigatorEnabled ? 50 : 75}
                   order={3}
                 >
                   <Flex direction="column" flex={1} height="fill">
