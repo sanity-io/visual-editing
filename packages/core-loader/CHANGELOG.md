@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.3.3-pink-lizard...core-loader-v0.3.4-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([#239](https://github.com/sanity-io/visual-editing/issues/239)) ([e1583b9](https://github.com/sanity-io/visual-editing/commit/e1583b99eb45342ffbddb68c1af66b33bc9a25d1))
+* make `@sanity/groq-store` a regular dep ([b5b4490](https://github.com/sanity-io/visual-editing/commit/b5b449039002b76a83b5e170d1e2775cbd157989))
+
 ## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.3.2-pink-lizard...core-loader-v0.3.3-pink-lizard) (2023-11-02)
 
 

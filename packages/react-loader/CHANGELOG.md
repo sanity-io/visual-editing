@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.1-pink-lizard...react-loader-v0.3.2-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([#239](https://github.com/sanity-io/visual-editing/issues/239)) ([e1583b9](https://github.com/sanity-io/visual-editing/commit/e1583b99eb45342ffbddb68c1af66b33bc9a25d1))
+* remove `@sanity/overlays` as peer dep ([5a2f806](https://github.com/sanity-io/visual-editing/commit/5a2f8063da3e03c3270af41db44a9e6456ac124b))
+* set `@sanity/core-loader` as typical dep ([3f2dd24](https://github.com/sanity-io/visual-editing/commit/3f2dd24de2e54007e7987f76c1e361852c6c5aa5))
+
 ## [0.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.0-pink-lizard...react-loader-v0.3.1-pink-lizard) (2023-11-02)
 
 

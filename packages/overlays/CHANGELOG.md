@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.14-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.13-pink-lizard...overlays-v0.1.14-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([#239](https://github.com/sanity-io/visual-editing/issues/239)) ([e1583b9](https://github.com/sanity-io/visual-editing/commit/e1583b99eb45342ffbddb68c1af66b33bc9a25d1))
+* use the same path utils everywhere ([a437719](https://github.com/sanity-io/visual-editing/commit/a4377194fdcaefddb3f199650aeb87a6989b0694))
+
 ## [0.1.13-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.12-pink-lizard...overlays-v0.1.13-pink-lizard) (2023-11-02)
 
 

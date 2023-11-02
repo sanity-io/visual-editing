@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.1.3-pink-lizard...svelte-loader-v0.1.4-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([#239](https://github.com/sanity-io/visual-editing/issues/239)) ([e1583b9](https://github.com/sanity-io/visual-editing/commit/e1583b99eb45342ffbddb68c1af66b33bc9a25d1))
+* set `@sanity/core-loader` as typical dep ([cbda01c](https://github.com/sanity-io/visual-editing/commit/cbda01c70ce9f76c5f624a73ecdff7e094511619))
+
 ## [0.1.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.1.2-pink-lizard...svelte-loader-v0.1.3-pink-lizard) (2023-11-02)
 
 
