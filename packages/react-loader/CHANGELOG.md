@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.3-pink-lizard...react-loader-v0.3.4-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* export `encodeSanityNodeData` ([4d78837](https://github.com/sanity-io/visual-editing/commit/4d78837a5d29466ba714eecf50e4b88f1a8b7647))
+
 ## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.2-pink-lizard...react-loader-v0.3.3-pink-lizard) (2023-11-02)
 
 
