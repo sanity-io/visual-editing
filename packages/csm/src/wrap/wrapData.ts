@@ -2,7 +2,6 @@
 
 import type { ContentSourceMap, PathSegment } from '@sanity/client/csm'
 
-import { Logger } from '../legacy'
 import { isArray, isRecord } from '../legacy/helpers'
 import { simplifyPath } from '../legacy/simplifyPath'
 import { resolveSanityNode } from '../resolveSanityNode'
@@ -16,7 +15,6 @@ export function wrapData<T>(
   sourceMap: ContentSourceMap | undefined,
   resultPath: PathSegment[] = [],
   keyedResultPath: PathSegment[] = [],
-  logger?: Logger,
 ): WrappedValue<T> {
   if (value === undefined) {
     return undefined as WrappedValue<T>
@@ -38,7 +36,6 @@ export function wrapData<T>(
             ? { key: t._key, index: idx }
             : idx,
         ),
-        logger,
       ),
     ) as WrappedValue<T>
   }
@@ -56,7 +53,6 @@ export function wrapData<T>(
                 sourceMap,
                 resultPath.concat(k),
                 keyedResultPath.concat(k),
-                logger,
               ),
             ],
       ),
@@ -67,13 +63,7 @@ export function wrapData<T>(
     $$type$$: 'sanity',
     path: simplifyPath(resultPath) || undefined,
     source: sourceMap
-      ? resolveSanityNode(
-          context,
-          sourceMap,
-          resultPath,
-          keyedResultPath,
-          logger,
-        )
+      ? resolveSanityNode(context, sourceMap, resultPath, keyedResultPath)
       : undefined,
     value,
   } as unknown as WrappedValue<T>
