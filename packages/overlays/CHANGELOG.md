@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.16-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.15-pink-lizard...overlays-v0.1.16-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* bundle `valibot` ([6b07f06](https://github.com/sanity-io/visual-editing/commit/6b07f0629d1e70fcce86b22f1a3f8258f1f833c7))
+* move peer deps to regular deps ([91489dc](https://github.com/sanity-io/visual-editing/commit/91489dc486f209cdaf618cffb2f0e331b2d9753a))
+* remove unused `@sanity/icons` package ([09c1954](https://github.com/sanity-io/visual-editing/commit/09c195409525fff03563ce973b36b14055d49fb9))
+* remove unused dep `history` ([9fb2447](https://github.com/sanity-io/visual-editing/commit/9fb24478abb0bddacd0fbe369ec4956cfa1aaa09))
+
 ## [0.1.15-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.14-pink-lizard...overlays-v0.1.15-pink-lizard) (2023-11-02)
 
 
