@@ -7,18 +7,50 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./csm": "./src/csm/index.ts",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./csm": {
+      "types": "./dist/csm.d.ts",
+      "source": "./src/csm/index.ts",
+      "require": "./dist/csm.cjs",
+      "import": "./dist/csm.js",
+      "default": "./dist/csm.js"
+    },
     "./package.json": "./package.json"
   },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "csm": [
+        "./dist/csm.d.ts"
+      ]
+    }
+  },
   "files": [
-    "src"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
+    "prepublishOnly": "pnpm build",
     "typecheck": "tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "watch": "pkg watch --strict"
   },
+  "browserslist": [
+    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
+    "maintained node versions"
+  ],
   "prettier": {
     "semi": false,
     "singleQuote": true

@@ -6,6 +6,19 @@ import type {
 } from '@sanity/client'
 
 /**
+ * Extracted from `import {Path} from 'sanity'`
+ * @internal
+ */
+export type Path = (
+  | string
+  | number
+  | {
+      _key: string
+    }
+  | [number | '', number | '']
+)[]
+
+/**
  * @internal
  * client.fetch(query, params) => `${query}-${JSON.stringify(params)}`
  */

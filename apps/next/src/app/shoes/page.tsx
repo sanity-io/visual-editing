@@ -1,7 +1,6 @@
 'use client'
 
-import { unwrapData, wrapData } from '@sanity/csm'
-import { sanity } from '@sanity/react-loader/jsx'
+import { sanity, wrapData, unwrapData } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'

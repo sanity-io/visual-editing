@@ -1,4 +1,5 @@
-import { isArray, Path } from 'sanity'
+import { isArray } from './csm/wrap/helpers'
+import type { Path } from './types'
 
 export function pathToUrlString(path: Path): string {
   let str = ''

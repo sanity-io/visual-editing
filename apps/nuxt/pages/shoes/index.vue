@@ -108,7 +108,6 @@
 </template>
 
 <script setup lang="ts">
-import { unwrapData, wrapData } from '@sanity/csm'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
@@ -118,7 +117,7 @@ import {
   urlForCrossDatasetReference,
 } from '~/utils'
 import { useQuery, useLiveMode } from '~/composables/useQuery'
-import { vSanity } from '@sanity/nuxt-loader/directive'
+import { vSanity, wrapData, unwrapData } from '@sanity/nuxt-loader/directive'
 
 const { data, sourceMap, loading } = useQuery<ShoesListResult>(shoesList)
 

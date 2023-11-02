@@ -2,10 +2,10 @@
 
 import type { ContentSourceMap, PathSegment } from '@sanity/client/csm'
 
-import { isArray, isRecord } from '../legacy/helpers'
 import { simplifyPath } from '../legacy/simplifyPath'
 import { resolveSanityNode } from '../resolveSanityNode'
 import { SANITY_KEYS } from './constants'
+import { isArray, isRecord } from './helpers'
 import { SanityKey, SanityNodeContext, WrappedValue } from './types'
 
 /** @public */

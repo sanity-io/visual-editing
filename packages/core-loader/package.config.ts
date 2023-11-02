@@ -1,14 +1,14 @@
 import { defineConfig } from '@sanity/pkg-utils'
 
+import baseConfig from '../../package.config'
+
 export default defineConfig({
-  minify: false,
+  ...baseConfig,
   extract: {
-    bundledPackages: ['nanostores', 'channels', 'visual-editing-helpers'],
-    rules: {
-      'ae-forgotten-export': 'warn',
-      'ae-incompatible-release-tags': 'warn',
-      'ae-missing-release-tag': 'warn',
-    },
+    ...baseConfig.extract,
+    bundledPackages: [
+      ...(baseConfig.extract?.bundledPackages || []),
+      'nanostores',
+    ],
   },
-  tsconfig: 'tsconfig.build.json',
 })

@@ -6,6 +6,7 @@ import {
 
 const { projectId, dataset, tool, workspace } = workspaces['remix']
 
+// @TODO replace with the reused utils
 export function encodeSanityNodeData(
   node: Partial<SanityNode> & Pick<SanityNode, 'id' | 'type' | 'path'>,
 ) {

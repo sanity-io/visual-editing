@@ -1,4 +1,4 @@
-import { Path } from 'sanity'
+import { Path } from './types'
 
 const RE_SEGMENT_WITH_INDEX = /^([A-Za-z]+):([0-9]+)$/
 const RE_SEGMENT_WITH_TUPLE = /^([A-Za-z]+):([0-9]+),([0-9]+)$/

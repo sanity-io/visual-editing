@@ -109,12 +109,12 @@
     },
     "root": true
   },
+  "dependencies": {
+    "@sanity/core-loader": "workspace:*"
+  },
   "devDependencies": {
-    "@sanity/core-loader": "workspace:*",
-    "@sanity/groq-store": "workspace:*",
     "@nanostores/vue": "0.10.0",
     "@sanity/client": "^6.7.0",
-    "@sanity/overlays": "workspace:*",
     "@sanity/pkg-utils": "^3.2.2",
     "channels": "workspace:*",
     "typescript": "^5.2.2",
@@ -131,6 +131,11 @@
     "@sanity/client": "6.7.1-pink-lizard.0",
     "@sanity/overlays": "workspace:*",
     "vue": "^3.3.4"
+  },
+  "peerDependenciesMeta": {
+    "@sanity/overlays": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=18"

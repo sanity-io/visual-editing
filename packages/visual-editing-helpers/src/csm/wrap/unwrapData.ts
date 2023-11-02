@@ -1,5 +1,5 @@
-import { isArray, isRecord } from '../legacy/helpers'
 import { SANITY_KEYS } from './constants'
+import { isArray, isRecord } from './helpers'
 import { isSourceNode } from './isSourceNode'
 import { SanityKey, UnwrappedValue, WrappedValue } from './types'
 

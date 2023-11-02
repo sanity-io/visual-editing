@@ -1,10 +1,5 @@
 {
   "compilerOptions": {
-    "declarationDir": "./dist/dts",
-    "outDir": "./dist/dts",
-    "incremental": true,
-    "noEmit": true,
-    "strictNullChecks": true,
     "baseUrl": ".",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -19,6 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
@@ -27,7 +23,5 @@
     "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
-  },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["dist", "node_modules"]
+  }
 }

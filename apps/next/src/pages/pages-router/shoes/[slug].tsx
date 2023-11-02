@@ -1,6 +1,5 @@
 import { PortableText } from '@portabletext/react'
-import { unwrapData, wrapData } from '@sanity/csm'
-import { sanity } from '@sanity/react-loader/jsx'
+import { sanity, unwrapData, wrapData } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
