@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.11-pink-lizard...groq-store-v5.0.0-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **README:** add badges and links ([0fcf516](https://github.com/sanity-io/visual-editing/commit/0fcf516fb0a920c01cb4a153863d256e39395024))
+
 ## [0.0.11-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.10-pink-lizard...groq-store-v0.0.11-pink-lizard) (2023-11-02)
 
 
