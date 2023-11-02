@@ -1,7 +1,7 @@
 {
   "name": "apps-common",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
@@ -21,9 +21,11 @@
     "test": "tsc --noEmit"
   },
   "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson"
+    ],
     "semi": false,
-    "singleQuote": true,
-    "plugins": ["prettier-plugin-packagejson"]
+    "singleQuote": true
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -83,8 +85,8 @@
   "dependencies": {
     "@sanity/icons": "^2.6.0",
     "@sanity/overlays": "workspace:*",
-    "visual-editing-helpers": "workspace:*",
-    "@sanity/ui": "^1.8.3"
+    "@sanity/ui": "^1.8.3",
+    "visual-editing-helpers": "workspace:*"
   },
   "devDependencies": {
     "react": "^18.2.0",

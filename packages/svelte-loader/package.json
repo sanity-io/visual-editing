@@ -40,9 +40,11 @@
     "maintained node versions"
   ],
   "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson"
+    ],
     "semi": false,
-    "singleQuote": true,
-    "plugins": ["prettier-plugin-packagejson"]
+    "singleQuote": true
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -96,18 +98,16 @@
     "@sanity/core-loader": "workspace:*"
   },
   "devDependencies": {
-    "@sanity/groq-store": "workspace:*",
-    "@sanity/core-loader": "workspace:*",
     "@sanity/client": "^6.7.0",
     "@sanity/pkg-utils": "^3.2.2",
-    "channels": "workspace:*",
-    "typescript": "^5.2.2",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
+    "channels": "workspace:*",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "typescript": "^5.2.2",
     "visual-editing-helpers": "workspace:*"
   },
   "peerDependencies": {

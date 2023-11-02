@@ -40,9 +40,11 @@
     "maintained node versions"
   ],
   "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson"
+    ],
     "semi": false,
-    "singleQuote": true,
-    "plugins": ["prettier-plugin-packagejson"]
+    "singleQuote": true
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -92,6 +94,10 @@
     },
     "root": true
   },
+  "dependencies": {
+    "@sanity/groq-store": "workspace:*",
+    "async-cache-dedupe": "2.0.0"
+  },
   "devDependencies": {
     "@sanity/client": "^6.7.0",
     "@sanity/pkg-utils": "^3.2.2",
@@ -115,9 +121,5 @@
   "publishConfig": {
     "access": "public",
     "tag": "pink-lizard"
-  },
-  "dependencies": {
-    "@sanity/groq-store": "workspace:*",
-    "async-cache-dedupe": "2.0.0"
   }
 }

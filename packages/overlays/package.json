@@ -49,9 +49,11 @@
     "maintained node versions"
   ],
   "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson"
+    ],
     "semi": false,
-    "singleQuote": true,
-    "plugins": ["prettier-plugin-packagejson"]
+    "singleQuote": true
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
