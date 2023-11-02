@@ -12,6 +12,7 @@ permissions:
 jobs:
   release-please:
     permissions:
+        contents: read # for checkout
         id-token: write # to enable use of OIDC for npm provenance
     runs-on: ubuntu-latest
     env:
