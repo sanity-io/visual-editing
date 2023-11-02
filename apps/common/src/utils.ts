@@ -7,8 +7,8 @@ import {
   encodeJsonPathToUriComponent,
   parseJsonPath,
   type PathSegment,
+  resolveMapping,
 } from '@sanity/client/csm'
-import { resolveMapping } from '@sanity/csm'
 import { encodeSanityNodeData, type SanityNode } from '@sanity/overlays'
 
 export function formatCurrency(value: number): string {
