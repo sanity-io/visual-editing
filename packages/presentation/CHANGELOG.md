@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.1-pink-lizard...presentation-v0.5.2-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([#239](https://github.com/sanity-io/visual-editing/issues/239)) ([e1583b9](https://github.com/sanity-io/visual-editing/commit/e1583b99eb45342ffbddb68c1af66b33bc9a25d1))
+* use the same path utils everywhere ([a437719](https://github.com/sanity-io/visual-editing/commit/a4377194fdcaefddb3f199650aeb87a6989b0694))
+
 ## [0.5.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.0-pink-lizard...presentation-v0.5.1-pink-lizard) (2023-11-02)
 
 

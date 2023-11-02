@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.11-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.10-pink-lizard...groq-store-v0.0.11-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([#239](https://github.com/sanity-io/visual-editing/issues/239)) ([e1583b9](https://github.com/sanity-io/visual-editing/commit/e1583b99eb45342ffbddb68c1af66b33bc9a25d1))
+
 ## [0.0.10-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.9-pink-lizard...groq-store-v0.0.10-pink-lizard) (2023-11-02)
 
 
