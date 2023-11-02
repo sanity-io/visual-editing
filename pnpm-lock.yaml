@@ -97,9 +97,6 @@ importers:
 
   apps/common:
     dependencies:
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../../packages/csm
       '@sanity/icons':
         specifier: ^2.6.0
         version: 2.6.0(react@18.2.0)
@@ -137,9 +134,6 @@ importers:
       '@portabletext/react':
         specifier: ^3.0.11
         version: 3.0.11(react@18.2.0)
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../../packages/csm
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -209,9 +203,6 @@ importers:
       '@nuxtjs/tailwindcss':
         specifier: ^6.8.1
         version: 6.8.1(webpack@5.89.0)
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../../packages/csm
       '@sanity/nuxt-loader':
         specifier: workspace:*
         version: link:../../packages/nuxt-loader
@@ -249,9 +240,6 @@ importers:
       '@portabletext/react':
         specifier: ^3.0.11
         version: 3.0.11(react@18.2.0)
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../../packages/csm
       '@sanity/demo':
         specifier: ^1.0.2
         version: 1.0.2(@sanity/color@2.2.5)(tailwindcss@3.3.5)
@@ -336,9 +324,6 @@ importers:
       '@remix-run/vercel':
         specifier: ^1.19.3
         version: 1.19.3(@vercel/node@3.0.7)
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../../packages/csm
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -583,49 +568,6 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
 
-  packages/csm:
-    dependencies:
-      '@vercel/stega':
-        specifier: 0.1.0
-        version: 0.1.0
-    devDependencies:
-      '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
-      '@sanity/pkg-utils':
-        specifier: ^3.2.2
-        version: 3.2.2(typescript@5.2.2)
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.9.1
-        version: 6.9.1(@typescript-eslint/parser@6.9.1)(eslint@8.52.0)(typescript@5.2.2)
-      '@typescript-eslint/parser':
-        specifier: ^6.9.1
-        version: 6.9.1(eslint@8.52.0)(typescript@5.2.2)
-      eslint:
-        specifier: ^8.52.0
-        version: 8.52.0
-      eslint-config-prettier:
-        specifier: ^9.0.0
-        version: 9.0.0(eslint@8.52.0)
-      eslint-plugin-prettier:
-        specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.52.0)(prettier@3.0.3)
-      eslint-plugin-simple-import-sort:
-        specifier: ^10.0.0
-        version: 10.0.0(eslint@8.52.0)
-      rimraf:
-        specifier: ^5.0.1
-        version: 5.0.5
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-      visual-editing-helpers:
-        specifier: workspace:*
-        version: link:../visual-editing-helpers
-      vitest:
-        specifier: ^0.34.6
-        version: 0.34.6(jsdom@20.0.3)
-
   packages/groq-store:
     dependencies:
       mnemonist:
@@ -832,9 +774,6 @@ importers:
       '@sanity/client':
         specifier: 6.7.1-pink-lizard.0
         version: 6.7.1-pink-lizard.0
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../csm
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -871,9 +810,6 @@ importers:
       '@sanity/core-loader':
         specifier: workspace:*
         version: link:../core-loader
-      '@sanity/csm':
-        specifier: workspace:*
-        version: link:../csm
       '@sanity/groq-store':
         specifier: workspace:*
         version: link:../groq-store
@@ -988,6 +924,12 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
+      valibot:
+        specifier: ^0.20.0
+        version: 0.20.0
+      vitest:
+        specifier: ^0.34.6
+        version: 0.34.6(jsdom@20.0.3)
 
 packages:
 
@@ -4276,6 +4218,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -13291,6 +13234,10 @@ packages:
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: true
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: true
+
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: true
@@ -18381,7 +18328,6 @@ packages:
 
   /valibot@0.20.0:
     resolution: {integrity: sha512-a2Vy4oPIHvrwfPZF0Cl83yBn17Zgekp6IQ0PzdUFTPWtlwWFCJNHtOm/nypzv5o/6llKBsIEErswWHbvjNGzNw==}
-    dev: false
 
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}

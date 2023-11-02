@@ -1,7 +1,7 @@
 import { pathToString, stringToPath } from 'sanity'
 import { is, minLength, object, optional, safeParse, string } from 'valibot'
-import { pathToUrlString, urlStringToPath } from 'visual-editing-helpers'
 
+import { pathToUrlString, urlStringToPath } from '../index'
 import { SanityNode, SanityNodeLegacy } from '../types'
 
 const lengthyStr = string([minLength(1)])

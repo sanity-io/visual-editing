@@ -1,4 +1,4 @@
-import { SanityNode } from 'visual-editing-helpers'
+import { SanityNode } from '../../index'
 
 /** @public */
 export type SanityKey =

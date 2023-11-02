@@ -3,8 +3,8 @@ import {
   type PathSegment,
   resolveMapping,
 } from '@sanity/client/csm'
-import { SanityNode } from 'visual-editing-helpers'
 
+import { SanityNode } from '../types'
 import { simplifyPath } from './legacy/simplifyPath'
 import { resolvedKeyedSourcePath } from './resolveKeyedSourcePath'
 import { getPublishedId } from './wrap/getPublishedId'

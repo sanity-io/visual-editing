@@ -5,9 +5,9 @@
     "noEmit": true,
     "strictNullChecks": true,
     "paths": {
-      "@sanity/csm": ["../csm/src"]
+      "@sanity/groq-store": ["../groq-store/src"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "../csm/src"],
+  "include": ["**/*.ts", "**/*.tsx", "../groq-store/src"],
   "exclude": ["dist", "node_modules"]
 }

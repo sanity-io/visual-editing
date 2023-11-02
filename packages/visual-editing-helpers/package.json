@@ -8,6 +8,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./csm": "./src/csm/index.ts",
     "./package.json": "./package.json"
   },
   "files": [
@@ -15,7 +16,8 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "test": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
   },
   "prettier": {
     "semi": false,
@@ -78,12 +80,19 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "sanity": "^3.19.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "valibot": "^0.20.0",
+    "sanity": "3.18.2-pink-lizard.170",
+    "vitest": "^0.34.6"
   },
   "peerDependencies": {
     "@sanity/client": "6.7.1-pink-lizard.0",
-    "sanity": "3.18.2-pink-lizard.170"
+    "valibot": "^0.20.0"
+  },
+  "peerDependenciesMeta": {
+    "valibot": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=18"

@@ -1,8 +1,9 @@
+import { decodeSanityNodeData } from 'visual-editing-helpers/csm'
+
 import { OVERLAY_ID } from '../constants'
 import { _ResolvedElement, SanityNode, SanityNodeLegacy } from '../types'
 import { findNonInlineElement } from './findNonInlineElement'
 import { testAndDecodeStega } from './stega'
-import { decodeSanityNodeData } from './transformSanityNodeData'
 
 const isElementNode = (node: ChildNode): node is HTMLElement =>
   node.nodeType === Node.ELEMENT_NODE

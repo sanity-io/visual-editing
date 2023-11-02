@@ -11,7 +11,6 @@ const nextConfig = {
   },
 
   transpilePackages: [
-    '@sanity/csm',
     '@sanity/overlays',
     '@sanity/react-loader',
     'apps-common',
