@@ -80,7 +80,7 @@ function resolveSanityNodeFromResultSourceMapPath(
     mapping,
     matchedPath: tmpDebug,
     pathSuffix,
-  } = resolveMappingResult || []
+  } = resolveMappingResult || {}
   if (mapping.type !== 'value') {
     console.warn('mapping.type !== value', {
       resultPath,

@@ -1,8 +1,10 @@
-import type { ContentSourceMap, PathSegment } from '@sanity/client/csm'
+import {
+  type ContentSourceMap,
+  type PathSegment,
+  resolveMapping,
+} from '@sanity/client/csm'
 import { SanityNode } from 'visual-editing-helpers'
 
-import { Logger } from './legacy'
-import { resolveMapping } from './legacy/resolveMapping'
 import { simplifyPath } from './legacy/simplifyPath'
 import { resolvedKeyedSourcePath } from './resolveKeyedSourcePath'
 import { getPublishedId } from './wrap/getPublishedId'
@@ -13,9 +15,8 @@ export function resolveSanityNode(
   csm: ContentSourceMap,
   resultPath: PathSegment[],
   keyedResultPath: PathSegment[],
-  logger?: Logger,
 ): SanityNode | undefined {
-  const { mapping, pathSuffix } = resolveMapping(resultPath, csm, logger) || {}
+  const { mapping, pathSuffix } = resolveMapping(resultPath, csm) || {}
 
   if (!mapping) {
     // console.warn('no mapping for path', { path: resultPath, sourceMap: csm })
