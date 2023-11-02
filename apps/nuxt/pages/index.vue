@@ -132,7 +132,7 @@
 
 <script lang="ts" setup>
 import { vercelStegaCombine } from '@vercel/stega'
-import { encodeSanityNodeData } from '@sanity/overlays'
+import { encodeSanityNodeData } from 'visual-editing-helpers/csm'
 const enabled = ref(true)
 const elementAdded = ref(false)
 const expandedDocument = ref(false)

@@ -1,4 +1,4 @@
-import { SanityNode, encodeSanityNodeData } from '@sanity/overlays'
+import { SanityNode, encodeSanityNodeData } from 'visual-editing-helpers/csm'
 import { studioUrl, workspaces } from 'apps-common/env'
 
 const workspace = workspaces['page-builder-demo']

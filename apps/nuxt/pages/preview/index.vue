@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { encodeSanityNodeData } from '@sanity/overlays'
+import { encodeSanityNodeData } from 'visual-editing-helpers/csm'
 
 const sanityTitleData = {
   projectId: 'projectId',

@@ -5,6 +5,8 @@ import { pathToUrlString } from '../pathToUrlString'
 import { SanityNode, SanityNodeLegacy } from '../types'
 import { urlStringToPath } from '../urlStringToPath'
 
+export type { SanityNode, SanityNodeLegacy }
+
 const lengthyStr = string([minLength(1)])
 const optionalLengthyStr = optional(lengthyStr)
 

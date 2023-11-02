@@ -2,7 +2,7 @@ import { studioUrl, workspaces } from 'apps-common/env'
 import {
   type SanityNode,
   encodeSanityNodeData as _encodeSanityNodeData,
-} from '@sanity/overlays'
+} from 'visual-editing-helpers/csm'
 
 const { projectId, dataset, tool, workspace } = workspaces['remix']
 

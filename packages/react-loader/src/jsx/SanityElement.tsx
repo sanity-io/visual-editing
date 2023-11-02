@@ -1,7 +1,9 @@
-import { encodeSanityNodeData } from '@sanity/overlays'
 import type { HTMLProps, Ref } from 'react'
 import { createElement, forwardRef } from 'react'
-import type { SourceNode } from 'visual-editing-helpers/csm'
+import {
+  encodeSanityNodeData,
+  type SourceNode,
+} from 'visual-editing-helpers/csm'
 
 export interface SanityElementProps {
   children?: SourceNode | null
