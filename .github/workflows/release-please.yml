@@ -58,4 +58,5 @@ jobs:
       - run: pnpm -r publish
         # if: ${{ steps.release.outputs.releases_created }}
         env:
-          NPM_CONFIG_PROVENANCE: true
+          # @TODO uncomment below when the repo is public
+          # NPM_CONFIG_PROVENANCE: true
