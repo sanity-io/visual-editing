@@ -539,6 +539,9 @@ importers:
 
   packages/core-loader:
     dependencies:
+      '@sanity/groq-store':
+        specifier: workspace:*
+        version: link:../groq-store
       async-cache-dedupe:
         specifier: 2.0.0
         version: 2.0.0
@@ -546,9 +549,6 @@ importers:
       '@sanity/client':
         specifier: 6.7.1-pink-lizard.0
         version: 6.7.1-pink-lizard.0
-      '@sanity/groq-store':
-        specifier: workspace:*
-        version: link:../groq-store
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)

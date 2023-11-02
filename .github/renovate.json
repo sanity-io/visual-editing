@@ -45,13 +45,13 @@
         "sanity"
       ],
       "matchFileNames": ["package.json", "packages/**/package.json"],
-      "matchDepTypes": ["dependencies", "peerDependencies"],
+      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
       "followTag": "pink-lizard",
       "schedule": ["at any time"],
       "rangeStrategy": "pin",
       "groupSlug": "pink-lizard",
       "automerge": true,
-      "semanticCommitType": "chore"
+      "semanticCommitType": "fix"
     }
   ]
 }
