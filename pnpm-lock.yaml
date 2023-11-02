@@ -813,19 +813,14 @@ importers:
         version: 0.34.6(jsdom@20.0.3)
 
   packages/react-loader:
+    dependencies:
+      '@sanity/core-loader':
+        specifier: workspace:*
+        version: link:../core-loader
     devDependencies:
       '@sanity/client':
         specifier: 6.7.1-pink-lizard.0
         version: 6.7.1-pink-lizard.0
-      '@sanity/core-loader':
-        specifier: workspace:*
-        version: link:../core-loader
-      '@sanity/groq-store':
-        specifier: workspace:*
-        version: link:../groq-store
-      '@sanity/overlays':
-        specifier: workspace:*
-        version: link:../overlays
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -864,16 +859,14 @@ importers:
         version: link:../visual-editing-helpers
 
   packages/svelte-loader:
+    dependencies:
+      '@sanity/core-loader':
+        specifier: workspace:*
+        version: link:../core-loader
     devDependencies:
       '@sanity/client':
         specifier: 6.7.1-pink-lizard.0
         version: 6.7.1-pink-lizard.0
-      '@sanity/core-loader':
-        specifier: workspace:*
-        version: link:../core-loader
-      '@sanity/groq-store':
-        specifier: workspace:*
-        version: link:../groq-store
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
