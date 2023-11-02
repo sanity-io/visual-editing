@@ -1,16 +1,22 @@
-import { ClientPerspective, QueryParams } from '@sanity/client'
+import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
-  ReactElement,
-  startTransition,
+  type ReactElement,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
-import { Path, pathToString, Tool, useDataset, useProjectId } from 'sanity'
+import {
+  type Path,
+  pathToString,
+  type SanityDocument,
+  type Tool,
+  useDataset,
+  useProjectId,
+} from 'sanity'
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
@@ -264,6 +270,13 @@ export default function PresentationTool(props: {
     [channel],
   )
 
+  // The current document being edited, it's put on the fast track for super low latency updates
+  const [liveDocument, setLiveDocument] = useState<SanityDocument | null>(null)
+  const onDocumentChange = useCallback(
+    (document: SanityDocument | null) => setLiveDocument(document),
+    [],
+  )
+
   return (
     <>
       <PresentationProvider
@@ -309,6 +322,7 @@ export default function PresentationTool(props: {
                     documentType={params.type}
                     onDeskParams={handleDeskParams}
                     onFocusPath={handleFocusPath}
+                    onDocumentChange={onDocumentChange}
                     previewUrl={params.preview}
                   />
                 </Panel>
@@ -325,8 +339,10 @@ export default function PresentationTool(props: {
             channel={channel}
             liveQueries={liveQueries}
             perspective="published"
-            documentId={params.id}
-            documentType={params.type}
+            // Only send the liveDocument if it's a published document
+            liveDocument={
+              liveDocument?._id?.startsWith('drafts.') ? null : liveDocument
+            }
           />
           <LoaderQueries
             key="previewDrafts"
@@ -334,8 +350,7 @@ export default function PresentationTool(props: {
             channel={channel}
             liveQueries={liveQueries}
             perspective="previewDrafts"
-            documentId={params.id}
-            documentType={params.type}
+            liveDocument={liveDocument}
           />
         </>
       )}
@@ -361,39 +376,37 @@ function useDocumentsOnPage(
 
   const setDocumentsOnPage = useCallback(
     (perspective: ClientPerspective, documents: DocumentsOnPage) =>
-      startTransition(() =>
-        setState((state) => {
-          let changed = false
-          let map = state[perspective]
-          const getKey = (document: DocumentsOnPage[number]) => {
-            return `${document._projectId}-${document.dataset}-${document._type}-${document._id}`
+      setState((state) => {
+        let changed = false
+        let map = state[perspective]
+        const getKey = (document: DocumentsOnPage[number]) => {
+          return `${document._projectId}-${document.dataset}-${document._type}-${document._id}`
+        }
+        const knownKeys = new Set<ReturnType<typeof getKey>>()
+        // Add anything new, and track all keys
+        for (const document of documents) {
+          const key = getKey(document)
+          knownKeys.add(key)
+          if (!map.has(key)) {
+            map.set(key, document)
+            changed = true
           }
-          const knownKeys = new Set<ReturnType<typeof getKey>>()
-          // Add anything new, and track all keys
-          for (const document of documents) {
-            const key = getKey(document)
-            knownKeys.add(key)
-            if (!map.has(key)) {
-              map.set(key, document)
-              changed = true
-            }
+        }
+        // Remove anything that is no longer on the page
+        for (const key of map.keys()) {
+          if (!knownKeys.has(key)) {
+            map.delete(key)
+            changed = true
           }
-          // Remove anything that is no longer on the page
-          for (const key of map.keys()) {
-            if (!knownKeys.has(key)) {
-              map.delete(key)
-              changed = true
-            }
-          }
+        }
 
-          if (changed) {
-            map = new Map(map)
-            return { ...state, [perspective]: new Map(map) }
-          }
+        if (changed) {
+          map = new Map(map)
+          return { ...state, [perspective]: new Map(map) }
+        }
 
-          return state
-        }),
-      ),
+        return state
+      }),
     [],
   )
 

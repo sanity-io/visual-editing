@@ -12,7 +12,7 @@ import {
 let warnedAboutCrossDatasetReference = false
 
 export function turboChargeResultIfSourceMap(
-  draft: SanityDocument | undefined,
+  liveDocument: SanityDocument | null,
   projectId: string,
   dataset: string,
   result: unknown,
@@ -39,10 +39,10 @@ export function turboChargeResultIfSourceMap(
     }
     // If the draft matches, use that as it's the most up to date
     if (
-      draft?._id === sourceDocument._id &&
-      draft?._type === sourceDocument._type
+      liveDocument?._id === sourceDocument._id &&
+      liveDocument?._type === sourceDocument._type
     ) {
-      return draft
+      return liveDocument
     }
     // Fallback to general documents cache
     const key = unstable__getDocumentCacheKey(

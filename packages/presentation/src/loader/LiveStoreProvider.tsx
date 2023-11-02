@@ -14,7 +14,6 @@ import {
 import { applyPatch } from 'mendoza'
 import {
   memo,
-  startTransition,
   useCallback,
   useEffect,
   useMemo,
@@ -50,7 +49,7 @@ export interface LiveStoreProviderProps {
    */
   refreshInterval?: number
   perspective: ClientPerspective
-  draft: SanityDocument
+  liveDocument: SanityDocument | null
 }
 /**
  * @internal
@@ -58,7 +57,13 @@ export interface LiveStoreProviderProps {
 const LiveStoreProvider = memo(function LiveStoreProvider(
   props: LiveStoreProviderProps,
 ) {
-  const { draft, children, client, refreshInterval = 2000, perspective } = props
+  const {
+    liveDocument,
+    children,
+    client,
+    refreshInterval = 2000,
+    perspective,
+  } = props
   if (perspective === 'raw') {
     throw new Error('LiveStoreProvider does not support the raw perspective')
   }
@@ -116,20 +121,18 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
           nextTurboIds.add(_id)
         }
       }
-      startTransition(() =>
-        setTurboIds((prevTurboIds) => {
-          const mergedTurboIds = Array.from(
-            new Set([...prevTurboIds, ...nextTurboIds]),
-          )
-          if (
-            JSON.stringify(mergedTurboIds.sort()) ===
-            JSON.stringify(prevTurboIds.sort())
-          ) {
-            return prevTurboIds
-          }
-          return mergedTurboIds
-        }),
-      )
+      setTurboIds((prevTurboIds) => {
+        const mergedTurboIds = Array.from(
+          new Set([...prevTurboIds, ...nextTurboIds]),
+        )
+        if (
+          JSON.stringify(mergedTurboIds.sort()) ===
+          JSON.stringify(prevTurboIds.sort())
+        ) {
+          return prevTurboIds
+        }
+        return mergedTurboIds
+      })
     },
     [],
   )
@@ -138,7 +141,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
     <Context.Provider value={context}>
       <IsEnabledContext.Provider value>{children}</IsEnabledContext.Provider>
       <Turbo
-        draft={draft}
+        liveDocument={liveDocument}
         cache={hooks.cache}
         client={client}
         setTurboIds={setTurboIds}
@@ -153,7 +156,7 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
         return (
           <QuerySubscription
             key={key}
-            draft={draft}
+            liveDocument={liveDocument}
             client={client}
             listeners={listeners}
             params={params}
@@ -173,7 +176,7 @@ export default LiveStoreProvider
 
 interface QuerySubscriptionProps
   extends Required<Pick<LiveStoreProviderProps, 'client' | 'refreshInterval'>> {
-  draft: SanityDocument
+  liveDocument: SanityDocument | null
   query: string
   params: QueryParams
   listeners: Set<() => void>
@@ -185,7 +188,7 @@ const QuerySubscription = memo(function QuerySubscription(
   props: QuerySubscriptionProps,
 ) {
   const {
-    draft,
+    liveDocument,
     client,
     refreshInterval,
     query,
@@ -227,7 +230,7 @@ const QuerySubscription = memo(function QuerySubscription(
       if (!signal.aborted) {
         snapshots.set(getQueryCacheKey(perspective, query, params), {
           result: turboChargeResultIfSourceMap(
-            draft,
+            liveDocument,
             projectId,
             dataset,
             result,
@@ -262,7 +265,7 @@ const QuerySubscription = memo(function QuerySubscription(
       }
     }
   }, [
-    draft,
+    liveDocument,
     client,
     dataset,
     listeners,
@@ -297,8 +300,8 @@ function useShouldPause(): boolean {
   const [online, setOnline] = useState(false)
   useEffect(() => {
     setOnline(navigator.onLine)
-    const online = () => startTransition(() => setOnline(true))
-    const offline = () => startTransition(() => setOnline(false))
+    const online = () => setOnline(true)
+    const offline = () => setOnline(false)
     window.addEventListener('online', online)
     window.addEventListener('offline', offline)
     return () => {
@@ -354,8 +357,8 @@ function useRevalidate(
   // How to handle refresh to inflight?
 
   const startRefresh = useCallback(() => {
-    startTransition(() => setState('inflight'))
-    return () => startTransition(() => setState('hit'))
+    setState('inflight')
+    return () => setState('hit')
   }, [])
 
   // Revalidate on refreshInterval
@@ -366,10 +369,7 @@ function useRevalidate(
     if (!refreshInterval || state !== 'hit') {
       return
     }
-    const timeout = setTimeout(
-      () => startTransition(() => setState('stale')),
-      refreshInterval,
-    )
+    const timeout = setTimeout(() => setState('stale'), refreshInterval)
     return () => clearTimeout(timeout)
   }, [refreshInterval, state])
   // Revalidate on windows focus
@@ -377,7 +377,7 @@ function useRevalidate(
     if (state !== 'hit') {
       return
     }
-    const onFocus = () => startTransition(() => setState('stale'))
+    const onFocus = () => setState('stale')
     window.addEventListener('focus', onFocus)
     return () => window.removeEventListener('focus', onFocus)
   }, [refreshInterval, state])
@@ -385,11 +385,11 @@ function useRevalidate(
   useEffect(() => {
     // Mark as stale pre-emptively if we're offline or the document isn't visible
     if (shouldPause && state === 'hit') {
-      startTransition(() => setState('stale'))
+      setState('stale')
     }
     // If not paused we can mark stale as ready for refresh
     if (!shouldPause && state === 'stale') {
-      startTransition(() => setState('refresh'))
+      setState('refresh')
     }
   }, [shouldPause, state])
 
@@ -441,14 +441,12 @@ function useHooks(
           params,
           listeners: new Set<() => void>(),
         })
-        startTransition(() =>
-          setSubscriptions((prevSubscriptions) => {
-            if (prevSubscriptions.includes(key)) {
-              return prevSubscriptions
-            }
-            return [...prevSubscriptions, key]
-          }),
-        )
+        setSubscriptions((prevSubscriptions) => {
+          if (prevSubscriptions.includes(key)) {
+            return prevSubscriptions
+          }
+          return [...prevSubscriptions, key]
+        })
       }
       const hook = cache.get(key)
       if (!hook || !hook.listeners) {
@@ -460,14 +458,12 @@ function useHooks(
         listeners.delete(listener)
         if (listeners.size === 0) {
           cache.delete(key)
-          startTransition(() =>
-            setSubscriptions((prevSubscriptions) => {
-              if (prevSubscriptions.includes(key)) {
-                return prevSubscriptions.filter((sub) => sub !== key)
-              }
-              return prevSubscriptions
-            }),
-          )
+          setSubscriptions((prevSubscriptions) => {
+            if (prevSubscriptions.includes(key)) {
+              return prevSubscriptions.filter((sub) => sub !== key)
+            }
+            return prevSubscriptions
+          })
         }
       }
     },
@@ -477,7 +473,7 @@ function useHooks(
 }
 
 interface TurboProps extends Pick<LiveStoreProviderProps, 'client'> {
-  draft: SanityDocument
+  liveDocument: SanityDocument | null
   turboIds: string[]
   setTurboIds: React.Dispatch<React.SetStateAction<string[]>>
   cache: LiveStoreQueryCacheMap
@@ -489,7 +485,7 @@ interface TurboProps extends Pick<LiveStoreProviderProps, 'client'> {
  */
 const Turbo = memo(function Turbo(props: TurboProps) {
   const {
-    draft,
+    liveDocument,
     client,
     snapshots,
     cache,
@@ -518,7 +514,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     }
     const nextTurboIdsSnapshot = [...nextTurboIds].sort()
     if (JSON.stringify(turboIds) !== JSON.stringify(nextTurboIdsSnapshot)) {
-      startTransition(() => setTurboIds(nextTurboIdsSnapshot))
+      setTurboIds(nextTurboIdsSnapshot)
     }
   }, [cache, setTurboIds, snapshots, turboIds])
 
@@ -542,9 +538,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     }
     const nextBatchSlice = [...nextBatch].slice(0, 10)
     if (nextBatchSlice.length === 0) return
-    startTransition(() =>
-      setBatch((prevBatch) => [...prevBatch.slice(-10), nextBatchSlice]),
-    )
+    setBatch((prevBatch) => [...prevBatch.slice(-10), nextBatchSlice])
   }, [batch, dataset, perspective, projectId, turboIds])
 
   const [lastMutatedDocumentId, setLastMutatedDocumentId] = useState<string>()
@@ -581,7 +575,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
           unstable__documentsCache.set(key, patchedDocument)
         }
 
-        startTransition(() => setLastMutatedDocumentId(update.documentId))
+        setLastMutatedDocumentId(update.documentId)
       })
     return () => subscription.unsubscribe()
   }, [client, dataset, perspective, projectId])
@@ -595,7 +589,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     for (const [key, snapshot] of snapshots.entries()) {
       if (snapshot.resultSourceMap?.documents?.length) {
         snapshot.result = turboChargeResultIfSourceMap(
-          draft,
+          liveDocument,
           projectId,
           dataset,
           snapshot.result,
@@ -613,9 +607,9 @@ const Turbo = memo(function Turbo(props: TurboProps) {
         }
       }
     }
-    startTransition(() => setLastMutatedDocumentId(undefined))
+    setLastMutatedDocumentId(undefined)
   }, [
-    draft,
+    liveDocument,
     cache,
     dataset,
     lastMutatedDocumentId,
@@ -633,7 +627,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     for (const [key, snapshot] of snapshots.entries()) {
       if (snapshot.resultSourceMap?.documents?.length) {
         snapshot.result = turboChargeResultIfSourceMap(
-          draft,
+          liveDocument,
           projectId,
           dataset,
           snapshot.result,
@@ -654,17 +648,17 @@ const Turbo = memo(function Turbo(props: TurboProps) {
   }, [
     cache,
     dataset,
-    draft,
+    liveDocument,
     lastDraftDocumentRev,
     perspective,
     projectId,
     snapshots,
   ])
   useEffect(() => {
-    if (draft) {
-      startTransition(() => setLastDraftDocumentRev(draft._rev))
+    if (liveDocument) {
+      setLastDraftDocumentRev(liveDocument._rev)
     }
-  }, [draft])
+  }, [liveDocument])
 
   return (
     <>

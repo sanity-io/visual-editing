@@ -1,5 +1,5 @@
-import { FunctionComponent, useCallback } from 'react'
-import { Path, useEditState } from 'sanity'
+import { FunctionComponent, useCallback, useEffect } from 'react'
+import { Path, SanityDocument, useEditState } from 'sanity'
 import { DeskToolProvider } from 'sanity/desk'
 
 import { DeskDocumentPaneParams } from '../types'
@@ -12,12 +12,25 @@ const DocumentPanel: FunctionComponent<{
   documentType: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (documentId: string, path: Path) => void
+  onDocumentChange: (document: SanityDocument | null) => void
 }> = function (props) {
-  const { deskParams, documentId, documentType, onDeskParams, onFocusPath } =
-    props
+  const {
+    deskParams,
+    documentId,
+    documentType,
+    onDeskParams,
+    onFocusPath,
+    onDocumentChange,
+  } = props
 
   const editState = useEditState(documentId, documentType)
   const documentValue = editState.draft || editState.published
+
+  // Sync changes to the document being edited back up to the live loaders
+  useEffect(
+    () => onDocumentChange(documentValue),
+    [documentValue, onDocumentChange],
+  )
 
   const handleFocusPath = useCallback(
     (path: Path) => {
@@ -65,6 +78,7 @@ export const ContentEditor: FunctionComponent<{
   documentType?: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (documentId: string, path: Path) => void
+  onDocumentChange: (document: SanityDocument | null) => void
   previewUrl?: string
   refs: { _id: string; _type: string }[]
 }> = function (props) {
@@ -74,6 +88,7 @@ export const ContentEditor: FunctionComponent<{
     documentType,
     onDeskParams,
     onFocusPath,
+    onDocumentChange,
     previewUrl,
     refs,
   } = props
@@ -87,6 +102,7 @@ export const ContentEditor: FunctionComponent<{
           documentType={documentType}
           onDeskParams={onDeskParams}
           onFocusPath={onFocusPath}
+          onDocumentChange={onDocumentChange}
         />
       ) : (
         <DocumentListPanel

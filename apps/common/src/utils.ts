@@ -2,11 +2,14 @@
 // Common utils used in templates, demos and tests.
 // The JS in here needs to be able to run server side, browser side, in any fw
 
-import { encodeJsonPathToUriComponent } from '@sanity/client/csm'
-import { parseJsonPath, type PathSegment } from '@sanity/client/csm'
+import {
+  type ContentSourceMap,
+  encodeJsonPathToUriComponent,
+  parseJsonPath,
+  type PathSegment,
+} from '@sanity/client/csm'
 import { resolveMapping } from '@sanity/csm'
 import { encodeSanityNodeData, type SanityNode } from '@sanity/overlays'
-import type { ContentSourceMap } from '@sanity/preview-kit/client'
 
 export function formatCurrency(value: number): string {
   const formatter = new Intl.NumberFormat('en', {
