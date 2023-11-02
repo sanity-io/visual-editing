@@ -46,10 +46,10 @@ export const PreviewLocationInput: FunctionComponent<{
       onBlur={handleBlur}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
-      padding={2}
+      padding={3}
       prefix={
         host && (
-          <Box padding={2}>
+          <Box padding={3}>
             <Text muted size={1}>
               {host}
             </Text>

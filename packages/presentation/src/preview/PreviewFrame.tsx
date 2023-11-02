@@ -2,7 +2,7 @@ import { ClientPerspective } from '@sanity/client'
 import {
   ChevronDownIcon,
   DesktopIcon,
-  EditIcon,
+  EyeOpenIcon,
   MobileDeviceIcon,
   PanelLeftIcon,
   RefreshIcon,
@@ -132,28 +132,12 @@ export const PreviewFrame = forwardRef<
                   icon={PanelLeftIcon}
                   mode="bleed"
                   onClick={toggleNavigator}
-                  padding={2}
+                  padding={3}
                   selected={navigatorEnabled}
                 />
               </Tooltip>
             )}
-            <Tooltip
-              content={<Text size={1}>Toggle edit mode</Text>}
-              fallbackPlacements={['bottom-start']}
-              padding={2}
-              placement="bottom"
-              portal
-            >
-              <Button
-                aria-label="Toggle edit mode"
-                fontSize={1}
-                icon={EditIcon}
-                mode="bleed"
-                onClick={toggleOverlay}
-                padding={2}
-                selected={overlayEnabled}
-              />
-            </Tooltip>
+
             {devMode && (
               <Tooltip
                 content={
@@ -173,11 +157,12 @@ export const PreviewFrame = forwardRef<
                   mode="bleed"
                   loading={refreshing}
                   onClick={handleRefresh}
-                  padding={2}
+                  padding={3}
                 />
               </Tooltip>
             )}
           </Flex>
+
           <Box flex={1}>
             <PreviewLocationInput
               host={devMode ? previewLocationOrigin : undefined}
@@ -185,6 +170,25 @@ export const PreviewFrame = forwardRef<
               value={params.preview || '/'}
             />
           </Box>
+
+          <Tooltip
+            content={<Text size={1}>Toggle preview mode</Text>}
+            fallbackPlacements={['bottom-start']}
+            padding={2}
+            placement="bottom"
+            portal
+          >
+            <Button
+              aria-label="Toggle preview mode"
+              fontSize={1}
+              icon={EyeOpenIcon}
+              mode="bleed"
+              onClick={toggleOverlay}
+              padding={3}
+              selected={!overlayEnabled}
+            />
+          </Tooltip>
+
           <Flex align="center" flex="none" gap={1}>
             <MenuButton
               button={
@@ -192,7 +196,7 @@ export const PreviewFrame = forwardRef<
                   fontSize={1}
                   iconRight={ChevronDownIcon}
                   mode="bleed"
-                  padding={2}
+                  padding={3}
                   space={2}
                   text={PERSPECTIVE_TITLES[perspective]}
                 />
@@ -203,14 +207,14 @@ export const PreviewFrame = forwardRef<
                   <MenuItem
                     fontSize={1}
                     onClick={() => setPerspective('previewDrafts')}
-                    padding={2}
+                    padding={3}
                     pressed={perspective === 'previewDrafts'}
                     text="Preview drafts"
                   />
                   <MenuItem
                     fontSize={1}
                     onClick={() => setPerspective('published')}
-                    padding={2}
+                    padding={3}
                     pressed={perspective === 'published'}
                     text="Published"
                   />
@@ -224,6 +228,7 @@ export const PreviewFrame = forwardRef<
               }}
             />
           </Flex>
+
           <Flex align="center" flex="none" gap={1}>
             <Tooltip
               content={<Text size={1}>Desktop viewport</Text>}
@@ -238,7 +243,7 @@ export const PreviewFrame = forwardRef<
                 icon={DesktopIcon}
                 mode="bleed"
                 onClick={setDesktopMode}
-                padding={2}
+                padding={3}
                 selected={mode === 'desktop'}
               />
             </Tooltip>
@@ -255,7 +260,7 @@ export const PreviewFrame = forwardRef<
                 icon={MobileDeviceIcon}
                 mode="bleed"
                 onClick={setMobileMode}
-                padding={2}
+                padding={3}
                 selected={mode === 'mobile'}
               />
             </Tooltip>
