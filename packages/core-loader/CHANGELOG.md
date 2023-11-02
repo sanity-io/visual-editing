@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.3.2-pink-lizard...core-loader-v0.3.3-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* add base readmes ([e5f3f70](https://github.com/sanity-io/visual-editing/commit/e5f3f7054090c269a98bc5d5f6ff9572a8c3725b))
+* add README ([3c14ea1](https://github.com/sanity-io/visual-editing/commit/3c14ea1b362d6287f51b6af6d56c896574cd932b))
+* always bundle private packages ([6be3f74](https://github.com/sanity-io/visual-editing/commit/6be3f7409216c699667d6ac400b4ce3b3a426679))
+* **deps:** update dependency @sanity/client to v6.7.1-pink-lizard.0 ([#224](https://github.com/sanity-io/visual-editing/issues/224)) ([937c5cb](https://github.com/sanity-io/visual-editing/commit/937c5cbe290a260c1f0a0dccbab7c46b4ef50767))
+* **deps:** Update sanity monorepo ([#222](https://github.com/sanity-io/visual-editing/issues/222)) ([dec2114](https://github.com/sanity-io/visual-editing/commit/dec2114132de1b98da5a78f92def08a5528528a7))
+* load src directly ([94308f0](https://github.com/sanity-io/visual-editing/commit/94308f0ba815d89347c7201eb759cc0ba6e2bbf7))
+* prepare release ([f2ce9cb](https://github.com/sanity-io/visual-editing/commit/f2ce9cb4046df2cb7581e66fcad3a5c0631778ae))
+
 ## [0.3.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.3.1-pink-lizard...core-loader-v0.3.2-pink-lizard) (2023-10-27)
 
 

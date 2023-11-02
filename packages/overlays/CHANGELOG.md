@@ -5,6 +5,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.12-pink-lizard...overlays-v0.1.13-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* always bundle private packages ([6be3f74](https://github.com/sanity-io/visual-editing/commit/6be3f7409216c699667d6ac400b4ce3b3a426679))
+* **deps:** Update sanity monorepo to v3.18.2-pink-lizard.172 ([#233](https://github.com/sanity-io/visual-editing/issues/233)) ([c5e6c5d](https://github.com/sanity-io/visual-editing/commit/c5e6c5d48f6d1c6b17d97e3845e3da751aef9918))
+* load src directly ([94308f0](https://github.com/sanity-io/visual-editing/commit/94308f0ba815d89347c7201eb759cc0ba6e2bbf7))
+* move `@sanity/csm` into `visual-editing-helpers` ([257a4ad](https://github.com/sanity-io/visual-editing/commit/257a4adf64dcd74cbf435b883995c6f5b8730c25))
+* **overlays:** improve element detection in mutation handler ([eda5fbd](https://github.com/sanity-io/visual-editing/commit/eda5fbdcfb0d510569aab42a1233679a5ef60b07))
+* prepare release ([f2ce9cb](https://github.com/sanity-io/visual-editing/commit/f2ce9cb4046df2cb7581e66fcad3a5c0631778ae))
+
 ## [0.1.12-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.11-pink-lizard...overlays-v0.1.12-pink-lizard) (2023-10-31)
 
 

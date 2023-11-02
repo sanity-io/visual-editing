@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.0-pink-lizard...presentation-v0.5.1-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* always bundle private packages ([6be3f74](https://github.com/sanity-io/visual-editing/commit/6be3f7409216c699667d6ac400b4ce3b3a426679))
+* **deps:** update dependency @sanity/client to v6.7.1-pink-lizard.0 ([#224](https://github.com/sanity-io/visual-editing/issues/224)) ([937c5cb](https://github.com/sanity-io/visual-editing/commit/937c5cbe290a260c1f0a0dccbab7c46b4ef50767))
+* **deps:** Update sanity monorepo ([#222](https://github.com/sanity-io/visual-editing/issues/222)) ([dec2114](https://github.com/sanity-io/visual-editing/commit/dec2114132de1b98da5a78f92def08a5528528a7))
+* **deps:** Update sanity monorepo to v3.18.2-pink-lizard.172 ([#233](https://github.com/sanity-io/visual-editing/issues/233)) ([c5e6c5d](https://github.com/sanity-io/visual-editing/commit/c5e6c5d48f6d1c6b17d97e3845e3da751aef9918))
+* listen to document changes directly ([213159e](https://github.com/sanity-io/visual-editing/commit/213159e164f721b316a0cee3f724d1378652a95a))
+* load src directly ([94308f0](https://github.com/sanity-io/visual-editing/commit/94308f0ba815d89347c7201eb759cc0ba6e2bbf7))
+* move `@sanity/csm` into `visual-editing-helpers` ([257a4ad](https://github.com/sanity-io/visual-editing/commit/257a4adf64dcd74cbf435b883995c6f5b8730c25))
+* prepare release ([f2ce9cb](https://github.com/sanity-io/visual-editing/commit/f2ce9cb4046df2cb7581e66fcad3a5c0631778ae))
+
 ## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.0-pink-lizard...presentation-v0.5.0-pink-lizard) (2023-11-01)
 
 
