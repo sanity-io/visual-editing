@@ -11,7 +11,6 @@ import {
 } from 'react'
 import {
   type Path,
-  pathToString,
   type SanityDocument,
   type Tool,
   useDataset,
@@ -20,6 +19,7 @@ import {
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
+  pathToString,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from 'visual-editing-helpers'

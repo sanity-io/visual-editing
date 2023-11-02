@@ -1,8 +1,7 @@
 import { Box, Card, Flex, Text } from '@sanity/ui'
 import { memo, useEffect, useMemo, useRef } from 'react'
-import { stringToPath } from 'sanity'
 import styled from 'styled-components'
-import { pathToUrlString } from 'visual-editing-helpers'
+import { pathToUrlString, stringToPath } from 'visual-editing-helpers'
 
 import {
   ElementFocusedState,

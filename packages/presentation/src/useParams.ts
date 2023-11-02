@@ -1,13 +1,12 @@
 import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { stringToPath } from 'sanity'
 import {
   NavigateOptions,
   RouterContextValue,
   RouterState,
   useRouter,
 } from 'sanity/router'
-import { pathToUrlString } from 'visual-editing-helpers'
+import { pathToUrlString, stringToPath } from 'visual-editing-helpers'
 
 import { debounce } from './lib/debounce'
 import { parsePath } from './parsePath'

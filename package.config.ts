@@ -2,7 +2,6 @@ import { defineConfig } from '@sanity/pkg-utils'
 
 export default defineConfig({
   minify: false,
-  external: ['@sanity/client', 'sanity'],
   extract: {
     bundledPackages: ['channels', 'visual-editing-helpers', '@sanity/util'],
     rules: {

@@ -1,5 +1,4 @@
-import { pathToString } from 'sanity'
-import { urlStringToPath } from 'visual-editing-helpers'
+import { pathToString, urlStringToPath } from 'visual-editing-helpers'
 
 export function parsePath(rawPath: string | undefined): {
   id: string | undefined
