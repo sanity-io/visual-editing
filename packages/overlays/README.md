@@ -25,12 +25,12 @@ The other peer dependencies are required and will be loaded asynchronously when 
 
 ```sh
 # For React.js applications
-npm install --save-exact @sanity/overlays@pink-lizard @sanity/react-loader@pink-lizard react react-dom styled-components
+npm install --save-exact @sanity/overlays@pink-lizard @sanity/react-loader@pink-lizard
 ```
 
 ```sh
 # Framework agnostic JavaScript libraries
-npm install --save-exact @sanity/overlays@pink-lizard @sanity/core-loader@pink-lizard react react-dom styled-components
+npm install --save-exact @sanity/overlays@pink-lizard @sanity/core-loader@pink-lizard
 ```
 
 ### 2. Fetch data with a Sanity loader

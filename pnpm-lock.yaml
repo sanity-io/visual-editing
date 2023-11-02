@@ -677,6 +677,15 @@ importers:
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      styled-components:
+        specifier: 6.1.0
+        version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^3.2.2
@@ -717,18 +726,9 @@ importers:
       ls-engines:
         specifier: ^0.9.0
         version: 0.9.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
       rimraf:
         specifier: ^5.0.1
         version: 5.0.5
-      styled-components:
-        specifier: 6.1.0
-        version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
