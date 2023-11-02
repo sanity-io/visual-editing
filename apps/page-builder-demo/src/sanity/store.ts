@@ -1,5 +1,5 @@
 import { QueryParams } from '@sanity/client'
-import { SanityNodeContext, wrapData } from '@sanity/csm'
+import { SanityNodeContext, wrapData } from '@sanity/react-loader/jsx'
 import { createQueryStore } from '@sanity/react-loader'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { getClient } from './client'

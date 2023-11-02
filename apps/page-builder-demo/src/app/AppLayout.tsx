@@ -1,6 +1,5 @@
 import { CloseIcon, MenuIcon } from '@sanity/icons'
-import { WrappedValue } from '@sanity/csm'
-import { sanity } from '@sanity/react-loader/jsx'
+import { sanity, WrappedValue } from '@sanity/react-loader/jsx'
 import clsx from 'clsx'
 import { ReactNode, useState } from 'react'
 import { SiteSettingsData } from './types'

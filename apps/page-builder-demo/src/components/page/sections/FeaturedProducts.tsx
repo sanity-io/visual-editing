@@ -1,4 +1,4 @@
-import { WrappedValue, unwrapData } from '@sanity/csm'
+import { WrappedValue, unwrapData } from '@sanity/react-loader/jsx'
 import { sanity } from '@sanity/react-loader/jsx'
 import Link from 'next/link'
 

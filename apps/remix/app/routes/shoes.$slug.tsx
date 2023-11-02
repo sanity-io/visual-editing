@@ -1,7 +1,6 @@
 import { PortableText } from '@portabletext/react'
 import { Link, useLoaderData, useParams } from '@remix-run/react'
-import { unwrapData, wrapData } from '@sanity/csm'
-import { sanity } from '@sanity/react-loader/jsx'
+import { unwrapData, wrapData, sanity } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'

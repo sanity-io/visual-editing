@@ -1,6 +1,5 @@
 import { Link, useLoaderData } from '@remix-run/react'
-import { unwrapData, wrapData } from '@sanity/csm'
-import { sanity } from '@sanity/react-loader/jsx'
+import { unwrapData, wrapData, sanity } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'

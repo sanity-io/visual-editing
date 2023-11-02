@@ -1,4 +1,4 @@
-import { WrappedValue } from '@sanity/csm'
+import { WrappedValue } from '@sanity/react-loader/jsx'
 import { isArray } from 'sanity'
 
 import { dataAttribute } from '@/sanity'
