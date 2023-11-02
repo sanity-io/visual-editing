@@ -109,12 +109,12 @@ importers:
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@sanity/react-loader':
+        specifier: workspace:*
+        version: link:../../packages/react-loader
       '@sanity/ui':
         specifier: ^1.8.3
         version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
-      visual-editing-helpers:
-        specifier: workspace:*
-        version: link:../../packages/visual-editing-helpers
     devDependencies:
       react:
         specifier: ^18.2.0
@@ -233,9 +233,6 @@ importers:
       sanity:
         specifier: 3.18.2-pink-lizard.172
         version: 3.18.2-pink-lizard.172(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.0)
-      visual-editing-helpers:
-        specifier: workspace:*
-        version: link:../../packages/visual-editing-helpers
     devDependencies:
       '@nuxt/devtools':
         specifier: ^1.0.0
@@ -318,9 +315,6 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
-      visual-editing-helpers:
-        specifier: workspace:*
-        version: link:../../packages/visual-editing-helpers
 
   apps/remix:
     dependencies:
@@ -372,9 +366,6 @@ importers:
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
-      visual-editing-helpers:
-        specifier: workspace:*
-        version: link:../../packages/visual-editing-helpers
     devDependencies:
       '@remix-run/dev':
         specifier: ^1.19.3

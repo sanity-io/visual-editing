@@ -8,6 +8,7 @@ export default defineConfig({
       'ae-forgotten-export': 'warn',
       'ae-incompatible-release-tags': 'warn',
       'ae-missing-release-tag': 'warn',
+      'ae-internal-missing-underscore': 'off',
     },
   },
   tsconfig: 'tsconfig.build.json',

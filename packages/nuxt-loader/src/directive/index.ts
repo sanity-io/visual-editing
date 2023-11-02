@@ -1,3 +1,32 @@
 export * from './directive'
-export type * from 'visual-editing-helpers/csm'
-export { unwrapData, wrapData } from 'visual-editing-helpers/csm'
+export type {
+  Any,
+  ContentSourceMap,
+  ContentSourceMapDocument,
+  ContentSourceMapDocumentBase,
+  ContentSourceMapDocuments,
+  ContentSourceMapDocumentValueSource,
+  ContentSourceMapLiteralSource,
+  ContentSourceMapMapping,
+  ContentSourceMapMappings,
+  ContentSourceMapPaths,
+  ContentSourceMapRemoteDocument,
+  ContentSourceMapSource,
+  ContentSourceMapUnknownSource,
+  ContentSourceMapValueMapping,
+  KeyedSegment,
+  PathSegment,
+  SanityDocument,
+} from '@sanity/client/csm'
+export {
+  encodeSanityNodeData,
+  type SanityKey,
+  type SanityNode,
+  type SanityNodeContext,
+  type SanityPrimitive,
+  type SourceNode,
+  unwrapData,
+  type UnwrappedValue,
+  wrapData,
+  type WrappedValue,
+} from 'visual-editing-helpers/csm'

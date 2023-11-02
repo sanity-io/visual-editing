@@ -9,10 +9,7 @@ import {
   type PathSegment,
   resolveMapping,
 } from '@sanity/client/csm'
-import {
-  encodeSanityNodeData,
-  type SanityNode,
-} from 'visual-editing-helpers/csm'
+import { encodeSanityNodeData, type SanityNode } from '@sanity/react-loader/jsx'
 
 export function formatCurrency(value: number): string {
   const formatter = new Intl.NumberFormat('en', {

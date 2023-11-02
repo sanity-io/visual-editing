@@ -132,7 +132,7 @@
 
 <script lang="ts" setup>
 import { vercelStegaCombine } from '@vercel/stega'
-import { encodeSanityNodeData } from 'visual-editing-helpers/csm'
+import { encodeSanityNodeData } from '@sanity/nuxt-loader/directive'
 const enabled = ref(true)
 const elementAdded = ref(false)
 const expandedDocument = ref(false)

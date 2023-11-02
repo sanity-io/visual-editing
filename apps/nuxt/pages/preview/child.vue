@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { encodeSanityNodeData } from 'visual-editing-helpers/csm'
+import { encodeSanityNodeData } from '@sanity/nuxt-loader/directive'
 
 const sanityTitleData = {
   projectId: 'projectId',
