@@ -7,10 +7,12 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: read # for checkout
 
 jobs:
   release-please:
+    permissions:
+        id-token: write # to enable use of OIDC for npm provenance
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
