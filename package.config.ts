@@ -4,7 +4,7 @@ export default defineConfig({
   minify: false,
   external: ['@sanity/client', 'sanity'],
   extract: {
-    bundledPackages: ['channels', 'visual-editing-helpers'],
+    bundledPackages: ['channels', 'visual-editing-helpers', '@sanity/util'],
     rules: {
       'ae-forgotten-export': 'warn',
       'ae-incompatible-release-tags': 'warn',
