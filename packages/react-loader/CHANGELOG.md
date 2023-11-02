@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.2-pink-lizard...react-loader-v0.3.3-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **README:** add badges and links ([0fcf516](https://github.com/sanity-io/visual-editing/commit/0fcf516fb0a920c01cb4a153863d256e39395024))
+
 ## [0.3.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.1-pink-lizard...react-loader-v0.3.2-pink-lizard) (2023-11-02)
 
 

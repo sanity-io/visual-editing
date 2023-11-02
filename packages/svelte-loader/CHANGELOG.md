@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.1.4-pink-lizard...svelte-loader-v0.1.5-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **README:** add badges and links ([0fcf516](https://github.com/sanity-io/visual-editing/commit/0fcf516fb0a920c01cb4a153863d256e39395024))
+
 ## [0.1.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.1.3-pink-lizard...svelte-loader-v0.1.4-pink-lizard) (2023-11-02)
 
 
