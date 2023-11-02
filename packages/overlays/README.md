@@ -1,19 +1,13 @@
 # @sanity/overlays — Visual Editing
 
-Sanity Visual Editing highlights elements on your website that are editable in Sanity Studio.
+[![npm stat](https://img.shields.io/npm/dm/@sanity/overlays.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@sanity/overlays)
+[![npm version](https://img.shields.io/npm/v/@sanity/overlays/pink-lizard.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/overlays)
+[![gzip size][gzip-badge]][bundlephobia]
+[![size][size-badge]][bundlephobia]
 
-Learn more about this feature, and how to use it, in our [Visual Editing documentation](http://sanity.io/docs/vercel-visual-editing).
-
-> **Note**
-> Visual Editing requires [Content Source Maps](https://www.sanity.io/blog/content-source-maps-announce), a feature available on a Sanity Enterprise plan. If you are an existing enterprise customer, [contact our sales team](https://www.sanity.io/contact/sales?ref=vercel-visual-editing-docs) to have Content Source Maps enabled on your project. [Learn more about Sanity for Enterprise organizations here](https://www.sanity.io/enterprise?ref=vercel-visual-editing-docs).
-
-> **Note**
-> This package is **not required** for Vercel Visual Editing. It is only required if you want to enable visual editing on alternative hosting providers.
-
-## Prerequisites
-
-- Sanity Enterprise project with Content Source Maps enabled
-- An **enhanced** Sanity Client using `createClient` from [`@sanity/preview-kit`](https://github.com/sanity-io/preview-kit) or [`next-sanity`](https://github.com/sanity-io/next-sanity) with `encodeSourceMap` and `studioUrl` enabled
+> **Warning**
+>
+> This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
 
 ## Getting started
 
@@ -95,3 +89,7 @@ Docs on how to use the new stega enhanced client in `@sanity/client/stega` which
 ## Vercel Visual Editing compatibility
 
 A note on usage that's compatible with Vercel.
+
+[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/overlays@pink-lizard?label=gzip%20size&style=flat-square
+[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/overlays@pink-lizard?label=size&style=flat-square
+[bundlephobia]: https://bundlephobia.com/package/@sanity/overlays@pink-lizard
