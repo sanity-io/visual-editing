@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.14-pink-lizard...overlays-v0.1.15-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* remove `sanity` peer dep ([30ff225](https://github.com/sanity-io/visual-editing/commit/30ff225255b587e92e020bca5cfda03f5577852b))
+* remove unused `nanoid` dependency ([142b3dd](https://github.com/sanity-io/visual-editing/commit/142b3ddf9f30b0a7ab89471144a9bf091c31863f))
+
 ## [0.1.14-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.13-pink-lizard...overlays-v0.1.14-pink-lizard) (2023-11-02)
 
 
