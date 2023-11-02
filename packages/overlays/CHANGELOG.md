@@ -5,6 +5,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.0-pink-lizard...overlays-v2.0.1-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* attempt bundling `@sanity/ui` and `styled-components` for hydrogen compat ([b39f58a](https://github.com/sanity-io/visual-editing/commit/b39f58a33e6114be37d69d852b40ff35397d8591))
+* **CHANGELOG:** restore continuity ([c9f19cd](https://github.com/sanity-io/visual-editing/commit/c9f19cd7d8be297b99f7feb9c678b34822d10c8b))
+* don't bundle `uuid` ([6e11ca5](https://github.com/sanity-io/visual-editing/commit/6e11ca552cc05dc37295900c5aab511ab7b6eef9))
+
 ## [2.0.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.16-pink-lizard...overlays-v2.0.0-pink-lizard) (2023-11-02)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.0-pink-lizard...groq-store-v5.0.1-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **CHANGELOG:** restore continuity ([c9f19cd](https://github.com/sanity-io/visual-editing/commit/c9f19cd7d8be297b99f7feb9c678b34822d10c8b))
+
 ## [5.0.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v0.0.11-pink-lizard...groq-store-v5.0.0-pink-lizard) (2023-11-02)
 
 
