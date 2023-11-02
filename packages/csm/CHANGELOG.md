@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.2.2-pink-lizard...csm-v0.2.3-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* prepare release ([f2ce9cb](https://github.com/sanity-io/visual-editing/commit/f2ce9cb4046df2cb7581e66fcad3a5c0631778ae))
+
 ## [0.2.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/csm-v0.2.1-pink-lizard...csm-v0.2.2-pink-lizard) (2023-11-01)
 
 

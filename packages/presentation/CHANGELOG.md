@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.0-pink-lizard...presentation-v0.5.0-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* listen to document changes directly ([213159e](https://github.com/sanity-io/visual-editing/commit/213159e164f721b316a0cee3f724d1378652a95a))
+* prepare release ([f2ce9cb](https://github.com/sanity-io/visual-editing/commit/f2ce9cb4046df2cb7581e66fcad3a5c0631778ae))
+
 ## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.0-pink-lizard...presentation-v0.5.0-pink-lizard) (2023-11-01)
 
 

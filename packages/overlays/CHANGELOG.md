@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.12-pink-lizard...overlays-v0.1.13-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **overlays:** improve element detection in mutation handler ([eda5fbd](https://github.com/sanity-io/visual-editing/commit/eda5fbdcfb0d510569aab42a1233679a5ef60b07))
+* prepare release ([f2ce9cb](https://github.com/sanity-io/visual-editing/commit/f2ce9cb4046df2cb7581e66fcad3a5c0631778ae))
+
 ## [0.1.12-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.11-pink-lizard...overlays-v0.1.12-pink-lizard) (2023-10-31)
 
 

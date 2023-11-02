@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.0-pink-lizard...react-loader-v0.3.1-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* prepare release ([f2ce9cb](https://github.com/sanity-io/visual-editing/commit/f2ce9cb4046df2cb7581e66fcad3a5c0631778ae))
+
 ## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.2.1-pink-lizard...react-loader-v0.3.0-pink-lizard) (2023-10-25)
 
 
