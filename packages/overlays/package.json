@@ -41,7 +41,7 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
-    "test": "vitest",
+    "test": "vitest --pass-with-no-tests",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
@@ -153,7 +153,7 @@
     "node": ">=16.14"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "tag": "pink-lizard"
   }
 }
