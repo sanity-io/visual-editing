@@ -13,14 +13,6 @@
       "cache": false
     },
     "lint": {},
-    "artifact": {
-      "dependsOn": ["^artifact"],
-      "outputs": [
-        "artifact/*.tgz",
-        "artifact/CHANGELOG.md",
-        "artifact/README.md"
-      ]
-    },
     "typecheck": {
       "env": ["GITHUB_ACTIONS"],
       "dependsOn": ["^build"]

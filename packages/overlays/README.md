@@ -19,44 +19,29 @@ Learn more about this feature, and how to use it, in our [Visual Editing documen
 
 ### 1. Install @sanity/overlays
 
-Install the package along with either `next-sanity` or `@sanity/preview-kit` depending on your project.
+Install the package along with either `@sanity/react-loader`, `@sanity/nuxt-loader`, `@sanity/svelte-loader` or `@sanity/core-loader` depending on your project.
 
 The other peer dependencies are required and will be loaded asynchronously when Visual Editing is enabled.
 
 ```sh
-# For Next.js applications
-npm install @sanity/overlays next-sanity react react-dom styled-components
+# For React.js applications
+npm install --save-exact @sanity/overlays@pink-lizard @sanity/react-loader@pink-lizard react react-dom styled-components
 ```
 
 ```sh
 # Framework agnostic JavaScript libraries
-npm install @sanity/overlays @sanity/preview-kit react react-dom styled-components
+npm install --save-exact @sanity/overlays@pink-lizard @sanity/core-loader@pink-lizard react react-dom styled-components
 ```
 
-### 2. Configure an enhanced Sanity client
+### 2. Fetch data with a Sanity loader
 
-Visual Editing relies on encoded metadata being present in values returned from your queries. This metadata is only present when using an enhanced Sanity client on a project on which Content Source Maps is enabled.
+TODO, link to the docs for each loader
 
-Ensure `encodeSourceMap` is only `true` in non-production environments.
+### 3. Set data attributes
 
-```ts
-import { createClient } from 'next-sanity'
-// or
-import { createClient } from '@sanity/preview-kit/client'
+TODO, how to set the `data-sanity` attributes
 
-const client = createClient({
-  // ...all other config
-  studioUrl: '/studio', // Or: 'https://my-cool-project.sanity.studio'
-  encodeSourceMap: true,
-})
-```
-
-For more configuration options when working with Content Source Maps and the enhanced Sanity Client, see the README's of either package:
-
-- [next-sanity](https://github.com/sanity-io/next-sanity)
-- [@sanity/preview-kit](https://github.com/sanity-io/preview-kit)
-
-### 3. Dynamically enable Visual Editing
+### 4. Dynamically enable Visual Editing
 
 Ensure the overlay is only enabled in non-production environments.
 
@@ -103,21 +88,10 @@ But by adding the `data-sanity-edit-target` attribute to the `<section>` tag, th
 
 Manually setting the edit target will use the first element it finds with encoded metadata and remove clickable buttons from all other child elements.
 
-### `data-sanity-edit-info`
+## Using stega
 
-You can manually add custom "Edit in Sanity Studio" elements by adding a `data-sanity-edit-info` attribute to the element you want to be editable.
+Docs on how to use the new stega enhanced client in `@sanity/client/stega` which replaces `@sanity/preview-kit/client`.
 
-```tsx
-export function MyComponent() {
-  return (
-    <div
-      data-sanity-edit-info={JSON.stringify({
-        origin: 'sanity.io',
-        href: '/studio',
-      })}
-    >
-      ...
-    </div>
-  )
-}
-```
+## Vercel Visual Editing compatibility
+
+A note on usage that's compatible with Vercel.

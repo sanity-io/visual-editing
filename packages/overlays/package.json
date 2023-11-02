@@ -33,14 +33,14 @@
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepack": "pnpm build",
-    "artifact": "pnpm pack --pack-destination artifact && cp CHANGELOG.md artifact/CHANGELOG.md && cp RESTRICTED-README.md artifact/README.md",
+    "prepublishOnly": "pnpm build",
     "test": "vitest",
     "watch": "pkg watch --strict"
   },

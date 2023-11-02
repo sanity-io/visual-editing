@@ -37,11 +37,10 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist artifact",
+    "prebuild": "rimraf dist",
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepack": "pnpm build",
-    "artifact": "pnpm pack --pack-destination artifact",
+    "prepublishOnly": "pnpm build",
     "test": "vitest",
     "watch": "pkg watch --strict"
   },
