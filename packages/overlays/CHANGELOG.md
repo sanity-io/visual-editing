@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.17-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.16-pink-lizard...overlays-v0.1.17-pink-lizard) (2023-11-02)
+
+
+### Bug Fixes
+
+* **README:** add badges and links ([0fcf516](https://github.com/sanity-io/visual-editing/commit/0fcf516fb0a920c01cb4a153863d256e39395024))
+
 ## [0.1.16-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v0.1.15-pink-lizard...overlays-v0.1.16-pink-lizard) (2023-11-02)
 
 
