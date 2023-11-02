@@ -19,7 +19,7 @@ TODO data fetching example
 
 Link to @sanity/overlays README with setup.
 
-Show how to use `jsx` utils.
+Show how to use `directive` utils.
 
 Alternatively show how to set `data-sanity` attributes.
 
