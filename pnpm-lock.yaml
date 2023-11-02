@@ -210,8 +210,8 @@ importers:
   apps/nuxt:
     dependencies:
       '@nuxtjs/tailwindcss':
-        specifier: ^6.8.1
-        version: 6.8.1(rollup@4.2.0)(webpack@5.89.0)
+        specifier: ^6.9.3
+        version: 6.9.3(rollup@4.2.0)(webpack@5.89.0)
       '@sanity/nuxt-loader':
         specifier: workspace:*
         version: link:../../packages/nuxt-loader
@@ -4106,8 +4106,8 @@ packages:
       - vue-tsc
     dev: true
 
-  /@nuxtjs/tailwindcss@6.8.1(rollup@4.2.0)(webpack@5.89.0):
-    resolution: {integrity: sha512-PU9dJtDIEiwBff2WKkWxKuZIfgn9+F9SYAc4io2n0tAmYL8bQr9gJgyf+xpCtMF7UJZ450xXAjSTkO6v8q5Obw==}
+  /@nuxtjs/tailwindcss@6.9.3(rollup@4.2.0)(webpack@5.89.0):
+    resolution: {integrity: sha512-NGODFTmM8OZl9Ex/sg98WNTOg/hJ6KlutgFo9HyOkB02k6B2lOMaR5MTbJYUSNsjTylcfwWLTW8t7Ve7Q9ZYIg==}
     dependencies:
       '@nuxt/kit': 3.8.0(rollup@4.2.0)
       '@nuxt/postcss8': 1.1.3(webpack@5.89.0)
@@ -4224,7 +4224,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -13238,10 +13237,6 @@ packages:
   /nanostores@0.9.4:
     resolution: {integrity: sha512-BVFzKt6K5P8tYQLL7MItqcev7jpspA5pIjv+Ck3k6wBnUlwCJcpkGTIinj4APvx8SvdP9fXDGoMRCTY6DO/9QA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    dev: true
-
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
