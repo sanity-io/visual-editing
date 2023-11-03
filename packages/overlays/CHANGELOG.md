@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.1-pink-lizard...overlays-v2.0.2-pink-lizard) (2023-11-03)
+
+
+### Bug Fixes
+
+* **overlays:** flash overlays when mounting ([6a9a86d](https://github.com/sanity-io/visual-editing/commit/6a9a86d9eca784dff1ff55686b9b91ca9203f6a9))
+
 ## [2.0.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.0-pink-lizard...overlays-v2.0.1-pink-lizard) (2023-11-02)
 
 

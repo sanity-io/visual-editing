@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.3.5-pink-lizard...core-loader-v0.3.6-pink-lizard) (2023-11-03)
+
+
+### Bug Fixes
+
+* strip relative paths from cors targetOrigin ([c2b5b3b](https://github.com/sanity-io/visual-editing/commit/c2b5b3b781af0852bfb798f96b9c685c15f90cc0))
+
 ## [0.3.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.3.4-pink-lizard...core-loader-v0.3.5-pink-lizard) (2023-11-02)
 
 
