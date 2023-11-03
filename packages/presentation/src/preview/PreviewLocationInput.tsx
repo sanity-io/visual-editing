@@ -1,4 +1,5 @@
-import { Box, Text, TextInput } from '@sanity/ui'
+import { LaunchIcon } from '@sanity/icons'
+import { Box, Button, Text, TextInput } from '@sanity/ui'
 import {
   ChangeEvent,
   FunctionComponent,
@@ -49,15 +50,44 @@ export const PreviewLocationInput: FunctionComponent<{
       padding={2}
       prefix={
         host && (
-          <Box padding={2}>
-            <Text muted size={1}>
-              {host}
+          <Box
+            padding={2}
+            style={{ lineHeight: 0, maxWidth: 140, whiteSpace: 'nowrap' }}
+          >
+            <Text size={1} textOverflow="ellipsis" title={host}>
+              <a
+                href={host}
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: 'var(--card-muted-fg-color)' }}
+              >
+                {host}
+              </a>
             </Text>
           </Box>
         )
       }
       radius={2}
       ref={inputRef}
+      space={2}
+      suffix={
+        <Box style={{ lineHeight: 0 }}>
+          <Button
+            as="a"
+            fontSize={1}
+            href={host + sessionValue}
+            icon={LaunchIcon}
+            padding={2}
+            mode="ghost"
+            rel="noreferrer"
+            target="_blank"
+            style={{
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+            }}
+          />
+        </Box>
+      }
       value={sessionValue}
     />
   )
