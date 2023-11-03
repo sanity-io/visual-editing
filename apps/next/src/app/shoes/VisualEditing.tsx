@@ -2,9 +2,9 @@
 
 import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { useLiveMode } from './useQuery'
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 
 export default function VisualEditing() {
   const router = useRouter()

@@ -7,7 +7,7 @@ settings:
 overrides:
   '@sanity/block-tools': 3.18.2-pink-lizard.172
   '@sanity/cli': 3.18.2-pink-lizard.172
-  '@sanity/client': 6.7.1-pink-lizard.0
+  '@sanity/client': 6.7.1-pink-lizard.2
   '@sanity/diff': 3.18.2-pink-lizard.172
   '@sanity/export': 3.18.2-pink-lizard.172
   '@sanity/import': 3.18.2-pink-lizard.172
@@ -34,8 +34,8 @@ importers:
         specifier: 3.18.2-pink-lizard.172
         version: 3.18.2-pink-lizard.172
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/diff':
         specifier: 3.18.2-pink-lizard.172
         version: 3.18.2-pink-lizard.172
@@ -115,6 +115,9 @@ importers:
       '@sanity/ui':
         specifier: ^1.8.3
         version: 1.8.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
+      '@vercel/stega':
+        specifier: 0.1.0
+        version: 0.1.0
     devDependencies:
       react:
         specifier: ^18.2.0
@@ -143,15 +146,15 @@ importers:
       '@portabletext/react':
         specifier: ^3.0.11
         version: 3.0.11(react@18.2.0)
+      '@sanity/client':
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
-      '@sanity/preview-kit':
-        specifier: 3.2.6
-        version: 3.2.6(@sanity/client@6.7.1-pink-lizard.0)(react@18.2.0)
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -212,6 +215,9 @@ importers:
       '@nuxtjs/tailwindcss':
         specifier: ^6.9.3
         version: 6.9.3(rollup@4.2.0)(webpack@5.89.0)
+      '@sanity/client':
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/nuxt-loader':
         specifier: workspace:*
         version: link:../../packages/nuxt-loader
@@ -449,8 +455,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -538,8 +544,8 @@ importers:
         version: 2.0.0
     devDependencies:
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -581,8 +587,8 @@ importers:
         version: 0.39.5
     devDependencies:
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -624,8 +630,8 @@ importers:
         specifier: 0.10.0
         version: 0.10.0(nanostores@0.9.4)(vue@3.3.7)
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -758,8 +764,8 @@ importers:
         version: 7.8.1
     devDependencies:
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -795,8 +801,8 @@ importers:
         version: link:../core-loader
     devDependencies:
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -841,8 +847,8 @@ importers:
         version: link:../core-loader
     devDependencies:
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/pkg-utils':
         specifier: ^3.2.2
         version: 3.2.2(typescript@5.2.2)
@@ -877,8 +883,8 @@ importers:
   packages/visual-editing-helpers:
     devDependencies:
       '@sanity/client':
-        specifier: 6.7.1-pink-lizard.0
-        version: 6.7.1-pink-lizard.0
+        specifier: 6.7.1-pink-lizard.2
+        version: 6.7.1-pink-lizard.2
       '@sanity/util':
         specifier: 3.18.2-pink-lizard.172
         version: 3.18.2-pink-lizard.172
@@ -5013,11 +5019,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/client@6.7.1-pink-lizard.0:
-    resolution: {integrity: sha512-o0tpaH2+sfAZvKW7ai+ZEHuSAC+lVCXIQtzXnKmF0IGwhaCHPfZ91+HiQwOPTeiFA2kcj5Zm3FvpCy8aEOoYwA==}
+  /@sanity/client@6.7.1-pink-lizard.2:
+    resolution: {integrity: sha512-UTTwMjxZYCZz8TVmQ+1P2nWCo4yeMau38pUt3bZOjT2sYh67ydw1L2rgtetJuKrxXrcfMrPSOJNhwOGBFK4oew==}
     engines: {node: '>=14.18'}
     dependencies:
       '@sanity/eventsource': 5.0.1
+      '@vercel/stega': 0.1.0
       get-it: 8.4.4
       rxjs: 7.8.1
     transitivePeerDependencies:
@@ -5072,23 +5079,6 @@ packages:
   /@sanity/generate-help-url@3.0.0:
     resolution: {integrity: sha512-wtMYcV5GIDIhVyF/jjmdwq1GdlK07dRL40XMns73VbrFI7FteRltxv48bhYVZPcLkRXb0SHjpDS/icj9/yzbVA==}
 
-  /@sanity/groq-store@4.1.3:
-    resolution: {integrity: sha512-Yh3zbCkpnrowIG8+tMoZHGxV9HFMWVlZ4zhNfF1Y2rygi14SJteV+ildrlq3/OFq9/Y/cc6iXSD/+U6dErIpNw==}
-    engines: {node: '>= 18'}
-    dependencies:
-      '@sanity/eventsource': 5.0.1
-      '@sanity/types': 3.18.2-pink-lizard.172
-      fast-deep-equal: 3.1.3
-      groq: 3.18.2-pink-lizard.172
-      groq-js: 1.3.0
-      mendoza: 3.0.3
-      simple-get: 4.0.1
-      split2: 4.2.0
-      throttle-debounce: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@sanity/icons@1.3.10(react@18.2.0):
     resolution: {integrity: sha512-5wVG/vIiGuGrSmq+Bl3PY7XDgQrGv0fyHdJI64FSulnr2wH3NMqZ6C59UFxnrZ93sr7kOt0zQFoNv2lkPBi0Cg==}
     peerDependencies:
@@ -5114,7 +5104,7 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@sanity/client': 6.7.1-pink-lizard.0
+      '@sanity/client': 6.7.1-pink-lizard.2
       '@sanity/import': 3.18.2-pink-lizard.172
       get-it: 8.4.4
       meow: 9.0.0
@@ -5257,31 +5247,6 @@ packages:
       - react-dom
       - supports-color
 
-  /@sanity/preview-kit@3.2.6(@sanity/client@6.7.1-pink-lizard.0)(react@18.2.0):
-    resolution: {integrity: sha512-TsqAbw/YikixLQ6Brphc8fkldBS3aTRWU5i+pAW4Lk9ywNCYqarKyXfMXGHjhb8eK7QQBnKQoQ93sPzKB9tz3w==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@sanity/client': 6.7.1-pink-lizard.0
-      react: ^18.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-    dependencies:
-      '@sanity/client': 6.7.1-pink-lizard.0
-      '@sanity/eventsource': 5.0.1
-      '@sanity/groq-store': 4.1.3
-      '@vercel/stega': 0.1.0
-      lodash.get: 4.4.2
-      lodash.isplainobject: 4.0.6
-      lru-cache: 10.0.1
-      mendoza: 3.0.3
-      react: 18.2.0
-      react-fast-compare: 3.2.2
-      use-sync-external-store: 1.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@sanity/schema@3.18.2-pink-lizard.172:
     resolution: {integrity: sha512-rFcvfC0KZKwMaf7WJJ0G3L29fDPc0szpMUWMxpSh/lehsZ9K59fryx2XS3DZ/5te3ehpkrnXyo3wNuSp6Ktdug==}
     dependencies:
@@ -5298,7 +5263,7 @@ packages:
   /@sanity/types@3.18.2-pink-lizard.172:
     resolution: {integrity: sha512-jGrL8fL905sIi0KZbkngPFiTWzxndGgPuNTJg1cEXU2twZUKrk3Vr/fUb8dt1DlpGnsoitN1/3125Db3kjz9og==}
     dependencies:
-      '@sanity/client': 6.7.1-pink-lizard.0
+      '@sanity/client': 6.7.1-pink-lizard.2
       '@types/react': 18.2.34
     transitivePeerDependencies:
       - supports-color
@@ -6374,7 +6339,6 @@ packages:
 
   /@vercel/stega@0.1.0:
     resolution: {integrity: sha512-5b0PkOJsFBX5alChuIO3qpkt5vIZBevzLPhUQ1UP8UzVjL3F1VllnZxp/thfD8R5ol7D7WHkgZHIjdUBX4tDpQ==}
-    dev: false
 
   /@vitejs/plugin-react@4.1.0(vite@4.5.0):
     resolution: {integrity: sha512-rM0SqazU9iqPUraQ2JlIvReeaxOoRj6n+PzB1C0cBzIbd8qP336nC39/R9yPi3wVcah7E7j/kdU1uCUqMEU4OQ==}
@@ -8474,6 +8438,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       mimic-response: 3.1.0
+    dev: true
 
   /decompress-response@7.0.0:
     resolution: {integrity: sha512-6IvPrADQyyPGLpMnUh6kfKiqy7SrbXbjoUuZ90WMBJKErzv2pCiwlGEXjRX9/54OnTq+XFVnkOnOMzclLI5aEA==}
@@ -12195,6 +12160,7 @@ packages:
 
   /lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    dev: true
 
   /lodash.isarguments@3.1.0:
     resolution: {integrity: sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg==}
@@ -12268,6 +12234,7 @@ packages:
   /lru-cache@10.0.1:
     resolution: {integrity: sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==}
     engines: {node: 14 || >=16.14}
+    dev: true
 
   /lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -16229,7 +16196,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.18.2-pink-lizard.172
       '@sanity/cli': 3.18.2-pink-lizard.172
-      '@sanity/client': 6.7.1-pink-lizard.0
+      '@sanity/client': 6.7.1-pink-lizard.2
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.18.2-pink-lizard.172
       '@sanity/diff-match-patch': 3.1.1
@@ -16529,18 +16496,6 @@ packages:
       - supports-color
     dev: true
 
-  /simple-concat@1.0.1:
-    resolution: {integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==}
-    dev: false
-
-  /simple-get@4.0.1:
-    resolution: {integrity: sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==}
-    dependencies:
-      decompress-response: 6.0.0
-      once: 1.4.0
-      simple-concat: 1.0.1
-    dev: false
-
   /simple-git@3.20.0:
     resolution: {integrity: sha512-ozK8tl2hvLts8ijTs18iFruE+RoqmC/mqZhjs/+V7gS5W68JpJ3+FCTmLVqmR59MaUQ52MfGQuWsIqfsTbbJ0Q==}
     dependencies:
@@ -16752,11 +16707,6 @@ packages:
     resolution: {integrity: sha512-9NThjpgZnifTkJpzTZ7Eue85S49QwpNhZTq6GRJwObb6jnLFNGB7Qm73V5HewTROPyxD0C29xqmaI68bQtV+hg==}
     dependencies:
       readable-stream: 3.6.2
-
-  /split2@4.2.0:
-    resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
-    engines: {node: '>= 10.x'}
-    dev: false
 
   /sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
@@ -17378,11 +17328,6 @@ packages:
   /throttle-debounce@2.3.0:
     resolution: {integrity: sha512-H7oLPV0P7+jgvrk+6mwwwBDmxTaxnu9HMXmloNLXwnNO0ZxZ31Orah2n8lU1eMPvsaowP2CX+USCgyovXfdOFQ==}
     engines: {node: '>=8'}
-    dev: false
-
-  /throttle-debounce@5.0.0:
-    resolution: {integrity: sha512-2iQTSgkkc1Zyk0MeVrt/3BvuOXYPl/R8Z0U2xxo9rjwNciaHDG3R+Lm6dh4EeUci49DanvBnuqI6jshoQQRGEg==}
-    engines: {node: '>=12.22'}
     dev: false
 
   /through2@2.0.5:

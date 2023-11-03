@@ -4,6 +4,7 @@ import type {
   QueryParams,
   SanityClient,
 } from '@sanity/client'
+import { SanityStegaClient, stegaEncodeSourceMap } from '@sanity/client/stega'
 import { ChannelReturns, createChannel } from 'channels'
 import { listenKeys, map, MapStore, onMount, WritableAtom } from 'nanostores'
 import {
@@ -14,7 +15,7 @@ import {
 import { LiveModeState, QueryStoreState } from '../types'
 
 export interface CreateLiveModeStoreOptions {
-  client: SanityClient
+  client: SanityClient | SanityStegaClient
   studioUrl: string
   $perspective: WritableAtom<ClientPerspective>
 }
@@ -42,61 +43,78 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
 
   const cache = new Map()
 
-  onMount($LiveMode, () => {
-    if (typeof document === 'undefined') return
-    $LiveMode.setKey('enabled', true)
-    const studioOrigin = new URL(studioUrl, location.origin).origin
-    $LiveMode.setKey('studioOrigin', studioOrigin)
-    channel = createChannel<VisualEditingMsg>({
-      id: 'loaders' satisfies VisualEditingConnectionIds,
-      onStatusUpdate(status) {
-        if (status === 'connected') {
-          $LiveMode.setKey('connected', true)
-        } else if (status === 'disconnected' || status === 'unhealthy') {
-          $LiveMode.setKey('connected', false)
-        }
-      },
-      connections: [
-        {
-          target: parent,
-          targetOrigin: studioOrigin,
-          id: 'presentation' satisfies VisualEditingConnectionIds,
+  if (typeof document !== 'undefined') {
+    onMount($LiveMode, () => {
+      $LiveMode.setKey('enabled', true)
+      const studioOrigin = new URL(studioUrl, location.origin).origin
+      $LiveMode.setKey('studioOrigin', studioOrigin)
+      channel = createChannel<VisualEditingMsg>({
+        id: 'loaders' satisfies VisualEditingConnectionIds,
+        onStatusUpdate(status) {
+          if (status === 'connected') {
+            $LiveMode.setKey('connected', true)
+          } else if (status === 'disconnected' || status === 'unhealthy') {
+            $LiveMode.setKey('connected', false)
+          }
         },
-      ],
-      handler: (type, data) => {
-        if (
-          type === 'loader/perspective' &&
-          data.projectId === projectId &&
-          data.dataset === dataset
-        ) {
-          $perspective.set(data.perspective)
-          updateLiveQueries()
-        } else if (
-          type === 'loader/query-change' &&
-          data.projectId === projectId &&
-          data.dataset === dataset
-        ) {
-          const { perspective, query, params } = data
-          cache.set(JSON.stringify({ perspective, query, params }), data)
-          updateLiveQueries()
-        }
-      },
-    })
+        connections: [
+          {
+            target: parent,
+            targetOrigin: studioOrigin,
+            id: 'presentation' satisfies VisualEditingConnectionIds,
+          },
+        ],
+        handler: (type, data) => {
+          if (
+            type === 'loader/perspective' &&
+            data.projectId === projectId &&
+            data.dataset === dataset
+          ) {
+            $perspective.set(data.perspective)
+            updateLiveQueries()
+          } else if (
+            type === 'loader/query-change' &&
+            data.projectId === projectId &&
+            data.dataset === dataset
+          ) {
+            const { perspective, query, params } = data
+            if (
+              client instanceof SanityStegaClient &&
+              client.config().stega.enabled &&
+              data.resultSourceMap
+            ) {
+              cache.set(JSON.stringify({ perspective, query, params }), {
+                ...data,
+                result: stegaEncodeSourceMap(
+                  data.result,
+                  data.resultSourceMap,
+                  client.config().stega,
+                ),
+              })
+            } else {
+              cache.set(JSON.stringify({ perspective, query, params }), data)
+            }
 
-    const unlistenConnection = listenKeys($LiveMode, ['connected'], () => {
-      // @TODO handle reconnection and invalidation
-      // Revalidate if the connection status changes
-      // invalidateKeys(() => true)
-    })
+            updateLiveQueries()
+          }
+        },
+      })
 
-    return () => {
-      unlistenConnection()
-      $LiveMode.setKey('enabled', false)
-      $LiveMode.setKey('connected', false)
-      channel?.disconnect()
-      channel = null
-    }
-  })
+      const unlistenConnection = listenKeys($LiveMode, ['connected'], () => {
+        // @TODO handle reconnection and invalidation
+        // Revalidate if the connection status changes
+        // invalidateKeys(() => true)
+      })
+
+      return () => {
+        unlistenConnection()
+        $LiveMode.setKey('enabled', false)
+        $LiveMode.setKey('connected', false)
+        channel?.disconnect()
+        channel = null
+      }
+    })
+  }
 
   const liveQueries = new Set<{
     query: string
