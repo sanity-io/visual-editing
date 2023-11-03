@@ -1,4 +1,4 @@
-import { Container, Heading, Stack, Text } from '@sanity/ui'
+import { Heading, Stack, Text } from '@sanity/ui'
 import { ReactNode, useMemo } from 'react'
 import {
   ObjectSchemaType,
