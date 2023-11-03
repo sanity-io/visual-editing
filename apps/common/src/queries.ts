@@ -8,14 +8,14 @@ import type {
 export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]{
   title,
   slug,
-  price,
+  "price": string(price),
   "media": media[0]{ alt, asset, crop, hotspot },
   "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
 }`
 export type ShoesListResult = {
   title?: string | null
   slug: { current: string }
-  price?: number | null
+  price?: string | null
   media?: {
     alt?: string | null
     asset?: ImageAsset | null
@@ -38,7 +38,7 @@ export type ShoesListResult = {
 export const shoe = /* groq */ `*[_type == "shoe" && slug.current == $slug]{
   title,
   slug,
-  price,
+  "price": string(price),
   "media": media[]{ alt, asset, crop, hotspot },
   "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
   description,
@@ -47,7 +47,7 @@ export type ShoeParams = { slug: string }
 export type ShoeResult = {
   title?: string | null
   slug: { current: string }
-  price?: number | null
+  price?: string | null
   media?: {
     alt?: string | null
     asset?: ImageAsset | null

@@ -1,12 +1,12 @@
 import {
   type ContentSourceMap,
   type PathSegment,
+  resolvedKeyedSourcePath,
   resolveMapping,
+  simplifyPath,
 } from '@sanity/client/csm'
 
 import { SanityNode } from '../types'
-import { simplifyPath } from './legacy/simplifyPath'
-import { resolvedKeyedSourcePath } from './resolveKeyedSourcePath'
 import { getPublishedId } from './wrap/getPublishedId'
 import { SanityNodeContext } from './wrap/types'
 

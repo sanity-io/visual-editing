@@ -23,7 +23,6 @@ export function decodeStega(str: string, isAltText = false): string {
   if (isAltText) {
     decoded.href = decoded.href?.replace('.alt', '')
   }
-  decoded.href += ';view=preview,'
   return JSON.stringify(decoded)
 }
 

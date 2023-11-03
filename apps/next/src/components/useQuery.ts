@@ -1,7 +1,27 @@
+import { createClient } from '@sanity/client/stega'
 import { createQueryStore } from '@sanity/react-loader'
-import { studioUrl } from 'apps-common/env'
-import { getClient } from './utils'
+import { apiVersion, studioUrl as baseUrl, workspaces } from 'apps-common/env'
 
-const client = getClient()
+const { projectId, dataset, tool, workspace } = workspaces['next-pages-router']
+const studioUrl = `${baseUrl}/${workspace}/${tool}`
 
-export const { useQuery, useLiveMode } = createQueryStore({ client, studioUrl })
+const client = createClient({
+  projectId,
+  dataset,
+  useCdn: false,
+  apiVersion,
+  resultSourceMap: 'withKeyArraySelector',
+  stega: {
+    enabled: true,
+    logger: console,
+    studioUrl: ({ _dataset }) =>
+      _dataset === workspaces['cross-dataset-references'].dataset
+        ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
+        : studioUrl,
+  },
+})
+
+export const { query, useQuery, useLiveMode } = createQueryStore({
+  client,
+  studioUrl,
+})

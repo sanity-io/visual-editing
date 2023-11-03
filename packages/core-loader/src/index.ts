@@ -3,6 +3,7 @@ import type {
   QueryParams,
   SanityClient,
 } from '@sanity/client'
+import type { SanityStegaClient } from '@sanity/client/stega'
 import { type Cache, createCache } from 'async-cache-dedupe'
 import {
   atom,
@@ -21,7 +22,7 @@ export type { MapStore }
 export type * from './types'
 
 export interface CreateQueryStoreOptions {
-  client: SanityClient
+  client: SanityClient | SanityStegaClient
   studioUrl: string
 }
 

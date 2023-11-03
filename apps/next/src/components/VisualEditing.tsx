@@ -1,8 +1,8 @@
 import { enableOverlays } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useLiveMode } from './useQuery'
-import { useRouter } from 'next/router'
 
 export default function VisualEditing() {
   const router = useRouter()
