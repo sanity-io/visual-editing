@@ -30,12 +30,21 @@ import { DeskDocumentPaneParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
 
+const RootLayout = styled(PaneLayout)`
+  height: 100%;
+`
+
 const Root = styled(Flex)`
   & > div {
     min-width: none !important;
     max-width: none !important;
   }
 `
+
+const WrappedCode = styled(Code)`
+  white-space: pre-wrap;
+`
+
 export const DocumentListPane: FunctionComponent<{
   onDeskParams: (params: DeskDocumentPaneParams) => void
   previewUrl?: string
@@ -67,10 +76,8 @@ export const DocumentListPane: FunctionComponent<{
 
   const deskParams = useMemo(() => ({}), [])
 
-  // Reset error state when refs change
-  useEffect(() => {
-    setErrorParams(null)
-  }, [refs])
+  // Reset error state when `refs` value schanges
+  useEffect(() => setErrorParams(null), [refs])
 
   if (errorParams) {
     return (
@@ -86,6 +93,7 @@ export const DocumentListPane: FunctionComponent<{
           </Stack>
 
           {devMode && (
+            // show runtime error message in dev mode
             <Card
               marginTop={4}
               overflow="auto"
@@ -97,9 +105,7 @@ export const DocumentListPane: FunctionComponent<{
                 <Label muted size={0}>
                   Error message
                 </Label>
-                <Code size={1} style={{ whiteSpace: 'pre-wrap' }}>
-                  {errorParams.error.message}
-                </Code>
+                <WrappedCode size={1}>{errorParams.error.message}</WrappedCode>
               </Stack>
             </Card>
           )}
@@ -119,7 +125,7 @@ export const DocumentListPane: FunctionComponent<{
 
   return (
     <ErrorBoundary onCatch={setErrorParams}>
-      <PaneLayout style={{ height: '100%' }}>
+      <RootLayout>
         <DeskToolProvider>
           <PresentationPaneRouterProvider
             params={deskParams}
@@ -137,7 +143,7 @@ export const DocumentListPane: FunctionComponent<{
             </Root>
           </PresentationPaneRouterProvider>
         </DeskToolProvider>
-      </PaneLayout>
+      </RootLayout>
     </ErrorBoundary>
   )
 }
