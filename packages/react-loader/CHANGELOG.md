@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.4-pink-lizard...react-loader-v0.3.5-pink-lizard) (2023-11-03)
+
+
+### Bug Fixes
+
+* include `sourceMap` on `query()` result ([9f90f04](https://github.com/sanity-io/visual-editing/commit/9f90f048dff17baa1925b63052ef0bce5a462bdd))
+
 ## [0.3.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.3-pink-lizard...react-loader-v0.3.4-pink-lizard) (2023-11-02)
 
 
