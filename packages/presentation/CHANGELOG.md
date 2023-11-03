@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.3-pink-lizard...presentation-v0.5.4-pink-lizard) (2023-11-03)
+
+
+### Bug Fixes
+
+* **presentation:** disable responsive mode ([cf70460](https://github.com/sanity-io/visual-editing/commit/cf70460d3ca5e094956d999a380be8ce79fd62b9))
+* **presentation:** update controls ui ([b02b327](https://github.com/sanity-io/visual-editing/commit/b02b3279e0ba9123ff338b11f28113fbd3684d27))
+
 ## [0.5.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.5.2-pink-lizard...presentation-v0.5.3-pink-lizard) (2023-11-02)
 
 
