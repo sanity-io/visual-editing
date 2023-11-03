@@ -30,7 +30,10 @@ export interface UseQueryOptions<Response = unknown> {
 export type UseLiveModeHook = () => LiveModeState
 
 export interface QueryStore {
-  query: <Response>(query: string, params?: QueryParams) => Promise<Response>
+  query: <Response>(
+    query: string,
+    params?: QueryParams,
+  ) => Promise<{ data: Response; sourceMap: ContentSourceMap | undefined }>
   useQuery: UseQueryHook
   useLiveMode: UseLiveModeHook
 }
@@ -38,7 +41,10 @@ export interface QueryStore {
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): {
-  query: <Response>(query: string, params?: QueryParams) => Promise<Response>
+  query: <Response>(
+    query: string,
+    params?: QueryParams,
+  ) => Promise<{ data: Response; sourceMap: ContentSourceMap | undefined }>
   useQuery: <Response = unknown, Error = unknown>(
     query: string,
     params?: QueryParams,
@@ -104,16 +110,16 @@ export const createQueryStore = (
   const query = async <Response>(
     query: string,
     params: QueryParams = {},
-  ): Promise<Response> => {
+  ): Promise<{ data: Response; sourceMap: ContentSourceMap | undefined }> => {
     if (typeof document !== 'undefined') {
       throw new Error(
         'Cannot use `query` in a browser environment, you should use it inside a loader, getStaticProps, getServerSideProps, getInitialProps, or in a React Server Component.',
       )
     }
-    const { result } = await unstable__cache.fetch<Response>(
+    const { result, resultSourceMap } = await unstable__cache.fetch<Response>(
       JSON.stringify({ query, params }),
     )
-    return result
+    return { data: result, sourceMap: resultSourceMap }
   }
 
   return { query, useQuery, useLiveMode }
