@@ -41,12 +41,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
   if (params.type === 'siteSettings') {
     return {
       message: 'This document is used on all pages',
-      locations: [
-        {
-          title: 'Home',
-          href: '/',
-        },
-      ],
+      tone: 'caution',
     } satisfies DocumentLocationsState
   }
 
