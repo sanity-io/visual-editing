@@ -121,7 +121,6 @@ export const DocumentPane: FunctionComponent<{
     <ErrorBoundary onCatch={setErrorParams}>
       <PaneLayout
         style={{ height: '100%' }}
-        minWidth={640}
         onExpand={handleRootExpand}
         onCollapse={handleRootCollapse}
       >
