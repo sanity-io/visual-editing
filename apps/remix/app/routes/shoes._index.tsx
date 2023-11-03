@@ -13,13 +13,11 @@ import { useQuery, query } from '~/useQuery'
 import { json } from '@remix-run/node'
 
 export const loader = async () => {
-  return json({
-    initialData: await query<ShoesListResult>(shoesList),
-  })
+  return json(await query<ShoesListResult>(shoesList))
 }
 
 export default function ShoesPage() {
-  const { initialData } = useLoaderData<typeof loader>()
+  const { data: initialData } = useLoaderData<typeof loader>()
   const {
     data,
     error,
