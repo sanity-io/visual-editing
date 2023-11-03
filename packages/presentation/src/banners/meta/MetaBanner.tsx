@@ -43,23 +43,15 @@ export function MetaBanner(props: {
   }
 
   return (
-    <Container
-      paddingX={4}
-      paddingTop={5}
-      paddingBottom={0}
-      sizing="border"
-      width={1}
-    >
-      <Stack space={3}>
-        {typeTitle !== previewTitle && (
-          <Text muted size={1}>
-            {typeTitle}
-          </Text>
-        )}
-        <Heading as="h1" muted={!value?.title} size={3}>
-          {value?.title || <em>Untitled</em>}
-        </Heading>
-      </Stack>
-    </Container>
+    <Stack space={3}>
+      {typeTitle !== previewTitle && (
+        <Text muted size={1}>
+          {typeTitle}
+        </Text>
+      )}
+      <Heading as="h1" muted={!value?.title} size={3}>
+        {value?.title || <em>Untitled</em>}
+      </Heading>
+    </Stack>
   )
 }

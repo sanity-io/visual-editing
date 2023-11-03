@@ -8,7 +8,7 @@ export interface DocumentLocation {
 }
 
 export interface DocumentLocationsState {
-  locations: DocumentLocation[]
+  locations?: DocumentLocation[]
   message?: string
   tone?: 'positive' | 'caution' | 'critical'
 }

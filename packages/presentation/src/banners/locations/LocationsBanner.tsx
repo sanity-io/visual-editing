@@ -1,7 +1,15 @@
-import { ChevronRightIcon, DesktopIcon } from '@sanity/icons'
-import { Box, Card, Container, Flex, Stack, Text } from '@sanity/ui'
+import {
+  ChevronRightIcon,
+  DesktopIcon,
+  ErrorOutlineIcon,
+  InfoOutlineIcon,
+  WarningOutlineIcon,
+} from '@sanity/icons'
+import { Box, Card, Flex, Stack, Text } from '@sanity/ui'
 import {
   ComponentProps,
+  ComponentType,
+  createElement,
   ReactNode,
   useCallback,
   useContext,
@@ -26,6 +34,12 @@ const LENGTH_FORMAT: Record<number, string> = {
   9: 'nine',
 }
 
+const TONE_ICONS: Record<'positive' | 'caution' | 'critical', ComponentType> = {
+  positive: InfoOutlineIcon,
+  caution: WarningOutlineIcon,
+  critical: ErrorOutlineIcon,
+}
+
 export function LocationsBanner(
   props: {
     options: PresentationPluginOptions
@@ -40,58 +54,83 @@ export function LocationsBanner(
     type: schemaType.name,
   })
 
-  const len = locations.length
+  const len = locations?.length || 0
 
   const [expanded, setExpanded] = useState(false)
 
   const toggle = useCallback(() => setExpanded((v) => !v), [])
 
-  if (len === 0) {
+  const title =
+    message ||
+    (len ? (
+      <>
+        Used on {LENGTH_FORMAT[len] || len} {len === 1 ? <>page</> : <>pages</>}
+      </>
+    ) : null)
+
+  if (len === 0 && !title) {
     return null
   }
 
   return (
-    <Card tone={tone}>
-      <Container width={1}>
-        <Box padding={2} paddingBottom={expanded ? 0 : 2}>
-          <Card as="button" onClick={toggle} padding={3} radius={2}>
-            <Flex gap={3}>
+    <Card padding={1} radius={3} border tone={tone}>
+      <div style={{ margin: -1 }}>
+        {!locations && (
+          <Flex align="flex-start" gap={3} padding={3}>
+            {tone && (
               <Box flex="none">
-                <Text size={1}>
-                  <ChevronRightIcon
-                    style={{
-                      transform: `rotate(${expanded ? '90deg' : 0})`,
-                      transition: 'transform 100ms ease-in-out',
-                    }}
-                  />
-                </Text>
+                <Text size={1}>{createElement(TONE_ICONS[tone])}</Text>
               </Box>
-              <Box flex={1}>
-                <Text size={1} weight="semibold">
-                  {message || (
-                    <>
-                      Used on {LENGTH_FORMAT[len] || len}{' '}
-                      {len === 1 ? <>page</> : <>pages</>}
-                    </>
-                  )}
-                </Text>
-              </Box>
-            </Flex>
-          </Card>
-        </Box>
+            )}
+            <Box flex={1}>
+              <Text size={1} weight="medium">
+                {title}
+              </Text>
+            </Box>
+          </Flex>
+        )}
 
-        <Stack hidden={!expanded} padding={2} paddingTop={1} space={1}>
-          {locations.map((l, index) => (
-            <LocationItem
-              active={l.href === presentation?.params.preview}
-              documentId={documentId}
-              documentType={schemaType.name}
-              key={index}
-              node={l}
-            />
-          ))}
-        </Stack>
-      </Container>
+        {locations && (
+          <>
+            <Card
+              as="button"
+              onClick={toggle}
+              padding={3}
+              radius={2}
+              tone="inherit"
+            >
+              <Flex gap={3}>
+                <Box flex="none">
+                  <Text size={1}>
+                    <ChevronRightIcon
+                      style={{
+                        transform: `rotate(${expanded ? '90deg' : 0})`,
+                        transition: 'transform 100ms ease-in-out',
+                      }}
+                    />
+                  </Text>
+                </Box>
+                <Box flex={1}>
+                  <Text size={1} weight="medium">
+                    {title}
+                  </Text>
+                </Box>
+              </Flex>
+            </Card>
+            <Stack hidden={!expanded} marginTop={1} space={1}>
+              {locations.map((l, index) => (
+                <LocationItem
+                  active={l.href === presentation?.params.preview}
+                  documentId={documentId}
+                  documentType={schemaType.name}
+                  key={index}
+                  node={l}
+                />
+              ))}
+            </Stack>
+          </>
+        )}
+      </div>
     </Card>
   )
 }

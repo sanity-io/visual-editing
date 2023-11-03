@@ -1,6 +1,13 @@
+import { SanityDocument } from '@sanity/client'
 import { ComposeIcon } from '@sanity/icons'
+import { Stack } from '@sanity/ui'
 import { lazy } from 'react'
-import { definePlugin, DocumentBanner } from 'sanity'
+import {
+  definePlugin,
+  getPublishedId,
+  InputProps,
+  isDocumentSchemaType,
+} from 'sanity'
 
 import { LocationsBanner } from './banners/locations'
 import { MetaBanner } from './banners/meta'
@@ -10,18 +17,31 @@ import { PresentationPluginOptions } from './types'
 
 export const presentationTool = definePlugin<PresentationPluginOptions>(
   (options) => {
-    const locationsBanner: DocumentBanner = {
-      name: 'presentation/locations',
-      component: function LocationsBannerWithOptions(props) {
-        return <LocationsBanner {...props} options={options} />
-      },
-    }
+    function PresentationDocumentInput(props: InputProps) {
+      const value = props.value as SanityDocument
+      const documentId = value?._id && getPublishedId(value?._id)
 
-    const metaBanner: DocumentBanner = {
-      name: 'presentation/meta',
-      component: function MetaBannerWithOptions(props) {
-        return <MetaBanner {...props} options={options} />
-      },
+      if (documentId && isDocumentSchemaType(props.schemaType)) {
+        return (
+          <>
+            <Stack marginBottom={5} space={5}>
+              <MetaBanner
+                documentId={documentId}
+                options={options}
+                schemaType={props.schemaType}
+              />
+              <LocationsBanner
+                documentId={documentId}
+                options={options}
+                schemaType={props.schemaType}
+              />
+            </Stack>
+            {props.renderDefault(props)}
+          </>
+        )
+      }
+
+      return props.renderDefault(props)
     }
 
     return {
@@ -29,14 +49,12 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
         unstable_comments: {
           enabled: true,
         },
-        unstable_banners: (prev) => [
-          ...prev.filter(
-            (b) =>
-              b.name !== locationsBanner.name && b.name !== metaBanner.name,
-          ),
-          locationsBanner,
-          metaBanner,
-        ],
+      },
+
+      form: {
+        components: {
+          input: PresentationDocumentInput,
+        },
       },
 
       plugins: [],
