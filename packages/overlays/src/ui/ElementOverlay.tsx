@@ -10,37 +10,68 @@ import {
   SanityNodeLegacy,
 } from '../types'
 
-const Root = styled(Card)<{
-  $hovered: boolean
-  $focused: boolean
-}>`
-  background-color: transparent;
+const Root = styled(Card)`
+  background-color: var(--overlay-bg);
   border-radius: 3px;
   pointer-events: none;
   position: absolute;
   will-change: transform;
-  box-shadow: ${({ $focused, $hovered }) =>
-    $focused
-      ? 'inset 0 0 0 1px var(--card-focus-ring-color)'
-      : $hovered
-      ? 'inset 0 0 0 2px var(--card-focus-ring-color)'
-      : undefined};
+  box-shadow: var(--overlay-box-shadow);
+  transition: none;
+
+  --overlay-bg: transparent;
+  --overlay-box-shadow: inset 0 0 0 1px transparent;
+
+  [data-overlays] & {
+    --overlay-bg: color-mix(
+      in srgb,
+      transparent 95%,
+      var(--card-focus-ring-color)
+    );
+    --overlay-box-shadow: inset 0 0 0 2px
+      color-mix(in srgb, transparent 50%, var(--card-focus-ring-color));
+  }
+
+  [data-fading-out] & {
+    transition:
+      box-shadow 1550ms,
+      background-color 1550ms;
+
+    --overlay-bg: rgba(0, 0, 255, 0);
+    --overlay-box-shadow: inset 0 0 0 1px transparent;
+  }
+
+  &[data-focused] {
+    --overlay-box-shadow: inset 0 0 0 1px var(--card-focus-ring-color);
+  }
+
+  &[data-hovered]:not([data-focused]) {
+    transition: none;
+    --overlay-box-shadow: inset 0 0 0 2px var(--card-focus-ring-color);
+  }
+
+  /* [data-unmounted] & {
+    --overlay-box-shadow: inset 0 0 0 1px var(--card-focus-ring-color);
+  } */
 `
 
-const Actions = styled(Flex)<{
-  $hovered: boolean
-}>`
+const Actions = styled(Flex)`
   bottom: 100%;
   cursor: pointer;
-  pointer-events: ${({ $hovered }) => ($hovered ? 'all' : 'none')};
+  pointer-events: none;
   position: absolute;
   right: 0;
+
+  [data-hovered] & {
+    pointer-events: all;
+  }
 `
 
 const ActionOpen = styled(Card)`
   background-color: var(--card-focus-ring-color);
   right: 0;
   border-radius: 3px;
+
   & [data-ui='Text'] {
     color: var(--card-bg-color);
     white-space: nowrap;
@@ -100,9 +131,14 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
 
   return (
-    <Root ref={ref} $focused={!!focused} $hovered={hovered} style={style}>
+    <Root
+      data-focused={focused ? '' : undefined}
+      data-hovered={hovered ? '' : undefined}
+      ref={ref}
+      style={style}
+    >
       {showActions && hovered ? (
-        <Actions $hovered={hovered} gap={1} paddingBottom={1}>
+        <Actions gap={1} paddingBottom={1}>
           <Box as="a" href={href}>
             <ActionOpen padding={2}>
               <Text size={1} weight="medium">

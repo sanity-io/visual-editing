@@ -6,6 +6,7 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState,
 } from 'react'
 import styled from 'styled-components'
@@ -28,6 +29,20 @@ const Root = styled.div<{
   pointer-events: none;
   z-index: ${({ $zIndex }) => $zIndex ?? '9999999'};
 `
+
+function raf2(fn: () => void) {
+  let r0: number | undefined = undefined
+  let r1: number | undefined = undefined
+
+  r0 = requestAnimationFrame(() => {
+    r1 = requestAnimationFrame(fn)
+  })
+
+  return () => {
+    if (r0 !== undefined) cancelAnimationFrame(r0)
+    if (r1 !== undefined) cancelAnimationFrame(r1)
+  }
+}
 
 /**
  * @internal
@@ -113,9 +128,40 @@ export const Overlays: FunctionComponent<{
     })
   }, [channel, history])
 
+  const [overlaysFlash, setOverlaysFlash] = useState(false)
+  const [fadingOut, setFadingOut] = useState(false)
+  const fadeOutTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
+
+  // Flash overlays when they are enabled
+  useEffect(() => {
+    if (overlayEnabled) {
+      return raf2(() => {
+        setOverlaysFlash(true)
+        raf2(() => {
+          setFadingOut(true)
+          fadeOutTimeoutRef.current = setTimeout(() => {
+            setFadingOut(false)
+            setOverlaysFlash(false)
+          }, 1500)
+        })
+      })
+    } else if (fadeOutTimeoutRef.current) {
+      clearTimeout(fadeOutTimeoutRef.current)
+      setOverlaysFlash(false)
+      setFadingOut(false)
+    }
+
+    return
+  }, [overlayEnabled])
+
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
-      <Root ref={setRootElement} $zIndex={zIndex}>
+      <Root
+        data-fading-out={fadingOut ? '' : undefined}
+        data-overlays={overlaysFlash ? '' : undefined}
+        ref={setRootElement}
+        $zIndex={zIndex}
+      >
         {elementsToRender.map(({ id, focused, hovered, rect, sanity }) => {
           return (
             <ElementOverlay
