@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.1.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.1-pink-lizard...groq-store-v5.1.0-pink-lizard) (2023-11-04)
+
+
+### Features
+
+* use the new `@sanity/client/stega` features ([#252](https://github.com/sanity-io/visual-editing/issues/252)) ([fa08bb2](https://github.com/sanity-io/visual-editing/commit/fa08bb24e6413bfa49adb79df256217e06ed0844))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.7.1-pink-lizard.2 ([#251](https://github.com/sanity-io/visual-editing/issues/251)) ([9f66693](https://github.com/sanity-io/visual-editing/commit/9f66693bd2e954f54987e9352f35f3fccab3ad6f))
+* **deps:** update dependency @sanity/client to v6.7.1-pink-lizard.5 ([#259](https://github.com/sanity-io/visual-editing/issues/259)) ([8f2f00f](https://github.com/sanity-io/visual-editing/commit/8f2f00faef5a91dd11218b05be4c76da2ec45e0e))
+* handle stega nodes in a way that supports focus ([#254](https://github.com/sanity-io/visual-editing/issues/254)) ([dce801f](https://github.com/sanity-io/visual-editing/commit/dce801f3b76e6e2bb0597345b5deacc2038e6fec))
+
 ## [5.0.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.0-pink-lizard...groq-store-v5.0.1-pink-lizard) (2023-11-02)
 
 
