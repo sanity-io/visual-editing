@@ -1,5 +1,6 @@
 import { Box, Card, Flex, Text } from '@sanity/ui'
 import { memo, useEffect, useMemo, useRef } from 'react'
+import scrollIntoView from 'scroll-into-view-if-needed'
 import styled from 'styled-components'
 import { pathToUrlString, stringToPath } from 'visual-editing-helpers'
 
@@ -111,10 +112,12 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (focused === true) {
-      ref.current?.scrollIntoView({
+    if (focused === true && ref.current) {
+      scrollIntoView(ref.current, {
         behavior: 'smooth',
+        scrollMode: 'if-needed',
         block: 'center',
+        inline: 'nearest',
       })
     }
   }, [focused])
