@@ -5,6 +5,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.2-pink-lizard...overlays-v2.1.0-pink-lizard) (2023-11-04)
+
+
+### Features
+
+* use the new `@sanity/client/stega` features ([#252](https://github.com/sanity-io/visual-editing/issues/252)) ([fa08bb2](https://github.com/sanity-io/visual-editing/commit/fa08bb24e6413bfa49adb79df256217e06ed0844))
+
+
+### Bug Fixes
+
+* handle stega nodes in a way that supports focus ([#254](https://github.com/sanity-io/visual-editing/issues/254)) ([dce801f](https://github.com/sanity-io/visual-editing/commit/dce801f3b76e6e2bb0597345b5deacc2038e6fec))
+
 ## [2.0.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.1-pink-lizard...overlays-v2.0.2-pink-lizard) (2023-11-03)
 
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.5-pink-lizard...react-loader-v0.4.0-pink-lizard) (2023-11-04)
+
+
+### Features
+
+* use the new `@sanity/client/stega` features ([#252](https://github.com/sanity-io/visual-editing/issues/252)) ([fa08bb2](https://github.com/sanity-io/visual-editing/commit/fa08bb24e6413bfa49adb79df256217e06ed0844))
+
+
+### Bug Fixes
+
+* handle stega nodes in a way that supports focus ([#254](https://github.com/sanity-io/visual-editing/issues/254)) ([dce801f](https://github.com/sanity-io/visual-editing/commit/dce801f3b76e6e2bb0597345b5deacc2038e6fec))
+
 ## [0.3.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.4-pink-lizard...react-loader-v0.3.5-pink-lizard) (2023-11-03)
 
 
