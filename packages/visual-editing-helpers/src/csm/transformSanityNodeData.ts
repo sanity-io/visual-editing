@@ -1,4 +1,12 @@
-import { is, minLength, object, optional, safeParse, string } from 'valibot'
+import {
+  is,
+  minLength,
+  object,
+  optional,
+  parse,
+  safeParse,
+  string,
+} from 'valibot'
 
 import {
   pathToString,
@@ -14,8 +22,8 @@ const lengthyStr = string([minLength(1)])
 const optionalLengthyStr = optional(lengthyStr)
 
 const sanityNodeSchema = object({
-  projectId: lengthyStr,
-  dataset: lengthyStr,
+  projectId: optionalLengthyStr,
+  dataset: optionalLengthyStr,
   id: lengthyStr,
   path: lengthyStr,
   type: optionalLengthyStr,
@@ -144,7 +152,25 @@ function decodeSanityJson(
   }
   const sanityLegacyNode = safeParse(sanityLegacyNodeSchema, data)
   if (sanityLegacyNode.success) {
-    return sanityLegacyNode.output
+    try {
+      const url = new URL(
+        sanityLegacyNode.output.href,
+        typeof document === 'undefined'
+          ? 'https://example.com'
+          : location.origin,
+      )
+      if (url.searchParams.size > 0) {
+        return parse(
+          sanityNodeSchema,
+          Object.fromEntries(url.searchParams.entries()),
+        )
+      }
+      return sanityLegacyNode.output
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to parse sanity node', err)
+      return sanityLegacyNode.output
+    }
   }
   return undefined
 }

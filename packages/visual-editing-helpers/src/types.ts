@@ -30,8 +30,8 @@ export type QueryCacheKey = `${string}-${string}`
  * @public
  */
 export type SanityNode = {
-  projectId: string
-  dataset: string
+  projectId?: string
+  dataset?: string
   id: string
   path: string
   type?: string
