@@ -18,7 +18,7 @@ test('node data returns an encoded string', async () => {
   }
 
   const output =
-    'project=projectId;dataset=dataset;id=documentId;path=sections:abcdef.tagline;base=https%3A%2F%2Fsome.sanity.studio;workspace=docs;tool=desk'
+    'project=projectId;dataset=dataset;id=documentId;type=documentType;path=sections:abcdef.tagline;base=https%3A%2F%2Fsome.sanity.studio;workspace=docs;tool=desk'
 
   expect(encodeSanityNodeData(input)).toMatch(output)
 })
