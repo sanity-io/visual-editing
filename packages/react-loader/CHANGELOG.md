@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.4.0-pink-lizard...react-loader-v0.4.1-pink-lizard) (2023-11-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.0 ([#264](https://github.com/sanity-io/visual-editing/issues/264)) ([010b87a](https://github.com/sanity-io/visual-editing/commit/010b87a5afbc3619a3406db405299522456854a2))
+
 ## [0.4.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.3.5-pink-lizard...react-loader-v0.4.0-pink-lizard) (2023-11-04)
 
 
