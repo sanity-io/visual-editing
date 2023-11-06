@@ -83,8 +83,8 @@ const StyledSwitch = styled(Switch)`
 `
 
 const PERSPECTIVE_TITLES: Record<ClientPerspective, string> = {
-  previewDrafts: 'Draft',
-  published: 'Public',
+  previewDrafts: 'Drafts',
+  published: 'Published',
   raw: 'Raw',
 }
 
