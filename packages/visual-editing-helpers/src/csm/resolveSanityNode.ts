@@ -1,5 +1,6 @@
 import {
   type ContentSourceMap,
+  getPublishedId,
   type PathSegment,
   resolvedKeyedSourcePath,
   resolveMapping,
@@ -7,7 +8,6 @@ import {
 } from '@sanity/client/csm'
 
 import { SanityNode } from '../types'
-import { getPublishedId } from './wrap/getPublishedId'
 import { SanityNodeContext } from './wrap/types'
 
 export function resolveSanityNode(

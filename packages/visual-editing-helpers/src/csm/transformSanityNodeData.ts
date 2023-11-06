@@ -1,3 +1,4 @@
+import { getPublishedId } from '@sanity/client/csm'
 import {
   is,
   minLength,
@@ -72,13 +73,10 @@ export function encodeSanityNodeData(node: SanityNode): string | undefined {
     return undefined
   }
 
-  // @TODO figure out why this workaround is needed
-  const id = _id.startsWith('drafts.') ? _id.slice(7) : _id
-
   const parts = [
     ['project', projectId],
     ['dataset', dataset],
-    ['id', id],
+    ['id', getPublishedId(_id)],
     ['type', type],
     ['path', pathToUrlString(stringToPath(path))],
     ['base', encodeURIComponent(baseUrl)],
