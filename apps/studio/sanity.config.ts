@@ -10,7 +10,7 @@ import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
-import { CustomNavigator } from './presentation/CustomNavigator'
+// import { CustomNavigator } from './presentation/CustomNavigator'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -88,16 +88,16 @@ const presentationWorkspaces = Object.entries({
           previewUrl: maybeGitBranchUrl(previewUrl),
           locate,
           devMode,
-          components:
-            name === 'page-builder-demo'
-              ? {
-                  unstable_navigator: {
-                    minWidth: 120,
-                    maxWidth: 240,
-                    component: CustomNavigator,
-                  },
-                }
-              : {},
+          // components:
+          //   name === 'page-builder-demo'
+          //     ? {
+          //         unstable_navigator: {
+          //           minWidth: 120,
+          //           maxWidth: 240,
+          //           component: CustomNavigator,
+          //         },
+          //       }
+          //     : {},
         }),
         sharedSettings(),
       ],
