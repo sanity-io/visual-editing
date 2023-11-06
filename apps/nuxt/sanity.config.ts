@@ -1,6 +1,6 @@
 import { schema } from 'apps-common'
 import { presentationTool } from '@sanity/presentation'
-import { Config, defineConfig } from 'sanity'
+import { type Config, defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
 export default function getSanityConfig(config: Config) {
