@@ -11,11 +11,13 @@ import {
 } from 'react'
 
 export const PreviewLocationInput: FunctionComponent<{
+  fontSize?: number
   host?: string
   onChange: (value: string) => void
+  padding?: number
   value: string
 }> = function (props) {
-  const { host, onChange, value } = props
+  const { fontSize = 1, host, onChange, padding = 3, value } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [sessionValue, setSessionValue] = useState(value)
 
@@ -43,18 +45,18 @@ export const PreviewLocationInput: FunctionComponent<{
 
   return (
     <TextInput
-      fontSize={1}
+      fontSize={fontSize}
       onBlur={handleBlur}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
-      padding={2}
+      padding={padding}
       prefix={
         host && (
           <Box
-            padding={2}
-            style={{ lineHeight: 0, maxWidth: 140, whiteSpace: 'nowrap' }}
+            padding={padding}
+            style={{ lineHeight: 0, maxWidth: 180, whiteSpace: 'nowrap' }}
           >
-            <Text size={1} textOverflow="ellipsis" title={host}>
+            <Text size={fontSize} textOverflow="ellipsis" title={host}>
               <a
                 href={host}
                 target="_blank"
@@ -69,15 +71,15 @@ export const PreviewLocationInput: FunctionComponent<{
       }
       radius={2}
       ref={inputRef}
-      space={2}
+      space={padding}
       suffix={
         <Box style={{ lineHeight: 0 }}>
           <Button
             as="a"
-            fontSize={1}
-            href={host + sessionValue}
+            fontSize={fontSize}
+            href={(host || '') + (sessionValue || '')}
             icon={LaunchIcon}
-            padding={2}
+            padding={padding}
             mode="ghost"
             rel="noreferrer"
             target="_blank"

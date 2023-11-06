@@ -178,7 +178,7 @@ export const PreviewFrame = forwardRef<
                 icon={PanelLeftIcon}
                 mode="bleed"
                 onClick={toggleNavigator}
-                padding={2}
+                padding={3}
                 selected={navigatorEnabled}
               />
             </Tooltip>
@@ -212,7 +212,7 @@ export const PreviewFrame = forwardRef<
             <Card
               as="label"
               flex="none"
-              padding={2}
+              padding={3}
               style={{
                 lineHeight: 0,
                 borderRadius: 999,
@@ -255,14 +255,14 @@ export const PreviewFrame = forwardRef<
                 mode="bleed"
                 loading={refreshing}
                 onClick={handleRefresh}
-                padding={2}
+                padding={3}
               />
             </Tooltip>
           )}
 
           <Box flex={1}>
             <PreviewLocationInput
-              host={devMode ? previewLocationOrigin : undefined}
+              host={previewLocationOrigin}
               onChange={onPathChange}
               value={params.preview || '/'}
             />
@@ -276,7 +276,7 @@ export const PreviewFrame = forwardRef<
                   // icon={PERSPECTIVE_ICONS[perspective]}
                   iconRight={ChevronDownIcon}
                   mode="bleed"
-                  padding={2}
+                  padding={3}
                   space={2}
                   text={PERSPECTIVE_TITLES[perspective]}
                   // tone={PERSPECTIVE_TONES[perspective]}
@@ -382,7 +382,7 @@ export const PreviewFrame = forwardRef<
                 icon={DesktopIcon}
                 mode="bleed"
                 onClick={setDesktopMode}
-                padding={2}
+                padding={3}
                 selected={mode === 'desktop'}
               />
             </Tooltip>
@@ -399,7 +399,7 @@ export const PreviewFrame = forwardRef<
                 icon={MobileDeviceIcon}
                 mode="bleed"
                 onClick={setMobileMode}
-                padding={2}
+                padding={3}
                 selected={mode === 'mobile'}
               />
             </Tooltip>
