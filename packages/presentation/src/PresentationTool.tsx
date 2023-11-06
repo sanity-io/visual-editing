@@ -313,19 +313,21 @@ export default function PresentationTool(props: {
                     />
                   </Flex>
                 </Panel>
-                <PanelResizer order={4} />
-                <Panel id="content" minWidth={325} order={5}>
-                  <ContentEditor
-                    refs={documentsOnPage}
-                    deskParams={deskParams}
-                    documentId={params.id}
-                    documentType={params.type}
-                    onDeskParams={handleDeskParams}
-                    onFocusPath={handleFocusPath}
-                    onDocumentChange={onDocumentChange}
-                    previewUrl={params.preview}
-                  />
-                </Panel>
+                {params.id && <PanelResizer order={4} />}
+                {params.id && (
+                  <Panel id="content" minWidth={325} order={5}>
+                    <ContentEditor
+                      refs={documentsOnPage}
+                      deskParams={deskParams}
+                      documentId={params.id}
+                      documentType={params.type}
+                      onDeskParams={handleDeskParams}
+                      onFocusPath={handleFocusPath}
+                      onDocumentChange={onDocumentChange}
+                      previewUrl={params.preview}
+                    />
+                  </Panel>
+                )}
               </Panels>
             </Container>
           </PresentationParamsProvider>
