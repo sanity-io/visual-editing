@@ -163,7 +163,7 @@ export const PreviewFrame = forwardRef<
   return (
     <TooltipDelayGroupProvider delay={1000}>
       <Card flex="none" padding={2} shadow={1} style={{ position: 'relative' }}>
-        <Flex align="center" gap={2} style={{ minHeight: 0 }}>
+        <Flex align="center" gap={1} style={{ minHeight: 0 }}>
           {toggleNavigator && (
             <Tooltip
               content={<Text size={1}>Toggle navigator</Text>}
