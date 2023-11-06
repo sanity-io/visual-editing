@@ -4,11 +4,7 @@ import { unwrapData, wrapData, sanity } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
-import {
-  defineDataAttribute,
-  urlFor,
-  urlForCrossDatasetReference,
-} from '~/utils'
+import { urlFor, urlForCrossDatasetReference } from '~/utils'
 import { useMemo } from 'react'
 import { query, useQuery } from '~/useQuery'
 import { json, type LoaderFunction } from '@remix-run/node'
@@ -52,11 +48,6 @@ export default function ShoePage() {
     throw error
   }
 
-  const dataAttribute = useMemo(
-    () => defineDataAttribute(sourceMap),
-    [sourceMap],
-  )
-
   const [coverImage, ...otherImages] = product?.media || []
 
   return (
@@ -98,7 +89,7 @@ export default function ShoePage() {
       </nav>
 
       {product && (
-        <article data-sanity={dataAttribute(['slug'])}>
+        <article>
           {coverImage?.asset && (
             <div className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
               <img
@@ -109,7 +100,6 @@ export default function ShoePage() {
                   .url()}
                 width={1280}
                 height={720}
-                data-sanity={dataAttribute(['media', 0, 'alt'])}
                 alt={coverImage.alt?.value || ''}
               />
             </div>
@@ -135,7 +125,6 @@ export default function ShoePage() {
                           .url()}
                         width={1280 / 2}
                         height={720 / 2}
-                        data-sanity={dataAttribute(['media', i, 'alt'])}
                         alt={image.alt?.value || ''}
                       />
                     </div>
@@ -159,15 +148,12 @@ export default function ShoePage() {
             {/* Options */}
             <div className="mt-4 flex flex-col gap-y-6 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
-              <p
-                className="text-3xl tracking-tight text-gray-900"
-                data-sanity={dataAttribute(['price'])}
-              >
+              <p className="text-3xl tracking-tight text-gray-900">
                 {product.price ? formatCurrency(product.price.value) : 'FREE'}
               </p>
 
               {product.brand?.name && (
-                <div data-sanity={dataAttribute(['brand', 'name'])}>
+                <div>
                   <h2 className="text-sm font-medium text-gray-900">Brand</h2>
                   <div className="flex items-center gap-x-2">
                     <img
@@ -186,7 +172,6 @@ export default function ShoePage() {
                       }
                       width={24}
                       height={24}
-                      data-sanity={dataAttribute(['brand', 'logo', 'alt'])}
                       alt={product.brand?.logo?.alt?.value || ''}
                     />
                     <sanity.span className="text-lg font-bold">
@@ -211,10 +196,7 @@ export default function ShoePage() {
               <div>
                 <h3 className="sr-only">Description</h3>
 
-                <div
-                  className="space-y-6 text-base text-gray-900"
-                  data-sanity={dataAttribute(['description'])}
-                >
+                <div className="space-y-6 text-base text-gray-900">
                   {product.description ? (
                     <PortableText value={unwrapData(product.description)} />
                   ) : (

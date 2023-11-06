@@ -1,6 +1,5 @@
 import createImageUrlBuilder from '@sanity/image-url'
 import { workspaces } from 'apps-common/env'
-import { defineDataAttribute as _defineDataAttribute } from 'apps-common/utils'
 
 const { projectId, dataset } = workspaces['page-builder-demo']
 

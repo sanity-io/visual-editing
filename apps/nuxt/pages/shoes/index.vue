@@ -33,7 +33,7 @@
             v-for="(product, i) of products || []"
             :key="product.slug.current.value"
             :to="`/shoes/${product.slug.current.value}`"
-            :data-sanity="dataAttribute([i, 'slug'])"
+
             class="group relative"
           >
             <div
@@ -51,7 +51,6 @@
                         .url()
                     : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`
                 "
-                :data-sanity="dataAttribute([i, 'media'])"
                 :alt="product.media?.alt?.value || ''"
               />
             </div>
@@ -62,7 +61,7 @@
             />
             <p
               class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
-              :data-sanity="dataAttribute([i, 'price'])"
+
             >
               {{
                 product.price?.value
@@ -92,7 +91,6 @@
                           : `brand&r=${i}`
                       }`
                 "
-                :data-sanity="dataAttribute([i, 'brand', 'logo'])"
                 :alt="product.brand?.logo?.alt?.value || ''"
               />
               <span
@@ -112,7 +110,6 @@ import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import {
-  defineDataAttribute,
   urlFor,
   urlForCrossDatasetReference,
 } from '~/utils'
@@ -129,7 +126,7 @@ const products = computed(() => {
   )
 })
 
-const dataAttribute = computed(() => defineDataAttribute(sourceMap.value))
+
 
 onMounted(() => {
   useLiveMode()

@@ -1,7 +1,6 @@
-import { type ContentSourceMap, createClient } from '@sanity/client/stega'
+import { createClient } from '@sanity/client/stega'
 import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
-import { defineDataAttribute as _defineDataAttribute } from 'apps-common/utils'
 
 const { projectId, dataset, tool, workspace } = workspaces['nuxt']
 const studioUrl = `${baseUrl}/${workspace}`
@@ -12,7 +11,6 @@ export function getClient() {
     dataset,
     useCdn: false,
     apiVersion,
-    resultSourceMap: 'withKeyArraySelector',
     stega: {
       enabled: true,
       studioUrl,
@@ -32,11 +30,4 @@ const crossDatasetBuilder = imageUrlBuilder({
 })
 export function urlForCrossDatasetReference(source: any) {
   return crossDatasetBuilder.image(source).auto('format').fit('max')
-}
-
-export function defineDataAttribute(csm?: ContentSourceMap) {
-  return _defineDataAttribute(
-    { baseUrl, projectId, dataset, tool, workspace },
-    csm,
-  )
 }

@@ -10,7 +10,6 @@ const client = createClient({
   dataset,
   useCdn: false,
   apiVersion,
-  resultSourceMap: 'withKeyArraySelector',
   stega: {
     enabled: true,
     logger: console,

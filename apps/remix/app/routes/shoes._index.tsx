@@ -3,11 +3,7 @@ import { unwrapData, wrapData, sanity } from '@sanity/react-loader/jsx'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import {
-  urlFor,
-  urlForCrossDatasetReference,
-  defineDataAttribute,
-} from '~/utils'
+import { urlFor, urlForCrossDatasetReference } from '~/utils'
 import { useMemo } from 'react'
 import { useQuery, query } from '~/useQuery'
 import { json } from '@remix-run/node'
@@ -35,11 +31,6 @@ export default function ShoesPage() {
   if (error) {
     throw error
   }
-
-  const dataAttribute = useMemo(
-    () => defineDataAttribute(sourceMap),
-    [sourceMap],
-  )
 
   return (
     <div className="min-h-screen bg-white">
@@ -70,7 +61,6 @@ export default function ShoesPage() {
               <Link
                 key={product.slug.current.value}
                 to={`/shoes/${product.slug.current.value}`}
-                data-sanity={dataAttribute([i, 'slug'])}
                 className="group relative"
               >
                 <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
@@ -86,7 +76,6 @@ export default function ShoesPage() {
                     }
                     width={720}
                     height={720}
-                    data-sanity={dataAttribute([i, 'media'])}
                     alt={product.media?.alt?.value || ''}
                   />
                 </div>
@@ -96,10 +85,7 @@ export default function ShoesPage() {
                 >
                   {product.title}
                 </sanity.h2>
-                <p
-                  className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
-                  data-sanity={dataAttribute([i, 'price'])}
-                >
+                <p className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900">
                   {product.price?.value
                     ? formatCurrency(product.price.value)
                     : 'FREE'}
@@ -124,7 +110,6 @@ export default function ShoesPage() {
                       }
                       width={24}
                       height={24}
-                      data-sanity={dataAttribute([i, 'brand', 'logo'])}
                       alt={product.brand?.logo?.alt?.value || ''}
                     />
                     <sanity.span className="font-bold text-gray-600">

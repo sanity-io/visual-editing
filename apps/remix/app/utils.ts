@@ -1,9 +1,7 @@
-import { type ContentSourceMap, createClient } from '@sanity/client'
+import { createClient } from '@sanity/client/stega'
 import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
-import { defineDataAttribute as _defineDataAttribute } from 'apps-common/utils'
-
-const { projectId, dataset, tool, workspace } = workspaces['remix']
+const { projectId, dataset } = workspaces['remix']
 
 export function getClient() {
   return createClient({
@@ -11,6 +9,10 @@ export function getClient() {
     dataset,
     useCdn: false,
     apiVersion,
+    stega: {
+      enabled: true,
+      studioUrl: baseUrl,
+    },
   })
 }
 
@@ -25,11 +27,4 @@ const crossDatasetBuilder = imageUrlBuilder({
 })
 export function urlForCrossDatasetReference(source: any) {
   return crossDatasetBuilder.image(source).auto('format').fit('max')
-}
-
-export function defineDataAttribute(csm?: ContentSourceMap) {
-  return _defineDataAttribute(
-    { baseUrl, projectId, dataset, tool, workspace },
-    csm,
-  )
 }
