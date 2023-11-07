@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.1-pink-lizard...presentation-v0.6.2-pink-lizard) (2023-11-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.3 ([#267](https://github.com/sanity-io/visual-editing/issues/267)) ([432f47b](https://github.com/sanity-io/visual-editing/commit/432f47bdd742cc863bbeb257325690b0f2063022))
+* **deps:** Update dependency @sanity/ui to ^1.9.0 ([#274](https://github.com/sanity-io/visual-editing/issues/274)) ([4b971e3](https://github.com/sanity-io/visual-editing/commit/4b971e38c480322b4041206b5fd6378b01797ca4))
+* **deps:** Update dependency @types/lodash.isequal to ^4.5.8 ([#276](https://github.com/sanity-io/visual-editing/issues/276)) ([667002d](https://github.com/sanity-io/visual-editing/commit/667002d20ca22e6ef8ccb64a8443e3a288356c60))
+* **deps:** Update sanity monorepo to v3.19.2-pink-lizard.19 ([#270](https://github.com/sanity-io/visual-editing/issues/270)) ([9bdea72](https://github.com/sanity-io/visual-editing/commit/9bdea72e927f46f029273350a8fb898fa45f0e86))
+* **presenation:** update perspectives copy ([97dabe5](https://github.com/sanity-io/visual-editing/commit/97dabe5180d799b8b98d23eb8b527d4cc2d66368))
+* **presentation:** add padding to controls ([4389e1c](https://github.com/sanity-io/visual-editing/commit/4389e1cd144f0f8f98d3ca87a411ba6e0bd2e214))
+* use new `ContentSourceMapParsedPathKeyedSegment` format ([20b3186](https://github.com/sanity-io/visual-editing/commit/20b31864815aeacb4c40e6cea5311d32805c6c2e))
+
 ## [0.6.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.0-pink-lizard...presentation-v0.6.1-pink-lizard) (2023-11-05)
 
 

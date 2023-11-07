@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.4.1-pink-lizard...core-loader-v0.4.2-pink-lizard) (2023-11-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.3 ([#267](https://github.com/sanity-io/visual-editing/issues/267)) ([432f47b](https://github.com/sanity-io/visual-editing/commit/432f47bdd742cc863bbeb257325690b0f2063022))
+
 ## [0.4.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.4.0-pink-lizard...core-loader-v0.4.1-pink-lizard) (2023-11-05)
 
 
