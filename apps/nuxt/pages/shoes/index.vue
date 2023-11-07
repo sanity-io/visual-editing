@@ -33,7 +33,6 @@
             v-for="(product, i) of products || []"
             :key="product.slug.current.value"
             :to="`/shoes/${product.slug.current.value}`"
-
             class="group relative"
           >
             <div
@@ -61,7 +60,6 @@
             />
             <p
               class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
-
             >
               {{
                 product.price?.value
@@ -109,10 +107,7 @@
 import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import {
-  urlFor,
-  urlForCrossDatasetReference,
-} from '~/utils'
+import { urlFor, urlForCrossDatasetReference } from '~/utils'
 import { useQuery, useLiveMode } from '~/composables/useQuery'
 import { vSanity, wrapData, unwrapData } from '@sanity/nuxt-loader/directive'
 
@@ -125,8 +120,6 @@ const products = computed(() => {
     sourceMap.value,
   )
 })
-
-
 
 onMounted(() => {
   useLiveMode()
