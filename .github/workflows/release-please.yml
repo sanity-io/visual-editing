@@ -5,6 +5,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish to NPM
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read # for checkout
@@ -34,29 +41,29 @@ jobs:
 
       # Publish to NPM on new releases
       - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - uses: pnpm/action-setup@v2
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - uses: actions/setup-node@v4
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
         with:
           cache: pnpm
           node-version: lts/*
       - name: Authenticate with private NPM package @sanity/sanitype
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - name: install deps & build
         run: corepack enable && pnpm --version && pnpm install --ignore-scripts && pnpm build --filter=./packages/*
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - name: Set publishing config
         run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
       # Release Please has already incremented versions and published tags, so we just
       # need to publish all unpublished versions to NPM here
       - run: pnpm -r publish
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
         # env:
           # @TODO uncomment below when the repo is public
           # NPM_CONFIG_PROVENANCE: true
