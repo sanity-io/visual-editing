@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.4.2-pink-lizard...core-loader-v0.4.3-pink-lizard) (2023-11-07)
+
+
+### Bug Fixes
+
+* update stega implementation ([26cc0e7](https://github.com/sanity-io/visual-editing/commit/26cc0e7ed02bf194a16d337669895b02aa4b1922))
+
 ## [0.4.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.4.1-pink-lizard...core-loader-v0.4.2-pink-lizard) (2023-11-07)
 
 
