@@ -89,6 +89,7 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
                   data.result,
                   data.resultSourceMap,
                   client.config().stega,
+                  { projectId: data.projectId, dataset: data.dataset },
                 ),
               })
             } else {
