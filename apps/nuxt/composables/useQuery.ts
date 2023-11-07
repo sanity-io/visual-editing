@@ -4,4 +4,7 @@ import { getClient } from '@/utils'
 
 const client = getClient()
 
-export const { useQuery, useLiveMode } = createQueryStore({ client, studioUrl })
+export const { useQuery, useLiveMode } = createQueryStore({
+  client,
+  allowStudioOrigin: studioUrl,
+})

@@ -49,10 +49,10 @@ function raf2(fn: () => void) {
  */
 export const Overlays: FunctionComponent<{
   history?: HistoryAdapter
-  studioUrl: string
+  allowStudioOrigin: string
   zIndex?: string | number
 }> = function (props) {
-  const { history, studioUrl, zIndex } = props
+  const { history, allowStudioOrigin, zIndex } = props
   const [elements, dispatch] = useReducer(elementsReducer, [])
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -82,17 +82,14 @@ export const Overlays: FunctionComponent<{
     [history],
   )
 
-  const studioOrigin = useMemo(() => {
+  const allowOrigin = useMemo(() => {
     // previewUrl might be relative, if it is we set `targetOrigin` to the same origin as the Studio
     // if it's an absolute URL we extract the origin from it
-    const url = new URL(studioUrl, location.href)
+    const url = new URL(allowStudioOrigin, location.href)
     return url.origin
-  }, [studioUrl])
+  }, [allowStudioOrigin])
 
-  const channel = useChannel<VisualEditingMsg>(
-    channelEventHandler,
-    studioOrigin,
-  )
+  const channel = useChannel<VisualEditingMsg>(channelEventHandler, allowOrigin)
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {

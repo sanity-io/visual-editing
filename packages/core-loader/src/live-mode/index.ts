@@ -15,8 +15,14 @@ import {
 import { LiveModeState, QueryStoreState } from '../types'
 
 export interface CreateLiveModeStoreOptions {
+  /**
+   * The origin that are allowed to connect to the overlay.
+   * If left unspecified it will default to the current origin, and the Studio will have to be hosted by the same origin.
+   * @example `https://my.sanity.studio`
+   * @defaultValue `location.origin`
+   */
+  allowStudioOrigin: string
   client: SanityClient | SanityStegaClient
-  studioUrl: string
   $perspective: WritableAtom<ClientPerspective>
 }
 
@@ -29,7 +35,7 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
     controller: AbortController,
   ) => Promise<void>
 } {
-  const { client, studioUrl, $perspective } = options
+  const { client, allowStudioOrigin = '/', $perspective } = options
   const { projectId, dataset } = client.config()
 
   let channel: ChannelReturns<VisualEditingMsg> | null = null
@@ -37,7 +43,7 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
   const initialLiveMode = {
     enabled: false,
     connected: false,
-    studioOrigin: '',
+    studioOrigin: options.allowStudioOrigin,
   } satisfies LiveModeState
   const $LiveMode = map<LiveModeState>(initialLiveMode)
 
@@ -46,8 +52,8 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
   if (typeof document !== 'undefined') {
     onMount($LiveMode, () => {
       $LiveMode.setKey('enabled', true)
-      const studioOrigin = new URL(studioUrl, location.origin).origin
-      $LiveMode.setKey('studioOrigin', studioOrigin)
+      const targetOrigin = new URL(allowStudioOrigin, location.origin).origin
+      $LiveMode.setKey('studioOrigin', targetOrigin)
       channel = createChannel<VisualEditingMsg>({
         id: 'loaders' satisfies VisualEditingConnectionIds,
         onStatusUpdate(status) {
@@ -60,7 +66,7 @@ export function createLiveModeStore(options: CreateLiveModeStoreOptions): {
         connections: [
           {
             target: parent,
-            targetOrigin: studioOrigin,
+            targetOrigin,
             id: 'presentation' satisfies VisualEditingConnectionIds,
           },
         ],

@@ -23,7 +23,13 @@ export type * from './types'
 
 export interface CreateQueryStoreOptions {
   client: SanityClient | SanityStegaClient
-  studioUrl: string
+  /**
+   * The origin that are allowed to connect to the overlay.
+   * If left unspecified it will default to the current origin, and the Studio will have to be hosted by the same origin.
+   * @example `https://my.sanity.studio`
+   * @defaultValue `location.origin`
+   */
+  allowStudioOrigin: string
 }
 
 export interface QueryStore {
@@ -45,7 +51,7 @@ export interface QueryStore {
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): QueryStore => {
-  const { client, studioUrl } = options
+  const { client, allowStudioOrigin } = options
   const { projectId, dataset, resultSourceMap, perspective } = client.config()
   if (!projectId) throw new Error('Missing projectId')
   if (!dataset) throw new Error('Missing dataset')
@@ -65,7 +71,7 @@ export const createQueryStore = (
 
   const { $LiveMode, runLiveFetch } = createLiveModeStore({
     client,
-    studioUrl,
+    allowStudioOrigin,
     $perspective,
   })
 

@@ -11,7 +11,7 @@ const router = useRouter()
 
 onMounted(() => {
   disable = enableOverlays({
-    studioUrl,
+    allowStudioOrigin: studioUrl,
     history: {
       subscribe: (navigate) => {
         return router.afterEach((to) => {

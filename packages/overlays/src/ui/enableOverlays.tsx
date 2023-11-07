@@ -21,8 +21,14 @@ let cleanup: number | null = null
  */
 export function enableOverlays(
   options: {
+    /**
+     * The origin that are allowed to connect to the overlay.
+     * If left unspecified it will default to the current origin, and the Studio will have to be hosted by the same origin.
+     * @example `https://my.sanity.studio`
+     * @defaultValue `location.origin`
+     */
+    allowStudioOrigin?: string
     history?: HistoryAdapter
-    studioUrl?: string
     zIndex?: string | number
   } = {},
 ): DisableOverlays {
@@ -35,7 +41,7 @@ export function enableOverlays(
       if (controller.signal.aborted) return
 
       const { history, zIndex } = options
-      const studioUrl = options.studioUrl || parent.origin
+      const allowStudioOrigin = options.allowStudioOrigin || location.origin
 
       if (!node) {
         node = document.createElement('div')
@@ -50,7 +56,11 @@ export function enableOverlays(
       }
 
       root.render(
-        <Overlays history={history} studioUrl={studioUrl} zIndex={zIndex} />,
+        <Overlays
+          history={history}
+          allowStudioOrigin={allowStudioOrigin}
+          zIndex={zIndex}
+        />,
       )
     },
   )

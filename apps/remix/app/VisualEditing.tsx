@@ -12,7 +12,7 @@ export default function VisualEditing() {
 
   useEffect(() => {
     const disable = enableOverlays({
-      studioUrl,
+      allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
           navigatePresentationRef.current = navigate

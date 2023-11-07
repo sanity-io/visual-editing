@@ -14,7 +14,7 @@ const client = createClient({
     apiVersion,
   })
 
-const {query, liveMode } = createQueryStore({client, studioUrl})
+const {query, liveMode } = createQueryStore({client, allowStudioOrigin: studioUrl})
 
 const shoe = query(shoesList)
 

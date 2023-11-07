@@ -11,7 +11,7 @@ export const client = getClient()
 
 const { useQuery: _useQuery, useLiveMode } = createQueryStore({
   client,
-  studioUrl,
+  allowStudioOrigin: studioUrl,
 })
 
 const context: SanityNodeContext = {

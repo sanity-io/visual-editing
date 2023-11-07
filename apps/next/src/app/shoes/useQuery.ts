@@ -20,4 +20,7 @@ const client = createClient({
   },
 })
 
-export const { useQuery, useLiveMode } = createQueryStore({ client, studioUrl })
+export const { useQuery, useLiveMode } = createQueryStore({
+  client,
+  allowStudioOrigin: studioUrl,
+})
