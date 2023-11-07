@@ -1,7 +1,7 @@
 import {
   type ContentSourceMap,
+  type ContentSourceMapParsedPath,
   getPublishedId,
-  type PathSegment,
   resolvedKeyedSourcePath,
   resolveMapping,
   simplifyPath,
@@ -13,8 +13,8 @@ import { SanityNodeContext } from './wrap/types'
 export function resolveSanityNode(
   context: SanityNodeContext,
   csm: ContentSourceMap,
-  resultPath: PathSegment[],
-  keyedResultPath: PathSegment[],
+  resultPath: ContentSourceMapParsedPath,
+  keyedResultPath: ContentSourceMapParsedPath,
 ): SanityNode | undefined {
   const { mapping, pathSuffix } = resolveMapping(resultPath, csm) || {}
 

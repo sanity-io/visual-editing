@@ -50,6 +50,7 @@ export const PreviewLocationInput: FunctionComponent<{
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       padding={padding}
+      style={{ zIndex: 1 }}
       prefix={
         host && (
           <Box
@@ -73,7 +74,7 @@ export const PreviewLocationInput: FunctionComponent<{
       ref={inputRef}
       space={padding}
       suffix={
-        <Box style={{ lineHeight: 0 }}>
+        <Box style={{ lineHeight: 0, zIndex: -1 }}>
           <Button
             as="a"
             fontSize={fontSize}

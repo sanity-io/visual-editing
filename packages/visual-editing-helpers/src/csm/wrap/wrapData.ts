@@ -2,7 +2,7 @@
 
 import {
   type ContentSourceMap,
-  type PathSegment,
+  type ContentSourceMapParsedPath,
   simplifyPath,
 } from '@sanity/client/csm'
 
@@ -16,8 +16,8 @@ export function wrapData<T>(
   context: SanityNodeContext,
   value: T,
   sourceMap: ContentSourceMap | undefined,
-  resultPath: PathSegment[] = [],
-  keyedResultPath: PathSegment[] = [],
+  resultPath: ContentSourceMapParsedPath = [],
+  keyedResultPath: ContentSourceMapParsedPath = [],
 ): WrappedValue<T> {
   if (value === undefined) {
     return undefined as WrappedValue<T>
@@ -36,7 +36,7 @@ export function wrapData<T>(
         resultPath.concat(idx),
         keyedResultPath.concat(
           isRecord(t) && '_key' in t && typeof t._key === 'string'
-            ? { key: t._key, index: idx }
+            ? { _key: t._key, _index: idx }
             : idx,
         ),
       ),
