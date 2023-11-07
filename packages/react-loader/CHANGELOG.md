@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.4.1-pink-lizard...react-loader-v0.4.2-pink-lizard) (2023-11-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.3 ([#267](https://github.com/sanity-io/visual-editing/issues/267)) ([432f47b](https://github.com/sanity-io/visual-editing/commit/432f47bdd742cc863bbeb257325690b0f2063022))
+* use new `ContentSourceMapParsedPathKeyedSegment` format ([20b3186](https://github.com/sanity-io/visual-editing/commit/20b31864815aeacb4c40e6cea5311d32805c6c2e))
+
 ## [0.4.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.4.0-pink-lizard...react-loader-v0.4.1-pink-lizard) (2023-11-05)
 
 
