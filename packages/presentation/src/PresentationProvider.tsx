@@ -10,18 +10,20 @@ export const PresentationProvider: FunctionComponent<
   PropsWithChildren<{
     deskParams: DeskDocumentPaneParams
     devMode: boolean
+    name: string
     params: PresentationParams
   }>
 > = function (props) {
-  const { children, deskParams, devMode, params } = props
+  const { children, deskParams, devMode, name, params } = props
 
   const context = useMemo<PresentationContextValue>(
     () => ({
       deskParams,
       devMode,
+      name,
       params,
     }),
-    [deskParams, devMode, params],
+    [deskParams, devMode, name, params],
   )
 
   return (

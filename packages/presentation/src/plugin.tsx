@@ -1,6 +1,5 @@
 import { SanityDocument } from '@sanity/client'
 import { ComposeIcon } from '@sanity/icons'
-import { Stack } from '@sanity/ui'
 import { lazy } from 'react'
 import {
   definePlugin,
@@ -9,35 +8,31 @@ import {
   isDocumentSchemaType,
 } from 'sanity'
 
-import { LocationsBanner } from './banners/locations'
-import { MetaBanner } from './banners/meta'
+import { PresentationDocumentHeader } from './document/PresentationDocumentHeader'
+import { PresentationDocumentProvider } from './document/PresentationDocumentProvider'
 import { getIntentState } from './getIntentState'
 import { router } from './router'
 import { PresentationPluginOptions } from './types'
 
 export const presentationTool = definePlugin<PresentationPluginOptions>(
   (options) => {
+    const toolName = options.name || 'presentation'
+
     function PresentationDocumentInput(props: InputProps) {
       const value = props.value as SanityDocument
-      const documentId = value?._id && getPublishedId(value?._id)
+      const documentId = value?._id ? getPublishedId(value?._id) : undefined
 
       if (documentId && isDocumentSchemaType(props.schemaType)) {
         return (
-          <>
-            <Stack marginBottom={5} space={5}>
-              <MetaBanner
-                documentId={documentId}
-                options={options}
-                schemaType={props.schemaType}
-              />
-              <LocationsBanner
-                documentId={documentId}
-                options={options}
-                schemaType={props.schemaType}
-              />
-            </Stack>
+          <PresentationDocumentProvider options={options}>
+            <PresentationDocumentHeader
+              documentId={documentId}
+              options={options}
+              schemaType={props.schemaType}
+            />
+
             {props.renderDefault(props)}
-          </>
+          </PresentationDocumentProvider>
         )
       }
 
@@ -62,11 +57,15 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
       tools: [
         {
           icon: options.icon || ComposeIcon,
-          name: options.name || 'presentation',
+          name: toolName,
           title: options.title,
           component: lazy(() => import('./PresentationTool')),
           options,
           canHandleIntent(intent, params) {
+            if (params.tool && params.tool !== 'presentation') {
+              return false
+            }
+
             if (intent === 'edit' && params.id) {
               return true
             }

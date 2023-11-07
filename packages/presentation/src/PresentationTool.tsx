@@ -63,6 +63,7 @@ export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
   const { previewUrl = '/', components } = props.tool.options ?? {}
+  const name = props.tool.name || 'presentation'
   const { unstable_navigator } = components || {}
 
   const [devMode] = useState(() => {
@@ -282,6 +283,7 @@ export default function PresentationTool(props: {
       <PresentationProvider
         deskParams={deskParams}
         devMode={devMode}
+        name={name}
         params={params}
       >
         <PresentationNavigateProvider setParams={setParams}>

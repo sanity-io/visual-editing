@@ -5,6 +5,7 @@ import { DeskDocumentPaneParams, PresentationParams } from './types'
 export interface PresentationContextValue {
   deskParams: DeskDocumentPaneParams
   devMode: boolean
+  name: string
   params: PresentationParams
 }
 

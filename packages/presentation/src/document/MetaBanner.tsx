@@ -7,7 +7,7 @@ import {
   useEditState,
 } from 'sanity'
 
-import { PresentationPluginOptions } from '../../types'
+import { PresentationPluginOptions } from '../types'
 
 export function MetaBanner(props: {
   documentId: string
@@ -35,7 +35,7 @@ export function MetaBanner(props: {
   const previewTitle = value?.title
 
   if (error) {
-    return null // <Text>Could not preview</Text>
+    return null
   }
 
   if (isLoading) {

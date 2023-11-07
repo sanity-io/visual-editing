@@ -7,7 +7,6 @@ import {
 } from '@sanity/icons'
 import { Box, Card, Flex, Stack, Text } from '@sanity/ui'
 import {
-  ComponentProps,
   ComponentType,
   createElement,
   ReactNode,
@@ -15,12 +14,12 @@ import {
   useContext,
   useState,
 } from 'react'
-import { DocumentBanner } from 'sanity'
+import { ObjectSchemaType } from 'sanity'
 import { useIntentLink } from 'sanity/router'
 
-import { PresentationContext } from '../../PresentationContext'
-import { DocumentLocation, PresentationPluginOptions } from '../../types'
-import { useDocumentLocations } from '../../useDocumentLocations'
+import { PresentationContext } from '../PresentationContext'
+import { DocumentLocation, PresentationPluginOptions } from '../types'
+import { useDocumentLocations } from '../useDocumentLocations'
 
 const LENGTH_FORMAT: Record<number, string> = {
   1: 'one',
@@ -40,12 +39,13 @@ const TONE_ICONS: Record<'positive' | 'caution' | 'critical', ComponentType> = {
   critical: ErrorOutlineIcon,
 }
 
-export function LocationsBanner(
-  props: {
-    options: PresentationPluginOptions
-  } & ComponentProps<DocumentBanner['component']>,
-): ReactNode {
-  const { documentId, options, schemaType } = props
+export function LocationsBanner(props: {
+  documentId: string
+  options: PresentationPluginOptions
+  schemaType: ObjectSchemaType
+  showPresentationTitle: boolean
+}): ReactNode {
+  const { documentId, options, schemaType, showPresentationTitle } = props
   const presentation = useContext(PresentationContext)
 
   const { message, locations, tone } = useDocumentLocations({
@@ -84,6 +84,9 @@ export function LocationsBanner(
             )}
             <Box flex={1}>
               <Text size={1} weight="medium">
+                {showPresentationTitle && (
+                  <>{options.title || 'Presentation'} &middot; </>
+                )}
                 {title}
               </Text>
             </Box>
@@ -112,6 +115,9 @@ export function LocationsBanner(
                 </Box>
                 <Box flex={1}>
                   <Text size={1} weight="medium">
+                    {showPresentationTitle && (
+                      <>{options.title || 'Presentation'} &middot; </>
+                    )}
                     {title}
                   </Text>
                 </Box>
@@ -120,11 +126,15 @@ export function LocationsBanner(
             <Stack hidden={!expanded} marginTop={1} space={1}>
               {locations.map((l, index) => (
                 <LocationItem
-                  active={l.href === presentation?.params.preview}
+                  active={
+                    (options.name || 'presentation') === presentation?.name &&
+                    l.href === presentation?.params.preview
+                  }
                   documentId={documentId}
                   documentType={schemaType.name}
                   key={index}
                   node={l}
+                  toolName={options.name || 'presentation'}
                 />
               ))}
             </Stack>
@@ -140,8 +150,9 @@ function LocationItem(props: {
   documentId: string
   documentType: string
   node: DocumentLocation
+  toolName: string
 }) {
-  const { documentId, documentType, node, active } = props
+  const { documentId, documentType, node, active, toolName } = props
   const presentation = useContext(PresentationContext)
 
   const presentationLinkProps = useIntentLink({
@@ -150,7 +161,7 @@ function LocationItem(props: {
       id: documentId,
       type: documentType,
       // @ts-expect-error The `tool` param is not yet part of the `edit` intent
-      tool: 'presentation',
+      tool: toolName,
     },
     searchParams: {
       ...presentation?.deskParams,
