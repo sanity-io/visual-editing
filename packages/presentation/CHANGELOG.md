@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.3-pink-lizard...presentation-v0.6.4-pink-lizard) (2023-11-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.4 ([#278](https://github.com/sanity-io/visual-editing/issues/278)) ([f9a64c4](https://github.com/sanity-io/visual-editing/commit/f9a64c4f245da1f7beb3052fb205f422ec94221e))
+
 ## [0.6.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.2-pink-lizard...presentation-v0.6.3-pink-lizard) (2023-11-07)
 
 
