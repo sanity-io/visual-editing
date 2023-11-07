@@ -61,7 +61,7 @@ export const DocumentListPane: FunctionComponent<{
         params: { ids: refs.map((r) => r._id) },
       },
       schemaTypeName: '',
-      title: 'Documents on page',
+      title: 'Documents on this page',
       type: 'documentList',
     }),
     [refs],
