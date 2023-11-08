@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.7.2-pink-lizard...presentation-v0.7.3-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* only poll the active perspective ([8eaf9e6](https://github.com/sanity-io/visual-editing/commit/8eaf9e6d04b3e0802a86042405f309e2aa0063e4))
+
 ## [0.7.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.7.1-pink-lizard...presentation-v0.7.2-pink-lizard) (2023-11-08)
 
 
