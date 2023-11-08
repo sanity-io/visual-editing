@@ -47,11 +47,17 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
           enabled: true,
         },
 
-        unstable_fieldActions: (prev) => [
-          // prevent duplication
-          ...prev.filter((a) => a.name !== openInDesk.name),
-          openInDesk,
-        ],
+        // @TODO fix in https://linear.app/sanity/issue/ECO-253/declaring-open-in-desk-removes-all-field-actions
+        /*
+        unstable_fieldActions: (prev) => {
+          console.log(prev)
+          return [
+            // prevent duplication
+            ...prev.filter((a) => a.name !== openInDesk.name),
+            openInDesk,
+          ]
+        },
+        // */
       },
 
       form: {
