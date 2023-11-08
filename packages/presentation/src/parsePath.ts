@@ -1,4 +1,5 @@
-import { pathToString, urlStringToPath } from 'visual-editing-helpers'
+import { studioPath } from '@sanity/client/csm'
+import { urlStringToPath } from 'visual-editing-helpers'
 
 export function parsePath(rawPath: string | undefined): {
   id: string | undefined
@@ -15,7 +16,7 @@ export function parsePath(rawPath: string | undefined): {
       id: segments[1],
       path:
         segments.length > 2
-          ? pathToString(urlStringToPath(segments.slice(2).join('.')))
+          ? studioPath.toString(urlStringToPath(segments.slice(2).join('.')))
           : undefined,
     }
   }
@@ -24,7 +25,7 @@ export function parsePath(rawPath: string | undefined): {
     id: segments[0],
     path:
       segments.length > 1
-        ? pathToString(urlStringToPath(segments.slice(1).join('.')))
+        ? studioPath.toString(urlStringToPath(segments.slice(1).join('.')))
         : undefined,
   }
 }

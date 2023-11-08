@@ -1,4 +1,5 @@
 import type { ClientPerspective, QueryParams } from '@sanity/client'
+import { studioPath } from '@sanity/client/csm'
 import { Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
@@ -19,7 +20,6 @@ import {
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
-  pathToString,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
@@ -214,7 +214,7 @@ export default function PresentationTool(props: {
     (nextDocumentId: string, nextPath: Path) => {
       setParams({
         // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
-        path: pathToString(nextPath),
+        path: studioPath.toString(nextPath),
       })
     },
     [setParams],

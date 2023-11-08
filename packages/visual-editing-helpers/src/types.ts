@@ -5,18 +5,7 @@ import type {
   QueryParams,
 } from '@sanity/client'
 
-/**
- * Extracted from `import {Path} from 'sanity'`
- * @internal
- */
-export type Path = (
-  | string
-  | number
-  | {
-      _key: string
-    }
-  | [number | '', number | '']
-)[]
+export type { Path } from '@sanity/client/csm'
 
 /**
  * @internal

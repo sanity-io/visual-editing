@@ -1,3 +1,4 @@
+import { studioPath } from '@sanity/client/csm'
 import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -6,7 +7,7 @@ import {
   RouterState,
   useRouter,
 } from 'sanity/router'
-import { pathToUrlString, stringToPath } from 'visual-editing-helpers'
+import { pathToUrlString } from 'visual-editing-helpers'
 
 import { debounce } from './lib/debounce'
 import { parsePath } from './parsePath'
@@ -142,7 +143,9 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
     const type = params.type
     const path = params.id
       ? pathToUrlString(
-          stringToPath([params.id, params.path].filter(Boolean).join('.')),
+          studioPath.fromString(
+            [params.id, params.path].filter(Boolean).join('.'),
+          ),
         )
       : undefined
 

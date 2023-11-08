@@ -1,3 +1,4 @@
 export { getQueryCacheKey } from './getQueryCacheKey'
-export * from './paths'
+export { pathToUrlString } from './pathToUrlString'
 export * from './types'
+export { urlStringToPath } from './urlStringToPath'

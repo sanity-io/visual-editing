@@ -1,4 +1,4 @@
-import { getPublishedId } from '@sanity/client/csm'
+import { getPublishedId, studioPath } from '@sanity/client/csm'
 import {
   is,
   minLength,
@@ -9,13 +9,9 @@ import {
   string,
 } from 'valibot'
 
-import {
-  pathToString,
-  pathToUrlString,
-  stringToPath,
-  urlStringToPath,
-} from '../paths'
+import { pathToUrlString } from '../pathToUrlString'
 import { SanityNode, SanityNodeLegacy } from '../types'
+import { urlStringToPath } from '../urlStringToPath'
 
 export type { SanityNode, SanityNodeLegacy }
 
@@ -80,7 +76,7 @@ export function encodeSanityNodeData(node: SanityNode): string | undefined {
     ['dataset', dataset],
     ['id', getPublishedId(_id)],
     ['type', type],
-    ['path', pathToUrlString(stringToPath(path))],
+    ['path', pathToUrlString(studioPath.fromString(path))],
     ['base', encodeURIComponent(baseUrl)],
     ['workspace', workspace],
     ['tool', tool],
@@ -118,7 +114,7 @@ export function decodeSanityString(str: string): SanityNode | undefined {
         acc.type = value
         break
       case 'path':
-        acc.path = pathToString(urlStringToPath(value))
+        acc.path = studioPath.toString(urlStringToPath(value))
         break
       case 'base':
         acc.baseUrl = decodeURIComponent(value)
