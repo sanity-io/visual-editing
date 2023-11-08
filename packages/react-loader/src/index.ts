@@ -5,13 +5,7 @@ import {
   EnableLiveModeOptions,
   type QueryStoreState,
 } from '@sanity/core-loader'
-import {
-  startTransition as _startTransition,
-  type TransitionFunction,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export type * from '@sanity/core-loader'
 
@@ -44,7 +38,6 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
   }
-  startTransition?: TransitionFunction
 }
 export type UseLiveModeHook = (options: EnableLiveModeOptions) => void
 
@@ -83,7 +76,6 @@ export const createQueryStore = (
     params: QueryParams = DEFAULT_PARAMS,
     options: UseQueryOptions<QueryResponseResult> = {},
   ) => {
-    const { startTransition = _startTransition } = options
     const [initial] = useState(() => options.initial)
     const $params = useMemo(() => JSON.stringify(params), [params])
     const [snapshot, setSnapshot] = useState<
@@ -99,11 +91,17 @@ export const createQueryStore = (
         QueryResponseResult,
         QueryResponseError
       >(query, JSON.parse($params), initial)
-      const unlisten = fetcher.listen((snapshot) =>
-        startTransition(() => setSnapshot(snapshot)),
-      )
-      return () => unlisten()
-    }, [$params, initial, query, startTransition])
+      const controller = new AbortController()
+      const unlisten = fetcher.listen((snapshot) => {
+        if (controller.signal.aborted) return
+        setSnapshot(snapshot)
+      })
+
+      return () => {
+        controller.abort()
+        unlisten()
+      }
+    }, [$params, initial, query])
     return snapshot
   }
 
