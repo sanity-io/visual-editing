@@ -29,11 +29,12 @@ export function PresentationDocumentHeader(props: {
         options={options}
         schemaType={schemaType}
       />
+
       <Stack space={2}>
-        {context?.options.map((o) => (
+        {context?.options.map((o, idx) => (
           <LocationsBanner
             documentId={documentId}
-            key={o.name || 'presentation'}
+            key={idx}
             options={o}
             schemaType={schemaType}
             showPresentationTitle={len > 1}

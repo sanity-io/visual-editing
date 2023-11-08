@@ -8,6 +8,7 @@ import {
   isDocumentSchemaType,
 } from 'sanity'
 
+import { DEFAULT_TOOL_NAME } from './constants'
 import { PresentationDocumentHeader } from './document/PresentationDocumentHeader'
 import { PresentationDocumentProvider } from './document/PresentationDocumentProvider'
 import { getIntentState } from './getIntentState'
@@ -16,7 +17,7 @@ import { PresentationPluginOptions } from './types'
 
 export const presentationTool = definePlugin<PresentationPluginOptions>(
   (options) => {
-    const toolName = options.name || 'presentation'
+    const toolName = options.name || DEFAULT_TOOL_NAME
 
     function PresentationDocumentInput(props: InputProps) {
       const value = props.value as SanityDocument
@@ -62,7 +63,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
           component: lazy(() => import('./PresentationTool')),
           options,
           canHandleIntent(intent, params) {
-            if (params.tool && params.tool !== 'presentation') {
+            if (params.tool && params.tool !== toolName) {
               return false
             }
 

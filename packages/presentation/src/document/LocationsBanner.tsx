@@ -17,6 +17,7 @@ import {
 import { ObjectSchemaType } from 'sanity'
 import { useIntentLink } from 'sanity/router'
 
+import { DEFAULT_TOOL_NAME, DEFAULT_TOOL_TITLE } from '../constants'
 import { PresentationContext } from '../PresentationContext'
 import { DocumentLocation, PresentationPluginOptions } from '../types'
 import { useDocumentLocations } from '../useDocumentLocations'
@@ -85,7 +86,7 @@ export function LocationsBanner(props: {
             <Box flex={1}>
               <Text size={1} weight="medium">
                 {showPresentationTitle && (
-                  <>{options.title || 'Presentation'} &middot; </>
+                  <>{options.title || DEFAULT_TOOL_TITLE} &middot; </>
                 )}
                 {title}
               </Text>
@@ -116,7 +117,7 @@ export function LocationsBanner(props: {
                 <Box flex={1}>
                   <Text size={1} weight="medium">
                     {showPresentationTitle && (
-                      <>{options.title || 'Presentation'} &middot; </>
+                      <>{options.title || DEFAULT_TOOL_TITLE} &middot; </>
                     )}
                     {title}
                   </Text>
@@ -127,14 +128,15 @@ export function LocationsBanner(props: {
               {locations.map((l, index) => (
                 <LocationItem
                   active={
-                    (options.name || 'presentation') === presentation?.name &&
+                    (options.name || DEFAULT_TOOL_NAME) ===
+                      presentation?.name &&
                     l.href === presentation?.params.preview
                   }
                   documentId={documentId}
                   documentType={schemaType.name}
                   key={index}
                   node={l}
-                  toolName={options.name || 'presentation'}
+                  toolName={options.name || DEFAULT_TOOL_NAME}
                 />
               ))}
             </Stack>

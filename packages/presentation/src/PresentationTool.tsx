@@ -24,6 +24,7 @@ import {
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
 
+import { DEFAULT_TOOL_NAME } from './constants'
 import { ContentEditor } from './editor/ContentEditor'
 import LoaderQueries from './loader/LoaderQueries'
 import { Panel } from './panels/Panel'
@@ -63,7 +64,7 @@ export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
   const { previewUrl = '/', components } = props.tool.options ?? {}
-  const name = props.tool.name || 'presentation'
+  const name = props.tool.name || DEFAULT_TOOL_NAME
   const { unstable_navigator } = components || {}
 
   const [devMode] = useState(() => {
