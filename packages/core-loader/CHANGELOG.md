@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.7.0-pink-lizard...core-loader-v0.7.1-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.12 ([#298](https://github.com/sanity-io/visual-editing/issues/298)) ([4bfbfff](https://github.com/sanity-io/visual-editing/commit/4bfbfffb8fab9e3440fb525babd2df0120fc4900))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped to 5.2.5-pink-lizard
+
 ## [0.7.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.6.0-pink-lizard...core-loader-v0.7.0-pink-lizard) (2023-11-08)
 
 
