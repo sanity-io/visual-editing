@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.7.1-pink-lizard...presentation-v0.7.2-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* disable "Open In Desk" tool for now ([6ac23e3](https://github.com/sanity-io/visual-editing/commit/6ac23e33960ce59e323a2f7148ad2d304cc008b3))
+
 ## [0.7.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.7.0-pink-lizard...presentation-v0.7.1-pink-lizard) (2023-11-08)
 
 
