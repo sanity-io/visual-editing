@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.2.0-pink-lizard...overlays-v2.2.1-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* use `studioPath` utils from `@sanity/client/csm` ([a804364](https://github.com/sanity-io/visual-editing/commit/a80436410083ae88f6dc46a259ae3a08a7f4b59f))
+
 ## [2.2.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.1.2-pink-lizard...overlays-v2.2.0-pink-lizard) (2023-11-08)
 
 

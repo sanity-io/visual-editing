@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.6.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.6-pink-lizard...presentation-v0.6.7-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.7 ([#288](https://github.com/sanity-io/visual-editing/issues/288)) ([7d63682](https://github.com/sanity-io/visual-editing/commit/7d63682b533495e75cdcef446e818e10b742329b))
+* use `studioPath` utils from `@sanity/client/csm` ([a804364](https://github.com/sanity-io/visual-editing/commit/a80436410083ae88f6dc46a259ae3a08a7f4b59f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped to 5.2.2-pink-lizard
+
 ## [0.6.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.5-pink-lizard...presentation-v0.6.6-pink-lizard) (2023-11-08)
 
 
