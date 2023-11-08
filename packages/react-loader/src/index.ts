@@ -90,6 +90,7 @@ export const createQueryStore = (
       QueryStoreState<QueryResponseResult, QueryResponseError>
     >(() => ({
       ...initialFetch,
+      loading: initial?.data === undefined || initial?.sourceMap === undefined,
       data: initial?.data,
       sourceMap: initial?.sourceMap,
     }))
