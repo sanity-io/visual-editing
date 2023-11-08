@@ -1,32 +1,28 @@
 import { Link, useLoaderData } from '@remix-run/react'
-import { unwrapData, wrapData, sanity } from '@sanity/react-loader/jsx'
-import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import { urlFor, urlForCrossDatasetReference } from '~/utils'
-import { useMemo } from 'react'
-import { useQuery, query } from '~/useQuery'
 import { json } from '@remix-run/node'
+import { useQuery } from '~/sanity.loader'
+import { query } from '~/sanity.loader.server'
+import { urlFor, urlForCrossDatasetReference } from '~/sanity'
 
 export const loader = async () => {
   return json(await query<ShoesListResult>(shoesList))
 }
 
 export default function ShoesPage() {
-  const { data: initialData } = useLoaderData<typeof loader>()
+  const { data: initialData, sourceMap: initialSourceMap } =
+    useLoaderData<typeof loader>()
   const {
-    data,
+    data: products,
     error,
     loading: _loading,
-    sourceMap,
-  } = useQuery<ShoesListResult>(shoesList, {}, { initialData })
-  const loading = !data?.length && _loading
-
-  const products = useMemo(
-    () =>
-      wrapData({ ...workspaces['remix'], baseUrl: studioUrl }, data, sourceMap),
-    [data, sourceMap],
+  } = useQuery<ShoesListResult>(
+    shoesList,
+    {},
+    { initialData, initialSourceMap },
   )
+  const loading = !products?.length && _loading
 
   if (error) {
     throw error
@@ -59,8 +55,8 @@ export default function ShoesPage() {
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products?.map?.((product, i) => (
               <Link
-                key={product.slug.current.value}
-                to={`/shoes/${product.slug.current.value}`}
+                key={product.slug.current}
+                to={`/shoes/${product.slug.current}`}
                 className="group relative"
               >
                 <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
@@ -68,27 +64,22 @@ export default function ShoesPage() {
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
                     src={
                       product.media?.asset
-                        ? urlFor(unwrapData(product.media))
-                            .width(1440)
-                            .height(1440)
-                            .url()
+                        ? urlFor(product.media).width(1440).height(1440).url()
                         : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`
                     }
                     width={720}
                     height={720}
-                    alt={product.media?.alt?.value || ''}
+                    alt={product.media?.alt || ''}
                   />
                 </div>
-                <sanity.h2
+                <h2
                   className="mb-8 mt-4 text-sm text-gray-700"
                   style={{ ['textWrap' as any]: 'balance' }}
                 >
                   {product.title}
-                </sanity.h2>
+                </h2>
                 <p className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900">
-                  {product.price?.value
-                    ? formatCurrency(product.price.value)
-                    : 'FREE'}
+                  {product.price ? formatCurrency(product.price) : 'FREE'}
                 </p>
                 {product.brand && (
                   <div className="absolute bottom-0.5 right-0 flex items-center gap-x-2">
@@ -96,25 +87,23 @@ export default function ShoesPage() {
                       className="h-6 w-6 rounded-full bg-gray-50"
                       src={
                         product.brand?.logo?.asset
-                          ? urlForCrossDatasetReference(
-                              unwrapData(product.brand.logo),
-                            )
+                          ? urlForCrossDatasetReference(product.brand.logo)
                               .width(48)
                               .height(48)
                               .url()
                           : `https://source.unsplash.com/featured/48x48?${
                               product.brand.name
-                                ? encodeURIComponent(product.brand.name.value)
+                                ? encodeURIComponent(product.brand.name)
                                 : `brand&r=${i}`
                             }`
                       }
                       width={24}
                       height={24}
-                      alt={product.brand?.logo?.alt?.value || ''}
+                      alt={product.brand?.logo?.alt || ''}
                     />
-                    <sanity.span className="font-bold text-gray-600">
+                    <span className="font-bold text-gray-600">
                       {product.brand.name}
-                    </sanity.span>
+                    </span>
                   </div>
                 )}
               </Link>

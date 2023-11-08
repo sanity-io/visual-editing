@@ -32,6 +32,7 @@ export interface QueryStore {
     query: string,
     params?: QueryParams,
   ) => Promise<{ data: Response; sourceMap: ContentSourceMap | undefined }>
+  setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: UseQueryHook
   useLiveMode: UseLiveModeHook
 }
@@ -39,8 +40,12 @@ export interface QueryStore {
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): QueryStore => {
-  const { createFetcherStore, enableLiveMode, unstable__cache } =
-    createCoreQueryStore(options)
+  const {
+    createFetcherStore,
+    setServerClient,
+    enableLiveMode,
+    unstable__cache,
+  } = createCoreQueryStore(options)
   const initialFetch = {
     loading: true,
     data: undefined,
@@ -86,17 +91,19 @@ export const createQueryStore = (
 
   const useLiveMode: UseLiveModeHook = ({
     allowStudioOrigin,
+    client,
     onConnect,
     onDisconnect,
   }) => {
     useEffect(() => {
       const disableLiveMode = enableLiveMode({
         allowStudioOrigin,
+        client,
         onConnect,
         onDisconnect,
       })
       return () => disableLiveMode()
-    }, [allowStudioOrigin, onConnect, onDisconnect])
+    }, [allowStudioOrigin, client, onConnect, onDisconnect])
   }
   const query = async <Response>(
     query: string,
@@ -113,5 +120,5 @@ export const createQueryStore = (
     return { data: result, sourceMap: resultSourceMap }
   }
 
-  return { query, useQuery, useLiveMode }
+  return { query, useQuery, setServerClient, useLiveMode }
 }

@@ -2,7 +2,8 @@ import { useLocation, useNavigate } from '@remix-run/react'
 import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef } from 'react'
-import { useLiveMode } from './useQuery'
+import { useLiveMode } from '~/sanity.loader'
+import { client } from '~/sanity'
 
 export default function VisualEditing() {
   const navigateRemix = useNavigate()
@@ -41,7 +42,7 @@ export default function VisualEditing() {
     }
   }, [location.hash, location.pathname, location.search])
 
-  useLiveMode({ allowStudioOrigin: studioUrl })
+  useLiveMode({ allowStudioOrigin: studioUrl, client })
 
   return null
 }

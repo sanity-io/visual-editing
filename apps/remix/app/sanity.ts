@@ -1,22 +1,39 @@
-import { studioUrl, workspaces } from 'apps-common/env'
-import {
-  type SanityNode,
-  encodeSanityNodeData as _encodeSanityNodeData,
-} from '@sanity/react-loader/jsx'
+import { createClient } from '@sanity/client/stega'
+import { apiVersion, studioUrl as baseUrl, workspaces } from 'apps-common/env'
+import imageUrlBuilder from '@sanity/image-url'
+const { projectId, dataset } = workspaces['remix']
 
-const { projectId, dataset, tool, workspace } = workspaces['remix']
+export const client = createClient({
+  projectId,
+  dataset,
+  useCdn: false,
+  apiVersion,
+  stega: {
+    enabled: true,
+    studioUrl: (sourceDocument) => {
+      if (
+        sourceDocument._projectId ===
+          workspaces['cross-dataset-references'].projectId &&
+        sourceDocument._dataset ===
+          workspaces['cross-dataset-references'].dataset
+      ) {
+        const { workspace, tool } = workspaces['cross-dataset-references']
+        return { baseUrl, workspace, tool }
+      }
+      return { baseUrl }
+    },
+  },
+})
 
-// @TODO replace with the reused utils
-export function encodeSanityNodeData(
-  node: Partial<SanityNode> & Pick<SanityNode, 'id' | 'type' | 'path'>,
-) {
-  return _encodeSanityNodeData({
-    projectId,
-    dataset,
-    // @TODO temporary workaround as overlays fails to find the right workspace
-    baseUrl: `${studioUrl}/${workspace}`,
-    workspace,
-    tool,
-    ...node,
-  })
+const builder = imageUrlBuilder({ projectId, dataset })
+export function urlFor(source: any) {
+  return builder.image(source).auto('format').fit('max')
+}
+
+const crossDatasetBuilder = imageUrlBuilder({
+  projectId: workspaces['cross-dataset-references'].projectId,
+  dataset: workspaces['cross-dataset-references'].dataset,
+})
+export function urlForCrossDatasetReference(source: any) {
+  return crossDatasetBuilder.image(source).auto('format').fit('max')
 }

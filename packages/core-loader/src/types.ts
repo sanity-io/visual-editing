@@ -1,4 +1,9 @@
-import type { ContentSourceMap, QueryParams } from '@sanity/client'
+import type {
+  ContentSourceMap,
+  QueryParams,
+  SanityClient,
+} from '@sanity/client'
+import type { SanityStegaClient } from '@sanity/client/stega'
 import type { MapStore } from 'nanostores'
 
 export type { ContentSourceMap, MapStore, QueryParams }
@@ -20,6 +25,15 @@ export interface EnableLiveModeOptions {
    * @defaultValue `location.origin`
    */
   allowStudioOrigin: string
+  /**
+   * You may use any client that is an `instanceof SanityClient` or `instanceof SanityStegaClient`.
+   * Required when `ssr: true`, optional otherwise.
+   * @example `import {createClient} from '@sanity/client'`
+   * @example `import {createClient} from '@sanity/client/stega'`
+   * @example `import {createClient} from '@sanity/preview-kit/client'`
+   * @example `import {createClient} from 'next-sanity'`
+   */
+  client?: SanityClient | SanityStegaClient
   /**
    * Fires when a connection is established to a parent Studio window.
    */

@@ -1,7 +1,7 @@
-import type {
-  ClientPerspective,
-  ContentSourceMapDocuments,
-  QueryParams,
+import {
+  type ClientPerspective,
+  type ContentSourceMapDocuments,
+  type QueryParams,
   SanityClient,
 } from '@sanity/client'
 import { SanityStegaClient, stegaEncodeSourceMap } from '@sanity/client/stega'
@@ -16,7 +16,7 @@ import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'
 
 /** @internal */
 export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
-  client: SanityClient | SanityStegaClient
+  ssr: boolean
   setFetcher: SetFetcher
 }
 
@@ -28,6 +28,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     onConnect,
     onDisconnect,
   } = options
+  if (!client || !(client instanceof SanityClient)) {
+    throw new Error(
+      `Expected \`client\` to be an instance of SanityClient or SanityStegaClient: ${JSON.stringify(
+        client,
+      )}`,
+    )
+  }
   const { projectId, dataset } = client.config()
   const $perspective = atom<Exclude<ClientPerspective, 'raw'>>('previewDrafts')
   const $connected = atom(false)
@@ -74,8 +81,8 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       ) {
         const { perspective, query, params } = data
         if (
-          client instanceof SanityStegaClient &&
-          client.config().stega.enabled &&
+          isStegaClient(client) &&
+          (client as SanityStegaClient).config().stega?.enabled &&
           data.resultSourceMap
         ) {
           cache.set(JSON.stringify({ perspective, query, params }), {
@@ -83,7 +90,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             result: stegaEncodeSourceMap(
               data.result,
               data.resultSourceMap,
-              client.config().stega,
+              (client as SanityStegaClient).config().stega,
               { projectId: data.projectId, dataset: data.dataset },
             ),
           })
@@ -221,4 +228,10 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     unlistenConnection()
     channel.disconnect()
   }
+}
+
+function isStegaClient(
+  client: SanityClient | SanityStegaClient,
+): client is SanityStegaClient {
+  return client instanceof SanityStegaClient
 }

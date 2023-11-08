@@ -1,23 +1,31 @@
-import { EnableLiveMode, EnableLiveModeOptions } from '../types'
+import { runtime } from '../env'
+import type { EnableLiveMode, EnableLiveModeOptions } from '../types'
 import type { LazyEnableLiveModeOptions } from './enableLiveMode'
 
 export const defineEnableLiveMode: (
-  config: Omit<LazyEnableLiveModeOptions, keyof EnableLiveModeOptions>,
+  config: Omit<
+    LazyEnableLiveModeOptions,
+    Exclude<keyof EnableLiveModeOptions, 'client'>
+  >,
 ) => EnableLiveMode = (config) => {
-  const { client, setFetcher } = config
+  const { ssr, setFetcher } = config
 
   return (options) => {
-    if (typeof document === 'undefined') {
-      return () => {
-        // Do nothing if not in browser
-      }
+    if (runtime === 'server') {
+      throw new Error('Live mode is not supported in server environments')
+    }
+    if (ssr && !options.client) {
+      throw new Error(
+        'The `client` option in `enableLiveMode` is required when `ssr: true`',
+      )
     }
 
+    const client = options.client || config.client || undefined
     const controller = new AbortController()
     let disableLiveMode: (() => void) | undefined
     import('./enableLiveMode').then(({ enableLiveMode }) => {
       if (controller.signal.aborted) return
-      disableLiveMode = enableLiveMode({ ...options, client, setFetcher })
+      disableLiveMode = enableLiveMode({ ...options, client, setFetcher, ssr })
     })
     return () => {
       controller.abort()
