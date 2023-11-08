@@ -19,7 +19,7 @@ export const openInDesk = defineDocumentFieldAction({
 
     return {
       type: 'action',
-      hidden: !presentation,
+      hidden: !presentation || path.length > 0,
       icon: MasterDetailIcon,
       title: 'Open in Desk',
       onAction() {
