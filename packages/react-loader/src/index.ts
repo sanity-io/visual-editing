@@ -2,17 +2,15 @@ import type { ContentSourceMap, QueryParams } from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
-  type LiveModeState,
+  EnableLiveModeOptions,
   type QueryStoreState,
 } from '@sanity/core-loader'
 import {
   startTransition as _startTransition,
   type TransitionFunction,
-  useCallback,
   useEffect,
   useMemo,
   useState,
-  useSyncExternalStore,
 } from 'react'
 
 export type * from '@sanity/core-loader'
@@ -27,7 +25,7 @@ export interface UseQueryOptions<Response = unknown> {
   initialSourceMap?: ContentSourceMap
   startTransition?: TransitionFunction
 }
-export type UseLiveModeHook = () => LiveModeState
+export type UseLiveModeHook = (options: EnableLiveModeOptions) => void
 
 export interface QueryStore {
   query: <Response>(
@@ -40,19 +38,8 @@ export interface QueryStore {
 
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
-): {
-  query: <Response>(
-    query: string,
-    params?: QueryParams,
-  ) => Promise<{ data: Response; sourceMap: ContentSourceMap | undefined }>
-  useQuery: <Response = unknown, Error = unknown>(
-    query: string,
-    params?: QueryParams,
-    options?: UseQueryOptions<Response>,
-  ) => QueryStoreState<Response, Error>
-  useLiveMode: () => void
-} => {
-  const { createFetcherStore, $LiveMode, unstable__cache } =
+): QueryStore => {
+  const { createFetcherStore, enableLiveMode, unstable__cache } =
     createCoreQueryStore(options)
   const initialFetch = {
     loading: true,
@@ -60,7 +47,6 @@ export const createQueryStore = (
     error: undefined,
     sourceMap: undefined,
   } satisfies QueryStoreState<Response, Error>
-  const initialLiveMode = $LiveMode.value!
 
   const DEFAULT_PARAMS = {}
   const useQuery = <Response, Error>(
@@ -98,14 +84,19 @@ export const createQueryStore = (
     return snapshot
   }
 
-  const useLiveMode: UseLiveModeHook = () => {
-    const store = useSyncExternalStore(
-      useCallback((onStoreChange) => $LiveMode.listen(onStoreChange), []),
-      () => $LiveMode.get(),
-      () => initialLiveMode,
-    )
-
-    return store
+  const useLiveMode: UseLiveModeHook = ({
+    allowStudioOrigin,
+    onConnect,
+    onDisconnect,
+  }) => {
+    useEffect(() => {
+      const disableLiveMode = enableLiveMode({
+        allowStudioOrigin,
+        onConnect,
+        onDisconnect,
+      })
+      return () => disableLiveMode()
+    }, [allowStudioOrigin, onConnect, onDisconnect])
   }
   const query = async <Response>(
     query: string,

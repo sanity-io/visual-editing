@@ -13,11 +13,11 @@ export const createQueryStore = (
     query: string,
     params?: QueryParams,
   ) => MapStore<QueryStoreState<Response, Error>>
-  liveMode: ReturnType<typeof createCoreQueryStore>['$LiveMode']
+  enableLiveMode: ReturnType<typeof createCoreQueryStore>['enableLiveMode']
 } => {
-  const { createFetcherStore, $LiveMode } = createCoreQueryStore(options)
+  const { createFetcherStore, enableLiveMode } = createCoreQueryStore(options)
   const query = (query: string, params: QueryParams = {}) =>
     createFetcherStore(query, params)
   // @ts-expect-error -- @TODO fix
-  return { query, liveMode: $LiveMode }
+  return { query, enableLiveMode }
 }

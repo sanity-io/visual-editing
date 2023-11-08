@@ -67,7 +67,7 @@ export type UnwrappedValue<W = WrappedValue<unknown>> =
     ? undefined
     : never
 
-/* @public */
+/** @public */
 export interface SanityNodeContext {
   baseUrl: string
   dataset: string

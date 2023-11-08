@@ -39,12 +39,14 @@ const sanityLegacyNodeSchema = object({
   data: optionalLengthyStr,
 })
 
+/** @internal */
 export function isValidSanityNode(
   node: Partial<SanityNode>,
 ): node is SanityNode {
   return is(sanityNodeSchema, node)
 }
 
+/** @internal */
 export function isValidSanityLegacyNode(
   node: Partial<SanityNodeLegacy>,
 ): node is SanityNodeLegacy {
@@ -93,6 +95,7 @@ export function encodeSanityNodeData(node: SanityNode): string | undefined {
 /**
  * Transforms a sanity data string into sanity node data
  * @param str - An encoded string of sanity data
+ * @internal
  */
 export function decodeSanityString(str: string): SanityNode | undefined {
   const segments = str.split(';')
@@ -176,6 +179,7 @@ function decodeSanityJson(
 /**
  * Transforms sanity data from multiple formats into sanity node data
  * @param str - Sanity data as a string of unknown format
+ * @internal
  */
 export function decodeSanityNodeData(
   str: string,
