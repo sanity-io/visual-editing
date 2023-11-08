@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.4.3-pink-lizard...react-loader-v0.5.0-pink-lizard) (2023-11-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* lazy load live mode ([#281](https://github.com/sanity-io/visual-editing/issues/281))
+
+### Bug Fixes
+
+* lazy load live mode ([#281](https://github.com/sanity-io/visual-editing/issues/281)) ([e52991c](https://github.com/sanity-io/visual-editing/commit/e52991cc974df76647c4ede51de16527c14e6c10))
+
 ## [0.4.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.4.2-pink-lizard...react-loader-v0.4.3-pink-lizard) (2023-11-07)
 
 
