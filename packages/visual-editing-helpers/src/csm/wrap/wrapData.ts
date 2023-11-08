@@ -3,7 +3,8 @@
 import {
   type ContentSourceMap,
   type ContentSourceMapParsedPath,
-  simplifyPath,
+  jsonPathToStudioPath,
+  studioPath,
 } from '@sanity/client/csm'
 
 import { resolveSanityNode } from '../resolveSanityNode'
@@ -64,7 +65,7 @@ export function wrapData<T>(
 
   return {
     $$type$$: 'sanity',
-    path: simplifyPath(resultPath) || undefined,
+    path: studioPath.toString(jsonPathToStudioPath(resultPath)) || undefined,
     source: sourceMap
       ? resolveSanityNode(context, sourceMap, resultPath, keyedResultPath)
       : undefined,

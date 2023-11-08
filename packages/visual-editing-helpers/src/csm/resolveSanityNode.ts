@@ -2,9 +2,10 @@ import {
   type ContentSourceMap,
   type ContentSourceMapParsedPath,
   getPublishedId,
+  jsonPathToStudioPath,
   resolvedKeyedSourcePath,
   resolveMapping,
-  simplifyPath,
+  studioPath,
 } from '@sanity/client/csm'
 
 import { SanityNode } from '../types'
@@ -40,12 +41,14 @@ export function resolveSanityNode(
       baseUrl: context.baseUrl,
       dataset: context.dataset,
       id: getPublishedId(sourceDoc._id),
-      path: simplifyPath(
-        resolvedKeyedSourcePath({
-          keyedResultPath,
-          pathSuffix,
-          sourceBasePath,
-        }),
+      path: studioPath.toString(
+        jsonPathToStudioPath(
+          resolvedKeyedSourcePath({
+            keyedResultPath,
+            pathSuffix,
+            sourceBasePath,
+          }),
+        ),
       ),
       projectId: context.projectId,
       tool: context.tool,
