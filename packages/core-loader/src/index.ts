@@ -129,8 +129,6 @@ export const createQueryStore = (
 
     onMount($fetch, () => {
       const unsubscribe = $fetcher.subscribe((fetcher) => {
-        // eslint-disable-next-line no-console
-        console.log('fetcher.subscribe', fetcher)
         const controller = new AbortController()
         fetcher.fetch(query, params, $fetch, controller)
       })
