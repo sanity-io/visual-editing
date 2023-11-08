@@ -63,13 +63,6 @@ export const createQueryStore = (
     enableLiveMode,
     unstable__cache,
   } = createCoreQueryStore(options)
-  const initialFetch = {
-    loading: true,
-    data: undefined,
-    error: undefined,
-    sourceMap: undefined,
-  } satisfies QueryStoreState<undefined, undefined>
-
   const DEFAULT_PARAMS = {}
   const useQuery = <QueryResponseResult, QueryResponseError>(
     query: string,
@@ -78,14 +71,16 @@ export const createQueryStore = (
   ) => {
     const [initial] = useState(() => options.initial)
     const $params = useMemo(() => JSON.stringify(params), [params])
+
     const [snapshot, setSnapshot] = useState<
       QueryStoreState<QueryResponseResult, QueryResponseError>
-    >(() => ({
-      ...initialFetch,
-      loading: initial?.data === undefined || initial?.sourceMap === undefined,
-      data: initial?.data,
-      sourceMap: initial?.sourceMap,
-    }))
+    >(() => {
+      const fetcher = createFetcherStore<
+        QueryResponseResult,
+        QueryResponseError
+      >(query, JSON.parse($params), initial)
+      return fetcher.value!
+    })
     useEffect(() => {
       const fetcher = createFetcherStore<
         QueryResponseResult,
