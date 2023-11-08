@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.5.0-pink-lizard...core-loader-v0.5.1-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* remove `console.log` ([b84d3f3](https://github.com/sanity-io/visual-editing/commit/b84d3f3ebde6f1f6989da473fefad6acff57028f))
+
 ## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.4.4-pink-lizard...core-loader-v0.5.0-pink-lizard) (2023-11-08)
 
 
