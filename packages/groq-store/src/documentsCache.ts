@@ -59,6 +59,9 @@ export interface SanityDocumentLike {
   _id: DocumentId
 }
 
+/**
+ * @alpha
+ */
 export function unstable__getDocumentCacheKey(
   config: ClientConfigLike,
   document: SanityDocumentLike,

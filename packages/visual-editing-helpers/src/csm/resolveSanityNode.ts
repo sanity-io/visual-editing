@@ -10,6 +10,7 @@ import {
 import { SanityNode } from '../types'
 import { SanityNodeContext } from './wrap/types'
 
+/** @internal */
 export function resolveSanityNode(
   context: SanityNodeContext,
   csm: ContentSourceMap,

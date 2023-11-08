@@ -10,6 +10,9 @@ export type {
   SanityNodeLegacy,
 } from 'visual-editing-helpers'
 
+/**
+ * @public
+ */
 export interface OverlayRect {
   x: number
   y: number

@@ -41,7 +41,7 @@ export default function VisualEditing() {
     }
   }, [location.hash, location.pathname, location.search])
 
-  useLiveMode()
+  useLiveMode({ allowStudioOrigin: studioUrl })
 
   return null
 }

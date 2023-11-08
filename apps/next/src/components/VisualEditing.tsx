@@ -45,7 +45,7 @@ export default function VisualEditing() {
     router?.replace,
   ])
 
-  useLiveMode()
+  useLiveMode({ allowStudioOrigin: studioUrl })
 
   return null
 }
