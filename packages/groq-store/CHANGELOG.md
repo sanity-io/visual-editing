@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.2.4-pink-lizard...groq-store-v5.2.5-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.12 ([#298](https://github.com/sanity-io/visual-editing/issues/298)) ([4bfbfff](https://github.com/sanity-io/visual-editing/commit/4bfbfffb8fab9e3440fb525babd2df0120fc4900))
+
 ## [5.2.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.2.3-pink-lizard...groq-store-v5.2.4-pink-lizard) (2023-11-08)
 
 
