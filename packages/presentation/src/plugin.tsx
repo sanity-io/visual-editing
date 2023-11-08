@@ -11,7 +11,7 @@ import {
 import { DEFAULT_TOOL_NAME } from './constants'
 import { PresentationDocumentHeader } from './document/PresentationDocumentHeader'
 import { PresentationDocumentProvider } from './document/PresentationDocumentProvider'
-import { openInDesk } from './fieldActions/openInDesk'
+// import { openInDesk } from './fieldActions/openInDesk'
 import { getIntentState } from './getIntentState'
 import { router } from './router'
 import { PresentationPluginOptions } from './types'
