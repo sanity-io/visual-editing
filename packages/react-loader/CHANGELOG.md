@@ -6,6 +6,25 @@
   * dependencies
     * @sanity/core-loader bumped to 0.5.1-pink-lizard
 
+## [0.6.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.5.3-pink-lizard...react-loader-v0.6.0-pink-lizard) (2023-11-08)
+
+
+### Features
+
+* support SSR-only mode ([96d82f2](https://github.com/sanity-io/visual-editing/commit/96d82f2873d358353102181a10913d34949d645f))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.8 ([#291](https://github.com/sanity-io/visual-editing/issues/291)) ([9623639](https://github.com/sanity-io/visual-editing/commit/9623639ac7c333ee7b13c253a61a7f9d4f9f599a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.6.0-pink-lizard
+
 ## [0.5.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.5.2-pink-lizard...react-loader-v0.5.3-pink-lizard) (2023-11-08)
 
 
