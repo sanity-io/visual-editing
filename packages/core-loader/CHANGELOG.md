@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.4.4-pink-lizard...core-loader-v0.5.0-pink-lizard) (2023-11-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* lazy load live mode ([#281](https://github.com/sanity-io/visual-editing/issues/281))
+* renamed `studioUrl` to `allowStudioOrigin`to clarify it's CORS related
+
+### Bug Fixes
+
+* lazy load live mode ([#281](https://github.com/sanity-io/visual-editing/issues/281)) ([e52991c](https://github.com/sanity-io/visual-editing/commit/e52991cc974df76647c4ede51de16527c14e6c10))
+* renamed `studioUrl` to `allowStudioOrigin`to clarify it's CORS related ([589a7c2](https://github.com/sanity-io/visual-editing/commit/589a7c29ef61bb53f249847b4d5b9ae78ad252f2))
+
 ## [0.4.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.4.3-pink-lizard...core-loader-v0.4.4-pink-lizard) (2023-11-07)
 
 

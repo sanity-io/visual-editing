@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.4-pink-lizard...presentation-v0.6.5-pink-lizard) (2023-11-08)
+
+
+### Bug Fixes
+
+* **presentation:** support multiple instances ([a49b1db](https://github.com/sanity-io/visual-editing/commit/a49b1db2341df5d33b4cd1354ff79f07b04d5462))
+
 ## [0.6.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.3-pink-lizard...presentation-v0.6.4-pink-lizard) (2023-11-07)
 
 

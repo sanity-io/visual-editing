@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.2.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.1.3-pink-lizard...groq-store-v5.2.0-pink-lizard) (2023-11-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* lazy load live mode ([#281](https://github.com/sanity-io/visual-editing/issues/281))
+
+### Bug Fixes
+
+* lazy load live mode ([#281](https://github.com/sanity-io/visual-editing/issues/281)) ([e52991c](https://github.com/sanity-io/visual-editing/commit/e52991cc974df76647c4ede51de16527c14e6c10))
+
 ## [5.1.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.1.2-pink-lizard...groq-store-v5.1.3-pink-lizard) (2023-11-07)
 
 
