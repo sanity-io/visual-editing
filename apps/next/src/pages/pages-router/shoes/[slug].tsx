@@ -6,26 +6,27 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { query, useQuery } from '../../../components/useQuery'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
+import { ContentSourceMap } from '@sanity/client'
 
 type Props = {
   params: { slug: string }
-  initialData: ShoeResult
+  initial: { data: ShoeResult; sourceMap: ContentSourceMap | undefined }
 }
 
 export const getServerSideProps = (async (context) => {
   const { params } = context
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
   if (!slug) throw new Error('slug is required')
-  const { data: initialData } = await query<ShoeResult>(shoe, {
+  const initial = await query<ShoeResult>(shoe, {
     slug,
   } satisfies ShoeParams)
-  return { props: { params: { slug }, initialData } }
+  return { props: { params: { slug }, initial } }
 }) satisfies GetServerSideProps<Props>
 
 export default function ShoePage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ) {
-  const { initialData, params } = props
+  const { initial, params } = props
 
   if (!params.slug) {
     throw new Error('No slug, 404?')
@@ -35,7 +36,7 @@ export default function ShoePage(
     data: product,
     error,
     loading,
-  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initialData })
+  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
 
   if (error) {
     throw error

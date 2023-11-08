@@ -9,14 +9,17 @@ import { computed, type Ref } from 'vue'
 
 export type * from '@sanity/core-loader'
 
-export type UseQueryHook = <Response = unknown, Error = unknown>(
+export type UseQueryHook = <
+  QueryResponseResult = unknown,
+  QueryResponseError = unknown,
+>(
   query: string,
   params?: QueryParams,
 ) => {
-  data: Ref<Response>
+  data: Ref<QueryResponseResult>
   sourceMap: Ref<ContentSourceMap>
   loading: Ref<boolean>
-  error: Ref<Error>
+  error: Ref<QueryResponseError>
 }
 export type EnableLiveMode = (options: EnableLiveModeOptions) => void
 
@@ -29,11 +32,17 @@ export const createQueryStore = (
   const { createFetcherStore, enableLiveMode } = createCoreQueryStore(options)
 
   const DEFAULT_PARAMS = {}
-  const useQuery: UseQueryHook = <Response = unknown, Error = unknown>(
+  const useQuery: UseQueryHook = <
+    QueryResponseResult = unknown,
+    QueryResponseError = unknown,
+  >(
     query: string,
     params: QueryParams = DEFAULT_PARAMS,
   ) => {
-    const $fetch = createFetcherStore<Response, Error>(query, params)
+    const $fetch = createFetcherStore<QueryResponseResult, QueryResponseError>(
+      query,
+      params,
+    )
     const snapshot = useStore($fetch)
 
     return {

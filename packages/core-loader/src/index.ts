@@ -36,12 +36,21 @@ export interface CreateQueryStoreOptions {
 
 /** @public */
 export interface QueryStore {
-  createFetcherStore: <Response = unknown, Error = unknown>(
+  createFetcherStore: <
+    QueryResponseResult = unknown,
+    QueryResponseError = unknown,
+  >(
     query: string,
     params?: QueryParams,
-    initialData?: Response,
-    initialSourceMap?: ContentSourceMap,
-  ) => MapStore<QueryStoreState<Response, Error>>
+    /**
+     * Initial `data` and `sourceMap`, used with SSR hydration and is required if `ssr: true`
+     * and an optional speed optimization if `ssr: false`
+     */
+    initial?: {
+      data: QueryResponseResult
+      sourceMap: ContentSourceMap | undefined
+    },
+  ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
   /**
    * When `ssr: true` you call this in your server entry point that imports the result of `createQueryStore` instance.
    * It's required to call it before any data fetching is done, and it can only be called once.
@@ -50,8 +59,8 @@ export interface QueryStore {
   enableLiveMode: EnableLiveMode
   /** @internal */
   unstable__cache: Cache & {
-    fetch: <Response>(key: string) => Promise<{
-      result: Response
+    fetch: <QueryResponseResult>(key: string) => Promise<{
+      result: QueryResponseResult
       resultSourceMap: ContentSourceMap | undefined
     }>
   }
@@ -110,11 +119,11 @@ export const createQueryStore = (
     defaultFetcherCreated = true
 
     return {
-      hydrate: (_query, _params, initialData, initialSourceMap) => ({
+      hydrate: (_query, _params, initial) => ({
         loading: true,
         error: undefined,
-        data: initialData,
-        sourceMap: initialSourceMap,
+        data: initial?.data,
+        sourceMap: initial?.sourceMap,
       }),
       fetch: (query, params, $fetch, controller) => {
         if (controller.signal.aborted) return
@@ -156,28 +165,32 @@ export const createQueryStore = (
   })
 
   const createFetcherStore: QueryStore['createFetcherStore'] = <
-    Response,
-    ErrorType,
+    QueryResponseResult,
+    QueryResponseError,
   >(
     query: string,
     params: QueryParams = {},
-    initialData?: Response,
-    initialSourceMap?: ContentSourceMap,
-  ): MapStore<QueryStoreState<Response, ErrorType>> => {
+    initial?: Pick<
+      QueryStoreState<QueryResponseResult, QueryResponseError>,
+      'data' | 'sourceMap'
+    >,
+  ): MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>> => {
     const fetcher = $fetcher.get()
-    const $fetch = map<QueryStoreState<Response, ErrorType>>(
+    const $fetch = map<
+      QueryStoreState<QueryResponseResult, QueryResponseError>
+    >(
       fetcher
-        ? fetcher.hydrate(query, params, initialData, initialSourceMap)
+        ? fetcher.hydrate(query, params, initial)
         : {
             loading: false,
             error:
-              typeof initialData === 'undefined'
+              typeof initial?.data === 'undefined'
                 ? (new Error(
-                    `The \`initialData\` option is required when \`ssr: true\``,
-                  ) as ErrorType)
+                    `The \`initial\` option is required when \`ssr: true\``,
+                  ) as QueryResponseError)
                 : undefined,
-            data: initialData,
-            sourceMap: initialSourceMap,
+            data: initial?.data,
+            sourceMap: initial?.sourceMap,
           },
     )
 

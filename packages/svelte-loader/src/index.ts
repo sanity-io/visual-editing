@@ -9,10 +9,10 @@ import {
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): {
-  query: <Response = unknown, Error = unknown>(
+  query: <QueryResponseResult = unknown, QueryResponseError = unknown>(
     query: string,
     params?: QueryParams,
-  ) => MapStore<QueryStoreState<Response, Error>>
+  ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
   enableLiveMode: ReturnType<typeof createCoreQueryStore>['enableLiveMode']
 } => {
   const { createFetcherStore, enableLiveMode } = createCoreQueryStore(options)

@@ -9,10 +9,10 @@ import type { MapStore } from 'nanostores'
 export type { ContentSourceMap, MapStore, QueryParams }
 
 /** @public */
-export interface QueryStoreState<Response, Error> {
+export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
   loading: boolean
-  error: Error | undefined
-  data: Response | undefined
+  error: QueryResponseError | undefined
+  data: QueryResponseResult | undefined
   sourceMap: ContentSourceMap | undefined
 }
 
@@ -52,16 +52,18 @@ export type SetFetcher = (fetcher: Fetcher) => () => void
 
 /** @internal */
 export interface Fetcher {
-  hydrate: <Response, Error>(
+  hydrate: <QueryResponseResult, QueryResponseError>(
     query: string,
     params: QueryParams,
-    initialData?: Response,
-    initialSourceMap?: ContentSourceMap,
-  ) => QueryStoreState<Response, Error>
-  fetch: <Response, Error>(
+    initial?: Pick<
+      QueryStoreState<QueryResponseResult, QueryResponseError>,
+      'data' | 'sourceMap'
+    >,
+  ) => QueryStoreState<QueryResponseResult, QueryResponseError>
+  fetch: <QueryResponseResult, QueryResponseError>(
     query: string,
     params: QueryParams,
-    $fetch: MapStore<QueryStoreState<Response, Error>>,
+    $fetch: MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>,
     controller: AbortController,
   ) => void
 }

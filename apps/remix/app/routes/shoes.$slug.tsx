@@ -19,7 +19,7 @@ export default function ShoePage() {
     throw new Error('No slug, 404?')
   }
 
-  const { data: initialData } = useLoaderData<typeof loader>()
+  const initial = useLoaderData<typeof loader>()
   const {
     data: product,
     error,
@@ -29,7 +29,7 @@ export default function ShoePage() {
     {
       slug,
     } satisfies ShoeParams,
-    { initialData },
+    { initial },
   )
   const loading = !product && _loading
 

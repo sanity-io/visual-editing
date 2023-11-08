@@ -107,21 +107,21 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const unlistenConnection = $connected.listen((connected) => {
     if (connected) {
       unsetFetcher = setFetcher({
-        hydrate: (query, params, initialData, initialSourceMap) => {
+        hydrate: (query, params, initial) => {
           const key = JSON.stringify({
             perspective: $perspective.get(),
             query,
             params,
           })
-          if ((!cache.has(key) && initialData) || initialSourceMap) {
+          if (!cache.has(key) && initial?.data) {
             cache.set(key, {
               projectId,
               dataset,
               perspective: $perspective.get(),
               query,
               params,
-              result: initialData,
-              resultSourceMap: initialSourceMap,
+              result: initial.data,
+              resultSourceMap: initial.sourceMap,
             })
           }
           const { result, resultSourceMap } = cache.get(key) || {}
@@ -133,10 +133,12 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             sourceMap: resultSourceMap,
           }
         },
-        fetch: <Response, Error>(
+        fetch: <QueryResponseResult, QueryResponseError>(
           query: string,
           params: QueryParams,
-          $fetch: MapStore<QueryStoreState<Response, Error>>,
+          $fetch: MapStore<
+            QueryStoreState<QueryResponseResult, QueryResponseError>
+          >,
           controller: AbortController,
         ) => {
           try {
@@ -155,7 +157,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             $fetch.setKey('error', undefined)
             if (controller.signal.aborted) return
           } catch (error: unknown) {
-            $fetch.setKey('error', error as Error)
+            $fetch.setKey('error', error as QueryResponseError)
             $fetch.setKey('loading', false)
           }
         },

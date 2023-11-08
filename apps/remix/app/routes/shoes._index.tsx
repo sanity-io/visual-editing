@@ -11,17 +11,12 @@ export const loader = async () => {
 }
 
 export default function ShoesPage() {
-  const { data: initialData, sourceMap: initialSourceMap } =
-    useLoaderData<typeof loader>()
+  const initial = useLoaderData<typeof loader>()
   const {
     data: products,
     error,
     loading: _loading,
-  } = useQuery<ShoesListResult>(
-    shoesList,
-    {},
-    { initialData, initialSourceMap },
-  )
+  } = useQuery<ShoesListResult>(shoesList, {}, { initial } as any)
   const loading = !products?.length && _loading
 
   if (error) {
