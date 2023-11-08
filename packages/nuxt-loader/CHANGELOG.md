@@ -6,6 +6,25 @@
   * dependencies
     * @sanity/core-loader bumped to 0.5.1-pink-lizard
 
+## [0.6.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.5.4-pink-lizard...nuxt-loader-v0.6.0-pink-lizard) (2023-11-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* `initialData` and `initialSourceMap` are now grouped by `initial`
+
+### Bug Fixes
+
+* `initialData` and `initialSourceMap` are now grouped by `initial` ([30f8cfd](https://github.com/sanity-io/visual-editing/commit/30f8cfdf284c940e5589820e1c72b5c50da17cbd))
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.9 ([#295](https://github.com/sanity-io/visual-editing/issues/295)) ([6335f36](https://github.com/sanity-io/visual-editing/commit/6335f36c0c5324499ccbd42256e3a5d317e3a709))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.7.0-pink-lizard
+
 ## [0.5.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.5.3-pink-lizard...nuxt-loader-v0.5.4-pink-lizard) (2023-11-08)
 
 
