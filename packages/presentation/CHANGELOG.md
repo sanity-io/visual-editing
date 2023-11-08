@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.7.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.8-pink-lizard...presentation-v0.7.0-pink-lizard) (2023-11-08)
+
+
+### Features
+
+* **presentation:** add 'Open in Desk' action ([d989723](https://github.com/sanity-io/visual-editing/commit/d989723bcbad388a17426cce43ed9ebd58aacd73))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.8.0-pink-lizard.9 ([#295](https://github.com/sanity-io/visual-editing/issues/295)) ([6335f36](https://github.com/sanity-io/visual-editing/commit/6335f36c0c5324499ccbd42256e3a5d317e3a709))
+* **presentation:** show 'Open in Desk' only in header ([4619cbf](https://github.com/sanity-io/visual-editing/commit/4619cbf976e1945111196c20399762554297f85c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped to 5.2.4-pink-lizard
+
 ## [0.6.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.6.7-pink-lizard...presentation-v0.6.8-pink-lizard) (2023-11-08)
 
 
