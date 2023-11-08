@@ -44,6 +44,7 @@ export default function LoaderQueries(props: {
       liveDocument={liveDocument}
       client={client}
       perspective={perspective}
+      refreshInterval={activePerspective ? 2000 : 0}
     >
       {Object.entries(liveQueries).map(([key, { query, params }]) => (
         <QuerySubscription
