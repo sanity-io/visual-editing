@@ -9,10 +9,7 @@ const workspace = workspaces['page-builder-demo']
 
 export const client = getClient()
 
-const { useQuery: _useQuery, useLiveMode } = createQueryStore({
-  client,
-  allowStudioOrigin: studioUrl,
-})
+const { useQuery: _useQuery, useLiveMode } = createQueryStore({ client })
 
 const context: SanityNodeContext = {
   projectId: workspace.projectId,
