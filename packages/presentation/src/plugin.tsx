@@ -11,6 +11,7 @@ import {
 import { DEFAULT_TOOL_NAME } from './constants'
 import { PresentationDocumentHeader } from './document/PresentationDocumentHeader'
 import { PresentationDocumentProvider } from './document/PresentationDocumentProvider'
+import { openInDesk } from './fieldActions/openInDesk'
 import { getIntentState } from './getIntentState'
 import { router } from './router'
 import { PresentationPluginOptions } from './types'
@@ -45,6 +46,12 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
         unstable_comments: {
           enabled: true,
         },
+
+        unstable_fieldActions: (prev) => [
+          // prevent duplication
+          ...prev.filter((a) => a.name !== openInDesk.name),
+          openInDesk,
+        ],
       },
 
       form: {
