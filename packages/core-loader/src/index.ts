@@ -120,7 +120,8 @@ export const createQueryStore = (
 
     return {
       hydrate: (_query, _params, initial) => ({
-        loading: true,
+        loading:
+          initial?.data === undefined || initial?.sourceMap === undefined,
         error: undefined,
         data: initial?.data,
         sourceMap: initial?.sourceMap,
