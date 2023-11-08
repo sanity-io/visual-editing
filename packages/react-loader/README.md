@@ -80,7 +80,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   })
 }
 
-export default function ShoePage() {
+export default function ProductPage() {
   const { params, initial } = useLoaderData<typeof loader>()
 
   if (!params.slug || !initial.data?.slug?.current) {

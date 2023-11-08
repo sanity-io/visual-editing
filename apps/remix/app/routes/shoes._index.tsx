@@ -7,11 +7,11 @@ import { query } from '~/sanity.loader.server'
 import { urlFor, urlForCrossDatasetReference } from '~/sanity'
 
 export const loader = async () => {
-  return json(await query<ShoesListResult>(shoesList))
+  return json({ initial: await query<ShoesListResult>(shoesList) })
 }
 
 export default function ShoesPage() {
-  const initial = useLoaderData<typeof loader>()
+  const { initial } = useLoaderData<typeof loader>()
   const {
     data: products,
     error,

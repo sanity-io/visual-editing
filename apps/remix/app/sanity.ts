@@ -20,7 +20,8 @@ export const client = createClient({
         const { workspace, tool } = workspaces['cross-dataset-references']
         return { baseUrl, workspace, tool }
       }
-      return { baseUrl }
+      const { workspace, tool } = workspaces['remix']
+      return { baseUrl, workspace, tool }
     },
   },
 })

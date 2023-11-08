@@ -1,5 +1,5 @@
 import { PortableText } from '@portabletext/react'
-import { Link, useLoaderData, useParams } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import { urlFor, urlForCrossDatasetReference } from '~/sanity'
@@ -8,29 +8,21 @@ import { query } from '~/sanity.loader.server'
 import { useQuery } from '~/sanity.loader'
 
 export const loader: LoaderFunction = async ({ params }) => {
-  return json(await query<ShoeResult>(shoe, params))
+  return json({ params, initial: await query<ShoeResult>(shoe, params) })
 }
 
 export default function ShoePage() {
-  const params = useParams()
-  const slug = params.slug
+  const { params, initial } = useLoaderData<typeof loader>()
 
-  if (!slug) {
+  if (!params.slug) {
     throw new Error('No slug, 404?')
   }
 
-  const initial = useLoaderData<typeof loader>()
   const {
     data: product,
     error,
     loading: _loading,
-  } = useQuery<ShoeResult>(
-    shoe,
-    {
-      slug,
-    } satisfies ShoeParams,
-    { initial },
-  )
+  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
   const loading = !product && _loading
 
   if (error) {
@@ -65,7 +57,7 @@ export default function ShoePage() {
           </li>
           <li className="text-sm" style={{ ['textWrap' as any]: 'balance' }}>
             <Link
-              to={`/shoes/${slug}`}
+              to={`/shoes/${params.slug}`}
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
