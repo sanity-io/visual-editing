@@ -3,6 +3,7 @@ import { studioUrl } from 'apps-common/env'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useLiveMode } from './useQuery'
+import { client } from './sanity'
 
 export default function VisualEditing() {
   const router = useRouter()
@@ -45,7 +46,13 @@ export default function VisualEditing() {
     router?.replace,
   ])
 
-  useLiveMode({ allowStudioOrigin: studioUrl })
+  useLiveMode({ allowStudioOrigin: studioUrl, client })
+  useEffect(() => {
+    if (window === parent) {
+      // If not an iframe, turn off Draft Mode
+      location.href = '/api/disable-pages-draft'
+    }
+  }, [])
 
   return null
 }

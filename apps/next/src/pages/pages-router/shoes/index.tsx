@@ -3,15 +3,32 @@ import { formatCurrency } from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useQuery } from '../../../components/useQuery'
+import { query } from '../../../components/useQuery.server'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { ContentSourceMap } from '@sanity/client'
+import type { SharedProps } from '../../_app'
 
-export default function ShoesPage() {
+interface Props extends SharedProps {
+  initial: { data: ShoesListResult; sourceMap: ContentSourceMap | undefined }
+}
+
+export const getStaticProps = (async (context) => {
+  const { draftMode = false } = context
+  const initial = await query<ShoesListResult>(shoesList)
+  return { props: { draftMode, initial }, revalidate: 1 }
+}) satisfies GetStaticProps<Props>
+
+export default function ShoesPage(
+  props: InferGetStaticPropsType<typeof getStaticProps>,
+) {
+  const { draftMode, initial } = props
   const {
     data: products,
     error,
     loading,
-  } = useQuery<ShoesListResult>(shoesList)
-  console.log({ loading, products })
+  } = useQuery<ShoesListResult>(shoesList, {}, { initial })
+  console.log({ draftMode, loading, products })
 
   if (error) {
     throw error

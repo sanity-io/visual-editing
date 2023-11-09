@@ -6,13 +6,20 @@ import '../tailwind.css'
 
 const VisualEditing = dynamic(() => import('../components/VisualEditing'))
 
-export default function App({ Component, pageProps }: AppProps) {
+export interface SharedProps {
+  draftMode: boolean
+}
+
+export default function App({ Component, pageProps }: AppProps<SharedProps>) {
+  const { draftMode } = pageProps
   return (
     <>
       <Component {...pageProps} />
-      <Suspense>
-        <VisualEditing />
-      </Suspense>
+      {draftMode && (
+        <Suspense>
+          <VisualEditing />
+        </Suspense>
+      )}
     </>
   )
 }

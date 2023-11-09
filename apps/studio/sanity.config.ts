@@ -53,10 +53,10 @@ const presentationWorkspaces = Object.entries({
   next: {
     'app-router':
       process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/shoes',
+      'http://localhost:3001/api/draft',
     'pages-router':
       process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/pages-router/shoes',
+      'http://localhost:3001/api/pages-draft',
   },
   nuxt:
     process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',

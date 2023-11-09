@@ -1,30 +1,43 @@
 import { PortableText } from '@portabletext/react'
 import { shoe, type ShoeParams, type ShoeResult } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import type {
+  GetStaticProps,
+  GetStaticPaths,
+  InferGetStaticPropsType,
+} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { query, useQuery } from '../../../components/useQuery'
+import { useQuery } from '../../../components/useQuery'
+import { query } from '../../../components/useQuery.server'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
 import { ContentSourceMap } from '@sanity/client'
+import type { SharedProps } from '../../_app'
 
-type Props = {
+interface Props extends SharedProps {
   params: { slug: string }
   initial: { data: ShoeResult; sourceMap: ContentSourceMap | undefined }
 }
 
-export const getServerSideProps = (async (context) => {
-  const { params } = context
+export const getStaticProps = (async (context) => {
+  const { draftMode = false, params } = context
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
   if (!slug) throw new Error('slug is required')
   const initial = await query<ShoeResult>(shoe, {
     slug,
   } satisfies ShoeParams)
-  return { props: { params: { slug }, initial } }
-}) satisfies GetServerSideProps<Props>
+  return { props: { draftMode, params: { slug }, initial }, revalidate: 1 }
+}) satisfies GetStaticProps<Props>
+
+export const getStaticPaths = (async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}) satisfies GetStaticPaths
 
 export default function ShoePage(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>,
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const { initial, params } = props
 
