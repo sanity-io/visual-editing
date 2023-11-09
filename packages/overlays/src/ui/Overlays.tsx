@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react'
 import styled from 'styled-components'
-import { type VisualEditingMsg } from 'visual-editing-helpers'
+import { isModKeyEvent, type VisualEditingMsg } from 'visual-editing-helpers'
 
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
@@ -118,6 +118,41 @@ export const Overlays: FunctionComponent<{
       controller?.deactivate()
     }
   }, [channel, controller, overlayEnabled])
+
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (event.metaKey) {
+        event.preventDefault()
+        const newEvent = new MouseEvent(event.type, {
+          ...event,
+          metaKey: false,
+          bubbles: true,
+          cancelable: true,
+        })
+        event.target?.dispatchEvent(newEvent)
+      }
+    }
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (isModKeyEvent(e)) {
+        setOverlayEnabled((enabled) => !enabled)
+      }
+    }
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (isModKeyEvent(e)) {
+        setOverlayEnabled((enabled) => !enabled)
+      }
+    }
+    window.addEventListener('click', handleClick)
+    window.addEventListener('keydown', handleKeydown)
+    window.addEventListener('keyup', handleKeyUp)
+
+    return () => {
+      window.removeEventListener('click', handleClick)
+      window.removeEventListener('keydown', handleKeydown)
+      window.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [setOverlayEnabled])
 
   useEffect(() => {
     return history?.subscribe((update) => {

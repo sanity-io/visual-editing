@@ -186,4 +186,5 @@ export interface _EventHandlers {
   click: (event: MouseEvent) => void
   mouseenter: (event: MouseEvent) => void
   mouseleave: (event: MouseEvent) => void
+  mousemove: (event: MouseEvent) => void
 }

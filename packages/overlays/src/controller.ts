@@ -54,12 +54,19 @@ export function createOverlayController({
     el.addEventListener('click', handlers.click, {
       capture: true,
     })
-    el.addEventListener('mouseenter', handlers.mouseenter)
-    el.addEventListener('mouseleave', handlers.mouseleave)
+    // We listen for the initial mousemove event, in case the overlay is enabled whilst the cursor is already over an element
+    // mouseenter and mouseleave listeners are attached within this handler
+    el.addEventListener('mousemove', handlers.mousemove, {
+      once: true,
+      capture: true,
+    })
   }
 
   function removeEventHandlers(el: HTMLElement, handlers: _EventHandlers) {
     el.removeEventListener('click', handlers.click, {
+      capture: true,
+    })
+    el.removeEventListener('mousemove', handlers.mousemove, {
       capture: true,
     })
     el.removeEventListener('mouseenter', handlers.mouseenter)
@@ -108,6 +115,7 @@ export function createOverlayController({
    */
   function registerElement({ elements, sanity }: _ResolvedElement) {
     const { element, measureElement } = elements
+
     const eventHandlers: _EventHandlers = {
       click(event) {
         const target = event.target as HTMLElement | null
@@ -121,6 +129,14 @@ export function createOverlayController({
             id,
             sanity,
           })
+        }
+      },
+      mousemove(event) {
+        eventHandlers.mouseenter(event)
+        const el = event.currentTarget as HTMLElement | null
+        if (el) {
+          el.addEventListener('mouseenter', eventHandlers.mouseenter)
+          el.addEventListener('mouseleave', eventHandlers.mouseleave)
         }
       },
       mouseenter() {

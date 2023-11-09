@@ -20,6 +20,7 @@ import {
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
+  isModKeyEvent,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
@@ -285,6 +286,25 @@ export default function PresentationTool(props: {
     (document: SanityDocument | null) => setLiveDocument(document),
     [],
   )
+
+  useEffect(() => {
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (isModKeyEvent(e)) {
+        toggleOverlay()
+      }
+    }
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (isModKeyEvent(e)) {
+        toggleOverlay()
+      }
+    }
+    window.addEventListener('keydown', handleKeydown)
+    window.addEventListener('keyup', handleKeyUp)
+    return () => {
+      window.removeEventListener('keydown', handleKeydown)
+      window.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [toggleOverlay])
 
   return (
     <>
