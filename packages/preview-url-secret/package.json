@@ -26,7 +26,25 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./create-secret": {
+      "types": "./dist/create-secret.d.ts",
+      "source": "./src/_exports/create-secret.ts",
+      "require": "./dist/create-secret.cjs",
+      "node": {
+        "module": "./dist/create-secret.js",
+        "import": "./dist/create-secret.cjs.js"
+      },
+      "import": "./dist/create-secret.js",
+      "default": "./dist/create-secret.js"
+    },
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "create-secret": [
+        "./dist/create-secret.d.ts"
+      ]
+    }
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
