@@ -16,7 +16,7 @@ import {
   tag,
   type UrlSecretId,
 } from './isValidSecret'
-import { MissingSlug } from '../types'
+import { MissingSlug } from '../src/types'
 import { patchUrlSecret } from './utils'
 
 export type { DefineUrlResolverOptions, UrlSecretId }

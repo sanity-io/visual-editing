@@ -8,7 +8,7 @@ import {
   tag,
   UrlSecretId,
 } from './isValidSecret'
-import { SetError } from '../types'
+import { SetError } from '../src/types'
 import { getExpiresAt, patchUrlSecret } from './utils'
 
 export interface GetUrlSecretProps {

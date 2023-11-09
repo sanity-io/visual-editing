@@ -1,4 +1,4 @@
-import { name } from '../../package.json'
+import { name } from '../package.json'
 
 // updated within the hour, if it's older it'll create a new secret or return null
 export const SECRET_TTL = 60 * 60

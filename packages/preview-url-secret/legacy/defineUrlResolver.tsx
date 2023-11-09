@@ -1,6 +1,6 @@
 import type { SanityDocument } from 'sanity'
 
-import { MissingSlug, UrlState } from '../types'
+import { MissingSlug, UrlState } from '../src/types'
 
 export type { UrlState }
 
