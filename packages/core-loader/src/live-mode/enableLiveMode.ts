@@ -1,5 +1,6 @@
 import {
   type ClientPerspective,
+  type ContentSourceMap,
   type ContentSourceMapDocuments,
   type QueryParams,
   SanityClient,
@@ -39,7 +40,19 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const $perspective = atom<Exclude<ClientPerspective, 'raw'>>('previewDrafts')
   const $connected = atom(false)
 
-  const cache = new Map()
+  const cache = new Map<
+    string,
+    {
+      projectId: string
+      dataset: string
+      perspective: ClientPerspective
+      query: string
+      params: QueryParams
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      result: any
+      resultSourceMap?: ContentSourceMap | undefined
+    }
+  >()
 
   const targetOrigin = new URL(allowStudioOrigin, location.origin).origin
   const channel = createChannel<VisualEditingMsg>({
@@ -81,9 +94,10 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       ) {
         const { perspective, query, params } = data
         if (
+          data.result !== undefined &&
+          data.resultSourceMap !== undefined &&
           isStegaClient(client) &&
-          (client as SanityStegaClient).config().stega?.enabled &&
-          data.resultSourceMap
+          (client as SanityStegaClient).config().stega?.enabled
         ) {
           cache.set(JSON.stringify({ perspective, query, params }), {
             ...data,
@@ -113,24 +127,25 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             query,
             params,
           })
-          if (!cache.has(key) && initial?.data) {
-            cache.set(key, {
-              projectId,
-              dataset,
-              perspective: $perspective.get(),
-              query,
-              params,
-              result: initial.data,
-              resultSourceMap: initial.sourceMap,
-            })
+          const snapshot = cache.get(key)
+          if (
+            snapshot?.result !== undefined &&
+            snapshot?.resultSourceMap !== undefined
+          ) {
+            return {
+              loading: false,
+              error: undefined,
+              data: snapshot.result,
+              sourceMap: snapshot.resultSourceMap,
+            }
           }
-          const { result, resultSourceMap } = cache.get(key) || {}
 
           return {
-            loading: !cache.has(key),
+            loading:
+              initial?.data === undefined || initial?.sourceMap === undefined,
             error: undefined,
-            data: result,
-            sourceMap: resultSourceMap,
+            data: initial?.data,
+            sourceMap: initial?.sourceMap,
           }
         },
         fetch: <QueryResponseResult, QueryResponseError>(
