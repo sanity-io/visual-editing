@@ -1,22 +1,39 @@
 import { createPreviewSecret } from '@sanity/preview-url-secret/create-secret'
-import { useActiveWorkspace, useClient } from 'sanity'
+import { definePreviewUrl } from '@sanity/preview-url-secret/define-preview-url'
+import { useMemo, useState } from 'react'
+import { SanityClient, useActiveWorkspace, useClient } from 'sanity'
 import { suspend } from 'suspend-react'
 
-import { PreviewUrlResolver } from './types'
+import { PreviewUrlOption } from './types'
 
 export function usePreviewUrl(
-  resolvePreviewUrl: string | PreviewUrlResolver,
+  _previewUrl: PreviewUrlOption,
   toolName: string,
 ): string {
   const client = useClient({ apiVersion: '2023-10-16' })
   const workspace = useActiveWorkspace()
   const basePath = workspace?.activeWorkspace?.basePath
   const workspaceName = workspace?.activeWorkspace?.name || 'default'
+  const [previewUrl] = useState(() => _previewUrl)
+  const resolvePreviewUrl = useMemo(() => {
+    if (typeof previewUrl === 'object') {
+      return definePreviewUrl<SanityClient>(previewUrl)
+    }
+    return previewUrl
+  }, [previewUrl])
 
   return suspend(async (): Promise<string> => {
     if (typeof resolvePreviewUrl === 'function') {
       const previewUrlSecret = await createPreviewSecret()
-      return resolvePreviewUrl({ client, previewUrlSecret })
+      const searchParams =
+        typeof document === 'undefined'
+          ? new URLSearchParams()
+          : new URLSearchParams(document.location.search)
+      return resolvePreviewUrl({
+        client,
+        previewUrlSecret,
+        previewSearchParam: searchParams.get('preview'),
+      })
     }
     return resolvePreviewUrl
   }, [

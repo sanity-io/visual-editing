@@ -4,6 +4,8 @@ import { deskTool } from 'sanity/desk'
 import {
   presentationTool,
   type PresentationPluginOptions,
+  type PreviewUrlResolverOptions,
+  type PreviewUrlOption,
 } from '@sanity/presentation'
 import { schema } from 'apps-common'
 import { workspaces } from 'apps-common/env'
@@ -29,7 +31,6 @@ const devMode = (() => {
 
 // If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
 function maybeGitBranchUrl(url: string) {
-  // console.log('maybeGitBranchUrl', url)
   if (
     !url.includes('.sanity.build') ||
     process.env.SANITY_STUDIO_VERCEL_ENV !== 'preview' ||
@@ -42,7 +43,26 @@ function maybeGitBranchUrl(url: string) {
     '',
   )
   const previewUrl = url.replace('.sanity.build', `-git-${branchUrl}`)
-  // console.log({ branchUrl, previewUrl })
+  return previewUrl
+}
+
+// Some apps have a Draft Mode, some don't
+function definePreviewUrl(
+  _previewUrl: string,
+  workspaceName: string,
+  toolName: string,
+): PreviewUrlOption {
+  const previewUrl = maybeGitBranchUrl(_previewUrl)
+  if (workspaceName === 'next' && toolName === 'pages-router') {
+    const { origin, pathname } = new URL(previewUrl)
+    const draftMode = {
+      enable: '/api/pages-draft',
+      check: '/api/pages-check-draft',
+      disable: '/api/pages-disable-draft',
+    } satisfies PreviewUrlResolverOptions['draftMode']
+    return { origin, preview: pathname, draftMode }
+  }
+
   return previewUrl
 }
 
@@ -53,10 +73,10 @@ const presentationWorkspaces = Object.entries({
   next: {
     'app-router':
       process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/api/draft',
+      'http://localhost:3001/shoes',
     'pages-router':
       process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/api/pages-draft',
+      'http://localhost:3001/shoes',
   },
   nuxt:
     process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
@@ -85,7 +105,7 @@ const presentationWorkspaces = Object.entries({
       plugins: [
         presentationTool({
           name: toolName,
-          previewUrl: maybeGitBranchUrl(previewUrl),
+          previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           locate,
           devMode,
           // components:
@@ -116,7 +136,7 @@ const presentationWorkspaces = Object.entries({
         )!
         return presentationTool({
           name: toolName,
-          previewUrl: maybeGitBranchUrl(previewUrl),
+          previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           // @TODO fix the locator for the pages-router
           locate: toolName === 'pages-router' ? undefined : locate,
           devMode,

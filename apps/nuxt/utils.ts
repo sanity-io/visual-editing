@@ -14,7 +14,6 @@ export function getClient() {
     stega: {
       enabled: true,
       studioUrl,
-      logger: console,
     },
   })
 }

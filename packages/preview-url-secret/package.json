@@ -37,12 +37,26 @@
       "import": "./dist/create-secret.js",
       "default": "./dist/create-secret.js"
     },
+    "./define-preview-url": {
+      "types": "./dist/define-preview-url.d.ts",
+      "source": "./src/_exports/define-preview-url.ts",
+      "require": "./dist/define-preview-url.cjs",
+      "node": {
+        "module": "./dist/define-preview-url.js",
+        "import": "./dist/define-preview-url.cjs.js"
+      },
+      "import": "./dist/define-preview-url.js",
+      "default": "./dist/define-preview-url.js"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "create-secret": [
         "./dist/create-secret.d.ts"
+      ],
+      "define-preview-url": [
+        "./dist/define-preview-url.d.ts"
       ]
     }
   },

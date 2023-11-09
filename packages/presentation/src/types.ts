@@ -1,6 +1,12 @@
+import type {
+  PreviewUrlResolver,
+  PreviewUrlResolverOptions,
+} from '@sanity/preview-url-secret/define-preview-url'
 import type { ComponentType } from 'react'
 import type { Observable } from 'rxjs'
 import type { DocumentStore, SanityClient } from 'sanity'
+
+export type { PreviewUrlResolver, PreviewUrlResolverOptions }
 
 export interface DocumentLocation {
   title: string
@@ -28,24 +34,10 @@ export interface NavigatorOptions {
   component: ComponentType
 }
 
-export interface PreviewUrlResolverContext {
-  client: SanityClient
-  /**
-   * A generated secret, used by `@sanity/preview-url-secret` to verify
-   * that the application can securily preview draft content server side.
-   * https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
-   */
-  previewUrlSecret: string
-}
-
-/**
- * Resolve a preview URL asynchronously, it's only called on first render.
- * It receives the current `presentationParams` and a `previewUrlSecret`, but it won't be called
- * again if this context changes.
- */
-export type PreviewUrlResolver = (
-  context: PreviewUrlResolverContext,
-) => Promise<string>
+export type PreviewUrlOption =
+  | string
+  | PreviewUrlResolver<SanityClient>
+  | PreviewUrlResolverOptions
 
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
@@ -53,7 +45,7 @@ export interface PresentationPluginOptions {
   name?: string
   title?: string
   locate?: DocumentLocationResolver
-  previewUrl: string | PreviewUrlResolver
+  previewUrl: PreviewUrlOption
   components?: {
     unstable_navigator?: NavigatorOptions
   }

@@ -11,7 +11,6 @@ export const client = createClient({
   apiVersion,
   stega: {
     enabled: true,
-    logger: console,
     studioUrl: ({ _dataset }) =>
       _dataset === workspaces['cross-dataset-references'].dataset
         ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`

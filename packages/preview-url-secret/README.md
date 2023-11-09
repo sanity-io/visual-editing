@@ -19,6 +19,8 @@ TODO how to verify the secret in an API handler that enables Draft Mode
 
 ## Presentation Tool
 
+@TODO move to presentation tool docs
+
 ```ts
 import { presentationTool } from '@sanity/presentation'
 import { definePreviewUrl } from '@sanity/preview-url-secret/presentation'
@@ -37,11 +39,13 @@ export default defineConfig({
       // You now pass into `definePreviewUrl`, slightly modified:
       previewUrl: definePreviewUrl({
         // You first specify the shared baseUrl:
-        baseUrl: 'http://localhost:3000',
-        previewRoute: '/en/home', // Optional, it's '/' by default
+        origin: 'http://localhost:3000',
+        preview: '/en/home', // Optional, it's '/' by default
         // The API route that securely puts the app in a "Draft Mode"
         // Next.js docs: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
-        draftModeRoute: '/api/draft',
+        draftMode: {
+          enable: '/api/draft',
+        },
       }),
     }),
     deskTool(),
