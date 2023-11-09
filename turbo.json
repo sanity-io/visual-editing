@@ -4,6 +4,7 @@
   "globalEnv": ["RUNNER_OS"],
   "pipeline": {
     "build": {
+      "env": ["GITHUB_ACTIONS"],
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
     },

@@ -4,7 +4,6 @@ import baseConfig from '../../package.config'
 
 export default defineConfig({
   ...baseConfig,
-  minify: true,
   // `@sanity/overlays` isn't designed to be server side rendered
   runtime: 'browser',
   define: {
