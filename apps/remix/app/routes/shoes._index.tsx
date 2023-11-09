@@ -15,9 +15,8 @@ export default function ShoesPage() {
   const {
     data: products,
     error,
-    loading: _loading,
+    loading,
   } = useQuery<ShoesListResult>(shoesList, {}, { initial } as any)
-  const loading = !products?.length && _loading
 
   if (error) {
     throw error

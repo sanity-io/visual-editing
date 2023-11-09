@@ -21,9 +21,8 @@ export default function ShoePage() {
   const {
     data: product,
     error,
-    loading: _loading,
+    loading,
   } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
-  const loading = !product && _loading
 
   if (error) {
     throw error
