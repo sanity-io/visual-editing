@@ -1,4 +1,5 @@
 import { getPublishedId } from 'sanity'
+import { SearchParam } from 'sanity/router'
 
 /**
  * @internal
@@ -9,12 +10,16 @@ export function getIntentState(
   _routerState: undefined,
   payload: unknown,
 ):
-  | { type: string; path: string }
+  | { type: string; path: string; _searchParams: SearchParam[] }
   | { intent: string; params: Record<string, string>; payload: unknown } {
-  if (intent === 'edit' && params.id) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id, path, type, tool, ...searchParams } = params
+
+  if (intent === 'edit' && id) {
     return {
-      type: params.type || '*',
-      path: [getPublishedId(params.id), params.path].filter(Boolean).join('.'),
+      type: type || '*',
+      path: [getPublishedId(id), path].filter(Boolean).join('.'),
+      _searchParams: Object.entries(searchParams),
     }
   }
 

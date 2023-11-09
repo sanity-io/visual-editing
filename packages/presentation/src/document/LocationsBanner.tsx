@@ -162,13 +162,10 @@ function LocationItem(props: {
     params: {
       id: documentId,
       type: documentType,
-      // @ts-expect-error The `tool` param is not yet part of the `edit` intent
       tool: toolName,
-    },
-    searchParams: {
       ...presentation?.deskParams,
       preview: node.href,
-    },
+    } as any,
   })
 
   return (

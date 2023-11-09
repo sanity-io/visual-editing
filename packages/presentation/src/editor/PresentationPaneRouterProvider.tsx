@@ -7,7 +7,7 @@ import {
   useCallback,
   useMemo,
 } from 'react'
-import { getPublishedId } from 'sanity'
+import { getPublishedId, useUnique } from 'sanity'
 import {
   BackLinkProps,
   PaneRouterContext,
@@ -61,8 +61,13 @@ const BackLink = forwardRef(function BackLink(
     <StateLink
       {...props}
       ref={ref}
-      searchParams={{ ...deskParams, preview: params.preview }}
-      state={{ type: undefined }}
+      state={{
+        type: undefined,
+        _searchParams: Object.entries({
+          ...deskParams,
+          preview: params.preview,
+        }),
+      }}
       title={undefined}
     />
   )
@@ -94,11 +99,11 @@ export function PresentationPaneRouterProvider(
 ): ReactElement {
   const { children, params, onDeskParams, previewUrl, refs } = props
 
-  const {
-    state: routerState,
-    searchParams: routerSearchParams,
-    resolvePathFromState,
-  } = useRouter()
+  const { state: routerState, resolvePathFromState } = useRouter()
+
+  const routerSearchParams = useUnique(
+    Object.fromEntries(routerState._searchParams || []),
+  )
 
   const createPathWithParams: PaneRouterContextValue['createPathWithParams'] =
     useCallback(
@@ -131,8 +136,11 @@ export function PresentationPaneRouterProvider(
           return (
             <StateLink
               {...restProps}
-              searchParams={{ preview: previewUrl }}
-              state={{ path: ref._id, type: ref._type }}
+              state={{
+                path: ref._id,
+                type: ref._type,
+                _searchParams: Object.entries({ preview: previewUrl }),
+              }}
             />
           )
         }
