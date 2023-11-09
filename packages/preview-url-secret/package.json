@@ -73,7 +73,6 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
-    "test": "tsc --noEmit",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
