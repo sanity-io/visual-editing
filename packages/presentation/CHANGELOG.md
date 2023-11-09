@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.10.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.9.0-pink-lizard...presentation-v0.10.0-pink-lizard) (2023-11-09)
+
+
+### Features
+
+* **overlays:** toggle overlay using mod key ([#228](https://github.com/sanity-io/visual-editing/issues/228)) ([60484e1](https://github.com/sanity-io/visual-editing/commit/60484e1458fdc9f85071cdbca2afc0978fae8041))
+
+
+### Bug Fixes
+
+* **presentation:** complete keyboard implementation ([a931b1b](https://github.com/sanity-io/visual-editing/commit/a931b1b68cf85a17dd1ab8010445313c4d75539a))
+* **presentation:** reset `id` and `type` when preview URL changes ([1c56063](https://github.com/sanity-io/visual-editing/commit/1c560631bd3f6ad4c6da30b274107e934c03b2ea))
+
 ## [0.9.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.8.1-pink-lizard...presentation-v0.9.0-pink-lizard) (2023-11-09)
 
 

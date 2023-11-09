@@ -5,6 +5,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.2.1-pink-lizard...overlays-v2.3.0-pink-lizard) (2023-11-09)
+
+
+### Features
+
+* **overlays:** toggle overlay using mod key ([#228](https://github.com/sanity-io/visual-editing/issues/228)) ([60484e1](https://github.com/sanity-io/visual-editing/commit/60484e1458fdc9f85071cdbca2afc0978fae8041))
+
+
+### Bug Fixes
+
+* **presentation:** complete keyboard implementation ([a931b1b](https://github.com/sanity-io/visual-editing/commit/a931b1b68cf85a17dd1ab8010445313c4d75539a))
+
 ## [2.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.2.0-pink-lizard...overlays-v2.2.1-pink-lizard) (2023-11-08)
 
 
