@@ -11,6 +11,10 @@ import {
   RefreshIcon,
 } from '@sanity/icons'
 import {
+  urlSearchParamPreviewPathname,
+  urlSearchParamPreviewSecret,
+} from '@sanity/preview-url-secret'
+import {
   Box,
   Button,
   ButtonTone,
@@ -40,10 +44,6 @@ import styled from 'styled-components'
 import { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PreviewLocationInput } from './PreviewLocationInput'
-import {
-  urlSearchParamPreviewPathname,
-  urlSearchParamPreviewSecret,
-} from '@sanity/preview-url-secret'
 
 const IFrame = styled.iframe`
   border: 0;
