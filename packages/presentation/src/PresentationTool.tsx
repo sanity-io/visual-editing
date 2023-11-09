@@ -184,6 +184,8 @@ export default function PresentationTool(props: {
           })
         } else if (type === 'overlay/navigate') {
           setParams({
+            id: undefined,
+            type: undefined,
             preview: data.url,
           })
         } else if (type === 'overlay/toggle') {
