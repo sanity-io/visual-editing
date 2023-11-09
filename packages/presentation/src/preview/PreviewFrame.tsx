@@ -145,7 +145,7 @@ export const PreviewFrame = forwardRef<
       params.preview || '/',
       targetOrigin,
     )
-    return previewOrigin === location.origin ? undefined : previewOrigin
+    return previewOrigin === location.origin ? '' : previewOrigin
   }, [params.preview, targetOrigin])
 
   const handleRefresh = useCallback(() => {
@@ -209,14 +209,6 @@ export const PreviewFrame = forwardRef<
                       : 'Enable edit overlay'}
                   </Text>
                 </Box>
-                <Flex gap={1} padding={1} style={{ opacity: 0.75 }}>
-                  <Text muted size={1}>
-                    Cmd
-                  </Text>
-                  <Text muted size={1}>
-                    \
-                  </Text>
-                </Flex>
               </Flex>
             }
             fallbackPlacements={['bottom-start']}
@@ -277,8 +269,8 @@ export const PreviewFrame = forwardRef<
 
           <Box flex={1}>
             <PreviewLocationInput
-              host={previewLocationOrigin}
               onChange={onPathChange}
+              origin={previewLocationOrigin}
               value={previewLocationRoute}
             />
           </Box>
@@ -288,13 +280,11 @@ export const PreviewFrame = forwardRef<
               button={
                 <Button
                   fontSize={1}
-                  // icon={PERSPECTIVE_ICONS[perspective]}
                   iconRight={ChevronDownIcon}
                   mode="bleed"
                   padding={3}
                   space={2}
                   text={PERSPECTIVE_TITLES[perspective]}
-                  // tone={PERSPECTIVE_TONES[perspective]}
                 />
               }
               id="perspective-menu"
@@ -302,11 +292,9 @@ export const PreviewFrame = forwardRef<
                 <Menu style={{ maxWidth: 240 }}>
                   <MenuItem
                     fontSize={1}
-                    // icon={PERSPECTIVE_ICONS['previewDrafts']}
                     onClick={() => setPerspective('previewDrafts')}
                     padding={3}
                     pressed={perspective === 'previewDrafts'}
-                    // text={PERSPECTIVE_TITLES['previewDrafts']}
                     tone={PERSPECTIVE_TONES['previewDrafts']}
                   >
                     <Flex align="flex-start" gap={3}>
@@ -381,18 +369,16 @@ export const PreviewFrame = forwardRef<
             />
           </Flex>
 
-          {/* <Card borderLeft style={{ height: 25, width: 0 }} /> */}
-
           <Flex align="center" flex="none" gap={1}>
             <Tooltip
-              content={<Text size={1}>Full size</Text>}
+              content={<Text size={1}>Full viewport</Text>}
               fallbackPlacements={['bottom-start']}
               padding={2}
               placement="bottom"
               portal
             >
               <Button
-                aria-label="Full size"
+                aria-label="Full viewport"
                 fontSize={1}
                 icon={DesktopIcon}
                 mode="bleed"
@@ -402,14 +388,14 @@ export const PreviewFrame = forwardRef<
               />
             </Tooltip>
             <Tooltip
-              content={<Text size={1}>Narrow</Text>}
+              content={<Text size={1}>Narrow viewport</Text>}
               fallbackPlacements={['bottom-start']}
               padding={2}
               placement="bottom"
               portal
             >
               <Button
-                aria-label="Narrow"
+                aria-label="Narrow viewport"
                 fontSize={1}
                 icon={MobileDeviceIcon}
                 mode="bleed"
