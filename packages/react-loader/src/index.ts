@@ -86,16 +86,11 @@ export const createQueryStore = (
         QueryResponseResult,
         QueryResponseError
       >(query, JSON.parse($params), initial)
-      const controller = new AbortController()
       const unlisten = fetcher.listen((snapshot) => {
-        if (controller.signal.aborted) return
         setSnapshot(snapshot)
       })
 
-      return () => {
-        controller.abort()
-        unlisten()
-      }
+      return () => unlisten()
     }, [$params, initial, query])
     return snapshot
   }
