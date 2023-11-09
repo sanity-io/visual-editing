@@ -86,22 +86,27 @@ export default function PresentationTool(props: {
     const url = new URL(previewUrl, location.href)
     return url.origin
   }, [previewUrl])
-  const [perspective, setPerspective] =
-    useState<ClientPerspective>('previewDrafts')
 
   const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(perspective)
   const [liveQueries, setLiveQueries] = useState<
     Record<
       string,
       { query: string; params: QueryParams; perspective: ClientPerspective }
     >
   >({})
-
   const { defaultPreviewUrl, setParams, params, deskParams } = useParams({
     previewUrl,
   })
+  const [perspective, setPerspective] = useState<ClientPerspective>(() =>
+    params.perspective === 'published' ? params.perspective : 'previewDrafts',
+  )
+  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(perspective)
+  useEffect(() => {
+    if (perspective !== params.perspective || params.perspective) {
+      setParams({ perspective })
+    }
+  }, [params.perspective, perspective, setParams])
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 

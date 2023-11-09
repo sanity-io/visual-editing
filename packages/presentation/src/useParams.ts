@@ -53,6 +53,7 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       type: routerState.type,
       path,
       preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
+      perspective: routerSearchParams.perspective,
       inspect: routerSearchParams.inspect,
       rev: routerSearchParams.rev,
       since: routerSearchParams.since,
@@ -113,6 +114,7 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       type: type === '*' ? undefined : type,
       path,
       preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
+      perspective: routerSearchParams.perspective,
       inspect: routerSearchParams.inspect,
       rev: routerSearchParams.rev,
       since: routerSearchParams.since,
@@ -151,6 +153,7 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
 
     const searchParams = {
       preview: params.preview,
+      perspective: params.perspective,
       inspect: params.inspect,
       rev: params.rev,
       since: params.since,

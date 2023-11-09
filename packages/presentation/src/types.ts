@@ -66,6 +66,7 @@ export interface PresentationParams
     DeskDocumentPaneParams {
   id?: string
   preview?: string
+  perspective?: string
 }
 
 export type SetPresentationParams = (prev: PresentationParams) => void
