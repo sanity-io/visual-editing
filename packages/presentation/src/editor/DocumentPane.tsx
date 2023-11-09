@@ -47,6 +47,7 @@ export const DocumentPane: FunctionComponent<{
         id: documentId,
         type: documentType,
       },
+      title: '',
       type: 'document',
     }),
     [documentId, documentType],

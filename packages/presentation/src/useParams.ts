@@ -1,6 +1,7 @@
 import { studioPath } from '@sanity/client/csm'
 import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useUnique } from 'sanity'
 import {
   NavigateOptions,
   RouterContextValue,
@@ -21,7 +22,7 @@ import {
 function pruneObject<T extends RouterState | PresentationParams>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).filter(
-      ([, value]) => value !== undefined && value !== '',
+      ([, value]) => value !== undefined && value !== '' && value !== null,
     ),
   ) as T
 }
@@ -33,11 +34,12 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
   params: PresentationParams
   setParams: SetPresentationParams
 } {
-  const {
-    navigate: routerNavigate,
-    searchParams: routerSearchParams,
-    state: routerState,
-  } = useRouter() as RouterContextValue & { state: PresentationStateParams }
+  const { navigate: routerNavigate, state: routerState } =
+    useRouter() as RouterContextValue & { state: PresentationStateParams }
+
+  const routerSearchParams = useUnique(
+    Object.fromEntries(routerState._searchParams || []),
+  )
 
   const defaultPreviewUrl = useMemo(
     () => new URL(previewUrl, window.location.origin),
@@ -78,19 +80,20 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
   }, [])
 
   const deskParams = useMemo<DeskDocumentPaneParams>(
-    () => ({
-      inspect: params.inspect,
-      path: params.path,
-      rev: params.rev,
-      since: params.since,
-      template: params.template,
-      view: params.view,
-      // assist
-      pathKey: params.pathKey,
-      instruction: params.instruction,
-      // comments
-      comment: params.comment,
-    }),
+    () =>
+      pruneObject({
+        inspect: params.inspect,
+        path: params.path,
+        rev: params.rev,
+        since: params.since,
+        template: params.template,
+        view: params.view,
+        // assist
+        pathKey: params.pathKey,
+        instruction: params.instruction,
+        // comments
+        comment: params.comment,
+      }),
     [
       params.inspect,
       params.path,
@@ -109,23 +112,25 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
     // decodeURI param in path?
     const { id, path } = parsePath(routerState.path)
 
-    setParams({
-      id,
-      type: type === '*' ? undefined : type,
-      path,
-      preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
-      perspective: routerSearchParams.perspective,
-      inspect: routerSearchParams.inspect,
-      rev: routerSearchParams.rev,
-      since: routerSearchParams.since,
-      template: routerSearchParams.template,
-      view: routerSearchParams.view,
-      // assist
-      pathKey: routerSearchParams.pathKey,
-      instruction: routerSearchParams.instruction,
-      // comments
-      comment: routerSearchParams.comment,
-    })
+    setParams(
+      pruneObject({
+        id,
+        type: type === '*' ? undefined : type,
+        path,
+        preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
+        perspective: routerSearchParams.perspective,
+        inspect: routerSearchParams.inspect,
+        rev: routerSearchParams.rev,
+        since: routerSearchParams.since,
+        template: routerSearchParams.template,
+        view: routerSearchParams.view,
+        // assist
+        pathKey: routerSearchParams.pathKey,
+        instruction: routerSearchParams.instruction,
+        // comments
+        comment: routerSearchParams.comment,
+      }),
+    )
   }, [defaultPreviewUrl, routerSearchParams, routerState, setParams])
 
   const navigate = useMemo(() => {
@@ -151,7 +156,7 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
         )
       : undefined
 
-    const searchParams = {
+    const searchParams = pruneObject({
       preview: params.preview,
       perspective: params.perspective,
       inspect: params.inspect,
@@ -164,10 +169,17 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       instruction: params.instruction,
       // comments
       comment: params.comment,
-    } satisfies PresentationParams as Record<string, string>
+    }) satisfies PresentationParams
 
     const replace = params.preview === previousPreview
-    navigate({ type, path }, { replace, searchParams })
+    navigate(
+      {
+        type,
+        path,
+        _searchParams: Object.entries(searchParams as Record<string, string>),
+      },
+      { replace },
+    )
   }, [navigate, params])
 
   return {
