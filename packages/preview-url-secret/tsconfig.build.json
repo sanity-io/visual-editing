@@ -7,6 +7,6 @@
     "emitDeclarationOnly": true,
     "declarationDir": "dist/dts"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "!src/legacy/**/*.ts",],
   "exclude": ["dist", "node_modules"]
 }
