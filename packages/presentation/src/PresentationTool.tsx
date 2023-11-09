@@ -20,7 +20,8 @@ import {
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
-  isModKeyEvent,
+  isAltKey,
+  isHotkey,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
@@ -289,12 +290,16 @@ export default function PresentationTool(props: {
 
   useEffect(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
-      if (isModKeyEvent(e)) {
+      if (isAltKey(e)) {
         toggleOverlay()
       }
     }
     const handleKeydown = (e: KeyboardEvent) => {
-      if (isModKeyEvent(e)) {
+      if (isAltKey(e)) {
+        toggleOverlay()
+      }
+
+      if (isHotkey(['mod', '\\'], e)) {
         toggleOverlay()
       }
     }

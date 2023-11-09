@@ -1,4 +1,9 @@
-import { studioTheme, ThemeProvider } from '@sanity/ui'
+import {
+  isHTMLAnchorElement,
+  isHTMLElement,
+  studioTheme,
+  ThemeProvider,
+} from '@sanity/ui'
 import { ChannelEventHandler } from 'channels'
 import {
   FunctionComponent,
@@ -10,7 +15,11 @@ import {
   useState,
 } from 'react'
 import styled from 'styled-components'
-import { isModKeyEvent, type VisualEditingMsg } from 'visual-editing-helpers'
+import {
+  isAltKey,
+  isHotkey,
+  type VisualEditingMsg,
+} from 'visual-editing-helpers'
 
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
@@ -121,11 +130,20 @@ export const Overlays: FunctionComponent<{
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
-      if (event.metaKey) {
+      const target = event.target
+
+      // We only need to modify the default behavior if the target is a link
+      const targetsLink = Boolean(
+        isHTMLAnchorElement(target) ||
+          (isHTMLElement(target) && target.closest('a')),
+      )
+
+      if (targetsLink && event.altKey) {
         event.preventDefault()
+        event.stopPropagation()
         const newEvent = new MouseEvent(event.type, {
           ...event,
-          metaKey: false,
+          altKey: false,
           bubbles: true,
           cancelable: true,
         })
@@ -134,15 +152,21 @@ export const Overlays: FunctionComponent<{
     }
 
     const handleKeyUp = (e: KeyboardEvent) => {
-      if (isModKeyEvent(e)) {
+      if (isAltKey(e)) {
         setOverlayEnabled((enabled) => !enabled)
       }
     }
+
     const handleKeydown = (e: KeyboardEvent) => {
-      if (isModKeyEvent(e)) {
+      if (isAltKey(e)) {
+        setOverlayEnabled((enabled) => !enabled)
+      }
+
+      if (isHotkey(['mod', '\\'], e)) {
         setOverlayEnabled((enabled) => !enabled)
       }
     }
+
     window.addEventListener('click', handleClick)
     window.addEventListener('keydown', handleKeydown)
     window.addEventListener('keyup', handleKeyUp)

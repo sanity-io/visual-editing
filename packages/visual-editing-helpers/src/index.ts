@@ -1,5 +1,5 @@
 export { getQueryCacheKey } from './getQueryCacheKey'
-export { isHotkey, isModKeyEvent } from './hotkeys'
+export { isAltKey, isHotkey, isModKey } from './hotkeys'
 export { pathToUrlString } from './pathToUrlString'
 export * from './types'
 export { urlStringToPath } from './urlStringToPath'

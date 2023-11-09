@@ -19,6 +19,10 @@ export function isHotkey(keys: string[], event: KeyboardEvent): boolean {
   })
 }
 
-export function isModKeyEvent(event: KeyboardEvent): boolean {
+export function isModKey(event: KeyboardEvent): boolean {
   return event.key === (IS_MAC ? 'Meta' : 'Ctrl')
+}
+
+export function isAltKey(event: KeyboardEvent): boolean {
+  return event.key === 'Alt'
 }
