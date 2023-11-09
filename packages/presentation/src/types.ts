@@ -1,6 +1,6 @@
-import { ComponentType } from 'react'
-import { Observable } from 'rxjs'
-import { DocumentStore } from 'sanity'
+import type { ComponentType } from 'react'
+import type { Observable } from 'rxjs'
+import type { DocumentStore, SanityClient } from 'sanity'
 
 export interface DocumentLocation {
   title: string
@@ -28,13 +28,38 @@ export interface NavigatorOptions {
   component: ComponentType
 }
 
+export interface PreviewUrlResolverContext {
+  client: SanityClient
+  /**
+   * The current presentation parameters, as they were when the presentation tool started loading.
+   * You can use these to know on the server side what the user was looking at when they opened the tool,
+   * just remember that these can change client side, and the handler isn't called again later if the state changes.
+   */
+  presentationParams: PresentationParams
+  /**
+   * A generated secret, used by `@sanity/preview-url-secret` to verify
+   * that the application can securily preview draft content server side.
+   * https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
+   */
+  previewUrlSecret: string
+}
+
+/**
+ * Resolve a preview URL asynchronously, it's only called on first render.
+ * It receives the current `presentationParams` and a `previewUrlSecret`, but it won't be called
+ * again if this context changes.
+ */
+export type PreviewUrlResolver = (
+  context: PreviewUrlResolverContext,
+) => Promise<string>
+
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
   icon?: ComponentType
   name?: string
   title?: string
   locate?: DocumentLocationResolver
-  previewUrl: string
+  previewUrl: string | PreviewUrlResolver
   components?: {
     unstable_navigator?: NavigatorOptions
   }

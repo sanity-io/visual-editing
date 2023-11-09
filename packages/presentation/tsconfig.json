@@ -5,9 +5,10 @@
     "noEmit": true,
     "strictNullChecks": true,
     "paths": {
-      "@sanity/groq-store": ["../groq-store/src"]
+      "@sanity/groq-store": ["../groq-store/src"],
+      "@sanity/preview-url-secret": ["../preview-url-secret/src"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "../groq-store/src"],
+  "include": ["**/*.ts", "**/*.tsx", "../groq-store/src", "../preview-url-secret/src"],
   "exclude": ["dist", "node_modules"]
 }
