@@ -114,27 +114,25 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
     // decodeURI param in path?
     const { id, path } = parsePath(routerState.path)
 
-    setParams(
-      pruneObject({
-        id,
-        type: type === '*' ? undefined : type,
-        path,
-        preview:
-          routerSearchParams.preview ||
-          `${defaultPreviewUrl.pathname}${defaultPreviewUrl.search}`,
-        perspective: routerSearchParams.perspective,
-        inspect: routerSearchParams.inspect,
-        rev: routerSearchParams.rev,
-        since: routerSearchParams.since,
-        template: routerSearchParams.template,
-        view: routerSearchParams.view,
-        // assist
-        pathKey: routerSearchParams.pathKey,
-        instruction: routerSearchParams.instruction,
-        // comments
-        comment: routerSearchParams.comment,
-      }),
-    )
+    setParams({
+      id,
+      type: type === '*' ? undefined : type,
+      path,
+      preview:
+        routerSearchParams.preview ||
+        `${defaultPreviewUrl.pathname}${defaultPreviewUrl.search}`,
+      perspective: routerSearchParams.perspective,
+      inspect: routerSearchParams.inspect,
+      rev: routerSearchParams.rev,
+      since: routerSearchParams.since,
+      template: routerSearchParams.template,
+      view: routerSearchParams.view,
+      // assist
+      pathKey: routerSearchParams.pathKey,
+      instruction: routerSearchParams.instruction,
+      // comments
+      comment: routerSearchParams.comment,
+    })
   }, [defaultPreviewUrl, routerSearchParams, routerState, setParams])
 
   const navigate = useMemo(() => {
