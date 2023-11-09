@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.9.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.8.1-pink-lizard...presentation-v0.9.0-pink-lizard) (2023-11-09)
+
+
+### Features
+
+* add `definePreviewUrl` API ([c141b74](https://github.com/sanity-io/visual-editing/commit/c141b74b61d93623682a679ecf2614f0886f3939))
+* add support for async resolving `previewUrl` ([ca3d3c6](https://github.com/sanity-io/visual-editing/commit/ca3d3c6e5fe3cbe17f7a9df837df3b62574f6dda))
+* first mvp of Draft Mode handling ([e7d49f4](https://github.com/sanity-io/visual-editing/commit/e7d49f4a1f5069252a48d99de86bae5ea148881c))
+
+
+### Bug Fixes
+
+* add types for async preview url resolver API ([d9b5ecf](https://github.com/sanity-io/visual-editing/commit/d9b5ecf877011d7b98484086a9d8b8e75072a820))
+* **deps:** Update sanity monorepo to v3.19.3-pink-lizard.10 ([#315](https://github.com/sanity-io/visual-editing/issues/315)) ([4da915e](https://github.com/sanity-io/visual-editing/commit/4da915eaba5d437f6ad70415dc1f3750ac278f4b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 0.2.0-pink-lizard
+
 ## [0.8.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.8.0-pink-lizard...presentation-v0.8.1-pink-lizard) (2023-11-09)
 
 
