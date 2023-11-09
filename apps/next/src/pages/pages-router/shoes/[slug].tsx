@@ -37,6 +37,7 @@ export default function ShoePage(
     error,
     loading,
   } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
+  console.log({ loading, product, initial })
 
   if (error) {
     throw error

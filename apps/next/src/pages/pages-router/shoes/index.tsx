@@ -11,6 +11,7 @@ export default function ShoesPage() {
     error,
     loading,
   } = useQuery<ShoesListResult>(shoesList)
+  console.log({ loading, products })
 
   if (error) {
     throw error
