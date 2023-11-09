@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.7.3-pink-lizard...presentation-v0.8.0-pink-lizard) (2023-11-09)
+
+
+### Features
+
+* preserve perspective state in search params ([8425173](https://github.com/sanity-io/visual-editing/commit/8425173ad8535d967447503fd0e64d02483d509f))
+
+
+### Bug Fixes
+
+* remove flicker during live preview warmup ([4c1c9e1](https://github.com/sanity-io/visual-editing/commit/4c1c9e1d9b712da16f92848ea69d4a12bc86f81b))
+
 ## [0.7.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.7.2-pink-lizard...presentation-v0.7.3-pink-lizard) (2023-11-08)
 
 

@@ -6,6 +6,26 @@
   * dependencies
     * @sanity/core-loader bumped to 0.5.1-pink-lizard
 
+## [0.8.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.7.2-pink-lizard...react-loader-v0.8.0-pink-lizard) (2023-11-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove `startTransition` option
+
+### Bug Fixes
+
+* remove `startTransition` option ([25268ed](https://github.com/sanity-io/visual-editing/commit/25268ed021a3743853ba673afe8ada91a562e21f))
+* set initial `loading` to `false` when hydrated ([415c2f5](https://github.com/sanity-io/visual-editing/commit/415c2f582a4873c33371bd52a7848352c1bcb189))
+* set initial hydrated state consistently ([4d9676c](https://github.com/sanity-io/visual-editing/commit/4d9676c95a7f32d4166828bbd643eb35570f97fe))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.7.3-pink-lizard
+
 ## [0.7.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.7.1-pink-lizard...react-loader-v0.7.2-pink-lizard) (2023-11-08)
 
 

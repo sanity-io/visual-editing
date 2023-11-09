@@ -6,6 +6,12 @@
   * dependencies
     * @sanity/core-loader bumped to 0.5.1-pink-lizard
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.7.3-pink-lizard
+
 ## [0.4.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.4.1-pink-lizard...svelte-loader-v0.4.2-pink-lizard) (2023-11-08)
 
 
