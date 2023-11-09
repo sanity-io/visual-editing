@@ -41,6 +41,7 @@ import {
 } from './types'
 import { useLocalState } from './useLocalState'
 import { useParams } from './useParams'
+import { usePreviewUrl } from './usePreviewUrl'
 
 function Navigator(props: NavigatorOptions) {
   const { minWidth, maxWidth, component: NavigatorComponent } = props
@@ -63,9 +64,10 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
-  const { previewUrl = '/', components } = props.tool.options ?? {}
+  const { previewUrl: _previewUrl, components } = props.tool.options ?? {}
   const name = props.tool.name || DEFAULT_TOOL_NAME
   const { unstable_navigator } = components || {}
+  const previewUrl = usePreviewUrl(_previewUrl || '/', name)
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode

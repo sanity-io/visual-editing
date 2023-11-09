@@ -21,6 +21,7 @@ export default function LoaderQueries(props: {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { activePerspective, liveDocument, channel, perspective, liveQueries } =
     props
+  // @TODO lift up this client instance to the root, re-use it everywhere
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const studioClient = useClient({ apiVersion: '2023-10-16' })
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])

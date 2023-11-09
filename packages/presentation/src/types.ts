@@ -31,12 +31,6 @@ export interface NavigatorOptions {
 export interface PreviewUrlResolverContext {
   client: SanityClient
   /**
-   * The current presentation parameters, as they were when the presentation tool started loading.
-   * You can use these to know on the server side what the user was looking at when they opened the tool,
-   * just remember that these can change client side, and the handler isn't called again later if the state changes.
-   */
-  presentationParams: PresentationParams
-  /**
    * A generated secret, used by `@sanity/preview-url-secret` to verify
    * that the application can securily preview draft content server side.
    * https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
