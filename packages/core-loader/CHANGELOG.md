@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.7.2-pink-lizard...core-loader-v0.7.3-pink-lizard) (2023-11-09)
+
+
+### Bug Fixes
+
+* only set cache in live mode on a valid connection ([d0d05a5](https://github.com/sanity-io/visual-editing/commit/d0d05a518f5c04c6ff935a595b0b4bc135e5fd0f))
+* set initial `loading` to `false` when hydrated ([b18d0f5](https://github.com/sanity-io/visual-editing/commit/b18d0f55bff74975ebeca386b728271a7e731614))
+
 ## [0.7.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.7.1-pink-lizard...core-loader-v0.7.2-pink-lizard) (2023-11-08)
 
 
