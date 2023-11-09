@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.8.0-pink-lizard...presentation-v0.8.1-pink-lizard) (2023-11-09)
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to v3.19.2-pink-lizard.28 ([#311](https://github.com/sanity-io/visual-editing/issues/311)) ([915953e](https://github.com/sanity-io/visual-editing/commit/915953e2f78fa222ac5fd4c85977dae55ba21371))
+* **presentation:** remove `useDocumentPane` and re-enable field action ([d0c4382](https://github.com/sanity-io/visual-editing/commit/d0c43824dfa658d1821722de8b351c80c584db23))
+
 ## [0.8.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.7.3-pink-lizard...presentation-v0.8.0-pink-lizard) (2023-11-09)
 
 
