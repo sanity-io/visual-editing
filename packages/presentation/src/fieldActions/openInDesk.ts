@@ -5,15 +5,13 @@ import {
   DocumentFieldActionItem,
   pathToString,
 } from 'sanity'
-import { useDocumentPane } from 'sanity/desk'
 import { useRouter } from 'sanity/router'
 
 import { PresentationContext } from '../PresentationContext'
 
 export const openInDesk = defineDocumentFieldAction({
   name: 'presentation/openInDesk',
-  useAction({ documentId, path }) {
-    const { documentType } = useDocumentPane()
+  useAction({ documentId, documentType, path }) {
     const { navigateIntent } = useRouter()
     const presentation = useContext(PresentationContext)
 

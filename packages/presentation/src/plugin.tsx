@@ -11,7 +11,7 @@ import {
 import { DEFAULT_TOOL_NAME } from './constants'
 import { PresentationDocumentHeader } from './document/PresentationDocumentHeader'
 import { PresentationDocumentProvider } from './document/PresentationDocumentProvider'
-// import { openInDesk } from './fieldActions/openInDesk'
+import { openInDesk } from './fieldActions/openInDesk'
 import { getIntentState } from './getIntentState'
 import { router } from './router'
 import { PresentationPluginOptions } from './types'
@@ -47,17 +47,12 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
           enabled: true,
         },
 
-        // @TODO fix in https://linear.app/sanity/issue/ECO-253/declaring-open-in-desk-removes-all-field-actions
-        /*
         unstable_fieldActions: (prev) => {
-          console.log(prev)
           return [
-            // prevent duplication
-            ...prev.filter((a) => a.name !== openInDesk.name),
+            ...prev.filter((a) => a.name !== openInDesk.name), // prevent duplication
             openInDesk,
           ]
         },
-        // */
       },
 
       form: {
