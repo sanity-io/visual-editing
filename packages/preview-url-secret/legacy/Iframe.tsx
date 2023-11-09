@@ -22,16 +22,16 @@ import React, {
 import { HTMLAttributeReferrerPolicy } from 'react'
 import { SanityDocument } from 'sanity'
 
-import { UrlResolver } from './defineUrlResolver'
-import { GetUrlSecret } from './GetUrlSecret'
-import { UrlSecretId } from './isValidSecret'
-import { DEFAULT_SIZE, sizes, Toolbar } from './Toolbar'
 import {
   IframeSizeKey,
   MissingSlug,
   SetError,
   type UrlState,
 } from '../src/types'
+import { UrlResolver } from './defineUrlResolver'
+import { GetUrlSecret } from './GetUrlSecret'
+import { UrlSecretId } from './isValidSecret'
+import { DEFAULT_SIZE, sizes, Toolbar } from './Toolbar'
 
 export type { IframeSizeKey, UrlResolver, UrlSecretId }
 

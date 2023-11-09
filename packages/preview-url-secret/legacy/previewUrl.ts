@@ -5,6 +5,7 @@
 
 import { definePlugin, SanityDocument } from 'sanity'
 
+import { MissingSlug } from '../src/types'
 import {
   defineUrlResolver,
   DefineUrlResolverOptions,
@@ -16,7 +17,6 @@ import {
   tag,
   type UrlSecretId,
 } from './isValidSecret'
-import { MissingSlug } from '../src/types'
 import { patchUrlSecret } from './utils'
 
 export type { DefineUrlResolverOptions, UrlSecretId }

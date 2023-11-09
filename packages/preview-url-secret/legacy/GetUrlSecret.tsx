@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useClient } from 'sanity'
 
+import { SetError } from '../src/types'
 import {
   apiVersion,
   fetchSecretQuery,
@@ -8,7 +9,6 @@ import {
   tag,
   UrlSecretId,
 } from './isValidSecret'
-import { SetError } from '../src/types'
 import { getExpiresAt, patchUrlSecret } from './utils'
 
 export interface GetUrlSecretProps {
