@@ -1,4 +1,8 @@
-import type { ClientPerspective, QueryParams } from '@sanity/client'
+import type {
+  ClientPerspective,
+  ContentSourceMap,
+  QueryParams,
+} from '@sanity/client'
 import { ChannelReturns } from 'channels'
 import { useEffect, useMemo } from 'react'
 import { type SanityDocument, useClient } from 'sanity'
@@ -61,8 +65,6 @@ export default function LoaderQueries(props: {
   )
 }
 
-const initialData = {}
-
 function QuerySubscription(props: {
   projectId: string
   dataset: string
@@ -73,29 +75,24 @@ function QuerySubscription(props: {
 }) {
   const { projectId, dataset, perspective, query, params, channel } = props
 
-  const data = useLiveQuery(initialData, query, params)
-  const { result, resultSourceMap } = data || ({} as any)
+  const data = useLiveQuery<null | {
+    result: any
+    resultSourceMap?: ContentSourceMap
+  }>(null, query, params)
 
   useEffect(() => {
-    channel!.send('loader/query-change', {
-      projectId,
-      dataset,
-      perspective,
-      query,
-      params,
-      result,
-      resultSourceMap,
-    })
-  }, [
-    channel,
-    dataset,
-    params,
-    projectId,
-    query,
-    result,
-    resultSourceMap,
-    perspective,
-  ])
+    if (data?.resultSourceMap) {
+      channel!.send('loader/query-change', {
+        projectId,
+        dataset,
+        perspective,
+        query,
+        params,
+        result: data.result,
+        resultSourceMap: data.resultSourceMap,
+      })
+    }
+  }, [data, channel, dataset, params, projectId, query, perspective])
 
   return null
 }

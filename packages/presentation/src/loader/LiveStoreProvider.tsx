@@ -79,14 +79,6 @@ const LiveStoreProvider = memo(function LiveStoreProvider(
     ) {
       const key = getQueryCacheKey(perspective, query, params)
 
-      // Warm up the cache by setting the initial snapshot, showing stale-while-revalidate
-      if (!snapshots.has(key)) {
-        snapshots.set(key, {
-          result: initialSnapshot,
-          resultSourceMap: {} as ContentSourceMap,
-        })
-      }
-
       const subscribe: ListenerSubscribe = (onStoreChange) => {
         const unsubscribe = hooks.subscribe(
           key,
@@ -229,15 +221,17 @@ const QuerySubscription = memo(function QuerySubscription(
 
       if (!signal.aborted) {
         snapshots.set(getQueryCacheKey(perspective, query, params), {
-          result: turboChargeResultIfSourceMap(
-            liveDocument,
-            projectId,
-            dataset,
-            result,
-            perspective,
-            resultSourceMap,
-          ),
-          resultSourceMap: resultSourceMap ?? ({} as ContentSourceMap),
+          result: resultSourceMap
+            ? turboChargeResultIfSourceMap(
+                liveDocument,
+                projectId,
+                dataset,
+                result,
+                perspective,
+                resultSourceMap,
+              )
+            : result,
+          resultSourceMap,
         })
 
         if (resultSourceMap) {
@@ -285,7 +279,7 @@ QuerySubscription.displayName = 'QuerySubscription'
 
 type QuerySnapshotsCache = Map<
   QueryCacheKey,
-  { result: unknown; resultSourceMap: ContentSourceMap }
+  { result: unknown; resultSourceMap?: ContentSourceMap }
 >
 
 function onVisibilityChange(onStoreChange: () => void): () => void {
