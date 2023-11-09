@@ -40,6 +40,10 @@ import styled from 'styled-components'
 import { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PreviewLocationInput } from './PreviewLocationInput'
+import {
+  urlSearchParamPreviewPathname,
+  urlSearchParamPreviewSecret,
+} from '@sanity/preview-url-secret'
 
 const IFrame = styled.iframe`
   border: 0;
@@ -157,6 +161,16 @@ export const PreviewFrame = forwardRef<
     setRefreshing(true)
   }, [params.preview, targetOrigin, ref])
 
+  const previewLocationRoute = useMemo(() => {
+    const { pathname, searchParams } = new URL(
+      params.preview || '/',
+      previewLocationOrigin,
+    )
+    searchParams.delete(urlSearchParamPreviewSecret)
+    searchParams.delete(urlSearchParamPreviewPathname)
+    return `${pathname}${searchParams.size ? `?${searchParams}` : ''}`
+  }, [params.preview, previewLocationOrigin])
+
   const onIFrameLoad = useCallback(() => {
     setRefreshing(false)
   }, [])
@@ -264,7 +278,7 @@ export const PreviewFrame = forwardRef<
             <PreviewLocationInput
               host={previewLocationOrigin}
               onChange={onPathChange}
-              value={params.preview || '/'}
+              value={previewLocationRoute}
             />
           </Box>
 

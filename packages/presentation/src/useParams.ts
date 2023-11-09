@@ -54,7 +54,9 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
       id,
       type: routerState.type,
       path,
-      preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
+      preview:
+        routerSearchParams.preview ||
+        `${defaultPreviewUrl.pathname}${defaultPreviewUrl.search}`,
       perspective: routerSearchParams.perspective,
       inspect: routerSearchParams.inspect,
       rev: routerSearchParams.rev,
@@ -117,7 +119,9 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
         id,
         type: type === '*' ? undefined : type,
         path,
-        preview: routerSearchParams.preview || defaultPreviewUrl.pathname,
+        preview:
+          routerSearchParams.preview ||
+          `${defaultPreviewUrl.pathname}${defaultPreviewUrl.search}`,
         perspective: routerSearchParams.perspective,
         inspect: routerSearchParams.inspect,
         rev: routerSearchParams.rev,

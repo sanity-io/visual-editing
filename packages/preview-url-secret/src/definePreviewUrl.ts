@@ -1,3 +1,7 @@
+import {
+  urlSearchParamPreviewPathname,
+  urlSearchParamPreviewSecret,
+} from './constants'
 import { PreviewUrlResolver, PreviewUrlResolverOptions } from './types'
 
 /**
@@ -7,15 +11,30 @@ export function definePreviewUrl<SanityClientType>(
   options: PreviewUrlResolverOptions,
 ): PreviewUrlResolver<SanityClientType> {
   const { draftMode, origin, preview = '/' } = options
-  // eslint-disable-next-line no-console
-  console.log('definePreviewUrl', { draftMode, origin, preview })
+  const productionUrl = new URL(preview, origin)
+  const enableDraftModeUrl = draftMode.enable
+    ? new URL(draftMode.enable, origin)
+    : undefined
+
   return async (context): Promise<string> => {
-    // eslint-disable-next-line no-console
-    console.log('resolvePreviewUrl', context)
-    await new Promise((resolve) => setTimeout(resolve, 5000))
-    // eslint-disable-next-line no-console
-    console.log('After timeout')
-    return '/'
+    const previewUrl = new URL(
+      context.previewSearchParam || preview,
+      productionUrl,
+    )
+    if (enableDraftModeUrl) {
+      const enableDraftModeRequestUrl = new URL(enableDraftModeUrl)
+      const { searchParams } = enableDraftModeRequestUrl
+      searchParams.set(urlSearchParamPreviewSecret, context.previewUrlSecret)
+      if (
+        !previewUrl.pathname.startsWith('/api') &&
+        previewUrl.pathname !== enableDraftModeRequestUrl.pathname
+      ) {
+        searchParams.set(urlSearchParamPreviewPathname, previewUrl.pathname)
+      }
+
+      return enableDraftModeRequestUrl.toString()
+    }
+    return previewUrl.toString()
   }
 }
 

@@ -13,3 +13,9 @@ export const schemaIdPrefix =
 
 /** @internal */
 export const apiVersion = '2023-11-09'
+
+/** @internal */
+export const urlSearchParamPreviewSecret = 'sanity-preview-secret'
+
+/** @internal */
+export const urlSearchParamPreviewPathname = 'sanity-preview-pathname'

@@ -81,7 +81,7 @@ export interface PreviewUrlResolverContext<SanityClientType> {
    * If the user navigated to a preview path already, this will be the path
    *
    */
-  previewSearchParam: string | undefined
+  previewSearchParam: string | null
 }
 
 /**

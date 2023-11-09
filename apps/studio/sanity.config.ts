@@ -76,7 +76,7 @@ const presentationWorkspaces = Object.entries({
       'http://localhost:3001/shoes',
     'pages-router':
       process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/shoes',
+      'http://localhost:3001/pages-router/shoes',
   },
   nuxt:
     process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
