@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.10.1-pink-lizard...presentation-v0.10.2-pink-lizard) (2023-11-10)
+
+
+### Bug Fixes
+
+* fast path didn't send changed queries over postMessage ([995142f](https://github.com/sanity-io/visual-editing/commit/995142fc8ac1c6a043ff5c7da8e23173d341107b))
+
 ## [0.10.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.10.0-pink-lizard...presentation-v0.10.1-pink-lizard) (2023-11-10)
 
 
