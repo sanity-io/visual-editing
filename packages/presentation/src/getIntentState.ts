@@ -13,7 +13,7 @@ export function getIntentState(
   | { type: string; path: string; _searchParams: SearchParam[] }
   | { intent: string; params: Record<string, string>; payload: unknown } {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, path, type, tool, ...searchParams } = params
+  const { id, mode, path, presentation, type, ...searchParams } = params
 
   if (intent === 'edit' && id) {
     return {

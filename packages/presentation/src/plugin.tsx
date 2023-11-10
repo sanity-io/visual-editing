@@ -71,14 +71,19 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
           component: lazy(() => import('./PresentationTool')),
           options,
           canHandleIntent(intent, params) {
-            if (params.tool && params.tool !== toolName) {
+            if (intent !== 'edit' || !params.id) {
               return false
             }
 
-            if (intent === 'edit' && params.id) {
+            if (params.presentation && params.presentation !== toolName) {
+              return false
+            }
+
+            if (!params.mode) {
               return true
             }
-            return false
+
+            return params.mode === 'presentation' ? { mode: true } : false
           },
           getIntentState,
           router,

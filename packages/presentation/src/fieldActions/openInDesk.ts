@@ -24,7 +24,7 @@ export const openInDesk = defineDocumentFieldAction({
         navigateIntent('edit', {
           id: documentId,
           type: documentType,
-          tool: 'desk',
+          mode: 'structure',
           path: pathToString(path),
         } as any)
       },

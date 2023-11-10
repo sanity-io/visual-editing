@@ -163,10 +163,11 @@ function LocationItem(props: {
     params: {
       id: documentId,
       type: documentType,
-      tool: toolName,
+      mode: 'presentation',
+      presentation: toolName,
       ...presentation?.deskParams,
       preview: node.href,
-    } as any,
+    },
   })
 
   const handleClick = useCallback(() => {
