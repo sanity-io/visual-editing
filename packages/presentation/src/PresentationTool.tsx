@@ -11,6 +11,7 @@ import {
   useState,
 } from 'react'
 import {
+  getPublishedId,
   type Path,
   type SanityDocument,
   type Tool,
@@ -32,6 +33,7 @@ import LoaderQueries from './loader/LoaderQueries'
 import { Panel } from './panels/Panel'
 import { PanelResizer } from './panels/PanelResizer'
 import { Panels } from './panels/Panels'
+import { HoldEditState } from './perf/HoldEditState'
 import { PresentationNavigateProvider } from './PresentationNavigateProvider'
 import { PresentationParamsProvider } from './PresentationParamsProvider'
 import { PresentationProvider } from './PresentationProvider'
@@ -41,6 +43,7 @@ import {
   NavigatorOptions,
   PresentationPluginOptions,
 } from './types'
+import { DocumentOnPage, useDocumentsOnPage } from './useDocumentsOnPage'
 import { useLocalState } from './useLocalState'
 import { useParams } from './useParams'
 import { usePreviewUrl } from './usePreviewUrl'
@@ -91,26 +94,26 @@ export default function PresentationTool(props: {
     return url.origin
   }, [previewUrl])
 
-  const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
   const iframeRef = useRef<HTMLIFrameElement>(null)
+
+  const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
+
   const [liveQueries, setLiveQueries] = useState<
     Record<
       string,
       { query: string; params: QueryParams; perspective: ClientPerspective }
     >
   >({})
+
   const { defaultPreviewUrl, setParams, params, deskParams } = useParams({
     previewUrl,
   })
+
   const [perspective, setPerspective] = useState<ClientPerspective>(() =>
     params.perspective === 'published' ? params.perspective : 'previewDrafts',
   )
+
   const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(perspective)
-  useEffect(() => {
-    if (perspective !== params.perspective || params.perspective) {
-      setParams({ perspective })
-    }
-  }, [params.perspective, perspective, setParams])
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -121,19 +124,56 @@ export default function PresentationTool(props: {
     navigatorProvided,
   )
 
-  const toggleNavigator = useMemo(
-    () =>
-      (navigatorProvided &&
-        (() => setNavigatorEnabled((enabled) => !enabled))) ||
-      undefined,
-    [navigatorProvided, setNavigatorEnabled],
-  )
-
   const toast = useToast()
   const projectId = useProjectId()
   const dataset = useDataset()
 
   const previewRef = useRef(params.preview)
+
+  const idRef = useRef(params.id)
+
+  const toggleNavigator = useMemo(() => {
+    if (!navigatorProvided) return undefined
+
+    return () => setNavigatorEnabled((enabled) => !enabled)
+  }, [navigatorProvided, setNavigatorEnabled])
+
+  const [preloadRefs, setPreloadRefs] = useState<DocumentOnPage[]>(() =>
+    documentsOnPage
+      .slice(0, 3)
+      .map((d) => ({ ...d, _id: getPublishedId(d._id) })),
+  )
+
+  // Update the perspective when the param changes
+  useEffect(() => {
+    if (perspective !== params.perspective) {
+      setParams({ perspective })
+    }
+  }, [params.perspective, perspective, setParams])
+
+  useEffect(() => {
+    setPreloadRefs(
+      documentsOnPage
+        .slice(0, 3)
+        .map((d) => ({ ...d, _id: getPublishedId(d._id) })),
+    )
+  }, [documentsOnPage])
+
+  useEffect(() => {
+    if (params.id !== idRef.current) {
+      idRef.current = params.id
+
+      if (params.id) {
+        setPreloadRefs((p) => {
+          const exists = p.find((d) => d._id === params.id)
+
+          if (exists) return p
+
+          return p.slice(1).concat([{ _id: params.id!, _type: params.type! }])
+        })
+      }
+    }
+  }, [params])
 
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
@@ -328,6 +368,11 @@ export default function PresentationTool(props: {
         params={params}
         setParams={setParams}
       >
+        {/* perf improvement: preload edit state */}
+        {preloadRefs.map((d) => (
+          <HoldEditState id={d._id} key={d._id} type={d._type} />
+        ))}
+
         <PresentationNavigateProvider setParams={setParams}>
           <PresentationParamsProvider params={params}>
             <Container height="fill">
@@ -400,66 +445,4 @@ export default function PresentationTool(props: {
       )}
     </>
   )
-}
-
-type DocumentsOnPage = {
-  _id: string
-  _type: string
-  _projectId?: string
-  dataset?: string
-}[]
-function useDocumentsOnPage(
-  perspective: ClientPerspective,
-): [
-  DocumentsOnPage,
-  (perspective: ClientPerspective, state: DocumentsOnPage) => void,
-] {
-  const [state, setState] = useState<
-    Record<ClientPerspective, Map<string, DocumentsOnPage[number]>>
-  >(() => ({ published: new Map(), previewDrafts: new Map(), raw: new Map() }))
-
-  const setDocumentsOnPage = useCallback(
-    (perspective: ClientPerspective, documents: DocumentsOnPage) =>
-      setState((state) => {
-        let changed = false
-        let map = state[perspective]
-        const getKey = (document: DocumentsOnPage[number]) => {
-          return `${document._projectId}-${document.dataset}-${document._type}-${document._id}`
-        }
-        const knownKeys = new Set<ReturnType<typeof getKey>>()
-        // Add anything new, and track all keys
-        for (const document of documents) {
-          const key = getKey(document)
-          knownKeys.add(key)
-          if (!map.has(key)) {
-            map.set(key, document)
-            changed = true
-          }
-        }
-        // Remove anything that is no longer on the page
-        for (const key of map.keys()) {
-          if (!knownKeys.has(key)) {
-            map.delete(key)
-            changed = true
-          }
-        }
-
-        if (changed) {
-          map = new Map(map)
-          return { ...state, [perspective]: new Map(map) }
-        }
-
-        return state
-      }),
-    [],
-  )
-
-  const documentsOnPageMap = useMemo(() => {
-    return state[perspective]
-  }, [perspective, state])
-  const documentsOnPage = useMemo(() => {
-    return [...documentsOnPageMap.values()]
-  }, [documentsOnPageMap])
-
-  return [documentsOnPage, setDocumentsOnPage]
 }
