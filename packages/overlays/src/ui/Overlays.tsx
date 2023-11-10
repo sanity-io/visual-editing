@@ -23,7 +23,7 @@ import {
 
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
-import { elementsReducer } from './elementsReducer'
+import { overlayStateReducer } from './overlayStateReducer'
 import { useChannel } from './useChannel'
 import { useController } from './useController'
 
@@ -62,7 +62,15 @@ export const Overlays: FunctionComponent<{
   zIndex?: string | number
 }> = function (props) {
   const { history, allowStudioOrigin, zIndex } = props
-  const [elements, dispatch] = useReducer(elementsReducer, [])
+  const [{ elements, wasMaybeCollapsed }, dispatch] = useReducer(
+    overlayStateReducer,
+    undefined,
+    () => ({
+      elements: [],
+      focusPath: '',
+      wasMaybeCollapsed: false,
+    }),
+  )
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -227,6 +235,7 @@ export const Overlays: FunctionComponent<{
               hovered={hovered}
               showActions={!channel?.inFrame}
               sanity={sanity}
+              wasMaybeCollapsed={focused && wasMaybeCollapsed}
             />
           )
         })}

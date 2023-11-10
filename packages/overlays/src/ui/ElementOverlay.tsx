@@ -107,13 +107,22 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   rect: OverlayRect
   showActions: boolean
   sanity: SanityNode | SanityNodeLegacy
+  wasMaybeCollapsed: boolean
 }) {
-  const { focused, hovered, rect, showActions, sanity } = props
+  const { focused, hovered, rect, showActions, sanity, wasMaybeCollapsed } =
+    props
 
   const ref = useRef<HTMLDivElement>(null)
 
+  const scrolledIntoViewRef = useRef(false)
+
   useEffect(() => {
-    if (focused === true && ref.current) {
+    if (
+      !scrolledIntoViewRef.current &&
+      !wasMaybeCollapsed &&
+      focused === true &&
+      ref.current
+    ) {
       scrollIntoView(ref.current, {
         behavior: 'smooth',
         scrollMode: 'if-needed',
@@ -121,7 +130,9 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
         inline: 'nearest',
       })
     }
-  }, [focused])
+
+    scrolledIntoViewRef.current = focused === true
+  }, [focused, wasMaybeCollapsed])
 
   const style = useMemo(
     () => ({
