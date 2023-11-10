@@ -80,20 +80,31 @@ function QuerySubscription(props: {
     result: any
     resultSourceMap?: ContentSourceMap
   }>(null, query, params)
+  const result = data?.result
+  const resultSourceMap = data?.resultSourceMap
 
   useEffect(() => {
-    if (data?.resultSourceMap) {
+    if (resultSourceMap) {
       channel!.send('loader/query-change', {
         projectId,
         dataset,
         perspective,
         query,
         params,
-        result: data.result,
-        resultSourceMap: data.resultSourceMap,
+        result,
+        resultSourceMap,
       })
     }
-  }, [data, channel, dataset, params, projectId, query, perspective])
+  }, [
+    channel,
+    dataset,
+    params,
+    perspective,
+    projectId,
+    query,
+    result,
+    resultSourceMap,
+  ])
 
   return null
 }
