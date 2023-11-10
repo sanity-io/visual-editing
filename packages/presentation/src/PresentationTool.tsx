@@ -304,13 +304,16 @@ export default function PresentationTool(props: {
 
   const handlePreviewPath = useCallback(
     (nextPath: string) => {
-      const url = new URL(nextPath, initialUrl.origin)
+      const url = new URL(nextPath, defaultPreviewUrl.origin)
       const preview = url.pathname + url.search
-      if (url.origin === initialUrl.origin && preview !== params.preview) {
+      if (
+        url.origin === defaultPreviewUrl.origin &&
+        preview !== params.preview
+      ) {
         setParams({ id: undefined, path: undefined, preview })
       }
     },
-    [initialUrl, params, setParams],
+    [defaultPreviewUrl, params, setParams],
   )
 
   const handleDeskParams = useCallback(
