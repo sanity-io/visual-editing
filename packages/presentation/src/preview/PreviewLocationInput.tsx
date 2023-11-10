@@ -108,7 +108,7 @@ export const PreviewLocationInput: FunctionComponent<{
             <Button
               as="a"
               fontSize={fontSize}
-              href={origin + (sessionValue || '')}
+              href={origin + (sessionValue || value)}
               icon={LaunchIcon}
               padding={padding - 1}
               mode="bleed"
