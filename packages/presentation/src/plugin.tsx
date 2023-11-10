@@ -24,14 +24,16 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
       const value = props.value as SanityDocument
       const documentId = value?._id ? getPublishedId(value?._id) : undefined
 
-      if (documentId && isDocumentSchemaType(props.schemaType)) {
+      if (isDocumentSchemaType(props.schemaType)) {
         return (
           <PresentationDocumentProvider options={options}>
-            <PresentationDocumentHeader
-              documentId={documentId}
-              options={options}
-              schemaType={props.schemaType}
-            />
+            {documentId && (
+              <PresentationDocumentHeader
+                documentId={documentId}
+                options={options}
+                schemaType={props.schemaType}
+              />
+            )}
 
             {props.renderDefault(props)}
           </PresentationDocumentProvider>
