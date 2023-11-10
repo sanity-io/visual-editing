@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.7.3-pink-lizard...core-loader-v0.7.4-pink-lizard) (2023-11-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nanostores to v0.9.5 ([e8a4cef](https://github.com/sanity-io/visual-editing/commit/e8a4cef014a6145c63d25a9116fa51a21824e2b8))
+
 ## [0.7.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.7.2-pink-lizard...core-loader-v0.7.3-pink-lizard) (2023-11-09)
 
 
