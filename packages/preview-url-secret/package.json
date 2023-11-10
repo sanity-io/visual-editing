@@ -48,6 +48,17 @@
       "import": "./dist/define-preview-url.js",
       "default": "./dist/define-preview-url.js"
     },
+    "./without-secret-search-params": {
+      "types": "./dist/without-secret-search-params.d.ts",
+      "source": "./src/_exports/without-secret-search-params.ts",
+      "require": "./dist/without-secret-search-params.cjs",
+      "node": {
+        "module": "./dist/without-secret-search-params.js",
+        "import": "./dist/without-secret-search-params.cjs.js"
+      },
+      "import": "./dist/without-secret-search-params.js",
+      "default": "./dist/without-secret-search-params.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -61,6 +72,9 @@
       ],
       "define-preview-url": [
         "./dist/define-preview-url.d.ts"
+      ],
+      "without-secret-search-params": [
+        "./dist/without-secret-search-params.d.ts"
       ]
     }
   },

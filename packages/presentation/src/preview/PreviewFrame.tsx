@@ -10,6 +10,7 @@ import {
   PublishIcon,
   RefreshIcon,
 } from '@sanity/icons'
+import { withoutSecretSearchParams } from '@sanity/preview-url-secret/without-secret-search-params'
 import {
   Box,
   Button,
@@ -158,10 +159,8 @@ export const PreviewFrame = forwardRef<
   }, [params.preview, targetOrigin, ref])
 
   const previewLocationRoute = useMemo(() => {
-    const { pathname, search } = new URL(
-      params.preview || '/',
-      previewLocationOrigin,
-    )
+    const previewUrl = new URL(params.preview || '/', previewLocationOrigin)
+    const { pathname, search } = withoutSecretSearchParams(previewUrl)
 
     return `${pathname}${search}`
   }, [params.preview, previewLocationOrigin])
