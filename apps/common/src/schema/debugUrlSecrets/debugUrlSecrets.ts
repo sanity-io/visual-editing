@@ -17,5 +17,25 @@ export const debugUrlSecretsType = defineType({
       name: 'source',
       title: 'Source Tool',
     },
+    {
+      type: 'string',
+      name: 'studioUrl',
+      title: 'Studio URL',
+    },
   ],
+  preview: {
+    select: {
+      title: 'source',
+      subtitle: 'studioUrl',
+    },
+    prepare(data) {
+      const url = data.subtitle
+        ? new URL(data.subtitle, location.origin)
+        : undefined
+      return {
+        ...data,
+        subtitle: url ? `${url.host}${url.pathname}` : data.subtitle,
+      }
+    },
+  },
 })

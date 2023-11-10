@@ -30,8 +30,9 @@ export const isDev = process.env.NODE_ENV === 'development'
 export const SECRET_TTL = 60 * 60
 
 /** @internal */
-export const fetchSecretQuery =
-  /* groq */ `*[_type == ${schemaType} && secret == $secret && dateTime(_updatedAt) > dateTime(now()) - ${SECRET_TTL}][0]{
+export const fetchSecretQuery = /* groq */ `*[_type == ${JSON.stringify(
+  schemaType,
+)} && secret == $secret && dateTime(_updatedAt) > dateTime(now()) - ${SECRET_TTL}][0]{
   _id,
   _updatedAt,
   secret,
