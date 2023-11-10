@@ -1,5 +1,4 @@
 import { SanityDocument } from '@sanity/client'
-import { ComposeIcon } from '@sanity/icons'
 import { lazy } from 'react'
 import {
   definePlugin,
@@ -8,7 +7,11 @@ import {
   isDocumentSchemaType,
 } from 'sanity'
 
-import { DEFAULT_TOOL_NAME } from './constants'
+import {
+  DEFAULT_TOOL_ICON,
+  DEFAULT_TOOL_NAME,
+  EDIT_INTENT_MODE,
+} from './constants'
 import { PresentationDocumentHeader } from './document/PresentationDocumentHeader'
 import { PresentationDocumentProvider } from './document/PresentationDocumentProvider'
 import { openInDesk } from './fieldActions/openInDesk'
@@ -63,29 +66,30 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
         },
       },
 
-      plugins: [],
-
       tools: [
         {
-          icon: options.icon || ComposeIcon,
+          icon: options.icon || DEFAULT_TOOL_ICON,
           name: toolName,
           title: options.title,
           component: lazy(() => import('./PresentationTool')),
           options,
           canHandleIntent(intent, params) {
-            if (intent !== 'edit' || !params.id) {
-              return false
+            if (intent === 'edit') {
+              if (!params.id) return false
+
+              if (params.presentation && params.presentation !== toolName) {
+                return false
+              }
+
+              if (!params.mode) return true
+
+              if (params.mode === EDIT_INTENT_MODE) {
+                // inform the intent resolver that `mode` is matching
+                return { mode: true }
+              }
             }
 
-            if (params.presentation && params.presentation !== toolName) {
-              return false
-            }
-
-            if (!params.mode) {
-              return true
-            }
-
-            return params.mode === 'presentation' ? { mode: true } : false
+            return false
           },
           getIntentState,
           router,

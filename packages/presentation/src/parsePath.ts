@@ -12,13 +12,7 @@ export function parsePath(rawPath: string | undefined): {
   const segments = rawPath?.split('.')
 
   if (segments[0] === 'drafts') {
-    return {
-      id: segments[1],
-      path:
-        segments.length > 2
-          ? studioPath.toString(urlStringToPath(segments.slice(2).join('.')))
-          : undefined,
-    }
+    segments.shift()
   }
 
   return {

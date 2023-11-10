@@ -4,9 +4,7 @@ import { useDocumentStore } from 'sanity'
 
 import { DocumentLocationResolver, DocumentLocationsState } from './types'
 
-const INITIAL_STATE: DocumentLocationsState = {
-  locations: [],
-}
+const INITIAL_STATE: DocumentLocationsState = { locations: [] }
 
 export function useDocumentLocations(props: {
   id: string
@@ -14,24 +12,14 @@ export function useDocumentLocations(props: {
   type: string
 }): DocumentLocationsState {
   const { id, locate, type } = props
-
   const documentStore = useDocumentStore()
-
   const [state, setLocations] = useState<DocumentLocationsState>(INITIAL_STATE)
 
   useEffect(() => {
-    if (!locate) {
-      return undefined
-    }
+    if (!locate) return undefined
 
-    const params = {
-      id,
-      type,
-    }
-
-    const context = {
-      documentStore,
-    }
+    const params = { id, type }
+    const context = { documentStore }
 
     const result = locate(params, context)
     const locations$ = isObservable(result) ? result : of(result)
