@@ -1,7 +1,12 @@
 import { createPreviewSecret } from '@sanity/preview-url-secret/create-secret'
 import { definePreviewUrl } from '@sanity/preview-url-secret/define-preview-url'
 import { useMemo, useState } from 'react'
-import { SanityClient, useActiveWorkspace, useClient } from 'sanity'
+import {
+  SanityClient,
+  useActiveWorkspace,
+  useClient,
+  useCurrentUser,
+} from 'sanity'
 import { suspend } from 'suspend-react'
 
 import { PreviewUrlOption } from './types'
@@ -16,6 +21,7 @@ export function usePreviewUrl(
   const basePath = workspace?.activeWorkspace?.basePath
   const workspaceName = workspace?.activeWorkspace?.name || 'default'
   const [previewUrl] = useState(() => _previewUrl)
+  const currentUser = useCurrentUser()
   const resolvePreviewUrl = useMemo(() => {
     if (typeof previewUrl === 'object') {
       return definePreviewUrl<SanityClient>(previewUrl)
@@ -29,6 +35,7 @@ export function usePreviewUrl(
         client,
         '@sanity/presentation',
         typeof window === 'undefined' ? '' : location.href,
+        currentUser?.id,
       )
       return resolvePreviewUrl({
         client,
@@ -43,6 +50,7 @@ export function usePreviewUrl(
     basePath,
     workspaceName,
     toolName,
+    currentUser?.id,
     resolveUUID,
   ])
   return useMemo(
