@@ -145,8 +145,14 @@ export interface ElementState {
  *
  * @public
  */
+export type HistoryAdapterNavigate = (update: HistoryUpdate) => void
+
+/**
+ *
+ * @public
+ */
 export interface HistoryAdapter {
-  subscribe: (navigate: (update: HistoryUpdate) => void) => () => void
+  subscribe: (navigate: HistoryAdapterNavigate) => () => void
   update: (update: HistoryUpdate) => void
 }
 
