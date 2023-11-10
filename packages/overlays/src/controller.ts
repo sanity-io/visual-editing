@@ -60,6 +60,10 @@ export function createOverlayController({
       once: true,
       capture: true,
     })
+    // Listen for mousedown in case we need to prevent default behavior
+    el.addEventListener('mousedown', handlers.mousedown, {
+      capture: true,
+    })
   }
 
   function removeEventHandlers(el: HTMLElement, handlers: _EventHandlers) {
@@ -67,6 +71,9 @@ export function createOverlayController({
       capture: true,
     })
     el.removeEventListener('mousemove', handlers.mousemove, {
+      capture: true,
+    })
+    el.removeEventListener('mousedown', handlers.mousedown, {
       capture: true,
     })
     el.removeEventListener('mouseenter', handlers.mouseenter)
@@ -130,6 +137,10 @@ export function createOverlayController({
             sanity,
           })
         }
+      },
+      mousedown(event) {
+        // prevent iframe from taking focus
+        event.preventDefault()
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)

@@ -184,6 +184,7 @@ export interface _OverlayElement {
  */
 export interface _EventHandlers {
   click: (event: MouseEvent) => void
+  mousedown: (event: MouseEvent) => void
   mouseenter: (event: MouseEvent) => void
   mouseleave: (event: MouseEvent) => void
   mousemove: (event: MouseEvent) => void
