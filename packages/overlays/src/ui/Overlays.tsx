@@ -186,17 +186,8 @@ export const Overlays: FunctionComponent<{
     }
   }, [setOverlayEnabled])
 
-  const initialSent = useRef(false)
   useEffect(() => {
     if (channel && history) {
-      // Send the initial state on load
-      if (!initialSent.current) {
-        channel?.send('overlay/navigate', {
-          type: 'replace',
-          url: `${location.pathname}${location.search}`,
-        })
-        initialSent.current = true
-      }
       return history.subscribe((update) => {
         channel.send('overlay/navigate', update)
       })
