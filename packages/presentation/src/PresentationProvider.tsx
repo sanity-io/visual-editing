@@ -4,7 +4,11 @@ import {
   PresentationContext,
   PresentationContextValue,
 } from './PresentationContext'
-import { DeskDocumentPaneParams, PresentationParams } from './types'
+import {
+  DeskDocumentPaneParams,
+  PresentationParams,
+  SetPresentationParams,
+} from './types'
 
 export const PresentationProvider: FunctionComponent<
   PropsWithChildren<{
@@ -12,9 +16,10 @@ export const PresentationProvider: FunctionComponent<
     devMode: boolean
     name: string
     params: PresentationParams
+    setParams: SetPresentationParams
   }>
 > = function (props) {
-  const { children, deskParams, devMode, name, params } = props
+  const { children, deskParams, devMode, name, params, setParams } = props
 
   const context = useMemo<PresentationContextValue>(
     () => ({
@@ -22,8 +27,9 @@ export const PresentationProvider: FunctionComponent<
       devMode,
       name,
       params,
+      setParams,
     }),
-    [deskParams, devMode, name, params],
+    [deskParams, devMode, name, params, setParams],
   )
 
   return (

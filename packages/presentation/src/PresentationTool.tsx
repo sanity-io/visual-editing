@@ -133,6 +133,8 @@ export default function PresentationTool(props: {
   const projectId = useProjectId()
   const dataset = useDataset()
 
+  const previewRef = useRef(params.preview)
+
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
 
@@ -183,11 +185,14 @@ export default function PresentationTool(props: {
             type: data.type,
           })
         } else if (type === 'overlay/navigate') {
-          setParams({
-            id: undefined,
-            type: undefined,
-            preview: data.url,
-          })
+          if (previewRef.current !== data.url) {
+            previewRef.current = data.url
+            setParams({
+              id: undefined,
+              type: undefined,
+              preview: data.url,
+            })
+          }
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
         } else if (
@@ -264,7 +269,8 @@ export default function PresentationTool(props: {
   // Dispatch a navigation message whenever the preview param changes
   // @todo This will cause a reflection of received navigation messages which could be problematic
   useEffect(() => {
-    if (params.preview) {
+    if (params.preview && previewRef.current !== params.preview) {
+      previewRef.current = params.preview
       channel?.send('presentation/navigate', {
         url: params.preview,
         type: 'push',
@@ -320,6 +326,7 @@ export default function PresentationTool(props: {
         devMode={devMode}
         name={name}
         params={params}
+        setParams={setParams}
       >
         <PresentationNavigateProvider setParams={setParams}>
           <PresentationParamsProvider params={params}>

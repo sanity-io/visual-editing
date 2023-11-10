@@ -156,6 +156,7 @@ function LocationItem(props: {
 }) {
   const { documentId, documentType, node, active, toolName } = props
   const presentation = useContext(PresentationContext)
+  const setParams = presentation?.setParams
 
   const presentationLinkProps = useIntentLink({
     intent: 'edit',
@@ -168,11 +169,19 @@ function LocationItem(props: {
     } as any,
   })
 
+  const handleClick = useCallback(() => {
+    setParams?.({
+      ...presentation?.params,
+      preview: node.href,
+    })
+  }, [node.href, presentation?.params, setParams])
+
   return (
     <Card
-      {...presentationLinkProps}
-      as="a"
+      {...(presentation ? {} : presentationLinkProps)}
+      as={presentation ? 'button' : 'a'}
       key={node.href}
+      onClick={handleClick}
       padding={3}
       radius={2}
       pressed={active}
