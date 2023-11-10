@@ -954,7 +954,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
       valibot:
-        specifier: ^0.20.1
+        specifier: 0.20.1
         version: 0.20.1
       vitest:
         specifier: ^0.34.6
@@ -4247,6 +4247,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -13202,6 +13203,10 @@ packages:
   /nanostores@0.9.5:
     resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
