@@ -1,26 +1,26 @@
 'use client'
 
-import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
+import {
+  enableOverlays,
+  HistoryAdapterNavigate,
+  type HistoryUpdate,
+} from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLiveMode } from './useQuery'
 
 export default function VisualEditing() {
   const router = useRouter()
-  const navigatePresentationRef = useRef<
-    null | ((update: HistoryUpdate) => void)
-  >(null)
+  const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
 
   useEffect(() => {
     const disable = enableOverlays({
       allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
-          navigatePresentationRef.current = navigate
-          return () => {
-            navigatePresentationRef.current = null
-          }
+          setNavigate(navigate)
+          return () => setNavigate(undefined)
         },
         update: (update) => {
           switch (update.type) {
@@ -42,15 +42,21 @@ export default function VisualEditing() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   useEffect(() => {
-    if (navigatePresentationRef.current) {
-      navigatePresentationRef.current({
+    if (navigate) {
+      navigate({
         type: 'push',
         url: `${pathname}${searchParams?.size ? `?${searchParams}` : ''}`,
       })
     }
-  }, [pathname, searchParams])
+  }, [navigate, pathname, searchParams])
 
   useLiveMode({ allowStudioOrigin: studioUrl })
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview' && window === parent) {
+      // If not an iframe, turn off Draft Mode
+      location.href = '/api/disable-draft'
+    }
+  }, [])
 
   return null
 }

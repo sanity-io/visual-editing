@@ -1,12 +1,15 @@
 import { enableOverlays } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLiveMode } from './useQuery'
 import { client } from './sanity'
 
 export default function VisualEditing() {
   const router = useRouter()
+  const routerRef = useRef(router)
+  const sentInitialRef = useRef(false)
+  const [initialPath] = useState(() => router.asPath)
 
   useEffect(() => {
     if (!router.isReady) return
@@ -14,6 +17,13 @@ export default function VisualEditing() {
       allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
+          // Only necessary because of the initial /api/pages-draft redirect to another route
+          if (!sentInitialRef.current) {
+            // Set the initial url
+            navigate({ type: 'replace', url: initialPath })
+            sentInitialRef.current = true
+          }
+          // Subscribe to history changes
           const handleHistoryChange = (url: string) => {
             navigate({ type: 'push', url })
           }
@@ -25,11 +35,11 @@ export default function VisualEditing() {
         update: (update) => {
           switch (update.type) {
             case 'push':
-              return router.push(update.url)
+              return routerRef.current.push(update.url)
             case 'pop':
-              return router.back()
+              return routerRef.current.back()
             case 'replace':
-              return router.replace(update.url)
+              return routerRef.current.replace(update.url)
             default:
               throw new Error(`Unknown update type: ${update.type}`)
           }
@@ -37,18 +47,11 @@ export default function VisualEditing() {
       },
     })
     return () => disable()
-  }, [
-    router.isReady,
-    router?.events?.on,
-    router?.events?.off,
-    router?.push,
-    router?.back,
-    router?.replace,
-  ])
+  }, [initialPath, router.events, router.isReady])
 
   useLiveMode({ allowStudioOrigin: studioUrl, client })
   useEffect(() => {
-    if (window === parent) {
+    if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview' && window === parent) {
       // If not an iframe, turn off Draft Mode
       location.href = '/api/disable-pages-draft'
     }
