@@ -44,7 +44,7 @@ export function usePreviewUrl(
         previewSearchParam,
       })
     }
-    return resolvePreviewUrl
+    return previewSearchParam || resolvePreviewUrl
   }, [
     // Cache based on a few specific conditions
     '@sanity/presentation',
