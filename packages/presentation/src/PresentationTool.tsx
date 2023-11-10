@@ -86,18 +86,11 @@ export default function PresentationTool(props: {
     Object.fromEntries(routerState._searchParams || []),
   )
 
-  const initialUrl = usePreviewUrl(
+  const initialPreviewUrl = usePreviewUrl(
     _previewUrl || '/',
     name,
     routerSearchParams.preview || null,
   )
-  // Clean hidden URL params from the preview URL
-  const defaultPreviewUrl = useMemo(() => {
-    const url = new URL(initialUrl)
-    url.searchParams.delete(urlSearchParamPreviewSecret)
-    url.searchParams.delete(urlSearchParamPreviewPathname)
-    return url
-  }, [initialUrl])
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode
@@ -113,8 +106,8 @@ export default function PresentationTool(props: {
   // @TODO The iframe URL might change, we have to make sure we don't post Studio state to unknown origins
   // see https://medium.com/@chiragrai3666/exploiting-postmessage-e2b01349c205
   const targetOrigin = useMemo(() => {
-    return initialUrl.origin
-  }, [initialUrl.origin])
+    return initialPreviewUrl.origin
+  }, [initialPreviewUrl.origin])
 
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
@@ -128,7 +121,7 @@ export default function PresentationTool(props: {
   >({})
 
   const { setParams, params, deskParams } = useParams({
-    defaultPreviewUrl,
+    initialPreviewUrl,
     routerNavigate,
     routerState,
     routerSearchParams,
@@ -304,16 +297,16 @@ export default function PresentationTool(props: {
 
   const handlePreviewPath = useCallback(
     (nextPath: string) => {
-      const url = new URL(nextPath, defaultPreviewUrl.origin)
+      const url = new URL(nextPath, initialPreviewUrl.origin)
       const preview = url.pathname + url.search
       if (
-        url.origin === defaultPreviewUrl.origin &&
+        url.origin === initialPreviewUrl.origin &&
         preview !== params.preview
       ) {
         setParams({ id: undefined, path: undefined, preview })
       }
     },
-    [defaultPreviewUrl, params, setParams],
+    [initialPreviewUrl, params, setParams],
   )
 
   const handleDeskParams = useCallback(
@@ -407,7 +400,7 @@ export default function PresentationTool(props: {
                 >
                   <Flex direction="column" flex={1} height="fill">
                     <PreviewFrame
-                      initialUrl={initialUrl}
+                      initialUrl={initialPreviewUrl}
                       navigatorEnabled={navigatorEnabled}
                       onPathChange={handlePreviewPath}
                       overlayEnabled={overlayEnabled}

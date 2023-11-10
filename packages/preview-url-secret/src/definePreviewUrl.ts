@@ -25,10 +25,7 @@ export function definePreviewUrl<SanityClientType>(
       const enableDraftModeRequestUrl = new URL(enableDraftModeUrl)
       const { searchParams } = enableDraftModeRequestUrl
       searchParams.set(urlSearchParamPreviewSecret, context.previewUrlSecret)
-      if (
-        !previewUrl.pathname.startsWith('/api') &&
-        previewUrl.pathname !== enableDraftModeRequestUrl.pathname
-      ) {
+      if (previewUrl.pathname !== enableDraftModeRequestUrl.pathname) {
         searchParams.set(urlSearchParamPreviewPathname, previewUrl.pathname)
       }
 

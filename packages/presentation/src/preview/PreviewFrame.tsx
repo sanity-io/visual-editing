@@ -11,10 +11,6 @@ import {
   RefreshIcon,
 } from '@sanity/icons'
 import {
-  urlSearchParamPreviewPathname,
-  urlSearchParamPreviewSecret,
-} from '@sanity/preview-url-secret'
-import {
   Box,
   Button,
   ButtonTone,
@@ -162,13 +158,12 @@ export const PreviewFrame = forwardRef<
   }, [params.preview, targetOrigin, ref])
 
   const previewLocationRoute = useMemo(() => {
-    const { pathname, searchParams } = new URL(
+    const { pathname, search } = new URL(
       params.preview || '/',
       previewLocationOrigin,
     )
-    searchParams.delete(urlSearchParamPreviewSecret)
-    searchParams.delete(urlSearchParamPreviewPathname)
-    return `${pathname}${searchParams.size ? `?${searchParams}` : ''}`
+
+    return `${pathname}${search}`
   }, [params.preview, previewLocationOrigin])
 
   const onIFrameLoad = useCallback(() => {

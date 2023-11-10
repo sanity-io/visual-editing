@@ -22,19 +22,18 @@ function pruneObject<T extends RouterState | PresentationParams>(obj: T): T {
 }
 
 export function useParams({
-  defaultPreviewUrl,
+  initialPreviewUrl,
   routerNavigate,
   routerState,
   routerSearchParams,
 }: {
-  defaultPreviewUrl: URL
+  initialPreviewUrl: URL
   routerNavigate: RouterContextValue['navigate']
   routerState: PresentationStateParams
   routerSearchParams: {
     [k: string]: string
   }
 }): {
-  defaultPreviewUrl: URL
   deskParams: DeskDocumentPaneParams
   navigate: (nextState: RouterState, options?: NavigateOptions) => void
   params: PresentationParams
@@ -50,7 +49,7 @@ export function useParams({
       path,
       preview:
         routerSearchParams.preview ||
-        `${defaultPreviewUrl.pathname}${defaultPreviewUrl.search}`,
+        `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
       perspective: routerSearchParams.perspective,
       inspect: routerSearchParams.inspect,
       rev: routerSearchParams.rev,
@@ -114,7 +113,7 @@ export function useParams({
       path,
       preview:
         routerSearchParams.preview ||
-        `${defaultPreviewUrl.pathname}${defaultPreviewUrl.search}`,
+        `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
       perspective: routerSearchParams.perspective,
       inspect: routerSearchParams.inspect,
       rev: routerSearchParams.rev,
@@ -127,7 +126,7 @@ export function useParams({
       // comments
       comment: routerSearchParams.comment,
     })
-  }, [defaultPreviewUrl, routerSearchParams, routerState, setParams])
+  }, [initialPreviewUrl, routerSearchParams, routerState, setParams])
 
   const navigate = useMemo(() => {
     // Debounce navigation to mitigate various event related race conditions
@@ -179,7 +178,6 @@ export function useParams({
   }, [navigate, params])
 
   return {
-    defaultPreviewUrl,
     navigate,
     setParams,
     deskParams,
