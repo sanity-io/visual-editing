@@ -1,5 +1,6 @@
-import ShoesPage from './ShoesPage'
+// import ShoesPage from './ShoesPage'
 
 export default function Page() {
-  return <ShoesPage />
+  return <h1>TODO</h1>
+  // return <ShoesPage />
 }
