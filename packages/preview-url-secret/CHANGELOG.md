@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.2.1-pink-lizard...preview-url-secret-v0.3.0-pink-lizard) (2023-11-10)
+
+
+### Features
+
+* generate secrets on demand ([9b47760](https://github.com/sanity-io/visual-editing/commit/9b477607edc2f3b89e03e0c64c9f7a92687f7c25))
+
+
+### Bug Fixes
+
+* don't show secret url search params in navbar ([4c684f1](https://github.com/sanity-io/visual-editing/commit/4c684f11c981bd0788cc2a8b5f9fcc4c7e9e9693))
+* implement url validation on the api handler side ([ca0c856](https://github.com/sanity-io/visual-editing/commit/ca0c856637e5c00200e02c708e02814319a9e55f))
+* keep preview url in sync (figure out cleaning hidden search params later) ([38912e1](https://github.com/sanity-io/visual-editing/commit/38912e17a86f17e0886aac9ae43dc3aa3299a574))
+* mark API that's not yet implemented ([53c0a33](https://github.com/sanity-io/visual-editing/commit/53c0a339b02ab6f5e7925740eb7ef888c227e2b6))
+* quote query string ([90006be](https://github.com/sanity-io/visual-editing/commit/90006be863b388c688f659eb37dba8bb759a2ee2))
+
 ## [0.2.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.2.0-pink-lizard...preview-url-secret-v0.2.1-pink-lizard) (2023-11-10)
 
 
