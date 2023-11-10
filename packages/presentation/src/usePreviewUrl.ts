@@ -14,7 +14,7 @@ import { PreviewUrlOption } from './types'
 export function usePreviewUrl(
   _previewUrl: PreviewUrlOption,
   toolName: string,
-  previewSearchParam: string | null,
+  _previewSearchParam: string | null,
 ): URL {
   const client = useClient({ apiVersion: '2023-10-16' })
   const workspace = useActiveWorkspace()
@@ -29,31 +29,40 @@ export function usePreviewUrl(
     }
     return previewUrl
   }, [previewUrl])
-
-  const resolvedUrl = suspend(async (): Promise<string> => {
-    if (typeof resolvePreviewUrl === 'function') {
-      const previewUrlSecret = await createPreviewSecret(
-        client,
-        '@sanity/presentation',
-        typeof window === 'undefined' ? '' : location.href,
-        // currentUser?.id,
-      )
-      return resolvePreviewUrl({
-        client,
-        previewUrlSecret,
-        previewSearchParam,
-      })
+  const [previewSearchParam] = useState(() => {
+    if (typeof resolvePreviewUrl !== 'string' || !_previewSearchParam) {
+      return null
     }
-    return previewSearchParam || resolvePreviewUrl
-  }, [
-    // Cache based on a few specific conditions
-    '@sanity/presentation',
-    basePath,
-    workspaceName,
-    toolName,
-    // currentUser?.id,
-    resolveUUID,
-  ])
+    return new URL(_previewSearchParam, resolvePreviewUrl)
+  })
+
+  const resolvedUrl =
+    typeof resolvePreviewUrl === 'function'
+      ? suspend(async (): Promise<string> => {
+          const previewUrlSecret = await createPreviewSecret(
+            client,
+            '@sanity/presentation',
+            typeof window === 'undefined' ? '' : location.href,
+            // currentUser?.id,
+          )
+          return resolvePreviewUrl({
+            client,
+            previewUrlSecret,
+            previewSearchParam: previewSearchParam
+              ? `${previewSearchParam.pathname}${previewSearchParam.search}`
+              : null,
+          })
+        }, [
+          // Cache based on a few specific conditions
+          '@sanity/presentation',
+          basePath,
+          workspaceName,
+          toolName,
+          // currentUser?.id,
+          resolveUUID,
+        ])
+      : previewSearchParam || resolvePreviewUrl
+
   return useMemo(
     () => new URL(resolvedUrl, window.location.origin),
     [resolvedUrl],

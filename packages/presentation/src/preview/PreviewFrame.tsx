@@ -159,11 +159,11 @@ export const PreviewFrame = forwardRef<
   }, [params.preview, targetOrigin, ref])
 
   const previewLocationRoute = useMemo(() => {
-    const previewUrl = new URL(params.preview || '/', previewLocationOrigin)
+    const previewUrl = new URL(params.preview || '/', targetOrigin)
     const { pathname, search } = withoutSecretSearchParams(previewUrl)
 
     return `${pathname}${search}`
-  }, [params.preview, previewLocationOrigin])
+  }, [params.preview, targetOrigin])
 
   const onIFrameLoad = useCallback(() => {
     setRefreshing(false)
