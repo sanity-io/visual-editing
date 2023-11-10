@@ -26,7 +26,7 @@ export default function RootLayout({
         >
           app-router:{' '}
           {draftMode().isEnabled
-            ? 'draftMode().isEnabled'
+            ? 'draftMode'
             : process.env.NEXT_PUBLIC_VERCEL_ENV || 'development'}
         </a>
       </body>

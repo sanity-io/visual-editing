@@ -1,9 +1,6 @@
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
-import {
-  urlSearchParamPreviewPathname,
-  urlSearchParamPreviewSecret,
-} from '@sanity/preview-url-secret'
+import {} from '@sanity/preview-url-secret'
 import { Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
@@ -146,7 +143,7 @@ export default function PresentationTool(props: {
   const projectId = useProjectId()
   const dataset = useDataset()
 
-  const previewRef = useRef(params.preview)
+  const previewRef = useRef<typeof params.preview>()
 
   const idRef = useRef(params.id)
 
@@ -327,7 +324,11 @@ export default function PresentationTool(props: {
   // Dispatch a navigation message whenever the preview param changes
   // @todo This will cause a reflection of received navigation messages which could be problematic
   useEffect(() => {
-    if (params.preview && previewRef.current !== params.preview) {
+    if (
+      previewRef.current &&
+      params.preview &&
+      previewRef.current !== params.preview
+    ) {
       previewRef.current = params.preview
       channel?.send('presentation/navigate', {
         url: params.preview,
