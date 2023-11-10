@@ -160,7 +160,7 @@ export function useParams({ previewUrl }: { previewUrl: string }): {
 
     const searchParams = pruneObject({
       preview: params.preview,
-      perspective: params.perspective,
+      perspective: params.perspective === 'published' ? 'published' : undefined,
       inspect: params.inspect,
       rev: params.rev,
       since: params.since,
