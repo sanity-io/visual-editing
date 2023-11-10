@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.11.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.10.3-pink-lizard...presentation-v0.11.0-pink-lizard) (2023-11-10)
+
+
+### Features
+
+* generate secrets on demand ([9b47760](https://github.com/sanity-io/visual-editing/commit/9b477607edc2f3b89e03e0c64c9f7a92687f7c25))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency styled-components to ^6.1.1 ([#326](https://github.com/sanity-io/visual-editing/issues/326)) ([6b3c65c](https://github.com/sanity-io/visual-editing/commit/6b3c65c94df8b93970601dd208acb7c4f02f2b7e))
+* don't set `previewRef.current` until an established connection with frame ([541c30d](https://github.com/sanity-io/visual-editing/commit/541c30dcd31d97b497a52b5e00868c6ca9e4fe58))
+* don't show secret url search params in navbar ([4c684f1](https://github.com/sanity-io/visual-editing/commit/4c684f11c981bd0788cc2a8b5f9fcc4c7e9e9693))
+* keep preview url in sync (figure out cleaning hidden search params later) ([38912e1](https://github.com/sanity-io/visual-editing/commit/38912e17a86f17e0886aac9ae43dc3aa3299a574))
+* **presentation:** improve perf by preloading edit state ([#330](https://github.com/sanity-io/visual-editing/issues/330)) ([10a69b9](https://github.com/sanity-io/visual-editing/commit/10a69b9d929f5b012cfbe354e8c3e6744b52154c))
+* **presentation:** shorten search params ([38f30e1](https://github.com/sanity-io/visual-editing/commit/38f30e120dba0224d99f653e8cc1fd6842c1a253))
+* resolve secrets properly when switching tools ([f8a12bf](https://github.com/sanity-io/visual-editing/commit/f8a12bf8c729c478bb6e224ac2de79077152544f))
+* respect initial preview param on load ([7759481](https://github.com/sanity-io/visual-editing/commit/7759481a530465c069768188ec1667126c6a21eb))
+* scope preview secrets per user ([26489b4](https://github.com/sanity-io/visual-editing/commit/26489b439ed6aae1f70d5861af8d97ca16220462))
+* URL preview param parsing ([30ee931](https://github.com/sanity-io/visual-editing/commit/30ee9316c76769c2e61a4d0df049adb1aa327b8b))
+* use the clean url in `handlePreviewPath` ([4e96e82](https://github.com/sanity-io/visual-editing/commit/4e96e8221524798c9b5525cb4e00238a805f1bee))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 0.3.0-pink-lizard
+
 ## [0.10.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.10.2-pink-lizard...presentation-v0.10.3-pink-lizard) (2023-11-10)
 
 

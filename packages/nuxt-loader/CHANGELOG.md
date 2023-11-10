@@ -18,6 +18,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [0.6.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.6.5-pink-lizard...nuxt-loader-v0.6.6-pink-lizard) (2023-11-10)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency vue to ^3.3.8 ([#329](https://github.com/sanity-io/visual-editing/issues/329)) ([ca4c1e8](https://github.com/sanity-io/visual-editing/commit/ca4c1e84fadd53fe645a8e57a651b719b97df29e))
+
 ## [0.6.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.6.4-pink-lizard...nuxt-loader-v0.6.5-pink-lizard) (2023-11-10)
 
 

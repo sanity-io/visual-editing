@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.0-pink-lizard...overlays-v2.3.1-pink-lizard) (2023-11-10)
+
+
+### Bug Fixes
+
+* **presentation:** prevent iframe from taking focus ([fbd02fd](https://github.com/sanity-io/visual-editing/commit/fbd02fd3b83774546c017a84cf8c444eff5dfe4f))
+* **presentation:** prevent scrolling when array items close ([da2ad22](https://github.com/sanity-io/visual-editing/commit/da2ad22c7e825cebdff0dbfa374b65ca3a50e04c))
+* remove initial url sender ([badda86](https://github.com/sanity-io/visual-editing/commit/badda8677af485467f469ef39f710566ba2908b4))
+* send initial URL on load ([3caf2e3](https://github.com/sanity-io/visual-editing/commit/3caf2e35511e4bfd7275131f2301b1f32742e70b))
+* **types:** add `HistoryAdapterNavigate` exported type ([7e8340f](https://github.com/sanity-io/visual-editing/commit/7e8340f0b5313885b4205bad60f3b2db62f79309))
+
 ## [2.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.2.1-pink-lizard...overlays-v2.3.0-pink-lizard) (2023-11-09)
 
 
