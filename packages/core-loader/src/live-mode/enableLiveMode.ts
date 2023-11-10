@@ -13,6 +13,7 @@ import {
   type VisualEditingMsg,
 } from 'visual-editing-helpers'
 
+import { isStegaClient } from '../isStegaClient'
 import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'
 
 /** @internal */
@@ -245,10 +246,4 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     unlistenConnection()
     channel.disconnect()
   }
-}
-
-function isStegaClient(
-  client: SanityClient | SanityStegaClient,
-): client is SanityStegaClient {
-  return client instanceof SanityStegaClient
 }

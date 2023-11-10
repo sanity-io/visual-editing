@@ -2,8 +2,8 @@ import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useQuery } from '../../../components/useQuery'
-import { query } from '../../../components/useQuery.server'
+import { useQuery } from '../../../components/sanity.loader'
+import { query, setServerDraftMode } from '../../../components/sanity.ssr'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { ContentSourceMap } from '@sanity/client'
@@ -15,6 +15,10 @@ interface Props extends SharedProps {
 
 export const getStaticProps = (async (context) => {
   const { draftMode = false } = context
+  if (draftMode) {
+    setServerDraftMode({ enabled: true })
+  }
+
   const initial = await query<ShoesListResult>(shoesList)
   return { props: { draftMode, initial }, revalidate: 1 }
 }) satisfies GetStaticProps<Props>

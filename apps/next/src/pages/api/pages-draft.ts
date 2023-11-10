@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { validatePreviewUrl } from '@sanity/preview-url-secret'
-import { client } from '@/components/sanity'
+import { client } from '@/components/sanity.client'
 
 const clientWithToken = client.withConfig({
   token: process.env.SANITY_API_READ_TOKEN,

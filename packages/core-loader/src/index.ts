@@ -3,11 +3,12 @@ import type {
   QueryParams,
   SanityClient,
 } from '@sanity/client'
-import type { SanityStegaClient } from '@sanity/client/stega'
+import type { SanityStegaClient, StegaConfig } from '@sanity/client/stega'
 import { type Cache, createCache } from 'async-cache-dedupe'
 import { atom, map, type MapStore, onMount, startTask } from 'nanostores'
 
 import { runtime } from './env'
+import { isStegaClient } from './isStegaClient'
 import { defineEnableLiveMode } from './live-mode'
 import type { EnableLiveMode, Fetcher, QueryStoreState } from './types'
 
@@ -35,6 +36,30 @@ export interface CreateQueryStoreOptions {
 }
 
 /** @public */
+export interface ServerDraftModeOptions {
+  /**
+   * Toggle draft mode on or off.
+   * If you want to change other draft mode options, like setting its `token` or `stega` settings yo
+   * can do that by setting `enabled: undefined` explicitly to avoid toggling it.
+   */
+  enabled: boolean | undefined
+  /**
+   * Draft content is fetched by using the `perspective: "previewDrafts"` option.
+   * It needs a token with read access, otherwise it'll return only published content.
+   * Or nothing at all if the dataset is private.
+   * You can either set the `token` in the `client` instance you pass to `setServerClient`, or you can set it here.
+   */
+  token?: string
+  /**
+   * Change stega settings for draft content.
+   * If you only want stega to be enabled when in draft mode, you can set `stega: {enabled: true}` here.
+   * It supports the same options as `stega` in `createClient`. If you specify `stega` in both your `client`
+   * and here, then it'll be merged.
+   */
+  stega?: StegaConfig
+}
+
+/** @public */
 export interface QueryStore {
   createFetcherStore: <
     QueryResponseResult = unknown,
@@ -56,6 +81,14 @@ export interface QueryStore {
    * It's required to call it before any data fetching is done, and it can only be called once.
    */
   setServerClient: (client: SanityClient | SanityStegaClient) => void
+  /**
+   * When `ssr: true` you can call this to fetch draft content server-side.
+   * It's meant for features like "Draft Mode" in Next.js.
+   * By implementing this you no longer see a "flash of published content" as you navigate in `@sanity/presentation`.
+   * It also lets you see draft content when toggling Draft Mode in the Vercel Preview Toolbar.
+   * @link https://vercel.com/docs/workflow-collaboration/draft-mode
+   */
+  setServerDraftMode: (options: ServerDraftModeOptions) => void
   enableLiveMode: EnableLiveMode
   /** @internal */
   unstable__cache: Cache & {
@@ -63,6 +96,12 @@ export interface QueryStore {
       result: QueryResponseResult
       resultSourceMap: ContentSourceMap | undefined
     }>
+  }
+  /** @internal */
+  unstable__serverDraftMode: {
+    enabled: boolean
+    client?: SanityClient | SanityStegaClient
+    token?: string
   }
 }
 
@@ -230,12 +269,72 @@ export const createQueryStore = (
     client = cloneClientWithConfig(newClient)
     $fetcher.set(createDefaultFetcher())
   }
+  const unstable__serverDraftMode: QueryStore['unstable__serverDraftMode'] = {
+    enabled: false,
+  }
+  const setServerDraftMode: QueryStore['setServerDraftMode'] = (options) => {
+    if (runtime !== 'server') {
+      throw new Error(
+        '`setServerDraftMode` can only be called in server environments, detected: ' +
+          JSON.stringify(runtime),
+      )
+    }
+    if (!ssr) {
+      throw new Error(
+        '`setServerDraftMode` can only be called when `ssr: true`',
+      )
+    }
+    if (!serverClientCalled) {
+      throw new Error(
+        '`setServerDraftMode` can only be called after a client is setup with `setServerClient`',
+      )
+    }
+    const { enabled, stega, token } = options
+    if (enabled !== undefined) {
+      unstable__serverDraftMode.enabled = enabled
+    }
+    if (!unstable__serverDraftMode.client) {
+      unstable__serverDraftMode.client = cloneClientWithConfig(
+        client!,
+      ).withConfig({
+        useCdn: false,
+        perspective: 'previewDrafts',
+      })
+    }
+    if (token !== undefined) {
+      unstable__serverDraftMode.token = token
+    }
+    if (!token && !unstable__serverDraftMode.client.config().token) {
+      throw new Error(
+        '`token` must be set either in the client passed to `setServerClient` or in `setServerDraftMode`',
+      )
+    }
+    if (stega !== undefined) {
+      if (!isStegaClient(unstable__serverDraftMode.client)) {
+        throw new Error(
+          "`stega` can only be set when using `import {createClient} from '@sanity/client/stega'`",
+        )
+      }
+      const prevStegaConfig = (
+        unstable__serverDraftMode.client as SanityStegaClient
+      ).config().stega
+      unstable__serverDraftMode.client =
+        unstable__serverDraftMode.client.withConfig({
+          stega: {
+            ...prevStegaConfig,
+            ...stega,
+          },
+        })
+    }
+  }
 
   return {
     createFetcherStore,
     enableLiveMode,
     setServerClient,
+    setServerDraftMode: setServerDraftMode,
     unstable__cache: cache,
+    unstable__serverDraftMode: unstable__serverDraftMode,
   }
 }
 

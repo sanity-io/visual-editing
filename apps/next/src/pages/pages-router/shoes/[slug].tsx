@@ -8,11 +8,11 @@ import type {
 } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useQuery } from '../../../components/useQuery'
-import { query } from '../../../components/useQuery.server'
+import { useQuery } from '../../../components/sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
 import { ContentSourceMap } from '@sanity/client'
 import type { SharedProps } from '../../_app'
+import { query, setServerDraftMode } from '@/components/sanity.ssr'
 
 interface Props extends SharedProps {
   params: { slug: string }
@@ -21,6 +21,10 @@ interface Props extends SharedProps {
 
 export const getStaticProps = (async (context) => {
   const { draftMode = false, params } = context
+  if (draftMode) {
+    setServerDraftMode({ enabled: true })
+  }
+
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
   if (!slug) throw new Error('slug is required')
   const initial = await query<ShoeResult>(shoe, {

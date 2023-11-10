@@ -4,6 +4,7 @@ import {
   type CreateQueryStoreOptions,
   EnableLiveModeOptions,
   type QueryStoreState,
+  type QueryStore as QueryCoreStore,
 } from '@sanity/core-loader'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -50,6 +51,7 @@ export interface QueryStore {
     sourceMap: ContentSourceMap | undefined
   }>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
+  setServerDraftMode: QueryCoreStore['setServerDraftMode']
   useQuery: UseQueryHook
   useLiveMode: UseLiveModeHook
 }
@@ -60,8 +62,10 @@ export const createQueryStore = (
   const {
     createFetcherStore,
     setServerClient,
+    setServerDraftMode,
     enableLiveMode,
     unstable__cache,
+    unstable__serverDraftMode: unstable__draftMode,
   } = createCoreQueryStore(options)
   const DEFAULT_PARAMS = {}
   const useQuery = <QueryResponseResult, QueryResponseError>(
@@ -123,6 +127,15 @@ export const createQueryStore = (
         'Cannot use `query` in a browser environment, you should use it inside a loader, getStaticProps, getServerSideProps, getInitialProps, or in a React Server Component.',
       )
     }
+    if (unstable__draftMode.enabled) {
+      const { client, token } = unstable__draftMode
+      const { result, resultSourceMap } =
+        await client!.fetch<QueryResponseResult>(query, params, {
+          filterResponse: false,
+          token,
+        })
+      return { data: result, sourceMap: resultSourceMap }
+    }
     const { result, resultSourceMap } =
       await unstable__cache.fetch<QueryResponseResult>(
         JSON.stringify({ query, params }),
@@ -130,5 +143,11 @@ export const createQueryStore = (
     return { data: result, sourceMap: resultSourceMap }
   }
 
-  return { query, useQuery, setServerClient, useLiveMode }
+  return {
+    query,
+    useQuery,
+    setServerClient,
+    setServerDraftMode: setServerDraftMode,
+    useLiveMode,
+  }
 }
