@@ -1,4 +1,4 @@
-import { enableOverlays } from '@sanity/overlays'
+import { HistoryAdapterNavigate, enableOverlays } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -13,29 +13,19 @@ const stegaClient = client.withConfig({
 export default function VisualEditing() {
   const router = useRouter()
   const routerRef = useRef(router)
-  const sentInitialRef = useRef(false)
-  const [initialPath] = useState(() => router.asPath)
+  const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
 
+  useEffect(() => {
+    routerRef.current = router
+  }, [router])
   useEffect(() => {
     if (!router.isReady) return
     const disable = enableOverlays({
       allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
-          // Only necessary because of the initial /api/pages-draft redirect to another route
-          if (!sentInitialRef.current) {
-            // Set the initial url
-            navigate({ type: 'replace', url: initialPath })
-            sentInitialRef.current = true
-          }
-          // Subscribe to history changes
-          const handleHistoryChange = (url: string) => {
-            navigate({ type: 'push', url })
-          }
-          router.events.on('beforeHistoryChange', handleHistoryChange)
-          return () => {
-            router.events.off('beforeHistoryChange', handleHistoryChange)
-          }
+          setNavigate(() => navigate)
+          return () => setNavigate(undefined)
         },
         update: (update) => {
           switch (update.type) {
@@ -52,7 +42,12 @@ export default function VisualEditing() {
       },
     })
     return () => disable()
-  }, [initialPath, router.events, router.isReady])
+  }, [router.isReady])
+  useEffect(() => {
+    if (navigate) {
+      navigate({ type: 'push', url: router.asPath })
+    }
+  }, [navigate, router.asPath])
 
   useLiveMode({ allowStudioOrigin: studioUrl, client: stegaClient })
   useEffect(() => {
