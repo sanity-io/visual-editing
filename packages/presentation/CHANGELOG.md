@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.10.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.10.0-pink-lizard...presentation-v0.10.1-pink-lizard) (2023-11-10)
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to v3.19.3-pink-lizard.18 ([#318](https://github.com/sanity-io/visual-editing/issues/318)) ([f97a770](https://github.com/sanity-io/visual-editing/commit/f97a770c95b3e76c94592739d8cee5262f6d5f86))
+* **presentation:** open preview using `setParams` when in Presentation tool ([7aca6ca](https://github.com/sanity-io/visual-editing/commit/7aca6cac32efa72d9401380d7db53265f8917616))
+* **presentation:** prevent unmounting document provider ([56e82cb](https://github.com/sanity-io/visual-editing/commit/56e82cbcb8ebc74c66313970c1663b0bad05abe9))
+
 ## [0.10.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.9.0-pink-lizard...presentation-v0.10.0-pink-lizard) (2023-11-09)
 
 
