@@ -5,7 +5,7 @@ import {
   SanityClient,
   useActiveWorkspace,
   useClient,
-  // useCurrentUser,
+  useCurrentUser,
 } from 'sanity'
 import { suspend } from 'suspend-react'
 
@@ -21,8 +21,7 @@ export function usePreviewUrl(
   const basePath = workspace?.activeWorkspace?.basePath
   const workspaceName = workspace?.activeWorkspace?.name || 'default'
   const [previewUrl] = useState(() => _previewUrl)
-  // @TODO scope by current user in a better way
-  // const currentUser = useCurrentUser()
+  const currentUser = useCurrentUser()
   const resolvePreviewUrl = useMemo(() => {
     if (typeof previewUrl === 'object') {
       return definePreviewUrl<SanityClient>(previewUrl)
@@ -43,7 +42,7 @@ export function usePreviewUrl(
             client,
             '@sanity/presentation',
             typeof window === 'undefined' ? '' : location.href,
-            // currentUser?.id,
+            currentUser?.id,
           )
           return resolvePreviewUrl({
             client,
@@ -58,7 +57,7 @@ export function usePreviewUrl(
           basePath,
           workspaceName,
           toolName,
-          // currentUser?.id,
+          currentUser?.id,
           resolveUUID,
         ])
       : previewSearchParam || resolvePreviewUrl

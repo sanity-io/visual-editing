@@ -22,6 +22,11 @@ export const debugUrlSecretsType = defineType({
       name: 'studioUrl',
       title: 'Studio URL',
     },
+    {
+      type: 'string',
+      name: 'userId',
+      title: 'Sanity User ID',
+    },
   ],
   preview: {
     select: {

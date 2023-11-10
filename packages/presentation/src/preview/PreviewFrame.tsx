@@ -129,6 +129,7 @@ export const PreviewFrame = forwardRef<
   const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
+  const iframeIsBusy = loading || refreshing
 
   const previewLocationOrigin = useMemo(() => {
     const { origin: previewOrigin } = new URL(
@@ -409,7 +410,10 @@ export const PreviewFrame = forwardRef<
             align="center"
             height="fill"
             justify="center"
-            style={{ position: 'relative' }}
+            style={{
+              position: 'relative',
+              cursor: iframeIsBusy ? 'wait' : undefined,
+            }}
           >
             <AnimatePresence>
               {loading && (
@@ -444,7 +448,7 @@ export const PreviewFrame = forwardRef<
             <IFrame
               ref={ref}
               style={{
-                pointerEvents: loading ? 'none' : 'auto',
+                pointerEvents: iframeIsBusy ? 'none' : 'auto',
                 boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
                 borderTop: '1px solid transparent',
               }}
