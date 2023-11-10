@@ -1,5 +1,9 @@
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
+import {
+  urlSearchParamPreviewPathname,
+  urlSearchParamPreviewSecret,
+} from '@sanity/preview-url-secret'
 import { Flex, useToast } from '@sanity/ui'
 import { ChannelReturns, createChannel } from 'channels'
 import {
@@ -10,6 +14,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { useUnique } from 'sanity'
 import {
   getPublishedId,
   type Path,
@@ -18,6 +23,7 @@ import {
   useDataset,
   useProjectId,
 } from 'sanity'
+import { RouterContextValue, useRouter } from 'sanity/router'
 import styled from 'styled-components'
 import {
   getQueryCacheKey,
@@ -42,6 +48,7 @@ import {
   DeskDocumentPaneParams,
   NavigatorOptions,
   PresentationPluginOptions,
+  PresentationStateParams,
 } from './types'
 import { DocumentOnPage, useDocumentsOnPage } from './useDocumentsOnPage'
 import { useLocalState } from './useLocalState'
@@ -72,7 +79,25 @@ export default function PresentationTool(props: {
   const { previewUrl: _previewUrl, components } = props.tool.options ?? {}
   const name = props.tool.name || DEFAULT_TOOL_NAME
   const { unstable_navigator } = components || {}
-  const previewUrl = usePreviewUrl(_previewUrl || '/', name)
+
+  const { navigate: routerNavigate, state: routerState } =
+    useRouter() as RouterContextValue & { state: PresentationStateParams }
+  const routerSearchParams = useUnique(
+    Object.fromEntries(routerState._searchParams || []),
+  )
+
+  const initialUrl = usePreviewUrl(
+    _previewUrl || '/',
+    name,
+    routerSearchParams.preview || null,
+  )
+  // Clean hidden URL params from the preview URL
+  const defaultPreviewUrl = useMemo(() => {
+    const url = new URL(initialUrl)
+    url.searchParams.delete(urlSearchParamPreviewSecret)
+    url.searchParams.delete(urlSearchParamPreviewPathname)
+    return url
+  }, [initialUrl])
 
   const [devMode] = useState(() => {
     const option = props.tool.options?.devMode
@@ -88,11 +113,8 @@ export default function PresentationTool(props: {
   // @TODO The iframe URL might change, we have to make sure we don't post Studio state to unknown origins
   // see https://medium.com/@chiragrai3666/exploiting-postmessage-e2b01349c205
   const targetOrigin = useMemo(() => {
-    // previewUrl might be relative, if it is we set `targetOrigin` to the same origin as the Studio
-    // if it's an absolute URL we extract the origin from it
-    const url = new URL(previewUrl, location.href)
-    return url.origin
-  }, [previewUrl])
+    return initialUrl.origin
+  }, [initialUrl.origin])
 
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
@@ -105,8 +127,11 @@ export default function PresentationTool(props: {
     >
   >({})
 
-  const { defaultPreviewUrl, setParams, params, deskParams } = useParams({
-    previewUrl,
+  const { setParams, params, deskParams } = useParams({
+    defaultPreviewUrl,
+    routerNavigate,
+    routerState,
+    routerSearchParams,
   })
 
   const [perspective, setPerspective] = useState<ClientPerspective>(() =>
@@ -279,16 +304,13 @@ export default function PresentationTool(props: {
 
   const handlePreviewPath = useCallback(
     (nextPath: string) => {
-      const url = new URL(nextPath, defaultPreviewUrl.origin)
+      const url = new URL(nextPath, initialUrl.origin)
       const preview = url.pathname + url.search
-      if (
-        url.origin === defaultPreviewUrl.origin &&
-        preview !== params.preview
-      ) {
+      if (url.origin === initialUrl.origin && preview !== params.preview) {
         setParams({ id: undefined, path: undefined, preview })
       }
     },
-    [defaultPreviewUrl, params, setParams],
+    [initialUrl, params, setParams],
   )
 
   const handleDeskParams = useCallback(
@@ -317,12 +339,6 @@ export default function PresentationTool(props: {
       })
     }
   }, [channel, params.preview])
-
-  // The URL that should be loaded by the preview iframe
-  // useRef to prevent iframe reloading when preview param changes
-  const initialPreviewUrl = useRef(
-    `${defaultPreviewUrl.origin}${params.preview}`,
-  )
 
   const toggleOverlay = useCallback(
     () => channel?.send('presentation/toggleOverlay', undefined),
@@ -388,7 +404,7 @@ export default function PresentationTool(props: {
                 >
                   <Flex direction="column" flex={1} height="fill">
                     <PreviewFrame
-                      initialUrl={initialPreviewUrl.current}
+                      initialUrl={initialUrl}
                       navigatorEnabled={navigatorEnabled}
                       onPathChange={handlePreviewPath}
                       overlayEnabled={overlayEnabled}

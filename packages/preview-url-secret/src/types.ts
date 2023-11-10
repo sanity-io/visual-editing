@@ -26,8 +26,8 @@ export type SanityClientLike = {
   withConfig(config: {
     apiVersion?: string
     useCdn?: boolean
-    perspective: 'published'
-    resultSourceMap: boolean
+    perspective?: 'published'
+    resultSourceMap?: boolean
   }): SanityClientLike
   fetch<
     R,

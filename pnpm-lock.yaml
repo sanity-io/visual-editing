@@ -803,6 +803,10 @@ importers:
         version: 0.34.6(jsdom@20.0.3)
 
   packages/preview-url-secret:
+    dependencies:
+      '@sanity/uuid':
+        specifier: 3.0.2
+        version: 3.0.2
     devDependencies:
       '@edge-runtime/types':
         specifier: ^2.2.7

@@ -9,7 +9,8 @@ import { PreviewUrlOption } from './types'
 export function usePreviewUrl(
   _previewUrl: PreviewUrlOption,
   toolName: string,
-): string {
+  previewSearchParam: string | null,
+): URL {
   const client = useClient({ apiVersion: '2023-10-16' })
   const workspace = useActiveWorkspace()
   const basePath = workspace?.activeWorkspace?.basePath
@@ -22,17 +23,17 @@ export function usePreviewUrl(
     return previewUrl
   }, [previewUrl])
 
-  return suspend(async (): Promise<string> => {
+  const resolvedUrl = suspend(async (): Promise<string> => {
     if (typeof resolvePreviewUrl === 'function') {
-      const previewUrlSecret = await createPreviewSecret()
-      const searchParams =
-        typeof document === 'undefined'
-          ? new URLSearchParams()
-          : new URLSearchParams(document.location.search)
+      const previewUrlSecret = await createPreviewSecret(
+        client,
+        '@sanity/presentation',
+        typeof window === 'undefined' ? '' : location.href,
+      )
       return resolvePreviewUrl({
         client,
         previewUrlSecret,
-        previewSearchParam: searchParams.get('preview'),
+        previewSearchParam,
       })
     }
     return resolvePreviewUrl
@@ -44,6 +45,10 @@ export function usePreviewUrl(
     toolName,
     resolveUUID,
   ])
+  return useMemo(
+    () => new URL(resolvedUrl, window.location.origin),
+    [resolvedUrl],
+  )
 }
 
 // https://github.com/pmndrs/suspend-react?tab=readme-ov-file#making-cache-keys-unique

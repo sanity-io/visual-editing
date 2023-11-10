@@ -107,7 +107,7 @@ const PERSPECTIVE_ICONS: Record<ClientPerspective, ComponentType> = {
 export const PreviewFrame = forwardRef<
   HTMLIFrameElement,
   {
-    initialUrl: string
+    initialUrl: URL
     targetOrigin: string
     navigatorEnabled: boolean
     onPathChange: (nextPath: string) => void
@@ -419,7 +419,11 @@ export const PreviewFrame = forwardRef<
               maxHeight: mode === 'desktop' ? undefined : 650,
             }}
           >
-            <IFrame ref={ref} src={initialUrl} onLoad={onIFrameLoad} />
+            <IFrame
+              ref={ref}
+              src={initialUrl.toString()}
+              onLoad={onIFrameLoad}
+            />
           </IFrameContainerCard>
         </Flex>
       </Card>

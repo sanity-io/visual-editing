@@ -1,13 +1,7 @@
 import { studioPath } from '@sanity/client/csm'
 import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useUnique } from 'sanity'
-import {
-  NavigateOptions,
-  RouterContextValue,
-  RouterState,
-  useRouter,
-} from 'sanity/router'
+import { NavigateOptions, RouterContextValue, RouterState } from 'sanity/router'
 import { pathToUrlString } from 'visual-editing-helpers'
 
 import { debounce } from './lib/debounce'
@@ -27,25 +21,25 @@ function pruneObject<T extends RouterState | PresentationParams>(obj: T): T {
   ) as T
 }
 
-export function useParams({ previewUrl }: { previewUrl: string }): {
+export function useParams({
+  defaultPreviewUrl,
+  routerNavigate,
+  routerState,
+  routerSearchParams,
+}: {
+  defaultPreviewUrl: URL
+  routerNavigate: RouterContextValue['navigate']
+  routerState: PresentationStateParams
+  routerSearchParams: {
+    [k: string]: string
+  }
+}): {
   defaultPreviewUrl: URL
   deskParams: DeskDocumentPaneParams
   navigate: (nextState: RouterState, options?: NavigateOptions) => void
   params: PresentationParams
   setParams: SetPresentationParams
 } {
-  const { navigate: routerNavigate, state: routerState } =
-    useRouter() as RouterContextValue & { state: PresentationStateParams }
-
-  const routerSearchParams = useUnique(
-    Object.fromEntries(routerState._searchParams || []),
-  )
-
-  const defaultPreviewUrl = useMemo(
-    () => new URL(previewUrl, window.location.origin),
-    [previewUrl],
-  )
-
   const [params, setParamsState] = useState<PresentationParams>(() => {
     const { id, path } = parsePath(
       routerState.path && decodeURIComponent(routerState.path),
