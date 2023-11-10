@@ -58,11 +58,13 @@ export interface PreviewUrlResolverOptions {
     /**
      * A route that reports of Draft Mode is enabled or not, useful for debugging
      * @example '/api/check-draft'
+     * @deprecated - this API is not yet implemented
      */
     check?: string
     /**
      * The route that disables Draft Mode, useful for debugging
      * @example '/api/disable-draft'
+     * @deprecated - this API is not yet implemented
      */
     disable?: string
   }
