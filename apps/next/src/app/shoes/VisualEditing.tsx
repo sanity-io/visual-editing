@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  enableOverlays,
-  HistoryAdapterNavigate,
-  type HistoryUpdate,
-} from '@sanity/overlays'
+import { enableOverlays, HistoryAdapterNavigate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -19,7 +15,7 @@ export default function VisualEditing() {
       allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
-          setNavigate(navigate)
+          setNavigate(() => navigate)
           return () => setNavigate(undefined)
         },
         update: (update) => {
