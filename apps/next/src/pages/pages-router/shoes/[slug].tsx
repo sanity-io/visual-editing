@@ -10,9 +10,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useQuery } from '../../../components/sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
-import { ContentSourceMap } from '@sanity/client'
+import { ClientPerspective, ContentSourceMap } from '@sanity/client'
 import type { SharedProps } from '../../_app'
-import { query, setServerDraftMode } from '@/components/sanity.ssr'
+import { query } from '@/components/sanity.ssr'
 
 interface Props extends SharedProps {
   params: { slug: string }
@@ -21,15 +21,19 @@ interface Props extends SharedProps {
 
 export const getStaticProps = (async (context) => {
   const { draftMode = false, params } = context
-  if (draftMode) {
-    setServerDraftMode({ enabled: true })
-  }
+  const perspective = (
+    draftMode ? 'previewDrafts' : 'published'
+  ) satisfies ClientPerspective
 
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
   if (!slug) throw new Error('slug is required')
-  const initial = await query<ShoeResult>(shoe, {
-    slug,
-  } satisfies ShoeParams)
+  const initial = await query<ShoeResult>(
+    shoe,
+    {
+      slug,
+    } satisfies ShoeParams,
+    { perspective },
+  )
   return { props: { draftMode, params: { slug }, initial }, revalidate: 1 }
 }) satisfies GetStaticProps<Props>
 

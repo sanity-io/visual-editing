@@ -1,10 +1,13 @@
-import type { ContentSourceMap, QueryParams } from '@sanity/client'
+import type {
+  ClientPerspective,
+  ContentSourceMap,
+  QueryParams,
+} from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
   EnableLiveModeOptions,
   type QueryStoreState,
-  type QueryStore as QueryCoreStore,
 } from '@sanity/core-loader'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -38,6 +41,10 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
   initial?: {
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
+    /**
+     * The perspective used to fetch the data, if not provided it'll assume 'published'
+     */
+    perspective?: ClientPerspective
   }
 }
 export type UseLiveModeHook = (options: EnableLiveModeOptions) => void
@@ -46,14 +53,22 @@ export interface QueryStore {
   query: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
+    options?: { perspective?: ClientPerspective },
   ) => Promise<{
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
+    perspective?: ClientPerspective
   }>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
-  setServerDraftMode: QueryCoreStore['setServerDraftMode']
   useQuery: UseQueryHook
   useLiveMode: UseLiveModeHook
+}
+
+export interface QueryOptions {
+  /**
+   * The perspective used to fetch the data, if not provided it'll assume 'published'
+   */
+  perspective?: ClientPerspective
 }
 
 export const createQueryStore = (
@@ -62,10 +77,9 @@ export const createQueryStore = (
   const {
     createFetcherStore,
     setServerClient,
-    setServerDraftMode,
     enableLiveMode,
     unstable__cache,
-    unstable__serverDraftMode: unstable__draftMode,
+    unstable__serverClient,
   } = createCoreQueryStore(options)
   const DEFAULT_PARAMS = {}
   const useQuery = <QueryResponseResult, QueryResponseError>(
@@ -73,7 +87,11 @@ export const createQueryStore = (
     params: QueryParams = DEFAULT_PARAMS,
     options: UseQueryOptions<QueryResponseResult> = {},
   ) => {
-    const [initial] = useState(() => options.initial)
+    const [initial] = useState(() =>
+      options.initial
+        ? { perspective: 'published' as const, ...options.initial }
+        : undefined,
+    )
     const $params = useMemo(() => JSON.stringify(params), [params])
 
     const [snapshot, setSnapshot] = useState<
@@ -118,23 +136,39 @@ export const createQueryStore = (
   const query = async <QueryResponseResult>(
     query: string,
     params: QueryParams = {},
+    options: QueryOptions = {},
   ): Promise<{
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
+    perspective?: ClientPerspective
   }> => {
+    const { perspective = 'published' } = options
     if (typeof document !== 'undefined') {
       throw new Error(
         'Cannot use `query` in a browser environment, you should use it inside a loader, getStaticProps, getServerSideProps, getInitialProps, or in a React Server Component.',
       )
     }
-    if (unstable__draftMode.enabled) {
-      const { client, token } = unstable__draftMode
+    if (perspective !== 'published' && !unstable__serverClient.instance) {
+      throw new Error(
+        `You cannot use other perspectives than "published" unless you set "ssr: true" and call "setServerClient" first.`,
+      )
+    }
+    if (perspective === 'previewDrafts') {
+      if (!unstable__serverClient.canPreviewDrafts) {
+        throw new Error(
+          `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
+        )
+      }
+      // Necessary with a new client instanec as `useCdn` can't be set on `client.fetch`
+      const client = unstable__serverClient.instance!.config().useCdn
+        ? unstable__serverClient.instance!.withConfig({ useCdn: false })
+        : unstable__serverClient.instance!
       const { result, resultSourceMap } =
         await client!.fetch<QueryResponseResult>(query, params, {
           filterResponse: false,
-          token,
+          perspective,
         })
-      return { data: result, sourceMap: resultSourceMap }
+      return { data: result, sourceMap: resultSourceMap, perspective }
     }
     const { result, resultSourceMap } =
       await unstable__cache.fetch<QueryResponseResult>(
@@ -147,7 +181,6 @@ export const createQueryStore = (
     query,
     useQuery,
     setServerClient,
-    setServerDraftMode: setServerDraftMode,
     useLiveMode,
   }
 }

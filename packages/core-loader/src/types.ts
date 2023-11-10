@@ -1,4 +1,5 @@
 import type {
+  ClientPerspective,
   ContentSourceMap,
   QueryParams,
   SanityClient,
@@ -14,6 +15,7 @@ export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
   error: QueryResponseError | undefined
   data: QueryResponseResult | undefined
   sourceMap: ContentSourceMap | undefined
+  perspective: ClientPerspective | undefined
 }
 
 /** @public */
@@ -57,7 +59,7 @@ export interface Fetcher {
     params: QueryParams,
     initial?: Pick<
       QueryStoreState<QueryResponseResult, QueryResponseError>,
-      'data' | 'sourceMap'
+      'data' | 'sourceMap' | 'perspective'
     >,
   ) => QueryStoreState<QueryResponseResult, QueryResponseError>
   fetch: <QueryResponseResult, QueryResponseError>(

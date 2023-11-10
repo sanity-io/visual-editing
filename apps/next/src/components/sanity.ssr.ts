@@ -7,7 +7,7 @@ if (!token) {
   throw new Error('Missing SANITY_API_READ_TOKEN')
 }
 
-const { query, setServerDraftMode, setServerClient } = serverOnly
+const { query, setServerClient } = serverOnly
 setServerClient(
   client.withConfig({
     token,
@@ -20,4 +20,4 @@ setServerClient(
 )
 
 // Exports to be used by getInitialProps, getServerSideProps, getStaticProps
-export { query, setServerDraftMode }
+export { query }

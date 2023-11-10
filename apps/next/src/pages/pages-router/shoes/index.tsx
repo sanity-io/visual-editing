@@ -3,10 +3,10 @@ import { formatCurrency } from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useQuery } from '../../../components/sanity.loader'
-import { query, setServerDraftMode } from '../../../components/sanity.ssr'
+import { query } from '../../../components/sanity.ssr'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { ContentSourceMap } from '@sanity/client'
+import type { ClientPerspective, ContentSourceMap } from '@sanity/client'
 import type { SharedProps } from '../../_app'
 
 interface Props extends SharedProps {
@@ -15,11 +15,10 @@ interface Props extends SharedProps {
 
 export const getStaticProps = (async (context) => {
   const { draftMode = false } = context
-  if (draftMode) {
-    setServerDraftMode({ enabled: true })
-  }
-
-  const initial = await query<ShoesListResult>(shoesList)
+  const perspective = (
+    draftMode ? 'previewDrafts' : 'published'
+  ) satisfies ClientPerspective
+  const initial = await query<ShoesListResult>(shoesList, {}, { perspective })
   return { props: { draftMode, initial }, revalidate: 1 }
 }) satisfies GetStaticProps<Props>
 

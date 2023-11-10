@@ -123,8 +123,9 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     if (connected) {
       unsetFetcher = setFetcher({
         hydrate: (query, params, initial) => {
+          const perspective = $perspective.get()
           const key = JSON.stringify({
-            perspective: $perspective.get(),
+            perspective,
             query,
             params,
           })
@@ -138,6 +139,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
               error: undefined,
               data: snapshot.result,
               sourceMap: snapshot.resultSourceMap,
+              perspective,
             }
           }
 
@@ -147,6 +149,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             error: undefined,
             data: initial?.data,
             sourceMap: initial?.sourceMap,
+            perspective: initial?.perspective || 'published',
           }
         },
         fetch: <QueryResponseResult, QueryResponseError>(
@@ -217,6 +220,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         params,
       })
       $fetch.setKey('loading', true)
+      $fetch.setKey('perspective', perspective)
     }
   }
   function updateLiveQueries() {
@@ -229,6 +233,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       if (value) {
         $fetch.setKey('data', value.result)
         $fetch.setKey('sourceMap', value.resultSourceMap)
+        $fetch.setKey('perspective', perspective)
         $fetch.setKey('loading', false)
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
       }
