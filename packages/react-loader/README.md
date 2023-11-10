@@ -10,7 +10,7 @@
 > This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
 
 ```sh
-npm i --save-exact @sanity/react-loader@pink-lizard @sanity/client@pink-lizard react@^18.2
+npm i --save-exact @sanity/react-loader@pink-lizard @sanity/client react@^18.2
 ```
 
 ## Usage

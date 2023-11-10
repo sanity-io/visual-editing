@@ -10,7 +10,7 @@
 > This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
 
 ```sh
-npm i --save-dev --save-exact @sanity/svelte-loader@pink-lizard @sanity/client@pink-lizard
+npm i --save-dev --save-exact @sanity/svelte-loader@pink-lizard @sanity/client
 npm i --save-dev svelte@^4
 ```
 

@@ -22,14 +22,13 @@
       "groupName": "App dependencies"
     },
     {
-      "matchDepTypes": ["dependencies"],
+      "matchDepTypes": ["dependencies", "peerDependencies"],
       "rangeStrategy": "bump"
     },
     {
       "matchDepNames": [
         "@sanity/block-tools",
         "@sanity/cli",
-        "@sanity/client",
         "@sanity/diff",
         "@sanity/export",
         "@sanity/import",
