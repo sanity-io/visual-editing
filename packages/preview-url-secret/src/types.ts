@@ -26,7 +26,7 @@ export type SanityClientLike = {
   withConfig(config: {
     apiVersion?: string
     useCdn?: boolean
-    perspective: 'raw'
+    perspective: 'published'
     resultSourceMap: boolean
   }): SanityClientLike
   fetch<
@@ -39,6 +39,23 @@ export type SanityClientLike = {
     params: Q,
     options: { tag?: string },
   ): Promise<R>
+}
+
+/**
+ * @alpha
+ */
+export interface PreviewUrlValidateUrlResult {
+  isValid: boolean
+  /**
+   * If the URL is valid, and there's a parameter for what preview path to redirect to, it will be here
+   */
+  redirectTo?: string
+}
+
+/** @internal */
+export interface ParsedPreviewUrl {
+  secret: string
+  redirectTo?: string
 }
 
 /** @internal */
@@ -69,6 +86,18 @@ export interface PreviewUrlResolverOptions {
     disable?: string
   }
 }
+
+/** @internal */
+export interface FetchSecretQueryParams {
+  secret: string
+}
+
+/** @internal */
+export type FetchSecretQueryResponse = {
+  _id: string
+  _updatedAt: string | null
+  secret: string | null
+} | null
 
 /** @internal */
 export interface PreviewUrlResolverContext<SanityClientType> {

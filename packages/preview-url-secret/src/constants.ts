@@ -19,3 +19,26 @@ export const urlSearchParamPreviewSecret = 'sanity-preview-secret'
 
 /** @internal */
 export const urlSearchParamPreviewPathname = 'sanity-preview-pathname'
+
+/** @internal */
+export const isDev = process.env.NODE_ENV === 'development'
+
+/**
+ * updated within the hour, if it's older it'll create a new secret or return null
+ * @internal
+ */
+export const SECRET_TTL = 60 * 60
+
+/** @internal */
+export const fetchSecretQuery =
+  /* groq */ `*[_type == ${schemaType} && secret == $secret && dateTime(_updatedAt) > dateTime(now()) - ${SECRET_TTL}][0]{
+  _id,
+  _updatedAt,
+  secret,
+}` as const
+
+/**
+ * Used for tagging `client.fetch` queries
+ * @internal
+ */
+export const tag = 'sanity.preview-url-secret' as const

@@ -62,6 +62,15 @@ function definePreviewUrl(
     } satisfies PreviewUrlResolverOptions['draftMode']
     return { origin, preview: pathname, draftMode }
   }
+  if (workspaceName === 'next' && toolName === 'app-router') {
+    const { origin, pathname } = new URL(previewUrl)
+    const draftMode = {
+      enable: '/api/draft',
+      check: '/api/check-draft',
+      disable: '/api/disable-draft',
+    } satisfies PreviewUrlResolverOptions['draftMode']
+    return { origin, preview: pathname, draftMode }
+  }
 
   return previewUrl
 }
