@@ -123,7 +123,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     if (connected) {
       unsetFetcher = setFetcher({
         hydrate: (query, params, initial) => {
-          const perspective = $perspective.get()
+          const perspective = initial?.perspective || $perspective.get()
           const key = JSON.stringify({
             perspective,
             query,
