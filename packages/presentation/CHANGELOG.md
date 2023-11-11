@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.0-pink-lizard...presentation-v0.12.1-pink-lizard) (2023-11-11)
+
+
+### Bug Fixes
+
+* add UI for `disconnected` states, improve `unhealthy` UI ([40adc81](https://github.com/sanity-io/visual-editing/commit/40adc81c9c18599c33467148b94155e4d7debf16))
+
 ## [0.12.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.11.0-pink-lizard...presentation-v0.12.0-pink-lizard) (2023-11-11)
 
 
