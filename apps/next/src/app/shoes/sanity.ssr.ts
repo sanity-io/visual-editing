@@ -35,5 +35,9 @@ setServerClient(
 export const query = ((query, params = {}, options = {}) => {
   const perspective =
     options.perspective || draftMode().isEnabled ? 'previewDrafts' : 'published'
-  return serverOnly.query(query, params, { ...options, perspective })
+  return serverOnly.query(query, params, {
+    cache: 'no-store',
+    ...options,
+    perspective,
+  })
 }) satisfies typeof serverOnly.query
