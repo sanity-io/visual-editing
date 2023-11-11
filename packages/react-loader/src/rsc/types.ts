@@ -54,7 +54,7 @@ export interface QueryStore {
   query: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: { perspective?: ClientPerspective },
+    options?: QueryOptions,
   ) => Promise<QueryResponseInitial<QueryResponseResult>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: UseQueryHook
