@@ -14,9 +14,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
-        <Suspense>
-          <VisualEditing />
-        </Suspense>
+        {draftMode().isEnabled && (
+          <Suspense>
+            <VisualEditing />
+          </Suspense>
+        )}
         <a
           href={draftMode().isEnabled ? '/api/disable-draft' : undefined}
           title={
