@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [0.9.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.9.0-pink-lizard...react-loader-v0.9.1-pink-lizard) (2023-11-11)
+
+
+### Bug Fixes
+
+* export `rsc` correctly ([49f364f](https://github.com/sanity-io/visual-editing/commit/49f364f5531828128e080ffa50a5c42f89ff81de))
+
 ## [0.9.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.8.2-pink-lizard...react-loader-v0.9.0-pink-lizard) (2023-11-11)
 
 
