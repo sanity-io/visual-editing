@@ -37,6 +37,18 @@
       "import": "./dist/jsx.js",
       "default": "./dist/jsx.js"
     },
+    "./rsc": {
+      "types": "./dist/rsc.d.ts",
+      "source": "./src/rsc/index.ts",
+      "react-server": "./dist/rsc/index.react-server.js",
+      "require": "./dist/rsc.cjs",
+      "node": {
+        "module": "./dist/rsc.js",
+        "import": "./dist/rsc.cjs.js"
+      },
+      "import": "./dist/rsc.js",
+      "default": "./dist/rsc.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -47,6 +59,9 @@
     "*": {
       "jsx": [
         "./dist/jsx.d.ts"
+      ],
+      "rsc": [
+        "./dist/rsc.d.ts"
       ]
     }
   },

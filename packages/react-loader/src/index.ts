@@ -64,11 +64,13 @@ export interface QueryStore {
   useLiveMode: UseLiveModeHook
 }
 
-export interface QueryOptions {
+export interface QueryOptions<T = 'next'> {
   /**
    * The perspective used to fetch the data, if not provided it'll assume 'published'
    */
   perspective?: ClientPerspective
+  cache?: RequestInit['cache']
+  next?: T extends keyof RequestInit ? RequestInit[T] : never
 }
 
 export const createQueryStore = (

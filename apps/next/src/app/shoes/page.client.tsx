@@ -4,15 +4,22 @@ import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useQuery } from './useQuery'
+import { useQuery } from './sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from './utils'
+import { use } from 'react'
+import { QueryResponseInitial } from '@sanity/react-loader/rsc'
 
-export default function ShoesPage() {
+type Props = {
+  initial: Promise<QueryResponseInitial<ShoesListResult>>
+}
+
+export default function ShoesPageClient(props: Props) {
+  const initial = use(props.initial)
   const {
     data: products,
     error,
     loading,
-  } = useQuery<ShoesListResult>(shoesList)
+  } = useQuery<ShoesListResult>(shoesList, {}, { initial })
 
   if (error) {
     throw error

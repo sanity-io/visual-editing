@@ -1,5 +1,8 @@
-import ShoesPage from './ShoesPage'
+import { ShoesListResult, shoesList } from 'apps-common/queries'
+import ShoesPageClient from './page.client'
+import { query } from './sanity.ssr'
 
-export default function Page() {
-  return <ShoesPage />
+export default async function ShoesPage() {
+  const initial = query<ShoesListResult>(shoesList)
+  return <ShoesPageClient initial={initial} />
 }

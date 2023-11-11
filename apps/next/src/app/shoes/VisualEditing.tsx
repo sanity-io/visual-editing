@@ -4,7 +4,13 @@ import { enableOverlays, HistoryAdapterNavigate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useLiveMode } from './useQuery'
+import { useLiveMode } from './sanity.loader'
+import { client } from './sanity.client'
+
+// Always enable stega in Live Mode
+const stegaClient = client.withConfig({
+  stega: { ...client.config().stega, enabled: true },
+})
 
 export default function VisualEditing() {
   const router = useRouter()
@@ -46,7 +52,7 @@ export default function VisualEditing() {
     }
   }, [navigate, pathname, searchParams])
 
-  useLiveMode({ allowStudioOrigin: studioUrl })
+  useLiveMode({ allowStudioOrigin: studioUrl, client: stegaClient })
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview' && window === parent) {
       // If not an iframe, turn off Draft Mode

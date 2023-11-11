@@ -1,63 +1,30 @@
+'use client'
+
 import { PortableText } from '@portabletext/react'
 import { shoe, type ShoeParams, type ShoeResult } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
-import type {
-  GetStaticProps,
-  GetStaticPaths,
-  InferGetStaticPropsType,
-} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useQuery } from '../../../components/sanity.loader'
-import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
-import { ClientPerspective, ContentSourceMap } from '@sanity/client'
-import type { SharedProps } from '../../_app'
-import { query } from '@/components/sanity.ssr'
+import { useQuery } from '../sanity.loader'
+import { urlFor, urlForCrossDatasetReference } from '../utils'
+import { QueryResponseInitial } from '@sanity/react-loader/rsc'
+import { use } from 'react'
 
-interface Props extends SharedProps {
+type Props = {
   params: { slug: string }
-  initial: { data: ShoeResult; sourceMap: ContentSourceMap | undefined }
+  initial: Promise<QueryResponseInitial<ShoeResult>>
 }
 
-export const getStaticProps = (async (context) => {
-  const { draftMode = false, params } = context
-  const perspective = (
-    draftMode ? 'previewDrafts' : 'published'
-  ) satisfies ClientPerspective
-
-  const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
-  if (!slug) throw new Error('slug is required')
-  const initial = await query<ShoeResult>(
-    shoe,
-    {
-      slug,
-    } satisfies ShoeParams,
-    { perspective },
-  )
-  return { props: { draftMode, params: { slug }, initial }, revalidate: 1 }
-}) satisfies GetStaticProps<Props>
-
-export const getStaticPaths = (async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}) satisfies GetStaticPaths
-
-export default function ShoePage(
-  props: InferGetStaticPropsType<typeof getStaticProps>,
-) {
-  const { initial, params } = props
-
-  if (!params.slug) {
-    throw new Error('No slug, 404?')
-  }
+export default function ShoePage(props: Props) {
+  const { params } = props
+  const initial = use(props.initial)
 
   const {
     data: product,
     error,
     loading,
   } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
+  console.log({ params, product, error, loading, initial })
 
   if (error) {
     throw error
@@ -72,7 +39,7 @@ export default function ShoePage(
           <li>
             <div className="flex items-center">
               <Link
-                href="/pages-router/shoes"
+                href="/shoes"
                 className="mr-2 text-sm font-medium text-gray-900"
               >
                 Shoes
@@ -91,7 +58,7 @@ export default function ShoePage(
           </li>
           <li className="text-sm" style={{ ['textWrap' as any]: 'balance' }}>
             <Link
-              href={`/pages-router/shoes/${params.slug}`}
+              href={`/shoes/${params.slug}`}
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
