@@ -12,6 +12,25 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [0.9.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.8.2-pink-lizard...react-loader-v0.9.0-pink-lizard) (2023-11-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* replace `setServerDraftMode ` with `perspective` on `query`
+
+### Features
+
+* add `setServerDraftMode` API ([9c5dd76](https://github.com/sanity-io/visual-editing/commit/9c5dd7606cd099566052d678ea47d8b7354189e9))
+* replace `setServerDraftMode ` with `perspective` on `query` ([017d02f](https://github.com/sanity-io/visual-editing/commit/017d02f194fc0fdbd3693e3feec9ea747d3ab81c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.8.0-pink-lizard
+
 ## [0.8.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.8.1-pink-lizard...react-loader-v0.8.2-pink-lizard) (2023-11-10)
 
 
