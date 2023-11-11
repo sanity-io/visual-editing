@@ -5,7 +5,7 @@ export type {
   ChannelOptions,
   ChannelReturns,
   Connection,
+  ConnectionStatus,
   MsgBody,
   MsgType,
-  ConnectionStatus,
 } from './types'
