@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.3.0-pink-lizard...preview-url-secret-v0.3.1-pink-lizard) (2023-11-11)
+
+
+### Bug Fixes
+
+* garbage collect expired secrets ([817582b](https://github.com/sanity-io/visual-editing/commit/817582b509d7614162485f71ba38f84e98653157))
+
 ## [0.3.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.2.1-pink-lizard...preview-url-secret-v0.3.0-pink-lizard) (2023-11-10)
 
 
