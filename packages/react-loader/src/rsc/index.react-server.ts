@@ -49,6 +49,9 @@ export const createQueryStore = (
     const { result, resultSourceMap } =
       await client!.fetch<QueryResponseResult>(query, params, {
         filterResponse: false,
+        // @TODO don't cache by default, but allow it to be configured
+        cache: 'no-store',
+        ...options,
         perspective,
       })
     return {

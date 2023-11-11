@@ -7,7 +7,7 @@ const studioUrl = `${baseUrl}/${workspace}`
 export const client = createClient({
   projectId,
   dataset,
-  useCdn: false,
+  useCdn: true,
   apiVersion,
   stega: {
     studioUrl: ({ _dataset }) =>
