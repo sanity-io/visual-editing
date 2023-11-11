@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.12.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.11.0-pink-lizard...presentation-v0.12.0-pink-lizard) (2023-11-11)
+
+
+### Features
+
+* show an initial loading state in the iframe ([c400b13](https://github.com/sanity-io/visual-editing/commit/c400b13302890514486d7b6b6f7451db7c80f8a5))
+
+
+### Bug Fixes
+
+* add path to open-in-new-window button ([62f3726](https://github.com/sanity-io/visual-editing/commit/62f37265f92548014b2459339dc061398c6c0433))
+* **deps:** Update dependency @sanity/ui to ^1.9.2 ([#335](https://github.com/sanity-io/visual-editing/issues/335)) ([5b17c77](https://github.com/sanity-io/visual-editing/commit/5b17c7785f748eea4d0dae57e0c906e8bc3f3918))
+* garbage collect expired secrets ([817582b](https://github.com/sanity-io/visual-editing/commit/817582b509d7614162485f71ba38f84e98653157))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 0.3.1-pink-lizard
+
 ## [0.11.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.10.3-pink-lizard...presentation-v0.11.0-pink-lizard) (2023-11-10)
 
 
