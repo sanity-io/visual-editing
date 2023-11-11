@@ -38,16 +38,16 @@
       "default": "./dist/jsx.js"
     },
     "./rsc": {
-      "types": "./dist/rsc.d.ts",
+      "types": "./dist/rsc/index.d.ts",
       "source": "./src/rsc/index.ts",
       "react-server": "./dist/rsc/index.react-server.js",
-      "require": "./dist/rsc.cjs",
+      "require": "./dist/rsc/index.cjs",
       "node": {
-        "module": "./dist/rsc.js",
-        "import": "./dist/rsc.cjs.js"
+        "module": "./dist/rsc/index.js",
+        "import": "./dist/rsc/index.cjs.js"
       },
-      "import": "./dist/rsc.js",
-      "default": "./dist/rsc.js"
+      "import": "./dist/rsc/index.js",
+      "default": "./dist/rsc/index.js"
     },
     "./package.json": "./package.json"
   },
