@@ -16,7 +16,10 @@ import {
   Button,
   ButtonTone,
   Card,
+  Code,
+  Container,
   Flex,
+  Label,
   Menu,
   MenuButton,
   MenuItem,
@@ -28,6 +31,7 @@ import {
   TooltipDelayGroupProvider,
   usePrefersReducedMotion,
 } from '@sanity/ui'
+import type { ConnectionStatus } from 'channels'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import {
   ComponentType,
@@ -105,6 +109,8 @@ export const PreviewFrame = forwardRef<
     setPerspective: Dispatch<SetStateAction<ClientPerspective>>
     toggleNavigator?: () => void
     toggleOverlay: () => void
+    loadersConnection: ConnectionStatus
+    overlaysConnection: ConnectionStatus
   }
 >(function PreviewFrame(props, ref) {
   const {
@@ -118,6 +124,8 @@ export const PreviewFrame = forwardRef<
     setPerspective,
     toggleNavigator,
     toggleOverlay,
+    loadersConnection,
+    overlaysConnection,
   } = props
 
   const { devMode } = usePresentationTool()
@@ -129,7 +137,13 @@ export const PreviewFrame = forwardRef<
   const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
-  const iframeIsBusy = loading || refreshing
+  const iframeIsBusy =
+    loading || refreshing || overlaysConnection === 'connecting'
+  const somethingIsWrong =
+    overlaysConnection === 'unhealthy' ||
+    overlaysConnection === 'disconnected' ||
+    loadersConnection === 'unhealthy' ||
+    loadersConnection === 'disconnected'
 
   const previewLocationOrigin = useMemo(() => {
     const { origin: previewOrigin } = new URL(
@@ -151,6 +165,15 @@ export const PreviewFrame = forwardRef<
 
     setRefreshing(true)
   }, [params.preview, targetOrigin, ref])
+  const handleRetry = useCallback(() => {
+    if (typeof ref === 'function' || !ref?.current) {
+      return
+    }
+
+    ref.current.src = initialUrl.toString()
+
+    setRefreshing(true)
+  }, [ref, initialUrl])
 
   const previewLocationRoute = useMemo(() => {
     const previewUrl = new URL(params.preview || '/', targetOrigin)
@@ -229,6 +252,7 @@ export const PreviewFrame = forwardRef<
                     <StyledSwitch
                       checked={overlayEnabled}
                       onChange={toggleOverlay}
+                      disabled={iframeIsBusy}
                     />
                   </div>
                   <Box>
@@ -282,6 +306,8 @@ export const PreviewFrame = forwardRef<
                     padding={3}
                     space={2}
                     text={PERSPECTIVE_TITLES[perspective]}
+                    loading={iframeIsBusy || loadersConnection === 'connecting'}
+                    disabled={loadersConnection !== 'connected'}
                   />
                 }
                 id="perspective-menu"
@@ -416,7 +442,7 @@ export const PreviewFrame = forwardRef<
             }}
           >
             <AnimatePresence>
-              {loading && (
+              {loading || iframeIsBusy ? (
                 <MotionFlex
                   initial="initial"
                   animate="animate"
@@ -443,7 +469,82 @@ export const PreviewFrame = forwardRef<
                     </Text>
                   </Flex>
                 </MotionFlex>
-              )}
+              ) : somethingIsWrong && !iframeIsBusy ? (
+                <MotionFlex
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={errorVariants}
+                  justify="center"
+                  align="center"
+                  style={{
+                    background: 'var(--card-bg-color)',
+                    inset: `0`,
+                    position: `absolute`,
+                    borderTop: '1px solid transparent',
+                    boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
+                  }}
+                >
+                  <Flex align="center" height="fill" justify="center">
+                    <Container padding={4} sizing="border" width={0}>
+                      <Stack space={3}>
+                        <Text size={1} weight="semibold">
+                          An error occured
+                        </Text>
+                        <Text muted size={1}>
+                          Lost connection to the preview frame
+                        </Text>
+                      </Stack>
+
+                      {devMode &&
+                        (overlaysConnection === 'unhealthy' ||
+                          overlaysConnection === 'disconnected') && (
+                          <Card
+                            marginTop={4}
+                            overflow="auto"
+                            padding={3}
+                            radius={2}
+                            tone="critical"
+                          >
+                            <Stack space={3}>
+                              <Label muted size={0}>
+                                overlays connection status
+                              </Label>
+                              <Code size={1}>{overlaysConnection}</Code>
+                            </Stack>
+                          </Card>
+                        )}
+                      {devMode &&
+                        (loadersConnection === 'unhealthy' ||
+                          loadersConnection === 'disconnected') && (
+                          <Card
+                            marginTop={4}
+                            overflow="auto"
+                            padding={3}
+                            radius={2}
+                            tone="critical"
+                          >
+                            <Stack space={3}>
+                              <Label muted size={0}>
+                                loaders connection status
+                              </Label>
+                              <Code size={1}>{loadersConnection}</Code>
+                            </Stack>
+                          </Card>
+                        )}
+
+                      <Box marginTop={4}>
+                        <Button
+                          fontSize={1}
+                          mode="ghost"
+                          onClick={handleRetry}
+                          text="Retry"
+                        />
+                      </Box>
+                    </Container>
+                  </Flex>
+                </MotionFlex>
+              ) : null}
             </AnimatePresence>
             <IFrame
               ref={ref}
@@ -456,7 +557,7 @@ export const PreviewFrame = forwardRef<
               initial={['background']}
               variants={iframeVariants}
               animate={[
-                loading ? 'background' : 'active',
+                loading || iframeIsBusy ? 'background' : 'active',
                 refreshing ? 'reloading' : 'idle',
                 mode,
               ]}
@@ -481,6 +582,12 @@ const sizes = {
 }
 
 const spinnerVariants = {
+  initial: { opacity: 1 },
+  animate: { opacity: [0, 0, 1] },
+  exit: { opacity: [1, 0, 0] },
+}
+
+const errorVariants = {
   initial: { opacity: 1 },
   animate: { opacity: [0, 0, 1] },
   exit: { opacity: [1, 0, 0] },

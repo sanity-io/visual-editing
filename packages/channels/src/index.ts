@@ -7,4 +7,5 @@ export type {
   Connection,
   MsgBody,
   MsgType,
+  ConnectionStatus,
 } from './types'

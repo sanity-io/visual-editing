@@ -1,7 +1,8 @@
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
 import {} from '@sanity/preview-url-secret'
-import { Flex, useToast } from '@sanity/ui'
+import { Flex } from '@sanity/ui'
+import type { ConnectionStatus } from 'channels'
 import { ChannelReturns, createChannel } from 'channels'
 import {
   type ReactElement,
@@ -139,7 +140,6 @@ export default function PresentationTool(props: {
     navigatorProvided,
   )
 
-  const toast = useToast()
   const projectId = useProjectId()
   const dataset = useDataset()
 
@@ -190,6 +190,11 @@ export default function PresentationTool(props: {
     }
   }, [params])
 
+  const [loadersConnection, setLoadersConnection] =
+    useState<ConnectionStatus>('fresh')
+  const [overlaysConnection, setOverlaysConnection] =
+    useState<ConnectionStatus>('fresh')
+
   useEffect(() => {
     const iframe = iframeRef.current?.contentWindow
 
@@ -198,25 +203,8 @@ export default function PresentationTool(props: {
     const nextChannel = createChannel<VisualEditingMsg>({
       id: 'presentation' satisfies VisualEditingConnectionIds,
       onStatusUpdate(status, prevStatus, connection) {
-        if (status === 'unhealthy') {
-          toast.push({
-            id: connection.config.id,
-            closable: true,
-            description: `The connection '${connection.config.id}' stopped responding. This means further changes might not be reflected in the preview.`,
-            status: 'error',
-            title: `Connection unhealthy`,
-            duration: 1000 * 60 * 60,
-          })
-        }
-        if (status === 'connected' && prevStatus === 'unhealthy') {
-          toast.push({
-            id: connection.config.id,
-            closable: true,
-            description: `The connection '${connection.config.id}' was restored.`,
-            status: 'success',
-            title: `Connection restored`,
-          })
-        }
+        if (connection.config.id === 'loaders') setLoadersConnection(status)
+        if (connection.config.id === 'overlays') setOverlaysConnection(status)
       },
       connections: [
         {
@@ -278,7 +266,7 @@ export default function PresentationTool(props: {
       nextChannel.disconnect()
       setChannel(undefined)
     }
-  }, [setParams, targetOrigin, toast, dataset, projectId, setDocumentsOnPage])
+  }, [dataset, projectId, setDocumentsOnPage, setParams, targetOrigin])
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments
@@ -412,6 +400,8 @@ export default function PresentationTool(props: {
                       targetOrigin={targetOrigin}
                       toggleNavigator={toggleNavigator}
                       toggleOverlay={toggleOverlay}
+                      loadersConnection={loadersConnection}
+                      overlaysConnection={overlaysConnection}
                     />
                   </Flex>
                 </Panel>
