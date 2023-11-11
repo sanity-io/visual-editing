@@ -18,6 +18,12 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.8.0-pink-lizard
+
 ## [0.6.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.6.5-pink-lizard...nuxt-loader-v0.6.6-pink-lizard) (2023-11-10)
 
 
