@@ -42,15 +42,18 @@ export const createQueryStore = (
     }
     // Necessary with a new client instanec as `useCdn` can't be set on `client.fetch`
     const client =
-      perspective === 'previewDrafts' &&
-      unstable__serverClient.instance!.config().useCdn
+      perspective === 'published' &&
+      !unstable__serverClient.instance!.config().useCdn &&
+      !options.cache &&
+      !options.next
+        ? unstable__serverClient.instance!.withConfig({ useCdn: true })
+        : 'previewDrafts' && unstable__serverClient.instance!.config().useCdn
         ? unstable__serverClient.instance!.withConfig({ useCdn: false })
         : unstable__serverClient.instance!
     const { result, resultSourceMap } =
       await client!.fetch<QueryResponseResult>(query, params, {
         filterResponse: false,
-        // @TODO don't cache by default, but allow it to be configured
-        cache: 'no-store',
+        cache: options.next ? undefined : 'no-store',
         ...options,
         perspective,
       })
