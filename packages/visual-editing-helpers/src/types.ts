@@ -12,7 +12,6 @@ export type { Path } from '@sanity/client/csm'
  * client.fetch(query, params) => `${query}-${JSON.stringify(params)}`
  */
 export type QueryCacheKey = `${string}-${string}`
-// export type QueryCacheKey = `${ClientPerspective}-${string}-${string}`
 
 /**
  * Data resolved from a Sanity node
