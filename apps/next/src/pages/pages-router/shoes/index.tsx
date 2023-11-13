@@ -10,7 +10,7 @@ import type { ClientPerspective, ContentSourceMap } from '@sanity/client'
 import type { SharedProps } from '../../_app'
 
 interface Props extends SharedProps {
-  initial: { data: ShoesListResult; sourceMap: ContentSourceMap | undefined }
+  initial: { data: ShoesListResult; sourceMap?: ContentSourceMap }
 }
 
 export const getStaticProps = (async (context) => {
@@ -25,11 +25,12 @@ export const getStaticProps = (async (context) => {
 export default function ShoesPage(
   props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
-  const { draftMode, initial } = props
+  const { initial } = props
   const {
     data: products,
     error,
     loading,
+    encodeDataAttribute,
   } = useQuery<ShoesListResult>(shoesList, {}, { initial })
 
   if (error) {
@@ -67,7 +68,10 @@ export default function ShoesPage(
                 href={`/pages-router/shoes/${product.slug.current}`}
                 className="group relative"
               >
-                <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
+                <div
+                  data-sanity={encodeDataAttribute([i, 'media', 'asset'])}
+                  className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
+                >
                   <Image
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
                     src={
@@ -86,7 +90,10 @@ export default function ShoesPage(
                 >
                   {product.title}
                 </h2>
-                <p className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900">
+                <p
+                  data-sanity={encodeDataAttribute([i, 'price'])}
+                  className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
+                >
                   {product.price ? formatCurrency(product.price) : 'FREE'}
                 </p>
                 {product.brand && (

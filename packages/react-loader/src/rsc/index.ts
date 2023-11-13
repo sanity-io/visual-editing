@@ -82,3 +82,5 @@ export const createQueryStore = (
     useLiveMode,
   }
 }
+
+export * from '../useEncodeDataAttribute'

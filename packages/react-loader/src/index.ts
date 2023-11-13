@@ -40,7 +40,7 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
    */
   initial?: {
     data: QueryResponseResult
-    sourceMap: ContentSourceMap | undefined
+    sourceMap?: ContentSourceMap
     /**
      * The perspective used to fetch the data, if not provided it'll assume 'published'
      */
@@ -56,7 +56,7 @@ export interface QueryStore {
     options?: { perspective?: ClientPerspective },
   ) => Promise<{
     data: QueryResponseResult
-    sourceMap: ContentSourceMap | undefined
+    sourceMap?: ContentSourceMap
     perspective?: ClientPerspective
   }>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
@@ -116,6 +116,7 @@ export const createQueryStore = (
 
       return () => unlisten()
     }, [$params, initial, query])
+
     return snapshot
   }
 
@@ -141,7 +142,7 @@ export const createQueryStore = (
     options: QueryOptions = {},
   ): Promise<{
     data: QueryResponseResult
-    sourceMap: ContentSourceMap | undefined
+    sourceMap?: ContentSourceMap
     perspective?: ClientPerspective
   }> => {
     const { perspective = 'published' } = options
@@ -168,6 +169,9 @@ export const createQueryStore = (
       const { result, resultSourceMap } =
         await client!.fetch<QueryResponseResult>(query, params, {
           filterResponse: false,
+          // @ts-expect-error -- `@sanity/client` typings are missing this parameter
+
+          resultSourceMap: 'withKeyArraySelector' as boolean,
           perspective,
         })
       return { data: result, sourceMap: resultSourceMap, perspective }
@@ -176,7 +180,9 @@ export const createQueryStore = (
       await unstable__cache.fetch<QueryResponseResult>(
         JSON.stringify({ query, params }),
       )
-    return { data: result, sourceMap: resultSourceMap }
+    return resultSourceMap
+      ? { data: result, sourceMap: resultSourceMap }
+      : { data: result }
   }
 
   return {
@@ -186,3 +192,5 @@ export const createQueryStore = (
     useLiveMode,
   }
 }
+
+export * from './useEncodeDataAttribute'

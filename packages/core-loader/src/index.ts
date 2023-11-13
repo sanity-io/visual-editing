@@ -49,8 +49,8 @@ export interface QueryStore {
      */
     initial?: {
       data: QueryResponseResult
-      sourceMap: ContentSourceMap | undefined
-      perspective: ClientPerspective | undefined
+      sourceMap?: ContentSourceMap
+      perspective?: ClientPerspective
     },
   ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
   /**
@@ -85,7 +85,6 @@ function cloneClientWithConfig(
   return newClient.withConfig({
     allowReconfigure: false,
     perspective: 'published',
-    resultSourceMap: 'withKeyArraySelector',
   })
 }
 

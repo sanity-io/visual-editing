@@ -23,6 +23,7 @@ export default function ShoePage(props: Props) {
     data: product,
     error,
     loading,
+    encodeDataAttribute,
   } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
   console.log({ params, product, error, loading, initial })
 
@@ -71,7 +72,10 @@ export default function ShoePage(props: Props) {
       {product && (
         <article>
           {coverImage?.asset && (
-            <div className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
+            <div
+              data-sanity={encodeDataAttribute('media[0].asset')}
+              className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24"
+            >
               <Image
                 className="aspect-video w-full rounded-md object-cover object-center group-hover:opacity-75 lg:rounded-lg"
                 src={urlFor(coverImage)
@@ -95,6 +99,7 @@ export default function ShoePage(props: Props) {
                   return (
                     <div
                       key={(image.asset._ref as string) || i}
+                      data-sanity={encodeDataAttribute(['media', i, 'asset'])}
                       className="shrink-0 snap-start"
                     >
                       <Image

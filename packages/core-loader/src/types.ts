@@ -4,7 +4,8 @@ import type {
   QueryParams,
   SanityClient,
 } from '@sanity/client'
-import type { SanityStegaClient } from '@sanity/client/stega'
+import type { StudioPathLike } from '@sanity/client/csm'
+import type { SanityStegaClient, StegaConfig } from '@sanity/client/stega'
 import type { MapStore } from 'nanostores'
 
 export type { ContentSourceMap, MapStore, QueryParams }
@@ -12,11 +13,22 @@ export type { ContentSourceMap, MapStore, QueryParams }
 /** @public */
 export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
   loading: boolean
-  error: QueryResponseError | undefined
-  data: QueryResponseResult | undefined
-  sourceMap: ContentSourceMap | undefined
-  perspective: ClientPerspective | undefined
+  error?: QueryResponseError
+  data?: QueryResponseResult
+  sourceMap?: ContentSourceMap
+  perspective?: ClientPerspective
 }
+
+/**
+ * Creates a encoded payload suitable for passing to a `data-sanity` attribute, which are used by `@sanity/overlays`
+ * @public
+ */
+export type EncodeDataAttribute<QueryResponseResult = unknown> = (
+  result: QueryResponseResult,
+  sourceMap: ContentSourceMap | undefined,
+  studioUrl: Exclude<StegaConfig['studioUrl'], undefined>,
+  path: StudioPathLike,
+) => string | undefined
 
 /** @public */
 export interface EnableLiveModeOptions {

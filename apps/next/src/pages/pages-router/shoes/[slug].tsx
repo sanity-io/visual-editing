@@ -16,7 +16,7 @@ import { query } from '@/components/sanity.ssr'
 
 interface Props extends SharedProps {
   params: { slug: string }
-  initial: { data: ShoeResult; sourceMap: ContentSourceMap | undefined }
+  initial: { data: ShoeResult; sourceMap?: ContentSourceMap }
 }
 
 export const getStaticProps = (async (context) => {
@@ -57,6 +57,7 @@ export default function ShoePage(
     data: product,
     error,
     loading,
+    encodeDataAttribute,
   } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
 
   if (error) {
@@ -104,7 +105,10 @@ export default function ShoePage(
       {product && (
         <article>
           {coverImage?.asset && (
-            <div className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
+            <div
+              data-sanity={encodeDataAttribute('media[0].asset')}
+              className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24"
+            >
               <Image
                 className="aspect-video w-full rounded-md object-cover object-center group-hover:opacity-75 lg:rounded-lg"
                 src={urlFor(coverImage)
@@ -128,6 +132,7 @@ export default function ShoePage(
                   return (
                     <div
                       key={(image.asset._ref as string) || i}
+                      data-sanity={encodeDataAttribute(['media', i, 'asset'])}
                       className="shrink-0 snap-start"
                     >
                       <Image

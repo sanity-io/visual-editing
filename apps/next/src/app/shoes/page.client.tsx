@@ -19,6 +19,7 @@ export default function ShoesPageClient(props: Props) {
     data: products,
     error,
     loading,
+    encodeDataAttribute,
   } = useQuery<ShoesListResult>(shoesList, {}, { initial })
   console.log({ initial, products, error, loading })
 
@@ -57,7 +58,10 @@ export default function ShoesPageClient(props: Props) {
                 href={`/shoes/${product.slug.current}`}
                 className="group relative"
               >
-                <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
+                <div
+                  data-sanity={encodeDataAttribute([i, 'media', 'asset'])}
+                  className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
+                >
                   <Image
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
                     src={

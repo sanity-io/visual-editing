@@ -26,12 +26,30 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./encode-data-attribute": {
+      "types": "./dist/encode-data-attribute.d.ts",
+      "source": "./src/encodeDataAttribute.ts",
+      "require": "./dist/encode-data-attribute.cjs",
+      "node": {
+        "module": "./dist/encode-data-attribute.js",
+        "import": "./dist/encode-data-attribute.cjs.js"
+      },
+      "import": "./dist/encode-data-attribute.js",
+      "default": "./dist/encode-data-attribute.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "encode-data-attribute": [
+        "./dist/encode-data-attribute.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist",
     "CHANGELOG.md"

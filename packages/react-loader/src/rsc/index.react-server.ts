@@ -66,13 +66,13 @@ export const createQueryStore = (
 
   const useQuery: QueryStore['useQuery'] = () => {
     throw new Error(
-      'The `useQuery` function can only be called from a client component.',
+      'The `useQuery` hook can only be called from a client component.',
     )
   }
 
   const useLiveMode: QueryStore['useLiveMode'] = () => {
     throw new Error(
-      'The `useLiveMode` function can only be called from a client component.',
+      'The `useLiveMode` hook can only be called from a client component.',
     )
   }
 
@@ -82,4 +82,10 @@ export const createQueryStore = (
     useQuery,
     useLiveMode,
   }
+}
+
+export const useEncodeDataAttribute = (): void => {
+  throw new Error(
+    'The `useEncodeDataAttribute` hook can only be called from a client component.',
+  )
 }

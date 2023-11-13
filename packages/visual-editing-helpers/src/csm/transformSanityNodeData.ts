@@ -56,24 +56,13 @@ export function isValidSanityLegacyNode(
  * @public
  */
 export function encodeSanityNodeData(node: SanityNode): string | undefined {
-  const {
-    projectId,
-    dataset,
-    id: _id,
-    path,
-    baseUrl,
-    tool,
-    workspace,
-    type,
-  } = node
+  const { id: _id, path, baseUrl, tool, workspace, type } = node
 
   if (!isValidSanityNode(node)) {
     return undefined
   }
 
   const parts = [
-    ['project', projectId],
-    ['dataset', dataset],
     ['id', getPublishedId(_id)],
     ['type', type],
     ['path', pathToUrlString(studioPath.fromString(path))],
@@ -101,12 +90,6 @@ export function decodeSanityString(str: string): SanityNode | undefined {
     if (!key || !value) return acc
 
     switch (key) {
-      case 'project':
-        acc.projectId = value
-        break
-      case 'dataset':
-        acc.dataset = value
-        break
       case 'id':
         acc.id = value
         break
