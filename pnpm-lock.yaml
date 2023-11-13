@@ -110,7 +110,7 @@ importers:
         version: link:../../packages/react-loader
       '@sanity/ui':
         specifier: ^1.9.2
-        version: 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+        version: 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
@@ -410,7 +410,7 @@ importers:
         version: link:../../packages/presentation
       '@sanity/ui':
         specifier: ^1.9.2
-        version: 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+        version: 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       '@sanity/vision':
         specifier: 3.19.3-pink-lizard.21
         version: 3.19.3-pink-lizard.21(@babel/runtime@7.23.2)(@codemirror/lint@6.4.2)(@codemirror/state@6.3.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.1.0)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
@@ -665,8 +665,8 @@ importers:
   packages/overlays:
     dependencies:
       '@sanity/ui':
-        specifier: ^1.9.2
-        version: 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+        specifier: ^1.9.3
+        version: 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
@@ -750,8 +750,8 @@ importers:
         specifier: workspace:*
         version: link:../preview-url-secret
       '@sanity/ui':
-        specifier: ^1.9.2
-        version: 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+        specifier: ^1.9.3
+        version: 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       '@types/lodash.isequal':
         specifier: ^4.5.8
         version: 4.5.8
@@ -4260,7 +4260,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -5033,7 +5032,7 @@ packages:
     dependencies:
       '@sanity/icons': 2.7.0(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/ui': 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+      '@sanity/ui': 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       date-fns: 2.30.0
       react: 18.2.0
       react-fast-compare: 3.2.2
@@ -5322,8 +5321,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/ui@1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1):
-    resolution: {integrity: sha512-Ia0jWGD9Fzckq6TxOehtAfdObwoCEPFz/DsGu6FmzYZSwuYW/S3O64AgrZWuQqfO/rcgcBFFAnpSJxbNTFmXiA==}
+  /@sanity/ui@1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1):
+    resolution: {integrity: sha512-AdWEVFaK0Snk6xxP0lGPVP3QQYKwzkfGFpFZnL9d6UtWt8yeuS8BMLVAzmXzg14hrqH50ex9nvNl3eq6a0MWiw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18
@@ -5376,7 +5375,7 @@ packages:
       '@rexxars/react-split-pane': 0.1.93(react-dom@18.2.0)(react@18.2.0)
       '@sanity/color': 2.2.5
       '@sanity/icons': 2.7.0(react@18.2.0)
-      '@sanity/ui': 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+      '@sanity/ui': 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       '@uiw/react-codemirror': 4.21.20(@babel/runtime@7.23.2)(@codemirror/autocomplete@6.10.2)(@codemirror/language@6.9.2)(@codemirror/lint@6.4.2)(@codemirror/search@6.5.4)(@codemirror/state@6.3.1)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.22.0)(codemirror@6.0.1)(react-dom@18.2.0)(react@18.2.0)
       hashlru: 2.3.0
       is-hotkey: 0.1.8
@@ -13218,10 +13217,6 @@ packages:
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: true
 
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
-    dev: true
-
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: true
@@ -16199,7 +16194,7 @@ packages:
       styled-components: 6.1.1
     dependencies:
       '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/ui': 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+      '@sanity/ui': 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       react: 18.2.0
       react-infinite-scroll-component: 6.1.0(react@18.2.0)
       react-photo-album: 2.3.0(react@18.2.0)
@@ -16246,7 +16241,7 @@ packages:
       '@sanity/portable-text-editor': 3.19.3-pink-lizard.21(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)(styled-components@6.1.1)
       '@sanity/schema': 3.19.3-pink-lizard.21
       '@sanity/types': 3.19.3-pink-lizard.21
-      '@sanity/ui': 1.9.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+      '@sanity/ui': 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       '@sanity/util': 3.19.3-pink-lizard.21
       '@sanity/uuid': 3.0.2
       '@tanstack/react-virtual': 3.0.0-beta.54(react@18.2.0)
