@@ -169,9 +169,7 @@ export const createQueryStore = (
       const { result, resultSourceMap } =
         await client!.fetch<QueryResponseResult>(query, params, {
           filterResponse: false,
-          // @ts-expect-error -- `@sanity/client` typings are missing this parameter
-
-          resultSourceMap: 'withKeyArraySelector' as boolean,
+          resultSourceMap: 'withKeyArraySelector',
           perspective,
         })
       return { data: result, sourceMap: resultSourceMap, perspective }
