@@ -1,6 +1,6 @@
 {
   "name": "@sanity/core-loader",
-  "version": "0.8.0-pink-lizard",
+  "version": "0.8.1-pink-lizard",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/core-loader#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -104,6 +104,7 @@
     "root": true
   },
   "dependencies": {
+    "@sanity/groq-store": "workspace:*",
     "async-cache-dedupe": "2.0.0"
   },
   "devDependencies": {
