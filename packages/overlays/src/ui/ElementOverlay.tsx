@@ -136,6 +136,24 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   )
 
   const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
+  const hrefWithPreview = useMemo(
+    () =>
+      typeof document === 'undefined'
+        ? href
+        : href.replace(
+            '/intent/edit/',
+            `/intent/edit/preview=${encodeURIComponent(
+              `${location.pathname}${location.search}`,
+            )};`,
+          ),
+    // @TODO add search params support in core
+    /*
+        : `${href}${href.includes('?') ? `&` : `?`}${new URLSearchParams({
+            preview: `${location.pathname}${location.search}`,
+          })}`,
+          // **/
+    [href],
+  )
 
   return (
     <Root
@@ -146,7 +164,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     >
       {showActions && hovered ? (
         <Actions gap={1} paddingBottom={1}>
-          <Box as="a" href={href}>
+          <Box as="a" href={hrefWithPreview}>
             <ActionOpen padding={2}>
               <Text size={1} weight="medium">
                 Open in Studio
