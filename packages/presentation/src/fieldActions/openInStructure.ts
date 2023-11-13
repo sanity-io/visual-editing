@@ -20,8 +20,8 @@ export const openInStructure = defineDocumentFieldAction({
     const presentation = useContext(PresentationContext)
 
     const defaultStructureTool = useMemo(
-      () => findStructureTool(workspace.tools),
-      [workspace.tools],
+      () => findStructureTool(workspace.tools, documentId, documentType),
+      [documentId, documentType, workspace.tools],
     )
 
     return {
@@ -42,13 +42,17 @@ export const openInStructure = defineDocumentFieldAction({
   },
 })
 
-function findStructureTool(tools: Tool[]): Tool | undefined {
+function findStructureTool(
+  tools: Tool[],
+  documentId: string,
+  documentType: string,
+): Tool | undefined {
   const results = tools.map((t) => {
     const match = t.canHandleIntent?.(
       'edit',
       {
-        id: 'check',
-        type: 'check',
+        id: documentId,
+        type: documentType,
         mode: 'structure',
       },
       {},
@@ -59,7 +63,7 @@ function findStructureTool(tools: Tool[]): Tool | undefined {
 
   const modeMatches = results.filter((t) => isRecord(t.match) && t.match.mode)
 
-  if (modeMatches.length === 1) {
+  if (modeMatches.length > 0) {
     return modeMatches[0].tool
   }
 
