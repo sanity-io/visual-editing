@@ -47,9 +47,7 @@ export function usePreviewUrl(
           return resolvePreviewUrl({
             client,
             previewUrlSecret,
-            previewSearchParam: previewSearchParam
-              ? `${previewSearchParam.pathname}${previewSearchParam.search}`
-              : null,
+            previewSearchParam: _previewSearchParam,
           })
         }, [
           // Cache based on a few specific conditions
