@@ -19,8 +19,6 @@ const lengthyStr = string([minLength(1)])
 const optionalLengthyStr = optional(lengthyStr)
 
 const sanityNodeSchema = object({
-  projectId: optionalLengthyStr,
-  dataset: optionalLengthyStr,
   id: lengthyStr,
   path: lengthyStr,
   type: optionalLengthyStr,
