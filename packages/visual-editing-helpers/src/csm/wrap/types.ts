@@ -74,8 +74,6 @@ export type UnwrappedValue<W = WrappedValue<unknown>> =
 /** @public */
 export interface SanityNodeContext {
   baseUrl: string
-  dataset: string
-  projectId: string
   tool?: string
   workspace?: string
 }

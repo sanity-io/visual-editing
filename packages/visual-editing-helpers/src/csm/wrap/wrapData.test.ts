@@ -1,16 +1,15 @@
 import { expect, test } from 'vitest'
 
 import * as fixtures from './__fixtures__/responses'
+import { SanityNodeContext } from './types'
 import { wrapData } from './wrapData'
 
 test('wrap an array of documents with source maps', () => {
   const context = {
     baseUrl: 'http://localhost:3333',
-    dataset: 'test',
-    projectId: 'test',
     tool: undefined,
     workspace: undefined,
-  }
+  } satisfies SanityNodeContext
 
   const { result, resultSourceMap } = fixtures.response1
   const wrapped = wrapData(context, result, resultSourceMap)
@@ -34,11 +33,9 @@ test('wrap an array of documents with source maps', () => {
 test('wrap a deep target with source maps', () => {
   const context = {
     baseUrl: 'http://localhost:3333',
-    dataset: 'test',
-    projectId: 'test',
     tool: undefined,
     workspace: undefined,
-  }
+  } satisfies SanityNodeContext
 
   const { result, resultSourceMap } = fixtures.response2
   const wrapped = wrapData(context, result, resultSourceMap)
