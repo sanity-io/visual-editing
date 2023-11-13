@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.1-pink-lizard...presentation-v0.12.2-pink-lizard) (2023-11-13)
+
+
+### Bug Fixes
+
+* handle initial redirect when using draft mode ([e5cd105](https://github.com/sanity-io/visual-editing/commit/e5cd1052cdc98b4c4182d910f588ecf7837a1b45))
+
 ## [0.12.1-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.0-pink-lizard...presentation-v0.12.1-pink-lizard) (2023-11-11)
 
 
