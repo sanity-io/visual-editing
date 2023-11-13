@@ -1,4 +1,4 @@
-import { studioPath } from '@sanity/client/csm'
+import { createEditUrl, studioPath } from '@sanity/client/csm'
 import { Box, Card, Flex, Text } from '@sanity/ui'
 import { memo, useEffect, useMemo, useRef } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -81,24 +81,16 @@ const ActionOpen = styled(Card)`
 `
 
 function createIntentLink(node: SanityNode) {
-  const { projectId, dataset, id, type, path, baseUrl, tool, workspace } = node
+  const { id, type, path, baseUrl, tool, workspace } = node
 
-  const parts = [
-    ['project', projectId],
-    ['dataset', dataset],
-    ['id', id],
-    ['type', type],
-    ['path', pathToUrlString(studioPath.fromString(path))],
-    ['workspace', workspace],
-    ['tool', tool],
-  ]
-
-  const intent = parts
-    .filter(([, value]) => !!value)
-    .map((part) => part.join('='))
-    .join(';')
-
-  return `${baseUrl}/intent/edit/${intent}`
+  return createEditUrl({
+    baseUrl,
+    workspace,
+    tool,
+    type: type!,
+    id,
+    path: pathToUrlString(studioPath.fromString(path)),
+  })
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: {

@@ -39,7 +39,9 @@ export function resolveSanityNode(
   if (sourceDoc && sourceBasePath) {
     return {
       baseUrl: context.baseUrl,
-      dataset: context.dataset,
+      workspace: context.workspace,
+      tool: context.tool,
+      type: sourceDoc._type,
       id: getPublishedId(sourceDoc._id),
       path: studioPath.toString(
         jsonPathToStudioPath(
@@ -50,10 +52,6 @@ export function resolveSanityNode(
           }),
         ),
       ),
-      projectId: context.projectId,
-      tool: context.tool,
-      type: sourceDoc._type,
-      workspace: context.workspace,
     }
   }
 
