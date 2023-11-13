@@ -106,7 +106,6 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
               data.result,
               data.resultSourceMap,
               (client as SanityStegaClient).config().stega,
-              { projectId: data.projectId, dataset: data.dataset },
             ),
           })
         } else {
