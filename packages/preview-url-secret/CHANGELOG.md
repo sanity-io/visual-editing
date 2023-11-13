@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.3.2-pink-lizard...preview-url-secret-v0.3.3-pink-lizard) (2023-11-13)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/client to ^6.8.2 ([#356](https://github.com/sanity-io/visual-editing/issues/356)) ([b80dfa5](https://github.com/sanity-io/visual-editing/commit/b80dfa519c9790efdfdc0590ad7eb3f56998ea01))
+* **deps:** Update dependency @sanity/client to ^6.8.4 ([5dbbe06](https://github.com/sanity-io/visual-editing/commit/5dbbe062ac1dd71a251e70d15caa1c5d53a505f6))
+* **deps:** Update dependency @sanity/client to ^6.8.5 ([#361](https://github.com/sanity-io/visual-editing/issues/361)) ([e8e61c1](https://github.com/sanity-io/visual-editing/commit/e8e61c1a377b2737db60a1c3e42160794b26ad9b))
+
 ## [0.3.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.3.1-pink-lizard...preview-url-secret-v0.3.2-pink-lizard) (2023-11-13)
 
 

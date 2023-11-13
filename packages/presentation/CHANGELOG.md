@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.12.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.3-pink-lizard...presentation-v0.12.4-pink-lizard) (2023-11-13)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/client to ^6.8.2 ([#356](https://github.com/sanity-io/visual-editing/issues/356)) ([b80dfa5](https://github.com/sanity-io/visual-editing/commit/b80dfa519c9790efdfdc0590ad7eb3f56998ea01))
+* **deps:** Update dependency @sanity/client to ^6.8.4 ([5dbbe06](https://github.com/sanity-io/visual-editing/commit/5dbbe062ac1dd71a251e70d15caa1c5d53a505f6))
+* **deps:** Update dependency @sanity/client to ^6.8.5 ([#361](https://github.com/sanity-io/visual-editing/issues/361)) ([e8e61c1](https://github.com/sanity-io/visual-editing/commit/e8e61c1a377b2737db60a1c3e42160794b26ad9b))
+* **deps:** Update dependency @sanity/ui to ^1.9.3 ([#355](https://github.com/sanity-io/visual-editing/issues/355)) ([e10f6a7](https://github.com/sanity-io/visual-editing/commit/e10f6a79243b040aaba73c94146348f509164064))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped to 5.2.9-pink-lizard
+    * @sanity/preview-url-secret bumped to 0.3.3-pink-lizard
+
 ## [0.12.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.2-pink-lizard...presentation-v0.12.3-pink-lizard) (2023-11-13)
 
 
