@@ -24,6 +24,20 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [0.4.7-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.4.6-pink-lizard...svelte-loader-v0.4.7-pink-lizard) (2023-11-13)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/client to ^6.8.1 ([#351](https://github.com/sanity-io/visual-editing/issues/351)) ([6efe86f](https://github.com/sanity-io/visual-editing/commit/6efe86f7589ae8e0b2e64e1c5b6c439b5ec5292d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.8.1-pink-lizard
+
 ## [0.4.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.4.4-pink-lizard...svelte-loader-v0.4.5-pink-lizard) (2023-11-10)
 
 
