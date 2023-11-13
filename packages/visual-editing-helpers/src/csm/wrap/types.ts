@@ -32,40 +32,44 @@ export type SourceNode<
 export type WrappedValue<T> = T extends string
   ? SourceNode<string>
   : T extends number
-  ? SourceNode<number>
-  : T extends boolean
-  ? SourceNode<boolean>
-  : T extends Array<unknown>
-  ? Array<WrappedValue<T[number]>>
-  : T extends {} // eslint-disable-line @typescript-eslint/ban-types
-  ? { [P in keyof T]: P extends SanityKey ? T[P] : WrappedValue<T[P]> }
-  : T extends string
-  ? string
-  : T extends null
-  ? null
-  : T extends undefined
-  ? undefined
-  : never
+    ? SourceNode<number>
+    : T extends boolean
+      ? SourceNode<boolean>
+      : T extends Array<unknown>
+        ? Array<WrappedValue<T[number]>>
+        : T extends {} // eslint-disable-line @typescript-eslint/ban-types
+          ? { [P in keyof T]: P extends SanityKey ? T[P] : WrappedValue<T[P]> }
+          : T extends string
+            ? string
+            : T extends null
+              ? null
+              : T extends undefined
+                ? undefined
+                : never
 
 /** @public */
 export type UnwrappedValue<W = WrappedValue<unknown>> =
   W extends SourceNode<string>
     ? string
     : W extends SourceNode<number>
-    ? number
-    : W extends SourceNode<boolean>
-    ? boolean
-    : W extends Array<unknown>
-    ? Array<UnwrappedValue<W[number]>>
-    : W extends {} // eslint-disable-line @typescript-eslint/ban-types
-    ? { [P in keyof W]: P extends SanityKey ? W[P] : UnwrappedValue<W[P]> }
-    : W extends string
-    ? string
-    : W extends null
-    ? null
-    : W extends undefined
-    ? undefined
-    : never
+      ? number
+      : W extends SourceNode<boolean>
+        ? boolean
+        : W extends Array<unknown>
+          ? Array<UnwrappedValue<W[number]>>
+          : W extends {} // eslint-disable-line @typescript-eslint/ban-types
+            ? {
+                [P in keyof W]: P extends SanityKey
+                  ? W[P]
+                  : UnwrappedValue<W[P]>
+              }
+            : W extends string
+              ? string
+              : W extends null
+                ? null
+                : W extends undefined
+                  ? undefined
+                  : never
 
 /** @public */
 export interface SanityNodeContext {

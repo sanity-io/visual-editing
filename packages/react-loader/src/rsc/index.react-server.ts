@@ -48,8 +48,8 @@ export const createQueryStore = (
       !options.next
         ? unstable__serverClient.instance!.withConfig({ useCdn: true })
         : 'previewDrafts' && unstable__serverClient.instance!.config().useCdn
-        ? unstable__serverClient.instance!.withConfig({ useCdn: false })
-        : unstable__serverClient.instance!
+          ? unstable__serverClient.instance!.withConfig({ useCdn: false })
+          : unstable__serverClient.instance!
     const { result, resultSourceMap } =
       await client!.fetch<QueryResponseResult>(query, params, {
         filterResponse: false,

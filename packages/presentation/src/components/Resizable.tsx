@@ -68,8 +68,8 @@ export const Resizable: FunctionComponent<
       disabled
         ? styleProp
         : targetWidth
-        ? { ...styleProp, flex: 'none', width: targetWidth }
-        : { ...styleProp, minWidth, maxWidth },
+          ? { ...styleProp, flex: 'none', width: targetWidth }
+          : { ...styleProp, minWidth, maxWidth },
     [disabled, minWidth, maxWidth, styleProp, targetWidth],
   )
 
