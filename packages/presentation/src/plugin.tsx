@@ -14,7 +14,7 @@ import {
 } from './constants'
 import { PresentationDocumentHeader } from './document/PresentationDocumentHeader'
 import { PresentationDocumentProvider } from './document/PresentationDocumentProvider'
-import { openInDesk } from './fieldActions/openInDesk'
+import { openInStructure } from './fieldActions/openInStructure'
 import { getIntentState } from './getIntentState'
 import { router } from './router'
 import { PresentationPluginOptions } from './types'
@@ -54,8 +54,8 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
 
         unstable_fieldActions: (prev) => {
           return [
-            ...prev.filter((a) => a.name !== openInDesk.name), // prevent duplication
-            openInDesk,
+            ...prev.filter((a) => a.name !== openInStructure.name), // prevent duplication
+            openInStructure,
           ]
         },
       },

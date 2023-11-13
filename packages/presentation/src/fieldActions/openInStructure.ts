@@ -9,8 +9,8 @@ import { useRouter } from 'sanity/router'
 
 import { PresentationContext } from '../PresentationContext'
 
-export const openInDesk = defineDocumentFieldAction({
-  name: 'presentation/openInDesk',
+export const openInStructure = defineDocumentFieldAction({
+  name: 'presentation/openInStructure',
   useAction({ documentId, documentType, path }) {
     const { navigateIntent } = useRouter()
     const presentation = useContext(PresentationContext)
@@ -19,7 +19,7 @@ export const openInDesk = defineDocumentFieldAction({
       type: 'action',
       hidden: !presentation || path.length > 0,
       icon: MasterDetailIcon,
-      title: 'Open in Desk',
+      title: 'Open in Structure',
       onAction() {
         navigateIntent('edit', {
           id: documentId,
