@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.2-pink-lizard...overlays-v2.3.3-pink-lizard) (2023-11-13)
+
+
+### Bug Fixes
+
+* click-to-edit links in overlays pass in `preview` params of the current page ([d90ec9e](https://github.com/sanity-io/visual-editing/commit/d90ec9efe79d11f7f5c880c0439090d25dfc42d7))
+* **deps:** Update dependency @sanity/client to ^6.8.4 ([5dbbe06](https://github.com/sanity-io/visual-editing/commit/5dbbe062ac1dd71a251e70d15caa1c5d53a505f6))
+* **deps:** Update dependency @sanity/ui to ^1.9.3 ([#355](https://github.com/sanity-io/visual-editing/issues/355)) ([e10f6a7](https://github.com/sanity-io/visual-editing/commit/e10f6a79243b040aaba73c94146348f509164064))
+* make `allowStudioOrigin` required ([700e140](https://github.com/sanity-io/visual-editing/commit/700e14025d327514152528138501353961034999))
+* use `createEditUrl ` from `@sanity/client` ([e83bb2b](https://github.com/sanity-io/visual-editing/commit/e83bb2bf28794477300d914e053d77b6ad1c07e4))
+
 ## [2.3.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.1-pink-lizard...overlays-v2.3.2-pink-lizard) (2023-11-11)
 
 

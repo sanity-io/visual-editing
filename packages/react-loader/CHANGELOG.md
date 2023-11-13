@@ -12,6 +12,26 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [0.10.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.9.2-pink-lizard...react-loader-v0.10.0-pink-lizard) (2023-11-13)
+
+
+### Features
+
+* add `encodeDataAttribute` API ([d9179f3](https://github.com/sanity-io/visual-editing/commit/d9179f30ab0defb1539d589a24c230683cce9c4e))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/client to ^6.8.2 ([#356](https://github.com/sanity-io/visual-editing/issues/356)) ([b80dfa5](https://github.com/sanity-io/visual-editing/commit/b80dfa519c9790efdfdc0590ad7eb3f56998ea01))
+* **deps:** Update dependency @sanity/client to ^6.8.4 ([5dbbe06](https://github.com/sanity-io/visual-editing/commit/5dbbe062ac1dd71a251e70d15caa1c5d53a505f6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 0.9.0-pink-lizard
+
 ## [0.9.2-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.9.1-pink-lizard...react-loader-v0.9.2-pink-lizard) (2023-11-13)
 
 
