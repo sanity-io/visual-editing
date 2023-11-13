@@ -12,7 +12,7 @@ import {
 } from '@sanity/ui'
 import {
   ErrorInfo,
-  FunctionComponent,
+  ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -30,13 +30,13 @@ import { DeskDocumentPaneParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
 
-export const DocumentPane: FunctionComponent<{
+export function DocumentPane(props: {
   documentId: string
   documentType: string
   params: DeskDocumentPaneParams
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
-}> = function (props) {
+}): ReactElement {
   const { documentId, documentType, params, onDeskParams, onFocusPath } = props
   const { devMode } = usePresentationTool()
 

@@ -12,7 +12,7 @@ import {
 } from '@sanity/ui'
 import {
   ErrorInfo,
-  FunctionComponent,
+  ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -45,11 +45,11 @@ const WrappedCode = styled(Code)`
   white-space: pre-wrap;
 `
 
-export const DocumentListPane: FunctionComponent<{
+export function DocumentListPane(props: {
   onDeskParams: (params: DeskDocumentPaneParams) => void
   previewUrl?: string
   refs: { _id: string; _type: string }[]
-}> = function (props) {
+}): ReactElement {
   const { onDeskParams, previewUrl, refs } = props
   const { devMode } = usePresentationTool()
 
