@@ -23,14 +23,14 @@ export function enableOverlays(
   options: {
     /**
      * The origin that are allowed to connect to the overlay.
-     * If left unspecified it will default to the current origin, and the Studio will have to be hosted by the same origin.
      * @example `https://my.sanity.studio`
-     * @defaultValue `location.origin`
+     * @example `location.origin`
      */
-    allowStudioOrigin?: string
+    allowStudioOrigin: string
     history?: HistoryAdapter
     zIndex?: string | number
-  } = {},
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } = {} as any,
 ): DisableOverlays {
   if (cleanup) clearTimeout(cleanup)
   const controller = new AbortController()
