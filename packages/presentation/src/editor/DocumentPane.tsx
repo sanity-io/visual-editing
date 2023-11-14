@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  Code,
-  Container,
-  ErrorBoundary,
-  Flex,
-  Label,
-  Stack,
-  Text,
-} from '@sanity/ui'
+import { Card, Code, ErrorBoundary, Label, Stack } from '@sanity/ui'
 import {
   ErrorInfo,
   ReactElement,
@@ -25,10 +14,16 @@ import {
   PaneLayout,
   useDeskTool,
 } from 'sanity/desk'
+import styled from 'styled-components'
 
+import { ErrorCard } from '../components/ErrorCard'
 import { DeskDocumentPaneParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
+
+const WrappedCode = styled(Code)`
+  white-space: pre-wrap;
+`
 
 export function DocumentPane(props: {
   documentId: string
@@ -77,44 +72,22 @@ export function DocumentPane(props: {
 
   if (errorParams) {
     return (
-      <Flex align="center" height="fill" justify="center">
-        <Container padding={4} sizing="border" width={0}>
-          <Stack space={3}>
-            <Text size={1} weight="semibold">
-              An error occured
-            </Text>
-            <Text muted size={1}>
-              Could not render the document editor
-            </Text>
-          </Stack>
-          {devMode && (
-            <Card
-              marginTop={4}
-              overflow="auto"
-              padding={3}
-              radius={2}
-              tone="critical"
-            >
-              <Stack space={3}>
-                <Label muted size={0}>
-                  Error message
-                </Label>
-                <Code size={1} style={{ whiteSpace: 'pre-wrap' }}>
-                  {errorParams.error.message}
-                </Code>
-              </Stack>
-            </Card>
-          )}
-          <Box marginTop={4}>
-            <Button
-              fontSize={1}
-              mode="ghost"
-              onClick={handleRetry}
-              text="Retry"
-            />
-          </Box>
-        </Container>
-      </Flex>
+      <ErrorCard
+        message="Could not render the document editor"
+        onRetry={handleRetry}
+      >
+        {devMode && (
+          // show runtime error message in dev mode
+          <Card overflow="auto" padding={3} radius={2} tone="critical">
+            <Stack space={3}>
+              <Label muted size={0}>
+                Error message
+              </Label>
+              <WrappedCode size={1}>{errorParams.error.message}</WrappedCode>
+            </Stack>
+          </Card>
+        )}
+      </ErrorCard>
     )
   }
 

@@ -17,7 +17,6 @@ import {
   ButtonTone,
   Card,
   Code,
-  Container,
   Flex,
   Label,
   Menu,
@@ -45,6 +44,7 @@ import {
 } from 'react'
 import styled from 'styled-components'
 
+import { ErrorCard } from '../components/ErrorCard'
 import { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { IFrame } from './IFrame'
@@ -485,64 +485,34 @@ export const PreviewFrame = forwardRef<
                     boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
                   }}
                 >
-                  <Flex align="center" height="fill" justify="center">
-                    <Container padding={4} sizing="border" width={0}>
-                      <Stack space={3}>
-                        <Text size={1} weight="semibold">
-                          An error occured
-                        </Text>
-                        <Text muted size={1}>
-                          Lost connection to the preview frame
-                        </Text>
-                      </Stack>
-
-                      {devMode &&
-                        (overlaysConnection === 'unhealthy' ||
+                  <ErrorCard
+                    message="Could not connect to the preview"
+                    onRetry={handleRetry}
+                  >
+                    {devMode && (
+                      <>
+                        {(overlaysConnection === 'unhealthy' ||
                           overlaysConnection === 'disconnected') && (
-                          <Card
-                            marginTop={4}
-                            overflow="auto"
-                            padding={3}
-                            radius={2}
-                            tone="critical"
-                          >
-                            <Stack space={3}>
-                              <Label muted size={0}>
-                                overlays connection status
-                              </Label>
-                              <Code size={1}>{overlaysConnection}</Code>
-                            </Stack>
-                          </Card>
-                        )}
-                      {devMode &&
-                        (loadersConnection === 'unhealthy' ||
-                          loadersConnection === 'disconnected') && (
-                          <Card
-                            marginTop={4}
-                            overflow="auto"
-                            padding={3}
-                            radius={2}
-                            tone="critical"
-                          >
-                            <Stack space={3}>
-                              <Label muted size={0}>
-                                loaders connection status
-                              </Label>
-                              <Code size={1}>{loadersConnection}</Code>
-                            </Stack>
-                          </Card>
+                          <Stack space={3}>
+                            <Label muted size={0}>
+                              Overlay connection status
+                            </Label>
+                            <Code size={1}>{overlaysConnection}</Code>
+                          </Stack>
                         )}
 
-                      <Box marginTop={4}>
-                        <Button
-                          fontSize={1}
-                          mode="ghost"
-                          onClick={handleRetry}
-                          text="Retry"
-                        />
-                      </Box>
-                    </Container>
-                  </Flex>
+                        {(loadersConnection === 'unhealthy' ||
+                          loadersConnection === 'disconnected') && (
+                          <Stack space={3}>
+                            <Label muted size={0}>
+                              Loader connection status
+                            </Label>
+                            <Code size={1}>{loadersConnection}</Code>
+                          </Stack>
+                        )}
+                      </>
+                    )}
+                  </ErrorCard>
                 </MotionFlex>
               ) : null}
             </AnimatePresence>

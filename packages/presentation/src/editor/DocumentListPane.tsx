@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  Code,
-  Container,
-  ErrorBoundary,
-  Flex,
-  Label,
-  Stack,
-  Text,
-} from '@sanity/ui'
+import { Card, Code, ErrorBoundary, Flex, Label, Stack } from '@sanity/ui'
 import {
   ErrorInfo,
   ReactElement,
@@ -26,6 +15,7 @@ import {
 } from 'sanity/desk'
 import styled from 'styled-components'
 
+import { ErrorCard } from '../components/ErrorCard'
 import { DeskDocumentPaneParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
@@ -81,45 +71,22 @@ export function DocumentListPane(props: {
 
   if (errorParams) {
     return (
-      <Flex align="center" height="fill" justify="center">
-        <Container padding={4} sizing="border" width={0}>
-          <Stack space={3}>
-            <Text size={1} weight="semibold">
-              An error occured
-            </Text>
-            <Text muted size={1}>
-              Could not render the document list
-            </Text>
-          </Stack>
-
-          {devMode && (
-            // show runtime error message in dev mode
-            <Card
-              marginTop={4}
-              overflow="auto"
-              padding={3}
-              radius={2}
-              tone="critical"
-            >
-              <Stack space={3}>
-                <Label muted size={0}>
-                  Error message
-                </Label>
-                <WrappedCode size={1}>{errorParams.error.message}</WrappedCode>
-              </Stack>
-            </Card>
-          )}
-
-          <Box marginTop={4}>
-            <Button
-              fontSize={1}
-              mode="ghost"
-              onClick={handleRetry}
-              text="Retry"
-            />
-          </Box>
-        </Container>
-      </Flex>
+      <ErrorCard
+        message="Could not render the document list"
+        onRetry={handleRetry}
+      >
+        {devMode && (
+          // show runtime error message in dev mode
+          <Card overflow="auto" padding={3} radius={2} tone="critical">
+            <Stack space={3}>
+              <Label muted size={0}>
+                Error message
+              </Label>
+              <WrappedCode size={1}>{errorParams.error.message}</WrappedCode>
+            </Stack>
+          </Card>
+        )}
+      </ErrorCard>
     )
   }
 
