@@ -1,10 +1,10 @@
-# Sanity Presentation with Nuxt 3&mdash;Minimal starter
+# Nuxt 3&mdash;Minimal starter
 
 > ℹ️ Note:  
 >    This is a minimal documentation set to get you started with Nuxt 3.  
 >    For more information see the [Nuxt 3 getting started documentation](https://nuxt.com/docs/getting-started/introduction).
 
-## Setup
+## Set up
 
 Install the required dependencies:
 
@@ -64,6 +64,11 @@ yarn preview
 
 ## See also
 
+To gain familiarity with Nuxt deployment, see the following resource:
+
 - [Nuxt 3 deployment documentation](https://nuxt.com/docs/getting-started/deployment)
+
+To get a broader understanding of Sanity Presentation, see the following resources:
+
 - [Enable visual editing in Sanity Studio](###TODO### Add link as soon as docs are in Sanity.io docs)
 - [Enable visual editing in a React front end](###TODO### Add link as soon as docs are in Sanity.io docs)
