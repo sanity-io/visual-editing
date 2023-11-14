@@ -1,46 +1,48 @@
 import { useLocation, useNavigate } from '@remix-run/react'
-import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
+import { enableOverlays, type HistoryAdapterNavigate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLiveMode } from '~/sanity.loader'
 import { client } from '~/sanity'
 
 export default function VisualEditing() {
   const navigateRemix = useNavigate()
-  const navigatePresentationRef = useRef<
-    null | ((update: HistoryUpdate) => void)
-  >(null)
+  const navigateRemixRef = useRef(navigateRemix)
+  const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
 
+  useEffect(() => {
+    navigateRemixRef.current = navigateRemix
+  }, [navigateRemix])
   useEffect(() => {
     const disable = enableOverlays({
       allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
-          navigatePresentationRef.current = navigate
-          return () => {
-            navigatePresentationRef.current = null
-          }
+          setNavigate(() => navigate)
+          return () => setNavigate(undefined)
         },
         update: (update) => {
           if (update.type === 'push' || update.type === 'replace') {
-            navigateRemix(update.url, { replace: update.type === 'replace' })
+            navigateRemixRef.current(update.url, {
+              replace: update.type === 'replace',
+            })
           } else if (update.type === 'pop') {
-            navigateRemix(-1)
+            navigateRemixRef.current(-1)
           }
         },
       },
     })
     return () => disable()
-  }, [navigateRemix])
+  }, [])
   const location = useLocation()
   useEffect(() => {
-    if (navigatePresentationRef.current) {
-      navigatePresentationRef.current({
+    if (navigate) {
+      navigate({
         type: 'push',
         url: `${location.pathname}${location.search}${location.hash}`,
       })
     }
-  }, [location.hash, location.pathname, location.search])
+  }, [location.hash, location.pathname, location.search, navigate])
 
   useLiveMode({ allowStudioOrigin: studioUrl, client })
 
