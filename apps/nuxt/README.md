@@ -1,49 +1,51 @@
-# Nuxt 3 Minimal Starter
+# Sanity Presentation with Nuxt 3&mdash;Minimal starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> ℹ️ Note:  
+>    This is a minimal documentation set to get you started with Nuxt 3.  
+>    For more information see the [Nuxt 3 getting started documentation](https://nuxt.com/docs/getting-started/introduction).
 
 ## Setup
 
-Make sure to install the dependencies:
+Install the required dependencies:
 
 ```bash
-# npm
+# Install with npm
 npm install
 
-# pnpm
+# Install with pnpm
 pnpm install
 
-# yarn
+# Install with yarn
 yarn install
 ```
 
-## Development Server
+## Start the server
 
-Start the development server on `http://localhost:3001`:
+Start running the development server on `http://localhost:3001`:
 
 ```bash
-# npm
+# Start dev server with npm
 npm run dev
 
-# pnpm
+# Start dev server with pnpm
 pnpm run dev
 
-# yarn
+# Start dev server with yarn
 yarn dev
 ```
 
-## Production
+## Build for production
 
 Build the application for production:
 
 ```bash
-# npm
+# Build with npm
 npm run build
 
-# pnpm
+# Build with pnpm
 pnpm run build
 
-# yarn
+# Build with yarn
 yarn build
 ```
 
@@ -60,4 +62,8 @@ pnpm run preview
 yarn preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## See also
+
+- [Nuxt 3 deployment documentation](https://nuxt.com/docs/getting-started/deployment)
+- [Enable visual editing in Sanity Studio](###TODO### Add link as soon as docs are in Sanity.io docs)
+- [Enable visual editing in a React front end](###TODO### Add link as soon as docs are in Sanity.io docs)
