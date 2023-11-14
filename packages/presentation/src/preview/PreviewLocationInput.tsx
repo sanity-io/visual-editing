@@ -34,7 +34,7 @@ export const PreviewLocationInput: FunctionComponent<{
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
-        if (!sessionValue) {
+        if (sessionValue === undefined) {
           return
         }
 
@@ -117,7 +117,7 @@ export const PreviewLocationInput: FunctionComponent<{
             />
           </Box>
         }
-        value={sessionValue || `${origin}${value}`}
+        value={sessionValue === undefined ? `${origin}${value}` : sessionValue}
       />
     </>
   )
