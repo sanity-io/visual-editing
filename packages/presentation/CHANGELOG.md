@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.4-pink-lizard...presentation-v0.12.5-pink-lizard) (2023-11-14)
+
+
+### Bug Fixes
+
+* **presentation:** handle empty location ([6ea8353](https://github.com/sanity-io/visual-editing/commit/6ea83537df5f3b8162b2fed5f86c1d0281a4de65))
+
 ## [0.12.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.3-pink-lizard...presentation-v0.12.4-pink-lizard) (2023-11-13)
 
 
