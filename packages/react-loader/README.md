@@ -136,6 +136,132 @@ export default function VisualEditing() {
 }
 ```
 
+### Adding overlays to any element
+
+You can use `useEncodeDataAttribute` to create `data-json` attributes, that are picked up by `@sanity/overlays`.
+This allows you to link to elements that otherwise isn't automatically linked to using `@sanity/client/stega`, such as array root item, or an image field.
+
+Update your shared loader to change `useQuery`, adding `useEncodeDataAttribute`
+
+```ts
+// ./src/app/sanity.loader.ts
+import {
+  createQueryStore,
+  useEncodeDataAttribute,
+  QueryParams,
+  UseQueryOptions,
+} from '@sanity/react-loader'
+
+const studioUrl = 'https://my.sanity.studio'
+
+const {
+  // Used only server side
+  query,
+  setServerClient,
+  // Used only client side
+  useQuery: _useQuery,
+  useLiveMode,
+} = createQueryStore({ client: false, ssr: true })
+
+// Used only server side
+export { query, setServerClient }
+
+// Used only client side
+export { useLiveMode }
+export const useQuery = <
+  QueryResponseResult = unknown,
+  QueryResponseError = unknown,
+>(
+  query: string,
+  params?: QueryParams,
+  options?: UseQueryOptions<QueryResponseResult>,
+) => {
+  const snapshot = _useQuery<QueryResponseResult, QueryResponseError>(
+    query,
+    params,
+    options,
+  )
+
+  const encodeDataAttribute = useEncodeDataAttribute(
+    snapshot.data,
+    snapshot.sourceMap,
+    studioUrl,
+  )
+
+  return {
+    ...snapshot,
+    encodeDataAttribute,
+  }
+}
+```
+
+You then use it in your template:
+
+```tsx
+// ./src/app/routes/products.$slug.tsx
+
+import { Link, useLoaderData, useParams } from '@remix-run/react'
+import { json, type LoaderFunction } from '@remix-run/node'
+import { query } from '~/sanity.loader.server'
+import { useQuery } from '~/sanity.loader'
+
+interface Product {}
+const queryProduct = `*[_type == "product" && slug.current == $slug][0]`
+
+export const loader: LoaderFunction = async ({ params }) => {
+  return json({
+    params,
+    initial: await query<Product>(queryProduct, params),
+  })
+}
+
+export default function ProductPage() {
+  const { params, initial } = useLoaderData<typeof loader>()
+
+  if (!params.slug || !initial.data?.slug?.current) {
+    throw new Error('No slug, 404?')
+  }
+
+  const { data, encodeDataAttribute } = useQuery<Product>(
+    queryProduct,
+    params,
+    { initial },
+  )
+
+  // Use `data` in your view, it'll mirror what the loader returns in production mode,
+  // while Live Mode it becomes reactive and respons in real-time to your edits in the Presentation tool.
+  // And `encodeDataAttribute` is a helpful utility for adding custom `data-sanity` attributes.
+  return <ProductTemplate data={data} />
+}
+```
+
+You use `encodeDataAttribute` by giving it a path to the data you want to be linked to, or open in the Studio when in the Presentation tool.
+
+```tsx
+// ./src/app/templates/product.tsx
+import { StudioPathLike } from '@sanity/react-loader'
+
+interface Product {}
+
+interface Props {
+  data: Product
+  encodeDataAttribute: (path: StudioPathLike) => string | undefined
+}
+export default function ProductTemplate(props: Props) {
+  const { data, encodeDataAttribute } = props
+  return (
+    <>
+      <img
+        // Adding this attribute makes sure the image is always clickable in the Presentation tool
+        data-sanity={encodeDataAttribute('image')}
+        src={urlFor(data.image.asset).url()}
+        // other props
+      />
+    </>
+  )
+}
+```
+
 ## Visual Editing
 
 ### @sanity/overlays
