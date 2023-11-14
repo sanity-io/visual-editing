@@ -31,7 +31,7 @@
 ### Bug Fixes
 
 * **deps:** Update dependency @sanity/client to ^6.8.1 ([#351](https://github.com/sanity-io/visual-editing/issues/351)) ([6efe86f](https://github.com/sanity-io/visual-editing/commit/6efe86f7589ae8e0b2e64e1c5b6c439b5ec5292d))
-* **deps:** Update sanity monorepo to v3.19.3-pink-lizard.21 ([2bb162c](https://github.com/sanity-io/visual-editing/commit/2bb162cc8b5844ddc927876e8f039b028e4250cc))
+* **deps:** Update sanity monorepo to v^3.19.2 ([2bb162c](https://github.com/sanity-io/visual-editing/commit/2bb162cc8b5844ddc927876e8f039b028e4250cc))
 * **presentation:** render icon and title of Structure tool in field action ([f617052](https://github.com/sanity-io/visual-editing/commit/f61705210035a151671899d0cfc4dd69e8b0e994))
 * **presentation:** structure tool resolver ([373af37](https://github.com/sanity-io/visual-editing/commit/373af373b14651f52c34c4147a341493ca6685a8))
 
