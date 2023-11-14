@@ -3,7 +3,7 @@
 import { enableOverlays, HistoryAdapterNavigate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLiveMode } from './sanity.loader'
 import { client } from './sanity.client'
 
@@ -14,8 +14,12 @@ const stegaClient = client.withConfig({
 
 export default function VisualEditing() {
   const router = useRouter()
+  const routerRef = useRef(router)
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
 
+  useEffect(() => {
+    routerRef.current = router
+  }, [router])
   useEffect(() => {
     const disable = enableOverlays({
       allowStudioOrigin: studioUrl,
@@ -27,11 +31,11 @@ export default function VisualEditing() {
         update: (update) => {
           switch (update.type) {
             case 'push':
-              return router.push(update.url)
+              return routerRef.current.push(update.url)
             case 'pop':
-              return router.back()
+              return routerRef.current.back()
             case 'replace':
-              return router.replace(update.url)
+              return routerRef.current.replace(update.url)
             default:
               throw new Error(`Unknown update type: ${update.type}`)
           }
@@ -39,7 +43,7 @@ export default function VisualEditing() {
       },
     })
     return () => disable()
-  }, [router])
+  }, [])
 
   const pathname = usePathname()
   const searchParams = useSearchParams()

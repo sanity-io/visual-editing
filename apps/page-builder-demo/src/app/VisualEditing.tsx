@@ -1,35 +1,35 @@
 'use client'
 
 import { useLiveMode } from '@/sanity'
-import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
+import { enableOverlays, HistoryAdapterNavigate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 
 export default function VisualEditing() {
   const router = useRouter()
-  const navigatePresentationRef = useRef<
-    null | ((update: HistoryUpdate) => void)
-  >(null)
+  const routerRef = useRef(router)
+  const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
 
+  useEffect(() => {
+    routerRef.current = router
+  }, [router])
   useEffect(() => {
     const disable = enableOverlays({
       allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
-          navigatePresentationRef.current = navigate
-          return () => {
-            navigatePresentationRef.current = null
-          }
+          setNavigate(() => navigate)
+          return () => setNavigate(undefined)
         },
         update: (update) => {
           switch (update.type) {
             case 'push':
-              return router.push(update.url)
+              return routerRef.current.push(update.url)
             case 'pop':
-              return router.back()
+              return routerRef.current.back()
             case 'replace':
-              return router.replace(update.url)
+              return routerRef.current.replace(update.url)
             default:
               throw new Error(`Unknown update type: ${update.type}`)
           }
@@ -37,18 +37,18 @@ export default function VisualEditing() {
       },
     })
     return () => disable()
-  }, [router])
+  }, [])
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
   useEffect(() => {
-    if (navigatePresentationRef.current) {
-      navigatePresentationRef.current({
+    if (navigate) {
+      navigate({
         type: 'push',
         url: `${pathname}${searchParams?.size ? `?${searchParams}` : ''}`,
       })
     }
-  }, [pathname, searchParams])
+  }, [navigate, pathname, searchParams])
 
   useLiveMode({ allowStudioOrigin: studioUrl })
 
