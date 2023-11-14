@@ -12,8 +12,6 @@ export const client = getClient()
 const { useQuery: _useQuery, useLiveMode } = createQueryStore({ client })
 
 const context: SanityNodeContext = {
-  projectId: workspace.projectId,
-  dataset: workspace.dataset,
   baseUrl: `${studioUrl}/${workspace.workspace}`,
 }
 
