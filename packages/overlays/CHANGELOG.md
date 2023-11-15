@@ -5,6 +5,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.4-pink-lizard...overlays-v2.0.0) (2023-11-15)
+
+
+### Features
+
+* production ready release ([#246](https://github.com/sanity-io/visual-editing/issues/246)) ([993c3cc](https://github.com/sanity-io/visual-editing/commit/993c3cc621921971087053950a1dc88fd9e34762))
+
+## [2.3.4-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.3-pink-lizard...overlays-v2.3.4-pink-lizard) (2023-11-15)
+
+
+### Bug Fixes
+
+* **overlays:** add `mode=presentation` to intent links ([a838cd8](https://github.com/sanity-io/visual-editing/commit/a838cd8b392f8f74d18463709d7f24a3aac28ed6))
+
 ## [2.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.2-pink-lizard...overlays-v2.3.3-pink-lizard) (2023-11-13)
 
 

@@ -22,7 +22,7 @@ export const createQueryStore = (
   }
   const { setServerClient, unstable__serverClient } =
     createCoreQueryStore(options)
-  const query = async <QueryResponseResult>(
+  const loadQuery = async <QueryResponseResult>(
     query: string,
     params: QueryParams = {},
     options: QueryOptions = {},
@@ -77,7 +77,7 @@ export const createQueryStore = (
   }
 
   return {
-    query,
+    loadQuery,
     setServerClient,
     useQuery,
     useLiveMode,

@@ -24,6 +24,31 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.0.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.5.0-pink-lizard...svelte-loader-v1.0.0) (2023-11-15)
+
+
+### Features
+
+* production ready release ([#246](https://github.com/sanity-io/visual-editing/issues/246)) ([993c3cc](https://github.com/sanity-io/visual-editing/commit/993c3cc621921971087053950a1dc88fd9e34762))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.0.0
+
+## [0.5.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.4.8-pink-lizard...svelte-loader-v0.5.0-pink-lizard) (2023-11-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename `query` to `loadQuery`
+
+### Bug Fixes
+
+* rename `query` to `loadQuery` ([228dfc3](https://github.com/sanity-io/visual-editing/commit/228dfc3d2c5838d2124302e514ca9530ee92fbb8))
+
 ## [0.4.8-pink-lizard](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v0.4.7-pink-lizard...svelte-loader-v0.4.8-pink-lizard) (2023-11-13)
 
 

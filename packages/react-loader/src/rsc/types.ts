@@ -33,16 +33,16 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
   /**
    * Initial `data` and `sourceMap`, used with SSR hydration and is required if `ssr: true`
    * and an optional speed optimization if `ssr: false`.
-   * It's recommended to set `initial` to the return value of `query()`.
+   * It's recommended to set `initial` to the return value of `loadQuery()`.
    * @example
    * ```ts
-   * const queryAuthor = `*[_type == "author" && slug.current == $slug][0]`
+   * const query = `*[_type == "author" && slug.current == $slug][0]`
    * export const getServerSideProps = async ({params}) => {
-   *   const initial = await query<AuhthorType>(queryAuthor, params)
+   *   const initial = await loadQuery<AuhthorType>(query, params)
    *   return { props: { params, initial } }
    * }
    * export default function Page({params, initial}) {
-   *   const {data} = useQuery<AuthorType>(queryAuthor, params, {initial})
+   *   const {data} = useQuery<AuthorType>(query, params, {initial})
    * }
    * ```
    */
@@ -51,7 +51,7 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
 export type UseLiveModeHook = (options: EnableLiveModeOptions) => void
 
 export interface QueryStore {
-  query: <QueryResponseResult>(
+  loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
     options?: QueryOptions,

@@ -24,6 +24,20 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.0.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.6.9-pink-lizard...nuxt-loader-v1.0.0) (2023-11-15)
+
+
+### Features
+
+* production ready release ([#246](https://github.com/sanity-io/visual-editing/issues/246)) ([993c3cc](https://github.com/sanity-io/visual-editing/commit/993c3cc621921971087053950a1dc88fd9e34762))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.0.0
+
 ## [0.6.9-pink-lizard](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v0.6.8-pink-lizard...nuxt-loader-v0.6.9-pink-lizard) (2023-11-13)
 
 

@@ -1,6 +1,6 @@
 import { client } from './sanity'
-import { server__query, setServerClient } from './sanity.loader'
+import { server__loadQuery, setServerClient } from './sanity.loader'
 
 setServerClient(client)
 
-export { server__query as query }
+export { server__loadQuery as loadQuery }

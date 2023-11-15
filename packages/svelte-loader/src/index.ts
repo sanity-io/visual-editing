@@ -9,15 +9,15 @@ import {
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): {
-  query: <QueryResponseResult = unknown, QueryResponseError = unknown>(
+  loadQuery: <QueryResponseResult = unknown, QueryResponseError = unknown>(
     query: string,
     params?: QueryParams,
   ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
   enableLiveMode: ReturnType<typeof createCoreQueryStore>['enableLiveMode']
 } => {
   const { createFetcherStore, enableLiveMode } = createCoreQueryStore(options)
-  const query = (query: string, params: QueryParams = {}) =>
+  const loadQuery = (query: string, params: QueryParams = {}) =>
     createFetcherStore(query, params)
   // @ts-expect-error -- @TODO fix
-  return { query, enableLiveMode }
+  return { loadQuery, enableLiveMode }
 }

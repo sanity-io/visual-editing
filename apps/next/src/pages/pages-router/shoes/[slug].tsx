@@ -12,7 +12,7 @@ import { useQuery } from '../../../components/sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
 import { ClientPerspective, ContentSourceMap } from '@sanity/client'
 import type { SharedProps } from '../../_app'
-import { query } from '@/components/sanity.ssr'
+import { loadQuery } from '@/components/sanity.ssr'
 
 interface Props extends SharedProps {
   params: { slug: string }
@@ -27,7 +27,7 @@ export const getStaticProps = (async (context) => {
 
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
   if (!slug) throw new Error('slug is required')
-  const initial = await query<ShoeResult>(
+  const initial = await loadQuery<ShoeResult>(
     shoe,
     {
       slug,

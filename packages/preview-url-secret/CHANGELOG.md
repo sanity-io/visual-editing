@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.3.3-pink-lizard...preview-url-secret-v1.0.0) (2023-11-15)
+
+
+### Features
+
+* production ready release ([#246](https://github.com/sanity-io/visual-editing/issues/246)) ([993c3cc](https://github.com/sanity-io/visual-editing/commit/993c3cc621921971087053950a1dc88fd9e34762))
+
 ## [0.3.3-pink-lizard](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v0.3.2-pink-lizard...preview-url-secret-v0.3.3-pink-lizard) (2023-11-13)
 
 

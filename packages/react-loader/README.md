@@ -1,7 +1,7 @@
 # @sanity/react-loader
 
 [![npm stat](https://img.shields.io/npm/dm/@sanity/react-loader.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@sanity/react-loader)
-[![npm version](https://img.shields.io/npm/v/@sanity/react-loader/pink-lizard.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/react-loader)
+[![npm version](https://img.shields.io/npm/v/@sanity/react-loader.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/react-loader)
 [![gzip size][gzip-badge]][bundlephobia]
 [![size][size-badge]][bundlephobia]
 
@@ -10,7 +10,7 @@
 > This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
 
 ```sh
-npm i --save-exact @sanity/react-loader@pink-lizard @sanity/client react@^18.2
+npm install @sanity/react-loader @sanity/client react@^18.2
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ import { createQueryStore } from '@sanity/react-loader'
 
 export const {
   // Used only server side
-  query,
+  loadQuery,
   setServerClient,
   // Used only client side
   useQuery,
@@ -41,7 +41,7 @@ Later in the server side of the app, you setup the client. The `.server.ts` suff
 ```ts
 // ./src/app/sanity.loader.server.ts
 import { createClient } from '@sanity/client/stega'
-import { setServerClient, query } from './sanity.loader'
+import { setServerClient, loadQuery } from './sanity.loader'
 
 const client = createClient({
   projectId: process.env.SANITY_PROJECT_ID,
@@ -57,26 +57,26 @@ const client = createClient({
 setServerClient(client)
 
 // Re-export for convenience
-export { query }
+export { loadQuery }
 ```
 
-Then somewhere in your app, you can use the `query` and `useQuery` utilities together. `useQuery` now only fetches data when Live Mode is active. Otherwise it's `query` that is used.
+Then somewhere in your app, you can use the `loadQuery` and `useQuery` utilities together. `useQuery` now only fetches data when Live Mode is active. Otherwise it's `loadQuery` that is used.
 
 ```tsx
 // ./src/app/routes/products.$slug.tsx
 
 import { Link, useLoaderData, useParams } from '@remix-run/react'
 import { json, type LoaderFunction } from '@remix-run/node'
-import { query } from '~/sanity.loader.server'
+import { loadQuery } from '~/sanity.loader.server'
 import { useQuery } from '~/sanity.loader'
 
 interface Product {}
-const queryProduct = `*[_type == "product" && slug.current == $slug][0]`
+const query = `*[_type == "product" && slug.current == $slug][0]`
 
 export const loader: LoaderFunction = async ({ params }) => {
   return json({
     params,
-    initial: await query<Product>(queryProduct, params),
+    initial: await loadQuery<Product>(query, params),
   })
 }
 
@@ -87,7 +87,7 @@ export default function ProductPage() {
     throw new Error('No slug, 404?')
   }
 
-  const { data } = useQuery<Product>(queryProduct, params, { initial })
+  const { data } = useQuery<Product>(query, params, { initial })
 
   // Use `data` in your view, it'll mirror what the loader returns in production mode,
   // while Live Mode it becomes reactive and respons in real-time to your edits in the Presentation tool.
@@ -156,7 +156,7 @@ const studioUrl = 'https://my.sanity.studio'
 
 const {
   // Used only server side
-  query,
+  loadQuery,
   setServerClient,
   // Used only client side
   useQuery: _useQuery,
@@ -164,7 +164,7 @@ const {
 } = createQueryStore({ client: false, ssr: true })
 
 // Used only server side
-export { query, setServerClient }
+export { loadQuery, setServerClient }
 
 // Used only client side
 export { useLiveMode }
@@ -172,12 +172,12 @@ export const useQuery = <
   QueryResponseResult = unknown,
   QueryResponseError = unknown,
 >(
-  query: string,
+  loadQuery: string,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
 ) => {
   const snapshot = _useQuery<QueryResponseResult, QueryResponseError>(
-    query,
+    loadQuery,
     params,
     options,
   )
@@ -202,16 +202,16 @@ You then use it in your template:
 
 import { Link, useLoaderData, useParams } from '@remix-run/react'
 import { json, type LoaderFunction } from '@remix-run/node'
-import { query } from '~/sanity.loader.server'
+import { loadQuery } from '~/sanity.loader.server'
 import { useQuery } from '~/sanity.loader'
 
 interface Product {}
-const queryProduct = `*[_type == "product" && slug.current == $slug][0]`
+const query = `*[_type == "product" && slug.current == $slug][0]`
 
 export const loader: LoaderFunction = async ({ params }) => {
   return json({
     params,
-    initial: await query<Product>(queryProduct, params),
+    initial: await loadQuery<Product>(query, params),
   })
 }
 
@@ -222,11 +222,9 @@ export default function ProductPage() {
     throw new Error('No slug, 404?')
   }
 
-  const { data, encodeDataAttribute } = useQuery<Product>(
-    queryProduct,
-    params,
-    { initial },
-  )
+  const { data, encodeDataAttribute } = useQuery<Product>(query, params, {
+    initial,
+  })
 
   // Use `data` in your view, it'll mirror what the loader returns in production mode,
   // while Live Mode it becomes reactive and respons in real-time to your edits in the Presentation tool.
@@ -262,24 +260,6 @@ export default function ProductTemplate(props: Props) {
 }
 ```
 
-## Visual Editing
-
-### @sanity/overlays
-
-Link to @sanity/overlays README with setup.
-
-Show how to use `jsx` utils.
-
-Alternatively show how to set `data-sanity` attributes.
-
-### Vercel Visual Editing
-
-Show how to enable stega in strings.
-
-[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/react-loader@pink-lizard?label=gzip%20size&style=flat-square
-[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/react-loader@pink-lizard?label=size&style=flat-square
-[bundlephobia]: https://bundlephobia.com/package/@sanity/react-loader@pink-lizard
-
-```
-
-```
+[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/react-loader?label=gzip%20size&style=flat-square
+[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/react-loader?label=size&style=flat-square
+[bundlephobia]: https://bundlephobia.com/package/@sanity/react-loader

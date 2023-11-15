@@ -14,12 +14,12 @@
     apiVersion,
   })
 
-  const { query, liveMode } = createQueryStore({
+  const { loadQuery, liveMode } = createQueryStore({
     client,
     allowStudioOrigin: studioUrl,
   })
 
-  const shoe = query(shoesList)
+  const shoe = loadQuery(shoesList)
 </script>
 
 <svelte:head>

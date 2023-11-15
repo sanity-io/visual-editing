@@ -1,7 +1,7 @@
 import { createQueryStore } from '@sanity/react-loader'
 
 export const {
-  query: server__query,
+  loadQuery: server__loadQuery,
   useQuery,
   setServerClient,
   useLiveMode,

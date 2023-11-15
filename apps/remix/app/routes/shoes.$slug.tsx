@@ -4,11 +4,11 @@ import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import { urlFor, urlForCrossDatasetReference } from '~/sanity'
 import { json, type LoaderFunction } from '@remix-run/node'
-import { query } from '~/sanity.loader.server'
+import { loadQuery } from '~/sanity.loader.server'
 import { useQuery } from '~/sanity.loader'
 
 export const loader: LoaderFunction = async ({ params }) => {
-  return json({ params, initial: await query<ShoeResult>(shoe, params) })
+  return json({ params, initial: await loadQuery<ShoeResult>(shoe, params) })
 }
 
 export default function ShoePage() {
