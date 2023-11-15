@@ -431,11 +431,13 @@ export const PreviewFrame = forwardRef<
           </Flex>
         </Card>
 
-        <Card flex={1} padding={mode === 'desktop' ? 0 : 2} tone="transparent">
+        <Card flex={1} tone="transparent">
           <Flex
             align="center"
             height="fill"
             justify="center"
+            padding={mode === 'desktop' ? 0 : 2}
+            sizing="border"
             style={{
               position: 'relative',
               cursor: iframeIsBusy ? 'wait' : undefined,
@@ -486,6 +488,7 @@ export const PreviewFrame = forwardRef<
                   }}
                 >
                   <ErrorCard
+                    flex={1}
                     message="Could not connect to the preview"
                     onRetry={handleRetry}
                   >
@@ -493,22 +496,26 @@ export const PreviewFrame = forwardRef<
                       <>
                         {(overlaysConnection === 'unhealthy' ||
                           overlaysConnection === 'disconnected') && (
-                          <Stack space={3}>
-                            <Label muted size={0}>
-                              Overlay connection status
-                            </Label>
-                            <Code size={1}>{overlaysConnection}</Code>
-                          </Stack>
+                          <Card padding={3} radius={2} tone="critical">
+                            <Stack space={3}>
+                              <Label muted size={0}>
+                                Overlay connection status
+                              </Label>
+                              <Code size={1}>{overlaysConnection}</Code>
+                            </Stack>
+                          </Card>
                         )}
 
                         {(loadersConnection === 'unhealthy' ||
                           loadersConnection === 'disconnected') && (
-                          <Stack space={3}>
-                            <Label muted size={0}>
-                              Loader connection status
-                            </Label>
-                            <Code size={1}>{loadersConnection}</Code>
-                          </Stack>
+                          <Card padding={3} radius={2} tone="critical">
+                            <Stack space={3}>
+                              <Label muted size={0}>
+                                Loader connection status
+                              </Label>
+                              <Code size={1}>{loadersConnection}</Code>
+                            </Stack>
+                          </Card>
                         )}
                       </>
                     )}

@@ -73,6 +73,7 @@ export function DocumentPane(props: {
   if (errorParams) {
     return (
       <ErrorCard
+        flex={1}
         message="Could not render the document editor"
         onRetry={handleRetry}
       >

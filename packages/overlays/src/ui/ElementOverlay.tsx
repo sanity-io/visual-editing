@@ -142,7 +142,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
         ? href
         : href.replace(
             '/intent/edit/',
-            `/intent/edit/preview=${encodeURIComponent(
+            `/intent/edit/mode=presentation;preview=${encodeURIComponent(
               `${location.pathname}${location.search}`,
             )};`,
           ),
