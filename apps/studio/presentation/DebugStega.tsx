@@ -69,11 +69,6 @@ function InputDebugger(props: InputProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const value = props.value as any
   const paneRouter = usePaneRouter()
-  useEffect(() => {
-    if (paneRouter.params?.path) {
-      console.log('HERE', paneRouter.params.path)
-    }
-  }, [])
   const {
     documentId,
     documentType,
