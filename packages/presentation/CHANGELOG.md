@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.0](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.6-pink-lizard...presentation-v1.0.0) (2023-11-15)
+
+
+### Features
+
+* production ready release ([#246](https://github.com/sanity-io/visual-editing/issues/246)) ([993c3cc](https://github.com/sanity-io/visual-editing/commit/993c3cc621921971087053950a1dc88fd9e34762))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped to 5.0.0-experimental
+    * @sanity/preview-url-secret bumped to 1.0.0
+
 ## [0.12.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.5-pink-lizard...presentation-v0.12.6-pink-lizard) (2023-11-15)
 
 
