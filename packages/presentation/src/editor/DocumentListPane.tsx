@@ -72,6 +72,7 @@ export function DocumentListPane(props: {
   if (errorParams) {
     return (
       <ErrorCard
+        flex={1}
         message="Could not render the document list"
         onRetry={handleRetry}
       >
