@@ -1,7 +1,7 @@
 # @sanity/svelte-loader
 
 [![npm stat](https://img.shields.io/npm/dm/@sanity/svelte-loader.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@sanity/svelte-loader)
-[![npm version](https://img.shields.io/npm/v/@sanity/svelte-loader/pink-lizard.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/svelte-loader)
+[![npm version](https://img.shields.io/npm/v/@sanity/svelte-loader.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/svelte-loader)
 [![gzip size][gzip-badge]][bundlephobia]
 [![size][size-badge]][bundlephobia]
 
@@ -10,8 +10,7 @@
 > This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
 
 ```sh
-npm i --save-dev --save-exact @sanity/svelte-loader@pink-lizard @sanity/client
-npm i --save-dev svelte@^4
+npm install --save-dev @sanity/svelte-loader @sanity/client svelte@^4
 ```
 
 ## Usage
@@ -30,6 +29,6 @@ Show how to set `data-sanity` attributes.
 
 Show how to enable stega in strings.
 
-[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/svelte-loader@pink-lizard?label=gzip%20size&style=flat-square
-[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/svelte-loader@pink-lizard?label=size&style=flat-square
-[bundlephobia]: https://bundlephobia.com/package/@sanity/svelte-loader@pink-lizard
+[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/svelte-loader?label=gzip%20size&style=flat-square
+[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/svelte-loader?label=size&style=flat-square
+[bundlephobia]: https://bundlephobia.com/package/@sanity/svelte-loader

@@ -1,13 +1,9 @@
 # @sanity/overlays — Visual Editing
 
 [![npm stat](https://img.shields.io/npm/dm/@sanity/overlays.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@sanity/overlays)
-[![npm version](https://img.shields.io/npm/v/@sanity/overlays/pink-lizard.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/overlays)
+[![npm version](https://img.shields.io/npm/v/@sanity/overlays.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/overlays)
 [![gzip size][gzip-badge]][bundlephobia]
 [![size][size-badge]][bundlephobia]
-
-> **Warning**
->
-> This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
 
 ## Getting started
 
@@ -19,12 +15,12 @@ The other peer dependencies are required and will be loaded asynchronously when 
 
 ```sh
 # For React.js applications
-npm install --save-exact @sanity/overlays@pink-lizard @sanity/react-loader@pink-lizard
+npm install @sanity/overlays @sanity/react-loader
 ```
 
 ```sh
 # Framework agnostic JavaScript libraries
-npm install --save-exact @sanity/overlays@pink-lizard @sanity/core-loader@pink-lizard
+npm install @sanity/overlays @sanity/core-loader
 ```
 
 ### 2. Fetch data with a Sanity loader
@@ -90,6 +86,6 @@ Docs on how to use the new stega enhanced client in `@sanity/client/stega` which
 
 A note on usage that's compatible with Vercel.
 
-[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/overlays@pink-lizard?label=gzip%20size&style=flat-square
-[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/overlays@pink-lizard?label=size&style=flat-square
-[bundlephobia]: https://bundlephobia.com/package/@sanity/overlays@pink-lizard
+[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/overlays?label=gzip%20size&style=flat-square
+[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/overlays?label=size&style=flat-square
+[bundlephobia]: https://bundlephobia.com/package/@sanity/overlays

@@ -64,6 +64,5 @@ jobs:
       # need to publish all unpublished versions to NPM here
       - run: pnpm -r publish
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
-        # env:
-          # @TODO uncomment below when the repo is public
-          # NPM_CONFIG_PROVENANCE: true
+        env:
+          NPM_CONFIG_PROVENANCE: true
