@@ -12,6 +12,18 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [0.11.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.10.0-pink-lizard...react-loader-v0.11.0-pink-lizard) (2023-11-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename `query` to `loadQuery`
+
+### Bug Fixes
+
+* **docs:** add docs for `encodeDataAttribute` ([0686612](https://github.com/sanity-io/visual-editing/commit/06866126cf019780cce676408a69ac346186c0ec))
+* rename `query` to `loadQuery` ([228dfc3](https://github.com/sanity-io/visual-editing/commit/228dfc3d2c5838d2124302e514ca9530ee92fbb8))
+
 ## [0.10.0-pink-lizard](https://github.com/sanity-io/visual-editing/compare/react-loader-v0.9.2-pink-lizard...react-loader-v0.10.0-pink-lizard) (2023-11-13)
 
 

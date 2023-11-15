@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.12.6-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.5-pink-lizard...presentation-v0.12.6-pink-lizard) (2023-11-15)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency framer-motion to ^10.16.5 ([#365](https://github.com/sanity-io/visual-editing/issues/365)) ([f807cf8](https://github.com/sanity-io/visual-editing/commit/f807cf8480b9df9c485d3f4ca5cad2333f72b651))
+* **deps:** Update sanity monorepo to ^3.19.3 ([#369](https://github.com/sanity-io/visual-editing/issues/369)) ([24813fa](https://github.com/sanity-io/visual-editing/commit/24813fafa42da329efe4025deed48766ca6c454b))
+* **presentation:** error card layout ([48d85ab](https://github.com/sanity-io/visual-editing/commit/48d85ab6b8e9ab93ef1948eea8b4a44181d32526))
+* protect against race conditions ([1fd10ca](https://github.com/sanity-io/visual-editing/commit/1fd10cafd473c926c6471118c1b63a4e15f45941))
+
 ## [0.12.5-pink-lizard](https://github.com/sanity-io/visual-editing/compare/presentation-v0.12.4-pink-lizard...presentation-v0.12.5-pink-lizard) (2023-11-14)
 
 
