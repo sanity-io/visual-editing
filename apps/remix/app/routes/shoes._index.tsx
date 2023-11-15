@@ -3,11 +3,11 @@ import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import { json } from '@remix-run/node'
 import { useQuery } from '~/sanity.loader'
-import { query } from '~/sanity.loader.server'
+import { loadQuery } from '~/sanity.loader.server'
 import { urlFor, urlForCrossDatasetReference } from '~/sanity'
 
 export const loader = async () => {
-  return json({ initial: await query<ShoesListResult>(shoesList) })
+  return json({ initial: await loadQuery<ShoesListResult>(shoesList) })
 }
 
 export default function ShoesPage() {

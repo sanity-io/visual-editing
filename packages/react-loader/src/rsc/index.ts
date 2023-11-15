@@ -67,8 +67,8 @@ export const createQueryStore = (
     }, [allowStudioOrigin, client, onConnect, onDisconnect])
   }
 
-  const query: QueryStore['query'] = () => {
-    throw new Error('The `query` function is server only.')
+  const loadQuery: QueryStore['loadQuery'] = () => {
+    throw new Error('The `loadQuery` function is server only.')
   }
 
   const setServerClient: QueryStore['setServerClient'] = () => {
@@ -76,7 +76,7 @@ export const createQueryStore = (
   }
 
   return {
-    query,
+    loadQuery,
     useQuery,
     setServerClient,
     useLiveMode,

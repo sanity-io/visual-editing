@@ -32,11 +32,11 @@ setServerClient(
 )
 
 // Automatically handle draft mode
-export const query = ((query, params = {}, options = {}) => {
+export const loadQuery = ((query, params = {}, options = {}) => {
   const perspective =
     options.perspective || draftMode().isEnabled ? 'previewDrafts' : 'published'
   return serverOnly.query(query, params, {
     ...options,
     perspective,
   })
-}) satisfies typeof serverOnly.query
+}) satisfies typeof serverOnly.loadQuery
