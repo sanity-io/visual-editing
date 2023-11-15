@@ -12,6 +12,7 @@ import { workspaces } from 'apps-common/env'
 import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
+import { StegaDebugger } from './presentation/DebugStega'
 // import { CustomNavigator } from './presentation/CustomNavigator'
 
 const sharedSettings = definePlugin({
@@ -138,6 +139,7 @@ const presentationWorkspaces = Object.entries({
     basePath: `/${workspaceName}`,
     projectId,
     dataset,
+    form: { components: { input: StegaDebugger } },
     plugins: [
       ...Object.entries(previewUrl).map(([name, previewUrl]) => {
         const { tool: toolName } = Object.values(workspaces).find(
