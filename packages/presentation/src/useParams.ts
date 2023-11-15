@@ -107,25 +107,30 @@ export function useParams({
     // decodeURI param in path?
     const { id, path } = parsePath(routerState.path)
 
-    setParams({
-      id,
-      type: type === '*' ? undefined : type,
-      path,
-      preview:
-        routerSearchParams.preview ||
-        `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
-      perspective: routerSearchParams.perspective,
-      inspect: routerSearchParams.inspect,
-      rev: routerSearchParams.rev,
-      since: routerSearchParams.since,
-      template: routerSearchParams.template,
-      view: routerSearchParams.view,
-      // assist
-      pathKey: routerSearchParams.pathKey,
-      instruction: routerSearchParams.instruction,
-      // comments
-      comment: routerSearchParams.comment,
-    })
+    const timeout = setTimeout(
+      () =>
+        setParams({
+          id,
+          type: type === '*' ? undefined : type,
+          path,
+          preview:
+            routerSearchParams.preview ||
+            `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
+          perspective: routerSearchParams.perspective,
+          inspect: routerSearchParams.inspect,
+          rev: routerSearchParams.rev,
+          since: routerSearchParams.since,
+          template: routerSearchParams.template,
+          view: routerSearchParams.view,
+          // assist
+          pathKey: routerSearchParams.pathKey,
+          instruction: routerSearchParams.instruction,
+          // comments
+          comment: routerSearchParams.comment,
+        }),
+      0,
+    )
+    return () => clearTimeout(timeout)
   }, [initialPreviewUrl, routerSearchParams, routerState, setParams])
 
   const navigate = useMemo(() => {
@@ -167,14 +172,21 @@ export function useParams({
     }) satisfies PresentationParams
 
     const replace = params.preview === previousPreview
-    navigate(
-      {
-        type,
-        path,
-        _searchParams: Object.entries(searchParams as Record<string, string>),
-      },
-      { replace },
+    const timeout = setTimeout(
+      () =>
+        navigate(
+          {
+            type,
+            path,
+            _searchParams: Object.entries(
+              searchParams as Record<string, string>,
+            ),
+          },
+          { replace },
+        ),
+      0,
     )
+    return () => clearTimeout(timeout)
   }, [navigate, params])
 
   return {
