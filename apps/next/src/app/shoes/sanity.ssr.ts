@@ -35,7 +35,7 @@ setServerClient(
 export const loadQuery = ((query, params = {}, options = {}) => {
   const perspective =
     options.perspective || draftMode().isEnabled ? 'previewDrafts' : 'published'
-  return serverOnly.query(query, params, {
+  return serverOnly.loadQuery(query, params, {
     ...options,
     perspective,
   })
