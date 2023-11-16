@@ -48,6 +48,17 @@
       "import": "./dist/define-preview-url.js",
       "default": "./dist/define-preview-url.js"
     },
+    "./get-redirect-to": {
+      "types": "./dist/get-redirect-to.d.ts",
+      "source": "./src/_exports/get-redirect-to.ts",
+      "require": "./dist/get-redirect-to.cjs",
+      "node": {
+        "module": "./dist/get-redirect-to.js",
+        "import": "./dist/get-redirect-to.cjs.js"
+      },
+      "import": "./dist/get-redirect-to.js",
+      "default": "./dist/get-redirect-to.js"
+    },
     "./without-secret-search-params": {
       "types": "./dist/without-secret-search-params.d.ts",
       "source": "./src/_exports/without-secret-search-params.ts",
@@ -72,6 +83,9 @@
       ],
       "define-preview-url": [
         "./dist/define-preview-url.d.ts"
+      ],
+      "get-redirect-to": [
+        "./dist/get-redirect-to.d.ts"
       ],
       "without-secret-search-params": [
         "./dist/without-secret-search-params.d.ts"
