@@ -41,8 +41,7 @@
         "@sanity/util",
         "@sanity/vision",
         "create-sanity",
-        "groq",
-        "sanity"
+        "groq"
       ],
       "matchFileNames": ["package.json", "packages/**/package.json"],
       "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
@@ -50,6 +49,14 @@
       "rangeStrategy": "bump",
       "groupSlug": "sanity-monorepo",
       "semanticCommitType": "fix"
+    },
+    {
+      "matchDepNames": ["sanity"],
+      "matchFileNames": ["packages/presentation/package.json"],
+      "matchDepTypes": ["devDependencies", "peerDependencies"],
+      "schedule": ["at any time"],
+      "rangeStrategy": "bump",
+      "semanticCommitType": "chore"
     },
     {
       "matchDepNames": ["nanostores", "@nanostores/vue"],
