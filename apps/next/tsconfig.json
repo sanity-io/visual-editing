@@ -22,11 +22,13 @@
     "paths": {
       "@/*": ["./src/*"],
       "@sanity/overlays": ["../../packages/overlays/src"],
-      "@sanity/react-loader": ["../../packages/react-loader/src"]
+      "@sanity/preview-kit-compat": ["../../packages/preview-kit-compat/src"],
+      "@sanity/react-loader": ["../../packages/react-loader/src"],
     }
   },
   "include": [
     "../../packages/overlays/src",
+    "../../packages/preview-kit-compat/src",
     "../../packages/react-loader/src",
     "next-env.d.ts",
     "**/*.ts",

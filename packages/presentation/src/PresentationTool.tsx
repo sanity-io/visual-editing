@@ -190,9 +190,11 @@ export default function PresentationTool(props: {
     }
   }, [params])
 
+  const [overlaysConnection, setOverlaysConnection] =
+    useState<ConnectionStatus>('fresh')
   const [loadersConnection, setLoadersConnection] =
     useState<ConnectionStatus>('fresh')
-  const [overlaysConnection, setOverlaysConnection] =
+  const [previewKitConnection, setPreviewKitConnection] =
     useState<ConnectionStatus>('fresh')
 
   useEffect(() => {
@@ -205,6 +207,8 @@ export default function PresentationTool(props: {
       onStatusUpdate(status, prevStatus, connection) {
         if (connection.config.id === 'loaders') setLoadersConnection(status)
         if (connection.config.id === 'overlays') setOverlaysConnection(status)
+        if (connection.config.id === 'preview-kit')
+          setPreviewKitConnection(status)
       },
       connections: [
         {
@@ -217,6 +221,12 @@ export default function PresentationTool(props: {
           target: iframe,
           targetOrigin,
           id: 'loaders' satisfies VisualEditingConnectionIds,
+          heartbeat: true,
+        },
+        {
+          target: iframe,
+          targetOrigin,
+          id: 'preview-kit' satisfies VisualEditingConnectionIds,
           heartbeat: true,
         },
       ],
@@ -239,9 +249,10 @@ export default function PresentationTool(props: {
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
         } else if (
-          type === 'loader/documents' &&
-          data.projectId === projectId &&
-          data.dataset === dataset
+          type === 'loader/documents' ||
+          (type === 'preview-kit/documents' &&
+            data.projectId === projectId &&
+            data.dataset === dataset)
         ) {
           setDocumentsOnPage(data.perspective, data.documents)
         } else if (
@@ -402,6 +413,7 @@ export default function PresentationTool(props: {
                       toggleOverlay={toggleOverlay}
                       loadersConnection={loadersConnection}
                       overlaysConnection={overlaysConnection}
+                      previewKitConnection={previewKitConnection}
                     />
                   </Flex>
                 </Panel>

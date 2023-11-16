@@ -111,6 +111,7 @@ export const PreviewFrame = forwardRef<
     toggleOverlay: () => void
     loadersConnection: ConnectionStatus
     overlaysConnection: ConnectionStatus
+    previewKitConnection: ConnectionStatus
   }
 >(function PreviewFrame(props, ref) {
   const {
@@ -126,6 +127,7 @@ export const PreviewFrame = forwardRef<
     toggleOverlay,
     loadersConnection,
     overlaysConnection,
+    previewKitConnection,
   } = props
 
   const { devMode } = usePresentationTool()
@@ -143,7 +145,9 @@ export const PreviewFrame = forwardRef<
     overlaysConnection === 'unhealthy' ||
     overlaysConnection === 'disconnected' ||
     loadersConnection === 'unhealthy' ||
-    loadersConnection === 'disconnected'
+    loadersConnection === 'disconnected' ||
+    previewKitConnection === 'unhealthy' ||
+    previewKitConnection === 'disconnected'
 
   const previewLocationOrigin = useMemo(() => {
     const { origin: previewOrigin } = new URL(
@@ -306,7 +310,11 @@ export const PreviewFrame = forwardRef<
                     padding={3}
                     space={2}
                     text={PERSPECTIVE_TITLES[perspective]}
-                    loading={iframeIsBusy || loadersConnection === 'connecting'}
+                    loading={
+                      iframeIsBusy ||
+                      (loadersConnection === 'connecting' &&
+                        previewKitConnection !== 'connected')
+                    }
                     disabled={loadersConnection !== 'connected'}
                   />
                 }

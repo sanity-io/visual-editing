@@ -151,6 +151,9 @@ importers:
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@sanity/preview-kit-compat':
+        specifier: workspace:*
+        version: link:../../packages/preview-kit-compat
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
@@ -807,6 +810,48 @@ importers:
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@20.0.3)
+
+  packages/preview-kit-compat:
+    devDependencies:
+      '@sanity/client':
+        specifier: ^6.8.6
+        version: 6.8.6
+      '@sanity/pkg-utils':
+        specifier: ^3.2.3
+        version: 3.2.3(typescript@5.2.2)
+      '@types/react':
+        specifier: ^18.2.37
+        version: 18.2.37
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.11.0
+        version: 6.11.0(@typescript-eslint/parser@6.11.0)(eslint@8.53.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: ^6.11.0
+        version: 6.11.0(eslint@8.53.0)(typescript@5.2.2)
+      channels:
+        specifier: workspace:*
+        version: link:../channels
+      eslint:
+        specifier: ^8.53.0
+        version: 8.53.0
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.53.0)
+      eslint-plugin-prettier:
+        specifier: ^5.0.1
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
+      eslint-plugin-simple-import-sort:
+        specifier: ^10.0.0
+        version: 10.0.0(eslint@8.53.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      visual-editing-helpers:
+        specifier: workspace:*
+        version: link:../visual-editing-helpers
 
   packages/preview-url-secret:
     dependencies:
@@ -4266,6 +4311,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -13221,6 +13267,10 @@ packages:
   /nanostores@0.9.5:
     resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:

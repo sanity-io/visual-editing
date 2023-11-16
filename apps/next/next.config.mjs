@@ -11,6 +11,7 @@ const nextConfig = {
 
   transpilePackages: [
     '@sanity/overlays',
+    '@sanity/preview-kit-compat',
     '@sanity/react-loader',
     'apps-common',
     'channels',

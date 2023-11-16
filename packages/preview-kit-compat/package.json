@@ -1,0 +1,136 @@
+{
+  "name": "@sanity/preview-kit-compat",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/preview-kit-compat#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/visual-editing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
+    "directory": "packages/preview-kit-compat"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "require": "./dist/index.cjs",
+      "node": {
+        "module": "./dist/index.js",
+        "import": "./dist/index.cjs.js"
+      },
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "pkg build --strict && pkg --strict",
+    "lint": "eslint .",
+    "prepublishOnly": "pnpm build",
+    "watch": "pkg watch --strict"
+  },
+  "browserslist": [
+    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
+    "maintained node versions"
+  ],
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson"
+    ],
+    "semi": false,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort",
+      "prettier"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "extends": [
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:react/jsx-runtime",
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "no-console": "error",
+      "no-warning-comments": [
+        "warn",
+        {
+          "location": "start",
+          "terms": [
+            "todo",
+            "@todo",
+            "fixme"
+          ]
+        }
+      ],
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/member-delimiter-style": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "prettier/prettier": "warn",
+      "react-hooks/exhaustive-deps": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react/prop-types": "off",
+      "simple-import-sort/exports": "warn",
+      "simple-import-sort/imports": "warn"
+    },
+    "root": true
+  },
+  "devDependencies": {
+    "@sanity/client": "^6.8.6",
+    "@sanity/pkg-utils": "^3.2.3",
+    "@types/react": "^18.2.37",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "channels": "workspace:*",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "react": "^18.2.0",
+    "typescript": "^5.2.2",
+    "visual-editing-helpers": "workspace:*"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^6.8.6",
+    "react": "^18.2.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -142,13 +142,39 @@ export type LoaderMsg =
     }
 
 /**
+ * Messages emitted by the preview-kit-compat package
+ * @public
+ */
+export type PreviewKitMsg = {
+  /**
+   * Sends over the CSM reported documents in use on the page. If there are multiple queries and thus
+   * multiple CSM's, they're all deduped and concatenated into a single list.
+   */
+  type: 'preview-kit/documents'
+  data: {
+    projectId: string
+    dataset: string
+    perspective: ClientPerspective
+    documents: ContentSourceMapDocuments
+  }
+}
+
+/**
  * Union type of visual editing related messages
  * @public
  */
-export type VisualEditingMsg = PresentationMsg | LoaderMsg | OverlayMsg
+export type VisualEditingMsg =
+  | PresentationMsg
+  | LoaderMsg
+  | OverlayMsg
+  | PreviewKitMsg
 
 /**
  * Known Channel connection IDs
  * @public
  */
-export type VisualEditingConnectionIds = 'presentation' | 'loaders' | 'overlays'
+export type VisualEditingConnectionIds =
+  | 'presentation'
+  | 'loaders'
+  | 'overlays'
+  | 'preview-kit'
