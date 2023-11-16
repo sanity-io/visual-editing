@@ -27,6 +27,6 @@ export function createClientWithConfig(
     // Don't waste time returning a source map, we don't need it
     resultSourceMap: false,
     // @ts-expect-error - If stega is enabled, make sure it's disabled
-    stega: undefined,
+    stega: false,
   })
 }
