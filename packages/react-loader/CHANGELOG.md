@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [1.0.2](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.0.1...react-loader-v1.0.2) (2023-11-16)
+
+
+### Bug Fixes
+
+* **docs:** remove experimental badges ([874d884](https://github.com/sanity-io/visual-editing/commit/874d884f390d50b70256a6ac6098cb5f81247c53))
+
 ## [1.0.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.0.0...react-loader-v1.0.1) (2023-11-16)
 
 
