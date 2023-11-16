@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.0.2...preview-url-secret-v1.1.0) (2023-11-16)
+
+
+### Features
+
+* add `getRedirectTo` utility ([03591b5](https://github.com/sanity-io/visual-editing/commit/03591b50d60675d3d1a0eed1b66c7e528a63a1b7))
+* return when the secret expires ([8f2c1ce](https://github.com/sanity-io/visual-editing/commit/8f2c1ceefcce73728488b2a3db73cbbee21cf34f))
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.0.1...preview-url-secret-v1.0.2) (2023-11-16)
 
 
