@@ -38,7 +38,7 @@ export function usePreviewUrl(
   const resolvedUrl =
     typeof resolvePreviewUrl === 'function'
       ? suspend(async (): Promise<string> => {
-          const previewUrlSecret = await createPreviewSecret(
+          const { secret: previewUrlSecret } = await createPreviewSecret(
             client,
             '@sanity/presentation',
             typeof window === 'undefined' ? '' : location.href,

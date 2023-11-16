@@ -1,6 +1,5 @@
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
-import {} from '@sanity/preview-url-secret'
 import { Flex } from '@sanity/ui'
 import type { ConnectionStatus } from 'channels'
 import { ChannelReturns, createChannel } from 'channels'
