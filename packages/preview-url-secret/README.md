@@ -137,7 +137,7 @@ export default function handler(
 }
 ```
 
-[`@sanity/presentation`]: ../packages/presentation/README.md
+[`@sanity/presentation`]: https://github.com/sanity-io/visual-editing/tree/main/packages/presentation#readme
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/preview-url-secret?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/preview-url-secret?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/preview-url-secret
