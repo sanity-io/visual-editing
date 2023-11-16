@@ -39,12 +39,14 @@ import {
   forwardRef,
   SetStateAction,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
 import styled from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
+import { MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
 import { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { IFrame } from './IFrame'
@@ -138,6 +140,7 @@ export const PreviewFrame = forwardRef<
   const setDesktopMode = useCallback(() => setMode('desktop'), [setMode])
   const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
   const [loading, setLoading] = useState(true)
+  const [timedOut, setTimedOut] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const iframeIsBusy =
     loading || refreshing || overlaysConnection === 'connecting'
@@ -178,6 +181,41 @@ export const PreviewFrame = forwardRef<
 
     setRefreshing(true)
   }, [ref, initialUrl])
+
+  const [showOverlaysConnectionStatus, setShowOverlaysConnectionState] =
+    useState(false)
+  useEffect(() => {
+    if (loading || refreshing) {
+      return
+    }
+
+    if (loadersConnection === 'connecting') {
+      const timeout = setTimeout(() => {
+        setShowOverlaysConnectionState(true)
+      }, 3000)
+      return () => clearTimeout(timeout)
+    }
+    return
+  }, [loadersConnection, loading, refreshing])
+  useEffect(() => {
+    if (loading || refreshing || !showOverlaysConnectionStatus) {
+      return
+    }
+    if (loadersConnection === 'connected') {
+      setTimedOut(false)
+    }
+    if (loadersConnection === 'connecting') {
+      const timeout = setTimeout(() => {
+        setTimedOut(true)
+        // eslint-disable-next-line no-console
+        console.error(
+          `Unable to connect to overlays. Make sure you're calling the 'enableOverlays' function in '@sanity/overlays' correctly, and that its 'allowStudioOrigin' property is set to '${location.origin}'`,
+        )
+      }, MAX_TIME_TO_OVERLAYS_CONNECTION)
+      return () => clearTimeout(timeout)
+    }
+    return
+  }, [loadersConnection, loading, refreshing, showOverlaysConnectionStatus])
 
   const previewLocationRoute = useMemo(() => {
     const previewUrl = new URL(params.preview || '/', targetOrigin)
@@ -452,7 +490,62 @@ export const PreviewFrame = forwardRef<
             }}
           >
             <AnimatePresence>
-              {loading || iframeIsBusy ? (
+              {!somethingIsWrong &&
+              !loading &&
+              !refreshing &&
+              showOverlaysConnectionStatus &&
+              loadersConnection === 'connecting' ? (
+                <MotionFlex
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={spinnerVariants}
+                  justify="center"
+                  align="center"
+                  style={{
+                    inset: `0`,
+                    position: `absolute`,
+                    backdropFilter: timedOut
+                      ? 'blur(16px) saturate(0.5) grayscale(0.5)'
+                      : 'blur(2px)',
+                    ['transition' as string]:
+                      'backdrop-filter 0.2s ease-in-out',
+                    zIndex: 1,
+                  }}
+                >
+                  <Flex
+                    style={{ ...sizes[mode] }}
+                    justify="center"
+                    align="center"
+                  >
+                    <Card
+                      radius={2}
+                      tone={timedOut ? 'caution' : 'inherit'}
+                      padding={4}
+                      shadow={1}
+                    >
+                      <Flex
+                        justify="center"
+                        align="center"
+                        direction="column"
+                        gap={4}
+                      >
+                        <Spinner muted />
+                        <Text muted size={1}>
+                          {timedOut ? (
+                            <>
+                              Unable to connect, check the browser console for
+                              more information.
+                            </>
+                          ) : (
+                            'Connecting…'
+                          )}
+                        </Text>
+                      </Flex>
+                    </Card>
+                  </Flex>
+                </MotionFlex>
+              ) : loading || iframeIsBusy ? (
                 <MotionFlex
                   initial="initial"
                   animate="animate"
@@ -545,6 +638,7 @@ export const PreviewFrame = forwardRef<
                 loading || iframeIsBusy ? 'background' : 'active',
                 refreshing ? 'reloading' : 'idle',
                 mode,
+                showOverlaysConnectionStatus ? 'timedOut' : '',
               ]}
               onLoad={onIFrameLoad}
             />
@@ -600,5 +694,8 @@ const iframeVariants = {
   active: {
     opacity: [0, 0, 1],
     scale: 1,
+  },
+  timedOut: {
+    opacity: [0, 0, 1],
   },
 }
