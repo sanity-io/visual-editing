@@ -30,5 +30,10 @@
     "turbo": "1.10.16",
     "typescript": "^5.2.2"
   },
-  "packageManager": "pnpm@8.10.5"
+  "packageManager": "pnpm@8.10.5",
+  "pnpm": {
+    "overrides": {
+      "@sanity/presentation": "workspace:*"
+    }
+  }
 }
