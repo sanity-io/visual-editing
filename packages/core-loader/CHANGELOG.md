@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.0.0...core-loader-v1.0.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.8.6 ([#374](https://github.com/sanity-io/visual-editing/issues/374)) ([f62967a](https://github.com/sanity-io/visual-editing/commit/f62967a2068844b358357c7c2254cd1d9228ba6d))
+
 ## [1.0.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v0.9.0-pink-lizard...core-loader-v1.0.0) (2023-11-15)
 
 

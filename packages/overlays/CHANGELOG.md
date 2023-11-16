@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.0...overlays-v2.0.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.8.6 ([#374](https://github.com/sanity-io/visual-editing/issues/374)) ([f62967a](https://github.com/sanity-io/visual-editing/commit/f62967a2068844b358357c7c2254cd1d9228ba6d))
+
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.4-pink-lizard...overlays-v2.0.0) (2023-11-15)
 
 
