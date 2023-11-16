@@ -21,24 +21,6 @@
     "semi": false,
     "singleQuote": true
   },
-  "dependencies": {
-    "@sanity/block-tools": "^3.19.3",
-    "@sanity/cli": "^3.20.0",
-    "@sanity/diff": "^3.19.3",
-    "@sanity/export": "^3.19.3",
-    "@sanity/import": "^3.19.3",
-    "@sanity/import-cli": "^3.20.0",
-    "@sanity/mutator": "^3.19.3",
-    "@sanity/portable-text-editor": "^3.19.3",
-    "@sanity/schema": "^3.19.3",
-    "@sanity/types": "^3.19.3",
-    "@sanity/util": "^3.19.3",
-    "@sanity/vision": "^3.20.0",
-    "create-sanity": "^3.20.0",
-    "groq": "^3.19.3",
-    "sanity": "^3.19.3",
-    "styled-components": "6.1.1"
-  },
   "devDependencies": {
     "@sanity/pkg-utils": "^3.2.3",
     "prettier": "3.1.0",
@@ -48,25 +30,5 @@
     "turbo": "1.10.16",
     "typescript": "^5.2.2"
   },
-  "packageManager": "pnpm@8.10.5",
-  "pnpm": {
-    "overrides": {
-      "@sanity/block-tools": "$@sanity/block-tools",
-      "@sanity/cli": "$@sanity/cli",
-      "@sanity/diff": "$@sanity/diff",
-      "@sanity/export": "$@sanity/export",
-      "@sanity/import": "$@sanity/import",
-      "@sanity/import-cli": "$@sanity/import-cli",
-      "@sanity/mutator": "$@sanity/mutator",
-      "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
-      "@sanity/schema": "$@sanity/schema",
-      "@sanity/types": "$@sanity/types",
-      "@sanity/util": "$@sanity/util",
-      "@sanity/vision": "$@sanity/vision",
-      "create-sanity": "$create-sanity",
-      "groq": "$groq",
-      "sanity": "$sanity",
-      "styled-components": "$styled-components"
-    }
-  }
+  "packageManager": "pnpm@8.10.5"
 }

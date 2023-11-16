@@ -26,32 +26,6 @@
       "rangeStrategy": "bump"
     },
     {
-      "matchDepNames": [
-        "@sanity/block-tools",
-        "@sanity/cli",
-        "@sanity/client",
-        "@sanity/diff",
-        "@sanity/export",
-        "@sanity/import",
-        "@sanity/import-cli",
-        "@sanity/mutator",
-        "@sanity/portable-text-editor",
-        "@sanity/schema",
-        "@sanity/types",
-        "@sanity/util",
-        "@sanity/vision",
-        "create-sanity",
-        "groq"
-      ],
-      "excludeDepNames": ["sanity"],
-      "matchFileNames": ["package.json", "packages/**/package.json"],
-      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
-      "schedule": ["at any time"],
-      "rangeStrategy": "bump",
-      "groupSlug": "sanity-monorepo",
-      "semanticCommitType": "fix"
-    },
-    {
       "matchDepNames": ["sanity"],
       "matchFileNames": ["packages/presentation/package.json"],
       "matchDepTypes": ["devDependencies", "peerDependencies"],
@@ -61,7 +35,7 @@
       "semanticCommitType": "chore"
     },
     {
-      "matchDepNames": ["nanostores", "@nanostores/vue"],
+      "matchDepNames": ["@sanity/client", "nanostores", "@nanostores/vue"],
       "semanticCommitType": "fix"
     }
   ]
