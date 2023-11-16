@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.0.1...preview-url-secret-v1.0.2) (2023-11-16)
+
+
+### Bug Fixes
+
+* disable stega on verification of url preview secrets ([6426750](https://github.com/sanity-io/visual-editing/commit/64267500b60fe4b0b6c58bcf5e5da9ac7b311f28))
+
 ## [1.0.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.0.0...preview-url-secret-v1.0.1) (2023-11-16)
 
 
