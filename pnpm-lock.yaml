@@ -732,8 +732,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(eslint@8.53.0)
       ls-engines:
-        specifier: ^0.9.0
-        version: 0.9.0
+        specifier: ^0.9.1
+        version: 0.9.1
       rimraf:
         specifier: ^5.0.5
         version: 5.0.5
@@ -4311,7 +4311,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -7148,6 +7147,16 @@ packages:
       define-properties: 1.2.1
       es-abstract: 1.22.3
       es-array-method-boxes-properly: 1.0.0
+      is-string: 1.0.7
+    dev: true
+
+  /array.prototype.some@1.1.5:
+    resolution: {integrity: sha512-ElkevlaqGphMFg/OsGUGQygXG0SSb8FeSLHbfkrqPlrmobgRJgCZZCJI9wocJVlAshA3kYyNq1VwCyZxi7Kvpw==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      call-bind: 1.0.5
+      define-properties: 1.2.1
+      es-abstract: 1.22.3
       is-string: 1.0.7
     dev: true
 
@@ -12349,13 +12358,15 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /ls-engines@0.9.0:
-    resolution: {integrity: sha512-KYLGyWhV2D1ILyaDHMnyNboqnXIH8gL5seGRFZj5GGttiwnKjZ7O2q2tvhR8sLp+avu+D8Bc18fE1PKfeLtZGg==}
+  /ls-engines@0.9.1:
+    resolution: {integrity: sha512-w1BzDJP2qm9gIESA0SFuUQmNdCgyoUetRmE2xHMOx8EWF2QUaFV5moJ3yc3WceJMYNeygSuKm0AQYvXpzow/TQ==}
     engines: {node: '>= 19 || ^18 || ^16.13 || ^14.17', npm: '>=8'}
     hasBin: true
     dependencies:
       '@npmcli/arborist': 6.5.0
       array.prototype.group: 1.1.2
+      array.prototype.some: 1.1.5
+      array.prototype.tosorted: 1.1.2
       colors: 1.4.0
       fast_array_intersect: 1.1.0
       get-dep-tree: 1.0.4
@@ -13267,10 +13278,6 @@ packages:
   /nanostores@0.9.5:
     resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    dev: true
-
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
