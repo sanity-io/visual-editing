@@ -1,6 +1,6 @@
 import type { ContentSourceMapDocuments } from '@sanity/client/csm'
 import { type ChannelReturns, createChannel } from 'channels'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
