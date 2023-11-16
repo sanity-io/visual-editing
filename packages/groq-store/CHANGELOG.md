@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1-experimental](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.0-experimental...groq-store-v5.0.1-experimental) (2023-11-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.8.6 ([#374](https://github.com/sanity-io/visual-editing/issues/374)) ([f62967a](https://github.com/sanity-io/visual-editing/commit/f62967a2068844b358357c7c2254cd1d9228ba6d))
+
 ## [5.0.0-experimental](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.2.9-pink-lizard...groq-store-v5.0.0-experimental) (2023-11-15)
 
 
