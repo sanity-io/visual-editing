@@ -6,6 +6,7 @@ import {
   deleteExpiredSecretsQuery,
   schemaIdPrefix,
   schemaType,
+  SECRET_TTL,
   tag,
 } from './constants'
 import { generateUrlSecret } from './generateSecret'
@@ -18,10 +19,11 @@ export async function createPreviewSecret(
   studioUrl: string,
   userId?: string,
   id = uuid(),
-): Promise<string> {
+): Promise<{ secret: string; expiresAt: Date }> {
   const client = _client.withConfig({ apiVersion })
 
   try {
+    const expiresAt = new Date(Date.now() + 1000 * SECRET_TTL)
     const _id = `${schemaIdPrefix}.${id}`
     const newSecret = generateUrlSecret()
     const patch = client
@@ -33,7 +35,7 @@ export async function createPreviewSecret(
       .patch(patch)
       .commit({ tag })
 
-    return newSecret
+    return { secret: newSecret, expiresAt }
   } finally {
     // Garbage collect expired secrets
     await client.delete({ query: deleteExpiredSecretsQuery })
