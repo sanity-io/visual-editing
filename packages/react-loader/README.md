@@ -5,10 +5,6 @@
 [![gzip size][gzip-badge]][bundlephobia]
 [![size][size-badge]][bundlephobia]
 
-> **Warning**
->
-> This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
-
 ```sh
 npm install @sanity/react-loader @sanity/client react@^18.2
 ```

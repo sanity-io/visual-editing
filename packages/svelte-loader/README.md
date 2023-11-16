@@ -5,10 +5,6 @@
 [![gzip size][gzip-badge]][bundlephobia]
 [![size][size-badge]][bundlephobia]
 
-> **Warning**
->
-> This is an experimental package. Breaking changes may be introduced at any time. It's not production ready.
-
 ```sh
 npm install --save-dev @sanity/svelte-loader @sanity/client svelte@^4
 ```
