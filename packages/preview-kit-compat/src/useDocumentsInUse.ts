@@ -16,16 +16,13 @@ export function useDocumentsInUse(
   projectId: string,
   dataset: string,
 ): void {
-  const targetOrigin = useMemo(
-    () => new URL(allowStudioOrigin || '/', location.origin).origin,
-    [allowStudioOrigin],
-  )
-
   const [channel, setChannel] = useState<
     ChannelReturns<VisualEditingMsg> | undefined
   >()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
+    const targetOrigin = new URL(allowStudioOrigin || '/', location.origin)
+      .origin
     const channel = createChannel<VisualEditingMsg>({
       id: 'preview-kit' satisfies VisualEditingConnectionIds,
       onStatusUpdate(status) {
@@ -50,7 +47,7 @@ export function useDocumentsInUse(
       channel.disconnect()
       setChannel(undefined)
     }
-  }, [dataset, projectId, targetOrigin])
+  }, [allowStudioOrigin, dataset, projectId])
 
   const changedKeys = JSON.stringify(Array.from(documentsInUse.keys()))
   useEffect(() => {
