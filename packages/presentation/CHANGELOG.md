@@ -6,6 +6,13 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.0.2
 
+## [1.0.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.2...presentation-v1.0.3) (2023-11-16)
+
+
+### Bug Fixes
+
+* show an error message if it takes too long to connect to the preview frame ([f0b4ca0](https://github.com/sanity-io/visual-editing/commit/f0b4ca039bf79b82374a84136fe2bc46560bedc9))
+
 ## [1.0.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.0...presentation-v1.0.1) (2023-11-16)
 
 
