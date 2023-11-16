@@ -43,6 +43,7 @@
         "create-sanity",
         "groq"
       ],
+      "excludeDepNames": ["sanity"],
       "matchFileNames": ["package.json", "packages/**/package.json"],
       "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
       "schedule": ["at any time"],
