@@ -17,7 +17,7 @@ import { StegaDebugger } from './presentation/DebugStega'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
-  plugins: [deskTool(), visionTool(), assist(), unsplashImageAsset()],
+  plugins: [deskTool(), assist(), unsplashImageAsset()],
   schema,
 })
 
@@ -113,6 +113,7 @@ const presentationWorkspaces = Object.entries({
       projectId,
       dataset,
       plugins: [
+        sharedSettings(),
         presentationTool({
           name: toolName,
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
@@ -129,7 +130,7 @@ const presentationWorkspaces = Object.entries({
           //       }
           //     : {},
         }),
-        sharedSettings(),
+        visionTool(),
       ],
     })
   }
@@ -141,6 +142,7 @@ const presentationWorkspaces = Object.entries({
     dataset,
     form: { components: { input: StegaDebugger } },
     plugins: [
+      sharedSettings(),
       ...Object.entries(previewUrl).map(([name, previewUrl]) => {
         const { tool: toolName } = Object.values(workspaces).find(
           (workspace) => workspace.tool === name,
@@ -153,7 +155,7 @@ const presentationWorkspaces = Object.entries({
           devMode,
         })
       }),
-      sharedSettings(),
+      visionTool(),
     ],
   })
 })
