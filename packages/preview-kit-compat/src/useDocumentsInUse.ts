@@ -12,12 +12,12 @@ import {
  */
 export function useDocumentsInUse(
   documentsInUse: Map<string, ContentSourceMapDocuments[number]>,
-  allowStudioOrigin: string,
+  allowStudioOrigin: string | null,
   projectId: string,
   dataset: string,
 ): void {
   const targetOrigin = useMemo(
-    () => new URL(allowStudioOrigin, location.origin).origin,
+    () => new URL(allowStudioOrigin || '/', location.origin).origin,
     [allowStudioOrigin],
   )
 
