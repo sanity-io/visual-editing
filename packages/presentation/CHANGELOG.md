@@ -6,6 +6,20 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.0.2
 
+## [1.0.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.3...presentation-v1.0.4) (2023-11-16)
+
+
+### Bug Fixes
+
+* allow `styled-components` v5.2 ([7ce9a76](https://github.com/sanity-io/visual-editing/commit/7ce9a76fe977c6eb15ebdcebfe507f5b3e5bb99f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 1.1.0
+
 ## [1.0.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.2...presentation-v1.0.3) (2023-11-16)
 
 
