@@ -189,22 +189,22 @@ export const PreviewFrame = forwardRef<
       return
     }
 
-    if (loadersConnection === 'connecting') {
+    if (overlaysConnection === 'connecting') {
       const timeout = setTimeout(() => {
         setShowOverlaysConnectionState(true)
       }, 3000)
       return () => clearTimeout(timeout)
     }
     return
-  }, [loadersConnection, loading, refreshing])
+  }, [overlaysConnection, loading, refreshing])
   useEffect(() => {
     if (loading || refreshing || !showOverlaysConnectionStatus) {
       return
     }
-    if (loadersConnection === 'connected') {
+    if (overlaysConnection === 'connected') {
       setTimedOut(false)
     }
-    if (loadersConnection === 'connecting') {
+    if (overlaysConnection === 'connecting') {
       const timeout = setTimeout(() => {
         setTimedOut(true)
         // eslint-disable-next-line no-console
@@ -215,7 +215,7 @@ export const PreviewFrame = forwardRef<
       return () => clearTimeout(timeout)
     }
     return
-  }, [loadersConnection, loading, refreshing, showOverlaysConnectionStatus])
+  }, [overlaysConnection, loading, refreshing, showOverlaysConnectionStatus])
 
   const previewLocationRoute = useMemo(() => {
     const previewUrl = new URL(params.preview || '/', targetOrigin)
