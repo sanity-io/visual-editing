@@ -6,6 +6,13 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.0.2
 
+## [1.0.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.4...presentation-v1.0.5) (2023-11-17)
+
+
+### Bug Fixes
+
+* the `Unable to connect to overlays` message fired when it was in fact loaders that failed to connect ([65177ae](https://github.com/sanity-io/visual-editing/commit/65177aeb683ad53730e48f9c067888514e017efb))
+
 ## [1.0.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.3...presentation-v1.0.4) (2023-11-16)
 
 
