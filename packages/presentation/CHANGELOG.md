@@ -6,6 +6,12 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.0.2
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 1.2.0
+
 ## [1.0.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.4...presentation-v1.0.5) (2023-11-17)
 
 
