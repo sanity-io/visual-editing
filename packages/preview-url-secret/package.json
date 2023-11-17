@@ -1,6 +1,6 @@
 {
   "name": "@sanity/preview-url-secret",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/preview-url-secret#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -194,7 +194,14 @@
     "@sanity/icons": "^2.7.0",
     "sanity": "^3.20.0"
   },
-  "peerDependenciesMeta": {"sanity": {"optional": true}, "@sanity/icons": {"optional": true}},
+  "peerDependenciesMeta": {
+    "sanity": {
+      "optional": true
+    },
+    "@sanity/icons": {
+      "optional": true
+    }
+  },
   "engines": {
     "node": ">=18"
   },

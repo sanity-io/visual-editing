@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.1.0...preview-url-secret-v1.2.0) (2023-11-17)
+
+
+### Features
+
+* add `debugSecrets`  studio plugin that lets you easily see the generated url secrets in your dataset ([86ab7aa](https://github.com/sanity-io/visual-editing/commit/86ab7aaaa4a1edee4ac915f4b81c1a678bc14612))
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.0.2...preview-url-secret-v1.1.0) (2023-11-16)
 
 
