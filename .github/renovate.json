@@ -27,7 +27,10 @@
     },
     {
       "matchDepNames": ["sanity"],
-      "matchFileNames": ["packages/presentation/package.json","packages/preview-url-secret/package.json"],
+      "matchFileNames": [
+        "packages/presentation/package.json",
+        "packages/preview-url-secret/package.json"
+      ],
       "matchDepTypes": ["devDependencies", "peerDependencies"],
       "schedule": ["at any time"],
       "rangeStrategy": "bump",
