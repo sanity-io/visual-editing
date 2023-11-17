@@ -59,6 +59,17 @@
       "import": "./dist/get-redirect-to.js",
       "default": "./dist/get-redirect-to.js"
     },
+    "./sanity-plugin-debug-secrets": {
+      "types": "./dist/sanity-plugin-debug-secrets.d.ts",
+      "source": "./src/_exports/sanity-plugin-debug-secrets.ts",
+      "require": "./dist/sanity-plugin-debug-secrets.cjs",
+      "node": {
+        "module": "./dist/sanity-plugin-debug-secrets.js",
+        "import": "./dist/sanity-plugin-debug-secrets.cjs.js"
+      },
+      "import": "./dist/sanity-plugin-debug-secrets.js",
+      "default": "./dist/sanity-plugin-debug-secrets.js"
+    },
     "./without-secret-search-params": {
       "types": "./dist/without-secret-search-params.d.ts",
       "source": "./src/_exports/without-secret-search-params.ts",
@@ -86,6 +97,9 @@
       ],
       "get-redirect-to": [
         "./dist/get-redirect-to.d.ts"
+      ],
+      "sanity-plugin-debug-secrets": [
+        "./dist/sanity-plugin-debug-secrets.d.ts"
       ],
       "without-secret-search-params": [
         "./dist/without-secret-search-params.d.ts"
@@ -163,6 +177,7 @@
   "devDependencies": {
     "@edge-runtime/types": "^2.2.7",
     "@sanity/client": "^6.8.6",
+    "@sanity/icons": "^2.7.0",
     "@sanity/pkg-utils": "^3.2.3",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
@@ -171,11 +186,15 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "sanity": "^3.20.0"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.8.6"
+    "@sanity/client": "^6.8.6",
+    "@sanity/icons": "^2.7.0",
+    "sanity": "^3.20.0"
   },
+  "peerDependenciesMeta": {"sanity": {"optional": true}, "@sanity/icons": {"optional": true}},
   "engines": {
     "node": ">=18"
   },

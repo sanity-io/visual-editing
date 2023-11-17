@@ -1,4 +1,3 @@
-import { debugUrlSecretsSchema } from './debugUrlSecrets'
 import { defineSchema } from './defineSchema'
 import { pageSchema } from './page'
 import { productSchema } from './product'
@@ -13,5 +12,4 @@ export const schema = defineSchema([
   ...shoeSchema.types,
   ...projectSchema.types,
   ...siteSettingsSchema.types,
-  ...debugUrlSecretsSchema.types,
 ])

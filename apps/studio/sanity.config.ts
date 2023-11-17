@@ -14,10 +14,11 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
 import { StegaDebugger } from './presentation/DebugStega'
 // import { CustomNavigator } from './presentation/CustomNavigator'
+import { debugSecrets } from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
-  plugins: [deskTool(), assist(), unsplashImageAsset()],
+  plugins: [deskTool(), assist(), unsplashImageAsset(), debugSecrets()],
   schema,
 })
 

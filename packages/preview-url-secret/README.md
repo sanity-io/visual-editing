@@ -137,6 +137,23 @@ export default function handler(
 }
 ```
 
+## Debugging generated secrets
+
+You can view the generated url secrets that are in your dataset by adding the debug plugin to your `sanity.config.ts`:
+
+```ts
+import { defineConfig } from 'sanity'
+import { debugSecrets } from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+
+export default defineConfig({
+  // ... other options
+  plugins: [
+    // Makes the url secrets visible in the Sanity Studio like any other documents defined in your schema
+    debugSecrets(),
+  ],
+})
+```
+
 [`@sanity/presentation`]: https://github.com/sanity-io/visual-editing/tree/main/packages/presentation#readme
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/preview-url-secret?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/preview-url-secret?label=size&style=flat-square
