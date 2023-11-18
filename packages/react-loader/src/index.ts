@@ -53,7 +53,7 @@ export interface QueryStore {
   loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: { perspective?: ClientPerspective },
+    options?: QueryOptions,
   ) => Promise<{
     data: QueryResponseResult
     sourceMap?: ContentSourceMap
