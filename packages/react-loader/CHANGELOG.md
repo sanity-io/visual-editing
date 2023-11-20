@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.0.2...react-loader-v1.1.0) (2023-11-20)
+
+
+### Features
+
+* **typings:** only set `data` as optionally `undefined` if `initial.data` isn't provided ([fb24f66](https://github.com/sanity-io/visual-editing/commit/fb24f665fcf8cd8620e405aeb1388895c9ba4ae3))
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.0.1...react-loader-v1.0.2) (2023-11-16)
 
 
