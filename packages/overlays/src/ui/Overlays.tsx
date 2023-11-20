@@ -74,11 +74,6 @@ export const Overlays: FunctionComponent<{
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
-  const elementsToRender = useMemo(
-    () => elements.filter((e) => e.activated || e.focused),
-    [elements],
-  )
-
   const channelEventHandler = useCallback<
     ChannelEventHandler<VisualEditingMsg>
   >(
@@ -106,7 +101,10 @@ export const Overlays: FunctionComponent<{
     return url.origin
   }, [allowStudioOrigin])
 
-  const channel = useChannel<VisualEditingMsg>(channelEventHandler, allowOrigin)
+  const { channel, status } = useChannel<VisualEditingMsg>(
+    channelEventHandler,
+    allowOrigin,
+  )
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
@@ -220,6 +218,13 @@ export const Overlays: FunctionComponent<{
 
     return
   }, [overlayEnabled])
+
+  const elementsToRender = useMemo(() => {
+    if (!channel || (channel.inFrame && status !== 'connected')) {
+      return []
+    }
+    return elements.filter((e) => e.activated || e.focused)
+  }, [channel, elements, status])
 
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
