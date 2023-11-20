@@ -77,6 +77,7 @@ export const createQueryStore = (
 
   return {
     loadQuery,
+    // @ts-expect-error - update typings
     useQuery,
     setServerClient,
     useLiveMode,

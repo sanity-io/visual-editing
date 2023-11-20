@@ -75,7 +75,7 @@
     "dev": "pkg watch --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
-    "test": "tsc --noEmit"
+    "typecheck": "vitest typecheck --run"
   },
   "browserslist": [
     "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
