@@ -238,12 +238,14 @@ export default function PresentationTool(props: {
           })
         } else if (type === 'overlay/navigate') {
           if (previewRef.current !== data.url) {
+            const isInitialNavigation = previewRef.current === undefined
+
             previewRef.current = data.url
-            setParams({
-              id: undefined,
-              type: undefined,
-              preview: data.url,
-            })
+            setParams(
+              isInitialNavigation
+                ? { preview: data.url }
+                : { id: undefined, type: undefined, preview: data.url },
+            )
           }
         } else if (type === 'overlay/toggle') {
           setOverlayEnabled(data.enabled)
