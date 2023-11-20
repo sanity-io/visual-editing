@@ -238,10 +238,11 @@ export default function PresentationTool(props: {
           })
         } else if (type === 'overlay/navigate') {
           if (previewRef.current !== data.url) {
+            const isInitialNavigation = previewRef.current === undefined;
             previewRef.current = data.url
             setParams({
-              id: undefined,
-              type: undefined,
+              id: isInitialNavigation ? params.id : undefined,
+              type: isInitialNavigation ? params.type : undefined,
               preview: data.url,
             })
           }
