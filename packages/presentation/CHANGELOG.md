@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.2.0
 
+## [1.0.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.6...presentation-v1.0.7) (2023-11-20)
+
+
+### Bug Fixes
+
+* **presentation:** preserve current document on initial navigation ([#406](https://github.com/sanity-io/visual-editing/issues/406)) ([1490a75](https://github.com/sanity-io/visual-editing/commit/1490a755c83da6d481ca68e9191444d82ebf8f65))
+
 ## [1.0.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.4...presentation-v1.0.5) (2023-11-17)
 
 
