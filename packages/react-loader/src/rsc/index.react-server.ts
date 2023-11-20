@@ -8,7 +8,7 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import { QueryOptions, QueryStore } from './types'
+import { LoadQueryOptions, QueryStore } from './types'
 
 export type * from './types'
 
@@ -25,7 +25,7 @@ export const createQueryStore = (
   const loadQuery = async <QueryResponseResult>(
     query: string,
     params: QueryParams = {},
-    options: QueryOptions = {},
+    options: LoadQueryOptions = {},
   ): Promise<{
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
