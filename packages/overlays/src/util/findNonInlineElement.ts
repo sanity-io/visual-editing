@@ -1,5 +1,5 @@
 export function findNonInlineElement(element: HTMLElement): HTMLElement | null {
-  const display = element.computedStyleMap().get('display')?.toString()
+  const { display } = window.getComputedStyle(element)
 
   if (display !== 'inline') return element
 
