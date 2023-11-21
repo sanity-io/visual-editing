@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.1...overlays-v2.0.2) (2023-11-21)
+
+
+### Bug Fixes
+
+* **overlays:** use getComputedStyle over computedStyleMap ([#412](https://github.com/sanity-io/visual-editing/issues/412)) ([63398e4](https://github.com/sanity-io/visual-editing/commit/63398e4fa1d4a1e8830964200f15b88e8c0d387a))
+
 ## [2.0.1](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.0...overlays-v2.0.1) (2023-11-16)
 
 
