@@ -12,6 +12,20 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [1.1.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.1.0...react-loader-v1.1.1) (2023-11-27)
+
+
+### Bug Fixes
+
+* set `tag` in `fetch` and `listen` methods ([4867aee](https://github.com/sanity-io/visual-editing/commit/4867aee5bd0f2b33445852ee7fcb17bd29804564))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.0.2
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.0.2...react-loader-v1.1.0) (2023-11-20)
 
 

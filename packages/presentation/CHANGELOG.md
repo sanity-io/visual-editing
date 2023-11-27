@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.2.0
 
+## [1.0.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.7...presentation-v1.0.8) (2023-11-27)
+
+
+### Bug Fixes
+
+* set `tag` in `fetch` and `listen` methods ([4867aee](https://github.com/sanity-io/visual-editing/commit/4867aee5bd0f2b33445852ee7fcb17bd29804564))
+
 ## [1.0.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.6...presentation-v1.0.7) (2023-11-20)
 
 

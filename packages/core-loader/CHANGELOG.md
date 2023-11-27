@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.0.1...core-loader-v1.0.2) (2023-11-27)
+
+
+### Bug Fixes
+
+* set `tag` in `fetch` and `listen` methods ([4867aee](https://github.com/sanity-io/visual-editing/commit/4867aee5bd0f2b33445852ee7fcb17bd29804564))
+
 ## [1.0.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.0.0...core-loader-v1.0.1) (2023-11-16)
 
 

@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.2...overlays-v2.0.3) (2023-11-27)
+
+
+### Bug Fixes
+
+* **overlays:** only render overlays in iframe if channel is connected ([#411](https://github.com/sanity-io/visual-editing/issues/411)) ([1aa40fc](https://github.com/sanity-io/visual-editing/commit/1aa40fc412d575cffd84a2427072ddade849a3a1))
+
 ## [2.0.2](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.1...overlays-v2.0.2) (2023-11-21)
 
 

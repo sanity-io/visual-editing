@@ -24,6 +24,21 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.0.2](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.0.1...nuxt-loader-v1.0.2) (2023-11-27)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency vue to ^3.3.9 ([#417](https://github.com/sanity-io/visual-editing/issues/417)) ([6f7b66c](https://github.com/sanity-io/visual-editing/commit/6f7b66c4f107ba1ad7eb302fc3cd82e277871f36))
+* set `tag` in `fetch` and `listen` methods ([4867aee](https://github.com/sanity-io/visual-editing/commit/4867aee5bd0f2b33445852ee7fcb17bd29804564))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.0.2
+
 ## [1.0.1](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.0.0...nuxt-loader-v1.0.1) (2023-11-16)
 
 
