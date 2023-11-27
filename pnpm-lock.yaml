@@ -86,11 +86,11 @@ importers:
         specifier: 2.4.6
         version: 2.4.6(prettier@3.1.0)
       prettier-plugin-svelte:
-        specifier: 3.1.0
-        version: 3.1.0(prettier@3.1.0)(svelte@4.2.7)
+        specifier: 3.1.2
+        version: 3.1.2(prettier@3.1.0)(svelte@4.2.7)
       prettier-plugin-tailwindcss:
         specifier: 0.5.7
-        version: 0.5.7(prettier-plugin-svelte@3.1.0)(prettier@3.1.0)
+        version: 0.5.7(prettier-plugin-svelte@3.1.2)(prettier@3.1.0)
       turbo:
         specifier: 1.10.16
         version: 1.10.16
@@ -6805,6 +6805,7 @@ packages:
 
   /abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
+    deprecated: Use your platform's native atob() and btoa() methods instead
 
   /abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -15183,8 +15184,8 @@ packages:
       synckit: 0.8.5
     dev: true
 
-  /prettier-plugin-svelte@3.1.0(prettier@3.1.0)(svelte@4.2.7):
-    resolution: {integrity: sha512-96+AZxs2ESqIFA9j+o+DHqY+BsUglezfl553LQd6VOtTyJq5GPuBEb3ElxF2cerFzKlYKttlH/VcVmRNj5oc3A==}
+  /prettier-plugin-svelte@3.1.2(prettier@3.1.0)(svelte@4.2.7):
+    resolution: {integrity: sha512-7xfMZtwgAWHMT0iZc8jN4o65zgbAQ3+O32V6W7pXrqNvKnHnkoyQCGCbKeUyXKZLbYE0YhFRnamfxfkEGxm8qA==}
     peerDependencies:
       prettier: ^3.0.0
       svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
@@ -15193,7 +15194,7 @@ packages:
       svelte: 4.2.7
     dev: true
 
-  /prettier-plugin-tailwindcss@0.5.7(prettier-plugin-svelte@3.1.0)(prettier@3.1.0):
+  /prettier-plugin-tailwindcss@0.5.7(prettier-plugin-svelte@3.1.2)(prettier@3.1.0):
     resolution: {integrity: sha512-4v6uESAgwCni6YF6DwJlRaDjg9Z+al5zM4JfngcazMy4WEf/XkPS5TEQjbD+DZ5iNuG6RrKQLa/HuX2SYzC3kQ==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
@@ -15246,7 +15247,7 @@ packages:
         optional: true
     dependencies:
       prettier: 3.1.0
-      prettier-plugin-svelte: 3.1.0(prettier@3.1.0)(svelte@4.2.7)
+      prettier-plugin-svelte: 3.1.2(prettier@3.1.0)(svelte@4.2.7)
     dev: true
 
   /prettier@2.8.8:
