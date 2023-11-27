@@ -13,7 +13,10 @@ export type * from './types'
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): QueryStore => {
-  const { createFetcherStore, enableLiveMode } = createCoreQueryStore(options)
+  const { createFetcherStore, enableLiveMode } = createCoreQueryStore({
+    tag: 'react-loader.rsc',
+    ...options,
+  })
   const DEFAULT_PARAMS = {}
   const useQuery = <QueryResponseResult, QueryResponseError>(
     query: string,

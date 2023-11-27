@@ -15,7 +15,10 @@ export const createQueryStore = (
   ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
   enableLiveMode: ReturnType<typeof createCoreQueryStore>['enableLiveMode']
 } => {
-  const { createFetcherStore, enableLiveMode } = createCoreQueryStore(options)
+  const { createFetcherStore, enableLiveMode } = createCoreQueryStore({
+    tag: 'svelte-loader',
+    ...options,
+  })
   const loadQuery = (query: string, params: QueryParams = {}) =>
     createFetcherStore(query, params)
   // @ts-expect-error -- @TODO fix

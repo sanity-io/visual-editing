@@ -29,7 +29,10 @@ export const createQueryStore = (
   useQuery: UseQueryHook
   enableLiveMode: EnableLiveMode
 } => {
-  const { createFetcherStore, enableLiveMode } = createCoreQueryStore(options)
+  const { createFetcherStore, enableLiveMode } = createCoreQueryStore({
+    tag: 'nuxt-loader',
+    ...options,
+  })
 
   const DEFAULT_PARAMS = {}
   const useQuery: UseQueryHook = <

@@ -22,7 +22,7 @@ export const createQueryStore = (
     enableLiveMode,
     unstable__cache,
     unstable__serverClient,
-  } = createCoreQueryStore(options)
+  } = createCoreQueryStore({ tag: 'react-loader', ...options })
   const DEFAULT_PARAMS = {}
   const useQuery = <QueryResponseResult, QueryResponseError>(
     query: string,

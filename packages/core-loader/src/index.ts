@@ -33,6 +33,8 @@ export interface CreateQueryStoreOptions {
    * Then, in your server entry file, you can set the Sanity client with `setServerClient`.
    */
   ssr?: boolean
+  /** @internal */
+  tag?: string
 }
 
 /** @public */
@@ -92,7 +94,7 @@ function cloneClientWithConfig(
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): QueryStore => {
-  const { ssr = false } = options
+  const { ssr = false, tag = 'core-loader' } = options
   if (ssr && options.client) {
     throw new TypeError(
       '`client` option is not allowed when `ssr: true`, use `setServerClient` from your server entry point instead',
@@ -118,6 +120,7 @@ export const createQueryStore = (
     }
     const { query, params = {} } = JSON.parse(key)
     const { result, resultSourceMap } = await client.fetch(query, params, {
+      tag,
       filterResponse: false,
     })
     return { result, resultSourceMap }

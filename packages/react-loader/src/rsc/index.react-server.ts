@@ -20,8 +20,10 @@ export const createQueryStore = (
       'When using React Server Components the `ssr` option must be set to `true`.',
     )
   }
-  const { setServerClient, unstable__serverClient } =
-    createCoreQueryStore(options)
+  const { setServerClient, unstable__serverClient } = createCoreQueryStore({
+    tag: 'react-loader.rsc',
+    ...options,
+  })
   const loadQuery = async <QueryResponseResult>(
     query: string,
     params: QueryParams = {},

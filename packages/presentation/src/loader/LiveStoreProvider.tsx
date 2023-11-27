@@ -214,6 +214,7 @@ const QuerySubscription = memo(function QuerySubscription(
     async function effect() {
       const { signal } = controller
       const { result, resultSourceMap } = await client.fetch(query, params, {
+        tag: 'presentation-loader',
         signal,
         perspective,
         filterResponse: false,
@@ -549,7 +550,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
           effectFormat: 'mendoza',
           includePreviousRevision: false,
           includeResult: false,
-          tag: 'turbo',
+          tag: 'presentation-loader',
         },
       )
       .subscribe((update) => {
