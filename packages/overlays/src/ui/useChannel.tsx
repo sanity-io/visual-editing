@@ -2,9 +2,10 @@ import {
   ChannelEventHandler,
   ChannelMsg,
   ChannelReturns,
+  ConnectionStatus,
   createChannel,
 } from 'channels'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * Hook for maintaining a channel between overlays and the presentation tool
@@ -13,8 +14,12 @@ import { useEffect, useRef } from 'react'
 export function useChannel<T extends ChannelMsg>(
   handler: ChannelEventHandler<T>,
   targetOrigin: string,
-): ChannelReturns<T> | undefined {
+): {
+  channel: ChannelReturns<T> | undefined
+  status: ConnectionStatus | undefined
+} {
   const channelRef = useRef<ChannelReturns<T>>()
+  const [status, setStatus] = useState<ConnectionStatus>()
 
   useEffect(() => {
     const channel = createChannel<T>({
@@ -27,6 +32,9 @@ export function useChannel<T extends ChannelMsg>(
         },
       ],
       handler,
+      onStatusUpdate(status) {
+        setStatus(status)
+      },
     })
     channelRef.current = channel
     return () => {
@@ -35,5 +43,8 @@ export function useChannel<T extends ChannelMsg>(
     }
   }, [handler, targetOrigin])
 
-  return channelRef.current
+  return {
+    channel: channelRef.current,
+    status,
+  }
 }
