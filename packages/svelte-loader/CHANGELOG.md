@@ -24,6 +24,20 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.0.3](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.0.2...svelte-loader-v1.0.3) (2023-11-27)
+
+
+### Bug Fixes
+
+* set `tag` in `fetch` and `listen` methods ([4867aee](https://github.com/sanity-io/visual-editing/commit/4867aee5bd0f2b33445852ee7fcb17bd29804564))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.0.2
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.0.1...svelte-loader-v1.0.2) (2023-11-16)
 
 
