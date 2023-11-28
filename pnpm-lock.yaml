@@ -165,7 +165,7 @@ importers:
         specifier: 20.8.7
         version: 20.8.7
       '@types/react':
-        specifier: ^18.2.38
+        specifier: ^18.2.39
         version: 18.2.39
       '@types/react-dom':
         specifier: ^18.2.17
@@ -244,8 +244,8 @@ importers:
         version: 3.20.1(@types/react@18.2.39)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)
     devDependencies:
       '@nuxt/devtools':
-        specifier: ^1.0.3
-        version: 1.0.3(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0)
+        specifier: ^1.0.4
+        version: 1.0.4(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0)
       nuxt:
         specifier: ^3.8.2
         version: 3.8.2(rollup@4.6.0)(typescript@5.3.2)(vite@4.5.0)
@@ -277,7 +277,7 @@ importers:
         specifier: 20.8.7
         version: 20.8.7
       '@types/react':
-        specifier: ^18.2.38
+        specifier: ^18.2.39
         version: 18.2.39
       '@types/react-dom':
         specifier: ^18.2.17
@@ -389,7 +389,7 @@ importers:
         specifier: ^1.19.3
         version: 1.19.3
       '@types/react':
-        specifier: ^18.2.38
+        specifier: ^18.2.39
         version: 18.2.39
       '@types/react-dom':
         specifier: ^18.2.17
@@ -425,7 +425,7 @@ importers:
         specifier: ^3.20.1
         version: 3.20.1(@babel/runtime@7.23.2)(@codemirror/lint@6.4.2)(@codemirror/state@6.3.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.1.0)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
       '@types/react':
-        specifier: ^18.2.38
+        specifier: ^18.2.39
         version: 18.2.39
       '@types/react-dom':
         specifier: ^18.2.17
@@ -488,10 +488,10 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       '@typescript-eslint/eslint-plugin':
-        specifier: ^6.12.0
+        specifier: ^6.13.0
         version: 6.13.0(@typescript-eslint/parser@6.13.0)(eslint@8.54.0)(typescript@5.3.2)
       '@typescript-eslint/parser':
-        specifier: ^6.12.0
+        specifier: ^6.13.0
         version: 6.13.0(eslint@8.54.0)(typescript@5.3.2)
       apps-common:
         specifier: workspace:*
@@ -3974,8 +3974,8 @@ packages:
     resolution: {integrity: sha512-GBzP8zOc7CGWyFQS6dv1lQz8VVpz5C2yRszbXufwG/9zhStTIH50EtD87NmWbTMwXDvZLNg8GIpb1UFdH93JCA==}
     dev: true
 
-  /@nuxt/devtools-kit@1.0.3(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0):
-    resolution: {integrity: sha512-a/ZAVmrD5yOfUYhRVfC9afMkczzL8J8zdf0h6QHbTd33rJW/jmjwTn++RTdnbSD2gg2fSBRi/h8y17RmqIdb9g==}
+  /@nuxt/devtools-kit@1.0.4(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0):
+    resolution: {integrity: sha512-AXNeI1dBilNryCmwuTd3lU7CrPBhzUJ5ntTFiXw9MmFwe5QT3NOxDFOv0gX7z1DFnmBEmx5mPKWysCwh7htEnQ==}
     peerDependencies:
       nuxt: ^3.8.1
       vite: '*'
@@ -3990,8 +3990,8 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/devtools-wizard@1.0.3:
-    resolution: {integrity: sha512-iningPOhBVMYov+7hDX5yr1tAVVA6AmJ7EgRkNfmHqPX2rerhD4eIN7Ao4KwkjGmQJ7qdM7k8w+NiL8OQOpdFQ==}
+  /@nuxt/devtools-wizard@1.0.4:
+    resolution: {integrity: sha512-3QHRfmkiITM67lAzSIOiI6N4Qzi5i705TCQ53pHQbce0+E00f5vck2hPauflN2X0/M3SZdkUV8UayaHc4egmdA==}
     hasBin: true
     dependencies:
       consola: 3.2.3
@@ -4006,16 +4006,16 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /@nuxt/devtools@1.0.3(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0):
-    resolution: {integrity: sha512-2mXvQiS3KTMF0fO80Y9WLx95yubRoIp2wSCarmhhqInPe8/0K9VZ4TUiTGF20ti45h0ky3OAxiVSmLfViwDWjg==}
+  /@nuxt/devtools@1.0.4(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0):
+    resolution: {integrity: sha512-G1Oo9+TaOYzePIXpNX+Zzalw/rJyIZKZpZmXfzolPlOJSA1i0JKzZX6Z7iQHdqPwNJ8t+HnVaF4PghPIpo1kwg==}
     hasBin: true
     peerDependencies:
       nuxt: ^3.8.1
       vite: '*'
     dependencies:
       '@antfu/utils': 0.7.6
-      '@nuxt/devtools-kit': 1.0.3(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0)
-      '@nuxt/devtools-wizard': 1.0.3
+      '@nuxt/devtools-kit': 1.0.4(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0)
+      '@nuxt/devtools-wizard': 1.0.4
       '@nuxt/kit': 3.8.2(rollup@4.6.0)
       birpc: 0.2.14
       consola: 3.2.3
@@ -13578,7 +13578,7 @@ packages:
         optional: true
     dependencies:
       '@nuxt/devalue': 2.0.2
-      '@nuxt/devtools': 1.0.3(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0)
+      '@nuxt/devtools': 1.0.4(nuxt@3.8.2)(rollup@4.6.0)(vite@4.5.0)
       '@nuxt/kit': 3.8.2(rollup@4.6.0)
       '@nuxt/schema': 3.8.2(rollup@4.6.0)
       '@nuxt/telemetry': 2.5.2(rollup@4.6.0)
