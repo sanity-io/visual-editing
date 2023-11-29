@@ -21,6 +21,9 @@ export function useDocumentsInUse(
   >()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
+    if (window.self === window.top) {
+      return
+    }
     const targetOrigin = new URL(allowStudioOrigin || '/', location.origin)
       .origin
     const channel = createChannel<VisualEditingMsg>({
