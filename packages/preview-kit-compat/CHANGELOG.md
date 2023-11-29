@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.0.2...preview-kit-compat-v1.0.3) (2023-11-29)
+
+
+### Bug Fixes
+
+* revert iframe check ([1e6f031](https://github.com/sanity-io/visual-editing/commit/1e6f031e70fbf6fc403b872a06a1d05c5c08f368))
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.0.1...preview-kit-compat-v1.0.2) (2023-11-29)
 
 
