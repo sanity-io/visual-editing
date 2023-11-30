@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [1.1.3](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.1.2...react-loader-v1.1.3) (2023-11-30)
+
+
+### Bug Fixes
+
+* **useQuery:** snapshot state is now updated when initial changes ([#444](https://github.com/sanity-io/visual-editing/issues/444)) ([a0e2d38](https://github.com/sanity-io/visual-editing/commit/a0e2d3875dc9677b61fdaa4ab0c8ec85c244e3f1))
+
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.1.1...react-loader-v1.1.2) (2023-11-29)
 
 
