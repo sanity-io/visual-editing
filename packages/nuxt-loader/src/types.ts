@@ -27,6 +27,7 @@ export type UseQueryComposable = <
   key: string,
   query: string,
   params?: QueryParams,
+  options?: UseQueryOptions,
 ) => Promise<{
   data: Ref<QueryResponseResult | undefined>
   sourceMap: Ref<ContentSourceMap | undefined>

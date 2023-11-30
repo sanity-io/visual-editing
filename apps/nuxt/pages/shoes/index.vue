@@ -125,7 +125,7 @@ const products = computed(() => {
   )
 })
 
-let disableLiveMode: ReturnType<typeof enableLiveMode> | undefined
+let disableLiveMode: ReturnType<typeof useLiveMode> | undefined
 
 onMounted(() => {
   disableLiveMode = useLiveMode({

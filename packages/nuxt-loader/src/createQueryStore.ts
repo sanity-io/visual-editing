@@ -1,7 +1,11 @@
-import type { ContentSourceMap, QueryParams } from '@sanity/client'
+import type {
+  ClientPerspective,
+  ContentSourceMap,
+  QueryParams,
+} from '@sanity/client'
 import { createQueryStore as createCoreQueryStore } from '@sanity/core-loader'
 import { useAsyncData } from 'nuxt/app'
-import { computed, onBeforeMount, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 
 import type {
   CreateQueryStoreOptions,
@@ -14,10 +18,20 @@ import type {
 export const createQueryStore = (
   storeOptions: CreateQueryStoreOptions,
 ): QueryStore => {
-  const { createFetcherStore, enableLiveMode } = createCoreQueryStore({
-    tag: 'nuxt-loader',
-    ...storeOptions,
+  const {
+    createFetcherStore,
+    enableLiveMode,
+    setServerClient,
+    unstable__serverClient,
+  } = createCoreQueryStore({
+    tag: storeOptions.tag || 'nuxt-loader',
+    client: false,
+    ssr: true,
   })
+
+  if (import.meta.server) {
+    setServerClient(storeOptions.client)
+  }
 
   const DEFAULT_PARAMS = {}
 
@@ -32,18 +46,23 @@ export const createQueryStore = (
   ) => {
     const { perspective = 'published' } = options
 
-    const fetcher = createFetcherStore<QueryResponseResult, QueryResponseError>(
-      query,
-      params,
-    )
-
     let unlisten: (() => void) | undefined
 
-    onBeforeMount(() => {
-      unlisten = fetcher.listen((newSnapshot) => {
+    onMounted(() => {
+      const initial = result.data.value?.data
+        ? { perspective: 'published' as const, ...result.data.value }
+        : undefined
+
+      const fetcher = createFetcherStore<
+        QueryResponseResult,
+        QueryResponseError
+      >(query, params, initial)
+
+      unlisten = fetcher.subscribe((newSnapshot) => {
         result.data.value = {
-          data: newSnapshot.data,
+          data: newSnapshot.data as unknown as QueryResponseResult,
           sourceMap: newSnapshot.sourceMap,
+          perspective: newSnapshot.perspective,
         }
       })
     })
@@ -52,23 +71,44 @@ export const createQueryStore = (
       unlisten?.()
     })
 
-    const client = storeOptions.client.config().useCdn
-      ? storeOptions.client.withConfig({ useCdn: false })
-      : storeOptions.client
-
     const result = await useAsyncData<
       {
-        data: QueryResponseResult | undefined
-        sourceMap: ContentSourceMap | undefined
+        data: QueryResponseResult
+        sourceMap?: ContentSourceMap | undefined
+        perspective?: ClientPerspective
       },
       QueryResponseError
     >(key, async () => {
-      const response = await client.fetch<QueryResponseResult>(query, params, {
-        filterResponse: false,
-        resultSourceMap: 'withKeyArraySelector',
-        perspective,
-      })
-      return { data: response.result, sourceMap: response.resultSourceMap }
+      const client = unstable__serverClient.instance || storeOptions.client
+
+      if (perspective === 'previewDrafts') {
+        if (!unstable__serverClient.canPreviewDrafts) {
+          throw new Error(
+            `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're passing to "createQueryStore".`,
+          )
+        }
+        // Necessary with a new client instance as `useCdn` can't be set on `client.fetch`
+        const clientNotUsingCdn = client.config().useCdn
+          ? client.withConfig({ useCdn: false })
+          : client
+
+        const { result, resultSourceMap } =
+          await clientNotUsingCdn!.fetch<QueryResponseResult>(query, params, {
+            filterResponse: false,
+            resultSourceMap: 'withKeyArraySelector',
+            perspective,
+          })
+        return { data: result, sourceMap: resultSourceMap, perspective }
+      }
+
+      const { result, resultSourceMap } =
+        await client.fetch<QueryResponseResult>(query, params, {
+          filterResponse: false,
+        })
+
+      return resultSourceMap
+        ? { data: result, sourceMap: resultSourceMap }
+        : { data: result }
     })
 
     return {
@@ -87,7 +127,7 @@ export const createQueryStore = (
   }) => {
     const disableLiveMode = enableLiveMode({
       allowStudioOrigin,
-      client,
+      client: client || storeOptions.client,
       onConnect,
       onDisconnect,
     })
