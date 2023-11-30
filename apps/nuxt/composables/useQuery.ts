@@ -3,4 +3,4 @@ import { getClient } from '@/utils'
 
 const client = getClient()
 
-export const { useQuery, enableLiveMode } = createQueryStore({ client })
+export const { useQuery, useLiveMode } = createQueryStore({ client })

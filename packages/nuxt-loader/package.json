@@ -18,28 +18,17 @@
     ".": {
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
-      "node": {
-        "module": "./dist/index.js",
-        "import": "./dist/index.cjs.js"
-      },
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./directive": {
       "types": "./dist/directive.d.ts",
       "source": "./src/directive/index.ts",
-      "require": "./dist/directive.cjs",
-      "node": {
-        "module": "./dist/directive.js",
-        "import": "./dist/directive.cjs.js"
-      },
       "import": "./dist/directive.js",
       "default": "./dist/directive.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
@@ -135,12 +124,14 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "nuxt": "^3.8.1",
     "typescript": "^5.3.2",
     "visual-editing-helpers": "workspace:*",
     "vue": "^3.3.9"
   },
   "peerDependencies": {
     "@sanity/client": "^6.9.1",
+    "nuxt": "^3.8.1",
     "vue": "^3.3.9"
   },
   "engines": {

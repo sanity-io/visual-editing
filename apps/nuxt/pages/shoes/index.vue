@@ -108,12 +108,16 @@ import { studioUrl, workspaces } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import { urlFor, urlForCrossDatasetReference } from '~/utils'
-import { useQuery, enableLiveMode } from '~/composables/useQuery'
+import { useQuery, useLiveMode } from '~/composables/useQuery'
 import { vSanity, wrapData, unwrapData } from '@sanity/nuxt-loader/directive'
 
-const { data, sourceMap, loading } = useQuery<ShoesListResult>(shoesList)
+const { data, sourceMap, loading } = await useQuery<ShoesListResult>(
+  'shoes',
+  shoesList,
+)
 
 const products = computed(() => {
+  if (!data.value) return []
   return wrapData(
     { ...workspaces['nuxt'], baseUrl: studioUrl },
     data.value,
@@ -121,11 +125,12 @@ const products = computed(() => {
   )
 })
 
-let disableLiveMode: ReturnType<typeof enableLiveMode> | undefined
+let disableLiveMode: ReturnType<typeof useLiveMode> | undefined
+
 onMounted(() => {
-  disableLiveMode = enableLiveMode({
+  disableLiveMode = useLiveMode({
     allowStudioOrigin: studioUrl,
   })
 })
-onUnmounted(() => disableLiveMode())
+onUnmounted(() => disableLiveMode && disableLiveMode())
 </script>
