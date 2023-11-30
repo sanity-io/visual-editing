@@ -1,6 +1,12 @@
 import { PortableText } from '@portabletext/react'
 import { Link, useLoaderData } from '@remix-run/react'
-import { type ShoeParams, type ShoeResult, shoe } from 'apps-common/queries'
+import type { ShoesListResult } from 'apps-common/queries'
+import {
+  type ShoeParams,
+  type ShoeResult,
+  shoe,
+  shoesList,
+} from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import { urlFor, urlForCrossDatasetReference } from '~/sanity'
 import { json, type LoaderFunction } from '@remix-run/node'
@@ -8,7 +14,13 @@ import { loadQuery } from '~/sanity.loader.server'
 import { useQuery } from '~/sanity.loader'
 
 export const loader: LoaderFunction = async ({ params }) => {
-  return json({ params, initial: await loadQuery<ShoeResult>(shoe, params) })
+  return json({
+    params,
+    initial: {
+      shoe: await loadQuery<ShoeResult>(shoe, params),
+      shoes: await loadQuery<ShoesListResult>(`${shoesList}[0..3]`),
+    },
+  })
 }
 
 export default function ShoePage() {
@@ -18,17 +30,23 @@ export default function ShoePage() {
     throw new Error('No slug, 404?')
   }
 
-  const {
-    data: product,
-    error,
-    loading,
-  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
+  const shoeSnapshot = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, {
+    initial: initial.shoe,
+  })
+  const shoesSnapshot = useQuery<ShoesListResult>(
+    `${shoesList}[0..3]`,
+    {},
+    { initial: initial.shoes },
+  )
 
-  if (error) {
-    throw error
+  if (shoeSnapshot.error || shoesSnapshot.error) {
+    throw shoeSnapshot.error || shoesSnapshot.error
   }
 
+  const { data: product } = shoeSnapshot
   const [coverImage, ...otherImages] = product?.media || []
+
+  const { data: products } = shoesSnapshot
 
   return (
     <div className="min-h-screen bg-white">
@@ -60,7 +78,7 @@ export default function ShoePage() {
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
-              {loading
+              {shoeSnapshot.loading
                 ? 'Loading'
                 : <span>{product?.title}</span> || 'Untitled'}
             </Link>
@@ -186,6 +204,73 @@ export default function ShoePage() {
           </div>
         </article>
       )}
+      {
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+          <h1 className="sr-only">Recent products</h1>
+
+          {shoesSnapshot.loading ? (
+            <div className="animate-pulse">Loading...</div>
+          ) : (
+            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+              {products?.map?.((product, i) => (
+                <Link
+                  key={product.slug.current}
+                  to={`/shoes/${product.slug.current}`}
+                  className="group relative"
+                >
+                  <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
+                    <img
+                      className="h-full w-full object-cover object-center group-hover:opacity-75"
+                      src={
+                        product.media?.asset
+                          ? urlFor(product.media).width(1440).height(1440).url()
+                          : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`
+                      }
+                      width={720}
+                      height={720}
+                      alt={product.media?.alt || ''}
+                    />
+                  </div>
+                  <h2
+                    className="mb-8 mt-4 text-sm text-gray-700"
+                    style={{ ['textWrap' as any]: 'balance' }}
+                  >
+                    {product.title}
+                  </h2>
+                  <p className="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900">
+                    {product.price ? formatCurrency(product.price) : 'FREE'}
+                  </p>
+                  {product.brand && (
+                    <div className="absolute bottom-0.5 right-0 flex items-center gap-x-2">
+                      <img
+                        className="h-6 w-6 rounded-full bg-gray-50"
+                        src={
+                          product.brand?.logo?.asset
+                            ? urlForCrossDatasetReference(product.brand.logo)
+                                .width(48)
+                                .height(48)
+                                .url()
+                            : `https://source.unsplash.com/featured/48x48?${
+                                product.brand.name
+                                  ? encodeURIComponent(product.brand.name)
+                                  : `brand&r=${i}`
+                              }`
+                        }
+                        width={24}
+                        height={24}
+                        alt={product.brand?.logo?.alt || ''}
+                      />
+                      <span className="font-bold text-gray-600">
+                        {product.brand.name}
+                      </span>
+                    </div>
+                  )}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      }
     </div>
   )
 }
