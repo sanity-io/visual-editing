@@ -29,10 +29,12 @@ export const createQueryStore = (
     params: QueryParams = DEFAULT_PARAMS,
     options: UseQueryOptions<QueryResponseResult> = {},
   ) => {
-    const [initial] = useState(() =>
-      options.initial
-        ? { perspective: 'published' as const, ...options.initial }
-        : undefined,
+    const initial = useMemo(
+      () =>
+        options.initial
+          ? { perspective: 'published' as const, ...options.initial }
+          : undefined,
+      [options.initial],
     )
     const $params = useMemo(() => JSON.stringify(params), [params])
 
@@ -50,7 +52,7 @@ export const createQueryStore = (
         QueryResponseResult,
         QueryResponseError
       >(query, JSON.parse($params), initial)
-      const unlisten = fetcher.listen((snapshot) => {
+      const unlisten = fetcher.subscribe((snapshot) => {
         setSnapshot(snapshot)
       })
 
