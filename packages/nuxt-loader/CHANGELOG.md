@@ -24,6 +24,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.0.3...nuxt-loader-v1.1.0) (2023-11-30)
+
+
+### Features
+
+* **nuxt-loader:** align APIs, use useAsyncData for fetching ([#435](https://github.com/sanity-io/visual-editing/issues/435)) ([e195607](https://github.com/sanity-io/visual-editing/commit/e1956071982943978f3e10924fd5e799736d3e91))
+
 ## [1.0.3](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.0.2...nuxt-loader-v1.0.3) (2023-11-29)
 
 
