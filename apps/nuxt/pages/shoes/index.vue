@@ -18,7 +18,6 @@
           </li>
         </ol>
       </nav>
-
       <div
         class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
       >
@@ -31,12 +30,13 @@
         >
           <NuxtLink
             v-for="(product, i) of products || []"
-            :key="product.slug.current.value"
-            :to="`/shoes/${product.slug.current.value}`"
+            :key="product.slug.current"
+            :to="`/shoes/${product.slug.current}`"
             class="group relative"
           >
             <div
               class="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
+              :data-sanity="encodeDataAttribute([i, 'media', 'asset'])"
             >
               <img
                 class="h-full w-full object-cover object-center group-hover:opacity-75"
@@ -44,28 +44,23 @@
                 height="720"
                 :src="
                   product.media?.asset
-                    ? urlFor(unwrapData(product.media))
-                        .width(1440)
-                        .height(1440)
-                        .url()
+                    ? urlFor(product.media).width(1440).height(1440).url()
                     : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`
                 "
-                :alt="product.media?.alt?.value || ''"
+                :alt="product.media?.alt || ''"
               />
             </div>
             <h2
               class="mb-8 mt-4 text-sm text-gray-700"
               :style="{ ['textWrap' as any]: 'balance' }"
-              v-sanity="product.title"
-            />
+              :data-sanity="encodeDataAttribute([i, 'title'])"
+            >
+              {{ product.title }}
+            </h2>
             <p
               class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
             >
-              {{
-                product.price?.value
-                  ? formatCurrency(product.price.value)
-                  : 'FREE'
-              }}
+              {{ product.price ? formatCurrency(product.price) : 'FREE' }}
             </p>
             <div
               v-if="product.brand"
@@ -77,24 +72,24 @@
                 height="24"
                 :src="
                   product.brand?.logo?.asset
-                    ? urlForCrossDatasetReference(
-                        unwrapData(product.brand.logo),
-                      )
+                    ? urlForCrossDatasetReference(product.brand.logo)
                         .width(48)
                         .height(48)
                         .url()
                     : `https://source.unsplash.com/featured/48x48?${
                         product.brand.name
-                          ? encodeURIComponent(product.brand.name.value)
+                          ? encodeURIComponent(product.brand.name)
                           : `brand&r=${i}`
                       }`
                 "
-                :alt="product.brand?.logo?.alt?.value || ''"
+                :alt="product.brand?.logo?.alt || ''"
               />
               <span
                 class="font-bold text-gray-600"
-                v-sanity="product.brand.name"
-              />
+                :data-sanity="encodeDataAttribute([i, 'brand', 'name'])"
+              >
+                {{ product.brand.name }}
+              </span>
             </div>
           </NuxtLink>
         </div>
@@ -104,26 +99,17 @@
 </template>
 
 <script setup lang="ts">
-import { studioUrl, workspaces } from 'apps-common/env'
+import { studioUrl } from 'apps-common/env'
 import { formatCurrency } from 'apps-common/utils'
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import { urlFor, urlForCrossDatasetReference } from '~/utils'
-import { useQuery, useLiveMode } from '~/composables/useQuery'
-import { vSanity, wrapData, unwrapData } from '@sanity/nuxt-loader/directive'
+import { useQuery, useLiveMode } from '~/composables/sanity'
 
-const { data, sourceMap, loading } = await useQuery<ShoesListResult>(
-  'shoes',
-  shoesList,
-)
-
-const products = computed(() => {
-  if (!data.value) return []
-  return wrapData(
-    { ...workspaces['nuxt'], baseUrl: studioUrl },
-    data.value,
-    sourceMap.value,
-  )
-})
+const {
+  data: products,
+  loading,
+  encodeDataAttribute,
+} = await useQuery<ShoesListResult>('shoes', shoesList)
 
 let disableLiveMode: ReturnType<typeof useLiveMode> | undefined
 

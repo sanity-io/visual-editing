@@ -9,6 +9,7 @@ import type {
 } from '@sanity/core-loader'
 import type { Ref } from 'vue'
 
+/** @public */
 export type CreateQueryStoreOptions = Omit<
   CoreCreateQueryStoreOptions,
   'ssr'
@@ -16,10 +17,12 @@ export type CreateQueryStoreOptions = Omit<
   client: Exclude<CoreCreateQueryStoreOptions['client'], false>
 }
 
+/** @public */
 export interface UseQueryOptions {
   perspective?: ClientPerspective
 }
 
+/** @public */
 export type UseQueryComposable = <
   QueryResponseResult = unknown,
   QueryResponseError = unknown,
@@ -35,10 +38,12 @@ export type UseQueryComposable = <
   error: Ref<QueryResponseError | null>
 }>
 
+/** @public */
 export type UseLiveModeComposable = (
   options: EnableLiveModeOptions,
 ) => () => void
 
+/** @public */
 export interface QueryStore {
   useQuery: UseQueryComposable
   useLiveMode: UseLiveModeComposable
