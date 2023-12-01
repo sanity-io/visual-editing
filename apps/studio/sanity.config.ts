@@ -169,6 +169,11 @@ export default [
     projectId: workspaces['cross-dataset-references'].projectId,
     dataset: workspaces['cross-dataset-references'].dataset,
     plugins: [deskTool(), visionTool(), assist(), unsplashImageAsset()],
+    document: {
+      unstable_comments: {
+        enabled: true,
+      },
+    },
     schema: {
       types: [
         defineType({
