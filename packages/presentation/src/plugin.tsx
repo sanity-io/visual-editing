@@ -48,10 +48,6 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
 
     return {
       document: {
-        unstable_comments: {
-          enabled: true,
-        },
-
         unstable_fieldActions: (prev) => {
           return [
             ...prev.filter((a) => a.name !== openInStructure.name), // prevent duplication
