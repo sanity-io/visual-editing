@@ -24,6 +24,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.1.1](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.1.0...nuxt-loader-v1.1.1) (2023-12-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nuxt to ^3.8.2 ([#451](https://github.com/sanity-io/visual-editing/issues/451)) ([1071dc4](https://github.com/sanity-io/visual-editing/commit/1071dc475c8d94c69b5f844e96c9f453746a8857))
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.0.3...nuxt-loader-v1.1.0) (2023-11-30)
 
 
