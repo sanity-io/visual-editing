@@ -17,10 +17,10 @@ module.exports = {
     /^apps-common.*/,
     /^@sanity\/core-loader.*/,
     /^@sanity\/react-loader.*/,
-    'channels',
+    /^@sanity\/channels.*/,
+    /^@sanity\/visual-editing-helpers.*/,
     'nanostores',
     'nanoevents',
-    'visual-editing-helpers',
   ],
   future: {
     v2_dev: true,

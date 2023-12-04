@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type ChannelReturns, createChannel } from 'channels'
+import { type ChannelReturns, createChannel } from '@sanity/channels'
 
 const log = ref<any[]>([])
 const channel = ref<ChannelReturns | undefined>()

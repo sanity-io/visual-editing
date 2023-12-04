@@ -1,12 +1,12 @@
+import { ChannelReturns } from '@sanity/channels'
 import type {
   ClientPerspective,
   ContentSourceMap,
   QueryParams,
 } from '@sanity/client'
-import { ChannelReturns } from 'channels'
+import { VisualEditingMsg } from '@sanity/visual-editing-helpers'
 import { useEffect, useMemo } from 'react'
 import { type SanityDocument, useClient } from 'sanity'
-import { VisualEditingMsg } from 'visual-editing-helpers'
 
 import LiveStoreProvider from './LiveStoreProvider'
 import { useLiveQuery } from './useLiveQuery'

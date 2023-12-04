@@ -4,7 +4,7 @@ import {
   studioPath,
   studioPathToJsonPath,
 } from '@sanity/client/csm'
-import { encodeSanityNodeData } from 'visual-editing-helpers/csm'
+import { encodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 
 import type { EncodeDataAttribute } from './types'
 

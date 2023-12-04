@@ -12,8 +12,8 @@ const nextConfig = {
     '@sanity/overlays',
     '@sanity/react-loader',
     'apps-common',
-    'channels',
-    'visual-editing-helpers',
+    '@sanity/channels',
+    '@sanity/visual-editing-helpers',
   ],
 
   // We run these checks in the CI pipeline, so we don't need to run them on Vercel

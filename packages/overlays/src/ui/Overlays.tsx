@@ -1,10 +1,15 @@
+import { ChannelEventHandler } from '@sanity/channels'
 import {
   isHTMLAnchorElement,
   isHTMLElement,
   studioTheme,
   ThemeProvider,
 } from '@sanity/ui'
-import { ChannelEventHandler } from 'channels'
+import {
+  isAltKey,
+  isHotkey,
+  type VisualEditingMsg,
+} from '@sanity/visual-editing-helpers'
 import {
   FunctionComponent,
   useCallback,
@@ -15,11 +20,6 @@ import {
   useState,
 } from 'react'
 import styled from 'styled-components'
-import {
-  isAltKey,
-  isHotkey,
-  type VisualEditingMsg,
-} from 'visual-editing-helpers'
 
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'

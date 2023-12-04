@@ -2,13 +2,13 @@ import type {
   HistoryUpdate,
   SanityNode,
   SanityNodeLegacy,
-} from 'visual-editing-helpers'
+} from '@sanity/visual-editing-helpers'
 
 export type {
   HistoryUpdate,
   SanityNode,
   SanityNodeLegacy,
-} from 'visual-editing-helpers'
+} from '@sanity/visual-editing-helpers'
 
 /**
  * @public

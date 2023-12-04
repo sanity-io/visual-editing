@@ -1,5 +1,5 @@
 import { studioPath } from '@sanity/client/csm'
-import { urlStringToPath } from 'visual-editing-helpers'
+import { urlStringToPath } from '@sanity/visual-editing-helpers'
 
 export function parsePath(rawPath: string | undefined): {
   id: string | undefined

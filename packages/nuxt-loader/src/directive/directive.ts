@@ -1,4 +1,4 @@
-import { encodeSanityNodeData } from 'visual-editing-helpers/csm'
+import { encodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 import { Directive } from 'vue'
 
 function bindNodeDataToElement(node: any, el: HTMLElement) {

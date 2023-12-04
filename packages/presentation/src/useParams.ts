@@ -1,8 +1,8 @@
 import { studioPath } from '@sanity/client/csm'
+import { pathToUrlString } from '@sanity/visual-editing-helpers'
 import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { NavigateOptions, RouterContextValue, RouterState } from 'sanity/router'
-import { pathToUrlString } from 'visual-editing-helpers'
 
 import { debounce } from './lib/debounce'
 import { parsePath } from './parsePath'

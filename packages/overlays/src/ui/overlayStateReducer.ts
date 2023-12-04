@@ -1,4 +1,4 @@
-import { PresentationMsg } from 'visual-editing-helpers'
+import { PresentationMsg } from '@sanity/visual-editing-helpers'
 
 import { ElementState, OverlayMsg } from '../types'
 import { elementsReducer } from './elementsReducer'

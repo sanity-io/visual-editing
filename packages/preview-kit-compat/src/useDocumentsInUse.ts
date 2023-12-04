@@ -1,10 +1,10 @@
+import { type ChannelReturns, createChannel } from '@sanity/channels'
 import type { ContentSourceMapDocuments } from '@sanity/client/csm'
-import { type ChannelReturns, createChannel } from 'channels'
-import { useEffect, useState } from 'react'
 import {
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
-} from 'visual-editing-helpers'
+} from '@sanity/visual-editing-helpers'
+import { useEffect, useState } from 'react'
 
 /**
  * Reports the documents in use on the page to the Presentation Tool, if a connection can be established.

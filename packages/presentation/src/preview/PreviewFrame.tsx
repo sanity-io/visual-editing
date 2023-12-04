@@ -1,3 +1,4 @@
+import type { ConnectionStatus } from '@sanity/channels'
 import { ClientPerspective } from '@sanity/client'
 import {
   CheckmarkIcon,
@@ -30,7 +31,6 @@ import {
   TooltipDelayGroupProvider,
   usePrefersReducedMotion,
 } from '@sanity/ui'
-import type { ConnectionStatus } from 'channels'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import {
   ComponentType,

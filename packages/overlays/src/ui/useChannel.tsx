@@ -4,7 +4,7 @@ import {
   ChannelReturns,
   ConnectionStatus,
   createChannel,
-} from 'channels'
+} from '@sanity/channels'
 import { useEffect, useRef, useState } from 'react'
 
 /**

@@ -33,4 +33,4 @@ export {
   type UnwrappedValue,
   wrapData,
   type WrappedValue,
-} from 'visual-editing-helpers/csm'
+} from '@sanity/visual-editing-helpers/csm'

@@ -1,3 +1,4 @@
+import { createChannel } from '@sanity/channels'
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -6,12 +7,11 @@ import {
   SanityClient,
 } from '@sanity/client'
 import { SanityStegaClient, stegaEncodeSourceMap } from '@sanity/client/stega'
-import { createChannel } from 'channels'
-import { atom, MapStore } from 'nanostores'
 import {
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
-} from 'visual-editing-helpers'
+} from '@sanity/visual-editing-helpers'
+import { atom, MapStore } from 'nanostores'
 
 import { isStegaClient } from '../isStegaClient'
 import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'

@@ -1,8 +1,15 @@
+import type { ConnectionStatus } from '@sanity/channels'
+import { ChannelReturns, createChannel } from '@sanity/channels'
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
 import { Flex } from '@sanity/ui'
-import type { ConnectionStatus } from 'channels'
-import { ChannelReturns, createChannel } from 'channels'
+import {
+  getQueryCacheKey,
+  isAltKey,
+  isHotkey,
+  type VisualEditingConnectionIds,
+  type VisualEditingMsg,
+} from '@sanity/visual-editing-helpers'
 import {
   type ReactElement,
   useCallback,
@@ -22,13 +29,6 @@ import {
 } from 'sanity'
 import { RouterContextValue, useRouter } from 'sanity/router'
 import styled from 'styled-components'
-import {
-  getQueryCacheKey,
-  isAltKey,
-  isHotkey,
-  type VisualEditingConnectionIds,
-  type VisualEditingMsg,
-} from 'visual-editing-helpers'
 
 import { DEFAULT_TOOL_NAME } from './constants'
 import { ContentEditor } from './editor/ContentEditor'
