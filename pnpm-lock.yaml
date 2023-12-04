@@ -644,7 +644,7 @@ importers:
   packages/nuxt-loader:
     dependencies:
       '@sanity/core-loader':
-        specifier: workspace:*
+        specifier: 1.0.3
         version: link:../core-loader
     devDependencies:
       '@nanostores/vue':
@@ -778,13 +778,13 @@ importers:
   packages/presentation:
     dependencies:
       '@sanity/groq-store':
-        specifier: workspace:*
+        specifier: 5.0.2-experimental.0
         version: link:../groq-store
       '@sanity/icons':
         specifier: ^2.7.0
         version: 2.7.0(react@18.2.0)
       '@sanity/preview-url-secret':
-        specifier: workspace:^
+        specifier: ^1.2.1
         version: link:../preview-url-secret
       '@sanity/ui':
         specifier: ^1.9.3
@@ -936,7 +936,7 @@ importers:
   packages/react-loader:
     dependencies:
       '@sanity/core-loader':
-        specifier: workspace:*
+        specifier: 1.0.3
         version: link:../core-loader
     devDependencies:
       '@sanity/channels':
@@ -985,7 +985,7 @@ importers:
   packages/svelte-loader:
     dependencies:
       '@sanity/core-loader':
-        specifier: workspace:*
+        specifier: 1.0.3
         version: link:../core-loader
     devDependencies:
       '@sanity/channels':
