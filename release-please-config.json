@@ -4,7 +4,10 @@
   "plugins": ["node-workspace"],
   "packages": {
     "packages/core-loader": {},
-    "packages/groq-store": {},
+    "packages/groq-store": {
+      "prerelease": true,
+      "prerelease-type": "experimental"
+    },
     "packages/nuxt-loader": {},
     "packages/overlays": {},
     "packages/presentation": {},
