@@ -15,8 +15,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "test": "vitest --pass-with-no-tests",
-    "typecheck": "vitest typecheck --pass-with-no-tests --run"
+    "test": "vitest --pass-with-no-tests --typecheck"
   },
   "prettier": {
     "plugins": [

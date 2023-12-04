@@ -34,6 +34,6 @@ describe('allowStudioOrigin handling', () => {
   test('Invalid URL', () => {
     expect(() =>
       renderToStaticMarkup(<TestPrinter allowStudioOrigin="//" />),
-    ).toThrowErrorMatchingInlineSnapshot('"Invalid URL"')
+    ).toThrowErrorMatchingInlineSnapshot(`[TypeError: Invalid URL]`)
   })
 })

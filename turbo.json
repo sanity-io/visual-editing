@@ -14,10 +14,6 @@
       "cache": false
     },
     "lint": {},
-    "typecheck": {
-      "env": ["GITHUB_ACTIONS"],
-      "dependsOn": ["^build"]
-    },
     "preview": {
       "dependsOn": ["^build"]
     },

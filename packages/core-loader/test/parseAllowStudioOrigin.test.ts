@@ -20,6 +20,6 @@ describe('allowStudioOrigin handling', () => {
   test('Invalid URL', () => {
     expect(() =>
       parseAllowStudioOrigin('//'),
-    ).toThrowErrorMatchingInlineSnapshot('"Invalid URL"')
+    ).toThrowErrorMatchingInlineSnapshot(`[TypeError: Invalid URL]`)
   })
 })
