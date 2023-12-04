@@ -2,7 +2,11 @@ import {
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewSecret,
 } from './constants'
-import { PreviewUrlResolver, PreviewUrlResolverOptions } from './types'
+import type {
+  PreviewUrlResolver,
+  PreviewUrlResolverContext,
+  PreviewUrlResolverOptions,
+} from './types'
 
 /**
  * @internal
@@ -10,7 +14,13 @@ import { PreviewUrlResolver, PreviewUrlResolverOptions } from './types'
 export function definePreviewUrl<SanityClientType>(
   options: PreviewUrlResolverOptions,
 ): PreviewUrlResolver<SanityClientType> {
-  const { draftMode, origin, preview = '/' } = options
+  const {
+    draftMode,
+    origin = typeof location === 'undefined'
+      ? 'https://localhost'
+      : location.origin,
+    preview = '/',
+  } = options
   const productionUrl = new URL(preview, origin)
   const enableDraftModeUrl = draftMode.enable
     ? new URL(draftMode.enable, origin)
@@ -35,4 +45,8 @@ export function definePreviewUrl<SanityClientType>(
   }
 }
 
-export type { PreviewUrlResolver, PreviewUrlResolverOptions }
+export type {
+  PreviewUrlResolver,
+  PreviewUrlResolverContext,
+  PreviewUrlResolverOptions,
+}

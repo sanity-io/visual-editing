@@ -58,14 +58,24 @@ export interface ParsedPreviewUrl {
   redirectTo?: string
 }
 
-/** @internal */
+/** @public */
 export interface PreviewUrlResolverOptions {
-  // origin: 'http://localhost:3000',
-  origin: string
-  // preview: '/en/preview', // Optional, it's '/' by default
+  /**
+   * Leave empty if it's on the same origin as the Studio, or set to `location.origin` explicitly if that's what you want.
+   * @defaultValue `location.origin`
+   */
+  origin?: string
+  /**
+   * The default preview pathname, used when the path to use is not yet known.
+   * Otherwise the path that were last used will be restored, or the path used when navigating to the tool when using the `locate` API.
+   * @example '/en/preview'
+   * @defaultValue '/'
+   */
   preview?: string
-  // The API route that securely puts the app in a "Draft Mode"
-  // Next.js docs: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
+  /**
+   * The API route that securely puts the app in a "Draft Mode"
+   * Next.js docs: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
+   */
   draftMode: {
     /**
      * The route that enables Draft Mode

@@ -17,9 +17,6 @@ export function usePreviewUrl(
   _previewSearchParam: string | null,
 ): URL {
   const client = useClient({ apiVersion: '2023-10-16' })
-  const workspace = useActiveWorkspace()
-  const basePath = workspace?.activeWorkspace?.basePath
-  const workspaceName = workspace?.activeWorkspace?.name || 'default'
   const [previewUrl] = useState(() => _previewUrl)
   const currentUser = useCurrentUser()
   const resolvePreviewUrl = useMemo(() => {
@@ -35,6 +32,10 @@ export function usePreviewUrl(
     return new URL(_previewSearchParam, resolvePreviewUrl)
   })
 
+  const resolveUrlDeps = usePreviewUrlSecretDependencies(
+    toolName,
+    currentUser?.id,
+  )
   const resolvedUrl =
     typeof resolvePreviewUrl === 'function'
       ? suspend(async (): Promise<string> => {
@@ -49,21 +50,28 @@ export function usePreviewUrl(
             previewUrlSecret,
             previewSearchParam: _previewSearchParam,
           })
-        }, [
-          // Cache based on a few specific conditions
-          '@sanity/presentation',
-          basePath,
-          workspaceName,
-          toolName,
-          currentUser?.id,
-          resolveUUID,
-        ])
+        }, resolveUrlDeps)
       : previewSearchParam || resolvePreviewUrl
 
-  return useMemo(
-    () => new URL(resolvedUrl, window.location.origin),
-    [resolvedUrl],
-  )
+  return useMemo(() => new URL(resolvedUrl, location.origin), [resolvedUrl])
+}
+
+function usePreviewUrlSecretDependencies(
+  toolName: string,
+  currentUserId?: string,
+) {
+  const workspace = useActiveWorkspace()
+  const basePath = workspace?.activeWorkspace?.basePath
+  const workspaceName = workspace?.activeWorkspace?.name || 'default'
+  return [
+    // Cache based on a few specific conditions
+    '@sanity/presentation',
+    basePath,
+    workspaceName,
+    toolName,
+    currentUserId,
+    resolveUUID,
+  ]
 }
 
 // https://github.com/pmndrs/suspend-react?tab=readme-ov-file#making-cache-keys-unique
