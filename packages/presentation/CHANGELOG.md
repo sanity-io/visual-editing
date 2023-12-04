@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.2.0
 
+## [1.0.14](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.13...presentation-v1.0.14) (2023-12-04)
+
+
+### Bug Fixes
+
+* use `^` semver range for `@sanity/preview-url-secret` ([f38c339](https://github.com/sanity-io/visual-editing/commit/f38c33970e1704470d14271911776120be19f448))
+
 ## [1.0.13](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.12...presentation-v1.0.13) (2023-12-04)
 
 
