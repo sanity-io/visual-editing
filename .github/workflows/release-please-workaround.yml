@@ -1,0 +1,48 @@
+---
+name: Workaround release-please not updating pnpm-lock.yml
+
+on:
+  pull_request:
+    branches: ['release-please--**']
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  release-please-workaround:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2
+        id: generate-token
+        with:
+          app_id: ${{ secrets.ECOSPARK_APP_ID }}
+          private_key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          token: ${{ steps.generate-token.outputs.token }}
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version: lts/*
+      - run: pnpm install --lockfile-only
+      - uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
+        with:
+          author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>
+          body: I ran `pnpm format` 🧑‍💻
+          branch: actions/prettier
+          commit-message: 'chore(prettier): 🤖 ✨'
+          labels: 🤖 bot
+          title: 'chore(prettier): 🤖 ✨'
+          token: ${{ steps.generate-token.outputs.token }}
+      - uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: 'chore(pnpm): update lockfile'
