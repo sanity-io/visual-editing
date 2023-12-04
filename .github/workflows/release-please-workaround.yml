@@ -4,7 +4,6 @@ name: Workaround release-please not updating pnpm-lock.yml
 on:
   pull_request:
     branches: ['release-please--**']
-  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -33,15 +32,6 @@ jobs:
           cache: pnpm
           node-version: lts/*
       - run: pnpm install --lockfile-only
-      - uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
-        with:
-          author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>
-          body: I ran `pnpm format` 🧑‍💻
-          branch: actions/prettier
-          commit-message: 'chore(prettier): 🤖 ✨'
-          labels: 🤖 bot
-          title: 'chore(prettier): 🤖 ✨'
-          token: ${{ steps.generate-token.outputs.token }}
       - uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
