@@ -24,6 +24,13 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.1.1...nuxt-loader-v1.2.0) (2023-12-04)
+
+
+### Features
+
+* **nuxt-loader:** add useEncodeDataAttribute API ([#457](https://github.com/sanity-io/visual-editing/issues/457)) ([598937d](https://github.com/sanity-io/visual-editing/commit/598937d124f60d9caa4a429c7c4e8fbb5bbdff3c))
+
 ## [1.1.1](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.1.0...nuxt-loader-v1.1.1) (2023-12-01)
 
 
