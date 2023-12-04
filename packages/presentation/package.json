@@ -42,7 +42,7 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
-    "test": "vitest --pass-with-no-tests --typecheck",
+    "test": "vitest --typecheck",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
