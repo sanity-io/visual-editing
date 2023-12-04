@@ -10,5 +10,9 @@ export default defineConfig({
       ...(baseConfig.extract?.bundledPackages || []),
       'nanostores',
     ],
+    rules: {
+      ...baseConfig.extract?.rules,
+      'ae-forgotten-export': 'warn',
+    },
   },
 })

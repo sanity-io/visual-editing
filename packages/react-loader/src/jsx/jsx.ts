@@ -78,4 +78,4 @@ const sanity = new Proxy({} as SanityElements, {
   },
 })
 
-export { sanity }
+export { type htmlElements, sanity, type SanityElementProps, type svgElements }

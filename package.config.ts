@@ -5,7 +5,7 @@ export default defineConfig({
   extract: {
     bundledPackages: ['@sanity/channels', '@sanity/visual-editing-helpers'],
     rules: {
-      'ae-forgotten-export': 'warn',
+      'ae-forgotten-export': 'error',
       'ae-incompatible-release-tags': 'warn',
       'ae-internal-missing-underscore': 'off',
       'ae-missing-release-tag': 'warn',

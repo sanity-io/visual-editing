@@ -14,3 +14,5 @@ export function usePresentationNavigate(): PresentationNavigateContextValue {
 
   return navigate
 }
+
+export type { PresentationNavigateContextValue }

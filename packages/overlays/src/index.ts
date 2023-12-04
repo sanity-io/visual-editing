@@ -1,3 +1,7 @@
 export { createOverlayController } from './controller'
 export type * from './types'
-export { type DisableOverlays, enableOverlays } from './ui/enableOverlays'
+export {
+  type AllowStudioOrigin,
+  type DisableOverlays,
+  enableOverlays,
+} from './ui/enableOverlays'

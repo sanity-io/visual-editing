@@ -7,10 +7,13 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 
 import {
+  NonUndefinedGuard,
   QueryResponseInitial,
   QueryStore,
   UseLiveModeHook,
   UseQueryOptions,
+  UseQueryOptionsDefinedInitial,
+  UseQueryOptionsUndefinedInitial,
 } from './types'
 
 export const createQueryStore = (
@@ -129,4 +132,13 @@ export const createQueryStore = (
     setServerClient,
     useLiveMode,
   }
+}
+
+export type {
+  NonUndefinedGuard,
+  QueryResponseInitial,
+  QueryStore,
+  UseLiveModeHook,
+  UseQueryOptionsDefinedInitial,
+  UseQueryOptionsUndefinedInitial,
 }

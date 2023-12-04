@@ -93,3 +93,5 @@ export const enableVisualEditing: typeof enableOverlays = (...args) => {
   )
   return enableOverlays(...args)
 }
+
+export type { AllowStudioOrigin }

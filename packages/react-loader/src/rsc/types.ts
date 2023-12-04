@@ -14,3 +14,5 @@ export interface LoadQueryOptions<T = 'next'> {
   cache?: RequestInit['cache']
   next?: T extends keyof RequestInit ? RequestInit[T] : never
 }
+
+export type { BaseQueryStore }

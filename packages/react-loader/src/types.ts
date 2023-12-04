@@ -69,7 +69,7 @@ export interface UseQueryOptionsUndefinedInitial {
   initial?: undefined
 }
 
-type NonUndefinedGuard<T> = T extends undefined ? never : T
+export type NonUndefinedGuard<T> = T extends undefined ? never : T
 
 export interface UseQueryOptionsDefinedInitial<QueryResponseResult = unknown> {
   /**
