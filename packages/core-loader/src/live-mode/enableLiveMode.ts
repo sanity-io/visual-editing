@@ -15,6 +15,7 @@ import { atom, MapStore } from 'nanostores'
 
 import { isStegaClient } from '../isStegaClient'
 import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'
+import { parseAllowStudioOrigin } from './parseAllowStudioOrigin'
 
 /** @internal */
 export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
@@ -25,7 +26,7 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const {
     client,
-    allowStudioOrigin = '/',
+    allowStudioOrigin = 'same-origin',
     setFetcher,
     onConnect,
     onDisconnect,
@@ -55,7 +56,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const targetOrigin = new URL(allowStudioOrigin, location.origin).origin
+  const targetOrigin = parseAllowStudioOrigin(allowStudioOrigin)
   const channel = createChannel<VisualEditingMsg>({
     id: 'loaders' satisfies VisualEditingConnectionIds,
     onStatusUpdate(status) {

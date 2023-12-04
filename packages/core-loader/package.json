@@ -59,7 +59,8 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
-    "test": "tsc --noEmit",
+    "test": "vitest --pass-with-no-tests",
+    "typecheck": "vitest typecheck --pass-with-no-tests --run",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
@@ -135,8 +136,10 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "happy-dom": "^12.10.3",
     "nanostores": "0.9.5",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
   },
   "peerDependencies": {
     "@sanity/client": "^6.9.1"

@@ -39,5 +39,13 @@
 </template>
 
 <script setup lang="ts">
+import { type DisableOverlays, enableOverlays } from '@sanity/overlays'
+
+let disable: DisableOverlays
+onMounted(() => {
+  disable = enableOverlays({ allowStudioOrigin: 'same-origin' })
+})
+onUnmounted(() => disable())
+
 const route = useRoute()
 </script>

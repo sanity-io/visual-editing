@@ -2,6 +2,7 @@ import type { Root } from 'react-dom/client'
 
 import { OVERLAY_ID } from '../constants'
 import { HistoryAdapter } from '../types'
+import type { AllowStudioOrigin } from './useAllowStudioOrigin'
 
 /**
  * Cleanup function used when e.g. unmounting
@@ -23,10 +24,12 @@ export function enableOverlays(
   options: {
     /**
      * The origin that are allowed to connect to the overlay.
-     * @example `https://my.sanity.studio`
-     * @example `location.origin`
+     * @example 'https://my.sanity.studio'
+     * @example location.origin
+     * @example 'same-origin'
+     * @defaultValue 'same-origin'
      */
-    allowStudioOrigin: string
+    allowStudioOrigin?: AllowStudioOrigin
     history?: HistoryAdapter
     zIndex?: string | number
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,8 +43,7 @@ export function enableOverlays(
     ([reactClient, { Overlays }]) => {
       if (controller.signal.aborted) return
 
-      const { history, zIndex } = options
-      const allowStudioOrigin = options.allowStudioOrigin || location.origin
+      const { allowStudioOrigin = 'same-origin', history, zIndex } = options
 
       if (!node) {
         node = document.createElement('div')
