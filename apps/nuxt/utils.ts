@@ -11,10 +11,10 @@ export function getClient() {
     dataset,
     useCdn: false,
     apiVersion,
-    stega: {
-      enabled: true,
-      studioUrl,
-    },
+    // stega: {
+    //   enabled: true,
+    //   studioUrl,
+    // },
   })
 }
 

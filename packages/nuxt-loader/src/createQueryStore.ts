@@ -15,6 +15,7 @@ import type {
   UseQueryOptions,
 } from './types'
 
+/** @public */
 export const createQueryStore = (
   storeOptions: CreateQueryStoreOptions,
 ): QueryStore => {

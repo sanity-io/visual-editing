@@ -10,6 +10,7 @@ function bindNodeDataToElement(node: any, el: HTMLElement) {
   }
 }
 
+/** @beta */
 export const vSanity: Directive<HTMLElement> = {
   created: (el, binding) => {
     const { value: node } = binding
