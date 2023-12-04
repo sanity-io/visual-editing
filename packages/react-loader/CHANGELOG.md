@@ -12,6 +12,20 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.1.3...react-loader-v1.2.0) (2023-12-04)
+
+
+### Features
+
+* add new `same-origin` option ([#471](https://github.com/sanity-io/visual-editing/issues/471)) ([09621ad](https://github.com/sanity-io/visual-editing/commit/09621ad85897d4c600cbf7a011f8ddcfed75841e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.0.3 to 1.1.0
+
 ## [1.1.3](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.1.2...react-loader-v1.1.3) (2023-11-30)
 
 
