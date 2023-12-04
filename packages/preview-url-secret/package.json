@@ -108,6 +108,7 @@
   },
   "files": [
     "dist",
+    "src",
     "CHANGELOG.md"
   ],
   "scripts": {
@@ -115,6 +116,8 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
+    "test": "vitest --pass-with-no-tests",
+    "typecheck": "vitest typecheck --pass-with-no-tests --run",
     "watch": "pkg watch --strict"
   },
   "browserslist": [
@@ -175,7 +178,6 @@
     "@sanity/uuid": "3.0.2"
   },
   "devDependencies": {
-    "@edge-runtime/types": "^2.2.7",
     "@sanity/channels": "workspace:*",
     "@sanity/client": "^6.9.1",
     "@sanity/icons": "^2.7.0",
@@ -187,7 +189,8 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "sanity": "^3.20.2",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
   },
   "peerDependencies": {
     "@sanity/client": "^6.9.1",

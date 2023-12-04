@@ -24,6 +24,7 @@ import styled from 'styled-components'
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { overlayStateReducer } from './overlayStateReducer'
+import { useAllowStudioOrigin } from './useAllowStudioOrigin'
 import { useChannel } from './useChannel'
 import { useController } from './useController'
 
@@ -94,16 +95,11 @@ export const Overlays: FunctionComponent<{
     [history],
   )
 
-  const allowOrigin = useMemo(() => {
-    // previewUrl might be relative, if it is we set `targetOrigin` to the same origin as the Studio
-    // if it's an absolute URL we extract the origin from it
-    const url = new URL(allowStudioOrigin, location.href)
-    return url.origin
-  }, [allowStudioOrigin])
+  const targetOrigin = useAllowStudioOrigin(allowStudioOrigin)
 
   const { channel, status } = useChannel<VisualEditingMsg>(
     channelEventHandler,
-    allowOrigin,
+    targetOrigin,
   )
 
   const overlayEventHandler: OverlayEventHandler = useCallback(

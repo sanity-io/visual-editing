@@ -36,6 +36,7 @@
   },
   "files": [
     "dist",
+    "src",
     "CHANGELOG.md"
   ],
   "scripts": {
@@ -43,8 +44,8 @@
     "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit",
+    "test": "vitest --pass-with-no-tests",
+    "typecheck": "vitest typecheck --pass-with-no-tests --run",
     "watch": "pkg watch --strict"
   },
   "browserslist": [

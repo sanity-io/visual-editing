@@ -11,7 +11,7 @@ export async function validateSecret(
   secret: string,
 ): Promise<boolean> {
   // If we're in the Edge Runtime it's usually too quick and we need to delay fetching the secret a little bit
-  // eslint-disable-next-line no-warning-comments
+  // @ts-expect-error -- this global exists if we're in the Edge Runtime
   if (typeof EdgeRuntime !== 'undefined') {
     await new Promise((resolve) => setTimeout(resolve, 300))
   }

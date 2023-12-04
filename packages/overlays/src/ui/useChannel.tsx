@@ -5,6 +5,7 @@ import {
   ConnectionStatus,
   createChannel,
 } from '@sanity/channels'
+import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
 import { useEffect, useRef, useState } from 'react'
 
 /**
@@ -23,12 +24,12 @@ export function useChannel<T extends ChannelMsg>(
 
   useEffect(() => {
     const channel = createChannel<T>({
-      id: 'overlays',
+      id: 'overlays' satisfies VisualEditingConnectionIds,
       connections: [
         {
           target: parent,
           targetOrigin,
-          id: 'presentation',
+          id: 'presentation' satisfies VisualEditingConnectionIds,
         },
       ],
       handler,

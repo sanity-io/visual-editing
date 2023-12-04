@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client'
 import { describe, expectTypeOf, test } from 'vitest'
 
-import { createQueryStore } from './createQueryStore'
+import { createQueryStore } from '../src/createQueryStore'
 
 describe('useQuery', () => {
   const { useQuery } = createQueryStore({ client: createClient({}) })
@@ -16,7 +16,11 @@ describe('useQuery', () => {
         '',
         {},
         {
-          initial: { data: true, sourceMap: undefined, perspective: undefined },
+          initial: {
+            data: true,
+            sourceMap: undefined,
+            perspective: undefined,
+          },
         },
       ).data,
     ).toMatchTypeOf<boolean>()
