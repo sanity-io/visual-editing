@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.4...overlays-v2.1.0) (2023-12-04)
+
+
+### Features
+
+* add new `same-origin` option ([#471](https://github.com/sanity-io/visual-editing/issues/471)) ([09621ad](https://github.com/sanity-io/visual-editing/commit/09621ad85897d4c600cbf7a011f8ddcfed75841e))
+
 ## [2.0.4](https://github.com/sanity-io/visual-editing/compare/overlays-v2.0.3...overlays-v2.0.4) (2023-11-29)
 
 

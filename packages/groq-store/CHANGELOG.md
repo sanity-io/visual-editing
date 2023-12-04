@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0-experimental](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.2-experimental...groq-store-v5.1.0-experimental) (2023-12-04)
+
+
+### Features
+
+* add new `same-origin` option ([#471](https://github.com/sanity-io/visual-editing/issues/471)) ([09621ad](https://github.com/sanity-io/visual-editing/commit/09621ad85897d4c600cbf7a011f8ddcfed75841e))
+
 ## [5.0.2-experimental](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.1-experimental...groq-store-v5.0.2-experimental) (2023-11-29)
 
 
