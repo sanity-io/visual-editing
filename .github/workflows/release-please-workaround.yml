@@ -3,7 +3,8 @@ name: Workaround release-please not updating pnpm-lock.yml
 
 on:
   pull_request:
-    branches: ['release-please--**']
+    types: [opened, reopened, synchronize]
+    branches: ['main']
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -14,6 +15,7 @@ permissions:
 
 jobs:
   release-please-workaround:
+    if:  startsWith(github.head_ref, 'release-please--')
     runs-on: ubuntu-latest
     steps:
       - uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2
