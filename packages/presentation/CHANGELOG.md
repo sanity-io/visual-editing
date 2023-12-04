@@ -12,6 +12,13 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.2.0
 
+## [1.0.13](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.12...presentation-v1.0.13) (2023-12-04)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency framer-motion to ^10.16.12 ([#456](https://github.com/sanity-io/visual-editing/issues/456)) ([a421f94](https://github.com/sanity-io/visual-editing/commit/a421f94f3710faaadbb8dc342cb02c9e4e3ed71f))
+
 ## [1.0.12](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.11...presentation-v1.0.12) (2023-12-01)
 
 
