@@ -47,9 +47,6 @@ jobs:
         with:
           cache: pnpm
           node-version: lts/*
-      - name: Authenticate with private NPM package @sanity/sanitype
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
-        if: ${{ steps.release.outputs.release_created || github.event.inputs.publish == 'true' }}
       - name: install deps & build
         run: corepack enable && pnpm --version && pnpm install --ignore-scripts && pnpm build --filter=./packages/*
         if: ${{ steps.release.outputs.release_created || github.event.inputs.publish == 'true' }}

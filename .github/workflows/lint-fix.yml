@@ -24,8 +24,6 @@ jobs:
         with:
           cache: pnpm
           node-version: lts/*
-      - name: Authenticate with private NPM package @sanity/sanitype
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
       - run: pnpm install --ignore-scripts
       - run: git restore pnpm-lock.yaml
       - run: pnpm lint:fix
@@ -43,4 +41,3 @@ jobs:
           labels: 🤖 bot
           title: 'chore(lint): --fix 🤖 ✨'
           token: ${{ steps.generate-token.outputs.token }}
-  

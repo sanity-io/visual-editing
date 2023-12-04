@@ -24,8 +24,6 @@ jobs:
         with:
           cache: pnpm
           node-version: lts/*
-      - name: Authenticate with private NPM package @sanity/sanitype
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
 
       - run: pnpm install --dev --ignore-scripts
       - uses: actions/cache@v3

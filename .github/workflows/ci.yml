@@ -28,8 +28,6 @@ jobs:
           cache: pnpm
           node-version: lts/*
       - run: corepack enable && pnpm --version
-      - name: Authenticate with private NPM package @sanity/sanitype
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
       - run: pnpm install --ignore-scripts
       - run: pnpm build --filter=./packages/*
       - run: pnpm lint
@@ -71,7 +69,5 @@ jobs:
           cache: pnpm
           node-version: ${{ matrix.node }}
       - run: corepack enable && pnpm --version
-      - name: Authenticate with private NPM package @sanity/sanitype
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMRC }}" > ~/.npmrc
       - run: pnpm install --loglevel=error --ignore-scripts
       - run: pnpm test
