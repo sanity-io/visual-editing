@@ -70,7 +70,6 @@ A minimal implementation for enabling visual editing on a single page is provide
     <h1 :data-sanity="encodeDataAttribute(['title'])">
       {{ data.title }}
     </h1>
-    <img />
   </div>
 </template>
 
@@ -82,7 +81,7 @@ interface MyPage {}
 const query = `*[_type == "page"][0]`
 
 // Fetch content using your useQuery composable
-const { data, loading, encodeDataAttribute } = await useQuery<MyContent>(
+const { data, loading, encodeDataAttribute } = await useQuery<MyPage>(
   'my-page', // a unique key for this query
   query,
 )
