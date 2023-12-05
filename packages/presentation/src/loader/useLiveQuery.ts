@@ -2,6 +2,7 @@
 // need the more advanced features `useLiveQuery`, like the `isEqual` option or the `loading` state
 
 import type { QueryParams as ClientQueryParams } from '@sanity/client'
+import { useQueryParams } from '@sanity/visual-editing-helpers/hooks'
 import {
   useCallback,
   useContext,
@@ -11,7 +12,6 @@ import {
 } from 'react'
 
 import { defineListenerContext } from './context'
-import { useParams } from './utils'
 
 // Re-export types we use that are needed externally
 export type { ClientQueryParams }
@@ -29,7 +29,7 @@ export function useLiveQuery<
   if (!defineStore) {
     throw new Error('useLiveQuery must be used inside a <LiveQueryProvider />')
   }
-  const queryParams = useParams(queryParams2)
+  const queryParams = useQueryParams(queryParams2)
   const store = useMemo(
     () => defineStore<QueryResult>(initialData, query, queryParams),
     [defineStore, initialData, queryParams, query],
