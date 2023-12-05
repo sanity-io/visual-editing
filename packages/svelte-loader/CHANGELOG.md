@@ -24,6 +24,15 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.1.0 to 1.1.1
+  * devDependencies
+    * @sanity/channels bumped to 0.1.0
+    * @sanity/visual-editing-helpers bumped to 0.1.0
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.0.4...svelte-loader-v1.1.0) (2023-12-05)
 
 

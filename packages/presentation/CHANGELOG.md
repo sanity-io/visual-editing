@@ -12,6 +12,25 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.2.0
 
+## [1.1.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.1...presentation-v1.1.2) (2023-12-05)
+
+
+### Bug Fixes
+
+* use `useQueryParams` from shared helpers ([7466ca2](https://github.com/sanity-io/visual-editing/commit/7466ca25e3065953a49909d04dfb1b7a8172daf7))
+* use `useRevalidate` from shared helpers ([5756a53](https://github.com/sanity-io/visual-editing/commit/5756a5305aa1dc5b1c009db5d238d318a2cd8a5d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.3.0 to 5.3.1
+    * @sanity/preview-url-secret bumped from ^1.3.0 to ^1.3.1
+  * devDependencies
+    * @sanity/channels bumped to 0.1.0
+    * @sanity/visual-editing-helpers bumped to 0.1.0
+
 ## [1.1.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.0...presentation-v1.1.1) (2023-12-05)
 
 
