@@ -8,7 +8,7 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import { LoadQueryOptions, QueryStore } from './types'
+import type { LoadQueryOptions, QueryStore } from './types'
 
 export type * from './types'
 
