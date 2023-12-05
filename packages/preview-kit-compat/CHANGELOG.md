@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.1.0...preview-kit-compat-v1.2.0) (2023-12-05)
+
+
+### Features
+
+* add `useQueryParams` ([b563581](https://github.com/sanity-io/visual-editing/commit/b563581ea6c1e3a6888166c8ca7e552c37ee3398))
+* add `useRevalidate` ([008956a](https://github.com/sanity-io/visual-editing/commit/008956a84126daf990f3127a4785f4cff213726e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/channels bumped to 0.1.0
+    * @sanity/visual-editing-helpers bumped to 0.1.0
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.0.2...preview-kit-compat-v1.1.0) (2023-12-05)
 
 
