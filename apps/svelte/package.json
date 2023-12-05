@@ -11,6 +11,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "@sanity/image-url": "^1.0.2"
+  },
   "devDependencies": {
     "@fontsource/fira-mono": "^5.0.8",
     "@neoconfetti/svelte": "^1.0.0",
@@ -26,8 +29,10 @@
     "apps-common": "workspace:*",
     "eslint": "^8.55.0",
     "eslint-plugin-svelte": "^2.35.1",
+    "postcss": "8.4.32",
     "svelte": "^4.2.8",
     "svelte-check": "^3.6.2",
+    "tailwindcss": "^3.3.6",
     "tslib": "^2.6.2",
     "typescript": "^5.3.2",
     "vite": "^5.0.5"

@@ -62,7 +62,7 @@ const useQuery = async <
 export { useQuery, useLiveMode }
 ```
 
-A minimal implementation for enabling visual editing on a single page is provided below for clarity. In practice live mode and overlays would likely be enabled at app or layout level to provide a visual editing experience across multiple pages.
+Note that for clarity we are enabling Overlays and Live Mode at the page level. In practice this would likely be done at the app or layout level to provide a visual editing experience across multiple pages.
 
 ```vue
 <template>

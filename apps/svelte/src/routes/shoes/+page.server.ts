@@ -1,10 +1,7 @@
-import { projectId } from 'apps-common/env'
-import { VERCEL_ENV } from '$env/static/private'
+import { shoesList, type ShoesListResult } from 'apps-common/queries'
+import { loadQuery } from '$lib/sanity.loader.server'
+import type { PageLoad } from './$types'
 
-/** @type {import('./$types').PageServerLoad} */
-export function load() {
-  return {
-    vercelEnv: VERCEL_ENV || 'development',
-    projectId,
-  }
+export const load: PageLoad = () => {
+  return loadQuery<ShoesListResult>(shoesList)
 }

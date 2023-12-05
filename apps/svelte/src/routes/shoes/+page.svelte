@@ -1,32 +1,131 @@
 <script lang="ts">
-  import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
-  import { createClient } from '@sanity/client'
-  import { createQueryStore } from '@sanity/svelte-loader'
-  import { shoesList } from 'apps-common/queries'
+  import { onMount } from 'svelte'
+  import type { PageData } from './$types'
 
-  const { projectId, dataset, workspace } = workspaces['svelte']
-  const studioUrl = `${baseUrl}/${workspace}`
+  import { enableOverlays } from '@sanity/overlays'
+  import { studioUrl } from 'apps-common/env'
+  import { useLiveMode } from '$lib/sanity.loader'
+  import { client, urlFor, urlForCrossDatasetReference } from '$lib/sanity'
+  import { formatCurrency } from 'apps-common/utils'
+  import { useEncodeDataAttribute } from '@sanity/svelte-loader'
 
-  const client = createClient({
-    projectId,
-    dataset,
-    useCdn: false,
-    apiVersion,
-  })
+  export let data: PageData
 
-  const { loadQuery, liveMode } = createQueryStore({
-    client,
-    allowStudioOrigin: studioUrl,
-  })
+  $: ({ data: products, loading, sourceMap } = $data)
 
-  const shoe = loadQuery(shoesList)
+  $: encodeDataAttribute = useEncodeDataAttribute(
+    products,
+    sourceMap,
+    studioUrl,
+  )
+
+  onMount(() =>
+    enableOverlays({
+      allowStudioOrigin: studioUrl,
+    }),
+  )
+
+  onMount(() =>
+    useLiveMode({
+      allowStudioOrigin: studioUrl,
+      client,
+    }),
+  )
 </script>
 
 <svelte:head>
   <title>Shoes</title>
 </svelte:head>
 
-<div>liveMode.connected {$liveMode.connected}</div>
-<pre>{JSON.stringify(shoe)}</pre>
-<div>loading: {$shoe.loading}</div>
-<div>Data: {JSON.stringify($shoe.data)}</div>
+<div class="min-h-screen bg-white">
+  <nav aria-label="Breadcrumb" class="pt-16 sm:pt-24">
+    <ol
+      class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
+    >
+      <li>
+        <div class="flex items-center">
+          <a
+            href="/shoes"
+            aria-current="page"
+            class="mr-2 text-sm font-medium text-gray-900"
+          >
+            Shoes
+          </a>
+        </div>
+      </li>
+    </ol>
+  </nav>
+
+  <div
+    class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+  >
+    <h1 class="sr-only">Products</h1>
+
+    {#if loading}
+      <div class="animate-pulse">Loading...</div>
+    {:else if products}
+      <div
+        class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
+      >
+        {#each products as product, i}
+          <a href={`/shoes/${product.slug.current}`} class="group relative">
+            <div
+              class="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
+              data-sanity={encodeDataAttribute([i, 'media', 'asset'])}
+            >
+              <img
+                class="h-full w-full object-cover object-center group-hover:opacity-75"
+                width="720"
+                height="720"
+                src={product.media?.asset
+                  ? urlFor(product.media).width(1440).height(1440).url()
+                  : `https://source.unsplash.com/featured/720x720?shoes&r=${i}`}
+                alt={product.media?.alt || ''}
+              />
+            </div>
+            <h2
+              class="mb-8 mt-4 text-sm text-gray-700"
+              style:textWrap={'balance'}
+              data-sanity={encodeDataAttribute([i, 'title'])}
+            >
+              {product.title}
+            </h2>
+            <p
+              class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
+            >
+              {product.price ? formatCurrency(product.price) : 'FREE'}
+            </p>
+            {#if product.brand}
+              <div
+                class="absolute bottom-0.5 right-0 flex items-center gap-x-2"
+              >
+                <img
+                  class="h-6 w-6 rounded-full bg-gray-50"
+                  width="24"
+                  height="24"
+                  src={product.brand?.logo?.asset
+                    ? urlForCrossDatasetReference(product.brand.logo)
+                        .width(48)
+                        .height(48)
+                        .url()
+                    : `https://source.unsplash.com/featured/48x48?${
+                        product.brand.name
+                          ? encodeURIComponent(product.brand.name)
+                          : `brand&r=${i}`
+                      }`}
+                  alt={product.brand?.logo?.alt || ''}
+                />
+                <span
+                  class="font-bold text-gray-600"
+                  data-sanity={encodeDataAttribute([i, 'brand', 'name'])}
+                >
+                  {product.brand.name}
+                </span>
+              </div>
+            {/if}
+          </a>
+        {/each}
+      </div>
+    {/if}
+  </div>
+</div>
