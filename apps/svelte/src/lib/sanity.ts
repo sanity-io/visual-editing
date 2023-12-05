@@ -1,12 +1,12 @@
 import { createClient } from '@sanity/client/stega'
-import { apiVersion, studioUrl as baseUrl, workspaces } from 'apps-common/env'
+import { apiVersion, workspaces } from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
 const { projectId, dataset } = workspaces['svelte']
 
 export const client = createClient({
   projectId,
   dataset,
-  useCdn: false,
+  useCdn: true,
   apiVersion,
   // stega: {
   //   enabled: true,

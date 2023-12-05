@@ -4,17 +4,16 @@
 
   import { enableOverlays } from '@sanity/overlays'
   import { studioUrl } from 'apps-common/env'
-  import { useLiveMode } from '$lib/sanity.loader.js'
-  import { client, urlFor, urlForCrossDatasetReference } from '$lib/sanity.js'
+  import { useLiveMode } from '$lib/sanity.loader'
+  import { client, urlFor, urlForCrossDatasetReference } from '$lib/sanity'
   import { formatCurrency } from 'apps-common/utils'
-  import { useEncodeDataAttribute, type MapStore } from '@sanity/svelte-loader'
-  import type { ShoesListResult } from 'apps-common/queries'
+  import { useEncodeDataAttribute } from '@sanity/svelte-loader'
 
   export let data: PageData
 
   $: ({ data: products, loading, sourceMap } = $data)
 
-  $: encodeDataAttribute = useEncodeDataAttribute<ShoesListResult>(
+  $: encodeDataAttribute = useEncodeDataAttribute(
     products,
     sourceMap,
     studioUrl,
