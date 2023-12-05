@@ -33,6 +33,13 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.1.1...svelte-loader-v1.2.0) (2023-12-05)
+
+
+### Features
+
+* **svelte-loader:** feature parity ([#482](https://github.com/sanity-io/visual-editing/issues/482)) ([88dcb8b](https://github.com/sanity-io/visual-editing/commit/88dcb8b4ea05a5d84fa90d522a92ce2ae2869221))
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.0.4...svelte-loader-v1.1.0) (2023-12-05)
 
 
