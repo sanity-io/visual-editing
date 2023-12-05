@@ -1,8 +1,12 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "bump-minor-pre-major": true,
+  "always-link-local": true,
   "plugins": ["node-workspace"],
   "packages": {
+    "packages/channels": {
+      "initial-version": "0.0.0"
+    },
     "packages/core-loader": {},
     "packages/groq-store": {
       "release-as": "5.3.0"
@@ -13,6 +17,9 @@
     "packages/preview-kit-compat": {},
     "packages/preview-url-secret": {},
     "packages/react-loader": {},
-    "packages/svelte-loader": {}
+    "packages/svelte-loader": {},
+    "packages/visual-editing-helpers": {
+      "initial-version": "0.0.0"
+    }
   }
 }
