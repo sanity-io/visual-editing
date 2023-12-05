@@ -24,6 +24,25 @@
   * dependencies
     * @sanity/core-loader bumped to 0.8.0-pink-lizard
 
+## [1.3.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.2.0...nuxt-loader-v1.3.0) (2023-12-05)
+
+
+### Features
+
+* add new `same-origin` option ([#471](https://github.com/sanity-io/visual-editing/issues/471)) ([09621ad](https://github.com/sanity-io/visual-editing/commit/09621ad85897d4c600cbf7a011f8ddcfed75841e))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency vue to ^3.3.10 ([#478](https://github.com/sanity-io/visual-editing/issues/478)) ([14c5cd2](https://github.com/sanity-io/visual-editing/commit/14c5cd23e5227df499772450371e37b15434575f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.0.3 to 1.1.0
+
 ## [1.2.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.1.1...nuxt-loader-v1.2.0) (2023-12-04)
 
 

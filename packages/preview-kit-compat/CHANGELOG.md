@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.0.2...preview-kit-compat-v1.1.0) (2023-12-05)
+
+
+### Features
+
+* add new `same-origin` option ([#471](https://github.com/sanity-io/visual-editing/issues/471)) ([09621ad](https://github.com/sanity-io/visual-editing/commit/09621ad85897d4c600cbf7a011f8ddcfed75841e))
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.0.1...preview-kit-compat-v1.0.2) (2023-11-29)
 
 
