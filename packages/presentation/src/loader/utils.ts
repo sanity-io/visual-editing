@@ -1,5 +1,4 @@
 import type { ClientPerspective, QueryParams } from '@sanity/client'
-import { useMemo } from 'react'
 
 /**
  * @internal
