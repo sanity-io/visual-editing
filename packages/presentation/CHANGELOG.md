@@ -12,6 +12,20 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.2.0
 
+## [1.1.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.0...presentation-v1.1.1) (2023-12-05)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency framer-motion to ^10.16.14 ([#486](https://github.com/sanity-io/visual-editing/issues/486)) ([7b5ef82](https://github.com/sanity-io/visual-editing/commit/7b5ef82bc6c5cabbcaf5dad7ee720217d3c02350))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.0.0-experimental.0 to 5.3.0
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.13...presentation-v1.1.0) (2023-12-05)
 
 

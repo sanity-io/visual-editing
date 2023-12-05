@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.0-experimental.0...groq-store-v5.3.0) (2023-12-05)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency mnemonist to v0.39.6 ([#487](https://github.com/sanity-io/visual-editing/issues/487)) ([c902be8](https://github.com/sanity-io/visual-editing/commit/c902be8a8c0dafa0b16ac8e159d54c9a5507f4e4))
+
 ## [5.0.0-experimental.0](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.2-experimental...groq-store-v5.0.0-experimental.0) (2023-12-05)
 
 
