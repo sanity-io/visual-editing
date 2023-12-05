@@ -12,6 +12,29 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.2.0
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.13...presentation-v1.1.0) (2023-12-05)
+
+
+### Features
+
+* add new `same-origin` option ([#471](https://github.com/sanity-io/visual-editing/issues/471)) ([09621ad](https://github.com/sanity-io/visual-editing/commit/09621ad85897d4c600cbf7a011f8ddcfed75841e))
+
+
+### Bug Fixes
+
+* allow relative preview URLs ([6ae264c](https://github.com/sanity-io/visual-editing/commit/6ae264c488f05e74a3a7180b7dc17c5a84905d3a))
+* allow relative preview URLs ([#481](https://github.com/sanity-io/visual-editing/issues/481)) ([06435cf](https://github.com/sanity-io/visual-editing/commit/06435cf6e65634db9df28f4833794ef245a9afe1))
+* **types:** add missing exports ([fd52637](https://github.com/sanity-io/visual-editing/commit/fd52637f1ca932965260a00132f31148533ce913))
+* use `^` semver range for `@sanity/preview-url-secret` ([f38c339](https://github.com/sanity-io/visual-editing/commit/f38c33970e1704470d14271911776120be19f448))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.0.2-experimental to 5.0.0-experimental.0
+    * @sanity/preview-url-secret bumped from ^1.2.1 to ^1.3.0
+
 ## [1.0.13](https://github.com/sanity-io/visual-editing/compare/presentation-v1.0.12...presentation-v1.0.13) (2023-12-04)
 
 
