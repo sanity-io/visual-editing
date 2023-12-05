@@ -1,5 +1,11 @@
 # Changelog
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/channels bumped to 0.1.0
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.2.1...preview-url-secret-v1.3.0) (2023-12-05)
 
 

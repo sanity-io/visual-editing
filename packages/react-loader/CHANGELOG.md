@@ -12,6 +12,15 @@
   * dependencies
     * @sanity/core-loader bumped to 0.7.4-pink-lizard
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.1.0 to 1.1.1
+  * devDependencies
+    * @sanity/channels bumped to 0.1.0
+    * @sanity/visual-editing-helpers bumped to 0.1.0
+
 ## [1.2.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.1.3...react-loader-v1.2.0) (2023-12-05)
 
 
