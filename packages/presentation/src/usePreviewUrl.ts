@@ -29,7 +29,10 @@ export function usePreviewUrl(
     if (typeof resolvePreviewUrl !== 'string' || !_previewSearchParam) {
       return null
     }
-    return new URL(_previewSearchParam, resolvePreviewUrl)
+    return new URL(
+      _previewSearchParam,
+      new URL(resolvePreviewUrl, location.origin),
+    )
   })
 
   const resolveUrlDeps = usePreviewUrlSecretDependencies(
