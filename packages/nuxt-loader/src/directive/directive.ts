@@ -1,6 +1,7 @@
 import { encodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 import { Directive } from 'vue'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function bindNodeDataToElement(node: any, el: HTMLElement) {
   if (!node) return
   el.textContent = node.value

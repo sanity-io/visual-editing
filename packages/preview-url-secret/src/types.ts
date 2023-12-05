@@ -32,6 +32,7 @@ export type SanityClientLike = {
   fetch<
     R,
     Q = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [key: string]: any
     },
   >(

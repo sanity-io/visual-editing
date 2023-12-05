@@ -146,6 +146,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
               `${location.pathname}${location.search}`,
             )};`,
           ),
+    // eslint-disable-next-line no-warning-comments
     // @TODO add search params support in core
     /*
         : `${href}${href.includes('?') ? `&` : `?`}${new URLSearchParams({

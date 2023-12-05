@@ -85,7 +85,7 @@
             </div>
             <h2
               class="mb-8 mt-4 text-sm text-gray-700"
-              style:textWrap={'balance'}
+              style:text-wrap="balance"
               data-sanity={encodeDataAttribute([i, 'title'])}
             >
               {product.title}
