@@ -33,6 +33,22 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.3.1...nuxt-loader-v1.4.0) (2023-12-05)
+
+
+### Features
+
+* **svelte-loader:** feature parity ([#482](https://github.com/sanity-io/visual-editing/issues/482)) ([88dcb8b](https://github.com/sanity-io/visual-editing/commit/88dcb8b4ea05a5d84fa90d522a92ce2ae2869221))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.1.1 to 1.1.2
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.2.0...nuxt-loader-v1.3.0) (2023-12-05)
 
 
