@@ -1,2 +1,5 @@
 export * from './useDocumentsInUse'
-export { useQueryParams } from '@sanity/visual-editing-helpers/hooks'
+export {
+  useQueryParams,
+  useRevalidate,
+} from '@sanity/visual-editing-helpers/hooks'
