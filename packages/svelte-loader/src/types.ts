@@ -5,8 +5,8 @@ import type {
 } from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
-  EnableLiveModeOptions,
-  MapStore,
+  type EnableLiveModeOptions,
+  type MapStore,
   type QueryStoreState,
 } from '@sanity/core-loader'
 
@@ -70,7 +70,7 @@ export interface UseQueryOptionsUndefinedInitial {
   initial?: undefined
 }
 
-type NonUndefinedGuard<T> = T extends undefined ? never : T
+export type NonUndefinedGuard<T> = T extends undefined ? never : T
 
 export interface UseQueryOptionsDefinedInitial<QueryResponseResult = unknown> {
   /**
