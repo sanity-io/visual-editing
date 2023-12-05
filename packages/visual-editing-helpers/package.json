@@ -21,6 +21,13 @@
       "require": "./dist/csm.cjs",
       "default": "./dist/csm.js"
     },
+    "./hooks": {
+      "types": "./dist/hooks.d.ts",
+      "source": "./src/hooks/index.ts",
+      "import": "./dist/hooks.js",
+      "require": "./dist/hooks.cjs",
+      "default": "./dist/hooks.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -31,6 +38,9 @@
     "*": {
       "csm": [
         "./dist/csm.d.ts"
+      ],
+      "hooks": [
+        "./dist/hooks.d.ts"
       ]
     }
   },
@@ -117,15 +127,21 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "sanity": "^3.20.2",
+    "@types/react": "^18.2.42",
+    "react": "^18.2.0",
     "typescript": "^5.3.2",
     "valibot": "0.22.0",
     "vitest": "^1.0.1"
   },
   "peerDependencies": {
     "@sanity/client": "^6.9.1",
+    "react": "^18.2.0",
     "valibot": "0.22.0"
   },
   "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
     "valibot": {
       "optional": true
     }
