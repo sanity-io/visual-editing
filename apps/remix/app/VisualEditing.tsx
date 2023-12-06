@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from '@remix-run/react'
 import { enableOverlays, type HistoryAdapterNavigate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef, useState } from 'react'
-import { useLiveMode } from '~/sanity.loader'
+import { useLiveMode } from '@sanity/react-loader'
 import { client } from '~/sanity'
 
 export default function VisualEditing() {

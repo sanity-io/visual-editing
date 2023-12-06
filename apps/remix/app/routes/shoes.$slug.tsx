@@ -11,7 +11,7 @@ import { formatCurrency } from 'apps-common/utils'
 import { urlFor, urlForCrossDatasetReference } from '~/sanity'
 import { json, type LoaderFunction } from '@remix-run/node'
 import { loadQuery } from '~/sanity.loader.server'
-import { useQuery } from '~/sanity.loader'
+import { useQuery } from '@sanity/react-loader'
 
 export const loader: LoaderFunction = async ({ params }) => {
   return json({

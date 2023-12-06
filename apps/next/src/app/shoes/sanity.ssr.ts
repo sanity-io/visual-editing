@@ -1,7 +1,7 @@
 // import { experimental_taintUniqueValue } from 'react'
 
 import { client } from './sanity.client'
-import { serverOnly } from './sanity.loader'
+import { setServerClient, loadQuery as _loadQuery } from '@sanity/react-loader'
 import { draftMode } from 'next/headers'
 
 const token = process.env.SANITY_API_READ_TOKEN
@@ -19,7 +19,6 @@ experimental_taintUniqueValue(
 )
 // */
 
-const { setServerClient } = serverOnly
 setServerClient(
   client.withConfig({
     token,
@@ -35,8 +34,8 @@ setServerClient(
 export const loadQuery = ((query, params = {}, options = {}) => {
   const perspective =
     options.perspective || draftMode().isEnabled ? 'previewDrafts' : 'published'
-  return serverOnly.loadQuery(query, params, {
+  return _loadQuery(query, params, {
     ...options,
     perspective,
   })
-}) satisfies typeof serverOnly.loadQuery
+}) satisfies typeof _loadQuery
