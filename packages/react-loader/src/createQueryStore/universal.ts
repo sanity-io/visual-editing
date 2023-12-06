@@ -4,8 +4,8 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import { defineUseLiveMode } from './defineUseLiveMode'
-import { defineUseQuery } from './defineUseQuery'
+import { defineUseLiveMode } from '../defineUseLiveMode'
+import { defineUseQuery } from '../defineUseQuery'
 import {
   NonUndefinedGuard,
   QueryResponseInitial,
@@ -13,7 +13,9 @@ import {
   UseLiveModeHook,
   UseQueryOptionsDefinedInitial,
   UseQueryOptionsUndefinedInitial,
-} from './types'
+} from '../types'
+
+export type * from '../types'
 
 export const createQueryStore = (
   options: CreateQueryStoreOptions,

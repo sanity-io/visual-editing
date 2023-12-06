@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useQuery } from './sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from './utils'
 import { use } from 'react'
-import { QueryResponseInitial } from '@sanity/react-loader/rsc'
+import { QueryResponseInitial } from '@sanity/react-loader'
 
 type Props = {
   initial: Promise<QueryResponseInitial<ShoesListResult>>
