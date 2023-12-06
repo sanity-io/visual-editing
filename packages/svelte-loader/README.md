@@ -12,7 +12,7 @@ npm install --save-dev svelte@^4
 
 ## Usage
 
-### Setup loaders for server and client side fetching
+### Setup Sanity loaders for server and client side fetching
 
 The loader file will run both on the client and server, it creates a query store and exports some useful methods we will use to query data and enable Live Mode.
 
@@ -56,6 +56,8 @@ export interface MyPage {
   // ...etc
 }
 ```
+
+### Create a Svelte page component with data loaders
 
 Now we can set up our Svelte route level `load` functions. On the server, we use `loadQuery` to perform initial data fetching.
 
