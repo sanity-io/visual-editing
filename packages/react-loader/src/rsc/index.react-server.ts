@@ -91,3 +91,13 @@ export const useEncodeDataAttribute = (): void => {
     'The `useEncodeDataAttribute` hook can only be called from a client component.',
   )
 }
+
+/**
+ * Shortcut setup for the main SSR use-case.
+ * @public
+ */
+export const { loadQuery, setServerClient, useLiveMode, useQuery } =
+  createQueryStore({
+    client: false,
+    ssr: true,
+  })
