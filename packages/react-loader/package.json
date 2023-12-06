@@ -20,6 +20,12 @@
       "source": "./src/index.ts",
       "react-server": "./dist/rsc/index.react-server.js",
       "require": "./dist/index.cjs",
+      "browser": {
+        "types": "./dist/index.browser.d.ts",
+        "source": "./src/index.browser.ts",
+        "require": "./dist/index.browser.cjs",
+        "import": "./dist/index.browser.js"
+      },
       "node": {
         "module": "./dist/index.js",
         "import": "./dist/index.cjs.js"

@@ -1,2 +1,2 @@
-export * from './createQueryStore'
+export * from './createQueryStore/universal'
 export * from './useEncodeDataAttribute'

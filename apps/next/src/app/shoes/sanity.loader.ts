@@ -3,7 +3,7 @@ import {
   UseQueryOptions,
   createQueryStore,
   useEncodeDataAttribute,
-} from '@sanity/react-loader/rsc'
+} from '@sanity/react-loader'
 import { workspaces, studioUrl as baseUrl } from 'apps-common/env'
 
 const studioUrl = `${baseUrl}/${workspaces['next-app-router']}`
