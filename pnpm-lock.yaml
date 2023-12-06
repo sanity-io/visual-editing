@@ -575,7 +575,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
@@ -624,7 +624,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
@@ -654,7 +654,7 @@ importers:
   packages/nuxt-loader:
     dependencies:
       '@sanity/core-loader':
-        specifier: 1.1.1
+        specifier: 1.1.2
         version: link:../core-loader
     devDependencies:
       '@nanostores/vue':
@@ -670,7 +670,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
@@ -737,7 +737,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       '@types/react':
         specifier: ^18.2.42
@@ -788,7 +788,7 @@ importers:
   packages/presentation:
     dependencies:
       '@sanity/groq-store':
-        specifier: 5.3.1
+        specifier: 5.3.2
         version: link:../groq-store
       '@sanity/icons':
         specifier: ^2.7.0
@@ -828,7 +828,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       happy-dom:
         specifier: ^12.10.3
@@ -864,7 +864,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       '@types/react':
         specifier: ^18.2.42
@@ -946,7 +946,7 @@ importers:
   packages/react-loader:
     dependencies:
       '@sanity/core-loader':
-        specifier: 1.1.1
+        specifier: 1.1.2
         version: link:../core-loader
     devDependencies:
       '@sanity/channels':
@@ -959,7 +959,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       '@types/react':
         specifier: ^18.2.42
@@ -995,7 +995,7 @@ importers:
   packages/svelte-loader:
     dependencies:
       '@sanity/core-loader':
-        specifier: 1.1.1
+        specifier: 1.1.2
         version: link:../core-loader
     devDependencies:
       '@sanity/channels':
@@ -1008,7 +1008,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(typescript@5.3.2)
       '@sanity/visual-editing-helpers':
-        specifier: 0.1.0
+        specifier: 0.1.1
         version: link:../visual-editing-helpers
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.2
@@ -4372,6 +4372,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -12822,6 +12823,10 @@ packages:
   /nanostores@0.9.5:
     resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:

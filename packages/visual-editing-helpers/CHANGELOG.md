@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.1.0...visual-editing-helpers-v0.1.1) (2023-12-06)
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to ^3.21.0 ([#497](https://github.com/sanity-io/visual-editing/issues/497)) ([a8188d8](https://github.com/sanity-io/visual-editing/commit/a8188d84ef23b491b8f9edfd298e1d5d1acac219))
+
 ## 0.1.0 (2023-12-05)
 
 

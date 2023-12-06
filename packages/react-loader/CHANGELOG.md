@@ -21,6 +21,29 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.3.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.2.1...react-loader-v1.3.0) (2023-12-06)
+
+
+### Features
+
+* add top-level `setServerClient`, `loadQuery`, `useQuery` & `useLiveMode` exports ([79fd84e](https://github.com/sanity-io/visual-editing/commit/79fd84e6908d8b6ae1515896c789d85faa0b5d34))
+* add top-level shortcuts for server-only data fetching ([#505](https://github.com/sanity-io/visual-editing/issues/505)) ([0345040](https://github.com/sanity-io/visual-editing/commit/034504066b71dcfa5344846b05591cdda7518047))
+
+
+### Bug Fixes
+
+* add RSC support to main export ([#504](https://github.com/sanity-io/visual-editing/issues/504)) ([f9fd0e7](https://github.com/sanity-io/visual-editing/commit/f9fd0e7a1a10e05ca8b2bdb152e376818ad2fddf))
+* **RSC:** also support server components on the main route ([73d5296](https://github.com/sanity-io/visual-editing/commit/73d5296962c7a7ddb8ed145ef5b414f65dd2d40f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.1.1 to 1.1.2
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
+
 ## [1.2.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.1.3...react-loader-v1.2.0) (2023-12-05)
 
 
