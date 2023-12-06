@@ -3,6 +3,11 @@ import type {
   ContentSourceMap,
   QueryParams,
 } from '@sanity/client'
+import type {
+  ResolveStudioUrl,
+  StudioPathLike,
+  StudioUrl,
+} from '@sanity/client/csm'
 import {
   createQueryStore as createCoreQueryStore,
   EnableLiveModeOptions,
@@ -11,6 +16,10 @@ import {
 
 export type * from '@sanity/core-loader'
 
+export type WithEncodeDataAttribute = {
+  encodeDataAttribute(path: StudioPathLike): string | undefined
+}
+
 export type UseQueryHook = <
   QueryResponseResult = unknown,
   QueryResponseError = unknown,
@@ -18,7 +27,8 @@ export type UseQueryHook = <
   query: string,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
-) => QueryStoreState<QueryResponseResult, QueryResponseError>
+) => QueryStoreState<QueryResponseResult, QueryResponseError> &
+  WithEncodeDataAttribute
 
 export interface QueryResponseInitial<QueryResponseResult> {
   data: QueryResponseResult
@@ -90,7 +100,14 @@ export interface UseQueryOptionsDefinedInitial<QueryResponseResult = unknown> {
    */
   initial: NonUndefinedGuard<QueryResponseInitial<QueryResponseResult>>
 }
-export type UseLiveModeHook = (options: EnableLiveModeOptions) => void
+export type UseLiveModeHook = (
+  options: EnableLiveModeOptions & {
+    /**
+     * Set this option to activate `encodeDataAttribute` on `useQuery` hooks when stega isn't used.
+     */
+    studioUrl?: StudioUrl | ResolveStudioUrl | undefined
+  },
+) => void
 
 export interface QueryStore<
   LoadQueryOptions = { perspective?: ClientPerspective },
@@ -106,7 +123,8 @@ export interface QueryStore<
       query: string,
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
-    ): QueryStoreState<QueryResponseResult, QueryResponseError>
+    ): QueryStoreState<QueryResponseResult, QueryResponseError> &
+      WithEncodeDataAttribute
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
       query: string,
       params?: QueryParams,
@@ -114,12 +132,12 @@ export interface QueryStore<
     ): Omit<
       QueryStoreState<QueryResponseResult, QueryResponseError>,
       'data'
-    > & { data: QueryResponseResult }
+    > & { data: QueryResponseResult } & WithEncodeDataAttribute
     // <QueryResponseResult = unknown, QueryResponseError = unknown>(
     //   query: string,
     //   params?: QueryParams,
     //   options?: UseQueryOptions<QueryResponseResult>,
-    // ): QueryStoreState<QueryResponseResult, QueryResponseError>
+    // ): QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute
   }
   useLiveMode: UseLiveModeHook
 }

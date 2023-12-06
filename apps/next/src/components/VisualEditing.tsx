@@ -2,8 +2,8 @@ import { HistoryAdapterNavigate, enableOverlays } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import { useLiveMode } from './sanity.loader'
 import { client } from './sanity.client'
+import { useLiveMode } from '@sanity/react-loader'
 
 // Always enable stega in Live Mode
 const stegaClient = client.withConfig({

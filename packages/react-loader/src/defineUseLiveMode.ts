@@ -1,12 +1,23 @@
+import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
+import type { SanityStegaClient } from '@sanity/client/stega'
 import type { QueryStore } from '@sanity/core-loader'
 import { useEffect } from 'react'
 
-import { UseLiveModeHook } from './types'
+import type { UseLiveModeHook } from './types'
 
 export function defineUseLiveMode({
   enableLiveMode,
-}: Pick<QueryStore, 'enableLiveMode'>): UseLiveModeHook {
-  return ({ allowStudioOrigin, client, onConnect, onDisconnect }) => {
+  setStudioUrl,
+}: Pick<QueryStore, 'enableLiveMode'> & {
+  setStudioUrl: (studioUrl: StudioUrl | ResolveStudioUrl | undefined) => void
+}): UseLiveModeHook {
+  return ({
+    allowStudioOrigin,
+    client,
+    onConnect,
+    onDisconnect,
+    studioUrl,
+  }) => {
     useEffect(() => {
       const disableLiveMode = enableLiveMode({
         allowStudioOrigin,
@@ -16,5 +27,12 @@ export function defineUseLiveMode({
       })
       return () => disableLiveMode()
     }, [allowStudioOrigin, client, onConnect, onDisconnect])
+    useEffect(() => {
+      setStudioUrl(
+        studioUrl ?? typeof client === 'object'
+          ? (client as SanityStegaClient)?.config().stega?.studioUrl
+          : undefined,
+      )
+    }, [studioUrl, client])
   }
 }

@@ -1,19 +1,22 @@
 import type { QueryParams } from '@sanity/client'
 import type { QueryStore, QueryStoreState } from '@sanity/core-loader'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 
-import type { UseQueryOptions } from './types'
+import { defineStudioUrlStore } from './defineStudioUrlStore'
+import type { UseQueryOptions, WithEncodeDataAttribute } from './types'
+import { useEncodeDataAttribute } from './useEncodeDataAttribute'
 
 export function defineUseQuery({
   createFetcherStore,
-}: Pick<QueryStore, 'createFetcherStore'>): <
-  QueryResponseResult,
-  QueryResponseError,
->(
+  studioUrlStore,
+}: Pick<QueryStore, 'createFetcherStore'> & {
+  studioUrlStore: ReturnType<typeof defineStudioUrlStore>
+}): <QueryResponseResult, QueryResponseError>(
   query: string,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
-) => QueryStoreState<QueryResponseResult, QueryResponseError> {
+) => QueryStoreState<QueryResponseResult, QueryResponseError> &
+  WithEncodeDataAttribute {
   const DEFAULT_PARAMS = {}
   return <QueryResponseResult, QueryResponseError>(
     query: string,
@@ -49,7 +52,21 @@ export function defineUseQuery({
 
       return () => unlisten()
     }, [$params, initial, query])
-
-    return snapshot
+    const studioUrl = useSyncExternalStore(
+      studioUrlStore.subscribe,
+      studioUrlStore.getSnapshot,
+      studioUrlStore.getServerSnapshot,
+    )
+    // eslint-disable-next-line no-console
+    console.log({ studioUrl })
+    const encodeDataAttribute = useEncodeDataAttribute(
+      snapshot.data,
+      snapshot.sourceMap,
+      studioUrl,
+    )
+    return useMemo(
+      () => ({ ...snapshot, encodeDataAttribute }),
+      [snapshot, encodeDataAttribute],
+    )
   }
 }

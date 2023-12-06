@@ -1,17 +1,17 @@
 import { PortableText } from '@portabletext/react'
+import { json, type LoaderFunction } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
-import type { ShoesListResult } from 'apps-common/queries'
+import { useQuery } from '@sanity/react-loader'
 import {
-  type ShoeParams,
-  type ShoeResult,
   shoe,
   shoesList,
+  type ShoeParams,
+  type ShoeResult,
+  type ShoesListResult,
 } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import { urlFor, urlForCrossDatasetReference } from '~/sanity'
-import { json, type LoaderFunction } from '@remix-run/node'
 import { loadQuery } from '~/sanity.loader.server'
-import { useQuery } from '@sanity/react-loader'
 
 export const loader: LoaderFunction = async ({ params }) => {
   return json({

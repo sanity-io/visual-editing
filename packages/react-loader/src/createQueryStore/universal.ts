@@ -4,6 +4,7 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
+import { defineStudioUrlStore } from '../defineStudioUrlStore'
 import { defineUseLiveMode } from '../defineUseLiveMode'
 import { defineUseQuery } from '../defineUseQuery'
 import {
@@ -27,8 +28,12 @@ export const createQueryStore = (
     unstable__cache,
     unstable__serverClient,
   } = createCoreQueryStore({ tag: 'react-loader', ...options })
-  const useQuery = defineUseQuery({ createFetcherStore })
-  const useLiveMode: UseLiveModeHook = defineUseLiveMode({ enableLiveMode })
+  const studioUrlStore = defineStudioUrlStore(options.client)
+  const useQuery = defineUseQuery({ createFetcherStore, studioUrlStore })
+  const useLiveMode: UseLiveModeHook = defineUseLiveMode({
+    enableLiveMode,
+    setStudioUrl: studioUrlStore.setStudioUrl,
+  })
 
   const loadQuery = async <QueryResponseResult>(
     query: string,
