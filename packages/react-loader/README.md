@@ -32,6 +32,21 @@ export const {
 } = createQueryStore({ client: false, ssr: true })
 ```
 
+You can also use the top-level shortcuts for the same effect:
+
+```ts
+// ./src/app/sanity.loader.ts
+
+export {
+  // Used only server side
+  loadQuery,
+  setServerClient,
+  // Used only client side
+  useQuery,
+  useLiveMode,
+} from '@sanity/react-loader'
+```
+
 Later in the server side of the app, you setup the client. The `.server.ts` suffix on Remix ensures that this file is only loaded on the server, and it avoids adding `@sanity/client` to the browser bundle in production.
 
 ```ts

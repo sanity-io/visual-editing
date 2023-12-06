@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useQuery } from '../sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from '../utils'
-import { QueryResponseInitial } from '@sanity/react-loader/rsc'
+import { QueryResponseInitial } from '@sanity/react-loader'
 import { use } from 'react'
 
 type Props = {
