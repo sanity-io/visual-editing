@@ -4,6 +4,11 @@ import VisualEditing from './VisualEditing'
 
 import '../../tailwind.css'
 import { draftMode } from 'next/headers'
+import { Metadata } from 'next'
+
+export const metadata = {
+  referrer: 'no-referrer-when-downgrade',
+} satisfies Metadata
 
 export default function RootLayout({
   children,
