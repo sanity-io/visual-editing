@@ -147,8 +147,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/channels
       '@sanity/client':
-        specifier: ^6.9.1
-        version: 6.9.1
+        specifier: ^6.9.3
+        version: 6.9.3
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -222,8 +222,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/channels
       '@sanity/client':
-        specifier: ^6.9.1
-        version: 6.9.1
+        specifier: ^6.9.3
+        version: 6.9.3
       '@sanity/nuxt-loader':
         specifier: workspace:*
         version: link:../../packages/nuxt-loader
@@ -471,8 +471,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       '@sanity/client':
-        specifier: ^6.9.1
-        version: 6.9.1
+        specifier: ^6.9.3
+        version: 6.9.3
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -570,7 +570,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/pkg-utils':
         specifier: ^3.3.3
         version: 3.3.3(typescript@5.3.3)
@@ -619,7 +619,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/pkg-utils':
         specifier: ^3.3.3
         version: 3.3.3(typescript@5.3.3)
@@ -665,7 +665,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/pkg-utils':
         specifier: ^3.3.3
         version: 3.3.3(typescript@5.3.3)
@@ -710,7 +710,7 @@ importers:
         version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/color':
         specifier: 2.2.5
         version: 2.2.5
@@ -838,7 +838,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/pkg-utils':
         specifier: ^3.3.3
         version: 3.3.3(typescript@5.3.3)
@@ -874,7 +874,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/pkg-utils':
         specifier: ^3.3.3
         version: 3.3.3(typescript@5.3.3)
@@ -923,7 +923,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/icons':
         specifier: ^2.7.0
         version: 2.7.0(react@18.2.0)
@@ -969,7 +969,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/pkg-utils':
         specifier: ^3.3.3
         version: 3.3.3(typescript@5.3.3)
@@ -1018,7 +1018,7 @@ importers:
         version: link:../channels
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/pkg-utils':
         specifier: ^3.3.3
         version: 3.3.3(typescript@5.3.3)
@@ -1054,7 +1054,7 @@ importers:
     devDependencies:
       '@sanity/client':
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.3
       '@sanity/util':
         specifier: ^3.21.0
         version: 3.21.0
@@ -5160,8 +5160,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/client@6.9.1:
-    resolution: {integrity: sha512-k104Mp3n7uhmY/6DZ5oVxeX1pL3ixv3htodsqW3f2aEQnBXBcRYFQ9OL12p2jpSeOSicOve2joX2sBx0fJBdww==}
+  /@sanity/client@6.9.3:
+    resolution: {integrity: sha512-ba8fHqsncuuPNCGs5qTynpQqWdyeQzXmPQ6UzaNCn4/JNKmoucrdSNfCijE+3CsA23OJpZe51RqkF9JRvOpkdw==}
     engines: {node: '>=14.18'}
     dependencies:
       '@sanity/eventsource': 5.0.1
@@ -5245,7 +5245,7 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@sanity/client': 6.9.1
+      '@sanity/client': 6.9.3
       '@sanity/import': 3.21.0
       get-it: 8.4.4
       meow: 9.0.0
@@ -5404,7 +5404,7 @@ packages:
   /@sanity/types@3.21.0:
     resolution: {integrity: sha512-Aafv7gnOQ28kiECutHKFNkui6liElSC4aGZHTqT4GOablU9yhVvUpP0Ipgz0aQpKyn2L/aod/XnvdtmBSpzfFQ==}
     dependencies:
-      '@sanity/client': 6.9.1
+      '@sanity/client': 6.9.3
       '@types/react': 18.2.42
     transitivePeerDependencies:
       - supports-color
@@ -15734,7 +15734,7 @@ packages:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.21.0
       '@sanity/cli': 3.21.0
-      '@sanity/client': 6.9.1
+      '@sanity/client': 6.9.3
       '@sanity/color': 2.2.5
       '@sanity/diff': 3.21.0
       '@sanity/diff-match-patch': 3.1.1
