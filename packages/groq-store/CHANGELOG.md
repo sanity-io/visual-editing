@@ -13,6 +13,20 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
 
+## [5.3.3](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.3.2...groq-store-v5.3.3) (2023-12-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.9.3 ([#517](https://github.com/sanity-io/visual-editing/issues/517)) ([39528c8](https://github.com/sanity-io/visual-editing/commit/39528c8dc3f4898ad596c686513d9c13df9368e1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.1 to 0.1.2
+
 ## [5.3.0](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.0.0-experimental.0...groq-store-v5.3.0) (2023-12-05)
 
 
