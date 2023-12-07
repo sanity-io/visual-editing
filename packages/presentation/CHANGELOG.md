@@ -20,6 +20,25 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
 
+## [1.1.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.3...presentation-v1.1.4) (2023-12-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.9.3 ([#517](https://github.com/sanity-io/visual-editing/issues/517)) ([39528c8](https://github.com/sanity-io/visual-editing/commit/39528c8dc3f4898ad596c686513d9c13df9368e1))
+* **deps:** Update dependency framer-motion to ^10.16.15 ([#514](https://github.com/sanity-io/visual-editing/issues/514)) ([b95db5e](https://github.com/sanity-io/visual-editing/commit/b95db5e45bfbc0647c5e8db527d8c3247bc4b824))
+* use `document.referrer` ([#518](https://github.com/sanity-io/visual-editing/issues/518)) ([55c3ec1](https://github.com/sanity-io/visual-editing/commit/55c3ec195019051d2670437cf92339b1e5ef6feb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.3.2 to 5.3.3
+    * @sanity/preview-url-secret bumped from ^1.3.1 to ^1.3.2
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.1 to 0.1.2
+
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.1...presentation-v1.1.2) (2023-12-05)
 
 

@@ -21,6 +21,22 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.3.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.3.0...react-loader-v1.3.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.9.3 ([#517](https://github.com/sanity-io/visual-editing/issues/517)) ([39528c8](https://github.com/sanity-io/visual-editing/commit/39528c8dc3f4898ad596c686513d9c13df9368e1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.1.2 to 1.1.3
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.1 to 0.1.2
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.2.1...react-loader-v1.3.0) (2023-12-06)
 
 
