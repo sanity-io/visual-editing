@@ -705,9 +705,18 @@ importers:
 
   packages/overlays:
     dependencies:
+      '@floating-ui/react-dom':
+        specifier: 2.0.0
+        version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
       '@sanity/client':
         specifier: ^6.9.1
         version: 6.9.1
+      '@sanity/color':
+        specifier: 2.2.5
+        version: 2.2.5
+      '@sanity/icons':
+        specifier: 2.7.0
+        version: 2.7.0(react@18.2.0)
       '@sanity/ui':
         specifier: ^1.9.3
         version: 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.1)
@@ -720,6 +729,12 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-is:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-refractor:
+        specifier: 2.1.7
+        version: 2.1.7(react@18.2.0)
       scroll-into-view-if-needed:
         specifier: ^3.1.0
         version: 3.1.0
@@ -4372,6 +4387,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -12822,6 +12838,10 @@ packages:
   /nanostores@0.9.5:
     resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
