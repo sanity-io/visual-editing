@@ -4,10 +4,9 @@ import { shoesList, type ShoesListResult } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useQuery } from './sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from './utils'
 import { use } from 'react'
-import { QueryResponseInitial } from '@sanity/react-loader'
+import { QueryResponseInitial, useQuery } from '@sanity/react-loader'
 
 type Props = {
   initial: Promise<QueryResponseInitial<ShoesListResult>>

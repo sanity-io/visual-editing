@@ -8,11 +8,11 @@ import type {
 } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useQuery } from '../../../components/sanity.loader'
 import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
 import { ClientPerspective, ContentSourceMap } from '@sanity/client'
 import type { SharedProps } from '../../_app'
 import { loadQuery } from '@/components/sanity.ssr'
+import { useQuery } from '@sanity/react-loader'
 
 interface Props extends SharedProps {
   params: { slug: string }

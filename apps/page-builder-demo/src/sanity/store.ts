@@ -21,6 +21,7 @@ export function useQuery<T>(query: string, params?: QueryParams) {
     error,
     loading,
     sourceMap,
+    encodeDataAttribute,
   } = _useQuery<T>(query, params)
 
   const data = useMemo(
@@ -34,6 +35,7 @@ export function useQuery<T>(query: string, params?: QueryParams) {
     error,
     loading,
     sourceMap,
+    encodeDataAttribute,
   }
 }
 

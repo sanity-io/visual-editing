@@ -16,10 +16,15 @@ export type EncodeDataAttributeCallback = (
 export function useEncodeDataAttribute<QueryResponseResult = unknown>(
   result: QueryResponseResult,
   sourceMap: ContentSourceMap | undefined,
-  studioUrl: StudioUrl | ResolveStudioUrl,
+  studioUrl: StudioUrl | ResolveStudioUrl | undefined,
 ): EncodeDataAttributeCallback {
   return useCallback(
-    (path) => encodeDataAttribute(result, sourceMap, studioUrl, path),
+    (path) => {
+      if (!studioUrl) {
+        return undefined
+      }
+      return encodeDataAttribute(result, sourceMap, studioUrl, path)
+    },
     [result, sourceMap, studioUrl],
   )
 }
