@@ -20,6 +20,22 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
 
+## [1.1.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.4...presentation-v1.1.5) (2023-12-08)
+
+
+### Bug Fixes
+
+* automatically generate a new url preview secret on expiry ([b1d74b1](https://github.com/sanity-io/visual-editing/commit/b1d74b18a9accda1b2366a6ba21762ff8f2fd860))
+* **deps:** Update dependency framer-motion to ^10.16.16 ([#526](https://github.com/sanity-io/visual-editing/issues/526)) ([8d3a7c2](https://github.com/sanity-io/visual-editing/commit/8d3a7c2e70b807f338433c5a369826c261e67c53))
+* only use `document.referrer` as fallback if its origin matches the preview origin ([d73d64f](https://github.com/sanity-io/visual-editing/commit/d73d64f5cc9d6a34f17b53e7f54fbab47b8a1983))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.3.2 to ^1.3.3
+
 ## [1.1.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.3...presentation-v1.1.4) (2023-12-07)
 
 
