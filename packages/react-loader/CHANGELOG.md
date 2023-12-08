@@ -21,6 +21,22 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.3.1...react-loader-v1.4.0) (2023-12-08)
+
+
+### Features
+
+* add `encodeDataAttribute` to `useQuery` ([#506](https://github.com/sanity-io/visual-editing/issues/506)) ([3d85cb3](https://github.com/sanity-io/visual-editing/commit/3d85cb3ab518e90d181fd35aa2c584cff070fda1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.1.3 to 1.1.4
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
+
 ## [1.3.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.3.0...react-loader-v1.3.1) (2023-12-07)
 
 

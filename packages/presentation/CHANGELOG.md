@@ -20,6 +20,14 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.3.3 to 5.3.4
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
+
 ## [1.1.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.4...presentation-v1.1.5) (2023-12-08)
 
 
