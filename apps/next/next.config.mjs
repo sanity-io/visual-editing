@@ -26,6 +26,20 @@ const nextConfig = {
       { hostname: 'source.unsplash.com' },
     ],
   },
+
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: `frame-ancestors 'self' https://*.sanity.build http://localhost:3333`,
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default withBundleAnalyzer({
