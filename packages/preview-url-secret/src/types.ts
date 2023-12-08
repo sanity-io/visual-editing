@@ -121,9 +121,12 @@ export interface PreviewUrlResolverContext<SanityClientType> {
   previewUrlSecret: string
   /**
    * If the user navigated to a preview path already, this will be the path
-   *
    */
   previewSearchParam: string | null
+  /**
+   * If there's a referrer, this will be the URL and might be used as fallback if previewSearchParam is not set
+   */
+  referrer: URL | null
 }
 
 /**

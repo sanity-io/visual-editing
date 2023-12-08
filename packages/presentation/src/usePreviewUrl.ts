@@ -25,14 +25,19 @@ export function usePreviewUrl(
     }
     return previewUrl
   }, [previewUrl])
+  const documentReferrer = useDocumentReferrer()
   const [previewSearchParam] = useState(() => {
-    if (typeof resolvePreviewUrl !== 'string' || !_previewSearchParam) {
+    if (typeof resolvePreviewUrl !== 'string') {
       return null
     }
-    return new URL(
-      _previewSearchParam,
-      new URL(resolvePreviewUrl, location.origin),
-    )
+    const previewOrigin = new URL(resolvePreviewUrl, location.origin)
+    if (_previewSearchParam) {
+      return new URL(_previewSearchParam, previewOrigin)
+    }
+    if (documentReferrer?.origin === previewOrigin.origin) {
+      return documentReferrer
+    }
+    return null
   })
 
   const resolveUrlDeps = usePreviewUrlSecretDependencies(
@@ -52,6 +57,7 @@ export function usePreviewUrl(
             client,
             previewUrlSecret,
             previewSearchParam: _previewSearchParam,
+            referrer: documentReferrer,
           })
         }, resolveUrlDeps)
       : previewSearchParam || resolvePreviewUrl
@@ -79,3 +85,14 @@ function usePreviewUrlSecretDependencies(
 
 // https://github.com/pmndrs/suspend-react?tab=readme-ov-file#making-cache-keys-unique
 const resolveUUID = Symbol()
+
+function useDocumentReferrer() {
+  return useMemo(() => {
+    if (typeof document === 'undefined') return null
+    try {
+      return new URL(document.referrer)
+    } catch {
+      return null
+    }
+  }, [])
+}

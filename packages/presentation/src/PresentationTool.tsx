@@ -86,8 +86,7 @@ export default function PresentationTool(props: {
   const initialPreviewUrl = usePreviewUrl(
     _previewUrl || '/',
     name,
-    routerSearchParams.preview ||
-      (typeof document === 'undefined' ? null : document.referrer),
+    routerSearchParams.preview || null,
   )
 
   const [devMode] = useState(() => {

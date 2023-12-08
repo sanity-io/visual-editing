@@ -28,7 +28,10 @@ export function definePreviewUrl<SanityClientType>(
 
   return async (context): Promise<string> => {
     const previewUrl = new URL(
-      context.previewSearchParam || preview,
+      context.previewSearchParam ||
+        (context.referrer && context.referrer.origin === productionUrl.origin
+          ? context.referrer
+          : preview),
       productionUrl,
     )
     if (enableDraftModeUrl) {
