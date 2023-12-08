@@ -67,9 +67,9 @@ export interface PreviewUrlResolverOptions {
    */
   origin?: string
   /**
-   * The default preview pathname, used when the path to use is not yet known.
+   * The default preview relative URL (pathname and search), used when the URL to use is not yet known.
    * Otherwise the path that were last used will be restored, or the path used when navigating to the tool when using the `locate` API.
-   * @example '/en/preview'
+   * @example '/en/preview?q=shoes'
    * @defaultValue '/'
    */
   preview?: string
@@ -122,11 +122,11 @@ export interface PreviewUrlResolverContext<SanityClientType> {
   /**
    * If the user navigated to a preview path already, this will be the path
    */
-  previewSearchParam: string | null
+  previewSearchParam?: string | null
   /**
    * If there's a referrer, this will be the URL and might be used as fallback if previewSearchParam is not set
    */
-  referrer: URL | null
+  referrer?: string | null
 }
 
 /**

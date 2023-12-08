@@ -19,6 +19,8 @@ import { getIntentState } from './getIntentState'
 import { router } from './router'
 import { PresentationPluginOptions } from './types'
 
+const PresentationTool = lazy(() => import('./PresentationTool'))
+
 export const presentationTool = definePlugin<PresentationPluginOptions>(
   (options) => {
     const toolName = options.name || DEFAULT_TOOL_NAME
@@ -67,7 +69,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
           icon: options.icon || DEFAULT_TOOL_ICON,
           name: toolName,
           title: options.title,
-          component: lazy(() => import('./PresentationTool')),
+          component: PresentationTool,
           options,
           canHandleIntent(intent, params) {
             if (intent === 'edit') {

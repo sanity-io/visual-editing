@@ -8,3 +8,6 @@ export const EDIT_INTENT_MODE = 'presentation'
 
 // How long we wait until an iframe is loaded until we consider it to be slow and possibly failed
 export const MAX_TIME_TO_OVERLAYS_CONNECTION = 3000
+
+// The API version to use when using `@sanity/client`
+export const API_VERSION = '2023-10-16'

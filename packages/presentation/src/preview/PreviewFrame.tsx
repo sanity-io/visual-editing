@@ -153,12 +153,8 @@ export const PreviewFrame = forwardRef<
     previewKitConnection === 'disconnected'
 
   const previewLocationOrigin = useMemo(() => {
-    const { origin: previewOrigin } = new URL(
-      params.preview || '/',
-      targetOrigin,
-    )
-    return previewOrigin === location.origin ? '' : previewOrigin
-  }, [params.preview, targetOrigin])
+    return targetOrigin === location.origin ? '' : targetOrigin
+  }, [targetOrigin])
 
   const handleRefresh = useCallback(() => {
     if (typeof ref === 'function' || !ref?.current) {

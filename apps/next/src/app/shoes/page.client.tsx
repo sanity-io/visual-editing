@@ -21,7 +21,6 @@ export default function ShoesPageClient(props: Props) {
     loading,
     encodeDataAttribute,
   } = useQuery<ShoesListResult>(shoesList, {}, { initial })
-  console.log({ initial, products, error, loading })
 
   if (error) {
     throw error

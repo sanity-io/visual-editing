@@ -25,7 +25,6 @@ export default function ShoePage(props: Props) {
     loading,
     encodeDataAttribute,
   } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
-  console.log({ params, product, error, loading, initial })
 
   if (error) {
     throw error
