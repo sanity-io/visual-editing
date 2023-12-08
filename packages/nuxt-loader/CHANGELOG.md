@@ -33,6 +33,13 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.4.2](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.4.1...nuxt-loader-v1.4.2) (2023-12-08)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency vue to ^3.3.11 ([#522](https://github.com/sanity-io/visual-editing/issues/522)) ([0b6f473](https://github.com/sanity-io/visual-editing/commit/0b6f473adb1a68f50f068b6902df7ee2a1050293))
+
 ## [1.4.1](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.4.0...nuxt-loader-v1.4.1) (2023-12-07)
 
 
