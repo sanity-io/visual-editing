@@ -6,6 +6,14 @@
   * devDependencies
     * @sanity/channels bumped to 0.1.0
 
+## [1.3.3](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.3.2...preview-url-secret-v1.3.3) (2023-12-08)
+
+
+### Bug Fixes
+
+* automatically generate a new url preview secret on expiry ([b1d74b1](https://github.com/sanity-io/visual-editing/commit/b1d74b18a9accda1b2366a6ba21762ff8f2fd860))
+* only use `document.referrer` as fallback if its origin matches the preview origin ([d73d64f](https://github.com/sanity-io/visual-editing/commit/d73d64f5cc9d6a34f17b53e7f54fbab47b8a1983))
+
 ## [1.3.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.3.1...preview-url-secret-v1.3.2) (2023-12-07)
 
 
