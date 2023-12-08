@@ -57,8 +57,6 @@ export function defineUseQuery({
       studioUrlStore.getSnapshot,
       studioUrlStore.getServerSnapshot,
     )
-    // eslint-disable-next-line no-console
-    console.log({ studioUrl })
     const encodeDataAttribute = useEncodeDataAttribute(
       snapshot.data,
       snapshot.sourceMap,
