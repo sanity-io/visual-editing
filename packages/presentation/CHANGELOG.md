@@ -20,6 +20,20 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
 
+## [1.1.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.4...presentation-v1.1.5) (2023-12-08)
+
+
+### Bug Fixes
+
+* only use `document.referrer` as fallback if its origin matches the preview origin ([d73d64f](https://github.com/sanity-io/visual-editing/commit/d73d64f5cc9d6a34f17b53e7f54fbab47b8a1983))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.3.2 to ^1.3.3
+
 ## [1.1.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.3...presentation-v1.1.4) (2023-12-07)
 
 
