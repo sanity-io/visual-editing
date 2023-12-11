@@ -22,11 +22,19 @@ let cleanup: number | null = null
  */
 export function enableOverlays(
   options: {
+    /**
+     * @deprecated
+     */
+    allowStudioOrigin?: AllowStudioOrigin
     history?: HistoryAdapter
     zIndex?: string | number
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } = {} as any,
 ): DisableOverlays {
+  if (options.allowStudioOrigin) {
+    // eslint-disable-next-line no-console
+    console.warn('`allowStudioOrigin` is deprecated and no longer needed')
+  }
   if (cleanup) clearTimeout(cleanup)
   const controller = new AbortController()
 

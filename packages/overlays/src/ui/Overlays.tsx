@@ -24,6 +24,7 @@ import styled from 'styled-components'
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { overlayStateReducer } from './overlayStateReducer'
+import type { AllowStudioOrigin } from './useAllowStudioOrigin'
 import { useChannel } from './useChannel'
 import { useController } from './useController'
 
@@ -57,6 +58,7 @@ function raf2(fn: () => void) {
  * @internal
  */
 export const Overlays: FunctionComponent<{
+  allowStudioOrigin?: AllowStudioOrigin
   history?: HistoryAdapter
   zIndex?: string | number
 }> = function (props) {

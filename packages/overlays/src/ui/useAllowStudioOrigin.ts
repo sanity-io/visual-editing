@@ -1,11 +1,7 @@
 import { useMemo } from 'react'
 
 /**
- * The origin that are allowed to connect to the overlay.
- * @example 'https://my.sanity.studio'
- * @example location.origin
- * @example 'same-origin'
- * @public
+ * @deprecated
  */
 export type AllowStudioOrigin =
   | 'same-origin'
