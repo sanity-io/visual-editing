@@ -1,4 +1,4 @@
-import type { ChannelsConnectionStatus } from '@sanity/channels'
+import type { ChannelStatus } from '@sanity/channels'
 import { ClientPerspective } from '@sanity/client'
 import {
   CheckmarkIcon,
@@ -111,9 +111,9 @@ export const PreviewFrame = forwardRef<
     setPerspective: Dispatch<SetStateAction<ClientPerspective>>
     toggleNavigator?: () => void
     toggleOverlay: () => void
-    loadersConnection: ChannelsConnectionStatus
-    overlaysConnection: ChannelsConnectionStatus
-    previewKitConnection: ChannelsConnectionStatus
+    loadersConnection: ChannelStatus
+    overlaysConnection: ChannelStatus
+    previewKitConnection: ChannelStatus
   }
 >(function PreviewFrame(props, ref) {
   const {

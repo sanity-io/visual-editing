@@ -1,4 +1,4 @@
-import type { ChannelsPublisher } from '@sanity/channels'
+import type { ChannelsController } from '@sanity/channels'
 import type {
   ClientPerspective,
   ContentSourceMap,
@@ -14,7 +14,7 @@ import { useLiveQuery } from './useLiveQuery'
 export default function LoaderQueries(props: {
   activePerspective: boolean
   liveDocument: SanityDocument | null
-  channel: ChannelsPublisher<VisualEditingMsg> | undefined
+  channel: ChannelsController<VisualEditingMsg> | undefined
   perspective: ClientPerspective
   liveQueries: Record<string, { query: string; params: QueryParams }>
 }): any {
@@ -72,7 +72,7 @@ function QuerySubscription(props: {
   perspective: ClientPerspective
   query: string
   params: QueryParams
-  channel: ChannelsPublisher<VisualEditingMsg> | undefined
+  channel: ChannelsController<VisualEditingMsg> | undefined
 }) {
   const { projectId, dataset, perspective, query, params, channel } = props
 

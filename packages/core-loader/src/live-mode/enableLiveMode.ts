@@ -1,4 +1,4 @@
-import { createChannelsSubscriber } from '@sanity/channels'
+import { createChannelsNode } from '@sanity/channels'
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -49,7 +49,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const channel = createChannelsSubscriber<VisualEditingMsg>({
+  const channel = createChannelsNode<VisualEditingMsg>({
     id: 'loaders' satisfies VisualEditingConnectionIds,
     connectTo: 'presentation' satisfies VisualEditingConnectionIds,
     onEvent: (type, data) => {

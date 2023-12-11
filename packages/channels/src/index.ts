@@ -1,14 +1,14 @@
-export * from './publisher'
-export * from './subscriber'
+export * from './controller'
+export * from './node'
 export type {
-  ChannelsConnectionStatus,
+  ChannelMsg,
+  ChannelMsgData,
+  ChannelMsgType,
+  ChannelsController,
+  ChannelsControllerChannelOptions,
+  ChannelsControllerOptions,
   ChannelsEventHandler,
-  ChannelsMsg,
-  ChannelsMsgData,
-  ChannelsMsgType,
-  ChannelsPublisher,
-  ChannelsPublisherConnectionOptions,
-  ChannelsPublisherOptions,
-  ChannelsSubscriber,
-  ChannelsSubscriberOptions,
+  ChannelsNode,
+  ChannelsNodeOptions,
+  ChannelStatus,
 } from './types'

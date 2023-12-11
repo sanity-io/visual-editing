@@ -3,25 +3,25 @@ import { HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES } from './constants'
 /**
  * @public
  */
-export type ChannelsMsgType = `${string}/${string}`
+export type ChannelMsgType = `${string}/${string}`
 
 /**
  * @public
  */
-export type ChannelsMsgData = Record<string, unknown> | undefined
+export type ChannelMsgData = Record<string, unknown> | undefined
 
 /**
  * @public
  */
-export interface ChannelsMsg {
-  data: ChannelsMsgData
-  type: ChannelsMsgType
+export interface ChannelMsg {
+  data: ChannelMsgData
+  type: ChannelMsgType
 }
 
 /**
  * @internal
  */
-export type ProtocolMsg<T extends ChannelsMsg = ChannelsMsg> = {
+export type ProtocolMsg<T extends ChannelMsg = ChannelMsg> = {
   id: string
   connectionId: string
   data?: T['data']
@@ -34,14 +34,14 @@ export type ProtocolMsg<T extends ChannelsMsg = ChannelsMsg> = {
 /**
  * @internal
  */
-export type ToArgs<T extends ChannelsMsg> = T extends T
+export type ToArgs<T extends ChannelMsg> = T extends T
   ? [type: T['type'], data: T['data']]
   : never
 
 /**
  * @public
  */
-export type ChannelsConnectionStatus =
+export type ChannelStatus =
   | 'connecting'
   | 'connected'
   | 'reconnecting'
@@ -70,59 +70,51 @@ export type HandshakeMsgType = HandshakeMsgTypeTuple[number]
 /**
  * @public
  */
-export type ChannelsEventHandler<T extends ChannelsMsg = ChannelsMsg> = (
+export type ChannelsEventHandler<T extends ChannelMsg = ChannelMsg> = (
   ...args: ToArgs<T>
 ) => void
 
 /**
  * @public
  */
-export interface ChannelsPublisherOptions<T extends ChannelsMsg = ChannelsMsg> {
+export interface ChannelsControllerOptions<T extends ChannelMsg = ChannelMsg> {
   id: string
-  connectTo: ChannelsPublisherConnectionOptions<T>[]
+  connectTo: ChannelsControllerChannelOptions<T>[]
   frame: HTMLIFrameElement
   frameOrigin: string
   onEvent?: ChannelsEventHandler<T>
-  onStatusUpdate?: (
-    status: ChannelsConnectionStatus,
-    connectionId: string,
-  ) => void
+  onStatusUpdate?: (status: ChannelStatus, connectionId: string) => void
 }
 
 /**
  * @public
  */
-export interface ChannelsPublisherConnectionOptions<
-  T extends ChannelsMsg = ChannelsMsg,
+export interface ChannelsControllerChannelOptions<
+  T extends ChannelMsg = ChannelMsg,
 > {
   id: string
   heartbeat?: boolean | number
-  onStatusUpdate?: (
-    status: ChannelsConnectionStatus,
-    connectionId: string,
-  ) => void
+  onStatusUpdate?: (status: ChannelStatus, connectionId: string) => void
   onEvent?: ChannelsEventHandler<T>
 }
 
 /**
  * @internal
  */
-export interface ChannelsPublisherConnection<
-  T extends ChannelsMsg = ChannelsMsg,
-> {
+export interface ChannelsControllerChannel<T extends ChannelMsg = ChannelMsg> {
   id: string | null
-  buffer: ChannelsMsg[]
-  config: ChannelsPublisherConnectionOptions<T>
+  buffer: ChannelMsg[]
+  config: ChannelsControllerChannelOptions<T>
   handler: (e: MessageEvent) => void
   heartbeat: number | undefined
   interval: number | undefined
-  status: ChannelsConnectionStatus
+  status: ChannelStatus
 }
 
 /**
  * @public
  */
-export interface ChannelsPublisher<T extends ChannelsMsg = ChannelsMsg> {
+export interface ChannelsController<T extends ChannelMsg = ChannelMsg> {
   destroy: () => void
   send: (id: string | string[] | undefined, ...args: ToArgs<T>) => void
 }
@@ -130,29 +122,27 @@ export interface ChannelsPublisher<T extends ChannelsMsg = ChannelsMsg> {
 /**
  * @public
  */
-export interface ChannelsSubscriberOptions<
-  T extends ChannelsMsg = ChannelsMsg,
-> {
+export interface ChannelsNodeOptions<T extends ChannelMsg = ChannelMsg> {
   id: string
   connectTo: string
   onEvent?: ChannelsEventHandler<T>
-  onStatusUpdate?: (status: ChannelsConnectionStatus) => void
+  onStatusUpdate?: (status: ChannelStatus) => void
 }
 
 /**
  * @internal
  */
-export interface ChannelsSubscriberConnection {
+export interface ChannelsNodeChannel {
   id: string | null
-  buffer: ChannelsMsg[]
+  buffer: ChannelMsg[]
   origin: string | null
-  status: ChannelsConnectionStatus
+  status: ChannelStatus
 }
 
 /**
  * @public
  */
-export interface ChannelsSubscriber<T extends ChannelsMsg = ChannelsMsg> {
+export interface ChannelsNode<T extends ChannelMsg = ChannelMsg> {
   destroy: () => void
   inFrame: boolean
   send: (...args: ToArgs<T>) => void

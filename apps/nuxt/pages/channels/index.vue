@@ -25,16 +25,16 @@
 
 <script lang="ts" setup>
 import {
-  type ChannelsPublisher,
-  createChannelsPublisher,
+  type ChannelsController,
+  createChannelsController,
 } from '@sanity/channels'
 
 const log = ref<any[]>([])
-const channel = ref<ChannelsPublisher | undefined>()
+const channel = ref<ChannelsController | undefined>()
 const iframeEl = ref<HTMLIFrameElement | undefined>()
 
 onMounted(async () => {
-  channel.value = createChannelsPublisher({
+  channel.value = createChannelsController({
     id: 'parent',
     frame: iframeEl.value!,
     frameOrigin: 'same-origin',

@@ -1,7 +1,7 @@
 import {
-  type ChannelsConnectionStatus,
-  type ChannelsPublisher,
-  createChannelsPublisher,
+  type ChannelsController,
+  type ChannelStatus,
+  createChannelsController,
 } from '@sanity/channels'
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
@@ -111,7 +111,7 @@ export default function PresentationTool(props: {
 
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  const [channel, setChannel] = useState<ChannelsPublisher<VisualEditingMsg>>()
+  const [channel, setChannel] = useState<ChannelsController<VisualEditingMsg>>()
 
   const [liveQueries, setLiveQueries] = useState<
     Record<
@@ -193,18 +193,18 @@ export default function PresentationTool(props: {
   }, [params])
 
   const [overlaysConnection, setOverlaysConnection] =
-    useState<ChannelsConnectionStatus>('connecting')
+    useState<ChannelStatus>('connecting')
   const [loadersConnection, setLoadersConnection] =
-    useState<ChannelsConnectionStatus>('connecting')
+    useState<ChannelStatus>('connecting')
   const [previewKitConnection, setPreviewKitConnection] =
-    useState<ChannelsConnectionStatus>('connecting')
+    useState<ChannelStatus>('connecting')
 
   useEffect(() => {
     const iframe = iframeRef.current
 
     if (!iframe) return
 
-    const nextChannel = createChannelsPublisher<VisualEditingMsg>({
+    const nextChannel = createChannelsController<VisualEditingMsg>({
       id: 'presentation' satisfies VisualEditingConnectionIds,
       frame: iframe,
       frameOrigin: targetOrigin,

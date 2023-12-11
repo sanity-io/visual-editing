@@ -1,4 +1,4 @@
-import type { ChannelsMsgType } from './types'
+import type { ChannelMsgType } from './types'
 
 export const RESPONSE_TIMEOUT = 1000
 export const HEARTBEAT_INTERVAL = 2000
@@ -8,10 +8,10 @@ export const INTERNAL_MSG_TYPES = [
   'channel/disconnect',
   'channel/response',
   'channel/heartbeat',
-] satisfies ChannelsMsgType[]
+] satisfies ChannelMsgType[]
 
 export const HANDSHAKE_MSG_TYPES = [
   'handshake/syn',
   'handshake/syn-ack',
   'handshake/ack',
-] satisfies ChannelsMsgType[]
+] satisfies ChannelMsgType[]

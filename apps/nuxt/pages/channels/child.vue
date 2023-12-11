@@ -26,16 +26,13 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  type ChannelsSubscriber,
-  createChannelsSubscriber,
-} from '@sanity/channels'
+import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
 
 const log = ref<any[]>([])
-const channel = ref<ChannelsSubscriber | undefined>()
+const channel = ref<ChannelsNode | undefined>()
 
 onMounted(() => {
-  channel.value = createChannelsSubscriber({
+  channel.value = createChannelsNode({
     id: 'child',
     connectTo: 'parent',
     onEvent(type, data) {

@@ -1,7 +1,4 @@
-import {
-  type ChannelsSubscriber,
-  createChannelsSubscriber,
-} from '@sanity/channels'
+import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
 import type { ContentSourceMapDocuments } from '@sanity/client/csm'
 import {
   type VisualEditingConnectionIds,
@@ -20,7 +17,7 @@ export function useDocumentsInUse(
   dataset: string,
 ): void {
   const [channel, setChannel] = useState<
-    ChannelsSubscriber<VisualEditingMsg> | undefined
+    ChannelsNode<VisualEditingMsg> | undefined
   >()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
@@ -29,7 +26,7 @@ export function useDocumentsInUse(
     }
     // const targetOrigin = new URL(allowStudioOrigin || '/', location.origin)
     //   .origin
-    const channel = createChannelsSubscriber<VisualEditingMsg>({
+    const channel = createChannelsNode<VisualEditingMsg>({
       id: 'preview-kit' satisfies VisualEditingConnectionIds,
       connectTo: 'presentation' satisfies VisualEditingConnectionIds,
       onStatusUpdate(status) {

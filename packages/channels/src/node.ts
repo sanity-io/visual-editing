@@ -2,23 +2,23 @@ import { v4 as uuid } from 'uuid'
 
 import { isHandshakeMessage, isInternalMessage } from './helpers'
 import {
-  ChannelsConnectionStatus,
-  ChannelsMsg,
-  ChannelsSubscriber,
-  ChannelsSubscriberConnection,
-  ChannelsSubscriberOptions,
+  ChannelMsg,
+  ChannelsNode,
+  ChannelsNodeChannel,
+  ChannelsNodeOptions,
+  ChannelStatus,
   HandshakeMsgType,
   InternalMsgType,
   ProtocolMsg,
   ToArgs,
 } from './types'
 
-export function createChannelsSubscriber<T extends ChannelsMsg>(
-  config: ChannelsSubscriberOptions<T>,
-): ChannelsSubscriber<T> {
+export function createChannelsNode<T extends ChannelMsg>(
+  config: ChannelsNodeOptions<T>,
+): ChannelsNode<T> {
   const inFrame = window.self !== window.top
 
-  const connection: ChannelsSubscriberConnection = {
+  const channel: ChannelsNodeChannel = {
     buffer: [],
     id: null,
     origin: null,
@@ -26,8 +26,8 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
   }
 
   function flush() {
-    const toFlush = [...connection.buffer]
-    connection.buffer.splice(0, connection.buffer.length)
+    const toFlush = [...channel.buffer]
+    channel.buffer.splice(0, channel.buffer.length)
     toFlush.forEach(({ type, data }) => {
       send(type, data)
     })
@@ -40,16 +40,15 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
     if (
       !isHandshakeMessage(type) &&
       !isInternalMessage(type) &&
-      (connection.status === 'connecting' ||
-        connection.status === 'reconnecting')
+      (channel.status === 'connecting' || channel.status === 'reconnecting')
     ) {
-      connection.buffer.push({ type, data })
+      channel.buffer.push({ type, data })
       return
     }
 
-    if (connection.id && connection.origin) {
+    if (channel.id && channel.origin) {
       const msg: ProtocolMsg<T> = {
-        connectionId: connection.id,
+        connectionId: channel.id,
         data,
         domain: 'sanity/channels',
         from: config.id,
@@ -60,7 +59,7 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
 
       try {
         parent.postMessage(msg, {
-          targetOrigin: connection.origin,
+          targetOrigin: channel.origin,
         })
       } catch (e) {
         throw new Error(`Failed to postMessage '${msg.id}' on '${config.id}'`)
@@ -85,19 +84,19 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
       const { data } = e
       if (isHandshakeMessage(data.type) && data.data) {
         if (data.type === 'handshake/syn') {
-          connection.origin = e.origin
-          connection.id = data.data.id as string
+          channel.origin = e.origin
+          channel.id = data.data.id as string
           setConnectionStatus('connecting')
-          send('handshake/syn-ack', { id: connection.id })
+          send('handshake/syn-ack', { id: channel.id })
           return
         }
-        if (data.type === 'handshake/ack' && data.data.id === connection.id) {
+        if (data.type === 'handshake/ack' && data.data.id === channel.id) {
           setConnectionStatus('connected')
           return
         }
       } else if (
-        data.connectionId === connection.id &&
-        e.origin === connection.origin
+        data.connectionId === channel.id &&
+        e.origin === channel.origin
       ) {
         if (data.type === 'channel/disconnect') {
           setConnectionStatus('disconnected')
@@ -113,8 +112,8 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
   }
 
   function disconnect() {
-    if (['disconnected'].includes(connection.status)) return
-    // send('channel/disconnect', { id: connection.id })
+    if (['disconnected'].includes(channel.status)) return
+    // send('channel/disconnect', { id: channel.id })
     setConnectionStatus('disconnected')
   }
 
@@ -123,8 +122,8 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
     window.removeEventListener('message', handleEvents, false)
   }
 
-  function setConnectionStatus(next: ChannelsConnectionStatus) {
-    connection.status = next
+  function setConnectionStatus(next: ChannelStatus) {
+    channel.status = next
     config?.onStatusUpdate?.(next)
     if (next === 'connected') {
       flush()
