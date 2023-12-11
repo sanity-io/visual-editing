@@ -6,12 +6,13 @@ import {
   RESPONSE_TIMEOUT,
 } from './constants'
 import { isHandshakeMessage } from './helpers'
-import {
+import type {
   ChannelsConnectionStatus,
   ChannelsMsg,
   ChannelsPublisher,
   ChannelsPublisherConnection,
   ChannelsPublisherOptions,
+  InternalMsgType,
   ProtocolMsg,
   ToArgs,
 } from './types'
@@ -19,34 +20,28 @@ import {
 export function createChannelsPublisher<T extends ChannelsMsg>(
   config: ChannelsPublisherOptions<T>,
 ): ChannelsPublisher {
-  let iframe = config.frame.contentWindow
+  const iframe = config.frame.contentWindow
 
-  const connections: ChannelsPublisherConnection[] = config.connectTo.map(
+  const connections: ChannelsPublisherConnection<T>[] = config.connectTo.map(
     (config) => ({
       buffer: [],
       config,
       id: '',
       handler: handshakeHandler,
-      status: 'fresh',
+      status: 'connecting',
       interval: undefined,
       heartbeat: undefined,
     }),
   )
 
-  function startHandshakes() {
-    const inactiveConnections = connections.filter((connection) =>
-      ['disconnected', 'fresh'].includes(connection.status),
-    )
-    inactiveConnections.forEach((connection) => {
-      connection.interval = window.setInterval(() => {
-        connection.id = uuid()
-        setConnectionStatus(connection, 'connecting')
-        sendHandshake(connection, 'handshake/syn', { id: connection.id })
-      }, HANDSHAKE_INTERVAL)
-    })
+  function startHandshake(connection: ChannelsPublisherConnection<T>) {
+    connection.id = uuid()
+    connection.interval = window.setInterval(() => {
+      sendHandshake(connection, 'handshake/syn', { id: connection.id })
+    }, HANDSHAKE_INTERVAL)
   }
 
-  function stopHandshake(connection: ChannelsPublisherConnection) {
+  function stopHandshake(connection: ChannelsPublisherConnection<T>) {
     window.clearInterval(connection.interval)
   }
 
@@ -74,7 +69,6 @@ export function createChannelsPublisher<T extends ChannelsMsg>(
       if (connection && data.type === 'handshake/syn-ack') {
         setConnectionStatus(connection, 'connected')
         sendHandshake(connection, 'handshake/ack', { id: connection.id })
-        stopHandshake(connection)
       }
     }
   }
@@ -90,17 +84,12 @@ export function createChannelsPublisher<T extends ChannelsMsg>(
         (connection) => connection.config.id === data.from,
       )
       if (connection) {
-        if (data.type === 'channel/disconnect') {
-          setConnectionStatus(connection, 'disconnected')
-          return
-        } else {
-          // eslint-disable-next-line no-warning-comments
-          // @todo Ugly type casting
-          const args = [data.type, data.data] as ToArgs<T>
-          config.handler?.(...args)
-          // config.handler?.(data.type, data.data);
-          send(connection, 'channel/response', { responseTo: data.id })
-        }
+        // eslint-disable-next-line no-warning-comments
+        // @todo Ugly type casting
+        const args = [data.type, data.data] as ToArgs<T>
+        connection.config.onEvent?.(...args)
+        config.onEvent?.(...args)
+        send(connection, 'channel/response', { responseTo: data.id }, false)
       }
     }
   }
@@ -114,7 +103,7 @@ export function createChannelsPublisher<T extends ChannelsMsg>(
     }
   }
 
-  function flush(connection: ChannelsPublisherConnection) {
+  function flush(connection: ChannelsPublisherConnection<T>) {
     const toFlush = [...connection.buffer]
     connection.buffer.splice(0, connection.buffer.length)
     toFlush.forEach(({ type, data }) => {
@@ -122,7 +111,7 @@ export function createChannelsPublisher<T extends ChannelsMsg>(
     })
   }
 
-  function startHeartbeat(connection: ChannelsPublisherConnection) {
+  function startHeartbeat(connection: ChannelsPublisherConnection<T>) {
     stopHeartbeat(connection)
     if (connection.config.heartbeat) {
       const heartbeatInverval =
@@ -135,34 +124,45 @@ export function createChannelsPublisher<T extends ChannelsMsg>(
     }
   }
 
-  function stopHeartbeat(connection: ChannelsPublisherConnection) {
+  function stopHeartbeat(connection: ChannelsPublisherConnection<T>) {
     if (connection.heartbeat) {
       window.clearInterval(connection.heartbeat)
     }
   }
 
   function setConnectionStatus(
-    connection: ChannelsPublisherConnection,
+    connection: ChannelsPublisherConnection<T>,
     next: ChannelsConnectionStatus,
   ) {
     connection.status = next
     connection.config.onStatusUpdate?.(next, connection.config.id)
-    if (next === 'connected') {
+    config.onStatusUpdate?.(next, connection.config.id)
+    if (next === 'connecting' || next === 'reconnecting') {
+      connection.handler = handshakeHandler
+      stopHeartbeat(connection)
+      startHandshake(connection)
+    } else if (next === 'connected') {
       connection.handler = messageHandler
+      stopHandshake(connection)
       startHeartbeat(connection)
       flush(connection)
     } else if (next === 'disconnected') {
+      connection.id = null
       connection.handler = handshakeHandler
+      stopHandshake(connection)
       stopHeartbeat(connection)
     }
   }
 
   function sendHandshake<K extends T['type']>(
-    connection: ChannelsPublisherConnection,
+    connection: ChannelsPublisherConnection<T>,
     type: K,
     data?: Extract<T, { type: K }>['data'],
   ) {
-    if (!connection.id) throw new Error('No connection ID set')
+    if (!connection.id) {
+      throw new Error('No connection ID set')
+    }
+
     const msg: ProtocolMsg<T> = {
       connectionId: connection.id,
       data,
@@ -172,117 +172,93 @@ export function createChannelsPublisher<T extends ChannelsMsg>(
       to: connection.config.id,
       type,
     }
-    iframe?.postMessage(msg, { targetOrigin: '*' })
+
+    try {
+      iframe?.postMessage(msg, { targetOrigin: '*' })
+    } catch (e) {
+      throw new Error(`Failed to postMessage '${msg.id}' on '${config.id}'`)
+    }
   }
 
   function send<K extends T['type']>(
-    connection: ChannelsPublisherConnection,
-    type: K,
+    connection: ChannelsPublisherConnection<T>,
+    type: K | InternalMsgType,
     data?: Extract<T, { type: K }>['data'],
     expectResponse = true,
   ) {
-    return new Promise<string>((resolve, reject) => {
-      if (!connection.id) return reject('No connection ID set')
-      const id = uuid()
+    const id = uuid()
 
-      // If there is no active connection, push to the buffer
-      if (connection.status === 'fresh' || connection.status === 'connecting') {
-        connection.buffer.push({
-          type,
-          data,
-        })
-        return resolve(id)
-      }
+    // If there is no active connection, push to the buffer
+    if (
+      connection.status === 'connecting' ||
+      connection.status === 'reconnecting' ||
+      connection.status === 'disconnected'
+    ) {
+      connection.buffer.push({ type, data })
+      return
+    }
 
-      const msg: ProtocolMsg<T> = {
-        connectionId: connection.id,
-        data,
-        domain: 'sanity/channels',
-        from: config.id,
-        id,
-        to: connection.config.id,
-        type,
-      }
+    if (!connection.id) {
+      throw new Error('No connection ID set')
+    }
 
-      // const isInternal = isInternalMessage(type);
+    const msg: ProtocolMsg<T> = {
+      connectionId: connection.id,
+      data,
+      domain: 'sanity/channels',
+      from: config.id,
+      id,
+      to: connection.config.id,
+      type,
+    }
 
-      if (expectResponse) {
-        const maxWait = setTimeout(() => {
-          // The connection may have changed, so only reject if the IDs match
-          if (msg.connectionId === connection.id) {
-            // eslint-disable-next-line no-console
-            console.error('Received no response to message', {
-              msg,
-              connection,
-            })
-            setConnectionStatus(connection, 'disconnected')
-            window.removeEventListener('message', transact, false)
-            return reject({
-              reason: `Received no response to message '${msg.id}' on client '${config.id}'`,
-              msg,
-              connection,
-            })
-          } else {
-            return resolve(msg.id)
+    if (expectResponse) {
+      const maxWait = setTimeout(() => {
+        // The connection may have changed, so only reject if the IDs match
+        if (msg.connectionId === connection.id) {
+          // Cleanup the transaction listener
+          window.removeEventListener('message', transact, false)
+          // Push the message to the buffer
+          if (type !== 'channel/heartbeat') {
+            connection.buffer.push({ type, data })
           }
-        }, RESPONSE_TIMEOUT)
-
-        const transact = (e: MessageEvent<ChannelsMsg>) => {
-          const { data: eventData } = e
-          if (
-            eventData.type === 'channel/response' &&
-            eventData.data?.responseTo &&
-            eventData.data.responseTo === msg.id
-          ) {
-            window.removeEventListener('message', transact, false)
-            clearTimeout(maxWait)
-            return resolve(msg.id)
-          }
+          // Try to reconnect
+          setConnectionStatus(connection, 'reconnecting')
+          // eslint-disable-next-line no-console
+          console.warn({
+            reason: `Received no response to message '${msg.id}' on connection '${config.id}'`,
+            msg,
+            connection,
+          })
         }
-        window.addEventListener('message', transact, false)
-      }
+      }, RESPONSE_TIMEOUT)
 
-      try {
-        iframe?.postMessage(msg, { targetOrigin: config.frameOrigin })
-        // Resolve immediately if we don't expect a response
-        if (!expectResponse) {
-          return resolve(msg.id)
+      const transact = (e: MessageEvent<ChannelsMsg>) => {
+        const { data: eventData } = e
+        if (
+          eventData.type === 'channel/response' &&
+          eventData.data?.responseTo &&
+          eventData.data.responseTo === msg.id
+        ) {
+          window.removeEventListener('message', transact, false)
+          clearTimeout(maxWait)
         }
-        return
-      } catch (e) {
-        reject({
-          reason: `Failed to postMessage '${msg.id}' on client '${config.id}'`,
-          msg,
-          connection,
-        })
       }
+      window.addEventListener('message', transact, false)
+    }
 
-      // const isInternal = isInternalMessage(type);
-      // const isHandshake = isHandshakeMessage(type);
-      // const isHeartbeat = isHeartbeatMessage(type);
-
-      // Always send internal messages
-      // Otherwise send if connection is active
-      // Buffer messages if we have a fresh connection or connecting
-      // if (connection.status === "fresh" || connection.status === "connecting") {
-      //   connection.buffer.push({
-      //     type,
-      //     data,
-      //   });
-      //   resolve(msg.id);
-      // }
-
-      return reject({
-        reason: `Will not send message '${msg.id}' on client '${config.id}'`,
-        msg,
-        connection,
-      })
-    })
+    try {
+      iframe?.postMessage(msg, { targetOrigin: config.frameOrigin })
+    } catch (e) {
+      throw new Error(
+        `Failed to postMessage '${msg.id}' on client '${config.id}'`,
+      )
+    }
   }
 
   function disconnect() {
     connections.forEach((connection) => {
-      if (['fresh', 'disconnected'].includes(connection.status)) return
+      if (['disconnected'].includes(connection.status)) return
       send(connection, 'channel/disconnect', { id: connection.id }, false)
       setConnectionStatus(connection, 'disconnected')
     })
@@ -297,26 +273,37 @@ export function createChannelsPublisher<T extends ChannelsMsg>(
     })
   }
 
-  config.frame.onload = () => {
-    iframe = config.frame.contentWindow
-  }
-
-  function connect() {
+  function initialise() {
     window.addEventListener('message', handleEvents, false)
-    startHandshakes()
+    connections.forEach((connection) => {
+      setConnectionStatus(connection, 'connecting')
+    })
   }
 
-  connections.forEach((connection) => setConnectionStatus(connection, 'fresh'))
-  connect()
+  initialise()
 
-  function sendToAll(type: T['type'], data?: T['data']) {
-    return Promise.all(
-      connections.map((connection) => send(connection, type, data)),
-    )
+  function sendPublic<K extends T['type']>(
+    id: string | string[] | undefined,
+    type: K,
+    data?: Extract<T, { type: K }>['data'],
+  ) {
+    const connectionsToSend = id
+      ? Array.isArray(id)
+        ? [...id]
+        : [id]
+      : connections
+
+    connectionsToSend.forEach((id) => {
+      const connection = connections.find(
+        (connection) => connection.config.id === id,
+      )
+      if (!connection) throw new Error('Invalid connection ID')
+      send(connection, type, data)
+    })
   }
 
   return {
     destroy,
-    send: sendToAll,
+    send: sendPublic,
   }
 }

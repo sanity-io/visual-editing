@@ -22,14 +22,6 @@ let cleanup: number | null = null
  */
 export function enableOverlays(
   options: {
-    /**
-     * The origin that are allowed to connect to the overlay.
-     * @example 'https://my.sanity.studio'
-     * @example location.origin
-     * @example 'same-origin'
-     * @defaultValue 'same-origin'
-     */
-    allowStudioOrigin?: AllowStudioOrigin
     history?: HistoryAdapter
     zIndex?: string | number
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,7 +35,7 @@ export function enableOverlays(
     ([reactClient, { Overlays }]) => {
       if (controller.signal.aborted) return
 
-      const { allowStudioOrigin = 'same-origin', history, zIndex } = options
+      const { history, zIndex } = options
 
       if (!node) {
         node = document.createElement('div')
@@ -57,13 +49,7 @@ export function enableOverlays(
         root = createRoot(node)
       }
 
-      root.render(
-        <Overlays
-          history={history}
-          allowStudioOrigin={allowStudioOrigin}
-          zIndex={zIndex}
-        />,
-      )
+      root.render(<Overlays history={history} zIndex={zIndex} />)
     },
   )
 

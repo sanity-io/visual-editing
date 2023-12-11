@@ -1,4 +1,7 @@
-import { type ChannelReturns, createChannel } from '@sanity/channels'
+import {
+  type ChannelsSubscriber,
+  createChannelsSubscriber,
+} from '@sanity/channels'
 import type { ContentSourceMapDocuments } from '@sanity/client/csm'
 import {
   type VisualEditingConnectionIds,
@@ -17,37 +20,30 @@ export function useDocumentsInUse(
   dataset: string,
 ): void {
   const [channel, setChannel] = useState<
-    ChannelReturns<VisualEditingMsg> | undefined
+    ChannelsSubscriber<VisualEditingMsg> | undefined
   >()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
     if (window.self === window.top) {
       return
     }
-    const targetOrigin = new URL(allowStudioOrigin || '/', location.origin)
-      .origin
-    const channel = createChannel<VisualEditingMsg>({
+    // const targetOrigin = new URL(allowStudioOrigin || '/', location.origin)
+    //   .origin
+    const channel = createChannelsSubscriber<VisualEditingMsg>({
       id: 'preview-kit' satisfies VisualEditingConnectionIds,
+      connectTo: 'presentation' satisfies VisualEditingConnectionIds,
       onStatusUpdate(status) {
         if (status === 'connected') {
           setConnected(true)
-        } else if (status === 'disconnected' || status === 'unhealthy') {
+        } else if (status === 'disconnected') {
           setConnected(false)
         }
       },
-      connections: [
-        {
-          target: parent,
-          targetOrigin,
-          id: 'presentation' satisfies VisualEditingConnectionIds,
-        },
-      ],
-      handler: () => {},
     })
     const timeout = setTimeout(() => setChannel(channel), 0)
     return () => {
       clearTimeout(timeout)
-      channel.disconnect()
+      channel.destroy()
       setChannel(undefined)
     }
   }, [allowStudioOrigin, dataset, projectId])

@@ -15,7 +15,6 @@ export default function VisualEditing() {
   }, [navigateRemix])
   useEffect(() => {
     const disable = enableOverlays({
-      allowStudioOrigin: studioUrl,
       history: {
         subscribe: (navigate) => {
           setNavigate(() => navigate)

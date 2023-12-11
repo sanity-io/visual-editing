@@ -1,5 +1,8 @@
-import type { ConnectionStatus } from '@sanity/channels'
-import { ChannelReturns, createChannel } from '@sanity/channels'
+import {
+  type ChannelsConnectionStatus,
+  type ChannelsPublisher,
+  createChannelsPublisher,
+} from '@sanity/channels'
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
 import { Flex } from '@sanity/ui'
@@ -108,7 +111,7 @@ export default function PresentationTool(props: {
 
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  const [channel, setChannel] = useState<ChannelReturns<VisualEditingMsg>>()
+  const [channel, setChannel] = useState<ChannelsPublisher<VisualEditingMsg>>()
 
   const [liveQueries, setLiveQueries] = useState<
     Record<
@@ -190,92 +193,96 @@ export default function PresentationTool(props: {
   }, [params])
 
   const [overlaysConnection, setOverlaysConnection] =
-    useState<ConnectionStatus>('fresh')
+    useState<ChannelsConnectionStatus>('connecting')
   const [loadersConnection, setLoadersConnection] =
-    useState<ConnectionStatus>('fresh')
+    useState<ChannelsConnectionStatus>('connecting')
   const [previewKitConnection, setPreviewKitConnection] =
-    useState<ConnectionStatus>('fresh')
+    useState<ChannelsConnectionStatus>('connecting')
 
   useEffect(() => {
-    const iframe = iframeRef.current?.contentWindow
+    const iframe = iframeRef.current
 
     if (!iframe) return
 
-    const nextChannel = createChannel<VisualEditingMsg>({
+    const nextChannel = createChannelsPublisher<VisualEditingMsg>({
       id: 'presentation' satisfies VisualEditingConnectionIds,
-      onStatusUpdate(status, prevStatus, connection) {
-        if (connection.config.id === 'loaders') setLoadersConnection(status)
-        if (connection.config.id === 'overlays') setOverlaysConnection(status)
-        if (connection.config.id === 'preview-kit')
-          setPreviewKitConnection(status)
-      },
-      connections: [
+      frame: iframe,
+      frameOrigin: targetOrigin,
+      connectTo: [
         {
-          target: iframe,
-          targetOrigin,
+          // target: iframe,
+          // targetOrigin,
           id: 'overlays' satisfies VisualEditingConnectionIds,
           heartbeat: true,
+          onStatusUpdate: setOverlaysConnection,
+          onEvent(type, data) {
+            if (type === 'overlay/focus' && 'id' in data) {
+              setParams({
+                id: data.id,
+                path: data.path,
+                type: data.type,
+              })
+            } else if (type === 'overlay/navigate') {
+              if (previewRef.current !== data.url) {
+                const isInitialNavigation = previewRef.current === undefined
+
+                previewRef.current = data.url
+                setParams(
+                  isInitialNavigation
+                    ? { preview: data.url }
+                    : { id: undefined, type: undefined, preview: data.url },
+                )
+              }
+            } else if (type === 'overlay/toggle') {
+              setOverlayEnabled(data.enabled)
+            }
+          },
         },
         {
-          target: iframe,
-          targetOrigin,
+          // target: iframe,
+          // targetOrigin,
           id: 'loaders' satisfies VisualEditingConnectionIds,
           heartbeat: true,
+          onStatusUpdate: setLoadersConnection,
+          onEvent(type, data) {
+            if (type === 'loader/documents') {
+              setDocumentsOnPage(data.perspective, data.documents)
+            } else if (
+              type === 'loader/query-listen' &&
+              data.projectId === projectId &&
+              data.dataset === dataset
+            ) {
+              setLiveQueries((prev) => ({
+                ...prev,
+                [getQueryCacheKey(data.query, data.params)]: {
+                  perspective: data.perspective,
+                  query: data.query,
+                  params: data.params,
+                },
+              }))
+            }
+          },
         },
         {
-          target: iframe,
-          targetOrigin,
           id: 'preview-kit' satisfies VisualEditingConnectionIds,
           heartbeat: true,
+          onStatusUpdate: setPreviewKitConnection,
+          onEvent(type, data) {
+            if (
+              type === 'preview-kit/documents' &&
+              data.projectId === projectId &&
+              data.dataset === dataset
+            ) {
+              setDocumentsOnPage(data.perspective, data.documents)
+            }
+          },
         },
       ],
-      handler(type, data) {
-        if (type === 'overlay/focus' && 'id' in data) {
-          setParams({
-            id: data.id,
-            path: data.path,
-            type: data.type,
-          })
-        } else if (type === 'overlay/navigate') {
-          if (previewRef.current !== data.url) {
-            const isInitialNavigation = previewRef.current === undefined
-
-            previewRef.current = data.url
-            setParams(
-              isInitialNavigation
-                ? { preview: data.url }
-                : { id: undefined, type: undefined, preview: data.url },
-            )
-          }
-        } else if (type === 'overlay/toggle') {
-          setOverlayEnabled(data.enabled)
-        } else if (
-          type === 'loader/documents' ||
-          (type === 'preview-kit/documents' &&
-            data.projectId === projectId &&
-            data.dataset === dataset)
-        ) {
-          setDocumentsOnPage(data.perspective, data.documents)
-        } else if (
-          type === 'loader/query-listen' &&
-          data.projectId === projectId &&
-          data.dataset === dataset
-        ) {
-          setLiveQueries((prev) => ({
-            ...prev,
-            [getQueryCacheKey(data.query, data.params)]: {
-              perspective: data.perspective,
-              query: data.query,
-              params: data.params,
-            },
-          }))
-        }
-      },
     })
     setChannel(nextChannel)
 
     return () => {
-      nextChannel.disconnect()
+      nextChannel.destroy()
       setChannel(undefined)
     }
   }, [dataset, projectId, setDocumentsOnPage, setParams, targetOrigin])
@@ -315,9 +322,12 @@ export default function PresentationTool(props: {
 
   useEffect(() => {
     if (params.id && params.path) {
-      channel?.send('presentation/focus', { id: params.id, path: params.path })
+      channel?.send('overlays', 'presentation/focus', {
+        id: params.id,
+        path: params.path,
+      })
     } else {
-      channel?.send('presentation/blur', undefined)
+      channel?.send('overlays', 'presentation/blur', undefined)
     }
   }, [channel, params.id, params.path])
 
@@ -330,7 +340,7 @@ export default function PresentationTool(props: {
       previewRef.current !== params.preview
     ) {
       previewRef.current = params.preview
-      channel?.send('presentation/navigate', {
+      channel?.send('overlays', 'presentation/navigate', {
         url: params.preview,
         type: 'push',
       })
@@ -338,7 +348,7 @@ export default function PresentationTool(props: {
   }, [channel, params.preview])
 
   const toggleOverlay = useCallback(
-    () => channel?.send('presentation/toggleOverlay', undefined),
+    () => channel?.send('overlays', 'presentation/toggleOverlay', undefined),
     [channel],
   )
 

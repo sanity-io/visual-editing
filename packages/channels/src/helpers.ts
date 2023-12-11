@@ -12,9 +12,3 @@ export const isHandshakeMessage = (
 ): type is HandshakeMsgType => {
   return HANDSHAKE_MSG_TYPES.some((t) => t === type)
 }
-
-export const isHeartbeatMessage = (
-  type: ChannelsMsgType | InternalMsgType,
-): type is 'channel/heartbeat' => {
-  return type === 'channel/heartbeat'
-}

@@ -1,4 +1,4 @@
-import { createChannel } from '@sanity/channels'
+import { createChannelsSubscriber } from '@sanity/channels'
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -15,7 +15,6 @@ import { atom, MapStore } from 'nanostores'
 
 import { isStegaClient } from '../isStegaClient'
 import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'
-import { parseAllowStudioOrigin } from './parseAllowStudioOrigin'
 
 /** @internal */
 export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
@@ -24,13 +23,7 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
 }
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
-  const {
-    client,
-    allowStudioOrigin = 'same-origin',
-    setFetcher,
-    onConnect,
-    onDisconnect,
-  } = options
+  const { client, setFetcher, onConnect, onDisconnect } = options
   if (!client || !(client instanceof SanityClient)) {
     throw new Error(
       `Expected \`client\` to be an instance of SanityClient or SanityStegaClient: ${JSON.stringify(
@@ -56,24 +49,10 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const targetOrigin = parseAllowStudioOrigin(allowStudioOrigin)
-  const channel = createChannel<VisualEditingMsg>({
+  const channel = createChannelsSubscriber<VisualEditingMsg>({
     id: 'loaders' satisfies VisualEditingConnectionIds,
-    onStatusUpdate(status) {
-      if (status === 'connected') {
-        $connected.set(true)
-      } else if (status === 'disconnected' || status === 'unhealthy') {
-        $connected.set(false)
-      }
-    },
-    connections: [
-      {
-        target: parent,
-        targetOrigin,
-        id: 'presentation' satisfies VisualEditingConnectionIds,
-      },
-    ],
-    handler: (type, data) => {
+    connectTo: 'presentation' satisfies VisualEditingConnectionIds,
+    onEvent: (type, data) => {
       if (
         type === 'loader/perspective' &&
         data.projectId === projectId &&
@@ -114,6 +93,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         }
 
         updateLiveQueries()
+      }
+    },
+    onStatusUpdate(status) {
+      if (status === 'connected') {
+        $connected.set(true)
+      } else if (status === 'disconnected') {
+        $connected.set(false)
       }
     },
   })
@@ -249,6 +235,6 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   return () => {
     unsetFetcher?.()
     unlistenConnection()
-    channel.disconnect()
+    channel.destroy()
   }
 }

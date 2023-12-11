@@ -1,4 +1,4 @@
-import type { ConnectionStatus } from '@sanity/channels'
+import type { ChannelsConnectionStatus } from '@sanity/channels'
 import { ClientPerspective } from '@sanity/client'
 import {
   CheckmarkIcon,
@@ -111,9 +111,9 @@ export const PreviewFrame = forwardRef<
     setPerspective: Dispatch<SetStateAction<ClientPerspective>>
     toggleNavigator?: () => void
     toggleOverlay: () => void
-    loadersConnection: ConnectionStatus
-    overlaysConnection: ConnectionStatus
-    previewKitConnection: ConnectionStatus
+    loadersConnection: ChannelsConnectionStatus
+    overlaysConnection: ChannelsConnectionStatus
+    previewKitConnection: ChannelsConnectionStatus
   }
 >(function PreviewFrame(props, ref) {
   const {
@@ -143,13 +143,13 @@ export const PreviewFrame = forwardRef<
   const [timedOut, setTimedOut] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const iframeIsBusy =
-    loading || refreshing || overlaysConnection === 'connecting'
+    loading ||
+    refreshing ||
+    overlaysConnection === 'connecting' ||
+    overlaysConnection === 'reconnecting'
   const somethingIsWrong =
-    overlaysConnection === 'unhealthy' ||
     overlaysConnection === 'disconnected' ||
-    loadersConnection === 'unhealthy' ||
     loadersConnection === 'disconnected' ||
-    previewKitConnection === 'unhealthy' ||
     previewKitConnection === 'disconnected'
 
   const previewLocationOrigin = useMemo(() => {
@@ -591,8 +591,7 @@ export const PreviewFrame = forwardRef<
                   >
                     {devMode && (
                       <>
-                        {(overlaysConnection === 'unhealthy' ||
-                          overlaysConnection === 'disconnected') && (
+                        {overlaysConnection === 'disconnected' && (
                           <Card padding={3} radius={2} tone="critical">
                             <Stack space={3}>
                               <Label muted size={0}>
@@ -603,8 +602,7 @@ export const PreviewFrame = forwardRef<
                           </Card>
                         )}
 
-                        {(loadersConnection === 'unhealthy' ||
-                          loadersConnection === 'disconnected') && (
+                        {loadersConnection === 'disconnected' && (
                           <Card padding={3} radius={2} tone="critical">
                             <Stack space={3}>
                               <Label muted size={0}>

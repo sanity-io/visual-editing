@@ -1,9 +1,9 @@
 import {
-  ChannelEventHandler,
-  ChannelMsg,
-  ChannelReturns,
-  ConnectionStatus,
-  createChannel,
+  type ChannelsConnectionStatus,
+  type ChannelsEventHandler,
+  type ChannelsMsg,
+  type ChannelsSubscriber,
+  createChannelsSubscriber,
 } from '@sanity/channels'
 import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
 import { useEffect, useRef, useState } from 'react'
@@ -12,37 +12,28 @@ import { useEffect, useRef, useState } from 'react'
  * Hook for maintaining a channel between overlays and the presentation tool
  * @internal
  */
-export function useChannel<T extends ChannelMsg>(
-  handler: ChannelEventHandler<T>,
-  targetOrigin: string,
+export function useChannel<T extends ChannelsMsg>(
+  handler: ChannelsEventHandler<T>,
 ): {
-  channel: ChannelReturns<T> | undefined
-  status: ConnectionStatus | undefined
+  channel: ChannelsSubscriber<T> | undefined
+  status: ChannelsConnectionStatus | undefined
 } {
-  const channelRef = useRef<ChannelReturns<T>>()
-  const [status, setStatus] = useState<ConnectionStatus>()
+  const channelRef = useRef<ChannelsSubscriber<T>>()
+  const [status, setStatus] = useState<ChannelsConnectionStatus>()
 
   useEffect(() => {
-    const channel = createChannel<T>({
+    const channel = createChannelsSubscriber<T>({
       id: 'overlays' satisfies VisualEditingConnectionIds,
-      connections: [
-        {
-          target: parent,
-          targetOrigin,
-          id: 'presentation' satisfies VisualEditingConnectionIds,
-        },
-      ],
-      handler,
-      onStatusUpdate(status) {
-        setStatus(status)
-      },
+      connectTo: 'presentation' satisfies VisualEditingConnectionIds,
+      onEvent: handler,
+      onStatusUpdate: setStatus,
     })
     channelRef.current = channel
     return () => {
-      channel.disconnect()
+      channel.destroy()
       channelRef.current = undefined
     }
-  }, [handler, targetOrigin])
+  }, [handler])
 
   return {
     channel: channelRef.current,

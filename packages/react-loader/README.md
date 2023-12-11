@@ -133,7 +133,6 @@ export default function VisualEditing() {
   useEffect(
     () =>
       enableOverlays({
-        allowStudioOrigin,
         history: {
           // setup Remix router integration
         },

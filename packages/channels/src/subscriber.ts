@@ -1,14 +1,14 @@
 import { v4 as uuid } from 'uuid'
 
-import { isHandshakeMessage } from './helpers'
+import { isHandshakeMessage, isInternalMessage } from './helpers'
 import {
   ChannelsConnectionStatus,
   ChannelsMsg,
-  ChannelsMsgData,
-  ChannelsMsgType,
   ChannelsSubscriber,
   ChannelsSubscriberConnection,
   ChannelsSubscriberOptions,
+  HandshakeMsgType,
+  InternalMsgType,
   ProtocolMsg,
   ToArgs,
 } from './types'
@@ -19,12 +19,34 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
   const inFrame = window.self !== window.top
 
   const connection: ChannelsSubscriberConnection = {
+    buffer: [],
     id: null,
-    status: 'fresh',
     origin: null,
+    status: 'connecting',
   }
 
-  async function send(type: ChannelsMsgType, data?: ChannelsMsgData) {
+  function flush() {
+    const toFlush = [...connection.buffer]
+    connection.buffer.splice(0, connection.buffer.length)
+    toFlush.forEach(({ type, data }) => {
+      send(type, data)
+    })
+  }
+
+  function send<K extends T['type']>(
+    type: K | InternalMsgType | HandshakeMsgType,
+    data?: Extract<T, { type: K }>['data'],
+  ) {
+    if (
+      !isHandshakeMessage(type) &&
+      !isInternalMessage(type) &&
+      (connection.status === 'connecting' ||
+        connection.status === 'reconnecting')
+    ) {
+      connection.buffer.push({ type, data })
+      return
+    }
+
     if (connection.id && connection.origin) {
       const msg: ProtocolMsg<T> = {
         connectionId: connection.id,
@@ -35,9 +57,14 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
         to: config.connectTo,
         type,
       }
-      parent.postMessage(msg, {
-        targetOrigin: connection.origin,
-      })
+
+      try {
+        parent.postMessage(msg, {
+          targetOrigin: connection.origin,
+        })
+      } catch (e) {
+        throw new Error(`Failed to postMessage '${msg.id}' on '${config.id}'`)
+      }
     }
   }
 
@@ -70,23 +97,24 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
         }
       } else if (
         data.connectionId === connection.id &&
-        origin === connection.origin
+        e.origin === connection.origin
       ) {
         if (data.type === 'channel/disconnect') {
           setConnectionStatus('disconnected')
           return
         } else {
           const args = [data.type, data.data] as ToArgs<T>
-          config.handler?.(...args)
+          config.onEvent?.(...args)
           send('channel/response', { responseTo: data.id })
         }
+        return
       }
     }
   }
 
   function disconnect() {
-    if (['fresh', 'disconnected'].includes(connection.status)) return
-    send('channel/disconnect', { id: connection.id })
+    if (['disconnected'].includes(connection.status)) return
+    // send('channel/disconnect', { id: connection.id })
     setConnectionStatus('disconnected')
   }
 
@@ -98,14 +126,28 @@ export function createChannelsSubscriber<T extends ChannelsMsg>(
   function setConnectionStatus(next: ChannelsConnectionStatus) {
     connection.status = next
     config?.onStatusUpdate?.(next)
+    if (next === 'connected') {
+      flush()
+    }
   }
 
-  window.addEventListener('message', handleEvents, false)
-  setConnectionStatus('fresh')
+  function initialise() {
+    window.addEventListener('message', handleEvents, false)
+    setConnectionStatus('connecting')
+  }
+
+  initialise()
+
+  function sendPublic<K extends T['type']>(
+    type: K,
+    data?: Extract<T, { type: K }>['data'],
+  ) {
+    send(type, data)
+  }
 
   return {
     destroy,
     inFrame,
-    send,
+    send: sendPublic,
   }
 }

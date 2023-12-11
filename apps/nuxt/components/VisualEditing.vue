@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-import { studioUrl } from 'apps-common/env'
 import { type DisableOverlays, enableOverlays } from '@sanity/overlays'
 
 let disable: DisableOverlays
@@ -11,7 +10,6 @@ const router = useRouter()
 
 onMounted(() => {
   disable = enableOverlays({
-    allowStudioOrigin: studioUrl,
     history: {
       subscribe: (navigate) => {
         return router.afterEach((to) => {

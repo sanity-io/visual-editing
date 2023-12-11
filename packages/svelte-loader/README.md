@@ -114,9 +114,7 @@ Note that for clarity we are enabling Overlays and Live Mode at the page level. 
   )
 
   onMount(() => {
-    return enableOverlays({
-      allowStudioOrigin: studioUrl,
-    })
+    return enableOverlays()
   })
 
   const client = createClient({

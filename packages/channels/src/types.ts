@@ -42,9 +42,9 @@ export type ToArgs<T extends ChannelsMsg> = T extends T
  * @public
  */
 export type ChannelsConnectionStatus =
-  | 'fresh'
   | 'connecting'
   | 'connected'
+  | 'reconnecting'
   | 'disconnected'
 
 /**
@@ -79,28 +79,40 @@ export type ChannelsEventHandler<T extends ChannelsMsg = ChannelsMsg> = (
  */
 export interface ChannelsPublisherOptions<T extends ChannelsMsg = ChannelsMsg> {
   id: string
-  connectTo: ChannelsPublisherConnectionOptions[]
+  connectTo: ChannelsPublisherConnectionOptions<T>[]
   frame: HTMLIFrameElement
   frameOrigin: string
-  handler?: ChannelsEventHandler<T>
+  onEvent?: ChannelsEventHandler<T>
+  onStatusUpdate?: (
+    status: ChannelsConnectionStatus,
+    connectionId: string,
+  ) => void
 }
 
 /**
  * @public
  */
-export interface ChannelsPublisherConnectionOptions {
+export interface ChannelsPublisherConnectionOptions<
+  T extends ChannelsMsg = ChannelsMsg,
+> {
   id: string
   heartbeat?: boolean | number
-  onStatusUpdate?: (status: string, id: string) => void
+  onStatusUpdate?: (
+    status: ChannelsConnectionStatus,
+    connectionId: string,
+  ) => void
+  onEvent?: ChannelsEventHandler<T>
 }
 
 /**
  * @internal
  */
-export interface ChannelsPublisherConnection {
+export interface ChannelsPublisherConnection<
+  T extends ChannelsMsg = ChannelsMsg,
+> {
   id: string | null
   buffer: ChannelsMsg[]
-  config: ChannelsPublisherConnectionOptions
+  config: ChannelsPublisherConnectionOptions<T>
   handler: (e: MessageEvent) => void
   heartbeat: number | undefined
   interval: number | undefined
@@ -112,7 +124,7 @@ export interface ChannelsPublisherConnection {
  */
 export interface ChannelsPublisher<T extends ChannelsMsg = ChannelsMsg> {
   destroy: () => void
-  send: (...args: ToArgs<T>) => Promise<string[]>
+  send: (id: string | string[] | undefined, ...args: ToArgs<T>) => void
 }
 
 /**
@@ -123,8 +135,8 @@ export interface ChannelsSubscriberOptions<
 > {
   id: string
   connectTo: string
-  handler?: ChannelsEventHandler<T>
-  onStatusUpdate?: (id: string) => void
+  onEvent?: ChannelsEventHandler<T>
+  onStatusUpdate?: (status: ChannelsConnectionStatus) => void
 }
 
 /**
@@ -132,6 +144,7 @@ export interface ChannelsSubscriberOptions<
  */
 export interface ChannelsSubscriberConnection {
   id: string | null
+  buffer: ChannelsMsg[]
   origin: string | null
   status: ChannelsConnectionStatus
 }
@@ -142,5 +155,5 @@ export interface ChannelsSubscriberConnection {
 export interface ChannelsSubscriber<T extends ChannelsMsg = ChannelsMsg> {
   destroy: () => void
   inFrame: boolean
-  send: (...args: ToArgs<T>) => Promise<void>
+  send: (...args: ToArgs<T>) => void
 }

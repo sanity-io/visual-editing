@@ -7,6 +7,7 @@ export const HANDSHAKE_INTERVAL = 500
 export const INTERNAL_MSG_TYPES = [
   'channel/disconnect',
   'channel/response',
+  'channel/heartbeat',
 ] satisfies ChannelsMsgType[]
 
 export const HANDSHAKE_MSG_TYPES = [

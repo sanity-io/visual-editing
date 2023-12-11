@@ -114,9 +114,7 @@ const {
 let disableLiveMode: ReturnType<typeof useLiveMode> | undefined
 
 onMounted(() => {
-  disableLiveMode = useLiveMode({
-    allowStudioOrigin: studioUrl,
-  })
+  disableLiveMode = useLiveMode({ allowStudioOrigin: studioUrl })
 })
 onUnmounted(() => disableLiveMode && disableLiveMode())
 </script>
