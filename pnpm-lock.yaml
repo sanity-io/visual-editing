@@ -706,8 +706,8 @@ importers:
   packages/overlays:
     dependencies:
       '@floating-ui/react-dom':
-        specifier: 2.0.0
-        version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: 2.0.4
+        version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
       '@sanity/client':
         specifier: ^6.9.3
         version: 6.9.3
@@ -3274,6 +3274,17 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
+  /@floating-ui/react-dom@2.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-CF8k2rgKeh/49UrnIBs4BdxPUV6vize/Db1d/YbCLyp9GiVZ0BEwf5AiDSxJRCr6yOkGqTFHtmrULxkEfYZ7dQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/dom': 1.5.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@floating-ui/utils@0.1.6:
     resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
 
@@ -4387,7 +4398,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -12845,10 +12855,6 @@ packages:
   /nanostores@0.9.5:
     resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    dev: true
-
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
