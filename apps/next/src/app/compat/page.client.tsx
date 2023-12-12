@@ -30,7 +30,7 @@ export default function ShoesPageClient(props: Props) {
     }
     return map
   }, [sourceMap?.documents])
-  useDocumentsInUse(documentsInUse, studioUrl, projectId, dataset)
+  useDocumentsInUse(documentsInUse, projectId, dataset)
 
   return (
     <div className="min-h-screen bg-white">

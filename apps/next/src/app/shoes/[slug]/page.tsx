@@ -8,7 +8,9 @@ type Props = {
 
 export default async function ShoePage(props: Props) {
   const { params } = props
-  const initial = loadQuery<ShoeResult>(shoe, params satisfies ShoeParams)
+  const initial = loadQuery<ShoeResult>(shoe, params satisfies ShoeParams, {
+    next: { tags: [`shoe:${params.slug}`, 'brandReference'] },
+  })
 
   return <ShoePageClient params={params} initial={initial} />
 }
