@@ -28,6 +28,33 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.6...presentation-v1.2.0) (2023-12-12)
+
+
+### Features
+
+* add "Proceed anyway" button when the preview frame can't connect ([#555](https://github.com/sanity-io/visual-editing/issues/555)) ([78f55f7](https://github.com/sanity-io/visual-editing/commit/78f55f7890e62eeaca2ae9495d023ee3848ec38d))
+* **channels:** simplify implementation and API ([#542](https://github.com/sanity-io/visual-editing/issues/542)) ([4854e7f](https://github.com/sanity-io/visual-editing/commit/4854e7f22dabe1aafad340342d1dbc209a94e9e0))
+
+
+### Bug Fixes
+
+* deprecate `allowStudioOrigin`, as it's no longer needed ([7ad52a0](https://github.com/sanity-io/visual-editing/commit/7ad52a03dfc05e3b3b7323468be4ebb1ae78c78a))
+* **deps:** update dependency @sanity/client to ^6.10.0 ([#551](https://github.com/sanity-io/visual-editing/issues/551)) ([5dc24c9](https://github.com/sanity-io/visual-editing/commit/5dc24c98bb84d7bc6dea5e77ac88dc4ca2cc9c6b))
+* don't emit query change events if the result is the same ([814c0a3](https://github.com/sanity-io/visual-editing/commit/814c0a344578fa7d69786a51a3d73d403b84ce8e))
+* prevent loading a studio within a studio ([#552](https://github.com/sanity-io/visual-editing/issues/552)) ([f1ccdaa](https://github.com/sanity-io/visual-editing/commit/f1ccdaa5cfb26c2eebc412a64aefe35015b86936))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.3.4 to 5.3.5
+    * @sanity/preview-url-secret bumped from ^1.3.3 to ^1.3.4
+  * devDependencies
+    * @sanity/channels bumped from 0.1.0 to 0.2.0
+    * @sanity/visual-editing-helpers bumped from 0.1.3 to 0.1.4
+
 ## [1.1.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.1.4...presentation-v1.1.5) (2023-12-08)
 
 

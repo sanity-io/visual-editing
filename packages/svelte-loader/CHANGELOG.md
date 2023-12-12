@@ -41,6 +41,29 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
 
+## [1.3.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.2.2...svelte-loader-v1.3.0) (2023-12-12)
+
+
+### Features
+
+* **channels:** simplify implementation and API ([#542](https://github.com/sanity-io/visual-editing/issues/542)) ([4854e7f](https://github.com/sanity-io/visual-editing/commit/4854e7f22dabe1aafad340342d1dbc209a94e9e0))
+
+
+### Bug Fixes
+
+* deprecate `allowStudioOrigin`, as it's no longer needed ([7ad52a0](https://github.com/sanity-io/visual-editing/commit/7ad52a03dfc05e3b3b7323468be4ebb1ae78c78a))
+* **deps:** update dependency @sanity/client to ^6.10.0 ([#551](https://github.com/sanity-io/visual-editing/issues/551)) ([5dc24c9](https://github.com/sanity-io/visual-editing/commit/5dc24c98bb84d7bc6dea5e77ac88dc4ca2cc9c6b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.1.4 to 1.2.0
+  * devDependencies
+    * @sanity/channels bumped from 0.1.0 to 0.2.0
+    * @sanity/visual-editing-helpers bumped from 0.1.3 to 0.1.4
+
 ## [1.2.1](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.2.0...svelte-loader-v1.2.1) (2023-12-07)
 
 

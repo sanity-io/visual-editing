@@ -6,6 +6,21 @@
   * devDependencies
     * @sanity/channels bumped to 0.1.0
 
+## [1.3.4](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.3.3...preview-url-secret-v1.3.4) (2023-12-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.10.0 ([#551](https://github.com/sanity-io/visual-editing/issues/551)) ([5dc24c9](https://github.com/sanity-io/visual-editing/commit/5dc24c98bb84d7bc6dea5e77ac88dc4ca2cc9c6b))
+* prevent loading a studio within a studio ([#552](https://github.com/sanity-io/visual-editing/issues/552)) ([f1ccdaa](https://github.com/sanity-io/visual-editing/commit/f1ccdaa5cfb26c2eebc412a64aefe35015b86936))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/channels bumped from 0.1.0 to 0.2.0
+
 ## [1.3.3](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.3.2...preview-url-secret-v1.3.3) (2023-12-08)
 
 

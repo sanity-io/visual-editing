@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/sanity-io/visual-editing/compare/channels-v0.1.0...channels-v0.2.0) (2023-12-12)
+
+
+### Features
+
+* **channels:** simplify implementation and API ([#542](https://github.com/sanity-io/visual-editing/issues/542)) ([4854e7f](https://github.com/sanity-io/visual-editing/commit/4854e7f22dabe1aafad340342d1dbc209a94e9e0))
+
 ## 0.1.0 (2023-12-05)
 
 
