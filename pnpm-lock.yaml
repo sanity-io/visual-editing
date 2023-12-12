@@ -344,7 +344,7 @@ importers:
         version: 2.3.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
       '@remix-run/vercel':
         specifier: ^1.19.3
-        version: 1.19.3(@vercel/node@3.0.11)
+        version: 1.19.3(@vercel/node@3.0.12)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -358,8 +358,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/react-loader
       '@vercel/node':
-        specifier: ^3.0.11
-        version: 3.0.11
+        specifier: ^3.0.12
+        version: 3.0.12
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
@@ -484,18 +484,18 @@ importers:
         version: link:../../packages/svelte-loader
       '@sveltejs/adapter-auto':
         specifier: ^2.1.1
-        version: 2.1.1(@sveltejs/kit@1.28.0)
+        version: 2.1.1(@sveltejs/kit@1.29.0)
       '@sveltejs/kit':
-        specifier: ^1.28.0
-        version: 1.28.0(svelte@4.2.8)(vite@5.0.7)
+        specifier: ^1.29.0
+        version: 1.29.0(svelte@4.2.8)(vite@5.0.7)
       '@types/cookie':
         specifier: ^0.6.0
         version: 0.6.0
       '@typescript-eslint/eslint-plugin':
-        specifier: ^6.13.2
+        specifier: ^6.14.0
         version: 6.14.0(@typescript-eslint/parser@6.14.0)(eslint@8.55.0)(typescript@5.3.3)
       '@typescript-eslint/parser':
-        specifier: ^6.13.2
+        specifier: ^6.14.0
         version: 6.14.0(eslint@8.55.0)(typescript@5.3.3)
       apps-common:
         specifier: workspace:*
@@ -4760,14 +4760,14 @@ packages:
       source-map: 0.7.4
       typescript: 5.3.3
 
-  /@remix-run/vercel@1.19.3(@vercel/node@3.0.11):
+  /@remix-run/vercel@1.19.3(@vercel/node@3.0.12):
     resolution: {integrity: sha512-LoWffUns8u9oqOHSvZtH0LMXWm4NuZ2hUldLx7TAw19lfif1liwa8WrqxRyMItuUp1xEo6shTDCNEUNdQtsEGg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@vercel/node': ^1.8.3 || ^2.4.0
     dependencies:
       '@remix-run/node': 1.19.3
-      '@vercel/node': 3.0.11
+      '@vercel/node': 3.0.12
     dev: false
 
   /@remix-run/web-blob@3.1.0:
@@ -5558,17 +5558,17 @@ packages:
     resolution: {integrity: sha512-rUV5WyJrJLoloD4NDN1V1+LDMDWOa4OTsT4yYJwQNpTU6FWxkxHpL7eu4w+DmiH8x/EAM1otkPE1+LaspIbplw==}
     engines: {node: '>=18'}
 
-  /@sveltejs/adapter-auto@2.1.1(@sveltejs/kit@1.28.0):
+  /@sveltejs/adapter-auto@2.1.1(@sveltejs/kit@1.29.0):
     resolution: {integrity: sha512-nzi6x/7/3Axh5VKQ8Eed3pYxastxoa06Y/bFhWb7h3Nu+nGRVxKAy3+hBJgmPCwWScy8n0TsstZjSVKfyrIHkg==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
-      '@sveltejs/kit': 1.28.0(svelte@4.2.8)(vite@5.0.7)
+      '@sveltejs/kit': 1.29.0(svelte@4.2.8)(vite@5.0.7)
       import-meta-resolve: 4.0.0
     dev: true
 
-  /@sveltejs/kit@1.28.0(svelte@4.2.8)(vite@5.0.7):
-    resolution: {integrity: sha512-T9hoS6XM840W4ZUgf3kKAoBt2dsupumUxBtlxt3ddu2yRLrqsKcC3gledBB/e5NtTC8zEZyR5qWBNFT9WAWmIA==}
+  /@sveltejs/kit@1.29.0(svelte@4.2.8)(vite@5.0.7):
+    resolution: {integrity: sha512-O+DvB67Ouha0pVKh0nRxr8QwZcls8h4knLoS6Sk1DhRLAuQzuM0FNnPNIhMHL1iP1LFeXd3P+bk+h2V07WSF5w==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
     requiresBuild: true
@@ -6331,8 +6331,8 @@ packages:
     resolution: {integrity: sha512-17kVyLq3ePTKOkveHxXuIJZtGYs+cSoev7BlP+Lf4916qfDhk/HBjvlYDe8egrea7LNPHKwSZJK/bzZC+Q6AwQ==}
     dev: true
 
-  /@vercel/build-utils@7.2.5:
-    resolution: {integrity: sha512-rlXL7Kjwfl8c8CQ9fYpP/+AunFZbaXXf89OT+7G8E/CGRM+hAYrGF+N3Kz1X8TfwfNlSCqPs7VQriOKKajUS0g==}
+  /@vercel/build-utils@7.3.0:
+    resolution: {integrity: sha512-RJwqrGYSk75auHZqWmlSL+a5JsWv+4SF1AxNQJ+KpF3XWZ/8yThkN/jHBfNxMmW6VvNczSVtMaXI0/2Sess6Eg==}
     dev: false
 
   /@vercel/error-utils@2.0.2:
@@ -6381,14 +6381,14 @@ packages:
       - supports-color
     dev: true
 
-  /@vercel/node@3.0.11:
-    resolution: {integrity: sha512-J6ETfnfHNCnomEaEVTdbr/J1t1+SDYTx7nawCRux+Gn2JDrQ6y1K0YIi61FLLd7uIhShqJ4DzfImih7zKxxeeg==}
+  /@vercel/node@3.0.12:
+    resolution: {integrity: sha512-OiNHiUe1LX/CfDrQ07ntPsoYhJiC38mEeErYeqA6YNVAz3QGdX3pthiaIig2KPqeeYkEx5bSkVIqQtQOTJBuLQ==}
     dependencies:
       '@edge-runtime/node-utils': 2.2.1
       '@edge-runtime/primitives': 4.0.5
       '@edge-runtime/vm': 3.1.7
       '@types/node': 14.18.33
-      '@vercel/build-utils': 7.2.5
+      '@vercel/build-utils': 7.3.0
       '@vercel/error-utils': 2.0.2
       '@vercel/nft': 0.24.2
       '@vercel/static-config': 3.0.0
