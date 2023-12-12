@@ -8,20 +8,9 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import { QueryStore as BaseQueryStore } from '../types'
+import { QueryStore as BaseQueryStore, QueryStore } from '../types'
 
 export type * from '../types'
-
-export type QueryStore = BaseQueryStore<LoadQueryOptions>
-
-export interface LoadQueryOptions<T = 'next'> {
-  /**
-   * The perspective used to fetch the data, if not provided it'll assume 'published'
-   */
-  perspective?: ClientPerspective
-  cache?: RequestInit['cache']
-  next?: T extends keyof RequestInit ? RequestInit[T] : never
-}
 
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
@@ -38,7 +27,7 @@ export const createQueryStore = (
   const loadQuery = async <QueryResponseResult>(
     query: string,
     params: QueryParams = {},
-    options: LoadQueryOptions = {},
+    options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<{
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined

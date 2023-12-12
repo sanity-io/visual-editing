@@ -2,6 +2,7 @@ import type {
   ClientPerspective,
   ContentSourceMap,
   QueryParams,
+  ResponseQueryOptions,
 } from '@sanity/client'
 import type {
   ResolveStudioUrl,
@@ -109,13 +110,11 @@ export type UseLiveModeHook = (
   },
 ) => void
 
-export interface QueryStore<
-  LoadQueryOptions = { perspective?: ClientPerspective },
-> {
+export interface QueryStore {
   loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: LoadQueryOptions,
+    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next'>,
   ) => Promise<QueryResponseInitial<QueryResponseResult>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {

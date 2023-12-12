@@ -15,9 +15,7 @@ export const defineEnableLiveMode: (
       throw new Error('Live mode is not supported in server environments')
     }
     if (ssr && !options.client) {
-      throw new Error(
-        'The `client` option in `enableLiveMode` is required when `ssr: true`',
-      )
+      throw new Error('The `client` option in `enableLiveMode` is required')
     }
 
     const client = options.client || config.client || undefined
