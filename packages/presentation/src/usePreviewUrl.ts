@@ -18,7 +18,10 @@ export function usePreviewUrl(
   previewSearchParam: string | null,
 ): URL {
   const client = useClient({ apiVersion: API_VERSION })
-  const deps = useSuspendCacheKeys(toolName)
+  const workspace = useActiveWorkspace()
+  const basePath = workspace?.activeWorkspace?.basePath || '/'
+  const workspaceName = workspace?.activeWorkspace?.name || 'default'
+  const deps = useSuspendCacheKeys(toolName, basePath, workspaceName)
   const previewUrlSecret = usePreviewUrlSecret(
     typeof previewUrl === 'object' || typeof previewUrl === 'function',
     deps,
@@ -26,24 +29,31 @@ export function usePreviewUrl(
   return suspend(async () => {
     if (typeof previewUrl === 'string') {
       const resolvedUrl = new URL(previewUrl, location.origin)
+      let resultUrl = resolvedUrl
       try {
         if (previewSearchParam) {
           const restoredUrl = new URL(previewSearchParam, resolvedUrl)
           if (restoredUrl.origin === resolvedUrl.origin) {
-            return restoredUrl
+            resultUrl = restoredUrl
           }
-        }
-        if (document.referrer) {
+        } else if (document.referrer) {
           const referrerUrl = new URL(document.referrer)
           if (referrerUrl.origin === resolvedUrl.origin) {
-            return referrerUrl
+            resultUrl = referrerUrl
           }
         }
       } catch {
         // ignore
       }
-
-      return resolvedUrl
+      // Prevent infinite recursion
+      if (
+        location.origin === resultUrl.origin &&
+        (resultUrl.pathname.startsWith(`${basePath}/`) ||
+          resultUrl.pathname === basePath)
+      ) {
+        return resolvedUrl
+      }
+      return resultUrl
     }
     const resolvePreviewUrl =
       typeof previewUrl === 'object'
@@ -54,6 +64,7 @@ export function usePreviewUrl(
       previewUrlSecret: previewUrlSecret!,
       previewSearchParam,
       referrer: typeof document === 'undefined' ? null : document.referrer,
+      studioBasePath: basePath,
     })
     return new URL(resolvedUrl, location.origin)
   }, [...deps, previewUrlSecret]) satisfies URL
@@ -62,11 +73,12 @@ export function usePreviewUrl(
 // https://github.com/pmndrs/suspend-react?tab=readme-ov-file#making-cache-keys-unique
 const resolveUUID = Symbol()
 
-function useSuspendCacheKeys(toolName: string) {
+function useSuspendCacheKeys(
+  toolName: string,
+  basePath: string,
+  workspaceName: string,
+) {
   const currentUser = useCurrentUser()
-  const workspace = useActiveWorkspace()
-  const basePath = workspace?.activeWorkspace?.basePath
-  const workspaceName = workspace?.activeWorkspace?.name || 'default'
   return useMemo(
     () => [
       // Cache based on a few specific conditions
