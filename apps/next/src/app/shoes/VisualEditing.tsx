@@ -55,7 +55,7 @@ export default function VisualEditing() {
     }
   }, [navigate, pathname, searchParams])
 
-  useLiveMode({ allowStudioOrigin: studioUrl, client: stegaClient })
+  useLiveMode({ client: stegaClient })
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview' && window === parent) {
       // If not an iframe, turn off Draft Mode

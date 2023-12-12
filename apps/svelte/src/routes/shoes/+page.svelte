@@ -22,10 +22,7 @@
   onMount(() => enableOverlays())
 
   onMount(() =>
-    useLiveMode({
-      allowStudioOrigin: studioUrl,
-      client,
-    }),
+    useLiveMode({ client }),
   )
 </script>
 

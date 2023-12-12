@@ -49,7 +49,7 @@ export default function VisualEditing() {
     }
   }, [navigate, pathname, searchParams])
 
-  useLiveMode({ allowStudioOrigin: studioUrl })
+  useLiveMode({})
 
   return null
 }
