@@ -5,6 +5,7 @@ import {
   CardProps,
   Container,
   Flex,
+  Inline,
   Stack,
   Text,
 } from '@sanity/ui'
@@ -15,9 +16,23 @@ export function ErrorCard(
     children?: ReactNode
     message: string
     onRetry?: () => void
+    onContinueAnyway?: () => void
   } & CardProps,
 ): ReactElement {
-  const { children, message, onRetry, ...restProps } = props
+  const { children, message, onRetry, onContinueAnyway, ...restProps } = props
+
+  const retryButton = (
+    <Button fontSize={1} mode="ghost" onClick={onRetry} text="Retry" />
+  )
+  const continueAnywayButton = (
+    <Button
+      fontSize={1}
+      mode="ghost"
+      tone="critical"
+      onClick={onContinueAnyway}
+      text="Continue anyway"
+    />
+  )
 
   return (
     <Card height="fill" {...restProps}>
@@ -35,16 +50,16 @@ export function ErrorCard(
 
             {children}
 
-            {onRetry && (
-              <Box>
-                <Button
-                  fontSize={1}
-                  mode="ghost"
-                  onClick={onRetry}
-                  text="Retry"
-                />
-              </Box>
-            )}
+            {onRetry && onContinueAnyway ? (
+              <Inline space={2}>
+                {retryButton}
+                {continueAnywayButton}
+              </Inline>
+            ) : onRetry ? (
+              <Box>{retryButton}</Box>
+            ) : onContinueAnyway ? (
+              <Box>{continueAnywayButton}</Box>
+            ) : null}
           </Stack>
         </Container>
       </Flex>
