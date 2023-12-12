@@ -4,8 +4,11 @@ import type {
   StudioPathLike,
   StudioUrl,
 } from '@sanity/client/csm'
-import { encodeDataAttribute } from '@sanity/core-loader/encode-data-attribute'
-import { useCallback } from 'react'
+import {
+  defineEncodeDataAttribute,
+  type EncodeDataAttributeFunction,
+} from '@sanity/core-loader/encode-data-attribute'
+import { useMemo } from 'react'
 
 /** @public */
 export type EncodeDataAttributeCallback = (
@@ -17,14 +20,9 @@ export function useEncodeDataAttribute<QueryResponseResult = unknown>(
   result: QueryResponseResult,
   sourceMap: ContentSourceMap | undefined,
   studioUrl: StudioUrl | ResolveStudioUrl | undefined,
-): EncodeDataAttributeCallback {
-  return useCallback(
-    (path) => {
-      if (!studioUrl) {
-        return undefined
-      }
-      return encodeDataAttribute(result, sourceMap, studioUrl, path)
-    },
+): EncodeDataAttributeFunction {
+  return useMemo(
+    () => defineEncodeDataAttribute(result, sourceMap, studioUrl),
     [result, sourceMap, studioUrl],
   )
 }

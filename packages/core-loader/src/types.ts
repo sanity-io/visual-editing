@@ -26,7 +26,7 @@ export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
 export type EncodeDataAttribute<QueryResponseResult = unknown> = (
   result: QueryResponseResult,
   sourceMap: ContentSourceMap | undefined,
-  studioUrl: Exclude<StegaConfig['studioUrl'], undefined>,
+  studioUrl: Exclude<StegaConfig['studioUrl'], undefined> | undefined,
   path: StudioPathLike,
 ) => string | undefined
 
