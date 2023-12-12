@@ -171,7 +171,11 @@ export const PreviewFrame = forwardRef<
 
     setRefreshing(true)
   }, [ref, initialUrl])
+  const handleContinueAnyway = useCallback(() => {
+    setContinueAnyway(true)
+  }, [])
 
+  const [continueAnyway, setContinueAnyway] = useState(false)
   const [showOverlaysConnectionStatus, setShowOverlaysConnectionState] =
     useState(false)
   useEffect(() => {
@@ -199,6 +203,7 @@ export const PreviewFrame = forwardRef<
       setSomethingIsWrong(false)
       setShowOverlaysConnectionState(false)
       setTimedOut(false)
+      setContinueAnyway(false)
     }
     if (overlaysConnection === 'connecting') {
       const timeout = setTimeout(() => {
@@ -499,7 +504,8 @@ export const PreviewFrame = forwardRef<
               {!somethingIsWrong &&
               !loading &&
               !refreshing &&
-              showOverlaysConnectionStatus ? (
+              showOverlaysConnectionStatus &&
+              !continueAnyway ? (
                 <MotionFlex
                   initial="initial"
                   animate="animate"
@@ -522,7 +528,18 @@ export const PreviewFrame = forwardRef<
                     style={{ ...sizes[mode] }}
                     justify="center"
                     align="center"
+                    direction="column"
+                    gap={4}
                   >
+                    {timedOut && (
+                      <Button
+                        disabled
+                        fontSize={1}
+                        mode="ghost"
+                        text="Continue anyway"
+                        style={{ opacity: 0 }}
+                      />
+                    )}
                     <Card
                       radius={2}
                       tone={timedOut ? 'caution' : 'inherit'}
@@ -548,9 +565,18 @@ export const PreviewFrame = forwardRef<
                         </Text>
                       </Flex>
                     </Card>
+                    {timedOut && (
+                      <Button
+                        fontSize={1}
+                        // mode="ghost"
+                        tone="critical"
+                        onClick={handleContinueAnyway}
+                        text="Continue anyway"
+                      />
+                    )}
                   </Flex>
                 </MotionFlex>
-              ) : loading || iframeIsBusy ? (
+              ) : (loading || iframeIsBusy) && !continueAnyway ? (
                 <MotionFlex
                   initial="initial"
                   animate="animate"
@@ -577,7 +603,7 @@ export const PreviewFrame = forwardRef<
                     </Text>
                   </Flex>
                 </MotionFlex>
-              ) : somethingIsWrong ? (
+              ) : somethingIsWrong && !continueAnyway ? (
                 <MotionFlex
                   initial="initial"
                   animate="animate"
@@ -597,6 +623,7 @@ export const PreviewFrame = forwardRef<
                     flex={1}
                     message="Could not connect to the preview"
                     onRetry={handleRetry}
+                    onContinueAnyway={handleContinueAnyway}
                   >
                     {devMode && (
                       <>
@@ -630,7 +657,8 @@ export const PreviewFrame = forwardRef<
             <IFrame
               ref={ref}
               style={{
-                pointerEvents: iframeIsBusy ? 'none' : 'auto',
+                pointerEvents:
+                  iframeIsBusy && !continueAnyway ? 'none' : 'auto',
                 boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
                 borderTop: '1px solid transparent',
               }}
@@ -638,10 +666,14 @@ export const PreviewFrame = forwardRef<
               initial={['background']}
               variants={iframeVariants}
               animate={[
-                loading || iframeIsBusy ? 'background' : 'active',
+                (loading || iframeIsBusy) && !continueAnyway
+                  ? 'background'
+                  : 'active',
                 refreshing ? 'reloading' : 'idle',
                 mode,
-                showOverlaysConnectionStatus ? 'timedOut' : '',
+                showOverlaysConnectionStatus && !continueAnyway
+                  ? 'timedOut'
+                  : '',
               ]}
               onLoad={onIFrameLoad}
             />
