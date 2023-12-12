@@ -24,34 +24,38 @@
 </template>
 
 <script lang="ts" setup>
-import { type ChannelReturns, createChannel } from '@sanity/channels'
+import {
+  type ChannelsController,
+  createChannelsController,
+} from '@sanity/channels'
 
 const log = ref<any[]>([])
-const channel = ref<ChannelReturns | undefined>()
+const channel = ref<ChannelsController | undefined>()
 const iframeEl = ref<HTMLIFrameElement | undefined>()
 
 onMounted(async () => {
-  channel.value = createChannel({
+  channel.value = createChannelsController({
     id: 'parent',
-    connections: [
+    frame: iframeEl.value!,
+    frameOrigin: 'same-origin',
+    connectTo: [
       {
-        target: iframeEl.value?.contentWindow!,
         id: 'child',
       },
     ],
-    handler(type, data) {
+    onEvent(type, data) {
       log.value.unshift({ ...data, type })
     },
   })
 })
 
 onUnmounted(() => {
-  channel.value?.disconnect()
+  channel.value?.destroy()
   channel.value = undefined
 })
 
 const sendMessage = () => {
-  channel.value?.send('parent/event', {
+  channel.value?.send('child', 'parent/event', {
     datetime: new Date().toISOString(),
   })
 }

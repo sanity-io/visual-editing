@@ -26,28 +26,23 @@
 </template>
 
 <script lang="ts" setup>
-import { type ChannelReturns, createChannel } from '@sanity/channels'
+import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
 
 const log = ref<any[]>([])
-const channel = ref<ChannelReturns | undefined>()
+const channel = ref<ChannelsNode | undefined>()
 
 onMounted(() => {
-  channel.value = createChannel({
+  channel.value = createChannelsNode({
     id: 'child',
-    connections: [
-      {
-        target: parent,
-        id: 'parent',
-      },
-    ],
-    handler(type, data) {
+    connectTo: 'parent',
+    onEvent(type, data) {
       log.value.unshift({ ...data, type })
     },
   })
 })
 
 onUnmounted(() => {
-  channel.value?.disconnect()
+  channel.value?.destroy()
 })
 
 const sendMessage = () => {

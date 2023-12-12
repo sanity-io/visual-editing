@@ -1,4 +1,4 @@
-import type { ConnectionStatus } from '@sanity/channels'
+import type { ChannelStatus } from '@sanity/channels'
 import { ClientPerspective } from '@sanity/client'
 import {
   CheckmarkIcon,
@@ -111,9 +111,9 @@ export const PreviewFrame = forwardRef<
     setPerspective: Dispatch<SetStateAction<ClientPerspective>>
     toggleNavigator?: () => void
     toggleOverlay: () => void
-    loadersConnection: ConnectionStatus
-    overlaysConnection: ConnectionStatus
-    previewKitConnection: ConnectionStatus
+    loadersConnection: ChannelStatus
+    overlaysConnection: ChannelStatus
+    previewKitConnection: ChannelStatus
   }
 >(function PreviewFrame(props, ref) {
   const {
@@ -142,15 +142,9 @@ export const PreviewFrame = forwardRef<
   const [loading, setLoading] = useState(true)
   const [timedOut, setTimedOut] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [somethingIsWrong, setSomethingIsWrong] = useState(false)
   const iframeIsBusy =
     loading || refreshing || overlaysConnection === 'connecting'
-  const somethingIsWrong =
-    overlaysConnection === 'unhealthy' ||
-    overlaysConnection === 'disconnected' ||
-    loadersConnection === 'unhealthy' ||
-    loadersConnection === 'disconnected' ||
-    previewKitConnection === 'unhealthy' ||
-    previewKitConnection === 'disconnected'
 
   const previewLocationOrigin = useMemo(() => {
     return targetOrigin === location.origin ? '' : targetOrigin
@@ -185,19 +179,25 @@ export const PreviewFrame = forwardRef<
       return
     }
 
-    if (overlaysConnection === 'connecting') {
+    if (
+      overlaysConnection === 'connecting' ||
+      overlaysConnection === 'reconnecting'
+    ) {
       const timeout = setTimeout(() => {
         setShowOverlaysConnectionState(true)
-      }, 3000)
+      }, 1000)
       return () => clearTimeout(timeout)
     }
     return
-  }, [overlaysConnection, loading, refreshing])
+  }, [overlaysConnection, loading, refreshing, setShowOverlaysConnectionState])
+
   useEffect(() => {
     if (loading || refreshing || !showOverlaysConnectionStatus) {
       return
     }
     if (overlaysConnection === 'connected') {
+      setSomethingIsWrong(false)
+      setShowOverlaysConnectionState(false)
       setTimedOut(false)
     }
     if (overlaysConnection === 'connecting') {
@@ -210,8 +210,18 @@ export const PreviewFrame = forwardRef<
       }, MAX_TIME_TO_OVERLAYS_CONNECTION)
       return () => clearTimeout(timeout)
     }
+    if (overlaysConnection === 'reconnecting') {
+      const timeout = setTimeout(() => {
+        setTimedOut(true)
+        setSomethingIsWrong(true)
+      }, MAX_TIME_TO_OVERLAYS_CONNECTION)
+      return () => clearTimeout(timeout)
+    }
+    if (overlaysConnection === 'disconnected') {
+      setSomethingIsWrong(true)
+    }
     return
-  }, [overlaysConnection, loading, refreshing, showOverlaysConnectionStatus])
+  }, [loading, overlaysConnection, refreshing, showOverlaysConnectionStatus])
 
   const previewLocationRoute = useMemo(() => {
     const previewUrl = new URL(params.preview || '/', targetOrigin)
@@ -489,8 +499,7 @@ export const PreviewFrame = forwardRef<
               {!somethingIsWrong &&
               !loading &&
               !refreshing &&
-              showOverlaysConnectionStatus &&
-              loadersConnection === 'connecting' ? (
+              showOverlaysConnectionStatus ? (
                 <MotionFlex
                   initial="initial"
                   animate="animate"
@@ -568,7 +577,7 @@ export const PreviewFrame = forwardRef<
                     </Text>
                   </Flex>
                 </MotionFlex>
-              ) : somethingIsWrong && !iframeIsBusy ? (
+              ) : somethingIsWrong ? (
                 <MotionFlex
                   initial="initial"
                   animate="animate"
@@ -591,8 +600,7 @@ export const PreviewFrame = forwardRef<
                   >
                     {devMode && (
                       <>
-                        {(overlaysConnection === 'unhealthy' ||
-                          overlaysConnection === 'disconnected') && (
+                        {overlaysConnection !== 'connected' && (
                           <Card padding={3} radius={2} tone="critical">
                             <Stack space={3}>
                               <Label muted size={0}>
@@ -603,8 +611,7 @@ export const PreviewFrame = forwardRef<
                           </Card>
                         )}
 
-                        {(loadersConnection === 'unhealthy' ||
-                          loadersConnection === 'disconnected') && (
+                        {loadersConnection !== 'connected' && (
                           <Card padding={3} radius={2} tone="critical">
                             <Stack space={3}>
                               <Label muted size={0}>

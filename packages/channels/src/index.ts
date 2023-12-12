@@ -1,11 +1,14 @@
-export { createChannel } from './channels'
+export * from './controller'
+export * from './node'
 export type {
-  ChannelEventHandler,
   ChannelMsg,
-  ChannelOptions,
-  ChannelReturns,
-  Connection,
-  ConnectionStatus,
-  MsgBody,
-  MsgType,
+  ChannelMsgData,
+  ChannelMsgType,
+  ChannelsController,
+  ChannelsControllerChannelOptions,
+  ChannelsControllerOptions,
+  ChannelsEventHandler,
+  ChannelsNode,
+  ChannelsNodeOptions,
+  ChannelStatus,
 } from './types'

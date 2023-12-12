@@ -1,4 +1,4 @@
-import { ChannelEventHandler } from '@sanity/channels'
+import type { ChannelsEventHandler } from '@sanity/channels'
 import {
   isHTMLAnchorElement,
   isHTMLElement,
@@ -24,7 +24,7 @@ import styled from 'styled-components'
 import { HistoryAdapter, OverlayEventHandler } from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { overlayStateReducer } from './overlayStateReducer'
-import { useAllowStudioOrigin } from './useAllowStudioOrigin'
+import type { AllowStudioOrigin } from './useAllowStudioOrigin'
 import { useChannel } from './useChannel'
 import { useController } from './useController'
 
@@ -58,11 +58,11 @@ function raf2(fn: () => void) {
  * @internal
  */
 export const Overlays: FunctionComponent<{
+  allowStudioOrigin?: AllowStudioOrigin
   history?: HistoryAdapter
-  allowStudioOrigin: string
   zIndex?: string | number
 }> = function (props) {
-  const { history, allowStudioOrigin, zIndex } = props
+  const { history, zIndex } = props
   const [{ elements, wasMaybeCollapsed }, dispatch] = useReducer(
     overlayStateReducer,
     undefined,
@@ -76,7 +76,7 @@ export const Overlays: FunctionComponent<{
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
   const channelEventHandler = useCallback<
-    ChannelEventHandler<VisualEditingMsg>
+    ChannelsEventHandler<VisualEditingMsg>
   >(
     (type, data) => {
       if (type === 'presentation/focus' && data.path?.length) {
@@ -95,12 +95,7 @@ export const Overlays: FunctionComponent<{
     [history],
   )
 
-  const targetOrigin = useAllowStudioOrigin(allowStudioOrigin)
-
-  const { channel, status } = useChannel<VisualEditingMsg>(
-    channelEventHandler,
-    targetOrigin,
-  )
+  const { channel, status } = useChannel<VisualEditingMsg>(channelEventHandler)
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {

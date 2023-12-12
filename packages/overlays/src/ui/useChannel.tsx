@@ -1,9 +1,9 @@
 import {
-  ChannelEventHandler,
-  ChannelMsg,
-  ChannelReturns,
-  ConnectionStatus,
-  createChannel,
+  type ChannelMsg,
+  type ChannelsEventHandler,
+  type ChannelsNode,
+  type ChannelStatus,
+  createChannelsNode,
 } from '@sanity/channels'
 import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
 import { useEffect, useRef, useState } from 'react'
@@ -13,36 +13,27 @@ import { useEffect, useRef, useState } from 'react'
  * @internal
  */
 export function useChannel<T extends ChannelMsg>(
-  handler: ChannelEventHandler<T>,
-  targetOrigin: string,
+  handler: ChannelsEventHandler<T>,
 ): {
-  channel: ChannelReturns<T> | undefined
-  status: ConnectionStatus | undefined
+  channel: ChannelsNode<T> | undefined
+  status: ChannelStatus | undefined
 } {
-  const channelRef = useRef<ChannelReturns<T>>()
-  const [status, setStatus] = useState<ConnectionStatus>()
+  const channelRef = useRef<ChannelsNode<T>>()
+  const [status, setStatus] = useState<ChannelStatus>()
 
   useEffect(() => {
-    const channel = createChannel<T>({
+    const channel = createChannelsNode<T>({
       id: 'overlays' satisfies VisualEditingConnectionIds,
-      connections: [
-        {
-          target: parent,
-          targetOrigin,
-          id: 'presentation' satisfies VisualEditingConnectionIds,
-        },
-      ],
-      handler,
-      onStatusUpdate(status) {
-        setStatus(status)
-      },
+      connectTo: 'presentation' satisfies VisualEditingConnectionIds,
+      onEvent: handler,
+      onStatusUpdate: setStatus,
     })
     channelRef.current = channel
     return () => {
-      channel.disconnect()
+      channel.destroy()
       channelRef.current = undefined
     }
-  }, [handler, targetOrigin])
+  }, [handler])
 
   return {
     channel: channelRef.current,

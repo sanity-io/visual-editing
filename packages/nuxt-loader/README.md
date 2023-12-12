@@ -98,7 +98,7 @@ onUnmounted(() => disableLiveMode?.())
 // Enable overlays
 let disableOverlays: DisableOverlays | undefined
 onMounted(() => {
-  disableOverlays = enableOverlays({ allowStudioOrigin })
+  disableOverlays = enableOverlays()
 })
 onUnmounted(() => disableOverlays?.())
 </script>

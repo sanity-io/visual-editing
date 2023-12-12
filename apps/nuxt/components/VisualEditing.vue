@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-import { studioUrl } from 'apps-common/env'
 import { type DisableOverlays, enableOverlays } from '@sanity/overlays'
 
 let disable: DisableOverlays
@@ -11,9 +10,11 @@ const router = useRouter()
 
 onMounted(() => {
   disable = enableOverlays({
-    allowStudioOrigin: studioUrl,
     history: {
       subscribe: (navigate) => {
+        router.isReady().then(() => {
+          navigate({ type: 'replace', url: router.currentRoute.value.fullPath })
+        })
         return router.afterEach((to) => {
           // There is no mechanism to determine navigation type in a Vue Router navigation guard, so just push
           // https://github.com/vuejs/vue-router/issues/1620

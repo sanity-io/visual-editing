@@ -19,11 +19,7 @@
     studioUrl,
   )
 
-  onMount(() =>
-    enableOverlays({
-      allowStudioOrigin: studioUrl,
-    }),
-  )
+  onMount(() => enableOverlays())
 
   onMount(() =>
     useLiveMode({
