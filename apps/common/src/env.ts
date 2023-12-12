@@ -22,10 +22,15 @@ function maybeGitBranchStudioUrl(url: string) {
   }
   return url
 }
+const isStablePreviewBranch =
+  process.env.VERCEL_BRANCH_URL?.includes('-git-preview') ||
+  process.env.NEXT_PUBLIC_VERCEL_URL?.includes('-git-preview')
 export const studioUrl = maybeGitBranchStudioUrl(
   process.env.NODE_ENV !== 'production'
     ? 'http://localhost:3333'
-    : 'https://visual-editing-studio.sanity.build',
+    : isStablePreviewBranch
+      ? 'https://visual-editing-studio-git-preview.sanity.build'
+      : 'https://visual-editing-studio.sanity.build',
 )
 
 export const apiVersion = '2023-10-11'
