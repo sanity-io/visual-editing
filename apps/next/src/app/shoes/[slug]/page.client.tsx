@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { use } from 'react'
 import { urlFor, urlForCrossDatasetReference } from '../utils'
+import { LemonIcon } from '@sanity/icons'
 
 type Props = {
   params: { slug: string }
@@ -69,6 +70,11 @@ export default function ShoePage(props: Props) {
 
       {product && (
         <article>
+          <LemonIcon
+            aria-label={product.title!}
+            className="right bottom-1 right-1 block h-8 w-8 text-slate-900"
+          />
+          {!loading && <img alt={product.title!} />}
           {coverImage?.asset && (
             <div
               data-sanity={encodeDataAttribute('media[0].asset')}
