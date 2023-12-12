@@ -210,8 +210,6 @@ export default function PresentationTool(props: {
       frameOrigin: targetOrigin,
       connectTo: [
         {
-          // target: iframe,
-          // targetOrigin,
           id: 'overlays' satisfies VisualEditingConnectionIds,
           heartbeat: true,
           onStatusUpdate: setOverlaysConnection,
@@ -239,8 +237,6 @@ export default function PresentationTool(props: {
           },
         },
         {
-          // target: iframe,
-          // targetOrigin,
           id: 'loaders' satisfies VisualEditingConnectionIds,
           heartbeat: true,
           onStatusUpdate: setLoadersConnection,

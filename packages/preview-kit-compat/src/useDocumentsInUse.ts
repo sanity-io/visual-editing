@@ -24,8 +24,6 @@ export function useDocumentsInUse(
     if (window.self === window.top) {
       return
     }
-    // const targetOrigin = new URL(allowStudioOrigin || '/', location.origin)
-    //   .origin
     const channel = createChannelsNode<VisualEditingMsg>({
       id: 'preview-kit' satisfies VisualEditingConnectionIds,
       connectTo: 'presentation' satisfies VisualEditingConnectionIds,

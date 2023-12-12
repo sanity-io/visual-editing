@@ -76,7 +76,6 @@ export function createChannelsController<T extends ChannelMsg>(
     if (
       !isHandshakeMessage(data.type) &&
       channels.find((channel) => channel.id === data.connectionId)
-      // && origin !== config.frameOrigin
     ) {
       const channel = channels.find(
         (channel) => channel.config.id === data.from,
