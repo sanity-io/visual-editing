@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { useActiveWorkspace } from 'sanity'
 
 export const PreviewLocationInput: FunctionComponent<{
   fontSize?: number
@@ -18,6 +19,7 @@ export const PreviewLocationInput: FunctionComponent<{
   padding?: number
   value: string
 }> = function (props) {
+  const { basePath = '/' } = useActiveWorkspace()?.activeWorkspace || {}
   const { fontSize = 1, onChange, origin, padding = 3, value } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [sessionValue, setSessionValue] = useState<string | undefined>(
@@ -50,6 +52,17 @@ export const PreviewLocationInput: FunctionComponent<{
           setCustomValidity(`URL must start with ${origin}`)
           return
         }
+        // `origin` is an empty string '' if the Studio is embedded, and that's when we need to protect against recursion
+        if (
+          !origin &&
+          (absoluteValue.startsWith(`${basePath}/`) ||
+            absoluteValue === basePath)
+        ) {
+          setCustomValidity(
+            `URL can't have the same base path as the Studio ${basePath}`,
+          )
+          return
+        }
 
         const nextValue =
           absoluteValue === origin ? origin + '/' : absoluteValue
@@ -67,7 +80,7 @@ export const PreviewLocationInput: FunctionComponent<{
         setSessionValue(undefined)
       }
     },
-    [onChange, origin, sessionValue],
+    [basePath, onChange, origin, sessionValue],
   )
 
   const handleBlur = useCallback(() => {

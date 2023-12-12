@@ -42,6 +42,16 @@ export function definePreviewUrl<SanityClientType>(
     } catch {
       // ignore
     }
+    // Prevent infinite recursion
+    if (
+      typeof location !== 'undefined' &&
+      location.origin === productionUrl.origin &&
+      context.studioBasePath &&
+      (preview.startsWith(`${context.studioBasePath}/`) ||
+        preview === context.studioBasePath)
+    ) {
+      preview = options.preview || '/'
+    }
     const previewUrl = new URL(preview, productionUrl)
     if (enableDraftModeUrl) {
       const enableDraftModeRequestUrl = new URL(enableDraftModeUrl)

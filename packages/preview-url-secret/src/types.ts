@@ -127,6 +127,10 @@ export interface PreviewUrlResolverContext<SanityClientType> {
    * If there's a referrer, this will be the URL and might be used as fallback if previewSearchParam is not set
    */
   referrer?: string | null
+  /**
+   * If the Studio is embedded on the same origin it's necessary to know the base path of the Studio router to avoid infinite iframe embed recursion scenarios
+   */
+  studioBasePath?: string | null
 }
 
 /**
