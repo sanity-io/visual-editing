@@ -21,6 +21,20 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.5.0...react-loader-v1.6.0) (2023-12-12)
+
+
+### Features
+
+* add `.scope` method to `encodeDataAttribute` function ([#557](https://github.com/sanity-io/visual-editing/issues/557)) ([61e03da](https://github.com/sanity-io/visual-editing/commit/61e03dad26e61321bb3ac92636109237c80a6289))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.2.0 to 1.3.0
+
 ## [1.5.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.4.0...react-loader-v1.5.0) (2023-12-12)
 
 

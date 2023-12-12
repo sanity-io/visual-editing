@@ -19,6 +19,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
 
+## [1.3.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.2.0...core-loader-v1.3.0) (2023-12-12)
+
+
+### Features
+
+* add `.scope` method to `encodeDataAttribute` function ([#557](https://github.com/sanity-io/visual-editing/issues/557)) ([61e03da](https://github.com/sanity-io/visual-editing/commit/61e03dad26e61321bb3ac92636109237c80a6289))
+
 ## [1.2.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.1.4...core-loader-v1.2.0) (2023-12-12)
 
 

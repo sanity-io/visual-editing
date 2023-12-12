@@ -41,6 +41,20 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.3.0...svelte-loader-v1.4.0) (2023-12-12)
+
+
+### Features
+
+* add `.scope` method to `encodeDataAttribute` function ([#557](https://github.com/sanity-io/visual-editing/issues/557)) ([61e03da](https://github.com/sanity-io/visual-editing/commit/61e03dad26e61321bb3ac92636109237c80a6289))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.2.0 to 1.3.0
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.2.2...svelte-loader-v1.3.0) (2023-12-12)
 
 
