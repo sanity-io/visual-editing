@@ -245,10 +245,10 @@ importers:
     devDependencies:
       '@nuxt/devtools':
         specifier: ^1.0.5
-        version: 1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.7)
+        version: 1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.8)
       nuxt:
         specifier: ^3.8.2
-        version: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.7)
+        version: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.8)
 
   apps/page-builder-demo:
     dependencies:
@@ -487,7 +487,7 @@ importers:
         version: 2.1.1(@sveltejs/kit@1.29.0)
       '@sveltejs/kit':
         specifier: ^1.29.0
-        version: 1.29.0(svelte@4.2.8)(vite@5.0.7)
+        version: 1.29.0(svelte@4.2.8)(vite@5.0.8)
       '@types/cookie':
         specifier: ^0.6.0
         version: 0.6.0
@@ -525,8 +525,8 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vite:
-        specifier: ^5.0.7
-        version: 5.0.7
+        specifier: ^5.0.8
+        version: 5.0.8
 
   packages/channels:
     dependencies:
@@ -692,7 +692,7 @@ importers:
         version: 10.0.0(eslint@8.55.0)
       nuxt:
         specifier: ^3.8.2
-        version: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.7)
+        version: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.8)
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -4037,7 +4037,7 @@ packages:
     resolution: {integrity: sha512-GBzP8zOc7CGWyFQS6dv1lQz8VVpz5C2yRszbXufwG/9zhStTIH50EtD87NmWbTMwXDvZLNg8GIpb1UFdH93JCA==}
     dev: true
 
-  /@nuxt/devtools-kit@1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.7):
+  /@nuxt/devtools-kit@1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.8):
     resolution: {integrity: sha512-2SbsYZngD0r6nZCXhEKQ8E6sc10uaYMiN3VicoHj0fZSXNEYjJjLRQ3xD+hbmiqM4dRMGeR06IU6E/Ff0asDcQ==}
     peerDependencies:
       nuxt: ^3.8.1
@@ -4046,8 +4046,8 @@ packages:
       '@nuxt/kit': 3.8.2(rollup@4.8.0)
       '@nuxt/schema': 3.8.2(rollup@4.8.0)
       execa: 7.2.0
-      nuxt: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.7)
-      vite: 5.0.7
+      nuxt: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.8)
+      vite: 5.0.8
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -4069,7 +4069,7 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /@nuxt/devtools@1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.7):
+  /@nuxt/devtools@1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.8):
     resolution: {integrity: sha512-kGgxDFD3/Zw0HqCRl+S+ZIZ0NxGJoiseTzKreD2sW8q7otnqSSjte3z4qhGWI2HpvwN0Gwu/C4FtfkAVGUxPTQ==}
     hasBin: true
     peerDependencies:
@@ -4077,7 +4077,7 @@ packages:
       vite: '*'
     dependencies:
       '@antfu/utils': 0.7.6
-      '@nuxt/devtools-kit': 1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.7)
+      '@nuxt/devtools-kit': 1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.8)
       '@nuxt/devtools-wizard': 1.0.5
       '@nuxt/kit': 3.8.2(rollup@4.8.0)
       birpc: 0.2.14
@@ -4096,7 +4096,7 @@ packages:
       local-pkg: 0.5.0
       magicast: 0.3.2
       nitropack: 2.8.1
-      nuxt: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.7)
+      nuxt: 3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.8)
       nypm: 0.3.3
       ofetch: 1.3.3
       ohash: 1.1.3
@@ -4110,9 +4110,9 @@ packages:
       simple-git: 3.21.0
       sirv: 2.0.3
       unimport: 3.6.1(rollup@4.8.0)
-      vite: 5.0.7
-      vite-plugin-inspect: 0.8.1(@nuxt/kit@3.8.2)(rollup@4.8.0)(vite@5.0.7)
-      vite-plugin-vue-inspector: 4.0.2(vite@5.0.7)
+      vite: 5.0.8
+      vite-plugin-inspect: 0.8.1(@nuxt/kit@3.8.2)(rollup@4.8.0)(vite@5.0.8)
+      vite-plugin-vue-inspector: 4.0.2(vite@5.0.8)
       which: 3.0.1
       ws: 8.14.2
     transitivePeerDependencies:
@@ -5563,11 +5563,11 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
-      '@sveltejs/kit': 1.29.0(svelte@4.2.8)(vite@5.0.7)
+      '@sveltejs/kit': 1.29.0(svelte@4.2.8)(vite@5.0.8)
       import-meta-resolve: 4.0.0
     dev: true
 
-  /@sveltejs/kit@1.29.0(svelte@4.2.8)(vite@5.0.7):
+  /@sveltejs/kit@1.29.0(svelte@4.2.8)(vite@5.0.8):
     resolution: {integrity: sha512-O+DvB67Ouha0pVKh0nRxr8QwZcls8h4knLoS6Sk1DhRLAuQzuM0FNnPNIhMHL1iP1LFeXd3P+bk+h2V07WSF5w==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
@@ -5576,7 +5576,7 @@ packages:
       svelte: ^3.54.0 || ^4.0.0-next.0 || ^5.0.0-next.0
       vite: ^4.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 2.5.0(svelte@4.2.8)(vite@5.0.7)
+      '@sveltejs/vite-plugin-svelte': 2.5.0(svelte@4.2.8)(vite@5.0.8)
       '@types/cookie': 0.5.4
       cookie: 0.5.0
       devalue: 4.3.2
@@ -5590,12 +5590,12 @@ packages:
       svelte: 4.2.8
       tiny-glob: 0.2.9
       undici: 5.26.5
-      vite: 5.0.7
+      vite: 5.0.8
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte-inspector@1.0.4(@sveltejs/vite-plugin-svelte@2.5.0)(svelte@4.2.8)(vite@5.0.7):
+  /@sveltejs/vite-plugin-svelte-inspector@1.0.4(@sveltejs/vite-plugin-svelte@2.5.0)(svelte@4.2.8)(vite@5.0.8):
     resolution: {integrity: sha512-zjiuZ3yydBtwpF3bj0kQNV0YXe+iKE545QGZVTaylW3eAzFr+pJ/cwK8lZEaRp4JtaJXhD5DyWAV4AxLh6DgaQ==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
@@ -5603,30 +5603,30 @@ packages:
       svelte: ^3.54.0 || ^4.0.0
       vite: ^4.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 2.5.0(svelte@4.2.8)(vite@5.0.7)
+      '@sveltejs/vite-plugin-svelte': 2.5.0(svelte@4.2.8)(vite@5.0.8)
       debug: 4.3.4
       svelte: 4.2.8
-      vite: 5.0.7
+      vite: 5.0.8
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte@2.5.0(svelte@4.2.8)(vite@5.0.7):
+  /@sveltejs/vite-plugin-svelte@2.5.0(svelte@4.2.8)(vite@5.0.8):
     resolution: {integrity: sha512-FxLZLVfFA2soGw7ej8Ohuav7+AOsJILiPlL8FgY5MABDDmDqb637o8Xd/QGkrXLC1qXyG1bnteOw5Z5yrA2lHA==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
       vite: ^4.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 1.0.4(@sveltejs/vite-plugin-svelte@2.5.0)(svelte@4.2.8)(vite@5.0.7)
+      '@sveltejs/vite-plugin-svelte-inspector': 1.0.4(@sveltejs/vite-plugin-svelte@2.5.0)(svelte@4.2.8)(vite@5.0.8)
       debug: 4.3.4
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.5
       svelte: 4.2.8
       svelte-hmr: 0.15.3(svelte@4.2.8)
-      vite: 5.0.7
-      vitefu: 0.2.5(vite@5.0.7)
+      vite: 5.0.8
+      vitefu: 0.2.5(vite@5.0.8)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -13398,7 +13398,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /nuxt@3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.7):
+  /nuxt@3.8.2(eslint@8.55.0)(rollup@4.8.0)(typescript@5.3.3)(vite@5.0.8):
     resolution: {integrity: sha512-HUAyifmqTs2zcQBGvcby3KNs2pBAk+l7ZbLjD1oCNqQQ+wBuZ1qgLC4Ebu++y4g3o3Y8WAWSvpafbKRLQZziPw==}
     engines: {node: ^14.18.0 || >=16.10.0}
     hasBin: true
@@ -13412,7 +13412,7 @@ packages:
         optional: true
     dependencies:
       '@nuxt/devalue': 2.0.2
-      '@nuxt/devtools': 1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.7)
+      '@nuxt/devtools': 1.0.5(nuxt@3.8.2)(rollup@4.8.0)(vite@5.0.8)
       '@nuxt/kit': 3.8.2(rollup@4.8.0)
       '@nuxt/schema': 3.8.2(rollup@4.8.0)
       '@nuxt/telemetry': 2.5.2(rollup@4.8.0)
@@ -17810,7 +17810,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.7
+      vite: 5.0.8
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -17875,7 +17875,7 @@ packages:
       vscode-uri: 3.0.8
     dev: true
 
-  /vite-plugin-inspect@0.8.1(@nuxt/kit@3.8.2)(rollup@4.8.0)(vite@5.0.7):
+  /vite-plugin-inspect@0.8.1(@nuxt/kit@3.8.2)(rollup@4.8.0)(vite@5.0.8):
     resolution: {integrity: sha512-oPBPVGp6tBd5KdY/qY6lrbLXqrbHRG0hZLvEaJfiZ/GQfDB+szRuLHblQh1oi1Hhh8GeLit/50l4xfs2SA+TCA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -17894,13 +17894,13 @@ packages:
       open: 9.1.0
       picocolors: 1.0.0
       sirv: 2.0.3
-      vite: 5.0.7
+      vite: 5.0.8
     transitivePeerDependencies:
       - rollup
       - supports-color
     dev: true
 
-  /vite-plugin-vue-inspector@4.0.2(vite@5.0.7):
+  /vite-plugin-vue-inspector@4.0.2(vite@5.0.8):
     resolution: {integrity: sha512-KPvLEuafPG13T7JJuQbSm5PwSxKFnVS965+MP1we2xGw9BPkkc/+LPix5MMWenpKWqtjr0ws8THrR+KuoDC8hg==}
     peerDependencies:
       vite: ^3.0.0-0 || ^4.0.0-0 || ^5.0.0-0
@@ -17914,7 +17914,7 @@ packages:
       '@vue/compiler-dom': 3.3.11
       kolorist: 1.8.0
       magic-string: 0.30.5
-      vite: 5.0.7
+      vite: 5.0.8
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -17954,8 +17954,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vite@5.0.7:
-    resolution: {integrity: sha512-B4T4rJCDPihrQo2B+h1MbeGL/k/GMAHzhQ8S0LjQ142s6/+l3hHTT095ORvsshj4QCkoWu3Xtmob5mazvakaOw==}
+  /vite@5.0.8:
+    resolution: {integrity: sha512-jYMALd8aeqR3yS9xlHd0OzQJndS9fH5ylVgWdB+pxTwxLKdO1pgC5Dlb398BUxpfaBxa4M9oT7j1g503Gaj5IQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -17989,7 +17989,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitefu@0.2.5(vite@5.0.7):
+  /vitefu@0.2.5(vite@5.0.8):
     resolution: {integrity: sha512-SgHtMLoqaeeGnd2evZ849ZbACbnwQCIwRH57t18FxcXoZop0uQu0uzlIhJBlF/eWVzuce0sHeqPcDo+evVcg8Q==}
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0 || ^5.0.0
@@ -17997,7 +17997,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.0.7
+      vite: 5.0.8
     dev: true
 
   /vitest@1.0.4(happy-dom@12.10.3)(jsdom@20.0.3):
@@ -18045,7 +18045,7 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.7
+      vite: 5.0.8
       vite-node: 1.0.4
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
