@@ -1,9 +1,12 @@
 import {
+  type ContentSourceMap,
   jsonPathToStudioPath,
   resolveEditInfo,
   studioPath,
+  type StudioPathLike,
   studioPathToJsonPath,
 } from '@sanity/client/csm'
+import type { StegaConfig } from '@sanity/client/stega'
 import { encodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 
 import type { EncodeDataAttribute } from './types'
@@ -15,7 +18,7 @@ export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
   studioUrl,
   studioPathLike,
 ) => {
-  if (!sourceMap) {
+  if (!sourceMap || !studioUrl) {
     return undefined
   }
   const resultPath = studioPathToJsonPath(studioPathLike)
@@ -43,3 +46,43 @@ export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
 }
 
 export type { EncodeDataAttribute }
+
+/**
+ * @public
+ */
+export type EncodeDataAttributeFunction = {
+  (path: StudioPathLike): string | undefined
+  scope: (path: StudioPathLike) => EncodeDataAttributeFunction
+}
+
+/**
+ * @public
+ */
+export function defineEncodeDataAttribute<QueryResponseResult = unknown>(
+  result: QueryResponseResult,
+  sourceMap: ContentSourceMap | undefined,
+  studioUrl: Exclude<StegaConfig['studioUrl'], undefined> | undefined,
+): EncodeDataAttributeFunction {
+  // This function should encode the given attribute based on the result, sourceMap, and studioUrl
+  const encodeDataAttributeImplementation = (path: StudioPathLike) => {
+    return encodeDataAttribute(result, sourceMap, studioUrl, path)
+  }
+
+  // The scope method creates a scoped version of encodeDataAttribute
+  encodeDataAttributeImplementation.scope = function (scope: StudioPathLike) {
+    const parsedScope =
+      typeof scope === 'string' ? studioPath.fromString(scope) : scope
+    return function (scopedPath: StudioPathLike) {
+      const parsedScopedPath =
+        typeof scopedPath === 'string'
+          ? studioPath.fromString(scopedPath)
+          : scopedPath
+      return encodeDataAttributeImplementation([
+        ...parsedScope,
+        ...parsedScopedPath,
+      ])
+    }
+  }
+
+  return encodeDataAttributeImplementation as EncodeDataAttributeFunction
+}
