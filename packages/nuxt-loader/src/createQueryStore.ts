@@ -126,8 +126,11 @@ export const createQueryStore = (
     onConnect,
     onDisconnect,
   }) => {
+    if (allowStudioOrigin) {
+      // eslint-disable-next-line no-console
+      console.warn('`allowStudioOrigin` is deprecated and no longer needed')
+    }
     const disableLiveMode = enableLiveMode({
-      allowStudioOrigin,
       client: client || storeOptions.client,
       onConnect,
       onDisconnect,

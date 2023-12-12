@@ -86,12 +86,10 @@ const { data, loading, encodeDataAttribute } = await useQuery<MyPage>(
   query,
 )
 
-const allowStudioOrigin = 'https://my.sanity.studio'
-
 // Enable live mode
 let disableLiveMode: ReturnType<typeof useLiveMode> | undefined
 onMounted(() => {
-  disableLiveMode = useLiveMode({ allowStudioOrigin })
+  disableLiveMode = useLiveMode({})
 })
 onUnmounted(() => disableLiveMode?.())
 

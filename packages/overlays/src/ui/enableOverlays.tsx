@@ -2,7 +2,6 @@ import type { Root } from 'react-dom/client'
 
 import { OVERLAY_ID } from '../constants'
 import { HistoryAdapter } from '../types'
-import type { AllowStudioOrigin } from './useAllowStudioOrigin'
 
 /**
  * Cleanup function used when e.g. unmounting
@@ -23,9 +22,13 @@ let cleanup: number | null = null
 export function enableOverlays(
   options: {
     /**
-     * @deprecated
+     * @deprecated -- no longer needed
      */
-    allowStudioOrigin?: AllowStudioOrigin
+    allowStudioOrigin?:
+      | 'same-origin'
+      | `https://${string}`
+      | `http://${string}`
+      | string
     history?: HistoryAdapter
     zIndex?: string | number
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,5 +90,3 @@ export const enableVisualEditing: typeof enableOverlays = (...args) => {
   )
   return enableOverlays(...args)
 }
-
-export type { AllowStudioOrigin }

@@ -127,10 +127,7 @@ Note that for clarity we are enabling Overlays and Live Mode at the page level. 
   })
 
   onMount(() => {
-    return useLiveMode({
-      allowStudioOrigin: studioUrl,
-      client,
-    })
+    return useLiveMode({ client })
   })
 </script>
 

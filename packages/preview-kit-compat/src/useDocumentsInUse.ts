@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react'
  */
 export function useDocumentsInUse(
   documentsInUse: Map<string, ContentSourceMapDocuments[number]>,
-  allowStudioOrigin: string | null,
   projectId: string,
   dataset: string,
 ): void {
@@ -41,7 +40,7 @@ export function useDocumentsInUse(
       channel.destroy()
       setChannel(undefined)
     }
-  }, [allowStudioOrigin, dataset, projectId])
+  }, [dataset, projectId])
 
   const changedKeys = JSON.stringify(Array.from(documentsInUse.keys()))
   useEffect(() => {

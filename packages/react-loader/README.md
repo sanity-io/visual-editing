@@ -114,9 +114,6 @@ import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
 import { useEffect } from 'react'
 import { useLiveMode } from '~/sanity.loader'
 
-// Only a Studio from this origin is allowed to connect to overlays and initiate live mode, it's also used to build Stega encoded source links that can take you from the application to the Studio
-const allowStudioOrigin = 'https://my.sanity.studio'
-
 // A browser client for Live Mode, it's only part of the browser bundle when the `VisualEditing` component is lazy loaded with `React.lazy`
 const client = createClient({
   projectId: window.ENV.SANITY_PROJECT_ID,
@@ -125,7 +122,7 @@ const client = createClient({
   apiVersion: window.ENV.SANITY_API_VERSION,
   stega: {
     enabled: true,
-    studioUrl: allowStudioOrigin,
+    studioUrl: 'https://my.sanity.studio',
   },
 })
 
@@ -140,7 +137,7 @@ export default function VisualEditing() {
     [],
   )
 
-  useLiveMode({ allowStudioOrigin, client })
+  useLiveMode({ client })
 
   return null
 }
@@ -154,8 +151,8 @@ This allows you to link to elements that otherwise isn't automatically linked to
 If you aren't using stega and don't have a `studioUrl` defined in the `createClient` call, then you add it to the `useLiveMode` hook:
 
 ```diff
--useLiveMode({ allowStudioOrigin, client })
-+useLiveMode({ allowStudioOrigin, client, studioUrl: 'https://my.sanity.studio' })
+-useLiveMode({ client })
++useLiveMode({ client, studioUrl: 'https://my.sanity.studio' })
 ```
 
 You then use it in your template:

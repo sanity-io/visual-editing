@@ -33,14 +33,9 @@ export type EncodeDataAttribute<QueryResponseResult = unknown> = (
 /** @public */
 export interface EnableLiveModeOptions {
   /**
-   * The origin that are allowed to connect to the loader.
-   * If left unspecified it will default to the current origin, and the Studio will have to be hosted by the same origin.
-   * @example 'https://my.sanity.studio'
-   * @example location.origin
-   * @example 'same-origin'
-   * @defaultValue 'same-origin'
+   * @deprecated -- no longer needed
    */
-  allowStudioOrigin:
+  allowStudioOrigin?:
     | 'same-origin'
     | `https://${string}`
     | `http://${string}`

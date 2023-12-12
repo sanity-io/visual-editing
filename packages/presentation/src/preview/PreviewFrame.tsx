@@ -205,7 +205,7 @@ export const PreviewFrame = forwardRef<
         setTimedOut(true)
         // eslint-disable-next-line no-console
         console.error(
-          `Unable to connect to overlays. Make sure you're calling the 'enableOverlays' function in '@sanity/overlays' correctly, and that its 'allowStudioOrigin' property is set to '${location.origin}'`,
+          `Unable to connect to overlays. Make sure you're calling the 'enableOverlays' function in '@sanity/overlays' correctly`,
         )
       }, MAX_TIME_TO_OVERLAYS_CONNECTION)
       return () => clearTimeout(timeout)
