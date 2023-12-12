@@ -340,12 +340,16 @@ export default function PresentationTool(props: {
       previewRef.current !== params.preview
     ) {
       previewRef.current = params.preview
-      channel?.send('overlays', 'presentation/navigate', {
-        url: params.preview,
-        type: 'push',
-      })
+      if (overlaysConnection !== 'connected' && iframeRef.current) {
+        iframeRef.current.src = `${targetOrigin}${params.preview}`
+      } else {
+        channel?.send('overlays', 'presentation/navigate', {
+          url: params.preview,
+          type: 'push',
+        })
+      }
     }
-  }, [channel, params.preview])
+  }, [channel, overlaysConnection, targetOrigin, params.preview])
 
   const toggleOverlay = useCallback(
     () => channel?.send('overlays', 'presentation/toggleOverlay', undefined),
