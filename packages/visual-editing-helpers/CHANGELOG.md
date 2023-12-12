@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.1.3...visual-editing-helpers-v0.1.4) (2023-12-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.10.0 ([#551](https://github.com/sanity-io/visual-editing/issues/551)) ([5dc24c9](https://github.com/sanity-io/visual-editing/commit/5dc24c98bb84d7bc6dea5e77ac88dc4ca2cc9c6b))
+* **deps:** Update dependency valibot to v0.24.1 ([#548](https://github.com/sanity-io/visual-editing/issues/548)) ([f31dc1a](https://github.com/sanity-io/visual-editing/commit/f31dc1a6adf2e03c3b8e894d8e0ba4e471ab5fc9))
+
 ## [0.1.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.1.2...visual-editing-helpers-v0.1.3) (2023-12-08)
 
 
