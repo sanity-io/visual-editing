@@ -21,9 +21,7 @@
 
   onMount(() => enableOverlays())
 
-  onMount(() =>
-    useLiveMode({ client }),
-  )
+  onMount(() => useLiveMode({ client }))
 </script>
 
 <svelte:head>
