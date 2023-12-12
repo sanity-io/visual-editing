@@ -5,7 +5,8 @@ import type {
   QueryParams,
 } from '@sanity/client'
 import { VisualEditingMsg } from '@sanity/visual-editing-helpers'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
+import isEqual from 'react-fast-compare'
 import { type SanityDocument, useClient } from 'sanity'
 
 import LiveStoreProvider from './LiveStoreProvider'
@@ -80,11 +81,17 @@ function QuerySubscription(props: {
     result: any
     resultSourceMap?: ContentSourceMap
   }>(null, query, params)
+  const prevResult = useRef(data?.result)
+  const prevResultSourceMap = useRef(data?.resultSourceMap)
   const result = data?.result
   const resultSourceMap = data?.resultSourceMap
 
   useEffect(() => {
-    if (resultSourceMap) {
+    if (
+      resultSourceMap &&
+      !isEqual(prevResult.current, result) &&
+      !isEqual(prevResultSourceMap.current, resultSourceMap)
+    ) {
       channel!.send('loaders', 'loader/query-change', {
         projectId,
         dataset,
@@ -94,6 +101,8 @@ function QuerySubscription(props: {
         result,
         resultSourceMap,
       })
+      prevResult.current = result
+      prevResultSourceMap.current = resultSourceMap
     }
   }, [
     channel,
