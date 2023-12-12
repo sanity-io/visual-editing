@@ -1,7 +1,7 @@
 import type { ChannelMsgType } from './types'
 
 export const RESPONSE_TIMEOUT = 1000
-export const HEARTBEAT_INTERVAL = 2000
+export const HEARTBEAT_INTERVAL = 1000
 export const HANDSHAKE_INTERVAL = 500
 
 export const INTERNAL_MSG_TYPES = [

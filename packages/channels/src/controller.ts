@@ -221,11 +221,9 @@ export function createChannelsController<T extends ChannelMsg>(
           // Try to reconnect
           setChannelStatus(channel, 'reconnecting')
           // eslint-disable-next-line no-console
-          console.warn({
-            reason: `Received no response to message '${msg.id}' on channel '${config.id}'`,
-            msg,
-            channel,
-          })
+          console.warn(
+            `Received no response to message '${msg.type}' on client '${config.id}' (ID: '${msg.id}').`,
+          )
         }
       }, RESPONSE_TIMEOUT)
 
