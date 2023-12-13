@@ -1,5 +1,6 @@
 import type { QueryParams } from '@sanity/client'
 import type { QueryStore, QueryStoreState } from '@sanity/core-loader'
+import isEqual from 'fast-deep-equal'
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 
 import { defineStudioUrlStore } from './defineStudioUrlStore'
@@ -47,11 +48,27 @@ export function defineUseQuery({
         QueryResponseError
       >(query, JSON.parse($params), initial)
       const unlisten = fetcher.subscribe((snapshot) => {
-        setSnapshot(snapshot)
+        setSnapshot((prev) => {
+          if (isEqual(prev, snapshot)) {
+            // console.warn('do not apply')
+            return prev
+          }
+          // console.log(
+          //   'it applies',
+          //   JSON.parse(JSON.stringify(snapshot)),
+          //   JSON.parse(JSON.stringify(prev)),
+          // )
+          return snapshot
+        })
       })
-
       return () => unlisten()
     }, [$params, initial, query])
+    // useEffect(() => {
+    //   console.groupCollapsed(`useQuery`)
+    //   console.count(`useQuery(${query}, ${$params})`)
+    //   console.log(snapshot.data)
+    //   console.groupEnd()
+    // }, [$params, query, snapshot.data])
     const studioUrl = useSyncExternalStore(
       studioUrlStore.subscribe,
       studioUrlStore.getSnapshot,
