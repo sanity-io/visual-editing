@@ -21,6 +21,13 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.6.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.6.0...react-loader-v1.6.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **useQuery:** export correct typing for `encodeDataAttribute` ([eab977b](https://github.com/sanity-io/visual-editing/commit/eab977b2b807df8599d9a47f9675bb26b78550c3))
+
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.5.0...react-loader-v1.6.0) (2023-12-12)
 
 
