@@ -4,21 +4,18 @@ import type {
   QueryParams,
   ResponseQueryOptions,
 } from '@sanity/client'
-import type {
-  ResolveStudioUrl,
-  StudioPathLike,
-  StudioUrl,
-} from '@sanity/client/csm'
+import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
 import {
   createQueryStore as createCoreQueryStore,
   EnableLiveModeOptions,
   type QueryStoreState,
 } from '@sanity/core-loader'
+import { EncodeDataAttributeFunction } from '@sanity/core-loader/encode-data-attribute'
 
 export type * from '@sanity/core-loader'
 
 export type WithEncodeDataAttribute = {
-  encodeDataAttribute(path: StudioPathLike): string | undefined
+  encodeDataAttribute: EncodeDataAttributeFunction
 }
 
 export type UseQueryHook = <
