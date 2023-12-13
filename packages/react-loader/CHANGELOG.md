@@ -21,6 +21,13 @@
     * @sanity/channels bumped to 0.1.0
     * @sanity/visual-editing-helpers bumped to 0.1.0
 
+## [1.6.2](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.6.1...react-loader-v1.6.2) (2023-12-13)
+
+
+### Bug Fixes
+
+* **perf:** move isEqual check to `@sanity/react-loader` ([00330a7](https://github.com/sanity-io/visual-editing/commit/00330a7e91a7f40495e3355010740c7bdebe088d))
+
 ## [1.6.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.6.0...react-loader-v1.6.1) (2023-12-13)
 
 
