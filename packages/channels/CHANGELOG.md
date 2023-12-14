@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/sanity-io/visual-editing/compare/channels-v0.2.0...channels-v0.3.0) (2023-12-14)
+
+
+### Features
+
+* **channels:** log error on legacy message ([5377163](https://github.com/sanity-io/visual-editing/commit/5377163f5798451206dc14476080a7c890f66815))
+
 ## [0.2.0](https://github.com/sanity-io/visual-editing/compare/channels-v0.1.0...channels-v0.2.0) (2023-12-12)
 
 
