@@ -1,6 +1,10 @@
 import { v4 as uuid } from 'uuid'
 
-import { isHandshakeMessage, isInternalMessage } from './helpers'
+import {
+  isHandshakeMessage,
+  isInternalMessage,
+  isLegacyHandshakeMessage,
+} from './helpers'
 import {
   ChannelMsg,
   ChannelsNode,
@@ -80,6 +84,14 @@ export function createChannelsNode<T extends ChannelMsg>(
   }
 
   function handleEvents(e: MessageEvent) {
+    if (isLegacyHandshakeMessage(e)) {
+      // eslint-disable-next-line no-console
+      console.error(
+        'Visual editing package mismatch detected! Please ensure you are using the latest version of Sanity Studio and any packages listed here:\nhttps://github.com/sanity-io/visual-editing',
+      )
+      return
+    }
+
     if (isValidMessageEvent(e)) {
       const { data } = e
       if (isHandshakeMessage(data.type) && data.data) {

@@ -5,7 +5,7 @@ import {
   HEARTBEAT_INTERVAL,
   RESPONSE_TIMEOUT,
 } from './constants'
-import { isHandshakeMessage } from './helpers'
+import { isHandshakeMessage, isLegacyHandshakeMessage } from './helpers'
 import type {
   ChannelMsg,
   ChannelsController,
@@ -92,6 +92,14 @@ export function createChannelsController<T extends ChannelMsg>(
   }
 
   function handleEvents(e: MessageEvent<ProtocolMsg<T>>) {
+    if (isLegacyHandshakeMessage(e)) {
+      // eslint-disable-next-line no-console
+      console.error(
+        'Visual editing package mismatch detected! Please ensure you are using the latest version of Sanity Studio and any packages listed here:\nhttps://github.com/sanity-io/visual-editing',
+      )
+      return
+    }
+
     if (isValidMessageEvent(e)) {
       const { data } = e
       channels.find((channel) => channel.config.id === data.from)?.handler(e)
