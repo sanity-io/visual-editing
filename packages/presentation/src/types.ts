@@ -53,6 +53,7 @@ export interface PresentationPluginOptions {
 
 export interface PresentationStateParams {
   type?: string
+  id?: string
   path?: string
 }
 

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { NavigateOptions, RouterContextValue, RouterState } from 'sanity/router'
 
 import { debounce } from './lib/debounce'
-import { parsePath } from './parsePath'
+import { parseRouterState } from './lib/parse'
 import {
   DeskDocumentPaneParams,
   PresentationParams,
@@ -40,12 +40,11 @@ export function useParams({
   setParams: SetPresentationParams
 } {
   const [params, setParamsState] = useState<PresentationParams>(() => {
-    const { id, path } = parsePath(
-      routerState.path && decodeURIComponent(routerState.path),
-    )
+    const { id, path, type } = parseRouterState(routerState)
+
     return {
       id,
-      type: routerState.type,
+      type,
       path,
       preview:
         routerSearchParams.preview ||
@@ -103,9 +102,7 @@ export function useParams({
   )
 
   useEffect(() => {
-    const { type } = routerState
-    // decodeURI param in path?
-    const { id, path } = parsePath(routerState.path)
+    const { id, path, type } = parseRouterState(routerState)
 
     const timeout = setTimeout(
       () =>
@@ -148,12 +145,9 @@ export function useParams({
     previewRef.current = params.preview
 
     const type = params.type
-    const path = params.id
-      ? pathToUrlString(
-          studioPath.fromString(
-            [params.id, params.path].filter(Boolean).join('.'),
-          ),
-        )
+    const id = params.id
+    const path = params.path
+      ? pathToUrlString(studioPath.fromString(params.path))
       : undefined
 
     const searchParams = pruneObject({
@@ -177,6 +171,7 @@ export function useParams({
         navigate(
           {
             type,
+            id,
             path,
             _searchParams: Object.entries(
               searchParams as Record<string, string>,
