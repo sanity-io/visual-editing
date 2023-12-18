@@ -37,6 +37,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.2.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.2.2...presentation-v1.2.3) (2023-12-18)
+
+
+### Bug Fixes
+
+* **presentation:** support periods in document ids ([#571](https://github.com/sanity-io/visual-editing/issues/571)) ([5d470f6](https://github.com/sanity-io/visual-editing/commit/5d470f66dfa9210b65df2e86601eaa8c6d74942d))
+
 ## [1.2.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.2.0...presentation-v1.2.1) (2023-12-13)
 
 
