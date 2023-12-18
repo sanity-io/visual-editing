@@ -1,6 +1,8 @@
 import { getPublishedId } from 'sanity'
 import { SearchParam } from 'sanity/router'
 
+import { PresentationStateParams } from './types'
+
 /**
  * @internal
  */
@@ -10,7 +12,7 @@ export function getIntentState(
   _routerState: undefined,
   payload: unknown,
 ):
-  | { id: string; type: string; path: string; _searchParams: SearchParam[] }
+  | (PresentationStateParams & { _searchParams: SearchParam[] })
   | { intent: string; params: Record<string, string>; payload: unknown } {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, mode, path, presentation, type, ...searchParams } = params
