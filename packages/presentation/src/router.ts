@@ -3,5 +3,8 @@ import { route } from 'sanity/router'
 export const router = route.create(
   '/',
   { __unsafe_disableScopedSearchParams: true },
-  [route.intents('/intent'), route.create('/:type', [route.create('/:path')])],
+  [
+    route.intents('/intent'),
+    route.create('/:type', [route.create('/:id'), route.create('/:id/:path')]),
+  ],
 )

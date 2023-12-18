@@ -83,7 +83,7 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
     <StateLink
       {...restProps}
       ref={ref}
-      state={{ path: documentId, type: documentType }}
+      state={{ id: documentId, type: documentType }}
       title={undefined}
     />
   )
@@ -137,7 +137,7 @@ export function PresentationPaneRouterProvider(
             <StateLink
               {...restProps}
               state={{
-                path: ref._id,
+                id: ref._id,
                 type: ref._type,
                 _searchParams: Object.entries({ preview: previewUrl }),
               }}
