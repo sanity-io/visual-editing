@@ -49,6 +49,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.6.2](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.6.1...nuxt-loader-v1.6.2) (2023-12-18)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency vue to ^3.3.12 ([#569](https://github.com/sanity-io/visual-editing/issues/569)) ([9e6046e](https://github.com/sanity-io/visual-editing/commit/9e6046ed7a24abfb71fcb6b6c7d0a69fbd43529c))
+
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.5.0...nuxt-loader-v1.6.0) (2023-12-12)
 
 
