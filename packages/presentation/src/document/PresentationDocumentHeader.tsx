@@ -1,6 +1,6 @@
 import { Stack } from '@sanity/ui'
-import { ReactNode, useContext } from 'react'
-import { ObjectSchemaType, PublishedId } from 'sanity'
+import { ReactNode, useContext, useMemo } from 'react'
+import { ObjectSchemaType, PublishedId, SANITY_VERSION } from 'sanity'
 
 import { PresentationPluginOptions } from '../types'
 import { LocationsBanner } from './LocationsBanner'
@@ -16,6 +16,12 @@ export function PresentationDocumentHeader(props: {
 
   const context = useContext(PresentationDocumentContext)
 
+  // Meta banner is only displayed prior to 3.23.0
+  const showMetaBanner = useMemo(() => {
+    const [major, minor] = SANITY_VERSION.split('.').map(Number)
+    return major <= 3 && minor <= 22
+  }, [])
+
   if (context && context.options[0] !== options) {
     return null
   }
@@ -24,11 +30,13 @@ export function PresentationDocumentHeader(props: {
 
   return (
     <Stack marginBottom={5} space={5}>
-      <MetaBanner
-        documentId={documentId}
-        options={options}
-        schemaType={schemaType}
-      />
+      {showMetaBanner && (
+        <MetaBanner
+          documentId={documentId}
+          options={options}
+          schemaType={schemaType}
+        />
+      )}
 
       <Stack space={2}>
         {context?.options.map((o, idx) => (
