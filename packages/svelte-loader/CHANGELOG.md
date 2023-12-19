@@ -49,6 +49,14 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.1 to 1.3.2
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.3.0...svelte-loader-v1.4.0) (2023-12-12)
 
 

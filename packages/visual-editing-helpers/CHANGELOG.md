@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.1.4...visual-editing-helpers-v0.2.0) (2023-12-19)
+
+
+### Features
+
+* **deps:** update sanity to ^3.23.0, update @sanity/ui to 2.0.0-beta.13 ([9ea150d](https://github.com/sanity-io/visual-editing/commit/9ea150d1473092f4152f9efb91f3ff3ee3fa7d42))
+
 ## [0.1.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.1.3...visual-editing-helpers-v0.1.4) (2023-12-12)
 
 
