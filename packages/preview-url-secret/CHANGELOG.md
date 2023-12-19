@@ -12,6 +12,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.3.6...preview-url-secret-v1.4.0) (2023-12-19)
+
+
+### Features
+
+* **deps:** update sanity to ^3.23.0, update @sanity/ui to 2.0.0-beta.13 ([9ea150d](https://github.com/sanity-io/visual-editing/commit/9ea150d1473092f4152f9efb91f3ff3ee3fa7d42))
+
 ## [1.3.5](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.3.4...preview-url-secret-v1.3.5) (2023-12-13)
 
 
