@@ -37,6 +37,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.3.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.2.3...presentation-v1.3.0) (2023-12-19)
+
+
+### Features
+
+* **presentation:** only show meta banner prior to sanity version 3.23.0 ([#573](https://github.com/sanity-io/visual-editing/issues/573)) ([18da806](https://github.com/sanity-io/visual-editing/commit/18da8066151f65b3f41f441cee26903ebe28e3b0))
+
 ## [1.2.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.2.2...presentation-v1.2.3) (2023-12-18)
 
 
