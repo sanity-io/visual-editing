@@ -367,8 +367,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       isbot:
-        specifier: ^3.7.1
-        version: 3.7.1
+        specifier: ^4.1.0
+        version: 4.1.0
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -4401,7 +4401,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
-      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -11393,9 +11392,9 @@ packages:
   /isarray@2.0.5:
     resolution: {integrity: sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==}
 
-  /isbot@3.7.1:
-    resolution: {integrity: sha512-JfqOaY3O1lcWt2nc+D6Mq231CNpwZrBboLa59Go0J8hjGH+gY/Sy0CA/YLUSIScINmAVwTdJZIsOTk4PfBtRuw==}
-    engines: {node: '>=12'}
+  /isbot@4.1.0:
+    resolution: {integrity: sha512-Kz7zk1wc0oC0FYLYtqea1RKdEX4XGlqacPhoaq9HSEQamEXQNJ/MzVzBKAQXDCCHO0h/eo4CdZs9t3Jfbup5Aw==}
+    engines: {node: '>=18'}
     dev: false
 
   /isexe@2.0.0:
@@ -12853,10 +12852,6 @@ packages:
   /nanostores@0.9.5:
     resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    dev: true
-
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare-lite@1.4.0:
