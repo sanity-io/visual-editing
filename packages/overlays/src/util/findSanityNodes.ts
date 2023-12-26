@@ -11,6 +11,10 @@ const isElementNode = (node: ChildNode): node is HTMLElement =>
 const isImgElement = (el: HTMLElement): el is HTMLImageElement =>
   el.tagName === 'IMG'
 
+const isSvgElement = (el: unknown): el is SVGSVGElement =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (el as any).tagName.toUpperCase() === 'SVG'
+
 const isTimeElement = (el: HTMLElement): el is HTMLTimeElement =>
   el.tagName === 'TIME'
 
@@ -165,6 +169,14 @@ export function findSanityNodes(
           addElement(node, node.dataset.sanityEditInfo)
         } else if (isImgElement(node)) {
           const data = testAndDecodeStega(node.alt, true)
+          debugger
+          if (!data) continue
+          addElement(node, data)
+          // No need to recurse for img elements
+          continue
+        } else if (isSvgElement(node) && node.ariaLabel) {
+          const data = testAndDecodeStega(node.ariaLabel, true)
+          debugger
           if (!data) continue
           addElement(node, data)
           // No need to recurse for img elements

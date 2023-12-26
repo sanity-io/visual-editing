@@ -1,4 +1,4 @@
-import { CloseIcon, MenuIcon } from '@sanity/icons'
+import { CloseIcon, MenuIcon, LemonIcon } from '@sanity/icons'
 import { sanity, WrappedValue } from '@sanity/react-loader/jsx'
 import clsx from 'clsx'
 import { ReactNode, useState } from 'react'
