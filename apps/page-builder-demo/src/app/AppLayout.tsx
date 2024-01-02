@@ -33,14 +33,14 @@ export function AppLayout(props: {
     <div className="flex min-h-screen flex-col">
       <div className="mx-auto flex w-full max-w-4xl justify-between gap-2 p-4">
         <Link
-          className="text-md block flex-none rounded p-3 font-bold leading-none hover:bg-gray-50 dark:hover:bg-gray-950 sm:ml-0"
+          className="text-md block flex-none rounded p-3 font-bold leading-none hover:bg-gray-50 sm:ml-0 dark:hover:bg-gray-950"
           href="/"
         >
           <sanity.span>{data?.siteSettings?.title}</sanity.span>
         </Link>
 
         <button
-          className="text-md inline-block flex-none rounded p-3 leading-none hover:bg-gray-50 dark:hover:bg-gray-950 sm:hidden"
+          className="text-md inline-block flex-none rounded p-3 leading-none hover:bg-gray-50 sm:hidden dark:hover:bg-gray-950"
           onClick={() => setMenuOpen(true)}
           type="button"
         >

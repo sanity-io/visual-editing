@@ -26,7 +26,7 @@ export function Hero(props: {
           <sanity.span>{section.headline}</sanity.span>
         </h1>
       ) : (
-        <h1 className="text-3xl font-extrabold text-gray-200 dark:text-gray-800 sm:text-5xl md:text-7xl">
+        <h1 className="text-3xl font-extrabold text-gray-200 sm:text-5xl md:text-7xl dark:text-gray-800">
           <span
             data-sanity={dataAttribute({
               id: data._id,
@@ -40,11 +40,11 @@ export function Hero(props: {
       )}
 
       {section.tagline ? (
-        <p className="mt-3 font-serif text-xl text-gray-600 dark:text-gray-400 sm:mt-4">
+        <p className="mt-3 font-serif text-xl text-gray-600 sm:mt-4 dark:text-gray-400">
           <sanity.span>{section.tagline}</sanity.span>
         </p>
       ) : (
-        <p className="mt-3 font-serif text-xl text-gray-200 dark:text-gray-800 sm:mt-4">
+        <p className="mt-3 font-serif text-xl text-gray-200 sm:mt-4 dark:text-gray-800">
           <span
             data-sanity={dataAttribute({
               id: data._id,

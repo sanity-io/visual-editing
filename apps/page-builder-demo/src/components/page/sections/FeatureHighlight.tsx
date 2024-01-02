@@ -35,12 +35,12 @@ export function FeatureHighlight(props: {
         )}
       </div>
 
-      <div className="relative z-10 mx-auto max-w-xl bg-white p-4 dark:bg-black sm:p-5">
+      <div className="relative z-10 mx-auto max-w-xl bg-white p-4 sm:p-5 dark:bg-black">
         <h1 className="text-2xl font-extrabold sm:text-3xl md:text-4xl">
           <sanity.span>{section.headline}</sanity.span>
         </h1>
         {section.description && (
-          <p className="mt-3 font-serif text-xl dark:text-gray-400 sm:mt-4">
+          <p className="mt-3 font-serif text-xl sm:mt-4 dark:text-gray-400">
             <sanity.span>{section.description}</sanity.span>
           </p>
         )}

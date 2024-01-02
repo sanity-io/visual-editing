@@ -36,7 +36,7 @@ export function ProductsPage(props: { data: WrappedValue<ProductsPageData> }) {
             <div className="flex flex-col gap-2">
               {data.products.map((product) => (
                 <Link
-                  className="block rounded border border-white p-4 hover:border-gray-100 dark:border-black dark:hover:border-gray-800 sm:flex sm:gap-5"
+                  className="block rounded border border-white p-4 hover:border-gray-100 sm:flex sm:gap-5 dark:border-black dark:hover:border-gray-800"
                   href={
                     product.slug?.current &&
                     `/product/${product.slug.current.value}`

@@ -26,7 +26,7 @@ export function Intro(props: {
           <sanity.span>{section.headline}</sanity.span>
         </h1>
       ) : (
-        <h1 className="text-2xl font-extrabold text-gray-200 dark:text-gray-800 sm:text-3xl md:text-4xl">
+        <h1 className="text-2xl font-extrabold text-gray-200 sm:text-3xl md:text-4xl dark:text-gray-800">
           <span
             data-sanity={dataAttribute({
               id: data._id,
@@ -40,11 +40,11 @@ export function Intro(props: {
       )}
 
       {section.intro ? (
-        <p className="mt-3 font-serif text-xl text-gray-600 dark:text-gray-400 sm:mt-4">
+        <p className="mt-3 font-serif text-xl text-gray-600 sm:mt-4 dark:text-gray-400">
           <sanity.span>{section.intro}</sanity.span>
         </p>
       ) : (
-        <p className="mt-3 font-serif text-xl text-gray-200 dark:text-gray-800 sm:mt-4">
+        <p className="mt-3 font-serif text-xl text-gray-200 sm:mt-4 dark:text-gray-800">
           <span
             data-sanity={dataAttribute({
               id: data._id,
