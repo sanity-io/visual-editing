@@ -25,7 +25,7 @@ export async function validateSecret(
     {
       tag,
       // @ts-expect-error -- the `cache` option is valid, but not in the types when NextJS typings aren't installed
-      ...(!disableCacheStore ? { cache: 'no-store'} : undefined)
+      ...(!disableCacheNoStore ? { cache: 'no-store'} : undefined)
     },
   )
   if (!result?._id || !result?._updatedAt || !result?.secret) {
