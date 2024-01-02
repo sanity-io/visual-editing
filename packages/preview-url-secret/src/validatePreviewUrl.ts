@@ -14,6 +14,7 @@ import { validateSecret } from './validateSecret'
 export async function validatePreviewUrl(
   _client: SanityClientLike,
   previewUrl: string,
+  disableCacheNoStore?: boolean
 ): Promise<PreviewUrlValidateUrlResult> {
   const client = createClientWithConfig(_client)
   let parsedPreviewUrl: ParsedPreviewUrl
@@ -30,7 +31,7 @@ export async function validatePreviewUrl(
     return { isValid: false }
   }
 
-  const isValid = await validateSecret(client, parsedPreviewUrl.secret)
+  const isValid = await validateSecret(client, parsedPreviewUrl.secret, disableCacheNoStore)
   const redirectTo = isValid ? parsedPreviewUrl.redirectTo : undefined
 
   return { isValid, redirectTo }
