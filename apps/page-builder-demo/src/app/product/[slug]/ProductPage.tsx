@@ -55,7 +55,7 @@ export function ProductPage(props: { data: WrappedValue<ProductPageData> }) {
           <div className="mt-5 flex-1 sm:mt-0">
             {data?.product?.description && (
               <div
-                className="text-lg text-gray-600 dark:text-gray-400 md:text-xl"
+                className="text-lg text-gray-600 md:text-xl dark:text-gray-400"
                 data-sanity={dataAttribute({
                   id: data.product?._id,
                   type: 'product',
