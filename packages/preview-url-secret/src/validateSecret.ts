@@ -9,7 +9,7 @@ import type {
 export async function validateSecret(
   client: SanityClientLike,
   secret: string,
-  disableCacheNoStore?: boolean
+  disableCacheNoStore?: boolean,
 ): Promise<boolean> {
   // If we're in the Edge Runtime it's usually too quick and we need to delay fetching the secret a little bit
   // @ts-expect-error -- this global exists if we're in the Edge Runtime
@@ -25,7 +25,7 @@ export async function validateSecret(
     {
       tag,
       // @ts-expect-error -- the `cache` option is valid, but not in the types when NextJS typings aren't installed
-      ...(!disableCacheNoStore ? { cache: 'no-store'} : undefined)
+      ...(!disableCacheNoStore ? { cache: 'no-store' } : undefined),
     },
   )
   if (!result?._id || !result?._updatedAt || !result?.secret) {
