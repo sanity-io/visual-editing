@@ -37,6 +37,12 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.3.0...presentation-v1.4.0) (2023-12-19)
 
 

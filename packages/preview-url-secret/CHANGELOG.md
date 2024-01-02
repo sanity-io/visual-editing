@@ -12,6 +12,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.4.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.4.0...preview-url-secret-v1.4.1) (2024-01-02)
+
+
+### Bug Fixes
+
+* allow opting out of `cache: no-store` fetch option in `@sanity/preview-url-secret` ([#581](https://github.com/sanity-io/visual-editing/issues/581)) ([7fe53ae](https://github.com/sanity-io/visual-editing/commit/7fe53ae4c4170117df95d6d61b75386c545d98eb))
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.3.6...preview-url-secret-v1.4.0) (2023-12-19)
 
 
