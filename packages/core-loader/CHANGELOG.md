@@ -31,6 +31,12 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.2.0...core-loader-v1.3.0) (2023-12-12)
 
 
