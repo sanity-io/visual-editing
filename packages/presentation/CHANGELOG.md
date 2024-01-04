@@ -43,6 +43,25 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
+## [1.4.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.1...presentation-v1.4.2) (2024-01-04)
+
+
+### Bug Fixes
+
+* animate perspective popover ([8645b6d](https://github.com/sanity-io/visual-editing/commit/8645b6dffc01600797f6be509a1a1044123b1dfd))
+* **deps:** Update dependency @sanity/ui to v2.0.0-beta.14 ([#604](https://github.com/sanity-io/visual-editing/issues/604)) ([67fa54a](https://github.com/sanity-io/visual-editing/commit/67fa54a2e94f2d52cd9338517a000d5a73d5ab69))
+* **deps:** Update dependency framer-motion to ^10.17.4 ([#603](https://github.com/sanity-io/visual-editing/issues/603)) ([0fe9743](https://github.com/sanity-io/visual-editing/commit/0fe9743aa71bf56c91e1e14b2a4635a99825bc59))
+* position popovers and tooltips on preview pane within preview pane ([7113a4c](https://github.com/sanity-io/visual-editing/commit/7113a4ca8a57f2599b1b71978a2e301358223923))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.3.7 to 5.3.8
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.3.0...presentation-v1.4.0) (2023-12-19)
 
 
