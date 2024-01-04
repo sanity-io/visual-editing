@@ -5,7 +5,7 @@ import {
 } from '@sanity/channels'
 import type { ClientPerspective, QueryParams } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
-import { Flex } from '@sanity/ui'
+import { BoundaryElementProvider, Flex } from '@sanity/ui'
 import {
   getQueryCacheKey,
   isAltKey,
@@ -382,6 +382,8 @@ export default function PresentationTool(props: {
     }
   }, [toggleOverlay])
 
+  const [boundaryElement, setBoundaryElement] = useState<HTMLDivElement | null>(null)
+
   return (
     <>
       <PresentationProvider
@@ -409,7 +411,8 @@ export default function PresentationTool(props: {
                   defaultSize={navigatorEnabled ? 50 : 75}
                   order={3}
                 >
-                  <Flex direction="column" flex={1} height="fill">
+                  <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
+                  <BoundaryElementProvider element={boundaryElement}>
                     <PreviewFrame
                       initialUrl={initialPreviewUrl}
                       navigatorEnabled={navigatorEnabled}
@@ -426,6 +429,7 @@ export default function PresentationTool(props: {
                       overlaysConnection={overlaysConnection}
                       previewKitConnection={previewKitConnection}
                     />
+                    </BoundaryElementProvider>
                   </Flex>
                 </Panel>
                 <PanelResizer order={4} />
