@@ -91,6 +91,43 @@ export type OverlayMsg =
       }
     }
 
+/** @public */
+export interface LoaderPayloads {
+  perspective: {
+    projectId: string
+    dataset: string
+    perspective: ClientPerspective
+  }
+  'query-change': {
+    projectId: string
+    dataset: string
+    perspective: ClientPerspective
+    query: string
+    params: QueryParams
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    result: any
+    resultSourceMap?: ContentSourceMap
+  }
+  'query-listen': {
+    projectId: string
+    dataset: string
+    perspective: ClientPerspective
+    query: string
+    params: QueryParams
+    /**
+     * If above 0, then the loader will fire listen events on a heartbeat interval,
+     * allowing Presentation Tool to detect when it's no longer necessary to subscribe to a query.
+     */
+    heartbeat?: number
+  }
+  documents: {
+    projectId: string
+    dataset: string
+    perspective: ClientPerspective
+    documents: ContentSourceMapDocuments
+  }
+}
+
 /**
  * Messages emitted by the loader packages
  * @public
@@ -98,34 +135,15 @@ export type OverlayMsg =
 export type LoaderMsg =
   | {
       type: 'loader/perspective'
-      data: {
-        projectId: string
-        dataset: string
-        perspective: ClientPerspective
-      }
+      data: LoaderPayloads['perspective']
     }
   | {
       type: 'loader/query-change'
-      data: {
-        projectId: string
-        dataset: string
-        perspective: ClientPerspective
-        query: string
-        params: QueryParams
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        result: any
-        resultSourceMap?: ContentSourceMap
-      }
+      data: LoaderPayloads['query-change']
     }
   | {
       type: 'loader/query-listen'
-      data: {
-        projectId: string
-        dataset: string
-        perspective: ClientPerspective
-        query: string
-        params: QueryParams
-      }
+      data: LoaderPayloads['query-listen']
     }
   | {
       /**
@@ -133,12 +151,7 @@ export type LoaderMsg =
        * multiple CSM's, they're all deduped and concatenated into a single list.
        */
       type: 'loader/documents'
-      data: {
-        projectId: string
-        dataset: string
-        perspective: ClientPerspective
-        documents: ContentSourceMapDocuments
-      }
+      data: LoaderPayloads['documents']
     }
 
 /**

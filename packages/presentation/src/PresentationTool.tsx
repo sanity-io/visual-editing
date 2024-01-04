@@ -3,7 +3,7 @@ import {
   type ChannelStatus,
   createChannelsController,
 } from '@sanity/channels'
-import type { ClientPerspective, QueryParams } from '@sanity/client'
+import type { ClientPerspective } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
 import { BoundaryElementProvider, Flex } from '@sanity/ui'
 import {
@@ -20,6 +20,7 @@ import {
   useMemo,
   useRef,
   useState,
+  startTransition,
 } from 'react'
 import { useUnique } from 'sanity'
 import {
@@ -33,7 +34,10 @@ import {
 import { RouterContextValue, useRouter } from 'sanity/router'
 import styled from 'styled-components'
 
-import { DEFAULT_TOOL_NAME } from './constants'
+import {
+  DEFAULT_TOOL_NAME,
+  MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
+} from './constants'
 import { ContentEditor } from './editor/ContentEditor'
 import LoaderQueries from './loader/LoaderQueries'
 import { Panel } from './panels/Panel'
@@ -47,6 +51,8 @@ import { PresentationProvider } from './PresentationProvider'
 import { PreviewFrame } from './preview/PreviewFrame'
 import type {
   DeskDocumentPaneParams,
+  LiveQueriesState,
+  LiveQueriesStateValue,
   PresentationPluginOptions,
   PresentationStateParams,
 } from './types'
@@ -96,12 +102,7 @@ export default function PresentationTool(props: {
 
   const [channel, setChannel] = useState<ChannelsController<VisualEditingMsg>>()
 
-  const [liveQueries, setLiveQueries] = useState<
-    Record<
-      string,
-      { query: string; params: QueryParams; perspective: ClientPerspective }
-    >
-  >({})
+  const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
   const { setParams, params, deskParams } = useParams({
     initialPreviewUrl,
@@ -218,13 +219,23 @@ export default function PresentationTool(props: {
               data.projectId === projectId &&
               data.dataset === dataset
             ) {
+              if (
+                typeof data.heartbeat === 'number' &&
+                data.heartbeat! < MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL
+              ) {
+                throw new Error(
+                  `Loader query listen heartbeat interval must be at least ${MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL}ms`,
+                )
+              }
               setLiveQueries((prev) => ({
                 ...prev,
                 [getQueryCacheKey(data.query, data.params)]: {
                   perspective: data.perspective,
                   query: data.query,
                   params: data.params,
-                },
+                  receivedAt: Date.now(),
+                  heartbeat: data.heartbeat ?? false,
+                } satisfies LiveQueriesStateValue,
               }))
             }
           },
@@ -252,6 +263,42 @@ export default function PresentationTool(props: {
       setChannel(undefined)
     }
   }, [dataset, projectId, setDocumentsOnPage, setParams, targetOrigin])
+
+  useEffect(() => {
+    const interval = setInterval(
+      () =>
+        startTransition(() =>
+          setLiveQueries((liveQueries) => {
+            if (Object.keys(liveQueries).length < 1) {
+              return liveQueries
+            }
+
+            const now = Date.now()
+            const hasAnyExpired = Object.values(liveQueries).some(
+              (liveQuery) =>
+                liveQuery.heartbeat !== false &&
+                now > liveQuery.receivedAt + liveQuery.heartbeat,
+            )
+            if (!hasAnyExpired) {
+              return liveQueries
+            }
+            const next = {} as LiveQueriesState
+            for (const [key, value] of Object.entries(liveQueries)) {
+              if (
+                value.heartbeat !== false &&
+                now > value.receivedAt + value.heartbeat
+              ) {
+                continue
+              }
+              next[key] = value
+            }
+            return next
+          }),
+        ),
+      MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
+    )
+    return () => clearInterval(interval)
+  }, [])
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments

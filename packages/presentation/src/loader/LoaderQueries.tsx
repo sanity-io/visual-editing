@@ -4,7 +4,10 @@ import type {
   ContentSourceMap,
   QueryParams,
 } from '@sanity/client'
-import { VisualEditingMsg } from '@sanity/visual-editing-helpers'
+import type {
+  LoaderPayloads,
+  VisualEditingMsg,
+} from '@sanity/visual-editing-helpers'
 import { useEffect, useMemo } from 'react'
 import { type SanityDocument, useClient } from 'sanity'
 
@@ -40,7 +43,7 @@ export default function LoaderQueries(props: {
         projectId: projectId!,
         dataset: dataset!,
         perspective,
-      })
+      } satisfies LoaderPayloads['perspective'])
     }
   }, [activePerspective, channel, clientConfig, perspective])
 
@@ -93,7 +96,7 @@ function QuerySubscription(props: {
         params,
         result,
         resultSourceMap,
-      })
+      } satisfies LoaderPayloads['query-change'])
     }
   }, [
     channel,
