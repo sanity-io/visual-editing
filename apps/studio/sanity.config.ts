@@ -141,7 +141,10 @@ const presentationWorkspaces = Object.entries({
     basePath: `/${workspaceName}`,
     projectId,
     dataset,
-    form: process.env.SANITY_STUDIO_STEGA_DEBUG === 'true' ? { components: { input: StegaDebugger } } : {},
+    form:
+      process.env.SANITY_STUDIO_STEGA_DEBUG === 'true'
+        ? { components: { input: StegaDebugger } }
+        : {},
     plugins: [
       sharedSettings(),
       ...Object.entries(previewUrl).map(([name, previewUrl]) => {
