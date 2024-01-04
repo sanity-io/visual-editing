@@ -44,6 +44,7 @@ import {
   useState,
 } from 'react'
 import styled from 'styled-components'
+import { Hotkeys } from 'sanity'
 
 import { ErrorCard } from '../components/ErrorCard'
 import { MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
@@ -281,6 +282,12 @@ export const PreviewFrame = forwardRef<
                         ? 'Disable edit overlay'
                         : 'Enable edit overlay'}
                     </Text>
+                  </Box>
+                  <Box padding={1}>
+                    <Hotkeys
+                      keys={['Alt']}
+                      style={{ marginTop: -4, marginBottom: -4 }}
+                    />
                   </Box>
                 </Flex>
               }
