@@ -441,7 +441,7 @@ export const PreviewFrame = forwardRef<
                   </Menu>
                 }
                 popover={{
-                  // arrow: false,
+                  animate: true,
                   constrainSize: true,
                   placement: 'bottom',
                   portal: true,
