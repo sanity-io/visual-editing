@@ -255,6 +255,7 @@ export const PreviewFrame = forwardRef<
           <Flex align="center" gap={2} style={{ minHeight: 0 }}>
             {toggleNavigator && (
               <Tooltip
+                animate
                 content={<Text size={1}>Toggle navigator</Text>}
                 fallbackPlacements={['bottom-start']}
                 padding={2}
@@ -274,6 +275,7 @@ export const PreviewFrame = forwardRef<
             )}
 
             <Tooltip
+              animate
               content={
                 <Flex align="center" style={{ whiteSpace: 'nowrap' }}>
                   <Box padding={1}>
@@ -326,6 +328,7 @@ export const PreviewFrame = forwardRef<
 
             {devMode && (
               <Tooltip
+                animate
                 content={
                   <Text size={1}>
                     {refreshing ? 'Refreshing…' : 'Refresh preview'}
@@ -458,6 +461,7 @@ export const PreviewFrame = forwardRef<
 
             <Flex align="center" flex="none" gap={1}>
               <Tooltip
+                animate
                 content={<Text size={1}>Full viewport</Text>}
                 fallbackPlacements={['bottom-start']}
                 padding={2}
@@ -475,8 +479,8 @@ export const PreviewFrame = forwardRef<
                 />
               </Tooltip>
               <Tooltip
+                animate
                 content={<Text size={1}>Narrow viewport</Text>}
-                fallbackPlacements={['bottom-start']}
                 padding={2}
                 placement="bottom"
                 portal
