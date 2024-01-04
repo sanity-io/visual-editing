@@ -1,3 +1,4 @@
+import type { ClientPerspective, QueryParams } from '@sanity/client'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,
@@ -5,7 +6,6 @@ import type {
 import type { ComponentType } from 'react'
 import type { Observable } from 'rxjs'
 import type { DocumentStore, SanityClient } from 'sanity'
-import type { ClientPerspective, QueryParams } from '@sanity/client'
 
 export type { PreviewUrlResolver, PreviewUrlResolverOptions }
 
