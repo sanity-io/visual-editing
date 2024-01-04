@@ -41,33 +41,18 @@ import { PanelResizer } from './panels/PanelResizer'
 import { Panels } from './panels/Panels'
 import { HoldEditState } from './perf/HoldEditState'
 import { PresentationNavigateProvider } from './PresentationNavigateProvider'
+import { usePresentationNavigator } from './PresentationNavigator'
 import { PresentationParamsProvider } from './PresentationParamsProvider'
 import { PresentationProvider } from './PresentationProvider'
 import { PreviewFrame } from './preview/PreviewFrame'
-import {
+import type {
   DeskDocumentPaneParams,
-  NavigatorOptions,
   PresentationPluginOptions,
   PresentationStateParams,
 } from './types'
 import { DocumentOnPage, useDocumentsOnPage } from './useDocumentsOnPage'
-import { useLocalState } from './useLocalState'
 import { useParams } from './useParams'
 import { usePreviewUrl } from './usePreviewUrl'
-
-function Navigator(props: NavigatorOptions) {
-  const { minWidth, maxWidth, component: NavigatorComponent } = props
-  const navigatorDisabled =
-    minWidth != null && maxWidth != null && minWidth === maxWidth
-  return (
-    <>
-      <Panel id="navigator" minWidth={minWidth} maxWidth={maxWidth} order={1}>
-        <NavigatorComponent />
-      </Panel>
-      <PanelResizer order={2} disabled={navigatorDisabled} />
-    </>
-  )
-}
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -103,8 +88,6 @@ export default function PresentationTool(props: {
     )
   })
 
-  // @TODO The iframe URL might change, we have to make sure we don't post Studio state to unknown origins
-  // see https://medium.com/@chiragrai3666/exploiting-postmessage-e2b01349c205
   const targetOrigin = useMemo(() => {
     return initialPreviewUrl.origin
   }, [initialPreviewUrl.origin])
@@ -135,25 +118,12 @@ export default function PresentationTool(props: {
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
-  const navigatorProvided = !!unstable_navigator?.component
-
-  const [navigatorEnabled, setNavigatorEnabled] = useLocalState<boolean>(
-    'presentation/navigator',
-    navigatorProvided,
-  )
-
   const projectId = useProjectId()
   const dataset = useDataset()
 
   const previewRef = useRef<typeof params.preview>()
 
   const idRef = useRef(params.id)
-
-  const toggleNavigator = useMemo(() => {
-    if (!navigatorProvided) return undefined
-
-    return () => setNavigatorEnabled((enabled) => !enabled)
-  }, [navigatorProvided, setNavigatorEnabled])
 
   const [preloadRefs, setPreloadRefs] = useState<DocumentOnPage[]>(() =>
     documentsOnPage
@@ -386,6 +356,9 @@ export default function PresentationTool(props: {
     null,
   )
 
+  const [{ navigatorEnabled, toggleNavigator }, PresentationNavigator] =
+    usePresentationNavigator({ unstable_navigator })
+
   return (
     <>
       <PresentationProvider
@@ -404,9 +377,7 @@ export default function PresentationTool(props: {
           <PresentationParamsProvider params={params}>
             <Container height="fill">
               <Panels>
-                {navigatorProvided && navigatorEnabled && (
-                  <Navigator {...unstable_navigator} />
-                )}
+                <PresentationNavigator />
                 <Panel
                   id="preview"
                   minWidth={325}

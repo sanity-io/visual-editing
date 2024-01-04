@@ -13,7 +13,7 @@ import { assist } from '@sanity/assist'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { locate } from './locate'
 import { StegaDebugger } from './presentation/DebugStega'
-// import { CustomNavigator } from './presentation/CustomNavigator'
+import { CustomNavigator } from './presentation/CustomNavigator'
 import { debugSecrets } from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 
 const sharedSettings = definePlugin({
@@ -120,16 +120,16 @@ const presentationWorkspaces = Object.entries({
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           locate,
           devMode,
-          // components:
-          //   name === 'page-builder-demo'
-          //     ? {
-          //         unstable_navigator: {
-          //           minWidth: 120,
-          //           maxWidth: 240,
-          //           component: CustomNavigator,
-          //         },
-          //       }
-          //     : {},
+          components:
+            name === 'page-builder-demo'
+              ? {
+                  unstable_navigator: {
+                    minWidth: 120,
+                    maxWidth: 240,
+                    component: CustomNavigator,
+                  },
+                }
+              : {},
         }),
         visionTool(),
       ],

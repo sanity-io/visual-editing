@@ -285,7 +285,7 @@ export const PreviewFrame = forwardRef<
                         : 'Enable edit overlay'}
                     </Text>
                   </Box>
-                  <Box padding={1}>
+                  <Box paddingY={1}>
                     <Hotkeys
                       keys={['Alt']}
                       style={{ marginTop: -4, marginBottom: -4 }}
