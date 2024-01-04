@@ -382,7 +382,9 @@ export default function PresentationTool(props: {
     }
   }, [toggleOverlay])
 
-  const [boundaryElement, setBoundaryElement] = useState<HTMLDivElement | null>(null)
+  const [boundaryElement, setBoundaryElement] = useState<HTMLDivElement | null>(
+    null,
+  )
 
   return (
     <>
@@ -411,24 +413,29 @@ export default function PresentationTool(props: {
                   defaultSize={navigatorEnabled ? 50 : 75}
                   order={3}
                 >
-                  <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
-                  <BoundaryElementProvider element={boundaryElement}>
-                    <PreviewFrame
-                      initialUrl={initialPreviewUrl}
-                      navigatorEnabled={navigatorEnabled}
-                      onPathChange={handlePreviewPath}
-                      overlayEnabled={overlayEnabled}
-                      params={params}
-                      perspective={perspective}
-                      ref={iframeRef}
-                      setPerspective={setPerspective}
-                      targetOrigin={targetOrigin}
-                      toggleNavigator={toggleNavigator}
-                      toggleOverlay={toggleOverlay}
-                      loadersConnection={loadersConnection}
-                      overlaysConnection={overlaysConnection}
-                      previewKitConnection={previewKitConnection}
-                    />
+                  <Flex
+                    direction="column"
+                    flex={1}
+                    height="fill"
+                    ref={setBoundaryElement}
+                  >
+                    <BoundaryElementProvider element={boundaryElement}>
+                      <PreviewFrame
+                        initialUrl={initialPreviewUrl}
+                        navigatorEnabled={navigatorEnabled}
+                        onPathChange={handlePreviewPath}
+                        overlayEnabled={overlayEnabled}
+                        params={params}
+                        perspective={perspective}
+                        ref={iframeRef}
+                        setPerspective={setPerspective}
+                        targetOrigin={targetOrigin}
+                        toggleNavigator={toggleNavigator}
+                        toggleOverlay={toggleOverlay}
+                        loadersConnection={loadersConnection}
+                        overlaysConnection={overlaysConnection}
+                        previewKitConnection={previewKitConnection}
+                      />
                     </BoundaryElementProvider>
                   </Flex>
                 </Panel>
