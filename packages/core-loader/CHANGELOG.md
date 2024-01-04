@@ -31,6 +31,20 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
 
+## [1.3.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.2...core-loader-v1.3.3) (2024-01-04)
+
+
+### Bug Fixes
+
+* unsubscribe live queries that are no longer in use on the curren… ([#613](https://github.com/sanity-io/visual-editing/issues/613)) ([12bce7a](https://github.com/sanity-io/visual-editing/commit/12bce7ab6b26233db39626fd28d1dfd5b059e9c9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.2.0...core-loader-v1.3.0) (2023-12-12)
 
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.2.0...visual-editing-helpers-v0.2.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency valibot to v0.25.0 ([#597](https://github.com/sanity-io/visual-editing/issues/597)) ([031f397](https://github.com/sanity-io/visual-editing/commit/031f3979646c156c007ff0f8acac90284045544a))
+* unsubscribe live queries that are no longer in use on the curren… ([#613](https://github.com/sanity-io/visual-editing/issues/613)) ([12bce7a](https://github.com/sanity-io/visual-editing/commit/12bce7ab6b26233db39626fd28d1dfd5b059e9c9))
+
 ## [0.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.1.4...visual-editing-helpers-v0.2.0) (2023-12-19)
 
 
