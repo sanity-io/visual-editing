@@ -18,7 +18,7 @@ const Root = styled.div`
   /* Border */
   & > span:nth-child(1) {
     display: block;
-    border-left: 1px solid var(--card-shadow-outline-color);
+    border-left: 1px solid var(--card-border-color);
     position: absolute;
     top: 0;
     left: 4px;

@@ -627,7 +627,7 @@ export const PreviewFrame = forwardRef<
                     inset: `0`,
                     position: `absolute`,
                     borderTop: '1px solid transparent',
-                    boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
+                    boxShadow: '0 0 0 1px var(--card-border-color)',
                   }}
                 >
                   <ErrorCard
@@ -670,7 +670,7 @@ export const PreviewFrame = forwardRef<
               style={{
                 pointerEvents:
                   iframeIsBusy && !continueAnyway ? 'none' : 'auto',
-                boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
+                boxShadow: '0 0 0 1px var(--card-border-color)',
                 borderTop: '1px solid transparent',
               }}
               src={initialUrl.toString()}
@@ -721,11 +721,11 @@ const errorVariants = {
 const iframeVariants = {
   desktop: {
     ...sizes.desktop,
-    boxShadow: '0 0 0 0px var(--card-shadow-outline-color)',
+    boxShadow: '0 0 0 0px var(--card-border-color)',
   },
   mobile: {
     ...sizes.mobile,
-    boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
+    boxShadow: '0 0 0 1px var(--card-border-color)',
   },
   background: {
     opacity: 0,
