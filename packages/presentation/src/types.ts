@@ -5,6 +5,7 @@ import type {
 import type { ComponentType } from 'react'
 import type { Observable } from 'rxjs'
 import type { DocumentStore, SanityClient } from 'sanity'
+import type { ClientPerspective, QueryParams } from '@sanity/client'
 
 export type { PreviewUrlResolver, PreviewUrlResolverOptions }
 
@@ -82,3 +83,20 @@ export interface PresentationParams
 }
 
 export type SetPresentationParams = (prev: PresentationParams) => void
+
+/** @internal */
+export type LiveQueriesState = Record<string, LiveQueriesStateValue>
+
+/** @internal */
+export interface LiveQueriesStateValue {
+  query: string
+  params: QueryParams
+  perspective: ClientPerspective
+  receivedAt: number
+  /**
+   * If false it means the query can't safely be garbage collected,
+   * as older versions of @sanity/core-loader doesn't fire listen events
+   * on an interval.
+   */
+  heartbeat: number | false
+}

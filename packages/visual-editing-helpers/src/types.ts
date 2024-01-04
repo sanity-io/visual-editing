@@ -125,6 +125,11 @@ export type LoaderMsg =
         perspective: ClientPerspective
         query: string
         params: QueryParams
+        /**
+         * If above 0, then the loader will fire listen events on a heartbeat interval,
+         * allowing Presentation Tool to detect when it's no longer necessary to subscribe to a query.
+         */
+        heartbeat?: number
       }
     }
   | {

@@ -33,7 +33,10 @@ import {
 import { RouterContextValue, useRouter } from 'sanity/router'
 import styled from 'styled-components'
 
-import { DEFAULT_TOOL_NAME } from './constants'
+import {
+  DEFAULT_TOOL_NAME,
+  MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
+} from './constants'
 import { ContentEditor } from './editor/ContentEditor'
 import LoaderQueries from './loader/LoaderQueries'
 import { Panel } from './panels/Panel'
@@ -47,6 +50,8 @@ import { PresentationProvider } from './PresentationProvider'
 import { PreviewFrame } from './preview/PreviewFrame'
 import type {
   DeskDocumentPaneParams,
+  LiveQueriesState,
+  LiveQueriesStateValue,
   PresentationPluginOptions,
   PresentationStateParams,
 } from './types'
@@ -96,12 +101,7 @@ export default function PresentationTool(props: {
 
   const [channel, setChannel] = useState<ChannelsController<VisualEditingMsg>>()
 
-  const [liveQueries, setLiveQueries] = useState<
-    Record<
-      string,
-      { query: string; params: QueryParams; perspective: ClientPerspective }
-    >
-  >({})
+  const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
   const { setParams, params, deskParams } = useParams({
     initialPreviewUrl,
@@ -218,13 +218,23 @@ export default function PresentationTool(props: {
               data.projectId === projectId &&
               data.dataset === dataset
             ) {
+              if (
+                typeof data.heartbeat !== 'number' &&
+                data.heartbeat! < MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL
+              ) {
+                throw new Error(
+                  `Loader query listen heartbeat interval must be at least ${MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL}ms`,
+                )
+              }
               setLiveQueries((prev) => ({
                 ...prev,
                 [getQueryCacheKey(data.query, data.params)]: {
                   perspective: data.perspective,
                   query: data.query,
                   params: data.params,
-                },
+                  receivedAt: Date.now(),
+                  heartbeat: data.heartbeat ? 0 : false,
+                } satisfies LiveQueriesStateValue,
               }))
             }
           },
