@@ -15,12 +15,12 @@ import {
 } from '@sanity/visual-editing-helpers'
 import {
   type ReactElement,
+  startTransition,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-  startTransition,
 } from 'react'
 import { useUnique } from 'sanity'
 import {
