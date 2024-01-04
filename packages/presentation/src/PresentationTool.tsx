@@ -3,7 +3,7 @@ import {
   type ChannelStatus,
   createChannelsController,
 } from '@sanity/channels'
-import type { ClientPerspective, QueryParams } from '@sanity/client'
+import type { ClientPerspective } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
 import { BoundaryElementProvider, Flex } from '@sanity/ui'
 import {
@@ -20,6 +20,7 @@ import {
   useMemo,
   useRef,
   useState,
+  startTransition,
 } from 'react'
 import { useUnique } from 'sanity'
 import {
@@ -219,7 +220,7 @@ export default function PresentationTool(props: {
               data.dataset === dataset
             ) {
               if (
-                typeof data.heartbeat !== 'number' &&
+                typeof data.heartbeat === 'number' &&
                 data.heartbeat! < MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL
               ) {
                 throw new Error(
@@ -233,7 +234,7 @@ export default function PresentationTool(props: {
                   query: data.query,
                   params: data.params,
                   receivedAt: Date.now(),
-                  heartbeat: data.heartbeat ? 0 : false,
+                  heartbeat: data.heartbeat ?? false,
                 } satisfies LiveQueriesStateValue,
               }))
             }
@@ -262,6 +263,42 @@ export default function PresentationTool(props: {
       setChannel(undefined)
     }
   }, [dataset, projectId, setDocumentsOnPage, setParams, targetOrigin])
+
+  useEffect(() => {
+    const interval = setInterval(
+      () =>
+        startTransition(() =>
+          setLiveQueries((liveQueries) => {
+            if (Object.keys(liveQueries).length < 1) {
+              return liveQueries
+            }
+
+            const now = Date.now()
+            const hasAnyExpired = Object.values(liveQueries).some(
+              (liveQuery) =>
+                liveQuery.heartbeat !== false &&
+                now > liveQuery.receivedAt + liveQuery.heartbeat,
+            )
+            if (!hasAnyExpired) {
+              return liveQueries
+            }
+            const next = {} as LiveQueriesState
+            for (const [key, value] of Object.entries(liveQueries)) {
+              if (
+                value.heartbeat !== false &&
+                now > value.receivedAt + value.heartbeat
+              ) {
+                continue
+              }
+              next[key] = value
+            }
+            return next
+          }),
+        ),
+      MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
+    )
+    return () => clearInterval(interval)
+  }, [])
 
   const handleFocusPath = useCallback(
     // eslint-disable-next-line no-warning-comments

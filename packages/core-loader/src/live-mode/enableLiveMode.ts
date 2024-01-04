@@ -7,9 +7,10 @@ import {
   SanityClient,
 } from '@sanity/client'
 import { SanityStegaClient, stegaEncodeSourceMap } from '@sanity/client/stega'
-import {
-  type VisualEditingConnectionIds,
-  type VisualEditingMsg,
+import type {
+  LoaderPayloads,
+  VisualEditingConnectionIds,
+  VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
 import { atom, MapStore } from 'nanostores'
 
@@ -21,6 +22,8 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
   ssr: boolean
   setFetcher: SetFetcher
 }
+
+const LISTEN_HEARTBEAT_INTERVAL = 1000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const { client, setFetcher, onConnect, onDisconnect } = options
@@ -187,12 +190,17 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     const liveQuery = { query, params, $fetch }
     liveQueries.add(liveQuery)
     emitQueryListen()
+    const interval = setInterval(
+      () => emitQueryListen(true),
+      LISTEN_HEARTBEAT_INTERVAL,
+    )
     return () => {
+      clearInterval(interval)
       liveQueries.delete(liveQuery)
       emitQueryListen()
     }
   }
-  const emitQueryListen = () => {
+  const emitQueryListen = (skipSetLoading?: boolean) => {
     if (!channel) {
       throw new Error('No channel')
     }
@@ -204,8 +212,11 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         perspective,
         query,
         params,
-      })
-      $fetch.setKey('loading', true)
+        heartbeat: LISTEN_HEARTBEAT_INTERVAL,
+      } satisfies LoaderPayloads['query-listen'])
+      if (!skipSetLoading) {
+        $fetch.setKey('loading', true)
+      }
       $fetch.setKey('perspective', perspective)
     }
   }
