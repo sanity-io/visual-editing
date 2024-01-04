@@ -43,8 +43,8 @@ import {
   useMemo,
   useState,
 } from 'react'
-import styled from 'styled-components'
 import { Hotkeys } from 'sanity'
+import styled from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
 import { MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
