@@ -43,6 +43,16 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
+## [1.4.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.2...presentation-v1.4.3) (2024-01-05)
+
+
+### Bug Fixes
+
+* apply backdrop blur for safari browsers ([d6f8cbd](https://github.com/sanity-io/visual-editing/commit/d6f8cbd6b3474be99b5c93bcd13489be548e0019))
+* batch by 100s of documents instead of 10s ([#621](https://github.com/sanity-io/visual-editing/issues/621)) ([871e04c](https://github.com/sanity-io/visual-editing/commit/871e04c8a38e7641a5d2d0ae02ff1686a7e6040d))
+* **deps:** Update dependency @sanity/ui to v2.0.0-beta.15 ([#625](https://github.com/sanity-io/visual-editing/issues/625)) ([3ac44bc](https://github.com/sanity-io/visual-editing/commit/3ac44bc17a0b45cc5ae845774b319a9b9c8c02a5))
+* **deps:** Update dependency framer-motion to ^10.17.9 ([#618](https://github.com/sanity-io/visual-editing/issues/618)) ([544bb99](https://github.com/sanity-io/visual-editing/commit/544bb991d0f5142dad33b212611adda754cb6bdb))
+
 ## [1.4.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.1...presentation-v1.4.2) (2024-01-04)
 
 
