@@ -30,6 +30,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [2.3.2](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.1...overlays-v2.3.2) (2024-01-05)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/ui to v2.0.0-beta.15 ([#625](https://github.com/sanity-io/visual-editing/issues/625)) ([3ac44bc](https://github.com/sanity-io/visual-editing/commit/3ac44bc17a0b45cc5ae845774b319a9b9c8c02a5))
+
 ## [2.3.1](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.0...overlays-v2.3.1) (2024-01-04)
 
 

@@ -31,6 +31,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
 
+## [5.3.9](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.3.8...groq-store-v5.3.9) (2024-01-05)
+
+
+### Bug Fixes
+
+* double LRU cache size ([#627](https://github.com/sanity-io/visual-editing/issues/627)) ([2489ff8](https://github.com/sanity-io/visual-editing/commit/2489ff82a49f9fbcdf4ed322c1a627d9f0ebe635))
+
 ## [5.3.8](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.3.7...groq-store-v5.3.8) (2024-01-04)
 
 

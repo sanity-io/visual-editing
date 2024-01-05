@@ -65,6 +65,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
+## [1.5.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.4.3...svelte-loader-v1.5.0) (2024-01-05)
+
+
+### Features
+
+* **react-loader:** add `stega` and `useCdn` options to `loadQuery` ([#626](https://github.com/sanity-io/visual-editing/issues/626)) ([ae9618e](https://github.com/sanity-io/visual-editing/commit/ae9618e43d597b582b391805ba4df489e91ecab4))
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.3.0...svelte-loader-v1.4.0) (2023-12-12)
 
 
