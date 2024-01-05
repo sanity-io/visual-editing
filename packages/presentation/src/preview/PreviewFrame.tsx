@@ -532,6 +532,12 @@ export const PreviewFrame = forwardRef<
                       : 'blur(2px)',
                     ['transition' as string]:
                       'backdrop-filter 0.2s ease-in-out',
+                    // @TODO Because of Safari we have to do this
+                    WebkitBackdropFilter: timedOut
+                      ? 'blur(16px) saturate(0.5) grayscale(0.5)'
+                      : 'blur(2px)',
+                    WebkitTransition:
+                      '-webkit-backdrop-filter 0.2s ease-in-out',
                     zIndex: 1,
                   }}
                 >
