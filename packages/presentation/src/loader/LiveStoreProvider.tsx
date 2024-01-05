@@ -15,6 +15,7 @@ import { useRevalidate } from '@sanity/visual-editing-helpers/hooks'
 import { applyPatch } from 'mendoza'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
+import { LIVE_QUERY_CACHE_BATCH_SIZE } from '../constants'
 import { defineListenerContext as Context, IsEnabledContext } from './context'
 import { turboChargeResultIfSourceMap } from './turboChargeResultIfSourceMap'
 import type {
@@ -203,16 +204,19 @@ const QuerySubscription = memo(function QuerySubscription(
     }
 
     let fulfilled = false
+    let fetching = false
     const controller = new AbortController()
     // eslint-disable-next-line no-inner-declarations
     async function effect() {
       const { signal } = controller
+      fetching = true
       const { result, resultSourceMap } = await client.fetch(query, params, {
         tag: 'presentation-loader',
         signal,
         perspective,
         filterResponse: false,
       })
+      fetching = false
 
       if (!signal.aborted) {
         snapshots.set(getQueryCacheKey(perspective, query, params), {
@@ -243,13 +247,14 @@ const QuerySubscription = memo(function QuerySubscription(
     const onFinally = startRefresh()
     effect()
       .catch((error) => {
+        fetching = false
         if (error.name !== 'AbortError') {
           setError(error)
         }
       })
       .finally(onFinally)
     return () => {
-      if (!fulfilled) {
+      if (!fulfilled && !fetching) {
         controller.abort()
       }
     }
@@ -417,9 +422,12 @@ const Turbo = memo(function Turbo(props: TurboProps) {
         nextBatch.add(turboId)
       }
     }
-    const nextBatchSlice = [...nextBatch].slice(0, 10)
+    const nextBatchSlice = [...nextBatch].slice(0, LIVE_QUERY_CACHE_BATCH_SIZE)
     if (nextBatchSlice.length === 0) return
-    setBatch((prevBatch) => [...prevBatch.slice(-10), nextBatchSlice])
+    setBatch((prevBatch) => [
+      ...prevBatch.slice(-LIVE_QUERY_CACHE_BATCH_SIZE),
+      nextBatchSlice,
+    ])
   }, [batch, dataset, perspective, projectId, turboIds])
 
   const [lastMutatedDocumentId, setLastMutatedDocumentId] = useState<string>()

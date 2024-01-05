@@ -14,3 +14,6 @@ export const API_VERSION = '2023-10-16'
 
 // Heartbeats shouldn't fire on intervals that are so short it causes performance issues
 export const MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL = 1000 // ms
+
+// Batch size for fetching documents building up the cache
+export const LIVE_QUERY_CACHE_BATCH_SIZE = 100
