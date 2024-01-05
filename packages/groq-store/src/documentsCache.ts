@@ -41,7 +41,7 @@ export type DocumentCacheKey =
 export const unstable__documentsCache = new LRUCache<
   DocumentCacheKey,
   SanityDocument
->(1024)
+>(2048)
 
 /**
  * @alpha
