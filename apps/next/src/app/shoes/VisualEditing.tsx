@@ -8,9 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { client } from './sanity.client'
 
 // Always enable stega in Live Mode
-const stegaClient = client.withConfig({
-  stega: { ...client.config().stega, enabled: true },
-})
+const stegaClient = client.withConfig({ stega: true })
 
 export default function VisualEditing() {
   const router = useRouter()
