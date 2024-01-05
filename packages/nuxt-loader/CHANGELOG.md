@@ -57,6 +57,18 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.6.5...nuxt-loader-v1.7.0) (2024-01-05)
+
+
+### Features
+
+* **react-loader:** add `stega` and `useCdn` options to `loadQuery` ([#626](https://github.com/sanity-io/visual-editing/issues/626)) ([ae9618e](https://github.com/sanity-io/visual-editing/commit/ae9618e43d597b582b391805ba4df489e91ecab4))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency vue to ^3.4.5 ([#619](https://github.com/sanity-io/visual-editing/issues/619)) ([c14e3e5](https://github.com/sanity-io/visual-editing/commit/c14e3e52155d6918dada0b3cd3bdcc3bada624fe))
+
 ## [1.6.5](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.6.4...nuxt-loader-v1.6.5) (2024-01-04)
 
 
