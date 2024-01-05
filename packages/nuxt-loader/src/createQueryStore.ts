@@ -88,16 +88,13 @@ export const createQueryStore = (
             `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're passing to "createQueryStore".`,
           )
         }
-        // Necessary with a new client instance as `useCdn` can't be set on `client.fetch`
-        const clientNotUsingCdn = client.config().useCdn
-          ? client.withConfig({ useCdn: false })
-          : client
 
         const { result, resultSourceMap } =
-          await clientNotUsingCdn!.fetch<QueryResponseResult>(query, params, {
+          await client.fetch<QueryResponseResult>(query, params, {
             filterResponse: false,
             resultSourceMap: 'withKeyArraySelector',
             perspective,
+            useCdn: false,
           })
         return { data: result, sourceMap: resultSourceMap, perspective }
       }

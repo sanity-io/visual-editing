@@ -27,13 +27,13 @@ export const createQueryStore = (
   const loadQuery = async <QueryResponseResult>(
     query: string,
     params: QueryParams = {},
-    options: Parameters<QueryStore['loadQuery']>[2] = {},
+    _options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<{
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
     perspective?: ClientPerspective
   }> => {
-    const { perspective = 'published' } = options
+    const { perspective = 'published', cache, next, stega } = _options
     if (
       perspective === 'previewDrafts' &&
       !unstable__serverClient.canPreviewDrafts
@@ -42,23 +42,22 @@ export const createQueryStore = (
         `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
       )
     }
-    // Necessary with a new client instanec as `useCdn` can't be set on `client.fetch`
-    const client =
-      perspective === 'published' &&
-      !unstable__serverClient.instance!.config().useCdn &&
-      !options.cache &&
-      !options.next
-        ? unstable__serverClient.instance!.withConfig({ useCdn: true })
-        : 'previewDrafts' && unstable__serverClient.instance!.config().useCdn
-          ? unstable__serverClient.instance!.withConfig({ useCdn: false })
-          : unstable__serverClient.instance!
+    // @TODO can this be removed, and `useCdn: undefined` be used instead?
+    const useCdn = unstable__serverClient.instance!.config().useCdn
+
     const { result, resultSourceMap } =
-      await client!.fetch<QueryResponseResult>(query, params, {
-        filterResponse: false,
-        cache: options.next ? undefined : 'no-store',
-        ...options,
-        perspective,
-      })
+      await unstable__serverClient.instance!.fetch<QueryResponseResult>(
+        query,
+        params,
+        {
+          cache: cache ?? next ? undefined : 'no-store',
+          filterResponse: false,
+          next,
+          perspective,
+          useCdn: perspective === 'previewDrafts' ? false : useCdn,
+          ['stega' as string]: stega,
+        },
+      )
     return {
       data: result,
       sourceMap: resultSourceMap,

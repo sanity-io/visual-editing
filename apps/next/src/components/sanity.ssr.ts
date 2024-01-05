@@ -12,10 +12,7 @@ setServerClient(
   client.withConfig({
     token,
     // Enable stega if it's a Vercel preview deployment, as the Vercel Toolbar has controls that shows overlays
-    stega: {
-      ...client.config().stega,
-      enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
-    },
+    stega: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
   }),
 )
 

@@ -86,16 +86,17 @@ export const createQueryStore = (
           `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
         )
       }
-      // Necessary with a new client instance as `useCdn` can't be set on `client.fetch`
-      const client = unstable__serverClient.instance!.config().useCdn
-        ? unstable__serverClient.instance!.withConfig({ useCdn: false })
-        : unstable__serverClient.instance!
       const { result, resultSourceMap } =
-        await client!.fetch<QueryResponseResult>(query, params, {
-          filterResponse: false,
-          resultSourceMap: 'withKeyArraySelector',
-          perspective,
-        })
+        await unstable__serverClient.instance!.fetch<QueryResponseResult>(
+          query,
+          params,
+          {
+            filterResponse: false,
+            resultSourceMap: 'withKeyArraySelector',
+            perspective,
+            useCdn: false,
+          },
+        )
       return { data: result, sourceMap: resultSourceMap, perspective }
     }
 

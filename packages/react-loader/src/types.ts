@@ -5,6 +5,7 @@ import type {
   ResponseQueryOptions,
 } from '@sanity/client'
 import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
+import type { StegaConfig } from '@sanity/client/stega'
 import {
   createQueryStore as createCoreQueryStore,
   EnableLiveModeOptions,
@@ -111,7 +112,9 @@ export interface QueryStore {
   loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next'>,
+    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next'> & {
+      stega?: boolean | StegaConfig
+    },
   ) => Promise<QueryResponseInitial<QueryResponseResult>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {

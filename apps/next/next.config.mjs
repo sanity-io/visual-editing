@@ -24,6 +24,10 @@ const nextConfig = {
     ],
   },
 
+  experimental: {
+    taint: true,
+  },
+
   async headers() {
     return [
       {
