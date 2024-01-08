@@ -20,7 +20,7 @@ export function useDocumentsInUse(
   >()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
-    if (window.self === window.top) {
+    if (window.self === window.top && !window.opener) {
       return
     }
     const channel = createChannelsNode<VisualEditingMsg>({

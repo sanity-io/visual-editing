@@ -22,15 +22,6 @@ const sharedSettings = definePlugin({
   schema,
 })
 
-const devMode = (() => {
-  const vercelEnv = process.env.SANITY_STUDIO_VERCEL_ENV
-  if (vercelEnv === 'development' || vercelEnv === 'preview') return true
-
-  return typeof document === 'undefined'
-    ? false
-    : location.hostname === 'localhost'
-}) satisfies PresentationPluginOptions['devMode']
-
 // If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
 function maybeGitBranchUrl(url: string) {
   if (
@@ -78,9 +69,10 @@ function definePreviewUrl(
 }
 
 const presentationWorkspaces = Object.entries({
-  remix:
-    process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
-    'http://localhost:3000/shoes',
+  // @TODO make the remix build functional again
+  // remix:
+  // process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
+  // 'http://localhost:3000/shoes',
   next: {
     'app-router':
       process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL ||
@@ -119,7 +111,6 @@ const presentationWorkspaces = Object.entries({
           name: toolName,
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           locate,
-          devMode,
           components:
             name === 'page-builder-demo'
               ? {
@@ -156,7 +147,7 @@ const presentationWorkspaces = Object.entries({
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           // @TODO fix the locator for the pages-router
           locate: toolName === 'pages-router' ? undefined : locate,
-          devMode,
+          unstable_showUnsafeShareUrl: toolName === 'app-router',
         })
       }),
       visionTool(),
