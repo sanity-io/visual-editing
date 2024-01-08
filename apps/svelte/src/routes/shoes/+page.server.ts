@@ -1,7 +1,13 @@
 import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import { loadQuery } from '$lib/sanity.loader.server'
-import type { PageLoad } from './$types'
+import { loadQuery } from '@sanity/svelte-loader'
+import type { PageServerLoad } from './$types'
 
-export const load: PageLoad = () => {
-  return loadQuery<ShoesListResult>(shoesList)
+export const load: PageServerLoad = async () => {
+  const initial = await loadQuery<ShoesListResult>(
+    shoesList,
+    {},
+    { perspective: 'previewDrafts' },
+  )
+
+  return { initial }
 }

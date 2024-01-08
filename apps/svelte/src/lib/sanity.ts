@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client/stega'
-import { apiVersion, workspaces } from 'apps-common/env'
+import { apiVersion, studioUrl, workspaces } from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
 const { projectId, dataset } = workspaces['svelte']
 
@@ -8,22 +8,10 @@ export const client = createClient({
   dataset,
   useCdn: true,
   apiVersion,
-  // stega: {
-  //   enabled: true,
-  //   studioUrl: (sourceDocument) => {
-  //     if (
-  //       sourceDocument._projectId ===
-  //         workspaces['cross-dataset-references'].projectId &&
-  //       sourceDocument._dataset ===
-  //         workspaces['cross-dataset-references'].dataset
-  //     ) {
-  //       const { workspace, tool } = workspaces['cross-dataset-references']
-  //       return { baseUrl, workspace, tool }
-  //     }
-  //     const { workspace, tool } = workspaces['svelte']
-  //     return { baseUrl, workspace, tool }
-  //   },
-  // },
+  stega: {
+    // enabled: true,
+    studioUrl,
+  },
 })
 
 const builder = imageUrlBuilder({ projectId, dataset })

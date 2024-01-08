@@ -1,27 +1,17 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
   import type { PageData } from './$types'
 
-  import { enableOverlays } from '@sanity/overlays'
-  import { studioUrl } from 'apps-common/env'
-  import { useLiveMode } from '$lib/sanity.loader'
-  import { client, urlFor, urlForCrossDatasetReference } from '$lib/sanity'
+  import { urlFor, urlForCrossDatasetReference } from '$lib/sanity'
   import { formatCurrency } from 'apps-common/utils'
-  import { useEncodeDataAttribute } from '@sanity/svelte-loader'
+  import { useQuery } from '@sanity/svelte-loader'
+  import { shoesList, type ShoesListResult } from 'apps-common/queries'
 
   export let data: PageData
+  const { initial } = data;
 
-  $: ({ data: products, loading, sourceMap } = $data)
+  const query = useQuery<ShoesListResult>(shoesList, {}, { initial })
 
-  $: encodeDataAttribute = useEncodeDataAttribute(
-    products,
-    sourceMap,
-    studioUrl,
-  )
-
-  onMount(() => enableOverlays())
-
-  onMount(() => useLiveMode({ client }))
+  $: ({ data: products, loading, encodeDataAttribute } = $query);
 </script>
 
 <svelte:head>
