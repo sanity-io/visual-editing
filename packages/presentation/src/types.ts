@@ -50,6 +50,7 @@ export interface PresentationPluginOptions {
   components?: {
     unstable_navigator?: NavigatorOptions
   }
+  unstable_showUnsafeShareUrl?: boolean
 }
 
 export interface PresentationStateParams {

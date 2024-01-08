@@ -80,8 +80,8 @@ export type ChannelsEventHandler<T extends ChannelMsg = ChannelMsg> = (
 export interface ChannelsControllerOptions<T extends ChannelMsg = ChannelMsg> {
   id: string
   connectTo: ChannelsControllerChannelOptions<T>[]
-  frame: HTMLIFrameElement
-  frameOrigin: string
+  target: Window
+  targetOrigin: string
   onEvent?: ChannelsEventHandler<T>
   onStatusUpdate?: (status: ChannelStatus, connectionId: string) => void
 }
@@ -115,6 +115,7 @@ export interface ChannelsControllerChannel<T extends ChannelMsg = ChannelMsg> {
  * @public
  */
 export interface ChannelsController<T extends ChannelMsg = ChannelMsg> {
+  addSource: (source: MessageEventSource) => void
   destroy: () => void
   send: (id: string | string[] | undefined, ...args: ToArgs<T>) => void
 }
@@ -136,6 +137,7 @@ export interface ChannelsNodeChannel {
   id: string | null
   buffer: ChannelMsg[]
   origin: string | null
+  source: MessageEventSource | null
   status: ChannelStatus
 }
 
