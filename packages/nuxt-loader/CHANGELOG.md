@@ -57,6 +57,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
 
+## [1.7.1](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.0...nuxt-loader-v1.7.1) (2024-01-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nuxt to ^3.9.1 ([#636](https://github.com/sanity-io/visual-editing/issues/636)) ([4d9dbb0](https://github.com/sanity-io/visual-editing/commit/4d9dbb00356186764af9c86b316dee1736511da3))
+
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.6.5...nuxt-loader-v1.7.0) (2024-01-05)
 
 
