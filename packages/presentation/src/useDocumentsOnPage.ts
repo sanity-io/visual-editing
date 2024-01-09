@@ -1,12 +1,13 @@
-import { ClientPerspective } from '@sanity/client'
+import type { ClientPerspective } from '@sanity/client'
+import isEqual from 'fast-deep-equal'
 import { useCallback, useMemo, useState } from 'react'
 
 export type DocumentOnPage = {
   _id: string
   _type: string
-  _projectId?: string
-  dataset?: string
 }
+
+let warnedAboutCrossDatasetReference = false
 
 export function useDocumentsOnPage(
   perspective: ClientPerspective,
@@ -14,54 +15,52 @@ export function useDocumentsOnPage(
   DocumentOnPage[],
   (perspective: ClientPerspective, state: DocumentOnPage[]) => void,
 ] {
-  const [state, setState] = useState<
-    Record<ClientPerspective, Map<string, DocumentOnPage>>
-  >(() => ({ published: new Map(), previewDrafts: new Map(), raw: new Map() }))
+  if (perspective !== 'published' && perspective !== 'previewDrafts') {
+    throw new Error(`Invalid perspective: ${perspective}`)
+  }
+
+  const [published, setPublished] = useState<Record<string, DocumentOnPage>>({})
+  const [previewDrafts, setPreviewDrafts] = useState<
+    Record<string, DocumentOnPage>
+  >({})
 
   const setDocumentsOnPage = useCallback(
-    (perspective: ClientPerspective, documents: DocumentOnPage[]) => {
-      setState((state) => {
-        let changed = false
-        let map = state[perspective]
-        const getKey = (document: DocumentOnPage) => {
-          return `${document._projectId}-${document.dataset}-${document._type}-${document._id}`
+    (perspective: ClientPerspective, sourceDocuments: DocumentOnPage[]) => {
+      const documents = sourceDocuments.filter((sourceDocument) => {
+        if ('_projectId' in sourceDocument && sourceDocument._projectId) {
+          // @TODO Handle cross dataset references
+          if (!warnedAboutCrossDatasetReference) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              'Cross dataset references are not supported yet, ignoring source document',
+              sourceDocument,
+            )
+            warnedAboutCrossDatasetReference = true
+          }
+          return false
         }
-        const knownKeys = new Set<ReturnType<typeof getKey>>()
-        // Add anything new, and track all keys
+        return sourceDocument
+      })
+
+      const setCache =
+        perspective === 'published' ? setPublished : setPreviewDrafts
+
+      setCache((prev) => {
+        const next: Record<string, DocumentOnPage> = {}
         for (const document of documents) {
-          const key = getKey(document)
-          knownKeys.add(key)
-          if (!map.has(key)) {
-            map.set(key, document)
-            changed = true
-          }
+          next[document._id] = document
         }
-        // Remove anything that is no longer on the page
-        for (const key of map.keys()) {
-          if (!knownKeys.has(key)) {
-            map.delete(key)
-            changed = true
-          }
-        }
-
-        if (changed) {
-          map = new Map(map)
-          return { ...state, [perspective]: new Map(map) }
-        }
-
-        return state
+        return isEqual(prev, next) ? prev : next
       })
     },
     [],
   )
 
-  const documentsOnPageMap = useMemo(() => {
-    return state[perspective]
-  }, [perspective, state])
-
   const documentsOnPage = useMemo(() => {
-    return [...documentsOnPageMap.values()]
-  }, [documentsOnPageMap])
+    return perspective === 'published'
+      ? [...Object.values(published)]
+      : [...Object.values(previewDrafts)]
+  }, [perspective, previewDrafts, published])
 
   return [documentsOnPage, setDocumentsOnPage]
 }

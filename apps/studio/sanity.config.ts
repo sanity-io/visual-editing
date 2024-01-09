@@ -3,7 +3,6 @@ import { defineConfig, definePlugin, defineType, defineField } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import {
   presentationTool,
-  type PresentationPluginOptions,
   type PreviewUrlResolverOptions,
   type PreviewUrlOption,
 } from '@sanity/presentation'
@@ -201,6 +200,36 @@ export default [
                   title: 'Alt text',
                 }),
               ],
+            }),
+          ],
+        }),
+        defineType({
+          type: 'document',
+          name: 'book',
+          // @ts-expect-error - @TODO find out why TS is mad
+          fields: [
+            defineField({
+              type: 'string',
+              name: 'title',
+              title: 'Title',
+            }),
+            defineField({
+              type: 'reference',
+              name: 'author',
+              title: 'Author',
+              to: [{ type: 'author' }],
+            }),
+          ],
+        }),
+        defineType({
+          type: 'document',
+          name: 'author',
+          // @ts-expect-error - @TODO find out why TS is mad
+          fields: [
+            defineField({
+              type: 'string',
+              name: 'name',
+              title: 'Name',
             }),
           ],
         }),

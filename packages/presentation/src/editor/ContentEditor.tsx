@@ -1,7 +1,7 @@
-import { ReactElement } from 'react'
-import { Path, SanityDocument } from 'sanity'
+import { type ReactElement } from 'react'
+import { type Path } from 'sanity'
 
-import { DeskDocumentPaneParams } from '../types'
+import type { DeskDocumentPaneParams } from '../types'
 import { DocumentListPanel } from './DocumentListPanel'
 import { DocumentPanel } from './DocumentPanel'
 
@@ -10,8 +10,7 @@ export function ContentEditor(props: {
   documentId?: string
   documentType?: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
-  onFocusPath: (documentId: string, path: Path) => void
-  onDocumentChange: (document: SanityDocument | null) => void
+  onFocusPath: (path: Path) => void
   previewUrl?: string
   refs: { _id: string; _type: string }[]
 }): ReactElement {
@@ -21,7 +20,6 @@ export function ContentEditor(props: {
     documentType,
     onDeskParams,
     onFocusPath,
-    onDocumentChange,
     previewUrl,
     refs,
   } = props
@@ -34,7 +32,6 @@ export function ContentEditor(props: {
         documentType={documentType}
         onDeskParams={onDeskParams}
         onFocusPath={onFocusPath}
-        onDocumentChange={onDocumentChange}
       />
     )
   }

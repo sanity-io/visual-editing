@@ -1,5 +1,5 @@
 import { SanityDocument } from '@sanity/client'
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import {
   definePlugin,
   getPublishedId,
@@ -20,6 +20,9 @@ import { router } from './router'
 import { PresentationPluginOptions } from './types'
 
 const PresentationTool = lazy(() => import('./PresentationTool'))
+const BroadcastDisplayedDocument = lazy(
+  () => import('./loader/BroadcastDisplayedDocument'),
+)
 
 export const presentationTool = definePlugin<PresentationPluginOptions>(
   (options) => {
@@ -39,8 +42,10 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
                 schemaType={props.schemaType}
               />
             )}
-
             {props.renderDefault(props)}
+            <Suspense key="broadcast-displayed-document">
+              <BroadcastDisplayedDocument value={value} />
+            </Suspense>
           </PresentationDocumentProvider>
         )
       }

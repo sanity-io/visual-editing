@@ -1,10 +1,11 @@
 import { ContentSourceMap } from '@sanity/client'
+import LRUCache from 'mnemonist/lru-cache-with-delete'
+import { SanityDocument } from 'sanity'
 import { expect, test } from 'vitest'
 
-import { turboChargeResultIfSourceMap } from './turboChargeResultIfSourceMap'
+import { LIVE_QUERY_CACHE_SIZE } from '../constants'
+import { turboChargeResultIfSourceMap } from './LoaderQueries'
 
-const projectId = 'hiomol4a'
-const dataset = 'preview-poc'
 const perspective = 'previewDrafts'
 
 test('Can apply an array keyed field update', () => {
@@ -818,10 +819,10 @@ test('Can apply an array keyed field update', () => {
     title: 'Home',
   }
 
+  const cache = new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE)
   const turboCharged = turboChargeResultIfSourceMap(
+    cache,
     draft,
-    projectId,
-    dataset,
     result,
     perspective,
     resultSourceMap,
