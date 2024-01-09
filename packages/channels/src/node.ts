@@ -20,12 +20,13 @@ import {
 export function createChannelsNode<T extends ChannelMsg>(
   config: ChannelsNodeOptions<T>,
 ): ChannelsNode<T> {
-  const inFrame = window.self !== window.top
+  const inFrame = window.self !== window.top || window.opener
 
   const channel: ChannelsNodeChannel = {
     buffer: [],
     id: null,
     origin: null,
+    source: null,
     status: 'connecting',
   }
 
@@ -50,7 +51,7 @@ export function createChannelsNode<T extends ChannelMsg>(
       return
     }
 
-    if (channel.id && channel.origin) {
+    if (channel.id && channel.origin && channel.source) {
       const msg: ProtocolMsg<T> = {
         connectionId: channel.id,
         data,
@@ -62,7 +63,7 @@ export function createChannelsNode<T extends ChannelMsg>(
       }
 
       try {
-        parent.postMessage(msg, {
+        channel.source.postMessage(msg, {
           targetOrigin: channel.origin,
         })
       } catch (e) {
@@ -94,6 +95,15 @@ export function createChannelsNode<T extends ChannelMsg>(
 
     if (isValidMessageEvent(e)) {
       const { data } = e
+      // Once we know the origin, after a valid handshake, we always verify it
+      if (channel.origin && e.origin !== channel.origin) {
+        return
+      }
+      // Always update the channel source reference, in case it changes
+      if (e.source && channel.source !== e.source) {
+        channel.source = e.source
+      }
+
       if (isHandshakeMessage(data.type) && data.data) {
         if (data.type === 'handshake/syn') {
           channel.origin = e.origin

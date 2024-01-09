@@ -67,7 +67,11 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
-  const { previewUrl: _previewUrl, components } = props.tool.options ?? {}
+  const {
+    previewUrl: _previewUrl,
+    components,
+    unstable_showUnsafeShareUrl = false,
+  } = props.tool.options ?? {}
   const name = props.tool.name || DEFAULT_TOOL_NAME
   const { unstable_navigator } = components || {}
 
@@ -170,15 +174,37 @@ export default function PresentationTool(props: {
   const [previewKitConnection, setPreviewKitConnection] =
     useState<ChannelStatus>('connecting')
 
-  useEffect(() => {
-    const iframe = iframeRef.current
+  const [popups] = useState<Set<Window>>(() => new Set())
+  const handleOpenPopup = useCallback(
+    (url: string) => {
+      const source = window.open(url, '_blank')
+      if (source) {
+        popups.add(source)
+      }
+    },
+    [popups],
+  )
 
-    if (!iframe) return
+  useEffect(() => {
+    if (popups.size && channel) {
+      // loop popups and call channel.addSource
+      for (const source of popups) {
+        if (source && 'closed' in source && !source.closed) {
+          channel.addSource(source)
+        }
+      }
+    }
+  }, [channel, popups, popups.size])
+
+  useEffect(() => {
+    const target = iframeRef.current?.contentWindow
+
+    if (!target) return
 
     const nextChannel = createChannelsController<VisualEditingMsg>({
       id: 'presentation' satisfies VisualEditingConnectionIds,
-      frame: iframe,
-      frameOrigin: targetOrigin,
+      target,
+      targetOrigin,
       connectTo: [
         {
           id: 'overlays' satisfies VisualEditingConnectionIds,
@@ -442,6 +468,7 @@ export default function PresentationTool(props: {
                         initialUrl={initialPreviewUrl}
                         navigatorEnabled={navigatorEnabled}
                         onPathChange={handlePreviewPath}
+                        openPopup={handleOpenPopup}
                         overlayEnabled={overlayEnabled}
                         params={params}
                         perspective={perspective}
@@ -453,6 +480,9 @@ export default function PresentationTool(props: {
                         loadersConnection={loadersConnection}
                         overlaysConnection={overlaysConnection}
                         previewKitConnection={previewKitConnection}
+                        unstable_showUnsafeShareUrl={
+                          unstable_showUnsafeShareUrl
+                        }
                       />
                     </BoundaryElementProvider>
                   </Flex>

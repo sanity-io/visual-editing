@@ -20,7 +20,90 @@ import type {
 export function createChannelsController<T extends ChannelMsg>(
   config: ChannelsControllerOptions<T>,
 ): ChannelsController {
-  const iframe = config.frame.contentWindow
+  const { destroy, send } = createChannelsControllerInternal(config)
+  const sources = new Set<MessageEventSource>()
+  const sendToSource = new WeakMap<
+    MessageEventSource,
+    ChannelsController['send']
+  >()
+  const destroySource = new Set<ChannelsController['destroy']>()
+
+  const sendToMany = ((id, type, data) => {
+    send(id, type, data)
+    for (const source of sources) {
+      if (
+        source &&
+        'closed' in source &&
+        !source.closed &&
+        sendToSource.has(source)
+      ) {
+        const send = sendToSource.get(source)
+        send!(id, type, data)
+      }
+    }
+  }) satisfies ChannelsController['send']
+
+  const destroyMany = (() => {
+    destroy()
+    for (const destroy of destroySource) {
+      destroy()
+    }
+  }) satisfies ChannelsController['destroy']
+
+  return {
+    destroy: destroyMany,
+    send: sendToMany,
+    addSource(source) {
+      if (sources.has(source)) {
+        return
+      }
+      if (!('closed' in source)) {
+        // eslint-disable-next-line no-console
+        console.warn('Source is unsupported', { source })
+        throw new Error('Source is unsupported')
+      }
+      if (source.closed) {
+        throw new Error('Source is closed')
+      }
+      const { send, destroy } = createChannelsControllerInternal({
+        ...config,
+        target: source,
+        // @TODO temporary workaround for onStatusUpdate and onEvent not differentiating
+        //       iframes from popups
+        connectTo: config.connectTo.map((prevConnectTo) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { onStatusUpdate, onEvent, ...connectTo } = prevConnectTo
+
+          return {
+            ...connectTo,
+            onEvent: onEvent
+              ? (((type, data) => {
+                  if (
+                    type === 'preview-kit/documents' ||
+                    type === 'overlay/navigate' ||
+                    type === 'loader/documents'
+                  ) {
+                    return
+                  }
+
+                  // @ts-expect-error -- figure out ToArgs complaining
+                  return onEvent(type, data)
+                }) satisfies typeof onEvent)
+              : undefined,
+          }
+        }),
+      })
+      destroySource.add(destroy)
+      sendToSource.set(source, send)
+      sources.add(source)
+    },
+  }
+}
+
+function createChannelsControllerInternal<T extends ChannelMsg>(
+  config: ChannelsControllerOptions<T>,
+): Omit<ChannelsController, 'addSource'> {
+  const target = config.target
 
   const channels: ChannelsControllerChannel<T>[] = config.connectTo.map(
     (config) => ({
@@ -54,7 +137,7 @@ export function createChannelsController<T extends ChannelMsg>(
       data.to == config.id &&
       channels.map((channel) => channel.config.id).includes(data.from) &&
       data.type !== 'channel/response' &&
-      origin === config.frameOrigin
+      origin === config.targetOrigin
     )
   }
 
@@ -177,7 +260,7 @@ export function createChannelsController<T extends ChannelMsg>(
     }
 
     try {
-      iframe?.postMessage(msg, { targetOrigin: '*' })
+      target?.postMessage(msg, { targetOrigin: '*' })
     } catch (e) {
       throw new Error(`Failed to postMessage '${msg.id}' on '${config.id}'`)
     }
@@ -249,7 +332,7 @@ export function createChannelsController<T extends ChannelMsg>(
     }
 
     try {
-      iframe?.postMessage(msg, { targetOrigin: config.frameOrigin })
+      target?.postMessage(msg, { targetOrigin: config.targetOrigin })
     } catch (e) {
       throw new Error(
         `Failed to postMessage '${msg.id}' on client '${config.id}'`,
