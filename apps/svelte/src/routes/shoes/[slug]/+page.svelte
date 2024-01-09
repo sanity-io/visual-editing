@@ -8,7 +8,7 @@
 
   const query = useQuery<ShoeResult>(shoeQuery, params, { initial })
 
-  $: ({ data: shoe, loading, encodeDataAttribute } = $query)
+  $: ({ data: shoe, encodeDataAttribute } = $query)
 
 </script>
 
