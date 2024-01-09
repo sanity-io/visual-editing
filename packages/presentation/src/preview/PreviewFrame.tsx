@@ -393,12 +393,14 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     }
                     id="location-menu"
                     menu={
-                      <ShareUrlMenu
-                        initialUrl={initialUrl}
-                        openPopup={openPopup}
-                        previewLocationOrigin={previewLocationOrigin}
-                        previewLocationRoute={previewLocationRoute}
-                      />
+                      <Menu>
+                        <ShareUrlMenuItems
+                          initialUrl={initialUrl}
+                          openPopup={openPopup}
+                          previewLocationOrigin={previewLocationOrigin}
+                          previewLocationRoute={previewLocationRoute}
+                        />
+                      </Menu>
                     }
                     popover={{
                       animate: true,
@@ -807,7 +809,7 @@ const iframeVariants = {
   },
 }
 
-function ShareUrlMenu(
+function ShareUrlMenuItems(
   props: Pick<PreviewFrameProps, 'initialUrl' | 'openPopup'> & {
     previewLocationOrigin: string
     previewLocationRoute: string
@@ -825,7 +827,7 @@ function ShareUrlMenu(
   )
 
   return (
-    <Menu>
+    <>
       <CopyUrlMenuButton
         initialUrl={initialUrl}
         previewLocationOrigin={previewLocationOrigin}
@@ -840,7 +842,7 @@ function ShareUrlMenu(
         rel="opener"
         target="_blank"
       />
-    </Menu>
+    </>
   )
 }
 
