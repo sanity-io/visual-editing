@@ -7,11 +7,11 @@
   import { shoesList, type ShoesListResult } from 'apps-common/queries'
 
   export let data: PageData
-  const { initial } = data;
+  const { initial } = data
 
   const query = useQuery<ShoesListResult>(shoesList, {}, { initial })
 
-  $: ({ data: products, loading, encodeDataAttribute } = $query);
+  $: ({ data: products, loading, encodeDataAttribute } = $query)
 </script>
 
 <svelte:head>
