@@ -30,6 +30,20 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.3.3...preview-kit-compat-v1.4.0) (2024-01-09)
+
+
+### Features
+
+* add share URL button and improve popup window mode ([#639](https://github.com/sanity-io/visual-editing/issues/639)) ([76daf22](https://github.com/sanity-io/visual-editing/commit/76daf22374afa7ffd92e6e107f0e3bf8f215d46f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/channels bumped from 0.3.0 to 0.4.0
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.2.3...preview-kit-compat-v1.3.0) (2023-12-12)
 
 

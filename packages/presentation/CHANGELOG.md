@@ -43,6 +43,23 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
+## [1.5.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.3...presentation-v1.5.0) (2024-01-09)
+
+
+### Features
+
+* add share URL button and improve popup window mode ([#639](https://github.com/sanity-io/visual-editing/issues/639)) ([76daf22](https://github.com/sanity-io/visual-editing/commit/76daf22374afa7ffd92e6e107f0e3bf8f215d46f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.3.9 to 5.3.10
+    * @sanity/preview-url-secret bumped from ^1.4.1 to ^1.5.0
+  * devDependencies
+    * @sanity/channels bumped from 0.3.0 to 0.4.0
+
 ## [1.4.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.2...presentation-v1.4.3) (2024-01-05)
 
 

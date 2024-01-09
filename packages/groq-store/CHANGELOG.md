@@ -31,6 +31,12 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/channels bumped from 0.3.0 to 0.4.0
+
 ## [5.3.9](https://github.com/sanity-io/visual-editing/compare/groq-store-v5.3.8...groq-store-v5.3.9) (2024-01-05)
 
 
