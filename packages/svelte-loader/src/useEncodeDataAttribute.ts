@@ -6,7 +6,7 @@ import type {
 } from '@sanity/client/csm'
 import {
   defineEncodeDataAttribute,
-  EncodeDataAttributeFunction,
+  type EncodeDataAttributeFunction,
 } from '@sanity/core-loader/encode-data-attribute'
 
 /** @public */
@@ -18,7 +18,7 @@ export type EncodeDataAttributeCallback = (
 export function useEncodeDataAttribute<QueryResponseResult = unknown>(
   result: QueryResponseResult,
   sourceMap: ContentSourceMap | undefined,
-  studioUrl: StudioUrl | ResolveStudioUrl,
+  studioUrl: StudioUrl | ResolveStudioUrl | undefined,
 ): EncodeDataAttributeFunction {
   return defineEncodeDataAttribute(result, sourceMap, studioUrl)
 }

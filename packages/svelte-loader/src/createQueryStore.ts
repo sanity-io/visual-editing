@@ -4,14 +4,15 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import type {
-  QueryResponseInitial,
-  QueryStore,
-  UseLiveMode,
-  UseQuery,
-  UseQueryOptions,
-} from './types'
+import { defineStudioUrlStore } from './defineStudioUrlStore'
+import { defineUseLiveMode } from './defineUseLiveMode'
+import { defineUseQuery } from './defineUseQuery'
+import type { QueryResponseInitial, QueryStore, UseLiveMode } from './types'
 
+/**
+ * Create a query store
+ * @public
+ */
 export const createQueryStore = (
   options: CreateQueryStoreOptions,
 ): QueryStore => {
@@ -25,44 +26,13 @@ export const createQueryStore = (
     tag: 'svelte-loader',
     ...options,
   })
-  const DEFAULT_PARAMS = {}
 
-  const useQuery: UseQuery = <QueryResponseResult, QueryResponseError>(
-    query: string,
-    params: QueryParams = DEFAULT_PARAMS,
-    options: UseQueryOptions<QueryResponseResult> = {},
-  ) => {
-    const initial = options.initial
-      ? { perspective: 'published' as const, ...options.initial }
-      : undefined
-
-    const $params = JSON.stringify(params)
-
-    const snapshot = createFetcherStore<
-      QueryResponseResult,
-      QueryResponseError
-    >(query, JSON.parse($params), initial)
-
-    return snapshot
-  }
-
-  const useLiveMode: UseLiveMode = ({
-    allowStudioOrigin,
-    client,
-    onConnect,
-    onDisconnect,
-  }) => {
-    if (allowStudioOrigin) {
-      // eslint-disable-next-line no-console
-      console.warn('`allowStudioOrigin` is deprecated and no longer needed')
-    }
-    const disableLiveMode = enableLiveMode({
-      client,
-      onConnect,
-      onDisconnect,
-    })
-    return () => disableLiveMode()
-  }
+  const studioUrlStore = defineStudioUrlStore(options.client)
+  const useQuery = defineUseQuery({ createFetcherStore, studioUrlStore })
+  const useLiveMode: UseLiveMode = defineUseLiveMode({
+    enableLiveMode,
+    studioUrlStore,
+  })
 
   const loadQuery = async <QueryResponseResult>(
     query: string,
@@ -104,6 +74,7 @@ export const createQueryStore = (
       await unstable__cache.fetch<QueryResponseResult>(
         JSON.stringify({ query, params }),
       )
+
     // @ts-expect-error - update typings
     return resultSourceMap
       ? { data: result, sourceMap: resultSourceMap }
@@ -118,3 +89,21 @@ export const createQueryStore = (
     useLiveMode,
   }
 }
+
+/**
+ * Shortcut setup for the main SSR use-case.
+ * @public
+ */
+export const {
+  /** @public */
+  loadQuery,
+  /** @public */
+  setServerClient,
+  /** @public */
+  useLiveMode,
+  /** @public */
+  useQuery,
+} = createQueryStore({
+  client: false,
+  ssr: true,
+})

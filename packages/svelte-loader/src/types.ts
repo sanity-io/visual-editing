@@ -2,15 +2,23 @@ import type {
   ClientPerspective,
   ContentSourceMap,
   QueryParams,
+  ResponseQueryOptions,
 } from '@sanity/client'
+import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
 import {
   createQueryStore as createCoreQueryStore,
   type EnableLiveModeOptions,
-  type MapStore,
   type QueryStoreState,
 } from '@sanity/core-loader'
+import { EncodeDataAttributeFunction } from '@sanity/core-loader/encode-data-attribute'
+import type { Readable } from 'svelte/store'
 
 export type * from '@sanity/core-loader'
+
+/** @public */
+export type WithEncodeDataAttribute = {
+  encodeDataAttribute: EncodeDataAttributeFunction
+}
 
 export type UseQuery = <
   QueryResponseResult = unknown,
@@ -19,8 +27,12 @@ export type UseQuery = <
   query: string,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
-) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
+) => Readable<
+  QueryStoreState<QueryResponseResult, QueryResponseError> &
+    WithEncodeDataAttribute
+>
 
+/** @public */
 export interface QueryResponseInitial<QueryResponseResult> {
   data: QueryResponseResult
   sourceMap: ContentSourceMap | undefined
@@ -28,6 +40,7 @@ export interface QueryResponseInitial<QueryResponseResult> {
    * The perspective used to fetch the data, if not provided it'll assume 'published'
    */
   perspective?: ClientPerspective
+  encodeDataAttribute?: EncodeDataAttributeFunction
 }
 
 export interface UseQueryOptions<QueryResponseResult = unknown> {
@@ -50,6 +63,7 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
   initial?: QueryResponseInitial<QueryResponseResult>
 }
 
+/** @public */
 export interface UseQueryOptionsUndefinedInitial {
   /**
    * Initial `data` and `sourceMap`, used with SSR hydration and is required if `ssr: true`
@@ -70,8 +84,10 @@ export interface UseQueryOptionsUndefinedInitial {
   initial?: undefined
 }
 
+/** @public */
 export type NonUndefinedGuard<T> = T extends undefined ? never : T
 
+/** @public */
 export interface UseQueryOptionsDefinedInitial<QueryResponseResult = unknown> {
   /**
    * Initial `data` and `sourceMap`, used with SSR hydration and is required if `ssr: true`
@@ -91,15 +107,23 @@ export interface UseQueryOptionsDefinedInitial<QueryResponseResult = unknown> {
    */
   initial: NonUndefinedGuard<QueryResponseInitial<QueryResponseResult>>
 }
-export type UseLiveMode = (options: EnableLiveModeOptions) => void
 
-export interface QueryStore<
-  LoadQueryOptions = { perspective?: ClientPerspective },
-> {
+/** @public */
+export type UseLiveMode = (
+  options?: EnableLiveModeOptions & {
+    /**
+     * Set this option to activate `encodeDataAttribute` on `useQuery` hooks when stega isn't used.
+     */
+    studioUrl?: StudioUrl | ResolveStudioUrl | undefined
+  },
+) => void
+
+/** @public */
+export interface QueryStore {
   loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: LoadQueryOptions,
+    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next'>,
   ) => Promise<QueryResponseInitial<QueryResponseResult>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
@@ -107,15 +131,18 @@ export interface QueryStore<
       query: string,
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
-    ): MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
+    ): Readable<
+      QueryStoreState<QueryResponseResult, QueryResponseError> &
+        WithEncodeDataAttribute
+    >
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
       query: string,
       params?: QueryParams,
       options?: UseQueryOptionsDefinedInitial<QueryResponseResult>,
-    ): MapStore<
+    ): Readable<
       Omit<QueryStoreState<QueryResponseResult, QueryResponseError>, 'data'> & {
         data: QueryResponseResult
-      }
+      } & WithEncodeDataAttribute
     >
     // <QueryResponseResult = unknown, QueryResponseError = unknown>(
     //   query: string,
