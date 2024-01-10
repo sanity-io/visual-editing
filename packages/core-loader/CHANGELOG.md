@@ -31,6 +31,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
 
+## [1.3.5](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.4...core-loader-v1.3.5) (2024-01-10)
+
+
+### Bug Fixes
+
+* **core-loader:** remove enforced setServerClient published perspective ([#659](https://github.com/sanity-io/visual-editing/issues/659)) ([87c127f](https://github.com/sanity-io/visual-editing/commit/87c127f5d348b07c4b07948323f397f941a3d630))
+
 ## [1.3.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.3...core-loader-v1.3.4) (2024-01-10)
 
 
