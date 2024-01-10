@@ -86,7 +86,6 @@ function cloneClientWithConfig(
 ): SanityClient | SanityStegaClient {
   return newClient.withConfig({
     allowReconfigure: false,
-    perspective: 'published',
   })
 }
 
