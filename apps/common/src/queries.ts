@@ -11,7 +11,7 @@ export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]
   "price": string(price),
   "media": media[0]{ alt, asset, crop, hotspot },
   "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
-}`
+} | order(_updatedAt desc) `
 export type ShoesListResult = {
   title?: string | null
   slug: { current: string }
