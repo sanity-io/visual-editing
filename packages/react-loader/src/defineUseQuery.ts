@@ -1,7 +1,7 @@
 import type { QueryParams } from '@sanity/client'
 import type { QueryStore, QueryStoreState } from '@sanity/core-loader'
+import isEqual from 'fast-deep-equal'
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
-import isEqual from 'react-fast-compare'
 
 import { defineStudioUrlStore } from './defineStudioUrlStore'
 import type { UseQueryOptions, WithEncodeDataAttribute } from './types'
@@ -60,7 +60,7 @@ export function defineUseQuery({
               ? (window.debugReactLoader as (a: any, b: any) => void)
               : // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
                 (a: any, b: any) => {}
-                // */
+          // */
 
           if (!isEqual(prev.data, snapshot.data)) {
             // console.log('data changed')
