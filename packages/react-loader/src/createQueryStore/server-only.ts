@@ -33,7 +33,12 @@ export const createQueryStore = (
     sourceMap: ContentSourceMap | undefined
     perspective?: ClientPerspective
   }> => {
-    const { perspective = 'published', cache, next, stega } = _options
+    const { cache, next, stega } = _options
+    const perspective =
+      _options.perspective ||
+      unstable__serverClient.instance?.config().perspective ||
+      'published'
+
     if (
       perspective === 'previewDrafts' &&
       !unstable__serverClient.canPreviewDrafts

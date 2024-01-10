@@ -3,11 +3,6 @@ import { loadQuery } from '@sanity/svelte-loader'
 import type { PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async () => {
-  const initial = await loadQuery<ShoesListResult>(
-    shoesList,
-    {},
-    { perspective: 'previewDrafts' },
-  )
-
+  const initial = await loadQuery<ShoesListResult>(shoesList, {})
   return { initial }
 }

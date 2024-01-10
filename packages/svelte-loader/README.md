@@ -62,7 +62,7 @@ export const client = createClient({
 })
 ```
 
-On the server, we use a Sanity client configured with a read token and CDN disabled to allow the fetching of draft content. We pass this client instance to `setServerClient` in the [server hooks](https://kit.svelte.dev/docs/hooks#server-hooks) file as this code will only be executed once during app initialization.
+On the server, we use a Sanity client configured with a read token, CDN disabled and specified perspective to allow the fetching of draft content. We pass this client instance to `setServerClient` in the [server hooks](https://kit.svelte.dev/docs/hooks#server-hooks) file as this code will only be executed once during app initialization.
 
 ```ts
 // src/hooks.server.ts
@@ -74,6 +74,7 @@ setServerClient(
   client.withConfig({
     token: SANITY_API_READ_TOKEN,
     useCdn: false,
+    perspective: 'previewDrafts',
   }),
 )
 ```
@@ -107,11 +108,7 @@ import type { PageServerLoad } from './$types'
 export const load: PageServerLoad = async ({ params }) => {
   const { slug } = params
 
-  const initial = loadQuery<PageResult>(
-    pageQuery,
-    { slug },
-    { perspective: 'previewDrafts' },
-  )
+  const initial = loadQuery<PageResult>(pageQuery, { slug })
 
   return { initial, params: { slug } }
 }
