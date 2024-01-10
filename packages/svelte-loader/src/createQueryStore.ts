@@ -39,7 +39,11 @@ export const createQueryStore = (
     params: QueryParams = {},
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
-    const { perspective = 'published' } = options
+    const perspective =
+      options.perspective ||
+      unstable__serverClient.instance?.config().perspective ||
+      'published'
+
     if (typeof document !== 'undefined') {
       throw new Error(
         'Cannot use `loadQuery` in a browser environment, you should use it inside a loader, getStaticProps, getServerSideProps, getInitialProps, or in a React Server Component.',
