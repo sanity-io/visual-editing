@@ -43,6 +43,14 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
+## [1.5.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.0...presentation-v1.5.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/ui to v2.0.0-beta.17 ([#656](https://github.com/sanity-io/visual-editing/issues/656)) ([be117bb](https://github.com/sanity-io/visual-editing/commit/be117bb234a66faffbf166ef8b1dafffdf9ccb7f))
+* speed up live query cache store ([#652](https://github.com/sanity-io/visual-editing/issues/652)) ([fa1c034](https://github.com/sanity-io/visual-editing/commit/fa1c034f06ee4b11634a88a4d4f17c568c4212f3))
+
 ## [1.5.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.3...presentation-v1.5.0) (2024-01-10)
 
 

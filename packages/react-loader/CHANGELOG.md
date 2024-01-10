@@ -45,6 +45,20 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
+## [1.7.3](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.7.2...react-loader-v1.7.3) (2024-01-10)
+
+
+### Bug Fixes
+
+* use client perspective in loadQuery if not passed explicitly ([#661](https://github.com/sanity-io/visual-editing/issues/661)) ([c210633](https://github.com/sanity-io/visual-editing/commit/c21063323ae269f14b3933921d9d2362455e9cf9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.4 to 1.3.5
+
 ## [1.7.2](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.7.1...react-loader-v1.7.2) (2024-01-10)
 
 
