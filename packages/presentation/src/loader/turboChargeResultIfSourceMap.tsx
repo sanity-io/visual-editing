@@ -24,31 +24,46 @@ export function turboChargeResultIfSourceMap(
       'turboChargeResultIfSourceMap does not support raw perspective',
     )
   }
-  return applySourceDocuments(result, resultSourceMap, (sourceDocument) => {
-    if (sourceDocument._projectId) {
-      // @TODO Handle cross dataset references
-      if (!warnedAboutCrossDatasetReference) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          'Cross dataset references are not supported yet, ignoring source document',
-          sourceDocument,
-        )
-        warnedAboutCrossDatasetReference = true
+  return applySourceDocuments(
+    result,
+    resultSourceMap,
+    (sourceDocument) => {
+      if (sourceDocument._projectId) {
+        // @TODO Handle cross dataset references
+        if (!warnedAboutCrossDatasetReference) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            'Cross dataset references are not supported yet, ignoring source document',
+            sourceDocument,
+          )
+          warnedAboutCrossDatasetReference = true
+        }
+        return undefined
       }
-      return undefined
-    }
-    // If the draft matches, use that as it's the most up to date
-    if (
-      liveDocument?._id === sourceDocument._id &&
-      liveDocument?._type === sourceDocument._type
-    ) {
-      return liveDocument
-    }
-    // Fallback to general documents cache
-    const key = unstable__getDocumentCacheKey(
-      { projectId, dataset, perspective },
-      sourceDocument,
-    )
-    return unstable__documentsCache.get(key)
-  })
+      // If the draft matches, use that as it's the most up to date
+      if (
+        liveDocument?._id === sourceDocument._id &&
+        liveDocument?._type === sourceDocument._type
+      ) {
+        return liveDocument
+      }
+      // Fallback to general documents cache
+      const key = unstable__getDocumentCacheKey(
+        { projectId, dataset, perspective },
+        sourceDocument,
+      )
+      return unstable__documentsCache.get(key)
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (changedValue: any, { previousValue }) => {
+      if (
+        typeof changedValue === 'number' &&
+        typeof previousValue === 'string'
+      ) {
+        // If the string() function was used in the query, we need to convert the source value to a string as well
+        return `${changedValue}`
+      }
+      return changedValue
+    },
+  )
 }
