@@ -43,6 +43,24 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
+## [1.5.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.1...presentation-v1.5.2) (2024-01-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.11.1 ([#666](https://github.com/sanity-io/visual-editing/issues/666)) ([487d552](https://github.com/sanity-io/visual-editing/commit/487d552ffdef039ab9807a440df3b1a66b9fa064))
+* **deps:** Update dependency framer-motion to ^10.18.0 ([#669](https://github.com/sanity-io/visual-editing/issues/669)) ([63496aa](https://github.com/sanity-io/visual-editing/commit/63496aaa671233929bec191b39fc49b86e80b65b))
+* handle race condition when `rev` and `id` search params both change ([2b1288c](https://github.com/sanity-io/visual-editing/commit/2b1288c5a74a218133e260f824d06785c5819df4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.5.0 to ^1.5.1
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.2 to 0.2.3
+
 ## [1.5.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.0...presentation-v1.5.1) (2024-01-10)
 
 
