@@ -14,6 +14,10 @@ import { locate } from './locate'
 import { StegaDebugger } from './presentation/DebugStega'
 import { CustomNavigator } from './presentation/CustomNavigator'
 import { debugSecrets } from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import Building from './models/documents/Building'
+import Floor from './models/documents/Floor'
+import Space from './models/documents/Space'
+import SpaceType from './models/documents/SpaceType'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -154,86 +158,114 @@ const presentationWorkspaces = Object.entries({
   })
 })
 
+const crossDatasetReferencesWorkspace = defineConfig({
+  name: workspaces['cross-dataset-references'].workspace,
+  basePath: `/${workspaces['cross-dataset-references'].workspace}`,
+  projectId: workspaces['cross-dataset-references'].projectId,
+  dataset: workspaces['cross-dataset-references'].dataset,
+  plugins: [deskTool(), visionTool(), assist(), unsplashImageAsset()],
+  document: {
+    unstable_comments: {
+      enabled: true,
+    },
+  },
+  schema: {
+    types: [
+      defineType({
+        type: 'document',
+        name: 'brand',
+        // @ts-expect-error - @TODO find out why TS is mad
+        fields: [
+          defineField({
+            type: 'string',
+            name: 'name',
+            title: 'Name',
+          }),
+          defineField({
+            type: 'slug',
+            name: 'slug',
+            title: 'Slug',
+            options: { source: 'name' },
+          }),
+          defineField({
+            type: 'image',
+            name: 'logo',
+            title: 'Logo',
+            options: {
+              hotspot: true,
+              captionField: 'alt',
+            },
+            fields: [
+              defineField({
+                name: 'alt',
+                type: 'string',
+                title: 'Alt text',
+              }),
+            ],
+          }),
+        ],
+      }),
+      defineType({
+        type: 'document',
+        name: 'book',
+        // @ts-expect-error - @TODO find out why TS is mad
+        fields: [
+          defineField({
+            type: 'string',
+            name: 'title',
+            title: 'Title',
+          }),
+          defineField({
+            type: 'reference',
+            name: 'author',
+            title: 'Author',
+            to: [{ type: 'author' }],
+          }),
+        ],
+      }),
+      defineType({
+        type: 'document',
+        name: 'author',
+        // @ts-expect-error - @TODO find out why TS is mad
+        fields: [
+          defineField({
+            type: 'string',
+            name: 'name',
+            title: 'Name',
+          }),
+        ],
+      }),
+    ],
+  },
+})
+
+const performanceTestWorkspace = defineConfig({
+  name: 'performance-test',
+  basePath: `/performance-test`,
+  projectId: workspaces['next-pages-router'].projectId,
+  dataset: workspaces['next-pages-router'].dataset,
+  plugins: [
+    presentationTool({
+      previewUrl: {
+        ...(definePreviewUrl(
+          process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
+            'http://localhost:3001/pages-router/shoes',
+          'next',
+          'pages-router',
+        ) as PreviewUrlResolverOptions),
+        preview: '/pages-router/performance-test',
+      },
+    }),
+    deskTool(),
+    visionTool(),
+  ],
+  schema: {
+    types: [Building, Floor, Space, SpaceType],
+  },
+})
+
 export default [
   ...presentationWorkspaces,
-  defineConfig({
-    name: workspaces['cross-dataset-references'].workspace,
-    basePath: `/${workspaces['cross-dataset-references'].workspace}`,
-    projectId: workspaces['cross-dataset-references'].projectId,
-    dataset: workspaces['cross-dataset-references'].dataset,
-    plugins: [deskTool(), visionTool(), assist(), unsplashImageAsset()],
-    document: {
-      unstable_comments: {
-        enabled: true,
-      },
-    },
-    schema: {
-      types: [
-        defineType({
-          type: 'document',
-          name: 'brand',
-          // @ts-expect-error - @TODO find out why TS is mad
-          fields: [
-            defineField({
-              type: 'string',
-              name: 'name',
-              title: 'Name',
-            }),
-            defineField({
-              type: 'slug',
-              name: 'slug',
-              title: 'Slug',
-              options: { source: 'name' },
-            }),
-            defineField({
-              type: 'image',
-              name: 'logo',
-              title: 'Logo',
-              options: {
-                hotspot: true,
-                captionField: 'alt',
-              },
-              fields: [
-                defineField({
-                  name: 'alt',
-                  type: 'string',
-                  title: 'Alt text',
-                }),
-              ],
-            }),
-          ],
-        }),
-        defineType({
-          type: 'document',
-          name: 'book',
-          // @ts-expect-error - @TODO find out why TS is mad
-          fields: [
-            defineField({
-              type: 'string',
-              name: 'title',
-              title: 'Title',
-            }),
-            defineField({
-              type: 'reference',
-              name: 'author',
-              title: 'Author',
-              to: [{ type: 'author' }],
-            }),
-          ],
-        }),
-        defineType({
-          type: 'document',
-          name: 'author',
-          // @ts-expect-error - @TODO find out why TS is mad
-          fields: [
-            defineField({
-              type: 'string',
-              name: 'name',
-              title: 'Name',
-            }),
-          ],
-        }),
-      ],
-    },
-  }),
+  crossDatasetReferencesWorkspace,
+  performanceTestWorkspace,
 ]
