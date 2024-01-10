@@ -43,6 +43,31 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
+## [1.5.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.3...presentation-v1.5.0) (2024-01-10)
+
+
+### Features
+
+* add share URL button and improve popup window mode ([#639](https://github.com/sanity-io/visual-editing/issues/639)) ([76daf22](https://github.com/sanity-io/visual-editing/commit/76daf22374afa7ffd92e6e107f0e3bf8f215d46f))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.11.0 ([#649](https://github.com/sanity-io/visual-editing/issues/649)) ([b94f848](https://github.com/sanity-io/visual-editing/commit/b94f8482e2928f77748b75a4b26536b33cf21330))
+* **deps:** Update dependency framer-motion to ^10.17.12 ([#648](https://github.com/sanity-io/visual-editing/issues/648)) ([ca82d86](https://github.com/sanity-io/visual-editing/commit/ca82d862e4e2c99e45bc16886003a8076dc4703d))
+* reimplement GROQ typecasting of numbers to strings ([695e4b4](https://github.com/sanity-io/visual-editing/commit/695e4b4b09406c6bd207947dd42ddf0dcf33082b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/groq-store bumped from 5.3.9 to 5.3.10
+    * @sanity/preview-url-secret bumped from ^1.4.1 to ^1.5.0
+  * devDependencies
+    * @sanity/channels bumped from 0.3.0 to 0.4.0
+    * @sanity/visual-editing-helpers bumped from 0.2.1 to 0.2.2
+
 ## [1.4.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.4.2...presentation-v1.4.3) (2024-01-05)
 
 

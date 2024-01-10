@@ -45,6 +45,24 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
+## [1.7.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.7.0...react-loader-v1.7.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.11.0 ([#649](https://github.com/sanity-io/visual-editing/issues/649)) ([b94f848](https://github.com/sanity-io/visual-editing/commit/b94f8482e2928f77748b75a4b26536b33cf21330))
+* workaround issue where CSM randomly reordering paths causes excessive rerenders ([d6341ee](https://github.com/sanity-io/visual-editing/commit/d6341ee01d66a882fd363c6e7325329731c51668))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.3 to 1.3.4
+  * devDependencies
+    * @sanity/channels bumped from 0.3.0 to 0.4.0
+    * @sanity/visual-editing-helpers bumped from 0.2.1 to 0.2.2
+
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.6.5...react-loader-v1.7.0) (2024-01-05)
 
 

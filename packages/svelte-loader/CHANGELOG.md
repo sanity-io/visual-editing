@@ -65,6 +65,28 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.5.0...svelte-loader-v1.6.0) (2024-01-10)
+
+
+### Features
+
+* **svelte-loader:** simplify api, expose shortcut setup ([#644](https://github.com/sanity-io/visual-editing/issues/644)) ([140b1ee](https://github.com/sanity-io/visual-editing/commit/140b1eee8e2bb861a5db32a457b776b5dd7278b8))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.11.0 ([#649](https://github.com/sanity-io/visual-editing/issues/649)) ([b94f848](https://github.com/sanity-io/visual-editing/commit/b94f8482e2928f77748b75a4b26536b33cf21330))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.3 to 1.3.4
+  * devDependencies
+    * @sanity/channels bumped from 0.3.0 to 0.4.0
+    * @sanity/visual-editing-helpers bumped from 0.2.1 to 0.2.2
+
 ## [1.5.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.4.3...svelte-loader-v1.5.0) (2024-01-05)
 
 
