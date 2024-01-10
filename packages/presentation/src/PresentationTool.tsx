@@ -395,10 +395,10 @@ export default function PresentationTool(props: {
   // Handle edge case where the `&rev=` parameter gets "stuck"
   const idRef = useRef<string | undefined>(params.id)
   useEffect(() => {
-    if (params.rev && params.id !== idRef.current) {
+    if (params.rev && idRef.current && params.id !== idRef.current) {
       setParams({ rev: undefined })
-      idRef.current = params.id
     }
+    idRef.current = params.id
   })
 
   return (
