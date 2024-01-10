@@ -12,6 +12,25 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.5.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.4.1...preview-url-secret-v1.5.0) (2024-01-10)
+
+
+### Features
+
+* add share URL button and improve popup window mode ([#639](https://github.com/sanity-io/visual-editing/issues/639)) ([76daf22](https://github.com/sanity-io/visual-editing/commit/76daf22374afa7ffd92e6e107f0e3bf8f215d46f))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.11.0 ([#649](https://github.com/sanity-io/visual-editing/issues/649)) ([b94f848](https://github.com/sanity-io/visual-editing/commit/b94f8482e2928f77748b75a4b26536b33cf21330))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/channels bumped from 0.3.0 to 0.4.0
+
 ## [1.4.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.4.0...preview-url-secret-v1.4.1) (2024-01-02)
 
 
