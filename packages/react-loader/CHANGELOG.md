@@ -45,6 +45,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
+## [1.7.2](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.7.1...react-loader-v1.7.2) (2024-01-10)
+
+
+### Bug Fixes
+
+* replace `react-fast-compare` with `fast-deep-equal` to reduce bundle ([574d8ae](https://github.com/sanity-io/visual-editing/commit/574d8ae2d482c831cf808295ce055a123d8dbe68))
+
 ## [1.7.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.7.0...react-loader-v1.7.1) (2024-01-10)
 
 
