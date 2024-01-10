@@ -65,6 +65,22 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
+## [1.6.1](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.6.0...svelte-loader-v1.6.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* **svelte-loader:** prevent excessive useQuery state updates ([#658](https://github.com/sanity-io/visual-editing/issues/658)) ([3eee8f3](https://github.com/sanity-io/visual-editing/commit/3eee8f3391c20c33400a88650af49a741cc68a4a))
+* **svelte-loader:** prevent unnecessary fetcher state updates ([#662](https://github.com/sanity-io/visual-editing/issues/662)) ([6097d70](https://github.com/sanity-io/visual-editing/commit/6097d701dbfc27c8418813b0c5ff4c921b15b005))
+* use client perspective in loadQuery if not passed explicitly ([#661](https://github.com/sanity-io/visual-editing/issues/661)) ([c210633](https://github.com/sanity-io/visual-editing/commit/c21063323ae269f14b3933921d9d2362455e9cf9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.4 to 1.3.5
+
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.5.0...svelte-loader-v1.6.0) (2024-01-10)
 
 
