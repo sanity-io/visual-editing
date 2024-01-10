@@ -1,5 +1,6 @@
 import type { QueryParams } from '@sanity/client'
 import { type QueryStore, QueryStoreState } from '@sanity/core-loader'
+import isEqual from 'fast-deep-equal'
 import { onMount } from 'svelte'
 import { derived, writable } from 'svelte/store'
 
@@ -43,7 +44,17 @@ export function defineUseQuery({
     // Only call subscribe on the client
     onMount(() =>
       $fetcher.subscribe((snapshot) => {
-        $writeable.set(snapshot)
+        $writeable.update((prev) => {
+          if (
+            prev.error !== snapshot.error ||
+            prev.loading !== snapshot.loading ||
+            prev.perspective !== snapshot.perspective ||
+            !isEqual(prev.data, snapshot.data)
+          ) {
+            return snapshot
+          }
+          return prev
+        })
       }),
     )
 
