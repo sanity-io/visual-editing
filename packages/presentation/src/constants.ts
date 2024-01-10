@@ -17,3 +17,6 @@ export const MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL = 1000 // ms
 
 // Batch size for fetching documents building up the cache
 export const LIVE_QUERY_CACHE_BATCH_SIZE = 100
+
+// Total cache size for documents that are live queried
+export const LIVE_QUERY_CACHE_SIZE = 2048

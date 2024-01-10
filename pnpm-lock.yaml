@@ -7,6 +7,7 @@ settings:
 overrides:
   '@sanity/block-tools': ^3.23.4
   '@sanity/cli': ^3.23.4
+  '@sanity/client': ^6.11.1
   '@sanity/diff': ^3.23.4
   '@sanity/export': ^3.23.4
   '@sanity/import-cli': ^3.23.4
@@ -33,6 +34,9 @@ importers:
       '@sanity/cli':
         specifier: ^3.23.4
         version: 3.23.4
+      '@sanity/client':
+        specifier: ^6.11.1
+        version: 6.11.1
       '@sanity/diff':
         specifier: ^3.23.4
         version: 3.23.4
@@ -572,7 +576,7 @@ importers:
         specifier: 0.4.0
         version: link:../channels
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/pkg-utils':
         specifier: ^3.3.7
@@ -611,49 +615,6 @@ importers:
         specifier: ^1.1.3
         version: 1.1.3(happy-dom@12.10.3)(jsdom@23.0.1)
 
-  packages/groq-store:
-    dependencies:
-      mnemonist:
-        specifier: 0.39.7
-        version: 0.39.7
-    devDependencies:
-      '@sanity/channels':
-        specifier: 0.4.0
-        version: link:../channels
-      '@sanity/client':
-        specifier: ^6.11.0
-        version: 6.11.1
-      '@sanity/pkg-utils':
-        specifier: ^3.3.7
-        version: 3.3.7(typescript@5.3.3)
-      '@sanity/visual-editing-helpers':
-        specifier: 0.2.2
-        version: link:../visual-editing-helpers
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.18.1
-        version: 6.18.1(@typescript-eslint/parser@6.18.1)(eslint@8.56.0)(typescript@5.3.3)
-      '@typescript-eslint/parser':
-        specifier: ^6.18.1
-        version: 6.18.1(eslint@8.56.0)(typescript@5.3.3)
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@8.56.0)
-      eslint-plugin-prettier:
-        specifier: ^5.1.3
-        version: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.56.0)(prettier@3.1.1)
-      eslint-plugin-simple-import-sort:
-        specifier: ^10.0.0
-        version: 10.0.0(eslint@8.56.0)
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
-      vitest:
-        specifier: ^1.1.3
-        version: 1.1.3(happy-dom@12.10.3)(jsdom@23.0.1)
-
   packages/nuxt-loader:
     dependencies:
       '@sanity/core-loader':
@@ -667,7 +628,7 @@ importers:
         specifier: 0.4.0
         version: link:../channels
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/pkg-utils':
         specifier: ^3.3.7
@@ -712,7 +673,7 @@ importers:
         specifier: 2.0.0
         version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/color':
         specifier: 3.0.0-beta.9
@@ -805,9 +766,6 @@ importers:
 
   packages/presentation:
     dependencies:
-      '@sanity/groq-store':
-        specifier: 5.3.10
-        version: link:../groq-store
       '@sanity/icons':
         specifier: ^2.8.0
         version: 2.8.0(react@18.2.0)
@@ -820,6 +778,9 @@ importers:
       '@types/lodash.isequal':
         specifier: ^4.5.8
         version: 4.5.8
+      fast-deep-equal:
+        specifier: 3.1.3
+        version: 3.1.3
       framer-motion:
         specifier: ^10.17.12
         version: 10.17.12(react-dom@18.2.0)(react@18.2.0)
@@ -829,6 +790,9 @@ importers:
       mendoza:
         specifier: 3.0.3
         version: 3.0.3
+      mnemonist:
+        specifier: 0.39.7
+        version: 0.39.7
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -840,7 +804,7 @@ importers:
         specifier: 0.4.0
         version: link:../channels
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/pkg-utils':
         specifier: ^3.3.7
@@ -876,7 +840,7 @@ importers:
         specifier: 0.4.0
         version: link:../channels
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/pkg-utils':
         specifier: ^3.3.7
@@ -925,7 +889,7 @@ importers:
         specifier: 0.4.0
         version: link:../channels
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/icons':
         specifier: ^2.8.0
@@ -974,7 +938,7 @@ importers:
         specifier: 0.4.0
         version: link:../channels
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/pkg-utils':
         specifier: ^3.3.7
@@ -1026,7 +990,7 @@ importers:
         specifier: 0.4.0
         version: link:../channels
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/pkg-utils':
         specifier: ^3.3.7
@@ -1065,7 +1029,7 @@ importers:
   packages/visual-editing-helpers:
     devDependencies:
       '@sanity/client':
-        specifier: ^6.11.0
+        specifier: ^6.11.1
         version: 6.11.1
       '@sanity/util':
         specifier: ^3.23.4
@@ -8064,6 +8028,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    bundledDependencies: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}

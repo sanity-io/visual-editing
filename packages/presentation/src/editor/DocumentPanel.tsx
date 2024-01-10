@@ -1,5 +1,5 @@
-import { ReactElement, useCallback, useEffect } from 'react'
-import { Path, SanityDocument, useEditState } from 'sanity'
+import { type ReactElement } from 'react'
+import { type Path } from 'sanity'
 import { DeskToolProvider } from 'sanity/desk'
 
 import { DeskDocumentPaneParams } from '../types'
@@ -10,36 +10,10 @@ export function DocumentPanel(props: {
   documentId: string
   documentType: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
-  onFocusPath: (documentId: string, path: Path) => void
-  onDocumentChange: (document: SanityDocument | null) => void
+  onFocusPath: (path: Path) => void
 }): ReactElement {
-  const {
-    deskParams,
-    documentId,
-    documentType,
-    onDeskParams,
-    onFocusPath,
-    onDocumentChange,
-  } = props
-
-  const editState = useEditState(documentId, documentType)
-  const documentValue = editState.draft || editState.published
-
-  // Sync changes to the document being edited back up to the live loaders
-  useEffect(
-    () => onDocumentChange(documentValue),
-    [documentValue, onDocumentChange],
-  )
-
-  const handleFocusPath = useCallback(
-    (path: Path) => {
-      if (documentValue?._id) {
-        onFocusPath(documentValue._id, path)
-      }
-    },
-    [documentValue, onFocusPath],
-  )
-
+  const { deskParams, documentId, documentType, onDeskParams, onFocusPath } =
+    props
   return (
     <DeskToolProvider>
       <DocumentPane
@@ -47,7 +21,7 @@ export function DocumentPanel(props: {
         documentType={documentType}
         params={deskParams}
         onDeskParams={onDeskParams}
-        onFocusPath={handleFocusPath}
+        onFocusPath={onFocusPath}
       />
     </DeskToolProvider>
   )

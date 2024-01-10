@@ -49,6 +49,7 @@ export function DocumentListPane(props: {
       options: {
         filter: '_id in $ids',
         params: { ids: refs.map((r) => r._id) },
+        // defaultOrdering: [{ field: '_updatedAt', direction: 'desc' }],
       },
       schemaTypeName: '',
       title: 'Documents on this page',
@@ -64,7 +65,7 @@ export function DocumentListPane(props: {
 
   const handleRetry = useCallback(() => setErrorParams(null), [])
 
-  const deskParams = useMemo(() => ({}), [])
+  const [deskParams] = useState(() => ({}))
 
   // Reset error state when `refs` value schanges
   useEffect(() => setErrorParams(null), [refs])

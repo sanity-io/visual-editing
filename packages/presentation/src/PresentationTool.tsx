@@ -24,7 +24,6 @@ import {
 } from 'react'
 import { useUnique } from 'sanity'
 import {
-  getPublishedId,
   type Path,
   type SanityDocument,
   type Tool,
@@ -39,11 +38,11 @@ import {
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
 import { ContentEditor } from './editor/ContentEditor'
+import { DisplayedDocumentBroadcasterProvider } from './loader/DisplayedDocumentBroadcaster'
 import LoaderQueries from './loader/LoaderQueries'
 import { Panel } from './panels/Panel'
 import { PanelResizer } from './panels/PanelResizer'
 import { Panels } from './panels/Panels'
-import { HoldEditState } from './perf/HoldEditState'
 import { PresentationNavigateProvider } from './PresentationNavigateProvider'
 import { usePresentationNavigator } from './PresentationNavigator'
 import { PresentationParamsProvider } from './PresentationParamsProvider'
@@ -56,7 +55,7 @@ import type {
   PresentationPluginOptions,
   PresentationStateParams,
 } from './types'
-import { DocumentOnPage, useDocumentsOnPage } from './useDocumentsOnPage'
+import { useDocumentsOnPage } from './useDocumentsOnPage'
 import { useParams } from './useParams'
 import { usePreviewUrl } from './usePreviewUrl'
 
@@ -128,44 +127,12 @@ export default function PresentationTool(props: {
 
   const previewRef = useRef<typeof params.preview>()
 
-  const idRef = useRef(params.id)
-
-  const [preloadRefs, setPreloadRefs] = useState<DocumentOnPage[]>(() =>
-    documentsOnPage
-      .slice(0, 3)
-      .map((d) => ({ ...d, _id: getPublishedId(d._id) })),
-  )
-
   // Update the perspective when the param changes
   useEffect(() => {
     if (perspective !== params.perspective) {
       setParams({ perspective })
     }
   }, [params.perspective, perspective, setParams])
-
-  useEffect(() => {
-    setPreloadRefs(
-      documentsOnPage
-        .slice(0, 3)
-        .map((d) => ({ ...d, _id: getPublishedId(d._id) })),
-    )
-  }, [documentsOnPage])
-
-  useEffect(() => {
-    if (params.id !== idRef.current) {
-      idRef.current = params.id
-
-      if (params.id) {
-        setPreloadRefs((p) => {
-          const exists = p.find((d) => d._id === params.id)
-
-          if (exists) return p
-
-          return p.slice(1).concat([{ _id: params.id!, _type: params.type! }])
-        })
-      }
-    }
-  }, [params])
 
   const [overlaysConnection, setOverlaysConnection] =
     useState<ChannelStatus>('connecting')
@@ -219,14 +186,8 @@ export default function PresentationTool(props: {
               })
             } else if (type === 'overlay/navigate') {
               if (previewRef.current !== data.url) {
-                const isInitialNavigation = previewRef.current === undefined
-
                 previewRef.current = data.url
-                setParams(
-                  isInitialNavigation
-                    ? { preview: data.url }
-                    : { id: undefined, type: undefined, preview: data.url },
-                )
+                setParams({ preview: data.url })
               }
             } else if (type === 'overlay/toggle') {
               setOverlayEnabled(data.enabled)
@@ -238,7 +199,11 @@ export default function PresentationTool(props: {
           heartbeat: true,
           onStatusUpdate: setLoadersConnection,
           onEvent(type, data) {
-            if (type === 'loader/documents') {
+            if (
+              type === 'loader/documents' &&
+              data.projectId === projectId &&
+              data.dataset === dataset
+            ) {
               setDocumentsOnPage(data.perspective, data.documents)
             } else if (
               type === 'loader/query-listen' &&
@@ -327,9 +292,7 @@ export default function PresentationTool(props: {
   }, [])
 
   const handleFocusPath = useCallback(
-    // eslint-disable-next-line no-warning-comments
-    // @todo nextDocumentId may not be needed with this strategy
-    (nextDocumentId: string, nextPath: Path) => {
+    (nextPath: Path) => {
       setParams({
         // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
         path: studioPath.toString(nextPath),
@@ -395,12 +358,9 @@ export default function PresentationTool(props: {
     [channel],
   )
 
-  // The current document being edited, it's put on the fast track for super low latency updates
-  const [liveDocument, setLiveDocument] = useState<SanityDocument | null>(null)
-  const onDocumentChange = useCallback(
-    (document: SanityDocument | null) => setLiveDocument(document),
-    [],
-  )
+  const [displayedDocument, setDisplayedDocument] = useState<
+    Partial<SanityDocument> | null | undefined
+  >(null)
 
   useEffect(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
@@ -432,6 +392,15 @@ export default function PresentationTool(props: {
   const [{ navigatorEnabled, toggleNavigator }, PresentationNavigator] =
     usePresentationNavigator({ unstable_navigator })
 
+  // Handle edge case where the `&rev=` parameter gets "stuck"
+  const idRef = useRef<string | undefined>(params.id)
+  useEffect(() => {
+    if (params.rev && params.id !== idRef.current) {
+      setParams({ rev: undefined })
+      idRef.current = params.id
+    }
+  })
+
   return (
     <>
       <PresentationProvider
@@ -441,11 +410,6 @@ export default function PresentationTool(props: {
         params={params}
         setParams={setParams}
       >
-        {/* perf improvement: preload edit state */}
-        {preloadRefs.map((d) => (
-          <HoldEditState id={d._id} key={d._id} type={d._type} />
-        ))}
-
         <PresentationNavigateProvider setParams={setParams}>
           <PresentationParamsProvider params={params}>
             <Container height="fill">
@@ -489,16 +453,20 @@ export default function PresentationTool(props: {
                 </Panel>
                 <PanelResizer order={4} />
                 <Panel id="content" minWidth={325} order={5}>
-                  <ContentEditor
-                    refs={documentsOnPage}
-                    deskParams={deskParams}
+                  <DisplayedDocumentBroadcasterProvider
                     documentId={params.id}
-                    documentType={params.type}
-                    onDeskParams={handleDeskParams}
-                    onFocusPath={handleFocusPath}
-                    onDocumentChange={onDocumentChange}
-                    previewUrl={params.preview}
-                  />
+                    setDisplayedDocument={setDisplayedDocument}
+                  >
+                    <ContentEditor
+                      refs={documentsOnPage}
+                      deskParams={deskParams}
+                      documentId={params.id}
+                      documentType={params.type}
+                      onDeskParams={handleDeskParams}
+                      onFocusPath={handleFocusPath}
+                      previewUrl={params.preview}
+                    />
+                  </DisplayedDocumentBroadcasterProvider>
                 </Panel>
               </Panels>
             </Container>
@@ -506,27 +474,13 @@ export default function PresentationTool(props: {
         </PresentationNavigateProvider>
       </PresentationProvider>
       {channel && (
-        <>
-          <LoaderQueries
-            key="published"
-            activePerspective={perspective === 'published'}
-            channel={channel}
-            liveQueries={liveQueries}
-            perspective="published"
-            // Only send the liveDocument if it's a published document
-            liveDocument={
-              liveDocument?._id?.startsWith('drafts.') ? null : liveDocument
-            }
-          />
-          <LoaderQueries
-            key="previewDrafts"
-            activePerspective={perspective === 'previewDrafts'}
-            channel={channel}
-            liveQueries={liveQueries}
-            perspective="previewDrafts"
-            liveDocument={liveDocument}
-          />
-        </>
+        <LoaderQueries
+          channel={channel}
+          liveQueries={liveQueries}
+          perspective={perspective}
+          liveDocument={displayedDocument}
+          documentsOnPage={documentsOnPage}
+        />
       )}
     </>
   )
