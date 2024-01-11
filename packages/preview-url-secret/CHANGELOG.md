@@ -12,6 +12,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.5.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.1...preview-url-secret-v1.5.2) (2024-01-11)
+
+
+### Bug Fixes
+
+* remove problematic peer dependency declarations ([91c1f7d](https://github.com/sanity-io/visual-editing/commit/91c1f7d98748f8d82c873420cab60304bfade518))
+
 ## [1.5.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.0...preview-url-secret-v1.5.1) (2024-01-10)
 
 

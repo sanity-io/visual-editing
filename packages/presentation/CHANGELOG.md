@@ -43,6 +43,20 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
+## [1.5.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.2...presentation-v1.5.3) (2024-01-11)
+
+
+### Bug Fixes
+
+* remove problematic peer dependency declarations ([91c1f7d](https://github.com/sanity-io/visual-editing/commit/91c1f7d98748f8d82c873420cab60304bfade518))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.5.1 to ^1.5.2
+
 ## [1.5.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.1...presentation-v1.5.2) (2024-01-10)
 
 
