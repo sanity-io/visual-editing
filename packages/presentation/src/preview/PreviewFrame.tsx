@@ -57,7 +57,7 @@ import styled from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
 import { API_VERSION, MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
-import { PresentationParams, PresentationPluginOptions } from '../types'
+import { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { IFrame } from './IFrame'
 import { PreviewLocationInput } from './PreviewLocationInput'
