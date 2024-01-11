@@ -1,7 +1,7 @@
 import { studioPath } from '@sanity/client/csm'
 import { urlStringToPath } from '@sanity/visual-editing-helpers'
 
-import { PresentationStateParams } from '../types'
+import type { PresentationStateParams } from '../types'
 
 export function parseId(rawId: string | undefined): string | undefined {
   if (rawId === undefined) {

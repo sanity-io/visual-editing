@@ -1,5 +1,5 @@
 import type { ChannelStatus } from '@sanity/channels'
-import { ClientPerspective } from '@sanity/client'
+import type { ClientPerspective } from '@sanity/client'
 import {
   CheckmarkIcon,
   ChevronDownIcon,

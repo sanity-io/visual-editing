@@ -4,4 +4,5 @@ import baseConfig from '../../package.config'
 
 export default defineConfig({
   ...baseConfig,
+  external: ['@sanity/icons', 'sanity'],
 })

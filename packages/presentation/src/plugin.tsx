@@ -1,4 +1,4 @@
-import { SanityDocument } from '@sanity/client'
+import type { SanityDocument } from '@sanity/client'
 import { lazy, Suspense } from 'react'
 import {
   definePlugin,
