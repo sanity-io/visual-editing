@@ -66,11 +66,7 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
-  const {
-    previewUrl: _previewUrl,
-    components,
-    unstable_showUnsafeShareUrl = false,
-  } = props.tool.options ?? {}
+  const { previewUrl: _previewUrl, components } = props.tool.options ?? {}
   const name = props.tool.name || DEFAULT_TOOL_NAME
   const { unstable_navigator } = components || {}
 
@@ -444,9 +440,6 @@ export default function PresentationTool(props: {
                         loadersConnection={loadersConnection}
                         overlaysConnection={overlaysConnection}
                         previewKitConnection={previewKitConnection}
-                        unstable_showUnsafeShareUrl={
-                          unstable_showUnsafeShareUrl
-                        }
                       />
                     </BoundaryElementProvider>
                   </Flex>

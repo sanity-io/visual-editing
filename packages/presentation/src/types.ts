@@ -50,6 +50,9 @@ export interface PresentationPluginOptions {
   components?: {
     unstable_navigator?: NavigatorOptions
   }
+  /**
+   * @deprecated this feature flag is no longer needed
+   */
   unstable_showUnsafeShareUrl?: boolean
 }
 

@@ -1,5 +1,5 @@
-import { LaunchIcon, ResetIcon } from '@sanity/icons'
-import { Box, Button, TextInput, TextInputClearButtonProps } from '@sanity/ui'
+import { ResetIcon } from '@sanity/icons'
+import { TextInput, type TextInputClearButtonProps } from '@sanity/ui'
 import {
   ChangeEvent,
   FunctionComponent,
@@ -12,27 +12,15 @@ import {
 } from 'react'
 import { useActiveWorkspace } from 'sanity'
 
-import { PresentationPluginOptions } from '../types'
-
 export const PreviewLocationInput: FunctionComponent<{
   fontSize?: number
   onChange: (value: string) => void
-  openPopup: (url: string) => void
   origin: string
   padding?: number
   value: string
-  unstable_showUnsafeShareUrl: PresentationPluginOptions['unstable_showUnsafeShareUrl']
 }> = function (props) {
   const { basePath = '/' } = useActiveWorkspace()?.activeWorkspace || {}
-  const {
-    fontSize = 1,
-    onChange,
-    openPopup,
-    origin,
-    padding = 3,
-    value,
-    unstable_showUnsafeShareUrl,
-  } = props
+  const { fontSize = 1, onChange, origin, padding = 3, value } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [sessionValue, setSessionValue] = useState<string | undefined>(
     undefined,
@@ -44,14 +32,6 @@ export const PreviewLocationInput: FunctionComponent<{
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSessionValue(event.currentTarget.value)
   }, [])
-
-  const handleOpenPopup = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      event.preventDefault()
-      openPopup(event.currentTarget.href)
-    },
-    [openPopup],
-  )
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
@@ -136,23 +116,6 @@ export const PreviewLocationInput: FunctionComponent<{
         radius={2}
         ref={inputRef}
         space={padding}
-        suffix={
-          unstable_showUnsafeShareUrl ? undefined : (
-            <Box padding={1} style={{ lineHeight: 0, zIndex: -1 }}>
-              <Button
-                as="a"
-                fontSize={fontSize}
-                href={origin + (sessionValue || value)}
-                icon={LaunchIcon}
-                mode="bleed"
-                onClick={handleOpenPopup as any}
-                padding={padding - 1}
-                rel="opener"
-                target="_blank"
-              />
-            </Box>
-          )
-        }
         value={sessionValue === undefined ? `${origin}${value}` : sessionValue}
       />
     </>

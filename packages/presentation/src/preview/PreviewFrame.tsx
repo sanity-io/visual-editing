@@ -123,7 +123,6 @@ interface PreviewFrameProps {
   loadersConnection: ChannelStatus
   overlaysConnection: ChannelStatus
   previewKitConnection: ChannelStatus
-  unstable_showUnsafeShareUrl: PresentationPluginOptions['unstable_showUnsafeShareUrl']
 }
 
 export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
@@ -143,7 +142,6 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       loadersConnection,
       overlaysConnection,
       previewKitConnection,
-      unstable_showUnsafeShareUrl,
     } = props
 
     const { devMode } = usePresentationTool()
@@ -372,45 +370,41 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
               <Box flex={1}>
                 <PreviewLocationInput
                   onChange={onPathChange}
-                  openPopup={openPopup}
                   origin={previewLocationOrigin}
                   value={previewLocationRoute}
-                  unstable_showUnsafeShareUrl={unstable_showUnsafeShareUrl}
                 />
               </Box>
 
-              {unstable_showUnsafeShareUrl && (
-                <Flex align="center" flex="none" gap={1}>
-                  <MenuButton
-                    button={
-                      <Button
-                        fontSize={1}
-                        iconRight={ShareIcon}
-                        mode="bleed"
-                        padding={3}
-                        space={2}
+              <Flex align="center" flex="none" gap={1}>
+                <MenuButton
+                  button={
+                    <Button
+                      fontSize={1}
+                      iconRight={ShareIcon}
+                      mode="bleed"
+                      padding={3}
+                      space={2}
+                    />
+                  }
+                  id="location-menu"
+                  menu={
+                    <Menu>
+                      <ShareUrlMenuItems
+                        initialUrl={initialUrl}
+                        openPopup={openPopup}
+                        previewLocationOrigin={previewLocationOrigin}
+                        previewLocationRoute={previewLocationRoute}
                       />
-                    }
-                    id="location-menu"
-                    menu={
-                      <Menu>
-                        <ShareUrlMenuItems
-                          initialUrl={initialUrl}
-                          openPopup={openPopup}
-                          previewLocationOrigin={previewLocationOrigin}
-                          previewLocationRoute={previewLocationRoute}
-                        />
-                      </Menu>
-                    }
-                    popover={{
-                      animate: true,
-                      constrainSize: true,
-                      placement: 'bottom',
-                      portal: true,
-                    }}
-                  />
-                </Flex>
-              )}
+                    </Menu>
+                  }
+                  popover={{
+                    animate: true,
+                    constrainSize: true,
+                    placement: 'bottom',
+                    portal: true,
+                  }}
+                />
+              </Flex>
 
               <Flex align="center" flex="none" gap={1}>
                 <MenuButton
