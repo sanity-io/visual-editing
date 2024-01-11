@@ -4,5 +4,5 @@ import baseConfig from '../../package.config'
 
 export default defineConfig({
   ...baseConfig,
-  external: ['react', 'react-dom', 'sanity', 'styled-components'],
+  external: ['@sanity/ui', 'react', 'react-dom', 'sanity', 'styled-components'],
 })

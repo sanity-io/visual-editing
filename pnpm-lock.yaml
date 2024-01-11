@@ -772,9 +772,6 @@ importers:
       '@sanity/preview-url-secret':
         specifier: ^1.5.2
         version: link:../preview-url-secret
-      '@sanity/ui':
-        specifier: 2.0.0-beta.17
-        version: 2.0.0-beta.17(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@types/lodash.isequal':
         specifier: ^4.5.8
         version: 4.5.8
@@ -809,6 +806,9 @@ importers:
       '@sanity/pkg-utils':
         specifier: ^3.3.7
         version: 3.3.7(typescript@5.3.3)
+      '@sanity/ui':
+        specifier: 2.0.0-beta.17
+        version: 2.0.0-beta.17(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.3
         version: link:../visual-editing-helpers
@@ -5475,7 +5475,6 @@ packages:
       react-is: 18.2.0
       react-refractor: 2.1.7(react@18.2.0)
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-    dev: false
 
   /@sanity/util@3.24.1:
     resolution: {integrity: sha512-4TnjysKBdNMzZgGLwYii4ZTnYmvXz3ClYmyqJhPBKVcafip/r1q51OrIophW420Dhe9dIROjgguZAUiHnfXNYw==}
@@ -8028,6 +8027,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    bundledDependencies: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
