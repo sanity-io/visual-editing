@@ -1,47 +1,5 @@
 # Changelog
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/preview-url-secret bumped to 1.0.2
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/preview-url-secret bumped to 1.2.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/groq-store bumped from 5.3.1 to 5.3.2
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/groq-store bumped from 5.3.3 to 5.3.4
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/groq-store bumped from 5.3.5 to 5.3.6
-    * @sanity/preview-url-secret bumped from ^1.3.5 to ^1.3.6
-  * devDependencies
-    * @sanity/channels bumped from 0.2.0 to 0.3.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/preview-url-secret bumped from ^1.4.0 to ^1.4.1
 
 ## [1.5.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.2...presentation-v1.5.3) (2024-01-11)
 
