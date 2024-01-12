@@ -11,6 +11,8 @@ export const datasets = {
   'cross-dataset-references': 'cross-dataset-references',
   // demo dataset used for early prototyping
   'page-builder-demo': 'preview-poc',
+  // Used for testing the Next.js official Sanity Blog starter
+  blog: 'blog',
 } as const
 
 function maybeGitBranchStudioUrl(url: string) {

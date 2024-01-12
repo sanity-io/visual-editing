@@ -1,0 +1,53 @@
+{
+  "name": "next-server-only",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev -p 3009",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@portabletext/react": "^3.0.11",
+    "@sanity/channels": "workspace:*",
+    "@sanity/client": "^6.11.1",
+    "@sanity/icons": "^2.8.0",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/overlays": "workspace:*",
+    "@sanity/presentation": "workspace:*",
+    "@sanity/preview-kit-compat": "workspace:*",
+    "@sanity/preview-url-secret": "workspace:*",
+    "@sanity/vision": "^3.24.1",
+    "@sanity/visual-editing-helpers": "workspace:*",
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "^20.5.0",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "apps-common": "workspace:*",
+    "autoprefixer": "^10.4.15",
+    "classnames": "^2.3.1",
+    "date-fns": "^2.29.3",
+    "next": "14.0.4",
+    "next-sanity": "^7.0.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-wrap-balancer": "^1.1.0",
+    "sanity": "^3.24.1",
+    "sanity-plugin-asset-source-unsplash": "^1.1.2",
+    "server-only": "^0.0.1",
+    "styled-components": "^6.1.8"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "14.0.4",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.3.3"
+  }
+}
