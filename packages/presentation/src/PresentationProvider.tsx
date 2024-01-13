@@ -6,8 +6,8 @@ import {
 } from './PresentationContext'
 import {
   DeskDocumentPaneParams,
+  PresentationNavigate,
   PresentationParams,
-  SetPresentationParams,
 } from './types'
 
 export const PresentationProvider: FunctionComponent<
@@ -15,21 +15,21 @@ export const PresentationProvider: FunctionComponent<
     deskParams: DeskDocumentPaneParams
     devMode: boolean
     name: string
+    navigate: PresentationNavigate
     params: PresentationParams
-    setParams: SetPresentationParams
   }>
 > = function (props) {
-  const { children, deskParams, devMode, name, params, setParams } = props
+  const { children, deskParams, devMode, name, navigate, params } = props
 
   const context = useMemo<PresentationContextValue>(
     () => ({
       deskParams,
       devMode,
       name,
+      navigate,
       params,
-      setParams,
     }),
-    [deskParams, devMode, name, params, setParams],
+    [deskParams, devMode, name, navigate, params],
   )
 
   return (

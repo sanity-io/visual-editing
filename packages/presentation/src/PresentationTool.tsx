@@ -103,11 +103,14 @@ export default function PresentationTool(props: {
 
   const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
-  const { setParams, params, deskParams } = useParams({
+  const previewRef = useRef<typeof params.preview>()
+
+  const { params, deskParams, navigate } = useParams({
     initialPreviewUrl,
     routerNavigate,
     routerState,
     routerSearchParams,
+    previewRef,
   })
 
   const [perspective, setPerspective] = useState<ClientPerspective>(() =>
@@ -121,14 +124,17 @@ export default function PresentationTool(props: {
   const projectId = useProjectId()
   const dataset = useDataset()
 
-  const previewRef = useRef<typeof params.preview>()
-
   // Update the perspective when the param changes
   useEffect(() => {
     if (perspective !== params.perspective) {
-      setParams({ perspective })
+      navigate(
+        {},
+        {
+          perspective: perspective === 'published' ? 'published' : undefined,
+        },
+      )
     }
-  }, [params.perspective, perspective, setParams])
+  }, [params.perspective, perspective, navigate])
 
   const [overlaysConnection, setOverlaysConnection] =
     useState<ChannelStatus>('connecting')
@@ -175,15 +181,24 @@ export default function PresentationTool(props: {
           onStatusUpdate: setOverlaysConnection,
           onEvent(type, data) {
             if (type === 'overlay/focus' && 'id' in data) {
-              setParams({
+              navigate({
+                type: data.type,
                 id: data.id,
                 path: data.path,
-                type: data.type,
               })
             } else if (type === 'overlay/navigate') {
               if (previewRef.current !== data.url) {
+                const isInitialNavigation = previewRef.current === undefined
+
                 previewRef.current = data.url
-                setParams({ preview: data.url })
+                if (isInitialNavigation) {
+                  navigate({}, { preview: data.url })
+                } else {
+                  navigate(
+                    { id: undefined, type: undefined },
+                    { preview: data.url },
+                  )
+                }
               }
             } else if (type === 'overlay/toggle') {
               setOverlayEnabled(data.enabled)
@@ -249,7 +264,7 @@ export default function PresentationTool(props: {
       nextChannel.destroy()
       setChannel(undefined)
     }
-  }, [dataset, projectId, setDocumentsOnPage, setParams, targetOrigin])
+  }, [dataset, projectId, setDocumentsOnPage, navigate, targetOrigin])
 
   useEffect(() => {
     const interval = setInterval(
@@ -289,12 +304,10 @@ export default function PresentationTool(props: {
 
   const handleFocusPath = useCallback(
     (nextPath: Path) => {
-      setParams({
-        // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
-        path: studioPath.toString(nextPath),
-      })
+      // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
+      navigate({ path: studioPath.toString(nextPath) }, {}, true)
     },
-    [setParams],
+    [navigate],
   )
 
   const handlePreviewPath = useCallback(
@@ -305,17 +318,17 @@ export default function PresentationTool(props: {
         url.origin === initialPreviewUrl.origin &&
         preview !== params.preview
       ) {
-        setParams({ id: undefined, path: undefined, preview })
+        navigate({ id: undefined, path: undefined }, { preview })
       }
     },
-    [initialPreviewUrl, params, setParams],
+    [initialPreviewUrl, params, navigate],
   )
 
   const handleDeskParams = useCallback(
     (deskParams: DeskDocumentPaneParams) => {
-      setParams({ ...deskParams })
+      navigate({}, deskParams)
     },
-    [setParams],
+    [navigate],
   )
 
   useEffect(() => {
@@ -329,8 +342,7 @@ export default function PresentationTool(props: {
     }
   }, [channel, params.id, params.path])
 
-  // Dispatch a navigation message whenever the preview param changes
-  // @todo This will cause a reflection of received navigation messages which could be problematic
+  // Dispatch a navigation message when the preview param changes
   useEffect(() => {
     if (
       previewRef.current &&
@@ -343,7 +355,7 @@ export default function PresentationTool(props: {
       } else {
         channel?.send('overlays', 'presentation/navigate', {
           url: params.preview,
-          type: 'push',
+          type: 'replace',
         })
       }
     }
@@ -392,7 +404,7 @@ export default function PresentationTool(props: {
   const idRef = useRef<string | undefined>(params.id)
   useEffect(() => {
     if (params.rev && idRef.current && params.id !== idRef.current) {
-      setParams({ rev: undefined })
+      navigate({}, { rev: undefined })
     }
     idRef.current = params.id
   })
@@ -404,9 +416,9 @@ export default function PresentationTool(props: {
         devMode={devMode}
         name={name}
         params={params}
-        setParams={setParams}
+        navigate={navigate}
       >
-        <PresentationNavigateProvider setParams={setParams}>
+        <PresentationNavigateProvider navigate={navigate}>
           <PresentationParamsProvider params={params}>
             <Container height="fill">
               <Panels>

@@ -86,7 +86,16 @@ export interface PresentationParams
   perspective?: string
 }
 
-export type SetPresentationParams = (prev: PresentationParams) => void
+export interface PresentationSearchParams extends DeskDocumentPaneParams {
+  preview?: string
+  perspective?: string
+}
+
+export type PresentationNavigate = (
+  nextState: PresentationStateParams,
+  nextSearchState?: PresentationSearchParams,
+  forceReplace?: boolean,
+) => void
 
 /** @internal */
 export type LiveQueriesState = Record<string, LiveQueriesStateValue>
