@@ -9,20 +9,20 @@ import {
   PresentationNavigateContext,
   PresentationNavigateContextValue,
 } from './PresentationNavigateContext'
-import { SetPresentationParams } from './types'
+import { PresentationNavigate } from './types'
 
 export const PresentationNavigateProvider: FunctionComponent<
   PropsWithChildren<{
-    setParams: SetPresentationParams
+    navigate: PresentationNavigate
   }>
 > = function (props) {
-  const { children, setParams } = props
+  const { children, navigate: _navigate } = props
 
   const navigate = useCallback(
     (preview: string) => {
-      setParams({ preview })
+      _navigate({}, { preview })
     },
-    [setParams],
+    [_navigate],
   )
 
   const context = useMemo<PresentationNavigateContextValue>(

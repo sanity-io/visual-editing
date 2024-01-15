@@ -6,6 +6,7 @@ import {
   ReactElement,
   useCallback,
   useMemo,
+  useRef,
 } from 'react'
 import { getPublishedId, useUnique } from 'sanity'
 import {
@@ -118,13 +119,19 @@ export function PresentationPaneRouterProvider(
       [resolvePathFromState, routerSearchParams, routerState],
     )
 
+  // The PaneRouter clashes with the tools routing implementation if a path param is present when focusing/blurring on an input.
+  // So only provide a path on initialization. Use a ref to track this.
+  const firstFocus = useRef(true)
   const context: PaneRouterContextValue = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { path, ...paramsWithoutPath } = params
+    const safeParams = firstFocus.current ? params : paramsWithoutPath
     return {
       index: 0,
       groupIndex: 0,
       siblingIndex: 0,
       payload: {},
-      params: params as any,
+      params: safeParams as any,
       hasGroupSiblings: false,
       groupLength: 1,
       routerPanesState: [],
@@ -169,10 +176,10 @@ export function PresentationPaneRouterProvider(
         console.warn('setView', viewId)
       },
       setParams: (nextParams) => {
+        // eslint-disable-next-line no-warning-comments
+        // @todo set inspect param to undefined manually as param is missing from object when closing inspector
         onDeskParams({
           ...nextParams,
-          // eslint-disable-next-line no-warning-comments
-          // @todo set inspect param to undefined manually as param is missing from object when closing inspector
           inspect: nextParams.inspect ?? undefined,
         } as DeskDocumentPaneParams)
       },
@@ -185,6 +192,8 @@ export function PresentationPaneRouterProvider(
       createPathWithParams,
     }
   }, [createPathWithParams, onDeskParams, params, previewUrl, refs])
+
+  firstFocus.current = false
 
   return (
     <PaneRouterContext.Provider value={context}>
