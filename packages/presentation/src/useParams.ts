@@ -1,12 +1,4 @@
-import isEqual from 'lodash.isequal'
-import {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { MutableRefObject, useEffect, useMemo, useRef } from 'react'
 import { RouterContextValue, RouterState, SearchParam } from 'sanity/router'
 
 import { debounce } from './lib/debounce'
@@ -45,9 +37,8 @@ export function useParams({
   deskParams: DeskDocumentPaneParams
   navigate: PresentationNavigate
   params: PresentationParams
-  setParams: (prev: PresentationParams) => void
 } {
-  const [params, setParamsState] = useState<PresentationParams>(() => {
+  const params = useMemo<PresentationParams>(() => {
     const { id, path, type } = parseRouterState(routerState)
 
     return {
@@ -69,17 +60,7 @@ export function useParams({
       // comments
       comment: routerSearchParams.comment,
     }
-  })
-
-  const setParams = useCallback((newParams: Partial<PresentationParams>) => {
-    setParamsState((state) => {
-      const nextState = { ...state, ...newParams }
-      if (isEqual(pruneObject(state), pruneObject(nextState))) {
-        return state
-      }
-      return nextState
-    })
-  }, [])
+  }, [routerState, routerSearchParams, initialPreviewUrl])
 
   const deskParams = useMemo<DeskDocumentPaneParams>(() => {
     const pruned = pruneObject({
@@ -107,30 +88,6 @@ export function useParams({
     params.instruction,
     params.comment,
   ])
-
-  useEffect(() => {
-    const { id, path, type } = parseRouterState(routerState)
-
-    setParams({
-      id,
-      type: type === '*' ? undefined : type,
-      path,
-      preview:
-        routerSearchParams.preview ||
-        `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
-      perspective: routerSearchParams.perspective,
-      inspect: routerSearchParams.inspect,
-      rev: routerSearchParams.rev,
-      since: routerSearchParams.since,
-      template: routerSearchParams.template,
-      view: routerSearchParams.view,
-      // assist
-      pathKey: routerSearchParams.pathKey,
-      instruction: routerSearchParams.instruction,
-      // comments
-      comment: routerSearchParams.comment,
-    })
-  }, [initialPreviewUrl, routerSearchParams, routerState, setParams])
 
   const routerStateRef = useRef(routerState)
 
@@ -182,9 +139,8 @@ export function useParams({
   )
 
   return {
-    navigate,
-    setParams,
     deskParams,
+    navigate,
     params,
   }
 }
