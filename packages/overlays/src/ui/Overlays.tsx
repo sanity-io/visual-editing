@@ -31,11 +31,12 @@ const Root = styled.div<{
   $zIndex?: string | number
 }>`
   background-color: transparent;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  direction: ltr;
+  inset: 0;
   pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: ${({ $zIndex }) => $zIndex ?? '9999999'};
 `
 
