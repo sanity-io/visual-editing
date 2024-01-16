@@ -791,8 +791,8 @@ importers:
         specifier: 2.8.0
         version: 2.8.0(react@18.2.0)
       '@sanity/ui':
-        specifier: 2.0.0-beta.18
-        version: 2.0.0-beta.18(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        specifier: 2.0.0
+        version: 2.0.0(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
@@ -916,8 +916,8 @@ importers:
         specifier: ^3.3.8
         version: 3.3.8(typescript@5.3.3)
       '@sanity/ui':
-        specifier: 2.0.0-beta.18
-        version: 2.0.0-beta.18(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        specifier: 2.0.0
+        version: 2.0.0(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.3
         version: link:../visual-editing-helpers
@@ -5267,7 +5267,6 @@ packages:
   /@sanity/color@3.0.0:
     resolution: {integrity: sha512-JLIsloyyn0lhta/JivmYlxlcN7U3dpBNqtH7uAzM9/kPirFxWJ8LAVuF5vxK5JHwTNbgpVy6AmfIss/av7N96w==}
     engines: {node: '>=18.0.0'}
-    dev: false
 
   /@sanity/color@3.0.0-beta.9:
     resolution: {integrity: sha512-Mk7FRDtxz/U2SRlRM0BvUI62jU26W62aYsipaKFt/dk0rOyYa9yzfaojSM/QmW0E4W/nOw74RBA/HrapXUw+2Q==}
@@ -5589,30 +5588,9 @@ packages:
       react-is: 18.2.0
       react-refractor: 2.1.7(react@18.2.0)
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-    dev: false
 
   /@sanity/ui@2.0.0-beta.16(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
     resolution: {integrity: sha512-nu+N1ClKv5e3sraBvJnru3/F3Nzl7uI85En3kPWg611GfHlu6x0WGVE/6kB0FQXkwMsaqehduiz9xgE2lKZopg==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-      react-is: ^18
-      styled-components: 6.1.8
-    dependencies:
-      '@floating-ui/react-dom': 2.0.4(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/color': 3.0.0-beta.9
-      '@sanity/icons': 2.8.0(react@18.2.0)
-      csstype: 3.1.3
-      framer-motion: 10.18.0(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-is: 18.2.0
-      react-refractor: 2.1.7(react@18.2.0)
-      styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-
-  /@sanity/ui@2.0.0-beta.18(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-/wqnw3u4WUxCpk2dh7p6+jzHduyxSWGWRlYQrTfYERd7z744lHKT8WhHhudOfCULG7WLLTGnCWWk//nYXO6M2A==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18
