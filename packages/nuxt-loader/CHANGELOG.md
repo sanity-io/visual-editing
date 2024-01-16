@@ -63,6 +63,14 @@
   * dependencies
     * @sanity/core-loader bumped from 1.3.4 to 1.3.5
 
+## [1.7.4](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.3...nuxt-loader-v1.7.4) (2024-01-16)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency vue to ^3.4.14 ([#692](https://github.com/sanity-io/visual-editing/issues/692)) ([b78f850](https://github.com/sanity-io/visual-editing/commit/b78f850d551fac1bdbab4e9ba11156eb1a30425b))
+* **deps:** Update dependency vue to ^3.4.9 ([#680](https://github.com/sanity-io/visual-editing/issues/680)) ([8f2adfe](https://github.com/sanity-io/visual-editing/commit/8f2adfec741400466900b6e37539249e6a59e77e))
+
 ## [1.7.3](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.2...nuxt-loader-v1.7.3) (2024-01-10)
 
 

@@ -30,6 +30,14 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [2.3.6](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.5...overlays-v2.3.6) (2024-01-16)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/color to v3.0.0 ([#688](https://github.com/sanity-io/visual-editing/issues/688)) ([5eca472](https://github.com/sanity-io/visual-editing/commit/5eca472838eeedd2d75907a4a806fe908e874db5))
+* **overlays:** prevent incorrect element positioning in rtl layouts ([b105aa0](https://github.com/sanity-io/visual-editing/commit/b105aa0ea260f26c26fffa11b8d4b5ea752a95de))
+
 ## [2.3.5](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.4...overlays-v2.3.5) (2024-01-10)
 
 
