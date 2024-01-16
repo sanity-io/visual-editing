@@ -1,6 +1,21 @@
 # Changelog
 
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.3...presentation-v1.6.0) (2024-01-16)
+
+
+### Features
+
+* enable new URL sharing menu ([83fe01f](https://github.com/sanity-io/visual-editing/commit/83fe01fbe4ee3128a49401e2882e04463b5b1540))
+
+
+### Bug Fixes
+
+* always use the same `@sanity/ui` version as `sanity` ([e61312d](https://github.com/sanity-io/visual-editing/commit/e61312d9a2d8ebcce8f0b06a62b0bcd5ca42522f))
+* **presentation:** allow forward navigation ([#686](https://github.com/sanity-io/visual-editing/issues/686)) ([f9099e8](https://github.com/sanity-io/visual-editing/commit/f9099e88f5d3f4158fbe26737e0b1c6987df29f9))
+* **presentation:** derive params from routerState to fix focus ([175efe0](https://github.com/sanity-io/visual-editing/commit/175efe0a3881c288c8ea30086e427a1de21c60cd))
+* remove MetaBanner as it's now part of `sanity` ([c920188](https://github.com/sanity-io/visual-editing/commit/c920188859200770d31ff3e679e86563bcc4e52e))
+
 ## [1.5.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.2...presentation-v1.5.3) (2024-01-11)
 
 
