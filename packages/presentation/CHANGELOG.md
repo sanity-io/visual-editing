@@ -1,6 +1,23 @@
 # Changelog
 
 
+## [1.6.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.6.0...presentation-v1.6.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to ^3.25.0 ([#709](https://github.com/sanity-io/visual-editing/issues/709)) ([aba05de](https://github.com/sanity-io/visual-editing/commit/aba05de6c24470f4c1e1be1ab7c88903c9570e15))
+* remove `parentRefPath` warning ([2b4641c](https://github.com/sanity-io/visual-editing/commit/2b4641c1e0ca318c9b3a5512673f65559b14a665))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.5.2 to ^1.5.3
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.3 to 0.2.4
+
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.5.3...presentation-v1.6.0) (2024-01-16)
 
 
