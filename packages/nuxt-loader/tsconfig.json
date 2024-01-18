@@ -7,14 +7,14 @@
     "paths": {
       "@sanity/core-loader": ["../core-loader/src"],
       "@sanity/visual-editing-helpers": ["../visual-editing-helpers/src"],
-      "@sanity/visual-editing-helpers/*": ["../visual-editing-helpers/src/*"]
-    }
+      "@sanity/visual-editing-helpers/*": ["../visual-editing-helpers/src/*"],
+    },
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "../core-loader/src",
-    "../visual-editing-helpers/src"
+    "../visual-editing-helpers/src",
   ],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
 }

@@ -7,7 +7,7 @@
     "**/*.tsx",
     "../../packages/csm/src",
     "../../packages/core-loader/src",
-    "../../packages/react-loader/src"
+    "../../packages/react-loader/src",
   ],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -31,14 +31,14 @@
       "@sanity/react-loader": ["../../packages/react-loader/src"],
       "@sanity/react-loader/jsx": ["../../packages/react-loader/src/jsx"],
       "@sanity/visual-editing-helpers": [
-        "../../packages/visual-editing-helpers/src"
+        "../../packages/visual-editing-helpers/src",
       ],
       "@sanity/visual-editing-helpers/csm": [
-        "../../packages/visual-editing-helpers/src/csm"
-      ]
+        "../../packages/visual-editing-helpers/src/csm",
+      ],
     },
 
     // Remix takes care of building everything in `remix build`.
-    "noEmit": true
-  }
+    "noEmit": true,
+  },
 }
