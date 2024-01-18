@@ -4,8 +4,18 @@ import BlogHeader from './BlogHeader'
 import { EXAMPLE_NAME } from '@/lib/constants'
 import PreviewBanner from './PreviewBanner'
 import { draftMode } from 'next/headers'
+import dynamic from 'next/dynamic'
 
-export default function Template({ children }: { children: React.ReactNode }) {
+const Overlays = dynamic(() => import('@/components/VisualEditing/Overlays'))
+const PresentationToolBridge = dynamic(
+  () => import('@/components/VisualEditing/PresentationToolBridge'),
+)
+
+export default function BlogLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <>
       {draftMode().isEnabled && <PreviewBanner />}
@@ -19,6 +29,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
           </Link>
         </footer>
       </div>
+      {draftMode().isEnabled && <Overlays />}
+      {draftMode().isEnabled && <PresentationToolBridge />}
     </>
   )
 }

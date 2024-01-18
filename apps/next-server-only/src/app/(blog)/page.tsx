@@ -7,10 +7,10 @@ import CoverImage from './CoverImage'
 import MoreStories from './MoreStories'
 import Date from './PostDate'
 import { postFields } from '@/lib/queries'
-import { sanityFetch } from '@/lib/fetch'
+import { loadQuery } from '@/lib/loadQuery'
 
 export default async function BlogIndexPage() {
-  const data = await sanityFetch<any>({
+  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
     query: /* groq */ `
 *[_type == "post"] | order(publishedAt desc, _updatedAt desc) [0] {
   ${postFields}
@@ -67,6 +67,8 @@ export default async function BlogIndexPage() {
           </Suspense>
         </aside>
       )}
+      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
+      <RevalidatePreviewQuery />
     </>
   )
 }

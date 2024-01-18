@@ -12,6 +12,7 @@ import { client } from '@/lib/client'
 import { urlForImage } from '@/lib/image'
 import { sanityFetch } from '@/lib/fetch'
 import { postFields } from '@/lib/queries'
+import { loadQuery } from '@/lib/loadQuery'
 
 type Props = {
   params: { slug: string }
@@ -25,10 +26,10 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const [post, authorName] = await Promise.all([
-    sanityFetch<any>({ query, params, tags: [`post:${params.slug}`] }),
+  const [[post], [authorName]] = await Promise.all([
+    loadQuery<any>({ query, params, tags: [`post:${params.slug}`] }),
     // @TODO necessary as there's problems with type inference when `author-{name,image}` is used
-    sanityFetch<string | null>({
+    loadQuery<string | null>({
       query: /* groq */ `*[_type == "post" && slug.current == $slug][0].author->name`,
       params,
       tags: [`post:${params.slug}`, 'author'],
@@ -55,7 +56,7 @@ export async function generateMetadata(
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = params
-  const data = await sanityFetch<any>({
+  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
     query,
     params,
     tags: [`post:${params.slug}`],
@@ -105,6 +106,8 @@ export default async function BlogPostPage({ params }: Props) {
           <MoreStories skip={_id} limit={2} />
         </Suspense>
       </aside>
+      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
+      <RevalidatePreviewQuery />
     </>
   )
 }

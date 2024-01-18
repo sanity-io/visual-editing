@@ -1,8 +1,8 @@
 import 'tailwindcss/tailwind.css'
 
 import type { Metadata } from 'next'
-
 import { Inter } from 'next/font/google'
+
 import { CMS_NAME } from '@/lib/constants'
 
 const inter = Inter({
@@ -18,18 +18,12 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-  visualEditing,
 }: {
   children: React.ReactNode
-  visualEditing: React.ReactNode
 }) {
-  console.log('RootLayout', { children, visualEditing })
   return (
     <html lang="en" className={inter.variable}>
-      <body className="bg-white text-black">
-        {children}
-        {visualEditing}
-      </body>
+      <body className="bg-white text-black">{children}</body>
     </html>
   )
 }

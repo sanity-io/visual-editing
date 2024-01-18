@@ -5,8 +5,8 @@ const require = createRequire(import.meta.url)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // reactStrictMode: true,
-  /*
+  reactStrictMode: true,
+  // /*
   logging: {
     fetches: {
       fullUrl: true,
@@ -30,6 +30,7 @@ const nextConfig = {
 
   experimental: {
     taint: true,
+    windowHistorySupport: true,
   },
 
   webpack(config) {
@@ -44,20 +45,6 @@ const nextConfig = {
       sanity: require.resolve('sanity'),
     }
     return config
-  },
-
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: `frame-ancestors 'self' https://*.sanity.build http://localhost:3333`,
-          },
-        ],
-      },
-    ]
   },
 }
 

@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { Suspense } from 'react'
 
-import { sanityFetch } from '@/lib/fetch'
 import { postFields } from '@/lib/queries'
 import { AuthorAvatar, AuthorAvatarFallback } from './AuthorAvatar'
 import CoverImage from './CoverImage'
 import Date from './PostDate'
+import { loadQuery } from '@/lib/loadQuery'
 
 const query = /* groq */ `*[_type == "post" && _id != $skip] | order(date desc, _updatedAt desc) [0...$limit] {
   ${postFields}
@@ -15,7 +15,7 @@ export default async function MoreStories(params: {
   skip: string
   limit: number
 }) {
-  const data = await sanityFetch<any>({ query, params, tags: ['post'] })
+  const [data,RevalidatePreviewQuery] = await loadQuery<any>({ query, params, tags: ['post'] })
 
   return (
     <>
@@ -63,6 +63,8 @@ export default async function MoreStories(params: {
           )
         })}
       </div>
+      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
+      <RevalidatePreviewQuery />
     </>
   )
 }

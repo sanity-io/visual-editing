@@ -2,11 +2,12 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --filter=./apps/*",
+    "dev": "turbo run dev --filter=./apps/* --filter=!./apps/next-server-only",
     "format": "prettier --cache --write .",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
     "page-builder-demo:dev": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
+    "next-server-only:dev": "turbo run dev --filter=./apps/next-server-only",
     "preview": "turbo run preview",
     "test": "turbo run test",
     "watch": "turbo run watch"
