@@ -17,7 +17,7 @@
         type="button"
         @click.prevent="elementAdded = !elementAdded"
       >
-        {{ elementAdded ? 'Remove' : 'Add' }} Dynamic Element
+        {{ elementAdded ? 'Remove' : 'Add - draft' }} Dynamic Element
       </button>
       <button
         class="button"
