@@ -9,10 +9,6 @@ The Presentation tool is exported directly by `sanity`, so in most cases install
 
 To learn more about the Presentation tool and how to configure it, refer to [this article](https://www.sanity.io/docs/presentation) in the official Sanity documentation.
 
-```sh
-npm install @sanity/presentation
-```
-
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/presentation?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/presentation?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/presentation
