@@ -77,7 +77,9 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
   props: ReferenceChildLinkProps,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  const { documentId, documentType, ...restProps } = props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { documentId, documentType, parentRefPath, template, ...restProps } =
+    props
 
   return (
     <StateLink
