@@ -27,9 +27,9 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@sanity/overlays": ["../../packages/overlays/src"],
-      "@sanity/react-loader": ["../../packages/react-loader/src"]
-    }
+      "@sanity/react-loader": ["../../packages/react-loader/src"],
+    },
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
 }

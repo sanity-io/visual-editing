@@ -7,8 +7,8 @@
     "paths": {
       "@sanity/preview-url-secret": ["../preview-url-secret/src"],
       "@sanity/channels": ["../channels/src"],
-      "@sanity/visual-editing-helpers": ["../visual-editing-helpers/src"]
-    }
+      "@sanity/visual-editing-helpers": ["../visual-editing-helpers/src"],
+    },
   },
   "include": [
     "**/*.ts",
@@ -16,7 +16,7 @@
     "../channels/src",
     "../preview-url-secret/src",
     "../preview-url-secret/legacy",
-    "../visual-editing-helpers/src"
+    "../visual-editing-helpers/src",
   ],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
 }

@@ -15,7 +15,11 @@ export default async function MoreStories(params: {
   skip: string
   limit: number
 }) {
-  const [data,RevalidatePreviewQuery] = await loadQuery<any>({ query, params, tags: ['post'] })
+  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
+    query,
+    params,
+    tags: ['post'],
+  })
 
   return (
     <>

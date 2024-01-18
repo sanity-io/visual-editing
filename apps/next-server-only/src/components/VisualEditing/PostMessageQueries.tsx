@@ -119,17 +119,17 @@ export function RevalidateQuery(props: RevalidateQueryProps) {
       snapshot.perspective === perspective &&
       snapshotRef.current.data &&
       !isEqual(snapshotRef.current.data, snapshot.data)
-      ) {
-        clearTimeout(revalidateRef.current)
-        revalidate({tags})
-        revalidateRef.current = window.setTimeout(() => {
-          revalidate({tags})
-        }, 1000)
-      }
-      snapshotRef.current = snapshot
-    }, [perspective, snapshot, tags])
+    ) {
+      clearTimeout(revalidateRef.current)
+      revalidate({ tags })
+      revalidateRef.current = window.setTimeout(() => {
+        revalidate({ tags })
+      }, 1000)
+    }
+    snapshotRef.current = snapshot
+  }, [perspective, snapshot, tags])
 
-    /*
+  /*
     const [shouldRevalidate, setShouldRevalidate] = useState(false)
   const revalidating = useRef(false)
   useEffect(() => {
