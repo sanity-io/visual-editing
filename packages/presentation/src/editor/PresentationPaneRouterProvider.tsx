@@ -8,13 +8,13 @@ import {
   useMemo,
 } from 'react'
 import { getPublishedId, useUnique } from 'sanity'
+import { StateLink, useRouter } from 'sanity/router'
 import {
   BackLinkProps,
   PaneRouterContext,
   PaneRouterContextValue,
   ReferenceChildLinkProps,
-} from 'sanity/desk'
-import { StateLink, useRouter } from 'sanity/router'
+} from 'sanity/structure'
 
 import { DeskDocumentPaneParams, PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'

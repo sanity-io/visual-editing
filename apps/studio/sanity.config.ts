@@ -1,6 +1,6 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig, definePlugin, defineType, defineField } from 'sanity'
-import { deskTool } from 'sanity/desk'
+import { structureTool } from 'sanity/structure'
 import {
   presentationTool,
   type PreviewUrlResolverOptions,
@@ -21,7 +21,7 @@ import SpaceType from './models/documents/SpaceType'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
-  plugins: [deskTool(), assist(), unsplashImageAsset(), debugSecrets()],
+  plugins: [structureTool(), assist(), unsplashImageAsset(), debugSecrets()],
   schema,
 })
 
@@ -163,7 +163,7 @@ const crossDatasetReferencesWorkspace = defineConfig({
   basePath: `/${workspaces['cross-dataset-references'].workspace}`,
   projectId: workspaces['cross-dataset-references'].projectId,
   dataset: workspaces['cross-dataset-references'].dataset,
-  plugins: [deskTool(), visionTool(), assist(), unsplashImageAsset()],
+  plugins: [structureTool(), visionTool(), assist(), unsplashImageAsset()],
   document: {
     unstable_comments: {
       enabled: true,
@@ -256,7 +256,7 @@ const performanceTestWorkspace = defineConfig({
         preview: '/pages-router/performance-test',
       },
     }),
-    deskTool(),
+    structureTool(),
     visionTool(),
   ],
   schema: {

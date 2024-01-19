@@ -1,6 +1,6 @@
 import { type ReactElement } from 'react'
 import { type Path } from 'sanity'
-import { DeskToolProvider } from 'sanity/desk'
+import { StructureToolProvider } from 'sanity/structure'
 
 import { DeskDocumentPaneParams } from '../types'
 import { DocumentPane } from './DocumentPane'
@@ -15,7 +15,7 @@ export function DocumentPanel(props: {
   const { deskParams, documentId, documentType, onDeskParams, onFocusPath } =
     props
   return (
-    <DeskToolProvider>
+    <StructureToolProvider>
       <DocumentPane
         documentId={documentId}
         documentType={documentType}
@@ -23,6 +23,6 @@ export function DocumentPanel(props: {
         onDeskParams={onDeskParams}
         onFocusPath={onFocusPath}
       />
-    </DeskToolProvider>
+    </StructureToolProvider>
   )
 }

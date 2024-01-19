@@ -12,8 +12,8 @@ import {
   DocumentPane as DeskDocumentPane,
   DocumentPaneNode,
   PaneLayout,
-  useDeskTool,
-} from 'sanity/desk'
+  useStructureTool,
+} from 'sanity/structure'
 import styled from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
@@ -60,7 +60,7 @@ export function DocumentPane(props: {
     setErrorParams(null)
   }, [documentId, documentType, params])
 
-  const { setLayoutCollapsed } = useDeskTool()
+  const { setLayoutCollapsed } = useStructureTool()
   const handleRootCollapse = useCallback(
     () => setLayoutCollapsed(true),
     [setLayoutCollapsed],

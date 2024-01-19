@@ -8,11 +8,11 @@ import {
   useState,
 } from 'react'
 import {
-  DeskToolProvider,
   DocumentListPane as DeskDocumentListPane,
   PaneLayout,
   PaneNode,
-} from 'sanity/desk'
+  StructureToolProvider,
+} from 'sanity/structure'
 import styled from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
@@ -95,7 +95,7 @@ export function DocumentListPane(props: {
   return (
     <ErrorBoundary onCatch={setErrorParams}>
       <RootLayout>
-        <DeskToolProvider>
+        <StructureToolProvider>
           <PresentationPaneRouterProvider
             params={deskParams}
             onDeskParams={onDeskParams}
@@ -111,7 +111,7 @@ export function DocumentListPane(props: {
               />
             </Root>
           </PresentationPaneRouterProvider>
-        </DeskToolProvider>
+        </StructureToolProvider>
       </RootLayout>
     </ErrorBoundary>
   )
