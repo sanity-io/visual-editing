@@ -22,6 +22,7 @@ export default defineCliConfig({
         'sanity/router': require.resolve('sanity/router'),
         'sanity/structure': require.resolve('sanity/structure'),
         sanity: require.resolve('sanity'),
+        'styled-components': require.resolve('styled-components'),
       },
     },
   }),
