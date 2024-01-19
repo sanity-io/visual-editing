@@ -8,7 +8,6 @@ import {
 } from 'sanity'
 
 import {
-  CREATE_INTENT_MODE,
   DEFAULT_TOOL_ICON,
   DEFAULT_TOOL_NAME,
   EDIT_INTENT_MODE,
