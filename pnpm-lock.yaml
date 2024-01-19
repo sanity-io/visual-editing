@@ -887,6 +887,9 @@ importers:
       '@sanity/preview-url-secret':
         specifier: ^1.5.3
         version: link:../preview-url-secret
+      '@sanity/uuid':
+        specifier: 3.0.2
+        version: 3.0.2
       '@types/lodash.isequal':
         specifier: ^4.5.8
         version: 4.5.8
@@ -8173,6 +8176,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    bundledDependencies: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}

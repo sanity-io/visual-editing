@@ -8,6 +8,7 @@ import {
 } from 'sanity'
 
 import {
+  CREATE_INTENT_MODE,
   DEFAULT_TOOL_ICON,
   DEFAULT_TOOL_NAME,
   EDIT_INTENT_MODE,
@@ -53,6 +54,36 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
       return props.renderDefault(props)
     }
 
+    function canHandleCreateIntent(params: Record<string, unknown>) {
+      // We can't handle create intents without a `type` parameter
+      if (!('type' in params)) {
+        return false
+      }
+
+      if ('presentation' in params && params.presentation !== toolName) {
+        return false
+      }
+
+      return 'mode' in params
+        ? { mode: params.mode === CREATE_INTENT_MODE }
+        : true
+    }
+
+    function canHandleEditIntent(params: Record<string, unknown>) {
+      // We can't handle edit intents without `type` or `id` parameters
+      if (!('type' in params) || !('id' in params)) {
+        return false
+      }
+
+      if ('presentation' in params && params.presentation !== toolName) {
+        return false
+      }
+
+      return 'mode' in params
+        ? { mode: params.mode === EDIT_INTENT_MODE }
+        : true
+    }
+
     return {
       document: {
         unstable_fieldActions: (prev) => {
@@ -77,21 +108,8 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
           component: PresentationTool,
           options,
           canHandleIntent(intent, params) {
-            if (intent === 'edit') {
-              if (!params.id) return false
-
-              if (params.presentation && params.presentation !== toolName) {
-                return false
-              }
-
-              if (!params.mode) return true
-
-              if (params.mode === EDIT_INTENT_MODE) {
-                // inform the intent resolver that `mode` is matching
-                return { mode: true }
-              }
-            }
-
+            if (intent === 'create') return canHandleCreateIntent(params)
+            if (intent === 'edit') return canHandleEditIntent(params)
             return false
           },
           getIntentState,

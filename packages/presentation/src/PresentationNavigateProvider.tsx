@@ -1,9 +1,4 @@
-import {
-  FunctionComponent,
-  PropsWithChildren,
-  useCallback,
-  useMemo,
-} from 'react'
+import { FunctionComponent, PropsWithChildren, useCallback } from 'react'
 
 import {
   PresentationNavigateContext,
@@ -18,20 +13,15 @@ export const PresentationNavigateProvider: FunctionComponent<
 > = function (props) {
   const { children, navigate: _navigate } = props
 
-  const navigate = useCallback(
-    (preview: string) => {
-      _navigate({}, { preview })
+  const navigate = useCallback<PresentationNavigateContextValue>(
+    (preview, document = undefined) => {
+      _navigate(document || {}, preview ? { preview } : {})
     },
     [_navigate],
   )
 
-  const context = useMemo<PresentationNavigateContextValue>(
-    () => navigate,
-    [navigate],
-  )
-
   return (
-    <PresentationNavigateContext.Provider value={context}>
+    <PresentationNavigateContext.Provider value={navigate}>
       {children}
     </PresentationNavigateContext.Provider>
   )
