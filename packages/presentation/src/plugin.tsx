@@ -64,9 +64,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
         return false
       }
 
-      return 'mode' in params
-        ? { mode: params.mode === CREATE_INTENT_MODE }
-        : true
+      return 'template' in params ? { template: true } : true
     }
 
     function canHandleEditIntent(params: Record<string, unknown>) {
