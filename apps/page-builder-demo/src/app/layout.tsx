@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, Inter, PT_Serif } from 'next/font/google'
 import VisualEditing from './VisualEditing'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: '',
@@ -32,7 +33,9 @@ export default function RootLayout({
         {children}
       </body>
 
-      <VisualEditing />
+      <Suspense>
+        <VisualEditing />
+      </Suspense>
     </html>
   )
 }
