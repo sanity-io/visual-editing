@@ -744,4 +744,11 @@ describe('scoping', () => {
       `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio"`,
     )
   })
+  test('array paths recursive', () => {
+    const scoped = encodeDataAttribute.scope(['page'])
+    const scopedDeeper = scoped.scope(['sections', 4])
+    expect(scopedDeeper(['style'])).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio"`,
+    )
+  })
 })
