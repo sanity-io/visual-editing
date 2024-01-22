@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.6.1...presentation-v1.7.0) (2024-01-22)
+
+
+### Features
+
+* **presentation:** support create intent and document navigation ([#731](https://github.com/sanity-io/visual-editing/issues/731)) ([1579971](https://github.com/sanity-io/visual-editing/commit/157997105bf461e332a21972ee1853220db09f73))
+
 ## [1.6.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.6.0...presentation-v1.6.1) (2024-01-19)
 
 
