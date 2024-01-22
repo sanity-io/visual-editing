@@ -1,5 +1,5 @@
 import { PortableText } from '@portabletext/react'
-import { json, type LoaderFunction } from '@remix-run/node'
+import { json, type LoaderFunction } from '@vercel/remix'
 import { Link, useLoaderData } from '@remix-run/react'
 import { useQuery } from '@sanity/react-loader'
 import {

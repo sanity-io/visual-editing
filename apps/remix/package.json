@@ -4,12 +4,13 @@
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev --sourcemap",
+    "dev": "remix dev --sourcemap --manual",
     "start": "remix-serve ./build/index.js"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.11",
     "@remix-run/css-bundle": "^2.5.1",
+    "@remix-run/node": "^2.5.1",
     "@remix-run/react": "^2.5.1",
     "@sanity/channels": "workspace:*",
     "@sanity/image-url": "^1.0.2",

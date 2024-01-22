@@ -1,4 +1,4 @@
-import { json, type LinksFunction } from '@remix-run/node'
+import { json, type LinksFunction } from '@vercel/remix'
 import {
   Links,
   LiveReload,
