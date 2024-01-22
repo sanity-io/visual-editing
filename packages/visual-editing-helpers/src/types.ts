@@ -126,6 +126,14 @@ export interface LoaderPayloads {
     perspective: ClientPerspective
     documents: ContentSourceMapDocuments
   }
+  /**
+   * Experimental new event, may be removed at any time
+   */
+  'revalidate-tags': {
+    projectId: string
+    dataset: string
+    tags: [documentId: string, documentType: string, documentSlug?: string]
+  }
 }
 
 /**
@@ -152,6 +160,13 @@ export type LoaderMsg =
        */
       type: 'loader/documents'
       data: LoaderPayloads['documents']
+    }
+  | {
+      /**
+       * Experimental new event, may be removed at any time
+       */
+      type: 'loader/revalidate-tags'
+      data: LoaderPayloads['revalidate-tags']
     }
 
 /**

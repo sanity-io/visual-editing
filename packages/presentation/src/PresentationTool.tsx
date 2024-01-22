@@ -14,8 +14,10 @@ import {
   type VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
 import {
+  lazy,
   type ReactElement,
   startTransition,
+  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -39,7 +41,6 @@ import {
 } from './constants'
 import { ContentEditor } from './editor/ContentEditor'
 import { DisplayedDocumentBroadcasterProvider } from './loader/DisplayedDocumentBroadcaster'
-import LoaderQueries from './loader/LoaderQueries'
 import { Panel } from './panels/Panel'
 import { PanelResizer } from './panels/PanelResizer'
 import { Panels } from './panels/Panels'
@@ -59,6 +60,9 @@ import { useDocumentsOnPage } from './useDocumentsOnPage'
 import { useParams } from './useParams'
 import { usePreviewUrl } from './usePreviewUrl'
 
+const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
+const RevalidateTags = lazy(() => import('./loader/RevalidateTags'))
+
 const Container = styled(Flex)`
   overflow-x: auto;
 `
@@ -66,7 +70,11 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
-  const { previewUrl: _previewUrl, components } = props.tool.options ?? {}
+  const {
+    previewUrl: _previewUrl,
+    components,
+    unstable_emitExperimentalRevalidateTagsLoaderEvent,
+  } = props.tool.options ?? {}
   const name = props.tool.name || DEFAULT_TOOL_NAME
   const { unstable_navigator } = components || {}
 
@@ -479,13 +487,20 @@ export default function PresentationTool(props: {
         </PresentationNavigateProvider>
       </PresentationProvider>
       {channel && (
-        <LoaderQueries
-          channel={channel}
-          liveQueries={liveQueries}
-          perspective={perspective}
-          liveDocument={displayedDocument}
-          documentsOnPage={documentsOnPage}
-        />
+        <Suspense>
+          <LoaderQueries
+            channel={channel}
+            liveQueries={liveQueries}
+            perspective={perspective}
+            liveDocument={displayedDocument}
+            documentsOnPage={documentsOnPage}
+          />
+        </Suspense>
+      )}
+      {unstable_emitExperimentalRevalidateTagsLoaderEvent && channel && (
+        <Suspense>
+          <RevalidateTags channel={channel} />
+        </Suspense>
       )}
     </>
   )
