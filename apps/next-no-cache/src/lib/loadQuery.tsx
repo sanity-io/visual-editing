@@ -23,13 +23,13 @@ export async function loadQuery<QueryResponse>({
 
   const perspective = isDraftMode ? 'previewDrafts' : 'published'
   const options = {
-    // Disable the Data Cache for all requests, this opts out of build time cache
-    cache: 'no-store',
     filterResponse: true,
     resultSourceMap: isDraftMode ? 'withKeyArraySelector' : false,
     useCdn: !isDraftMode,
     token: isDraftMode ? token : undefined,
     perspective,
+    // Disable the Data Cache for all requests when in Draft Mode, otherwise it's 60 seconds like the API CDN TTL
+    next: { revalidate: isDraftMode ? 0 : 60 },
   } satisfies FilteredResponseQueryOptions
   return await client.fetch<QueryResponse>(query, params, {
     ...options,

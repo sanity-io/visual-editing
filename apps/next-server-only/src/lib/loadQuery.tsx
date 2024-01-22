@@ -54,8 +54,11 @@ export async function loadQuery<QueryResponse>({
     resultSourceMap: isDraftMode ? 'withKeyArraySelector' : false,
     token: isDraftMode ? token : undefined,
     perspective,
-    cache: 'force-cache',
-    next: { tags },
+    next: {
+      tags,
+      // Disable the Data Cache for all requests when in Draft Mode, otherwise it's cached until revalidateTag expires it
+      revalidate: isDraftMode ? 0 : false,
+    },
   } satisfies UnfilteredResponseQueryOptions
   const result = await client.fetch<QueryResponse>(query, params, {
     ...options,

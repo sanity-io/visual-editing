@@ -11,7 +11,6 @@ import { presentationTool } from '@sanity/presentation'
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from '@/lib/env'
 import { types } from '@/lib/sanity/schema'
-import { locate } from '@/lib/sanity/locate'
 
 const config = defineConfig({
   basePath: '/studio',
@@ -22,7 +21,6 @@ const config = defineConfig({
   plugins: [
     structureTool(),
     presentationTool({
-      locate,
       previewUrl: {
         draftMode: {
           enable: '/api/draft',
