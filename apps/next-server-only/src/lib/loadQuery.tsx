@@ -10,8 +10,7 @@ const DEFAULT_PARAMS = {} as QueryParams
 export async function loadQuery<QueryResponse>({
   query,
   params = DEFAULT_PARAMS,
-  // tags: _tags,
-  tags,
+  tags: _tags,
 }: {
   query: string
   params?: QueryParams
@@ -41,18 +40,18 @@ export async function loadQuery<QueryResponse>({
           // */
 
   const perspective = isDraftMode ? 'previewDrafts' : 'published'
-  /*
+  // /*
   const tags = isDraftMode
     ? _tags.map((tag) =>
         perspective === 'previewDrafts' ? `${perspective}:${tag}` : tag,
       )
     : _tags
-    // */
+  // */
 
   const options = {
     filterResponse: false,
+    useCdn: false,
     resultSourceMap: isDraftMode ? 'withKeyArraySelector' : false,
-    useCdn: !isDraftMode,
     token: isDraftMode ? token : undefined,
     perspective,
     cache: 'force-cache',
