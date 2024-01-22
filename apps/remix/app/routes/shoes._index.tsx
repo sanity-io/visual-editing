@@ -16,7 +16,7 @@ export default function ShoesPage() {
     data: products,
     error,
     loading,
-  } = useQuery<ShoesListResult>(shoesList, {}, { initial } as any)
+  } = useQuery<ShoesListResult>(shoesList, {}, { initial })
 
   if (error) {
     throw error

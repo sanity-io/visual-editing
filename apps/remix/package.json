@@ -4,19 +4,18 @@
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev --sourcemap"
+    "dev": "remix dev --sourcemap",
+    "start": "remix-serve ./build/index.js"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.11",
     "@remix-run/css-bundle": "^2.5.1",
-    "@remix-run/node": "^2.5.1",
     "@remix-run/react": "^2.5.1",
-    "@remix-run/vercel": "^1.19.3",
     "@sanity/channels": "workspace:*",
     "@sanity/image-url": "^1.0.2",
     "@sanity/overlays": "workspace:*",
     "@sanity/react-loader": "workspace:*",
-    "@vercel/node": "^3.0.17",
+    "@vercel/remix": "^2.0.0",
     "@vercel/stega": "0.1.0",
     "apps-common": "workspace:*",
     "isbot": "^4.4.0",
@@ -36,6 +35,6 @@
     "typescript": "^5.3.3"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   }
 }
