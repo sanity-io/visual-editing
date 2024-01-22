@@ -1,27 +1,22 @@
 import type { QueryParams } from 'next-sanity'
 import { draftMode } from 'next/headers'
-import dynamic from 'next/dynamic'
 import 'server-only'
 import { client } from './client'
-import { revalidateSecret, token } from './env'
+import { token } from './env'
 import { UnfilteredResponseQueryOptions } from '@sanity/client/stega'
 
 const DEFAULT_PARAMS = {} as QueryParams
-const DEFAULT_TAGS = [] as string[]
-
-const RevalidateQuery = dynamic(
-  () => import('@/components/VisualEditing/RevalidateQuery'),
-)
 
 export async function loadQuery<QueryResponse>({
   query,
   params = DEFAULT_PARAMS,
-  tags: _tags = DEFAULT_TAGS,
+  // tags: _tags,
+  tags,
 }: {
   query: string
   params?: QueryParams
   tags: string[]
-}): Promise<[QueryResponse, () => JSX.Element | null]> {
+}): Promise<QueryResponse> {
   const isDraftMode = draftMode().isEnabled
   if (isDraftMode && !token) {
     throw new Error(
@@ -45,9 +40,14 @@ export async function loadQuery<QueryResponse>({
           ) satisfies NextFetchRequestConfig['revalidate']
           // */
 
-  const { projectId, dataset } = client.config()
   const perspective = isDraftMode ? 'previewDrafts' : 'published'
-  const tags = isDraftMode ? _tags.map((tag) => `${perspective}:${tag}`) : _tags
+  /*
+  const tags = isDraftMode
+    ? _tags.map((tag) =>
+        perspective === 'previewDrafts' ? `${perspective}:${tag}` : tag,
+      )
+    : _tags
+    // */
 
   const options = {
     filterResponse: false,
@@ -55,30 +55,12 @@ export async function loadQuery<QueryResponse>({
     useCdn: !isDraftMode,
     token: isDraftMode ? token : undefined,
     perspective,
-    next: isDraftMode ? { tags } : { revalidate: 60 },
+    cache: 'force-cache',
+    next: { tags },
   } satisfies UnfilteredResponseQueryOptions
   const result = await client.fetch<QueryResponse>(query, params, {
     ...options,
     stega: isDraftMode,
   } as UnfilteredResponseQueryOptions)
-  return [
-    result.result,
-    function PreviewQuery() {
-      if (!draftMode().isEnabled) {
-        return null
-      }
-      return (
-        <RevalidateQuery
-          projectId={projectId!}
-          dataset={dataset!}
-          perspective={perspective}
-          query={query}
-          params={params}
-          data={result.result}
-          sourceMap={result.resultSourceMap!}
-          tags={tags}
-        />
-      )
-    },
-  ]
+  return result.result
 }

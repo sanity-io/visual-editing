@@ -7,15 +7,18 @@ import Balancer from 'react-wrap-balancer'
 const query = /* groq */ `*[_type == "author" && _id == $id][0]`
 
 export async function AuthorAvatar(params: { id: string }) {
-  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
+  const data = await loadQuery<any>({
     query,
     params,
-    tags: [`author:${params.id}`],
+    tags: [params.id],
   })
-  const { name = 'Anonymous', image } = data
+  const { name = 'Anonymous', image } = data ?? {}
   return (
     <>
-      <div className="flex items-center">
+      <div
+        className="flex items-center"
+        data-tags={JSON.stringify([params.id])}
+      >
         <div className="relative mr-4 h-12 w-12">
           <Image
             src={
@@ -33,8 +36,6 @@ export async function AuthorAvatar(params: { id: string }) {
           <Balancer>{name}</Balancer>
         </div>
       </div>
-      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
-      <RevalidatePreviewQuery />
     </>
   )
 }

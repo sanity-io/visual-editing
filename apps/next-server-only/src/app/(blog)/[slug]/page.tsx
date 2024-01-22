@@ -26,7 +26,7 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const [[post], [authorName]] = await Promise.all([
+  const [post, authorName] = await Promise.all([
     loadQuery<any>({ query, params, tags: [`post:${params.slug}`] }),
     // @TODO necessary as there's problems with type inference when `author-{name,image}` is used
     loadQuery<string | null>({
@@ -56,7 +56,7 @@ export async function generateMetadata(
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = params
-  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
+  const data = await loadQuery<any>({
     query,
     params,
     tags: [`post:${params.slug}`],
@@ -69,7 +69,7 @@ export default async function BlogPostPage({ params }: Props) {
   const { _id, title = 'Untitled', author, mainImage, body } = data ?? {}
   return (
     <>
-      <article>
+      <article data-tags={JSON.stringify([`post:${params.slug}`])}>
         <h1 className="mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
           <Balancer>{title}</Balancer>
         </h1>
@@ -106,8 +106,6 @@ export default async function BlogPostPage({ params }: Props) {
           <MoreStories skip={_id} limit={2} />
         </Suspense>
       </aside>
-      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
-      <RevalidatePreviewQuery />
     </>
   )
 }

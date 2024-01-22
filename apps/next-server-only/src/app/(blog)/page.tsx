@@ -10,7 +10,7 @@ import { postFields } from '@/lib/queries'
 import { loadQuery } from '@/lib/loadQuery'
 
 export default async function BlogIndexPage() {
-  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
+  const data = await loadQuery<any>({
     query: /* groq */ `
 *[_type == "post"] | order(publishedAt desc, _updatedAt desc) [0] {
   ${postFields}
@@ -23,7 +23,7 @@ export default async function BlogIndexPage() {
   return (
     <>
       {data && (
-        <article>
+        <article data-tags={JSON.stringify(['post'])}>
           <div className="mb-8 md:mb-16">
             <CoverImage slug={slug} title={title} image={mainImage} priority />
           </div>
@@ -67,8 +67,6 @@ export default async function BlogIndexPage() {
           </Suspense>
         </aside>
       )}
-      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
-      <RevalidatePreviewQuery />
     </>
   )
 }

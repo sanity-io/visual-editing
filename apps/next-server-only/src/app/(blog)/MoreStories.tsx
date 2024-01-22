@@ -15,7 +15,7 @@ export default async function MoreStories(params: {
   skip: string
   limit: number
 }) {
-  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
+  const data = await loadQuery<any>({
     query,
     params,
     tags: ['post'],
@@ -23,7 +23,10 @@ export default async function MoreStories(params: {
 
   return (
     <>
-      <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
+      <div
+        className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32"
+        data-tags={JSON.stringify(['post'])}
+      >
         {data.map((post: any) => {
           const {
             _id,
@@ -67,8 +70,6 @@ export default async function MoreStories(params: {
           )
         })}
       </div>
-      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
-      <RevalidatePreviewQuery />
     </>
   )
 }

@@ -4,7 +4,7 @@ import type {
   VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
 import { useEffect, useMemo } from 'react'
-import { useClient } from 'sanity'
+import { getPublishedId, useClient } from 'sanity'
 
 export interface RevalidateTagsProps {
   channel: ChannelsController<VisualEditingMsg> | undefined
@@ -45,11 +45,9 @@ export default function RevalidateTags(props: RevalidateTagsProps): null {
           const slug: string | undefined = update.result?.slug?.current
             ? `${type}:${update.result.slug.current}`
             : undefined
-          const tags = [update.documentId, type, slug!] satisfies [
-            string,
-            string,
-            string,
-          ]
+          const tags = [getPublishedId(update.documentId), type, slug!].filter(
+            Boolean,
+          ) as [string, string, string]
           channel.send('loaders', 'loader/revalidate-tags', {
             projectId: projectId!,
             dataset: dataset!,
