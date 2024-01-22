@@ -37,6 +37,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.3 to 0.2.4
 
+## [1.3.8](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.7...core-loader-v1.3.8) (2024-01-22)
+
+
+### Bug Fixes
+
+* **core-loader:** allow recursively calling encodeDataAttribute.scope ([#732](https://github.com/sanity-io/visual-editing/issues/732)) ([3d62bc6](https://github.com/sanity-io/visual-editing/commit/3d62bc62803fdfdce56b45e17a8f34d9f28c719e))
+
 ## [1.3.6](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.5...core-loader-v1.3.6) (2024-01-10)
 
 
