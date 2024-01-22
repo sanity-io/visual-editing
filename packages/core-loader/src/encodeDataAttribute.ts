@@ -62,27 +62,29 @@ export function defineEncodeDataAttribute<QueryResponseResult = unknown>(
   result: QueryResponseResult,
   sourceMap: ContentSourceMap | undefined,
   studioUrl: Exclude<StegaConfig['studioUrl'], undefined> | undefined,
+  basePath?: StudioPathLike,
 ): EncodeDataAttributeFunction {
+  const parse = (path?: StudioPathLike) => {
+    if (!path) return []
+    return typeof path === 'string' ? studioPath.fromString(path) : path
+  }
+
+  const parsedBasePath = parse(basePath)
+
   // This function should encode the given attribute based on the result, sourceMap, and studioUrl
-  const encodeDataAttributeImplementation = (path: StudioPathLike) => {
-    return encodeDataAttribute(result, sourceMap, studioUrl, path)
-  }
-
-  // The scope method creates a scoped version of encodeDataAttribute
-  encodeDataAttributeImplementation.scope = function (scope: StudioPathLike) {
-    const parsedScope =
-      typeof scope === 'string' ? studioPath.fromString(scope) : scope
-    return function (scopedPath: StudioPathLike) {
-      const parsedScopedPath =
-        typeof scopedPath === 'string'
-          ? studioPath.fromString(scopedPath)
-          : scopedPath
-      return encodeDataAttributeImplementation([
-        ...parsedScope,
-        ...parsedScopedPath,
-      ])
-    }
-  }
-
-  return encodeDataAttributeImplementation as EncodeDataAttributeFunction
+  return Object.assign(
+    (path: StudioPathLike) =>
+      encodeDataAttribute(result, sourceMap, studioUrl, [
+        ...parsedBasePath,
+        ...parse(path),
+      ]),
+    // The scope method creates a scoped version of encodeDataAttribute
+    {
+      scope: (scope: StudioPathLike) =>
+        defineEncodeDataAttribute(result, sourceMap, studioUrl, [
+          ...parsedBasePath,
+          ...parse(scope),
+        ]),
+    },
+  )
 }
