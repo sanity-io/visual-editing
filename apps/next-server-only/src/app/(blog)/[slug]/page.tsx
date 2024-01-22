@@ -8,9 +8,7 @@ import CoverImage from '../CoverImage'
 import MoreStories from '../MoreStories'
 import PostBody from '../PostBody'
 import PostDate from '../PostDate'
-import { client } from '@/lib/client'
 import { urlForImage } from '@/lib/image'
-import { sanityFetch } from '@/lib/fetch'
 import { postFields } from '@/lib/queries'
 import { loadQuery } from '@/lib/loadQuery'
 
@@ -41,7 +39,6 @@ export async function generateMetadata(
 
   return {
     authors: authorName ? [{ name: authorName }] : [],
-    metadataBase: new URL('http://groqsolid-nextjs-blog.sanity.build'),
     title: `${parentTitle} | ${post?.title}`,
     openGraph: {
       images: post?.mainImage?.asset?._ref

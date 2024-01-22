@@ -1,4 +1,3 @@
-import { sanityFetch } from '@/lib/fetch'
 import { urlForImage } from '@/lib/image'
 import { loadQuery } from '@/lib/loadQuery'
 import Image from 'next/image'
