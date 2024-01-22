@@ -63,11 +63,15 @@ export const createQueryStore = (
           ['stega' as string]: stega,
         },
       )
-    return {
-      data: result,
-      sourceMap: resultSourceMap,
-      perspective: perspective === 'previewDrafts' ? perspective : undefined,
+    const payload = resultSourceMap
+      ? { data: result, sourceMap: resultSourceMap }
+      : { data: result }
+    if (perspective === 'previewDrafts') {
+      // @ts-expect-error - update typings
+      return { ...payload, perspective }
     }
+    // @ts-expect-error - update typings
+    return payload
   }
 
   const useQuery: QueryStore['useQuery'] = () => {

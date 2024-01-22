@@ -72,7 +72,10 @@ export const createQueryStore = (
             useCdn: false,
           },
         )
-      return { data: result, sourceMap: resultSourceMap, perspective }
+      // @ts-expect-error - update typings
+      return resultSourceMap
+        ? { data: result, sourceMap: resultSourceMap, perspective }
+        : { data: result, perspective }
     }
     const { result, resultSourceMap } =
       await unstable__cache.fetch<QueryResponseResult>(
