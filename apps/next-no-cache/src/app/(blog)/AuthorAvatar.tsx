@@ -10,7 +10,7 @@ export async function AuthorAvatar(params: { id: string }) {
     query,
     params,
   })
-  const { name = 'Anonymous', image } = data
+  const { name = 'Anonymous', image } = data ?? {}
   return (
     <>
       <div className="flex items-center">

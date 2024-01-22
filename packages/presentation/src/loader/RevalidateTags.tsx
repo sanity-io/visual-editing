@@ -22,7 +22,7 @@ export default function RevalidateTags(props: RevalidateTagsProps): null {
 
       const subscription = client
         .listen(
-          '*',
+          '*[!(_type in path("system.**"))]',
           {},
           {
             events: ['mutation'],
@@ -33,17 +33,23 @@ export default function RevalidateTags(props: RevalidateTagsProps): null {
           },
         )
         .subscribe((update) => {
-          if (update.type !== 'mutation') {
+          if (update.type !== 'mutation' || update.transition === 'disappear') {
             return
           }
-          console.log('mutation', update)
+          const type = update.result?._type
+          if (!type) {
+            // eslint-disable-next-line no-console
+            console.warn('Type is missing, skipping revalidation', update)
+            return
+          }
           const slug: string | undefined = update.result?.slug?.current
-          const tags = [
-            update.documentId,
-            update.result!._type,
-            slug!,
-          ] satisfies [string, string, string]
-          console.log('tags', tags)
+            ? `${type}:${update.result.slug.current}`
+            : undefined
+          const tags = [update.documentId, type, slug!] satisfies [
+            string,
+            string,
+            string,
+          ]
           channel.send('loaders', 'loader/revalidate-tags', {
             projectId: projectId!,
             dataset: dataset!,

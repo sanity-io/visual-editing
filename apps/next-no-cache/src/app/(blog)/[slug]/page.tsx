@@ -8,9 +8,7 @@ import CoverImage from '../CoverImage'
 import MoreStories from '../MoreStories'
 import PostBody from '../PostBody'
 import PostDate from '../PostDate'
-import { client } from '@/lib/client'
 import { urlForImage } from '@/lib/image'
-import { sanityFetch } from '@/lib/fetch'
 import { postFields } from '@/lib/queries'
 import { loadQuery } from '@/lib/loadQuery'
 
@@ -26,13 +24,12 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const [[post], [authorName]] = await Promise.all([
-    loadQuery<any>({ query, params, tags: [`post:${params.slug}`] }),
+  const [post, authorName] = await Promise.all([
+    loadQuery<any>({ query, params }),
     // @TODO necessary as there's problems with type inference when `author-{name,image}` is used
     loadQuery<string | null>({
       query: /* groq */ `*[_type == "post" && slug.current == $slug][0].author->name`,
       params,
-      tags: [`post:${params.slug}`, 'author'],
     }),
   ])
   // optionally access and extend (rather than replace) parent metadata
@@ -41,7 +38,6 @@ export async function generateMetadata(
 
   return {
     authors: authorName ? [{ name: authorName }] : [],
-    metadataBase: new URL('http://groqsolid-nextjs-blog.sanity.build'),
     title: `${parentTitle} | ${post?.title}`,
     openGraph: {
       images: post?.mainImage?.asset?._ref
@@ -56,10 +52,9 @@ export async function generateMetadata(
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = params
-  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
+  const data = await loadQuery<any>({
     query,
     params,
-    tags: [`post:${params.slug}`],
   })
 
   if (!data) {
@@ -106,8 +101,6 @@ export default async function BlogPostPage({ params }: Props) {
           <MoreStories skip={_id} limit={2} />
         </Suspense>
       </aside>
-      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
-      <RevalidatePreviewQuery />
     </>
   )
 }

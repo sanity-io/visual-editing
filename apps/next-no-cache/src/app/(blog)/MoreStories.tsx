@@ -15,10 +15,9 @@ export default async function MoreStories(params: {
   skip: string
   limit: number
 }) {
-  const [data, RevalidatePreviewQuery] = await loadQuery<any>({
+  const data = await loadQuery<any>({
     query,
     params,
-    tags: ['post'],
   })
 
   return (
@@ -67,8 +66,6 @@ export default async function MoreStories(params: {
           )
         })}
       </div>
-      {/* When Draft Mode is enabled this component lets the Sanity Presentation Tool revalidate queries as content changes */}
-      <RevalidatePreviewQuery />
     </>
   )
 }
