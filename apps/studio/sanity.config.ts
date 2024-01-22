@@ -72,10 +72,9 @@ function definePreviewUrl(
 }
 
 const presentationWorkspaces = Object.entries({
-  // @TODO make the remix build functional again
-  // remix:
-  // process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
-  // 'http://localhost:3000/shoes',
+  remix:
+    process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
+    'http://localhost:3000/shoes',
   next: {
     'app-router':
       process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL ||
