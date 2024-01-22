@@ -3,10 +3,6 @@ import ShoesPageClient from './page.client'
 import { loadQuery } from './sanity.ssr'
 
 export default async function ShoesPage() {
-  const initial = loadQuery<ShoesListResult>(
-    shoesList,
-    {},
-    { next: { tags: ['shoe', 'brandReference'] } },
-  )
+  const initial = await loadQuery<ShoesListResult>(shoesList, {})
   return <ShoesPageClient initial={initial} />
 }

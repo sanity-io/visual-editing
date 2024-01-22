@@ -24,6 +24,7 @@ setServerClient(
 
 // Automatically handle draft mode
 export const loadQuery = ((query, params = {}, options = {}) => {
+  const isDraftMode = draftMode().isEnabled
   const perspective =
     options.perspective || draftMode().isEnabled ? 'previewDrafts' : 'published'
   return _loadQuery(query, params, {
@@ -32,5 +33,6 @@ export const loadQuery = ((query, params = {}, options = {}) => {
     stega:
       process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview' ||
       perspective === 'previewDrafts',
+    next: { revalidate: isDraftMode ? 0 : 60 },
   })
 }) satisfies typeof _loadQuery

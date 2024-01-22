@@ -9,11 +9,11 @@ import { use } from 'react'
 import { QueryResponseInitial, useQuery } from '@sanity/react-loader'
 
 type Props = {
-  initial: Promise<QueryResponseInitial<ShoesListResult>>
+  initial: QueryResponseInitial<ShoesListResult>
 }
 
 export default function ShoesPageClient(props: Props) {
-  const initial = use(props.initial)
+  const { initial } = props
   const {
     data: products,
     error,
