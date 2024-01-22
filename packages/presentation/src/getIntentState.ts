@@ -1,3 +1,4 @@
+import { uuid } from '@sanity/uuid'
 import { getPublishedId } from 'sanity'
 import { SearchParam } from 'sanity/router'
 
@@ -21,6 +22,14 @@ export function getIntentState(
       type: type || '*',
       id: getPublishedId(id),
       path,
+      _searchParams: Object.entries(searchParams),
+    }
+  }
+  if (intent === 'create') {
+    searchParams.preview = searchParams.preview || '/'
+    return {
+      type: type || '*',
+      id: id || uuid(),
       _searchParams: Object.entries(searchParams),
     }
   }
