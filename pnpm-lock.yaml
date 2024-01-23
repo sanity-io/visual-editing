@@ -267,6 +267,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.2.18
+      '@vercel/speed-insights':
+        specifier: ^1.0.7
+        version: 1.0.7(next@14.1.1-canary.6)(react@18.2.0)(svelte@4.2.9)
       apps-common:
         specifier: workspace:*
         version: link:../common
@@ -379,6 +382,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.2.18
+      '@vercel/speed-insights':
+        specifier: ^1.0.7
+        version: 1.0.7(next@14.1.1-canary.6)(react@18.2.0)(svelte@4.2.9)
       apps-common:
         specifier: workspace:*
         version: link:../common
@@ -6650,6 +6656,35 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - typescript
+    dev: false
+
+  /@vercel/speed-insights@1.0.7(next@14.1.1-canary.6)(react@18.2.0)(svelte@4.2.9):
+    resolution: {integrity: sha512-1XYZO/OlrAco8QPoXXIOPoMrj0O+slB9k6poRo1drQJ+DWTbdUUT18Mtm4ybA8KMj4mGEMEgbw0BKR/yq/VPhA==}
+    requiresBuild: true
+    peerDependencies:
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19
+      svelte: ^4
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
+    dependencies:
+      next: 14.1.1-canary.6(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      svelte: 4.2.9
     dev: false
 
   /@vercel/stega@0.1.0:
