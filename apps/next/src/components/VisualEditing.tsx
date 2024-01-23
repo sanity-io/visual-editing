@@ -47,16 +47,16 @@ export default function VisualEditing() {
   }, [navigate, router.asPath])
 
   useLiveMode({ client: stegaClient })
-  useEffect(() => {
-    if (
-      process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview' &&
-      window === parent &&
-      !opener
-    ) {
-      // If not an iframe, turn off Draft Mode
-      location.href = '/api/disable-pages-draft'
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (
+  //     process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview' &&
+  //     window === parent &&
+  //     !opener
+  //   ) {
+  //     // If not an iframe, turn off Draft Mode
+  //     location.href = '/api/disable-pages-draft'
+  //   }
+  // }, [])
 
   return null
 }
