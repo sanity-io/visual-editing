@@ -2,9 +2,10 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useQuery } from '@sanity/react-loader'
 import Link from 'next/link'
 import { ClientStegaConfig, createClient } from '@sanity/client/stega'
-import { workspaces } from 'apps-common/env'
+import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 
-const { projectId, dataset } = workspaces['next-pages-router']
+const { projectId, dataset, workspace } = workspaces['next-pages-router']
+const studioUrl = `${baseUrl}/${workspace}`
 
 const sanityToken = process.env.SANITY_API_READ_TOKEN
 
@@ -12,7 +13,13 @@ function createSanityClient(config: ClientStegaConfig) {
   return createClient({
     projectId,
     dataset,
-    apiVersion: '2023-06-21',
+    apiVersion,
+    stega: {
+      studioUrl: ({ _dataset }) =>
+        _dataset === workspaces['cross-dataset-references'].dataset
+          ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
+          : studioUrl,
+    },
     ...config,
   })
 }
@@ -34,7 +41,10 @@ export const getStaticProps = (async (context) => {
   const { query, params } = getPageQuery('ISSUE-BUILDING')
   const client = draftMode ? sanityClient : cdnSanityClient
 
-  const data = await client.fetch(query, params)
+  const data = await client.fetch(query, params, {
+    // @ts-expect-error -- this is supported but the client typings doesn't work
+    stega: draftMode ? true : false,
+  })
 
   return {
     props: { data, query, params, draftMode },
