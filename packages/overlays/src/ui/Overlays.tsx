@@ -118,9 +118,9 @@ export const Overlays: FunctionComponent<{
 
   useEffect(() => {
     if (overlayEnabled) {
-      controller?.activate()
+      controller.current?.activate()
     } else {
-      controller?.deactivate()
+      controller.current?.deactivate()
     }
   }, [channel, controller, overlayEnabled])
 

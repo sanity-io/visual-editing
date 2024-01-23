@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { MutableRefObject, useEffect, useRef } from 'react'
 
 import { createOverlayController } from '../controller'
 import { OverlayController, OverlayEventHandler } from '../types'
@@ -11,7 +11,7 @@ export function useController(
   element: HTMLElement | null,
   handler: OverlayEventHandler,
   preventDefault: boolean,
-): OverlayController | undefined {
+): MutableRefObject<OverlayController | undefined> {
   const overlayController = useRef<OverlayController | undefined>()
 
   useEffect(() => {
@@ -25,8 +25,9 @@ export function useController(
 
     return () => {
       overlayController.current?.deactivate()
+      overlayController.current = undefined
     }
   }, [element, handler, preventDefault])
 
-  return overlayController.current
+  return overlayController
 }
