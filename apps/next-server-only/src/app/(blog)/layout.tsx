@@ -11,8 +11,6 @@ const PresentationToolBridge = dynamic(
   () => import('@/components/VisualEditing/PresentationToolBridge'),
 )
 
-export const runtime = 'edge'
-
 export default function BlogLayout({
   children,
 }: {
