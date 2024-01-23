@@ -1012,8 +1012,8 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
       framer-motion:
-        specifier: ^10.18.0
-        version: 10.18.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^11.0.2
+        version: 11.0.2(react-dom@18.2.0)(react@18.2.0)
       lodash.isequal:
         specifier: ^4.5.0
         version: 4.5.0
@@ -8210,7 +8210,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-    bundledDependencies: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
@@ -10018,6 +10017,24 @@ packages:
       tslib: 2.6.2
     optionalDependencies:
       '@emotion/is-prop-valid': 0.8.8
+
+  /framer-motion@11.0.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-bLVO4kDavsfzXIObZ6Smzn2119nOiwI0mj99aQpY+3RbNAWR1mm9EiIWYETSbUrIZ8Ij5pPlZqbAwnKj43CKbw==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.6.2
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
+    dev: false
 
   /fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
