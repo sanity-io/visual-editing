@@ -151,8 +151,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/channels
       '@sanity/client':
-        specifier: 6.11.3-canary.0
-        version: 6.11.3-canary.0
+        specifier: ^6.11.1
+        version: 6.11.1
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -5414,18 +5414,6 @@ packages:
       rxjs: 7.8.1
     transitivePeerDependencies:
       - supports-color
-
-  /@sanity/client@6.11.3-canary.0:
-    resolution: {integrity: sha512-cM3yd3t7/0e4VhZyUA9i/Tbx3cxyI/CxXSUZvJuJ+aHTrSMGp0xRt6x3Lx3ydCIky4p6e2VDnVQskt9tXjfqhw==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sanity/eventsource': 5.0.1
-      '@vercel/stega': 0.1.0
-      get-it: 8.4.5
-      rxjs: 7.8.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /@sanity/color@2.2.5:
     resolution: {integrity: sha512-tTi22KoKuER3sldXYl4c1Dq2zU7tMLDkljFiaUKVkBbu4PBvRGCFw75kXZnD2b4Bsp6vin+7sI+AKdCKRhfRuw==}
