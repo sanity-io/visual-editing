@@ -82,7 +82,7 @@ importers:
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       prettier:
         specifier: 3.2.4
         version: 3.2.4
@@ -810,7 +810,7 @@ importers:
         version: 6.11.2
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.4
         version: link:../visual-editing-helpers
@@ -862,7 +862,7 @@ importers:
         version: 6.11.2
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.4
         version: link:../visual-editing-helpers
@@ -944,7 +944,7 @@ importers:
         version: link:../channels
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.4
         version: link:../visual-editing-helpers
@@ -1038,7 +1038,7 @@ importers:
         version: 6.11.2
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@sanity/ui':
         specifier: 2.0.1
         version: 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
@@ -1077,7 +1077,7 @@ importers:
         version: 6.11.2
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.4
         version: link:../visual-editing-helpers
@@ -1129,7 +1129,7 @@ importers:
         version: 2.8.0(react@18.2.0)
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.19.1
         version: 6.19.1(@typescript-eslint/parser@6.19.1)(eslint@8.56.0)(typescript@5.3.3)
@@ -1175,7 +1175,7 @@ importers:
         version: 6.11.2
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.4
         version: link:../visual-editing-helpers
@@ -1227,7 +1227,7 @@ importers:
         version: 6.11.2
       '@sanity/pkg-utils':
         specifier: ^4.0.0
-        version: 4.0.0(typescript@5.3.3)
+        version: 4.1.0(typescript@5.3.3)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.4
         version: link:../visual-editing-helpers
@@ -4499,6 +4499,10 @@ packages:
       get-random-values-esm: 1.0.0
       lodash: 4.17.21
 
+  /@sanity/browserslist-config@1.0.0:
+    resolution: {integrity: sha512-x9ref+iMpIHs299lRiScNz15IrsiGsM22kklToFHXtOxzmLXlD5m2AD0AOZP5uh4fn0Mu1Ex9ewn44Tr9HI7qA==}
+    dev: true
+
   /@sanity/cli@3.26.0:
     resolution: {integrity: sha512-9oxTqZeFXYIBQCi2gsQPPr3JSuIQ1y/fAxNDUWgsncsyNNM41J1Q2HeyOmw/cWyx+XwAlXcrUml++66wT/TAPQ==}
     engines: {node: '>=18'}
@@ -4673,8 +4677,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/pkg-utils@4.0.0(typescript@5.3.3):
-    resolution: {integrity: sha512-WJDeFz/sIXA09RtyjCBtdRdW9tVgGGYhXnJyN57LZ4VmfD6E+Gy75yPNgD80rYVSWo/dtDwHmqeVIsWjxpI1PQ==}
+  /@sanity/pkg-utils@4.1.0(typescript@5.3.3):
+    resolution: {integrity: sha512-jdg5w9PCBYN6UQWV1630HDrXGfhld785d6XWGgGhYO+gMNB0R0gs8Si2lzvi7KYzHv7Ff/gOy+vAm63WVoXBvA==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -4691,6 +4695,7 @@ packages:
       '@rollup/plugin-node-resolve': 15.2.3(rollup@4.9.6)
       '@rollup/plugin-replace': 5.0.5(rollup@4.9.6)
       '@rollup/plugin-terser': 0.4.4(rollup@4.9.6)
+      '@sanity/browserslist-config': 1.0.0
       browserslist: 4.22.2
       cac: 6.7.14
       chalk: 4.1.2
