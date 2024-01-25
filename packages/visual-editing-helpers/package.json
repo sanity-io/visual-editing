@@ -57,10 +57,7 @@
     "test": "vitest --pass-with-no-tests --typecheck",
     "watch": "pkg watch --strict"
   },
-  "browserslist": [
-    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
-    "maintained node versions"
-  ],
+  "browserslist": "extends @sanity/browserslist-config",
   "prettier": {
     "plugins": [
       "prettier-plugin-packagejson"

@@ -45,10 +45,7 @@
     "test": "vitest --pass-with-no-tests --typecheck",
     "watch": "pkg watch --strict"
   },
-  "browserslist": [
-    "> 0.2% and last 2 versions and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
-    "maintained node versions"
-  ],
+  "browserslist": "extends @sanity/browserslist-config",
   "prettier": {
     "plugins": [
       "prettier-plugin-packagejson"
@@ -128,7 +125,7 @@
   },
   "devDependencies": {
     "@sanity/channels": "0.4.0",
-    "@sanity/pkg-utils": "^4.0.0",
+    "@sanity/pkg-utils": "^4.1.0",
     "@sanity/visual-editing-helpers": "0.2.4",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
