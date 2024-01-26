@@ -55,12 +55,12 @@ export const createQueryStore = (
         query,
         params,
         {
-          cache: cache ?? next ? undefined : 'no-store',
+          cache: cache ?? next ? undefined : ('no-store' as any),
           filterResponse: false,
           next,
           perspective,
           useCdn: perspective === 'previewDrafts' ? false : useCdn,
-          ['stega' as string]: stega,
+          stega,
         },
       )
     const payload = resultSourceMap
