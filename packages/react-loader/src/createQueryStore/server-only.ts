@@ -38,7 +38,8 @@ export const createQueryStore = (
       _options.perspective ||
       unstable__serverClient.instance?.config().perspective ||
       'published'
-    const useCdn = _options.useCdn || unstable__serverClient.instance!.config().useCdn
+    const useCdn =
+      _options.useCdn || unstable__serverClient.instance!.config().useCdn
 
     if (
       perspective === 'previewDrafts' &&
