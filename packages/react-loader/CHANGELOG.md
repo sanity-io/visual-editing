@@ -59,6 +59,30 @@
   * dependencies
     * @sanity/core-loader bumped from 1.3.7 to 1.3.8
 
+## [1.8.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.7.6...react-loader-v1.8.0) (2024-01-26)
+
+
+### Features
+
+* add option to use cdn in loadquery ([#762](https://github.com/sanity-io/visual-editing/issues/762)) ([f77b64e](https://github.com/sanity-io/visual-editing/commit/f77b64ec14ea62bf4dd87bf8a5e18363aec0a1ce))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.11.2 ([#745](https://github.com/sanity-io/visual-editing/issues/745)) ([7f24dd6](https://github.com/sanity-io/visual-editing/commit/7f24dd64c3e1147c77b8b92a7ca5635f2bde4b39))
+* **deps:** update dependency @sanity/client to ^6.11.3 ([#755](https://github.com/sanity-io/visual-editing/issues/755)) ([148ce5a](https://github.com/sanity-io/visual-editing/commit/148ce5acad111fe885a2d21662e0e1d61094916a))
+* **deps:** update dependency @sanity/client to ^6.12.1 ([782f51e](https://github.com/sanity-io/visual-editing/commit/782f51ede5b3d1f0cc996dbe8636bbe127518a36))
+* don't serialize `initial` with `undefined` values ([10c5ff7](https://github.com/sanity-io/visual-editing/commit/10c5ff7946f71e43358b656a5b99aeee3814c6af))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.8 to 1.3.9
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.4 to 0.2.5
+
 ## [1.7.4](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.7.3...react-loader-v1.7.4) (2024-01-10)
 
 

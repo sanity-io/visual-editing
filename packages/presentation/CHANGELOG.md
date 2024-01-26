@@ -1,6 +1,27 @@
 # Changelog
 
 
+## [1.7.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.0...presentation-v1.7.1) (2024-01-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.11.2 ([#745](https://github.com/sanity-io/visual-editing/issues/745)) ([7f24dd6](https://github.com/sanity-io/visual-editing/commit/7f24dd64c3e1147c77b8b92a7ca5635f2bde4b39))
+* **deps:** update dependency @sanity/client to ^6.11.3 ([#755](https://github.com/sanity-io/visual-editing/issues/755)) ([148ce5a](https://github.com/sanity-io/visual-editing/commit/148ce5acad111fe885a2d21662e0e1d61094916a))
+* **deps:** Update dependency framer-motion to ^11.0.3 ([#749](https://github.com/sanity-io/visual-editing/issues/749)) ([3a7c41d](https://github.com/sanity-io/visual-editing/commit/3a7c41d000f828e9cc7191db5f64235ff9865b7e))
+* **deps:** Update dependency framer-motion to v11 ([#742](https://github.com/sanity-io/visual-editing/issues/742)) ([30ea61f](https://github.com/sanity-io/visual-editing/commit/30ea61f6b68d715797edb8f05d964ca01ce4cce4))
+* **deps:** Update dependency mendoza to v3.0.4 ([#760](https://github.com/sanity-io/visual-editing/issues/760)) ([b1e96ab](https://github.com/sanity-io/visual-editing/commit/b1e96ab3688dab9210c11b88ee5ee6d0fb1f79cc))
+* **deps:** Update sanity monorepo to ^3.26.1 ([#772](https://github.com/sanity-io/visual-editing/issues/772)) ([6e4b171](https://github.com/sanity-io/visual-editing/commit/6e4b17158fd6f98bfeab0752097698dd2c121606))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.5.3 to ^1.5.4
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.4 to 0.2.5
+
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.6.1...presentation-v1.7.0) (2024-01-22)
 
 
