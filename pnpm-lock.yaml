@@ -105,8 +105,8 @@ importers:
   apps/common:
     dependencies:
       '@sanity/icons':
-        specifier: ^2.8.0
-        version: 2.8.0(react@18.2.0)
+        specifier: ^2.10.0
+        version: 2.10.0(react@18.2.0)
       '@sanity/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -229,8 +229,8 @@ importers:
         specifier: ^6.11.3
         version: 6.11.3
       '@sanity/icons':
-        specifier: ^2.8.0
-        version: 2.8.0(react@18.2.0)
+        specifier: ^2.10.0
+        version: 2.10.0(react@18.2.0)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -269,7 +269,7 @@ importers:
         version: 18.2.18
       '@vercel/speed-insights':
         specifier: ^1.0.8
-        version: 1.0.8(next@14.1.1-canary.10)(react@18.2.0)(svelte@4.2.9)
+        version: 1.0.8(next@14.1.1-canary.14)(react@18.2.0)(svelte@4.2.9)
       apps-common:
         specifier: workspace:*
         version: link:../common
@@ -286,11 +286,11 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
       next:
-        specifier: 14.1.1-canary.10
-        version: 14.1.1-canary.10(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.1.1-canary.14
+        version: 14.1.1-canary.14(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
       next-sanity:
-        specifier: ^7.0.13
-        version: 7.0.13(@sanity/client@6.11.3)(@sanity/icons@2.8.0)(@sanity/types@3.26.0)(@sanity/ui@2.0.1)(next@14.1.1-canary.10)(react@18.2.0)(sanity@3.26.0)(styled-components@6.1.8)
+        specifier: ^7.0.14
+        version: 7.0.14(@sanity/client@6.11.3)(@sanity/icons@2.10.0)(@sanity/types@3.26.0)(@sanity/ui@2.0.1)(next@14.1.1-canary.14)(react@18.2.0)(sanity@3.26.0)(styled-components@6.1.8)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -314,8 +314,8 @@ importers:
         version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@next/bundle-analyzer':
-        specifier: 14.1.1-canary.10
-        version: 14.1.1-canary.10
+        specifier: 14.1.1-canary.14
+        version: 14.1.1-canary.14
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -344,8 +344,8 @@ importers:
         specifier: ^6.11.3
         version: 6.11.3
       '@sanity/icons':
-        specifier: ^2.8.0
-        version: 2.8.0(react@18.2.0)
+        specifier: ^2.10.0
+        version: 2.10.0(react@18.2.0)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -384,7 +384,7 @@ importers:
         version: 18.2.18
       '@vercel/speed-insights':
         specifier: ^1.0.8
-        version: 1.0.8(next@14.1.1-canary.10)(react@18.2.0)(svelte@4.2.9)
+        version: 1.0.8(next@14.1.1-canary.14)(react@18.2.0)(svelte@4.2.9)
       apps-common:
         specifier: workspace:*
         version: link:../common
@@ -401,11 +401,11 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
       next:
-        specifier: 14.1.1-canary.10
-        version: 14.1.1-canary.10(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.1.1-canary.14
+        version: 14.1.1-canary.14(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
       next-sanity:
-        specifier: ^7.0.13
-        version: 7.0.13(@sanity/client@6.11.3)(@sanity/icons@2.8.0)(@sanity/types@3.26.0)(@sanity/ui@2.0.1)(next@14.1.1-canary.10)(react@18.2.0)(sanity@3.26.0)(styled-components@6.1.8)
+        specifier: ^7.0.14
+        version: 7.0.14(@sanity/client@6.11.3)(@sanity/icons@2.10.0)(@sanity/types@3.26.0)(@sanity/ui@2.0.1)(next@14.1.1-canary.14)(react@18.2.0)(sanity@3.26.0)(styled-components@6.1.8)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -429,8 +429,8 @@ importers:
         version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@next/bundle-analyzer':
-        specifier: 14.1.1-canary.10
-        version: 14.1.1-canary.10
+        specifier: 14.1.1-canary.14
+        version: 14.1.1-canary.14
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -718,10 +718,10 @@ importers:
         version: link:../../packages/svelte-loader
       '@sveltejs/adapter-auto':
         specifier: ^3.1.1
-        version: 3.1.1(@sveltejs/kit@2.4.3)
+        version: 3.1.1(@sveltejs/kit@2.5.0)
       '@sveltejs/kit':
-        specifier: ^2.4.3
-        version: 2.4.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.12)
+        specifier: ^2.5.0
+        version: 2.5.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.12)
       '@sveltejs/vite-plugin-svelte':
         specifier: ^3.0.1
         version: 3.0.1(svelte@4.2.9)(vite@5.0.12)
@@ -998,7 +998,7 @@ importers:
     dependencies:
       '@sanity/icons':
         specifier: ^2.8.0
-        version: 2.8.0(react@18.2.0)
+        version: 2.10.0(react@18.2.0)
       '@sanity/preview-url-secret':
         specifier: ^1.5.3
         version: link:../preview-url-secret
@@ -1126,7 +1126,7 @@ importers:
         version: 6.11.3
       '@sanity/icons':
         specifier: ^2.8.0
-        version: 2.8.0(react@18.2.0)
+        version: 2.10.0(react@18.2.0)
       '@sanity/pkg-utils':
         specifier: ^4.1.0
         version: 4.1.0(typescript@5.3.3)
@@ -2877,8 +2877,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@next/bundle-analyzer@14.1.1-canary.10:
-    resolution: {integrity: sha512-/ZiVLKzAYBmo4LgC3Xj1yFKNAUMW2svquLuDkJris79M0g+kGZgP8KMHXOEKfg5Q4KrDhH0xzX/zjNPrWTUqog==}
+  /@next/bundle-analyzer@14.1.1-canary.14:
+    resolution: {integrity: sha512-OGSXqCFu/njCldkgmWKsEazHvpnF+amSJ79NSrUpd911VBT8WPhkYmRH6WxnLMhd3Bu4P7Ds8CaLKzl3MNJryQ==}
     dependencies:
       webpack-bundle-analyzer: 4.10.1
     transitivePeerDependencies:
@@ -2890,8 +2890,8 @@ packages:
     resolution: {integrity: sha512-Py8zIo+02ht82brwwhTg36iogzFqGLPXlRGKQw5s+qP/kMNc4MAyDeEwBKDijk6zTIbegEgu8Qy7C1LboslQAw==}
     dev: false
 
-  /@next/env@14.1.1-canary.10:
-    resolution: {integrity: sha512-R0HRDq7tmwO0tdAgpdb1f5S71G6ZMI5ex/WbChPzqu8VFpFBn9+teEFJIXi/qLXTmsSIeC90XP/NfvPQLHrhBw==}
+  /@next/env@14.1.1-canary.14:
+    resolution: {integrity: sha512-6IMTxqrw8+FN4iQtJLHLxlHysHjISkyoa4r53vEAndd7F3fikws+KYdpFSnx02W/zjHJN1Bh1+A9tlr+vmYC5A==}
     dev: false
 
   /@next/eslint-plugin-next@14.1.0:
@@ -2908,8 +2908,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-darwin-arm64@14.1.1-canary.10:
-    resolution: {integrity: sha512-qvIdWRJLnmkZjOO1ZLedYzuBFObu9zuFSO3DLB61yJIqwyu6GAYsajOo2wLOkBfveh8aBpqFGemkh16eTaUwrQ==}
+  /@next/swc-darwin-arm64@14.1.1-canary.14:
+    resolution: {integrity: sha512-d/f2Hc8GtyBPrz5lY0CEEq+4o91HixzIw8hg3B0l8Jxtx8f9jYUdeLQNmKZWt1/wcInN4TorBgIJAEXuBJyxWg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -2926,8 +2926,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-darwin-x64@14.1.1-canary.10:
-    resolution: {integrity: sha512-hN2xG6ExuGN6CdWzuihpouEetWBUmhfs0Im8W5NJw0MB+5CqGkomeWfdgTNhlzmOU5pYO5oOmZdy4uqoGdSz4g==}
+  /@next/swc-darwin-x64@14.1.1-canary.14:
+    resolution: {integrity: sha512-twZV8VLoxFON8huiJ+eEKW/TB5jT34t6848nTRX7QqD0qBvy1etS++9XzisvOhWzjat4t37QLxc1YvrYEw24Zg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -2944,8 +2944,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-gnu@14.1.1-canary.10:
-    resolution: {integrity: sha512-JZzmfTr5I/8xSMPH9Sx+ayKVKr/XOzRnLijEKm4bPeQz19eU/CR2LWP3zyabHJ77CrZf5P9Yzvuhd6Il2tSKtg==}
+  /@next/swc-linux-arm64-gnu@14.1.1-canary.14:
+    resolution: {integrity: sha512-QGQSSJoLEf+eRmAWHKN89y8/fT/XyQHnNghzrbpYm//6kmYrVUGKxNZVZqbTPXep/vphWAUmUwrRAisJ1hExGg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2962,8 +2962,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-musl@14.1.1-canary.10:
-    resolution: {integrity: sha512-80p5bCoHWAOZPibALpqC4KQzfQW6h4oMCzDgFPCBFP5uN1e8/3bWjGzgcCDW90wotgkRZFsRPHtGGjPBmyWyFw==}
+  /@next/swc-linux-arm64-musl@14.1.1-canary.14:
+    resolution: {integrity: sha512-iENCcig692XHRvBhAauDjuqi/+iuuxstjRY2NHIf3xanFJyrQuF6p+rZa4rQIRYT8URsNOWLlHVTYtT0BaeajA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2980,8 +2980,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-gnu@14.1.1-canary.10:
-    resolution: {integrity: sha512-+5YznnUisQ36TyW5lYq4QaHZ9CaD6lDI3gMdhnlsb1hHtN307A3M/IsSkEbQOosWd4nZ2kchSa8UBjk0V3EkKA==}
+  /@next/swc-linux-x64-gnu@14.1.1-canary.14:
+    resolution: {integrity: sha512-8Kd5z2Rs1l4n3WqVNZl+2e0wHF9rfmO2wbMQ/AqRg5sh1ZUqQm8X/r3mNQIaKU2tPNtGlFpFCXWp7ecsRVBqJQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -2998,8 +2998,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-musl@14.1.1-canary.10:
-    resolution: {integrity: sha512-zTz0SdMfT6O1pOsaNFvbYEvfboRSAwquiAij/Tr6YsDw6uuGi2JfDNt5lWh/esMSMwp0SLm4F/c4/PlRdcGkrw==}
+  /@next/swc-linux-x64-musl@14.1.1-canary.14:
+    resolution: {integrity: sha512-rK1eOmR3L9y5IZIYoenbGou7MPOMZ/SMoqVYWjQaS6mPdidGswOdigXmi3gQDWP/ChiEjgZg4/8S3s+rKPnXxQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -3016,8 +3016,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-arm64-msvc@14.1.1-canary.10:
-    resolution: {integrity: sha512-v/5gF0XOWn3AjOyDW09XPnYnBU7nQ4ZLQiy/SE2NU38eiH91W7lQJyB+SuDKhxRtWc9CzDYva0b9LUb2mk2L4A==}
+  /@next/swc-win32-arm64-msvc@14.1.1-canary.14:
+    resolution: {integrity: sha512-bPLy7xOK2SyR5P0rHwQSQ820gxTIL5hHazRGAGAiJMDLjCV4lwd/FEOFEGNAoyMzAh4XIfRm4boG2X5RwLx3Tg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -3034,8 +3034,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-ia32-msvc@14.1.1-canary.10:
-    resolution: {integrity: sha512-/aRyU9mWSCcvEezmJx8uLYll2OUWazRMWtGRt2L00QThlU2Ne+W9k18Gj0ToMaACnJlM7FmPvF1+fzwgxG97mg==}
+  /@next/swc-win32-ia32-msvc@14.1.1-canary.14:
+    resolution: {integrity: sha512-w3Qwnvu3W3dysfr7VH9A7SuptMWQ4Tk5C2H/PlKxGolJ+ngjIlhI8KA0ZYeFHJG8UKSPy/Dfw0JYh/2ftSRGYA==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
@@ -3052,8 +3052,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-x64-msvc@14.1.1-canary.10:
-    resolution: {integrity: sha512-gJ0xHSoNk7LF0j5vCtATJNzglwukb6DdBqhEvoyRK6yDYkDH7jNMNOJlA6b+P+l8eCzXMQcKFD6t50rl/3W3iw==}
+  /@next/swc-win32-x64-msvc@14.1.1-canary.14:
+    resolution: {integrity: sha512-zvRU2MdbBgcf0ejps06YMlvZ9QwrU2pg2/Tm4JxdpGA+226J9eivXLkY+OfAiO+KT1EpJ6wDTIhG5M21y8Tf4Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -4472,7 +4472,7 @@ packages:
       sanity: ^3.26.0
       styled-components: 6.1.8
     dependencies:
-      '@sanity/icons': 2.8.0(react@18.2.0)
+      '@sanity/icons': 2.10.0(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
       '@sanity/ui': 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       date-fns: 2.30.0
@@ -4593,6 +4593,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@sanity/icons@2.10.0(react@18.2.0):
+    resolution: {integrity: sha512-aroxPAPxjuIViRqd7ZVy6Trr8iEV+N9S+dw94HwEWVBk+F8XTaWUcDifDEPvUQr0LhwZqylzzEW9kVIJJpNngg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: ^18
+    dependencies:
+      react: 18.2.0
+
   /@sanity/icons@2.8.0(react@18.2.0):
     resolution: {integrity: sha512-Q8aKg+KPJPDLDR+beYZhtB3gYdq7zIyZQZ6HjaB/63KuidHzkIFuhVv8JS/rJNwWOn5lTuzmd+L/+U/Pv3klWw==}
     engines: {node: '>=14.0.0'}
@@ -4600,6 +4608,7 @@ packages:
       react: ^18
     dependencies:
       react: 18.2.0
+    dev: false
 
   /@sanity/image-url@1.0.2:
     resolution: {integrity: sha512-C4+jb2ny3ZbMgEkLd7Z3C75DsxcTEoE+axXQJsQ75ou0AKWGdVsP351hqK6mJUUxn5HCSlu3vznoh7Yljye4cQ==}
@@ -4764,8 +4773,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@sanity/preview-kit@5.0.12(@sanity/client@6.11.3)(react@18.2.0):
-    resolution: {integrity: sha512-5Kg3n+wB1Cd1U3raHDn5E6GXHilIB2J7AK2Y2FRkCNlVC/5bjrcHJCR35zrNf3Mj0v3AcbYprqEFy9JkLMa94g==}
+  /@sanity/preview-kit@5.0.13(@sanity/client@6.11.3)(react@18.2.0):
+    resolution: {integrity: sha512-71xpIBPE6VlkIj68Wc1L5op/1E53dgFMA900End6xNALgqswXIggdvypjAQn2dFTuZ2XoH13O9q8VP1nvA+u8Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.11.3
@@ -4826,7 +4835,7 @@ packages:
     dependencies:
       '@floating-ui/react-dom': 2.0.0(react-dom@18.2.0)(react@18.2.0)
       '@sanity/color': 2.2.5
-      '@sanity/icons': 2.8.0(react@18.2.0)
+      '@sanity/icons': 2.10.0(react@18.2.0)
       csstype: 3.1.3
       framer-motion: 10.18.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
@@ -4847,7 +4856,7 @@ packages:
     dependencies:
       '@floating-ui/react-dom': 2.0.6(react-dom@18.2.0)(react@18.2.0)
       '@sanity/color': 3.0.0
-      '@sanity/icons': 2.8.0(react@18.2.0)
+      '@sanity/icons': 2.10.0(react@18.2.0)
       csstype: 3.1.3
       framer-motion: 10.18.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
@@ -4889,7 +4898,7 @@ packages:
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@rexxars/react-split-pane': 0.1.93(react-dom@18.2.0)(react@18.2.0)
       '@sanity/color': 3.0.0
-      '@sanity/icons': 2.8.0(react@18.2.0)
+      '@sanity/icons': 2.10.0(react@18.2.0)
       '@sanity/ui': 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@uiw/react-codemirror': 4.21.21(@babel/runtime@7.23.8)(@codemirror/autocomplete@6.12.0)(@codemirror/language@6.10.0)(@codemirror/lint@6.4.2)(@codemirror/search@6.5.5)(@codemirror/state@6.4.0)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.23.0)(codemirror@6.0.1)(react-dom@18.2.0)(react@18.2.0)
       hashlru: 2.3.0
@@ -4998,17 +5007,17 @@ packages:
     resolution: {integrity: sha512-rUV5WyJrJLoloD4NDN1V1+LDMDWOa4OTsT4yYJwQNpTU6FWxkxHpL7eu4w+DmiH8x/EAM1otkPE1+LaspIbplw==}
     engines: {node: '>=18'}
 
-  /@sveltejs/adapter-auto@3.1.1(@sveltejs/kit@2.4.3):
+  /@sveltejs/adapter-auto@3.1.1(@sveltejs/kit@2.5.0):
     resolution: {integrity: sha512-6LeZft2Fo/4HfmLBi5CucMYmgRxgcETweQl/yQoZo/895K3S9YWYN4Sfm/IhwlIpbJp3QNvhKmwCHbsqQNYQpw==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
-      '@sveltejs/kit': 2.4.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.12)
+      '@sveltejs/kit': 2.5.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.12)
       import-meta-resolve: 4.0.0
     dev: true
 
-  /@sveltejs/kit@2.4.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.12):
-    resolution: {integrity: sha512-nKNhUdt61vtD961kQpUk6vLDhpnV0yku5F1uYNWvrJYFV0+cGfmW7ol0JVMSjHMXlMtmmv2FTc+nPRrTFwb2UA==}
+  /@sveltejs/kit@2.5.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.12):
+    resolution: {integrity: sha512-1uyXvzC2Lu1FZa30T4y5jUAC21R309ZMRG0TPt+PPPbNUoDpy8zSmSNVWYaBWxYDqLGQ5oPNWvjvvF2IjJ1jmA==}
     engines: {node: '>=18.13'}
     hasBin: true
     requiresBuild: true
@@ -5774,7 +5783,7 @@ packages:
       - typescript
     dev: false
 
-  /@vercel/speed-insights@1.0.8(next@14.1.1-canary.10)(react@18.2.0)(svelte@4.2.9):
+  /@vercel/speed-insights@1.0.8(next@14.1.1-canary.14)(react@18.2.0)(svelte@4.2.9):
     resolution: {integrity: sha512-x1V9MHUMGkaNafmgY0qRbmbr+jfeU+Cvo5KgreeEGo63SFuBYRg9RS52GUJ9p82nEL6NBzc9HNru6fkcvufYcQ==}
     requiresBuild: true
     peerDependencies:
@@ -5798,7 +5807,7 @@ packages:
       vue-router:
         optional: true
     dependencies:
-      next: 14.1.1-canary.10(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.1-canary.14(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       svelte: 4.2.9
     dev: false
@@ -11896,27 +11905,27 @@ packages:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
 
-  /next-sanity@7.0.13(@sanity/client@6.11.3)(@sanity/icons@2.8.0)(@sanity/types@3.26.0)(@sanity/ui@2.0.1)(next@14.1.1-canary.10)(react@18.2.0)(sanity@3.26.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-MABrWcaIawIOe034evvFLfJawk6EKcl51pSI8oHdzwF6GPVbu3twxmMMR0XaePifmTKbTE3sNXHXPBmSamTyaw==}
+  /next-sanity@7.0.14(@sanity/client@6.11.3)(@sanity/icons@2.10.0)(@sanity/types@3.26.0)(@sanity/ui@2.0.1)(next@14.1.1-canary.14)(react@18.2.0)(sanity@3.26.0)(styled-components@6.1.8):
+    resolution: {integrity: sha512-0KbKnq4sX36gxX3RemP99FjSSWuKvNnpIQ4VpymPhfZUwqqGzmYzJniCVy2f/hQCQ2lRuQArpcv5LuYhjwDRfg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.11.3
       '@sanity/icons': ^2.8
       '@sanity/types': ^3.26.0
-      '@sanity/ui': ^2.0
+      '@sanity/ui': ^2.0.0-beta || ^2.0
       next: ^14.1
       react: ^18.2
       sanity: ^3.26.0
       styled-components: 6.1.8
     dependencies:
       '@sanity/client': 6.11.3
-      '@sanity/icons': 2.8.0(react@18.2.0)
-      '@sanity/preview-kit': 5.0.12(@sanity/client@6.11.3)(react@18.2.0)
+      '@sanity/icons': 2.10.0(react@18.2.0)
+      '@sanity/preview-kit': 5.0.13(@sanity/client@6.11.3)(react@18.2.0)
       '@sanity/types': 3.26.0
       '@sanity/ui': 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/webhook': 4.0.0
       groq: 3.26.0
-      next: 14.1.1-canary.10(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.1-canary.14(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       sanity: 3.26.0(@types/node@20.8.7)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
@@ -11961,8 +11970,8 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /next@14.1.1-canary.10(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-HiCetXN6iaVY6O9tLSt00jy/mlfzISxpiNngaw+KMNoopVZP3CklJI4UJGVQLcxXYAHBZZJaCJTM9EHhVSL2KQ==}
+  /next@14.1.1-canary.14(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-y6wnciyFMG6x9MvPmghbrVqnj+3DLhA009sJIsAkP2inDnVibN3sHDVF42XDp7h85Vm820Tlz4++pMbuuLHEUw==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
@@ -11976,7 +11985,7 @@ packages:
       sass:
         optional: true
     dependencies:
-      '@next/env': 14.1.1-canary.10
+      '@next/env': 14.1.1-canary.14
       '@swc/helpers': 0.5.2
       busboy: 1.6.0
       caniuse-lite: 1.0.30001579
@@ -11986,15 +11995,15 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       styled-jsx: 5.1.1(@babel/core@7.23.7)(react@18.2.0)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 14.1.1-canary.10
-      '@next/swc-darwin-x64': 14.1.1-canary.10
-      '@next/swc-linux-arm64-gnu': 14.1.1-canary.10
-      '@next/swc-linux-arm64-musl': 14.1.1-canary.10
-      '@next/swc-linux-x64-gnu': 14.1.1-canary.10
-      '@next/swc-linux-x64-musl': 14.1.1-canary.10
-      '@next/swc-win32-arm64-msvc': 14.1.1-canary.10
-      '@next/swc-win32-ia32-msvc': 14.1.1-canary.10
-      '@next/swc-win32-x64-msvc': 14.1.1-canary.10
+      '@next/swc-darwin-arm64': 14.1.1-canary.14
+      '@next/swc-darwin-x64': 14.1.1-canary.14
+      '@next/swc-linux-arm64-gnu': 14.1.1-canary.14
+      '@next/swc-linux-arm64-musl': 14.1.1-canary.14
+      '@next/swc-linux-x64-gnu': 14.1.1-canary.14
+      '@next/swc-linux-x64-musl': 14.1.1-canary.14
+      '@next/swc-win32-arm64-msvc': 14.1.1-canary.14
+      '@next/swc-win32-ia32-msvc': 14.1.1-canary.14
+      '@next/swc-win32-x64-msvc': 14.1.1-canary.14
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
@@ -14802,7 +14811,7 @@ packages:
       '@sanity/eventsource': 5.0.1
       '@sanity/export': 3.26.0
       '@sanity/generate-help-url': 3.0.0
-      '@sanity/icons': 2.8.0(react@18.2.0)
+      '@sanity/icons': 2.10.0(react@18.2.0)
       '@sanity/image-url': 1.0.2
       '@sanity/import': 3.26.0
       '@sanity/logos': 2.1.4(@sanity/color@3.0.0)(react@18.2.0)
@@ -14937,7 +14946,7 @@ packages:
       '@sanity/eventsource': 5.0.1
       '@sanity/export': 3.26.0
       '@sanity/generate-help-url': 3.0.0
-      '@sanity/icons': 2.8.0(react@18.2.0)
+      '@sanity/icons': 2.10.0(react@18.2.0)
       '@sanity/image-url': 1.0.2
       '@sanity/import': 3.26.0
       '@sanity/logos': 2.1.4(@sanity/color@3.0.0)(react@18.2.0)
