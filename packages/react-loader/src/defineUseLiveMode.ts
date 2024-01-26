@@ -1,5 +1,5 @@
+import type { SanityClient } from '@sanity/client'
 import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
-import type { SanityStegaClient } from '@sanity/client/stega'
 import type { QueryStore } from '@sanity/core-loader'
 import { useEffect } from 'react'
 
@@ -33,7 +33,7 @@ export function defineUseLiveMode({
     useEffect(() => {
       setStudioUrl(
         studioUrl ?? typeof client === 'object'
-          ? (client as SanityStegaClient)?.config().stega?.studioUrl
+          ? (client as SanityClient)?.config().stega.studioUrl
           : undefined,
       )
     }, [studioUrl, client])

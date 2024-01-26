@@ -73,7 +73,7 @@ export interface QueryStore {
     /**
      * Only set if `ssr: true` and `setServerClient` has been called.
      */
-    instance: SanityClient | SanityStegaClient | undefined
+    instance: SanityClient | undefined
     /**
      * Will be `true` if the client given to `setServerClient` has a token configured.
      */
@@ -81,9 +81,7 @@ export interface QueryStore {
   }
 }
 
-function cloneClientWithConfig(
-  newClient: SanityClient | SanityStegaClient,
-): SanityClient | SanityStegaClient {
+function cloneClientWithConfig(newClient: SanityClient): SanityClient {
   return newClient.withConfig({
     allowReconfigure: false,
   })
@@ -109,7 +107,7 @@ export const createQueryStore = (
   }
   let client = ssr
     ? undefined
-    : cloneClientWithConfig(options.client as SanityClient | SanityStegaClient)
+    : cloneClientWithConfig(options.client as SanityClient)
 
   const cache = createCache().define('fetch', async (key: string) => {
     if (!client) {
@@ -118,10 +116,14 @@ export const createQueryStore = (
       )
     }
     const { query, params = {} } = JSON.parse(key)
-    const { result, resultSourceMap } = await client.fetch(query, params, {
-      tag,
-      filterResponse: false,
-    })
+    const { result, resultSourceMap } = await (client as SanityClient).fetch(
+      query,
+      params,
+      {
+        tag,
+        filterResponse: false,
+      },
+    )
     return { result, resultSourceMap }
   })
 
@@ -249,7 +251,9 @@ export const createQueryStore = (
       throw new Error('`setServerClient` can only be called once')
     }
     serverClientCalled = true
-    unstable__serverClient.instance = client = cloneClientWithConfig(newClient)
+    unstable__serverClient.instance = client = cloneClientWithConfig(
+      newClient as SanityClient,
+    )
     unstable__serverClient.canPreviewDrafts = !!client.config().token
     $fetcher.set(createDefaultFetcher())
   }

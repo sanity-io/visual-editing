@@ -6,7 +6,7 @@ import {
   type QueryParams,
   SanityClient,
 } from '@sanity/client'
-import { SanityStegaClient, stegaEncodeSourceMap } from '@sanity/client/stega'
+import { stegaEncodeSourceMap } from '@sanity/client/stega'
 import type {
   LoaderPayloads,
   VisualEditingConnectionIds,
@@ -14,7 +14,6 @@ import type {
 } from '@sanity/visual-editing-helpers'
 import { atom, MapStore } from 'nanostores'
 
-import { isStegaClient } from '../isStegaClient'
 import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'
 
 /** @internal */
@@ -80,15 +79,14 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         if (
           data.result !== undefined &&
           data.resultSourceMap !== undefined &&
-          isStegaClient(client) &&
-          (client as SanityStegaClient).config().stega?.enabled
+          (client as SanityClient).config().stega.enabled
         ) {
           cache.set(JSON.stringify({ perspective, query, params }), {
             ...data,
             result: stegaEncodeSourceMap(
               data.result,
               data.resultSourceMap,
-              (client as SanityStegaClient).config().stega,
+              (client as SanityClient).config().stega,
             ),
           })
         } else {

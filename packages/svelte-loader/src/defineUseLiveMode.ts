@@ -1,4 +1,4 @@
-import type { SanityStegaClient } from '@sanity/client/stega'
+import type { SanityClient } from '@sanity/client'
 import type { QueryStore } from '@sanity/core-loader'
 
 import { defineStudioUrlStore } from './defineStudioUrlStore'
@@ -25,7 +25,7 @@ export function defineUseLiveMode({
     studioUrlStore.set(
       studioUrl ??
         (typeof client === 'object'
-          ? (client as SanityStegaClient)?.config().stega?.studioUrl
+          ? (client as SanityClient)?.config().stega.studioUrl
           : undefined),
     )
 

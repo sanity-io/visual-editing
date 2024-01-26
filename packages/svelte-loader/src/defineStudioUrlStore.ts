@@ -1,5 +1,5 @@
+import type { SanityClient } from '@sanity/client'
 import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
-import type { SanityStegaClient } from '@sanity/client/stega'
 import type { CreateQueryStoreOptions } from '@sanity/core-loader'
 import { type Writable, writable } from 'svelte/store'
 
@@ -10,7 +10,7 @@ export function defineStudioUrlStore(
 ): Writable<StudioUrlLike> {
   return writable<StudioUrlLike>(
     typeof client === 'object'
-      ? (client as SanityStegaClient)?.config().stega?.studioUrl
+      ? (client as SanityClient)?.config().stega.studioUrl
       : undefined,
   )
 }
