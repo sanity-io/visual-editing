@@ -112,7 +112,10 @@ export interface QueryStore {
   loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next'> & {
+    options?: Pick<
+      ResponseQueryOptions,
+      'perspective' | 'cache' | 'next' | 'useCdn'
+    > & {
       stega?: boolean | StegaConfig
     },
   ) => Promise<QueryResponseInitial<QueryResponseResult>>

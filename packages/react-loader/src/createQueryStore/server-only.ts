@@ -38,6 +38,7 @@ export const createQueryStore = (
       _options.perspective ||
       unstable__serverClient.instance?.config().perspective ||
       'published'
+    const useCdn = _options.useCdn || unstable__serverClient.instance!.config().useCdn
 
     if (
       perspective === 'previewDrafts' &&
@@ -47,8 +48,6 @@ export const createQueryStore = (
         `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
       )
     }
-    // @TODO can this be removed, and `useCdn: undefined` be used instead?
-    const useCdn = unstable__serverClient.instance!.config().useCdn
 
     const { result, resultSourceMap } =
       await unstable__serverClient.instance!.fetch<QueryResponseResult>(
