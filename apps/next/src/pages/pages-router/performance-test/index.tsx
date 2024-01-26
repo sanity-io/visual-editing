@@ -42,7 +42,6 @@ export const getStaticProps = (async (context) => {
   const client = draftMode ? sanityClient : cdnSanityClient
 
   const data = await client.fetch(query, params, {
-    // @ts-expect-error -- this is supported but the client typings doesn't work
     stega: draftMode ? true : false,
   })
 
