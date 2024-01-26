@@ -30,6 +30,24 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [2.3.8](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.7...overlays-v2.3.8) (2024-01-26)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @floating-ui/react-dom to v2.0.7 ([#767](https://github.com/sanity-io/visual-editing/issues/767)) ([2beacd8](https://github.com/sanity-io/visual-editing/commit/2beacd89576e5e552b33e5b05098973d16602e88))
+* **deps:** update dependency @sanity/client to ^6.11.2 ([#745](https://github.com/sanity-io/visual-editing/issues/745)) ([7f24dd6](https://github.com/sanity-io/visual-editing/commit/7f24dd64c3e1147c77b8b92a7ca5635f2bde4b39))
+* **deps:** update dependency @sanity/client to ^6.11.3 ([#755](https://github.com/sanity-io/visual-editing/issues/755)) ([148ce5a](https://github.com/sanity-io/visual-editing/commit/148ce5acad111fe885a2d21662e0e1d61094916a))
+* **deps:** update dependency @sanity/client to ^6.12.1 ([#774](https://github.com/sanity-io/visual-editing/issues/774)) ([4ba2074](https://github.com/sanity-io/visual-editing/commit/4ba2074d807fb6c69c17b783cba1d7154846782f))
+* **overlays:** prevent overlay controller duplication ([dfdb578](https://github.com/sanity-io/visual-editing/commit/dfdb5787735b919332f6e68aa5f82a03f9b4b9ba))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.4 to 0.2.5
+
 ## [2.3.7](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.6...overlays-v2.3.7) (2024-01-19)
 
 
