@@ -1,4 +1,3 @@
-import type { QueryParams } from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
@@ -7,7 +6,12 @@ import {
 import { defineStudioUrlStore } from './defineStudioUrlStore'
 import { defineUseLiveMode } from './defineUseLiveMode'
 import { defineUseQuery } from './defineUseQuery'
-import type { QueryResponseInitial, QueryStore, UseLiveMode } from './types'
+import type {
+  LoadQuery,
+  QueryResponseInitial,
+  QueryStore,
+  UseLiveMode,
+} from './types'
 
 /**
  * Create a query store
@@ -34,10 +38,10 @@ export const createQueryStore = (
     studioUrlStore,
   })
 
-  const loadQuery = async <QueryResponseResult>(
-    query: string,
-    params: QueryParams = {},
-    options: Parameters<QueryStore['loadQuery']>[2] = {},
+  const loadQuery: LoadQuery = async <QueryResponseResult>(
+    query: Parameters<LoadQuery>[0],
+    params: Parameters<LoadQuery>[1] = {},
+    options: Parameters<LoadQuery>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
     const perspective =
       options.perspective ||
@@ -74,9 +78,12 @@ export const createQueryStore = (
       return { data: result, sourceMap: resultSourceMap, perspective }
     }
 
+    const useCdn =
+      options.useCdn || unstable__serverClient.instance!.config().useCdn
+
     const { result, resultSourceMap } =
       await unstable__cache.fetch<QueryResponseResult>(
-        JSON.stringify({ query, params }),
+        JSON.stringify({ query, params, perspective, useCdn }),
       )
 
     // @ts-expect-error - update typings

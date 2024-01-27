@@ -119,12 +119,21 @@ export type UseLiveMode = (
 ) => void
 
 /** @public */
+export type LoadQueryOptions = Pick<
+  ResponseQueryOptions,
+  'perspective' | 'cache' | 'next' | 'useCdn'
+>
+
+/** @public */
+export type LoadQuery = <QueryResponseResult>(
+  query: string,
+  params?: QueryParams,
+  options?: LoadQueryOptions,
+) => Promise<QueryResponseInitial<QueryResponseResult>>
+
+/** @public */
 export interface QueryStore {
-  loadQuery: <QueryResponseResult>(
-    query: string,
-    params?: QueryParams,
-    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next'>,
-  ) => Promise<QueryResponseInitial<QueryResponseResult>>
+  loadQuery: LoadQuery
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
