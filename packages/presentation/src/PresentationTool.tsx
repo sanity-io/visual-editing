@@ -33,6 +33,10 @@ import {
   useProjectId,
 } from 'sanity'
 import { RouterContextValue, useRouter } from 'sanity/router'
+import {
+  type CommentIntentGetter,
+  CommentsIntentProvider,
+} from 'sanity/structure'
 import styled from 'styled-components'
 
 import {
@@ -417,6 +421,24 @@ export default function PresentationTool(props: {
     idRef.current = params.id
   })
 
+  const getCommentIntent = useCallback<CommentIntentGetter>(
+    ({ id, type, path }) => {
+      return {
+        title: '@TODO Title',
+        name: 'edit',
+        params: {
+          id,
+          path,
+          type,
+          inspect: 'sanity/structure/comments',
+          mode: 'presentation',
+          preview: params.preview,
+        },
+      }
+    },
+    [params],
+  )
+
   return (
     <>
       <PresentationProvider
@@ -470,15 +492,17 @@ export default function PresentationTool(props: {
                     documentId={params.id}
                     setDisplayedDocument={setDisplayedDocument}
                   >
-                    <ContentEditor
-                      refs={documentsOnPage}
-                      deskParams={deskParams}
-                      documentId={params.id}
-                      documentType={params.type}
-                      onDeskParams={handleDeskParams}
-                      onFocusPath={handleFocusPath}
-                      previewUrl={params.preview}
-                    />
+                    <CommentsIntentProvider getIntent={getCommentIntent}>
+                      <ContentEditor
+                        refs={documentsOnPage}
+                        deskParams={deskParams}
+                        documentId={params.id}
+                        documentType={params.type}
+                        onDeskParams={handleDeskParams}
+                        onFocusPath={handleFocusPath}
+                        previewUrl={params.preview}
+                      />
+                    </CommentsIntentProvider>
                   </DisplayedDocumentBroadcasterProvider>
                 </Panel>
               </Panels>

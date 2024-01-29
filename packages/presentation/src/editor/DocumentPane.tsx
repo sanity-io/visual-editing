@@ -12,6 +12,7 @@ import {
   DocumentPane as DeskDocumentPane,
   DocumentPaneNode,
   PaneLayout,
+  useComments,
   useStructureTool,
 } from 'sanity/structure'
 import styled from 'styled-components'
