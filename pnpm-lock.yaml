@@ -899,21 +899,6 @@ importers:
 
   packages/overlays:
     dependencies:
-      '@floating-ui/react-dom':
-        specifier: 2.0.8
-        version: 2.0.8(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/client':
-        specifier: ^6.12.3
-        version: 6.12.3
-      '@sanity/color':
-        specifier: 3.0.0
-        version: 3.0.0
-      '@sanity/icons':
-        specifier: 2.10.0
-        version: 2.10.0(react@18.2.0)
-      '@sanity/ui':
-        specifier: 2.0.1
-        version: 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
@@ -926,25 +911,22 @@ importers:
       react-is:
         specifier: 18.2.0
         version: 18.2.0
-      react-refractor:
-        specifier: 2.1.7
-        version: 2.1.7(react@18.2.0)
       scroll-into-view-if-needed:
         specifier: ^3.1.0
         version: 3.1.0
-      styled-components:
-        specifier: 6.1.8
-        version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
     devDependencies:
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
+      '@sanity/client':
+        specifier: ^6.12.3
+        version: 6.12.3
       '@sanity/pkg-utils':
         specifier: ^4.1.1
         version: 4.1.1(typescript@5.3.3)
+      '@sanity/ui':
+        specifier: 2.0.1
+        version: 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/visual-editing-helpers':
         specifier: 0.2.5
         version: link:../visual-editing-helpers
@@ -987,9 +969,15 @@ importers:
       rimraf:
         specifier: ^5.0.5
         version: 5.0.5
+      styled-components:
+        specifier: 6.1.8
+        version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
+      uuid:
+        specifier: 9.0.1
+        version: 9.0.1
       vitest:
         specifier: ^1.2.2
         version: 1.2.2(happy-dom@13.3.5)(jsdom@23.2.0)
