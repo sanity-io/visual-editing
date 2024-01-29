@@ -12,6 +12,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.5.5](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.4...preview-url-secret-v1.5.5) (2024-01-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.12.3 ([#787](https://github.com/sanity-io/visual-editing/issues/787)) ([634d8a3](https://github.com/sanity-io/visual-editing/commit/634d8a35f4db4ac04157f5e3d01eff9abfba2f99))
+
 ## [1.5.4](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.3...preview-url-secret-v1.5.4) (2024-01-26)
 
 
