@@ -17,6 +17,7 @@ export function getIntentState(
   | { intent: string; params: Record<string, string>; payload: unknown } {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, mode, path, presentation, type, ...searchParams } = params
+
   if (intent === 'edit' && id) {
     return {
       type: type || '*',
@@ -25,8 +26,12 @@ export function getIntentState(
       _searchParams: Object.entries(searchParams),
     }
   }
+
   if (intent === 'create') {
-    searchParams.preview = searchParams.preview || '/'
+    searchParams.preview =
+      searchParams.preview ||
+      new URLSearchParams(window.location.search).get('preview') ||
+      '/'
     return {
       type: type || '*',
       id: id || uuid(),
