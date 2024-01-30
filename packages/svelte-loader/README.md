@@ -100,7 +100,7 @@ export const handle = createRequestHandler()
 ```
 
 > [!NOTE]
-> Note that if your app needs to support multiple `handle` functions, you can use SvelteKit's [sequence function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence).
+> If your app needs to support multiple `handle` functions, you can use SvelteKit's [sequence function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence).
 
 ### Update types
 
