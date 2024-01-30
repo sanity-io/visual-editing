@@ -1,10 +1,7 @@
-import { LoadQuery } from './types'
+import { LoaderLocals } from './types'
 
 declare global {
   namespace App {
-    export interface Locals {
-      preview: boolean
-      loadQuery: LoadQuery
-    }
+    interface Locals extends LoaderLocals {}
   }
 }

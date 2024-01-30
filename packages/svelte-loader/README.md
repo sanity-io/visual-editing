@@ -83,13 +83,11 @@ export const serverClient = client.withConfig({
 
 We pass the server client instance to `setServerClient` in the [server hooks](https://kit.svelte.dev/docs/hooks#server-hooks) file as this code will only be executed once during app initialization.
 
-The loader package also exports an optional `createRequestHandler` for creating a server hook [`handle` function](https://kit.svelte.dev/docs/hooks#server-hooks-handle) which:
+The loader package also exports an optional `createRequestHandler` for creating a server hook [`handle`](https://kit.svelte.dev/docs/hooks#server-hooks-handle) function which:
 
 - Creates server routes used to enable and disable previews.
 - Verifies the preview cookie on each request and sets `locals.preview` to `true` or `false`.
 - Sets and configures `locals.loadQuery`, the function we will use to fetch data on the server.
-
-Note that if your app needs to support multiple `handle` functions, you can use SvelteKit's [sequence function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence).
 
 ```ts
 // src/hooks.server.ts
@@ -101,18 +99,20 @@ setServerClient(serverClient)
 export const handle = createRequestHandler()
 ```
 
-If you choose to use the `handle` function, you should also augment your [app types](https://kit.svelte.dev/docs/types#app).
+> [!NOTE]
+> Note that if your app needs to support multiple `handle` functions, you can use SvelteKit's [sequence function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence).
+
+### Update types
+
+`createRequestHandler` adds properties to the `event.locals` object. If using TypeScript, you should add these to your app's [`App.Locals`](https://kit.svelte.dev/docs/types#app-locals) interface.
 
 ```ts
 // app.d.ts
-import type { LoadQuery } from '@sanity/svelte-loader'
+import type { LoaderLocals } from '@sanity/svelte-loader'
 
 declare global {
   namespace App {
-    interface Locals {
-      preview: boolean
-      loadQuery: LoadQuery
-    }
+    interface Locals extends LoaderLocals {}
   }
 }
 
@@ -121,9 +121,7 @@ export {}
 
 ### Client side preview state
 
-To access the preview state on the client side of our application, we pass it using a load function. Typically, the root level layout is a good place to do this.
-
-In the server load function, we return the value of `locals.preview` that the `handle` function defines for us.
+To access the preview state on the client side of our application, we pass it via a load function. Typically, the root level layout is a good place to do this. We return the value of `locals.preview` that the previously created `handle` function defines for us.
 
 ```ts
 // src/routes/+layout.server.ts
@@ -134,7 +132,7 @@ export const load: LayoutServerLoad = ({ locals: { preview } }) => {
 }
 ```
 
-On the client, we can set the preview state using `setPreviewing`.
+We then access the passed `preview` value via the `LoadEvent.data` property, and set the preview state using the loader's `setPreviewing` function.
 
 ```ts
 // src/routes/+layout.ts
@@ -146,7 +144,7 @@ export const load: LayoutLoad = ({ data: { preview } }) => {
 }
 ```
 
-You can now import `isPreviewing` (a [readonly Svelte store](https://svelte.dev/docs/svelte-store#readonly)) anywhere in your app. For example, a component to display if previews are enabled or disabled:
+You can now import `isPreviewing` (a [readonly Svelte store](https://svelte.dev/docs/svelte-store#readonly)) anywhere in your app. For example, in a component to display if previews are enabled or disabled:
 
 ```svelte
 <!-- src/components/DisplayPreview.svelte -->
@@ -179,7 +177,7 @@ export interface PageResult {
 
 #### loadQuery
 
-First, create a server `load` function that will handle fetching data from the Sanity Content Lake. Use `locals.loadQuery` to fetch data on the server.
+Create a server `load` function for your page that will handle fetching data from the Sanity Content Lake. Use `locals.loadQuery` to fetch data on the server.
 
 ```ts
 // src/routes/[slug]/+page.server.ts

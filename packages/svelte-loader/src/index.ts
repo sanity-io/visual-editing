@@ -3,6 +3,7 @@ export * from './createRequestHandler'
 export * from './previewStore'
 export type {
   HandleOptions,
+  LoaderLocals,
   LoadQuery,
   LoadQueryOptions,
   NonUndefinedGuard,

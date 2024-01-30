@@ -197,3 +197,9 @@ export interface HandleOptions {
    */
   loadQuery?: LoadQuery
 }
+
+/** @public */
+export interface LoaderLocals {
+  preview: boolean
+  loadQuery: LoadQuery
+}
