@@ -16,7 +16,7 @@ Read more about loaders [here](https://www.sanity.io/docs/loaders-and-overlays).
 ```sh
 npm install @sanity/svelte-loader
 
-# You will also need the following dependencies for fetching data and enabling visual editing
+# We will also need the following dependencies for fetching data and enabling visual editing
 npm install @sanity/client @sanity/overlays
 ```
 
@@ -100,11 +100,11 @@ export const handle = createRequestHandler()
 ```
 
 > [!NOTE]
-> If your app needs to support multiple `handle` functions, you can use SvelteKit's [sequence function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence).
+> If our app needs to support multiple `handle` functions, we can use SvelteKit's [sequence function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence).
 
 ### Update types
 
-`createRequestHandler` adds properties to the `event.locals` object. If using TypeScript, you should add these to your app's [`App.Locals`](https://kit.svelte.dev/docs/types#app-locals) interface.
+`createRequestHandler` adds properties to the `event.locals` object. When using TypeScript, we should add these to our app's [`App.Locals`](https://kit.svelte.dev/docs/types#app-locals) interface.
 
 ```ts
 // app.d.ts
@@ -144,7 +144,7 @@ export const load: LayoutLoad = ({ data: { preview } }) => {
 }
 ```
 
-You can now import `isPreviewing` (a [readonly Svelte store](https://svelte.dev/docs/svelte-store#readonly)) anywhere in your app. For example, in a component to display if previews are enabled or disabled:
+We can now import `isPreviewing` (a [readonly Svelte store](https://svelte.dev/docs/svelte-store#readonly)) anywhere in our app. For example, in a component to display if previews are enabled or disabled:
 
 ```svelte
 <!-- src/components/DisplayPreview.svelte -->
@@ -177,7 +177,7 @@ export interface PageResult {
 
 #### loadQuery
 
-Create a server `load` function for your page that will handle fetching data from the Sanity Content Lake. Use `locals.loadQuery` to fetch data on the server.
+Create a server `load` function for our page that will handle fetching data from the Sanity Content Lake. Use `locals.loadQuery` to fetch data on the server.
 
 ```ts
 // src/routes/[slug]/+page.server.ts
