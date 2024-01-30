@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.7.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.2...presentation-v1.7.3) (2024-01-30)
+
+
+### Bug Fixes
+
+* **presentation:** preserve preview if omitted on create intent ([0ef7633](https://github.com/sanity-io/visual-editing/commit/0ef76333ce6398bdbb0bcaf2b3e09975940c3680))
+
 ## [1.7.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.1...presentation-v1.7.2) (2024-01-29)
 
 
