@@ -5,8 +5,8 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      draftMode: boolean
       loadQuery: LoadQuery
+      preview: boolean
     }
     // interface PageData {}
     // interface Platform {}

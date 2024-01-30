@@ -70,8 +70,8 @@ function definePreviewUrl(
   if (workspaceName === 'svelte') {
     const { origin, pathname } = new URL(previewUrl)
     const draftMode = {
-      enable: '/draft/enable',
-      disable: '/draft/disable',
+      enable: '/preview/enable',
+      disable: '/preview/disable',
     } satisfies PreviewUrlResolverOptions['draftMode']
     return { origin, preview: pathname, draftMode }
   }

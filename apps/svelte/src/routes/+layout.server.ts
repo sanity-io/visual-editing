@@ -1,11 +1,7 @@
-// src/routes/+layout.server.ts
 import type { LayoutServerLoad } from './$types'
 
-/**
- * Return the `exitPreviewQueryParam` and `isPreview` values so that they can be referenced in client-side code.
- */
-export const load: LayoutServerLoad = ({ locals: { draftMode } }) => {
+export const load: LayoutServerLoad = ({ locals: { preview } }) => {
   return {
-    draftMode,
+    preview,
   }
 }

@@ -1,28 +1,16 @@
 import { ClientPerspective } from '@sanity/client'
-import type { SanityStegaClient } from '@sanity/client/stega'
 import { validatePreviewUrl } from '@sanity/preview-url-secret'
 import { error, type Handle, redirect } from '@sveltejs/kit'
 
-import { LoadQuery } from './types'
+import { HandleOptions } from './types'
 
-export const handler = ({
-  draftMode,
-  loadQuery,
-}: {
-  draftMode?: {
-    secret: string
-    client: SanityStegaClient
-    cookie?: string
-    enable?: string
-    disable?: string
-  }
-  loadQuery?: LoadQuery
-}): Handle => {
-  // @todo Verify URLs?
-
-  const cookieName = draftMode?.cookie || '__sanity_draft'
-  const enablePath = draftMode?.enable || '/draft/enable'
-  const disablePath = draftMode?.disable || '/draft/disable'
+/**
+ * @beta
+ */
+export const handler = ({ preview, loadQuery }: HandleOptions): Handle => {
+  const cookieName = preview?.cookie || '__sanity_preview'
+  const enablePath = preview?.endpoints?.enable || '/preview/enable'
+  const disablePath = preview?.endpoints?.disable || '/preview/disable'
 
   return async ({ event, resolve }) => {
     const { cookies, url } = event
@@ -31,18 +19,17 @@ export const handler = ({
     let perspective: ClientPerspective | undefined = undefined
     let useCdn: boolean | undefined = undefined
 
-    // If draftMode is configured, check the cookie to see if it also enabled
-    if (draftMode) {
-      event.locals.draftMode =
-        event.cookies.get(cookieName) === draftMode.secret
-      // Set default perspective and useCdn based on draftMode status
-      perspective = event.locals.draftMode ? 'previewDrafts' : 'published'
-      useCdn = event.locals.draftMode ? false : true
+    // If preview is configured, check the cookie to see if it also enabled
+    if (preview) {
+      event.locals.preview = event.cookies.get(cookieName) === preview.secret
+      // Set default perspective and useCdn based on preview status
+      perspective = event.locals.preview ? 'previewDrafts' : 'published'
+      useCdn = event.locals.preview ? false : true
 
-      // If draft mode is configured, check if the request is to enable or disable it
+      // If preview is configured, check if the request is to enable or disable it
       if (event.url.pathname === enablePath) {
         const { isValid, redirectTo = '/' } = await validatePreviewUrl(
-          draftMode.client,
+          preview.client,
           url.toString(),
         )
 
@@ -51,7 +38,7 @@ export const handler = ({
         }
 
         const devMode = process.env.NODE_ENV === 'development'
-        cookies.set(cookieName, draftMode.secret, {
+        cookies.set(cookieName, preview.secret, {
           httpOnly: true,
           sameSite: devMode ? 'lax' : 'none',
           secure: !devMode,

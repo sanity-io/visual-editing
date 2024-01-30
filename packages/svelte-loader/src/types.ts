@@ -3,6 +3,7 @@ import type {
   ContentSourceMap,
   QueryParams,
   ResponseQueryOptions,
+  SanityClient,
 } from '@sanity/client'
 import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
 import {
@@ -160,4 +161,35 @@ export interface QueryStore {
     // ): QueryStoreState<QueryResponseResult, QueryResponseError>
   }
   useLiveMode: UseLiveMode
+}
+
+/** @beta */
+export interface HandleOptions {
+  preview?: {
+    /**
+     * The preview secret to use for enabling preview
+     */
+    secret: string
+    /**
+     * The Sanity client to use for fetching data and listening to mutations.
+     */
+    client: SanityClient
+    /**
+     * The name of the cookie used to store preview secret
+     * @defaultValue '__sanity_preview'
+     */
+    cookie?: string
+    /**
+     * The endpoints to use for enabling and disabling preview
+     * @defaultValue { enable: '/preview/enable', disable: '/preview/disable' }
+     */
+    endpoints?: {
+      enable?: string
+      disable?: string
+    }
+  }
+  /**
+   * A query store exported load function to use for fetching data
+   */
+  loadQuery?: LoadQuery
 }

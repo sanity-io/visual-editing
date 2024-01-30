@@ -1,7 +1,8 @@
 export * from './createQueryStore'
-export * from './draftModeStore'
 export * from './handler'
+export * from './previewStore'
 export type {
+  HandleOptions,
   LoadQuery,
   LoadQueryOptions,
   NonUndefinedGuard,
