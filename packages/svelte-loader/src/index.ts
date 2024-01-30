@@ -1,5 +1,5 @@
 export * from './createQueryStore'
-export * from './handler'
+export * from './createRequestHandler'
 export * from './previewStore'
 export type {
   HandleOptions,

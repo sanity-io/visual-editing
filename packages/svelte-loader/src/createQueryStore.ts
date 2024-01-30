@@ -61,7 +61,7 @@ export const createQueryStore = (
     if (perspective === 'previewDrafts') {
       if (!unstable__serverClient.canPreviewDrafts) {
         throw new Error(
-          `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
+          `You cannot use "previewDrafts" unless you set a "token" in the "client" instance passed to "setServerClient".`,
         )
       }
       const { result, resultSourceMap } =
@@ -98,6 +98,7 @@ export const createQueryStore = (
     useQuery,
     setServerClient,
     useLiveMode,
+    unstable__serverClient,
   }
 }
 
@@ -114,6 +115,8 @@ export const {
   useLiveMode,
   /** @public */
   useQuery,
+  /** @internal */
+  unstable__serverClient,
 } = createQueryStore({
   client: false,
   ssr: true,

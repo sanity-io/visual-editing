@@ -161,19 +161,23 @@ export interface QueryStore {
     // ): QueryStoreState<QueryResponseResult, QueryResponseError>
   }
   useLiveMode: UseLiveMode
+  unstable__serverClient: {
+    instance: SanityClient | undefined
+    canPreviewDrafts?: boolean | undefined
+  }
 }
 
 /** @beta */
 export interface HandleOptions {
   preview?: {
     /**
-     * The preview secret to use for enabling preview
+     * The preview secret to use for verifying preview access
      */
-    secret: string
+    secret?: string
     /**
-     * The Sanity client to use for fetching data and listening to mutations.
+     * The Sanity client instance for fetching data and listening to mutations
      */
-    client: SanityClient
+    client?: SanityClient
     /**
      * The name of the cookie used to store preview secret
      * @defaultValue '__sanity_preview'

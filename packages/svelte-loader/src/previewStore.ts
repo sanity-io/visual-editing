@@ -1,16 +1,13 @@
-import { get, writable } from 'svelte/store'
+import { readonly, writable } from 'svelte/store'
+
+const previewStore = writable(false)
 
 /**
  * @beta
  */
-export const previewing = writable(false)
+export const isPreviewing = readonly(previewStore)
 
 /**
  * @beta
  */
-export const setPreviewing = previewing.set
-
-/**
- * @beta
- */
-export const previewEnabled = (): boolean => get(previewing)
+export const setPreviewing = previewStore.set
