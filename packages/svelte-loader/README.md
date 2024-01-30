@@ -29,6 +29,7 @@ Use the steps below with an existing or [new SvelteKit app](https://kit.svelte.d
 Create a `.env` file in the project's root directory and provide the following environment variables. The token should not be exposed on the client, so the `PUBLIC_` prefix is omitted.
 
 ```bash
+# .env
 SANITY_API_READ_TOKEN="..."
 PUBLIC_SANITY_PROJECT_ID="..."
 PUBLIC_SANITY_DATASET="..."
@@ -42,7 +43,7 @@ Create and export an instance of Sanity client using the previously defined envi
 
 ```ts
 // src/lib/sanity.ts
-import { createClient } from '@sanity/client/stega'
+import { createClient } from '@sanity/client'
 import {
   PUBLIC_SANITY_API_VERSION,
   PUBLIC_SANITY_DATASET,
@@ -55,33 +56,114 @@ export const client = createClient({
   dataset: PUBLIC_SANITY_DATASET,
   apiVersion: PUBLIC_SANITY_API_VERSION,
   useCdn: true,
-  // Optionally provide stega configuration
+  stega: {
+    studioUrl: PUBLIC_SANITY_STUDIO_URL,
+  },
+})
+```
+
+On the server, we use a Sanity client configured with a read token to allow the fetching of preview content.
+
+```ts
+// src/lib/server/sanity.ts
+import { SANITY_API_READ_TOKEN } from '$env/static/private'
+import { client } from '$lib/sanity'
+
+export const serverClient = client.withConfig({
+  token: SANITY_API_READ_TOKEN,
+  // Optionally enable stega
   // stega: {
-  //   studioUrl: PUBLIC_SANITY_STUDIO_URL,
+  //   ...client.config().stega,
+  //   enabled: true,
   // },
 })
 ```
 
-On the server, we use a Sanity client configured with a read token, CDN disabled and specified perspective to allow the fetching of draft content. We pass this client instance to `setServerClient` in the [server hooks](https://kit.svelte.dev/docs/hooks#server-hooks) file as this code will only be executed once during app initialization.
+### Configure loaders and previews
+
+We pass the server client instance to `setServerClient` in the [server hooks](https://kit.svelte.dev/docs/hooks#server-hooks) file as this code will only be executed once during app initialization.
+
+The loader package also exports an optional `createRequestHandler` for creating a server hook [`handle` function](https://kit.svelte.dev/docs/hooks#server-hooks-handle) which:
+
+- Creates server routes used to enable and disable previews.
+- Verifies the preview cookie on each request and sets `locals.preview` to `true` or `false`.
+- Sets and configures `locals.loadQuery`, the function we will use to fetch data on the server.
+
+Note that if your app needs to support multiple `handle` functions, you can use SvelteKit's [sequence function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence).
 
 ```ts
 // src/hooks.server.ts
-import { client } from './sanity'
-import { setServerClient } from '@sanity/svelte-loader'
-import { SANITY_API_READ_TOKEN } from '$env/static/private'
+import { createRequestHandler, setServerClient } from '@sanity/svelte-loader'
+import { serverClient } from '$lib/server/sanity'
 
-setServerClient(
-  client.withConfig({
-    token: SANITY_API_READ_TOKEN,
-    useCdn: false,
-    perspective: 'previewDrafts',
-  }),
-)
+setServerClient(serverClient)
+
+export const handle = createRequestHandler()
+```
+
+If you choose to use the `handle` function, you should also augment your [app types](https://kit.svelte.dev/docs/types#app).
+
+```ts
+// app.d.ts
+import type { LoadQuery } from '@sanity/svelte-loader'
+
+declare global {
+  namespace App {
+    interface Locals {
+      preview: boolean
+      loadQuery: LoadQuery
+    }
+  }
+}
+
+export {}
+```
+
+### Client side preview state
+
+To access the preview state on the client side of our application, we pass it using a load function. Typically, the root level layout is a good place to do this.
+
+In the server load function, we return the value of `locals.preview` that the `handle` function defines for us.
+
+```ts
+// src/routes/+layout.server.ts
+import type { LayoutServerLoad } from './$types'
+
+export const load: LayoutServerLoad = ({ locals: { preview } }) => {
+  return { preview }
+}
+```
+
+On the client, we can set the preview state using `setPreviewing`.
+
+```ts
+// src/routes/+layout.ts
+import { setPreviewing } from '@sanity/svelte-loader'
+import type { LayoutLoad } from './$types'
+
+export const load: LayoutLoad = ({ data: { preview } }) => {
+  setPreviewing(preview)
+}
+```
+
+You can now import `isPreviewing` (a [readonly Svelte store](https://svelte.dev/docs/svelte-store#readonly)) anywhere in your app. For example, a component to display if previews are enabled or disabled:
+
+```svelte
+<!-- src/components/DisplayPreview.svelte -->
+<script lang="ts">
+import { isPreviewing } from '@sanity/svelte-loader'
+</script>
+
+{#if $isPreviewing}
+  <div>Previews Enabled</div>
+{:else}
+  <div>Previews Disabled</div>
+{/if}
 ```
 
 ### Define queries
 
-Next, create a `queries` file and define a GROQ query (and corresponding TypeScript type). This example query is used to fetch a single page with a matching slug.
+Next, create a `queries` file and define a GROQ query and associated result type. This example query is used to fetch a single page with a matching slug.
 
 ```ts
 // src/lib/queries.ts
@@ -97,15 +179,17 @@ export interface PageResult {
 
 #### loadQuery
 
-First, create a server `load` function that will handle fetching data from the Sanity Content Lake. Use `loadQuery` to fetch data on the server.
+First, create a server `load` function that will handle fetching data from the Sanity Content Lake. Use `locals.loadQuery` to fetch data on the server.
 
 ```ts
-// /src/routes/[slug]/+page.server.ts
-import { loadQuery } from '@sanity/svelte-loader'
+// src/routes/[slug]/+page.server.ts
 import { pageQuery, type PageResult } from '$lib/queries'
 import type { PageServerLoad } from './$types'
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({
+  params,
+  locals: { loadQuery },
+}) => {
   const { slug } = params
 
   const initial = loadQuery<PageResult>(pageQuery, { slug })
@@ -121,7 +205,7 @@ Next, create the page component. We use `useQuery` on the client, passing the in
 `useQuery` also returns an `encodeDataAttribute` helper method for generating `data-sanity` attributes to support rendering [overlays](https://www.sanity.io/docs/loaders-and-overlays#1dbcc04a7093).
 
 ```svelte
-<!-- /src/routes/[slug]/+page.svelte -->
+<!-- src/routes/[slug]/+page.svelte -->
 <script lang="ts">
   import type { PageData } from './$types'
   import { useQuery } from '@sanity/svelte-loader'
@@ -148,10 +232,10 @@ Next, create the page component. We use `useQuery` on the client, passing the in
 
 ### Setup Visual Editing
 
-Finally, we enable both live mode andoverlays in the root layout component.
+Finally, we enable both live mode and overlays in the root layout component.
 
 ```svelte
-<!-- /src/routes/+layout.svelte -->
+<!-- src/routes/+layout.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte'
   import { enableOverlays } from '@sanity/overlays'
