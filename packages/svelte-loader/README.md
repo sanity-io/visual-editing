@@ -245,7 +245,7 @@ Finally, we enable both live mode and overlays in the root layout component.
     studioUrl: PUBLIC_SANITY_STUDIO_URL
     // ...or alternatively provide the stega client directly
     // client: client.withConfig({
-    //   stega: { ...client.config().stega, enabled: true },
+    //   stega: true
     // })
   }))
 </script>
