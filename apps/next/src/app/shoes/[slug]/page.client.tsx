@@ -66,7 +66,7 @@ export default function ShoePage(props: Props) {
           </li>
           <li>
             <a
-              href="https://visual-editing-studio.sanity.build"
+              href="https://visual-editing-studio.sanity.build/next/app-router"
               target="_blank"
               rel="noopener"
               referrerPolicy="no-referrer-when-downgrade"
