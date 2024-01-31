@@ -189,6 +189,14 @@ export default function ShoePage(props: Props) {
           </div>
         </article>
       )}
+      <a
+        href="https://visual-editing-studio.sanity.build"
+        target="_blank"
+        rel="noopener"
+        referrerPolicy="no-referrer-when-downgrade"
+      >
+        Edit this page
+      </a>
     </div>
   )
 }
