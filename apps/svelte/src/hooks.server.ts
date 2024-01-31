@@ -1,15 +1,6 @@
-import { client } from '$lib/sanity'
-import { setServerClient } from '@sanity/svelte-loader'
-import { SANITY_API_READ_TOKEN } from '$env/static/private'
+import { createRequestHandler, setServerClient } from '@sanity/svelte-loader'
+import { serverClient } from '$lib/server/sanity'
 
-setServerClient(
-  client.withConfig({
-    token: SANITY_API_READ_TOKEN,
-    useCdn: false,
-    perspective: 'previewDrafts',
-    stega: {
-      ...client.config().stega,
-      enabled: true,
-    },
-  }),
-)
+setServerClient(serverClient)
+
+export const handle = createRequestHandler()

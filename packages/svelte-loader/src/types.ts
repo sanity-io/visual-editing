@@ -3,6 +3,7 @@ import type {
   ContentSourceMap,
   QueryParams,
   ResponseQueryOptions,
+  SanityClient,
 } from '@sanity/client'
 import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
 import {
@@ -119,12 +120,21 @@ export type UseLiveMode = (
 ) => void
 
 /** @public */
+export type LoadQueryOptions = Pick<
+  ResponseQueryOptions,
+  'perspective' | 'cache' | 'next' | 'useCdn'
+>
+
+/** @public */
+export type LoadQuery = <QueryResponseResult>(
+  query: string,
+  params?: QueryParams,
+  options?: LoadQueryOptions,
+) => Promise<QueryResponseInitial<QueryResponseResult>>
+
+/** @public */
 export interface QueryStore {
-  loadQuery: <QueryResponseResult>(
-    query: string,
-    params?: QueryParams,
-    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next'>,
-  ) => Promise<QueryResponseInitial<QueryResponseResult>>
+  loadQuery: LoadQuery
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
@@ -151,4 +161,45 @@ export interface QueryStore {
     // ): QueryStoreState<QueryResponseResult, QueryResponseError>
   }
   useLiveMode: UseLiveMode
+  unstable__serverClient: {
+    instance: SanityClient | undefined
+    canPreviewDrafts?: boolean | undefined
+  }
+}
+
+/** @beta */
+export interface HandleOptions {
+  preview?: {
+    /**
+     * The preview secret to use for verifying preview access
+     */
+    secret?: string
+    /**
+     * The Sanity client instance for fetching data and listening to mutations
+     */
+    client?: SanityClient
+    /**
+     * The name of the cookie used to store preview secret
+     * @defaultValue '__sanity_preview'
+     */
+    cookie?: string
+    /**
+     * The endpoints to use for enabling and disabling preview
+     * @defaultValue { enable: '/preview/enable', disable: '/preview/disable' }
+     */
+    endpoints?: {
+      enable?: string
+      disable?: string
+    }
+  }
+  /**
+   * A query store exported load function to use for fetching data
+   */
+  loadQuery?: LoadQuery
+}
+
+/** @public */
+export interface LoaderLocals {
+  preview: boolean
+  loadQuery: LoadQuery
 }

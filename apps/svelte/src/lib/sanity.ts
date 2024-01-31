@@ -1,4 +1,4 @@
-import { createClient } from '@sanity/client/stega'
+import { createClient } from '@sanity/client'
 import { apiVersion, studioUrl, workspaces } from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
 const { projectId, dataset } = workspaces['svelte']

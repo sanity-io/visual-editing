@@ -1,46 +1,22 @@
 <script lang="ts">
   import '../app.css'
-  import { onMount } from 'svelte'
-  import { enableOverlays, type HistoryAdapterNavigate } from '@sanity/overlays'
-  import { useLiveMode } from '@sanity/svelte-loader'
-  import { afterNavigate, goto } from '$app/navigation'
-  import { client } from '$lib/sanity'
+  import { page } from '$app/stores'
 
-  onMount(() => useLiveMode({ client }))
-
-  let navigate: HistoryAdapterNavigate | undefined
-  let navigatingFromUpdate = false
-
-  onMount(() =>
-    enableOverlays({
-      history: {
-        subscribe: (_navigate) => {
-          navigate = _navigate
-          return () => {
-            navigate = undefined
-          }
-        },
-        update: (update) => {
-          if (update.type === 'push' || update.type === 'replace') {
-            navigatingFromUpdate = true
-            goto(update.url, { replaceState: update.type === 'replace' })
-          } else if (update.type === 'pop') {
-            history.back()
-          }
-        },
-      },
-    }),
-  )
-
-  afterNavigate(async ({ to, complete }) => {
-    if (navigate && to && !navigatingFromUpdate) {
-      await complete
-      navigate({ type: 'push', url: to.url.pathname + to.url.search })
-    }
-    navigatingFromUpdate = false
-  })
+  import VisualEditing from '../components/VisualEditing.svelte'
+  import { isPreviewing } from '@sanity/svelte-loader'
 </script>
 
 <div class="app">
   <slot />
+
+  {#if $isPreviewing}
+    <VisualEditing />
+    <a
+      href={`/draft/disable?redirect=${$page.url.pathname}`}
+      class="group fixed bottom-3 right-3 rounded bg-white/30 p-2 text-xs text-gray-800 shadow-lg backdrop-blur-md hover:bg-red-500 hover:text-white"
+    >
+      <span class="block group-hover:hidden">Preview Enabled</span>
+      <span class="hidden group-hover:block">Disable Preview</span>
+    </a>
+  {/if}
 </div>

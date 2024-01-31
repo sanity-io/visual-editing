@@ -713,6 +713,9 @@ importers:
       '@sanity/presentation':
         specifier: workspace:*
         version: link:../../packages/presentation
+      '@sanity/preview-url-secret':
+        specifier: workspace:*
+        version: link:../../packages/preview-url-secret
       '@sanity/svelte-loader':
         specifier: workspace:*
         version: link:../../packages/svelte-loader
@@ -1216,9 +1219,15 @@ importers:
       '@sanity/pkg-utils':
         specifier: ^4.1.1
         version: 4.1.1(typescript@5.3.3)
+      '@sanity/preview-url-secret':
+        specifier: ^1.5.3
+        version: link:../preview-url-secret
       '@sanity/visual-editing-helpers':
         specifier: 0.2.6
         version: link:../visual-editing-helpers
+      '@sveltejs/kit':
+        specifier: ^2.4.3
+        version: 2.5.0(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.9)(vite@5.0.12)
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.20.0
         version: 6.20.0(@typescript-eslint/parser@6.20.0)(eslint@8.56.0)(typescript@5.3.3)
