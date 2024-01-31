@@ -187,7 +187,7 @@ export const load: PageServerLoad = async ({
 }) => {
   const { slug } = params
 
-  const initial = loadQuery<PageResult>(pageQuery, { slug })
+  const initial = await loadQuery<PageResult>(pageQuery, { slug })
 
   return { initial, params: { slug } }
 }
