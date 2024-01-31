@@ -108,7 +108,7 @@ import type { PageServerLoad } from './$types'
 export const load: PageServerLoad = async ({ params }) => {
   const { slug } = params
 
-  const initial = loadQuery<PageResult>(pageQuery, { slug })
+  const initial = await loadQuery<PageResult>(pageQuery, { slug })
 
   return { initial, params: { slug } }
 }
