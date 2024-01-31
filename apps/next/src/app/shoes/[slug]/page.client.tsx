@@ -64,6 +64,16 @@ export default function ShoePage(props: Props) {
               {loading ? 'Loading' : product?.title || 'Untitled'}
             </Link>
           </li>
+          <li>
+            <a
+              href="https://visual-editing-studio.sanity.build"
+              target="_blank"
+              rel="noopener"
+              referrerPolicy="no-referrer-when-downgrade"
+            >
+              Edit this page
+            </a>
+          </li>
         </ol>
       </nav>
 
@@ -189,14 +199,6 @@ export default function ShoePage(props: Props) {
           </div>
         </article>
       )}
-      <a
-        href="https://visual-editing-studio.sanity.build"
-        target="_blank"
-        rel="noopener"
-        referrerPolicy="no-referrer-when-downgrade"
-      >
-        Edit this page
-      </a>
     </div>
   )
 }
