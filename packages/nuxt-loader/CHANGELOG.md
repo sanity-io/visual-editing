@@ -69,6 +69,13 @@
   * dependencies
     * @sanity/core-loader bumped from 1.3.7 to 1.3.8
 
+## [1.7.9](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.8...nuxt-loader-v1.7.9) (2024-01-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nuxt to ^3.10.0 ([#794](https://github.com/sanity-io/visual-editing/issues/794)) ([fd81d94](https://github.com/sanity-io/visual-editing/commit/fd81d94e132e587eee269042f7e5f760f67c33e0))
+
 ## [1.7.8](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.7...nuxt-loader-v1.7.8) (2024-01-29)
 
 
