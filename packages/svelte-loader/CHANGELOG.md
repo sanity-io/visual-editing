@@ -79,6 +79,25 @@
   * dependencies
     * @sanity/core-loader bumped from 1.3.7 to 1.3.8
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.6.6...svelte-loader-v1.7.0) (2024-02-02)
+
+
+### Features
+
+* **svelte-loader:** preview support ([#780](https://github.com/sanity-io/visual-editing/issues/780)) ([23aca02](https://github.com/sanity-io/visual-editing/commit/23aca029d0b2502c8b0709fdf1d39e25baac06d0))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-url-secret to ^1.5.5 ([#806](https://github.com/sanity-io/visual-editing/issues/806)) ([d63df86](https://github.com/sanity-io/visual-editing/commit/d63df8680b38ffe7e4148241c9c875c7508c6385))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.10 to 1.4.0
+
 ## [1.6.6](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.6.5...svelte-loader-v1.6.6) (2024-01-29)
 
 

@@ -37,6 +37,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.3 to 0.2.4
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.10...core-loader-v1.4.0) (2024-02-02)
+
+
+### Features
+
+* **svelte-loader:** preview support ([#780](https://github.com/sanity-io/visual-editing/issues/780)) ([23aca02](https://github.com/sanity-io/visual-editing/commit/23aca029d0b2502c8b0709fdf1d39e25baac06d0))
+
 ## [1.3.10](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.9...core-loader-v1.3.10) (2024-01-29)
 
 

@@ -69,6 +69,12 @@
   * dependencies
     * @sanity/core-loader bumped from 1.3.7 to 1.3.8
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.10 to 1.4.0
+
 ## [1.7.9](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.8...nuxt-loader-v1.7.9) (2024-01-31)
 
 
