@@ -137,6 +137,23 @@ export default function handler(
 }
 ```
 
+## Checking the Studio origin
+
+You can inspect the URL origin of the Studio that initiated the preview on the `studioOrigin` property of `validatePreviewUrl`:
+
+```ts
+const {
+  isValid,
+  redirectTo = '/',
+  studioOrigin,
+} = await validatePreviewUrl(clientWithToken, req.url)
+if (studioOrigin === 'http://localhost:3333') {
+  console.log('This preview was initiated from the local development Studio')
+}
+```
+
+You don't have to check `isValid` before using it, as it'll be `undefined` if the preview URL secret failed validation. It's also `undefined` if the way the secret were created didn't provide an origin.
+
 ## Debugging generated secrets
 
 You can view the generated url secrets that are in your dataset by adding the debug plugin to your `sanity.config.ts`:

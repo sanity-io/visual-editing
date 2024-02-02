@@ -51,6 +51,10 @@ export interface PreviewUrlValidateUrlResult {
    * If the URL is valid, and there's a parameter for what preview path to redirect to, it will be here
    */
   redirectTo?: string
+  /**
+   * If the URL is valid, and the studior URL is known and valid, then its origin will be here
+   */
+  studioOrigin?: string
 }
 
 /** @internal */
@@ -108,6 +112,7 @@ export type FetchSecretQueryResponse = {
   _id: string
   _updatedAt: string | null
   secret: string | null
+  studioUrl: string | null
 } | null
 
 /** @internal */
