@@ -12,6 +12,13 @@
   * devDependencies
     * @sanity/channels bumped from 0.2.0 to 0.3.0
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.5...preview-url-secret-v1.6.0) (2024-02-02)
+
+
+### Features
+
+* add `studioOrigin` to `validatePreviewUrl` ([#818](https://github.com/sanity-io/visual-editing/issues/818)) ([a1ba977](https://github.com/sanity-io/visual-editing/commit/a1ba977a5fb38ff383d2d14f24dfa31e2a613c32))
+
 ## [1.5.5](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.4...preview-url-secret-v1.5.5) (2024-01-29)
 
 

@@ -79,6 +79,12 @@
   * dependencies
     * @sanity/core-loader bumped from 1.3.7 to 1.3.8
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/preview-url-secret bumped from ^1.5.5 to ^1.6.0
+
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.6.6...svelte-loader-v1.7.0) (2024-02-02)
 
 
