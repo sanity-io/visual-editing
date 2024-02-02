@@ -59,6 +59,12 @@
   * dependencies
     * @sanity/core-loader bumped from 1.3.7 to 1.3.8
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.3.10 to 1.4.0
+
 ## [1.8.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.8.0...react-loader-v1.8.1) (2024-01-29)
 
 
