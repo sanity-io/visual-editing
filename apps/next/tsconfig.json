@@ -22,11 +22,13 @@
     "paths": {
       "@/*": ["./src/*"],
       "@sanity/overlays": ["../../packages/overlays/src"],
+      "@sanity/visual-editing": ["../../packages/visual-editing/src"],
       "@sanity/preview-kit-compat": ["../../packages/preview-kit-compat/src"],
     },
   },
   "include": [
     "../../packages/overlays/src",
+    "../../packages/visual-editing/src",
     "../../packages/preview-kit-compat/src",
     "next-env.d.ts",
     "**/*.ts",

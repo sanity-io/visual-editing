@@ -7,7 +7,7 @@ import { HistoryAdapter } from '../types'
  * Cleanup function used when e.g. unmounting
  * @public
  */
-export type DisableOverlays = () => void
+export type DisableVisualEditing = () => void
 
 let node: HTMLElement | null = null
 let root: Root | null = null
@@ -19,25 +19,13 @@ let cleanup: number | null = null
  * This will overlay UI on hovered elements that deep-links to Sanity Studio.
  * @public
  */
-export function enableOverlays(
+export function enableVisualEditing(
   options: {
-    /**
-     * @deprecated -- no longer needed
-     */
-    allowStudioOrigin?:
-      | 'same-origin'
-      | `https://${string}`
-      | `http://${string}`
-      | string
     history?: HistoryAdapter
     zIndex?: string | number
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } = {} as any,
-): DisableOverlays {
-  if (options.allowStudioOrigin) {
-    // eslint-disable-next-line no-console
-    console.warn('`allowStudioOrigin` is deprecated and no longer needed')
-  }
+): DisableVisualEditing {
   if (cleanup) clearTimeout(cleanup)
   const controller = new AbortController()
 
@@ -78,15 +66,4 @@ export function enableOverlays(
       }
     }, 1000)
   }
-}
-
-/**
- * @deprecated Use `enableOverlays` instead
- */
-export const enableVisualEditing: typeof enableOverlays = (...args) => {
-  // eslint-disable-next-line no-console
-  console.warn(
-    `'enableVisualEditing' is deprecated, use 'enableOverlays' instead.`,
-  )
-  return enableOverlays(...args)
 }

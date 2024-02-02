@@ -4,16 +4,9 @@ import baseConfig from '../../package.config'
 
 export default defineConfig({
   ...baseConfig,
-  // `@sanity/overlays` isn't designed to be server side rendered
+  // `@sanity/visual-editing` isn't designed to be server side rendered
   runtime: 'browser',
   define: {
     'process.env.NODE_ENV': 'production',
-  },
-  extract: {
-    ...baseConfig.extract,
-    bundledPackages: [
-      ...(baseConfig.extract?.bundledPackages || []),
-      '@sanity/visual-editing',
-    ],
   },
 })

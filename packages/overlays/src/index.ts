@@ -1,3 +1,8 @@
-export { createOverlayController } from './controller'
-export type * from './types'
-export { type DisableOverlays, enableOverlays } from './ui/enableOverlays'
+export type * from '@sanity/visual-editing'
+export {
+  createOverlayController,
+  type DisableVisualEditing as DisableOverlays,
+  type DisableVisualEditing,
+  enableVisualEditing as enableOverlays,
+  enableVisualEditing,
+} from '@sanity/visual-editing'

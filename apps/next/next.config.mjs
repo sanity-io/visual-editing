@@ -10,7 +10,7 @@ const nextConfig = {
   },
 
   transpilePackages: [
-    '@sanity/overlays',
+    '@sanity/visual-editing',
     '@sanity/preview-kit-compat',
     '@sanity/channels',
     '@sanity/visual-editing-helpers',

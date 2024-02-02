@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "noEmit": true,
-    "strictNullChecks": true,
     "baseUrl": ".",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -17,6 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
@@ -24,13 +22,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@sanity/overlays": ["../../packages/overlays/src"],
-      "@sanity/react-loader": ["../../packages/react-loader/src"],
-      "@sanity/visual-editing": ["../../packages/visual-editing/src"],
-    },
-  },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["dist", "node_modules"],
+    "noFallthroughCasesInSwitch": true
+  }
 }
