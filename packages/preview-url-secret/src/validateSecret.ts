@@ -9,27 +9,30 @@ import type {
 export async function validateSecret(
   client: SanityClientLike,
   secret: string,
-  disableCacheNoStore?: boolean,
-): Promise<boolean> {
+  disableCacheNoStore: boolean,
+): Promise<{ isValid: boolean; studioUrl: string | null }> {
   // If we're in the Edge Runtime it's usually too quick and we need to delay fetching the secret a little bit
   // @ts-expect-error -- this global exists if we're in the Edge Runtime
   if (typeof EdgeRuntime !== 'undefined') {
     await new Promise((resolve) => setTimeout(resolve, 300))
   }
   if (!secret || !secret.trim()) {
-    return false
+    return { isValid: false, studioUrl: null }
   }
-  const result = await client.fetch<FetchSecretQueryResponse>(
+  const result = await client.fetch<
+    FetchSecretQueryResponse,
+    FetchSecretQueryParams
+  >(
     fetchSecretQuery,
-    { secret } satisfies FetchSecretQueryParams,
+    { secret: secret },
     {
       tag,
-      // @ts-expect-error -- the `cache` option is valid, but not in the types when NextJS typings aren't installed
+      // In CloudFlare Workers we can't pass the cache header
       ...(!disableCacheNoStore ? { cache: 'no-store' } : undefined),
     },
   )
   if (!result?._id || !result?._updatedAt || !result?.secret) {
-    return false
+    return { isValid: false, studioUrl: null }
   }
-  return secret === result.secret
+  return { isValid: secret === result.secret, studioUrl: result.studioUrl }
 }

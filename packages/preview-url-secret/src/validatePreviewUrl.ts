@@ -9,12 +9,17 @@ import {
 import { validateSecret } from './validateSecret'
 
 /**
- * @alpha
+ * @public
  */
 export async function validatePreviewUrl(
   _client: SanityClientLike,
   previewUrl: string,
-  disableCacheNoStore?: boolean,
+  /**
+   * @deprecated - this option is automatically determined based on the environment
+   */
+  // Default value based on https://developers.cloudflare.com/workers/runtime-apis/web-standards/#navigatoruseragent
+  disableCacheNoStore: boolean = globalThis.navigator?.userAgent ===
+    'Cloudflare-Workers',
 ): Promise<PreviewUrlValidateUrlResult> {
   const client = createClientWithConfig(_client)
   let parsedPreviewUrl: ParsedPreviewUrl
@@ -31,14 +36,28 @@ export async function validatePreviewUrl(
     return { isValid: false }
   }
 
-  const isValid = await validateSecret(
+  const { isValid, studioUrl } = await validateSecret(
     client,
     parsedPreviewUrl.secret,
     disableCacheNoStore,
   )
   const redirectTo = isValid ? parsedPreviewUrl.redirectTo : undefined
+  let studioOrigin: string | undefined
+  if (isValid) {
+    try {
+      studioOrigin = new URL(studioUrl!).origin
+    } catch (error) {
+      if (isDev) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to parse studioUrl', error, {
+          previewUrl,
+          studioUrl,
+        })
+      }
+    }
+  }
 
-  return { isValid, redirectTo }
+  return { isValid, redirectTo, studioOrigin }
 }
 
 export type { PreviewUrlValidateUrlResult, SanityClientLike }

@@ -35,6 +35,7 @@ export const fetchSecretQuery =
   _id,
   _updatedAt,
   secret,
+  studioUrl,
 }` as const
 
 /** @internal */
