@@ -832,7 +832,7 @@ function ShareUrlMenuItems(
         text="Open preview"
         as="a"
         href={`${previewLocationOrigin}${previewLocationRoute}`}
-        onClick={handleOpenPopup as any}
+        // onClick={handleOpenPopup as any}
         rel="opener"
         target="_blank"
       />

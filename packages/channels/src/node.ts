@@ -30,6 +30,27 @@ export function createChannelsNode<T extends ChannelMsg>(
     status: 'connecting',
   }
 
+  // Handle channels that move between new windows
+  if (window.opener) {
+    // @ts-expect-error -- TODO fix type
+    const msg: ProtocolMsg<T> = {
+      domain: 'sanity/channels',
+      from: config.id,
+      id: uuid(),
+      to: config.connectTo,
+      type: 'handshake/opener',
+    }
+
+    try {
+      window.opener.postMessage(msg, {
+        // Don't know the origin of the opener initially, we set it after a successful handhsake with Presentation Tool
+        targetOrigin: '*',
+      })
+    } catch (e) {
+      throw new Error(`Failed to postMessage '${msg.id}' on '${config.id}'`)
+    }
+  }
+
   function flush() {
     const toFlush = [...channel.buffer]
     channel.buffer.splice(0, channel.buffer.length)

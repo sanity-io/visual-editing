@@ -163,6 +163,33 @@ export default function PresentationTool(props: {
   )
 
   useEffect(() => {
+    const listener = (event: MessageEvent) => {
+      if (!event.data) return
+      if (
+        event.data?.domain != 'sanity/channels' ||
+        event.data?.from != 'overlays' ||
+        event.data?.to != 'presentation' ||
+        event.data?.type == 'handshake/opener'
+      ) {
+        return
+      }
+      /**
+ * domain: 'sanity/channels',
+      from: config.id,
+      id: uuid(),
+      to: config.connectTo,
+      type: 'handshake/opener',
+ */
+
+      // if(event?.data?.domain !== 'sanity/channels' || event.data?.from == 'loaders') { return }
+      // console.log(JSON.parse(JSON.stringify(event.data)), event.source)
+      popups.add(event.source as Window)
+    }
+    window.addEventListener('message', listener)
+    return () => window.removeEventListener('message', listener)
+  }, [popups])
+
+  useEffect(() => {
     if (popups.size && channel) {
       // loop popups and call channel.addSource
       for (const source of popups) {

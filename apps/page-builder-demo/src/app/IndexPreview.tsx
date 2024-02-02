@@ -9,8 +9,8 @@ const PAGE_QUERY = `{
   "siteSettings": ${SITE_SETTINGS_QUERY}
 }`
 
-export function IndexPreview() {
-  const { data, loading } = useQuery<IndexPageData>(PAGE_QUERY)
+export function IndexPreview({ initial }: { initial: any }) {
+  const { data, loading } = useQuery<IndexPageData>(PAGE_QUERY, {}, { initial })
 
   if (loading || !data) {
     return <div>Loading…</div>

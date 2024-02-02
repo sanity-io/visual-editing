@@ -1,6 +1,6 @@
 'use client'
 
-import { useLiveMode } from '@/sanity'
+import { client, useLiveMode } from '@/sanity'
 import { enableOverlays, HistoryAdapterNavigate } from '@sanity/overlays'
 import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef, useState } from 'react'
@@ -49,7 +49,7 @@ export default function VisualEditing() {
     }
   }, [navigate, pathname, searchParams])
 
-  useLiveMode({})
+  useLiveMode({ client })
 
   return null
 }

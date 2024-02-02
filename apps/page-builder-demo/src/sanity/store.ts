@@ -1,6 +1,10 @@
 import { QueryParams } from '@sanity/client'
 import { SanityNodeContext, wrapData } from '@sanity/react-loader/jsx'
-import { createQueryStore } from '@sanity/react-loader'
+import {
+  UseQueryOptionsDefinedInitial,
+  setServerClient,
+  useQuery as _useQuery,
+} from '@sanity/react-loader'
 import { studioUrl, workspaces } from 'apps-common/env'
 import { getClient } from './client'
 import { useMemo } from 'react'
@@ -9,20 +13,26 @@ const workspace = workspaces['page-builder-demo']
 
 export const client = getClient()
 
-const { useQuery: _useQuery, useLiveMode } = createQueryStore({ client })
+if (typeof document === 'undefined') {
+  setServerClient(client)
+}
 
 const context: SanityNodeContext = {
   baseUrl: `${studioUrl}/${workspace.workspace}`,
 }
 
-export function useQuery<T>(query: string, params?: QueryParams) {
+export function useQuery<T>(
+  query: string,
+  params?: QueryParams,
+  options?: UseQueryOptionsDefinedInitial<T>,
+) {
   const {
     data: rawData,
     error,
     loading,
     sourceMap,
     encodeDataAttribute,
-  } = _useQuery<T>(query, params)
+  } = _useQuery<T>(query, params, options)
 
   const data = useMemo(
     () =>
@@ -39,4 +49,4 @@ export function useQuery<T>(query: string, params?: QueryParams) {
   }
 }
 
-export { useLiveMode }
+export { useLiveMode, loadQuery } from '@sanity/react-loader'

@@ -1,8 +1,9 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, Inter, PT_Serif } from 'next/font/google'
-import VisualEditing from './VisualEditing'
-import { Suspense } from 'react'
+import { Suspense, lazy } from 'react'
+
+const VisualEditing = lazy(() => import('./VisualEditing'))
 
 export const metadata: Metadata = {
   title: '',
