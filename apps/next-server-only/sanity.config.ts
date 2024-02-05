@@ -22,7 +22,7 @@ const config = defineConfig({
     structureTool(),
     presentationTool({
       previewUrl: {
-        draftMode: {
+        previewMode: {
           enable: '/api/draft',
           disable: 'api/disable-draft',
         },

@@ -24,7 +24,7 @@ export default defineConfig({
       previewUrl: {
         // @TODO change to the URL of the application, or `location.origin` if it's an embedded Studio
         origin: 'http://localhost:3000',
-        draftMode: {
+        previewMode: {
           enable: '/api/draft',
         },
       },

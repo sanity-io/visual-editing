@@ -78,24 +78,40 @@ export interface PreviewUrlResolverOptions {
    */
   preview?: string
   /**
-   * The API route that securely puts the app in a "Draft Mode"
-   * Next.js docs: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
+   * @deprecated - use `previewMode` instead
    */
-  draftMode: {
+  draftMode?: {
     /**
-     * The route that enables Draft Mode
-     * @example '/api/draft'
+     * @deprecated - use `previewMode.enable` instead
      */
     enable: string
     /**
-     * A route that reports of Draft Mode is enabled or not, useful for debugging
-     * @example '/api/check-draft'
+     * @deprecated - use `previewMode.check` instead
+     */
+    check?: string
+    /**
+     * @deprecated - use `previewMode.disable` instead
+     */
+    disable?: string
+  }
+  /**
+   * The API routes for setting the application's "Preview Mode"
+   */
+  previewMode?: {
+    /**
+     * The route that enables Preview Mode
+     * @example '/api/preview'
+     */
+    enable: string
+    /**
+     * The route that reports if Preview Mode is enabled or not, useful for debugging
+     * @example '/api/check-preview'
      * @deprecated - this API is not yet implemented
      */
     check?: string
     /**
-     * The route that disables Draft Mode, useful for debugging
-     * @example '/api/disable-draft'
+     * The route that disables Preview Mode, useful for debugging
+     * @example '/api/disable-preview'
      * @deprecated - this API is not yet implemented
      */
     disable?: string
