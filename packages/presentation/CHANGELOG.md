@@ -7,6 +7,13 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.5.5 to ^1.6.0
 
+## [1.7.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.4...presentation-v1.7.5) (2024-02-05)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency mnemonist to v0.39.8 ([#822](https://github.com/sanity-io/visual-editing/issues/822)) ([db154e2](https://github.com/sanity-io/visual-editing/commit/db154e259ff03efc030cf1ee863be7bff935f4b3))
+
 ## [1.7.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.2...presentation-v1.7.3) (2024-01-30)
 
 
