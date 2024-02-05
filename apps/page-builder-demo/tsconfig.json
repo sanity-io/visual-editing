@@ -15,16 +15,16 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "rootDir": "../..",
     "paths": {
       "@/*": ["./src/*"],
       "@sanity/overlays": ["../../packages/overlays/src"],
       "@sanity/react-loader": ["../../packages/react-loader/src"],
-      "@sanity/visual-editing": ["../../packages/visual-editing/src"],
-    },
+      "@sanity/visual-editing": ["../../packages/visual-editing/src"]
+    }
   },
   "include": [
     "../../packages/csm/src",
@@ -34,7 +34,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
