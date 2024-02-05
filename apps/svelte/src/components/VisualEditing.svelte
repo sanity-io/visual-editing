@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { enableVisualEditing, type HistoryAdapterNavigate } from '@sanity/visual-editing'
+  import {
+    enableVisualEditing,
+    type HistoryAdapterNavigate,
+  } from '@sanity/visual-editing'
   import { useLiveMode } from '@sanity/svelte-loader'
   import { afterNavigate, goto } from '$app/navigation'
   import { client } from '$lib/sanity'
