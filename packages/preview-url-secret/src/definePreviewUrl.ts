@@ -16,14 +16,16 @@ export function definePreviewUrl<SanityClientType>(
 ): PreviewUrlResolver<SanityClientType> {
   const {
     draftMode,
+    previewMode,
     origin = typeof location === 'undefined'
       ? 'https://localhost'
       : location.origin,
   } = options
+  const enableUrl = previewMode?.enable || draftMode?.enable
   let { preview = '/' } = options
   const productionUrl = new URL(preview, origin)
-  const enableDraftModeUrl = draftMode.enable
-    ? new URL(draftMode.enable, origin)
+  const enablePreviewModeUrl = enableUrl
+    ? new URL(enableUrl, origin)
     : undefined
 
   return async (context): Promise<string> => {
@@ -53,18 +55,18 @@ export function definePreviewUrl<SanityClientType>(
       preview = options.preview || '/'
     }
     const previewUrl = new URL(preview, productionUrl)
-    if (enableDraftModeUrl) {
-      const enableDraftModeRequestUrl = new URL(enableDraftModeUrl)
-      const { searchParams } = enableDraftModeRequestUrl
+    if (enablePreviewModeUrl) {
+      const enablePreviewModeRequestUrl = new URL(enablePreviewModeUrl)
+      const { searchParams } = enablePreviewModeRequestUrl
       searchParams.set(urlSearchParamPreviewSecret, context.previewUrlSecret)
-      if (previewUrl.pathname !== enableDraftModeRequestUrl.pathname) {
+      if (previewUrl.pathname !== enablePreviewModeRequestUrl.pathname) {
         searchParams.set(
           urlSearchParamPreviewPathname,
           `${previewUrl.pathname}${previewUrl.search}`,
         )
       }
 
-      return enableDraftModeRequestUrl.toString()
+      return enablePreviewModeRequestUrl.toString()
     }
     return previewUrl.toString()
   }

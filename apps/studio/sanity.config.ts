@@ -42,7 +42,7 @@ function maybeGitBranchUrl(url: string) {
   return previewUrl
 }
 
-// Some apps have a Draft Mode, some don't
+// Some apps have a Preview Mode, some don't
 function definePreviewUrl(
   _previewUrl: string,
   workspaceName: string,
@@ -51,29 +51,29 @@ function definePreviewUrl(
   const previewUrl = maybeGitBranchUrl(_previewUrl)
   if (workspaceName === 'next' && toolName === 'pages-router') {
     const { origin, pathname } = new URL(previewUrl)
-    const draftMode = {
+    const previewMode = {
       enable: '/api/pages-draft',
       check: '/api/pages-check-draft',
       disable: '/api/pages-disable-draft',
-    } satisfies PreviewUrlResolverOptions['draftMode']
-    return { origin, preview: pathname, draftMode }
+    } satisfies PreviewUrlResolverOptions['previewMode']
+    return { origin, preview: pathname, previewMode }
   }
   if (workspaceName === 'next' && toolName === 'app-router') {
     const { origin, pathname } = new URL(previewUrl)
-    const draftMode = {
+    const previewMode = {
       enable: '/api/draft',
       check: '/api/check-draft',
       disable: '/api/disable-draft',
-    } satisfies PreviewUrlResolverOptions['draftMode']
-    return { origin, preview: pathname, draftMode }
+    } satisfies PreviewUrlResolverOptions['previewMode']
+    return { origin, preview: pathname, previewMode }
   }
   if (workspaceName === 'svelte') {
     const { origin, pathname } = new URL(previewUrl)
-    const draftMode = {
+    const previewMode = {
       enable: '/preview/enable',
       disable: '/preview/disable',
-    } satisfies PreviewUrlResolverOptions['draftMode']
-    return { origin, preview: pathname, draftMode }
+    } satisfies PreviewUrlResolverOptions['previewMode']
+    return { origin, preview: pathname, previewMode }
   }
 
   return previewUrl

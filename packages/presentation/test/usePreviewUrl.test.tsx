@@ -46,9 +46,9 @@ describe('previewUrl handling', () => {
     ).toMatchInlineSnapshot(`"http://localhost:3000/"`)
   })
 
-  test('Draft Mode on same origin', async () => {
+  test('Preview Mode on same origin', async () => {
     const previewUrl = {
-      draftMode: { enable: '/api/draft' },
+      previewMode: { enable: '/api/draft' },
     } satisfies PreviewUrlOption
     const resolvePreviewUrl = definePreviewUrl<SanityClient>(previewUrl)
     let resolvedPreviewUrl = await resolvePreviewUrl({
@@ -75,10 +75,10 @@ describe('previewUrl handling', () => {
     )
   })
 
-  test('Draft Mode on same origin with redirect', async () => {
+  test('Preview Mode on same origin with redirect', async () => {
     const previewUrl = {
       preview: '/preview',
-      draftMode: { enable: '/api/draft' },
+      previewMode: { enable: '/api/draft' },
     } satisfies PreviewUrlOption
     const resolvePreviewUrl = definePreviewUrl<SanityClient>(previewUrl)
     let resolvedPreviewUrl = await resolvePreviewUrl({
@@ -105,10 +105,10 @@ describe('previewUrl handling', () => {
     )
   })
 
-  test('Draft Mode on cross origin', async () => {
+  test('Preview Mode on cross origin', async () => {
     const previewUrl = {
       origin: 'https://my.vercel.app',
-      draftMode: { enable: '/api/draft' },
+      previewMode: { enable: '/api/draft' },
     } satisfies PreviewUrlOption
     const resolvePreviewUrl = definePreviewUrl<SanityClient>(previewUrl)
     let resolvedPreviewUrl = await resolvePreviewUrl({
@@ -135,11 +135,11 @@ describe('previewUrl handling', () => {
     )
   })
 
-  test('Draft Mode on cross origin with redirect', async () => {
+  test('Preview Mode on cross origin with redirect', async () => {
     const previewUrl = {
       origin: 'https://my.vercel.app',
       preview: '/preview',
-      draftMode: { enable: '/api/draft' },
+      previewMode: { enable: '/api/draft' },
     } satisfies PreviewUrlOption
     const resolvePreviewUrl = definePreviewUrl<SanityClient>(previewUrl)
     let resolvedPreviewUrl = await resolvePreviewUrl({
@@ -172,20 +172,20 @@ describe('previewUrl handling', () => {
     ).toThrowErrorMatchingInlineSnapshot(`[TypeError: Invalid URL]`)
     expect(() =>
       renderToStaticMarkup(
-        <TestPrinter previewUrl={{ draftMode: { enable: '//' } }} />,
+        <TestPrinter previewUrl={{ previewMode: { enable: '//' } }} />,
       ),
     ).toThrowErrorMatchingInlineSnapshot(`[TypeError: Invalid URL]`)
     expect(() =>
       renderToStaticMarkup(
         <TestPrinter
-          previewUrl={{ preview: '//', draftMode: { enable: '/api/enable' } }}
+          previewUrl={{ preview: '//', previewMode: { enable: '/api/enable' } }}
         />,
       ),
     ).toThrowErrorMatchingInlineSnapshot(`[TypeError: Invalid URL]`)
     expect(() =>
       renderToStaticMarkup(
         <TestPrinter
-          previewUrl={{ origin: '//', draftMode: { enable: '/api/enable' } }}
+          previewUrl={{ origin: '//', previewMode: { enable: '/api/enable' } }}
         />,
       ),
     ).toThrowErrorMatchingInlineSnapshot(`[TypeError: Invalid URL]`)
