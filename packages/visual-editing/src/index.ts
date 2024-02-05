@@ -1,6 +1,33 @@
 export { createOverlayController } from './controller'
-export type * from './types'
+export type {
+  ElementFocusedState,
+  ElementState,
+  HistoryAdapter,
+  HistoryAdapterNavigate,
+  HistoryUpdate,
+  Msg,
+  OverlayController,
+  OverlayEventHandler,
+  OverlayMsg,
+  OverlayMsgActivate,
+  OverlayMsgBlur,
+  OverlayMsgDeactivate,
+  OverlayMsgElement,
+  OverlayMsgElementActivate,
+  OverlayMsgElementClick,
+  OverlayMsgElementDeactivate,
+  OverlayMsgElementMouseEnter,
+  OverlayMsgElementMouseLeave,
+  OverlayMsgElementRegister,
+  OverlayMsgElementUnregister,
+  OverlayMsgElementUpdateRect,
+  OverlayOptions,
+  OverlayRect,
+  SanityNode,
+  SanityNodeLegacy,
+} from './types'
 export {
   type DisableVisualEditing,
   enableVisualEditing,
+  type VisualEditingOptions,
 } from './ui/enableVisualEditing'

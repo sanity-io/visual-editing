@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { OverlayRect } from '@sanity/overlays'
+import type { OverlayRect } from '@sanity/visual-editing'
 
 const emit = defineEmits<{
   (e: 'open'): void

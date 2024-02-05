@@ -1,5 +1,8 @@
 import { useLocation, useNavigate } from '@remix-run/react'
-import { enableOverlays, type HistoryAdapterNavigate } from '@sanity/overlays'
+import {
+  enableVisualEditing,
+  type HistoryAdapterNavigate,
+} from '@sanity/visual-editing'
 import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef, useState } from 'react'
 import { useLiveMode } from '@sanity/react-loader'
@@ -14,7 +17,7 @@ export default function VisualEditing() {
     navigateRemixRef.current = navigateRemix
   }, [navigateRemix])
   useEffect(() => {
-    const disable = enableOverlays({
+    const disable = enableVisualEditing({
       history: {
         subscribe: (navigate) => {
           setNavigate(() => navigate)

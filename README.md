@@ -6,9 +6,9 @@ This repository contains packages to enable Visual Editing with Sanity. Visual E
 
 [`@sanity/presentation`](./packages/presentation/README.md) is a Sanity Studio plugin that lets you work with content directly through preview — be it a website, in-store display, or anything you can point a browser at.
 
-## Overlays
+## Overlays & router integration
 
-[`@sanity/overlays`](./packages/overlays/README.md) is used alongside the Presentation tool to create clickable elements to take editors right from previews to the document and field they want to edit.
+[`@sanity/visual-editing`](./packages/visual-editing/README.md) is used alongside the Presentation tool to create clickable elements to take editors right from previews to the document and field they want to edit. It's also used to two-way sync the preview URL and integrate with your framework router.
 
 ## Loaders
 

@@ -39,11 +39,11 @@
 </template>
 
 <script setup lang="ts">
-import { type DisableOverlays, enableOverlays } from '@sanity/overlays'
+import { type DisableVisualEditing, enableVisualEditing } from '@sanity/visual-editing'
 
-let disable: DisableOverlays
+let disable: DisableVisualEditing
 onMounted(() => {
-  disable = enableOverlays()
+  disable = enableVisualEditing()
 })
 onUnmounted(() => disable())
 

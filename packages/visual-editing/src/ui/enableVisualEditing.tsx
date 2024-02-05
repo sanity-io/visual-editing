@@ -9,6 +9,20 @@ import { HistoryAdapter } from '../types'
  */
 export type DisableVisualEditing = () => void
 
+/**
+ * @public
+ */
+export interface VisualEditingOptions {
+  /**
+   * The history adapter is used for Sanity Presentation to navigate URLs in the preview frame.
+   */
+  history?: HistoryAdapter
+  /**
+   * The CSS z-index on the root node that renders overlays, tweak it accordingly to what layout you have.
+   */
+  zIndex?: string | number
+}
+
 let node: HTMLElement | null = null
 let root: Root | null = null
 let cleanup: number | null = null
@@ -20,11 +34,7 @@ let cleanup: number | null = null
  * @public
  */
 export function enableVisualEditing(
-  options: {
-    history?: HistoryAdapter
-    zIndex?: string | number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } = {} as any,
+  options: VisualEditingOptions = {},
 ): DisableVisualEditing {
   if (cleanup) clearTimeout(cleanup)
   const controller = new AbortController()

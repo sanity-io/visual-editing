@@ -5,52 +5,26 @@
 [![gzip size][gzip-badge]][bundlephobia]
 [![size][size-badge]][bundlephobia]
 
-This package is used with the [Presentation](https://www.sanity.io/docs/presentation) tool in the Sanity Studio to create clickable elements to take editors right from previews to the document and field they want to edit.
+> [!WARNING]  
+> This package is replaced by [`@sanity/visual-editing`].
 
-## Usage
+## Migrate to [`@sanity/visual-editing`]
 
-### In React.js
+Replace the dependency:
 
-```tsx
-import { enableOverlays } from '@sanity/overlays'
-import { useEffect } from 'react'
-
-export default function VisualEditing() {
-  useEffect(() => {
-    const disable = enableOverlays()
-    return () => disable()
-  }, [])
-
-  return null
-}
+```sh
+npm uninstall @sanity/overlays
+npm install @sanity/visual-editing
 ```
 
-## Manually configuring "Edit in Sanity Studio" elements
+Replace import statements:
 
-### `data-sanity-edit-target`
-
-You can choose which element to render the "Edit in Sanity Studio" buttons on by adding a `data-sanity-edit-target` attribute to the element you want to be clickable. This allows you to move the edit container to a parent wrapper element.
-
-In this example, by default the edit button would be placed on the `<h1>` tag
-
-```html
-<section>
-  <h1>{dynamicTitle}</h1>
-  <div>Hardcoded Tagline</div>
-</section>
+```diff
+-import { enableOverlays, type DisableOverlays } from '@sanity/overlays'
++import { enableVisualEditing, type DisableVisualEditing } from '@sanity/vision-editing'
 ```
 
-But by adding the `data-sanity-edit-target` attribute to the `<section>` tag, the edit button will be placed on it instead.
-
-```html
-<section data-sanity-edit-target>
-  <h1>{dynamicTitle}</h1>
-  <div>Hardcoded Tagline</div>
-</section>
-```
-
-Manually setting the edit target will use the first element it finds with encoded metadata and remove clickable buttons from all other child elements.
-
+[`@sanity/visual-editing`]: https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing#readme
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/overlays?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/overlays?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/overlays
