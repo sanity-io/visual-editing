@@ -145,7 +145,7 @@ export default function VisualEditing() {
 
 ### Adding overlays to any element
 
-You can use the `encodeDataAttribute` function returned by `useQuery` to create `data-json` attributes, that are picked up by `@sanity/visual-editing`.
+You can use the `encodeDataAttribute` function returned by `useQuery` to create `data-sanity` attributes, that are picked up by `@sanity/visual-editing`.
 This allows you to link to elements that otherwise isn't automatically linked to using `@sanity/client/stega`, such as array root item, or an image field.
 
 If you aren't using stega and don't have a `studioUrl` defined in the `createClient` call, then you add it to the `useLiveMode` hook:
