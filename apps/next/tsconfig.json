@@ -15,16 +15,16 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "rootDir": "../..",
     "paths": {
       "@/*": ["./src/*"],
       "@sanity/overlays": ["../../packages/overlays/src"],
       "@sanity/visual-editing": ["../../packages/visual-editing/src"],
-      "@sanity/preview-kit-compat": ["../../packages/preview-kit-compat/src"],
-    },
+      "@sanity/preview-kit-compat": ["../../packages/preview-kit-compat/src"]
+    }
   },
   "include": [
     "../../packages/overlays/src",
@@ -33,7 +33,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
