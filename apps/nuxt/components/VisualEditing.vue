@@ -3,7 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { type DisableVisualEditing, enableVisualEditing } from '@sanity/visual-editing'
+import {
+  type DisableVisualEditing,
+  enableVisualEditing,
+} from '@sanity/visual-editing'
 
 let disable: DisableVisualEditing
 const router = useRouter()
