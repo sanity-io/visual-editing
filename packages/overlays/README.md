@@ -7,52 +7,23 @@
 
 This package is used with the [Presentation](https://www.sanity.io/docs/presentation) tool in the Sanity Studio to create clickable elements to take editors right from previews to the document and field they want to edit.
 
-## Getting started
+## Usage
 
-### 1. Install @sanity/overlays
+### In React.js
 
-Install the package along with either `@sanity/react-loader`, `@sanity/nuxt-loader`, `@sanity/svelte-loader` or `@sanity/core-loader` depending on your project.
-
-The other peer dependencies are required and will be loaded asynchronously when Visual Editing is enabled.
-
-```sh
-# For React.js applications
-npm install @sanity/overlays @sanity/react-loader
-```
-
-```sh
-# Framework agnostic JavaScript libraries
-npm install @sanity/overlays @sanity/core-loader
-```
-
-### 2. Fetch data with a Sanity loader
-
-TODO, link to the docs for each loader
-
-### 3. Set data attributes
-
-TODO, how to set the `data-sanity` attributes
-
-### 4. Dynamically enable Visual Editing
-
-Ensure the overlay is only enabled in non-production environments.
-
-```ts
+```tsx
 import { enableOverlays } from '@sanity/overlays'
+import { useEffect } from 'react'
 
-const disable = enableOverlays() // Enables Visual Editing overlay
-disable() // Disables Visual Editing overlay
+export default function VisualEditing() {
+  useEffect(() => {
+    const disable = enableOverlays()
+    return () => disable()
+  }, [])
+
+  return null
+}
 ```
-
-In React you could enable the feature in a `useEffect()` hook, where `disable()` will run on unmount:
-
-```ts
-import { enableOverlays } from '@sanity/overlays'
-
-useEffect(enableOverlays, [])
-```
-
-When enabled, you should see clickable "Edit in Sanity Studio" buttons for every element which contains encoded metadata from Content Source Maps.
 
 ## Manually configuring "Edit in Sanity Studio" elements
 
@@ -79,14 +50,6 @@ But by adding the `data-sanity-edit-target` attribute to the `<section>` tag, th
 ```
 
 Manually setting the edit target will use the first element it finds with encoded metadata and remove clickable buttons from all other child elements.
-
-## Using stega
-
-Docs on how to use the new stega enhanced client in `@sanity/client/stega` which replaces `@sanity/preview-kit/client`.
-
-## Vercel Visual Editing compatibility
-
-A note on usage that's compatible with Vercel.
 
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/overlays?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/overlays?label=size&style=flat-square
