@@ -5,30 +5,6 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/channels bumped to 0.1.0
-    * @sanity/visual-editing-helpers bumped to 0.1.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/channels bumped from 0.2.0 to 0.3.0
 
 ## [2.3.10](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.9...overlays-v2.3.10) (2024-02-05)
 

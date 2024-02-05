@@ -1,40 +1,10 @@
-# Changelog
+<!-- markdownlint-disable --><!-- textlint-disable -->
 
-### Dependencies
+# 📓 Changelog
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.0 to 0.1.1
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/channels bumped from 0.2.0 to 0.3.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.3 to 0.2.4
 
 ## [1.4.4](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.4.3...preview-kit-compat-v1.4.4) (2024-01-29)
 

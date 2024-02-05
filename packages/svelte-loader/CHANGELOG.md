@@ -1,89 +1,10 @@
-# Changelog
+<!-- markdownlint-disable --><!-- textlint-disable -->
 
-### Dependencies
+# 📓 Changelog
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped to 0.5.1-pink-lizard
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped to 0.7.3-pink-lizard
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped to 0.7.4-pink-lizard
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped to 0.8.0-pink-lizard
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped from 1.1.0 to 1.1.1
-  * devDependencies
-    * @sanity/channels bumped to 0.1.0
-    * @sanity/visual-editing-helpers bumped to 0.1.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped from 1.1.3 to 1.1.4
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.2 to 0.1.3
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped from 1.3.0 to 1.3.1
-  * devDependencies
-    * @sanity/channels bumped from 0.2.0 to 0.3.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped from 1.3.1 to 1.3.2
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.4 to 0.2.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped from 1.3.2 to 1.3.3
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped from 1.3.6 to 1.3.7
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.3 to 0.2.4
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped from 1.3.7 to 1.3.8
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/preview-url-secret bumped from ^1.5.5 to ^1.6.0
 
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.6.6...svelte-loader-v1.7.0) (2024-02-02)
 

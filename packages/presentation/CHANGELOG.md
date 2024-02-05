@@ -1,11 +1,10 @@
-# Changelog
+<!-- markdownlint-disable --><!-- textlint-disable -->
 
+# 📓 Changelog
 
-### Dependencies
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/preview-url-secret bumped from ^1.5.5 to ^1.6.0
 
 ## [1.7.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.4...presentation-v1.7.5) (2024-02-05)
 

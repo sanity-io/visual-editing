@@ -1,16 +1,10 @@
-# Changelog
+<!-- markdownlint-disable --><!-- textlint-disable -->
 
-### Dependencies
+# 📓 Changelog
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/channels bumped to 0.1.0
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/channels bumped from 0.2.0 to 0.3.0
 
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.5...preview-url-secret-v1.6.0) (2024-02-02)
 
