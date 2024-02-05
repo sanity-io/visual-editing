@@ -7,6 +7,21 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.5.5 to ^1.6.0
 
+## [1.7.6](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.5...presentation-v1.7.6) (2024-02-05)
+
+
+### Bug Fixes
+
+* add previewMode, deprecate draftMode ([#833](https://github.com/sanity-io/visual-editing/issues/833)) ([92cf3dc](https://github.com/sanity-io/visual-editing/commit/92cf3dc7e2236a98f8cc10faa3b73d1deb5a4dc2))
+* rename `@sanity/overlays` to `@sanity/visual-editing` ([#834](https://github.com/sanity-io/visual-editing/issues/834)) ([1d28908](https://github.com/sanity-io/visual-editing/commit/1d289084dd2d631230141fbdc5043c709ecebdea))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.0 to ^1.6.1
+
 ## [1.7.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.4...presentation-v1.7.5) (2024-02-05)
 
 

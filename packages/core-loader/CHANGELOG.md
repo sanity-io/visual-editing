@@ -37,6 +37,13 @@
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.2.3 to 0.2.4
 
+## [1.4.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.0...core-loader-v1.4.1) (2024-02-05)
+
+
+### Bug Fixes
+
+* rename `@sanity/overlays` to `@sanity/visual-editing` ([#834](https://github.com/sanity-io/visual-editing/issues/834)) ([1d28908](https://github.com/sanity-io/visual-editing/commit/1d289084dd2d631230141fbdc5043c709ecebdea))
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.10...core-loader-v1.4.0) (2024-02-02)
 
 
