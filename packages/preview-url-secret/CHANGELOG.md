@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.6.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.0...preview-url-secret-v1.6.1) (2024-02-05)
+
+
+### Bug Fixes
+
+* add previewMode, deprecate draftMode ([#833](https://github.com/sanity-io/visual-editing/issues/833)) ([92cf3dc](https://github.com/sanity-io/visual-editing/commit/92cf3dc7e2236a98f8cc10faa3b73d1deb5a4dc2))
+
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.5.5...preview-url-secret-v1.6.0) (2024-02-02)
 
 

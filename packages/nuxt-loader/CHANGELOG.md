@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.7.11](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.10...nuxt-loader-v1.7.11) (2024-02-05)
+
+
+### Bug Fixes
+
+* rename `@sanity/overlays` to `@sanity/visual-editing` ([#834](https://github.com/sanity-io/visual-editing/issues/834)) ([1d28908](https://github.com/sanity-io/visual-editing/commit/1d289084dd2d631230141fbdc5043c709ecebdea))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.4.0 to 1.4.1
+
 ## [1.7.9](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.8...nuxt-loader-v1.7.9) (2024-01-31)
 
 
