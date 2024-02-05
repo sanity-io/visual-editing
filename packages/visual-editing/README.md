@@ -15,6 +15,43 @@ npm install @sanity/visual-editing
 
 ## Usage
 
+### Plain JS
+
+```ts
+import { enableVisualEditing } from '@sanity/vision-editing'
+
+// Enables visual editing overlays
+enableVisualEditing()
+
+// Integrate with a router that uses the History API
+enableVisualEditing({
+  history: {
+    subscribe: (navigate) => {
+      const handler = (event: PopStateEvent) => {
+        navigate({
+          type: 'push',
+          url: `${location.pathname}${location.search}`,
+        })
+      }
+      window.addEventListener('popstate', handler)
+      return () => window.removeEventListener('popstate', handler)
+    },
+    update: (update) => {
+      switch (update.type) {
+        case 'push':
+          return window.history.pushState(null, '', update.url)
+        case 'pop':
+          return window.history.back()
+        case 'replace':
+          return window.history.replaceState(null, '', update.url)
+        default:
+          throw new Error(`Unknown update type: ${update.type}`)
+      }
+    },
+  },
+})
+```
+
 ### In React.js
 
 ```tsx
@@ -56,6 +93,14 @@ But by adding the `data-sanity-edit-target` attribute to the `<section>` tag, th
 ```
 
 Manually setting the edit target will use the first element it finds with encoded metadata and remove clickable buttons from all other child elements.
+
+## Change the z-index of overlay elements
+
+```ts
+enableVisualEditing({
+  zIndex: 1000,
+})
+```
 
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/visual-editing?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/visual-editing?label=size&style=flat-square
