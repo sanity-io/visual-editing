@@ -1,0 +1,21 @@
+---
+name: Deprecate Overlays
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  deprecate-overlays:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - run: npm deprecate @sanity/overlays@"< 2.3.10" "migrate to @sanity/visual-editing"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
