@@ -23,7 +23,7 @@ import { useEffect } from 'react'
 
 export default function VisualEditing() {
   useEffect(() => {
-    const disable = enableVisualEditing({)
+    const disable = enableVisualEditing()
     return () => disable()
   }, [])
 
