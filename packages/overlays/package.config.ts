@@ -9,11 +9,4 @@ export default defineConfig({
   define: {
     'process.env.NODE_ENV': 'production',
   },
-  extract: {
-    ...baseConfig.extract,
-    bundledPackages: [
-      ...(baseConfig.extract?.bundledPackages || []),
-      '@sanity/visual-editing',
-    ],
-  },
 })

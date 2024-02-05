@@ -1,4 +1,4 @@
-import type { ElementState, OverlayEventHandler } from '@sanity/overlays'
+import type { ElementState, OverlayEventHandler } from '@sanity/visual-editing'
 
 export const createDispatchHandler =
   (elements: Ref<ElementState[]>): OverlayEventHandler =>

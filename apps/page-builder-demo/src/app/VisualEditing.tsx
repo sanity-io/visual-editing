@@ -1,7 +1,10 @@
 'use client'
 
 import { useLiveMode } from '@/sanity'
-import { enableOverlays, HistoryAdapterNavigate } from '@sanity/overlays'
+import {
+  enableVisualEditing,
+  HistoryAdapterNavigate,
+} from '@sanity/visual-editing'
 import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef, useState } from 'react'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
@@ -15,7 +18,7 @@ export default function VisualEditing() {
     routerRef.current = router
   }, [router])
   useEffect(() => {
-    const disable = enableOverlays({
+    const disable = enableVisualEditing({
       history: {
         subscribe: (navigate) => {
           setNavigate(() => navigate)

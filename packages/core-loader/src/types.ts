@@ -20,7 +20,7 @@ export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
 }
 
 /**
- * Creates a encoded payload suitable for passing to a `data-sanity` attribute, which are used by `@sanity/overlays`
+ * Creates a encoded payload suitable for passing to a `data-sanity` attribute, which are used by `@sanity/visual-editing`
  * @public
  */
 export type EncodeDataAttribute<QueryResponseResult = unknown> = (

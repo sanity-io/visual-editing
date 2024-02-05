@@ -106,11 +106,11 @@ export default function ProductPage() {
 }
 ```
 
-Enabling Live Mode is done by adding `useLiveMode` to the same component you're currently calling `enableOverlays` from `@sanity/overlays`:
+Enabling Live Mode is done by adding `useLiveMode` to the same component you're currently calling `enableVisualEditing` from `@sanity/visual-editing`:
 
 ```tsx
 // ./src/app/VisualEditing.tsx
-import { enableOverlays, type HistoryUpdate } from '@sanity/overlays'
+import { enableVisualEditing, type HistoryUpdate } from '@sanity/visual-editing'
 import { useEffect } from 'react'
 import { useLiveMode } from '~/sanity.loader'
 
@@ -129,7 +129,7 @@ const client = createClient({
 export default function VisualEditing() {
   useEffect(
     () =>
-      enableOverlays({
+      enableVisualEditing({
         history: {
           // setup Remix router integration
         },
@@ -145,7 +145,7 @@ export default function VisualEditing() {
 
 ### Adding overlays to any element
 
-You can use the `encodeDataAttribute` function returned by `useQuery` to create `data-json` attributes, that are picked up by `@sanity/overlays`.
+You can use the `encodeDataAttribute` function returned by `useQuery` to create `data-json` attributes, that are picked up by `@sanity/visual-editing`.
 This allows you to link to elements that otherwise isn't automatically linked to using `@sanity/client/stega`, such as array root item, or an image field.
 
 If you aren't using stega and don't have a `studioUrl` defined in the `createClient` call, then you add it to the `useLiveMode` hook:

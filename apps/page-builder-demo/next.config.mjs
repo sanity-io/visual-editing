@@ -9,7 +9,6 @@ const nextConfig = {
   },
 
   transpilePackages: [
-    '@sanity/overlays',
     '@sanity/visual-editing',
     '@sanity/react-loader',
     'apps-common',

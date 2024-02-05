@@ -3,13 +3,13 @@
 </template>
 
 <script lang="ts" setup>
-import { type DisableOverlays, enableOverlays } from '@sanity/overlays'
+import { type DisableVisualEditing, enableVisualEditing } from '@sanity/visual-editing'
 
-let disable: DisableOverlays
+let disable: DisableVisualEditing
 const router = useRouter()
 
 onMounted(() => {
-  disable = enableOverlays({
+  disable = enableVisualEditing({
     history: {
       subscribe: (navigate) => {
         router.isReady().then(() => {

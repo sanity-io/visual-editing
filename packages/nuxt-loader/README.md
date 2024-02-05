@@ -75,7 +75,10 @@ Note that for clarity we are enabling Overlays and Live Mode at the page level. 
 
 <script setup lang="ts">
 import { useQuery, useLiveMode } from '~/sanity.composables'
-import { type DisableOverlays, enableOverlays } from '@sanity/overlays'
+import {
+  type DisableVisualEditing,
+  enableVisualEditing,
+} from '@sanity/visual-editing'
 
 interface MyPage {}
 const query = `*[_type == "page"][0]`
@@ -94,11 +97,11 @@ onMounted(() => {
 onUnmounted(() => disableLiveMode?.())
 
 // Enable overlays
-let disableOverlays: DisableOverlays | undefined
+let disableVisualEditing: DisableVisualEditing | undefined
 onMounted(() => {
-  disableOverlays = enableOverlays()
+  disableVisualEditing = enableVisualEditing()
 })
-onUnmounted(() => disableOverlays?.())
+onUnmounted(() => disableVisualEditing?.())
 </script>
 ```
 

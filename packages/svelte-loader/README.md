@@ -17,7 +17,7 @@ Read more about loaders [here](https://www.sanity.io/docs/loaders-and-overlays).
 npm install @sanity/svelte-loader
 
 # We will also need the following dependencies for fetching data and enabling visual editing
-npm install @sanity/client @sanity/overlays
+npm install @sanity/client @sanity/visual-editing
 ```
 
 ## Usage
@@ -233,12 +233,12 @@ Finally, we enable both live mode and overlays in the root layout component.
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { enableOverlays } from '@sanity/overlays'
+  import { enableVisualEditing } from '@sanity/visual-editing'
   import { useLiveMode } from '@sanity/svelte-loader'
   import { client } from '$lib/sanity'
   import { PUBLIC_SANITY_STUDIO_URL } from '$env/static/public'
 
-  onMount(() => enableOverlays())
+  onMount(() => enableVisualEditing())
 
   onMount(() => useLiveMode({
     // If `stega.studioUrl` was not provided to the client instance in `sanity.ts`, a studioUrl should be provided here
