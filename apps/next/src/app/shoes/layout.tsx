@@ -1,10 +1,11 @@
 import { Suspense } from 'react'
-
-import VisualEditing from './VisualEditing'
+import dynamic from 'next/dynamic'
 
 import '../../tailwind.css'
 import { draftMode } from 'next/headers'
 import { Metadata } from 'next'
+
+const LiveVisualEditing = dynamic(() => import('./VisualEditing'))
 
 export const metadata = {
   referrer: 'no-referrer-when-downgrade',
@@ -19,11 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
-        {draftMode().isEnabled && (
-          <Suspense>
-            <VisualEditing />
-          </Suspense>
-        )}
+        {draftMode().isEnabled && <LiveVisualEditing />}
         <a
           href={draftMode().isEnabled ? '/api/disable-draft' : undefined}
           title={

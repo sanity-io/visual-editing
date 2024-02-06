@@ -1,4 +1,7 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -41,6 +44,18 @@ const nextConfig = {
       },
     ]
   },
+
+  /*
+  webpack(config) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@sanity/visual-editing': require.resolve(
+        '../../packages/visual-editing/src/index.ts',
+      ),
+    }
+    return config
+  },
+  // */
 }
 
 export default withBundleAnalyzer({

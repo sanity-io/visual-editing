@@ -1,5 +1,6 @@
 import '../../tailwind.css'
-import VisualEditing from './VisualEditing'
+
+import { VisualEditing } from 'next-sanity'
 
 export const metadata = {
   title: 'Next.js',
@@ -13,10 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        {children}
-        <VisualEditing />
-      </body>
+      <body>{children}</body>
+      <VisualEditing />
     </html>
   )
 }

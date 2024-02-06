@@ -5,8 +5,8 @@ import { EXAMPLE_NAME } from '@/lib/constants'
 import PreviewBanner from './PreviewBanner'
 import { draftMode } from 'next/headers'
 import dynamic from 'next/dynamic'
+import { VisualEditing } from 'next-sanity'
 
-const Overlays = dynamic(() => import('@/components/VisualEditing/Overlays'))
 const PresentationToolBridge = dynamic(
   () => import('@/components/VisualEditing/PresentationToolBridge'),
 )
@@ -29,7 +29,7 @@ export default function BlogLayout({
           </Link>
         </footer>
       </div>
-      {draftMode().isEnabled && <Overlays />}
+      {draftMode().isEnabled && <VisualEditing />}
       {draftMode().isEnabled && <PresentationToolBridge />}
     </>
   )
