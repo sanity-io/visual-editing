@@ -537,6 +537,9 @@ importers:
       next:
         specifier: 14.1.0
         version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
+      next-sanity:
+        specifier: ^7.1.0
+        version: 7.1.0(@sanity/client@6.12.3)(@sanity/icons@2.10.1)(@sanity/types@3.28.0)(@sanity/ui@2.0.1)(next@14.1.0)(react@18.2.0)(sanity@3.28.0)(styled-components@6.1.8)
       postcss:
         specifier: 8.4.34
         version: 8.4.34
@@ -12554,6 +12557,33 @@ packages:
   /negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
+
+  /next-sanity@7.1.0(@sanity/client@6.12.3)(@sanity/icons@2.10.1)(@sanity/types@3.28.0)(@sanity/ui@2.0.1)(next@14.1.0)(react@18.2.0)(sanity@3.28.0)(styled-components@6.1.8):
+    resolution: {integrity: sha512-CNmR9M6nzXqYxpw97pP0sW58O58o5Ki5LKuo7T/9/CDSIEUeHQrRKF9Y9ZfKvS8qcH2TnZUs/daid5AXkcfHLw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.12.3
+      '@sanity/icons': ^2.8
+      '@sanity/types': ^3.28.0
+      '@sanity/ui': ^1.8 || ^2.0.0-beta || ^2.0
+      next: ^14.1
+      react: ^18.2
+      sanity: ^3.28.0
+      styled-components: 6.1.8
+    dependencies:
+      '@sanity/client': 6.12.3
+      '@sanity/icons': 2.10.1(react@18.2.0)
+      '@sanity/preview-kit': 5.0.19(@sanity/client@6.12.3)(react@18.2.0)
+      '@sanity/types': 3.28.0
+      '@sanity/ui': 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+      '@sanity/visual-editing': 1.0.1
+      '@sanity/webhook': 4.0.0
+      groq: 3.28.0
+      next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      sanity: 3.28.0(@types/node@20.8.7)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+      styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
+    dev: false
 
   /next-sanity@7.1.0(@sanity/client@6.12.3)(@sanity/icons@2.10.1)(@sanity/types@3.28.0)(@sanity/ui@2.0.1)(next@14.1.1-canary.38)(react@18.2.0)(sanity@3.28.0)(styled-components@6.1.8):
     resolution: {integrity: sha512-CNmR9M6nzXqYxpw97pP0sW58O58o5Ki5LKuo7T/9/CDSIEUeHQrRKF9Y9ZfKvS8qcH2TnZUs/daid5AXkcfHLw==}
