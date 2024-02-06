@@ -18,4 +18,4 @@ jobs:
           node-version: lts/*
       - run: npm deprecate @sanity/overlays "migrate to @sanity/visual-editing"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPRECATE_TOKEN }}
