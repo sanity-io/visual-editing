@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_DEPRECATE_TOKEN }}" > ~/.npmrc
       - run: npm deprecate @sanity/overlays "migrate to @sanity/visual-editing"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPRECATE_TOKEN }}
+        #env:
+        #  NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPRECATE_TOKEN }}
