@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
+import { useRouter } from 'next/router'
 
 import '../tailwind.css'
 
@@ -12,14 +13,11 @@ export interface SharedProps {
 
 export default function App({ Component, pageProps }: AppProps<SharedProps>) {
   const { draftMode } = pageProps
+  const { isPreview } = useRouter()
   return (
     <>
       <Component {...pageProps} />
-      {draftMode && (
-        <Suspense>
-          <VisualEditing />
-        </Suspense>
-      )}
+      {isPreview && <VisualEditing />}
       <a
         href={draftMode ? '/api/disable-pages-draft' : undefined}
         title={draftMode ? 'Click to disable Draft Mode' : undefined}
