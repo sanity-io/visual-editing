@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.0.1...visual-editing-v1.1.0) (2024-02-07)
+
+
+### Features
+
+* add `VisualEditing` component for Next.js Pages Router ([#856](https://github.com/sanity-io/visual-editing/issues/856)) ([2c7c362](https://github.com/sanity-io/visual-editing/commit/2c7c36270d59c3e863dfbd13c5f27f53b198e59c))
+
 ## [1.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.0.0...visual-editing-v1.0.1) (2024-02-05)
 
 
