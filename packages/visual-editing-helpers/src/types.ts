@@ -71,24 +71,59 @@ export type PresentationMsg =
       data: undefined
     }
 
+/**@public */
+export interface VisualEditingPayloads {
+  documents: {
+    projectId: string
+    dataset: string
+    perspective: ClientPerspective
+    documents: ContentSourceMapDocuments
+  }
+  focus: SanityNode | SanityNodeLegacy
+  navigate: HistoryUpdate
+  toggle: {
+    enabled: boolean
+  }
+}
+
 /**
  * Messages emitted by the overlays package
- * @public
+ * @deprecated use VisualEditingMsg instead
  */
 export type OverlayMsg =
   | {
       type: 'overlay/focus'
-      data: SanityNode | SanityNodeLegacy
+      data: VisualEditingPayloads['focus']
     }
   | {
       type: 'overlay/navigate'
-      data: HistoryUpdate
+      data: VisualEditingPayloads['navigate']
     }
   | {
       type: 'overlay/toggle'
-      data: {
-        enabled: boolean
-      }
+      data: VisualEditingPayloads['toggle']
+    }
+
+/**
+ * Messages emitted by the visual-editing package
+ * @public
+ */
+export type VisualEditingMsg =
+  | {
+      type: 'visual-editing/focus'
+      data: VisualEditingPayloads['focus']
+    }
+  | {
+      type: 'visual-editing/navigate'
+      data: VisualEditingPayloads['navigate']
+    }
+  | {
+      type: 'visual-editing/toggle'
+      data: VisualEditingPayloads['toggle']
+    }
+  | {
+      type: 'visual-editing/documents'
+      data: VisualEditingPayloads['documents']
     }
 
 /** @public */
@@ -186,16 +221,6 @@ export type PreviewKitMsg = {
     documents: ContentSourceMapDocuments
   }
 }
-
-/**
- * Union type of visual editing related messages
- * @public
- */
-export type VisualEditingMsg =
-  | PresentationMsg
-  | LoaderMsg
-  | OverlayMsg
-  | PreviewKitMsg
 
 /**
  * Known Channel connection IDs

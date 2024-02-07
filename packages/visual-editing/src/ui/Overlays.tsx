@@ -8,7 +8,8 @@ import {
 import {
   isAltKey,
   isHotkey,
-  type VisualEditingMsg,
+  type OverlayMsg,
+  type PresentationMsg,
 } from '@sanity/visual-editing-helpers'
 import {
   FunctionComponent,
@@ -75,7 +76,7 @@ export const Overlays: FunctionComponent<{
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
   const channelEventHandler = useCallback<
-    ChannelsEventHandler<VisualEditingMsg>
+    ChannelsEventHandler<PresentationMsg>
   >(
     (type, data) => {
       if (type === 'presentation/focus' && data.path?.length) {
@@ -94,7 +95,9 @@ export const Overlays: FunctionComponent<{
     [history],
   )
 
-  const { channel, status } = useChannel<VisualEditingMsg>(channelEventHandler)
+  const { channel, status } = useChannel<OverlayMsg, PresentationMsg>(
+    channelEventHandler,
+  )
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {

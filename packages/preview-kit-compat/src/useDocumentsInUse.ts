@@ -1,8 +1,9 @@
 import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
 import type { ContentSourceMapDocuments } from '@sanity/client/csm'
 import {
+  type PresentationMsg,
+  type PreviewKitMsg,
   type VisualEditingConnectionIds,
-  type VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
 import { useEffect, useState } from 'react'
 
@@ -16,14 +17,14 @@ export function useDocumentsInUse(
   dataset: string,
 ): void {
   const [channel, setChannel] = useState<
-    ChannelsNode<VisualEditingMsg> | undefined
+    ChannelsNode<PreviewKitMsg> | undefined
   >()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
     if (window.self === window.top && !window.opener) {
       return
     }
-    const channel = createChannelsNode<VisualEditingMsg>({
+    const channel = createChannelsNode<PreviewKitMsg, PresentationMsg>({
       id: 'preview-kit' satisfies VisualEditingConnectionIds,
       connectTo: 'presentation' satisfies VisualEditingConnectionIds,
       onStatusUpdate(status) {

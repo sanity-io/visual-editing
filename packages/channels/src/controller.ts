@@ -17,10 +17,13 @@ import type {
   ToArgs,
 } from './types'
 
-export function createChannelsController<T extends ChannelMsg>(
-  config: ChannelsControllerOptions<T>,
-): ChannelsController {
-  const { destroy, send } = createChannelsControllerInternal(config)
+export function createChannelsController<
+  Sends extends ChannelMsg,
+  Receives extends ChannelMsg,
+>(config: ChannelsControllerOptions<Receives>): ChannelsController {
+  const { destroy, send } = createChannelsControllerInternal<Sends, Receives>(
+    config,
+  )
   const sources = new Set<MessageEventSource>()
   const sendToSource = new WeakMap<
     MessageEventSource,
@@ -65,7 +68,10 @@ export function createChannelsController<T extends ChannelMsg>(
       if (source.closed) {
         throw new Error('Source is closed')
       }
-      const { send, destroy } = createChannelsControllerInternal({
+      const { send, destroy } = createChannelsControllerInternal<
+        Sends,
+        Receives
+      >({
         ...config,
         target: source,
         // @TODO temporary workaround for onStatusUpdate and onEvent not differentiating
@@ -100,12 +106,15 @@ export function createChannelsController<T extends ChannelMsg>(
   }
 }
 
-function createChannelsControllerInternal<T extends ChannelMsg>(
-  config: ChannelsControllerOptions<T>,
+function createChannelsControllerInternal<
+  Sends extends ChannelMsg,
+  Receives extends ChannelMsg,
+>(
+  config: ChannelsControllerOptions<Receives>,
 ): Omit<ChannelsController, 'addSource'> {
   const target = config.target
 
-  const channels: ChannelsControllerChannel<T>[] = config.connectTo.map(
+  const channels: ChannelsControllerChannel<Receives>[] = config.connectTo.map(
     (config) => ({
       buffer: [],
       config,
@@ -117,20 +126,20 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     }),
   )
 
-  function startHandshake(channel: ChannelsControllerChannel<T>) {
+  function startHandshake(channel: ChannelsControllerChannel<Receives>) {
     channel.id = uuid()
     channel.interval = window.setInterval(() => {
       sendHandshake(channel, 'handshake/syn', { id: channel.id })
     }, HANDSHAKE_INTERVAL)
   }
 
-  function stopHandshake(channel: ChannelsControllerChannel<T>) {
+  function stopHandshake(channel: ChannelsControllerChannel<Receives>) {
     window.clearInterval(channel.interval)
   }
 
   function isValidMessageEvent(
     e: MessageEvent,
-  ): e is MessageEvent<ProtocolMsg<T>> {
+  ): e is MessageEvent<ProtocolMsg<Receives>> {
     const { data, origin } = e
     return (
       data.domain === 'sanity/channels' &&
@@ -141,7 +150,7 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     )
   }
 
-  function handshakeHandler(e: MessageEvent<ProtocolMsg<T>>) {
+  function handshakeHandler(e: MessageEvent<ProtocolMsg<Receives>>) {
     const { data } = e
     if (isHandshakeMessage(data.type)) {
       const channel = channels.find(
@@ -154,7 +163,7 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     }
   }
 
-  const messageHandler = (e: MessageEvent<ProtocolMsg<T>>) => {
+  const messageHandler = (e: MessageEvent<ProtocolMsg<Receives>>) => {
     const { data } = e
     if (
       !isHandshakeMessage(data.type) &&
@@ -166,7 +175,7 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
       if (channel) {
         // eslint-disable-next-line no-warning-comments
         // @todo Ugly type casting
-        const args = [data.type, data.data] as ToArgs<T>
+        const args = [data.type, data.data] as ToArgs<Receives>
         channel.config.onEvent?.(...args)
         config.onEvent?.(...args)
         send(channel, 'channel/response', { responseTo: data.id }, false)
@@ -174,7 +183,7 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     }
   }
 
-  function handleEvents(e: MessageEvent<ProtocolMsg<T>>) {
+  function handleEvents(e: MessageEvent<ProtocolMsg<Receives>>) {
     if (isLegacyHandshakeMessage(e)) {
       // eslint-disable-next-line no-console
       console.error(
@@ -189,7 +198,7 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     }
   }
 
-  function flush(channel: ChannelsControllerChannel<T>) {
+  function flush(channel: ChannelsControllerChannel<Receives>) {
     const toFlush = [...channel.buffer]
     channel.buffer.splice(0, channel.buffer.length)
     toFlush.forEach(({ type, data }) => {
@@ -197,7 +206,7 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     })
   }
 
-  function startHeartbeat(channel: ChannelsControllerChannel<T>) {
+  function startHeartbeat(channel: ChannelsControllerChannel<Receives>) {
     stopHeartbeat(channel)
     if (channel.config.heartbeat) {
       const heartbeatInverval =
@@ -210,14 +219,14 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     }
   }
 
-  function stopHeartbeat(channel: ChannelsControllerChannel<T>) {
+  function stopHeartbeat(channel: ChannelsControllerChannel<Receives>) {
     if (channel.heartbeat) {
       window.clearInterval(channel.heartbeat)
     }
   }
 
   function setChannelStatus(
-    channel: ChannelsControllerChannel<T>,
+    channel: ChannelsControllerChannel<Receives>,
     next: ChannelStatus,
   ) {
     channel.status = next
@@ -240,16 +249,16 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     }
   }
 
-  function sendHandshake<K extends T['type']>(
-    channel: ChannelsControllerChannel<T>,
-    type: K,
-    data?: Extract<T, { type: K }>['data'],
+  function sendHandshake<T extends Sends['type']>(
+    channel: ChannelsControllerChannel<Receives>,
+    type: T,
+    data?: Extract<Sends, { type: T }>['data'],
   ) {
     if (!channel.id) {
       throw new Error('No channel ID set')
     }
 
-    const msg: ProtocolMsg<T> = {
+    const msg: ProtocolMsg<Sends> = {
       connectionId: channel.id,
       data,
       domain: 'sanity/channels',
@@ -266,10 +275,10 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
     }
   }
 
-  function send<K extends T['type']>(
-    channel: ChannelsControllerChannel<T>,
-    type: K | InternalMsgType,
-    data?: Extract<T, { type: K }>['data'],
+  function send<T extends Sends['type']>(
+    channel: ChannelsControllerChannel<Receives>,
+    type: T | InternalMsgType,
+    data?: Extract<Sends, { type: T }>['data'],
     expectResponse = true,
   ) {
     const id = uuid()
@@ -288,7 +297,7 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
       throw new Error('No channel ID set')
     }
 
-    const msg: ProtocolMsg<T> = {
+    const msg: ProtocolMsg<Sends> = {
       connectionId: channel.id,
       data,
       domain: 'sanity/channels',
@@ -366,10 +375,10 @@ function createChannelsControllerInternal<T extends ChannelMsg>(
 
   initialise()
 
-  function sendPublic<K extends T['type']>(
+  function sendPublic<T extends Sends['type']>(
     id: string | string[] | undefined,
-    type: K,
-    data?: Extract<T, { type: K }>['data'],
+    type: T,
+    data?: Extract<Sends, { type: T }>['data'],
   ) {
     const channelsToSend = id ? (Array.isArray(id) ? [...id] : [id]) : channels
 

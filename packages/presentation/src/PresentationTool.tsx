@@ -10,6 +10,10 @@ import {
   getQueryCacheKey,
   isAltKey,
   isHotkey,
+  type LoaderMsg,
+  type OverlayMsg,
+  type PresentationMsg,
+  type PreviewKitMsg,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
@@ -107,7 +111,8 @@ export default function PresentationTool(props: {
 
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  const [channel, setChannel] = useState<ChannelsController<VisualEditingMsg>>()
+  const [channel, setChannel] =
+    useState<ChannelsController<LoaderMsg | PresentationMsg>>()
 
   const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
@@ -178,7 +183,10 @@ export default function PresentationTool(props: {
 
     if (!target) return
 
-    const nextChannel = createChannelsController<VisualEditingMsg>({
+    const nextChannel = createChannelsController<
+      PresentationMsg,
+      LoaderMsg | OverlayMsg | VisualEditingMsg | PreviewKitMsg
+    >({
       id: 'presentation' satisfies VisualEditingConnectionIds,
       target,
       targetOrigin,

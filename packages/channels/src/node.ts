@@ -17,9 +17,10 @@ import {
   ToArgs,
 } from './types'
 
-export function createChannelsNode<T extends ChannelMsg>(
-  config: ChannelsNodeOptions<T>,
-): ChannelsNode<T> {
+export function createChannelsNode<
+  Sends extends ChannelMsg,
+  Receives extends ChannelMsg,
+>(config: ChannelsNodeOptions<Receives>): ChannelsNode<Sends> {
   const inFrame = window.self !== window.top || window.opener
 
   const channel: ChannelsNodeChannel = {
@@ -38,9 +39,9 @@ export function createChannelsNode<T extends ChannelMsg>(
     })
   }
 
-  function send<K extends T['type']>(
-    type: K | InternalMsgType | HandshakeMsgType,
-    data?: Extract<T, { type: K }>['data'],
+  function send<T extends Sends['type']>(
+    type: T | InternalMsgType | HandshakeMsgType,
+    data?: Extract<Sends, { type: T }>['data'],
   ) {
     if (
       !isHandshakeMessage(type) &&
@@ -52,7 +53,7 @@ export function createChannelsNode<T extends ChannelMsg>(
     }
 
     if (channel.id && channel.origin && channel.source) {
-      const msg: ProtocolMsg<T> = {
+      const msg: ProtocolMsg<Sends> = {
         connectionId: channel.id,
         data,
         domain: 'sanity/channels',
@@ -74,7 +75,7 @@ export function createChannelsNode<T extends ChannelMsg>(
 
   function isValidMessageEvent(
     e: MessageEvent,
-  ): e is MessageEvent<ProtocolMsg<T>> {
+  ): e is MessageEvent<ProtocolMsg<Receives>> {
     const { data } = e
     return (
       data.domain === 'sanity/channels' &&
@@ -124,7 +125,7 @@ export function createChannelsNode<T extends ChannelMsg>(
           setConnectionStatus('disconnected')
           return
         } else {
-          const args = [data.type, data.data] as ToArgs<T>
+          const args = [data.type, data.data] as ToArgs<Receives>
           config.onEvent?.(...args)
           send('channel/response', { responseTo: data.id })
         }
@@ -159,9 +160,9 @@ export function createChannelsNode<T extends ChannelMsg>(
 
   initialise()
 
-  function sendPublic<K extends T['type']>(
-    type: K,
-    data?: Extract<T, { type: K }>['data'],
+  function sendPublic<T extends Sends['type']>(
+    type: T,
+    data?: Extract<Sends, { type: T }>['data'],
   ) {
     send(type, data)
   }
