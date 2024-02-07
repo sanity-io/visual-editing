@@ -70,19 +70,21 @@ export type HandshakeMsgType = HandshakeMsgTypeTuple[number]
 /**
  * @public
  */
-export type ChannelsEventHandler<T extends ChannelMsg = ChannelMsg> = (
-  ...args: ToArgs<T>
+export type ChannelsEventHandler<Receives extends ChannelMsg = ChannelMsg> = (
+  ...args: ToArgs<Receives>
 ) => void
 
 /**
  * @public
  */
-export interface ChannelsControllerOptions<T extends ChannelMsg = ChannelMsg> {
+export interface ChannelsControllerOptions<
+  Receives extends ChannelMsg = ChannelMsg,
+> {
   id: string
-  connectTo: ChannelsControllerChannelOptions<T>[]
+  connectTo: ChannelsControllerChannelOptions<Receives>[]
   target: Window
   targetOrigin: string
-  onEvent?: ChannelsEventHandler<T>
+  onEvent?: ChannelsEventHandler<Receives>
   onStatusUpdate?: (status: ChannelStatus, connectionId: string) => void
 }
 
@@ -90,21 +92,23 @@ export interface ChannelsControllerOptions<T extends ChannelMsg = ChannelMsg> {
  * @public
  */
 export interface ChannelsControllerChannelOptions<
-  T extends ChannelMsg = ChannelMsg,
+  Receives extends ChannelMsg = ChannelMsg,
 > {
   id: string
   heartbeat?: boolean | number
   onStatusUpdate?: (status: ChannelStatus, connectionId: string) => void
-  onEvent?: ChannelsEventHandler<T>
+  onEvent?: ChannelsEventHandler<Receives>
 }
 
 /**
  * @internal
  */
-export interface ChannelsControllerChannel<T extends ChannelMsg = ChannelMsg> {
+export interface ChannelsControllerChannel<
+  Receives extends ChannelMsg = ChannelMsg,
+> {
   id: string | null
   buffer: ChannelMsg[]
-  config: ChannelsControllerChannelOptions<T>
+  config: ChannelsControllerChannelOptions<Receives>
   handler: (e: MessageEvent) => void
   heartbeat: number | undefined
   interval: number | undefined
@@ -114,19 +118,19 @@ export interface ChannelsControllerChannel<T extends ChannelMsg = ChannelMsg> {
 /**
  * @public
  */
-export interface ChannelsController<T extends ChannelMsg = ChannelMsg> {
+export interface ChannelsController<Sends extends ChannelMsg = ChannelMsg> {
   addSource: (source: MessageEventSource) => void
   destroy: () => void
-  send: (id: string | string[] | undefined, ...args: ToArgs<T>) => void
+  send: (id: string | string[] | undefined, ...args: ToArgs<Sends>) => void
 }
 
 /**
  * @public
  */
-export interface ChannelsNodeOptions<T extends ChannelMsg = ChannelMsg> {
+export interface ChannelsNodeOptions<Receives extends ChannelMsg = ChannelMsg> {
   id: string
   connectTo: string
-  onEvent?: ChannelsEventHandler<T>
+  onEvent?: ChannelsEventHandler<Receives>
   onStatusUpdate?: (status: ChannelStatus) => void
 }
 
@@ -144,8 +148,8 @@ export interface ChannelsNodeChannel {
 /**
  * @public
  */
-export interface ChannelsNode<T extends ChannelMsg = ChannelMsg> {
+export interface ChannelsNode<Sends extends ChannelMsg = ChannelMsg> {
   destroy: () => void
   inFrame: boolean
-  send: (...args: ToArgs<T>) => void
+  send: (...args: ToArgs<Sends>) => void
 }

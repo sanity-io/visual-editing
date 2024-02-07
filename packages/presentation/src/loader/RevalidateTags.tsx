@@ -1,13 +1,10 @@
 import type { ChannelsController } from '@sanity/channels'
-import type {
-  LoaderPayloads,
-  VisualEditingMsg,
-} from '@sanity/visual-editing-helpers'
+import type { LoaderMsg, LoaderPayloads } from '@sanity/visual-editing-helpers'
 import { useEffect, useMemo } from 'react'
 import { getPublishedId, useClient } from 'sanity'
 
 export interface RevalidateTagsProps {
-  channel: ChannelsController<VisualEditingMsg> | undefined
+  channel: ChannelsController<LoaderMsg> | undefined
 }
 
 export default function RevalidateTags(props: RevalidateTagsProps): null {

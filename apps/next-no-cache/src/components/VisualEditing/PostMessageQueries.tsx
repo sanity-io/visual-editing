@@ -1,9 +1,9 @@
 'use client'
 
 import { createChannelsNode } from '@sanity/channels'
-import {
-  type VisualEditingConnectionIds,
-  type VisualEditingMsg,
+import type {
+  LoaderMsg,
+  VisualEditingConnectionIds,
 } from '@sanity/visual-editing-helpers'
 import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
@@ -12,7 +12,7 @@ export function PostMessageReporter() {
   const router = useRouter()
   const revalidateRef = useRef(0)
   useEffect(() => {
-    const channel = createChannelsNode<VisualEditingMsg>({
+    const channel = createChannelsNode<LoaderMsg, LoaderMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
       connectTo: 'presentation' satisfies VisualEditingConnectionIds,
       onEvent: (type, data) => {

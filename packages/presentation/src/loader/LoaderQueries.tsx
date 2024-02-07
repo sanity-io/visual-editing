@@ -6,10 +6,7 @@ import type {
   QueryParams,
 } from '@sanity/client'
 import { applySourceDocuments, getPublishedId } from '@sanity/client/csm'
-import type {
-  LoaderPayloads,
-  VisualEditingMsg,
-} from '@sanity/visual-editing-helpers'
+import type { LoaderMsg, LoaderPayloads } from '@sanity/visual-editing-helpers'
 import {
   useQueryParams,
   useRevalidate,
@@ -27,7 +24,7 @@ import type { LiveQueriesState } from '../types'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
-  channel: ChannelsController<VisualEditingMsg> | undefined
+  channel: ChannelsController<LoaderMsg> | undefined
   perspective: ClientPerspective
   liveQueries: LiveQueriesState
   documentsOnPage: { _id: string; _type: string }[]
@@ -242,7 +239,7 @@ interface QuerySubscriptionProps
   perspective: ClientPerspective
   query: string
   params: QueryParams
-  channel: ChannelsController<VisualEditingMsg> | undefined
+  channel: ChannelsController<LoaderMsg> | undefined
 }
 function QuerySubscription(props: QuerySubscriptionProps) {
   const {

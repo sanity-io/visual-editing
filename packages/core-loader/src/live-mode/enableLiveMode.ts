@@ -8,9 +8,9 @@ import {
 } from '@sanity/client'
 import { stegaEncodeSourceMap } from '@sanity/client/stega'
 import type {
+  LoaderMsg,
   LoaderPayloads,
   VisualEditingConnectionIds,
-  VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
 import { atom, MapStore } from 'nanostores'
 
@@ -51,7 +51,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const channel = createChannelsNode<VisualEditingMsg>({
+  const channel = createChannelsNode<LoaderMsg, LoaderMsg>({
     id: 'loaders' satisfies VisualEditingConnectionIds,
     connectTo: 'presentation' satisfies VisualEditingConnectionIds,
     onEvent: (type, data) => {
