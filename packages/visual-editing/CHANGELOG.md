@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.1.0...visual-editing-v1.2.0) (2024-02-07)
+
+
+### Features
+
+* add `VisualEditing` component for Remix ([#860](https://github.com/sanity-io/visual-editing/issues/860)) ([0c48e8c](https://github.com/sanity-io/visual-editing/commit/0c48e8c0091dc84d70c4ae6c53bdb80012a63a9a))
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.0.1...visual-editing-v1.1.0) (2024-02-07)
 
 
