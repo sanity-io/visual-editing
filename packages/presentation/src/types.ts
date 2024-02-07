@@ -72,6 +72,7 @@ export interface DeskDocumentPaneParams {
   rev?: string
   since?: string
   template?: string
+  templateParams?: string
   view?: string
 
   // assist

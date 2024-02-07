@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react'
 import { Path } from 'sanity'
+import { decodeJsonParams } from 'sanity/router'
 import {
   DocumentPane as DeskDocumentPane,
   DocumentPaneNode,
@@ -33,6 +34,7 @@ export function DocumentPane(props: {
   onFocusPath: (path: Path) => void
 }): ReactElement {
   const { documentId, documentType, params, onDeskParams, onFocusPath } = props
+  const { template, templateParams } = params
   const { devMode } = usePresentationTool()
 
   const paneDocumentNode: DocumentPaneNode = useMemo(
@@ -41,11 +43,13 @@ export function DocumentPane(props: {
       options: {
         id: documentId,
         type: documentType,
+        template,
+        templateParameters: decodeJsonParams(templateParams),
       },
       title: '',
       type: 'document',
     }),
-    [documentId, documentType],
+    [documentId, documentType, template, templateParams],
   )
 
   const [errorParams, setErrorParams] = useState<{

@@ -1,6 +1,6 @@
 import { uuid } from '@sanity/uuid'
 import { getPublishedId } from 'sanity'
-import { SearchParam } from 'sanity/router'
+import { encodeJsonParams, SearchParam } from 'sanity/router'
 
 import { PresentationStateParams } from './types'
 
@@ -32,6 +32,13 @@ export function getIntentState(
       searchParams.preview ||
       new URLSearchParams(window.location.search).get('preview') ||
       '/'
+
+    if (payload && typeof payload === 'object') {
+      searchParams.templateParams = encodeJsonParams(
+        payload as Record<string, unknown>,
+      )
+    }
+
     return {
       type: type || '*',
       id: id || uuid(),
