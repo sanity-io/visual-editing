@@ -77,12 +77,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
-      {draftMode().isEnabled() && (
-        <VisualEditing
-          zIndex={1000} // Optional
-        />
-      )}
+      <body>
+        {children}
+        {draftMode().isEnabled() && (
+          <VisualEditing
+            zIndex={1000} // Optional
+          />
+        )}
+      </body>
     </html>
   )
 }
