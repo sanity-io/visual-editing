@@ -24,9 +24,15 @@ function maybeGitBranchStudioUrl(url: string) {
   }
   return url
 }
-const isStablePreviewBranch =
-  process.env.VERCEL_BRANCH_URL?.includes('-git-preview') ||
-  process.env.NEXT_PUBLIC_VERCEL_URL?.includes('-git-preview')
+let isStablePreviewBranch: boolean | undefined = false
+try {
+  isStablePreviewBranch =
+    process.env.VERCEL_BRANCH_URL?.includes('-git-preview') ||
+    process.env.NEXT_PUBLIC_VERCEL_URL?.includes('-git-preview')
+} catch {
+  //ignore
+}
+
 export const studioUrl = maybeGitBranchStudioUrl(
   process.env.NODE_ENV !== 'production'
     ? 'http://localhost:3333'

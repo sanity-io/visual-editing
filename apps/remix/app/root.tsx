@@ -8,9 +8,11 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react'
+import { lazy, Suspense } from 'react'
 
 import stylesheet from '~/tailwind.css'
-import VisualEditing from './VisualEditing'
+
+const VisualEditing = lazy(() => import('./VisualEditing'))
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
@@ -33,7 +35,9 @@ export default function App() {
       </head>
       <body>
         <Outlet />
-        <VisualEditing />
+        <Suspense>
+          <VisualEditing />
+        </Suspense>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
