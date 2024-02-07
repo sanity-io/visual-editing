@@ -116,6 +116,61 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 ```
 
+### Remix
+
+For Remix apps you should use `VisualEditing` from `@sanity/visual-editing/remix` in your `app/root.tsx`:
+
+```tsx
+import { json } from '@remix-run/node'
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from '@remix-run/react'
+import { VisualEditing } from '@sanity/visual-editing/remix'
+
+export const loader = () => {
+  return json({
+    ENV: {
+      SANITY_VISUAL_EDITING_ENABLED:
+        process.env.SANITY_VISUAL_EDITING_ENABLED === 'true',
+    },
+  })
+}
+
+export default function App() {
+  const { ENV } = useLoaderData<typeof loader>()
+
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <main>
+          <Outlet />
+        </main>
+        {ENV.SANITY_VISUAL_EDITING_ENABLED && (
+          <VisualEditing
+            zIndex={1000} // Optional
+          />
+        )}
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  )
+}
+```
+
 ### React.js
 
 On React apps that don't have a first-class framework integration may use the `enableVisualEditing` function directly in a `useEffect` hook.
