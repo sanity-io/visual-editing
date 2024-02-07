@@ -22,7 +22,25 @@ import SpaceType from './models/documents/SpaceType'
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
   plugins: [structureTool(), assist(), unsplashImageAsset(), debugSecrets()],
-  schema,
+  schema: {
+    ...schema,
+    templates: [
+      {
+        id: 'page-basic',
+        title: 'Basic page',
+        schemaType: 'page',
+        parameters: [{ name: 'title', title: 'Page Title', type: 'string' }],
+        value: (params: any) => {
+          return {
+            title: params.title,
+            slug: {
+              current: 'basic-slug',
+            },
+          }
+        },
+      },
+    ],
+  },
 })
 
 // If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment

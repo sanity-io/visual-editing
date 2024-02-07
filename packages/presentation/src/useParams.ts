@@ -53,6 +53,7 @@ export function useParams({
       rev: routerSearchParams.rev,
       since: routerSearchParams.since,
       template: routerSearchParams.template,
+      templateParams: routerSearchParams.templateParams,
       view: routerSearchParams.view,
       // assist
       pathKey: routerSearchParams.pathKey,
@@ -69,6 +70,7 @@ export function useParams({
       rev: params.rev,
       since: params.since,
       template: params.template,
+      templateParams: params.templateParams,
       view: params.view,
       // assist
       pathKey: params.pathKey,
@@ -78,15 +80,16 @@ export function useParams({
     })
     return pruned
   }, [
+    params.comment,
     params.inspect,
+    params.instruction,
     params.path,
+    params.pathKey,
     params.rev,
     params.since,
     params.template,
+    params.templateParams,
     params.view,
-    params.pathKey,
-    params.instruction,
-    params.comment,
   ])
 
   const routerStateRef = useRef(routerState)
@@ -122,6 +125,12 @@ export function useParams({
             ...routerSearchState,
             ...nextSearchState,
           })
+
+          // If the document has changed, clear the template and templateParams
+          if (routerState.id !== state.id) {
+            delete searchState.template
+            delete searchState.templateParams
+          }
 
           state._searchParams = Object.entries(searchState).reduce(
             (acc, [key, value]) => [...acc, [key, value]],

@@ -13,7 +13,12 @@ import {
   Stack,
   Text,
 } from '@sanity/ui'
-import { AddIcon, BulbOutlineIcon, SchemaIcon } from '@sanity/icons'
+import {
+  AddIcon,
+  BulbOutlineIcon,
+  DocumentIcon,
+  SchemaIcon,
+} from '@sanity/icons'
 import { useIntentLink } from 'sanity/router'
 
 export function CustomNavigator() {
@@ -79,6 +84,39 @@ export function CustomNavigator() {
             placement="top-start"
             menu={
               <Menu>
+                <MenuItem
+                  {...useIntentLink({
+                    intent: 'create',
+                    params: [
+                      {
+                        type: 'page',
+                        mode: 'presentation',
+                        preview: params.preview,
+                        template: 'page-basic',
+                      },
+                      {
+                        title: 'Basic Page',
+                      },
+                    ],
+                  })}
+                  as="a"
+                >
+                  <Flex align="center" gap={3}>
+                    <Box flex="none">
+                      <Text size={1}>
+                        <DocumentIcon />
+                      </Text>
+                    </Box>
+                    <Stack flex={1} space={2}>
+                      <Text size={1} weight="medium">
+                        Page (Basic)
+                      </Text>
+                      <Text muted size={1}>
+                        Create a new page document
+                      </Text>
+                    </Stack>
+                  </Flex>
+                </MenuItem>
                 <MenuItem
                   {...useIntentLink({
                     intent: 'create',
