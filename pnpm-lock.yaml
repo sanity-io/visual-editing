@@ -19,6 +19,7 @@ overrides:
   '@sanity/types': ^3.28.0
   '@sanity/util': ^3.28.0
   '@sanity/vision': ^3.28.0
+  '@sanity/visual-editing': workspace:*
   create-sanity: ^3.28.0
   groq: ^3.28.0
   sanity: ^3.28.0
@@ -903,7 +904,7 @@ importers:
   packages/overlays:
     dependencies:
       '@sanity/visual-editing':
-        specifier: 1.2.0
+        specifier: workspace:*
         version: link:../visual-editing
     devDependencies:
       '@sanity/pkg-utils':
