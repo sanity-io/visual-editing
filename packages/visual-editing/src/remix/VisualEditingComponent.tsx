@@ -2,13 +2,26 @@ import { useLocation, useNavigate } from '@remix-run/react'
 import {
   enableVisualEditing,
   type HistoryAdapterNavigate,
+  type VisualEditingOptions,
 } from '@sanity/visual-editing'
-import { studioUrl } from 'apps-common/env'
 import { useEffect, useRef, useState } from 'react'
-import { useLiveMode } from '@sanity/react-loader'
-import { client } from '~/sanity'
 
-export default function VisualEditing() {
+/**
+ * @public
+ */
+export interface VisualEditingProps
+  extends Omit<VisualEditingOptions, 'history'> {
+  /**
+   * @deprecated The histoy adapter is already implemented
+   */
+  history?: never
+}
+
+export default function VisualEditingComponent(
+  props: VisualEditingProps,
+): null {
+  const { zIndex } = props
+
   const navigateRemix = useNavigate()
   const navigateRemixRef = useRef(navigateRemix)
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
@@ -18,9 +31,10 @@ export default function VisualEditing() {
   }, [navigateRemix])
   useEffect(() => {
     const disable = enableVisualEditing({
+      zIndex,
       history: {
-        subscribe: (navigate) => {
-          setNavigate(() => navigate)
+        subscribe: (_navigate) => {
+          setNavigate(() => _navigate)
           return () => setNavigate(undefined)
         },
         update: (update) => {
@@ -35,7 +49,8 @@ export default function VisualEditing() {
       },
     })
     return () => disable()
-  }, [])
+  }, [zIndex])
+
   const location = useLocation()
   useEffect(() => {
     if (navigate) {
@@ -45,8 +60,6 @@ export default function VisualEditing() {
       })
     }
   }, [location.hash, location.pathname, location.search, navigate])
-
-  useLiveMode({ allowStudioOrigin: studioUrl, client })
 
   return null
 }

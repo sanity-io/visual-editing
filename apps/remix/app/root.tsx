@@ -12,7 +12,7 @@ import { lazy, Suspense } from 'react'
 
 import stylesheet from '~/tailwind.css'
 
-const VisualEditing = lazy(() => import('./VisualEditing'))
+const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
@@ -36,7 +36,7 @@ export default function App() {
       <body>
         <Outlet />
         <Suspense>
-          <VisualEditing />
+          <LiveVisualEditing />
         </Suspense>
         <ScrollRestoration />
         <Scripts />
