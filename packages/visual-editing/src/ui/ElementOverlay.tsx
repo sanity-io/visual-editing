@@ -55,6 +55,10 @@ const Root = styled(Card)`
   /* [data-unmounted] & {
     --overlay-box-shadow: inset 0 0 0 1px var(--card-focus-ring-color);
   } */
+
+  :link {
+    text-decoration: none;
+  }
 `
 
 const Actions = styled(Flex)`
