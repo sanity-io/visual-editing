@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.8.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.8.1...presentation-v1.8.2) (2024-02-08)
+
+
+### Bug Fixes
+
+* don't close the document pane on URL navigations ([898fe08](https://github.com/sanity-io/visual-editing/commit/898fe086cd3a6500b4fd00c28d6feb9d917b6970))
+* remove layout shift when loading locations ([#882](https://github.com/sanity-io/visual-editing/issues/882)) ([49c5ef8](https://github.com/sanity-io/visual-editing/commit/49c5ef8c6ffed2a96102105db1d2b46ef9a78ace))
+* show unpublished in "Documents on this page" ([10e203a](https://github.com/sanity-io/visual-editing/commit/10e203a8910106a0d26e1021c7ee38b3fb3a4acb))
+
 ## [1.8.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.8.0...presentation-v1.8.1) (2024-02-08)
 
 

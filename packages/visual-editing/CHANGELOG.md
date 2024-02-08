@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.2.0...visual-editing-v1.2.1) (2024-02-08)
+
+
+### Bug Fixes
+
+* prevent text underline on the "Open in Studio" buttons ([5589c54](https://github.com/sanity-io/visual-editing/commit/5589c543970c53ae6defcced96993e9b1720bd2d))
+
 ## [1.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.1.0...visual-editing-v1.2.0) (2024-02-07)
 
 
