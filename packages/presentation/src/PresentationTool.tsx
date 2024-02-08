@@ -204,17 +204,8 @@ export default function PresentationTool(props: {
               })
             } else if (type === 'overlay/navigate') {
               if (previewRef.current !== data.url) {
-                const isInitialNavigation = previewRef.current === undefined
-
                 previewRef.current = data.url
-                if (isInitialNavigation) {
-                  navigate({}, { preview: data.url })
-                } else {
-                  navigate(
-                    { id: undefined, type: undefined },
-                    { preview: data.url },
-                  )
-                }
+                navigate({}, { preview: data.url })
               }
             } else if (type === 'overlay/toggle') {
               setOverlayEnabled(data.enabled)
@@ -334,7 +325,7 @@ export default function PresentationTool(props: {
         url.origin === initialPreviewUrl.origin &&
         preview !== params.preview
       ) {
-        navigate({ id: undefined, path: undefined }, { preview })
+        navigate({}, { preview })
       }
     },
     [initialPreviewUrl, params, navigate],
