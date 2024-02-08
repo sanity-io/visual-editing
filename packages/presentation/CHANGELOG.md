@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.8.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.8.0...presentation-v1.8.1) (2024-02-08)
+
+
+### Bug Fixes
+
+* make `@sanity/ui` a regular dependency ([d3ae838](https://github.com/sanity-io/visual-editing/commit/d3ae838e5590386cd32bc976ae30c6a58d8dfa02))
+
 ## [1.8.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.6...presentation-v1.8.0) (2024-02-08)
 
 
