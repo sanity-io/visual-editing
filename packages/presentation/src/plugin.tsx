@@ -35,7 +35,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>(
       if (isDocumentSchemaType(props.schemaType)) {
         return (
           <PresentationDocumentProvider options={options}>
-            {documentId && (
+            {options.locate && documentId && (
               <PresentationDocumentHeader
                 documentId={documentId}
                 options={options}

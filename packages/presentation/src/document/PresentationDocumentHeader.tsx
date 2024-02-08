@@ -1,10 +1,19 @@
-import { Stack } from '@sanity/ui'
-import { ReactNode, useContext } from 'react'
-import { ObjectSchemaType, PublishedId } from 'sanity'
+import { rem, Stack } from '@sanity/ui'
+import { type ReactNode, useContext } from 'react'
+import { type ObjectSchemaType, type PublishedId } from 'sanity'
+import styled from 'styled-components'
 
-import { PresentationPluginOptions } from '../types'
+import type { PresentationPluginOptions } from '../types'
 import { LocationsBanner } from './LocationsBanner'
 import { PresentationDocumentContext } from './PresentationDocumentContext'
+
+const LocationStack = styled(Stack)`
+  min-height: ${rem(42)};
+
+  & + &:empty {
+    display: none;
+  }
+`
 
 export function PresentationDocumentHeader(props: {
   documentId: PublishedId
@@ -16,13 +25,13 @@ export function PresentationDocumentHeader(props: {
   const context = useContext(PresentationDocumentContext)
 
   if (context && context.options[0] !== options) {
-    return null
+    return <LocationStack marginBottom={5} space={5} />
   }
 
   const len = context?.options?.length || 0
 
   return (
-    <Stack marginBottom={5} space={5}>
+    <LocationStack marginBottom={5} space={5}>
       <Stack space={2}>
         {context?.options.map((o, idx) => (
           <LocationsBanner
@@ -34,6 +43,6 @@ export function PresentationDocumentHeader(props: {
           />
         ))}
       </Stack>
-    </Stack>
+    </LocationStack>
   )
 }
