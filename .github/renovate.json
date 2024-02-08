@@ -22,7 +22,12 @@
       "groupName": "App dependencies"
     },
     {
-      "matchDepTypes": ["dependencies", "peerDependencies"],
+      "matchDepTypes": ["dependencies", "devDependencies"]
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "excludePackageNames": ["@sveltejs/kit", "svelte", "vue", "next", "vue-router", "nuxt", "@remix-run/react"],
       "rangeStrategy": "bump"
     },
     {
