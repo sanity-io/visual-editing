@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.8.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.6...presentation-v1.8.0) (2024-02-08)
+
+
+### Features
+
+* **presentation:** support parameterized templates ([#865](https://github.com/sanity-io/visual-editing/issues/865)) ([5708fad](https://github.com/sanity-io/visual-editing/commit/5708fad028d2bc45383432348edb159855c53566))
+
 ## [1.7.6](https://github.com/sanity-io/visual-editing/compare/presentation-v1.7.5...presentation-v1.7.6) (2024-02-05)
 
 
