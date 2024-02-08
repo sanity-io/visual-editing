@@ -2,7 +2,7 @@ import { type ReactElement } from 'react'
 import { type Path } from 'sanity'
 
 import type { DeskDocumentPaneParams } from '../types'
-import { DocumentListPanel } from './DocumentListPanel'
+import { DocumentListPane } from './DocumentListPane'
 import { DocumentPanel } from './DocumentPanel'
 
 export function ContentEditor(props: {
@@ -37,7 +37,7 @@ export function ContentEditor(props: {
   }
 
   return (
-    <DocumentListPanel
+    <DocumentListPane
       onDeskParams={onDeskParams}
       previewUrl={previewUrl}
       refs={refs}

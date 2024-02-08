@@ -7,7 +7,7 @@ import {
   useCallback,
   useMemo,
 } from 'react'
-import { getPublishedId, useUnique } from 'sanity'
+import { useUnique } from 'sanity'
 import { StateLink, useRouter } from 'sanity/router'
 import {
   BackLinkProps,
@@ -132,7 +132,7 @@ export function PresentationPaneRouterProvider(
       routerPanesState: [],
       ChildLink: (childLinkProps) => {
         const { childId, ...restProps } = childLinkProps
-        const ref = refs?.find((r) => getPublishedId(r._id) === childId)
+        const ref = refs?.find((r) => r._id === childId)
 
         if (ref) {
           return (
