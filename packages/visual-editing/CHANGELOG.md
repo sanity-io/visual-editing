@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.2.1...visual-editing-v1.2.2) (2024-02-09)
+
+
+### Bug Fixes
+
+* improve bundling ([e1b6a1f](https://github.com/sanity-io/visual-editing/commit/e1b6a1fafaebbe68e48dd8c02ed4802b97b44d89))
+
 ## [1.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.2.0...visual-editing-v1.2.1) (2024-02-08)
 
 
