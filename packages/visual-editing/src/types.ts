@@ -1,7 +1,11 @@
+import { ChannelsNode } from '@sanity/channels'
 import type {
   HistoryUpdate,
+  OverlayMsg as OverlayChannelsMsg,
+  PresentationMsg,
   SanityNode,
   SanityNodeLegacy,
+  VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
 
 export type {
@@ -195,3 +199,21 @@ export interface _EventHandlers {
   mouseleave: (event: MouseEvent) => void
   mousemove: (event: MouseEvent) => void
 }
+
+/**
+ * @internal
+ */
+export type VisualEditingChannelSends = OverlayChannelsMsg | VisualEditingMsg
+
+/**
+ * @internal
+ */
+export type VisualEditingChannelReceives = PresentationMsg
+
+/**
+ * @internal
+ */
+export type VisualEditingChannel = ChannelsNode<
+  VisualEditingChannelSends,
+  VisualEditingChannelReceives
+>

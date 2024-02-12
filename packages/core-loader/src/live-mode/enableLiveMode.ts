@@ -54,55 +54,57 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const channel = createChannelsNode<LoaderMsg, LoaderMsg>({
     id: 'loaders' satisfies VisualEditingConnectionIds,
     connectTo: 'presentation' satisfies VisualEditingConnectionIds,
-    onEvent: (type, data) => {
-      if (
-        type === 'loader/perspective' &&
-        data.projectId === projectId &&
-        data.dataset === dataset
-      ) {
-        if (
-          data.perspective !== 'published' &&
-          data.perspective !== 'previewDrafts'
-        ) {
-          throw new Error(
-            `Unsupported perspective: ${JSON.stringify(data.perspective)}`,
-          )
-        }
-        $perspective.set(data.perspective)
-        updateLiveQueries()
-      } else if (
-        type === 'loader/query-change' &&
-        data.projectId === projectId &&
-        data.dataset === dataset
-      ) {
-        const { perspective, query, params } = data
-        if (
-          data.result !== undefined &&
-          data.resultSourceMap !== undefined &&
-          (client as SanityClient).config().stega.enabled
-        ) {
-          cache.set(JSON.stringify({ perspective, query, params }), {
-            ...data,
-            result: stegaEncodeSourceMap(
-              data.result,
-              data.resultSourceMap,
-              (client as SanityClient).config().stega,
-            ),
-          })
-        } else {
-          cache.set(JSON.stringify({ perspective, query, params }), data)
-        }
+  })
 
-        updateLiveQueries()
+  channel.onStatusUpdate((status) => {
+    if (status === 'connected') {
+      $connected.set(true)
+    } else if (status === 'disconnected') {
+      $connected.set(false)
+    }
+  })
+
+  channel.subscribe((type, data) => {
+    if (
+      type === 'loader/perspective' &&
+      data.projectId === projectId &&
+      data.dataset === dataset
+    ) {
+      if (
+        data.perspective !== 'published' &&
+        data.perspective !== 'previewDrafts'
+      ) {
+        throw new Error(
+          `Unsupported perspective: ${JSON.stringify(data.perspective)}`,
+        )
       }
-    },
-    onStatusUpdate(status) {
-      if (status === 'connected') {
-        $connected.set(true)
-      } else if (status === 'disconnected') {
-        $connected.set(false)
+      $perspective.set(data.perspective)
+      updateLiveQueries()
+    } else if (
+      type === 'loader/query-change' &&
+      data.projectId === projectId &&
+      data.dataset === dataset
+    ) {
+      const { perspective, query, params } = data
+      if (
+        data.result !== undefined &&
+        data.resultSourceMap !== undefined &&
+        (client as SanityClient).config().stega.enabled
+      ) {
+        cache.set(JSON.stringify({ perspective, query, params }), {
+          ...data,
+          result: stegaEncodeSourceMap(
+            data.result,
+            data.resultSourceMap,
+            (client as SanityClient).config().stega,
+          ),
+        })
+      } else {
+        cache.set(JSON.stringify({ perspective, query, params }), data)
       }
-    },
+
+      updateLiveQueries()
+    }
   })
 
   let unsetFetcher: (() => void) | undefined

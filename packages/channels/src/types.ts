@@ -77,6 +77,14 @@ export type ChannelsEventHandler<Receives extends ChannelMsg = ChannelMsg> = (
 /**
  * @public
  */
+export type ChannelsControllerStatusSubscriber = (
+  status: ChannelStatus,
+  connectionId: string,
+) => void
+
+/**
+ * @public
+ */
 export interface ChannelsControllerOptions<
   Receives extends ChannelMsg = ChannelMsg,
 > {
@@ -85,7 +93,7 @@ export interface ChannelsControllerOptions<
   target: Window
   targetOrigin: string
   onEvent?: ChannelsEventHandler<Receives>
-  onStatusUpdate?: (status: ChannelStatus, connectionId: string) => void
+  onStatusUpdate?: ChannelsControllerStatusSubscriber
 }
 
 /**
@@ -96,8 +104,8 @@ export interface ChannelsControllerChannelOptions<
 > {
   id: string
   heartbeat?: boolean | number
-  onStatusUpdate?: (status: ChannelStatus, connectionId: string) => void
   onEvent?: ChannelsEventHandler<Receives>
+  onStatusUpdate?: ChannelsControllerStatusSubscriber
 }
 
 /**
@@ -127,11 +135,9 @@ export interface ChannelsController<Sends extends ChannelMsg = ChannelMsg> {
 /**
  * @public
  */
-export interface ChannelsNodeOptions<Receives extends ChannelMsg = ChannelMsg> {
+export interface ChannelsNodeOptions {
   id: string
   connectTo: string
-  onEvent?: ChannelsEventHandler<Receives>
-  onStatusUpdate?: (status: ChannelStatus) => void
 }
 
 /**
@@ -148,8 +154,25 @@ export interface ChannelsNodeChannel {
 /**
  * @public
  */
-export interface ChannelsNode<Sends extends ChannelMsg = ChannelMsg> {
+export type ChannelsEventSubscriber<Receives extends ChannelMsg> = (
+  ...args: ToArgs<Receives>
+) => void
+
+/**
+ * @public
+ */
+export type ChannelsNodeStatusSubscriber = (status: ChannelStatus) => void
+
+/**
+ * @public
+ */
+export interface ChannelsNode<
+  Sends extends ChannelMsg,
+  Receives extends ChannelMsg,
+> {
   destroy: () => void
   inFrame: boolean
+  onStatusUpdate: (subscriber: ChannelsNodeStatusSubscriber) => () => void
   send: (...args: ToArgs<Sends>) => void
+  subscribe: (subscriber: ChannelsEventSubscriber<Receives>) => () => void
 }

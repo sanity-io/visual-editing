@@ -1,16 +1,11 @@
-import type { ChannelsEventHandler } from '@sanity/channels'
+import { ChannelStatus } from '@sanity/channels'
 import {
   isHTMLAnchorElement,
   isHTMLElement,
   studioTheme,
   ThemeProvider,
 } from '@sanity/ui'
-import {
-  isAltKey,
-  isHotkey,
-  type OverlayMsg,
-  type PresentationMsg,
-} from '@sanity/visual-editing-helpers'
+import { isAltKey, isHotkey } from '@sanity/visual-editing-helpers'
 import {
   FunctionComponent,
   useCallback,
@@ -22,10 +17,13 @@ import {
 } from 'react'
 import styled from 'styled-components'
 
-import { HistoryAdapter, OverlayEventHandler } from '../types'
+import {
+  HistoryAdapter,
+  OverlayEventHandler,
+  VisualEditingChannel,
+} from '../types'
 import { ElementOverlay } from './ElementOverlay'
 import { overlayStateReducer } from './overlayStateReducer'
-import { useChannel } from './useChannel'
 import { useController } from './useController'
 
 const Root = styled.div<{
@@ -59,10 +57,14 @@ function raf2(fn: () => void) {
  * @internal
  */
 export const Overlays: FunctionComponent<{
+  channel?: VisualEditingChannel
   history?: HistoryAdapter
   zIndex?: string | number
 }> = function (props) {
-  const { history, zIndex } = props
+  const { channel, history, zIndex } = props
+
+  const [status, setStatus] = useState<ChannelStatus>()
+
   const [{ elements, wasMaybeCollapsed }, dispatch] = useReducer(
     overlayStateReducer,
     undefined,
@@ -75,29 +77,25 @@ export const Overlays: FunctionComponent<{
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
-  const channelEventHandler = useCallback<
-    ChannelsEventHandler<PresentationMsg>
-  >(
-    (type, data) => {
+  useEffect(() => {
+    const unsubscribeFromStatus = channel?.onStatusUpdate(setStatus)
+    const unsubscribeFromEvents = channel?.subscribe((type, data) => {
       if (type === 'presentation/focus' && data.path?.length) {
         dispatch({ type, data })
-      }
-      if (type === 'presentation/blur') {
+      } else if (type === 'presentation/blur') {
         dispatch({ type, data })
-      }
-      if (type === 'presentation/navigate') {
+      } else if (type === 'presentation/navigate') {
         history?.update(data)
-      }
-      if (type === 'presentation/toggleOverlay') {
+      } else if (type === 'presentation/toggleOverlay') {
         setOverlayEnabled((enabled) => !enabled)
       }
-    },
-    [history],
-  )
+    })
 
-  const { channel, status } = useChannel<OverlayMsg, PresentationMsg>(
-    channelEventHandler,
-  )
+    return () => {
+      unsubscribeFromEvents?.()
+      unsubscribeFromStatus?.()
+    }
+  }, [channel, history])
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {

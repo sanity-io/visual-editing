@@ -15,17 +15,19 @@ export function PostMessageReporter() {
     const channel = createChannelsNode<LoaderMsg, LoaderMsg>({
       id: 'loaders' satisfies VisualEditingConnectionIds,
       connectTo: 'presentation' satisfies VisualEditingConnectionIds,
-      onEvent: (type, data) => {
-        if (type === 'loader/revalidate-tags') {
-          console.log('revalidate', data, 'calling router refresh')
-          clearTimeout(revalidateRef.current)
-          router.refresh()
-          revalidateRef.current = window.setTimeout(() => {
-            router.refresh()
-          }, 1000)
-        }
-      },
     })
+
+    channel.subscribe((type, data) => {
+      if (type === 'loader/revalidate-tags') {
+        console.log('revalidate', data, 'calling router refresh')
+        clearTimeout(revalidateRef.current)
+        router.refresh()
+        revalidateRef.current = window.setTimeout(() => {
+          router.refresh()
+        }, 1000)
+      }
+    })
+
     return () => {
       channel.destroy()
     }

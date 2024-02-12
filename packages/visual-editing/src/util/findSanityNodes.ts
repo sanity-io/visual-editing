@@ -42,7 +42,7 @@ export function findCommonPath(first: string, second: string): string {
 
 /**
  * Returns common Sanity node data from multiple nodes
- * If doocument paths are present, tries to resolve a common path
+ * If document paths are present, tries to resolve a common path
  * @param nodes An array of Sanity nodes
  * @returns A single sanity node or undefined
  * @internal

@@ -7,9 +7,11 @@ import {
 } from './helpers'
 import {
   ChannelMsg,
+  ChannelsEventSubscriber,
   ChannelsNode,
   ChannelsNodeChannel,
   ChannelsNodeOptions,
+  ChannelsNodeStatusSubscriber,
   ChannelStatus,
   HandshakeMsgType,
   InternalMsgType,
@@ -20,7 +22,7 @@ import {
 export function createChannelsNode<
   Sends extends ChannelMsg,
   Receives extends ChannelMsg,
->(config: ChannelsNodeOptions<Receives>): ChannelsNode<Sends> {
+>(config: ChannelsNodeOptions): ChannelsNode<Sends, Receives> {
   const inFrame = window.self !== window.top || window.opener
 
   const channel: ChannelsNodeChannel = {
@@ -126,12 +128,21 @@ export function createChannelsNode<
           return
         } else {
           const args = [data.type, data.data] as ToArgs<Receives>
-          config.onEvent?.(...args)
+          eventSubscribers.forEach((subscriber) => {
+            subscriber(...args)
+          })
           send('channel/response', { responseTo: data.id })
         }
         return
       }
     }
+  }
+
+  const eventSubscribers = new Set<ChannelsEventSubscriber<Receives>>()
+
+  function subscribeToEvent(subscriber: ChannelsEventSubscriber<Receives>) {
+    eventSubscribers.add(subscriber)
+    return () => eventSubscribers.delete(subscriber)
   }
 
   function disconnect() {
@@ -140,17 +151,28 @@ export function createChannelsNode<
     setConnectionStatus('disconnected')
   }
 
-  function destroy() {
-    disconnect()
-    window.removeEventListener('message', handleEvents, false)
+  const statusSubscribers = new Set<ChannelsNodeStatusSubscriber>()
+
+  function subscribeToStatus(subscriber: ChannelsNodeStatusSubscriber) {
+    statusSubscribers.add(subscriber)
+    return () => statusSubscribers.delete(subscriber)
   }
 
   function setConnectionStatus(next: ChannelStatus) {
     channel.status = next
-    config?.onStatusUpdate?.(next)
+    statusSubscribers.forEach((subscriber) => {
+      subscriber(next)
+    })
     if (next === 'connected') {
       flush()
     }
+  }
+
+  function destroy() {
+    disconnect()
+    eventSubscribers.clear()
+    statusSubscribers.clear()
+    window.removeEventListener('message', handleEvents, false)
   }
 
   function initialise() {
@@ -171,5 +193,7 @@ export function createChannelsNode<
     destroy,
     inFrame,
     send: sendPublic,
+    subscribe: subscribeToEvent,
+    onStatusUpdate: subscribeToStatus,
   }
 }

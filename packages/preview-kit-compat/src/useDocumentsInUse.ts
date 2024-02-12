@@ -17,7 +17,7 @@ export function useDocumentsInUse(
   dataset: string,
 ): void {
   const [channel, setChannel] = useState<
-    ChannelsNode<PreviewKitMsg> | undefined
+    ChannelsNode<PreviewKitMsg, PresentationMsg> | undefined
   >()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
@@ -27,14 +27,16 @@ export function useDocumentsInUse(
     const channel = createChannelsNode<PreviewKitMsg, PresentationMsg>({
       id: 'preview-kit' satisfies VisualEditingConnectionIds,
       connectTo: 'presentation' satisfies VisualEditingConnectionIds,
-      onStatusUpdate(status) {
-        if (status === 'connected') {
-          setConnected(true)
-        } else if (status === 'disconnected') {
-          setConnected(false)
-        }
-      },
     })
+
+    channel.onStatusUpdate((status) => {
+      if (status === 'connected') {
+        setConnected(true)
+      } else if (status === 'disconnected') {
+        setConnected(false)
+      }
+    })
+
     const timeout = setTimeout(() => setChannel(channel), 0)
     return () => {
       clearTimeout(timeout)
