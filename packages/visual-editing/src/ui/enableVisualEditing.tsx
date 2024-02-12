@@ -1,7 +1,7 @@
 import type { Root } from 'react-dom/client'
 
 import { OVERLAY_ID } from '../constants'
-import { HistoryAdapter } from '../types'
+import type { HistoryAdapter } from '../types'
 
 /**
  * Cleanup function used when e.g. unmounting
@@ -40,11 +40,9 @@ export function enableVisualEditing(
   const controller = new AbortController()
 
   // Lazy load everything needed to render the app
-  Promise.all([import('react-dom/client'), import('./Overlays')]).then(
-    ([reactClient, { Overlays }]) => {
+  Promise.all([import('react-dom/client'), import('./VisualEditing')]).then(
+    ([reactClient, { VisualEditing }]) => {
       if (controller.signal.aborted) return
-
-      const { history, zIndex } = options
 
       if (!node) {
         node = document.createElement('div')
@@ -58,7 +56,11 @@ export function enableVisualEditing(
         root = createRoot(node)
       }
 
-      root.render(<Overlays history={history} zIndex={zIndex} />)
+      root.render(
+        <>
+          <VisualEditing {...options} />
+        </>,
+      )
     },
   )
 

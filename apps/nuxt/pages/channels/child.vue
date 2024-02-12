@@ -28,16 +28,21 @@
 <script lang="ts" setup>
 import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
 
+interface Sends {
+  type: 'child/event'
+  data: { datetime: string }
+}
+
 const log = ref<any[]>([])
-const channel = ref<ChannelsNode | undefined>()
+const channel = ref<ChannelsNode<Sends, any> | undefined>()
 
 onMounted(() => {
   channel.value = createChannelsNode({
     id: 'child',
     connectTo: 'parent',
-    onEvent(type, data) {
-      log.value.unshift({ ...data, type })
-    },
+  })
+  channel.value.subscribe((type, data) => {
+    log.value.unshift({ ...data, type })
   })
 })
 
