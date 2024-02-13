@@ -218,13 +218,23 @@ const crossDatasetReferencesWorkspace = defineConfig({
             title: 'Logo',
             options: {
               hotspot: true,
-              captionField: 'alt',
+              // @ts-expect-error - find out how to get typings
+              aiAssist: {
+                imageDescriptionField: 'alt',
+                imagePromptField: 'imagePromptField',
+              },
             },
             fields: [
               defineField({
                 name: 'alt',
                 type: 'string',
                 title: 'Alt text',
+              }),
+              defineField({
+                type: 'text',
+                name: 'imagePrompt',
+                title: 'Image prompt',
+                rows: 2,
               }),
             ],
           }),
