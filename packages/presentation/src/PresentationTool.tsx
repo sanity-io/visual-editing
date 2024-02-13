@@ -28,7 +28,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { useUnique } from 'sanity'
+import { useUnique, useWorkspace } from 'sanity'
 import {
   type Path,
   type SanityDocument,
@@ -37,9 +37,14 @@ import {
   useProjectId,
 } from 'sanity'
 import { RouterContextValue, useRouter } from 'sanity/router'
+import {
+  type CommentIntentGetter,
+  CommentsIntentProvider,
+} from 'sanity/structure'
 import styled from 'styled-components'
 
 import {
+  COMMENTS_INSPECTOR_NAME,
   DEFAULT_TOOL_NAME,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
@@ -55,6 +60,7 @@ import { PresentationProvider } from './PresentationProvider'
 import { PreviewFrame } from './preview/PreviewFrame'
 import type {
   DeskDocumentPaneParams,
+  FrameState,
   LiveQueriesState,
   LiveQueriesStateValue,
   PresentationPluginOptions,
@@ -116,14 +122,17 @@ export default function PresentationTool(props: {
 
   const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
-  const previewRef = useRef<typeof params.preview>()
+  const frameStateRef = useRef<FrameState>({
+    title: undefined,
+    url: undefined,
+  })
 
   const { params, deskParams, navigate } = useParams({
     initialPreviewUrl,
     routerNavigate,
     routerState,
     routerSearchParams,
-    previewRef,
+    frameStateRef,
   })
 
   const [perspective, setPerspective] = useState<ClientPerspective>(() =>
@@ -203,10 +212,13 @@ export default function PresentationTool(props: {
                 path: data.path,
               })
             } else if (type === 'overlay/navigate') {
-              if (previewRef.current !== data.url) {
-                previewRef.current = data.url
-                navigate({}, { preview: data.url })
+              const { title, url } = data
+              if (frameStateRef.current.url !== url) {
+                navigate({}, { preview: url })
               }
+              frameStateRef.current = { title, url }
+            } else if (type === 'visual-editing/meta') {
+              frameStateRef.current.title = data.title
             } else if (type === 'overlay/toggle') {
               setOverlayEnabled(data.enabled)
             }
@@ -352,11 +364,11 @@ export default function PresentationTool(props: {
   // Dispatch a navigation message when the preview param changes
   useEffect(() => {
     if (
-      previewRef.current &&
+      frameStateRef.current.url &&
       params.preview &&
-      previewRef.current !== params.preview
+      frameStateRef.current.url !== params.preview
     ) {
-      previewRef.current = params.preview
+      frameStateRef.current.url = params.preview
       if (overlaysConnection !== 'connected' && iframeRef.current) {
         iframeRef.current.src = `${targetOrigin}${params.preview}`
       } else {
@@ -416,6 +428,30 @@ export default function PresentationTool(props: {
     idRef.current = params.id
   })
 
+  const workspace = useWorkspace()
+
+  const getCommentIntent = useCallback<CommentIntentGetter>(
+    ({ id, type, path }) => {
+      if (frameStateRef.current.url) {
+        return {
+          title: frameStateRef.current.title || frameStateRef.current.url,
+          name: 'edit',
+          params: {
+            id,
+            path,
+            type,
+            inspect: COMMENTS_INSPECTOR_NAME,
+            workspace: workspace.name,
+            mode: name,
+            preview: params.preview,
+          },
+        }
+      }
+      return undefined
+    },
+    [name, params, workspace.name],
+  )
+
   return (
     <>
       <PresentationProvider
@@ -469,15 +505,17 @@ export default function PresentationTool(props: {
                     documentId={params.id}
                     setDisplayedDocument={setDisplayedDocument}
                   >
-                    <ContentEditor
-                      refs={documentsOnPage}
-                      deskParams={deskParams}
-                      documentId={params.id}
-                      documentType={params.type}
-                      onDeskParams={handleDeskParams}
-                      onFocusPath={handleFocusPath}
-                      previewUrl={params.preview}
-                    />
+                    <CommentsIntentProvider getIntent={getCommentIntent}>
+                      <ContentEditor
+                        refs={documentsOnPage}
+                        deskParams={deskParams}
+                        documentId={params.id}
+                        documentType={params.type}
+                        onDeskParams={handleDeskParams}
+                        onFocusPath={handleFocusPath}
+                        previewUrl={params.preview}
+                      />
+                    </CommentsIntentProvider>
                   </DisplayedDocumentBroadcasterProvider>
                 </Panel>
               </Panels>

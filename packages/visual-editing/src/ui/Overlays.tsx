@@ -178,6 +178,7 @@ export const Overlays: FunctionComponent<{
   useEffect(() => {
     if (history) {
       return history.subscribe((update) => {
+        update.title = update.title || document.title
         channel.send('overlay/navigate', update)
       })
     }

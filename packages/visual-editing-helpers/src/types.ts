@@ -46,6 +46,7 @@ export type SanityNodeLegacy = {
  */
 export type HistoryUpdate = {
   type: 'push' | 'pop' | 'replace'
+  title?: string
   url: string
 }
 
@@ -80,6 +81,9 @@ export interface VisualEditingPayloads {
     documents: ContentSourceMapDocuments
   }
   focus: SanityNode | SanityNodeLegacy
+  meta: {
+    title: string
+  }
   navigate: HistoryUpdate
   toggle: {
     enabled: boolean
@@ -120,6 +124,10 @@ export type VisualEditingMsg =
   | {
       type: 'visual-editing/toggle'
       data: VisualEditingPayloads['toggle']
+    }
+  | {
+      type: 'visual-editing/meta'
+      data: VisualEditingPayloads['meta']
     }
   | {
       type: 'visual-editing/documents'

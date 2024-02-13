@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react'
 
 import { VisualEditingOptions } from './enableVisualEditing'
+import { Meta } from './Meta'
 import { Overlays } from './Overlays'
 import { useChannel } from './useChannel'
 
@@ -17,6 +18,7 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = function (
     channel && (
       <>
         <Overlays channel={channel} history={history} zIndex={zIndex} />
+        <Meta channel={channel} />
       </>
     )
   )

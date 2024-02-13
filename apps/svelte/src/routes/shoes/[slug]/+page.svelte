@@ -16,6 +16,10 @@
   $: [coverImage, ...otherImages] = product?.media || []
 </script>
 
+<svelte:head>
+  <title>{product.title}</title>
+</svelte:head>
+
 <div class="min-h-screen bg-white">
   <nav aria-label="Breadcrumb" class="pt-16 sm:pt-24">
     <ol
