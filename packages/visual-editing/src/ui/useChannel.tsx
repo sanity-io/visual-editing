@@ -1,6 +1,6 @@
 import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
 import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   VisualEditingChannelReceives as Receives,
@@ -12,19 +12,18 @@ import {
  * @internal
  */
 export function useChannel(): ChannelsNode<Sends, Receives> | undefined {
-  const channelRef = useRef<ChannelsNode<Sends, Receives>>()
+  const [channel, setChannel] = useState<ChannelsNode<Sends, Receives>>()
 
   useEffect(() => {
-    const channel = createChannelsNode<Sends, Receives>({
+    const channelInstance = createChannelsNode<Sends, Receives>({
       id: 'overlays' satisfies VisualEditingConnectionIds,
       connectTo: 'presentation' satisfies VisualEditingConnectionIds,
     })
-    channelRef.current = channel
+    setChannel(channelInstance)
     return () => {
-      channel.destroy()
-      channelRef.current = undefined
+      channelInstance.destroy()
     }
   }, [])
 
-  return channelRef.current
+  return channel
 }

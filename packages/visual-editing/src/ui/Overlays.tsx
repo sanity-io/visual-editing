@@ -1,4 +1,4 @@
-import { ChannelStatus } from '@sanity/channels'
+import type { ChannelStatus } from '@sanity/channels'
 import {
   isHTMLAnchorElement,
   isHTMLElement,
@@ -57,7 +57,7 @@ function raf2(fn: () => void) {
  * @internal
  */
 export const Overlays: FunctionComponent<{
-  channel?: VisualEditingChannel
+  channel: VisualEditingChannel
   history?: HistoryAdapter
   zIndex?: string | number
 }> = function (props) {
@@ -78,8 +78,8 @@ export const Overlays: FunctionComponent<{
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
   useEffect(() => {
-    const unsubscribeFromStatus = channel?.onStatusUpdate(setStatus)
-    const unsubscribeFromEvents = channel?.subscribe((type, data) => {
+    const unsubscribeFromStatus = channel.onStatusUpdate(setStatus)
+    const unsubscribeFromEvents = channel.subscribe((type, data) => {
       if (type === 'presentation/focus' && data.path?.length) {
         dispatch({ type, data })
       } else if (type === 'presentation/blur') {
@@ -92,19 +92,19 @@ export const Overlays: FunctionComponent<{
     })
 
     return () => {
-      unsubscribeFromEvents?.()
-      unsubscribeFromStatus?.()
+      unsubscribeFromEvents()
+      unsubscribeFromStatus()
     }
   }, [channel, history])
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
       if (message.type === 'element/click') {
-        channel?.send('overlay/focus', message.sanity)
+        channel.send('overlay/focus', message.sanity)
       } else if (message.type === 'overlay/activate') {
-        channel?.send('overlay/toggle', { enabled: true })
+        channel.send('overlay/toggle', { enabled: true })
       } else if (message.type === 'overlay/deactivate') {
-        channel?.send('overlay/toggle', { enabled: false })
+        channel.send('overlay/toggle', { enabled: false })
       }
       dispatch(message)
     },
@@ -114,7 +114,7 @@ export const Overlays: FunctionComponent<{
   const controller = useController(
     rootElement,
     overlayEventHandler,
-    !!channel?.inFrame,
+    !!channel.inFrame,
   )
 
   useEffect(() => {
@@ -176,7 +176,7 @@ export const Overlays: FunctionComponent<{
   }, [setOverlayEnabled])
 
   useEffect(() => {
-    if (channel && history) {
+    if (history) {
       return history.subscribe((update) => {
         channel.send('overlay/navigate', update)
       })
@@ -232,7 +232,7 @@ export const Overlays: FunctionComponent<{
               rect={rect}
               focused={focused}
               hovered={hovered}
-              showActions={!channel?.inFrame}
+              showActions={!channel.inFrame}
               sanity={sanity}
               wasMaybeCollapsed={focused && wasMaybeCollapsed}
             />
