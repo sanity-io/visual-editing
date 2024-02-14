@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.4.1 to 1.4.2
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.6 to 0.3.0
+
 ## [1.7.11](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.10...nuxt-loader-v1.7.11) (2024-02-05)
 
 

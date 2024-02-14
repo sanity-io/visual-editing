@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.4.1 to 1.4.2
+  * devDependencies
+    * @sanity/preview-url-secret bumped from ^1.6.1 to ^1.6.2
+    * @sanity/visual-editing-helpers bumped from 0.2.6 to 0.3.0
+
 ## [1.7.2](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.7.1...svelte-loader-v1.7.2) (2024-02-05)
 
 

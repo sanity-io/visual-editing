@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.4.2](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.1...core-loader-v1.4.2) (2024-02-14)
+
+
+### Bug Fixes
+
+* wait with setting an initial loading state until after Presentation is connected ([d997973](https://github.com/sanity-io/visual-editing/commit/d9979735f818698553f42d0d0f9216b20361af88))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.6 to 0.3.0
+
 ## [1.4.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.0...core-loader-v1.4.1) (2024-02-05)
 
 

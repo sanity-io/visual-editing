@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.2.6...visual-editing-helpers-v0.3.0) (2024-02-14)
+
+
+### Features
+
+* support comments intent ([#901](https://github.com/sanity-io/visual-editing/issues/901)) ([91017aa](https://github.com/sanity-io/visual-editing/commit/91017aa1ed59c23fbeae51148b424d3dc236ef9b))
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to ^3.29.0 ([#903](https://github.com/sanity-io/visual-editing/issues/903)) ([cc1b9e5](https://github.com/sanity-io/visual-editing/commit/cc1b9e50d1512479fa279b1d07791955592bc2d4))
+
 ## [0.2.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.2.5...visual-editing-helpers-v0.2.6) (2024-01-29)
 
 
