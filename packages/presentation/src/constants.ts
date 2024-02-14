@@ -4,6 +4,9 @@ export const DEFAULT_TOOL_ICON = ComposeIcon
 export const DEFAULT_TOOL_NAME = 'presentation'
 export const DEFAULT_TOOL_TITLE = 'Presentation'
 
+// @todo import from core sanity package
+export const COMMENTS_INSPECTOR_NAME = 'sanity/structure/comments'
+
 export const EDIT_INTENT_MODE = 'presentation'
 
 // How long we wait until an iframe is loaded until we consider it to be slow and possibly failed

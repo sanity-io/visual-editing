@@ -5,6 +5,7 @@ import { debounce } from './lib/debounce'
 import { parseRouterState } from './lib/parse'
 import {
   DeskDocumentPaneParams,
+  FrameState,
   PresentationNavigate,
   PresentationParams,
   PresentationSearchParams,
@@ -24,7 +25,7 @@ export function useParams({
   routerNavigate,
   routerState,
   routerSearchParams,
-  previewRef,
+  frameStateRef,
 }: {
   initialPreviewUrl: URL
   routerNavigate: RouterContextValue['navigate']
@@ -32,7 +33,7 @@ export function useParams({
   routerSearchParams: {
     [k: string]: string
   }
-  previewRef: MutableRefObject<string | undefined>
+  frameStateRef: MutableRefObject<FrameState>
 }): {
   deskParams: DeskDocumentPaneParams
   navigate: PresentationNavigate
@@ -138,13 +139,13 @@ export function useParams({
           )
 
           const replace =
-            forceReplace ?? searchState.preview === previewRef.current
+            forceReplace ?? searchState.preview === frameStateRef.current.url
 
           routerNavigate(state, { replace })
         },
         50,
       ),
-    [routerNavigate, previewRef],
+    [routerNavigate, frameStateRef],
   )
 
   return {

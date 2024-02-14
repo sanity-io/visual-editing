@@ -118,3 +118,9 @@ export interface LiveQueriesStateValue {
    */
   heartbeat: number | false
 }
+
+/** @internal */
+export interface FrameState {
+  title: string | undefined
+  url: string | undefined
+}
