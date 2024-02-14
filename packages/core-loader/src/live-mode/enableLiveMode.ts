@@ -134,7 +134,8 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
 
           return {
             loading:
-              initial?.data === undefined || initial?.sourceMap === undefined,
+              ($connected.value === true && initial?.data === undefined) ||
+              initial?.sourceMap === undefined,
             error: undefined,
             data: initial?.data,
             sourceMap: initial?.sourceMap,
@@ -214,7 +215,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         params,
         heartbeat: LISTEN_HEARTBEAT_INTERVAL,
       } satisfies LoaderPayloads['query-listen'])
-      if (!skipSetLoading) {
+      if (!skipSetLoading && $connected.value === true) {
         $fetch.setKey('loading', true)
       }
       $fetch.setKey('perspective', perspective)
