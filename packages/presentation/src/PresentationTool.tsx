@@ -449,7 +449,7 @@ export default function PresentationTool(props: {
       }
       return undefined
     },
-    [name, params, workspace.name],
+    [name, params.preview, workspace.name],
   )
 
   return (
