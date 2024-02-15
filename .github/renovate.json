@@ -22,6 +22,18 @@
       "groupName": "App dependencies"
     },
     {
+      "matchDepTypes": [
+        "dependencies",
+        "peerDependencies"
+      ],
+      "matchManagers": ["npm"],
+      "semanticCommitType": "chore",
+      "matchFileNames": ["packages/**/package.json"],
+      "matchDepNames": [
+        "sanity"
+      ]
+    },
+    {
       "matchDepTypes": ["dependencies", "devDependencies"],
       "rangeStrategy": "bump"
     },
