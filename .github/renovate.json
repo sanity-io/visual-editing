@@ -22,13 +22,6 @@
       "groupName": "App dependencies"
     },
     {
-      "matchDepTypes": ["dependencies", "peerDependencies"],
-      "matchManagers": ["npm"],
-      "semanticCommitType": "chore",
-      "matchFileNames": ["packages/**/package.json"],
-      "matchDepNames": ["sanity"]
-    },
-    {
       "matchDepTypes": ["dependencies", "devDependencies"],
       "rangeStrategy": "bump"
     },
@@ -46,8 +39,8 @@
       "rangeStrategy": "bump"
     },
     {
-      "matchDepNames": ["@sanity/util"],
-      "matchFileNames": ["packages/visual-editing-helpers/package.json"],
+      "matchDepNames": ["sanity", "@sanity/util"],
+      "matchFileNames": ["packages/presentation/package.json", "packages/preview-url-secret/package.json", "packages/visual-editing-helpers/package.json"],
       "matchDepTypes": ["devDependencies", "peerDependencies"],
       "schedule": ["at any time"],
       "rangeStrategy": "bump",
