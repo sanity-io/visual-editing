@@ -3,7 +3,6 @@ import {
   type ChannelStatus,
   createChannelsController,
 } from '@sanity/channels'
-import type { ClientPerspective } from '@sanity/client'
 import { studioPath } from '@sanity/client/csm'
 import { BoundaryElementProvider, Flex } from '@sanity/ui'
 import {
@@ -25,6 +24,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'react'
@@ -59,6 +59,10 @@ import { usePresentationNavigator } from './PresentationNavigator'
 import { PresentationParamsProvider } from './PresentationParamsProvider'
 import { PresentationProvider } from './PresentationProvider'
 import { PreviewFrame } from './preview/PreviewFrame'
+import {
+  presentationReducer,
+  presentationReducerInit,
+} from './reducers/presentationReducer'
 import type {
   DeskDocumentPaneParams,
   FrameState,
@@ -136,11 +140,15 @@ export default function PresentationTool(props: {
     frameStateRef,
   })
 
-  const [perspective, setPerspective] = useState<ClientPerspective>(() =>
-    params.perspective === 'published' ? params.perspective : 'previewDrafts',
+  const [state, dispatch] = useReducer(
+    presentationReducer,
+    { perspective: params.perspective },
+    presentationReducerInit,
   )
 
-  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(perspective)
+  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(
+    state.perspective,
+  )
 
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -149,15 +157,18 @@ export default function PresentationTool(props: {
 
   // Update the perspective when the param changes
   useEffect(() => {
-    if (perspective !== params.perspective) {
+    if (state.perspective !== params.perspective) {
       navigate(
         {},
         {
-          perspective: perspective === 'published' ? 'published' : undefined,
+          perspective:
+            state.perspective === 'previewDrafts'
+              ? undefined
+              : state.perspective,
         },
       )
     }
-  }, [params.perspective, perspective, navigate])
+  }, [params.perspective, state.perspective, navigate])
 
   const [overlaysConnection, setOverlaysConnection] =
     useState<ChannelStatus>('connecting')
@@ -243,7 +254,7 @@ export default function PresentationTool(props: {
             ) {
               if (
                 typeof data.heartbeat === 'number' &&
-                data.heartbeat! < MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL
+                data.heartbeat < MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL
               ) {
                 throw new Error(
                   `Loader query listen heartbeat interval must be at least ${MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL}ms`,
@@ -481,21 +492,21 @@ export default function PresentationTool(props: {
                   >
                     <BoundaryElementProvider element={boundaryElement}>
                       <PreviewFrame
+                        dispatch={dispatch}
                         initialUrl={initialPreviewUrl}
+                        loadersConnection={loadersConnection}
                         navigatorEnabled={navigatorEnabled}
                         onPathChange={handlePreviewPath}
                         openPopup={handleOpenPopup}
                         overlayEnabled={overlayEnabled}
+                        overlaysConnection={overlaysConnection}
                         params={params}
-                        perspective={perspective}
+                        perspective={state.perspective}
+                        previewKitConnection={previewKitConnection}
                         ref={iframeRef}
-                        setPerspective={setPerspective}
                         targetOrigin={targetOrigin}
                         toggleNavigator={toggleNavigator}
                         toggleOverlay={toggleOverlay}
-                        loadersConnection={loadersConnection}
-                        overlaysConnection={overlaysConnection}
-                        previewKitConnection={previewKitConnection}
                       />
                     </BoundaryElementProvider>
                   </Flex>
@@ -529,7 +540,7 @@ export default function PresentationTool(props: {
           <LoaderQueries
             channel={channel}
             liveQueries={liveQueries}
-            perspective={perspective}
+            perspective={state.perspective}
             liveDocument={displayedDocument}
             documentsOnPage={documentsOnPage}
           />

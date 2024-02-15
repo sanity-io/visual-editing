@@ -44,9 +44,7 @@ import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import {
   ComponentType,
   createElement,
-  Dispatch,
   forwardRef,
-  SetStateAction,
   useCallback,
   useEffect,
   useMemo,
@@ -57,6 +55,11 @@ import styled from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
 import { API_VERSION, MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
+import {
+  ACTION_PERSPECTIVE,
+  type DispatchPresentationAction,
+  type PresentationState,
+} from '../reducers/presentationReducer'
 import { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { IFrame } from './IFrame'
@@ -108,40 +111,39 @@ const PERSPECTIVE_ICONS: Record<ClientPerspective, ComponentType> = {
   raw: DatabaseIcon,
 }
 
-interface PreviewFrameProps {
+interface PreviewFrameProps extends Pick<PresentationState, 'perspective'> {
+  dispatch: DispatchPresentationAction
   initialUrl: URL
-  targetOrigin: string
+  loadersConnection: ChannelStatus
   navigatorEnabled: boolean
   onPathChange: (nextPath: string) => void
   openPopup: (url: string) => void
   overlayEnabled: boolean
+  overlaysConnection: ChannelStatus
   params: PresentationParams
-  perspective: ClientPerspective
-  setPerspective: Dispatch<SetStateAction<ClientPerspective>>
+  previewKitConnection: ChannelStatus
+  targetOrigin: string
   toggleNavigator?: () => void
   toggleOverlay: () => void
-  loadersConnection: ChannelStatus
-  overlaysConnection: ChannelStatus
-  previewKitConnection: ChannelStatus
 }
 
 export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
   function PreviewFrame(props, ref) {
     const {
+      dispatch,
       initialUrl,
-      targetOrigin,
+      loadersConnection,
       navigatorEnabled,
       onPathChange,
       openPopup,
       overlayEnabled,
+      overlaysConnection,
       params,
       perspective,
-      setPerspective,
+      previewKitConnection,
+      targetOrigin,
       toggleNavigator,
       toggleOverlay,
-      loadersConnection,
-      overlaysConnection,
-      previewKitConnection,
     } = props
 
     const { devMode } = usePresentationTool()
@@ -149,8 +151,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     const [mode, setMode] = useState<'desktop' | 'mobile'>('desktop')
     const prefersReducedMotion = usePrefersReducedMotion()
 
-    const setDesktopMode = useCallback(() => setMode('desktop'), [setMode])
-    const setMobileMode = useCallback(() => setMode('mobile'), [setMode])
+    const setDesktopMode = useCallback(() => setMode('desktop'), [])
+    const setMobileMode = useCallback(() => setMode('mobile'), [])
     const [loading, setLoading] = useState(true)
     const [timedOut, setTimedOut] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
@@ -205,12 +207,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
         return () => clearTimeout(timeout)
       }
       return
-    }, [
-      overlaysConnection,
-      loading,
-      refreshing,
-      setShowOverlaysConnectionState,
-    ])
+    }, [overlaysConnection, loading, refreshing])
 
     useEffect(() => {
       if (loading || refreshing || !showOverlaysConnectionStatus) {
@@ -429,22 +426,25 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     <Menu style={{ maxWidth: 240 }}>
                       <MenuItem
                         fontSize={1}
-                        onClick={() => setPerspective('previewDrafts')}
+                        onClick={() =>
+                          dispatch({
+                            type: ACTION_PERSPECTIVE,
+                            perspective: 'previewDrafts',
+                          })
+                        }
                         padding={3}
                         pressed={perspective === 'previewDrafts'}
-                        tone={PERSPECTIVE_TONES['previewDrafts']}
+                        tone={PERSPECTIVE_TONES.previewDrafts}
                       >
                         <Flex align="flex-start" gap={3}>
                           <Box flex="none">
                             <Text size={1}>
-                              {createElement(
-                                PERSPECTIVE_ICONS['previewDrafts'],
-                              )}
+                              {createElement(PERSPECTIVE_ICONS.previewDrafts)}
                             </Text>
                           </Box>
                           <Stack flex={1} space={2}>
                             <Text size={1} weight="medium">
-                              {PERSPECTIVE_TITLES['previewDrafts']}
+                              {PERSPECTIVE_TITLES.previewDrafts}
                             </Text>
                             <Text muted size={1}>
                               View this page with latest draft content
@@ -466,20 +466,25 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       </MenuItem>
                       <MenuItem
                         fontSize={1}
-                        onClick={() => setPerspective('published')}
+                        onClick={() =>
+                          dispatch({
+                            type: ACTION_PERSPECTIVE,
+                            perspective: 'published',
+                          })
+                        }
                         padding={3}
                         pressed={perspective === 'published'}
-                        tone={PERSPECTIVE_TONES['published']}
+                        tone={PERSPECTIVE_TONES.published}
                       >
                         <Flex align="flex-start" gap={3}>
                           <Box flex="none">
                             <Text size={1}>
-                              {createElement(PERSPECTIVE_ICONS['published'])}
+                              {createElement(PERSPECTIVE_ICONS.published)}
                             </Text>
                           </Box>
                           <Stack flex={1} space={2}>
                             <Text size={1} weight="medium">
-                              {PERSPECTIVE_TITLES['published']}
+                              {PERSPECTIVE_TITLES.published}
                             </Text>
                             <Text muted size={1}>
                               View this page with published content
