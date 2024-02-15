@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.4.5](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.4.4...preview-kit-compat-v1.4.5) (2024-02-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.13.3 ([#921](https://github.com/sanity-io/visual-editing/issues/921)) ([e150d8d](https://github.com/sanity-io/visual-editing/commit/e150d8d375a0fc12d8b9d4d11f04454a93a6a2c0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.2.6 to 0.3.0
+
 ## [1.4.4](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.4.3...preview-kit-compat-v1.4.4) (2024-01-29)
 
 
