@@ -46,6 +46,7 @@ import styled from 'styled-components'
 import {
   COMMENTS_INSPECTOR_NAME,
   DEFAULT_TOOL_NAME,
+  EDIT_INTENT_MODE,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
 import { ContentEditor } from './editor/ContentEditor'
@@ -442,14 +443,14 @@ export default function PresentationTool(props: {
             type,
             inspect: COMMENTS_INSPECTOR_NAME,
             workspace: workspace.name,
-            mode: name,
+            mode: EDIT_INTENT_MODE,
             preview: params.preview,
           },
         }
       }
       return undefined
     },
-    [name, params.preview, workspace.name],
+    [params.preview, workspace.name],
   )
 
   return (
