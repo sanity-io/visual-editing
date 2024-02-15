@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest'
 
 import {
   ACTION_PERSPECTIVE,
+  ACTION_VIEWPORT,
   presentationReducer,
   presentationReducerInit,
 } from '../../src/reducers/presentationReducer'
@@ -32,6 +33,24 @@ describe('presentationReducer', () => {
       perspective: 'invalid',
     })
     expect(next).toMatchObject({ perspective: 'previewDrafts' })
+  })
+  test('changing the viewport', () => {
+    let next = presentationReducer(state, {
+      type: ACTION_VIEWPORT,
+      viewport: 'mobile',
+    })
+    expect(next).toMatchObject({ viewport: 'mobile' })
+    next = presentationReducer(next, {
+      type: ACTION_VIEWPORT,
+      viewport: 'desktop',
+    })
+    expect(next).toMatchObject({ viewport: 'desktop' })
+    next = presentationReducer(next, {
+      type: ACTION_VIEWPORT,
+      // @ts-expect-error - testing edge case
+      viewport: 'invalid',
+    })
+    expect(next).toMatchObject({ viewport: 'desktop' })
   })
 })
 
@@ -67,6 +86,29 @@ describe('presentationReducerInit', () => {
     })
     expect(presentationReducerInit({ perspective: undefined })).toMatchObject({
       perspective: 'previewDrafts',
+    })
+  })
+  test('handling the `viewport` URLSearchParam', () => {
+    expect(presentationReducerInit({ viewport: 'mobile' })).toMatchObject({
+      viewport: 'mobile',
+    })
+    expect(presentationReducerInit({ viewport: 'desktop' })).toMatchObject({
+      viewport: 'desktop',
+    })
+    expect(presentationReducerInit({ viewport: 'tablet' })).toMatchObject({
+      viewport: 'desktop',
+    })
+    expect(presentationReducerInit({ viewport: 'invalid' })).toMatchObject({
+      viewport: 'desktop',
+    })
+    expect(
+      // @ts-expect-error - testing edge case
+      presentationReducerInit({ viewport: null }),
+    ).toMatchObject({
+      viewport: 'desktop',
+    })
+    expect(presentationReducerInit({ viewport: undefined })).toMatchObject({
+      viewport: 'desktop',
     })
   })
 })

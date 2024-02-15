@@ -89,11 +89,13 @@ export interface PresentationParams
   id?: string
   preview?: string
   perspective?: string
+  viewport?: string
 }
 
 export interface PresentationSearchParams extends DeskDocumentPaneParams {
   preview?: string
   perspective?: string
+  viewport?: string
 }
 
 export type PresentationNavigate = (

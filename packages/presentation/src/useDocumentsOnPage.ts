@@ -2,6 +2,8 @@ import type { ClientPerspective } from '@sanity/client'
 import isEqual from 'fast-deep-equal'
 import { useCallback, useMemo, useState } from 'react'
 
+import type { PresentationState } from './reducers/presentationReducer'
+
 export type DocumentOnPage = {
   _id: string
   _type: string
@@ -10,10 +12,13 @@ export type DocumentOnPage = {
 let warnedAboutCrossDatasetReference = false
 
 export function useDocumentsOnPage(
-  perspective: ClientPerspective,
+  perspective: PresentationState['perspective'],
 ): [
   DocumentOnPage[],
-  (perspective: ClientPerspective, state: DocumentOnPage[]) => void,
+  (
+    perspective: PresentationState['perspective'],
+    state: DocumentOnPage[],
+  ) => void,
 ] {
   if (perspective !== 'published' && perspective !== 'previewDrafts') {
     throw new Error(`Invalid perspective: ${perspective}`)

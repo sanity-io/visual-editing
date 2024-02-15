@@ -57,6 +57,7 @@ import { ErrorCard } from '../components/ErrorCard'
 import { API_VERSION, MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
 import {
   ACTION_PERSPECTIVE,
+  ACTION_VIEWPORT,
   type DispatchPresentationAction,
   type PresentationState,
 } from '../reducers/presentationReducer'
@@ -111,7 +112,8 @@ const PERSPECTIVE_ICONS: Record<ClientPerspective, ComponentType> = {
   raw: DatabaseIcon,
 }
 
-interface PreviewFrameProps extends Pick<PresentationState, 'perspective'> {
+interface PreviewFrameProps
+  extends Pick<PresentationState, 'perspective' | 'viewport'> {
   dispatch: DispatchPresentationAction
   initialUrl: URL
   loadersConnection: ChannelStatus
@@ -144,15 +146,21 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       targetOrigin,
       toggleNavigator,
       toggleOverlay,
+      viewport,
     } = props
 
     const { devMode } = usePresentationTool()
 
-    const [mode, setMode] = useState<'desktop' | 'mobile'>('desktop')
     const prefersReducedMotion = usePrefersReducedMotion()
 
-    const setDesktopMode = useCallback(() => setMode('desktop'), [])
-    const setMobileMode = useCallback(() => setMode('mobile'), [])
+    const setDesktopMode = useCallback(
+      () => dispatch({ type: ACTION_VIEWPORT, viewport: 'desktop' }),
+      [dispatch],
+    )
+    const setMobileMode = useCallback(
+      () => dispatch({ type: ACTION_VIEWPORT, viewport: 'mobile' }),
+      [dispatch],
+    )
     const [loading, setLoading] = useState(true)
     const [timedOut, setTimedOut] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
@@ -530,7 +538,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     mode="bleed"
                     onClick={setDesktopMode}
                     padding={3}
-                    selected={mode === 'desktop'}
+                    selected={viewport === 'desktop'}
                   />
                 </Tooltip>
                 <Tooltip
@@ -547,7 +555,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     mode="bleed"
                     onClick={setMobileMode}
                     padding={3}
-                    selected={mode === 'mobile'}
+                    selected={viewport === 'mobile'}
                   />
                 </Tooltip>
               </Flex>
@@ -559,7 +567,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
               align="center"
               height="fill"
               justify="center"
-              padding={mode === 'desktop' ? 0 : 2}
+              padding={viewport === 'desktop' ? 0 : 2}
               sizing="border"
               style={{
                 position: 'relative',
@@ -597,7 +605,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     }}
                   >
                     <Flex
-                      style={{ ...sizes[mode] }}
+                      style={{ ...sizes[viewport] }}
                       justify="center"
                       align="center"
                       direction="column"
@@ -663,7 +671,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     }}
                   >
                     <Flex
-                      style={{ ...sizes[mode] }}
+                      style={{ ...sizes[viewport] }}
                       justify="center"
                       align="center"
                       direction="column"
@@ -742,7 +750,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     ? 'background'
                     : 'active',
                   refreshing ? 'reloading' : 'idle',
-                  mode,
+                  viewport,
                   showOverlaysConnectionStatus && !continueAnyway
                     ? 'timedOut'
                     : '',

@@ -60,6 +60,7 @@ import { PresentationParamsProvider } from './PresentationParamsProvider'
 import { PresentationProvider } from './PresentationProvider'
 import { PreviewFrame } from './preview/PreviewFrame'
 import {
+  ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE,
   presentationReducer,
   presentationReducerInit,
 } from './reducers/presentationReducer'
@@ -142,7 +143,7 @@ export default function PresentationTool(props: {
 
   const [state, dispatch] = useReducer(
     presentationReducer,
-    { perspective: params.perspective },
+    { perspective: params.perspective, viewport: params.viewport },
     presentationReducerInit,
   )
 
@@ -150,14 +151,15 @@ export default function PresentationTool(props: {
     state.perspective,
   )
 
-  const [overlayEnabled, setOverlayEnabled] = useState(true)
-
   const projectId = useProjectId()
   const dataset = useDataset()
 
-  // Update the perspective when the param changes
+  // Update the perspective and viewport when the param changes
   useEffect(() => {
-    if (state.perspective !== params.perspective) {
+    if (
+      state.perspective !== params.perspective ||
+      state.viewport !== params.viewport
+    ) {
       navigate(
         {},
         {
@@ -165,10 +167,17 @@ export default function PresentationTool(props: {
             state.perspective === 'previewDrafts'
               ? undefined
               : state.perspective,
+          viewport: state.viewport === 'desktop' ? undefined : state.viewport,
         },
       )
     }
-  }, [params.perspective, state.perspective, navigate])
+  }, [
+    params.perspective,
+    state.perspective,
+    navigate,
+    state.viewport,
+    params.viewport,
+  ])
 
   const [overlaysConnection, setOverlaysConnection] =
     useState<ChannelStatus>('connecting')
@@ -232,7 +241,10 @@ export default function PresentationTool(props: {
             } else if (type === 'visual-editing/meta') {
               frameStateRef.current.title = data.title
             } else if (type === 'overlay/toggle') {
-              setOverlayEnabled(data.enabled)
+              dispatch({
+                type: ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE,
+                enabled: data.enabled,
+              })
             }
           },
         },
@@ -246,7 +258,11 @@ export default function PresentationTool(props: {
               data.projectId === projectId &&
               data.dataset === dataset
             ) {
-              setDocumentsOnPage(data.perspective, data.documents)
+              setDocumentsOnPage(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                data.perspective as unknown as any,
+                data.documents,
+              )
             } else if (
               type === 'loader/query-listen' &&
               data.projectId === projectId &&
@@ -283,7 +299,11 @@ export default function PresentationTool(props: {
               data.projectId === projectId &&
               data.dataset === dataset
             ) {
-              setDocumentsOnPage(data.perspective, data.documents)
+              setDocumentsOnPage(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                data.perspective as unknown as any,
+                data.documents,
+              )
             }
           },
         },
@@ -498,7 +518,7 @@ export default function PresentationTool(props: {
                         navigatorEnabled={navigatorEnabled}
                         onPathChange={handlePreviewPath}
                         openPopup={handleOpenPopup}
-                        overlayEnabled={overlayEnabled}
+                        overlayEnabled={state.visualEditing.overlays.enabled}
                         overlaysConnection={overlaysConnection}
                         params={params}
                         perspective={state.perspective}
@@ -507,6 +527,7 @@ export default function PresentationTool(props: {
                         targetOrigin={targetOrigin}
                         toggleNavigator={toggleNavigator}
                         toggleOverlay={toggleOverlay}
+                        viewport={state.viewport}
                       />
                     </BoundaryElementProvider>
                   </Flex>

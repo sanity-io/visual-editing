@@ -50,6 +50,7 @@ export function useParams({
         routerSearchParams.preview ||
         `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
       perspective: routerSearchParams.perspective,
+      viewport: routerSearchParams.viewport,
       inspect: routerSearchParams.inspect,
       rev: routerSearchParams.rev,
       since: routerSearchParams.since,
