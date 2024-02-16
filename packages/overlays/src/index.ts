@@ -12,12 +12,18 @@ import {
 /**
  * @deprecated use `import {createOverlayController} from '@sanity/visual-editing'` instead
  */
-export const createOverlayController = _createOverlayController
+export const createOverlayController: typeof _createOverlayController = (options) => {
+  warn()
+  return _createOverlayController(options)
+}
 
 /**
  * @deprecated use `import {enableVisualEditing} from '@sanity/visual-editing'` instead
  */
-export const enableVisualEditing = _enableVisualEditing
+export const enableVisualEditing: typeof _enableVisualEditing = (options) => {
+  warn()
+  return _enableVisualEditing(options)
+}
 
 /**
  * @deprecated use `import type {DisableVisualEditing} from '@sanity/visual-editing'` instead
@@ -27,7 +33,10 @@ export type DisableVisualEditing = _DisableVisualEditing
 /**
  * @deprecated use `import {enableVisualEditing} from '@sanity/visual-editing'` instead
  */
-export const enableOverlays = _enableVisualEditing
+export const enableOverlays: typeof _enableVisualEditing = (options) => {
+  warn()
+  return _enableVisualEditing(options)
+}
 
 /**
  * @deprecated use `import type {DisableVisualEditing} from '@sanity/visual-editing'` instead
@@ -54,3 +63,8 @@ export type OverlayEventHandler = _OverlayEventHandler
  * @deprecated use `import type {ElementState} from '@sanity/visual-editing'` instead
  */
 export type ElementState = _ElementState
+
+function warn() {
+  // eslint-disable-next-line no-console
+  console.warn('@sanity/overlays is deprecated. Use @sanity/visual-editing instead.')
+}
