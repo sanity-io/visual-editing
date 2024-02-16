@@ -79,7 +79,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
-        {draftMode().isEnabled() && (
+        {draftMode().isEnabled && (
           <VisualEditing
             zIndex={1000} // Optional
           />
