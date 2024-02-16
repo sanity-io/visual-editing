@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.4.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.2...core-loader-v1.4.3) (2024-02-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.13.3 ([#929](https://github.com/sanity-io/visual-editing/issues/929)) ([f711adc](https://github.com/sanity-io/visual-editing/commit/f711adc089198de325c55bc43a02c062ef9eef0e))
+* **deps:** Update dependency async-cache-dedupe to v2.1.0 ([#935](https://github.com/sanity-io/visual-editing/issues/935)) ([20dbe88](https://github.com/sanity-io/visual-editing/commit/20dbe881dcb0ea457abbfabfcf61568699be9d97))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.3.0 to 0.3.1
+
 ## [1.4.2](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.1...core-loader-v1.4.2) (2024-02-15)
 
 

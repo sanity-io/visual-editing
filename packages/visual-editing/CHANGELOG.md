@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.3.0...visual-editing-v1.3.1) (2024-02-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.13.3 ([#929](https://github.com/sanity-io/visual-editing/issues/929)) ([f711adc](https://github.com/sanity-io/visual-editing/commit/f711adc089198de325c55bc43a02c062ef9eef0e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.3.0 to 0.3.1
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.2.2...visual-editing-v1.3.0) (2024-02-15)
 
 

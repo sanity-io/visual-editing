@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.9.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.9.0...presentation-v1.9.1) (2024-02-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.13.3 ([#929](https://github.com/sanity-io/visual-editing/issues/929)) ([f711adc](https://github.com/sanity-io/visual-editing/commit/f711adc089198de325c55bc43a02c062ef9eef0e))
+* persist selected viewport in URLSearchParams ([93cfe9f](https://github.com/sanity-io/visual-editing/commit/93cfe9f99345ac0dd698ad3f962ef621770e05d3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.2 to ^1.6.3
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.3.0 to 0.3.1
+
 ## [1.9.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.8.2...presentation-v1.9.0) (2024-02-15)
 
 
