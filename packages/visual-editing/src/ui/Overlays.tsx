@@ -1,13 +1,18 @@
 import type { ChannelStatus } from '@sanity/channels'
+import type { ContentSourceMapDocuments } from '@sanity/client'
 import {
   isHTMLAnchorElement,
   isHTMLElement,
   studioTheme,
   ThemeProvider,
 } from '@sanity/ui'
-import { isAltKey, isHotkey } from '@sanity/visual-editing-helpers'
 import {
-  FunctionComponent,
+  isAltKey,
+  isHotkey,
+  type SanityNode,
+} from '@sanity/visual-editing-helpers'
+import {
+  type FunctionComponent,
   useCallback,
   useEffect,
   useMemo,
@@ -17,7 +22,7 @@ import {
 } from 'react'
 import styled from 'styled-components'
 
-import {
+import type {
   HistoryAdapter,
   OverlayEventHandler,
   VisualEditingChannel,
@@ -51,6 +56,13 @@ function raf2(fn: () => void) {
     if (r0 !== undefined) cancelAnimationFrame(r0)
     if (r1 !== undefined) cancelAnimationFrame(r1)
   }
+}
+
+function isEqualSets(a: Set<string>, b: Set<string>) {
+  if (a === b) return true
+  if (a.size !== b.size) return false
+  for (const value of a) if (!b.has(value)) return false
+  return true
 }
 
 /**
@@ -96,6 +108,45 @@ export const Overlays: FunctionComponent<{
       unsubscribeFromStatus()
     }
   }, [channel, history])
+
+  const nodeIdsRef = useRef<Set<string>>(new Set())
+
+  const reportDocuments = useCallback(
+    (documents: ContentSourceMapDocuments) => {
+      channel?.send('visual-editing/documents', {
+        perspective: 'previewDrafts',
+        documents,
+      })
+    },
+    [channel],
+  )
+
+  useEffect(() => {
+    // Report only `SanityNode`, if a node is untransformed (`SanityStegaNode`)
+    // at this stage it will not contain the necessary document data
+    const nodes = elements
+      .map((e) => e.sanity)
+      .filter((s) => 'id' in s) as SanityNode[]
+
+    const nodeIds = new Set<string>(nodes.map((e) => e.id))
+    // Only report documents if some document IDs have changed
+    if (!isEqualSets(nodeIds, nodeIdsRef.current)) {
+      const documentsOnPage: ContentSourceMapDocuments = Array.from(
+        nodeIds,
+      ).map((_id) => {
+        const {
+          type,
+          projectId: _projectId,
+          dataset: _dataset,
+        } = nodes.find((node) => node.id === _id)!
+        return _projectId && _dataset
+          ? { _id, _type: type!, _projectId, _dataset }
+          : { _id, _type: type! }
+      })
+      nodeIdsRef.current = nodeIds
+      reportDocuments(documentsOnPage)
+    }
+  }, [elements, reportDocuments])
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {

@@ -9,7 +9,7 @@ import {
   ElementFocusedState,
   OverlayRect,
   SanityNode,
-  SanityNodeLegacy,
+  SanityStegaNode,
 } from '../types'
 
 const Root = styled(Card)`
@@ -102,7 +102,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   hovered: boolean
   rect: OverlayRect
   showActions: boolean
-  sanity: SanityNode | SanityNodeLegacy
+  sanity: SanityNode | SanityStegaNode
   wasMaybeCollapsed: boolean
 }) {
   const { focused, hovered, rect, showActions, sanity, wasMaybeCollapsed } =

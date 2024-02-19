@@ -1,7 +1,7 @@
 import { decodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 
 import { OVERLAY_ID } from '../constants'
-import { _ResolvedElement, SanityNode, SanityNodeLegacy } from '../types'
+import { _ResolvedElement, SanityNode, SanityStegaNode } from '../types'
 import { findNonInlineElement } from './findNonInlineElement'
 import { testAndDecodeStega } from './stega'
 
@@ -14,7 +14,7 @@ const isImgElement = (el: HTMLElement): el is HTMLImageElement =>
 const isTimeElement = (el: HTMLElement): el is HTMLTimeElement =>
   el.tagName === 'TIME'
 
-function isSanityNode(node: SanityNode | SanityNodeLegacy): node is SanityNode {
+function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
   return 'path' in node
 }
 
@@ -48,8 +48,8 @@ export function findCommonPath(first: string, second: string): string {
  * @internal
  */
 export function findCommonSanityData(
-  nodes: (SanityNode | SanityNodeLegacy)[],
-): SanityNode | SanityNodeLegacy | undefined {
+  nodes: (SanityNode | SanityStegaNode)[],
+): SanityNode | SanityStegaNode | undefined {
   // If there are no nodes, or inconsistent node types
   if (
     !nodes.length ||
@@ -95,7 +95,7 @@ export function findSanityNodes(
 ): _ResolvedElement[] {
   const elements: _ResolvedElement[] = []
 
-  function addElement(element: HTMLElement, data: string) {
+  function addElement(element: HTMLElement, data: SanityStegaNode | string) {
     const sanity = decodeSanityNodeData(data)
     if (!sanity) {
       return
@@ -171,6 +171,7 @@ export function findSanityNodes(
           continue
         } else if (isTimeElement(node)) {
           const data = testAndDecodeStega(node.dateTime, true)
+          if (!data) continue
           addElement(node, data)
         }
 

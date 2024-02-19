@@ -1,21 +1,27 @@
 import type { ClientPerspective } from '@sanity/client'
 import isEqual from 'fast-deep-equal'
-import { useCallback, useMemo, useState } from 'react'
+import { MutableRefObject, useCallback, useMemo, useRef, useState } from 'react'
 
 import type { PresentationState } from './reducers/presentationReducer'
+import type { FrameState } from './types'
 
 export type DocumentOnPage = {
   _id: string
   _type: string
 }
 
+type DocumentCache = Record<string, DocumentOnPage>
+type KeyedDocumentCache = Record<string, DocumentCache>
+
 let warnedAboutCrossDatasetReference = false
 
 export function useDocumentsOnPage(
   perspective: PresentationState['perspective'],
+  frameStateRef: MutableRefObject<FrameState>,
 ): [
   DocumentOnPage[],
   (
+    key: string,
     perspective: PresentationState['perspective'],
     state: DocumentOnPage[],
   ) => void,
@@ -24,13 +30,19 @@ export function useDocumentsOnPage(
     throw new Error(`Invalid perspective: ${perspective}`)
   }
 
-  const [published, setPublished] = useState<Record<string, DocumentOnPage>>({})
-  const [previewDrafts, setPreviewDrafts] = useState<
-    Record<string, DocumentOnPage>
-  >({})
+  const [published, setPublished] = useState<KeyedDocumentCache>({})
+  const [previewDrafts, setPreviewDrafts] = useState<KeyedDocumentCache>({})
+
+  // Used to compare the frame url with its value when the cache was last updated
+  // If the url has changed, the entire cache is replaced
+  const urlRef = useRef<string | undefined>('')
 
   const setDocumentsOnPage = useCallback(
-    (perspective: ClientPerspective, sourceDocuments: DocumentOnPage[]) => {
+    (
+      key: string,
+      perspective: ClientPerspective,
+      sourceDocuments: DocumentOnPage[],
+    ) => {
       const documents = sourceDocuments.filter((sourceDocument) => {
         if ('_projectId' in sourceDocument && sourceDocument._projectId) {
           // @TODO Handle cross dataset references
@@ -50,21 +62,42 @@ export function useDocumentsOnPage(
       const setCache =
         perspective === 'published' ? setPublished : setPreviewDrafts
 
-      setCache((prev) => {
+      setCache((cache) => {
+        // Create the `next` documents, dedupe by `_id`
         const next: Record<string, DocumentOnPage> = {}
         for (const document of documents) {
           next[document._id] = document
         }
-        return isEqual(prev, next) ? prev : next
+
+        // If the frame url has changed, replace the entire cache with the next documents
+        if (urlRef.current !== frameStateRef.current.url) {
+          urlRef.current = frameStateRef.current.url
+          return { [key]: next }
+        }
+
+        // If the keyed cache has changed, return the entire cache and replace the keyed part
+        const prev = cache[key]
+        if (!isEqual(prev, next)) {
+          return { ...cache, [key]: next }
+        }
+
+        // Otherwise return the entire cache as is
+        return cache
       })
     },
-    [],
+    [frameStateRef],
   )
 
   const documentsOnPage = useMemo(() => {
-    return perspective === 'published'
-      ? [...Object.values(published)]
-      : [...Object.values(previewDrafts)]
+    const keyedCache = perspective === 'published' ? published : previewDrafts
+    const uniqueDocuments = Object.values(keyedCache).reduce((acc, cache) => {
+      Object.values(cache).forEach((doc) => {
+        acc[doc._id] = doc
+      })
+      return acc
+    }, {})
+
+    return Object.values(uniqueDocuments)
   }, [perspective, previewDrafts, published])
 
   return [documentsOnPage, setDocumentsOnPage]
