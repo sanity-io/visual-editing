@@ -5,32 +5,36 @@ import {
   object,
   optional,
   parse,
+  record,
   safeParse,
   string,
+  unknown,
 } from 'valibot'
 
 import { pathToUrlString } from '../pathToUrlString'
-import { SanityNode, SanityNodeLegacy } from '../types'
+import { SanityNode, SanityStegaNode } from '../types'
 import { urlStringToPath } from '../urlStringToPath'
 
-export type { SanityNode, SanityNodeLegacy }
+export type { SanityNode, SanityStegaNode }
 
 const lengthyStr = string([minLength(1)])
 const optionalLengthyStr = optional(lengthyStr)
 
 const sanityNodeSchema = object({
+  baseUrl: lengthyStr,
+  dataset: optionalLengthyStr,
   id: lengthyStr,
   path: lengthyStr,
-  type: optionalLengthyStr,
-  baseUrl: lengthyStr,
-  workspace: optionalLengthyStr,
+  projectId: optionalLengthyStr,
   tool: optionalLengthyStr,
+  type: optionalLengthyStr,
+  workspace: optionalLengthyStr,
 })
 
 const sanityLegacyNodeSchema = object({
   origin: lengthyStr,
   href: lengthyStr,
-  data: optionalLengthyStr,
+  data: optional(record(string(), unknown())),
 })
 
 /** @internal */
@@ -42,8 +46,8 @@ export function isValidSanityNode(
 
 /** @internal */
 export function isValidSanityLegacyNode(
-  node: Partial<SanityNodeLegacy>,
-): node is SanityNodeLegacy {
+  node: Partial<SanityStegaNode>,
+): node is SanityStegaNode {
   return is(sanityLegacyNodeSchema, node)
 }
 
@@ -106,6 +110,12 @@ export function decodeSanityString(str: string): SanityNode | undefined {
       case 'workspace':
         acc.workspace = value
         break
+      case 'projectId':
+        acc.projectId = value
+        break
+      case 'dataset':
+        acc.dataset = value
+        break
       default:
     }
 
@@ -121,9 +131,9 @@ export function decodeSanityString(str: string): SanityNode | undefined {
  * Transforms stringified JSON into sanity node data
  * @param str - JSON sanity data
  */
-function decodeSanityJson(
+function decodeSanityObject(
   data: Record<string, unknown>,
-): SanityNode | SanityNodeLegacy | undefined {
+): SanityNode | SanityStegaNode | undefined {
   const sanityNode = safeParse(sanityNodeSchema, data)
   if (sanityNode.success) {
     return sanityNode.output
@@ -159,12 +169,15 @@ function decodeSanityJson(
  * @internal
  */
 export function decodeSanityNodeData(
-  str: string,
-): SanityNode | SanityNodeLegacy | undefined {
+  data: SanityStegaNode | string,
+): SanityNode | SanityStegaNode | undefined {
+  if (typeof data === 'object' && data !== null) {
+    return decodeSanityObject(data)
+  }
   try {
-    const json = JSON.parse(str)
-    return decodeSanityJson(json)
+    const obj = JSON.parse(data)
+    return decodeSanityObject(obj)
   } catch {
-    return decodeSanityString(str)
+    return decodeSanityString(data)
   }
 }

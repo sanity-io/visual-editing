@@ -4,14 +4,14 @@ import type {
   OverlayMsg as OverlayChannelsMsg,
   PresentationMsg,
   SanityNode,
-  SanityNodeLegacy,
+  SanityStegaNode,
   VisualEditingMsg,
 } from '@sanity/visual-editing-helpers'
 
 export type {
   HistoryUpdate,
   SanityNode,
-  SanityNodeLegacy,
+  SanityStegaNode,
 } from '@sanity/visual-editing-helpers'
 
 /**
@@ -41,7 +41,7 @@ export interface OverlayMsgElement<T extends string>
 
 /** @public */
 export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
-  sanity: SanityNode | SanityNodeLegacy
+  sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
 }
 
@@ -59,7 +59,7 @@ export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
 
 /** @public */
 export type OverlayMsgElementClick = OverlayMsgElement<'click'> & {
-  sanity: SanityNode | SanityNodeLegacy
+  sanity: SanityNode | SanityStegaNode
 }
 
 /** @public */
@@ -72,7 +72,7 @@ export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>
 
 /** @public */
 export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
-  sanity: SanityNode | SanityNodeLegacy
+  sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
 }
 
@@ -142,7 +142,7 @@ export interface ElementState {
   focused: ElementFocusedState
   hovered: boolean
   rect: OverlayRect
-  sanity: SanityNode | SanityNodeLegacy
+  sanity: SanityNode | SanityStegaNode
 }
 
 /**
@@ -174,7 +174,7 @@ export interface _SanityNodeElements {
  */
 export interface _ResolvedElement {
   elements: _SanityNodeElements
-  sanity: SanityNode | SanityNodeLegacy
+  sanity: SanityNode | SanityStegaNode
 }
 
 /**
@@ -185,7 +185,7 @@ export interface _OverlayElement {
   id: string
   elements: _SanityNodeElements
   handlers: _EventHandlers
-  sanity: SanityNode | SanityNodeLegacy
+  sanity: SanityNode | SanityStegaNode
 }
 
 /**

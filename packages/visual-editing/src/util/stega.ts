@@ -1,3 +1,4 @@
+import type { SanityStegaNode } from '@sanity/visual-editing-helpers'
 import { vercelStegaDecode } from '@vercel/stega'
 
 import { VERCEL_STEGA_REGEX } from '../constants'
@@ -11,24 +12,26 @@ export function testVercelStegaRegex(input: string): boolean {
   return VERCEL_STEGA_REGEX.test(input)
 }
 
-export function decodeStega(str: string, isAltText = false): string {
-  const decoded = vercelStegaDecode<{
-    origin?: string
-    href?: string
-    data?: unknown
-  }>(str)
+export function decodeStega(
+  str: string,
+  isAltText = false,
+): SanityStegaNode | null {
+  const decoded = vercelStegaDecode<SanityStegaNode>(str)
   if (!decoded || decoded.origin !== 'sanity.io') {
-    return ''
+    return null
   }
   if (isAltText) {
     decoded.href = decoded.href?.replace('.alt', '')
   }
-  return JSON.stringify(decoded)
+  return decoded
 }
 
-export function testAndDecodeStega(str: string, isAltText = false): string {
+export function testAndDecodeStega(
+  str: string,
+  isAltText = false,
+): SanityStegaNode | null {
   if (testVercelStegaRegex(str)) {
     return decodeStega(str, isAltText)
   }
-  return ''
+  return null
 }

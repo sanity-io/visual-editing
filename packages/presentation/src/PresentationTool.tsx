@@ -149,6 +149,7 @@ export default function PresentationTool(props: {
 
   const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(
     state.perspective,
+    frameStateRef,
   )
 
   const projectId = useProjectId()
@@ -226,13 +227,19 @@ export default function PresentationTool(props: {
           heartbeat: true,
           onStatusUpdate: setOverlaysConnection,
           onEvent(type, data) {
-            if (type === 'overlay/focus' && 'id' in data) {
+            if (
+              (type === 'visual-editing/focus' || type === 'overlay/focus') &&
+              'id' in data
+            ) {
               navigate({
                 type: data.type,
                 id: data.id,
                 path: data.path,
               })
-            } else if (type === 'overlay/navigate') {
+            } else if (
+              type === 'visual-editing/navigate' ||
+              type === 'overlay/navigate'
+            ) {
               const { title, url } = data
               if (frameStateRef.current.url !== url) {
                 navigate({}, { preview: url })
@@ -240,11 +247,21 @@ export default function PresentationTool(props: {
               frameStateRef.current = { title, url }
             } else if (type === 'visual-editing/meta') {
               frameStateRef.current.title = data.title
-            } else if (type === 'overlay/toggle') {
+            } else if (
+              type === 'visual-editing/toggle' ||
+              type === 'overlay/toggle'
+            ) {
               dispatch({
                 type: ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE,
                 enabled: data.enabled,
               })
+            } else if (type === 'visual-editing/documents') {
+              setDocumentsOnPage(
+                'visual-editing',
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                data.perspective as unknown as any,
+                data.documents,
+              )
             }
           },
         },
@@ -259,6 +276,7 @@ export default function PresentationTool(props: {
               data.dataset === dataset
             ) {
               setDocumentsOnPage(
+                'loaders',
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 data.perspective as unknown as any,
                 data.documents,
@@ -300,6 +318,7 @@ export default function PresentationTool(props: {
               data.dataset === dataset
             ) {
               setDocumentsOnPage(
+                'preview-kit',
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 data.perspective as unknown as any,
                 data.documents,

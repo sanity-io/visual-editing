@@ -18,9 +18,7 @@ export type QueryCacheKey = `${string}-${string}`
  * @public
  */
 export type SanityNode = {
-  /** @deprecated */
   projectId?: string
-  /** @deprecated */
   dataset?: string
   id: string
   path: string
@@ -31,13 +29,13 @@ export type SanityNode = {
 }
 
 /**
- * Data resolved from a (legacy) Sanity node
+ * Data resolved from a Sanity Stega node
  * @public
  */
-export type SanityNodeLegacy = {
+export type SanityStegaNode = {
   origin: string
   href: string
-  data?: string
+  data?: unknown
 }
 
 /**
@@ -75,12 +73,12 @@ export type PresentationMsg =
 /**@public */
 export interface VisualEditingPayloads {
   documents: {
-    projectId: string
-    dataset: string
+    projectId?: string
+    dataset?: string
     perspective: ClientPerspective
     documents: ContentSourceMapDocuments
   }
-  focus: SanityNode | SanityNodeLegacy
+  focus: SanityNode | SanityStegaNode
   meta: {
     title: string
   }

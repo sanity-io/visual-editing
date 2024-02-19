@@ -24,7 +24,7 @@ export type {
   OverlayOptions,
   OverlayRect,
   SanityNode,
-  SanityNodeLegacy,
+  SanityStegaNode,
 } from './types'
 export {
   type DisableVisualEditing,
