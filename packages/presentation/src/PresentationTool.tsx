@@ -532,12 +532,12 @@ export default function PresentationTool(props: {
                     <BoundaryElementProvider element={boundaryElement}>
                       <PreviewFrame
                         dispatch={dispatch}
+                        iframe={state.iframe}
                         initialUrl={initialPreviewUrl}
                         loadersConnection={loadersConnection}
                         navigatorEnabled={navigatorEnabled}
                         onPathChange={handlePreviewPath}
                         openPopup={handleOpenPopup}
-                        overlayEnabled={state.visualEditing.overlays.enabled}
                         overlaysConnection={overlaysConnection}
                         params={params}
                         perspective={state.perspective}
@@ -547,6 +547,7 @@ export default function PresentationTool(props: {
                         toggleNavigator={toggleNavigator}
                         toggleOverlay={toggleOverlay}
                         viewport={state.viewport}
+                        visualEditing={state.visualEditing}
                       />
                     </BoundaryElementProvider>
                   </Flex>

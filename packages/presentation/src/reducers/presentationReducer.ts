@@ -3,6 +3,9 @@ import type { Dispatch, Reducer } from 'react'
 import { boolean, fallback, object, parse, picklist } from 'valibot'
 
 export interface PresentationState {
+  iframe: {
+    status: 'loading' | 'loaded' | 'refreshing'
+  }
   /**
    * The selected perspective that all previews should use
    */
@@ -12,17 +15,23 @@ export interface PresentationState {
    */
   viewport: 'desktop' | 'mobile'
   visualEditing: {
-    overlays: {
-      enabled: boolean
-    }
+    overlaysEnabled: boolean
   }
 }
 
+export const ACTION_IFRAME_LOADED = 'ACTION_IFRAME_LOADED'
+export const ACTION_IFRAME_REFRESH = 'ACTION_IFRAME_REFRESH'
 export const ACTION_PERSPECTIVE = 'ACTION_PERSPECTIVE'
 export const ACTION_VIEWPORT = 'ACTION_VIEWPORT'
 export const ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE =
   'ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE'
 
+interface IframeLoadedAction {
+  type: typeof ACTION_IFRAME_LOADED
+}
+interface IframeRefreshAction {
+  type: typeof ACTION_IFRAME_REFRESH
+}
 interface PerspectiveAction {
   type: typeof ACTION_PERSPECTIVE
   perspective: PresentationState['perspective']
@@ -37,6 +46,8 @@ interface VisualEditingOverlaysToggleAction {
 }
 
 type PresentationAction =
+  | IframeLoadedAction
+  | IframeRefreshAction
   | PerspectiveAction
   | ViewportAction
   | VisualEditingOverlaysToggleAction
@@ -46,6 +57,26 @@ export const presentationReducer: Reducer<
   Readonly<PresentationAction>
 > = (state, action) => {
   switch (action.type) {
+    case ACTION_IFRAME_LOADED:
+      return state.iframe.status === 'loaded'
+        ? state
+        : {
+            ...state,
+            iframe: {
+              ...state.iframe,
+              status: 'loaded',
+            },
+          }
+    case ACTION_IFRAME_REFRESH:
+      return state.iframe.status === 'refreshing'
+        ? state
+        : {
+            ...state,
+            iframe: {
+              ...state.iframe,
+              status: 'refreshing',
+            },
+          }
     case ACTION_PERSPECTIVE:
       return {
         ...state,
@@ -67,19 +98,17 @@ const toggleVisualEditingOverlays: Reducer<
   Readonly<PresentationState>,
   Readonly<VisualEditingOverlaysToggleAction>
 > = (state, action) => {
-  if (state.visualEditing.overlays.enabled === action.enabled) return state
+  if (state.visualEditing.overlaysEnabled === action.enabled) return state
   return {
     ...state,
     visualEditing: {
       ...state.visualEditing,
-      overlays: {
-        ...state.visualEditing.overlays,
-        enabled: action.enabled,
-      },
+      overlaysEnabled: action.enabled,
     },
   }
 }
 
+const iframeStatusSchema = picklist(['loading', 'loaded', 'refreshing'])
 const perspectiveSchema = fallback(
   picklist([
     'published',
@@ -92,18 +121,22 @@ const viewportSchema = fallback(
   'desktop',
 )
 const initStateSchema = object({
+  iframe: object({
+    status: iframeStatusSchema,
+  }),
   perspective: perspectiveSchema,
   viewport: viewportSchema,
-  visualEditing: object({ overlays: object({ enabled: boolean() }) }),
+  visualEditing: object({ overlaysEnabled: boolean() }),
 })
 
 const INITIAL_PRESENTATION_STATE = {
+  iframe: {
+    status: 'loading',
+  },
   perspective: 'previewDrafts',
   viewport: 'desktop',
   visualEditing: {
-    overlays: {
-      enabled: false,
-    },
+    overlaysEnabled: false,
   },
 } as const satisfies PresentationState
 export function presentationReducerInit(

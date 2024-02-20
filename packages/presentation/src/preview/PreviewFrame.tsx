@@ -1,9 +1,7 @@
 import type { ChannelStatus } from '@sanity/channels'
-import type { ClientPerspective } from '@sanity/client'
 import {
   CheckmarkIcon,
   ChevronDownIcon,
-  DatabaseIcon,
   DesktopIcon,
   EditIcon,
   MobileDeviceIcon,
@@ -48,6 +46,8 @@ import styled from 'styled-components'
 import { ErrorCard } from '../components/ErrorCard'
 import { MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
 import {
+  ACTION_IFRAME_LOADED,
+  ACTION_IFRAME_REFRESH,
   ACTION_PERSPECTIVE,
   ACTION_VIEWPORT,
   type DispatchPresentationAction,
@@ -87,33 +87,36 @@ const StyledSwitch = styled(Switch)`
   }
 `
 
-const PERSPECTIVE_TITLES: Record<ClientPerspective, string> = {
+const PERSPECTIVE_TITLES: Record<PresentationState['perspective'], string> = {
   previewDrafts: 'Drafts',
   published: 'Published',
-  raw: 'Raw',
 }
 
-const PERSPECTIVE_TONES: Record<ClientPerspective, ButtonTone> = {
-  previewDrafts: 'caution',
-  published: 'positive',
-  raw: 'default',
-}
+const PERSPECTIVE_TONES: Record<PresentationState['perspective'], ButtonTone> =
+  {
+    previewDrafts: 'caution',
+    published: 'positive',
+  }
 
-const PERSPECTIVE_ICONS: Record<ClientPerspective, ComponentType> = {
+const PERSPECTIVE_ICONS: Record<
+  PresentationState['perspective'],
+  ComponentType
+> = {
   previewDrafts: EditIcon,
   published: PublishIcon,
-  raw: DatabaseIcon,
 }
 
 export interface PreviewFrameProps
-  extends Pick<PresentationState, 'perspective' | 'viewport'> {
+  extends Pick<
+    PresentationState,
+    'iframe' | 'perspective' | 'viewport' | 'visualEditing'
+  > {
   dispatch: DispatchPresentationAction
   initialUrl: URL
   loadersConnection: ChannelStatus
   navigatorEnabled: boolean
   onPathChange: (nextPath: string) => void
   openPopup: (url: string) => void
-  overlayEnabled: boolean
   overlaysConnection: ChannelStatus
   params: PresentationParams
   previewKitConnection: ChannelStatus
@@ -126,12 +129,12 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
   function PreviewFrame(props, ref) {
     const {
       dispatch,
+      iframe,
       initialUrl,
       loadersConnection,
       navigatorEnabled,
       onPathChange,
       openPopup,
-      overlayEnabled,
       overlaysConnection,
       params,
       perspective,
@@ -140,6 +143,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       toggleNavigator,
       toggleOverlay,
       viewport,
+      visualEditing: { overlaysEnabled },
     } = props
 
     const { devMode } = usePresentationTool()
@@ -154,9 +158,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       () => dispatch({ type: ACTION_VIEWPORT, viewport: 'mobile' }),
       [dispatch],
     )
-    const [loading, setLoading] = useState(true)
+    const loading = iframe.status === 'loading'
     const [timedOut, setTimedOut] = useState(false)
-    const [refreshing, setRefreshing] = useState(false)
+    const refreshing = iframe.status === 'refreshing'
     const [somethingIsWrong, setSomethingIsWrong] = useState(false)
     const iframeIsBusy =
       loading || refreshing || overlaysConnection === 'connecting'
@@ -175,8 +179,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       // ref.current.src = ref.current.src
       ref.current.src = `${targetOrigin}${params.preview || '/'}`
 
-      setRefreshing(true)
-    }, [params.preview, targetOrigin, ref])
+      dispatch({ type: ACTION_IFRAME_REFRESH })
+    }, [dispatch, params.preview, targetOrigin, ref])
     const handleRetry = useCallback(() => {
       if (typeof ref === 'function' || !ref?.current) {
         return
@@ -184,8 +188,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
 
       ref.current.src = initialUrl.toString()
 
-      setRefreshing(true)
-    }, [ref, initialUrl])
+      dispatch({ type: ACTION_IFRAME_REFRESH })
+    }, [dispatch, ref, initialUrl])
     const handleContinueAnyway = useCallback(() => {
       setContinueAnyway(true)
     }, [])
@@ -251,9 +255,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     }, [params.preview, targetOrigin])
 
     const onIFrameLoad = useCallback(() => {
-      setLoading(false)
-      setRefreshing(false)
-    }, [])
+      dispatch({ type: ACTION_IFRAME_LOADED })
+    }, [dispatch])
 
     return (
       <MotionConfig
@@ -294,7 +297,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   <Flex align="center" style={{ whiteSpace: 'nowrap' }}>
                     <Box padding={1}>
                       <Text size={1}>
-                        {overlayEnabled
+                        {overlaysEnabled
                           ? 'Disable edit overlay'
                           : 'Enable edit overlay'}
                       </Text>
@@ -321,12 +324,12 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     borderRadius: 999,
                     userSelect: 'none',
                   }}
-                  tone={overlayEnabled ? 'positive' : undefined}
+                  tone={overlaysEnabled ? 'positive' : undefined}
                 >
                   <Flex align="center" gap={2}>
                     <div style={{ margin: -2 }}>
                       <StyledSwitch
-                        checked={overlayEnabled}
+                        checked={overlaysEnabled}
                         onChange={toggleOverlay}
                         disabled={iframeIsBusy}
                       />
@@ -578,8 +581,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     justify="center"
                     align="center"
                     style={{
-                      inset: `0`,
-                      position: `absolute`,
+                      inset: '0',
+                      position: 'absolute',
                       backdropFilter: timedOut
                         ? 'blur(16px) saturate(0.5) grayscale(0.5)'
                         : 'blur(2px)',
@@ -655,8 +658,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     justify="center"
                     align="center"
                     style={{
-                      inset: `0`,
-                      position: `absolute`,
+                      inset: '0',
+                      position: 'absolute',
                       // boxShadow: '0 0 0 1px var(--card-shadow-outline-color)',
                     }}
                   >
@@ -683,8 +686,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     align="center"
                     style={{
                       background: 'var(--card-bg-color)',
-                      inset: `0`,
-                      position: `absolute`,
+                      inset: '0',
+                      position: 'absolute',
                       borderTop: '1px solid transparent',
                       boxShadow: '0 0 0 1px var(--card-border-color)',
                     }}
