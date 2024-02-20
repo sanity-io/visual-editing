@@ -49,6 +49,21 @@ export type HistoryUpdate = {
 }
 
 /**
+ * Preview frame history update
+ * @public
+ */
+export type HistoryRefresh = {
+  /**
+   * source 'manual' means the refresh button were clicked by the user
+   */
+  source: 'manual'
+  /**
+   * If true then there's either preview-kit or a loader connected on the page
+   */
+  livePreviewEnabled: boolean
+}
+
+/**
  * Messages emitted by the presentation package
  * @public
  */
@@ -69,6 +84,10 @@ export type PresentationMsg =
       type: 'presentation/toggleOverlay'
       data: undefined
     }
+  | {
+      type: 'presentation/refresh/ack'
+      data: HistoryRefresh
+    }
 
 /**@public */
 export interface VisualEditingPayloads {
@@ -86,6 +105,7 @@ export interface VisualEditingPayloads {
   toggle: {
     enabled: boolean
   }
+  refresh: HistoryRefresh
 }
 
 /**
@@ -130,6 +150,14 @@ export type VisualEditingMsg =
   | {
       type: 'visual-editing/documents'
       data: VisualEditingPayloads['documents']
+    }
+  | {
+      type: 'visual-editing/refresh/syn-ack'
+      data: VisualEditingPayloads['refresh']
+    }
+  | {
+      type: 'visual-editing/refresh/ack'
+      data: VisualEditingPayloads['refresh']
     }
 
 /** @public */

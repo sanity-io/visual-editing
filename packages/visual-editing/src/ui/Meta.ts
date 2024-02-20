@@ -1,13 +1,13 @@
-import { FunctionComponent, useEffect } from 'react'
+import { type FunctionComponent, useEffect } from 'react'
 
-import { type VisualEditingChannel } from '../types'
+import type { VisualEditingChannel } from '../types'
 
 /**
  * @internal
  */
 export const Meta: FunctionComponent<{
   channel?: VisualEditingChannel
-}> = function (props) {
+}> = (props) => {
   const { channel } = props
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import {
 import { MenuItem, useToast } from '@sanity/ui'
 import { useCallback, useState } from 'react'
 import { useClient, useCurrentUser } from 'sanity'
+
 import { API_VERSION } from '../constants'
 import type { PreviewFrameProps } from './PreviewFrame'
 
@@ -16,7 +17,7 @@ export function ShareUrlMenuItems(
     previewLocationOrigin: string
     previewLocationRoute: string
   },
-) {
+): React.ReactNode {
   const { initialUrl, openPopup, previewLocationOrigin, previewLocationRoute } =
     props
 

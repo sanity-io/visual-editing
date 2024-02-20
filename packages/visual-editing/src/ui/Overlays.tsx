@@ -72,7 +72,7 @@ export const Overlays: FunctionComponent<{
   channel: VisualEditingChannel
   history?: HistoryAdapter
   zIndex?: string | number
-}> = function (props) {
+}> = (props) => {
   const { channel, history, zIndex } = props
 
   const [status, setStatus] = useState<ChannelStatus>()
