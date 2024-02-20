@@ -3,23 +3,16 @@ import type { ClientPerspective } from '@sanity/client'
 import {
   CheckmarkIcon,
   ChevronDownIcon,
-  CopyIcon,
   DatabaseIcon,
   DesktopIcon,
   EditIcon,
-  LaunchIcon,
   MobileDeviceIcon,
   PanelLeftIcon,
   PublishIcon,
   RefreshIcon,
   ShareIcon,
 } from '@sanity/icons'
-import { createPreviewSecret } from '@sanity/preview-url-secret/create-secret'
-import {
-  hasSecretSearchParams,
-  setSecretSearchParams,
-  withoutSecretSearchParams,
-} from '@sanity/preview-url-secret/without-secret-search-params'
+import { withoutSecretSearchParams } from '@sanity/preview-url-secret/without-secret-search-params'
 import {
   Box,
   Button,
@@ -38,7 +31,6 @@ import {
   Tooltip,
   TooltipDelayGroupProvider,
   usePrefersReducedMotion,
-  useToast,
 } from '@sanity/ui'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import {
@@ -50,11 +42,11 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { Hotkeys, useClient, useCurrentUser } from 'sanity'
+import { Hotkeys } from 'sanity'
 import styled from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
-import { API_VERSION, MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
+import { MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
 import {
   ACTION_PERSPECTIVE,
   ACTION_VIEWPORT,
@@ -65,6 +57,7 @@ import { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { IFrame } from './IFrame'
 import { PreviewLocationInput } from './PreviewLocationInput'
+import { ShareUrlMenuItems } from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
 
@@ -112,7 +105,7 @@ const PERSPECTIVE_ICONS: Record<ClientPerspective, ComponentType> = {
   raw: DatabaseIcon,
 }
 
-interface PreviewFrameProps
+export interface PreviewFrameProps
   extends Pick<PresentationState, 'perspective' | 'viewport'> {
   dispatch: DispatchPresentationAction
   initialUrl: URL
@@ -346,31 +339,28 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   </Flex>
                 </Card>
               </Tooltip>
-
-              {devMode && (
-                <Tooltip
-                  animate
-                  content={
-                    <Text size={1}>
-                      {refreshing ? 'Refreshing…' : 'Refresh preview'}
-                    </Text>
-                  }
-                  fallbackPlacements={['bottom-start']}
-                  padding={2}
-                  placement="bottom"
-                  portal
-                >
-                  <Button
-                    aria-label="Refresh preview"
-                    fontSize={1}
-                    icon={RefreshIcon}
-                    mode="bleed"
-                    loading={refreshing}
-                    onClick={handleRefresh}
-                    padding={3}
-                  />
-                </Tooltip>
-              )}
+              <Tooltip
+                animate
+                content={
+                  <Text size={1}>
+                    {refreshing ? 'Refreshing…' : 'Refresh preview'}
+                  </Text>
+                }
+                fallbackPlacements={['bottom-start']}
+                padding={2}
+                placement="bottom"
+                portal
+              >
+                <Button
+                  aria-label="Refresh preview"
+                  fontSize={1}
+                  icon={RefreshIcon}
+                  mode="bleed"
+                  loading={refreshing}
+                  onClick={handleRefresh}
+                  padding={3}
+                />
+              </Tooltip>
 
               <Box flex={1}>
                 <PreviewLocationInput
@@ -814,129 +804,4 @@ const iframeVariants = {
   timedOut: {
     opacity: [0, 0, 1],
   },
-}
-
-function ShareUrlMenuItems(
-  props: Pick<PreviewFrameProps, 'initialUrl' | 'openPopup'> & {
-    previewLocationOrigin: string
-    previewLocationRoute: string
-  },
-) {
-  const { initialUrl, openPopup, previewLocationOrigin, previewLocationRoute } =
-    props
-
-  const handleOpenPopup = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      event.preventDefault()
-      openPopup(event.currentTarget.href)
-    },
-    [openPopup],
-  )
-
-  return (
-    <>
-      <CopyUrlMenuButton
-        initialUrl={initialUrl}
-        previewLocationOrigin={previewLocationOrigin}
-        previewLocationRoute={previewLocationRoute}
-      />
-      <MenuItem
-        icon={LaunchIcon}
-        text="Open preview"
-        as="a"
-        href={`${previewLocationOrigin}${previewLocationRoute}`}
-        onClick={handleOpenPopup as any}
-        rel="opener"
-        target="_blank"
-      />
-    </>
-  )
-}
-
-function CopyUrlMenuButton(
-  props: Pick<PreviewFrameProps, 'initialUrl'> & {
-    previewLocationOrigin: string
-    previewLocationRoute: string
-  },
-) {
-  const { initialUrl, previewLocationOrigin, previewLocationRoute } = props
-
-  const { push: pushToast } = useToast()
-  const client = useClient({ apiVersion: API_VERSION })
-  const currentUser = useCurrentUser()
-  const [disabled, setDisabled] = useState(false)
-
-  return (
-    <MenuItem
-      disabled={disabled}
-      onClick={() => {
-        if (!navigator?.clipboard) {
-          pushToast({
-            closable: true,
-            status: 'error',
-            title: 'Clipboard not supported',
-          })
-          return false
-        }
-        setDisabled(true)
-
-        let id: string | undefined = undefined
-        let url = `${previewLocationOrigin}${previewLocationRoute}`
-        const onFinally = () => {
-          pushToast({
-            id,
-            closable: true,
-            status: 'success',
-            title: 'The URL is copied to the clipboard',
-          })
-          setDisabled(false)
-        }
-        const onError = (error: any) => {
-          pushToast({
-            closable: true,
-            status: 'error',
-            title: 'Copy failed',
-            description: error.message || error.toString(),
-          })
-          setDisabled(false)
-        }
-        if (
-          hasSecretSearchParams(initialUrl) &&
-          typeof ClipboardItem !== 'undefined'
-        ) {
-          const type = 'text/plain'
-          const resolvePreviewUrl = async () => {
-            id = pushToast({
-              closable: true,
-              title: 'Copying URL to clipboard…',
-            })
-            const previewUrlSecret = await createPreviewSecret(
-              client,
-              '@sanity/presentation',
-              typeof window === 'undefined' ? '' : location.href,
-              currentUser?.id,
-            )
-
-            const newUrl = setSecretSearchParams(
-              initialUrl,
-              previewUrlSecret.secret,
-              previewLocationRoute,
-            )
-            url = newUrl.toString()
-            return new Blob([url], { type })
-          }
-
-          // Try to save to clipboard then save it in the state if worked
-          const item = new ClipboardItem({
-            [type]: resolvePreviewUrl(),
-          })
-          navigator.clipboard.write([item]).then(onFinally).catch(onError)
-        } else {
-          navigator.clipboard.writeText(url).then(onFinally).catch(onError)
-        }
-      }}
-      text="Copy link"
-      icon={CopyIcon}
-    />
-  )
 }
