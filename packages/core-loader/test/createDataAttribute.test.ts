@@ -15,6 +15,17 @@ describe('createDataAttribute', () => {
     ).toMatchInlineSnapshot(snapshot)
   })
 
+  test('returns a resolved string (2 steps)', () => {
+    const fromDocument = createDataAttribute({ baseUrl })
+    expect(fromDocument({ id, type }, path)).toMatchInlineSnapshot(snapshot)
+  })
+
+  test('returns a resolved string (3 steps)', () => {
+    const fromDocument = createDataAttribute({ baseUrl })
+    const fromPath = fromDocument({ id, type })
+    expect(fromPath(path)).toMatchInlineSnapshot(snapshot)
+  })
+
   test('returns a function if document is omitted', () => {
     expect(createDataAttribute({ baseUrl })).toBeTypeOf('function')
   })
@@ -25,22 +36,17 @@ describe('createDataAttribute', () => {
     )
   })
 
-  test('returns a function if path is omitted after scoping', () => {
-    expect(createDataAttribute({ baseUrl })({ id, type })).toBeTypeOf(
-      'function',
+  test('returns a function if path is omitted (2 steps)', () => {
+    const fromDocument = createDataAttribute({ baseUrl })
+    const fromPath = fromDocument({ id, type })
+    expect(fromPath).toBeTypeOf('function')
+  })
+
+  test('returns a resolved string using `scope`', () => {
+    const fromPath = createDataAttribute({ baseUrl }, { id, type })
+    const scoped = fromPath.scope(['sections'])
+    expect(scoped([{ _key: '0bd049fc047a' }, 'style'])).toMatchInlineSnapshot(
+      snapshot,
     )
-  })
-
-  test('returns a resolved string if first scoped to studio', () => {
-    const createFromDocument = createDataAttribute({ baseUrl })
-    const createFromPath = createFromDocument({ id, type })
-    expect(createFromPath(path)).toMatchInlineSnapshot(snapshot)
-  })
-
-  test('returns a resolved string if first scoped to path', () => {
-    const createFromDocument = createDataAttribute({ baseUrl })
-    const createFromPath = createFromDocument({ id, type })
-    const scoped = createFromPath.scope(['sections', { _key: '0bd049fc047a' }])
-    expect(scoped('style')).toMatchInlineSnapshot(snapshot)
   })
 })
