@@ -4,6 +4,7 @@ export type {
   ElementState,
   HistoryAdapter,
   HistoryAdapterNavigate,
+  HistoryRefresh,
   HistoryUpdate,
   Msg,
   OverlayController,

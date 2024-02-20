@@ -8,9 +8,17 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react'
-import { lazy, Suspense } from 'react'
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 
 import stylesheet from '~/tailwind.css'
+import { formatTimeSince } from 'apps-common/utils'
 
 const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))
 
@@ -19,7 +27,12 @@ export const links: LinksFunction = () => [
 ]
 
 export async function loader() {
-  return json({ vercelEnv: process.env.VERCEL_ENV || 'development' })
+  // Simulate a slightly slow API
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  return json({
+    vercelEnv: process.env.VERCEL_ENV || 'development',
+    served: new Date().toJSON(),
+  })
 }
 
 export default function App() {
@@ -43,8 +56,29 @@ export default function App() {
         <LiveReload />
         <span className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100">
           {data.vercelEnv}
+          {', '}
+          <span className="text-slate-300">
+            served: <Timesince since={data.served} />
+          </span>
         </span>
       </body>
     </html>
   )
+}
+
+const subscribe = () => () => {}
+function Timesince(props: { since: string }) {
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  )
+  const from = useMemo(() => new Date(props.since), [props.since])
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(interval)
+  }, [])
+  if (!mounted) return 'now'
+  return <span className="tabular-nums">{formatTimeSince(from, now)}</span>
 }

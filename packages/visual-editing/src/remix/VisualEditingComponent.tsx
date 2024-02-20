@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from '@remix-run/react'
+import { useLocation, useNavigate, useRevalidator } from '@remix-run/react'
 import {
   enableVisualEditing,
   type HistoryAdapterNavigate,
@@ -20,18 +20,47 @@ export interface VisualEditingProps
 export default function VisualEditingComponent(
   props: VisualEditingProps,
 ): null {
-  const { zIndex } = props
+  const { refresh, zIndex } = props
 
   const navigateRemix = useNavigate()
   const navigateRemixRef = useRef(navigateRemix)
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
+  const revalidator = useRevalidator()
+  const [revalidatorPromise, setRevalidatorPromise] = useState<
+    (() => void) | null
+  >(null)
+  const [revalidatorLoading, setRevalidatorLoading] = useState(false)
 
   useEffect(() => {
     navigateRemixRef.current = navigateRemix
   }, [navigateRemix])
   useEffect(() => {
+    if (revalidatorPromise && revalidator.state === 'loading') {
+      setRevalidatorLoading(true)
+    } else if (
+      revalidatorPromise &&
+      revalidatorLoading &&
+      revalidator.state === 'idle'
+    ) {
+      revalidatorPromise()
+      setRevalidatorPromise(null)
+      setRevalidatorLoading(false)
+    }
+  }, [revalidatorLoading, revalidator.state, revalidatorPromise])
+  useEffect(() => {
     const disable = enableVisualEditing({
       zIndex,
+      refresh: refresh
+        ? refresh
+        : (payload) => {
+            if (payload.source !== 'manual') {
+              return false
+            }
+            return new Promise<void>((resolve) => {
+              revalidator.revalidate()
+              setRevalidatorPromise(() => resolve)
+            })
+          },
       history: {
         subscribe: (_navigate) => {
           setNavigate(() => _navigate)
@@ -49,7 +78,7 @@ export default function VisualEditingComponent(
       },
     })
     return () => disable()
-  }, [zIndex])
+  }, [refresh, revalidator, zIndex])
 
   const location = useLocation()
   useEffect(() => {

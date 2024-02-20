@@ -4,7 +4,7 @@ import { boolean, fallback, object, parse, picklist } from 'valibot'
 
 export interface PresentationState {
   iframe: {
-    status: 'loading' | 'loaded' | 'refreshing'
+    status: 'loading' | 'loaded' | 'refreshing' | 'reloading'
   }
   /**
    * The selected perspective that all previews should use
@@ -21,6 +21,7 @@ export interface PresentationState {
 
 export const ACTION_IFRAME_LOADED = 'ACTION_IFRAME_LOADED'
 export const ACTION_IFRAME_REFRESH = 'ACTION_IFRAME_REFRESH'
+export const ACTION_IFRAME_RELOAD = 'ACTION_IFRAME_RELOAD'
 export const ACTION_PERSPECTIVE = 'ACTION_PERSPECTIVE'
 export const ACTION_VIEWPORT = 'ACTION_VIEWPORT'
 export const ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE =
@@ -31,6 +32,9 @@ interface IframeLoadedAction {
 }
 interface IframeRefreshAction {
   type: typeof ACTION_IFRAME_REFRESH
+}
+interface IframeReloadAction {
+  type: typeof ACTION_IFRAME_RELOAD
 }
 interface PerspectiveAction {
   type: typeof ACTION_PERSPECTIVE
@@ -48,6 +52,7 @@ interface VisualEditingOverlaysToggleAction {
 type PresentationAction =
   | IframeLoadedAction
   | IframeRefreshAction
+  | IframeReloadAction
   | PerspectiveAction
   | ViewportAction
   | VisualEditingOverlaysToggleAction
@@ -75,6 +80,16 @@ export const presentationReducer: Reducer<
             iframe: {
               ...state.iframe,
               status: 'refreshing',
+            },
+          }
+    case ACTION_IFRAME_RELOAD:
+      return state.iframe.status === 'reloading'
+        ? state
+        : {
+            ...state,
+            iframe: {
+              ...state.iframe,
+              status: 'reloading',
             },
           }
     case ACTION_PERSPECTIVE:
@@ -108,7 +123,12 @@ const toggleVisualEditingOverlays: Reducer<
   }
 }
 
-const iframeStatusSchema = picklist(['loading', 'loaded', 'refreshing'])
+const iframeStatusSchema = picklist([
+  'loading',
+  'loaded',
+  'refreshing',
+  'reloading',
+])
 const perspectiveSchema = fallback(
   picklist([
     'published',

@@ -20,7 +20,7 @@ export interface VisualEditingProps
 export default function VisualEditingComponent(
   props: VisualEditingProps,
 ): null {
-  const { zIndex } = props
+  const { refresh, zIndex } = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -32,6 +32,7 @@ export default function VisualEditingComponent(
   useEffect(() => {
     const disable = enableVisualEditing({
       zIndex,
+      refresh,
       history: {
         subscribe: (_navigate) => {
           setNavigate(() => _navigate)
@@ -52,7 +53,7 @@ export default function VisualEditingComponent(
       },
     })
     return () => disable()
-  }, [zIndex])
+  }, [refresh, zIndex])
 
   const { asPath, basePath, locale, isReady } = useRouter()
   useEffect(() => {

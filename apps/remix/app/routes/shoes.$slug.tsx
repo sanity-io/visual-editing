@@ -48,6 +48,10 @@ export default function ShoePage() {
 
   const { data: products } = shoesSnapshot
 
+  // Only consider it loading if there are no data
+  const loadingShoe = shoeSnapshot.loading && !shoeSnapshot.data
+  const loadingShoes = shoesSnapshot.loading && !shoesSnapshot.data?.length
+
   return (
     <div className="min-h-screen bg-white">
       <nav aria-label="Breadcrumb" className="pt-16 sm:pt-24">
@@ -78,7 +82,7 @@ export default function ShoePage() {
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
-              {shoeSnapshot.loading
+              {loadingShoe
                 ? 'Loading'
                 : <span>{product?.title}</span> || 'Untitled'}
             </Link>
@@ -208,7 +212,7 @@ export default function ShoePage() {
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <h1 className="sr-only">Recent products</h1>
 
-          {shoesSnapshot.loading ? (
+          {loadingShoes ? (
             <div className="animate-pulse">Loading...</div>
           ) : (
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
