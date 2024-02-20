@@ -116,6 +116,7 @@ export interface PreviewFrameProps
   loadersConnection: ChannelStatus
   navigatorEnabled: boolean
   onPathChange: (nextPath: string) => void
+  onRefresh: (fallback: () => void) => void
   openPopup: (url: string) => void
   overlaysConnection: ChannelStatus
   params: PresentationParams
@@ -134,6 +135,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       loadersConnection,
       navigatorEnabled,
       onPathChange,
+      onRefresh,
       openPopup,
       overlaysConnection,
       params,
@@ -170,17 +172,16 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     }, [targetOrigin])
 
     const handleRefresh = useCallback(() => {
-      if (typeof ref === 'function' || !ref?.current) {
-        return
-      }
-
-      // Funky way to reload an iframe without CORS issues
-      // eslint-disable-next-line no-self-assign
-      // ref.current.src = ref.current.src
-      ref.current.src = `${targetOrigin}${params.preview || '/'}`
-
-      dispatch({ type: ACTION_IFRAME_REFRESH })
-    }, [dispatch, params.preview, targetOrigin, ref])
+      onRefresh(() => {
+        if (typeof ref === 'function' || !ref?.current) {
+          return
+        }
+        // Funky way to reload an iframe without CORS issues
+        // eslint-disable-next-line no-self-assign
+        // ref.current.src = ref.current.src
+        ref.current.src = `${targetOrigin}${params.preview || '/'}`
+      })
+    }, [onRefresh, params.preview, targetOrigin, ref])
     const handleRetry = useCallback(() => {
       if (typeof ref === 'function' || !ref?.current) {
         return
@@ -415,9 +416,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       space={2}
                       text={PERSPECTIVE_TITLES[perspective]}
                       loading={
-                        iframeIsBusy ||
-                        (loadersConnection === 'connecting' &&
-                          previewKitConnection !== 'connected')
+                        loadersConnection !== 'connected' &&
+                        (iframeIsBusy ||
+                          (loadersConnection === 'connecting' &&
+                            previewKitConnection !== 'connected'))
                       }
                       disabled={loadersConnection !== 'connected'}
                     />

@@ -60,6 +60,8 @@ import { PresentationParamsProvider } from './PresentationParamsProvider'
 import { PresentationProvider } from './PresentationProvider'
 import { PreviewFrame } from './preview/PreviewFrame'
 import {
+  ACTION_IFRAME_LOADED,
+  ACTION_IFRAME_REFRESH,
   ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE,
   presentationReducer,
   presentationReducerInit,
@@ -262,6 +264,13 @@ export default function PresentationTool(props: {
                 data.perspective as unknown as any,
                 data.documents,
               )
+            } else if (
+              type === 'visual-editing/refresh/syn-ack' &&
+              data.source === 'manual'
+            ) {
+              clearTimeout(refreshRef.current)
+            } else if (type === 'visual-editing/refresh/ack') {
+              dispatch({ type: ACTION_IFRAME_LOADED })
             }
           },
         },
@@ -479,6 +488,26 @@ export default function PresentationTool(props: {
     idRef.current = params.id
   })
 
+  const refreshRef = useRef<number>()
+  const handleRefresh = useCallback(
+    (fallback: () => void) => {
+      dispatch({ type: ACTION_IFRAME_REFRESH })
+      if (channel) {
+        // We only wait 300ms for the iframe to ack the refresh request before running the fallback logic
+        refreshRef.current = window.setTimeout(fallback, 300)
+        channel.send('overlays', 'presentation/refresh/ack', {
+          source: 'manual',
+          livePreviewEnabled:
+            previewKitConnection === 'connected' ||
+            overlaysConnection === 'connected',
+        })
+        return
+      }
+      fallback()
+    },
+    [channel, overlaysConnection, previewKitConnection],
+  )
+
   const workspace = useWorkspace()
 
   const getCommentIntent = useCallback<CommentIntentGetter>(
@@ -537,6 +566,7 @@ export default function PresentationTool(props: {
                         loadersConnection={loadersConnection}
                         navigatorEnabled={navigatorEnabled}
                         onPathChange={handlePreviewPath}
+                        onRefresh={handleRefresh}
                         openPopup={handleOpenPopup}
                         overlaysConnection={overlaysConnection}
                         params={params}
