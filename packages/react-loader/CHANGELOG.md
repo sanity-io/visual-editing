@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.4.3 to 1.4.4
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.3.1 to 0.4.0
+
 ## [1.8.5](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.8.4...react-loader-v1.8.5) (2024-02-16)
 
 

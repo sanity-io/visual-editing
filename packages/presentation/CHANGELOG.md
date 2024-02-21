@@ -6,6 +6,26 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.10.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.9.1...presentation-v1.10.0) (2024-02-21)
+
+
+### Features
+
+* add refresh API ([#956](https://github.com/sanity-io/visual-editing/issues/956)) ([6a12bfb](https://github.com/sanity-io/visual-editing/commit/6a12bfb8bb8922c34fa812a2620bde12053da734))
+* **visual-editing:** report documents on page ([#942](https://github.com/sanity-io/visual-editing/issues/942)) ([f47c13e](https://github.com/sanity-io/visual-editing/commit/f47c13eebf71367d4be9a883025b4bc293a518f4))
+
+
+### Bug Fixes
+
+* always show the refresh button ([f985e8d](https://github.com/sanity-io/visual-editing/commit/f985e8decc305e280a410569edbeff9891419e6f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.3.1 to 0.4.0
+
 ## [1.9.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.9.0...presentation-v1.9.1) (2024-02-16)
 
 
