@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.4.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.3...core-loader-v1.4.4) (2024-02-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nanostores to v0.10.0 ([#964](https://github.com/sanity-io/visual-editing/issues/964)) ([b30e865](https://github.com/sanity-io/visual-editing/commit/b30e8654763dfd7a4cd267b541c192b8516fce06))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.3.1 to 0.4.0
+
 ## [1.4.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.2...core-loader-v1.4.3) (2024-02-16)
 
 

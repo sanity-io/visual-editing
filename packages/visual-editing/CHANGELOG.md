@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.3.1...visual-editing-v1.4.0) (2024-02-21)
+
+
+### Features
+
+* **visual-editing:** report documents on page ([#942](https://github.com/sanity-io/visual-editing/issues/942)) ([f47c13e](https://github.com/sanity-io/visual-editing/commit/f47c13eebf71367d4be9a883025b4bc293a518f4))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency valibot to v0.29.0 ([#953](https://github.com/sanity-io/visual-editing/issues/953)) ([a31911b](https://github.com/sanity-io/visual-editing/commit/a31911b52a78d1290c91eca068692932472e2a1f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.3.1 to 0.4.0
+
 ## [1.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.3.0...visual-editing-v1.3.1) (2024-02-16)
 
 
