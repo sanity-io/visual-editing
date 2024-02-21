@@ -15,12 +15,15 @@ export default function ShoesPage() {
   const {
     data: products,
     error,
-    loading,
+    loading: _loading,
   } = useQuery<ShoesListResult>(shoesList, {}, { initial })
 
   if (error) {
     throw error
   }
+
+  // Only consider it to be loading if there are no products
+  const loading = _loading && !products?.length
 
   return (
     <div className="min-h-screen bg-white">

@@ -9,6 +9,7 @@ import type {
 } from '@sanity/visual-editing-helpers'
 
 export type {
+  HistoryRefresh,
   HistoryUpdate,
   SanityNode,
   SanityStegaNode,

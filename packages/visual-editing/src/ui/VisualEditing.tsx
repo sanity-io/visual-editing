@@ -3,7 +3,7 @@ import type { FunctionComponent } from 'react'
 import type { VisualEditingOptions } from './enableVisualEditing'
 import { Meta } from './Meta'
 import { Overlays } from './Overlays'
-// import { Refresh } from './Refresh'
+import { Refresh } from './Refresh'
 import { useChannel } from './useChannel'
 
 /**
@@ -12,7 +12,7 @@ import { useChannel } from './useChannel'
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (
   props,
 ) => {
-  const { history, zIndex } = props
+  const { history, refresh, zIndex } = props
   const channel = useChannel()
 
   return (
@@ -20,7 +20,7 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (
       <>
         <Overlays channel={channel} history={history} zIndex={zIndex} />
         <Meta channel={channel} />
-        {/* <Refresh channel={channel} /> */}
+        {refresh && <Refresh channel={channel} refresh={refresh} />}
       </>
     )
   )

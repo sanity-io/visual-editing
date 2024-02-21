@@ -47,7 +47,7 @@ import { ErrorCard } from '../components/ErrorCard'
 import { MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
 import {
   ACTION_IFRAME_LOADED,
-  ACTION_IFRAME_REFRESH,
+  ACTION_IFRAME_RELOAD,
   ACTION_PERSPECTIVE,
   ACTION_VIEWPORT,
   type DispatchPresentationAction,
@@ -160,7 +160,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       () => dispatch({ type: ACTION_VIEWPORT, viewport: 'mobile' }),
       [dispatch],
     )
-    const loading = iframe.status === 'loading'
+    const loading = iframe.status === 'loading' || iframe.status === 'reloading'
     const [timedOut, setTimedOut] = useState(false)
     const refreshing = iframe.status === 'refreshing'
     const [somethingIsWrong, setSomethingIsWrong] = useState(false)
@@ -176,12 +176,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
         if (typeof ref === 'function' || !ref?.current) {
           return
         }
+        dispatch({ type: ACTION_IFRAME_RELOAD })
         // Funky way to reload an iframe without CORS issues
         // eslint-disable-next-line no-self-assign
         // ref.current.src = ref.current.src
         ref.current.src = `${targetOrigin}${params.preview || '/'}`
       })
-    }, [onRefresh, params.preview, targetOrigin, ref])
+    }, [dispatch, onRefresh, params.preview, targetOrigin, ref])
     const handleRetry = useCallback(() => {
       if (typeof ref === 'function' || !ref?.current) {
         return
@@ -189,7 +190,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
 
       ref.current.src = initialUrl.toString()
 
-      dispatch({ type: ACTION_IFRAME_REFRESH })
+      dispatch({ type: ACTION_IFRAME_RELOAD })
     }, [dispatch, ref, initialUrl])
     const handleContinueAnyway = useCallback(() => {
       setContinueAnyway(true)
@@ -332,7 +333,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       <StyledSwitch
                         checked={overlaysEnabled}
                         onChange={toggleOverlay}
-                        disabled={iframeIsBusy}
+                        disabled={
+                          iframe.status === 'loading' ||
+                          overlaysConnection !== 'connected'
+                        }
                       />
                     </div>
                     <Box>
@@ -347,7 +351,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 animate
                 content={
                   <Text size={1}>
-                    {refreshing ? 'Refreshing…' : 'Refresh preview'}
+                    {iframe.status === 'loading'
+                      ? 'Loading…'
+                      : iframe.status === 'reloading'
+                        ? 'Refreshing…'
+                        : iframe.status === 'refreshing'
+                          ? 'Refreshing…'
+                          : 'Refresh preview'}
                   </Text>
                 }
                 fallbackPlacements={['bottom-start']}
@@ -360,7 +370,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   fontSize={1}
                   icon={RefreshIcon}
                   mode="bleed"
-                  loading={refreshing}
+                  loading={
+                    iframe.status === 'reloading' ||
+                    iframe.status === 'refreshing'
+                  }
                   onClick={handleRefresh}
                   padding={3}
                 />
@@ -651,7 +664,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       )}
                     </Flex>
                   </MotionFlex>
-                ) : (loading || iframeIsBusy) && !continueAnyway ? (
+                ) : (loading ||
+                    (overlaysConnection === 'connecting' &&
+                      iframe.status !== 'refreshing')) &&
+                  !continueAnyway ? (
                   <MotionFlex
                     initial="initial"
                     animate="animate"
@@ -733,7 +749,12 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 ref={ref}
                 style={{
                   pointerEvents:
-                    iframeIsBusy && !continueAnyway ? 'none' : 'auto',
+                    (loading ||
+                      (overlaysConnection === 'connecting' &&
+                        iframe.status !== 'refreshing')) &&
+                    !continueAnyway
+                      ? 'none'
+                      : 'auto',
                   boxShadow: '0 0 0 1px var(--card-border-color)',
                   borderTop: '1px solid transparent',
                 }}
@@ -741,10 +762,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 initial={['background']}
                 variants={iframeVariants}
                 animate={[
-                  (loading || iframeIsBusy) && !continueAnyway
+                  (loading ||
+                    (overlaysConnection === 'connecting' &&
+                      iframe.status !== 'refreshing')) &&
+                  !continueAnyway
                     ? 'background'
                     : 'active',
-                  refreshing ? 'reloading' : 'idle',
+                  loading ? 'reloading' : 'idle',
                   viewport,
                   showOverlaysConnectionStatus && !continueAnyway
                     ? 'timedOut'
