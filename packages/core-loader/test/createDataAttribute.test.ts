@@ -5,48 +5,71 @@ import { createDataAttribute } from '../src/createDataAttribute'
 describe('createDataAttribute', () => {
   const type = 'page'
   const id = 'drafts.home'
+  const basePath = ['sections']
+  const sectionPath = [{ _key: '0bd049fc047a' }, 'style']
   const path = 'sections:0bd049fc047a.style'
   const baseUrl = '/studio'
-  const snapshot = `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio"`
 
-  test('returns a resolved string', () => {
-    expect(
-      createDataAttribute({ baseUrl }, { id, type }, path),
-    ).toMatchInlineSnapshot(snapshot)
+  const resolvedAttributeString =
+    'id=home;type=page;path=sections:0bd049fc047a.style;base=%2F'
+  const snapshot = `"${resolvedAttributeString}"`
+  const snapshotWithBaseUrl = `"${resolvedAttributeString}studio"`
+
+  test('throws if id is omitted', () => {
+    const scopedWithoutId = createDataAttribute({ type })
+    expect(() => scopedWithoutId(path)).toThrowError('required')
   })
 
-  test('returns a resolved string (2 steps)', () => {
-    const fromDocument = createDataAttribute({ baseUrl })
-    expect(fromDocument({ id, type }, path)).toMatchInlineSnapshot(snapshot)
+  test('throws if type is omitted', () => {
+    const scopedWithoutType = createDataAttribute({ id })
+    expect(() => scopedWithoutType(path)).toThrowError('required')
   })
 
-  test('returns a resolved string (3 steps)', () => {
-    const fromDocument = createDataAttribute({ baseUrl })
-    const fromPath = fromDocument({ id, type })
-    expect(fromPath(path)).toMatchInlineSnapshot(snapshot)
+  test('throws if path is omitted', () => {
+    const scoped = createDataAttribute({ id, type })
+    expect(() => scoped()).toThrowError('required')
   })
 
-  test('returns a function if document is omitted', () => {
-    expect(createDataAttribute({ baseUrl })).toBeTypeOf('function')
+  test('resolves using function call', () => {
+    const scoped = createDataAttribute({ id, type })
+    expect(scoped(path)).toMatchInlineSnapshot(snapshot)
   })
 
-  test('returns a function if path is omitted', () => {
-    expect(createDataAttribute({ baseUrl }, { id, type })).toBeTypeOf(
-      'function',
-    )
+  test('resolves using empty function call if path is set', () => {
+    const scopedWithPath = createDataAttribute({ id, type, path })
+    expect(scopedWithPath()).toMatchInlineSnapshot(snapshot)
   })
 
-  test('returns a function if path is omitted (2 steps)', () => {
-    const fromDocument = createDataAttribute({ baseUrl })
-    const fromPath = fromDocument({ id, type })
-    expect(fromPath).toBeTypeOf('function')
+  test('resolves using `.toString`', () => {
+    const scopedWithPath = createDataAttribute({ id, type, path })
+    expect(scopedWithPath.toString()).toMatchInlineSnapshot(snapshot)
   })
 
-  test('returns a resolved string using `scope`', () => {
-    const fromPath = createDataAttribute({ baseUrl }, { id, type })
-    const scoped = fromPath.scope(['sections'])
-    expect(scoped([{ _key: '0bd049fc047a' }, 'style'])).toMatchInlineSnapshot(
+  test('resolves using `.toString` after setting path with `.scope`', () => {
+    const scoped = createDataAttribute({ id, type })
+    expect(scoped.scope(path).toString()).toMatchInlineSnapshot(snapshot)
+  })
+
+  test('resolves with a custom basePath', () => {
+    const scopedWithBaseUrl = createDataAttribute({ id, type, baseUrl })
+    expect(scopedWithBaseUrl(path)).toMatchInlineSnapshot(snapshotWithBaseUrl)
+  })
+
+  test('resolves combined path using attribute and `.scope`', () => {
+    const scopedWithPath = createDataAttribute({ id, type, path: basePath })
+    expect(scopedWithPath.scope(sectionPath).toString()).toMatchInlineSnapshot(
       snapshot,
     )
+  })
+
+  test('resolves combined path using `.scope` and function call', () => {
+    const scoped = createDataAttribute({ id, type })
+    expect(scoped.scope(basePath)(sectionPath)).toMatchInlineSnapshot(snapshot)
+  })
+
+  test('combines a baseUrl with id and type', () => {
+    const scopedWithBaseUrlOnly = createDataAttribute({ baseUrl })
+    const scoped = scopedWithBaseUrlOnly.combine({ id, type })
+    expect(scoped(path)).toMatchInlineSnapshot(snapshotWithBaseUrl)
   })
 })
