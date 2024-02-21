@@ -840,8 +840,8 @@ importers:
         specifier: ^13.3.8
         version: 13.3.8
       nanostores:
-        specifier: 0.9.5
-        version: 0.9.5
+        specifier: 0.10.0
+        version: 0.10.0
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -857,7 +857,7 @@ importers:
     devDependencies:
       '@nanostores/vue':
         specifier: 0.10.0
-        version: 0.10.0(nanostores@0.9.5)(vue@3.4.19)
+        version: 0.10.0(nanostores@0.10.0)(vue@3.4.19)
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -3102,7 +3102,7 @@ packages:
     resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
     dev: true
 
-  /@nanostores/vue@0.10.0(nanostores@0.9.5)(vue@3.4.19):
+  /@nanostores/vue@0.10.0(nanostores@0.10.0)(vue@3.4.19):
     resolution: {integrity: sha512-832RAUbzRfHPs1CdqVEwfvgB2+RD/INji4Zo8bUSEfRO2pQRMMeq479gydnohGpRaa0oNwlfKo7TGFXCghq/1g==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
@@ -3116,7 +3116,7 @@ packages:
       '@vue/devtools-api':
         optional: true
     dependencies:
-      nanostores: 0.9.5
+      nanostores: 0.10.0
       vue: 3.4.19(typescript@5.3.3)
     dev: true
 
@@ -12468,9 +12468,9 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
 
-  /nanostores@0.9.5:
-    resolution: {integrity: sha512-Z+p+g8E7yzaWwOe5gEUB2Ox0rCEeXWYIZWmYvw/ajNYX8DlXdMvMDj8DWfM/subqPAcsf8l8Td4iAwO1DeIIRQ==}
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+  /nanostores@0.10.0:
+    resolution: {integrity: sha512-Poy5+9wFXOD0jAstn4kv9n686U2BFw48z/W8lms8cS8lcbRz7BU20JxZ3e/kkKQVfRrkm4yLWCUA6GQINdvJCQ==}
+    engines: {node: ^18.0.0 || >=20.0.0}
     dev: true
 
   /natural-compare-lite@1.4.0:
