@@ -8,10 +8,9 @@ import { urlFor, urlForCrossDatasetReference } from '../shoes/utils'
 import { ContentSourceMap, ContentSourceMapDocuments } from '@sanity/client/csm'
 import { useDocumentsInUse } from '@sanity/preview-kit-compat'
 import { useMemo } from 'react'
-import { workspaces, studioUrl as baseUrl } from 'apps-common/env'
+import { workspaces } from 'apps-common/env'
 
-const { workspace, projectId, dataset } = workspaces['next-app-router']
-const studioUrl = `${baseUrl}/${workspace}`
+const { projectId, dataset } = workspaces['next-app-router']
 
 type Props = {
   data: ShoesListResult
@@ -39,11 +38,11 @@ export default function ShoesPageClient(props: Props) {
           <li>
             <div className="flex items-center">
               <Link
-                href="/shoes"
+                href="/compat"
                 aria-current="page"
                 className="mr-2 text-sm font-medium text-gray-900"
               >
-                Shoes
+                Shoes with Preview Kit
               </Link>
             </div>
           </li>
@@ -109,6 +108,38 @@ export default function ShoesPageClient(props: Props) {
           </div>
         }
       </div>
+      <ol className="mx-auto mb-8 flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <li>
+          <div className="flex items-center">
+            <Link
+              href="/shoes"
+              className="mr-2 text-sm font-medium text-gray-900"
+            >
+              React Loader
+            </Link>
+          </div>
+        </li>
+        <li>
+          <div className="flex items-center">
+            <Link
+              href="/compat"
+              className="mr-2 text-sm font-medium text-gray-900"
+            >
+              Preview Kit
+            </Link>
+          </div>
+        </li>
+        <li>
+          <div className="flex items-center">
+            <Link
+              href="/only-visual-editing"
+              className="mr-2 text-sm font-medium text-gray-900"
+            >
+              Visual Editing only
+            </Link>
+          </div>
+        </li>
+      </ol>
     </div>
   )
 }

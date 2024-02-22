@@ -1,29 +1,19 @@
-'use client'
-
-import { shoesList, type ShoesListResult } from 'apps-common/queries'
+import { type ShoesListResult } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { urlFor, urlForCrossDatasetReference } from './utils'
-import { use } from 'react'
-import { QueryResponseInitial, useQuery } from '@sanity/react-loader'
+import { urlFor, urlForCrossDatasetReference } from '../shoes/utils'
+import { ContentSourceMap } from '@sanity/client/csm'
 
 type Props = {
-  initial: QueryResponseInitial<ShoesListResult>
+  data: ShoesListResult
+  sourceMap: ContentSourceMap | undefined
 }
 
 export default function ShoesPageClient(props: Props) {
-  const { initial } = props
-  const {
-    data: products,
-    error,
-    loading,
-    encodeDataAttribute,
-  } = useQuery<ShoesListResult>(shoesList, {}, { initial })
+  const { data: products, sourceMap } = props
 
-  if (error) {
-    throw error
-  }
+  console.log({ products, sourceMap })
 
   return (
     <div className="min-h-screen bg-white">
@@ -32,11 +22,11 @@ export default function ShoesPageClient(props: Props) {
           <li>
             <div className="flex items-center">
               <Link
-                href="/shoes"
+                href="/only-visual-editing"
                 aria-current="page"
                 className="mr-2 text-sm font-medium text-gray-900"
               >
-                Shoes
+                Shoes without Loaders or Preview Kit
               </Link>
             </div>
           </li>
@@ -46,20 +36,11 @@ export default function ShoesPageClient(props: Props) {
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h1 className="sr-only">Products</h1>
 
-        {loading ? (
-          <div className="animate-pulse">Loading...</div>
-        ) : (
+        {
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products?.map?.((product, i) => (
-              <Link
-                key={product.slug.current}
-                href={`/shoes/${product.slug.current}`}
-                className="group relative"
-              >
-                <div
-                  data-sanity={encodeDataAttribute([i, 'media', 'asset'])}
-                  className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
-                >
+              <a key={product.slug.current} className="group relative">
+                <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200">
                   <Image
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
                     src={
@@ -106,10 +87,10 @@ export default function ShoesPageClient(props: Props) {
                     </span>
                   </div>
                 )}
-              </Link>
+              </a>
             ))}
           </div>
-        )}
+        }
       </div>
       <ol className="mx-auto mb-8 flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <li>
