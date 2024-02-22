@@ -5,11 +5,9 @@ import { EXAMPLE_NAME } from '@/lib/constants'
 import PreviewBanner from './PreviewBanner'
 import { draftMode } from 'next/headers'
 import dynamic from 'next/dynamic'
-import { VisualEditing } from 'next-sanity'
+import { revalidatePath } from 'next/cache'
 
-const PresentationToolBridge = dynamic(
-  () => import('@/components/VisualEditing/PresentationToolBridge'),
-)
+const VisualEditing = dynamic(() => import('./VisualEditing'))
 
 export default function BlogLayout({
   children,
@@ -29,8 +27,20 @@ export default function BlogLayout({
           </Link>
         </footer>
       </div>
-      {draftMode().isEnabled && <VisualEditing />}
-      {draftMode().isEnabled && <PresentationToolBridge />}
+      {draftMode().isEnabled && (
+        <VisualEditing
+          refresh={async () => {
+            'use server'
+            if (!draftMode().isEnabled) {
+              console.debug(
+                'Skipped manual refresh because draft mode is not enabled',
+              )
+              return
+            }
+            await revalidatePath('/', 'layout')
+          }}
+        />
+      )}
     </>
   )
 }

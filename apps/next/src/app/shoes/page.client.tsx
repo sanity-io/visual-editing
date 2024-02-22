@@ -17,13 +17,15 @@ export default function ShoesPageClient(props: Props) {
   const {
     data: products,
     error,
-    loading,
+    loading: _loading,
     encodeDataAttribute,
   } = useQuery<ShoesListResult>(shoesList, {}, { initial })
 
   if (error) {
     throw error
   }
+
+  const loading = _loading && !!products?.length
 
   return (
     <div className="min-h-screen bg-white">
@@ -111,7 +113,7 @@ export default function ShoesPageClient(props: Props) {
           </div>
         )}
       </div>
-      <ol className="mx-auto mb-8 flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 pb-8 sm:px-6 lg:max-w-7xl lg:px-8">
         <li>
           <div className="flex items-center">
             <Link

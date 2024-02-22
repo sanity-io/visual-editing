@@ -54,10 +54,6 @@ export interface PresentationPluginOptions {
    * @deprecated this feature flag is no longer needed
    */
   unstable_showUnsafeShareUrl?: boolean
-  /**
-   * @deprecated don't use this in production, it can be removed at any time
-   */
-  unstable_emitExperimentalRevalidateTagsLoaderEvent?: boolean
 }
 
 export interface PresentationStateParams {

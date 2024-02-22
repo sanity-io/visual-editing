@@ -1,17 +1,19 @@
 import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
+import { revalidateTag, unstable_cache } from 'next/cache'
 
 import '../../tailwind.css'
 import { draftMode } from 'next/headers'
 import { Metadata } from 'next'
 
 const LiveVisualEditing = dynamic(() => import('./VisualEditing'))
+import { Timesince } from '../Timesince'
 
 export const metadata = {
   referrer: 'no-referrer-when-downgrade',
 } satisfies Metadata
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -32,8 +34,18 @@ export default function RootLayout({
           {draftMode().isEnabled
             ? 'draftMode'
             : process.env.NEXT_PUBLIC_VERCEL_ENV || 'development'}
+          {', '}
+          <span className="text-slate-300">
+            served: <Timesince since={await getCachedServed()} />
+          </span>
         </a>
       </body>
     </html>
   )
 }
+
+const getCachedServed = unstable_cache(
+  async () => new Date().toJSON(),
+  ['shoes-test'],
+  { revalidate: 1 },
+)

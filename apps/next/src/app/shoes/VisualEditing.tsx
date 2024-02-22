@@ -1,14 +1,16 @@
 'use client'
 
 import { useLiveMode } from '@sanity/react-loader'
-import { VisualEditing } from 'next-sanity'
-import { useEffect, useRef, useState } from 'react'
+import { VisualEditing } from '../VisualEditing'
+import { useEffect } from 'react'
 import { client } from './sanity.client'
 
 // Always enable stega in Live Mode
 const stegaClient = client.withConfig({ stega: true })
 
-export default function LiveVisualEditing() {
+export default function LiveVisualEditing(
+  props: React.ComponentProps<typeof VisualEditing>,
+) {
   useLiveMode({ client: stegaClient })
   useEffect(() => {
     if (
@@ -21,5 +23,5 @@ export default function LiveVisualEditing() {
     }
   }, [])
 
-  return <VisualEditing />
+  return <VisualEditing {...props} />
 }
