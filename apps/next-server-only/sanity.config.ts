@@ -28,7 +28,6 @@ const config = defineConfig({
           disable: 'api/disable-draft',
         },
       },
-      unstable_emitExperimentalRevalidateTagsLoaderEvent: true,
     }),
     // Add an image asset source for Unsplash
     unsplashImageAsset(),

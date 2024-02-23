@@ -79,7 +79,9 @@ import { useParams } from './useParams'
 import { usePreviewUrl } from './usePreviewUrl'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
-const RevalidateTags = lazy(() => import('./loader/RevalidateTags'))
+const PostMessageRefreshMutations = lazy(
+  () => import('./editor/PostMessageRefreshMutations'),
+)
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -88,11 +90,7 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
-  const {
-    previewUrl: _previewUrl,
-    components,
-    unstable_emitExperimentalRevalidateTagsLoaderEvent,
-  } = props.tool.options ?? {}
+  const { previewUrl: _previewUrl, components } = props.tool.options ?? {}
   const name = props.tool.name || DEFAULT_TOOL_NAME
   const { unstable_navigator } = components || {}
 
@@ -265,11 +263,16 @@ export default function PresentationTool(props: {
                 data.documents,
               )
             } else if (
-              type === 'visual-editing/refresh/syn-ack' &&
+              type === 'visual-editing/refreshing' &&
               data.source === 'manual'
             ) {
               clearTimeout(refreshRef.current)
-            } else if (type === 'visual-editing/refresh/ack') {
+            } else if (
+              type === 'visual-editing/refreshing' &&
+              data.source === 'mutation'
+            ) {
+              dispatch({ type: ACTION_IFRAME_REFRESH })
+            } else if (type === 'visual-editing/refreshed') {
               dispatch({ type: ACTION_IFRAME_LOADED })
             }
           },
@@ -495,17 +498,17 @@ export default function PresentationTool(props: {
       if (channel) {
         // We only wait 300ms for the iframe to ack the refresh request before running the fallback logic
         refreshRef.current = window.setTimeout(fallback, 300)
-        channel.send('overlays', 'presentation/refresh/ack', {
+        channel.send('overlays', 'presentation/refresh', {
           source: 'manual',
           livePreviewEnabled:
             previewKitConnection === 'connected' ||
-            overlaysConnection === 'connected',
+            loadersConnection === 'connected',
         })
         return
       }
       fallback()
     },
-    [channel, overlaysConnection, previewKitConnection],
+    [channel, loadersConnection, previewKitConnection],
   )
 
   const workspace = useWorkspace()
@@ -571,7 +574,6 @@ export default function PresentationTool(props: {
                         overlaysConnection={overlaysConnection}
                         params={params}
                         perspective={state.perspective}
-                        previewKitConnection={previewKitConnection}
                         ref={iframeRef}
                         targetOrigin={targetOrigin}
                         toggleNavigator={toggleNavigator}
@@ -617,9 +619,15 @@ export default function PresentationTool(props: {
           />
         </Suspense>
       )}
-      {unstable_emitExperimentalRevalidateTagsLoaderEvent && channel && (
+      {channel && params.id && params.type && (
         <Suspense>
-          <RevalidateTags channel={channel} />
+          <PostMessageRefreshMutations
+            channel={channel}
+            id={params.id}
+            type={params.type}
+            loadersConnection={loadersConnection}
+            previewKitConnection={previewKitConnection}
+          />
         </Suspense>
       )}
     </>

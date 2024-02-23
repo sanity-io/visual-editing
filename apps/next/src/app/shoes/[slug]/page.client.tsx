@@ -21,13 +21,15 @@ export default function ShoePage(props: Props) {
   const {
     data: product,
     error,
-    loading,
+    loading: _loading,
     encodeDataAttribute,
   } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
 
   if (error) {
     throw error
   }
+
+  const loading = _loading && !!product
 
   const [coverImage, ...otherImages] = product?.media || []
 

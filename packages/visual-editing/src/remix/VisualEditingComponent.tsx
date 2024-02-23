@@ -2,6 +2,7 @@ import { useLocation, useNavigate, useRevalidator } from '@remix-run/react'
 import {
   enableVisualEditing,
   type HistoryAdapterNavigate,
+  type HistoryRefresh,
   type VisualEditingOptions,
 } from '@sanity/visual-editing'
 import { useEffect, useRef, useState } from 'react'
@@ -10,11 +11,20 @@ import { useEffect, useRef, useState } from 'react'
  * @public
  */
 export interface VisualEditingProps
-  extends Omit<VisualEditingOptions, 'history'> {
+  extends Omit<VisualEditingOptions, 'history' | 'refresh'> {
   /**
    * @deprecated The histoy adapter is already implemented
    */
   history?: never
+  /**
+   * The refresh API allows smarter refresh logic than the default `location.reload()` behavior.
+   * You can call the refreshDefault argument to trigger the default refresh behavior so you don't have to reimplement it.
+   * @alpha until it's shipped in `sanity/presentation`
+   */
+  refresh?: (
+    payload: HistoryRefresh,
+    refreshDefault: () => false | Promise<void>,
+  ) => false | Promise<void>
 }
 
 export default function VisualEditingComponent(
@@ -50,17 +60,18 @@ export default function VisualEditingComponent(
   useEffect(() => {
     const disable = enableVisualEditing({
       zIndex,
-      refresh: refresh
-        ? refresh
-        : (payload) => {
-            if (payload.source !== 'manual') {
-              return false
-            }
-            return new Promise<void>((resolve) => {
-              revalidator.revalidate()
-              setRevalidatorPromise(() => resolve)
-            })
-          },
+      refresh: (payload) => {
+        function refreshDefault() {
+          if (payload.source === 'mutation' && payload.livePreviewEnabled) {
+            return false
+          }
+          return new Promise<void>((resolve) => {
+            revalidator.revalidate()
+            setRevalidatorPromise(() => resolve)
+          })
+        }
+        return refresh ? refresh(payload, refreshDefault) : refreshDefault()
+      },
       history: {
         subscribe: (_navigate) => {
           setNavigate(() => _navigate)

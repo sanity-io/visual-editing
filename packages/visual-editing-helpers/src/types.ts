@@ -49,19 +49,52 @@ export type HistoryUpdate = {
 }
 
 /**
- * Preview frame history update
+ * Preview frame history refresh event, emitted by Presentation Tool
  * @public
  */
-export type HistoryRefresh = {
-  /**
-   * source 'manual' means the refresh button were clicked by the user
-   */
-  source: 'manual'
-  /**
-   * If true then there's either preview-kit or a loader connected on the page
-   */
-  livePreviewEnabled: boolean
-}
+export type HistoryRefresh =
+  | {
+      /**
+       * source 'manual' means the refresh button were clicked by the user
+       */
+      source: 'manual'
+      /**
+       * If true then there's either preview-kit or a loader connected on the page
+       */
+      livePreviewEnabled: boolean
+    }
+  | {
+      /**
+       * source 'mutation' means a document were mutated and the preview might need to refresh
+       */
+      source: 'mutation'
+      /**
+       * If true then there's either preview-kit or a loader connected on the page
+       */
+      livePreviewEnabled: boolean
+      /**
+       * Select metadata about the document that were mutated
+       * If it's prefixed with `drafts.` then it's a draft document, otherwise it's a published document.
+       */
+      document: {
+        /**
+         * If it's prefixed with `drafts.` then it's a draft document, otherwise it's a published document.
+         */
+        _id: string
+        /**
+         * The document type is frequently used in `revalidateTag` scenarios with Next.js App Router
+         */
+        _type: string
+        /**
+         * The document revision, can be used to dedupe requests, as we always send two due to debouncing and handling Content Lake eventual consistency
+         */
+        _rev: string
+        /**
+         * If the document has a top level slug field named `slug` with the type `slug`, then it'll be included here
+         */
+        slug?: { current?: string | null }
+      }
+    }
 
 /**
  * Messages emitted by the presentation package
@@ -85,7 +118,7 @@ export type PresentationMsg =
       data: undefined
     }
   | {
-      type: 'presentation/refresh/ack'
+      type: 'presentation/refresh'
       data: HistoryRefresh
     }
 
@@ -152,11 +185,11 @@ export type VisualEditingMsg =
       data: VisualEditingPayloads['documents']
     }
   | {
-      type: 'visual-editing/refresh/syn-ack'
+      type: 'visual-editing/refreshing'
       data: VisualEditingPayloads['refresh']
     }
   | {
-      type: 'visual-editing/refresh/ack'
+      type: 'visual-editing/refreshed'
       data: VisualEditingPayloads['refresh']
     }
 
@@ -195,14 +228,6 @@ export interface LoaderPayloads {
     perspective: ClientPerspective
     documents: ContentSourceMapDocuments
   }
-  /**
-   * Experimental new event, may be removed at any time
-   */
-  'revalidate-tags': {
-    projectId: string
-    dataset: string
-    tags: [documentId: string, documentType: string, documentSlug?: string]
-  }
 }
 
 /**
@@ -229,13 +254,6 @@ export type LoaderMsg =
        */
       type: 'loader/documents'
       data: LoaderPayloads['documents']
-    }
-  | {
-      /**
-       * Experimental new event, may be removed at any time
-       */
-      type: 'loader/revalidate-tags'
-      data: LoaderPayloads['revalidate-tags']
     }
 
 /**

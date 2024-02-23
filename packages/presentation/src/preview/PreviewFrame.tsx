@@ -120,7 +120,6 @@ export interface PreviewFrameProps
   openPopup: (url: string) => void
   overlaysConnection: ChannelStatus
   params: PresentationParams
-  previewKitConnection: ChannelStatus
   targetOrigin: string
   toggleNavigator?: () => void
   toggleOverlay: () => void
@@ -140,7 +139,6 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       overlaysConnection,
       params,
       perspective,
-      previewKitConnection,
       targetOrigin,
       toggleNavigator,
       toggleOverlay,
@@ -427,12 +425,16 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       mode="bleed"
                       padding={3}
                       space={2}
-                      text={PERSPECTIVE_TITLES[perspective]}
+                      text={
+                        PERSPECTIVE_TITLES[
+                          loadersConnection === 'connected'
+                            ? perspective
+                            : 'previewDrafts'
+                        ]
+                      }
                       loading={
-                        loadersConnection !== 'connected' &&
-                        (iframeIsBusy ||
-                          (loadersConnection === 'connecting' &&
-                            previewKitConnection !== 'connected'))
+                        loadersConnection === 'reconnecting' &&
+                        iframe.status !== 'loaded'
                       }
                       disabled={loadersConnection !== 'connected'}
                     />
