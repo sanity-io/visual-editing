@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.5.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.4.0...visual-editing-v1.5.0) (2024-02-23)
+
+
+### Features
+
+* add refresh mutation API ([#981](https://github.com/sanity-io/visual-editing/issues/981)) ([e507647](https://github.com/sanity-io/visual-editing/commit/e507647b61b9dac6c74b64d3f1e95fae1b546702))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.3.1...visual-editing-v1.4.0) (2024-02-21)
 
 
