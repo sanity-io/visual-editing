@@ -6,6 +6,25 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.11.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.10.0...presentation-v1.11.0) (2024-02-23)
+
+
+### Features
+
+* add refresh mutation API ([#981](https://github.com/sanity-io/visual-editing/issues/981)) ([e507647](https://github.com/sanity-io/visual-editing/commit/e507647b61b9dac6c74b64d3f1e95fae1b546702))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency framer-motion to ^11.0.6 ([#991](https://github.com/sanity-io/visual-editing/issues/991)) ([fbe8d5f](https://github.com/sanity-io/visual-editing/commit/fbe8d5fa20a150470fafc60977d4261fa73c0fc0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
+
 ## [1.10.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.9.1...presentation-v1.10.0) (2024-02-21)
 
 

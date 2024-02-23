@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.4.0...visual-editing-helpers-v0.5.0) (2024-02-23)
+
+
+### Features
+
+* add refresh mutation API ([#981](https://github.com/sanity-io/visual-editing/issues/981)) ([e507647](https://github.com/sanity-io/visual-editing/commit/e507647b61b9dac6c74b64d3f1e95fae1b546702))
+
 ## [0.4.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.3.1...visual-editing-helpers-v0.4.0) (2024-02-21)
 
 
