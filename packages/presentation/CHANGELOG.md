@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.11.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.0...presentation-v1.11.1) (2024-02-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.14.4 ([#1002](https://github.com/sanity-io/visual-editing/issues/1002)) ([1239cb2](https://github.com/sanity-io/visual-editing/commit/1239cb24da0f9132f6093f8ae9eccd275565fc7d))
+* **deps:** Update dependency mendoza to v3.0.5 ([#1000](https://github.com/sanity-io/visual-editing/issues/1000)) ([9119789](https://github.com/sanity-io/visual-editing/commit/91197897bd75ed273b6ff4669be6ac22c7cf51e3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.3 to ^1.6.4
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.5.0 to 0.5.1
+
 ## [1.11.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.10.0...presentation-v1.11.0) (2024-02-23)
 
 
