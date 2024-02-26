@@ -1,8 +1,8 @@
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
+import { VisualEditing } from 'next-sanity'
 import '../../tailwind.css'
 
-import { VisualEditing } from '../VisualEditing'
 import { Timesince } from '../Timesince'
 
 export const metadata = {

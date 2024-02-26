@@ -4,10 +4,7 @@ import BlogHeader from './BlogHeader'
 import { EXAMPLE_NAME } from '@/lib/constants'
 import PreviewBanner from './PreviewBanner'
 import { draftMode } from 'next/headers'
-import dynamic from 'next/dynamic'
-import { revalidatePath } from 'next/cache'
-
-const VisualEditing = dynamic(() => import('./VisualEditing'))
+import { VisualEditing } from 'next-sanity'
 
 export default function BlogLayout({
   children,
@@ -27,20 +24,7 @@ export default function BlogLayout({
           </Link>
         </footer>
       </div>
-      {draftMode().isEnabled && (
-        <VisualEditing
-          refresh={async () => {
-            'use server'
-            if (!draftMode().isEnabled) {
-              console.debug(
-                'Skipped manual refresh because draft mode is not enabled',
-              )
-              return
-            }
-            await revalidatePath('/', 'layout')
-          }}
-        />
-      )}
+      {draftMode().isEnabled && <VisualEditing />}
     </>
   )
 }

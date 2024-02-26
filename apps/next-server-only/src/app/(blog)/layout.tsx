@@ -4,10 +4,8 @@ import BlogHeader from './BlogHeader'
 import { EXAMPLE_NAME } from '@/lib/constants'
 import PreviewBanner from './PreviewBanner'
 import { draftMode } from 'next/headers'
-import dynamic from 'next/dynamic'
 import { revalidatePath, revalidateTag } from 'next/cache'
-
-const VisualEditing = dynamic(() => import('./VisualEditing'))
+import { VisualEditing } from 'next-sanity'
 
 export default function BlogLayout({
   children,

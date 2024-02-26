@@ -32,7 +32,9 @@ export function formatTimeSince(from: Date, to: Date): string {
     return rtf.format(minutes, 'minute')
   }
   const hours = Math.ceil(minutes / 60)
-  // if(hours > -24) {
-  return rtf.format(hours, 'hour')
-  // }
+  if (hours > -24) {
+    return rtf.format(hours, 'hour')
+  }
+  const days = Math.ceil(hours / 24)
+  return rtf.format(days, 'day')
 }
