@@ -1,6 +1,5 @@
 import { getPublishedId, studioPath } from '@sanity/client/csm'
 import {
-  boolean,
   is,
   minLength,
   object,
