@@ -1,5 +1,8 @@
 import type { ChannelStatus } from '@sanity/channels'
-import type { ContentSourceMapDocuments } from '@sanity/client'
+import type {
+  ClientPerspective,
+  ContentSourceMapDocuments,
+} from '@sanity/client'
 import {
   isHTMLAnchorElement,
   isHTMLElement,
@@ -11,6 +14,7 @@ import {
   isHotkey,
   type SanityNode,
 } from '@sanity/visual-editing-helpers'
+import { DRAFTS_PREFIX } from '@sanity/visual-editing-helpers/csm'
 import {
   type FunctionComponent,
   useCallback,
@@ -77,14 +81,14 @@ export const Overlays: FunctionComponent<{
 
   const [status, setStatus] = useState<ChannelStatus>()
 
-  const [{ elements, wasMaybeCollapsed }, dispatch] = useReducer(
+  const [{ elements, wasMaybeCollapsed, perspective }, dispatch] = useReducer(
     overlayStateReducer,
-    undefined,
-    () => ({
+    {
       elements: [],
       focusPath: '',
       wasMaybeCollapsed: false,
-    }),
+      perspective: 'published',
+    },
   )
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -95,6 +99,8 @@ export const Overlays: FunctionComponent<{
       if (type === 'presentation/focus' && data.path?.length) {
         dispatch({ type, data })
       } else if (type === 'presentation/blur') {
+        dispatch({ type, data })
+      } else if (type === 'presentation/perspective') {
         dispatch({ type, data })
       } else if (type === 'presentation/navigate') {
         history?.update(data)
@@ -109,49 +115,68 @@ export const Overlays: FunctionComponent<{
     }
   }, [channel, history])
 
-  const nodeIdsRef = useRef<Set<string>>(new Set())
+  const lastReported = useRef<
+    | {
+        nodeIds: Set<string>
+        perspective: ClientPerspective
+      }
+    | undefined
+  >(undefined)
 
   const reportDocuments = useCallback(
-    (documents: ContentSourceMapDocuments) => {
+    (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
       channel?.send('visual-editing/documents', {
-        perspective: 'previewDrafts',
         documents,
+        perspective,
       })
     },
     [channel],
   )
 
   useEffect(() => {
-    // Report only `SanityNode`, if a node is untransformed (`SanityStegaNode`)
-    // at this stage it will not contain the necessary document data
+    // Report only nodes of type `SanityNode`. Untransformed `SanityStegaNode`
+    // nodes without an `id`, are not reported as they will not contain the
+    // necessary document data.
     const nodes = elements
-      .map((e) => e.sanity)
-      .filter((s) => 'id' in s) as SanityNode[]
+      .map((e) => {
+        const { sanity } = e
+        if (!('id' in sanity)) return null
+        return {
+          ...sanity,
+          id: 'isDraft' in sanity ? `${DRAFTS_PREFIX}${sanity.id}` : sanity.id,
+        }
+      })
+      .filter((s) => !!s) as SanityNode[]
 
     const nodeIds = new Set<string>(nodes.map((e) => e.id))
-    // Only report documents if some document IDs have changed
-    if (!isEqualSets(nodeIds, nodeIdsRef.current)) {
+    // Report if:
+    // - Documents not yet reported
+    // - Document IDs changed
+    // - Perspective changed
+    if (
+      !lastReported.current ||
+      !isEqualSets(nodeIds, lastReported.current.nodeIds) ||
+      perspective !== lastReported.current.perspective
+    ) {
       const documentsOnPage: ContentSourceMapDocuments = Array.from(
         nodeIds,
       ).map((_id) => {
-        const {
-          type,
-          projectId: _projectId,
-          dataset: _dataset,
-        } = nodes.find((node) => node.id === _id)!
+        const node = nodes.find((node) => node.id === _id)!
+        const { type, projectId: _projectId, dataset: _dataset } = node
         return _projectId && _dataset
           ? { _id, _type: type!, _projectId, _dataset }
           : { _id, _type: type! }
       })
-      nodeIdsRef.current = nodeIds
-      reportDocuments(documentsOnPage)
+      lastReported.current = { nodeIds, perspective }
+      reportDocuments(documentsOnPage, perspective)
     }
-  }, [elements, reportDocuments])
+  }, [elements, perspective, reportDocuments])
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
       if (message.type === 'element/click') {
-        channel.send('overlay/focus', message.sanity)
+        const { sanity } = message
+        channel.send('overlay/focus', sanity)
       } else if (message.type === 'overlay/activate') {
         channel.send('overlay/toggle', { enabled: true })
       } else if (message.type === 'overlay/deactivate') {

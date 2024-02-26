@@ -53,6 +53,8 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
   useEffect(() => {
     if (channel) {
       const { projectId, dataset } = clientConfig
+      // @todo - Can this be migrated/deprecated in favour of emitting
+      // `presentation/perspective` at a higher level?
       channel.send('loaders', 'loader/perspective', {
         projectId: projectId!,
         dataset: dataset!,

@@ -413,6 +413,14 @@ export default function PresentationTool(props: {
     [navigate],
   )
 
+  // Dispatch a perspective message when the perspective changes
+  useEffect(() => {
+    channel?.send('overlays', 'presentation/perspective', {
+      perspective: state.perspective,
+    })
+  }, [channel, state.perspective])
+
+  // Dispatch a focus or blur message when the id or path change
   useEffect(() => {
     if (params.id && params.path) {
       channel?.send('overlays', 'presentation/focus', {

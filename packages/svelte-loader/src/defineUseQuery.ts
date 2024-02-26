@@ -45,12 +45,20 @@ export function defineUseQuery({
     onMount(() =>
       $fetcher.subscribe((snapshot) => {
         const prev = get($writeable)
-        if (
-          prev.error !== snapshot.error ||
-          prev.loading !== snapshot.loading ||
-          prev.perspective !== snapshot.perspective ||
-          !isEqual(prev.data, snapshot.data)
-        ) {
+
+        if (prev.error !== snapshot.error) {
+          $writeable.set(snapshot)
+        }
+
+        if (prev.loading !== snapshot.loading) {
+          $writeable.set(snapshot)
+        }
+
+        if (prev.perspective !== snapshot.perspective) {
+          $writeable.set(snapshot)
+        }
+
+        if (!isEqual(prev.data, snapshot.data)) {
           $writeable.set(snapshot)
         }
       }),

@@ -11,6 +11,7 @@ import {
   PresentationSearchParams,
   PresentationStateParams,
 } from './types'
+import { getPublishedId } from 'sanity'
 
 function pruneObject<T extends RouterState | PresentationParams>(obj: T): T {
   return Object.fromEntries(
@@ -104,6 +105,9 @@ export function useParams({
     () =>
       debounce<PresentationNavigate>(
         (nextState, nextSearchState = {}, forceReplace) => {
+          // Force navigation to use published IDs only
+          if (nextState.id) nextState.id = getPublishedId(nextState.id)
+
           // Extract type, id and path as 'routerState'
           const { _searchParams: routerSearchParams, ...routerState } =
             routerStateRef.current
