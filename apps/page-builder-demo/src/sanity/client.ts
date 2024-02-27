@@ -1,4 +1,4 @@
-import { createClient } from '@sanity/client/stega'
+import { createClient } from '@sanity/client'
 import { workspaces, apiVersion, studioUrl } from 'apps-common/env'
 
 const { projectId, dataset, workspace } = workspaces['page-builder-demo']

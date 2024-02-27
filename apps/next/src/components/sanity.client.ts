@@ -1,4 +1,4 @@
-import { createClient } from '@sanity/client/stega'
+import { createClient } from '@sanity/client'
 import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 
 const { projectId, dataset, workspace } = workspaces['next-pages-router']

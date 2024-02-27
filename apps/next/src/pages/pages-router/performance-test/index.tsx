@@ -1,7 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useQuery } from '@sanity/react-loader'
 import Link from 'next/link'
-import { ClientStegaConfig, createClient } from '@sanity/client/stega'
+import { ClientConfig, createClient } from '@sanity/client'
 import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
 
 const { projectId, dataset, workspace } = workspaces['next-pages-router']
@@ -9,7 +9,7 @@ const studioUrl = `${baseUrl}/${workspace}`
 
 const sanityToken = process.env.SANITY_API_READ_TOKEN
 
-function createSanityClient(config: ClientStegaConfig) {
+function createSanityClient(config: ClientConfig) {
   return createClient({
     projectId,
     dataset,

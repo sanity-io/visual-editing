@@ -3,7 +3,7 @@ import { draftMode } from 'next/headers'
 import 'server-only'
 import { client } from './client'
 import { token } from './env'
-import type { FilteredResponseQueryOptions } from '@sanity/client/stega'
+import type { FilteredResponseQueryOptions } from '@sanity/client'
 
 const DEFAULT_PARAMS = {} as QueryParams
 
