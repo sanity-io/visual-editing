@@ -22,6 +22,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
 
+## [1.9.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.8.8...react-loader-v1.9.0) (2024-02-27)
+
+
+### Features
+
+* **core-loader:** createDataAttribute ([#961](https://github.com/sanity-io/visual-editing/issues/961)) ([6e12777](https://github.com/sanity-io/visual-editing/commit/6e12777df69580e28ef74a17abf8def534ed4311))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.4.6 to 1.5.0
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.5.1 to 0.5.2
+
 ## [1.8.8](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.8.7...react-loader-v1.8.8) (2024-02-26)
 
 
