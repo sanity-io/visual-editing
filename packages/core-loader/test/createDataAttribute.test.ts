@@ -12,8 +12,6 @@ describe('createDataAttribute', () => {
 
   const resolvedAttributeString =
     'id=home;type=page;path=sections:0bd049fc047a.style;base=%2F'
-  const snapshot = `"${resolvedAttributeString}"`
-  const snapshotWithBaseUrl = `"${resolvedAttributeString}studio"`
 
   test('throws if id is omitted', () => {
     const scopedWithoutId = createDataAttribute({ type })
@@ -32,44 +30,58 @@ describe('createDataAttribute', () => {
 
   test('resolves using function call', () => {
     const scoped = createDataAttribute({ id, type })
-    expect(scoped(path)).toMatchInlineSnapshot(snapshot)
+    expect(scoped(path)).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+    )
   })
 
   test('resolves using empty function call if path is set', () => {
     const scopedWithPath = createDataAttribute({ id, type, path })
-    expect(scopedWithPath()).toMatchInlineSnapshot(snapshot)
+    expect(scopedWithPath()).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+    )
   })
 
   test('resolves using `.toString`', () => {
     const scopedWithPath = createDataAttribute({ id, type, path })
-    expect(scopedWithPath.toString()).toMatchInlineSnapshot(snapshot)
+    expect(scopedWithPath.toString()).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+    )
   })
 
   test('resolves using `.toString` after setting path with `.scope`', () => {
     const scoped = createDataAttribute({ id, type })
-    expect(scoped.scope(path).toString()).toMatchInlineSnapshot(snapshot)
+    expect(scoped.scope(path).toString()).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+    )
   })
 
   test('resolves with a custom basePath', () => {
     const scopedWithBaseUrl = createDataAttribute({ id, type, baseUrl })
-    expect(scopedWithBaseUrl(path)).toMatchInlineSnapshot(snapshotWithBaseUrl)
+    expect(scopedWithBaseUrl(path)).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio;isDraft"`,
+    )
   })
 
   test('resolves combined path using attribute and `.scope`', () => {
     const scopedWithPath = createDataAttribute({ id, type, path: basePath })
     expect(scopedWithPath.scope(sectionPath).toString()).toMatchInlineSnapshot(
-      snapshot,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
     )
   })
 
   test('resolves combined path using `.scope` and function call', () => {
     const scoped = createDataAttribute({ id, type })
-    expect(scoped.scope(basePath)(sectionPath)).toMatchInlineSnapshot(snapshot)
+    expect(scoped.scope(basePath)(sectionPath)).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+    )
   })
 
   test('combines a baseUrl with id and type', () => {
     const scopedWithBaseUrlOnly = createDataAttribute({ baseUrl })
     const scoped = scopedWithBaseUrlOnly.combine({ id, type })
-    expect(scoped(path)).toMatchInlineSnapshot(snapshotWithBaseUrl)
+    expect(scoped(path)).toMatchInlineSnapshot(
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio;isDraft"`,
+    )
   })
 })
