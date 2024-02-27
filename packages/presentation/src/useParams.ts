@@ -1,4 +1,5 @@
 import { MutableRefObject, useEffect, useMemo, useRef } from 'react'
+import { getPublishedId } from 'sanity'
 import { RouterContextValue, RouterState, SearchParam } from 'sanity/router'
 
 import { debounce } from './lib/debounce'
@@ -11,7 +12,6 @@ import {
   PresentationSearchParams,
   PresentationStateParams,
 } from './types'
-import { getPublishedId } from 'sanity'
 
 function pruneObject<T extends RouterState | PresentationParams>(obj: T): T {
   return Object.fromEntries(
