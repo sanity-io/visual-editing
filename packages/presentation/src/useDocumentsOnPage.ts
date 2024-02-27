@@ -41,7 +41,7 @@ export function useDocumentsOnPage(
     (
       key: string,
       perspective: ClientPerspective,
-      sourceDocuments: DocumentOnPage[],
+      sourceDocuments: DocumentOnPage[] = [],
     ) => {
       const documents = sourceDocuments.filter((sourceDocument) => {
         if ('_projectId' in sourceDocument && sourceDocument._projectId) {

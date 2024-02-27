@@ -266,15 +266,14 @@ export function createOverlayController({
       }
 
       if (node instanceof HTMLElement) {
+        // @todo - We need to handle cases where `data-sanity` attributes may
+        // have changed, so it's not enough to ignore previously registered
+        // elements. We can just unregister and re-register elements instead of
+        // attempting to update their data. Can this be made more efficient?
         if (elementsMap.has(node)) {
-          const sanityNodes = findSanityNodes({ childNodes: [node] })
-          // Check existing nodes are still valid
-          if (!sanityNodes.length) {
-            unregisterElement(node)
-          }
-        } else {
-          registerElements({ childNodes: [node] })
+          unregisterElement(node)
         }
+        registerElements({ childNodes: [node] })
       }
 
       return true

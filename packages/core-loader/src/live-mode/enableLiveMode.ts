@@ -229,10 +229,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       const key = JSON.stringify({ perspective, query, params })
       const value = cache.get(key)
       if (value) {
-        $fetch.setKey('data', value.result)
-        $fetch.setKey('sourceMap', value.resultSourceMap)
-        $fetch.setKey('perspective', perspective)
-        $fetch.setKey('loading', false)
+        $fetch.set({
+          data: value.result,
+          error: undefined,
+          loading: false,
+          perspective,
+          sourceMap: value.resultSourceMap,
+        })
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
       }
     }

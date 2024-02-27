@@ -1,12 +1,14 @@
-import { PresentationMsg } from '@sanity/visual-editing-helpers'
+import type { ClientPerspective } from '@sanity/client'
+import type { PresentationMsg } from '@sanity/visual-editing-helpers'
 
-import { ElementState, OverlayMsg } from '../types'
+import type { ElementState, OverlayMsg } from '../types'
 import { elementsReducer } from './elementsReducer'
 
 export interface OverlayState {
   focusPath: string
   elements: ElementState[]
   wasMaybeCollapsed: boolean
+  perspective: ClientPerspective
 }
 
 export function overlayStateReducer(
@@ -15,6 +17,7 @@ export function overlayStateReducer(
 ): OverlayState {
   let focusPath = state.focusPath
   let wasMaybeCollapsed = false
+  let perspective = state.perspective
 
   if (message.type === 'presentation/focus') {
     const prevFocusPath = state.focusPath
@@ -26,10 +29,15 @@ export function overlayStateReducer(
     }
   }
 
+  if (message.type === 'presentation/perspective') {
+    perspective = message.data.perspective
+  }
+
   return {
     ...state,
-    focusPath,
     elements: elementsReducer(state.elements, message),
+    focusPath,
+    perspective,
     wasMaybeCollapsed,
   }
 }

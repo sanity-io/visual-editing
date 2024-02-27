@@ -18,13 +18,14 @@ export type QueryCacheKey = `${string}-${string}`
  * @public
  */
 export type SanityNode = {
-  projectId?: string
+  baseUrl: string
   dataset?: string
   id: string
+  isDraft?: string
   path: string
-  type?: string
-  baseUrl: string
+  projectId?: string
   tool?: string
+  type?: string
   workspace?: string
 }
 
@@ -120,6 +121,12 @@ export type PresentationMsg =
   | {
       type: 'presentation/refresh'
       data: HistoryRefresh
+    }
+  | {
+      type: 'presentation/perspective'
+      data: {
+        perspective: ClientPerspective
+      }
     }
 
 /**@public */

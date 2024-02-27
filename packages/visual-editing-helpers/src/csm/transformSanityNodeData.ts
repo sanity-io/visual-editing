@@ -17,6 +17,8 @@ import { urlStringToPath } from '../urlStringToPath'
 
 export type { SanityNode, SanityStegaNode }
 
+export const DRAFTS_PREFIX = 'drafts.'
+
 const lengthyStr = string([minLength(1)])
 const optionalLengthyStr = optional(lengthyStr)
 
@@ -29,6 +31,7 @@ const sanityNodeSchema = object({
   tool: optionalLengthyStr,
   type: optionalLengthyStr,
   workspace: optionalLengthyStr,
+  isDraft: optional(string()),
 })
 
 const sanityLegacyNodeSchema = object({
@@ -71,11 +74,17 @@ export function encodeSanityNodeData(node: SanityNode): string | undefined {
     ['base', encodeURIComponent(baseUrl)],
     ['workspace', workspace],
     ['tool', tool],
+    ['isDraft', _id.startsWith(DRAFTS_PREFIX)],
   ]
 
   return parts
     .filter(([, value]) => !!value)
-    .map((part) => part.join('='))
+    .map((part) => {
+      const [key, value] = part
+      // For true values, just display the key
+      if (value === true) return key
+      return part.join('=')
+    })
     .join(';')
 }
 
@@ -89,7 +98,7 @@ export function decodeSanityString(str: string): SanityNode | undefined {
 
   const data = segments.reduce((acc, segment) => {
     const [key, value] = segment.split('=')
-    if (!key || !value) return acc
+    if (!key || (segment.includes('=') && !value)) return acc
 
     switch (key) {
       case 'id':
@@ -115,6 +124,9 @@ export function decodeSanityString(str: string): SanityNode | undefined {
         break
       case 'dataset':
         acc.dataset = value
+        break
+      case 'isDraft':
+        acc.isDraft = ''
         break
       default:
     }
