@@ -22,6 +22,27 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
 
+## [1.8.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.7.7...svelte-loader-v1.8.0) (2024-02-27)
+
+
+### Features
+
+* **core-loader:** createDataAttribute ([#961](https://github.com/sanity-io/visual-editing/issues/961)) ([6e12777](https://github.com/sanity-io/visual-editing/commit/6e12777df69580e28ef74a17abf8def534ed4311))
+
+
+### Bug Fixes
+
+* allow encoding draft ids ([#982](https://github.com/sanity-io/visual-editing/issues/982)) ([637a33d](https://github.com/sanity-io/visual-editing/commit/637a33d8dbfd22fc7a664f0d828cf2450556cc73))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.4.6 to 1.5.0
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.5.1 to 0.5.2
+
 ## [1.7.7](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.7.6...svelte-loader-v1.7.7) (2024-02-26)
 
 
