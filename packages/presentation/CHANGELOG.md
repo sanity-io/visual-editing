@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.11.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.1...presentation-v1.11.2) (2024-02-27)
+
+
+### Bug Fixes
+
+* allow encoding draft ids ([#982](https://github.com/sanity-io/visual-editing/issues/982)) ([637a33d](https://github.com/sanity-io/visual-editing/commit/637a33d8dbfd22fc7a664f0d828cf2450556cc73))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.5.1 to 0.5.2
+
 ## [1.11.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.0...presentation-v1.11.1) (2024-02-26)
 
 
