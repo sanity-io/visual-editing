@@ -10,9 +10,6 @@ describe('createDataAttribute', () => {
   const path = 'sections:0bd049fc047a.style'
   const baseUrl = '/studio'
 
-  const resolvedAttributeString =
-    'id=home;type=page;path=sections:0bd049fc047a.style;base=%2F'
-
   test('throws if id is omitted', () => {
     const scopedWithoutId = createDataAttribute({ type })
     expect(() => scopedWithoutId(path)).toThrowError('required')
