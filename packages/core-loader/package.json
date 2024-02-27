@@ -37,6 +37,17 @@
       "import": "./dist/encode-data-attribute.js",
       "default": "./dist/encode-data-attribute.js"
     },
+    "./create-data-attribute": {
+      "types": "./dist/create-data-attribute.d.ts",
+      "source": "./src/createDataAttribute.ts",
+      "require": "./dist/create-data-attribute.cjs",
+      "node": {
+        "module": "./dist/create-data-attribute.js",
+        "import": "./dist/create-data-attribute.cjs.js"
+      },
+      "import": "./dist/create-data-attribute.js",
+      "default": "./dist/create-data-attribute.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -47,6 +58,9 @@
     "*": {
       "encode-data-attribute": [
         "./dist/encode-data-attribute.d.ts"
+      ],
+      "create-data-attribute": [
+        "./dist/create-data-attribute.d.ts"
       ]
     }
   },
