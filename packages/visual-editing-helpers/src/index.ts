@@ -1,3 +1,4 @@
+export { createDataAttribute } from './createDataAttribute'
 export { getQueryCacheKey } from './getQueryCacheKey'
 export { isAltKey, isHotkey, isModKey } from './hotkeys'
 export { pathToUrlString } from './pathToUrlString'
