@@ -23,7 +23,10 @@
     },
     {
       "matchDepNames": ["next", "@next/bundle-analyzer"],
-      "matchFileNames": ["apps/next-server-only/package.json", "apps/next-no-cache/package.json"],
+      "matchFileNames": [
+        "apps/next-server-only/package.json",
+        "apps/next-no-cache/package.json"
+      ],
       "followTag": "canary"
     },
     {
