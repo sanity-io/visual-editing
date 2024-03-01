@@ -22,6 +22,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
 
+## [1.8.1](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.8.0...svelte-loader-v1.8.1) (2024-03-01)
+
+
+### Bug Fixes
+
+* support calling `setServerClient` more than once ([#1034](https://github.com/sanity-io/visual-editing/issues/1034)) ([14bdd0b](https://github.com/sanity-io/visual-editing/commit/14bdd0ba89222f99b2a73db17a6b7132d3bab3a1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.5.0 to 1.5.1
+
 ## [1.8.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.7.7...svelte-loader-v1.8.0) (2024-02-27)
 
 

@@ -22,6 +22,12 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.1 to 0.5.2
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.5.0 to 1.5.1
+
 ## [1.7.16](https://github.com/sanity-io/visual-editing/compare/nuxt-loader-v1.7.15...nuxt-loader-v1.7.16) (2024-02-26)
 
 
