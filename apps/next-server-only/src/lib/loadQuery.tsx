@@ -10,7 +10,7 @@ const DEFAULT_PARAMS = {} as QueryParams
 export async function loadQuery<QueryResponse>({
   query,
   params = DEFAULT_PARAMS,
-  tags: _tags,
+  tags,
 }: {
   query: string
   params?: QueryParams
@@ -40,13 +40,6 @@ export async function loadQuery<QueryResponse>({
           // */
 
   const perspective = isDraftMode ? 'previewDrafts' : 'published'
-  // /*
-  const tags = isDraftMode
-    ? _tags.map((tag) =>
-        perspective === 'previewDrafts' ? `${perspective}:${tag}` : tag,
-      )
-    : _tags
-  // */
 
   const options = {
     filterResponse: false,
@@ -56,8 +49,8 @@ export async function loadQuery<QueryResponse>({
     perspective,
     next: {
       tags,
-      // Disable the Data Cache for all requests when in Draft Mode, otherwise it's cached until revalidateTag expires it
-      revalidate: isDraftMode ? 0 : false,
+      // Cache forever in Draft Mode until expired with revalidateTag, use time-based cache in production that matches the CDN cache
+      revalidate: isDraftMode ? false : 60,
     },
   } satisfies UnfilteredResponseQueryOptions
   const result = await client.fetch<QueryResponse>(query, params, {

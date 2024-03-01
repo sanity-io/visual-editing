@@ -22,6 +22,11 @@
       "groupName": "App dependencies"
     },
     {
+      "matchDepNames": ["next", "@next/bundle-analyzer"],
+      "matchFileNames": ["apps/next-server-only/package.json", "apps/next-no-cache/package.json"],
+      "followTag": "canary"
+    },
+    {
       "matchDepTypes": ["dependencies", "devDependencies"],
       "rangeStrategy": "bump"
     },
