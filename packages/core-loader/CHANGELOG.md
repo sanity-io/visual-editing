@@ -12,6 +12,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.5.1...core-loader-v1.6.0) (2024-03-01)
+
+
+### Features
+
+* **visual-editing:** export `createDataAttribute` ([304ee39](https://github.com/sanity-io/visual-editing/commit/304ee39eb956a92a5b4fb48e0a54ae5a10537ee6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
+
 ## [1.5.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.5.0...core-loader-v1.5.1) (2024-03-01)
 
 

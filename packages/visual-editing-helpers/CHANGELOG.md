@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.5.2...visual-editing-helpers-v0.6.0) (2024-03-01)
+
+
+### Features
+
+* **visual-editing:** export `createDataAttribute` ([304ee39](https://github.com/sanity-io/visual-editing/commit/304ee39eb956a92a5b4fb48e0a54ae5a10537ee6))
+
 ## [0.5.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.5.1...visual-editing-helpers-v0.5.2) (2024-02-27)
 
 
