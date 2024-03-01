@@ -57,16 +57,18 @@ export interface QueryStore {
   ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
   /**
    * When `ssr: true` you call this in your server entry point that imports the result of `createQueryStore` instance.
-   * It's required to call it before any data fetching is done, and it can only be called once.
+   * It's required to call it before any data fetching is done.
    */
   setServerClient: (client: SanityClient | SanityStegaClient) => void
   enableLiveMode: EnableLiveMode
   /** @internal */
-  unstable__cache: Cache & {
-    fetch: <QueryResponseResult>(key: string) => Promise<{
-      result: QueryResponseResult
-      resultSourceMap: ContentSourceMap | undefined
-    }>
+  unstable__cache: {
+    instance: Cache & {
+      fetch: <QueryResponseResult>(key: string) => Promise<{
+        result: QueryResponseResult
+        resultSourceMap: ContentSourceMap | undefined
+      }>
+    }
   }
   /** @internal */
   unstable__serverClient: {
@@ -109,33 +111,30 @@ export const createQueryStore = (
     ? undefined
     : cloneClientWithConfig(options.client as SanityClient)
 
-  const cache = createCache().define('fetch', async (key: string) => {
-    if (!client) {
-      throw new Error(
-        `You have to set the Sanity client with \`setServerClient\` before any data fetching is done`,
-      )
-    }
-    const { query, params = {}, perspective, useCdn } = JSON.parse(key)
-    const { result, resultSourceMap } = await (client as SanityClient).fetch(
-      query,
-      params,
-      {
+  function createDefaultCache(client: SanityClient | undefined) {
+    return createCache().define('fetch', async (key: string) => {
+      if (!client) {
+        throw new Error(
+          `You have to set the Sanity client with \`setServerClient\` before any data fetching is done`,
+        )
+      }
+      const { query, params = {}, perspective, useCdn } = JSON.parse(key)
+      const { result, resultSourceMap } = await (
+        unstable__serverClient.instance as SanityClient
+      ).fetch(query, params, {
         tag,
         filterResponse: false,
         perspective,
         useCdn,
-      },
-    )
-    return { result, resultSourceMap }
-  })
+      })
+      return { result, resultSourceMap }
+    })
+  }
 
-  let defaultFetcherCreated = false
   function createDefaultFetcher(): Fetcher {
-    if (defaultFetcherCreated) {
-      throw new Error('Default fetcher can only be created once')
-    }
-    defaultFetcherCreated = true
     const initialPerspective = client?.config().perspective || 'published'
+
+    unstable__cache.instance = createDefaultCache(client)
 
     return {
       hydrate: (_query, _params, initial) => ({
@@ -153,8 +152,8 @@ export const createQueryStore = (
 
         $fetch.setKey('loading', true)
         $fetch.setKey('error', undefined)
-        cache
-          .fetch(JSON.stringify({ query, params }))
+        unstable__cache
+          .instance!.fetch(JSON.stringify({ query, params }))
           .then((response) => {
             if (controller.signal.aborted) return
             $fetch.setKey('data', response.result)
@@ -170,6 +169,10 @@ export const createQueryStore = (
           })
       },
     } satisfies Fetcher
+  }
+
+  const unstable__cache: QueryStore['unstable__cache'] = {
+    instance: createDefaultCache(client),
   }
 
   const $fetcher = atom<Fetcher | undefined>(
@@ -238,7 +241,6 @@ export const createQueryStore = (
     instance: undefined,
     canPreviewDrafts: false,
   }
-  let serverClientCalled = false
   const setServerClient: QueryStore['setServerClient'] = (newClient) => {
     if (runtime !== 'server') {
       throw new Error(
@@ -249,10 +251,6 @@ export const createQueryStore = (
     if (!ssr) {
       throw new Error('`setServerClient` can only be called when `ssr: true`')
     }
-    if (serverClientCalled) {
-      throw new Error('`setServerClient` can only be called once')
-    }
-    serverClientCalled = true
     unstable__serverClient.instance = client = cloneClientWithConfig(
       newClient as SanityClient,
     )
@@ -264,7 +262,7 @@ export const createQueryStore = (
     createFetcherStore,
     enableLiveMode,
     setServerClient,
-    unstable__cache: cache,
+    unstable__cache,
     unstable__serverClient,
   }
 }
