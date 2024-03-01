@@ -78,7 +78,7 @@ export const createQueryStore = (
         : { data: result, perspective }
     }
     const { result, resultSourceMap } =
-      await unstable__cache.fetch<QueryResponseResult>(
+      await unstable__cache.instance.fetch<QueryResponseResult>(
         JSON.stringify({ query, params }),
       )
     // @ts-expect-error - update typings

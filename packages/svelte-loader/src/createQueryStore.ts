@@ -82,7 +82,7 @@ export const createQueryStore = (
       options.useCdn || unstable__serverClient.instance!.config().useCdn
 
     const { result, resultSourceMap } =
-      await unstable__cache.fetch<QueryResponseResult>(
+      await unstable__cache.instance.fetch<QueryResponseResult>(
         JSON.stringify({ query, params, perspective, useCdn }),
       )
 
