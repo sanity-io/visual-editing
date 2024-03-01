@@ -1,8 +1,9 @@
 export * from './createQueryStore'
-export * from './createRequestHandler'
+export * from './hooks'
 export * from './previewStore'
 export type {
   HandleOptions,
+  HandlePreviewOptions,
   LoaderLocals,
   LoadQuery,
   LoadQueryOptions,
@@ -12,6 +13,7 @@ export type {
   UseLiveMode,
   UseQueryOptionsDefinedInitial,
   UseQueryOptionsUndefinedInitial,
+  VisualEditingLocals,
   WithEncodeDataAttribute,
 } from './types'
 export * from './useEncodeDataAttribute'

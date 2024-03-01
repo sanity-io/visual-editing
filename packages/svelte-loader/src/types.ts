@@ -12,9 +12,17 @@ import {
   type QueryStoreState,
 } from '@sanity/core-loader'
 import { EncodeDataAttributeFunction } from '@sanity/core-loader/encode-data-attribute'
+import type {
+  HandlePreviewOptions,
+  VisualEditingLocals,
+} from '@sanity/visual-editing-svelte'
 import type { Readable } from 'svelte/store'
 
 export type * from '@sanity/core-loader'
+export type {
+  HandlePreviewOptions,
+  VisualEditingLocals,
+} from '@sanity/visual-editing-svelte'
 
 /** @public */
 export type WithEncodeDataAttribute = {
@@ -167,30 +175,10 @@ export interface QueryStore {
   }
 }
 
-/** @beta */
+/** @public */
 export interface HandleOptions {
-  preview?: {
-    /**
-     * The preview secret to use for verifying preview access
-     */
-    secret?: string
-    /**
-     * The Sanity client instance for fetching data and listening to mutations
-     */
-    client?: SanityClient
-    /**
-     * The name of the cookie used to store preview secret
-     * @defaultValue '__sanity_preview'
-     */
-    cookie?: string
-    /**
-     * The endpoints to use for enabling and disabling preview
-     * @defaultValue { enable: '/preview/enable', disable: '/preview/disable' }
-     */
-    endpoints?: {
-      enable?: string
-      disable?: string
-    }
+  preview?: HandlePreviewOptions['preview'] & {
+    client?: HandlePreviewOptions['client']
   }
   /**
    * A query store exported load function to use for fetching data
@@ -199,7 +187,6 @@ export interface HandleOptions {
 }
 
 /** @public */
-export interface LoaderLocals {
-  preview: boolean
+export interface LoaderLocals extends VisualEditingLocals {
   loadQuery: LoadQuery
 }

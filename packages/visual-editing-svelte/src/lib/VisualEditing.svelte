@@ -3,18 +3,39 @@
   import {
     enableVisualEditing,
     type HistoryAdapterNavigate,
+    type HistoryRefresh,
+    type VisualEditingOptions,
   } from '@sanity/visual-editing'
-  import { useLiveMode } from '@sanity/svelte-loader'
-  import { afterNavigate, goto } from '$app/navigation'
-  import { client } from '$lib/sanity'
+  import { afterNavigate, goto, invalidateAll } from '$app/navigation'
+  import type { VisualEditingProps } from './types.js'
 
-  onMount(() => useLiveMode({ client }))
+  export let zIndex: VisualEditingProps['zIndex'] = undefined
+  /**
+   * The refresh API allows smarter refresh logic than the default `location.reload()` behavior.
+   * You can call the refreshDefault argument to trigger the default refresh behavior so you don't have to reimplement it.
+   * @alpha until it's shipped in `sanity/presentation`
+   */
+  export let refresh: VisualEditingProps['refresh'] = undefined
 
   let navigate: HistoryAdapterNavigate | undefined
   let navigatingFromUpdate = false
 
   onMount(() =>
     enableVisualEditing({
+      zIndex,
+      refresh: (payload) => {
+        function refreshDefault() {
+          if (payload.source === 'mutation' && payload.livePreviewEnabled) {
+            console.log('refresh false')
+            return false
+          }
+          return new Promise<void>(async (resolve) => {
+            await invalidateAll()
+            resolve()
+          })
+        }
+        return refresh ? refresh(payload, refreshDefault) : refreshDefault()
+      },
       history: {
         subscribe: (_navigate) => {
           navigate = _navigate

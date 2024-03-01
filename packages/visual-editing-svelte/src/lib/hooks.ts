@@ -1,25 +1,19 @@
-import { ClientPerspective } from '@sanity/client'
 import { validatePreviewUrl } from '@sanity/preview-url-secret'
 import { error, type Handle, redirect } from '@sveltejs/kit'
 import crypto from 'crypto'
 
-import {
-  loadQuery as defaultLoadQuery,
-  unstable__serverClient,
-} from './createQueryStore'
-import { HandleOptions } from './types'
+import type { HandlePreviewOptions } from './types'
 
 /**
- * @beta
+ * @public
  */
-export const createRequestHandler = ({
+export const handlePreview = ({
+  client,
   preview,
-  loadQuery,
-}: HandleOptions = {}): Handle => {
+}: HandlePreviewOptions): Handle => {
   const cookieName = preview?.cookie || '__sanity_preview'
   const enablePath = preview?.endpoints?.enable || '/preview/enable'
   const disablePath = preview?.endpoints?.disable || '/preview/disable'
-  const client = preview?.client || unstable__serverClient.instance
   const secret = preview?.secret || crypto.randomBytes(16).toString('hex')
 
   if (!client) throw new Error('No client configured for preview')
@@ -27,15 +21,12 @@ export const createRequestHandler = ({
   return async ({ event, resolve }) => {
     const { cookies, url } = event
 
-    // Set some defaults for perspective and useCdn
-    let perspective: ClientPerspective | undefined = undefined
-    let useCdn: boolean | undefined = undefined
-
     // Check the cookie to see if it preview is enabled
     event.locals.preview = event.cookies.get(cookieName) === secret
+
     // Set default perspective and useCdn based on preview status
-    perspective = event.locals.preview ? 'previewDrafts' : 'published'
-    useCdn = event.locals.preview ? false : true
+    const perspective = event.locals.preview ? 'previewDrafts' : 'published'
+    const useCdn = event.locals.preview ? false : true
 
     // Check if the request is to enable or disable previews
     if (event.url.pathname === enablePath) {
@@ -64,10 +55,11 @@ export const createRequestHandler = ({
       return redirect(307, url.searchParams.get('redirect') || '/')
     }
 
-    // Add loadQuery to event locals with the defaults set above
-    const lq = loadQuery || defaultLoadQuery
-    event.locals.loadQuery = (query, params, options) =>
-      lq(query, params, { perspective, useCdn, ...options })
+    // Add client to event locals with the defaults set above
+    event.locals.client = client.withConfig({
+      perspective,
+      useCdn,
+    })
 
     return await resolve(event)
   }
