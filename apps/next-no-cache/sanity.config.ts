@@ -20,15 +20,15 @@ const config = defineConfig({
   // Add and edit the content schema in the './src/sanity/schema' folder
   schema: { types },
   plugins: [
-    structureTool(),
     presentationTool({
       previewUrl: {
-        draftMode: {
+        previewMode: {
           enable: '/api/draft',
           disable: 'api/disable-draft',
         },
       },
     }),
+    structureTool(),
     // Add an image asset source for Unsplash
     unsplashImageAsset(),
     // Vision is a tool that lets you query your content with GROQ in the studio
