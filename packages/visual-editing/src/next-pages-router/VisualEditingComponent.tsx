@@ -1,10 +1,8 @@
-import {
-  enableVisualEditing,
-  type HistoryAdapterNavigate,
-  type VisualEditingOptions,
-} from '@sanity/visual-editing'
 import { useRouter } from 'next/router.js'
 import { useEffect, useRef, useState } from 'react'
+
+import type { HistoryAdapterNavigate, VisualEditingOptions } from '../types'
+import { enableVisualEditing } from '../ui/enableVisualEditing'
 
 /**
  * @public

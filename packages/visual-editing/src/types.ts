@@ -9,6 +9,10 @@ import type {
 } from '@sanity/visual-editing-helpers'
 
 export type {
+  DisableVisualEditing,
+  VisualEditingOptions,
+} from './ui/enableVisualEditing'
+export type {
   HistoryRefresh,
   HistoryUpdate,
   SanityNode,

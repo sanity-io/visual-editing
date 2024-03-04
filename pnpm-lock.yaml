@@ -20,7 +20,6 @@ overrides:
   '@sanity/util': ^3.30.1
   '@sanity/vision': ^3.30.1
   '@sanity/visual-editing': workspace:*
-  '@sanity/visual-editing-svelte': workspace:*
   create-sanity: ^3.30.1
   groq: ^3.30.1
   sanity: ^3.30.1
@@ -706,9 +705,6 @@ importers:
       '@fontsource/fira-mono':
         specifier: ^5.0.12
         version: 5.0.12
-      '@neoconfetti/svelte':
-        specifier: ^2.2.1
-        version: 2.2.1
       '@sanity/client':
         specifier: ^6.15.1
         version: 6.15.1
@@ -724,9 +720,6 @@ importers:
       '@sanity/visual-editing':
         specifier: workspace:*
         version: link:../../packages/visual-editing
-      '@sanity/visual-editing-svelte':
-        specifier: workspace:*
-        version: link:../../packages/visual-editing-svelte
       '@sveltejs/adapter-auto':
         specifier: ^3.1.1
         version: 3.1.1(@sveltejs/kit@2.5.2)
@@ -1200,12 +1193,12 @@ importers:
       '@sanity/preview-url-secret':
         specifier: ^1.6.4
         version: link:../preview-url-secret
+      '@sanity/visual-editing':
+        specifier: workspace:*
+        version: link:../visual-editing
       '@sanity/visual-editing-helpers':
         specifier: 0.5.2
         version: link:../visual-editing-helpers
-      '@sanity/visual-editing-svelte':
-        specifier: workspace:*
-        version: link:../visual-editing-svelte
       '@sveltejs/kit':
         specifier: ^2.5.2
         version: 2.5.2(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.12)(vite@5.1.5)
@@ -1227,6 +1220,9 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^12.0.0
         version: 12.0.0(eslint@8.57.0)
+      rollup-plugin-svelte:
+        specifier: ^7.1.6
+        version: 7.1.6(rollup@4.12.0)(svelte@4.2.12)
       svelte:
         specifier: ^4.2.12
         version: 4.2.12
@@ -1239,6 +1235,9 @@ importers:
 
   packages/visual-editing:
     dependencies:
+      '@sanity/preview-url-secret':
+        specifier: workspace:^
+        version: link:../preview-url-secret
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
@@ -1279,6 +1278,15 @@ importers:
       '@sanity/visual-editing-helpers':
         specifier: 0.5.2
         version: link:../visual-editing-helpers
+      '@sveltejs/adapter-auto':
+        specifier: ^3.1.1
+        version: 3.1.1(@sveltejs/kit@2.5.2)
+      '@sveltejs/kit':
+        specifier: ^2.5.2
+        version: 2.5.2(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.12)(vite@5.1.4)
+      '@sveltejs/package':
+        specifier: ^2.2.7
+        version: 2.2.7(svelte@4.2.12)(typescript@5.3.3)
       '@types/react':
         specifier: ^18.2.61
         version: 18.2.63
@@ -1321,6 +1329,9 @@ importers:
       styled-components:
         specifier: 6.1.8
         version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
+      svelte:
+        specifier: ^4.2.12
+        version: 4.2.12
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -1375,73 +1386,6 @@ importers:
       vitest:
         specifier: ^1.3.1
         version: 1.3.1(happy-dom@13.6.2)(jsdom@23.2.0)
-
-  packages/visual-editing-svelte:
-    dependencies:
-      '@sanity/preview-url-secret':
-        specifier: ^1.6.4
-        version: link:../preview-url-secret
-      '@sanity/visual-editing':
-        specifier: workspace:*
-        version: link:../visual-editing
-    devDependencies:
-      '@sanity/client':
-        specifier: ^6.15.1
-        version: 6.15.1
-      '@sveltejs/adapter-auto':
-        specifier: ^3.0.0
-        version: 3.1.1(@sveltejs/kit@2.5.2)
-      '@sveltejs/kit':
-        specifier: ^2.0.0
-        version: 2.5.2(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.12)(vite@5.1.4)
-      '@sveltejs/package':
-        specifier: ^2.0.0
-        version: 2.2.7(svelte@4.2.12)(typescript@5.3.3)
-      '@sveltejs/vite-plugin-svelte':
-        specifier: ^3.0.0
-        version: 3.0.2(svelte@4.2.12)(vite@5.1.4)
-      '@types/eslint':
-        specifier: ^8.56.0
-        version: 8.56.5
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^7.0.0
-        version: 7.1.1(@typescript-eslint/parser@7.1.1)(eslint@8.57.0)(typescript@5.3.3)
-      '@typescript-eslint/parser':
-        specifier: ^7.0.0
-        version: 7.1.1(eslint@8.57.0)(typescript@5.3.3)
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.0
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@8.57.0)
-      eslint-plugin-svelte:
-        specifier: ^2.35.1
-        version: 2.35.1(eslint@8.57.0)(svelte@4.2.12)
-      prettier:
-        specifier: ^3.1.1
-        version: 3.2.5
-      prettier-plugin-svelte:
-        specifier: ^3.1.2
-        version: 3.2.2(prettier@3.2.5)(svelte@4.2.12)
-      publint:
-        specifier: ^0.1.9
-        version: 0.1.16
-      svelte:
-        specifier: ^4.2.7
-        version: 4.2.12
-      svelte-check:
-        specifier: ^3.6.0
-        version: 3.6.6(@babel/core@7.24.0)(postcss@8.4.35)(svelte@4.2.12)
-      tslib:
-        specifier: ^2.4.1
-        version: 2.6.2
-      typescript:
-        specifier: ^5.0.0
-        version: 5.3.3
-      vite:
-        specifier: ^5.0.11
-        version: 5.1.4
 
 packages:
 
@@ -3205,10 +3149,6 @@ packages:
     dependencies:
       nanostores: 0.10.0
       vue: 3.4.21(typescript@5.3.3)
-    dev: true
-
-  /@neoconfetti/svelte@2.2.1:
-    resolution: {integrity: sha512-2Ts0Rxaf6clW2qG+AKhTwpl01AAyZEAe03XeuQ7Vp+qYIaM3ycuI94j546fmEkUxwACwGI3Zl2cZ/pncTuNcJg==}
     dev: true
 
   /@netlify/functions@2.6.0:
@@ -5644,13 +5584,6 @@ packages:
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
     dependencies:
       '@types/ms': 0.7.34
-    dev: true
-
-  /@types/eslint@8.56.5:
-    resolution: {integrity: sha512-u5/YPJHo1tvkSF2CE0USEkxon82Z5DBy2xR+qfyYNszpX9qcs4sT6uq2kBbj4BXY1+DBGDPnrhMZV3pKWGNukw==}
-    dependencies:
-      '@types/estree': 1.0.5
-      '@types/json-schema': 7.0.15
     dev: true
 
   /@types/estree-jsx@1.0.5:
@@ -14878,16 +14811,6 @@ packages:
   /psl@1.9.0:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
 
-  /publint@0.1.16:
-    resolution: {integrity: sha512-wJgk7HnXDT5Ap0DjFYbGz78kPkN44iQvDiaq8P63IEEyNU9mYXvaMd2cAyIM6OgqXM/IA3CK6XWIsRq+wjNpgw==}
-    engines: {node: '>=16'}
-    hasBin: true
-    dependencies:
-      npm-packlist: 5.1.3
-      picocolors: 1.0.0
-      sade: 1.8.1
-    dev: true
-
   /pump@2.0.1:
     resolution: {integrity: sha512-ruPMNRkN3MHP1cWJc9OWr+T/xDP0jhXYCLfJcBuX54hhfIBnaQmAUMfDcG4DM5UMWByBbJY69QSphm3jtDKIkA==}
     dependencies:
@@ -15530,6 +15453,19 @@ packages:
       rollup: 4.12.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /rollup-plugin-svelte@7.1.6(rollup@4.12.0)(svelte@4.2.12):
+    resolution: {integrity: sha512-nVFRBpGWI2qUY1OcSiEEA/kjCY2+vAjO9BI8SzA7NRrh2GTunLd6w2EYmnMt/atgdg8GvcNjLsmZmbQs/u4SQA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      rollup: '>=2.0.0'
+      svelte: '>=3.5.0'
+    dependencies:
+      '@rollup/pluginutils': 4.2.1
+      resolve.exports: 2.0.2
+      rollup: 4.12.0
+      svelte: 4.2.12
     dev: true
 
   /rollup-plugin-visualizer@5.12.0(rollup@4.12.0):

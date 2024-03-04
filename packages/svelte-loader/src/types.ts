@@ -15,14 +15,14 @@ import { EncodeDataAttributeFunction } from '@sanity/core-loader/encode-data-att
 import type {
   HandlePreviewOptions,
   VisualEditingLocals,
-} from '@sanity/visual-editing-svelte'
+} from '@sanity/visual-editing/svelte'
 import type { Readable } from 'svelte/store'
 
 export type * from '@sanity/core-loader'
 export type {
   HandlePreviewOptions,
   VisualEditingLocals,
-} from '@sanity/visual-editing-svelte'
+} from '@sanity/visual-editing/svelte'
 
 /** @public */
 export type WithEncodeDataAttribute = {

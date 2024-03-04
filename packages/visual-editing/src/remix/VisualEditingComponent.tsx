@@ -1,11 +1,12 @@
 import { useLocation, useNavigate, useRevalidator } from '@remix-run/react'
+import { useEffect, useRef, useState } from 'react'
+
 import {
-  enableVisualEditing,
   type HistoryAdapterNavigate,
   type HistoryRefresh,
   type VisualEditingOptions,
-} from '@sanity/visual-editing'
-import { useEffect, useRef, useState } from 'react'
+} from '../types'
+import { enableVisualEditing } from '../ui/enableVisualEditing'
 
 /**
  * @public

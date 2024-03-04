@@ -2,7 +2,7 @@
   import '../app.css'
   import { page } from '$app/stores'
 
-  import { VisualEditing } from '@sanity/visual-editing-svelte'
+  import { VisualEditing } from '@sanity/visual-editing/svelte'
   import { isPreviewing } from '@sanity/svelte-loader'
 </script>
 

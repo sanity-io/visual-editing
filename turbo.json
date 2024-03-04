@@ -5,7 +5,7 @@
   "pipeline": {
     "build": {
       "env": ["GITHUB_ACTIONS"],
-      "outputs": ["dist/**"],
+      "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
       "dependsOn": ["^build"]
     },
     "test": {

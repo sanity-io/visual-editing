@@ -1,4 +1,4 @@
-import { handlePreview } from '@sanity/visual-editing-svelte'
+import { handlePreview } from '@sanity/visual-editing/svelte'
 import { type Handle } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
 
@@ -16,7 +16,7 @@ export const handleLoadQuery =
   async ({ event, resolve }) => {
     if (!event.locals.client)
       throw new Error(
-        'Call `handlePreview` from `@sanity/visual-editing-svelte` before `handleLoadQuery`',
+        'Call `handlePreview` from `@sanity/visual-editing/svelte` before `handleLoadQuery`',
       )
 
     const lq = loadQuery || defaultLoadQuery

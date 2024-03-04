@@ -1,10 +1,10 @@
 {
-  "extends": "./tsconfig.base",
+  "extends": ["./.svelte-kit/tsconfig.json", "./tsconfig.base"],
   "compilerOptions": {
     "incremental": true,
     "noEmit": true,
     "strictNullChecks": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "dist-svelte", "node_modules"]
 }
