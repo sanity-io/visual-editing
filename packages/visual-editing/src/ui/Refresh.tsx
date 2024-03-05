@@ -1,7 +1,6 @@
 import { type FunctionComponent, useEffect, useRef } from 'react'
 
-import type { VisualEditingChannel } from '../types'
-import type { VisualEditingOptions } from './enableVisualEditing'
+import type { VisualEditingChannel, VisualEditingOptions } from '../types'
 
 /**
  * @internal

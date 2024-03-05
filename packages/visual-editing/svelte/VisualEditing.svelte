@@ -3,11 +3,9 @@
   import {
     enableVisualEditing,
     type HistoryAdapterNavigate,
-    type HistoryRefresh,
-    type VisualEditingOptions,
   } from '../dist/index.js'
   import { afterNavigate, goto, invalidateAll } from '$app/navigation'
-  import type { VisualEditingProps } from './types.js'
+  import type { VisualEditingProps } from './types'
 
   export let zIndex: VisualEditingProps['zIndex'] = undefined
   /**
