@@ -1,5 +1,6 @@
-import { ChannelsNode } from '@sanity/channels'
+import type { ChannelsNode } from '@sanity/channels'
 import type {
+  HistoryRefresh,
   HistoryUpdate,
   OverlayMsg as OverlayChannelsMsg,
   PresentationMsg,
@@ -218,3 +219,28 @@ export type VisualEditingChannel = ChannelsNode<
   VisualEditingChannelSends,
   VisualEditingChannelReceives
 >
+
+/**
+ * Cleanup function used when e.g. unmounting
+ * @public
+ */
+export type DisableVisualEditing = () => void
+
+/**
+ * @public
+ */
+export interface VisualEditingOptions {
+  /**
+   * The history adapter is used for Sanity Presentation to navigate URLs in the preview frame.
+   */
+  history?: HistoryAdapter
+  /**
+   * The refresh API allows smarter refresh logic than the default `location.reload()` behavior.
+   * @alpha until it's shipped in `sanity/presentation`
+   */
+  refresh?: (payload: HistoryRefresh) => false | Promise<void>
+  /**
+   * The CSS z-index on the root node that renders overlays, tweak it accordingly to what layout you have.
+   */
+  zIndex?: string | number
+}

@@ -2,7 +2,7 @@ import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
 import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
 import { useEffect, useState } from 'react'
 
-import {
+import type {
   VisualEditingChannelReceives as Receives,
   VisualEditingChannelSends as Sends,
 } from '../types'

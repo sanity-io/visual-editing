@@ -1,5 +1,6 @@
 export { createOverlayController } from './controller'
 export type {
+  DisableVisualEditing,
   ElementFocusedState,
   ElementState,
   HistoryAdapter,
@@ -26,9 +27,6 @@ export type {
   OverlayRect,
   SanityNode,
   SanityStegaNode,
+  VisualEditingOptions,
 } from './types'
-export {
-  type DisableVisualEditing,
-  enableVisualEditing,
-  type VisualEditingOptions,
-} from './ui/enableVisualEditing'
+export { enableVisualEditing } from './ui/enableVisualEditing'

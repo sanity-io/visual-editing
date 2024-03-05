@@ -1,6 +1,6 @@
-import { PresentationMsg } from '@sanity/visual-editing-helpers'
+import type { PresentationMsg } from '@sanity/visual-editing-helpers'
 
-import { ElementState, OverlayMsg } from '../types'
+import type { ElementState, OverlayMsg } from '../types'
 
 /**
  * Reducer for managing element state from received channel messages

@@ -68,11 +68,17 @@ export const workspaces = {
     workspace: 'nuxt',
     tool: 'presentation',
   },
-  svelte: {
+  'svelte-basic': {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'svelte',
-    tool: 'presentation',
+    tool: 'svelte-basic',
+  },
+  'svelte-loaders': {
+    projectId: projectId,
+    dataset: datasets.development,
+    workspace: 'svelte',
+    tool: 'svelte-loaders',
   },
   'cross-dataset-references': {
     projectId: projectId,

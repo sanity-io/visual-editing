@@ -5,7 +5,7 @@ import { memo, useEffect, useMemo, useRef } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import styled from 'styled-components'
 
-import {
+import type {
   ElementFocusedState,
   OverlayRect,
   SanityNode,

@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react'
 
-import type { VisualEditingOptions } from './enableVisualEditing'
+import type { VisualEditingOptions } from '../types'
 import { Meta } from './Meta'
 import { Overlays } from './Overlays'
 import { Refresh } from './Refresh'
