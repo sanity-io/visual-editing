@@ -87,7 +87,7 @@
   ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "pkg build --strict && svelte-kit sync && svelte-package -i ./src/svelte -o dist-svelte && pkg --strict",
+    "build": "pkg build --strict && svelte-kit sync && svelte-package -i ./svelte -o dist-svelte && pkg --strict",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
     "test": "vitest --pass-with-no-tests --typecheck",

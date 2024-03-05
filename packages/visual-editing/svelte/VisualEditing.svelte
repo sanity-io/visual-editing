@@ -5,7 +5,7 @@
     type HistoryAdapterNavigate,
     type HistoryRefresh,
     type VisualEditingOptions,
-  } from '@sanity/visual-editing'
+  } from '../dist/index.js'
   import { afterNavigate, goto, invalidateAll } from '$app/navigation'
   import type { VisualEditingProps } from './types.js'
 
