@@ -23,7 +23,6 @@
       refresh: (payload) => {
         function refreshDefault() {
           if (payload.source === 'mutation' && payload.livePreviewEnabled) {
-            console.log('refresh false')
             return false
           }
           return new Promise<void>(async (resolve) => {
