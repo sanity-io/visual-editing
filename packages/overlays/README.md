@@ -21,8 +21,10 @@ Replace import statements:
 
 ```diff
 -import { enableOverlays, type DisableOverlays } from '@sanity/overlays'
-+import { enableVisualEditing, type DisableVisualEditing } from '@sanity/vision-editing'
++import { enableVisualEditing, type DisableVisualEditing } from '@sanity/visual-editing'
 ```
+
+> Note that when using Next.js, there is now also [a built in `<VisualEditing>` component](https://github.com/sanity-io/next-sanity/pull/973) in `next-sanity`. 
 
 [`@sanity/visual-editing`]: https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing#readme
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/overlays?label=gzip%20size&style=flat-square
