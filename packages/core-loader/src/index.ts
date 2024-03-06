@@ -154,7 +154,8 @@ export const createQueryStore = (
           .instance!.fetch(JSON.stringify({ query, params }))
           .then((response) => {
             if (controller.signal.aborted) return
-            $fetch.setKey('data', response.result)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            $fetch.setKey('data', response.result as any)
             $fetch.setKey('sourceMap', response.resultSourceMap)
             $fetch.setKey('perspective', initialPerspective)
           })
