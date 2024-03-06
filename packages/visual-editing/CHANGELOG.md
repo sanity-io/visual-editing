@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.5.2...visual-editing-v1.6.0) (2024-03-06)
+
+
+### Features
+
+* **visual-editing:** add sveltekit specific exports ([#1038](https://github.com/sanity-io/visual-editing/issues/1038)) ([d36d24d](https://github.com/sanity-io/visual-editing/commit/d36d24df425ab4234f6aa05eed9cb6171b7802ce))
+* **visual-editing:** export `createDataAttribute` ([#1037](https://github.com/sanity-io/visual-editing/issues/1037)) ([2db8ac3](https://github.com/sanity-io/visual-editing/commit/2db8ac325cd66c6eea1697003dd2c39cab48e92a))
+
+
+### Bug Fixes
+
+* **docs:** document the Refresh API ([#1033](https://github.com/sanity-io/visual-editing/issues/1033)) ([2e417d2](https://github.com/sanity-io/visual-editing/commit/2e417d25b23256178a9ef7a08893affd7afcb5e0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
+
 ## [1.5.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.5.1...visual-editing-v1.5.2) (2024-02-27)
 
 
