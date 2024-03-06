@@ -66,6 +66,13 @@ All notable changes to this project will be documented in this file. See
   * dependencies
     * @sanity/visual-editing bumped from 1.5.2 to 1.6.0
 
+## [2.3.23](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.22...overlays-v2.3.23) (2024-03-06)
+
+
+### Bug Fixes
+
+* **docs:** fixed typo and added reference to &lt;VisualEditing&gt; ([#1061](https://github.com/sanity-io/visual-editing/issues/1061)) ([13ff98c](https://github.com/sanity-io/visual-editing/commit/13ff98c686ea2a631fdd14a7b6a6f1dcbb897bb2))
+
 ## [2.3.17](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.16...overlays-v2.3.17) (2024-02-16)
 
 
