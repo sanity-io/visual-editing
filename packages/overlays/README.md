@@ -24,7 +24,8 @@ Replace import statements:
 +import { enableVisualEditing, type DisableVisualEditing } from '@sanity/visual-editing'
 ```
 
-> Note that when using Next.js, there is now also [a built in `<VisualEditing>` component](https://github.com/sanity-io/next-sanity/pull/973) in `next-sanity`. 
+> [!NOTE]  
+> Note that there's now a built-in `<VisualEditing>` component [for Next.js App Router in `next-sanity`](https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing#app-router), [and for Next.js Pages Router in `@sanity/visual-editing/next-pages-rouer`](https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing#pages-router), [and for Remix in `@sanity/visual-editing/remix`](https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing#remix).
 
 [`@sanity/visual-editing`]: https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing#readme
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/overlays?label=gzip%20size&style=flat-square
