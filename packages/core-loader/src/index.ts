@@ -119,9 +119,7 @@ export const createQueryStore = (
         )
       }
       const { query, params = {}, perspective, useCdn } = JSON.parse(key)
-      const { result, resultSourceMap } = await (
-        unstable__serverClient.instance as SanityClient
-      ).fetch(query, params, {
+      const { result, resultSourceMap } = await client.fetch(query, params, {
         tag,
         filterResponse: false,
         perspective,
