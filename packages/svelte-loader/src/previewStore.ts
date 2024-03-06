@@ -1,13 +1,10 @@
-import { readonly, writable } from 'svelte/store'
-
-const previewStore = writable(false)
-
-/**
- * @beta
- */
-export const isPreviewing = readonly(previewStore)
-
-/**
- * @beta
- */
-export const setPreviewing = previewStore.set
+export {
+  /**
+   * @deprecated use `import {isPreviewing} from '@sanity/visual-editing/svelte'` instead
+   */
+  isPreviewing,
+  /**
+   * @deprecated use `import {setPreviewing} from '@sanity/visual-editing/svelte'` instead
+   */
+  setPreviewing,
+} from '@sanity/visual-editing/svelte'
