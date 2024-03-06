@@ -20,7 +20,6 @@ export interface VisualEditingProps
   /**
    * The refresh API allows smarter refresh logic than the default `location.reload()` behavior.
    * You can call the refreshDefault argument to trigger the default refresh behavior so you don't have to reimplement it.
-   * @alpha until it's shipped in `sanity/presentation`
    */
   refresh?: (
     payload: HistoryRefresh,

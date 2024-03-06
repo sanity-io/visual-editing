@@ -236,7 +236,6 @@ export interface VisualEditingOptions {
   history?: HistoryAdapter
   /**
    * The refresh API allows smarter refresh logic than the default `location.reload()` behavior.
-   * @alpha until it's shipped in `sanity/presentation`
    */
   refresh?: (payload: HistoryRefresh) => false | Promise<void>
   /**
