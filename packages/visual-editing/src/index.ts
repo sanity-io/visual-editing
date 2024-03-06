@@ -30,3 +30,8 @@ export type {
   VisualEditingOptions,
 } from './types'
 export { enableVisualEditing } from './ui/enableVisualEditing'
+export {
+  type CreateDataAttribute,
+  createDataAttribute,
+  type CreateDataAttributeProps,
+} from '@sanity/visual-editing-helpers'

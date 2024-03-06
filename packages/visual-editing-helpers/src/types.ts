@@ -4,6 +4,7 @@ import type {
   ContentSourceMapDocuments,
   QueryParams,
 } from '@sanity/client'
+import { StudioPathLike } from '@sanity/client/csm'
 
 export type { Path } from '@sanity/client/csm'
 
@@ -290,3 +291,46 @@ export type VisualEditingConnectionIds =
   | 'loaders'
   | 'overlays'
   | 'preview-kit'
+
+/**
+ * @public
+ */
+export interface CreateDataAttributeProps {
+  baseUrl?: string
+  dataset?: string
+  id?: string
+  path?: StudioPathLike
+  projectId?: string
+  tool?: string
+  type?: string
+  workspace?: string
+}
+
+/**
+ * @public
+ */
+export type CreateDataAttribute = {
+  /**
+   * @public
+   * Returns a string representation of the data attribute
+   * @param path - An optional path to concatenate with any existing path
+   */
+  (path?: StudioPathLike): string
+  /**
+   * @public
+   * Concatenate the data attribute current path with a new path
+   * @param path - A path to concatenate with any existing path
+   */
+  scope(path: StudioPathLike): CreateDataAttribute
+  /**
+   * @public
+   * Combines the current data attribute props with additional props
+   * @param props - New props to merge with any existing props
+   */
+  combine(props: CreateDataAttributeProps): CreateDataAttribute
+  /**
+   * @public
+   * Returns a string representation of the data attribute
+   */
+  toString(): string
+}
