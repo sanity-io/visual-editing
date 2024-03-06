@@ -7,23 +7,31 @@ import { VERCEL_STEGA_REGEX } from '../constants'
  * JavaScript regexps are stateful. Have to reset lastIndex between runs to ensure consistent behaviour for the same string
  * @param input
  */
-export function testVercelStegaRegex(input: string): boolean {
+function testVercelStegaRegex(input: string): boolean {
   VERCEL_STEGA_REGEX.lastIndex = 0
   return VERCEL_STEGA_REGEX.test(input)
 }
 
-export function decodeStega(
-  str: string,
-  isAltText = false,
-): SanityStegaNode | null {
-  const decoded = vercelStegaDecode<SanityStegaNode>(str)
-  if (!decoded || decoded.origin !== 'sanity.io') {
+function decodeStega(str: string, isAltText = false): SanityStegaNode | null {
+  try {
+    const decoded = vercelStegaDecode<SanityStegaNode>(str)
+    if (!decoded || decoded.origin !== 'sanity.io') {
+      return null
+    }
+    if (isAltText) {
+      decoded.href = decoded.href?.replace('.alt', '')
+    }
+    return decoded
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(
+      'Failed to decode stega for string: ',
+      str,
+      'with the original error: ',
+      err,
+    )
     return null
   }
-  if (isAltText) {
-    decoded.href = decoded.href?.replace('.alt', '')
-  }
-  return decoded
 }
 
 export function testAndDecodeStega(
