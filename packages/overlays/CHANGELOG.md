@@ -66,6 +66,20 @@ All notable changes to this project will be documented in this file. See
   * dependencies
     * @sanity/visual-editing bumped from 1.5.2 to 1.6.0
 
+## [2.3.24](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.23...overlays-v2.3.24) (2024-03-07)
+
+
+### Bug Fixes
+
+* don't render overlays if the Vercel Toolbar is present ([#1075](https://github.com/sanity-io/visual-editing/issues/1075)) ([296e1c7](https://github.com/sanity-io/visual-editing/commit/296e1c75d4f7c89005c94218bf1d284e52449ca4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped to 1.7.0
+
 ## [2.3.23](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.22...overlays-v2.3.23) (2024-03-06)
 
 
