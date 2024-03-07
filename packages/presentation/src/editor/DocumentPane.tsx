@@ -64,15 +64,13 @@ export function DocumentPane(props: {
     setErrorParams(null)
   }, [documentId, documentType, params])
 
-  const { setLayoutCollapsed } = useStructureTool()
-  const handleRootCollapse = useCallback(
-    () => setLayoutCollapsed(true),
-    [setLayoutCollapsed],
-  )
-  const handleRootExpand = useCallback(
-    () => setLayoutCollapsed(false),
-    [setLayoutCollapsed],
-  )
+  const { layoutCollapsed, setLayoutCollapsed } = useStructureTool()
+  const handleRootCollapse = useCallback(() => {
+    setLayoutCollapsed(true)
+  }, [setLayoutCollapsed])
+  const handleRootExpand = useCallback(() => {
+    setLayoutCollapsed(false)
+  }, [setLayoutCollapsed])
 
   if (errorParams) {
     return (
@@ -99,9 +97,10 @@ export function DocumentPane(props: {
   return (
     <ErrorBoundary onCatch={setErrorParams}>
       <PaneLayout
-        style={{ height: '100%' }}
+        style={layoutCollapsed ? { minHeight: '100%' } : { height: '100%' }}
         onExpand={handleRootExpand}
         onCollapse={handleRootCollapse}
+        minWidth={640}
       >
         <PresentationPaneRouterProvider
           onDeskParams={onDeskParams}
