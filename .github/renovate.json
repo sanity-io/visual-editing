@@ -30,6 +30,12 @@
       "followTag": "canary"
     },
     {
+      "description": "Use a TypeScript version compatible with the Studio Schema API",
+      "allowedVersions": "<=5.3",
+      "matchDepTypes": ["dependencies", "devDependencies", "resolutions"],
+      "matchPackageNames": ["typescript"]
+    },
+    {
       "matchDepTypes": ["dependencies", "devDependencies"],
       "rangeStrategy": "bump"
     },
