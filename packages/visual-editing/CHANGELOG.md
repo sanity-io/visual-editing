@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.6.0...visual-editing-v1.7.0) (2024-03-07)
+
+
+### Features
+
+* **visual-editing:** export svelte preview store, deprecate in loader ([#1064](https://github.com/sanity-io/visual-editing/issues/1064)) ([07cda92](https://github.com/sanity-io/visual-editing/commit/07cda92f233d8f43721eaf26f5939eeaea002fca))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency valibot to v0.30.0 ([#1071](https://github.com/sanity-io/visual-editing/issues/1071)) ([8734f34](https://github.com/sanity-io/visual-editing/commit/8734f348c44e9908e240e45b1ce5d64fd20b308e))
+* don't render overlays if the Vercel Toolbar is present ([#1075](https://github.com/sanity-io/visual-editing/issues/1075)) ([296e1c7](https://github.com/sanity-io/visual-editing/commit/296e1c75d4f7c89005c94218bf1d284e52449ca4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
+
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.5.2...visual-editing-v1.6.0) (2024-03-06)
 
 

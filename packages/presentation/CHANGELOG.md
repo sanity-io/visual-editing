@@ -12,6 +12,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.11.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.3...presentation-v1.11.4) (2024-03-07)
+
+
+### Bug Fixes
+
+* **presentation:** prevent horizontal scroll on narrow document pane ([#1060](https://github.com/sanity-io/visual-editing/issues/1060)) ([6e02d3e](https://github.com/sanity-io/visual-editing/commit/6e02d3e5d4639d5d1d8b4b422737fd3f6d679b79))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
+
 ## [1.11.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.1...presentation-v1.11.2) (2024-02-27)
 
 
