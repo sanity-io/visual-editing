@@ -2,7 +2,28 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, link the package to the Vercel project:
+
+```bash
+npx vercel@latest link
+```
+
+You should select `Sanity` as the scope, and `visual-editing-next` as the project:
+
+```bash
+npx vercel@latest link
+Need to install the following packages:
+vercel@33.5.4
+Ok to proceed? (y) y
+Vercel CLI 33.5.4
+? Set up “~/Developer/GitHub/visual-editing/apps/next”? [Y/n] y
+? Which scope should contain your project? Sanity
+? Link to existing project? [y/N] y
+? What’s the name of your existing project? visual-editing-next
+✅  Linked to sanity-io/visual-editing-next (created .vercel)
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev

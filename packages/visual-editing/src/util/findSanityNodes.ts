@@ -163,13 +163,13 @@ export function findSanityNodes(
         // Look for legacy sanity data attributes
         else if (node.dataset?.sanityEditInfo) {
           addElement(node, node.dataset.sanityEditInfo)
-        } else if (isImgElement(node)) {
+        } else if (isImgElement(node) && !node.dataset.vercelEditInfo) {
           const data = testAndDecodeStega(node.alt, true)
           if (!data) continue
           addElement(node, data)
           // No need to recurse for img elements
           continue
-        } else if (isTimeElement(node)) {
+        } else if (isTimeElement(node) && !node.dataset.vercelEditInfo) {
           const data = testAndDecodeStega(node.dateTime, true)
           if (!data) continue
           addElement(node, data)

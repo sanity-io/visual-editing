@@ -1,6 +1,7 @@
 import { draftMode } from 'next/headers'
 import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache'
 import { VisualEditing } from 'next-sanity'
+import { VercelToolbar } from '@vercel/toolbar/next'
 import '../../tailwind.css'
 
 import { Timesince } from '../Timesince'
@@ -19,6 +20,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <VercelToolbar />
         {draftMode().isEnabled && (
           <VisualEditing
             refresh={async (payload) => {

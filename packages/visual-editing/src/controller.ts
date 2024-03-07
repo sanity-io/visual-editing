@@ -151,6 +151,14 @@ export function createOverlayController({
         }
       },
       mouseenter() {
+        // If the Vercel Visual Editing provided by Vercel Toolbar is active, do not overlap overlays
+        if (
+          (document.querySelector('vercel-live-feedback') &&
+            element.closest('[data-vercel-edit-info]')) ||
+          element.closest('[data-vercel-edit-target]')
+        ) {
+          return
+        }
         hoverStack.push(element)
         handler({
           type: 'element/mouseenter',
