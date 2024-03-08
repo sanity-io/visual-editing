@@ -19,41 +19,29 @@
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
       "react-server": "./dist/rsc/index.react-server.js",
-      "require": "./dist/index.cjs",
       "browser": {
         "types": "./dist/index.browser.d.ts",
         "source": "./src/index.browser.ts",
         "require": "./dist/index.browser.cjs",
         "import": "./dist/index.browser.js"
       },
-      "node": {
-        "module": "./dist/index.js",
-        "import": "./dist/index.cjs.js"
-      },
+      "require": "./dist/index.cjs",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./jsx": {
       "types": "./dist/jsx.d.ts",
       "source": "./src/jsx/index.ts",
-      "require": "./dist/jsx.cjs",
-      "node": {
-        "module": "./dist/jsx.js",
-        "import": "./dist/jsx.cjs.js"
-      },
       "import": "./dist/jsx.js",
+      "require": "./dist/jsx.cjs",
       "default": "./dist/jsx.js"
     },
     "./rsc": {
       "types": "./dist/rsc/index.d.ts",
       "source": "./src/rsc/index.ts",
       "react-server": "./dist/rsc/index.react-server.js",
-      "require": "./dist/rsc/index.cjs",
-      "node": {
-        "module": "./dist/rsc/index.js",
-        "import": "./dist/rsc/index.cjs.js"
-      },
       "import": "./dist/rsc/index.js",
+      "require": "./dist/rsc/index.cjs",
       "default": "./dist/rsc/index.js"
     },
     "./package.json": "./package.json"

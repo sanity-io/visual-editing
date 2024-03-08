@@ -18,12 +18,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
-      "node": {
-        "module": "./dist/index.js",
-        "import": "./dist/index.cjs.js"
-      },
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"

@@ -18,34 +18,22 @@
     ".": {
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
-      "node": {
-        "module": "./dist/index.js",
-        "import": "./dist/index.cjs.js"
-      },
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./encode-data-attribute": {
       "types": "./dist/encode-data-attribute.d.ts",
       "source": "./src/encodeDataAttribute.ts",
-      "require": "./dist/encode-data-attribute.cjs",
-      "node": {
-        "module": "./dist/encode-data-attribute.js",
-        "import": "./dist/encode-data-attribute.cjs.js"
-      },
       "import": "./dist/encode-data-attribute.js",
+      "require": "./dist/encode-data-attribute.cjs",
       "default": "./dist/encode-data-attribute.js"
     },
     "./create-data-attribute": {
       "types": "./dist/create-data-attribute.d.ts",
       "source": "./src/createDataAttribute.ts",
-      "require": "./dist/create-data-attribute.cjs",
-      "node": {
-        "module": "./dist/create-data-attribute.js",
-        "import": "./dist/create-data-attribute.cjs.js"
-      },
       "import": "./dist/create-data-attribute.js",
+      "require": "./dist/create-data-attribute.cjs",
       "default": "./dist/create-data-attribute.js"
     },
     "./package.json": "./package.json"
