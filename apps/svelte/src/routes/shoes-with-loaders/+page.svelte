@@ -4,10 +4,8 @@
   import Shoes from '../../components/Shoes.svelte'
 
   export let data: PageData
-  const { query, params, options } = data
-  const q = useQuery(query, params, options)
-
-  $: ({ data: products, loading } = $q)
+  const query = useQuery(data)
+  $: ({ data: products, loading } = $query)
 </script>
 
 <Shoes {products} {loading} />

@@ -4,9 +4,8 @@
   import Shoe from '../../../components/Shoe.svelte'
 
   export let data: PageData
-  const { query, params, options } = data
-  const q = useQuery(query, params, options)
-  $: ({ data: product, loading } = $q)
+  const query = useQuery(data)
+  $: ({ data: product, loading } = $query)
 </script>
 
-<Shoe {product} {loading} slug={params.slug} />
+<Shoe {product} {loading} slug={product.slug.current} />

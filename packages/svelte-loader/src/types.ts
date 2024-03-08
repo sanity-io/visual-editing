@@ -33,7 +33,13 @@ export type UseQuery = <
   QueryResponseResult = unknown,
   QueryResponseError = unknown,
 >(
-  query: string,
+  query:
+    | string
+    | {
+        query: string
+        params?: QueryParams
+        options?: UseQueryOptions<QueryResponseResult>
+      },
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
 ) => Readable<
@@ -146,7 +152,13 @@ export interface QueryStore {
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
-      query: string,
+      query:
+        | string
+        | {
+            query: string
+            params?: QueryParams
+            options?: UseQueryOptionsUndefinedInitial
+          },
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
     ): Readable<
@@ -154,7 +166,13 @@ export interface QueryStore {
         WithEncodeDataAttribute
     >
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
-      query: string,
+      query:
+        | string
+        | {
+            query: string
+            params?: QueryParams
+            options?: UseQueryOptionsDefinedInitial<QueryResponseResult>
+          },
       params?: QueryParams,
       options?: UseQueryOptionsDefinedInitial<QueryResponseResult>,
     ): Readable<
