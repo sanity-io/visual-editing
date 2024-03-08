@@ -25,34 +25,22 @@
     ".": {
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
-      "node": {
-        "module": "./dist/index.js",
-        "import": "./dist/index.cjs.js"
-      },
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./next-pages-router": {
       "types": "./dist/next-pages-router/index.d.ts",
       "source": "./src/next-pages-router/index.ts",
-      "require": "./dist/next-pages-router/index.cjs",
-      "node": {
-        "module": "./dist/next-pages-router/index.js",
-        "import": "./dist/next-pages-router/index.cjs.js"
-      },
       "import": "./dist/next-pages-router/index.js",
+      "require": "./dist/next-pages-router/index.cjs",
       "default": "./dist/next-pages-router/index.js"
     },
     "./remix": {
       "types": "./dist/remix/index.d.ts",
       "source": "./src/remix/index.ts",
-      "require": "./dist/remix/index.cjs",
-      "node": {
-        "module": "./dist/remix/index.js",
-        "import": "./dist/remix/index.cjs.js"
-      },
       "import": "./dist/remix/index.js",
+      "require": "./dist/remix/index.cjs",
       "default": "./dist/remix/index.js"
     },
     "./svelte": {
@@ -172,7 +160,7 @@
     "@remix-run/react": "^2.8.0",
     "@sanity/channels": "0.4.0",
     "@sanity/client": "6.15.2",
-    "@sanity/pkg-utils": "^4.4.1",
+    "@sanity/pkg-utils": "^5.0.0",
     "@sanity/ui": "2.0.7",
     "@sanity/visual-editing-helpers": "0.6.1",
     "@sveltejs/adapter-auto": "^3.1.1",

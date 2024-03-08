@@ -18,12 +18,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
-      "node": {
-        "module": "./dist/index.js",
-        "import": "./dist/index.cjs.js"
-      },
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
@@ -110,7 +106,7 @@
   "devDependencies": {
     "@sanity/channels": "0.4.0",
     "@sanity/client": "^6.15.2",
-    "@sanity/pkg-utils": "^4.4.1",
+    "@sanity/pkg-utils": "^5.0.0",
     "@sanity/visual-editing-helpers": "0.6.1",
     "@types/react": "^18.2.64",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
