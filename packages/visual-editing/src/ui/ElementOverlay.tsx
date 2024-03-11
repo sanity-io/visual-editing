@@ -119,8 +119,21 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
       focused === true &&
       ref.current
     ) {
+      const target = ref.current
       scrollIntoView(ref.current, {
-        behavior: 'smooth',
+        // Workaround issue with scroll-into-view-if-needed struggling with iframes
+        behavior: (actions) => {
+          if (actions.length === 0) {
+            // An empty actions list equals scrolling isn't needed
+            return
+          }
+          // Uses native scrollIntoView to ensure iframes behave correctly
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest',
+          })
+        },
         scrollMode: 'if-needed',
         block: 'center',
         inline: 'nearest',
