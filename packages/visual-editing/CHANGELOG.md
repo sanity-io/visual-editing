@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.7.0...visual-editing-v1.7.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* handle iframe scrollIntoView edge case ([3cb3900](https://github.com/sanity-io/visual-editing/commit/3cb3900be69071f26cf91b4f65d9243c8e738821))
+
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.6.0...visual-editing-v1.7.0) (2024-03-07)
 
 
