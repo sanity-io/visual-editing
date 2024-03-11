@@ -15,11 +15,24 @@ export function defineUseQuery({
   studioUrlStore: ReturnType<typeof defineStudioUrlStore>
 }): UseQuery {
   const DEFAULT_PARAMS = {}
+  const DEFAULT_OPTIONS = {}
   return <QueryResponseResult, QueryResponseError>(
-    query: string,
+    query:
+      | string
+      | {
+          query: string
+          params?: QueryParams
+          options?: UseQueryOptions<QueryResponseResult>
+        },
     params: QueryParams = DEFAULT_PARAMS,
-    options: UseQueryOptions<QueryResponseResult> = {},
+    options: UseQueryOptions<QueryResponseResult> = DEFAULT_OPTIONS,
   ) => {
+    if (typeof query === 'object') {
+      params = query.params || DEFAULT_PARAMS
+      options = query.options || DEFAULT_OPTIONS
+      query = query.query
+    }
+
     const initial = options.initial
       ? {
           perspective: 'published' as const,
