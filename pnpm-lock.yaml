@@ -112,8 +112,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/react-loader
       '@sanity/ui':
-        specifier: 2.0.8
-        version: 2.0.8(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        specifier: 2.0.9
+        version: 2.0.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@vercel/stega':
         specifier: 0.1.0
         version: 0.1.0
@@ -657,8 +657,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
       '@sanity/ui':
-        specifier: 2.0.8
-        version: 2.0.8(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        specifier: 2.0.9
+        version: 2.0.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/vision':
         specifier: ^3.32.0
         version: 3.32.0(@babel/runtime@7.24.0)(@codemirror/lint@6.5.0)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
@@ -5145,29 +5145,6 @@ packages:
       react-is: 18.2.0
       react-refractor: 2.1.7(react@18.2.0)
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-    dev: false
-
-  /@sanity/ui@2.0.8(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-y6V7druEWsd61KU8rrxu9BEqGcWKzJtdcfgDlRnsqBYzOpSuooJYwmdSgyY05ivD3V25TpBQh5zp9qMEYQWptw==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-      react-is: ^18
-      styled-components: 6.1.8
-    dependencies:
-      '@floating-ui/react-dom': 2.0.8(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/color': 3.0.0
-      '@sanity/icons': 2.11.2(react@18.2.0)
-      csstype: 3.1.3
-      framer-motion: 11.0.12(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-is: 18.2.0
-      react-refractor: 2.1.7(react@18.2.0)
-      styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
     dev: false
 
   /@sanity/ui@2.0.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
