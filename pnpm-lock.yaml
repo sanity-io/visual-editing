@@ -308,8 +308,8 @@ importers:
         specifier: ^3.32.0
         version: 3.32.0(@types/node@20.8.7)(@types/react@18.2.65)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       sanity-plugin-asset-source-unsplash:
-        specifier: ^1.1.2
-        version: 1.1.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -423,8 +423,8 @@ importers:
         specifier: ^3.32.0
         version: 3.32.0(@types/node@20.8.7)(@types/react@18.2.65)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       sanity-plugin-asset-source-unsplash:
-        specifier: ^1.1.2
-        version: 1.1.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -687,8 +687,8 @@ importers:
         specifier: ^3.32.0
         version: 3.32.0(@types/node@20.8.7)(@types/react@18.2.65)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       sanity-plugin-asset-source-unsplash:
-        specifier: ^1.1.2
-        version: 1.1.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
       styled-components:
         specifier: 6.1.8
         version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
@@ -2852,17 +2852,6 @@ packages:
       '@floating-ui/core': 1.6.0
       '@floating-ui/utils': 0.2.1
 
-  /@floating-ui/react-dom@2.0.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Ke0oU3SeuABC2C4OFu2mSAwHIP5WUiV98O9YWoHV4Q5aT6E9k06DV0Khi5uYspR8xmmBk08t8ZDcz3TR3ARkEg==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/dom': 1.6.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
   /@floating-ui/react-dom@2.0.8(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HOdqOt3R3OGeTKidaLvJKcgg75S6tibQ3Tif4eyd91QnIJWr0NLvoXFpJA/j8HqkFSL68GDca9AuyWEHlhyClw==}
     peerDependencies:
@@ -4823,10 +4812,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/color@2.2.5:
-    resolution: {integrity: sha512-tTi22KoKuER3sldXYl4c1Dq2zU7tMLDkljFiaUKVkBbu4PBvRGCFw75kXZnD2b4Bsp6vin+7sI+AKdCKRhfRuw==}
-    dev: false
-
   /@sanity/color@3.0.0:
     resolution: {integrity: sha512-JLIsloyyn0lhta/JivmYlxlcN7U3dpBNqtH7uAzM9/kPirFxWJ8LAVuF5vxK5JHwTNbgpVy6AmfIss/av7N96w==}
     engines: {node: '>=18.0.0'}
@@ -5123,27 +5108,6 @@ packages:
       '@types/react': 18.2.65
     transitivePeerDependencies:
       - supports-color
-
-  /@sanity/ui@1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-AdWEVFaK0Snk6xxP0lGPVP3QQYKwzkfGFpFZnL9d6UtWt8yeuS8BMLVAzmXzg14hrqH50ex9nvNl3eq6a0MWiw==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-      react-is: ^18
-      styled-components: 6.1.8
-    dependencies:
-      '@floating-ui/react-dom': 2.0.0(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/color': 2.2.5
-      '@sanity/icons': 2.11.2(react@18.2.0)
-      csstype: 3.1.3
-      framer-motion: 10.18.0(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-is: 18.2.0
-      react-refractor: 2.1.7(react@18.2.0)
-      styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-    dev: false
 
   /@sanity/ui@2.0.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
     resolution: {integrity: sha512-AomxBbev1FGKBtGYcU85msJOJ0TTfY1+MHewnX6wx/WuyjhXM7xdrFxaENAe0yil5/Fkwiyig9qPToeq4GfR3Q==}
@@ -9836,24 +9800,6 @@ packages:
 
   /fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
-
-  /framer-motion@10.18.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-oGlDh1Q1XqYPksuTD/usb0I70hq95OUzmL9+6Zd+Hs4XV0oaISBa/UUMSjYiq6m8EUF32132mOJ8xVZS+I0S6w==}
-    peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.6.2
-    optionalDependencies:
-      '@emotion/is-prop-valid': 0.8.8
-    dev: false
 
   /framer-motion@11.0.12(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1VW4pk+4EH8RwWHdqntWTwF9peranyHn/BczvMzF9TGh/FwMKxoRZzkig8Nak9BQA8GymfIyCGo5adXwRuXDXA==}
@@ -14968,8 +14914,8 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
-  /react-photo-album@2.3.0(react@18.2.0):
-    resolution: {integrity: sha512-CU+UMK4ZQHIoPZ672TSst9loKE5bxy6w0+bf7bY4XOw1g1C7+VdDWCW+wD8wPpbg2ve38QBTS73HVe6xYLAQ3w==}
+  /react-photo-album@2.3.1(react@18.2.0):
+    resolution: {integrity: sha512-c7ofDx2DAbQa9AW9wUWOBX9zUKf/QjvdQK+fPNKEiKprks/n8t4c2viyBZ6EWpQLFLU0ad3yVBTgFvxEZ46/Iw==}
     engines: {node: '>=12'}
     peerDependencies:
       react: '>=16.8.0'
@@ -15584,23 +15530,25 @@ packages:
     dependencies:
       '@sanity/diff-match-patch': 3.1.1
 
-  /sanity-plugin-asset-source-unsplash@1.1.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-eBK6iaQ8AFqOHUP2s2rZKeiRJIbOGzy1HXXfOeDG6IQIYMJSmwKRiVEfI7XFcnTIwKHYJavLHp7zzBT+8m9D3A==}
+  /sanity-plugin-asset-source-unsplash@2.0.1(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8):
+    resolution: {integrity: sha512-KpKPFV98JRJwv2iT3VzzSZvIjRSrLRSI40udB+fjnAQ+GhFbWwZUSgo2xibJSbbh2VRu+yq0OgfzHFz2nnoUdA==}
     engines: {node: '>=14'}
     peerDependencies:
       react: ^18
       sanity: ^3.32.0
       styled-components: 6.1.8
     dependencies:
+      '@sanity/icons': 2.11.2(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/ui': 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+      '@sanity/ui': 2.0.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       react: 18.2.0
       react-infinite-scroll-component: 6.1.0(react@18.2.0)
-      react-photo-album: 2.3.0(react@18.2.0)
+      react-photo-album: 2.3.1(react@18.2.0)
       rxjs: 7.8.1
       sanity: 3.32.0(@types/node@20.8.7)(@types/react@18.2.65)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
       - react-dom
       - react-is
     dev: false
@@ -15813,7 +15761,7 @@ packages:
       esbuild-register: 3.5.0(esbuild@0.19.12)
       execa: 2.1.0
       exif-component: 1.0.1
-      framer-motion: 11.0.12(react-dom@18.2.0)(react@18.2.0)
+      framer-motion: 11.0.8(react-dom@18.2.0)(react@18.2.0)
       get-it: 8.4.10
       get-random-values-esm: 1.0.2
       groq-js: 1.4.3
