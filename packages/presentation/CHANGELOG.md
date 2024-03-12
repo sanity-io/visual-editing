@@ -12,6 +12,14 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.11.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.4...presentation-v1.11.5) (2024-03-12)
+
+
+### Bug Fixes
+
+* close menus when clicking inside the iframe ([f9859c1](https://github.com/sanity-io/visual-editing/commit/f9859c14e2079313e2ec04a1147d48bc28ae3be7))
+* **deps:** Update dependency framer-motion to ^11.0.12 ([#1104](https://github.com/sanity-io/visual-editing/issues/1104)) ([94a7144](https://github.com/sanity-io/visual-editing/commit/94a7144f350a9f6a6b8996fe33be73dc02dbc301))
+
 ## [1.11.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.3...presentation-v1.11.4) (2024-03-07)
 
 
