@@ -14,7 +14,7 @@ import { withoutSecretSearchParams } from '@sanity/preview-url-secret/without-se
 import {
   Box,
   Button,
-  ButtonTone,
+  type ButtonTone,
   Card,
   Code,
   Flex,
@@ -32,7 +32,7 @@ import {
 } from '@sanity/ui'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import {
-  ComponentType,
+  type ComponentType,
   createElement,
   forwardRef,
   useCallback,
@@ -53,7 +53,7 @@ import {
   type DispatchPresentationAction,
   type PresentationState,
 } from '../reducers/presentationReducer'
-import { PresentationParams } from '../types'
+import type { PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { IFrame } from './IFrame'
 import { PreviewLocationInput } from './PreviewLocationInput'
@@ -257,6 +257,29 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     const onIFrameLoad = useCallback(() => {
       dispatch({ type: ACTION_IFRAME_LOADED })
     }, [dispatch])
+
+    /**
+     * Ensure that clicking outside of menus and dialogs will close as focus shifts to the iframe
+     */
+    useEffect(() => {
+      if (typeof ref === 'function' || !ref?.current) {
+        return
+      }
+      const instance = ref.current
+      function handleBlur() {
+        if (instance !== document.activeElement) {
+          return
+        }
+
+        instance.dispatchEvent(
+          new MouseEvent('mousedown', { bubbles: true, cancelable: true }),
+        )
+      }
+      window.addEventListener('blur', handleBlur)
+      return () => {
+        window.removeEventListener('blur', handleBlur)
+      }
+    }, [ref])
 
     return (
       <MotionConfig
