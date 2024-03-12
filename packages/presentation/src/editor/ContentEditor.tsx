@@ -1,5 +1,5 @@
 import { type ReactElement } from 'react'
-import { type Path } from 'sanity'
+import type { Path } from 'sanity'
 
 import type { DeskDocumentPaneParams } from '../types'
 import { DocumentListPane } from './DocumentListPane'
