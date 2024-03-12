@@ -968,7 +968,7 @@ importers:
         specifier: ^1.6.4
         version: link:../preview-url-secret
       '@sanity/ui':
-        specifier: ^2.0.9
+        specifier: ^2.0.10
         version: 2.0.10(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/uuid':
         specifier: 3.0.2
@@ -1276,8 +1276,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(typescript@5.3.3)
       '@sanity/ui':
-        specifier: 2.0.9
-        version: 2.0.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        specifier: 2.0.10
+        version: 2.0.10(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/visual-editing-helpers':
         specifier: 0.6.1
         version: link:../visual-editing-helpers
@@ -5127,29 +5127,6 @@ packages:
       react-is: 18.2.0
       react-refractor: 2.1.7(react@18.2.0)
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-
-  /@sanity/ui@2.0.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-AomxBbev1FGKBtGYcU85msJOJ0TTfY1+MHewnX6wx/WuyjhXM7xdrFxaENAe0yil5/Fkwiyig9qPToeq4GfR3Q==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-      react-is: ^18
-      styled-components: 6.1.8
-    dependencies:
-      '@floating-ui/react-dom': 2.0.8(react-dom@18.2.0)(react@18.2.0)
-      '@sanity/color': 3.0.0
-      '@sanity/icons': 2.11.2(react@18.2.0)
-      csstype: 3.1.3
-      framer-motion: 11.0.12(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-is: 18.2.0
-      react-refractor: 2.1.7(react@18.2.0)
-      styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
-    dev: true
 
   /@sanity/util@3.32.0:
     resolution: {integrity: sha512-tObVDX7Gmwm/mbsGeObDn1Dqbhs1nvX6wKahU980BrCZrqzsQDjYWnbvAbk6T5jGJBhpDPRSSc2CXXADo+SQhg==}
@@ -9819,25 +9796,6 @@ packages:
 
   /fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
-
-  /framer-motion@11.0.12(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-1VW4pk+4EH8RwWHdqntWTwF9peranyHn/BczvMzF9TGh/FwMKxoRZzkig8Nak9BQA8GymfIyCGo5adXwRuXDXA==}
-    peerDependencies:
-      '@emotion/is-prop-valid': '*'
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    peerDependenciesMeta:
-      '@emotion/is-prop-valid':
-        optional: true
-      react:
-        optional: true
-      react-dom:
-        optional: true
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.6.2
-    dev: true
 
   /framer-motion@11.0.8(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1KSGNuqe1qZkS/SWQlDnqK2VCVzRVEoval379j0FiUBJAZoqgwyvqFkfvJbgW2IPFo4wX16K+M0k5jO23lCIjA==}
