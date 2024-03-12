@@ -1,13 +1,16 @@
 'use client'
 
-import { PortableText } from '@portabletext/react'
-import { QueryResponseInitial, useQuery } from '@sanity/react-loader'
+import PortableText from 'apps-common/portable-text/react'
+import { type QueryResponseInitial, useQuery } from '@sanity/react-loader'
 import { shoe, type ShoeParams, type ShoeResult } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { use } from 'react'
 import { urlFor, urlForCrossDatasetReference } from '../utils'
+import { workspaces } from 'apps-common/env'
+
+const { projectId, dataset } = workspaces['next-app-router']
 
 type Props = {
   params: { slug: string }
@@ -189,13 +192,16 @@ export default function ShoePage(props: Props) {
               <div>
                 <h3 className="sr-only">Description</h3>
 
-                <div className="space-y-6 text-base text-gray-900">
-                  {product.description ? (
-                    <PortableText value={product.description} />
-                  ) : (
-                    'No description'
-                  )}
-                </div>
+                {product.description ? (
+                  <PortableText
+                    className="space-y-6 text-base text-gray-900"
+                    projectId={projectId}
+                    dataset={dataset}
+                    value={product.description}
+                  />
+                ) : (
+                  'No description'
+                )}
               </div>
             </div>
           </div>

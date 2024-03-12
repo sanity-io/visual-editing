@@ -4,9 +4,11 @@ export function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
 ): F {
   let timer: ReturnType<typeof setTimeout>
   return ((...args: Parameters<F>) => {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      fn.apply(fn, args)
-    }, timeout)
+    console.log('debounce', ...args)
+    fn.apply(fn, args)
+    // clearTimeout(timer)
+    // timer = setTimeout(() => {
+    //   fn.apply(fn, args)
+    // }, timeout)
   }) as F
 }

@@ -2,21 +2,21 @@
 
 import {
   forwardRef,
-  PropsWithChildren,
-  ReactElement,
+  type PropsWithChildren,
+  type ReactElement,
   useCallback,
   useMemo,
 } from 'react'
 import { getPublishedId, useUnique } from 'sanity'
 import { StateLink, useRouter } from 'sanity/router'
 import {
-  BackLinkProps,
+  type BackLinkProps,
   PaneRouterContext,
-  PaneRouterContextValue,
-  ReferenceChildLinkProps,
+  type PaneRouterContextValue,
+  type ReferenceChildLinkProps,
 } from 'sanity/structure'
 
-import { DeskDocumentPaneParams, PresentationParams } from '../types'
+import type { DeskDocumentPaneParams, PresentationParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 
 function encodeQueryString(params: Record<string, unknown> = {}): string {
@@ -111,6 +111,7 @@ export function PresentationPaneRouterProvider(
     useCallback(
       (nextParams) => {
         const path = resolvePathFromState(routerState)
+        console.log('path', path)
         const qs = resolveQueryStringFromParams({
           ...routerSearchParams,
           ...nextParams,
@@ -173,6 +174,7 @@ export function PresentationPaneRouterProvider(
         console.warn('setView', viewId)
       },
       setParams: (nextParams) => {
+        console.log('setParams', nextParams)
         // eslint-disable-next-line no-warning-comments
         // @todo set inspect param to undefined manually as param is missing from object when closing inspector
         onDeskParams({

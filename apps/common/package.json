@@ -11,6 +11,7 @@
     "./env": "./src/env.ts",
     "./queries": "./src/queries.ts",
     "./utils": "./src/utils.ts",
+    "./portable-text/react": "./src/portable-text/react.tsx",
     "./package.json": "./package.json"
   },
   "files": [
@@ -83,10 +84,13 @@
     "root": true
   },
   "dependencies": {
+    "@portabletext/react": "^3.0.11",
+    "@portabletext/types": "^2.0.8",
     "@sanity/icons": "^2.11.2",
     "@sanity/react-loader": "workspace:*",
     "@sanity/ui": "2.0.10",
-    "@vercel/stega": "0.1.0"
+    "@vercel/stega": "0.1.0",
+    "sanity-image": "^0.1.7"
   },
   "devDependencies": {
     "react": "^18.2.0",

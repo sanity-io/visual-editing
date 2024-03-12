@@ -1,4 +1,4 @@
-import { type ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import type { Path } from 'sanity'
 
 import type { DeskDocumentPaneParams } from '../types'
@@ -11,6 +11,7 @@ export function ContentEditor(props: {
   documentType?: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
+  imperativeFocusPath: string
   previewUrl?: string
   refs: { _id: string; _type: string }[]
 }): ReactElement {
@@ -21,13 +22,16 @@ export function ContentEditor(props: {
     onDeskParams,
     onFocusPath,
     previewUrl,
+    imperativeFocusPath,
     refs,
   } = props
 
   if (documentId && documentType) {
     return (
       <DocumentPanel
+        key={`${documentId}-${documentType}`}
         deskParams={deskParams}
+        imperativeFocusPath={imperativeFocusPath}
         documentId={documentId}
         documentType={documentType}
         onDeskParams={onDeskParams}

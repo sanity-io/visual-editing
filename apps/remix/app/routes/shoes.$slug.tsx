@@ -1,4 +1,4 @@
-import { PortableText } from '@portabletext/react'
+import PortableText from 'apps-common/portable-text/react'
 import { json, type LoaderFunction } from '@vercel/remix'
 import { Link, useLoaderData } from '@remix-run/react'
 import { useQuery } from '@sanity/react-loader'
@@ -10,7 +10,12 @@ import {
   type ShoesListResult,
 } from 'apps-common/queries'
 import { formatCurrency } from 'apps-common/utils'
-import { urlFor, urlForCrossDatasetReference } from '~/sanity'
+import {
+  dataset,
+  projectId,
+  urlFor,
+  urlForCrossDatasetReference,
+} from '~/sanity'
 import { loadQuery } from '~/sanity.loader.server'
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -196,13 +201,16 @@ export default function ShoePage() {
               <div>
                 <h3 className="sr-only">Description</h3>
 
-                <div className="space-y-6 text-base text-gray-900">
-                  {product.description ? (
-                    <PortableText value={product.description} />
-                  ) : (
-                    'No description'
-                  )}
-                </div>
+                {product.description ? (
+                  <PortableText
+                    className="space-y-6 text-base text-gray-900"
+                    projectId={projectId}
+                    dataset={dataset}
+                    value={product.description}
+                  />
+                ) : (
+                  'No description'
+                )}
               </div>
             </div>
           </div>

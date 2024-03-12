@@ -209,6 +209,10 @@ export default function PresentationTool(props: {
     }
   }, [channel, popups, popups.size])
 
+  const [imperativeFocusPath, setImperativeFocusPath] = useState<string>(
+    deskParams.path || '',
+  )
+
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
 
@@ -236,6 +240,7 @@ export default function PresentationTool(props: {
                 id: data.id,
                 path: data.path,
               })
+              setImperativeFocusPath(data.path)
             } else if (
               type === 'visual-editing/navigate' ||
               type === 'overlay/navigate'
@@ -600,6 +605,7 @@ export default function PresentationTool(props: {
                   >
                     <CommentsIntentProvider getIntent={getCommentIntent}>
                       <ContentEditor
+                        imperativeFocusPath={imperativeFocusPath}
                         refs={documentsOnPage}
                         deskParams={deskParams}
                         documentId={params.id}
