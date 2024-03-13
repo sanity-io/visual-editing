@@ -11,9 +11,16 @@ export function DocumentPanel(props: {
   documentType: string
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
+  previewUrl?: string
 }): ReactElement {
-  const { deskParams, documentId, documentType, onDeskParams, onFocusPath } =
-    props
+  const {
+    deskParams,
+    documentId,
+    documentType,
+    onDeskParams,
+    onFocusPath,
+    previewUrl,
+  } = props
   return (
     <StructureToolProvider>
       <DocumentPane
@@ -22,6 +29,7 @@ export function DocumentPanel(props: {
         params={deskParams}
         onDeskParams={onDeskParams}
         onFocusPath={onFocusPath}
+        previewUrl={previewUrl}
       />
     </StructureToolProvider>
   )

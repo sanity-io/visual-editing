@@ -32,6 +32,7 @@ export function ContentEditor(props: {
         documentType={documentType}
         onDeskParams={onDeskParams}
         onFocusPath={onFocusPath}
+        previewUrl={previewUrl}
       />
     )
   }
