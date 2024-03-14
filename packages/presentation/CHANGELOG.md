@@ -12,6 +12,14 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.11.6](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.5...presentation-v1.11.6) (2024-03-14)
+
+
+### Bug Fixes
+
+* **presentation:** maintain preview param on reference link ([#1113](https://github.com/sanity-io/visual-editing/issues/1113)) ([dd3d567](https://github.com/sanity-io/visual-editing/commit/dd3d5678cb15f355449f3bb7f555f7ee3b3b5f82))
+* revert use of collapsed state ([#1122](https://github.com/sanity-io/visual-editing/issues/1122)) ([c115bc6](https://github.com/sanity-io/visual-editing/commit/c115bc6bc84dd05dc0246009c407f90b275949fd))
+
 ## [1.11.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.4...presentation-v1.11.5) (2024-03-12)
 
 
