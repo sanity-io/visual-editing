@@ -48,7 +48,7 @@
     "prettier-plugin-svelte": "3.2.2",
     "prettier-plugin-tailwindcss": "0.5.12",
     "turbo": "1.12.5",
-    "typescript": "^5.3.3"
+    "typescript": "5.3.3"
   },
   "packageManager": "pnpm@8.15.4",
   "pnpm": {
@@ -56,6 +56,7 @@
       "@sanity/block-tools": "$@sanity/block-tools",
       "@sanity/cli": "$@sanity/cli",
       "@sanity/client": "$@sanity/client",
+      "@sanity/core-loader": "workspace:*",
       "@sanity/diff": "$@sanity/diff",
       "@sanity/export": "$@sanity/export",
       "@sanity/import-cli": "$@sanity/import-cli",
@@ -63,7 +64,11 @@
       "@sanity/mutator": "$@sanity/mutator",
       "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
       "@sanity/presentation": "workspace:*",
+      "@sanity/preview-kit-compat": "workspace:*",
+      "@sanity/preview-url-secret": "workspace:*",
+      "@sanity/react-loader": "workspace:*",
       "@sanity/schema": "$@sanity/schema",
+      "@sanity/svelte-loader": "workspace:*",
       "@sanity/types": "$@sanity/types",
       "@sanity/util": "$@sanity/util",
       "@sanity/vision": "$@sanity/vision",
@@ -71,7 +76,8 @@
       "create-sanity": "$create-sanity",
       "groq": "$groq",
       "sanity": "$sanity",
-      "styled-components": "$styled-components"
+      "styled-components": "$styled-components",
+      "typescript": "$typescript"
     }
   }
 }
