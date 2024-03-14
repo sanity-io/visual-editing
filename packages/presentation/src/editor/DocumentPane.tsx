@@ -13,7 +13,6 @@ import {
   DocumentPane as DeskDocumentPane,
   DocumentPaneNode,
   PaneLayout,
-  useStructureTool,
 } from 'sanity/structure'
 import styled from 'styled-components'
 
@@ -64,14 +63,6 @@ export function DocumentPane(props: {
     setErrorParams(null)
   }, [documentId, documentType, params])
 
-  const { layoutCollapsed, setLayoutCollapsed } = useStructureTool()
-  const handleRootCollapse = useCallback(() => {
-    setLayoutCollapsed(true)
-  }, [setLayoutCollapsed])
-  const handleRootExpand = useCallback(() => {
-    setLayoutCollapsed(false)
-  }, [setLayoutCollapsed])
-
   if (errorParams) {
     return (
       <ErrorCard
@@ -96,12 +87,7 @@ export function DocumentPane(props: {
 
   return (
     <ErrorBoundary onCatch={setErrorParams}>
-      <PaneLayout
-        style={layoutCollapsed ? { minHeight: '100%' } : { height: '100%' }}
-        onExpand={handleRootExpand}
-        onCollapse={handleRootCollapse}
-        minWidth={640}
-      >
+      <PaneLayout style={{ height: '100%' }}>
         <PresentationPaneRouterProvider
           onDeskParams={onDeskParams}
           params={params}
