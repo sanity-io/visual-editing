@@ -17,7 +17,7 @@ interface PanelProps extends PropsWithChildren {
 }
 
 const Root = styled.div`
-  overflow-x: hidden;
+  overflow: hidden;
   flex-basis: 0;
   flex-shrink: 1;
 `
