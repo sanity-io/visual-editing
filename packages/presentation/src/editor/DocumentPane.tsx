@@ -31,8 +31,16 @@ export function DocumentPane(props: {
   params: DeskDocumentPaneParams
   onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
+  previewUrl?: string
 }): ReactElement {
-  const { documentId, documentType, params, onDeskParams, onFocusPath } = props
+  const {
+    documentId,
+    documentType,
+    params,
+    onDeskParams,
+    onFocusPath,
+    previewUrl,
+  } = props
   const { template, templateParams } = params
   const { devMode } = usePresentationTool()
 
@@ -91,6 +99,7 @@ export function DocumentPane(props: {
         <PresentationPaneRouterProvider
           onDeskParams={onDeskParams}
           params={params}
+          previewUrl={previewUrl}
         >
           <DeskDocumentPane
             paneKey="document"

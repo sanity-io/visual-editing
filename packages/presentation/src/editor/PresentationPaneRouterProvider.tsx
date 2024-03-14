@@ -74,7 +74,7 @@ const BackLink = forwardRef(function BackLink(
 })
 
 const ReferenceChildLink = forwardRef(function ReferenceChildLink(
-  props: ReferenceChildLinkProps,
+  props: ReferenceChildLinkProps & { previewUrl?: string },
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -85,7 +85,11 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
     <StateLink
       {...restProps}
       ref={ref}
-      state={{ id: documentId, type: documentType }}
+      state={{
+        id: documentId,
+        type: documentType,
+        _searchParams: Object.entries({ preview: props.previewUrl }),
+      }}
       title={undefined}
     />
   )
@@ -152,7 +156,9 @@ export function PresentationPaneRouterProvider(
         return <div {...restProps} />
       },
       BackLink,
-      ReferenceChildLink,
+      ReferenceChildLink: (childLinkProps) => (
+        <ReferenceChildLink {...childLinkProps} previewUrl={previewUrl} />
+      ),
       ParameterizedLink: () => <>ParameterizedLink</>,
       closeCurrentAndAfter: () => {
         console.warn('closeCurrentAndAfter')
