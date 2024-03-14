@@ -17,7 +17,7 @@ Loaders provide a convenient, unified way of loading data from Content Lake: A s
 Loaders are available for several frameworks:
 
 - [`@sanity/react-loader`](./packages/react-loader/README.md)
-- [`@sanity/nuxt-loader`](./packages/nuxt-loader/README.md)
+- [`@nuxtjs/sanity`](https://sanity.nuxtjs.org/getting-started/visual-editing/)
 - [`@sanity/svelte-loader`](./packages/svelte-loader/README.md)
 
 These framework specific loaders are built on top of [`@sanity/core-loader`](./packages/core-loader/README.md), which can be used in any JavaScript-based project.
