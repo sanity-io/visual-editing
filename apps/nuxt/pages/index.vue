@@ -71,11 +71,6 @@
             <p>data-sanity</p>
           </div>
 
-          <div class="block" :data-sanity="encodedSanityData">
-            <h2>String data attribute</h2>
-            <p>data-sanity</p>
-          </div>
-
           <div class="block">
             <h2>Stega string</h2>
             <p>
@@ -132,7 +127,6 @@
 
 <script lang="ts" setup>
 import { vercelStegaCombine } from '@vercel/stega'
-import { encodeSanityNodeData } from '@sanity/nuxt-loader/directive'
 const enabled = ref(true)
 const elementAdded = ref(false)
 const expandedDocument = ref(false)
@@ -168,8 +162,6 @@ const sanityDataDiff = {
   tool: 'desk',
   workspace: 'docs',
 }
-
-const encodedSanityData = encodeSanityNodeData(sanityData)
 </script>
 
 <style lang="postcss" scoped>

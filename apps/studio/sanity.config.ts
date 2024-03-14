@@ -85,7 +85,7 @@ function definePreviewUrl(
     } satisfies PreviewUrlResolverOptions['previewMode']
     return { origin, preview: pathname, previewMode }
   }
-  if (workspaceName === 'svelte') {
+  if (workspaceName === 'svelte' || workspaceName === 'nuxt') {
     const { origin, pathname } = new URL(previewUrl)
     const previewMode = {
       enable: '/preview/enable',
