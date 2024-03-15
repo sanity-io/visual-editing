@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.0...visual-editing-v1.8.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* add `/create-data-attribute` export that works without `use client` ([5569dd7](https://github.com/sanity-io/visual-editing/commit/5569dd7920e2b2b524f4c4dc4df9c2d1edbd22f4))
+
 ## [1.8.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.7.1...visual-editing-v1.8.0) (2024-03-15)
 
 
