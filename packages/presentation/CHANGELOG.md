@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.11.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.6...presentation-v1.11.7) (2024-03-15)
+
+
+### Bug Fixes
+
+* **presentation:** prevent panel vertical scroll ([#1131](https://github.com/sanity-io/visual-editing/issues/1131)) ([f919eb1](https://github.com/sanity-io/visual-editing/commit/f919eb1aaf4998b7288a2adab98beae2fc36cc6f))
+
 ## [1.11.6](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.5...presentation-v1.11.6) (2024-03-14)
 
 
