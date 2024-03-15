@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.7.1...visual-editing-v1.8.0) (2024-03-15)
+
+
+### Features
+
+* **visual-editing:** add `createDataAttribute` to `remix` and `next-pages-router` ([7fca312](https://github.com/sanity-io/visual-editing/commit/7fca31223977bd6ea2dfdea7997cfa4c867243fa))
+
 ## [1.7.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.7.0...visual-editing-v1.7.1) (2024-03-11)
 
 
