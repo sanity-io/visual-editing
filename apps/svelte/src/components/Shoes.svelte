@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { ShoesListResult } from 'apps-common/queries'
   import { formatCurrency } from 'apps-common/utils'
+  import { page } from '$app/stores'
   import { urlFor, urlForCrossDatasetReference } from '$lib/sanity'
 
   export let loading: boolean = false
   export let products: ShoesListResult
+
+  const basePath = $page.url.pathname
 </script>
 
 <svelte:head>
@@ -19,7 +22,7 @@
       <li>
         <div class="flex items-center">
           <a
-            href="/shoes"
+            href={basePath}
             aria-current="page"
             class="mr-2 text-sm font-medium text-gray-900"
           >
@@ -42,7 +45,10 @@
         class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
       >
         {#each products as product, i}
-          <a href={`/shoes/${product.slug.current}`} class="group relative">
+          <a
+            href={`${basePath}/${product.slug.current}`}
+            class="group relative"
+          >
             <div
               class="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
             >
