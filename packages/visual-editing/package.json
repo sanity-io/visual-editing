@@ -29,6 +29,13 @@
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
+    "./create-data-attribute": {
+      "types": "./dist/create-data-attribute/index.d.ts",
+      "source": "./src/create-data-attribute.ts",
+      "import": "./dist/create-data-attribute/index.js",
+      "require": "./dist/create-data-attribute/index.cjs",
+      "default": "./dist/create-data-attribute/index.js"
+    },
     "./next-pages-router": {
       "types": "./dist/next-pages-router/index.d.ts",
       "source": "./src/next-pages-router/index.ts",
@@ -56,6 +63,9 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
+      "create-data-attribute": [
+        "./dist/create-data-attribute/index.d.ts"
+      ],
       "next-pages-router": [
         "./dist/next-pages-router/index.d.ts"
       ],
