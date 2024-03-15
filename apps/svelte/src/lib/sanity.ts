@@ -9,7 +9,7 @@ export const client = createClient({
   useCdn: true,
   apiVersion,
   stega: {
-    // enabled: true,
+    enabled: true,
     studioUrl,
   },
 })
