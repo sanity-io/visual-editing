@@ -3,10 +3,13 @@
   import { PortableText } from '@portabletext/svelte'
   import type { ShoeResult } from 'apps-common/queries'
   import { formatCurrency } from 'apps-common/utils'
+  import { page } from '$app/stores'
 
   export let product: ShoeResult
   export let slug: string
   export let loading: boolean = false
+
+  const parentPath = $page.url.pathname.split('/').slice(0, -1).join('/')
 
   $: [coverImage, ...otherImages] = product?.media || []
 </script>
@@ -22,7 +25,7 @@
     >
       <li>
         <div class="flex items-center">
-          <a href="/shoes" class="mr-2 text-sm font-medium text-gray-900">
+          <a href={parentPath} class="mr-2 text-sm font-medium text-gray-900">
             Shoes
           </a>
           <svg
@@ -39,7 +42,7 @@
       </li>
       <li class="text-sm" style={'textWrap: balance'}>
         <a
-          href={`/shoes/${slug}`}
+          href={`${parentPath}/${slug}`}
           aria-current="page"
           class="font-medium text-gray-500 hover:text-gray-600"
         >
