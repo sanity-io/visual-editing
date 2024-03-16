@@ -149,7 +149,7 @@ importers:
         version: 14.1.3
       '@portabletext/react':
         specifier: ^3.0.11
-        version: 3.0.11(react@18.2.0)
+        version: 3.0.12(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -230,7 +230,7 @@ importers:
     dependencies:
       '@portabletext/react':
         specifier: ^3.0.11
-        version: 3.0.11(react@18.2.0)
+        version: 3.0.12(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -345,7 +345,7 @@ importers:
     dependencies:
       '@portabletext/react':
         specifier: ^3.0.11
-        version: 3.0.11(react@18.2.0)
+        version: 3.0.12(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -503,7 +503,7 @@ importers:
         version: 14.1.3
       '@portabletext/react':
         specifier: ^3.0.11
-        version: 3.0.11(react@18.2.0)
+        version: 3.0.12(react@18.2.0)
       '@sanity/demo':
         specifier: ^2.0.0
         version: 2.0.0(@sanity/color@3.0.0)(tailwindcss@3.4.1)
@@ -581,7 +581,7 @@ importers:
     dependencies:
       '@portabletext/react':
         specifier: ^3.0.11
-        version: 3.0.11(react@18.2.0)
+        version: 3.0.12(react@18.2.0)
       '@remix-run/css-bundle':
         specifier: ^2.8.1
         version: 2.8.1
@@ -708,7 +708,7 @@ importers:
     dependencies:
       '@portabletext/svelte':
         specifier: ^2.1.5
-        version: 2.1.5(svelte@4.2.12)
+        version: 2.1.6(svelte@4.2.12)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -3888,7 +3888,7 @@ packages:
     resolution: {integrity: sha512-5Vgu/95xHhAefSz2J5bRbbQfbSbVc+pBURsvVITld5GVT7x97Jbdpx2FXNysR/9a09wiS+ILkZIqbhCXzSndVQ==}
     dependencies:
       '@nuxt/kit': 3.10.3(rollup@4.13.0)
-      '@portabletext/types': 2.0.8
+      '@portabletext/types': 2.0.9
       '@sanity/client': 6.15.5
       '@sanity/core-loader': link:packages/core-loader
       '@sanity/preview-url-secret': link:packages/preview-url-secret
@@ -4106,33 +4106,33 @@ packages:
   /@polka/url@1.0.0-next.25:
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
-  /@portabletext/react@3.0.11(react@18.2.0):
-    resolution: {integrity: sha512-LATQQRxvP3TlAnFayjYt7kPJcnpAtWH6XHl4RFU31pKb1G6gZlTWTB+chXXAv0uQG6Be7OEdRzCmsz9XFEVNew==}
+  /@portabletext/react@3.0.12(react@18.2.0):
+    resolution: {integrity: sha512-XyvM9rad7JK9gVt+fg4eK/5LuqmoGSkSabqlEMiuoQ1sRd7dJrNiYAegmjNFuxHIQraDlz3fCrh5FbQP1hryIQ==}
     engines: {node: ^14.13.1 || >=16.0.0}
     peerDependencies:
       react: ^17 || ^18
     dependencies:
-      '@portabletext/toolkit': 2.0.10
-      '@portabletext/types': 2.0.8
+      '@portabletext/toolkit': 2.0.11
+      '@portabletext/types': 2.0.9
       react: 18.2.0
 
-  /@portabletext/svelte@2.1.5(svelte@4.2.12):
-    resolution: {integrity: sha512-NDHIT6TRPnWCGnr0VjwsmYtuhZRVkD41aexajtElwsVLSoYUf/mxXd6PVxjg1e12DfubQo4aQv6lpRthIVbIIA==}
+  /@portabletext/svelte@2.1.6(svelte@4.2.12):
+    resolution: {integrity: sha512-0lJhBbdNKz93gMhQvVTi5apOxfEpSFqigPzymIbE5s0dC5hdeSanz6lhvM+daVTAuEeUpzCcee/HsRstJl+rSA==}
     peerDependencies:
       svelte: '>=3.47.0 <5.0.0'
     dependencies:
-      '@portabletext/toolkit': 2.0.10
+      '@portabletext/toolkit': 2.0.11
       svelte: 4.2.12
     dev: false
 
-  /@portabletext/toolkit@2.0.10:
-    resolution: {integrity: sha512-d+F9JvpnMEx7kd6saZ9OWA4U1Iwuokh6TOht7iqkfWU+0ivh9yM4v+b0Kpu+iiPcElicoabhtXol+yTvWJ1jDw==}
+  /@portabletext/toolkit@2.0.11:
+    resolution: {integrity: sha512-4xdn1jZUZzihTvtJJbtZDsuaHNw9aaf/WZqKriP9306SlSuLFYC8Lw1MzW+Xmh3ZSurIjs+L0M+lTflB2NfYSA==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
-      '@portabletext/types': 2.0.8
+      '@portabletext/types': 2.0.9
 
-  /@portabletext/types@2.0.8:
-    resolution: {integrity: sha512-eiq9/kMX2bYezS4/kLFk3xNnruCFjCDdw6aYEv5ECHVKkYROiuLd3/AsP5d7tWF3+kPPy6tB0Wq8aqDG/URHGA==}
+  /@portabletext/types@2.0.9:
+    resolution: {integrity: sha512-1naiVZBrDTUSExPgaUPY8Ip1v9mboLBIsPHSAzvQraVsdj2dyHi6n9qwiXykY4W1JmpJAKz7jYp2rShCnKQ9JA==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
 
   /@remix-run/css-bundle@2.8.1:
@@ -12521,8 +12521,8 @@ packages:
       sanity: ^3.34.0
       styled-components: 6.1.8
     dependencies:
-      '@portabletext/react': 3.0.11(react@18.2.0)
-      '@portabletext/types': 2.0.8
+      '@portabletext/react': 3.0.12(react@18.2.0)
+      '@portabletext/types': 2.0.9
       '@sanity/client': 6.15.5
       '@sanity/icons': 2.11.2(react@18.2.0)
       '@sanity/preview-kit': 5.0.33(@sanity/client@6.15.5)(react@18.2.0)
@@ -12550,8 +12550,8 @@ packages:
       sanity: ^3.34.0
       styled-components: 6.1.8
     dependencies:
-      '@portabletext/react': 3.0.11(react@18.2.0)
-      '@portabletext/types': 2.0.8
+      '@portabletext/react': 3.0.12(react@18.2.0)
+      '@portabletext/types': 2.0.9
       '@sanity/client': 6.15.5
       '@sanity/icons': 2.11.2(react@18.2.0)
       '@sanity/preview-kit': 5.0.33(@sanity/client@6.15.5)(react@18.2.0)
@@ -15479,7 +15479,7 @@ packages:
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       '@juggle/resize-observer': 3.4.0
-      '@portabletext/react': 3.0.11(react@18.2.0)
+      '@portabletext/react': 3.0.12(react@18.2.0)
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
@@ -15619,7 +15619,7 @@ packages:
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       '@juggle/resize-observer': 3.4.0
-      '@portabletext/react': 3.0.11(react@18.2.0)
+      '@portabletext/react': 3.0.12(react@18.2.0)
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
