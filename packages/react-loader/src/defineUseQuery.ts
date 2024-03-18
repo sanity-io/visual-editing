@@ -62,35 +62,17 @@ export function defineUseQuery({
                 (a: any, b: any) => {}
           // */
 
+          if (!isEqual(prev.sourceMap, snapshot.sourceMap)) {
+            // console.log('sourceMap changed')
+            // debug(prev.sourceMap, snapshot.sourceMap)
+            return snapshot
+          }
+
           if (!isEqual(prev.data, snapshot.data)) {
             // console.log('data changed')
             // debug(prev.data, snapshot.data)
             return snapshot
           }
-
-          /*
-          // TODO: sourceMaps reorder randomly and can't be compared in a reliable way
-          if (!isEqual(prev.sourceMap, snapshot.sourceMap)) {
-            if (
-              !isEqual(prev.sourceMap?.documents, snapshot.sourceMap?.documents)
-            ) {
-              console.log('sourceMap.documents changed')
-              debug(prev.sourceMap?.documents, snapshot.sourceMap?.documents)
-            }
-            if (
-              !isEqual(prev.sourceMap?.mappings, snapshot.sourceMap?.mappings)
-            ) {
-              console.log('sourceMap.mappings changed')
-              debug(prev.sourceMap?.mappings, snapshot.sourceMap?.mappings)
-            }
-            if (!isEqual(prev.sourceMap?.paths, snapshot.sourceMap?.paths)) {
-              console.log('sourceMap.paths changed')
-
-              debug(prev.sourceMap?.paths, snapshot.sourceMap?.paths)
-            }
-            return snapshot
-          }
-          // */
 
           if (prev.error !== snapshot.error) {
             // console.log('error changed', prev.error, snapshot.error)
