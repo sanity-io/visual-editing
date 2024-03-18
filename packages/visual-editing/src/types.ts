@@ -163,19 +163,25 @@ export interface HistoryAdapter {
 }
 
 /**
+ * An element that is safe to parse
+ * @internal
+ */
+export type ElementNode = HTMLElement | SVGElement
+
+/**
  * Object returned by node traversal
  * @internal
  */
-export interface _SanityNodeElements {
-  element: HTMLElement
-  measureElement: HTMLElement
+export interface SanityNodeElements {
+  element: ElementNode
+  measureElement: ElementNode
 }
 /**
  * Object returned by node traversal
  * @internal
  */
-export interface _ResolvedElement {
-  elements: _SanityNodeElements
+export interface ResolvedElement {
+  elements: SanityNodeElements
   sanity: SanityNode | SanityStegaNode
 }
 
@@ -183,10 +189,10 @@ export interface _ResolvedElement {
  * Element data stored in controller state
  * @internal
  */
-export interface _OverlayElement {
+export interface OverlayElement {
   id: string
-  elements: _SanityNodeElements
-  handlers: _EventHandlers
+  elements: SanityNodeElements
+  handlers: EventHandlers
   sanity: SanityNode | SanityStegaNode
 }
 
@@ -194,12 +200,12 @@ export interface _OverlayElement {
  * Event handlers attached to each element
  * @internal
  */
-export interface _EventHandlers {
-  click: (event: MouseEvent) => void
-  mousedown: (event: MouseEvent) => void
-  mouseenter: (event: MouseEvent) => void
-  mouseleave: (event: MouseEvent) => void
-  mousemove: (event: MouseEvent) => void
+export interface EventHandlers {
+  click: (event: Event) => void
+  mousedown: (event: Event) => void
+  mouseenter: (event: Event) => void
+  mouseleave: (event: Event) => void
+  mousemove: (event: Event) => void
 }
 
 /**

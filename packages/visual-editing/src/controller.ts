@@ -1,14 +1,19 @@
 import { v4 as uuid } from 'uuid'
 
 import type {
-  _EventHandlers,
-  _OverlayElement,
-  _ResolvedElement,
+  ElementNode,
+  EventHandlers,
   OverlayController,
+  OverlayElement,
   OverlayOptions,
+  ResolvedElement,
 } from './types'
 import { findSanityNodes } from './util/findSanityNodes'
 import { getRect } from './util/getRect'
+
+const isElementNode = (target: EventTarget | null): target is ElementNode => {
+  return target instanceof HTMLElement || target instanceof SVGElement
+}
 
 /**
  * Creates a controller which dispatches overlay related events
@@ -24,13 +29,13 @@ export function createOverlayController({
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
-  const elementIdMap = new Map<string, HTMLElement>()
+  const elementIdMap = new Map<string, ElementNode>()
   // WeakMap for getting data by element
-  const elementsMap = new WeakMap<HTMLElement, _OverlayElement>()
+  const elementsMap = new WeakMap<ElementNode, OverlayElement>()
   // Set for iterating over elements
-  const elementSet = new Set<HTMLElement>()
+  const elementSet = new Set<ElementNode>()
   // Weakmap keyed by measureElement to find associated element
-  const measureElements = new WeakMap<HTMLElement, HTMLElement>()
+  const measureElements = new WeakMap<ElementNode, ElementNode>()
 
   let ro: ResizeObserver
   let io: IntersectionObserver
@@ -46,11 +51,11 @@ export function createOverlayController({
   //
   // When we want to know which element is currently hovered, we take the element at the top of the
   // stack. Since JavaScript does not have a Stack type, we use an array and take the last element.
-  let hoverStack: HTMLElement[] = []
+  let hoverStack: Array<ElementNode> = []
   const getHoveredElement = () =>
-    hoverStack[hoverStack.length - 1] as HTMLElement | undefined
+    hoverStack[hoverStack.length - 1] as ElementNode | undefined
 
-  function addEventHandlers(el: HTMLElement, handlers: _EventHandlers) {
+  function addEventHandlers(el: ElementNode, handlers: EventHandlers) {
     el.addEventListener('click', handlers.click, {
       capture: true,
     })
@@ -66,7 +71,7 @@ export function createOverlayController({
     })
   }
 
-  function removeEventHandlers(el: HTMLElement, handlers: _EventHandlers) {
+  function removeEventHandlers(el: ElementNode, handlers: EventHandlers) {
     el.removeEventListener('click', handlers.click, {
       capture: true,
     })
@@ -84,12 +89,7 @@ export function createOverlayController({
    * Executed when element enters the viewport
    * Enables an element’s event handlers
    */
-  function activateElement({
-    id,
-    elements,
-    handlers,
-    sanity,
-  }: _OverlayElement) {
+  function activateElement({ id, elements, handlers, sanity }: OverlayElement) {
     const { element, measureElement } = elements
     addEventHandlers(element, handlers)
     ro.observe(measureElement)
@@ -105,7 +105,7 @@ export function createOverlayController({
    * Executed when element leaves the viewport
    * Disables an element’s event handlers
    */
-  function deactivateElement({ id, elements, handlers }: _OverlayElement) {
+  function deactivateElement({ id, elements, handlers }: OverlayElement) {
     const { element, measureElement } = elements
     removeEventHandlers(element, handlers)
     ro.unobserve(measureElement)
@@ -120,12 +120,12 @@ export function createOverlayController({
   /**
    * Stores an element’s DOM node and decoded sanity data in state and sets up event handlers
    */
-  function registerElement({ elements, sanity }: _ResolvedElement) {
+  function registerElement({ elements, sanity }: ResolvedElement) {
     const { element, measureElement } = elements
 
-    const eventHandlers: _EventHandlers = {
+    const eventHandlers: EventHandlers = {
       click(event) {
-        const target = event.target as HTMLElement | null
+        const target = event.target as ElementNode | null
         if (element === getHoveredElement() && element.contains(target)) {
           if (preventDefault) {
             event.preventDefault()
@@ -144,7 +144,7 @@ export function createOverlayController({
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)
-        const el = event.currentTarget as HTMLElement | null
+        const el = event.currentTarget as ElementNode | null
         if (el) {
           el.addEventListener('mouseenter', eventHandlers.mouseenter)
           el.addEventListener('mouseleave', eventHandlers.mouseleave)
@@ -192,10 +192,9 @@ export function createOverlayController({
          * If moving to an element within the overlay which handles pointer events, attach a new
          * event handler to that element and defer the original leave event
          */
-        const { relatedTarget } = e
+        const { relatedTarget } = e as MouseEvent
         const isInteractiveOverlayElement =
-          relatedTarget instanceof HTMLElement &&
-          overlayElement.contains(relatedTarget)
+          isElementNode(relatedTarget) && overlayElement.contains(relatedTarget)
 
         if (isInteractiveOverlayElement) {
           const deferredLeave = () => {
@@ -235,11 +234,11 @@ export function createOverlayController({
     activateElement(sanityNode)
   }
 
-  function registerElements(node: HTMLElement | { childNodes: HTMLElement[] }) {
+  function registerElements(node: ElementNode | { childNodes: ElementNode[] }) {
     const sanityNodes = findSanityNodes(node)
     for (const sanityNode of sanityNodes) {
       if (
-        sanityNode.elements.element instanceof HTMLElement &&
+        isElementNode(sanityNode.elements.element) &&
         !elementsMap.has(sanityNode.elements.element)
       ) {
         registerElement(sanityNode)
@@ -247,7 +246,7 @@ export function createOverlayController({
     }
   }
 
-  function unregisterElement(element: HTMLElement) {
+  function unregisterElement(element: ElementNode) {
     const overlayElement = elementsMap.get(element)
     if (overlayElement) {
       const { id, handlers } = overlayElement
@@ -273,7 +272,7 @@ export function createOverlayController({
         return false
       }
 
-      if (node instanceof HTMLElement) {
+      if (isElementNode(node)) {
         // @todo - We need to handle cases where `data-sanity` attributes may
         // have changed, so it's not enough to ignore previously registered
         // elements. We can just unregister and re-register elements instead of
@@ -303,7 +302,7 @@ export function createOverlayController({
    * Dispatches an event containing the size and position (rect) of an element
    * @param el - Element to dispatch rect information for
    */
-  function updateRect(el: HTMLElement) {
+  function updateRect(el: ElementNode) {
     const overlayElement = elementsMap.get(el)
     if (overlayElement) {
       handler({
@@ -318,7 +317,7 @@ export function createOverlayController({
     for (const entry of entries) {
       const target = entry.target
 
-      if (target instanceof HTMLElement) {
+      if (isElementNode(target)) {
         const element = measureElements.get(target)
         if (!element) return
         updateRect(element)
@@ -329,7 +328,7 @@ export function createOverlayController({
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     for (const entry of entries) {
       const { target } = entry
-      const match = target instanceof HTMLElement && elementsMap.get(target)
+      const match = isElementNode(target) && elementsMap.get(target)
       if (!match) continue
       if (entry.isIntersecting) {
         activateElement(match)
@@ -355,7 +354,7 @@ export function createOverlayController({
   function handleWindowScroll(event: Event) {
     const { target } = event
 
-    if (target === window.document || !(target instanceof HTMLElement)) {
+    if (target === window.document || !isElementNode(target)) {
       return
     }
 

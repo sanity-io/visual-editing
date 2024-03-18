@@ -1,18 +1,21 @@
 import { decodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 
 import { OVERLAY_ID } from '../constants'
-import { _ResolvedElement, SanityNode, SanityStegaNode } from '../types'
+import type { ResolvedElement, SanityNode, SanityStegaNode } from '../types'
 import { findNonInlineElement } from './findNonInlineElement'
 import { testAndDecodeStega } from './stega'
 
-const isElementNode = (node: ChildNode): node is HTMLElement =>
+const isElementNode = (node: ChildNode): node is HTMLElement | SVGElement =>
   node.nodeType === Node.ELEMENT_NODE
 
-const isImgElement = (el: HTMLElement): el is HTMLImageElement =>
+const isImgElement = (el: HTMLElement | SVGElement): el is HTMLImageElement =>
   el.tagName === 'IMG'
 
-const isTimeElement = (el: HTMLElement): el is HTMLTimeElement =>
+const isTimeElement = (el: HTMLElement | SVGElement): el is HTMLTimeElement =>
   el.tagName === 'TIME'
+
+const isSvgRootElement = (el: HTMLElement | SVGElement): el is SVGSVGElement =>
+  el.tagName.toUpperCase() === 'SVG'
 
 function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
   return 'path' in node
@@ -91,11 +94,18 @@ export function findCommonSanityData(
  * @internal
  */
 export function findSanityNodes(
-  el: HTMLElement | ChildNode | { childNodes: HTMLElement[] },
-): _ResolvedElement[] {
-  const elements: _ResolvedElement[] = []
+  el:
+    | HTMLElement
+    | SVGElement
+    | ChildNode
+    | { childNodes: Array<HTMLElement | SVGElement> },
+): ResolvedElement[] {
+  const elements: ResolvedElement[] = []
 
-  function addElement(element: HTMLElement, data: SanityStegaNode | string) {
+  function addElement(
+    element: HTMLElement | SVGElement,
+    data: SanityStegaNode | string,
+  ) {
     const sanity = decodeSanityNodeData(data)
     if (!sanity) {
       return
@@ -171,6 +181,11 @@ export function findSanityNodes(
           continue
         } else if (isTimeElement(node)) {
           const data = testAndDecodeStega(node.dateTime, true)
+          if (!data) continue
+          addElement(node, data)
+        } else if (isSvgRootElement(node)) {
+          if (!node.ariaLabel) continue
+          const data = testAndDecodeStega(node.ariaLabel, true)
           if (!data) continue
           addElement(node, data)
         }

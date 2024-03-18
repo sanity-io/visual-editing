@@ -1,4 +1,6 @@
-export function findNonInlineElement(element: HTMLElement): HTMLElement | null {
+export function findNonInlineElement(
+  element: HTMLElement | SVGElement,
+): HTMLElement | SVGElement | null {
   const { display } = window.getComputedStyle(element)
 
   if (display !== 'inline') return element
