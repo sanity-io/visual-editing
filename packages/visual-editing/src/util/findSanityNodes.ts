@@ -1,20 +1,25 @@
 import { decodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 
 import { OVERLAY_ID } from '../constants'
-import type { ResolvedElement, SanityNode, SanityStegaNode } from '../types'
+import type {
+  ElementNode,
+  ResolvedElement,
+  SanityNode,
+  SanityStegaNode,
+} from '../types'
 import { findNonInlineElement } from './findNonInlineElement'
 import { testAndDecodeStega } from './stega'
 
-const isElementNode = (node: ChildNode): node is HTMLElement | SVGElement =>
+const isElementNode = (node: ChildNode): node is ElementNode =>
   node.nodeType === Node.ELEMENT_NODE
 
-const isImgElement = (el: HTMLElement | SVGElement): el is HTMLImageElement =>
+const isImgElement = (el: ElementNode): el is HTMLImageElement =>
   el.tagName === 'IMG'
 
-const isTimeElement = (el: HTMLElement | SVGElement): el is HTMLTimeElement =>
+const isTimeElement = (el: ElementNode): el is HTMLTimeElement =>
   el.tagName === 'TIME'
 
-const isSvgRootElement = (el: HTMLElement | SVGElement): el is SVGSVGElement =>
+const isSvgRootElement = (el: ElementNode): el is SVGSVGElement =>
   el.tagName.toUpperCase() === 'SVG'
 
 function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
@@ -94,18 +99,11 @@ export function findCommonSanityData(
  * @internal
  */
 export function findSanityNodes(
-  el:
-    | HTMLElement
-    | SVGElement
-    | ChildNode
-    | { childNodes: Array<HTMLElement | SVGElement> },
+  el: ElementNode | ChildNode | { childNodes: Array<ElementNode> },
 ): ResolvedElement[] {
   const elements: ResolvedElement[] = []
 
-  function addElement(
-    element: HTMLElement | SVGElement,
-    data: SanityStegaNode | string,
-  ) {
+  function addElement(element: ElementNode, data: SanityStegaNode | string) {
     const sanity = decodeSanityNodeData(data)
     if (!sanity) {
       return
