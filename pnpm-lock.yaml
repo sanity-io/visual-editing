@@ -148,8 +148,8 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       '@portabletext/react':
-        specifier: ^3.0.12
-        version: 3.0.12(react@18.2.0)
+        specifier: ^3.0.13
+        version: 3.0.13(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -229,8 +229,8 @@ importers:
   apps/next-no-cache:
     dependencies:
       '@portabletext/react':
-        specifier: ^3.0.12
-        version: 3.0.12(react@18.2.0)
+        specifier: ^3.0.13
+        version: 3.0.13(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -344,8 +344,8 @@ importers:
   apps/next-server-only:
     dependencies:
       '@portabletext/react':
-        specifier: ^3.0.12
-        version: 3.0.12(react@18.2.0)
+        specifier: ^3.0.13
+        version: 3.0.13(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -502,8 +502,8 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       '@portabletext/react':
-        specifier: ^3.0.12
-        version: 3.0.12(react@18.2.0)
+        specifier: ^3.0.13
+        version: 3.0.13(react@18.2.0)
       '@sanity/demo':
         specifier: ^2.0.0
         version: 2.0.0(@sanity/color@3.0.0)(tailwindcss@3.4.1)
@@ -580,8 +580,8 @@ importers:
   apps/remix:
     dependencies:
       '@portabletext/react':
-        specifier: ^3.0.12
-        version: 3.0.12(react@18.2.0)
+        specifier: ^3.0.13
+        version: 3.0.13(react@18.2.0)
       '@remix-run/css-bundle':
         specifier: ^2.8.1
         version: 2.8.1
@@ -3888,7 +3888,7 @@ packages:
     resolution: {integrity: sha512-5Vgu/95xHhAefSz2J5bRbbQfbSbVc+pBURsvVITld5GVT7x97Jbdpx2FXNysR/9a09wiS+ILkZIqbhCXzSndVQ==}
     dependencies:
       '@nuxt/kit': 3.11.0(rollup@4.13.0)
-      '@portabletext/types': 2.0.9
+      '@portabletext/types': 2.0.10
       '@sanity/client': 6.15.5
       '@sanity/core-loader': link:packages/core-loader
       '@sanity/preview-url-secret': link:packages/preview-url-secret
@@ -4106,14 +4106,14 @@ packages:
   /@polka/url@1.0.0-next.25:
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
-  /@portabletext/react@3.0.12(react@18.2.0):
-    resolution: {integrity: sha512-XyvM9rad7JK9gVt+fg4eK/5LuqmoGSkSabqlEMiuoQ1sRd7dJrNiYAegmjNFuxHIQraDlz3fCrh5FbQP1hryIQ==}
+  /@portabletext/react@3.0.13(react@18.2.0):
+    resolution: {integrity: sha512-TOSk1uwtkJC+VMK1dY5bHPnvNr/SXaqbWpEQoBC8oMhI55qnZg5pL9VBuw6BI2XEMsH5Il2tQngRQrtEeRklog==}
     engines: {node: ^14.13.1 || >=16.0.0}
     peerDependencies:
       react: ^17 || ^18
     dependencies:
-      '@portabletext/toolkit': 2.0.11
-      '@portabletext/types': 2.0.9
+      '@portabletext/toolkit': 2.0.12
+      '@portabletext/types': 2.0.10
       react: 18.2.0
 
   /@portabletext/svelte@2.1.7(svelte@4.2.12):
@@ -4121,18 +4121,18 @@ packages:
     peerDependencies:
       svelte: '>=3.47.0 <5.0.0'
     dependencies:
-      '@portabletext/toolkit': 2.0.11
+      '@portabletext/toolkit': 2.0.12
       svelte: 4.2.12
     dev: false
 
-  /@portabletext/toolkit@2.0.11:
-    resolution: {integrity: sha512-4xdn1jZUZzihTvtJJbtZDsuaHNw9aaf/WZqKriP9306SlSuLFYC8Lw1MzW+Xmh3ZSurIjs+L0M+lTflB2NfYSA==}
+  /@portabletext/toolkit@2.0.12:
+    resolution: {integrity: sha512-uSA8bDAuRht3uuFRXxVmDD3OkoqNYhT/R0JaCuoiaxr5WwEbFW/Rgngai/QInH9VxlDvfOpVCyt+DIIAm2W/uA==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
-      '@portabletext/types': 2.0.9
+      '@portabletext/types': 2.0.10
 
-  /@portabletext/types@2.0.9:
-    resolution: {integrity: sha512-1naiVZBrDTUSExPgaUPY8Ip1v9mboLBIsPHSAzvQraVsdj2dyHi6n9qwiXykY4W1JmpJAKz7jYp2rShCnKQ9JA==}
+  /@portabletext/types@2.0.10:
+    resolution: {integrity: sha512-pyyT3w8bV2v0LjOiSMHMEqzUhUO9FD54xU4tdLDt9WKBShrvP9NTQO5BO4bUljp1l5I5yyai0Y/OTKI8VAE9BQ==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
 
   /@remix-run/css-bundle@2.8.1:
@@ -12526,7 +12526,7 @@ packages:
       sanity: ^3.34.0
       styled-components: 6.1.8
     dependencies:
-      '@portabletext/react': 3.0.12(react@18.2.0)
+      '@portabletext/react': 3.0.13(react@18.2.0)
       '@sanity/client': 6.15.5
       '@sanity/icons': 2.11.2(react@18.2.0)
       '@sanity/preview-kit': 5.0.33(@sanity/client@6.15.5)(react@18.2.0)
@@ -12554,7 +12554,7 @@ packages:
       sanity: ^3.34.0
       styled-components: 6.1.8
     dependencies:
-      '@portabletext/react': 3.0.12(react@18.2.0)
+      '@portabletext/react': 3.0.13(react@18.2.0)
       '@sanity/client': 6.15.5
       '@sanity/icons': 2.11.2(react@18.2.0)
       '@sanity/preview-kit': 5.0.33(@sanity/client@6.15.5)(react@18.2.0)
@@ -15484,7 +15484,7 @@ packages:
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       '@juggle/resize-observer': 3.4.0
-      '@portabletext/react': 3.0.12(react@18.2.0)
+      '@portabletext/react': 3.0.13(react@18.2.0)
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
@@ -15624,7 +15624,7 @@ packages:
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       '@juggle/resize-observer': 3.4.0
-      '@portabletext/react': 3.0.12(react@18.2.0)
+      '@portabletext/react': 3.0.13(react@18.2.0)
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
