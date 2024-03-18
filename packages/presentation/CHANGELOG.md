@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.11.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.7...presentation-v1.11.8) (2024-03-18)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency mendoza to v3.0.6 ([#1167](https://github.com/sanity-io/visual-editing/issues/1167)) ([2dcb62f](https://github.com/sanity-io/visual-editing/commit/2dcb62f4ebdf6df6c5ee081bb47b11d9cbc229a4))
+
 ## [1.11.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.6...presentation-v1.11.7) (2024-03-15)
 
 

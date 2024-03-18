@@ -38,6 +38,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.9.4](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.3...react-loader-v1.9.4) (2024-03-18)
+
+
+### Bug Fixes
+
+* CSM key order is now stable, workaround no longer necessary ([ab45ecc](https://github.com/sanity-io/visual-editing/commit/ab45ecc4309b6e00362ed49e8e7d6cd86a712aed))
+
 ## [1.9.1](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.0...react-loader-v1.9.1) (2024-03-01)
 
 
