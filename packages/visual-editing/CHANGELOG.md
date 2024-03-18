@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.1...visual-editing-v1.8.2) (2024-03-18)
+
+
+### Bug Fixes
+
+* support `aria-label` on `&lt;svg&gt;` elements ([#1161](https://github.com/sanity-io/visual-editing/issues/1161)) ([f8f28b7](https://github.com/sanity-io/visual-editing/commit/f8f28b70f9d76e8c1781e87e6cea5ec34a8d25bf))
+
 ## [1.8.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.0...visual-editing-v1.8.1) (2024-03-15)
 
 
