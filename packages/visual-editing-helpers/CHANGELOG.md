@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.1...visual-editing-helpers-v0.6.2) (2024-03-20)
+
+
+### Bug Fixes
+
+* ship TS Node16 compatible typings ([a21794d](https://github.com/sanity-io/visual-editing/commit/a21794dec5001867279a5979403220060b1d16f0))
+
 ## [0.6.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.0...visual-editing-helpers-v0.6.1) (2024-03-07)
 
 

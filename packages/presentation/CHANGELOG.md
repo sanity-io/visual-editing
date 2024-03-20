@@ -12,6 +12,27 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.12.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.8...presentation-v1.12.0) (2024-03-20)
+
+
+### Features
+
+* **presentation:** reduce locations banner border radius ([#1174](https://github.com/sanity-io/visual-editing/issues/1174)) ([e5144d0](https://github.com/sanity-io/visual-editing/commit/e5144d0eae3cac811d8356bfa16f67cd53bfa708))
+
+
+### Bug Fixes
+
+* ship TS Node16 compatible typings ([a21794d](https://github.com/sanity-io/visual-editing/commit/a21794dec5001867279a5979403220060b1d16f0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.4 to ^1.6.5
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.1 to 0.6.2
+
 ## [1.11.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.7...presentation-v1.11.8) (2024-03-18)
 
 

@@ -72,6 +72,20 @@ All notable changes to this project will be documented in this file. See
   * dependencies
     * @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [2.3.29](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.28...overlays-v2.3.29) (2024-03-20)
+
+
+### Bug Fixes
+
+* ship TS Node16 compatible typings ([a21794d](https://github.com/sanity-io/visual-editing/commit/a21794dec5001867279a5979403220060b1d16f0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.2 to 1.8.3
+
 ## [2.3.28](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.27...overlays-v2.3.28) (2024-03-18)
 
 
