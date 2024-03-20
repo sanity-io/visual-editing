@@ -23,28 +23,24 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./create-data-attribute": {
-      "types": "./dist/create-data-attribute/index.d.ts",
       "source": "./src/create-data-attribute.ts",
       "import": "./dist/create-data-attribute/index.js",
       "require": "./dist/create-data-attribute/index.cjs",
       "default": "./dist/create-data-attribute/index.js"
     },
     "./next-pages-router": {
-      "types": "./dist/next-pages-router/index.d.ts",
       "source": "./src/next-pages-router/index.ts",
       "import": "./dist/next-pages-router/index.js",
       "require": "./dist/next-pages-router/index.cjs",
       "default": "./dist/next-pages-router/index.js"
     },
     "./remix": {
-      "types": "./dist/remix/index.d.ts",
       "source": "./src/remix/index.ts",
       "import": "./dist/remix/index.js",
       "require": "./dist/remix/index.cjs",
@@ -170,7 +166,7 @@
     "@remix-run/react": "^2.8.1",
     "@sanity/channels": "0.4.0",
     "@sanity/client": "6.15.5",
-    "@sanity/pkg-utils": "^5.0.4",
+    "@sanity/pkg-utils": "^5.1.1",
     "@sanity/ui": "2.0.10",
     "@sanity/visual-editing-helpers": "0.6.1",
     "@sveltejs/adapter-auto": "^3.1.1",

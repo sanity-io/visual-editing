@@ -16,11 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
       "react-server": "./dist/rsc/index.react-server.js",
       "browser": {
-        "types": "./dist/index.browser.d.ts",
         "source": "./src/index.browser.ts",
         "require": "./dist/index.browser.cjs",
         "import": "./dist/index.browser.js"
@@ -30,14 +28,12 @@
       "default": "./dist/index.js"
     },
     "./jsx": {
-      "types": "./dist/jsx.d.ts",
       "source": "./src/jsx/index.ts",
       "import": "./dist/jsx.js",
       "require": "./dist/jsx.cjs",
       "default": "./dist/jsx.js"
     },
     "./rsc": {
-      "types": "./dist/rsc/index.d.ts",
       "source": "./src/rsc/index.ts",
       "react-server": "./dist/rsc/index.react-server.js",
       "import": "./dist/rsc/index.js",
@@ -142,7 +138,7 @@
   "devDependencies": {
     "@sanity/channels": "0.4.0",
     "@sanity/client": "^6.15.5",
-    "@sanity/pkg-utils": "^5.0.4",
+    "@sanity/pkg-utils": "^5.1.1",
     "@sanity/visual-editing-helpers": "0.6.1",
     "@types/react": "^18.2.67",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
