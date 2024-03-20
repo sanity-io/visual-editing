@@ -124,7 +124,12 @@ export default function PresentationTool(props: {
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const [channel, setChannel] =
-    useState<ChannelsController<LoaderMsg | PresentationMsg>>()
+    useState<
+      ChannelsController<
+        VisualEditingConnectionIds,
+        PresentationMsg | LoaderMsg
+      >
+    >()
 
   const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
@@ -215,15 +220,16 @@ export default function PresentationTool(props: {
     if (!target) return
 
     const nextChannel = createChannelsController<
-      PresentationMsg,
+      VisualEditingConnectionIds,
+      PresentationMsg | LoaderMsg,
       LoaderMsg | OverlayMsg | VisualEditingMsg | PreviewKitMsg
     >({
-      id: 'presentation' satisfies VisualEditingConnectionIds,
+      id: 'presentation',
       target,
       targetOrigin,
       connectTo: [
         {
-          id: 'overlays' satisfies VisualEditingConnectionIds,
+          id: 'overlays',
           heartbeat: true,
           onStatusUpdate: setOverlaysConnection,
           onEvent(type, data) {
@@ -278,7 +284,7 @@ export default function PresentationTool(props: {
           },
         },
         {
-          id: 'loaders' satisfies VisualEditingConnectionIds,
+          id: 'loaders',
           heartbeat: true,
           onStatusUpdate: setLoadersConnection,
           onEvent(type, data) {
@@ -320,7 +326,7 @@ export default function PresentationTool(props: {
           },
         },
         {
-          id: 'preview-kit' satisfies VisualEditingConnectionIds,
+          id: 'preview-kit',
           heartbeat: true,
           onStatusUpdate: setPreviewKitConnection,
           onEvent(type, data) {

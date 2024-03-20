@@ -6,7 +6,10 @@ import type {
   QueryParams,
 } from '@sanity/client'
 import { applySourceDocuments, getPublishedId } from '@sanity/client/csm'
-import type { LoaderMsg, LoaderPayloads } from '@sanity/visual-editing-helpers'
+import type {
+  LoaderMsg,
+  VisualEditingConnectionIds,
+} from '@sanity/visual-editing-helpers'
 import {
   useQueryParams,
   useRevalidate,
@@ -24,7 +27,7 @@ import type { LiveQueriesState } from '../types'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
-  channel: ChannelsController<LoaderMsg> | undefined
+  channel: ChannelsController<VisualEditingConnectionIds, LoaderMsg> | undefined
   perspective: ClientPerspective
   liveQueries: LiveQueriesState
   documentsOnPage: { _id: string; _type: string }[]
@@ -59,7 +62,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
         projectId: projectId!,
         dataset: dataset!,
         perspective: activePerspective,
-      } satisfies LoaderPayloads['perspective'])
+      })
     }
   }, [channel, clientConfig, activePerspective])
 
@@ -241,7 +244,7 @@ interface QuerySubscriptionProps
   perspective: ClientPerspective
   query: string
   params: QueryParams
-  channel: ChannelsController<LoaderMsg> | undefined
+  channel: ChannelsController<VisualEditingConnectionIds, LoaderMsg> | undefined
 }
 function QuerySubscription(props: QuerySubscriptionProps) {
   const {
@@ -281,7 +284,7 @@ function QuerySubscription(props: QuerySubscriptionProps) {
         params,
         result,
         resultSourceMap,
-      } satisfies LoaderPayloads['query-change'])
+      })
     }
   }, [
     channel,

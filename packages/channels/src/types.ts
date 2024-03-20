@@ -21,7 +21,7 @@ export interface ChannelMsg {
 /**
  * @internal
  */
-export type ProtocolMsg<T extends ChannelMsg = ChannelMsg> = {
+export type ProtocolMsg<T extends ChannelMsg> = {
   id: string
   connectionId: string
   data?: T['data']
@@ -86,10 +86,11 @@ export type ChannelsControllerStatusSubscriber = (
  * @public
  */
 export interface ChannelsControllerOptions<
+  ConnectionIds extends string,
   Receives extends ChannelMsg = ChannelMsg,
 > {
-  id: string
-  connectTo: ChannelsControllerChannelOptions<Receives>[]
+  id: ConnectionIds
+  connectTo: ChannelsControllerChannelOptions<ConnectionIds, Receives>[]
   target: Window
   targetOrigin: string
   onEvent?: ChannelsEventHandler<Receives>
@@ -100,9 +101,10 @@ export interface ChannelsControllerOptions<
  * @public
  */
 export interface ChannelsControllerChannelOptions<
+  ConnectionIds extends string,
   Receives extends ChannelMsg = ChannelMsg,
 > {
-  id: string
+  id: ConnectionIds
   heartbeat?: boolean | number
   onEvent?: ChannelsEventHandler<Receives>
   onStatusUpdate?: ChannelsControllerStatusSubscriber
@@ -112,12 +114,13 @@ export interface ChannelsControllerChannelOptions<
  * @internal
  */
 export interface ChannelsControllerChannel<
+  ConnectionIds extends string,
   Receives extends ChannelMsg = ChannelMsg,
 > {
   id: string | null
   buffer: ChannelMsg[]
-  config: ChannelsControllerChannelOptions<Receives>
-  handler: (e: MessageEvent) => void
+  config: ChannelsControllerChannelOptions<ConnectionIds, Receives>
+  handler: (e: MessageEvent<ProtocolMsg<Receives>>) => void
   heartbeat: number | undefined
   interval: number | undefined
   status: ChannelStatus
@@ -126,18 +129,24 @@ export interface ChannelsControllerChannel<
 /**
  * @public
  */
-export interface ChannelsController<Sends extends ChannelMsg = ChannelMsg> {
+export interface ChannelsController<
+  ConnectionIds extends string,
+  Sends extends ChannelMsg = ChannelMsg,
+> {
   addSource: (source: MessageEventSource) => void
   destroy: () => void
-  send: (id: string | string[] | undefined, ...args: ToArgs<Sends>) => void
+  send: (
+    id: ConnectionIds | ConnectionIds[] | undefined,
+    ...args: ToArgs<Sends>
+  ) => void
 }
 
 /**
  * @public
  */
-export interface ChannelsNodeOptions {
-  id: string
-  connectTo: string
+export interface ChannelsNodeOptions<ConnectionIds extends string> {
+  id: ConnectionIds
+  connectTo: ConnectionIds
 }
 
 /**
