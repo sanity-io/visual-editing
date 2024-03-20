@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.8.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.2...visual-editing-v1.8.3) (2024-03-20)
+
+
+### Bug Fixes
+
+* ship TS Node16 compatible typings ([a21794d](https://github.com/sanity-io/visual-editing/commit/a21794dec5001867279a5979403220060b1d16f0))
+* **visual-editing:** relatively import type ([#1175](https://github.com/sanity-io/visual-editing/issues/1175)) ([c22e826](https://github.com/sanity-io/visual-editing/commit/c22e8261bab43cf6428a7865ac7eeb108f64679a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 1.6.5
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.1 to 0.6.2
+
 ## [1.8.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.1...visual-editing-v1.8.2) (2024-03-18)
 
 

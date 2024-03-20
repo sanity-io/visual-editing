@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.6.5](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.4...preview-url-secret-v1.6.5) (2024-03-20)
+
+
+### Bug Fixes
+
+* ship TS Node16 compatible typings ([a21794d](https://github.com/sanity-io/visual-editing/commit/a21794dec5001867279a5979403220060b1d16f0))
+
 ## [1.6.4](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.3...preview-url-secret-v1.6.4) (2024-02-26)
 
 

@@ -18,6 +18,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.6.2](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.1...core-loader-v1.6.2) (2024-03-20)
+
+
+### Bug Fixes
+
+* ship TS Node16 compatible typings ([a21794d](https://github.com/sanity-io/visual-editing/commit/a21794dec5001867279a5979403220060b1d16f0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.1 to 0.6.2
+
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.5.1...core-loader-v1.6.0) (2024-03-06)
 
 
