@@ -74,7 +74,7 @@ export function LocationsBanner(props: {
   }
 
   return (
-    <Card padding={1} radius={3} border tone={tone}>
+    <Card padding={1} radius={2} border tone={tone}>
       <div style={{ margin: -1 }}>
         {!locations && (
           <Flex align="flex-start" gap={3} padding={3}>
@@ -100,7 +100,7 @@ export function LocationsBanner(props: {
               as="button"
               onClick={toggle}
               padding={3}
-              radius={2}
+              radius={1}
               tone="inherit"
             >
               <Flex gap={3}>
@@ -181,7 +181,7 @@ function LocationItem(props: {
       key={node.href}
       onClick={handleClick}
       padding={3}
-      radius={2}
+      radius={1}
       pressed={active}
       tone="inherit"
     >
