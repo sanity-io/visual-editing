@@ -20,9 +20,10 @@ import {
 } from './types'
 
 export function createChannelsNode<
+  ConnectionIds extends string,
   Sends extends ChannelMsg,
   Receives extends ChannelMsg,
->(config: ChannelsNodeOptions): ChannelsNode<Sends, Receives> {
+>(config: ChannelsNodeOptions<ConnectionIds>): ChannelsNode<Sends, Receives> {
   const inFrame = window.self !== window.top || window.opener
 
   const channel: ChannelsNodeChannel = {

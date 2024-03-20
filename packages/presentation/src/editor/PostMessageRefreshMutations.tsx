@@ -1,12 +1,15 @@
 import type { ChannelsController, ChannelStatus } from '@sanity/channels'
-import type { PresentationMsg } from '@sanity/visual-editing-helpers'
+import type {
+  PresentationMsg,
+  VisualEditingConnectionIds,
+} from '@sanity/visual-editing-helpers'
 import { memo, startTransition, useEffect, useMemo, useState } from 'react'
 import { getPublishedId, type SanityDocument, useEditState } from 'sanity'
 
 export interface PostMessageRefreshMutationsProps {
   id: string
   type: string
-  channel: ChannelsController<PresentationMsg>
+  channel: ChannelsController<VisualEditingConnectionIds, PresentationMsg>
   previewKitConnection: ChannelStatus
   loadersConnection: ChannelStatus
 }

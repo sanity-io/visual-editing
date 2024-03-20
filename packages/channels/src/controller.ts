@@ -18,21 +18,25 @@ import type {
 } from './types'
 
 export function createChannelsController<
+  ConnectionIds extends string,
   Sends extends ChannelMsg,
   Receives extends ChannelMsg,
->(config: ChannelsControllerOptions<Receives>): ChannelsController {
-  const { destroy, send } = createChannelsControllerInternal<Sends, Receives>(
-    config,
-  )
-  const sources = new Set<MessageEventSource>()
-  const sendToSource = new WeakMap<
-    MessageEventSource,
-    ChannelsController['send']
-  >()
-  const destroySource = new Set<ChannelsController['destroy']>()
+>(
+  config: ChannelsControllerOptions<ConnectionIds, Receives>,
+): ChannelsController<ConnectionIds, Sends> {
+  type Controller = ChannelsController<ConnectionIds, Sends>
 
-  const sendToMany = ((id, type, data) => {
-    send(id, type, data)
+  const { destroy, send } = createChannelsControllerInternal<
+    ConnectionIds,
+    Sends,
+    Receives
+  >(config)
+  const sources = new Set<MessageEventSource>()
+  const sendToSource = new WeakMap<MessageEventSource, Controller['send']>()
+  const destroySource = new Set<Controller['destroy']>()
+
+  const sendToMany = ((id, ...args) => {
+    send(id, ...args)
     for (const source of sources) {
       if (
         source &&
@@ -41,17 +45,17 @@ export function createChannelsController<
         sendToSource.has(source)
       ) {
         const send = sendToSource.get(source)
-        send!(id, type, data)
+        send!(id, ...args)
       }
     }
-  }) satisfies ChannelsController['send']
+  }) satisfies Controller['send']
 
   const destroyMany = (() => {
     destroy()
     for (const destroy of destroySource) {
       destroy()
     }
-  }) satisfies ChannelsController['destroy']
+  }) satisfies Controller['destroy']
 
   return {
     destroy: destroyMany,
@@ -69,6 +73,7 @@ export function createChannelsController<
         throw new Error('Source is closed')
       }
       const { send, destroy } = createChannelsControllerInternal<
+        ConnectionIds,
         Sends,
         Receives
       >({
@@ -83,7 +88,8 @@ export function createChannelsController<
           return {
             ...connectTo,
             onEvent: onEvent
-              ? (((type, data) => {
+              ? (((...args) => {
+                  const [type] = args
                   if (
                     type === 'preview-kit/documents' ||
                     type === 'overlay/navigate' ||
@@ -92,8 +98,7 @@ export function createChannelsController<
                     return
                   }
 
-                  // @ts-expect-error -- figure out ToArgs complaining
-                  return onEvent(type, data)
+                  return onEvent(...args)
                 }) satisfies typeof onEvent)
               : undefined,
           }
@@ -107,33 +112,34 @@ export function createChannelsController<
 }
 
 function createChannelsControllerInternal<
+  ConnectionIds extends string,
   Sends extends ChannelMsg,
   Receives extends ChannelMsg,
 >(
-  config: ChannelsControllerOptions<Receives>,
-): Omit<ChannelsController, 'addSource'> {
+  config: ChannelsControllerOptions<ConnectionIds, Receives>,
+): Omit<ChannelsController<ConnectionIds, Sends>, 'addSource'> {
+  type Channel = ChannelsControllerChannel<ConnectionIds, Receives>
+
   const target = config.target
 
-  const channels: ChannelsControllerChannel<Receives>[] = config.connectTo.map(
-    (config) => ({
-      buffer: [],
-      config,
-      id: '',
-      handler: handshakeHandler,
-      status: 'connecting',
-      interval: undefined,
-      heartbeat: undefined,
-    }),
-  )
+  const channels: Channel[] = config.connectTo.map((config) => ({
+    buffer: [],
+    config,
+    id: '',
+    handler: handshakeHandler,
+    status: 'connecting',
+    interval: undefined,
+    heartbeat: undefined,
+  }))
 
-  function startHandshake(channel: ChannelsControllerChannel<Receives>) {
+  function startHandshake(channel: Channel) {
     channel.id = uuid()
     channel.interval = window.setInterval(() => {
       sendHandshake(channel, 'handshake/syn', { id: channel.id })
     }, HANDSHAKE_INTERVAL)
   }
 
-  function stopHandshake(channel: ChannelsControllerChannel<Receives>) {
+  function stopHandshake(channel: Channel) {
     window.clearInterval(channel.interval)
   }
 
@@ -163,8 +169,8 @@ function createChannelsControllerInternal<
     }
   }
 
-  const messageHandler = (e: MessageEvent<ProtocolMsg<Receives>>) => {
-    const { data } = e
+  const messageHandler = ((e: MessageEvent<ProtocolMsg<Receives>>) => {
+    const data = e.data as ProtocolMsg<Receives>
     if (
       !isHandshakeMessage(data.type) &&
       channels.find((channel) => channel.id === data.connectionId)
@@ -173,15 +179,13 @@ function createChannelsControllerInternal<
         (channel) => channel.config.id === data.from,
       )
       if (channel) {
-        // eslint-disable-next-line no-warning-comments
-        // @todo Ugly type casting
         const args = [data.type, data.data] as ToArgs<Receives>
         channel.config.onEvent?.(...args)
         config.onEvent?.(...args)
         send(channel, 'channel/response', { responseTo: data.id }, false)
       }
     }
-  }
+  }) satisfies Channel['handler']
 
   function handleEvents(e: MessageEvent<ProtocolMsg<Receives>>) {
     if (isLegacyHandshakeMessage(e)) {
@@ -198,7 +202,7 @@ function createChannelsControllerInternal<
     }
   }
 
-  function flush(channel: ChannelsControllerChannel<Receives>) {
+  function flush(channel: Channel) {
     const toFlush = [...channel.buffer]
     channel.buffer.splice(0, channel.buffer.length)
     toFlush.forEach(({ type, data }) => {
@@ -206,7 +210,7 @@ function createChannelsControllerInternal<
     })
   }
 
-  function startHeartbeat(channel: ChannelsControllerChannel<Receives>) {
+  function startHeartbeat(channel: Channel) {
     stopHeartbeat(channel)
     if (channel.config.heartbeat) {
       const heartbeatInverval =
@@ -219,16 +223,13 @@ function createChannelsControllerInternal<
     }
   }
 
-  function stopHeartbeat(channel: ChannelsControllerChannel<Receives>) {
+  function stopHeartbeat(channel: Channel) {
     if (channel.heartbeat) {
       window.clearInterval(channel.heartbeat)
     }
   }
 
-  function setChannelStatus(
-    channel: ChannelsControllerChannel<Receives>,
-    next: ChannelStatus,
-  ) {
+  function setChannelStatus(channel: Channel, next: ChannelStatus) {
     channel.status = next
     channel.config.onStatusUpdate?.(next, channel.config.id)
     config.onStatusUpdate?.(next, channel.config.id)
@@ -250,7 +251,7 @@ function createChannelsControllerInternal<
   }
 
   function sendHandshake<T extends Sends['type']>(
-    channel: ChannelsControllerChannel<Receives>,
+    channel: Channel,
     type: T,
     data?: Extract<Sends, { type: T }>['data'],
   ) {
@@ -258,7 +259,7 @@ function createChannelsControllerInternal<
       throw new Error('No channel ID set')
     }
 
-    const msg: ProtocolMsg<Sends> = {
+    const msg = {
       connectionId: channel.id,
       data,
       domain: 'sanity/channels',
@@ -266,7 +267,7 @@ function createChannelsControllerInternal<
       id: uuid(),
       to: channel.config.id,
       type,
-    }
+    } satisfies ProtocolMsg<Sends>
 
     try {
       target?.postMessage(msg, { targetOrigin: '*' })
@@ -276,7 +277,7 @@ function createChannelsControllerInternal<
   }
 
   function send<T extends Sends['type']>(
-    channel: ChannelsControllerChannel<Receives>,
+    channel: Channel,
     type: T | InternalMsgType,
     data?: Extract<Sends, { type: T }>['data'],
     expectResponse = true,
@@ -297,7 +298,7 @@ function createChannelsControllerInternal<
       throw new Error('No channel ID set')
     }
 
-    const msg: ProtocolMsg<Sends> = {
+    const msg = {
       connectionId: channel.id,
       data,
       domain: 'sanity/channels',
@@ -305,7 +306,7 @@ function createChannelsControllerInternal<
       id,
       to: channel.config.id,
       type,
-    }
+    } satisfies ProtocolMsg<Sends>
 
     if (expectResponse) {
       const maxWait = setTimeout(() => {

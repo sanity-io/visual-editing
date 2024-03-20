@@ -51,9 +51,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const channel = createChannelsNode<LoaderMsg, LoaderMsg>({
-    id: 'loaders' satisfies VisualEditingConnectionIds,
-    connectTo: 'presentation' satisfies VisualEditingConnectionIds,
+  const channel = createChannelsNode<
+    VisualEditingConnectionIds,
+    LoaderMsg,
+    LoaderMsg
+  >({
+    id: 'loaders',
+    connectTo: 'presentation',
   })
 
   channel.onStatusUpdate((status) => {

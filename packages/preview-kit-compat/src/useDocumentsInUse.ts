@@ -24,9 +24,13 @@ export function useDocumentsInUse(
     if (window.self === window.top && !window.opener) {
       return
     }
-    const channel = createChannelsNode<PreviewKitMsg, PresentationMsg>({
-      id: 'preview-kit' satisfies VisualEditingConnectionIds,
-      connectTo: 'presentation' satisfies VisualEditingConnectionIds,
+    const channel = createChannelsNode<
+      VisualEditingConnectionIds,
+      PreviewKitMsg,
+      PresentationMsg
+    >({
+      id: 'preview-kit',
+      connectTo: 'presentation',
     })
 
     channel.onStatusUpdate((status) => {

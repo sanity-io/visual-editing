@@ -15,9 +15,13 @@ export function useChannel(): ChannelsNode<Sends, Receives> | undefined {
   const [channel, setChannel] = useState<ChannelsNode<Sends, Receives>>()
 
   useEffect(() => {
-    const channelInstance = createChannelsNode<Sends, Receives>({
-      id: 'overlays' satisfies VisualEditingConnectionIds,
-      connectTo: 'presentation' satisfies VisualEditingConnectionIds,
+    const channelInstance = createChannelsNode<
+      VisualEditingConnectionIds,
+      Sends,
+      Receives
+    >({
+      id: 'overlays',
+      connectTo: 'presentation',
     })
     setChannel(channelInstance)
     return () => {
