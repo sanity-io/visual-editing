@@ -17,14 +17,12 @@ import {
   useSyncExternalStore,
 } from 'react'
 
-import stylesheet from '~/tailwind.css'
+import styles from '~/tailwind.css?url'
 import { formatTimeSince } from 'apps-common/utils'
 
 const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))
 
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: stylesheet },
-]
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
 export async function loader() {
   // Simulate a slightly slow API

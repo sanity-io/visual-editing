@@ -2,16 +2,17 @@
   "name": "apps-remix",
   "private": true,
   "sideEffects": false,
+  "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev --sourcemap --manual",
-    "start": "remix-serve ./build/index.js"
+    "dev": "remix vite:dev",
+    "build": "remix vite:build"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.13",
     "@remix-run/css-bundle": "^2.8.1",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
+    "@remix-run/serve": "^2.8.0",
     "@sanity/channels": "workspace:*",
     "@sanity/image-url": "^1.0.2",
     "@sanity/react-loader": "workspace:*",
@@ -27,15 +28,16 @@
   "devDependencies": {
     "@remix-run/dev": "^2.8.1",
     "@remix-run/eslint-config": "^2.8.1",
-    "@remix-run/serve": "^2.8.1",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "@types/source-map-support": "^0.5.10",
     "eslint": "^8.57.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vite": "^5.1.4",
+    "vite-tsconfig-paths": "^4.3.1"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "20.x"
   }
 }
