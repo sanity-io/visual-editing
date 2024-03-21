@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.3...visual-editing-v1.8.4) (2024-03-21)
+
+
+### Bug Fixes
+
+* improve vite compat with styled-components ([#1195](https://github.com/sanity-io/visual-editing/issues/1195)) ([69df4db](https://github.com/sanity-io/visual-editing/commit/69df4dbb47e01beb44317ed385d0eab345d11699))
+
 ## [1.8.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.2...visual-editing-v1.8.3) (2024-03-20)
 
 

@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.12.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.0...presentation-v1.12.1) (2024-03-21)
+
+
+### Bug Fixes
+
+* improve vite compat with styled-components ([#1195](https://github.com/sanity-io/visual-editing/issues/1195)) ([69df4db](https://github.com/sanity-io/visual-editing/commit/69df4dbb47e01beb44317ed385d0eab345d11699))
+
 ## [1.12.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.11.8...presentation-v1.12.0) (2024-03-20)
 
 
