@@ -41,7 +41,7 @@ import {
   type CommentIntentGetter,
   CommentsIntentProvider,
 } from 'sanity/structure'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 import {
   COMMENTS_INSPECTOR_NAME,

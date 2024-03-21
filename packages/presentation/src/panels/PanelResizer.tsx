@@ -7,7 +7,7 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 import { PanelsContext } from './PanelsContext'
 import { usePanelId } from './usePanelId'

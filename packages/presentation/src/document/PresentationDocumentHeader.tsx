@@ -1,7 +1,7 @@
 import { rem, Stack } from '@sanity/ui'
 import { type ReactNode, useContext } from 'react'
 import { type ObjectSchemaType, type PublishedId } from 'sanity'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 import type { PresentationPluginOptions } from '../types'
 import { LocationsBanner } from './LocationsBanner'

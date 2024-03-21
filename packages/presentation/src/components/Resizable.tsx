@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 import { useLocalState } from '../useLocalState'
 import { Resizer } from './Resizer'

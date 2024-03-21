@@ -13,7 +13,7 @@ import {
   PaneNode,
   StructureToolProvider,
 } from 'sanity/structure'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
 import { DeskDocumentPaneParams } from '../types'
