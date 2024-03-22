@@ -815,7 +815,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/core-loader:
     dependencies:
@@ -854,8 +854,8 @@ importers:
         specifier: ^12.0.0
         version: 12.0.0(eslint@8.57.0)
       happy-dom:
-        specifier: ^14.2.0
-        version: 14.2.0
+        specifier: ^14.3.1
+        version: 14.3.1
       nanostores:
         specifier: 0.10.0
         version: 0.10.0
@@ -864,7 +864,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/overlays:
     dependencies:
@@ -906,8 +906,8 @@ importers:
         specifier: ^12.0.0
         version: 12.0.0(eslint@8.57.0)
       happy-dom:
-        specifier: ^14.2.0
-        version: 14.2.0
+        specifier: ^14.3.1
+        version: 14.3.1
       ls-engines:
         specifier: ^0.9.1
         version: 0.9.1
@@ -919,7 +919,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/presentation:
     dependencies:
@@ -973,8 +973,8 @@ importers:
         specifier: 0.6.2
         version: link:../visual-editing-helpers
       happy-dom:
-        specifier: ^14.2.0
-        version: 14.2.0
+        specifier: ^14.3.1
+        version: 14.3.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -992,7 +992,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/preview-kit-compat:
     devDependencies:
@@ -1037,7 +1037,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/preview-url-secret:
     dependencies:
@@ -1083,7 +1083,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/react-loader:
     dependencies:
@@ -1135,7 +1135,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/svelte-loader:
     dependencies:
@@ -1196,7 +1196,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/visual-editing:
     dependencies:
@@ -1283,8 +1283,8 @@ importers:
         specifier: ^12.0.0
         version: 12.0.0(eslint@8.57.0)
       happy-dom:
-        specifier: ^14.2.0
-        version: 14.2.0
+        specifier: ^14.3.1
+        version: 14.3.1
       ls-engines:
         specifier: ^0.9.1
         version: 0.9.1
@@ -1305,7 +1305,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
   packages/visual-editing-helpers:
     devDependencies:
@@ -1350,7 +1350,7 @@ importers:
         version: 0.30.0
       vitest:
         specifier: ^1.4.0
-        version: 1.4.0(happy-dom@14.2.0)(jsdom@23.2.0)
+        version: 1.4.0(happy-dom@14.3.1)(jsdom@23.2.0)
 
 packages:
 
@@ -11750,8 +11750,8 @@ packages:
     transitivePeerDependencies:
       - uWebSockets.js
 
-  /happy-dom@14.2.0:
-    resolution: {integrity: sha512-vTqF/9MEkRKgYy5eKq9W0uiNmkgnVAmJhRwn8x8fQBR7lc4C84859jLhgZ1lR4Gi/t70oSdgvtLpxlHjgdJrAw==}
+  /happy-dom@14.3.1:
+    resolution: {integrity: sha512-uv2mE7jUH0S3cTnDPqNQj+J+Z5wOevqzopc7e8URXtcCH2STubCjPFVyEJ1ONGSv/aL/uvNwo5WWjsinpWpADQ==}
     engines: {node: '>=16.0.0'}
     dependencies:
       entities: 4.5.0
@@ -19529,7 +19529,7 @@ packages:
       vite: 5.2.2
     dev: true
 
-  /vitest@1.4.0(happy-dom@14.2.0)(jsdom@23.2.0):
+  /vitest@1.4.0(happy-dom@14.3.1)(jsdom@23.2.0):
     resolution: {integrity: sha512-gujzn0g7fmwf83/WzrDTnncZt2UiXP41mHuFYFrdwaLRVQ6JYQEiME2IfEjU3vcFL3VKa75XhI3lFgn+hfVsQw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -19563,7 +19563,7 @@ packages:
       chai: 4.4.1
       debug: 4.3.4
       execa: 8.0.1
-      happy-dom: 14.2.0
+      happy-dom: 14.3.1
       jsdom: 23.2.0
       local-pkg: 0.5.0
       magic-string: 0.30.8
