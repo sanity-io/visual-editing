@@ -16,7 +16,7 @@ import {
   ReferenceChildLinkProps,
 } from 'sanity/structure'
 
-import { DeskDocumentPaneParams, PresentationParams } from '../types'
+import type { PresentationParams, StructureDocumentPaneParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 
 function encodeQueryString(params: Record<string, unknown> = {}): string {
@@ -55,7 +55,7 @@ const BackLink = forwardRef(function BackLink(
   props: BackLinkProps,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  const { deskParams, params } = usePresentationTool()
+  const { params, structureParams } = usePresentationTool()
 
   return (
     <StateLink
@@ -64,7 +64,7 @@ const BackLink = forwardRef(function BackLink(
       state={{
         type: undefined,
         _searchParams: Object.entries({
-          ...deskParams,
+          ...structureParams,
           preview: params.preview,
         }),
       }}
@@ -97,13 +97,13 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
 
 export function PresentationPaneRouterProvider(
   props: PropsWithChildren<{
-    onDeskParams: (params: DeskDocumentPaneParams) => void
-    params: DeskDocumentPaneParams
+    onStructureParams: (params: StructureDocumentPaneParams) => void
+    params: StructureDocumentPaneParams
     previewUrl?: string
     refs?: { _id: string; _type: string }[]
   }>,
 ): ReactElement {
-  const { children, params, onDeskParams, previewUrl, refs } = props
+  const { children, onStructureParams, params, previewUrl, refs } = props
 
   const { state: routerState, resolvePathFromState } = useRouter()
 
@@ -181,10 +181,10 @@ export function PresentationPaneRouterProvider(
       setParams: (nextParams) => {
         // eslint-disable-next-line no-warning-comments
         // @todo set inspect param to undefined manually as param is missing from object when closing inspector
-        onDeskParams({
+        onStructureParams({
           ...nextParams,
           inspect: nextParams.inspect ?? undefined,
-        } as DeskDocumentPaneParams)
+        } as StructureDocumentPaneParams)
       },
       setPayload: (payload) => {
         console.warn('setPayload', payload)
@@ -194,7 +194,7 @@ export function PresentationPaneRouterProvider(
       },
       createPathWithParams,
     }
-  }, [createPathWithParams, onDeskParams, params, previewUrl, refs])
+  }, [createPathWithParams, onStructureParams, params, previewUrl, refs])
 
   return (
     <PaneRouterContext.Provider value={context}>

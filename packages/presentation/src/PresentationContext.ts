@@ -1,17 +1,17 @@
 import { createContext } from 'react'
 
 import {
-  DeskDocumentPaneParams,
   PresentationNavigate,
   PresentationParams,
+  StructureDocumentPaneParams,
 } from './types'
 
 export interface PresentationContextValue {
-  deskParams: DeskDocumentPaneParams
   devMode: boolean
   name: string
   navigate: PresentationNavigate
   params: PresentationParams
+  structureParams: StructureDocumentPaneParams
 }
 
 export const PresentationContext =

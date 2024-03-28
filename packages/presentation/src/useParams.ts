@@ -5,12 +5,12 @@ import { RouterContextValue, RouterState, SearchParam } from 'sanity/router'
 import { debounce } from './lib/debounce'
 import { parseRouterState } from './lib/parse'
 import {
-  DeskDocumentPaneParams,
   FrameState,
   PresentationNavigate,
   PresentationParams,
   PresentationSearchParams,
   PresentationStateParams,
+  StructureDocumentPaneParams,
 } from './types'
 
 function pruneObject<T extends RouterState | PresentationParams>(obj: T): T {
@@ -36,9 +36,9 @@ export function useParams({
   }
   frameStateRef: MutableRefObject<FrameState>
 }): {
-  deskParams: DeskDocumentPaneParams
   navigate: PresentationNavigate
   params: PresentationParams
+  structureParams: StructureDocumentPaneParams
 } {
   const params = useMemo<PresentationParams>(() => {
     const { id, path, type } = parseRouterState(routerState)
@@ -66,7 +66,7 @@ export function useParams({
     }
   }, [routerState, routerSearchParams, initialPreviewUrl])
 
-  const deskParams = useMemo<DeskDocumentPaneParams>(() => {
+  const structureParams = useMemo<StructureDocumentPaneParams>(() => {
     const pruned = pruneObject({
       inspect: params.inspect,
       path: params.path,
@@ -154,7 +154,7 @@ export function useParams({
   )
 
   return {
-    deskParams,
+    structureParams,
     navigate,
     params,
   }

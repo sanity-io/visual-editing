@@ -2,33 +2,33 @@ import { type ReactElement } from 'react'
 import { type Path } from 'sanity'
 import { StructureToolProvider } from 'sanity/structure'
 
-import { DeskDocumentPaneParams } from '../types'
+import type { StructureDocumentPaneParams } from '../types'
 import { DocumentPane } from './DocumentPane'
 
 export function DocumentPanel(props: {
-  deskParams: DeskDocumentPaneParams
   documentId: string
   documentType: string
-  onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
+  onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
+  structureParams: StructureDocumentPaneParams
 }): ReactElement {
   const {
-    deskParams,
     documentId,
     documentType,
-    onDeskParams,
     onFocusPath,
+    onStructureParams,
     previewUrl,
+    structureParams,
   } = props
   return (
     <StructureToolProvider>
       <DocumentPane
         documentId={documentId}
         documentType={documentType}
-        params={deskParams}
-        onDeskParams={onDeskParams}
         onFocusPath={onFocusPath}
+        onStructureParams={onStructureParams}
+        params={structureParams}
         previewUrl={previewUrl}
       />
     </StructureToolProvider>

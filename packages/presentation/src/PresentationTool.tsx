@@ -67,12 +67,12 @@ import {
   presentationReducerInit,
 } from './reducers/presentationReducer'
 import type {
-  DeskDocumentPaneParams,
   FrameState,
   LiveQueriesState,
   LiveQueriesStateValue,
   PresentationPluginOptions,
   PresentationStateParams,
+  StructureDocumentPaneParams,
 } from './types'
 import { useDocumentsOnPage } from './useDocumentsOnPage'
 import { useParams } from './useParams'
@@ -138,7 +138,7 @@ export default function PresentationTool(props: {
     url: undefined,
   })
 
-  const { params, deskParams, navigate } = useParams({
+  const { navigate, params, structureParams } = useParams({
     initialPreviewUrl,
     routerNavigate,
     routerState,
@@ -412,9 +412,9 @@ export default function PresentationTool(props: {
     [initialPreviewUrl, params, navigate],
   )
 
-  const handleDeskParams = useCallback(
-    (deskParams: DeskDocumentPaneParams) => {
-      navigate({}, deskParams)
+  const handleStructureParams = useCallback(
+    (structureParams: StructureDocumentPaneParams) => {
+      navigate({}, structureParams)
     },
     [navigate],
   )
@@ -552,11 +552,11 @@ export default function PresentationTool(props: {
   return (
     <>
       <PresentationProvider
-        deskParams={deskParams}
         devMode={devMode}
         name={name}
-        params={params}
         navigate={navigate}
+        params={params}
+        structureParams={structureParams}
       >
         <PresentationNavigateProvider navigate={navigate}>
           <PresentationParamsProvider params={params}>
@@ -606,13 +606,13 @@ export default function PresentationTool(props: {
                   >
                     <CommentsIntentProvider getIntent={getCommentIntent}>
                       <ContentEditor
-                        refs={documentsOnPage}
-                        deskParams={deskParams}
                         documentId={params.id}
                         documentType={params.type}
-                        onDeskParams={handleDeskParams}
                         onFocusPath={handleFocusPath}
+                        onStructureParams={handleStructureParams}
                         previewUrl={params.preview}
+                        refs={documentsOnPage}
+                        structureParams={structureParams}
                       />
                     </CommentsIntentProvider>
                   </DisplayedDocumentBroadcasterProvider>

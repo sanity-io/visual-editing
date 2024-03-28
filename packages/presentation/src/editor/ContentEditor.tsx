@@ -1,45 +1,45 @@
 import { type ReactElement } from 'react'
 import type { Path } from 'sanity'
 
-import type { DeskDocumentPaneParams } from '../types'
+import type { StructureDocumentPaneParams } from '../types'
 import { DocumentListPane } from './DocumentListPane'
 import { DocumentPanel } from './DocumentPanel'
 
 export function ContentEditor(props: {
-  deskParams: DeskDocumentPaneParams
   documentId?: string
   documentType?: string
-  onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
+  onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
   refs: { _id: string; _type: string }[]
+  structureParams: StructureDocumentPaneParams
 }): ReactElement {
   const {
-    deskParams,
     documentId,
     documentType,
-    onDeskParams,
     onFocusPath,
+    onStructureParams,
     previewUrl,
     refs,
+    structureParams,
   } = props
 
   if (documentId && documentType) {
     return (
       <DocumentPanel
-        deskParams={deskParams}
         documentId={documentId}
         documentType={documentType}
-        onDeskParams={onDeskParams}
         onFocusPath={onFocusPath}
+        onStructureParams={onStructureParams}
         previewUrl={previewUrl}
+        structureParams={structureParams}
       />
     )
   }
 
   return (
     <DocumentListPane
-      onDeskParams={onDeskParams}
+      onStructureParams={onStructureParams}
       previewUrl={previewUrl}
       refs={refs}
     />

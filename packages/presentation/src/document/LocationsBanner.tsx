@@ -165,7 +165,7 @@ function LocationItem(props: {
       type: documentType,
       mode: 'presentation',
       presentation: toolName,
-      ...presentation?.deskParams,
+      ...presentation?.structureParams,
       preview: node.href,
     },
   })

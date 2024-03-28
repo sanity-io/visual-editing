@@ -10,14 +10,14 @@ import {
 import { Path } from 'sanity'
 import { decodeJsonParams } from 'sanity/router'
 import {
-  DocumentPane as DeskDocumentPane,
+  DocumentPane as StructureDocumentPane,
   DocumentPaneNode,
   PaneLayout,
 } from 'sanity/structure'
 import { styled } from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
-import { DeskDocumentPaneParams } from '../types'
+import type { StructureDocumentPaneParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
 
@@ -28,17 +28,17 @@ const WrappedCode = styled(Code)`
 export function DocumentPane(props: {
   documentId: string
   documentType: string
-  params: DeskDocumentPaneParams
-  onDeskParams: (params: DeskDocumentPaneParams) => void
   onFocusPath: (path: Path) => void
+  onStructureParams: (params: StructureDocumentPaneParams) => void
+  params: StructureDocumentPaneParams
   previewUrl?: string
 }): ReactElement {
   const {
     documentId,
     documentType,
-    params,
-    onDeskParams,
     onFocusPath,
+    onStructureParams,
+    params,
     previewUrl,
   } = props
   const { template, templateParams } = params
@@ -97,11 +97,11 @@ export function DocumentPane(props: {
     <ErrorBoundary onCatch={setErrorParams}>
       <PaneLayout style={{ height: '100%' }}>
         <PresentationPaneRouterProvider
-          onDeskParams={onDeskParams}
+          onStructureParams={onStructureParams}
           params={params}
           previewUrl={previewUrl}
         >
-          <DeskDocumentPane
+          <StructureDocumentPane
             paneKey="document"
             index={1}
             itemId="document"
