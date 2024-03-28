@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react'
 import {
-  DocumentListPane as DeskDocumentListPane,
+  DocumentListPane as StructureDocumentListPane,
   PaneLayout,
   PaneNode,
   StructureToolProvider,
@@ -16,7 +16,7 @@ import {
 import { styled } from 'styled-components'
 
 import { ErrorCard } from '../components/ErrorCard'
-import { DeskDocumentPaneParams } from '../types'
+import type { StructureDocumentPaneParams } from '../types'
 import { usePresentationTool } from '../usePresentationTool'
 import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
 
@@ -36,11 +36,11 @@ const WrappedCode = styled(Code)`
 `
 
 export function DocumentListPane(props: {
-  onDeskParams: (params: DeskDocumentPaneParams) => void
+  onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
   refs: { _id: string; _type: string }[]
 }): ReactElement {
-  const { onDeskParams, previewUrl, refs } = props
+  const { onStructureParams, previewUrl, refs } = props
   const { devMode } = usePresentationTool()
 
   const pane: Extract<PaneNode, { type: 'documentList' }> = useMemo(
@@ -65,7 +65,7 @@ export function DocumentListPane(props: {
 
   const handleRetry = useCallback(() => setErrorParams(null), [])
 
-  const [deskParams] = useState(() => ({}))
+  const [structureParams] = useState(() => ({}))
 
   // Reset error state when `refs` value schanges
   useEffect(() => setErrorParams(null), [refs])
@@ -97,13 +97,13 @@ export function DocumentListPane(props: {
       <RootLayout>
         <StructureToolProvider>
           <PresentationPaneRouterProvider
-            params={deskParams}
-            onDeskParams={onDeskParams}
+            onStructureParams={onStructureParams}
+            params={structureParams}
             previewUrl={previewUrl}
             refs={refs}
           >
             <Root direction="column" flex={1}>
-              <DeskDocumentListPane
+              <StructureDocumentListPane
                 index={0}
                 itemId="$root"
                 pane={pane}

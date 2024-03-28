@@ -62,7 +62,7 @@ export interface PresentationStateParams {
   path?: string
 }
 
-export interface DeskDocumentPaneParams {
+export interface StructureDocumentPaneParams {
   inspect?: string
   path?: string
   rev?: string
@@ -81,14 +81,14 @@ export interface DeskDocumentPaneParams {
 
 export interface PresentationParams
   extends PresentationStateParams,
-    DeskDocumentPaneParams {
+    StructureDocumentPaneParams {
   id?: string
   preview?: string
   perspective?: string
   viewport?: string
 }
 
-export interface PresentationSearchParams extends DeskDocumentPaneParams {
+export interface PresentationSearchParams extends StructureDocumentPaneParams {
   preview?: string
   perspective?: string
   viewport?: string
