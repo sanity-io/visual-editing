@@ -1,4 +1,4 @@
-import type { QueryParams } from '@sanity/client'
+import type { QueryParams, StegaConfig } from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
@@ -40,6 +40,12 @@ export const createQueryStore = (
     params: QueryParams = {},
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
+    let stega: StegaConfig = {enabled: false}
+    if (options.stega) {
+      stega = options.stega === true ? {enabled: true} : options.stega
+    } else if (unstable__serverClient.instance?.config().stega) {
+      stega = unstable__serverClient.instance?.config().stega
+    }
     const perspective =
       options.perspective ||
       unstable__serverClient.instance?.config().perspective ||
@@ -70,6 +76,7 @@ export const createQueryStore = (
             resultSourceMap: 'withKeyArraySelector',
             perspective,
             useCdn: false,
+            stega
           },
         )
       // @ts-expect-error - update typings
@@ -79,7 +86,7 @@ export const createQueryStore = (
     }
     const { result, resultSourceMap } =
       await unstable__cache.instance.fetch<QueryResponseResult>(
-        JSON.stringify({ query, params }),
+        JSON.stringify({ query, params, options: { stega } }),
       )
     // @ts-expect-error - update typings
     return resultSourceMap
