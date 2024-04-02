@@ -40,12 +40,7 @@ export const createQueryStore = (
     params: QueryParams = {},
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
-    let stega: StegaConfig = {enabled: false}
-    if (options.stega) {
-      stega = options.stega === true ? {enabled: true} : options.stega
-    } else if (unstable__serverClient.instance?.config().stega) {
-      stega = unstable__serverClient.instance?.config().stega
-    }
+    const stega = options.stega ?? unstable__serverClient.instance?.config().stega.enabled ?? false
     const perspective =
       options.perspective ||
       unstable__serverClient.instance?.config().perspective ||
