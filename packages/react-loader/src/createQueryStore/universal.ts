@@ -86,7 +86,7 @@ export const createQueryStore = (
     }
     const { result, resultSourceMap } =
       await unstable__cache.instance.fetch<QueryResponseResult>(
-        JSON.stringify({ query, params, options: { stega } }),
+        JSON.stringify({ query, params, perspective, stega }),
       )
     // @ts-expect-error - update typings
     return resultSourceMap
