@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.4...visual-editing-v1.8.5) (2024-04-02)
+
+
+### Bug Fixes
+
+* **visual-editing:** prevent focusing both clicked and focused elements ([#1238](https://github.com/sanity-io/visual-editing/issues/1238)) ([cc04b4e](https://github.com/sanity-io/visual-editing/commit/cc04b4ef46cdf9e98ead01e43489f3b38096152d))
+
 ## [1.8.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.3...visual-editing-v1.8.4) (2024-03-21)
 
 
