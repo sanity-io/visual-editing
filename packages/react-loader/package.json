@@ -17,6 +17,10 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
+      "deno": "./dist/index.js",
+      "edge": "./dist/index.js",
+      "edge-light": "./dist/index.js",
+      "worker": "./dist/index.js",
       "react-server": "./dist/rsc/index.react-server.js",
       "browser": {
         "source": "./src/index.browser.ts",
