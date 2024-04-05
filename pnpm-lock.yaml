@@ -148,8 +148,8 @@ importers:
         specifier: 14.1.4
         version: 14.1.4
       '@portabletext/react':
-        specifier: ^3.0.15
-        version: 3.0.15(react@18.2.0)
+        specifier: ^3.0.17
+        version: 3.0.17(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -229,8 +229,8 @@ importers:
   apps/next-no-cache:
     dependencies:
       '@portabletext/react':
-        specifier: ^3.0.15
-        version: 3.0.15(react@18.2.0)
+        specifier: ^3.0.17
+        version: 3.0.17(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -344,8 +344,8 @@ importers:
   apps/next-server-only:
     dependencies:
       '@portabletext/react':
-        specifier: ^3.0.15
-        version: 3.0.15(react@18.2.0)
+        specifier: ^3.0.17
+        version: 3.0.17(react@18.2.0)
       '@sanity/channels':
         specifier: workspace:*
         version: link:../../packages/channels
@@ -502,8 +502,8 @@ importers:
         specifier: 14.1.4
         version: 14.1.4
       '@portabletext/react':
-        specifier: ^3.0.15
-        version: 3.0.15(react@18.2.0)
+        specifier: ^3.0.17
+        version: 3.0.17(react@18.2.0)
       '@sanity/demo':
         specifier: ^2.0.0
         version: 2.0.0(@sanity/color@3.0.4)(tailwindcss@3.4.3)
@@ -580,8 +580,8 @@ importers:
   apps/remix:
     dependencies:
       '@portabletext/react':
-        specifier: ^3.0.15
-        version: 3.0.15(react@18.2.0)
+        specifier: ^3.0.17
+        version: 3.0.17(react@18.2.0)
       '@remix-run/css-bundle':
         specifier: ^2.8.1
         version: 2.8.1
@@ -713,8 +713,8 @@ importers:
   apps/svelte:
     dependencies:
       '@portabletext/svelte':
-        specifier: ^2.1.9
-        version: 2.1.9(svelte@4.2.12)
+        specifier: ^2.1.10
+        version: 2.1.10(svelte@4.2.12)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -4554,7 +4554,7 @@ packages:
     resolution: {integrity: sha512-FyTAOsVafE/Pg3ZiuAc8mWYDWxREUmyAMGJ43T4ph8fLDWqiwG2PfDigTL+te8mKFPhLy/3xbMI0QAasoOkBcg==}
     dependencies:
       '@nuxt/kit': 3.11.2(rollup@4.14.0)
-      '@portabletext/types': 2.0.11
+      '@portabletext/types': 2.0.12
       '@sanity/client': 6.15.9
       '@sanity/core-loader': link:packages/core-loader
       '@sanity/preview-url-secret': link:packages/preview-url-secret
@@ -4774,33 +4774,33 @@ packages:
   /@polka/url@1.0.0-next.25:
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
-  /@portabletext/react@3.0.15(react@18.2.0):
-    resolution: {integrity: sha512-M4Yag/C+1k9jnBs9n+ciDz2sP3vuvohxlX4CL3VFIlnDOsjzFmkPhWjOO4HUhOl+YE1VABJv/q8MW7PYaKS7SQ==}
+  /@portabletext/react@3.0.17(react@18.2.0):
+    resolution: {integrity: sha512-a5z2CoEG6vtRNnMZ95hH1IRYMpY2Zhmeri839p0Os2CRlQX7PldL7B91NIhwuJd0D+9ESMNAMf4Or/XsVQWZew==}
     engines: {node: ^14.13.1 || >=16.0.0}
     peerDependencies:
       react: ^17 || ^18
     dependencies:
-      '@portabletext/toolkit': 2.0.13
-      '@portabletext/types': 2.0.11
+      '@portabletext/toolkit': 2.0.14
+      '@portabletext/types': 2.0.12
       react: 18.2.0
 
-  /@portabletext/svelte@2.1.9(svelte@4.2.12):
-    resolution: {integrity: sha512-hYWSgmVSIUjNahMNhAXUGvIf9Ua/pPG+Enux8fFuBSLxKCB+jyPxBeFDcTvl7enkTQ4POHrl3zMrtRrrtRD1FQ==}
+  /@portabletext/svelte@2.1.10(svelte@4.2.12):
+    resolution: {integrity: sha512-bTnQDaqaPPHW24RlTkm5ugXchO61vriXAtuoF3xGSAspmAW9Gns+Fd9Bz6PTUusDzCKCsiQHkrZcvwOxdl4sug==}
     peerDependencies:
       svelte: '>=3.47.0 <5.0.0'
     dependencies:
-      '@portabletext/toolkit': 2.0.13
+      '@portabletext/toolkit': 2.0.14
       svelte: 4.2.12
     dev: false
 
-  /@portabletext/toolkit@2.0.13:
-    resolution: {integrity: sha512-RH/jzwlWcsDPnpJBO1xEByUnweVVciD1OVLGyRUA8P++XedAc+fxY3RlUkgi5FyDEyEdisPflKtUU/GAXtMSig==}
+  /@portabletext/toolkit@2.0.14:
+    resolution: {integrity: sha512-SIg7bnfJ3nUA5N8JF6jcLE20CCrguqZDJkopHiUYBJ3y/OHIFdkBL5roLlMAY8VQOHK0CYKr9CnJ2BK/ihuuOw==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
-      '@portabletext/types': 2.0.11
+      '@portabletext/types': 2.0.12
 
-  /@portabletext/types@2.0.11:
-    resolution: {integrity: sha512-79Bj/tffVOV9mpMzQFLPMrxPpUXh4OKlUBG8eDJBirH/x1o28Qu8Tg2nO84/KAPmlCm4rC/TOGvDxqsP0apg5A==}
+  /@portabletext/types@2.0.12:
+    resolution: {integrity: sha512-dk8CcVDg7Y3DCXhuCdEJeV1GYzIfjCdEgZhrODhIiz+Zd7iXQYsdoRJXoz5lsT5w0UFxYkG+1KhQpIXSlKvyhA==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
 
   /@remix-run/css-bundle@2.8.1:
@@ -13895,7 +13895,7 @@ packages:
       sanity: 3.36.5-canary.40
       styled-components: 6.1.8
     dependencies:
-      '@portabletext/react': 3.0.15(react@18.2.0)
+      '@portabletext/react': 3.0.17(react@18.2.0)
       '@sanity/client': 6.15.9
       '@sanity/icons': 2.11.6(react@18.2.0)
       '@sanity/preview-kit': 5.0.37(@sanity/client@6.15.9)(react@18.2.0)
@@ -13924,7 +13924,7 @@ packages:
       sanity: 3.36.5-canary.40
       styled-components: 6.1.8
     dependencies:
-      '@portabletext/react': 3.0.15(react@18.2.0)
+      '@portabletext/react': 3.0.17(react@18.2.0)
       '@sanity/client': 6.15.9
       '@sanity/icons': 2.11.6(react@18.2.0)
       '@sanity/preview-kit': 5.0.37(@sanity/client@6.15.9)(react@18.2.0)
@@ -16925,7 +16925,7 @@ packages:
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       '@juggle/resize-observer': 3.4.0
-      '@portabletext/react': 3.0.15(react@18.2.0)
+      '@portabletext/react': 3.0.17(react@18.2.0)
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
@@ -17064,7 +17064,7 @@ packages:
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       '@juggle/resize-observer': 3.4.0
-      '@portabletext/react': 3.0.15(react@18.2.0)
+      '@portabletext/react': 3.0.17(react@18.2.0)
       '@rexxars/react-json-inspector': 8.0.1(react@18.2.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.3.1
