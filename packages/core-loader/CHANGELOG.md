@@ -18,6 +18,21 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.6.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.3...core-loader-v1.6.4) (2024-04-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.10 ([#1258](https://github.com/sanity-io/visual-editing/issues/1258)) ([9bf3cdb](https://github.com/sanity-io/visual-editing/commit/9bf3cdbcb7924cdcb96b7de15a159457385e8fec))
+* **deps:** update dependency nanostores to v0.10.3 ([#1264](https://github.com/sanity-io/visual-editing/issues/1264)) ([b6212e2](https://github.com/sanity-io/visual-editing/commit/b6212e2909dd58717a8d311f7fe6f85cda41450b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.2 to 0.6.3
+
 ## [1.6.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.2...core-loader-v1.6.3) (2024-04-02)
 
 
