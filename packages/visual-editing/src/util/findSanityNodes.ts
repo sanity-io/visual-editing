@@ -1,4 +1,4 @@
-import { decodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
+import { decodeSanityNodeData } from '@repo/visual-editing-helpers/csm'
 
 import { OVERLAY_ID } from '../constants'
 import type {

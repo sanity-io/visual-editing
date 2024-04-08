@@ -1,4 +1,9 @@
 import { createChannelsNode } from '@repo/channels'
+import type {
+  LoaderMsg,
+  LoaderPayloads,
+  VisualEditingConnectionIds,
+} from '@repo/visual-editing-helpers'
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -7,11 +12,6 @@ import {
   SanityClient,
 } from '@sanity/client'
 import { stegaEncodeSourceMap } from '@sanity/client/stega'
-import type {
-  LoaderMsg,
-  LoaderPayloads,
-  VisualEditingConnectionIds,
-} from '@sanity/visual-editing-helpers'
 import { atom, MapStore } from 'nanostores'
 
 import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'

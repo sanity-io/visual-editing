@@ -1,3 +1,4 @@
+import { encodeSanityNodeData } from '@repo/visual-editing-helpers/csm'
 import {
   type ContentSourceMap,
   jsonPathToStudioPath,
@@ -7,7 +8,6 @@ import {
   studioPathToJsonPath,
 } from '@sanity/client/csm'
 import type { StegaConfig } from '@sanity/client/stega'
-import { encodeSanityNodeData } from '@sanity/visual-editing-helpers/csm'
 
 import type { EncodeDataAttribute } from './types'
 

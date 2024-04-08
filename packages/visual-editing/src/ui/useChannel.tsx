@@ -1,5 +1,5 @@
 import { type ChannelsNode, createChannelsNode } from '@repo/channels'
-import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
+import type { VisualEditingConnectionIds } from '@repo/visual-editing-helpers'
 import { useEffect, useState } from 'react'
 
 import type {

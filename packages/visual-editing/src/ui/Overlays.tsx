@@ -1,4 +1,10 @@
 import type { ChannelStatus } from '@repo/channels'
+import {
+  isAltKey,
+  isHotkey,
+  type SanityNode,
+} from '@repo/visual-editing-helpers'
+import { DRAFTS_PREFIX } from '@repo/visual-editing-helpers/csm'
 import type {
   ClientPerspective,
   ContentSourceMapDocuments,
@@ -9,12 +15,6 @@ import {
   studioTheme,
   ThemeProvider,
 } from '@sanity/ui'
-import {
-  isAltKey,
-  isHotkey,
-  type SanityNode,
-} from '@sanity/visual-editing-helpers'
-import { DRAFTS_PREFIX } from '@sanity/visual-editing-helpers/csm'
 import {
   type FunctionComponent,
   useCallback,

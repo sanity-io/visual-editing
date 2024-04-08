@@ -3,4 +3,4 @@ export {
   type RevalidateState,
   useQueryParams,
   useRevalidate,
-} from '@sanity/visual-editing-helpers/hooks'
+} from '@repo/visual-editing-helpers/hooks'

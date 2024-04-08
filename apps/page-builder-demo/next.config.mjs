@@ -13,7 +13,7 @@ const nextConfig = {
     '@sanity/react-loader',
     'apps-common',
     '@repo/channels',
-    '@sanity/visual-editing-helpers',
+    '@repo/visual-editing-helpers',
   ],
 }
 

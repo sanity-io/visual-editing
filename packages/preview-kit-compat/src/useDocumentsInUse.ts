@@ -1,10 +1,10 @@
 import { type ChannelsNode, createChannelsNode } from '@repo/channels'
-import type { ContentSourceMapDocuments } from '@sanity/client/csm'
 import {
   type PresentationMsg,
   type PreviewKitMsg,
   type VisualEditingConnectionIds,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'
+import type { ContentSourceMapDocuments } from '@sanity/client/csm'
 import { useEffect, useState } from 'react'
 
 /**

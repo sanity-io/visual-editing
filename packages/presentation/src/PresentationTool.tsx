@@ -3,8 +3,6 @@ import {
   type ChannelStatus,
   createChannelsController,
 } from '@repo/channels'
-import { studioPath } from '@sanity/client/csm'
-import { BoundaryElementProvider, Flex } from '@sanity/ui'
 import {
   getQueryCacheKey,
   isAltKey,
@@ -15,7 +13,9 @@ import {
   type PreviewKitMsg,
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'
+import { studioPath } from '@sanity/client/csm'
+import { BoundaryElementProvider, Flex } from '@sanity/ui'
 import {
   lazy,
   type ReactElement,

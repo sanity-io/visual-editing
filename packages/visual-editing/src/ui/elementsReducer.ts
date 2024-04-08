@@ -1,4 +1,4 @@
-import type { PresentationMsg } from '@sanity/visual-editing-helpers'
+import type { PresentationMsg } from '@repo/visual-editing-helpers'
 
 import type { ElementState, OverlayMsg } from '../types'
 

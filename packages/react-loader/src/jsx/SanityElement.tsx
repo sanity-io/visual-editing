@@ -1,7 +1,7 @@
 import {
   encodeSanityNodeData,
   type SourceNode,
-} from '@sanity/visual-editing-helpers/csm'
+} from '@repo/visual-editing-helpers/csm'
 import type { HTMLProps, Ref } from 'react'
 import { createElement, forwardRef } from 'react'
 

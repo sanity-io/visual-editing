@@ -1,4 +1,4 @@
-import type { SanityStegaNode } from '@sanity/visual-editing-helpers'
+import type { SanityStegaNode } from '@repo/visual-editing-helpers'
 import { vercelStegaDecode } from '@vercel/stega'
 
 import { VERCEL_STEGA_REGEX } from '../constants'

@@ -1,6 +1,6 @@
+import { pathToUrlString } from '@repo/visual-editing-helpers'
 import { createEditUrl, studioPath } from '@sanity/client/csm'
 import { Box, Card, Flex, Text } from '@sanity/ui'
-import { pathToUrlString } from '@sanity/visual-editing-helpers'
 import { memo, useEffect, useMemo, useRef } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import { styled } from 'styled-components'

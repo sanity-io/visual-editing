@@ -2,7 +2,7 @@ import type { ChannelsController, ChannelStatus } from '@repo/channels'
 import type {
   PresentationMsg,
   VisualEditingConnectionIds,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'
 import { memo, startTransition, useEffect, useMemo, useState } from 'react'
 import { getPublishedId, type SanityDocument, useEditState } from 'sanity'
 

@@ -7,14 +7,14 @@ import type {
   SanityNode,
   SanityStegaNode,
   VisualEditingMsg,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'
 
 export type {
   HistoryRefresh,
   HistoryUpdate,
   SanityNode,
   SanityStegaNode,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'
 
 /**
  * @public

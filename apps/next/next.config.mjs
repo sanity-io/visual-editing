@@ -17,7 +17,7 @@ const nextConfig = {
     '@sanity/visual-editing',
     '@sanity/preview-kit-compat',
     '@repo/channels',
-    '@sanity/visual-editing-helpers',
+    '@repo/visual-editing-helpers',
     'apps-common',
   ],
 
