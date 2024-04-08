@@ -1,4 +1,4 @@
-import type { ChannelStatus } from '@sanity/channels'
+import type { ChannelStatus } from '@repo/channels'
 import type {
   ClientPerspective,
   ContentSourceMapDocuments,

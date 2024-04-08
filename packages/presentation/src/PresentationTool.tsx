@@ -2,7 +2,7 @@ import {
   type ChannelsController,
   type ChannelStatus,
   createChannelsController,
-} from '@sanity/channels'
+} from '@repo/channels'
 import { studioPath } from '@sanity/client/csm'
 import { BoundaryElementProvider, Flex } from '@sanity/ui'
 import {

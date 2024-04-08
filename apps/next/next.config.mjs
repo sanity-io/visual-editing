@@ -16,7 +16,7 @@ const nextConfig = {
   transpilePackages: [
     '@sanity/visual-editing',
     '@sanity/preview-kit-compat',
-    '@sanity/channels',
+    '@repo/channels',
     '@sanity/visual-editing-helpers',
     'apps-common',
   ],

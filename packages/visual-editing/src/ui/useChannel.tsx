@@ -1,4 +1,4 @@
-import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
+import { type ChannelsNode, createChannelsNode } from '@repo/channels'
 import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
 import { useEffect, useState } from 'react'
 

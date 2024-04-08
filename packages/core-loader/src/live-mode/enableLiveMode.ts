@@ -1,4 +1,4 @@
-import { createChannelsNode } from '@sanity/channels'
+import { createChannelsNode } from '@repo/channels'
 import {
   type ClientPerspective,
   type ContentSourceMap,

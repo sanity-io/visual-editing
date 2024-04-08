@@ -1,4 +1,4 @@
-import type { ChannelsController, ChannelStatus } from '@sanity/channels'
+import type { ChannelsController, ChannelStatus } from '@repo/channels'
 import type {
   PresentationMsg,
   VisualEditingConnectionIds,

@@ -15,7 +15,7 @@ const nextConfig = {
   // */
 
   transpilePackages: [
-    '@sanity/channels',
+    '@repo/channels',
     'apps-common',
     '@sanity/presentation',
     'sanity',

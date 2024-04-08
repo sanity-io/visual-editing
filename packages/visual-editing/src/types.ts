@@ -1,4 +1,4 @@
-import type { ChannelsNode } from '@sanity/channels'
+import type { ChannelsNode } from '@repo/channels'
 import type {
   HistoryRefresh,
   HistoryUpdate,

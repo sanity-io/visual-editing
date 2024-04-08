@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
+import { type ChannelsNode, createChannelsNode } from '@repo/channels'
 
 interface Sends {
   type: 'child/event'

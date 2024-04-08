@@ -1,4 +1,4 @@
-import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
+import { type ChannelsNode, createChannelsNode } from '@repo/channels'
 import type { ContentSourceMapDocuments } from '@sanity/client/csm'
 import {
   type PresentationMsg,

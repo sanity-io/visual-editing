@@ -27,7 +27,7 @@
 import {
   type ChannelsController,
   createChannelsController,
-} from '@sanity/channels'
+} from '@repo/channels'
 
 const log = ref<any[]>([])
 const channel = ref<ChannelsController | undefined>()

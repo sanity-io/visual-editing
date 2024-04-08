@@ -1,4 +1,4 @@
-import type { ChannelsController } from '@sanity/channels'
+import type { ChannelsController } from '@repo/channels'
 import type {
   ClientConfig,
   ClientPerspective,
