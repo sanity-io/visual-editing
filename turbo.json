@@ -13,7 +13,9 @@
       "dependsOn": ["^build"],
       "cache": false
     },
-    "lint": {},
+    "lint": {
+      "outputMode": "errors-only"
+    },
     "preview": {
       "dependsOn": ["^build"]
     },
