@@ -1,7 +1,6 @@
+import baseConfig from '@repo/package.config'
 import { defineConfig } from '@sanity/pkg-utils'
 import svelte from 'rollup-plugin-svelte'
-
-import baseConfig from '../../package.config'
 
 export default defineConfig({
   ...baseConfig,

@@ -823,6 +823,9 @@ importers:
         specifier: 2.1.0
         version: 2.1.0
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -872,6 +875,9 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/pkg-utils':
         specifier: ^5.1.12
         version: 5.1.12(typescript@5.4.2)
@@ -921,6 +927,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0(happy-dom@14.7.1)(jsdom@23.2.0)
 
+  packages/package.config: {}
+
   packages/presentation:
     dependencies:
       '@sanity/icons':
@@ -960,6 +968,9 @@ importers:
         specifier: 0.1.3
         version: 0.1.3(react@18.2.0)
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -996,6 +1007,9 @@ importers:
 
   packages/preview-kit-compat:
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -1045,6 +1059,9 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -1094,6 +1111,9 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -1146,6 +1166,9 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -1228,6 +1251,9 @@ importers:
       '@remix-run/react':
         specifier: ^2.8.1
         version: 2.8.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.2)
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/channels':
         specifier: 0.4.0
         version: link:../channels
@@ -1309,6 +1335,9 @@ importers:
 
   packages/visual-editing-helpers:
     devDependencies:
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
       '@sanity/client':
         specifier: ^6.15.11
         version: 6.15.11

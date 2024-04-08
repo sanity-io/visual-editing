@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local", "package.config.ts"],
+  "globalDependencies": ["**/.env.*local"],
   "globalEnv": ["RUNNER_OS"],
   "pipeline": {
     "build": {
