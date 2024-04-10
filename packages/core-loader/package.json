@@ -37,7 +37,6 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
@@ -54,8 +53,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "pkg build --strict && pkg --strict",
+    "build": "pkg build --strict --check --clean",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
     "test": "vitest --pass-with-no-tests --typecheck",
@@ -125,7 +123,7 @@
     "@repo/package.config": "workspace:*",
     "@repo/visual-editing-helpers": "0.6.4",
     "@sanity/client": "^6.15.11",
-    "@sanity/pkg-utils": "^6.1.0",
+    "@sanity/pkg-utils": "6.4.1",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.57.0",
@@ -134,7 +132,7 @@
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "happy-dom": "^14.7.1",
     "nanostores": "0.10.3",
-    "typescript": "5.4.2",
+    "typescript": "5.4.5",
     "vitest": "^1.4.0"
   },
   "peerDependencies": {

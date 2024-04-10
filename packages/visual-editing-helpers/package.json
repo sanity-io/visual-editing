@@ -29,7 +29,6 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
@@ -47,8 +46,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "pkg build --strict && pkg --strict",
+    "build": "pkg build --strict --check --clean",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
     "test": "vitest --pass-with-no-tests --typecheck",
@@ -124,7 +122,7 @@
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "react": "^18.2.0",
     "sanity": "^3.37.2",
-    "typescript": "5.4.2",
+    "typescript": "5.4.5",
     "valibot": "0.30.0",
     "vitest": "^1.4.0"
   },

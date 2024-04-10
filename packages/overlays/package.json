@@ -31,7 +31,6 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
@@ -39,8 +38,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "pkg build --strict && pkg --strict",
+    "build": "pkg build --strict --check --clean",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
     "test": "vitest --pass-with-no-tests --typecheck",
@@ -114,7 +112,7 @@
   },
   "devDependencies": {
     "@repo/package.config": "workspace:*",
-    "@sanity/pkg-utils": "^6.1.0",
+    "@sanity/pkg-utils": "6.4.1",
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
@@ -128,7 +126,7 @@
     "happy-dom": "^14.7.1",
     "ls-engines": "^0.9.1",
     "rimraf": "^5.0.5",
-    "typescript": "5.4.2",
+    "typescript": "5.4.5",
     "vitest": "^1.4.0"
   },
   "engines": {
