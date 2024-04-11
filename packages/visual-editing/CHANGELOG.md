@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.7...visual-editing-v1.8.8) (2024-04-11)
+
+
+### Bug Fixes
+
+* allow canary releases of next ([eb3b92a](https://github.com/sanity-io/visual-editing/commit/eb3b92a948bc722a5ca3ab3a7e13e09ff1e3874a))
+
 ## [1.8.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.6...visual-editing-v1.8.7) (2024-04-05)
 
 
