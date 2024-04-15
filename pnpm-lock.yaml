@@ -83,8 +83,8 @@ importers:
         version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       prettier:
         specifier: 3.2.5
         version: 3.2.5
@@ -832,8 +832,8 @@ importers:
         specifier: ^6.15.13
         version: 6.15.14
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.6.0
         version: 7.6.0(@typescript-eslint/parser@7.6.0)(eslint@8.57.0)(typescript@5.4.5)
@@ -875,8 +875,8 @@ importers:
         specifier: workspace:*
         version: link:../package.config
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.76
@@ -977,8 +977,8 @@ importers:
         specifier: ^6.15.13
         version: 6.15.14
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       happy-dom:
         specifier: ^14.7.1
         version: 14.7.1
@@ -1016,8 +1016,8 @@ importers:
         specifier: ^6.15.13
         version: 6.15.14
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.76
@@ -1068,8 +1068,8 @@ importers:
         specifier: ^2.11.8
         version: 2.11.8(react@18.2.0)
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.6.0
         version: 7.6.0(@typescript-eslint/parser@7.6.0)(eslint@8.57.0)(typescript@5.4.5)
@@ -1120,8 +1120,8 @@ importers:
         specifier: ^6.15.13
         version: 6.15.14
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.76
@@ -1175,8 +1175,8 @@ importers:
         specifier: ^6.15.13
         version: 6.15.14
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -1260,8 +1260,8 @@ importers:
         specifier: ^6.15.13
         version: 6.15.14
       '@sanity/pkg-utils':
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: 6.6.5
+        version: 6.6.5(typescript@5.4.5)
       '@sanity/ui':
         specifier: 2.1.2
         version: 2.1.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
@@ -5704,8 +5704,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/pkg-utils@6.4.1(typescript@5.4.5):
-    resolution: {integrity: sha512-X66IgwDLcv7gVwmxqx0ZMD9BXQeskVivRvhBqAnsbU0zVjSgvLplg5AGdzNdHX9kbeY4DYQEgjZhUyYSJASTFA==}
+  /@sanity/pkg-utils@6.6.5(typescript@5.4.5):
+    resolution: {integrity: sha512-zso5eO1ibVPmUwxob6mXgjA/ECv6s+Ahxo7usbo0TLQoQwrdapTaHRfLjXfbw439whvuRdgBP9Y2tL5RymlFKg==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
@@ -5751,6 +5751,7 @@ packages:
       typescript: 5.4.5
       uuid: 9.0.1
       zod: 3.22.4
+      zod-validation-error: 3.1.0(zod@3.22.4)
     transitivePeerDependencies:
       - '@types/babel__core'
       - '@types/node'
@@ -19709,6 +19710,15 @@ packages:
       archiver-utils: 5.0.2
       compress-commons: 6.0.2
       readable-stream: 4.5.2
+
+  /zod-validation-error@3.1.0(zod@3.22.4):
+    resolution: {integrity: sha512-zujS6HqJjMZCsvjfbnRs7WI3PXN39ovTcY1n8a+KTm4kOH0ZXYsNiJkH1odZf4xZKMkBDL7M2rmQ913FCS1p9w==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.18.0
+    dependencies:
+      zod: 3.22.4
+    dev: true
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
