@@ -131,6 +131,7 @@ function CopyUrlMenuButton(
         } else {
           navigator.clipboard.writeText(url).then(onFinally).catch(onError)
         }
+        return
       }}
       text="Copy link"
       icon={CopyIcon}
