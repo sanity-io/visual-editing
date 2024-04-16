@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.9...visual-editing-v1.8.10) (2024-04-16)
+
+
+### Bug Fixes
+
+* update allowed canary range for `next` ([3c2c0ae](https://github.com/sanity-io/visual-editing/commit/3c2c0aec8e01ca4462ddaf4c1d2b7425a240da62))
+
 ## [1.8.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.8...visual-editing-v1.8.9) (2024-04-16)
 
 
