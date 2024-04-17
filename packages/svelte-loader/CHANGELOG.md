@@ -28,6 +28,23 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [1.11.13](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.11.12...svelte-loader-v1.11.13) (2024-04-17)
+
+
+### Bug Fixes
+
+* inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.6.6 to 1.6.7
+  * devDependencies
+    * @sanity/preview-url-secret bumped from ^1.6.8 to ^1.6.9
+    * @sanity/visual-editing bumped from 1.8.10 to 1.8.11
+
 ## [1.11.12](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.11.11...svelte-loader-v1.11.12) (2024-04-16)
 
 

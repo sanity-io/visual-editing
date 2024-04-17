@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.6.9](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.8...preview-url-secret-v1.6.9) (2024-04-17)
+
+
+### Bug Fixes
+
+* inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
+
 ## [1.6.8](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.7...preview-url-secret-v1.6.8) (2024-04-16)
 
 

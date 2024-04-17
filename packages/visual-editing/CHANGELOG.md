@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.8.11](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.10...visual-editing-v1.8.11) (2024-04-17)
+
+
+### Bug Fixes
+
+* inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.8 to ^1.6.9
+
 ## [1.8.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.9...visual-editing-v1.8.10) (2024-04-16)
 
 
