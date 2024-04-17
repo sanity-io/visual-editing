@@ -38,6 +38,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.9.12](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.11...react-loader-v1.9.12) (2024-04-17)
+
+
+### Bug Fixes
+
+* inline `fast-deep-equal` for better ESM interop ([bacdd48](https://github.com/sanity-io/visual-editing/commit/bacdd48f88d2b583e593ec30ffd3265c35c72157))
+
 ## [1.9.11](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.10...react-loader-v1.9.11) (2024-04-17)
 
 
