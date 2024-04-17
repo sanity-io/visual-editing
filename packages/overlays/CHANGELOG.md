@@ -72,6 +72,20 @@ All notable changes to this project will be documented in this file. See
   * dependencies
     * @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [2.3.37](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.36...overlays-v2.3.37) (2024-04-17)
+
+
+### Bug Fixes
+
+* inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.10 to 1.8.11
+
 ## [2.3.36](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.35...overlays-v2.3.36) (2024-04-16)
 
 
