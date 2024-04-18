@@ -1,4 +1,4 @@
-import { ComposeIcon } from '@sanity/icons'
+import {ComposeIcon} from '@sanity/icons'
 
 export const DEFAULT_TOOL_ICON = ComposeIcon
 export const DEFAULT_TOOL_NAME = 'presentation'

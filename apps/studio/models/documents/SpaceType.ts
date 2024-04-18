@@ -7,15 +7,13 @@ const SpaceType = {
       title: 'Title',
       name: 'title',
       type: 'string',
-      validation: (Rule: any) =>
-        Rule.required().min(1).error('Space Type Title is required.'),
+      validation: (Rule: any) => Rule.required().min(1).error('Space Type Title is required.'),
     },
     {
       title: 'Name',
       name: 'name',
       type: 'string',
-      validation: (Rule: any) =>
-        Rule.required().min(1).error('Space Type Name is required.'),
+      validation: (Rule: any) => Rule.required().min(1).error('Space Type Name is required.'),
     },
     {
       title: 'Value',

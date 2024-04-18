@@ -1,7 +1,7 @@
-import { format, parseISO } from 'date-fns'
+import {format, parseISO} from 'date-fns'
 import Balancer from 'react-wrap-balancer'
 
-export default function PostDate({ dateString }: { dateString: string }) {
+export default function PostDate({dateString}: {dateString: string}) {
   const date = parseISO(dateString)
   return (
     <time dateTime={dateString}>

@@ -1,7 +1,7 @@
-import { createClient } from '@sanity/client'
-import { apiVersion, studioUrl as baseUrl, workspaces } from 'apps-common/env'
+import {createClient} from '@sanity/client'
+import {apiVersion, studioUrl as baseUrl, workspaces} from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
-const { projectId, dataset } = workspaces['remix']
+const {projectId, dataset} = workspaces['remix']
 
 export const client = createClient({
   projectId,
@@ -12,21 +12,19 @@ export const client = createClient({
     enabled: true,
     studioUrl: (sourceDocument) => {
       if (
-        sourceDocument._projectId ===
-          workspaces['cross-dataset-references'].projectId &&
-        sourceDocument._dataset ===
-          workspaces['cross-dataset-references'].dataset
+        sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
+        sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
       ) {
-        const { workspace, tool } = workspaces['cross-dataset-references']
-        return { baseUrl, workspace, tool }
+        const {workspace, tool} = workspaces['cross-dataset-references']
+        return {baseUrl, workspace, tool}
       }
-      const { workspace, tool } = workspaces['remix']
-      return { baseUrl, workspace, tool }
+      const {workspace, tool} = workspaces['remix']
+      return {baseUrl, workspace, tool}
     },
   },
 })
 
-const builder = imageUrlBuilder({ projectId, dataset })
+const builder = imageUrlBuilder({projectId, dataset})
 export function urlFor(source: any) {
   return builder.image(source).auto('format').fit('max')
 }

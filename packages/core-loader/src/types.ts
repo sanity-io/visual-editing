@@ -1,14 +1,9 @@
-import type {
-  ClientPerspective,
-  ContentSourceMap,
-  QueryParams,
-  SanityClient,
-} from '@sanity/client'
-import type { StudioPathLike } from '@sanity/client/csm'
-import type { SanityStegaClient, StegaConfig } from '@sanity/client/stega'
-import type { MapStore } from 'nanostores'
+import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
+import type {StudioPathLike} from '@sanity/client/csm'
+import type {SanityStegaClient, StegaConfig} from '@sanity/client/stega'
+import type {MapStore} from 'nanostores'
 
-export type { ContentSourceMap, MapStore, QueryParams }
+export type {ContentSourceMap, MapStore, QueryParams}
 
 /** @public */
 export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
@@ -35,11 +30,7 @@ export interface EnableLiveModeOptions {
   /**
    * @deprecated -- no longer needed
    */
-  allowStudioOrigin?:
-    | 'same-origin'
-    | `https://${string}`
-    | `http://${string}`
-    | string
+  allowStudioOrigin?: 'same-origin' | `https://${string}` | `http://${string}` | string
   /**
    * You may use any client that is an `instanceof SanityClient` or `instanceof SanityStegaClient`.
    * Required when `ssr: true`, optional otherwise.

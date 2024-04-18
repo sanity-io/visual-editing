@@ -1,8 +1,8 @@
-import { WrappedValue } from '@sanity/react-loader/jsx'
-import { sanity } from '@sanity/react-loader/jsx'
+import {WrappedValue} from '@sanity/react-loader/jsx'
+import {sanity} from '@sanity/react-loader/jsx'
 
-import { AppLayout } from '../AppLayout'
-import { SiteSettingsData } from '../types'
+import {AppLayout} from '../AppLayout'
+import {SiteSettingsData} from '../types'
 import Link from 'next/link'
 
 export interface ProjectsPageData {
@@ -16,11 +16,11 @@ export interface ProjectsPageData {
   siteSettings: SiteSettingsData | null
 }
 
-export function ProjectsPage(props: { data: WrappedValue<ProjectsPageData> }) {
-  const { data } = props
+export function ProjectsPage(props: {data: WrappedValue<ProjectsPageData>}) {
+  const {data} = props
 
   return (
-    <AppLayout data={{ siteSettings: data.siteSettings }}>
+    <AppLayout data={{siteSettings: data.siteSettings}}>
       <main className="mx-auto max-w-4xl">
         <div className="p-5">
           <h1 className="text-2xl font-extrabold">Projects</h1>
@@ -36,11 +36,7 @@ export function ProjectsPage(props: { data: WrappedValue<ProjectsPageData> }) {
                   key={project._id}
                 >
                   <div className="text-md">
-                    {project.title ? (
-                      <sanity.span>{project.title}</sanity.span>
-                    ) : (
-                      <em>Untitled</em>
-                    )}
+                    {project.title ? <sanity.span>{project.title}</sanity.span> : <em>Untitled</em>}
                   </div>
                 </Link>
               ))}

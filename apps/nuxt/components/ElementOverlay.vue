@@ -1,7 +1,7 @@
 <template>
   <div
     class="root"
-    :class="{ hovered }"
+    :class="{hovered}"
     :style="{
       width: `${rect.w}px`,
       height: `${rect.h}px`,
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { OverlayRect } from '@sanity/visual-editing'
+import type {OverlayRect} from '@sanity/visual-editing'
 
 const emit = defineEmits<{
   (e: 'open'): void

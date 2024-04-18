@@ -1,10 +1,6 @@
 <template>
   <div class="flex h-screen gap-px bg-black">
-    <iframe
-      ref="iframeEl"
-      class="h-full w-full bg-white"
-      src="/channels/child"
-    />
+    <iframe ref="iframeEl" class="h-full w-full bg-white" src="/channels/child" />
     <div class="h-full w-full bg-white p-8">
       <div class="flex items-center justify-between">
         <h1 class="text-lg font-bold">Presentation</h1>
@@ -24,10 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  type ChannelsController,
-  createChannelsController,
-} from '@repo/channels'
+import {type ChannelsController, createChannelsController} from '@repo/channels'
 
 const log = ref<any[]>([])
 const channel = ref<ChannelsController | undefined>()
@@ -44,7 +37,7 @@ onMounted(async () => {
       },
     ],
     onEvent(type, data) {
-      log.value.unshift({ ...data, type })
+      log.value.unshift({...data, type})
     },
   })
 })

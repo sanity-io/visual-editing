@@ -1,1 +1,1 @@
-export { default } from '../sanity.config'
+export {default} from '../sanity.config'

@@ -1,18 +1,12 @@
-import { studioPath, type StudioPathLike } from '@sanity/client/csm'
+import {studioPath, type StudioPathLike} from '@sanity/client/csm'
 
-import { encodeSanityNodeData } from './csm/transformSanityNodeData'
-import type {
-  CreateDataAttribute,
-  CreateDataAttributeProps,
-  SanityNode,
-} from './types'
+import {encodeSanityNodeData} from './csm/transformSanityNodeData'
+import type {CreateDataAttribute, CreateDataAttributeProps, SanityNode} from './types'
 
 /**
  * @public
  */
-export function createDataAttribute(
-  props: CreateDataAttributeProps,
-): CreateDataAttribute {
+export function createDataAttribute(props: CreateDataAttributeProps): CreateDataAttribute {
   // Internal function for normalizing a path
   function normalizePath(path?: StudioPathLike) {
     if (!path) return []
@@ -21,10 +15,8 @@ export function createDataAttribute(
 
   // Internal function for building a data attribute string
   function toString(props: CreateDataAttributeProps): string {
-    if (!props.id)
-      throw new Error('`id` is required to create a data attribute')
-    if (!props.type)
-      throw new Error('`type` is required to create a data attribute')
+    if (!props.id) throw new Error('`id` is required to create a data attribute')
+    if (!props.type) throw new Error('`type` is required to create a data attribute')
     if (!props.path || !props.path.length)
       throw new Error('`path` is required to create a data attribute')
 
@@ -34,10 +26,7 @@ export function createDataAttribute(
       tool: props.tool,
       type: props.type,
       id: props.id,
-      path:
-        typeof props.path === 'string'
-          ? props.path
-          : studioPath.toString(props.path),
+      path: typeof props.path === 'string' ? props.path : studioPath.toString(props.path),
     } satisfies SanityNode
 
     return encodeSanityNodeData(attrs)!

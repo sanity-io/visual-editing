@@ -1,16 +1,16 @@
-import { WrappedValue } from '@sanity/react-loader/jsx'
-import { isArray } from 'sanity'
+import {WrappedValue} from '@sanity/react-loader/jsx'
+import {isArray} from 'sanity'
 
-import { dataAttribute } from '@/sanity'
-import { FeaturedProducts } from './sections/FeaturedProducts'
-import { FeatureHighlight } from './sections/FeatureHighlight'
-import { Hero } from './sections/Hero'
-import { Intro } from './sections/Intro'
-import { Section } from './sections/Section'
-import { PageData } from './types'
+import {dataAttribute} from '@/sanity'
+import {FeaturedProducts} from './sections/FeaturedProducts'
+import {FeatureHighlight} from './sections/FeatureHighlight'
+import {Hero} from './sections/Hero'
+import {Intro} from './sections/Intro'
+import {Section} from './sections/Section'
+import {PageData} from './types'
 
-export function Page(props: { data: WrappedValue<PageData> }) {
-  const { data } = props
+export function Page(props: {data: WrappedValue<PageData>}) {
+  const {data} = props
 
   return (
     <main
@@ -31,23 +31,11 @@ export function Page(props: { data: WrappedValue<PageData> }) {
           }
 
           if (section._type === 'featuredProducts') {
-            return (
-              <FeaturedProducts
-                page={data}
-                key={section._key}
-                section={section}
-              />
-            )
+            return <FeaturedProducts page={data} key={section._key} section={section} />
           }
 
           if (section._type === 'featureHighlight') {
-            return (
-              <FeatureHighlight
-                page={data}
-                key={section._key}
-                section={section}
-              />
-            )
+            return <FeatureHighlight page={data} key={section._key} section={section} />
           }
 
           if (section._type === 'section') {

@@ -1,17 +1,17 @@
-import { WrappedValue, unwrapData } from '@sanity/react-loader/jsx'
-import { sanity } from '@sanity/react-loader/jsx'
+import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
+import {sanity} from '@sanity/react-loader/jsx'
 import Link from 'next/link'
 
-import { Image } from '@/components/image'
-import { PageSection } from '../PageSection'
-import { FeaturedProductsSectionData, PageData } from '../types'
-import { dataAttribute } from '@/sanity'
+import {Image} from '@/components/image'
+import {PageSection} from '../PageSection'
+import {FeaturedProductsSectionData, PageData} from '../types'
+import {dataAttribute} from '@/sanity'
 
 export function FeaturedProducts(props: {
   page: WrappedValue<PageData>
   section: WrappedValue<FeaturedProductsSectionData>
 }) {
-  const { page: data, section } = props
+  const {page: data, section} = props
 
   return (
     <PageSection
@@ -37,11 +37,7 @@ export function FeaturedProducts(props: {
             <h2>
               <sanity.span>{product.title}</sanity.span>
             </h2>
-            <div>
-              {product.media?.asset && (
-                <Image alt="" value={unwrapData(product.media)} />
-              )}
-            </div>
+            <div>{product.media?.asset && <Image alt="" value={unwrapData(product.media)} />}</div>
           </Link>
         ))}
       </div>

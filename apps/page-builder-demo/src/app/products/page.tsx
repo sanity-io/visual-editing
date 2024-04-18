@@ -1,4 +1,4 @@
-import { ProductsPreview } from './ProductsPreview'
+import {ProductsPreview} from './ProductsPreview'
 
 export default function ProductsPage() {
   return <ProductsPreview />

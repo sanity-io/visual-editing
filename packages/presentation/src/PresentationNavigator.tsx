@@ -1,9 +1,9 @@
-import { memo, useCallback, useMemo } from 'react'
+import {memo, useCallback, useMemo} from 'react'
 
-import { Panel } from './panels/Panel'
-import { PanelResizer } from './panels/PanelResizer'
-import type { NavigatorOptions } from './types'
-import { useLocalState } from './useLocalState'
+import {Panel} from './panels/Panel'
+import {PanelResizer} from './panels/PanelResizer'
+import type {NavigatorOptions} from './types'
+import {useLocalState} from './useLocalState'
 
 /** @internal */
 export interface UsePresentationNavigatorProps {
@@ -20,7 +20,7 @@ export interface UsePresentationNavigatorState {
 export function usePresentationNavigator(
   props: UsePresentationNavigatorProps,
 ): [UsePresentationNavigatorState, () => JSX.Element] {
-  const { unstable_navigator } = props
+  const {unstable_navigator} = props
 
   const navigatorProvided = !!unstable_navigator?.component
   const [_navigatorEnabled, setNavigatorEnabled] = useLocalState<boolean>(
@@ -41,13 +41,12 @@ export function usePresentationNavigator(
     [navigatorEnabled, unstable_navigator],
   )
 
-  return [{ navigatorEnabled, toggleNavigator }, Component]
+  return [{navigatorEnabled, toggleNavigator}, Component]
 }
 
 function NavigatorComponent(props: NavigatorOptions) {
-  const { minWidth, maxWidth, component: NavigatorComponent } = props
-  const navigatorDisabled =
-    minWidth != null && maxWidth != null && minWidth === maxWidth
+  const {minWidth, maxWidth, component: NavigatorComponent} = props
+  const navigatorDisabled = minWidth != null && maxWidth != null && minWidth === maxWidth
   return (
     <>
       <Panel id="navigator" minWidth={minWidth} maxWidth={maxWidth} order={1}>

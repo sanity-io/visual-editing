@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
+import {useMemo} from 'react'
 
-import { debounce } from '../lib/debounce'
-import { PanelElement } from './types'
+import {debounce} from '../lib/debounce'
+import {PanelElement} from './types'
 
 const itemKey = 'presentation/panels'
 

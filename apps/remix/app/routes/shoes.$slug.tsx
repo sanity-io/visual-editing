@@ -1,7 +1,7 @@
-import { PortableText } from '@portabletext/react'
-import { json, type LoaderFunction } from '@vercel/remix'
-import { Link, useLoaderData } from '@remix-run/react'
-import { useQuery } from '@sanity/react-loader'
+import {PortableText} from '@portabletext/react'
+import {json, type LoaderFunction} from '@vercel/remix'
+import {Link, useLoaderData} from '@remix-run/react'
+import {useQuery} from '@sanity/react-loader'
 import {
   shoe,
   shoesList,
@@ -9,11 +9,11 @@ import {
   type ShoeResult,
   type ShoesListResult,
 } from 'apps-common/queries'
-import { formatCurrency } from 'apps-common/utils'
-import { urlFor, urlForCrossDatasetReference } from '~/sanity'
-import { loadQuery } from '~/sanity.loader.server'
+import {formatCurrency} from 'apps-common/utils'
+import {urlFor, urlForCrossDatasetReference} from '~/sanity'
+import {loadQuery} from '~/sanity.loader.server'
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({params}) => {
   return json({
     params,
     initial: {
@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 }
 
 export default function ShoePage() {
-  const { params, initial } = useLoaderData<typeof loader>()
+  const {params, initial} = useLoaderData<typeof loader>()
 
   if (!params.slug) {
     throw new Error('No slug, 404?')
@@ -36,17 +36,17 @@ export default function ShoePage() {
   const shoesSnapshot = useQuery<ShoesListResult>(
     `${shoesList}[0..3]`,
     {},
-    { initial: initial.shoes },
+    {initial: initial.shoes},
   )
 
   if (shoeSnapshot.error || shoesSnapshot.error) {
     throw shoeSnapshot.error || shoesSnapshot.error
   }
 
-  const { data: product } = shoeSnapshot
+  const {data: product} = shoeSnapshot
   const [coverImage, ...otherImages] = product?.media || []
 
-  const { data: products } = shoesSnapshot
+  const {data: products} = shoesSnapshot
 
   // Only consider it loading if there are no data
   const loadingShoe = shoeSnapshot.loading && !shoeSnapshot.data
@@ -58,10 +58,7 @@ export default function ShoePage() {
         <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <li>
             <div className="flex items-center">
-              <Link
-                to="/shoes"
-                className="mr-2 text-sm font-medium text-gray-900"
-              >
+              <Link to="/shoes" className="mr-2 text-sm font-medium text-gray-900">
                 Shoes
               </Link>
               <svg
@@ -76,15 +73,13 @@ export default function ShoePage() {
               </svg>
             </div>
           </li>
-          <li className="text-sm" style={{ ['textWrap' as any]: 'balance' }}>
+          <li className="text-sm" style={{['textWrap' as any]: 'balance'}}>
             <Link
               to={`/shoes/${params.slug}`}
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
-              {loadingShoe
-                ? 'Loading'
-                : <span>{product?.title}</span> || 'Untitled'}
+              {loadingShoe ? 'Loading' : <span>{product?.title}</span> || 'Untitled'}
             </Link>
           </li>
         </ol>
@@ -115,10 +110,7 @@ export default function ShoePage() {
                   const i = _i + 1
 
                   return (
-                    <div
-                      key={(image.asset._ref as string) || i}
-                      className="shrink-0 snap-start"
-                    >
+                    <div key={(image.asset._ref as string) || i} className="shrink-0 snap-start">
                       <img
                         className="h-32 w-40 shrink-0 rounded bg-white shadow-xl lg:rounded-lg"
                         src={urlFor(image)
@@ -141,7 +133,7 @@ export default function ShoePage() {
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1
                 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-                style={{ ['textWrap' as any]: 'balance' }}
+                style={{['textWrap' as any]: 'balance'}}
               >
                 {product.title}
               </h1>
@@ -174,9 +166,7 @@ export default function ShoePage() {
                       height={24}
                       alt={product.brand?.logo?.alt || ''}
                     />
-                    <span className="text-lg font-bold">
-                      {product.brand.name}
-                    </span>
+                    <span className="text-lg font-bold">{product.brand.name}</span>
                   </div>
                 </div>
               )}
@@ -237,7 +227,7 @@ export default function ShoePage() {
                   </div>
                   <h2
                     className="mb-8 mt-4 text-sm text-gray-700"
-                    style={{ ['textWrap' as any]: 'balance' }}
+                    style={{['textWrap' as any]: 'balance'}}
                   >
                     {product.title}
                   </h2>
@@ -264,9 +254,7 @@ export default function ShoePage() {
                         height={24}
                         alt={product.brand?.logo?.alt || ''}
                       />
-                      <span className="font-bold text-gray-600">
-                        {product.brand.name}
-                      </span>
+                      <span className="font-bold text-gray-600">{product.brand.name}</span>
                     </div>
                   )}
                 </Link>

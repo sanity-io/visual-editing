@@ -1,7 +1,7 @@
-import { defineArrayMember, defineField } from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
-import { PageSectionInput } from './components/PageSectionInput'
-import { pageSectionType } from './pageSectionType'
+import {PageSectionInput} from './components/PageSectionInput'
+import {pageSectionType} from './pageSectionType'
 
 export const pageSectionArrayMember = defineArrayMember({
   type: 'object',
@@ -11,7 +11,7 @@ export const pageSectionArrayMember = defineArrayMember({
       type: 'reference',
       name: 'symbol',
       title: 'Symbol',
-      to: [{ type: 'page.section' }],
+      to: [{type: 'page.section'}],
     }),
 
     // overrides

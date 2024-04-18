@@ -8,8 +8,8 @@ import {
   studioPath,
 } from '@sanity/client/csm'
 
-import { SanityNode } from '../types'
-import { SanityNodeContext } from './wrap/types'
+import {SanityNode} from '../types'
+import {SanityNodeContext} from './wrap/types'
 
 /** @internal */
 export function resolveSanityNode(
@@ -18,7 +18,7 @@ export function resolveSanityNode(
   resultPath: ContentSourceMapParsedPath,
   keyedResultPath: ContentSourceMapParsedPath,
 ): SanityNode | undefined {
-  const { mapping, pathSuffix } = resolveMapping(resultPath, csm) || {}
+  const {mapping, pathSuffix} = resolveMapping(resultPath, csm) || {}
 
   if (!mapping) {
     // console.warn('no mapping for path', { path: resultPath, sourceMap: csm })

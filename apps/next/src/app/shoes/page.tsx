@@ -1,7 +1,7 @@
-import { ShoesListResult, shoesList } from 'apps-common/queries'
+import {ShoesListResult, shoesList} from 'apps-common/queries'
 import ShoesPageClient from './page.client'
-import { loadQuery } from './sanity.ssr'
-import { draftMode } from 'next/headers'
+import {loadQuery} from './sanity.ssr'
+import {draftMode} from 'next/headers'
 
 export default async function ShoesPage() {
   const initial = await loadQuery<ShoesListResult>(
@@ -9,7 +9,7 @@ export default async function ShoesPage() {
     {},
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
-      next: { revalidate: draftMode().isEnabled ? 0 : false, tags: ['shoe'] },
+      next: {revalidate: draftMode().isEnabled ? 0 : false, tags: ['shoe']},
     },
   )
   return <ShoesPageClient initial={initial} />

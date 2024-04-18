@@ -2,9 +2,9 @@
 
 import groq from 'groq'
 
-import { useQuery } from '@/sanity'
-import { SITE_SETTINGS_QUERY } from '../queries'
-import { ProjectsPage, ProjectsPageData } from './ProjectsPage'
+import {useQuery} from '@/sanity'
+import {SITE_SETTINGS_QUERY} from '../queries'
+import {ProjectsPage, ProjectsPageData} from './ProjectsPage'
 
 const PAGE_QUERY = groq`{
   "projects": *[_type == "project" && defined(slug.current)],
@@ -12,7 +12,7 @@ const PAGE_QUERY = groq`{
 }`
 
 export function ProjectsPreview() {
-  const { data, loading } = useQuery<ProjectsPageData>(PAGE_QUERY)
+  const {data, loading} = useQuery<ProjectsPageData>(PAGE_QUERY)
 
   if (loading || !data) {
     return <div>Loading…</div>

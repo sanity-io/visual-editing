@@ -1,8 +1,4 @@
-import {
-  type ChannelsController,
-  type ChannelStatus,
-  createChannelsController,
-} from '@repo/channels'
+import {type ChannelsController, type ChannelStatus, createChannelsController} from '@repo/channels'
 import {
   getQueryCacheKey,
   isAltKey,
@@ -14,8 +10,8 @@ import {
   type VisualEditingConnectionIds,
   type VisualEditingMsg,
 } from '@repo/visual-editing-helpers'
-import { studioPath } from '@sanity/client/csm'
-import { BoundaryElementProvider, Flex } from '@sanity/ui'
+import {studioPath} from '@sanity/client/csm'
+import {BoundaryElementProvider, Flex} from '@sanity/ui'
 import {
   lazy,
   type ReactElement,
@@ -28,20 +24,11 @@ import {
   useRef,
   useState,
 } from 'react'
-import { useUnique, useWorkspace } from 'sanity'
-import {
-  type Path,
-  type SanityDocument,
-  type Tool,
-  useDataset,
-  useProjectId,
-} from 'sanity'
-import { RouterContextValue, useRouter } from 'sanity/router'
-import {
-  type CommentIntentGetter,
-  CommentsIntentProvider,
-} from 'sanity/structure'
-import { styled } from 'styled-components'
+import {useUnique, useWorkspace} from 'sanity'
+import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} from 'sanity'
+import {RouterContextValue, useRouter} from 'sanity/router'
+import {type CommentIntentGetter, CommentsIntentProvider} from 'sanity/structure'
+import {styled} from 'styled-components'
 
 import {
   COMMENTS_INSPECTOR_NAME,
@@ -49,16 +36,16 @@ import {
   EDIT_INTENT_MODE,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
-import { ContentEditor } from './editor/ContentEditor'
-import { DisplayedDocumentBroadcasterProvider } from './loader/DisplayedDocumentBroadcaster'
-import { Panel } from './panels/Panel'
-import { PanelResizer } from './panels/PanelResizer'
-import { Panels } from './panels/Panels'
-import { PresentationNavigateProvider } from './PresentationNavigateProvider'
-import { usePresentationNavigator } from './PresentationNavigator'
-import { PresentationParamsProvider } from './PresentationParamsProvider'
-import { PresentationProvider } from './PresentationProvider'
-import { PreviewFrame } from './preview/PreviewFrame'
+import {ContentEditor} from './editor/ContentEditor'
+import {DisplayedDocumentBroadcasterProvider} from './loader/DisplayedDocumentBroadcaster'
+import {Panel} from './panels/Panel'
+import {PanelResizer} from './panels/PanelResizer'
+import {Panels} from './panels/Panels'
+import {PresentationNavigateProvider} from './PresentationNavigateProvider'
+import {usePresentationNavigator} from './PresentationNavigator'
+import {PresentationParamsProvider} from './PresentationParamsProvider'
+import {PresentationProvider} from './PresentationProvider'
+import {PreviewFrame} from './preview/PreviewFrame'
 import {
   ACTION_IFRAME_LOADED,
   ACTION_IFRAME_REFRESH,
@@ -74,14 +61,12 @@ import type {
   PresentationStateParams,
   StructureDocumentPaneParams,
 } from './types'
-import { useDocumentsOnPage } from './useDocumentsOnPage'
-import { useParams } from './useParams'
-import { usePreviewUrl } from './usePreviewUrl'
+import {useDocumentsOnPage} from './useDocumentsOnPage'
+import {useParams} from './useParams'
+import {usePreviewUrl} from './usePreviewUrl'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
-const PostMessageRefreshMutations = lazy(
-  () => import('./editor/PostMessageRefreshMutations'),
-)
+const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -90,15 +75,14 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
 }): ReactElement {
-  const { previewUrl: _previewUrl, components } = props.tool.options ?? {}
+  const {previewUrl: _previewUrl, components} = props.tool.options ?? {}
   const name = props.tool.name || DEFAULT_TOOL_NAME
-  const { unstable_navigator } = components || {}
+  const {unstable_navigator} = components || {}
 
-  const { navigate: routerNavigate, state: routerState } =
-    useRouter() as RouterContextValue & { state: PresentationStateParams }
-  const routerSearchParams = useUnique(
-    Object.fromEntries(routerState._searchParams || []),
-  )
+  const {navigate: routerNavigate, state: routerState} = useRouter() as RouterContextValue & {
+    state: PresentationStateParams
+  }
+  const routerSearchParams = useUnique(Object.fromEntries(routerState._searchParams || []))
 
   const initialPreviewUrl = usePreviewUrl(
     _previewUrl || '/',
@@ -112,9 +96,7 @@ export default function PresentationTool(props: {
     if (typeof option === 'function') return option()
     if (typeof option === 'boolean') return option
 
-    return (
-      typeof window !== 'undefined' && window.location.hostname === 'localhost'
-    )
+    return typeof window !== 'undefined' && window.location.hostname === 'localhost'
   })
 
   const targetOrigin = useMemo(() => {
@@ -124,12 +106,7 @@ export default function PresentationTool(props: {
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const [channel, setChannel] =
-    useState<
-      ChannelsController<
-        VisualEditingConnectionIds,
-        PresentationMsg | LoaderMsg
-      >
-    >()
+    useState<ChannelsController<VisualEditingConnectionIds, PresentationMsg | LoaderMsg>>()
 
   const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
@@ -138,7 +115,7 @@ export default function PresentationTool(props: {
     url: undefined,
   })
 
-  const { navigate, params, structureParams } = useParams({
+  const {navigate, params, structureParams} = useParams({
     initialPreviewUrl,
     routerNavigate,
     routerState,
@@ -148,49 +125,31 @@ export default function PresentationTool(props: {
 
   const [state, dispatch] = useReducer(
     presentationReducer,
-    { perspective: params.perspective, viewport: params.viewport },
+    {perspective: params.perspective, viewport: params.viewport},
     presentationReducerInit,
   )
 
-  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(
-    state.perspective,
-    frameStateRef,
-  )
+  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(state.perspective, frameStateRef)
 
   const projectId = useProjectId()
   const dataset = useDataset()
 
   // Update the perspective and viewport when the param changes
   useEffect(() => {
-    if (
-      state.perspective !== params.perspective ||
-      state.viewport !== params.viewport
-    ) {
+    if (state.perspective !== params.perspective || state.viewport !== params.viewport) {
       navigate(
         {},
         {
-          perspective:
-            state.perspective === 'previewDrafts'
-              ? undefined
-              : state.perspective,
+          perspective: state.perspective === 'previewDrafts' ? undefined : state.perspective,
           viewport: state.viewport === 'desktop' ? undefined : state.viewport,
         },
       )
     }
-  }, [
-    params.perspective,
-    state.perspective,
-    navigate,
-    state.viewport,
-    params.viewport,
-  ])
+  }, [params.perspective, state.perspective, navigate, state.viewport, params.viewport])
 
-  const [overlaysConnection, setOverlaysConnection] =
-    useState<ChannelStatus>('connecting')
-  const [loadersConnection, setLoadersConnection] =
-    useState<ChannelStatus>('connecting')
-  const [previewKitConnection, setPreviewKitConnection] =
-    useState<ChannelStatus>('connecting')
+  const [overlaysConnection, setOverlaysConnection] = useState<ChannelStatus>('connecting')
+  const [loadersConnection, setLoadersConnection] = useState<ChannelStatus>('connecting')
+  const [previewKitConnection, setPreviewKitConnection] = useState<ChannelStatus>('connecting')
 
   const [popups] = useState<Set<Window>>(() => new Set())
   const handleOpenPopup = useCallback(
@@ -233,30 +192,21 @@ export default function PresentationTool(props: {
           heartbeat: true,
           onStatusUpdate: setOverlaysConnection,
           onEvent(type, data) {
-            if (
-              (type === 'visual-editing/focus' || type === 'overlay/focus') &&
-              'id' in data
-            ) {
+            if ((type === 'visual-editing/focus' || type === 'overlay/focus') && 'id' in data) {
               navigate({
                 type: data.type,
                 id: data.id,
                 path: data.path,
               })
-            } else if (
-              type === 'visual-editing/navigate' ||
-              type === 'overlay/navigate'
-            ) {
-              const { title, url } = data
+            } else if (type === 'visual-editing/navigate' || type === 'overlay/navigate') {
+              const {title, url} = data
               if (frameStateRef.current.url !== url) {
-                navigate({}, { preview: url })
+                navigate({}, {preview: url})
               }
-              frameStateRef.current = { title, url }
+              frameStateRef.current = {title, url}
             } else if (type === 'visual-editing/meta') {
               frameStateRef.current.title = data.title
-            } else if (
-              type === 'visual-editing/toggle' ||
-              type === 'overlay/toggle'
-            ) {
+            } else if (type === 'visual-editing/toggle' || type === 'overlay/toggle') {
               dispatch({
                 type: ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE,
                 enabled: data.enabled,
@@ -268,18 +218,12 @@ export default function PresentationTool(props: {
                 data.perspective as unknown as any,
                 data.documents,
               )
-            } else if (
-              type === 'visual-editing/refreshing' &&
-              data.source === 'manual'
-            ) {
+            } else if (type === 'visual-editing/refreshing' && data.source === 'manual') {
               clearTimeout(refreshRef.current)
-            } else if (
-              type === 'visual-editing/refreshing' &&
-              data.source === 'mutation'
-            ) {
-              dispatch({ type: ACTION_IFRAME_REFRESH })
+            } else if (type === 'visual-editing/refreshing' && data.source === 'mutation') {
+              dispatch({type: ACTION_IFRAME_REFRESH})
             } else if (type === 'visual-editing/refreshed') {
-              dispatch({ type: ACTION_IFRAME_LOADED })
+              dispatch({type: ACTION_IFRAME_LOADED})
             }
           },
         },
@@ -366,18 +310,14 @@ export default function PresentationTool(props: {
             const now = Date.now()
             const hasAnyExpired = Object.values(liveQueries).some(
               (liveQuery) =>
-                liveQuery.heartbeat !== false &&
-                now > liveQuery.receivedAt + liveQuery.heartbeat,
+                liveQuery.heartbeat !== false && now > liveQuery.receivedAt + liveQuery.heartbeat,
             )
             if (!hasAnyExpired) {
               return liveQueries
             }
             const next = {} as LiveQueriesState
             for (const [key, value] of Object.entries(liveQueries)) {
-              if (
-                value.heartbeat !== false &&
-                now > value.receivedAt + value.heartbeat
-              ) {
+              if (value.heartbeat !== false && now > value.receivedAt + value.heartbeat) {
                 continue
               }
               next[key] = value
@@ -393,7 +333,7 @@ export default function PresentationTool(props: {
   const handleFocusPath = useCallback(
     (nextPath: Path) => {
       // Don’t need to explicitly set the id here because it was either already set via postMessage or is the same if navigating in the document pane
-      navigate({ path: studioPath.toString(nextPath) }, {}, true)
+      navigate({path: studioPath.toString(nextPath)}, {}, true)
     },
     [navigate],
   )
@@ -402,11 +342,8 @@ export default function PresentationTool(props: {
     (nextPath: string) => {
       const url = new URL(nextPath, initialPreviewUrl.origin)
       const preview = url.pathname + url.search
-      if (
-        url.origin === initialPreviewUrl.origin &&
-        preview !== params.preview
-      ) {
-        navigate({}, { preview })
+      if (url.origin === initialPreviewUrl.origin && preview !== params.preview) {
+        navigate({}, {preview})
       }
     },
     [initialPreviewUrl, params, navigate],
@@ -489,18 +426,17 @@ export default function PresentationTool(props: {
     }
   }, [toggleOverlay])
 
-  const [boundaryElement, setBoundaryElement] = useState<HTMLDivElement | null>(
-    null,
-  )
+  const [boundaryElement, setBoundaryElement] = useState<HTMLDivElement | null>(null)
 
-  const [{ navigatorEnabled, toggleNavigator }, PresentationNavigator] =
-    usePresentationNavigator({ unstable_navigator })
+  const [{navigatorEnabled, toggleNavigator}, PresentationNavigator] = usePresentationNavigator({
+    unstable_navigator,
+  })
 
   // Handle edge case where the `&rev=` parameter gets "stuck"
   const idRef = useRef<string | undefined>(params.id)
   useEffect(() => {
     if (params.rev && idRef.current && params.id !== idRef.current) {
-      navigate({}, { rev: undefined })
+      navigate({}, {rev: undefined})
     }
     idRef.current = params.id
   })
@@ -508,15 +444,14 @@ export default function PresentationTool(props: {
   const refreshRef = useRef<number>()
   const handleRefresh = useCallback(
     (fallback: () => void) => {
-      dispatch({ type: ACTION_IFRAME_REFRESH })
+      dispatch({type: ACTION_IFRAME_REFRESH})
       if (channel) {
         // We only wait 300ms for the iframe to ack the refresh request before running the fallback logic
         refreshRef.current = window.setTimeout(fallback, 300)
         channel.send('overlays', 'presentation/refresh', {
           source: 'manual',
           livePreviewEnabled:
-            previewKitConnection === 'connected' ||
-            loadersConnection === 'connected',
+            previewKitConnection === 'connected' || loadersConnection === 'connected',
         })
         return
       }
@@ -528,7 +463,7 @@ export default function PresentationTool(props: {
   const workspace = useWorkspace()
 
   const getCommentIntent = useCallback<CommentIntentGetter>(
-    ({ id, type, path }) => {
+    ({id, type, path}) => {
       if (frameStateRef.current.url) {
         return {
           title: frameStateRef.current.title || frameStateRef.current.url,
@@ -569,12 +504,7 @@ export default function PresentationTool(props: {
                   defaultSize={navigatorEnabled ? 50 : 75}
                   order={3}
                 >
-                  <Flex
-                    direction="column"
-                    flex={1}
-                    height="fill"
-                    ref={setBoundaryElement}
-                  >
+                  <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
                     <BoundaryElementProvider element={boundaryElement}>
                       <PreviewFrame
                         dispatch={dispatch}

@@ -7,7 +7,7 @@
  * https://portabletext.org/
  *
  */
-import { PortableText } from '@portabletext/react'
+import {PortableText} from '@portabletext/react'
 
 import styles from './PostBody.module.css'
 

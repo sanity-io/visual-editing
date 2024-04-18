@@ -13,15 +13,6 @@
     "test": "turbo run test",
     "watch": "turbo run watch"
   },
-  "prettier": {
-    "plugins": [
-      "prettier-plugin-packagejson",
-      "prettier-plugin-svelte",
-      "prettier-plugin-tailwindcss"
-    ],
-    "semi": false,
-    "singleQuote": true
-  },
   "dependencies": {
     "@sanity/block-tools": "3.38.0",
     "@sanity/cli": "3.38.0",
@@ -40,8 +31,8 @@
   },
   "devDependencies": {
     "@sanity/pkg-utils": "6.7.1",
+    "@sanity/prettier-config": "1.0.2",
     "prettier": "3.2.5",
-    "prettier-plugin-packagejson": "2.5.0",
     "prettier-plugin-svelte": "3.2.3",
     "prettier-plugin-tailwindcss": "0.5.14",
     "turbo": "1.13.2",

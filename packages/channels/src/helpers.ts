@@ -1,5 +1,5 @@
-import { HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES } from './constants'
-import { ChannelMsgType, HandshakeMsgType, InternalMsgType } from './types'
+import {HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES} from './constants'
+import {ChannelMsgType, HandshakeMsgType, InternalMsgType} from './types'
 
 export const isInternalMessage = (
   type: ChannelMsgType | InternalMsgType,
@@ -13,9 +13,7 @@ export const isHandshakeMessage = (
   return HANDSHAKE_MSG_TYPES.some((t) => t === type)
 }
 
-export const isLegacyHandshakeMessage = ({
-  data = {},
-}: MessageEvent): boolean => {
+export const isLegacyHandshakeMessage = ({data = {}}: MessageEvent): boolean => {
   return (
     // Check data is a record type
     typeof data === 'object' &&

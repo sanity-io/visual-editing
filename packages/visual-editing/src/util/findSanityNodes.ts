@@ -1,23 +1,15 @@
-import { decodeSanityNodeData } from '@repo/visual-editing-helpers/csm'
+import {decodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
 
-import { OVERLAY_ID } from '../constants'
-import type {
-  ElementNode,
-  ResolvedElement,
-  SanityNode,
-  SanityStegaNode,
-} from '../types'
-import { findNonInlineElement } from './findNonInlineElement'
-import { testAndDecodeStega } from './stega'
+import {OVERLAY_ID} from '../constants'
+import type {ElementNode, ResolvedElement, SanityNode, SanityStegaNode} from '../types'
+import {findNonInlineElement} from './findNonInlineElement'
+import {testAndDecodeStega} from './stega'
 
-const isElementNode = (node: ChildNode): node is ElementNode =>
-  node.nodeType === Node.ELEMENT_NODE
+const isElementNode = (node: ChildNode): node is ElementNode => node.nodeType === Node.ELEMENT_NODE
 
-const isImgElement = (el: ElementNode): el is HTMLImageElement =>
-  el.tagName === 'IMG'
+const isImgElement = (el: ElementNode): el is HTMLImageElement => el.tagName === 'IMG'
 
-const isTimeElement = (el: ElementNode): el is HTMLTimeElement =>
-  el.tagName === 'TIME'
+const isTimeElement = (el: ElementNode): el is HTMLTimeElement => el.tagName === 'TIME'
 
 const isSvgRootElement = (el: ElementNode): el is SVGSVGElement =>
   el.tagName.toUpperCase() === 'SVG'
@@ -40,10 +32,7 @@ export function findCommonPath(first: string, second: string): string {
   secondParts = secondParts.slice(0, maxLength).reverse()
 
   return firstParts
-    .reduce(
-      (parts, part, i) => (part === secondParts[i] ? [...parts, part] : []),
-      [] as string[],
-    )
+    .reduce((parts, part, i) => (part === secondParts[i] ? [...parts, part] : []), [] as string[])
     .reverse()
     .join('.')
 }
@@ -59,10 +48,7 @@ export function findCommonSanityData(
   nodes: (SanityNode | SanityStegaNode)[],
 ): SanityNode | SanityStegaNode | undefined {
   // If there are no nodes, or inconsistent node types
-  if (
-    !nodes.length ||
-    !nodes.map((n) => isSanityNode(n)).every((n, _i, arr) => n === arr[0])
-  ) {
+  if (!nodes.length || !nodes.map((n) => isSanityNode(n)).every((n, _i, arr) => n === arr[0])) {
     return undefined
   }
   // If legacy nodes, return first match (no common pathfinding)
@@ -99,7 +85,7 @@ export function findCommonSanityData(
  * @internal
  */
 export function findSanityNodes(
-  el: ElementNode | ChildNode | { childNodes: Array<ElementNode> },
+  el: ElementNode | ChildNode | {childNodes: Array<ElementNode>},
 ): ResolvedElement[] {
   const elements: ResolvedElement[] = []
 
@@ -125,16 +111,12 @@ export function findSanityNodes(
 
   if (el) {
     for (const node of el.childNodes) {
-      const { nodeType, parentElement, textContent } = node
+      const {nodeType, parentElement, textContent} = node
       // If an edit target is found, find common paths
       if (isElementNode(node) && node.dataset?.sanityEditTarget !== undefined) {
-        const nodesInTarget = findSanityNodes(node).map(({ sanity }) => sanity)
+        const nodesInTarget = findSanityNodes(node).map(({sanity}) => sanity)
         // If there are inconsistent node types, continue
-        if (
-          !nodesInTarget
-            .map((n) => isSanityNode(n))
-            .every((n, _i, arr) => n === arr[0])
-        ) {
+        if (!nodesInTarget.map((n) => isSanityNode(n)).every((n, _i, arr) => n === arr[0])) {
           continue
         }
 

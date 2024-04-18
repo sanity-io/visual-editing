@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const shoeType = defineType({
   type: 'document',
@@ -17,11 +17,11 @@ export const shoeType = defineType({
       options: {
         source: 'title',
         isUnique: async (slug, context) => {
-          const { document, getClient } = context
+          const {document, getClient} = context
           if (!document?._type) {
             return true
           }
-          const client = getClient({ apiVersion: '2023-10-12' })
+          const client = getClient({apiVersion: '2023-10-12'})
           const query = /* groq */ `count(*[_type == $type && slug.current == $slug])`
           const result = await client.fetch<number>(
             query,
@@ -29,7 +29,7 @@ export const shoeType = defineType({
               type: document._type,
               slug,
             },
-            { perspective: 'previewDrafts' },
+            {perspective: 'previewDrafts'},
           )
           return result < 2
         },
@@ -66,13 +66,13 @@ export const shoeType = defineType({
           ],
         }),
       ],
-      options: { layout: 'grid' },
+      options: {layout: 'grid'},
     }),
     defineField({
       type: 'array',
       name: 'description',
       title: 'Description',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'}],
     }),
     defineField({
       type: 'number',
@@ -84,7 +84,7 @@ export const shoeType = defineType({
       name: 'brandReference',
       type: 'crossDatasetReference',
       dataset: 'cross-dataset-references',
-      studioUrl: ({ type, id }) =>
+      studioUrl: ({type, id}) =>
         new URL(
           `/cross-dataset-references/desk/intent/edit/id=${id};type=${type}/`,
           location.href,

@@ -1,4 +1,4 @@
-import { FieldMember, ObjectMember } from 'sanity'
+import {FieldMember, ObjectMember} from 'sanity'
 
 /** @alpha */
 export function isFieldMember(member: ObjectMember): member is FieldMember {

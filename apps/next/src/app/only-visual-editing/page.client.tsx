@@ -1,9 +1,9 @@
-import { type ShoesListResult } from 'apps-common/queries'
-import { formatCurrency } from 'apps-common/utils'
+import {type ShoesListResult} from 'apps-common/queries'
+import {formatCurrency} from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { urlFor, urlForCrossDatasetReference } from '../shoes/utils'
-import { ContentSourceMap } from '@sanity/client/csm'
+import {urlFor, urlForCrossDatasetReference} from '../shoes/utils'
+import {ContentSourceMap} from '@sanity/client/csm'
 
 type Props = {
   data: ShoesListResult
@@ -11,9 +11,9 @@ type Props = {
 }
 
 export default function ShoesPageClient(props: Props) {
-  const { data: products, sourceMap } = props
+  const {data: products, sourceMap} = props
 
-  console.log({ products, sourceMap })
+  console.log({products, sourceMap})
 
   return (
     <div className="min-h-screen bg-white">
@@ -55,7 +55,7 @@ export default function ShoesPageClient(props: Props) {
                 </div>
                 <h2
                   className="mb-8 mt-4 text-sm text-gray-700"
-                  style={{ ['textWrap' as any]: 'balance' }}
+                  style={{['textWrap' as any]: 'balance'}}
                 >
                   {product.title}
                 </h2>
@@ -82,9 +82,7 @@ export default function ShoesPageClient(props: Props) {
                       height={24}
                       alt={product.brand?.logo?.alt || ''}
                     />
-                    <span className="font-bold text-gray-600">
-                      {product.brand.name}
-                    </span>
+                    <span className="font-bold text-gray-600">{product.brand.name}</span>
                   </div>
                 )}
               </a>
@@ -95,30 +93,21 @@ export default function ShoesPageClient(props: Props) {
       <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 pb-8 sm:px-6 lg:max-w-7xl lg:px-8">
         <li>
           <div className="flex items-center">
-            <Link
-              href="/shoes"
-              className="mr-2 text-sm font-medium text-gray-900"
-            >
+            <Link href="/shoes" className="mr-2 text-sm font-medium text-gray-900">
               React Loader
             </Link>
           </div>
         </li>
         <li>
           <div className="flex items-center">
-            <Link
-              href="/compat"
-              className="mr-2 text-sm font-medium text-gray-900"
-            >
+            <Link href="/compat" className="mr-2 text-sm font-medium text-gray-900">
               Preview Kit
             </Link>
           </div>
         </li>
         <li>
           <div className="flex items-center">
-            <Link
-              href="/only-visual-editing"
-              className="mr-2 text-sm font-medium text-gray-900"
-            >
+            <Link href="/only-visual-editing" className="mr-2 text-sm font-medium text-gray-900">
               Visual Editing only
             </Link>
           </div>

@@ -1,10 +1,6 @@
-import { v4 as uuid } from 'uuid'
+import {v4 as uuid} from 'uuid'
 
-import {
-  isHandshakeMessage,
-  isInternalMessage,
-  isLegacyHandshakeMessage,
-} from './helpers'
+import {isHandshakeMessage, isInternalMessage, isLegacyHandshakeMessage} from './helpers'
 import {
   ChannelMsg,
   ChannelsEventSubscriber,
@@ -37,21 +33,21 @@ export function createChannelsNode<
   function flush() {
     const toFlush = [...channel.buffer]
     channel.buffer.splice(0, channel.buffer.length)
-    toFlush.forEach(({ type, data }) => {
+    toFlush.forEach(({type, data}) => {
       send(type, data)
     })
   }
 
   function send<T extends Sends['type']>(
     type: T | InternalMsgType | HandshakeMsgType,
-    data?: Extract<Sends, { type: T }>['data'],
+    data?: Extract<Sends, {type: T}>['data'],
   ) {
     if (
       !isHandshakeMessage(type) &&
       !isInternalMessage(type) &&
       (channel.status === 'connecting' || channel.status === 'reconnecting')
     ) {
-      channel.buffer.push({ type, data })
+      channel.buffer.push({type, data})
       return
     }
 
@@ -76,10 +72,8 @@ export function createChannelsNode<
     }
   }
 
-  function isValidMessageEvent(
-    e: MessageEvent,
-  ): e is MessageEvent<ProtocolMsg<Receives>> {
-    const { data } = e
+  function isValidMessageEvent(e: MessageEvent): e is MessageEvent<ProtocolMsg<Receives>> {
+    const {data} = e
     return (
       data.domain === 'sanity/channels' &&
       data.to === config.id &&
@@ -98,7 +92,7 @@ export function createChannelsNode<
     }
 
     if (isValidMessageEvent(e)) {
-      const { data } = e
+      const {data} = e
       // Once we know the origin, after a valid handshake, we always verify it
       if (channel.origin && e.origin !== channel.origin) {
         return
@@ -113,17 +107,14 @@ export function createChannelsNode<
           channel.origin = e.origin
           channel.id = data.data.id as string
           setConnectionStatus('connecting')
-          send('handshake/syn-ack', { id: channel.id })
+          send('handshake/syn-ack', {id: channel.id})
           return
         }
         if (data.type === 'handshake/ack' && data.data.id === channel.id) {
           setConnectionStatus('connected')
           return
         }
-      } else if (
-        data.connectionId === channel.id &&
-        e.origin === channel.origin
-      ) {
+      } else if (data.connectionId === channel.id && e.origin === channel.origin) {
         if (data.type === 'channel/disconnect') {
           setConnectionStatus('disconnected')
           return
@@ -132,7 +123,7 @@ export function createChannelsNode<
           eventSubscribers.forEach((subscriber) => {
             subscriber(...args)
           })
-          send('channel/response', { responseTo: data.id })
+          send('channel/response', {responseTo: data.id})
         }
         return
       }
@@ -183,10 +174,7 @@ export function createChannelsNode<
 
   initialise()
 
-  function sendPublic<T extends Sends['type']>(
-    type: T,
-    data?: Extract<Sends, { type: T }>['data'],
-  ) {
+  function sendPublic<T extends Sends['type']>(type: T, data?: Extract<Sends, {type: T}>['data']) {
     send(type, data)
   }
 

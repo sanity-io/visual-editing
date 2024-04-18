@@ -1,23 +1,19 @@
-import { Suspense } from 'react'
+import {Suspense} from 'react'
 import dynamic from 'next/dynamic'
-import { revalidateTag, unstable_cache } from 'next/cache'
+import {revalidateTag, unstable_cache} from 'next/cache'
 
 import '../../tailwind.css'
-import { draftMode } from 'next/headers'
-import { Metadata } from 'next'
+import {draftMode} from 'next/headers'
+import {Metadata} from 'next'
 
 const LiveVisualEditing = dynamic(() => import('./VisualEditing'))
-import { Timesince } from '../Timesince'
+import {Timesince} from '../Timesince'
 
 export const metadata = {
   referrer: 'no-referrer-when-downgrade',
 } satisfies Metadata
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body>
@@ -25,9 +21,7 @@ export default async function RootLayout({
         {draftMode().isEnabled && <LiveVisualEditing />}
         <a
           href={draftMode().isEnabled ? '/api/disable-draft' : undefined}
-          title={
-            draftMode().isEnabled ? 'Click to disable Draft Mode' : undefined
-          }
+          title={draftMode().isEnabled ? 'Click to disable Draft Mode' : undefined}
           className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100"
         >
           app-router:{' '}
@@ -44,8 +38,6 @@ export default async function RootLayout({
   )
 }
 
-const getCachedServed = unstable_cache(
-  async () => new Date().toJSON(),
-  ['shoes-test'],
-  { revalidate: 1 },
-)
+const getCachedServed = unstable_cache(async () => new Date().toJSON(), ['shoes-test'], {
+  revalidate: 1,
+})

@@ -1,15 +1,5 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardProps,
-  Container,
-  Flex,
-  Inline,
-  Stack,
-  Text,
-} from '@sanity/ui'
-import { ReactElement, ReactNode } from 'react'
+import {Box, Button, Card, CardProps, Container, Flex, Inline, Stack, Text} from '@sanity/ui'
+import {ReactElement, ReactNode} from 'react'
 
 export function ErrorCard(
   props: {
@@ -19,11 +9,9 @@ export function ErrorCard(
     onContinueAnyway?: () => void
   } & CardProps,
 ): ReactElement {
-  const { children, message, onRetry, onContinueAnyway, ...restProps } = props
+  const {children, message, onRetry, onContinueAnyway, ...restProps} = props
 
-  const retryButton = (
-    <Button fontSize={1} mode="ghost" onClick={onRetry} text="Retry" />
-  )
+  const retryButton = <Button fontSize={1} mode="ghost" onClick={onRetry} text="Retry" />
   const continueAnywayButton = (
     <Button
       fontSize={1}

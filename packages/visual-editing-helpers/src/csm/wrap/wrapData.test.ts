@@ -1,8 +1,8 @@
-import { expect, test } from 'vitest'
+import {expect, test} from 'vitest'
 
 import * as fixtures from './__fixtures__/responses'
-import { SanityNodeContext } from './types'
-import { wrapData } from './wrapData'
+import {SanityNodeContext} from './types'
+import {wrapData} from './wrapData'
 
 test('wrap an array of documents with source maps', () => {
   const context = {
@@ -11,7 +11,7 @@ test('wrap an array of documents with source maps', () => {
     workspace: undefined,
   } satisfies SanityNodeContext
 
-  const { result, resultSourceMap } = fixtures.response1
+  const {result, resultSourceMap} = fixtures.response1
   const wrapped = wrapData(context, result, resultSourceMap)
 
   expect(wrapped?.[0]).toEqual({
@@ -37,7 +37,7 @@ test('wrap a deep target with source maps', () => {
     workspace: undefined,
   } satisfies SanityNodeContext
 
-  const { result, resultSourceMap } = fixtures.response2
+  const {result, resultSourceMap} = fixtures.response2
   const wrapped = wrapData(context, result, resultSourceMap)
 
   expect(wrapped?.seo?.og?.title).toEqual({

@@ -1,4 +1,4 @@
-import { IndexPreview } from './IndexPreview'
+import {IndexPreview} from './IndexPreview'
 
 export default function IndexPage() {
   return <IndexPreview />

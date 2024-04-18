@@ -4,9 +4,9 @@ import type {
   ContentSourceMapDocuments,
   QueryParams,
 } from '@sanity/client'
-import { StudioPathLike } from '@sanity/client/csm'
+import {StudioPathLike} from '@sanity/client/csm'
 
-export type { Path } from '@sanity/client/csm'
+export type {Path} from '@sanity/client/csm'
 
 /**
  * @internal
@@ -94,7 +94,7 @@ export type HistoryRefresh =
         /**
          * If the document has a top level slug field named `slug` with the type `slug`, then it'll be included here
          */
-        slug?: { current?: string | null }
+        slug?: {current?: string | null}
       }
     }
 
@@ -105,7 +105,7 @@ export type HistoryRefresh =
 export type PresentationMsg =
   | {
       type: 'presentation/focus'
-      data: { id: string; path: string }
+      data: {id: string; path: string}
     }
   | {
       type: 'presentation/blur'
@@ -203,7 +203,7 @@ export type VisualEditingMsg =
 
 /** @public */
 export interface LoaderPayloads {
-  perspective: {
+  'perspective': {
     projectId: string
     dataset: string
     perspective: ClientPerspective
@@ -230,7 +230,7 @@ export interface LoaderPayloads {
      */
     heartbeat?: number
   }
-  documents: {
+  'documents': {
     projectId: string
     dataset: string
     perspective: ClientPerspective
@@ -286,11 +286,7 @@ export type PreviewKitMsg = {
  * Known Channel connection IDs
  * @public
  */
-export type VisualEditingConnectionIds =
-  | 'presentation'
-  | 'loaders'
-  | 'overlays'
-  | 'preview-kit'
+export type VisualEditingConnectionIds = 'presentation' | 'loaders' | 'overlays' | 'preview-kit'
 
 /**
  * @public

@@ -1,12 +1,7 @@
-import {
-  FunctionComponent,
-  PropsWithChildren,
-  useContext,
-  useLayoutEffect,
-} from 'react'
-import { styled } from 'styled-components'
+import {FunctionComponent, PropsWithChildren, useContext, useLayoutEffect} from 'react'
+import {styled} from 'styled-components'
 
-import { PanelsContext } from './PanelsContext'
+import {PanelsContext} from './PanelsContext'
 
 interface PanelProps extends PropsWithChildren {
   defaultSize?: number | null
@@ -33,12 +28,10 @@ export const Panel: FunctionComponent<PanelProps> = function ({
   const context = useContext(PanelsContext)
 
   if (context === null) {
-    throw Error(
-      `Panel components must be rendered within a PanelGroup container`,
-    )
+    throw Error(`Panel components must be rendered within a PanelGroup container`)
   }
 
-  const { getPanelStyle, registerElement, unregisterElement } = context
+  const {getPanelStyle, registerElement, unregisterElement} = context
 
   const style = getPanelStyle(id)
 
@@ -55,15 +48,7 @@ export const Panel: FunctionComponent<PanelProps> = function ({
     return () => {
       unregisterElement(id)
     }
-  }, [
-    id,
-    defaultSize,
-    order,
-    maxWidth,
-    minWidth,
-    registerElement,
-    unregisterElement,
-  ])
+  }, [id, defaultSize, order, maxWidth, minWidth, registerElement, unregisterElement])
 
   return <Root style={style}>{children}</Root>
 }

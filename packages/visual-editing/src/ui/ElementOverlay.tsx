@@ -1,16 +1,11 @@
-import { pathToUrlString } from '@repo/visual-editing-helpers'
-import { createEditUrl, studioPath } from '@sanity/client/csm'
-import { Box, Card, Flex, Text } from '@sanity/ui'
-import { memo, useEffect, useMemo, useRef } from 'react'
+import {pathToUrlString} from '@repo/visual-editing-helpers'
+import {createEditUrl, studioPath} from '@sanity/client/csm'
+import {Box, Card, Flex, Text} from '@sanity/ui'
+import {memo, useEffect, useMemo, useRef} from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import type {
-  ElementFocusedState,
-  OverlayRect,
-  SanityNode,
-  SanityStegaNode,
-} from '../types'
+import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
 
 const Root = styled(Card)`
   background-color: var(--overlay-bg);
@@ -25,11 +20,7 @@ const Root = styled(Card)`
   --overlay-box-shadow: inset 0 0 0 1px transparent;
 
   [data-overlays] & {
-    --overlay-bg: color-mix(
-      in srgb,
-      transparent 95%,
-      var(--card-focus-ring-color)
-    );
+    --overlay-bg: color-mix(in srgb, transparent 95%, var(--card-focus-ring-color));
     --overlay-box-shadow: inset 0 0 0 2px
       color-mix(in srgb, transparent 50%, var(--card-focus-ring-color));
   }
@@ -85,7 +76,7 @@ const ActionOpen = styled(Card)`
 `
 
 function createIntentLink(node: SanityNode) {
-  const { id, type, path, baseUrl, tool, workspace } = node
+  const {id, type, path, baseUrl, tool, workspace} = node
 
   return createEditUrl({
     baseUrl,
@@ -105,20 +96,14 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
   sanity: SanityNode | SanityStegaNode
   wasMaybeCollapsed: boolean
 }) {
-  const { focused, hovered, rect, showActions, sanity, wasMaybeCollapsed } =
-    props
+  const {focused, hovered, rect, showActions, sanity, wasMaybeCollapsed} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
   const scrolledIntoViewRef = useRef(false)
 
   useEffect(() => {
-    if (
-      !scrolledIntoViewRef.current &&
-      !wasMaybeCollapsed &&
-      focused === true &&
-      ref.current
-    ) {
+    if (!scrolledIntoViewRef.current && !wasMaybeCollapsed && focused === true && ref.current) {
       const target = ref.current
       scrollIntoView(ref.current, {
         // Workaround issue with scroll-into-view-if-needed struggling with iframes

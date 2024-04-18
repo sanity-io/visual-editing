@@ -1,17 +1,17 @@
-import { WrappedValue, unwrapData } from '@sanity/react-loader/jsx'
-import { sanity } from '@sanity/react-loader/jsx'
+import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
+import {sanity} from '@sanity/react-loader/jsx'
 import Link from 'next/link'
 
-import { Image } from '@/components/image'
-import { dataAttribute } from '@/sanity'
-import { PageSection } from '../PageSection'
-import { FeatureHighlightSectionData, PageData } from '../types'
+import {Image} from '@/components/image'
+import {dataAttribute} from '@/sanity'
+import {PageSection} from '../PageSection'
+import {FeatureHighlightSectionData, PageData} from '../types'
 
 export function FeatureHighlight(props: {
   page: WrappedValue<PageData>
   section: WrappedValue<FeatureHighlightSectionData>
 }) {
-  const { page: data, section } = props
+  const {page: data, section} = props
 
   return (
     <PageSection

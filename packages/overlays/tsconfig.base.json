@@ -1,10 +1,7 @@
 {
+  "extends": "@sanity/pkg-utils/tsconfig/strictest.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,

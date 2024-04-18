@@ -40,7 +40,7 @@ npm install @sanity/visual-editing
 ### Plain JS
 
 ```ts
-import { enableVisualEditing } from '@sanity/vision-editing'
+import {enableVisualEditing} from '@sanity/vision-editing'
 
 // Enables visual editing overlays
 enableVisualEditing()
@@ -89,14 +89,10 @@ npm i next-sanity
 In your root `layout.tsx`, assuming you're using [Draft Mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) to toggle when to enable Visual Editing, add the `VisualEditing` component:
 
 ```tsx
-import { draftMode } from 'next/headers'
-import { VisualEditing } from 'next-sanity'
+import {draftMode} from 'next/headers'
+import {VisualEditing} from 'next-sanity'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body>
@@ -117,12 +113,12 @@ export default function RootLayout({
 For Pages Router you should use the `VisualEditing` from `@sanity/visual-editing/next-pages-router`. Assuming you're using [Draft Mode](https://nextjs.org/docs/pages/building-your-application/configuring/draft-mode) or [Preview Mode](https://nextjs.org/docs/pages/building-your-application/configuring/preview-mode) to toggle when to enable Visual Editing, add the `VisualEditing` component to your `_app.tsx`:
 
 ```tsx
-import { VisualEditing } from '@sanity/visual-editing/next-pages-router'
-import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
+import {VisualEditing} from '@sanity/visual-editing/next-pages-router'
+import type {AppProps} from 'next/app'
+import {useRouter} from 'next/router'
 
-export default function App({ Component, pageProps }: AppProps) {
-  const { isPreview } = useRouter()
+export default function App({Component, pageProps}: AppProps) {
+  const {isPreview} = useRouter()
   // A common alternative pattern to `isPreview` and `useRouter` is to pass down the draftMode/preview from getStaticProps/getServerSideProps/getInitialProps
   // const { draftMode } = pageProps
   return (
@@ -143,7 +139,7 @@ export default function App({ Component, pageProps }: AppProps) {
 For Remix apps you should use `VisualEditing` from `@sanity/visual-editing/remix` in your `app/root.tsx`:
 
 ```tsx
-import { json } from '@remix-run/node'
+import {json} from '@remix-run/node'
 import {
   Links,
   LiveReload,
@@ -153,19 +149,18 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react'
-import { VisualEditing } from '@sanity/visual-editing/remix'
+import {VisualEditing} from '@sanity/visual-editing/remix'
 
 export const loader = () => {
   return json({
     ENV: {
-      SANITY_VISUAL_EDITING_ENABLED:
-        process.env.SANITY_VISUAL_EDITING_ENABLED === 'true',
+      SANITY_VISUAL_EDITING_ENABLED: process.env.SANITY_VISUAL_EDITING_ENABLED === 'true',
     },
   })
 }
 
 export default function App() {
-  const { ENV } = useLoaderData<typeof loader>()
+  const {ENV} = useLoaderData<typeof loader>()
 
   return (
     <html lang="en">
@@ -290,15 +285,11 @@ The implementation makes use of [Server Actions][server-actions], here's the def
 
 ```tsx
 // app/layout.tsx
-import { revalidateTag, revalidatePath } from 'next/cache'
-import { draftMode } from 'next/headers'
-import { VisualEditing } from 'next-sanity'
+import {revalidateTag, revalidatePath} from 'next/cache'
+import {draftMode} from 'next/headers'
+import {VisualEditing} from 'next-sanity'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <head />
@@ -316,10 +307,7 @@ export default function RootLayout({
                 await revalidatePath('/', 'layout')
               }
               // Only revalidate on mutations if the route doesn't have loaders or preview-kit
-              if (
-                payload.source === 'mutation' &&
-                !payload.livePreviewEnabled
-              ) {
+              if (payload.source === 'mutation' && !payload.livePreviewEnabled) {
                 await revalidatePath('/', 'layout')
               }
             }}
@@ -383,11 +371,11 @@ Remix doesn't have [Server Actions][server-actions] yet, under the hood the [`us
 
 ```tsx
 // app/root.tsx
-import { VisualEditing } from '@sanity/visual-editing/remix'
-import { useRevalidator } from '@remix-run/react'
+import {VisualEditing} from '@sanity/visual-editing/remix'
+import {useRevalidator} from '@remix-run/react'
 
 export default function App() {
-  const { ENV } = useLoaderData<typeof loader>()
+  const {ENV} = useLoaderData<typeof loader>()
   const revalidator = useRevalidator()
 
   return (
@@ -400,10 +388,7 @@ export default function App() {
               if (payload.source === 'manual') {
                 revalidator.revalidate()
               }
-              if (
-                payload.source === 'mutation' &&
-                !payload.livePreviewEnabled
-              ) {
+              if (payload.source === 'mutation' && !payload.livePreviewEnabled) {
                 revalidator.revalidate()
               }
             }}
@@ -424,10 +409,7 @@ If you only want to configure **when** revalidation is called, and not the actua
       return refreshDefault()
     }
     // Always revalidate on mutations for document types that are used for MetaFunctions that render in <head />
-    if (
-      payload.source === 'mutation' &&
-      payload.document._type === 'settings'
-    ) {
+    if (payload.source === 'mutation' && payload.document._type === 'settings') {
       return refreshDefault()
     }
   }}

@@ -1,24 +1,17 @@
-import { Card, Code, ErrorBoundary, Flex, Label, Stack } from '@sanity/ui'
-import {
-  ErrorInfo,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
+import {ErrorInfo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
 import {
   DocumentListPane as StructureDocumentListPane,
   PaneLayout,
   PaneNode,
   StructureToolProvider,
 } from 'sanity/structure'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import { ErrorCard } from '../components/ErrorCard'
-import type { StructureDocumentPaneParams } from '../types'
-import { usePresentationTool } from '../usePresentationTool'
-import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
+import {ErrorCard} from '../components/ErrorCard'
+import type {StructureDocumentPaneParams} from '../types'
+import {usePresentationTool} from '../usePresentationTool'
+import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
 const RootLayout = styled(PaneLayout)`
   height: 100%;
@@ -38,17 +31,17 @@ const WrappedCode = styled(Code)`
 export function DocumentListPane(props: {
   onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
-  refs: { _id: string; _type: string }[]
+  refs: {_id: string; _type: string}[]
 }): ReactElement {
-  const { onStructureParams, previewUrl, refs } = props
-  const { devMode } = usePresentationTool()
+  const {onStructureParams, previewUrl, refs} = props
+  const {devMode} = usePresentationTool()
 
-  const pane: Extract<PaneNode, { type: 'documentList' }> = useMemo(
+  const pane: Extract<PaneNode, {type: 'documentList'}> = useMemo(
     () => ({
       id: '$root',
       options: {
         filter: '_id in $ids',
-        params: { ids: refs.map((r) => r._id) },
+        params: {ids: refs.map((r) => r._id)},
         // defaultOrdering: [{ field: '_updatedAt', direction: 'desc' }],
       },
       schemaTypeName: '',
@@ -72,11 +65,7 @@ export function DocumentListPane(props: {
 
   if (errorParams) {
     return (
-      <ErrorCard
-        flex={1}
-        message="Could not render the document list"
-        onRetry={handleRetry}
-      >
+      <ErrorCard flex={1} message="Could not render the document list" onRetry={handleRetry}>
         {devMode && (
           // show runtime error message in dev mode
           <Card overflow="auto" padding={3} radius={2} tone="critical">
@@ -103,12 +92,7 @@ export function DocumentListPane(props: {
             refs={refs}
           >
             <Root direction="column" flex={1}>
-              <StructureDocumentListPane
-                index={0}
-                itemId="$root"
-                pane={pane}
-                paneKey="$root"
-              />
+              <StructureDocumentListPane index={0} itemId="$root" pane={pane} paneKey="$root" />
             </Root>
           </PresentationPaneRouterProvider>
         </StructureToolProvider>

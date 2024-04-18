@@ -12,17 +12,11 @@ import {
   useRef,
   useState,
 } from 'react'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import { PanelsContext } from './PanelsContext'
-import {
-  ElementMap,
-  InitialDragState,
-  PanelElement,
-  PanelsState,
-  ResizerElement,
-} from './types'
-import { usePanelsStorage } from './usePanelsStorage'
+import {PanelsContext} from './PanelsContext'
+import {ElementMap, InitialDragState, PanelElement, PanelsState, ResizerElement} from './types'
+import {usePanelsStorage} from './usePanelsStorage'
 import {
   getDefaultWidths,
   getNextWidths,
@@ -42,17 +36,12 @@ const PanelsWrapper = styled.div`
   width: 100%;
 `
 
-export const Panels: FunctionComponent<PropsWithChildren> = function ({
-  children,
-}) {
+export const Panels: FunctionComponent<PropsWithChildren> = function ({children}) {
   const panelsEl = useRef<HTMLDivElement | null>(null)
 
   const [elements, setElements] = useState<ElementMap>(new Map())
 
-  const panels = useMemo(
-    () => getSortedElements(elements).filter(isPanel),
-    [elements],
-  )
+  const panels = useMemo(() => getSortedElements(elements).filter(isPanel), [elements])
 
   const [widths, setWidths] = useState<number[]>([])
   const [activeResizer, setActiveResizer] = useState<string | null>(null)
@@ -73,17 +62,14 @@ export const Panels: FunctionComponent<PropsWithChildren> = function ({
     [activeResizer, panels, widths],
   )
 
-  const registerElement = useCallback(
-    (id: string, data: PanelElement | ResizerElement) => {
-      setElements((prev) => {
-        if (prev.has(id)) return prev
-        const next = new Map(prev)
-        next.set(id, data)
-        return next
-      })
-    },
-    [],
-  )
+  const registerElement = useCallback((id: string, data: PanelElement | ResizerElement) => {
+    setElements((prev) => {
+      if (prev.has(id)) return prev
+      const next = new Map(prev)
+      next.set(id, data)
+      return next
+    })
+  }, [])
   const unregisterElement = useCallback((id: string) => {
     setElements((prev) => {
       if (!prev.has(id)) return prev
@@ -145,13 +131,7 @@ export const Panels: FunctionComponent<PropsWithChildren> = function ({
       event.preventDefault()
       event.stopPropagation()
 
-      const {
-        containerWidth,
-        dragOffset,
-        panelBefore,
-        panelAfter,
-        resizerRect,
-      } = dragRef.current
+      const {containerWidth, dragOffset, panelBefore, panelAfter, resizerRect} = dragRef.current
 
       if (panelBefore == null || panelAfter == null) {
         return
@@ -168,7 +148,7 @@ export const Panels: FunctionComponent<PropsWithChildren> = function ({
         return
       }
 
-      const { widths: prevWidths } = panelsRef.current
+      const {widths: prevWidths} = panelsRef.current
       const rect = panelsEl.current!.getBoundingClientRect()
       const delta = (offset / rect.width) * 100
 
@@ -181,9 +161,7 @@ export const Panels: FunctionComponent<PropsWithChildren> = function ({
         dragRef.current,
       )
 
-      const widthsChanged = prevWidths.some(
-        (prevWidth, i) => prevWidth !== nextWidths[i],
-      )
+      const widthsChanged = prevWidths.some((prevWidth, i) => prevWidth !== nextWidths[i])
 
       if (widthsChanged) {
         setWidths(nextWidths)
@@ -203,7 +181,7 @@ export const Panels: FunctionComponent<PropsWithChildren> = function ({
 
   // For setting default sizing when panels are updated
   useLayoutEffect(() => {
-    const { widths } = panelsRef.current
+    const {widths} = panelsRef.current
 
     if (widths.length === panels.length) {
       return
@@ -212,11 +190,7 @@ export const Panels: FunctionComponent<PropsWithChildren> = function ({
     const storedWidths = storage.get(panels)
 
     if (storedWidths) {
-      const validatedStoredWidths = validateWidths(
-        panels,
-        storedWidths,
-        window.innerWidth,
-      )
+      const validatedStoredWidths = validateWidths(panels, storedWidths, window.innerWidth)
       setWidths(validatedStoredWidths)
       return
     }
@@ -233,13 +207,11 @@ export const Panels: FunctionComponent<PropsWithChildren> = function ({
 
   useLayoutEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
-      const { panels, widths: prevWidths } = panelsRef.current
+      const {panels, widths: prevWidths} = panelsRef.current
 
       const nextWidths = validateWidths(panels, prevWidths, window.innerWidth)
 
-      const widthsChanged = prevWidths.some(
-        (prevWidth, i) => prevWidth !== nextWidths[i],
-      )
+      const widthsChanged = prevWidths.some((prevWidth, i) => prevWidth !== nextWidths[i])
       if (widthsChanged) {
         setWidths(nextWidths)
       }

@@ -27,7 +27,7 @@ const Floor = {
       of: [
         {
           type: 'reference',
-          to: [{ type: 'Space' }],
+          to: [{type: 'Space'}],
         },
       ],
     },

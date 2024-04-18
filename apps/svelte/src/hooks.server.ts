@@ -1,5 +1,5 @@
-import { createRequestHandler, setServerClient } from '@sanity/svelte-loader'
-import { serverClient } from '$lib/server/sanity'
+import {createRequestHandler, setServerClient} from '@sanity/svelte-loader'
+import {serverClient} from '$lib/server/sanity'
 
 setServerClient(serverClient)
 

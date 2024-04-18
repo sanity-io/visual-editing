@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { ShoesListResult } from 'apps-common/queries'
-  import { formatCurrency } from 'apps-common/utils'
-  import { page } from '$app/stores'
-  import { urlFor, urlForCrossDatasetReference } from '$lib/sanity'
+  import type {ShoesListResult} from 'apps-common/queries'
+  import {formatCurrency} from 'apps-common/utils'
+  import {page} from '$app/stores'
+  import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
 
   export let loading: boolean = false
   export let products: ShoesListResult
@@ -16,16 +16,10 @@
 
 <div class="min-h-screen bg-white">
   <nav aria-label="Breadcrumb" class="pt-16 sm:pt-24">
-    <ol
-      class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-    >
+    <ol class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <li>
         <div class="flex items-center">
-          <a
-            href={basePath}
-            aria-current="page"
-            class="mr-2 text-sm font-medium text-gray-900"
-          >
+          <a href={basePath} aria-current="page" class="mr-2 text-sm font-medium text-gray-900">
             Shoes
           </a>
         </div>
@@ -33,9 +27,7 @@
     </ol>
   </nav>
 
-  <div
-    class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
-  >
+  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
     <h1 class="sr-only">Products</h1>
 
     {#if loading}
@@ -45,10 +37,7 @@
         class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
       >
         {#each products as product, i}
-          <a
-            href={`${basePath}/${product.slug.current}`}
-            class="group relative"
-          >
+          <a href={`${basePath}/${product.slug.current}`} class="group relative">
             <div
               class="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
             >
@@ -62,34 +51,22 @@
                 alt={product.media?.alt || ''}
               />
             </div>
-            <h2
-              class="mb-8 mt-4 text-sm text-gray-700"
-              style:text-wrap="balance"
-            >
+            <h2 class="mb-8 mt-4 text-sm text-gray-700" style:text-wrap="balance">
               {product.title}
             </h2>
-            <p
-              class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
-            >
+            <p class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900">
               {product.price ? formatCurrency(product.price) : 'FREE'}
             </p>
             {#if product.brand}
-              <div
-                class="absolute bottom-0.5 right-0 flex items-center gap-x-2"
-              >
+              <div class="absolute bottom-0.5 right-0 flex items-center gap-x-2">
                 <img
                   class="h-6 w-6 rounded-full bg-gray-50"
                   width="24"
                   height="24"
                   src={product.brand?.logo?.asset
-                    ? urlForCrossDatasetReference(product.brand.logo)
-                        .width(48)
-                        .height(48)
-                        .url()
+                    ? urlForCrossDatasetReference(product.brand.logo).width(48).height(48).url()
                     : `https://source.unsplash.com/featured/48x48?${
-                        product.brand.name
-                          ? encodeURIComponent(product.brand.name)
-                          : `brand&r=${i}`
+                        product.brand.name ? encodeURIComponent(product.brand.name) : `brand&r=${i}`
                       }`}
                   alt={product.brand?.logo?.alt || ''}
                 />

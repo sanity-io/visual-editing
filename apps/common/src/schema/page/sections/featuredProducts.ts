@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField } from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export const featuredProductsSectionType = defineArrayMember({
   type: 'object',
@@ -17,7 +17,7 @@ export const featuredProductsSectionType = defineArrayMember({
       of: [
         {
           type: 'reference',
-          to: [{ type: 'product' }],
+          to: [{type: 'product'}],
         },
       ],
     }),

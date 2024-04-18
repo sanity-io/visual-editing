@@ -7,10 +7,10 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import { PanelsContext } from './PanelsContext'
-import { usePanelId } from './usePanelId'
+import {PanelsContext} from './PanelsContext'
+import {usePanelId} from './usePanelId'
 
 const Resizer = styled.div`
   position: relative;
@@ -24,7 +24,7 @@ const ResizerInner = styled.div<{
   left: -5px;
   width: 9px;
   z-index: 10;
-  cursor: ${({ $disabled }) => ($disabled ? 'auto' : 'ew-resize')};
+  cursor: ${({$disabled}) => ($disabled ? 'auto' : 'ew-resize')};
 
   /* Border */
   & > span:nth-child(1) {
@@ -37,7 +37,7 @@ const ResizerInner = styled.div<{
     transition: opacity 200ms;
   }
 
-  ${({ $disabled }) =>
+  ${({$disabled}) =>
     !$disabled &&
     `
     /* Hover effect */
@@ -65,34 +65,24 @@ export const PanelResizer: FunctionComponent<{
   id?: string
   order: number
   disabled?: boolean
-}> = function ({ id: propId, order, disabled = false }) {
+}> = function ({id: propId, order, disabled = false}) {
   const el = useRef<HTMLDivElement>(null)
 
   const context = useContext(PanelsContext)
 
   if (context === null) {
-    throw Error(
-      `Panel components must be rendered within a PanelGroup container`,
-    )
+    throw Error(`Panel components must be rendered within a PanelGroup container`)
   }
 
   const id = usePanelId(propId)
 
-  const {
-    activeResizer,
-    drag,
-    startDragging,
-    stopDragging,
-    registerElement,
-    unregisterElement,
-  } = context
+  const {activeResizer, drag, startDragging, stopDragging, registerElement, unregisterElement} =
+    context
 
   const isDragging = activeResizer === id
 
   if (context === null) {
-    throw Error(
-      `Panel components must be rendered within a PanelGroup container`,
-    )
+    throw Error(`Panel components must be rendered within a PanelGroup container`)
   }
 
   const onMouseDown = useCallback(
@@ -127,7 +117,7 @@ export const PanelResizer: FunctionComponent<{
   }, [disabled, isDragging, onDrag, onDragStop])
 
   useLayoutEffect(() => {
-    registerElement(id, { id, order, type: 'resizer', el })
+    registerElement(id, {id, order, type: 'resizer', el})
 
     return () => {
       unregisterElement(id)

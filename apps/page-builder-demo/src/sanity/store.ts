@@ -1,15 +1,15 @@
-import { QueryParams } from '@sanity/client'
-import { SanityNodeContext, wrapData } from '@sanity/react-loader/jsx'
-import { createQueryStore } from '@sanity/react-loader'
-import { studioUrl, workspaces } from 'apps-common/env'
-import { getClient } from './client'
-import { useMemo } from 'react'
+import {QueryParams} from '@sanity/client'
+import {SanityNodeContext, wrapData} from '@sanity/react-loader/jsx'
+import {createQueryStore} from '@sanity/react-loader'
+import {studioUrl, workspaces} from 'apps-common/env'
+import {getClient} from './client'
+import {useMemo} from 'react'
 
 const workspace = workspaces['page-builder-demo']
 
 export const client = getClient()
 
-const { useQuery: _useQuery, useLiveMode } = createQueryStore({ client })
+const {useQuery: _useQuery, useLiveMode} = createQueryStore({client})
 
 const context: SanityNodeContext = {
   baseUrl: `${studioUrl}/${workspace.workspace}`,
@@ -25,8 +25,7 @@ export function useQuery<T>(query: string, params?: QueryParams) {
   } = _useQuery<T>(query, params)
 
   const data = useMemo(
-    () =>
-      loading || error ? undefined : wrapData(context, rawData, sourceMap),
+    () => (loading || error ? undefined : wrapData(context, rawData, sourceMap)),
     [error, loading, rawData, sourceMap],
   )
 
@@ -39,4 +38,4 @@ export function useQuery<T>(query: string, params?: QueryParams) {
   }
 }
 
-export { useLiveMode }
+export {useLiveMode}

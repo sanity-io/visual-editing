@@ -1,14 +1,8 @@
 /* eslint-disable no-console */
 
-import {
-  forwardRef,
-  PropsWithChildren,
-  ReactElement,
-  useCallback,
-  useMemo,
-} from 'react'
-import { getPublishedId, useUnique } from 'sanity'
-import { StateLink, useRouter } from 'sanity/router'
+import {forwardRef, PropsWithChildren, ReactElement, useCallback, useMemo} from 'react'
+import {getPublishedId, useUnique} from 'sanity'
+import {StateLink, useRouter} from 'sanity/router'
 import {
   BackLinkProps,
   PaneRouterContext,
@@ -16,8 +10,8 @@ import {
   ReferenceChildLinkProps,
 } from 'sanity/structure'
 
-import type { PresentationParams, StructureDocumentPaneParams } from '../types'
-import { usePresentationTool } from '../usePresentationTool'
+import type {PresentationParams, StructureDocumentPaneParams} from '../types'
+import {usePresentationTool} from '../usePresentationTool'
 
 function encodeQueryString(params: Record<string, unknown> = {}): string {
   const parts = Object.entries(params)
@@ -27,9 +21,7 @@ function encodeQueryString(params: Record<string, unknown> = {}): string {
   return parts.length ? `?${parts}` : ''
 }
 
-function resolveQueryStringFromParams(
-  nextParams: Record<string, string | undefined>,
-) {
+function resolveQueryStringFromParams(nextParams: Record<string, string | undefined>) {
   const allowed = [
     'comment',
     'inspect',
@@ -45,7 +37,7 @@ function resolveQueryStringFromParams(
     .filter(([key]) => allowed.includes(key))
     .reduce((obj, [key, value]) => {
       if (value == undefined) return obj
-      return { ...obj, [key]: value }
+      return {...obj, [key]: value}
     }, {})
 
   return encodeQueryString(safeNextParams)
@@ -55,7 +47,7 @@ const BackLink = forwardRef(function BackLink(
   props: BackLinkProps,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  const { params, structureParams } = usePresentationTool()
+  const {params, structureParams} = usePresentationTool()
 
   return (
     <StateLink
@@ -74,12 +66,11 @@ const BackLink = forwardRef(function BackLink(
 })
 
 const ReferenceChildLink = forwardRef(function ReferenceChildLink(
-  props: ReferenceChildLinkProps & { previewUrl?: string },
+  props: ReferenceChildLinkProps & {previewUrl?: string},
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { documentId, documentType, parentRefPath, template, ...restProps } =
-    props
+  const {documentId, documentType, parentRefPath, template, ...restProps} = props
 
   return (
     <StateLink
@@ -88,7 +79,7 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
       state={{
         id: documentId,
         type: documentType,
-        _searchParams: Object.entries({ preview: props.previewUrl }),
+        _searchParams: Object.entries({preview: props.previewUrl}),
       }}
       title={undefined}
     />
@@ -100,29 +91,26 @@ export function PresentationPaneRouterProvider(
     onStructureParams: (params: StructureDocumentPaneParams) => void
     params: StructureDocumentPaneParams
     previewUrl?: string
-    refs?: { _id: string; _type: string }[]
+    refs?: {_id: string; _type: string}[]
   }>,
 ): ReactElement {
-  const { children, onStructureParams, params, previewUrl, refs } = props
+  const {children, onStructureParams, params, previewUrl, refs} = props
 
-  const { state: routerState, resolvePathFromState } = useRouter()
+  const {state: routerState, resolvePathFromState} = useRouter()
 
-  const routerSearchParams = useUnique(
-    Object.fromEntries(routerState._searchParams || []),
+  const routerSearchParams = useUnique(Object.fromEntries(routerState._searchParams || []))
+
+  const createPathWithParams: PaneRouterContextValue['createPathWithParams'] = useCallback(
+    (nextParams) => {
+      const path = resolvePathFromState(routerState)
+      const qs = resolveQueryStringFromParams({
+        ...routerSearchParams,
+        ...nextParams,
+      })
+      return `${path}${qs}`
+    },
+    [resolvePathFromState, routerSearchParams, routerState],
   )
-
-  const createPathWithParams: PaneRouterContextValue['createPathWithParams'] =
-    useCallback(
-      (nextParams) => {
-        const path = resolvePathFromState(routerState)
-        const qs = resolveQueryStringFromParams({
-          ...routerSearchParams,
-          ...nextParams,
-        })
-        return `${path}${qs}`
-      },
-      [resolvePathFromState, routerSearchParams, routerState],
-    )
 
   const context: PaneRouterContextValue = useMemo(() => {
     return {
@@ -135,10 +123,8 @@ export function PresentationPaneRouterProvider(
       groupLength: 1,
       routerPanesState: [],
       ChildLink: (childLinkProps) => {
-        const { childId, ...restProps } = childLinkProps
-        const ref = refs?.find(
-          (r) => r._id === childId || getPublishedId(r._id) === childId,
-        )
+        const {childId, ...restProps} = childLinkProps
+        const ref = refs?.find((r) => r._id === childId || getPublishedId(r._id) === childId)
 
         if (ref) {
           return (
@@ -147,7 +133,7 @@ export function PresentationPaneRouterProvider(
               state={{
                 id: childId,
                 type: ref._type,
-                _searchParams: Object.entries({ preview: previewUrl }),
+                _searchParams: Object.entries({preview: previewUrl}),
               }}
             />
           )
@@ -196,9 +182,5 @@ export function PresentationPaneRouterProvider(
     }
   }, [createPathWithParams, onStructureParams, params, previewUrl, refs])
 
-  return (
-    <PaneRouterContext.Provider value={context}>
-      {children}
-    </PaneRouterContext.Provider>
-  )
+  return <PaneRouterContext.Provider value={context}>{children}</PaneRouterContext.Provider>
 }

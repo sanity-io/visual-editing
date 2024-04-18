@@ -1,4 +1,4 @@
-import { ProjectsPreview } from './ProjectsPreview'
+import {ProjectsPreview} from './ProjectsPreview'
 
 export default function ProjectsPage() {
   return <ProjectsPreview />

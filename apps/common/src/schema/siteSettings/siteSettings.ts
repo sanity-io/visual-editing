@@ -1,5 +1,5 @@
-import { ControlsIcon } from '@sanity/icons'
-import { defineType } from 'sanity'
+import {ControlsIcon} from '@sanity/icons'
+import {defineType} from 'sanity'
 
 export const siteSettingsType = defineType({
   type: 'document',
@@ -21,7 +21,7 @@ export const siteSettingsType = defineType({
       type: 'reference',
       name: 'frontPage',
       title: 'Front page',
-      to: [{ type: 'page' }],
+      to: [{type: 'page'}],
     },
     {
       type: 'string',
@@ -31,7 +31,7 @@ export const siteSettingsType = defineType({
   ],
   preview: {
     prepare() {
-      return { title: 'Site Settings' }
+      return {title: 'Site Settings'}
     },
   },
 })

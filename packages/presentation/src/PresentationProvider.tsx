@@ -1,14 +1,7 @@
-import { FunctionComponent, PropsWithChildren, useMemo } from 'react'
+import {FunctionComponent, PropsWithChildren, useMemo} from 'react'
 
-import {
-  PresentationContext,
-  PresentationContextValue,
-} from './PresentationContext'
-import {
-  PresentationNavigate,
-  PresentationParams,
-  StructureDocumentPaneParams,
-} from './types'
+import {PresentationContext, PresentationContextValue} from './PresentationContext'
+import {PresentationNavigate, PresentationParams, StructureDocumentPaneParams} from './types'
 
 export const PresentationProvider: FunctionComponent<
   PropsWithChildren<{
@@ -19,7 +12,7 @@ export const PresentationProvider: FunctionComponent<
     structureParams: StructureDocumentPaneParams
   }>
 > = function (props) {
-  const { children, devMode, name, navigate, params, structureParams } = props
+  const {children, devMode, name, navigate, params, structureParams} = props
 
   const context = useMemo<PresentationContextValue>(
     () => ({
@@ -32,9 +25,5 @@ export const PresentationProvider: FunctionComponent<
     [devMode, name, navigate, params, structureParams],
   )
 
-  return (
-    <PresentationContext.Provider value={context}>
-      {children}
-    </PresentationContext.Provider>
-  )
+  return <PresentationContext.Provider value={context}>{children}</PresentationContext.Provider>
 }

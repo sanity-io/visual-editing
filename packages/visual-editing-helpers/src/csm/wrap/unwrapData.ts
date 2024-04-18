@@ -1,7 +1,7 @@
-import { SANITY_KEYS } from './constants'
-import { isArray, isRecord } from './helpers'
-import { isSourceNode } from './isSourceNode'
-import { SanityKey, UnwrappedValue, WrappedValue } from './types'
+import {SANITY_KEYS} from './constants'
+import {isArray, isRecord} from './helpers'
+import {isSourceNode} from './isSourceNode'
+import {SanityKey, UnwrappedValue, WrappedValue} from './types'
 
 /** @public */
 export function unwrapData<
@@ -22,17 +22,13 @@ export function unwrapData<
   }
 
   if (isArray(wrapper)) {
-    return wrapper.map((item) =>
-      unwrapData(item as WrappedValue<unknown>),
-    ) as UnwrappedValue<S>
+    return wrapper.map((item) => unwrapData(item as WrappedValue<unknown>)) as UnwrappedValue<S>
   }
 
   if (isRecord(wrapper)) {
     return Object.fromEntries(
       Object.entries(wrapper).map(([k, v]) =>
-        SANITY_KEYS.includes(k as SanityKey)
-          ? [k, v]
-          : [k, unwrapData(v as WrappedValue<unknown>)],
+        SANITY_KEYS.includes(k as SanityKey) ? [k, v] : [k, unwrapData(v as WrappedValue<unknown>)],
       ),
     ) as UnwrappedValue<S>
   }

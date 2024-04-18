@@ -1,14 +1,14 @@
-import { ShoeParams, ShoeResult, shoe } from 'apps-common/queries'
-import { draftMode } from 'next/headers'
-import { loadQuery } from '../sanity.ssr'
+import {ShoeParams, ShoeResult, shoe} from 'apps-common/queries'
+import {draftMode} from 'next/headers'
+import {loadQuery} from '../sanity.ssr'
 import ShoePageClient from './page.client'
 
 type Props = {
-  params: { slug: string }
+  params: {slug: string}
 }
 
 export default async function ShoePage(props: Props) {
-  const { params } = props
+  const {params} = props
   const initial = loadQuery<ShoeResult>(shoe, params satisfies ShoeParams, {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
     next: {

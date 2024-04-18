@@ -51,7 +51,7 @@ const Space = {
       of: [
         {
           type: 'reference',
-          to: [{ type: 'SpaceType' }],
+          to: [{type: 'SpaceType'}],
         },
       ],
     },

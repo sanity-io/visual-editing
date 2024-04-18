@@ -1,10 +1,10 @@
-import { defineField, defineType } from 'sanity'
+import {defineField, defineType} from 'sanity'
 
-import { pageSectionArrayMember } from './section'
-import { featuredProductsSectionType } from './sections/featuredProducts'
-import { featureHighlightSectionType } from './sections/featureHighlight'
-import { heroSectionType } from './sections/hero'
-import { introSectionType } from './sections/intro'
+import {pageSectionArrayMember} from './section'
+import {featuredProductsSectionType} from './sections/featuredProducts'
+import {featureHighlightSectionType} from './sections/featureHighlight'
+import {heroSectionType} from './sections/hero'
+import {introSectionType} from './sections/intro'
 
 export const pageType = defineType({
   type: 'document',
@@ -19,9 +19,8 @@ export const pageType = defineType({
       type: 'slug',
       name: 'slug',
       title: 'Slug',
-      options: { source: 'title' },
-      hidden: (ctx) =>
-        ['home', 'drafts.home'].includes(ctx.document?._id as string),
+      options: {source: 'title'},
+      hidden: (ctx) => ['home', 'drafts.home'].includes(ctx.document?._id as string),
     }),
     defineField({
       type: 'array',

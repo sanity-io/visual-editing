@@ -1,5 +1,5 @@
-import type { LayoutServerLoad } from './$types'
+import type {LayoutServerLoad} from './$types'
 
-export const load: LayoutServerLoad = ({ locals: { preview } }) => {
-  return { preview }
+export const load: LayoutServerLoad = ({locals: {preview}}) => {
+  return {preview}
 }

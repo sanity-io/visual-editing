@@ -1,11 +1,11 @@
-import { type ChannelsNode, createChannelsNode } from '@repo/channels'
+import {type ChannelsNode, createChannelsNode} from '@repo/channels'
 import {
   type PresentationMsg,
   type PreviewKitMsg,
   type VisualEditingConnectionIds,
 } from '@repo/visual-editing-helpers'
-import type { ContentSourceMapDocuments } from '@sanity/client/csm'
-import { useEffect, useState } from 'react'
+import type {ContentSourceMapDocuments} from '@sanity/client/csm'
+import {useEffect, useState} from 'react'
 
 /**
  * Reports the documents in use on the page to the Presentation Tool, if a connection can be established.
@@ -16,19 +16,13 @@ export function useDocumentsInUse(
   projectId: string,
   dataset: string,
 ): void {
-  const [channel, setChannel] = useState<
-    ChannelsNode<PreviewKitMsg, PresentationMsg> | undefined
-  >()
+  const [channel, setChannel] = useState<ChannelsNode<PreviewKitMsg, PresentationMsg> | undefined>()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
     if (window.self === window.top && !window.opener) {
       return
     }
-    const channel = createChannelsNode<
-      VisualEditingConnectionIds,
-      PreviewKitMsg,
-      PresentationMsg
-    >({
+    const channel = createChannelsNode<VisualEditingConnectionIds, PreviewKitMsg, PresentationMsg>({
       id: 'preview-kit',
       connectTo: 'presentation',
     })

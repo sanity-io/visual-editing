@@ -1,21 +1,11 @@
-import { getPublishedId, studioPath } from '@sanity/client/csm'
-import {
-  is,
-  minLength,
-  object,
-  optional,
-  parse,
-  record,
-  safeParse,
-  string,
-  unknown,
-} from 'valibot'
+import {getPublishedId, studioPath} from '@sanity/client/csm'
+import {is, minLength, object, optional, parse, record, safeParse, string, unknown} from 'valibot'
 
-import { pathToUrlString } from '../pathToUrlString'
-import { SanityNode, SanityStegaNode } from '../types'
-import { urlStringToPath } from '../urlStringToPath'
+import {pathToUrlString} from '../pathToUrlString'
+import {SanityNode, SanityStegaNode} from '../types'
+import {urlStringToPath} from '../urlStringToPath'
 
-export type { SanityNode, SanityStegaNode }
+export type {SanityNode, SanityStegaNode}
 
 export const DRAFTS_PREFIX = 'drafts.'
 
@@ -41,16 +31,12 @@ const sanityLegacyNodeSchema = object({
 })
 
 /** @internal */
-export function isValidSanityNode(
-  node: Partial<SanityNode>,
-): node is SanityNode {
+export function isValidSanityNode(node: Partial<SanityNode>): node is SanityNode {
   return is(sanityNodeSchema, node)
 }
 
 /** @internal */
-export function isValidSanityLegacyNode(
-  node: Partial<SanityStegaNode>,
-): node is SanityStegaNode {
+export function isValidSanityLegacyNode(node: Partial<SanityStegaNode>): node is SanityStegaNode {
   return is(sanityLegacyNodeSchema, node)
 }
 
@@ -61,7 +47,7 @@ export function isValidSanityLegacyNode(
  * @public
  */
 export function encodeSanityNodeData(node: SanityNode): string | undefined {
-  const { id: _id, path, baseUrl, tool, workspace, type } = node
+  const {id: _id, path, baseUrl, tool, workspace, type} = node
 
   if (!isValidSanityNode(node)) {
     return undefined
@@ -155,15 +141,10 @@ function decodeSanityObject(
     try {
       const url = new URL(
         sanityLegacyNode.output.href,
-        typeof document === 'undefined'
-          ? 'https://example.com'
-          : location.origin,
+        typeof document === 'undefined' ? 'https://example.com' : location.origin,
       )
       if (url.searchParams.size > 0) {
-        return parse(
-          sanityNodeSchema,
-          Object.fromEntries(url.searchParams.entries()),
-        )
+        return parse(sanityNodeSchema, Object.fromEntries(url.searchParams.entries()))
       }
       return sanityLegacyNode.output
     } catch (err) {

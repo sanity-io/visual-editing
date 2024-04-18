@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { urlFor, urlForCrossDatasetReference } from '$lib/sanity'
-  import { PortableText } from '@portabletext/svelte'
-  import type { ShoeResult } from 'apps-common/queries'
-  import { formatCurrency } from 'apps-common/utils'
-  import { page } from '$app/stores'
+  import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
+  import {PortableText} from '@portabletext/svelte'
+  import type {ShoeResult} from 'apps-common/queries'
+  import {formatCurrency} from 'apps-common/utils'
+  import {page} from '$app/stores'
 
   export let product: ShoeResult
   export let slug: string
@@ -20,14 +20,10 @@
 
 <div class="min-h-screen bg-white">
   <nav aria-label="Breadcrumb" class="pt-16 sm:pt-24">
-    <ol
-      class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-    >
+    <ol class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <li>
         <div class="flex items-center">
-          <a href={parentPath} class="mr-2 text-sm font-medium text-gray-900">
-            Shoes
-          </a>
+          <a href={parentPath} class="mr-2 text-sm font-medium text-gray-900"> Shoes </a>
           <svg
             width={16}
             height={20}
@@ -55,9 +51,7 @@
   {#if product}
     <article>
       {#if coverImage?.asset}
-        <div
-          class="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24"
-        >
+        <div class="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
           <img
             class="aspect-video w-full rounded-md object-cover object-center group-hover:opacity-75 lg:rounded-lg"
             src={urlFor(coverImage)
@@ -71,12 +65,8 @@
         </div>
       {/if}
       {#if otherImages?.length > 0}
-        <div
-          class="mx-auto max-w-2xl px-4 pt-5 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-8"
-        >
-          <div
-            class="relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto"
-          >
+        <div class="mx-auto max-w-2xl px-4 pt-5 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-8">
+          <div class="relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto">
             {#each otherImages as image, i (image.asset?._ref || i + 1)}
               {#if image.asset?._ref}
                 <div class="shrink-0 snap-start">
@@ -124,10 +114,7 @@
                 <img
                   class="h-10 w-10 rounded-full bg-gray-50"
                   src={product.brand?.logo?.asset
-                    ? urlForCrossDatasetReference(product.brand.logo)
-                        .width(48)
-                        .height(48)
-                        .url()
+                    ? urlForCrossDatasetReference(product.brand.logo).width(48).height(48).url()
                     : `https://source.unsplash.com/featured/48x48?${encodeURIComponent(
                         product.brand.name,
                       )}`}

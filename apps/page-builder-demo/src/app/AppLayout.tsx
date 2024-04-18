@@ -1,9 +1,9 @@
-import { CloseIcon, MenuIcon } from '@sanity/icons'
-import { sanity, WrappedValue } from '@sanity/react-loader/jsx'
+import {CloseIcon, MenuIcon} from '@sanity/icons'
+import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
 import clsx from 'clsx'
-import { ReactNode, useState } from 'react'
-import { SiteSettingsData } from './types'
-import { usePathname } from 'next/navigation'
+import {ReactNode, useState} from 'react'
+import {SiteSettingsData} from './types'
+import {usePathname} from 'next/navigation'
 import Link from 'next/link'
 
 const links = [
@@ -23,9 +23,9 @@ const links = [
 
 export function AppLayout(props: {
   children?: ReactNode
-  data: { siteSettings: WrappedValue<SiteSettingsData> | null }
+  data: {siteSettings: WrappedValue<SiteSettingsData> | null}
 }) {
-  const { children, data } = props
+  const {children, data} = props
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -65,10 +65,7 @@ export function AppLayout(props: {
         </div>
       </div>
 
-      <div
-        className="absolute inset-0 bg-white dark:bg-black"
-        hidden={!menuOpen}
-      >
+      <div className="absolute inset-0 bg-white dark:bg-black" hidden={!menuOpen}>
         <div className="flex justify-between p-4">
           <Link
             className="text-md block p-3 font-bold leading-none"
@@ -109,10 +106,7 @@ export function AppLayout(props: {
         {children}
       </div>
 
-      <div
-        className="p-5 text-xs text-gray-600 dark:text-gray-400"
-        hidden={menuOpen}
-      >
+      <div className="p-5 text-xs text-gray-600 dark:text-gray-400" hidden={menuOpen}>
         <sanity.span>{data?.siteSettings?.copyrightText}</sanity.span>
       </div>
     </div>

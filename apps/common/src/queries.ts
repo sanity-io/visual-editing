@@ -1,9 +1,4 @@
-import type {
-  ImageAsset,
-  ImageCrop,
-  ImageHotspot,
-  PortableTextTextBlock,
-} from 'sanity'
+import type {ImageAsset, ImageCrop, ImageHotspot, PortableTextTextBlock} from 'sanity'
 
 export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]{
   title,
@@ -14,7 +9,7 @@ export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]
 } | order(_updatedAt desc) `
 export type ShoesListResult = {
   title?: string | null
-  slug: { current: string }
+  slug: {current: string}
   price?: string | null
   media?: {
     alt?: string | null
@@ -25,7 +20,7 @@ export type ShoesListResult = {
   description?: PortableTextTextBlock[] | null
   brand?: {
     name?: string | null
-    slug?: { current?: string | null } | null
+    slug?: {current?: string | null} | null
     logo?: {
       alt?: string | null
       asset?: ImageAsset | null
@@ -43,10 +38,10 @@ export const shoe = /* groq */ `*[_type == "shoe" && slug.current == $slug]{
   "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},
   description,
 }[0]`
-export type ShoeParams = { slug: string }
+export type ShoeParams = {slug: string}
 export type ShoeResult = {
   title?: string | null
-  slug: { current: string }
+  slug: {current: string}
   price?: string | null
   media?: {
     alt?: string | null
@@ -56,7 +51,7 @@ export type ShoeResult = {
   }[]
   brand?: {
     name?: string | null
-    slug?: { current?: string | null } | null
+    slug?: {current?: string | null} | null
     logo?: {
       alt?: string | null
       asset?: ImageAsset | null

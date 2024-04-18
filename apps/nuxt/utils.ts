@@ -1,8 +1,8 @@
-import { createClient } from '@sanity/client'
-import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
+import {createClient} from '@sanity/client'
+import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
 
-const { projectId, dataset, tool, workspace } = workspaces['nuxt']
+const {projectId, dataset, tool, workspace} = workspaces['nuxt']
 const studioUrl = `${baseUrl}/${workspace}`
 
 export function getClient() {
@@ -18,7 +18,7 @@ export function getClient() {
   })
 }
 
-const builder = imageUrlBuilder({ projectId, dataset })
+const builder = imageUrlBuilder({projectId, dataset})
 export function urlFor(source: any) {
   return builder.image(source).auto('format').fit('max')
 }

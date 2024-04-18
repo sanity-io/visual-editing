@@ -7,10 +7,10 @@ import {
   studioPath,
 } from '@sanity/client/csm'
 
-import { resolveSanityNode } from '../resolveSanityNode'
-import { SANITY_KEYS } from './constants'
-import { isArray, isRecord } from './helpers'
-import { SanityKey, SanityNodeContext, WrappedValue } from './types'
+import {resolveSanityNode} from '../resolveSanityNode'
+import {SANITY_KEYS} from './constants'
+import {isArray, isRecord} from './helpers'
+import {SanityKey, SanityNodeContext, WrappedValue} from './types'
 
 /** @public */
 export function wrapData<T>(
@@ -37,7 +37,7 @@ export function wrapData<T>(
         resultPath.concat(idx),
         keyedResultPath.concat(
           isRecord(t) && '_key' in t && typeof t._key === 'string'
-            ? { _key: t._key, _index: idx }
+            ? {_key: t._key, _index: idx}
             : idx,
         ),
       ),
@@ -49,16 +49,7 @@ export function wrapData<T>(
       Object.entries(value).map(([k, v]) =>
         SANITY_KEYS.includes(k as SanityKey)
           ? [k, v]
-          : [
-              k,
-              wrapData(
-                context,
-                v,
-                sourceMap,
-                resultPath.concat(k),
-                keyedResultPath.concat(k),
-              ),
-            ],
+          : [k, wrapData(context, v, sourceMap, resultPath.concat(k), keyedResultPath.concat(k))],
       ),
     ) as WrappedValue<T>
   }

@@ -1,6 +1,6 @@
-import { type FunctionComponent, useEffect, useRef } from 'react'
+import {type FunctionComponent, useEffect, useRef} from 'react'
 
-import type { VisualEditingChannel, VisualEditingOptions } from '../types'
+import type {VisualEditingChannel, VisualEditingOptions} from '../types'
 
 /**
  * @internal
@@ -10,7 +10,7 @@ export const Refresh: FunctionComponent<
     channel: VisualEditingChannel
   } & Required<Pick<VisualEditingOptions, 'refresh'>>
 > = (props) => {
-  const { channel, refresh } = props
+  const {channel, refresh} = props
 
   const manualRefreshRef = useRef(0)
   const mutationRefreshRef = useRef(0)
@@ -32,10 +32,7 @@ export const Refresh: FunctionComponent<
             clearTimeout(manualRefreshRef.current)
             channel.send('visual-editing/refreshed', data)
           })
-        } else if (
-          type === 'presentation/refresh' &&
-          data.source === 'mutation'
-        ) {
+        } else if (type === 'presentation/refresh' && data.source === 'mutation') {
           clearTimeout(mutationRefreshRef.current)
           const promise = refresh(data)
           if (promise === false) return

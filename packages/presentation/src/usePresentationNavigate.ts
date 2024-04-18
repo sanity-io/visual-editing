@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import {useContext} from 'react'
 
 import {
   PresentationNavigateContext,
@@ -15,4 +15,4 @@ export function usePresentationNavigate(): PresentationNavigateContextValue {
   return navigate
 }
 
-export type { PresentationNavigateContextValue }
+export type {PresentationNavigateContextValue}

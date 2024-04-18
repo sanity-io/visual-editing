@@ -1,6 +1,6 @@
-import { EditIcon, RevertIcon } from '@sanity/icons'
-import { Card, Code, Stack } from '@sanity/ui'
-import { ReactElement, useCallback, useEffect, useMemo, useRef } from 'react'
+import {EditIcon, RevertIcon} from '@sanity/icons'
+import {Card, Code, Stack} from '@sanity/ui'
+import {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react'
 import {
   defineDocumentFieldAction,
   DocumentFieldActionItem,
@@ -12,9 +12,9 @@ import {
   unset,
 } from 'sanity'
 
-import { findFieldMember } from '../../../lib/findField'
-import { isFieldMember } from '../../../lib/isFieldMember'
-import { useReferenceEditState } from '../../../lib/useReferenceEditState'
+import {findFieldMember} from '../../../lib/findField'
+import {isFieldMember} from '../../../lib/isFieldMember'
+import {useReferenceEditState} from '../../../lib/useReferenceEditState'
 
 export function PageSectionInput(props: ObjectInputProps): ReactElement {
   const {
@@ -29,8 +29,7 @@ export function PageSectionInput(props: ObjectInputProps): ReactElement {
   } = props
   const symbolFieldMember = findFieldMember(props, 'symbol')
   const refEditState = useReferenceEditState(value?.symbol?._ref)
-  const symbolValue =
-    refEditState?.draft || refEditState?.published || undefined
+  const symbolValue = refEditState?.draft || refEditState?.published || undefined
   const symbolValueRef = useRef(symbolValue)
 
   const symbolAction = useMemo(
@@ -41,14 +40,11 @@ export function PageSectionInput(props: ObjectInputProps): ReactElement {
           const relativeFieldPath = actionProps.path.slice(path.length)
           const fieldSegment = relativeFieldPath[0]
           const isOverridden =
-            typeof fieldSegment === 'string' &&
-            value?.[fieldSegment] !== undefined
+            typeof fieldSegment === 'string' && value?.[fieldSegment] !== undefined
 
           return {
             type: 'action',
-            disabled:
-              fieldSegment !== 'string' ||
-              symbolValue?.[fieldSegment] === undefined,
+            disabled: fieldSegment !== 'string' || symbolValue?.[fieldSegment] === undefined,
             onAction() {
               if (typeof fieldSegment !== 'string') {
                 return
@@ -57,9 +53,7 @@ export function PageSectionInput(props: ObjectInputProps): ReactElement {
               if (isOverridden) {
                 onChange(unset(relativeFieldPath))
               } else {
-                onChange(
-                  set(symbolValue?.[fieldSegment] || '', relativeFieldPath),
-                )
+                onChange(set(symbolValue?.[fieldSegment] || '', relativeFieldPath))
               }
             },
             icon: isOverridden ? RevertIcon : EditIcon,
@@ -79,9 +73,7 @@ export function PageSectionInput(props: ObjectInputProps): ReactElement {
     (fieldProps: Omit<FieldProps, 'renderDefault'>) => {
       return renderFieldProp({
         ...fieldProps,
-        actions: (fieldProps.actions || []).concat(
-          symbolValue ? [symbolAction] : [],
-        ),
+        actions: (fieldProps.actions || []).concat(symbolValue ? [symbolAction] : []),
       })
     },
     [renderFieldProp, symbolAction, symbolValue],
@@ -90,7 +82,7 @@ export function PageSectionInput(props: ObjectInputProps): ReactElement {
   return (
     <Stack space={5}>
       {symbolFieldMember && (
-        <Card padding={4} style={{ margin: '-20px -20px -20px' }}>
+        <Card padding={4} style={{margin: '-20px -20px -20px'}}>
           <ObjectInputMember
             member={symbolFieldMember}
             renderField={renderFieldProp}
@@ -115,8 +107,7 @@ export function PageSectionInput(props: ObjectInputProps): ReactElement {
                   ...mem,
                   field: {
                     ...mem.field,
-                    readOnly:
-                      Boolean(symbolValue) && mem.field.value === undefined,
+                    readOnly: Boolean(symbolValue) && mem.field.value === undefined,
                     value: mem.field.value ?? symbolValue?.[mem.name],
                   },
                 }}

@@ -1,7 +1,7 @@
-import type { ElementNode } from '../types'
+import type {ElementNode} from '../types'
 
 export function findNonInlineElement(element: ElementNode): ElementNode | null {
-  const { display } = window.getComputedStyle(element)
+  const {display} = window.getComputedStyle(element)
 
   if (display !== 'inline') return element
 

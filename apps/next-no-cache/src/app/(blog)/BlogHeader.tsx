@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import {usePathname} from 'next/navigation'
 import Balancer from 'react-wrap-balancer'
 
-export default function BlogHeader({ title }: { title: string }) {
+export default function BlogHeader({title}: {title: string}) {
   const pathname = usePathname()
   if (pathname === '/') {
     return (

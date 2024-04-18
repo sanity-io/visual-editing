@@ -1,4 +1,4 @@
-import { SanityNode } from '../../index'
+import {SanityNode} from '../../index'
 
 /** @public */
 export type SanityKey =
@@ -19,14 +19,13 @@ export type SanityKey =
 export type SanityPrimitive = string | number | boolean | null
 
 /** @public */
-export type SourceNode<
-  T extends Exclude<SanityPrimitive, null> = Exclude<SanityPrimitive, null>,
-> = {
-  $$type$$: 'sanity'
-  path: string | undefined
-  source: SanityNode | undefined
-  value: T
-}
+export type SourceNode<T extends Exclude<SanityPrimitive, null> = Exclude<SanityPrimitive, null>> =
+  {
+    $$type$$: 'sanity'
+    path: string | undefined
+    source: SanityNode | undefined
+    value: T
+  }
 
 /** @public */
 export type WrappedValue<T> = T extends string
@@ -38,7 +37,7 @@ export type WrappedValue<T> = T extends string
       : T extends Array<unknown>
         ? Array<WrappedValue<T[number]>>
         : T extends {} // eslint-disable-line @typescript-eslint/ban-types
-          ? { [P in keyof T]: P extends SanityKey ? T[P] : WrappedValue<T[P]> }
+          ? {[P in keyof T]: P extends SanityKey ? T[P] : WrappedValue<T[P]>}
           : T extends string
             ? string
             : T extends null
@@ -59,9 +58,7 @@ export type UnwrappedValue<W = WrappedValue<unknown>> =
           ? Array<UnwrappedValue<W[number]>>
           : W extends {} // eslint-disable-line @typescript-eslint/ban-types
             ? {
-                [P in keyof W]: P extends SanityKey
-                  ? W[P]
-                  : UnwrappedValue<W[P]>
+                [P in keyof W]: P extends SanityKey ? W[P] : UnwrappedValue<W[P]>
               }
             : W extends string
               ? string

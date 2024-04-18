@@ -1,7 +1,7 @@
-import { createClient } from '@sanity/client'
-import { apiVersion, studioUrl, workspaces } from 'apps-common/env'
+import {createClient} from '@sanity/client'
+import {apiVersion, studioUrl, workspaces} from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
-const { projectId, dataset } = workspaces['svelte-basic']
+const {projectId, dataset} = workspaces['svelte-basic']
 
 export const client = createClient({
   projectId,
@@ -14,7 +14,7 @@ export const client = createClient({
   },
 })
 
-const builder = imageUrlBuilder({ projectId, dataset })
+const builder = imageUrlBuilder({projectId, dataset})
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function urlFor(source: any) {
   return builder.image(source).auto('format').fit('max')

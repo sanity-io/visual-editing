@@ -1,41 +1,33 @@
-import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import { formatCurrency } from 'apps-common/utils'
+import {shoesList, type ShoesListResult} from 'apps-common/queries'
+import {formatCurrency} from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { loadQuery } from '../../../components/sanity.ssr'
-import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import type { ClientPerspective, ContentSourceMap } from '@sanity/client'
-import type { SharedProps } from '../../_app'
-import { useQuery } from '@sanity/react-loader'
+import {loadQuery} from '../../../components/sanity.ssr'
+import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import type {ClientPerspective, ContentSourceMap} from '@sanity/client'
+import type {SharedProps} from '../../_app'
+import {useQuery} from '@sanity/react-loader'
 
 interface Props extends SharedProps {
-  initial: { data: ShoesListResult; sourceMap?: ContentSourceMap }
+  initial: {data: ShoesListResult; sourceMap?: ContentSourceMap}
 }
 
 export const getStaticProps = (async (context) => {
-  const { draftMode = false } = context
-  const perspective = (
-    draftMode ? 'previewDrafts' : 'published'
-  ) satisfies ClientPerspective
-  const initial = await loadQuery<ShoesListResult>(
-    shoesList,
-    {},
-    { perspective },
-  )
-  return { props: { draftMode, initial }, revalidate: 1 }
+  const {draftMode = false} = context
+  const perspective = (draftMode ? 'previewDrafts' : 'published') satisfies ClientPerspective
+  const initial = await loadQuery<ShoesListResult>(shoesList, {}, {perspective})
+  return {props: {draftMode, initial}, revalidate: 1}
 }) satisfies GetStaticProps<Props>
 
-export default function ShoesPage(
-  props: InferGetStaticPropsType<typeof getStaticProps>,
-) {
-  const { initial } = props
+export default function ShoesPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+  const {initial} = props
   const {
     data: products,
     error,
     loading,
     encodeDataAttribute,
-  } = useQuery<ShoesListResult>(shoesList, {}, { initial })
+  } = useQuery<ShoesListResult>(shoesList, {}, {initial})
 
   if (error) {
     throw error
@@ -90,7 +82,7 @@ export default function ShoesPage(
                 </div>
                 <h2
                   className="mb-8 mt-4 text-sm text-gray-700"
-                  style={{ ['textWrap' as any]: 'balance' }}
+                  style={{['textWrap' as any]: 'balance'}}
                 >
                   {product.title}
                 </h2>
@@ -120,9 +112,7 @@ export default function ShoesPage(
                       height={24}
                       alt={product.brand?.logo?.alt || ''}
                     />
-                    <span className="font-bold text-gray-600">
-                      {product.brand.name}
-                    </span>
+                    <span className="font-bold text-gray-600">{product.brand.name}</span>
                   </div>
                 )}
               </Link>

@@ -1,22 +1,22 @@
-import { Link, useLoaderData } from '@remix-run/react'
-import { formatCurrency } from 'apps-common/utils'
-import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import { json } from '@vercel/remix'
-import { useQuery } from '@sanity/react-loader'
-import { loadQuery } from '~/sanity.loader.server'
-import { urlFor, urlForCrossDatasetReference } from '~/sanity'
+import {Link, useLoaderData} from '@remix-run/react'
+import {formatCurrency} from 'apps-common/utils'
+import {shoesList, type ShoesListResult} from 'apps-common/queries'
+import {json} from '@vercel/remix'
+import {useQuery} from '@sanity/react-loader'
+import {loadQuery} from '~/sanity.loader.server'
+import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 
 export const loader = async () => {
-  return json({ initial: await loadQuery<ShoesListResult>(shoesList) })
+  return json({initial: await loadQuery<ShoesListResult>(shoesList)})
 }
 
 export default function ShoesPage() {
-  const { initial } = useLoaderData<typeof loader>()
+  const {initial} = useLoaderData<typeof loader>()
   const {
     data: products,
     error,
     loading: _loading,
-  } = useQuery<ShoesListResult>(shoesList, {}, { initial })
+  } = useQuery<ShoesListResult>(shoesList, {}, {initial})
 
   if (error) {
     throw error
@@ -71,7 +71,7 @@ export default function ShoesPage() {
                 </div>
                 <h2
                   className="mb-8 mt-4 text-sm text-gray-700"
-                  style={{ ['textWrap' as any]: 'balance' }}
+                  style={{['textWrap' as any]: 'balance'}}
                 >
                   {product.title}
                 </h2>
@@ -98,9 +98,7 @@ export default function ShoesPage() {
                       height={24}
                       alt={product.brand?.logo?.alt || ''}
                     />
-                    <span className="font-bold text-gray-600">
-                      {product.brand.name}
-                    </span>
+                    <span className="font-bold text-gray-600">{product.brand.name}</span>
                   </div>
                 )}
               </Link>

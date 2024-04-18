@@ -1,18 +1,13 @@
-import { useLocation, useNavigate, useRevalidator } from '@remix-run/react'
-import { useEffect, useRef, useState } from 'react'
+import {useLocation, useNavigate, useRevalidator} from '@remix-run/react'
+import {useEffect, useRef, useState} from 'react'
 
-import {
-  type HistoryAdapterNavigate,
-  type HistoryRefresh,
-  type VisualEditingOptions,
-} from '../types'
-import { enableVisualEditing } from '../ui/enableVisualEditing'
+import {type HistoryAdapterNavigate, type HistoryRefresh, type VisualEditingOptions} from '../types'
+import {enableVisualEditing} from '../ui/enableVisualEditing'
 
 /**
  * @public
  */
-export interface VisualEditingProps
-  extends Omit<VisualEditingOptions, 'history' | 'refresh'> {
+export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history' | 'refresh'> {
   /**
    * @deprecated The histoy adapter is already implemented
    */
@@ -27,18 +22,14 @@ export interface VisualEditingProps
   ) => false | Promise<void>
 }
 
-export default function VisualEditingComponent(
-  props: VisualEditingProps,
-): null {
-  const { refresh, zIndex } = props
+export default function VisualEditingComponent(props: VisualEditingProps): null {
+  const {refresh, zIndex} = props
 
   const navigateRemix = useNavigate()
   const navigateRemixRef = useRef(navigateRemix)
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
   const revalidator = useRevalidator()
-  const [revalidatorPromise, setRevalidatorPromise] = useState<
-    (() => void) | null
-  >(null)
+  const [revalidatorPromise, setRevalidatorPromise] = useState<(() => void) | null>(null)
   const [revalidatorLoading, setRevalidatorLoading] = useState(false)
 
   useEffect(() => {
@@ -47,11 +38,7 @@ export default function VisualEditingComponent(
   useEffect(() => {
     if (revalidatorPromise && revalidator.state === 'loading') {
       setRevalidatorLoading(true)
-    } else if (
-      revalidatorPromise &&
-      revalidatorLoading &&
-      revalidator.state === 'idle'
-    ) {
+    } else if (revalidatorPromise && revalidatorLoading && revalidator.state === 'idle') {
       revalidatorPromise()
       setRevalidatorPromise(null)
       setRevalidatorLoading(false)

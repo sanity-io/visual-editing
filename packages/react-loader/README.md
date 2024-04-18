@@ -20,7 +20,7 @@ For this to work you'll first have to setup a shared file that is loaded both on
 
 ```ts
 // ./src/app/sanity.loader.ts
-import { createQueryStore } from '@sanity/react-loader'
+import {createQueryStore} from '@sanity/react-loader'
 
 export const {
   // Used only server side
@@ -29,7 +29,7 @@ export const {
   // Used only client side
   useQuery,
   useLiveMode,
-} = createQueryStore({ client: false, ssr: true })
+} = createQueryStore({client: false, ssr: true})
 ```
 
 You can also use the top-level shortcuts for the same effect:
@@ -51,8 +51,8 @@ Later in the server side of the app, you setup the client. The `.server.ts` suff
 
 ```ts
 // ./src/app/sanity.loader.server.ts
-import { createClient } from '@sanity/client'
-import { setServerClient, loadQuery } from './sanity.loader'
+import {createClient} from '@sanity/client'
+import {setServerClient, loadQuery} from './sanity.loader'
 
 const client = createClient({
   projectId: process.env.SANITY_PROJECT_ID,
@@ -68,7 +68,7 @@ const client = createClient({
 setServerClient(client)
 
 // Re-export for convenience
-export { loadQuery }
+export {loadQuery}
 ```
 
 Then somewhere in your app, you can use the `loadQuery` and `useQuery` utilities together. `useQuery` now only fetches data when Live Mode is active. Otherwise it's `loadQuery` that is used.
@@ -76,15 +76,15 @@ Then somewhere in your app, you can use the `loadQuery` and `useQuery` utilities
 ```tsx
 // ./src/app/routes/products.$slug.tsx
 
-import { Link, useLoaderData, useParams } from '@remix-run/react'
-import { json, type LoaderFunction } from '@remix-run/node'
-import { loadQuery } from '~/sanity.loader.server'
-import { useQuery } from '~/sanity.loader'
+import {Link, useLoaderData, useParams} from '@remix-run/react'
+import {json, type LoaderFunction} from '@remix-run/node'
+import {loadQuery} from '~/sanity.loader.server'
+import {useQuery} from '~/sanity.loader'
 
 interface Product {}
 const query = `*[_type == "product" && slug.current == $slug][0]`
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({params}) => {
   return json({
     params,
     initial: await loadQuery<Product>(query, params),
@@ -92,13 +92,13 @@ export const loader: LoaderFunction = async ({ params }) => {
 }
 
 export default function ProductPage() {
-  const { params, initial } = useLoaderData<typeof loader>()
+  const {params, initial} = useLoaderData<typeof loader>()
 
   if (!params.slug || !initial.data?.slug?.current) {
     throw new Error('No slug, 404?')
   }
 
-  const { data } = useQuery<Product>(query, params, { initial })
+  const {data} = useQuery<Product>(query, params, {initial})
 
   // Use `data` in your view, it'll mirror what the loader returns in production mode,
   // while Live Mode it becomes reactive and respons in real-time to your edits in the Presentation tool.
@@ -110,9 +110,9 @@ Enabling Live Mode is done by adding `useLiveMode` to the same component you're 
 
 ```tsx
 // ./src/app/VisualEditing.tsx
-import { enableVisualEditing, type HistoryUpdate } from '@sanity/visual-editing'
-import { useEffect } from 'react'
-import { useLiveMode } from '~/sanity.loader'
+import {enableVisualEditing, type HistoryUpdate} from '@sanity/visual-editing'
+import {useEffect} from 'react'
+import {useLiveMode} from '~/sanity.loader'
 
 // A browser client for Live Mode, it's only part of the browser bundle when the `VisualEditing` component is lazy loaded with `React.lazy`
 const client = createClient({
@@ -137,7 +137,7 @@ export default function VisualEditing() {
     [],
   )
 
-  useLiveMode({ client })
+  useLiveMode({client})
 
   return null
 }
@@ -160,15 +160,15 @@ You then use it in your template:
 ```tsx
 // ./src/app/routes/products.$slug.tsx
 
-import { Link, useLoaderData, useParams } from '@remix-run/react'
-import { json, type LoaderFunction } from '@remix-run/node'
-import { useQuery } from '@sanity/react-loader'
-import { loadQuery } from '~/sanity.loader.server'
+import {Link, useLoaderData, useParams} from '@remix-run/react'
+import {json, type LoaderFunction} from '@remix-run/node'
+import {useQuery} from '@sanity/react-loader'
+import {loadQuery} from '~/sanity.loader.server'
 
 interface Product {}
 const query = `*[_type == "product" && slug.current == $slug][0]`
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({params}) => {
   return json({
     params,
     initial: await loadQuery<Product>(query, params),
@@ -176,22 +176,20 @@ export const loader: LoaderFunction = async ({ params }) => {
 }
 
 export default function ProductPage() {
-  const { params, initial } = useLoaderData<typeof loader>()
+  const {params, initial} = useLoaderData<typeof loader>()
 
   if (!params.slug || !initial.data?.slug?.current) {
     throw new Error('No slug, 404?')
   }
 
-  const { data, encodeDataAttribute } = useQuery<Product>(query, params, {
+  const {data, encodeDataAttribute} = useQuery<Product>(query, params, {
     initial,
   })
 
   // Use `data` in your view, it'll mirror what the loader returns in production mode,
   // while Live Mode it becomes reactive and respons in real-time to your edits in the Presentation tool.
   // And `encodeDataAttribute` is a helpful utility for adding custom `data-sanity` attributes.
-  return (
-    <ProductTemplate data={data} encodeDataAttribute={encodeDataAttribute} />
-  )
+  return <ProductTemplate data={data} encodeDataAttribute={encodeDataAttribute} />
 }
 ```
 
@@ -199,7 +197,7 @@ You use `encodeDataAttribute` by giving it a path to the data you want to be lin
 
 ```tsx
 // ./src/app/templates/product.tsx
-import { StudioPathLike } from '@sanity/react-loader'
+import {StudioPathLike} from '@sanity/react-loader'
 
 interface Product {}
 
@@ -208,7 +206,7 @@ interface Props {
   encodeDataAttribute: (path: StudioPathLike) => string | undefined
 }
 export default function ProductTemplate(props: Props) {
-  const { data, encodeDataAttribute } = props
+  const {data, encodeDataAttribute} = props
   return (
     <>
       <img
