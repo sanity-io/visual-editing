@@ -1,9 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import {type Dispatch, type SetStateAction, useEffect, useState} from 'react'
 
-export function useLocalState<T>(
-  key: string,
-  defaultValue: T,
-): [T, Dispatch<SetStateAction<T>>] {
+export function useLocalState<T>(key: string, defaultValue: T): [T, Dispatch<SetStateAction<T>>] {
   const [value, setValue] = useState<T>(() =>
     JSON.parse(localStorage.getItem(key) ?? JSON.stringify(defaultValue)),
   )

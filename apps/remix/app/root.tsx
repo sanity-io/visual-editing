@@ -1,4 +1,4 @@
-import { json, type LinksFunction } from '@vercel/remix'
+import {json, type LinksFunction} from '@vercel/remix'
 import {
   Links,
   LiveReload,
@@ -8,21 +8,14 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react'
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  useMemo,
-  useState,
-  useSyncExternalStore,
-} from 'react'
+import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
 
 import styles from '~/tailwind.css?url'
-import { formatTimeSince } from 'apps-common/utils'
+import {formatTimeSince} from 'apps-common/utils'
 
 const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))
 
-export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
+export const links: LinksFunction = () => [{rel: 'stylesheet', href: styles}]
 
 export async function loader() {
   // Simulate a slightly slow API
@@ -65,7 +58,7 @@ export default function App() {
 }
 
 const subscribe = () => () => {}
-function Timesince(props: { since: string }) {
+function Timesince(props: {since: string}) {
   const mounted = useSyncExternalStore(
     subscribe,
     () => true,

@@ -1,4 +1,4 @@
-import type { ChannelsNode } from '@repo/channels'
+import type {ChannelsNode} from '@repo/channels'
 import type {
   HistoryRefresh,
   HistoryUpdate,
@@ -36,8 +36,7 @@ export interface Msg<T extends string> {
 }
 
 /** @public */
-export interface OverlayMsgElement<T extends string>
-  extends Msg<`element/${T}`> {
+export interface OverlayMsgElement<T extends string> extends Msg<`element/${T}`> {
   id: string
 }
 

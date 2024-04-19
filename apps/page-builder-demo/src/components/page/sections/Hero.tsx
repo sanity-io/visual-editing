@@ -1,15 +1,15 @@
-import { WrappedValue } from '@sanity/react-loader/jsx'
-import { sanity } from '@sanity/react-loader/jsx'
+import {WrappedValue} from '@sanity/react-loader/jsx'
+import {sanity} from '@sanity/react-loader/jsx'
 
-import { dataAttribute } from '@/sanity'
-import { PageSection } from '../PageSection'
-import { HeroSectionData, PageData } from '../types'
+import {dataAttribute} from '@/sanity'
+import {PageSection} from '../PageSection'
+import {HeroSectionData, PageData} from '../types'
 
 export function Hero(props: {
   page: WrappedValue<PageData>
   section: WrappedValue<HeroSectionData>
 }) {
-  const { page: data, section } = props
+  const {page: data, section} = props
 
   return (
     <PageSection

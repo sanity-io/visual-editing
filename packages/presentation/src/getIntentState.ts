@@ -1,8 +1,8 @@
-import { uuid } from '@sanity/uuid'
-import { getPublishedId } from 'sanity'
-import { encodeJsonParams, SearchParam } from 'sanity/router'
+import {uuid} from '@sanity/uuid'
+import {getPublishedId} from 'sanity'
+import {encodeJsonParams, type SearchParam} from 'sanity/router'
 
-import { PresentationStateParams } from './types'
+import type {PresentationStateParams} from './types'
 
 /**
  * @internal
@@ -13,10 +13,10 @@ export function getIntentState(
   _routerState: undefined,
   payload: unknown,
 ):
-  | (PresentationStateParams & { _searchParams: SearchParam[] })
-  | { intent: string; params: Record<string, string>; payload: unknown } {
+  | (PresentationStateParams & {_searchParams: SearchParam[]})
+  | {intent: string; params: Record<string, string>; payload: unknown} {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, mode, path, presentation, type, ...searchParams } = params
+  const {id, mode, path, presentation, type, ...searchParams} = params
 
   if (intent === 'edit' && id) {
     return {
@@ -28,15 +28,11 @@ export function getIntentState(
   }
 
   if (intent === 'create') {
-    searchParams.preview =
-      searchParams.preview ||
-      new URLSearchParams(window.location.search).get('preview') ||
-      '/'
+    searchParams['preview'] =
+      searchParams['preview'] || new URLSearchParams(window.location.search).get('preview') || '/'
 
     if (payload && typeof payload === 'object') {
-      searchParams.templateParams = encodeJsonParams(
-        payload as Record<string, unknown>,
-      )
+      searchParams['templateParams'] = encodeJsonParams(payload as Record<string, unknown>)
     }
 
     return {
@@ -45,5 +41,5 @@ export function getIntentState(
       _searchParams: Object.entries(searchParams),
     }
   }
-  return { intent, params, payload }
+  return {intent, params, payload}
 }

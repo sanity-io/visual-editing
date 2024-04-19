@@ -1,4 +1,4 @@
-import { LoaderLocals } from './types'
+import {LoaderLocals} from './types'
 
 declare global {
   namespace App {

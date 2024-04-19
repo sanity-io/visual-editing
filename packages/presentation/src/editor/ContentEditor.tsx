@@ -1,9 +1,9 @@
-import { type ReactElement } from 'react'
-import type { Path } from 'sanity'
+import {type ReactElement} from 'react'
+import type {Path} from 'sanity'
 
-import type { StructureDocumentPaneParams } from '../types'
-import { DocumentListPane } from './DocumentListPane'
-import { DocumentPanel } from './DocumentPanel'
+import type {StructureDocumentPaneParams} from '../types'
+import {DocumentListPane} from './DocumentListPane'
+import {DocumentPanel} from './DocumentPanel'
 
 export function ContentEditor(props: {
   documentId?: string
@@ -11,7 +11,7 @@ export function ContentEditor(props: {
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
-  refs: { _id: string; _type: string }[]
+  refs: {_id: string; _type: string}[]
   structureParams: StructureDocumentPaneParams
 }): ReactElement {
   const {
@@ -38,10 +38,6 @@ export function ContentEditor(props: {
   }
 
   return (
-    <DocumentListPane
-      onStructureParams={onStructureParams}
-      previewUrl={previewUrl}
-      refs={refs}
-    />
+    <DocumentListPane onStructureParams={onStructureParams} previewUrl={previewUrl} refs={refs} />
   )
 }

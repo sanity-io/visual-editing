@@ -1,6 +1,6 @@
-import type { PresentationMsg } from '@repo/visual-editing-helpers'
+import type {PresentationMsg} from '@repo/visual-editing-helpers'
 
-import type { ElementState, OverlayMsg } from '../types'
+import type {ElementState, OverlayMsg} from '../types'
 
 /**
  * Reducer for managing element state from received channel messages
@@ -10,7 +10,7 @@ export const elementsReducer = (
   elements: ElementState[],
   message: OverlayMsg | PresentationMsg,
 ): ElementState[] => {
-  const { type } = message
+  const {type} = message
   switch (type) {
     case 'element/register': {
       const elementExists = !!elements.find((e) => e.id === message.id)
@@ -30,7 +30,7 @@ export const elementsReducer = (
     case 'element/activate':
       return elements.map((e) => {
         if (e.id === message.id) {
-          return { ...e, activated: true }
+          return {...e, activated: true}
         }
         return e
       })
@@ -39,42 +39,42 @@ export const elementsReducer = (
     case 'element/deactivate':
       return elements.map((e) => {
         if (e.id === message.id) {
-          return { ...e, activated: false, hovered: false }
+          return {...e, activated: false, hovered: false}
         }
         return e
       })
     case 'element/mouseenter':
       return elements.map((e) => {
         if (e.id === message.id) {
-          return { ...e, rect: message.rect, hovered: true }
+          return {...e, rect: message.rect, hovered: true}
         }
-        return { ...e, hovered: false }
+        return {...e, hovered: false}
       })
     case 'element/mouseleave':
       return elements.map((element) => {
         if (element.id === message.id) {
-          return { ...element, hovered: false }
+          return {...element, hovered: false}
         }
         return element
       })
     case 'element/updateRect':
       return elements.map((element) => {
         if (element.id === message.id) {
-          return { ...element, rect: message.rect }
+          return {...element, rect: message.rect}
         }
         return element
       })
     case 'element/click':
       return elements.map((e) => {
-        return { ...e, focused: e.id === message.id && 'clicked' }
+        return {...e, focused: e.id === message.id && 'clicked'}
       })
     case 'overlay/blur':
       return elements.map((e) => {
-        return { ...e, focused: false }
+        return {...e, focused: false}
       })
     case 'presentation/blur':
       return elements.map((e) => {
-        return { ...e, focused: false }
+        return {...e, focused: false}
       })
     case 'presentation/focus': {
       // Before setting the focus state of each element, check to see if any

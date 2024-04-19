@@ -1,7 +1,7 @@
-import { createClient } from '@sanity/client'
-import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
+import {createClient} from '@sanity/client'
+import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
 
-const { projectId, dataset, workspace } = workspaces['next-pages-router']
+const {projectId, dataset, workspace} = workspaces['next-pages-router']
 const studioUrl = `${baseUrl}/${workspace}`
 
 export const client = createClient({
@@ -10,7 +10,7 @@ export const client = createClient({
   useCdn: false,
   apiVersion,
   stega: {
-    studioUrl: ({ _dataset }) =>
+    studioUrl: ({_dataset}) =>
       _dataset === workspaces['cross-dataset-references'].dataset
         ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
         : studioUrl,

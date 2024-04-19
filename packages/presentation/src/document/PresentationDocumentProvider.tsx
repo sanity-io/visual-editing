@@ -1,6 +1,6 @@
 import {
-  ReactElement,
-  ReactNode,
+  type ReactElement,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -9,22 +9,20 @@ import {
   useState,
 } from 'react'
 
-import { PresentationPluginOptions } from '../types'
-import { PresentationDocumentContext } from './PresentationDocumentContext'
-import { PresentationDocumentContextValue } from './types'
+import type {PresentationPluginOptions} from '../types'
+import {PresentationDocumentContext} from './PresentationDocumentContext'
+import type {PresentationDocumentContextValue} from './types'
 
 /** @internal */
 export function PresentationDocumentProvider(props: {
   children?: ReactNode
   options: PresentationPluginOptions
 }): ReactElement {
-  const { children, options } = props
+  const {children, options} = props
   const parent = useContext(PresentationDocumentContext)
   const parentRegister = parent?.register
 
-  const [optionsArray, setOptionsArray] = useState<PresentationPluginOptions[]>(
-    () => [],
-  )
+  const [optionsArray, setOptionsArray] = useState<PresentationPluginOptions[]>(() => [])
 
   const register = useCallback(
     (options: PresentationPluginOptions) => {

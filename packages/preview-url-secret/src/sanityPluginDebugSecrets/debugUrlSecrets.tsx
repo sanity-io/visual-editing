@@ -1,7 +1,7 @@
-import { CheckmarkCircleIcon, CloseCircleIcon, LockIcon } from '@sanity/icons'
-import { defineType } from 'sanity'
+import {CheckmarkCircleIcon, CloseCircleIcon, LockIcon} from '@sanity/icons'
+import {defineType} from 'sanity'
 
-import { schemaType, SECRET_TTL } from '../constants'
+import {schemaType, SECRET_TTL} from '../constants'
 
 export const debugUrlSecretsType = defineType({
   type: 'document',
@@ -38,9 +38,7 @@ export const debugUrlSecretsType = defineType({
       updatedAt: '_updatedAt',
     },
     prepare(data) {
-      const url = data.studioUrl
-        ? new URL(data.studioUrl, location.origin)
-        : undefined
+      const url = data.studioUrl ? new URL(data.studioUrl, location.origin) : undefined
       const updatedAt = new Date(data.updatedAt).getTime()
       const expiresAt = new Date(updatedAt + 1000 * SECRET_TTL)
       const expired = expiresAt < new Date()
@@ -49,9 +47,7 @@ export const debugUrlSecretsType = defineType({
         title: url ? `${url.host}${url.pathname}` : data.source,
         subtitle: expired
           ? 'Expired'
-          : `Expires in ${Math.round(
-              (expiresAt.getTime() - Date.now()) / (1000 * 60),
-            )} minutes`,
+          : `Expires in ${Math.round((expiresAt.getTime() - Date.now()) / (1000 * 60))} minutes`,
         media: icon,
       }
     },

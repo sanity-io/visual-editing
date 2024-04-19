@@ -1,29 +1,23 @@
-import { PortableText } from '@portabletext/react'
-import { shoe, type ShoeParams, type ShoeResult } from 'apps-common/queries'
-import { formatCurrency } from 'apps-common/utils'
-import type {
-  GetStaticProps,
-  GetStaticPaths,
-  InferGetStaticPropsType,
-} from 'next'
+import {PortableText} from '@portabletext/react'
+import {shoe, type ShoeParams, type ShoeResult} from 'apps-common/queries'
+import {formatCurrency} from 'apps-common/utils'
+import type {GetStaticProps, GetStaticPaths, InferGetStaticPropsType} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { urlFor, urlForCrossDatasetReference } from '../../../components/utils'
-import { ClientPerspective, ContentSourceMap } from '@sanity/client'
-import type { SharedProps } from '../../_app'
-import { loadQuery } from '@/components/sanity.ssr'
-import { useQuery } from '@sanity/react-loader'
+import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
+import {ClientPerspective, ContentSourceMap} from '@sanity/client'
+import type {SharedProps} from '../../_app'
+import {loadQuery} from '@/components/sanity.ssr'
+import {useQuery} from '@sanity/react-loader'
 
 interface Props extends SharedProps {
-  params: { slug: string }
-  initial: { data: ShoeResult; sourceMap?: ContentSourceMap }
+  params: {slug: string}
+  initial: {data: ShoeResult; sourceMap?: ContentSourceMap}
 }
 
 export const getStaticProps = (async (context) => {
-  const { draftMode = false, params } = context
-  const perspective = (
-    draftMode ? 'previewDrafts' : 'published'
-  ) satisfies ClientPerspective
+  const {draftMode = false, params} = context
+  const perspective = (draftMode ? 'previewDrafts' : 'published') satisfies ClientPerspective
 
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
   if (!slug) throw new Error('slug is required')
@@ -32,9 +26,9 @@ export const getStaticProps = (async (context) => {
     {
       slug,
     } satisfies ShoeParams,
-    { perspective },
+    {perspective},
   )
-  return { props: { draftMode, params: { slug }, initial }, revalidate: 1 }
+  return {props: {draftMode, params: {slug}, initial}, revalidate: 1}
 }) satisfies GetStaticProps<Props>
 
 export const getStaticPaths = (async () => {
@@ -44,10 +38,8 @@ export const getStaticPaths = (async () => {
   }
 }) satisfies GetStaticPaths
 
-export default function ShoePage(
-  props: InferGetStaticPropsType<typeof getStaticProps>,
-) {
-  const { initial, params } = props
+export default function ShoePage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+  const {initial, params} = props
 
   if (!params.slug) {
     throw new Error('No slug, 404?')
@@ -58,7 +50,7 @@ export default function ShoePage(
     error,
     loading,
     encodeDataAttribute,
-  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
+  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, {initial})
 
   if (error) {
     throw error
@@ -72,10 +64,7 @@ export default function ShoePage(
         <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <li>
             <div className="flex items-center">
-              <Link
-                href="/pages-router/shoes"
-                className="mr-2 text-sm font-medium text-gray-900"
-              >
+              <Link href="/pages-router/shoes" className="mr-2 text-sm font-medium text-gray-900">
                 Shoes
               </Link>
               <svg
@@ -90,7 +79,7 @@ export default function ShoePage(
               </svg>
             </div>
           </li>
-          <li className="text-sm" style={{ ['textWrap' as any]: 'balance' }}>
+          <li className="text-sm" style={{['textWrap' as any]: 'balance'}}>
             <Link
               href={`/pages-router/shoes/${params.slug}`}
               aria-current="page"
@@ -157,7 +146,7 @@ export default function ShoePage(
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1
                 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-                style={{ ['textWrap' as any]: 'balance' }}
+                style={{['textWrap' as any]: 'balance'}}
               >
                 {product.title}
               </h1>
@@ -190,9 +179,7 @@ export default function ShoePage(
                       height={24}
                       alt={product.brand?.logo?.alt || ''}
                     />
-                    <span className="text-lg font-bold">
-                      {product.brand.name}
-                    </span>
+                    <span className="text-lg font-bold">{product.brand.name}</span>
                   </div>
                 </div>
               )}

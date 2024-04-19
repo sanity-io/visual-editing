@@ -1,14 +1,12 @@
 import './Slideshow.css'
 
-import { useState } from 'react'
+import {useState} from 'react'
 
-import { SanityArrayValue, SanityImageValue } from '@/sanity'
-import { Image } from '../image'
+import {SanityArrayValue, SanityImageValue} from '@/sanity'
+import {Image} from '../image'
 
-export function Slideshow(props: {
-  images: SanityArrayValue<SanityImageValue>[]
-}) {
-  const { images } = props
+export function Slideshow(props: {images: SanityArrayValue<SanityImageValue>[]}) {
+  const {images} = props
   const len = images.length
   const [index, setIndex] = useState(0)
 

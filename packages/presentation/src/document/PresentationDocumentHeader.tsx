@@ -1,11 +1,11 @@
-import { rem, Stack } from '@sanity/ui'
-import { type ReactNode, useContext } from 'react'
-import { type ObjectSchemaType, type PublishedId } from 'sanity'
-import { styled } from 'styled-components'
+import {rem, Stack} from '@sanity/ui'
+import {type ReactNode, useContext} from 'react'
+import {type ObjectSchemaType, type PublishedId} from 'sanity'
+import {styled} from 'styled-components'
 
-import type { PresentationPluginOptions } from '../types'
-import { LocationsBanner } from './LocationsBanner'
-import { PresentationDocumentContext } from './PresentationDocumentContext'
+import type {PresentationPluginOptions} from '../types'
+import {LocationsBanner} from './LocationsBanner'
+import {PresentationDocumentContext} from './PresentationDocumentContext'
 
 const LocationStack = styled(Stack)`
   min-height: ${rem(42)};
@@ -20,7 +20,7 @@ export function PresentationDocumentHeader(props: {
   options: PresentationPluginOptions
   schemaType: ObjectSchemaType
 }): ReactNode {
-  const { documentId, options, schemaType } = props
+  const {documentId, options, schemaType} = props
 
   const context = useContext(PresentationDocumentContext)
 

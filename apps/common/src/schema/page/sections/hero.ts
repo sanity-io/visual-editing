@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField } from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export const heroSectionType = defineArrayMember({
   type: 'object',

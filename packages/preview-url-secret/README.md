@@ -13,8 +13,8 @@ This package is used together with [`@sanity/presentation`]:
 
 ```ts
 // ./sanity.config.ts
-import { presentationTool } from 'sanity/presentation'
-import { defineConfig } from 'sanity'
+import {presentationTool} from 'sanity/presentation'
+import {defineConfig} from 'sanity'
 
 export default defineConfig({
   // ... other options
@@ -40,10 +40,10 @@ Create an API token with viewer rights, and put it in an environment variable na
 ```ts
 // ./app/api/draft/route.ts
 
-import { draftMode } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { validatePreviewUrl } from '@sanity/preview-url-secret'
-import { client } from '@/sanity/lib/client'
+import {draftMode} from 'next/headers'
+import {redirect} from 'next/navigation'
+import {validatePreviewUrl} from '@sanity/preview-url-secret'
+import {client} from '@/sanity/lib/client'
 
 const clientWithToken = client.withConfig({
   // Required, otherwise the URL preview secret can't be validated
@@ -51,12 +51,9 @@ const clientWithToken = client.withConfig({
 })
 
 export async function GET(req: Request) {
-  const { isValid, redirectTo = '/' } = await validatePreviewUrl(
-    clientWithToken,
-    req.url,
-  )
+  const {isValid, redirectTo = '/'} = await validatePreviewUrl(clientWithToken, req.url)
   if (!isValid) {
-    return new Response('Invalid secret', { status: 401 })
+    return new Response('Invalid secret', {status: 401})
   }
 
   draftMode().enable()
@@ -70,8 +67,8 @@ It's also handy to make a route to disable draft mode, so you have an easy way o
 ```ts
 // ./app/api/disable-draft/route.ts
 
-import { draftMode } from 'next/headers'
-import { NextRequest, NextResponse } from 'next/server'
+import {draftMode} from 'next/headers'
+import {NextRequest, NextResponse} from 'next/server'
 
 export function GET(request: NextRequest) {
   draftMode().disable()
@@ -87,32 +84,26 @@ Create an API token with viewer rights, and put it in an environment variable na
 ```ts
 // ./pages/api/draft.ts
 
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { validatePreviewUrl } from '@sanity/preview-url-secret'
-import { client } from '@/sanity/lib/client'
+import type {NextApiRequest, NextApiResponse} from 'next'
+import {validatePreviewUrl} from '@sanity/preview-url-secret'
+import {client} from '@/sanity/lib/client'
 
 const clientWithToken = client.withConfig({
   // Required, otherwise the URL preview secret can't be validated
   token: process.env.SANITY_API_READ_TOKEN,
 })
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<string | void>,
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<string | void>) {
   if (!req.url) {
     throw new Error('Missing url')
   }
-  const { isValid, redirectTo = '/' } = await validatePreviewUrl(
-    clientWithToken,
-    req.url,
-  )
+  const {isValid, redirectTo = '/'} = await validatePreviewUrl(clientWithToken, req.url)
   if (!isValid) {
     return res.status(401).send('Invalid secret')
   }
   // Enable Draft Mode by setting the cookies
-  res.setDraftMode({ enable: true })
-  res.writeHead(307, { Location: redirectTo })
+  res.setDraftMode({enable: true})
+  res.writeHead(307, {Location: redirectTo})
   res.end()
 }
 ```
@@ -122,17 +113,14 @@ It's also handy to make a route to disable draft mode, so you have an easy way o
 ```ts
 // ./pages/api/disable-draft.ts
 
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type {NextApiRequest, NextApiResponse} from 'next'
 
-export default function handler(
-  _req: NextApiRequest,
-  res: NextApiResponse<void>,
-): void {
+export default function handler(_req: NextApiRequest, res: NextApiResponse<void>): void {
   // Exit the current user from "Draft Mode".
-  res.setDraftMode({ enable: false })
+  res.setDraftMode({enable: false})
 
   // Redirect the user back to the index page.
-  res.writeHead(307, { Location: '/' })
+  res.writeHead(307, {Location: '/'})
   res.end()
 }
 ```
@@ -142,11 +130,7 @@ export default function handler(
 You can inspect the URL origin of the Studio that initiated the preview on the `studioOrigin` property of `validatePreviewUrl`:
 
 ```ts
-const {
-  isValid,
-  redirectTo = '/',
-  studioOrigin,
-} = await validatePreviewUrl(clientWithToken, req.url)
+const {isValid, redirectTo = '/', studioOrigin} = await validatePreviewUrl(clientWithToken, req.url)
 if (studioOrigin === 'http://localhost:3333') {
   console.log('This preview was initiated from the local development Studio')
 }
@@ -159,8 +143,8 @@ You don't have to check `isValid` before using it, as it'll be `undefined` if th
 You can view the generated url secrets that are in your dataset by adding the debug plugin to your `sanity.config.ts`:
 
 ```ts
-import { defineConfig } from 'sanity'
-import { debugSecrets } from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {defineConfig} from 'sanity'
+import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 
 export default defineConfig({
   // ... other options

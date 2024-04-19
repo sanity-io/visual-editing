@@ -1,15 +1,10 @@
 <template>
   <div class="min-h-screen bg-white">
     <nav aria-label="Breadcrumb" class="pt-16 sm:pt-24">
-      <ol
-        class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-      >
+      <ol class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <li>
           <div class="flex items-center">
-            <NuxtLink
-              :to="{ name: 'shoes' }"
-              class="mr-2 text-sm font-medium text-gray-900"
-            >
+            <NuxtLink :to="{name: 'shoes'}" class="mr-2 text-sm font-medium text-gray-900">
               Shoes
             </NuxtLink>
             <svg
@@ -24,11 +19,11 @@
             </svg>
           </div>
         </li>
-        <li class="text-sm" :style="{ textWrap: 'balance' }">
+        <li class="text-sm" :style="{textWrap: 'balance'}">
           <NuxtLink
             :to="{
               name: 'shoes-slug',
-              params: { slug: route.params.slug },
+              params: {slug: route.params.slug},
             }"
             aria-current="page"
             class="font-medium text-gray-500 hover:text-gray-600"
@@ -61,9 +56,7 @@
         v-if="otherImages.length > 0"
         class="mx-auto max-w-2xl px-4 pt-5 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-8"
       >
-        <div
-          class="relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto"
-        >
+        <div class="relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto">
           <div
             v-for="image of otherImages.filter((image) => !!image.asset?._ref)"
             class="shrink-0 snap-start"
@@ -91,7 +84,7 @@
         <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
           <h1
             class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-            :style="{ textWrap: 'balance' }"
+            :style="{textWrap: 'balance'}"
           >
             {{ product.title }}
           </h1>
@@ -111,10 +104,7 @@
                 class="h-10 w-10 rounded-full bg-gray-50"
                 :src="
                   product.brand?.logo?.asset
-                    ? urlForCrossDatasetReference(product.brand.logo)
-                        .width(48)
-                        .height(48)
-                        .url()
+                    ? urlForCrossDatasetReference(product.brand.logo).width(48).height(48).url()
                     : `https://source.unsplash.com/featured/48x48?${encodeURIComponent(
                         product.brand.name,
                       )}`
@@ -147,10 +137,7 @@
             <h3 class="sr-only">Description</h3>
 
             <div class="space-y-6 text-base text-gray-900">
-              <SanityContent
-                v-if="product.description"
-                :blocks="product.description"
-              />
+              <SanityContent v-if="product.description" :blocks="product.description" />
               <template v-else>No description</template>
             </div>
           </div>
@@ -161,13 +148,13 @@
 </template>
 
 <script setup lang="ts">
-import { formatCurrency } from 'apps-common/utils'
-import { shoe, type ShoeResult } from 'apps-common/queries'
-import { urlFor, urlForCrossDatasetReference } from '~/utils'
+import {formatCurrency} from 'apps-common/utils'
+import {shoe, type ShoeResult} from 'apps-common/queries'
+import {urlFor, urlForCrossDatasetReference} from '~/utils'
 
 const route = useRoute()
 
-const { data: product, pending } = await useSanityQuery<ShoeResult>(shoe, {
+const {data: product, pending} = await useSanityQuery<ShoeResult>(shoe, {
   slug: route.params.slug,
 })
 

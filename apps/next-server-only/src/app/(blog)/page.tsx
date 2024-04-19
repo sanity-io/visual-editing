@@ -1,13 +1,13 @@
 import Link from 'next/link'
-import { Suspense } from 'react'
+import {Suspense} from 'react'
 import Balancer from 'react-wrap-balancer'
 
-import { AuthorAvatar, AuthorAvatarFallback } from './AuthorAvatar'
+import {AuthorAvatar, AuthorAvatarFallback} from './AuthorAvatar'
 import CoverImage from './CoverImage'
 import MoreStories from './MoreStories'
 import Date from './PostDate'
-import { postFields } from '@/lib/queries'
-import { loadQuery } from '@/lib/loadQuery'
+import {postFields} from '@/lib/queries'
+import {loadQuery} from '@/lib/loadQuery'
 
 export default async function BlogIndexPage() {
   const data = await loadQuery<any>({
@@ -17,8 +17,7 @@ export default async function BlogIndexPage() {
 }`,
     tags: ['post'],
   })
-  const { _id, author, excerpt, mainImage, slug, title, publishedAt } =
-    data ?? {}
+  const {_id, author, excerpt, mainImage, slug, title, publishedAt} = data ?? {}
 
   return (
     <>

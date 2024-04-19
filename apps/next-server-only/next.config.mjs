@@ -1,5 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
-import { createRequire } from 'node:module'
+import {createRequire} from 'node:module'
 
 const require = createRequire(import.meta.url)
 
@@ -14,18 +14,10 @@ const nextConfig = {
   },
   // */
 
-  transpilePackages: [
-    '@repo/channels',
-    'apps-common',
-    '@sanity/presentation',
-    'sanity',
-  ],
+  transpilePackages: ['@repo/channels', 'apps-common', '@sanity/presentation', 'sanity'],
 
   images: {
-    remotePatterns: [
-      { hostname: 'cdn.sanity.io' },
-      { hostname: 'source.unsplash.com' },
-    ],
+    remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
   },
 
   experimental: {
@@ -43,7 +35,7 @@ const nextConfig = {
       'sanity/desk': require.resolve('sanity/desk'),
       'sanity/router': require.resolve('sanity/router'),
       'sanity/structure': require.resolve('sanity/structure'),
-      sanity: require.resolve('sanity'),
+      'sanity': require.resolve('sanity'),
     }
     return config
   },

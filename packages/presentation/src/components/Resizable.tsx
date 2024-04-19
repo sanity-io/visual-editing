@@ -1,17 +1,17 @@
-import { Box, BoxProps } from '@sanity/ui'
+import {Box, type BoxProps} from '@sanity/ui'
 import {
-  FunctionComponent,
-  HTMLProps,
+  type FunctionComponent,
+  type HTMLProps,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import { useLocalState } from '../useLocalState'
-import { Resizer } from './Resizer'
+import {useLocalState} from '../useLocalState'
+import {Resizer} from './Resizer'
 
 export interface ResizableProps {
   disabled?: boolean
@@ -41,10 +41,7 @@ export const Resizable: FunctionComponent<
   } = props
   const [element, setElement] = useState<HTMLDivElement | null>(null)
   const elementWidthRef = useRef<number>()
-  const [targetWidth, setTargetWidth] = useLocalState<number>(
-    'presentation/panel/width',
-    minWidth,
-  )
+  const [targetWidth, setTargetWidth] = useLocalState<number>('presentation/panel/width', minWidth)
 
   const handleResizeStart = useCallback(() => {
     onResizeStart?.()
@@ -56,9 +53,7 @@ export const Resizable: FunctionComponent<
       const width = elementWidthRef.current
       if (!width) return
 
-      setTargetWidth(
-        Math.min(Math.max(width - deltaX, minWidth), maxWidth ?? Infinity),
-      )
+      setTargetWidth(Math.min(Math.max(width - deltaX, minWidth), maxWidth ?? Infinity))
     },
     [minWidth, maxWidth, setTargetWidth],
   )
@@ -68,8 +63,8 @@ export const Resizable: FunctionComponent<
       disabled
         ? styleProp
         : targetWidth
-          ? { ...styleProp, flex: 'none', width: targetWidth }
-          : { ...styleProp, minWidth, maxWidth },
+          ? {...styleProp, flex: 'none', width: targetWidth}
+          : {...styleProp, minWidth, maxWidth},
     [disabled, minWidth, maxWidth, styleProp, targetWidth],
   )
 

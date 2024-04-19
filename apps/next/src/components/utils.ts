@@ -1,9 +1,9 @@
 import imageUrlBuilder from '@sanity/image-url'
-import { workspaces } from 'apps-common/env'
+import {workspaces} from 'apps-common/env'
 
-const { projectId, dataset } = workspaces['next-pages-router']
+const {projectId, dataset} = workspaces['next-pages-router']
 
-const builder = imageUrlBuilder({ projectId, dataset })
+const builder = imageUrlBuilder({projectId, dataset})
 export function urlFor(source: any) {
   return builder.image(source).auto('format').fit('max')
 }

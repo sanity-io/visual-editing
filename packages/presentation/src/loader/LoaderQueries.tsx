@@ -1,36 +1,22 @@
-import type { ChannelsController } from '@repo/channels'
-import type {
-  LoaderMsg,
-  VisualEditingConnectionIds,
-} from '@repo/visual-editing-helpers'
-import {
-  useQueryParams,
-  useRevalidate,
-} from '@repo/visual-editing-helpers/hooks'
-import type {
-  ClientConfig,
-  ClientPerspective,
-  ContentSourceMap,
-  QueryParams,
-} from '@sanity/client'
-import { applySourceDocuments, getPublishedId } from '@sanity/client/csm'
-import { applyPatch } from 'mendoza'
+import type {ChannelsController} from '@repo/channels'
+import type {LoaderMsg, VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
+import {useQueryParams, useRevalidate} from '@repo/visual-editing-helpers/hooks'
+import type {ClientConfig, ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
+import {applySourceDocuments, getPublishedId} from '@sanity/client/csm'
+import {applyPatch} from 'mendoza'
 import LRUCache from 'mnemonist/lru-cache-with-delete'
-import { memo, useEffect, useMemo, useState } from 'react'
-import { type SanityClient, type SanityDocument, useClient } from 'sanity'
+import {memo, useEffect, useMemo, useState} from 'react'
+import {type SanityClient, type SanityDocument, useClient} from 'sanity'
 
-import {
-  LIVE_QUERY_CACHE_BATCH_SIZE,
-  LIVE_QUERY_CACHE_SIZE,
-} from '../constants'
-import type { LiveQueriesState } from '../types'
+import {LIVE_QUERY_CACHE_BATCH_SIZE, LIVE_QUERY_CACHE_SIZE} from '../constants'
+import type {LiveQueriesState} from '../types'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
   channel: ChannelsController<VisualEditingConnectionIds, LoaderMsg> | undefined
   perspective: ClientPerspective
   liveQueries: LiveQueriesState
-  documentsOnPage: { _id: string; _type: string }[]
+  documentsOnPage: {_id: string; _type: string}[]
 }
 
 export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
@@ -41,10 +27,8 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     liveQueries,
     documentsOnPage,
   } = props
-  const [cache] = useState(
-    () => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE),
-  )
-  const studioClient = useClient({ apiVersion: '2023-10-16' })
+  const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
+  const studioClient = useClient({apiVersion: '2023-10-16'})
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])
   const client = useMemo(
     () =>
@@ -55,7 +39,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
   )
   useEffect(() => {
     if (channel) {
-      const { projectId, dataset } = clientConfig
+      const {projectId, dataset} = clientConfig
       // @todo - Can this be migrated/deprecated in favour of emitting
       // `presentation/perspective` at a higher level?
       channel.send('loaders', 'loader/perspective', {
@@ -67,7 +51,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
   }, [channel, clientConfig, activePerspective])
 
   const turboIds = useMemo(() => {
-    const documentsActuallyInUse = documentsOnPage.map(({ _id }) => _id)
+    const documentsActuallyInUse = documentsOnPage.map(({_id}) => _id)
     const set = new Set(documentsActuallyInUse)
     const ids = [...set]
     const max = cache.capacity
@@ -87,24 +71,22 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
         turboIds={turboIds}
         setDocumentsCacheLastUpdated={setDocumentsCacheLastUpdated}
       />
-      {Object.entries(liveQueries).map(
-        ([key, { query, params, perspective }]) => (
-          <QuerySubscription
-            key={`${key}${perspective}`}
-            cache={cache}
-            projectId={clientConfig.projectId!}
-            dataset={clientConfig.dataset!}
-            perspective={perspective}
-            query={query}
-            params={params}
-            channel={channel}
-            client={client}
-            refreshInterval={activePerspective ? 2000 : 0}
-            liveDocument={liveDocument}
-            documentsCacheLastUpdated={documentsCacheLastUpdated}
-          />
-        ),
-      )}
+      {Object.entries(liveQueries).map(([key, {query, params, perspective}]) => (
+        <QuerySubscription
+          key={`${key}${perspective}`}
+          cache={cache}
+          projectId={clientConfig.projectId!}
+          dataset={clientConfig.dataset!}
+          perspective={perspective}
+          query={query}
+          params={params}
+          channel={channel}
+          client={client}
+          refreshInterval={activePerspective ? 2000 : 0}
+          liveDocument={liveDocument}
+          documentsCacheLastUpdated={documentsCacheLastUpdated}
+        />
+      ))}
     </>
   )
 }
@@ -134,7 +116,7 @@ interface TurboProps extends Pick<SharedProps, 'client' | 'cache'> {
  * A turbo-charged mutation observer that uses Content Source Maps to apply mendoza patches on your queries
  */
 const Turbo = memo(function Turbo(props: TurboProps) {
-  const { cache, client, turboIds, setDocumentsCacheLastUpdated } = props
+  const {cache, client, turboIds, setDocumentsCacheLastUpdated} = props
   // Figure out which documents are missing from the cache
   const [batch, setBatch] = useState<string[][]>([])
   useEffect(() => {
@@ -147,10 +129,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
     }
     const nextBatchSlice = [...nextBatch].slice(0, LIVE_QUERY_CACHE_BATCH_SIZE)
     if (nextBatchSlice.length === 0) return
-    setBatch((prevBatch) => [
-      ...prevBatch.slice(-LIVE_QUERY_CACHE_BATCH_SIZE),
-      nextBatchSlice,
-    ])
+    setBatch((prevBatch) => [...prevBatch.slice(-LIVE_QUERY_CACHE_BATCH_SIZE), nextBatchSlice])
   }, [batch, cache, turboIds])
 
   // Use the same listen instance and patch documents as they come in
@@ -180,7 +159,7 @@ const Turbo = memo(function Turbo(props: TurboProps) {
         const cachedDocument = cache.peek(update.documentId)
         if (cachedDocument as SanityDocument) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const patchDoc = { ...cachedDocument } as any
+          const patchDoc = {...cachedDocument} as any
           delete patchDoc._rev
           const patchedDocument = applyPatch(patchDoc, update.effects.apply)
           cache.set(update.documentId, patchedDocument)
@@ -210,7 +189,7 @@ interface GetDocumentsProps extends Pick<SharedProps, 'client' | 'cache'> {
   setDocumentsCacheLastUpdated: (timestamp: number) => void
 }
 const GetDocuments = memo(function GetDocuments(props: GetDocumentsProps) {
-  const { client, cache, ids, setDocumentsCacheLastUpdated } = props
+  const {client, cache, ids, setDocumentsCacheLastUpdated} = props
 
   useEffect(() => {
     const missingIds = ids.filter((id) => !cache.has(id))
@@ -233,11 +212,7 @@ GetDocuments.displayName = 'GetDocuments'
 interface QuerySubscriptionProps
   extends Pick<
     UseQuerySubscriptionProps,
-    | 'client'
-    | 'cache'
-    | 'refreshInterval'
-    | 'liveDocument'
-    | 'documentsCacheLastUpdated'
+    'client' | 'cache' | 'refreshInterval' | 'liveDocument' | 'documentsCacheLastUpdated'
   > {
   projectId: string
   dataset: string
@@ -286,16 +261,7 @@ function QuerySubscription(props: QuerySubscriptionProps) {
         resultSourceMap,
       })
     }
-  }, [
-    channel,
-    dataset,
-    params,
-    perspective,
-    projectId,
-    query,
-    result,
-    resultSourceMap,
-  ])
+  }, [channel, dataset, params, perspective, projectId, query, result, resultSourceMap])
 
   return null
 }
@@ -323,18 +289,16 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
     result: unknown
     resultSourceMap?: ContentSourceMap
   } | null>(null)
-  const { projectId, dataset } = useMemo(() => {
-    const { projectId, dataset } = client.config()
-    return { projectId, dataset } as Required<
-      Pick<ClientConfig, 'projectId' | 'dataset'>
-    >
+  const {projectId, dataset} = useMemo(() => {
+    const {projectId, dataset} = client.config()
+    return {projectId, dataset} as Required<Pick<ClientConfig, 'projectId' | 'dataset'>>
   }, [client])
 
   // Make sure any async errors bubble up to the nearest error boundary
   const [error, setError] = useState<unknown>(null)
   if (error) throw error
 
-  const [revalidate, startRefresh] = useRevalidate({ refreshInterval })
+  const [revalidate, startRefresh] = useRevalidate({refreshInterval})
   const shouldRefetch = revalidate === 'refresh' || revalidate === 'inflight'
   useEffect(() => {
     if (!shouldRefetch) {
@@ -346,9 +310,9 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
     const controller = new AbortController()
     // eslint-disable-next-line no-inner-declarations
     async function effect() {
-      const { signal } = controller
+      const {signal} = controller
       fetching = true
-      const { result, resultSourceMap } = await client.fetch(query, params, {
+      const {result, resultSourceMap} = await client.fetch(query, params, {
         tag: 'presentation-loader',
         signal,
         perspective,
@@ -357,7 +321,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
       fetching = false
 
       if (!signal.aborted) {
-        setSnapshot({ result, resultSourceMap })
+        setSnapshot({result, resultSourceMap})
 
         fulfilled = true
       }
@@ -414,9 +378,7 @@ export function turboChargeResultIfSourceMap<T = unknown>(
   resultSourceMap?: ContentSourceMap,
 ): T {
   if (perspective === 'raw') {
-    throw new Error(
-      'turboChargeResultIfSourceMap does not support raw perspective',
-    )
+    throw new Error('turboChargeResultIfSourceMap does not support raw perspective')
   }
   return applySourceDocuments(
     result,
@@ -445,11 +407,8 @@ export function turboChargeResultIfSourceMap<T = unknown>(
       return cache.get(sourceDocument._id)
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (changedValue: any, { previousValue }) => {
-      if (
-        typeof changedValue === 'number' &&
-        typeof previousValue === 'string'
-      ) {
+    (changedValue: any, {previousValue}) => {
+      if (typeof changedValue === 'number' && typeof previousValue === 'string') {
         // If the string() function was used in the query, we need to convert the source value to a string as well
         return `${changedValue}`
       }

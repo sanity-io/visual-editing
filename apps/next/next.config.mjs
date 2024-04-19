@@ -1,6 +1,6 @@
-import { withVercelToolbar } from '@vercel/toolbar/plugins/next'
+import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
 import withBundleAnalyzer from '@next/bundle-analyzer'
-import { createRequire } from 'node:module'
+import {createRequire} from 'node:module'
 
 const require = createRequire(import.meta.url)
 
@@ -22,10 +22,7 @@ const nextConfig = {
   ],
 
   images: {
-    remotePatterns: [
-      { hostname: 'cdn.sanity.io' },
-      { hostname: 'source.unsplash.com' },
-    ],
+    remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
   },
 
   experimental: {

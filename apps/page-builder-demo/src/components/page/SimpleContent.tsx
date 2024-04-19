@@ -5,14 +5,14 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 
-export function SimpleContent(props: { value: any[] }) {
-  const { value } = props
+export function SimpleContent(props: {value: any[]}) {
+  const {value} = props
 
   return <PortableText value={value} components={components} />
 }
 
 const Block: PortableTextBlockComponent = (props) => {
-  const { children } = props
+  const {children} = props
 
   return <p>{children}</p>
 }

@@ -1,6 +1,6 @@
-import { type FunctionComponent, useEffect } from 'react'
+import {type FunctionComponent, useEffect} from 'react'
 
-import type { VisualEditingChannel } from '../types'
+import type {VisualEditingChannel} from '../types'
 
 /**
  * @internal
@@ -8,11 +8,11 @@ import type { VisualEditingChannel } from '../types'
 export const Meta: FunctionComponent<{
   channel?: VisualEditingChannel
 }> = (props) => {
-  const { channel } = props
+  const {channel} = props
 
   useEffect(() => {
     const sendMeta = () => {
-      channel?.send('visual-editing/meta', { title: document.title })
+      channel?.send('visual-editing/meta', {title: document.title})
     }
 
     const observer = new MutationObserver(([mutation]) => {

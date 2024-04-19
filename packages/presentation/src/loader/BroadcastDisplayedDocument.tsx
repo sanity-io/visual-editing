@@ -1,7 +1,7 @@
-import { memo, useEffect } from 'react'
-import type { SanityDocument } from 'sanity'
+import {memo, useEffect} from 'react'
+import type {SanityDocument} from 'sanity'
 
-import { useDisplayedDocumentBroadcaster } from './DisplayedDocumentBroadcaster'
+import {useDisplayedDocumentBroadcaster} from './DisplayedDocumentBroadcaster'
 
 /**
  * Sanity Form input component that reads the current form state and broadcasts it to
@@ -12,10 +12,7 @@ function BroadcastDisplayedDocument(props: {
 }): null {
   const setDisplayedDocument = useDisplayedDocumentBroadcaster()
 
-  useEffect(
-    () => setDisplayedDocument?.(props.value),
-    [props.value, setDisplayedDocument],
-  )
+  useEffect(() => setDisplayedDocument?.(props.value), [props.value, setDisplayedDocument])
 
   return null
 }

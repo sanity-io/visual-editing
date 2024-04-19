@@ -1,9 +1,6 @@
 {
   "extends": "./tsconfig.base",
   "compilerOptions": {
-    "incremental": true,
-    "noEmit": true,
-    "strictNullChecks": true,
     "paths": {
       "@sanity/preview-url-secret": ["../preview-url-secret/src"],
       "@repo/channels": ["../channels/src"],

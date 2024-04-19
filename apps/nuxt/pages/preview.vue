@@ -18,13 +18,13 @@
       >
       <div class="border-l p-2 pl-2 text-sm leading-none">Browser:</div>
       <a
-        :class="{ 'bg-gray-200': route.path === '/preview' }"
+        :class="{'bg-gray-200': route.path === '/preview'}"
         class="rounded p-2 leading-none hover:bg-gray-200"
         href="/preview"
         >Parent</a
       >
       <a
-        :class="{ 'bg-gray-200': route.path === '/preview/child' }"
+        :class="{'bg-gray-200': route.path === '/preview/child'}"
         class="rounded p-2 leading-none hover:bg-gray-200"
         href="/preview/child"
         >Child</a
@@ -39,10 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  type DisableVisualEditing,
-  enableVisualEditing,
-} from '@sanity/visual-editing'
+import {type DisableVisualEditing, enableVisualEditing} from '@sanity/visual-editing'
 
 let disable: DisableVisualEditing
 onMounted(() => {

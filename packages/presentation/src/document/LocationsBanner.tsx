@@ -5,22 +5,22 @@ import {
   InfoOutlineIcon,
   WarningOutlineIcon,
 } from '@sanity/icons'
-import { Box, Card, Flex, Stack, Text } from '@sanity/ui'
+import {Box, Card, Flex, Stack, Text} from '@sanity/ui'
 import {
-  ComponentType,
+  type ComponentType,
   createElement,
-  ReactNode,
+  type ReactNode,
   useCallback,
   useContext,
   useState,
 } from 'react'
-import { ObjectSchemaType } from 'sanity'
-import { useIntentLink } from 'sanity/router'
+import type {ObjectSchemaType} from 'sanity'
+import {useIntentLink} from 'sanity/router'
 
-import { DEFAULT_TOOL_NAME, DEFAULT_TOOL_TITLE } from '../constants'
-import { PresentationContext } from '../PresentationContext'
-import { DocumentLocation, PresentationPluginOptions } from '../types'
-import { useDocumentLocations } from '../useDocumentLocations'
+import {DEFAULT_TOOL_NAME, DEFAULT_TOOL_TITLE} from '../constants'
+import {PresentationContext} from '../PresentationContext'
+import type {DocumentLocation, PresentationPluginOptions} from '../types'
+import {useDocumentLocations} from '../useDocumentLocations'
 
 const LENGTH_FORMAT: Record<number, string> = {
   1: 'one',
@@ -46,10 +46,10 @@ export function LocationsBanner(props: {
   schemaType: ObjectSchemaType
   showPresentationTitle: boolean
 }): ReactNode {
-  const { documentId, options, schemaType, showPresentationTitle } = props
+  const {documentId, options, schemaType, showPresentationTitle} = props
   const presentation = useContext(PresentationContext)
 
-  const { message, locations, tone } = useDocumentLocations({
+  const {message, locations, tone} = useDocumentLocations({
     id: documentId,
     locate: options.locate,
     type: schemaType.name,
@@ -75,7 +75,7 @@ export function LocationsBanner(props: {
 
   return (
     <Card padding={1} radius={2} border tone={tone}>
-      <div style={{ margin: -1 }}>
+      <div style={{margin: -1}}>
         {!locations && (
           <Flex align="flex-start" gap={3} padding={3}>
             {tone && (
@@ -85,9 +85,7 @@ export function LocationsBanner(props: {
             )}
             <Box flex={1}>
               <Text size={1} weight="medium">
-                {showPresentationTitle && (
-                  <>{options.title || DEFAULT_TOOL_TITLE} &middot; </>
-                )}
+                {showPresentationTitle && <>{options.title || DEFAULT_TOOL_TITLE} &middot; </>}
                 {title}
               </Text>
             </Box>
@@ -96,13 +94,7 @@ export function LocationsBanner(props: {
 
         {locations && (
           <>
-            <Card
-              as="button"
-              onClick={toggle}
-              padding={3}
-              radius={1}
-              tone="inherit"
-            >
+            <Card as="button" onClick={toggle} padding={3} radius={1} tone="inherit">
               <Flex gap={3}>
                 <Box flex="none">
                   <Text size={1}>
@@ -116,9 +108,7 @@ export function LocationsBanner(props: {
                 </Box>
                 <Box flex={1}>
                   <Text size={1} weight="medium">
-                    {showPresentationTitle && (
-                      <>{options.title || DEFAULT_TOOL_TITLE} &middot; </>
-                    )}
+                    {showPresentationTitle && <>{options.title || DEFAULT_TOOL_TITLE} &middot; </>}
                     {title}
                   </Text>
                 </Box>
@@ -128,8 +118,7 @@ export function LocationsBanner(props: {
               {locations.map((l, index) => (
                 <LocationItem
                   active={
-                    (options.name || DEFAULT_TOOL_NAME) ===
-                      presentation?.name &&
+                    (options.name || DEFAULT_TOOL_NAME) === presentation?.name &&
                     l.href === presentation?.params.preview
                   }
                   documentId={documentId}
@@ -154,7 +143,7 @@ function LocationItem(props: {
   node: DocumentLocation
   toolName: string
 }) {
-  const { documentId, documentType, node, active, toolName } = props
+  const {documentId, documentType, node, active, toolName} = props
   const presentation = useContext(PresentationContext)
   const navigate = presentation?.navigate
 
@@ -171,7 +160,7 @@ function LocationItem(props: {
   })
 
   const handleClick = useCallback(() => {
-    navigate?.({}, { preview: node.href })
+    navigate?.({}, {preview: node.href})
   }, [node.href, navigate])
 
   return (

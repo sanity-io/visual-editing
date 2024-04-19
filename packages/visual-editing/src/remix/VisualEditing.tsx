@@ -1,6 +1,6 @@
-import { lazy, Suspense, useSyncExternalStore } from 'react'
+import {lazy, Suspense, useSyncExternalStore} from 'react'
 
-import type { VisualEditingProps } from './VisualEditingComponent'
+import type {VisualEditingProps} from './VisualEditingComponent'
 
 const VisualEditingComponent = lazy(() => import('./VisualEditingComponent'))
 
@@ -9,9 +9,7 @@ const subcribe = () => () => {}
 /**
  * @public
  */
-export function VisualEditing(
-  props: VisualEditingProps,
-): React.ReactElement | null {
+export function VisualEditing(props: VisualEditingProps): React.ReactElement | null {
   const mounted = useSyncExternalStore(
     subcribe,
     () => true,

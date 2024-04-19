@@ -1,25 +1,18 @@
-import { Card, Code, ErrorBoundary, Label, Stack } from '@sanity/ui'
-import {
-  ErrorInfo,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
-import { Path } from 'sanity'
-import { decodeJsonParams } from 'sanity/router'
+import {Card, Code, ErrorBoundary, Label, Stack} from '@sanity/ui'
+import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
+import type {Path} from 'sanity'
+import {decodeJsonParams} from 'sanity/router'
 import {
   DocumentPane as StructureDocumentPane,
-  DocumentPaneNode,
+  type DocumentPaneNode,
   PaneLayout,
 } from 'sanity/structure'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import { ErrorCard } from '../components/ErrorCard'
-import type { StructureDocumentPaneParams } from '../types'
-import { usePresentationTool } from '../usePresentationTool'
-import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
+import {ErrorCard} from '../components/ErrorCard'
+import type {StructureDocumentPaneParams} from '../types'
+import {usePresentationTool} from '../usePresentationTool'
+import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
 const WrappedCode = styled(Code)`
   white-space: pre-wrap;
@@ -33,16 +26,9 @@ export function DocumentPane(props: {
   params: StructureDocumentPaneParams
   previewUrl?: string
 }): ReactElement {
-  const {
-    documentId,
-    documentType,
-    onFocusPath,
-    onStructureParams,
-    params,
-    previewUrl,
-  } = props
-  const { template, templateParams } = params
-  const { devMode } = usePresentationTool()
+  const {documentId, documentType, onFocusPath, onStructureParams, params, previewUrl} = props
+  const {template, templateParams} = params
+  const {devMode} = usePresentationTool()
 
   const paneDocumentNode: DocumentPaneNode = useMemo(
     () => ({
@@ -73,11 +59,7 @@ export function DocumentPane(props: {
 
   if (errorParams) {
     return (
-      <ErrorCard
-        flex={1}
-        message="Could not render the document editor"
-        onRetry={handleRetry}
-      >
+      <ErrorCard flex={1} message="Could not render the document editor" onRetry={handleRetry}>
         {devMode && (
           // show runtime error message in dev mode
           <Card overflow="auto" padding={3} radius={2} tone="critical">
@@ -95,7 +77,7 @@ export function DocumentPane(props: {
 
   return (
     <ErrorBoundary onCatch={setErrorParams}>
-      <PaneLayout style={{ height: '100%' }}>
+      <PaneLayout style={{height: '100%'}}>
         <PresentationPaneRouterProvider
           onStructureParams={onStructureParams}
           params={params}

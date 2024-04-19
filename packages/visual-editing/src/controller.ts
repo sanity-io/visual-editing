@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid'
+import {v4 as uuid} from 'uuid'
 
 import type {
   ElementNode,
@@ -8,8 +8,8 @@ import type {
   OverlayOptions,
   ResolvedElement,
 } from './types'
-import { findSanityNodes } from './util/findSanityNodes'
-import { getRect } from './util/getRect'
+import {findSanityNodes} from './util/findSanityNodes'
+import {getRect} from './util/getRect'
 
 const isElementNode = (target: EventTarget | null): target is ElementNode => {
   return target instanceof HTMLElement || target instanceof SVGElement
@@ -52,8 +52,7 @@ export function createOverlayController({
   // When we want to know which element is currently hovered, we take the element at the top of the
   // stack. Since JavaScript does not have a Stack type, we use an array and take the last element.
   let hoverStack: Array<ElementNode> = []
-  const getHoveredElement = () =>
-    hoverStack[hoverStack.length - 1] as ElementNode | undefined
+  const getHoveredElement = () => hoverStack[hoverStack.length - 1] as ElementNode | undefined
 
   function addEventHandlers(el: ElementNode, handlers: EventHandlers) {
     el.addEventListener('click', handlers.click, {
@@ -89,8 +88,8 @@ export function createOverlayController({
    * Executed when element enters the viewport
    * Enables an element’s event handlers
    */
-  function activateElement({ id, elements, handlers, sanity }: OverlayElement) {
-    const { element, measureElement } = elements
+  function activateElement({id, elements, handlers, sanity}: OverlayElement) {
+    const {element, measureElement} = elements
     addEventHandlers(element, handlers)
     ro.observe(measureElement)
     handler({
@@ -105,8 +104,8 @@ export function createOverlayController({
    * Executed when element leaves the viewport
    * Disables an element’s event handlers
    */
-  function deactivateElement({ id, elements, handlers }: OverlayElement) {
-    const { element, measureElement } = elements
+  function deactivateElement({id, elements, handlers}: OverlayElement) {
+    const {element, measureElement} = elements
     removeEventHandlers(element, handlers)
     ro.unobserve(measureElement)
     // Scrolling from a hovered element will not trigger mouseleave event, so filter the stack
@@ -120,8 +119,8 @@ export function createOverlayController({
   /**
    * Stores an element’s DOM node and decoded sanity data in state and sets up event handlers
    */
-  function registerElement({ elements, sanity }: ResolvedElement) {
-    const { element, measureElement } = elements
+  function registerElement({elements, sanity}: ResolvedElement) {
+    const {element, measureElement} = elements
 
     const eventHandlers: EventHandlers = {
       click(event) {
@@ -192,7 +191,7 @@ export function createOverlayController({
          * If moving to an element within the overlay which handles pointer events, attach a new
          * event handler to that element and defer the original leave event
          */
-        const { relatedTarget } = e as MouseEvent
+        const {relatedTarget} = e as MouseEvent
         const isInteractiveOverlayElement =
           isElementNode(relatedTarget) && overlayElement.contains(relatedTarget)
 
@@ -234,7 +233,7 @@ export function createOverlayController({
     activateElement(sanityNode)
   }
 
-  function registerElements(node: ElementNode | { childNodes: ElementNode[] }) {
+  function registerElements(node: ElementNode | {childNodes: ElementNode[]}) {
     const sanityNodes = findSanityNodes(node)
     for (const sanityNode of sanityNodes) {
       if (
@@ -249,7 +248,7 @@ export function createOverlayController({
   function unregisterElement(element: ElementNode) {
     const overlayElement = elementsMap.get(element)
     if (overlayElement) {
-      const { id, handlers } = overlayElement
+      const {id, handlers} = overlayElement
       removeEventHandlers(element, handlers)
       ro.unobserve(element)
       elementsMap.delete(element)
@@ -280,7 +279,7 @@ export function createOverlayController({
         if (elementsMap.has(node)) {
           unregisterElement(node)
         }
-        registerElements({ childNodes: [node] })
+        registerElements({childNodes: [node]})
       }
 
       return true
@@ -327,7 +326,7 @@ export function createOverlayController({
 
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     for (const entry of entries) {
-      const { target } = entry
+      const {target} = entry
       const match = isElementNode(target) && elementsMap.get(target)
       if (!match) continue
       if (entry.isIntersecting) {
@@ -352,7 +351,7 @@ export function createOverlayController({
   }
 
   function handleWindowScroll(event: Event) {
-    const { target } = event
+    const {target} = event
 
     if (target === window.document || !isElementNode(target)) {
       return

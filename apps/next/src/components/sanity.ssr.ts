@@ -1,4 +1,4 @@
-import { client } from './sanity.client'
+import {client} from './sanity.client'
 import * as serverOnly from '@sanity/react-loader'
 
 const token = process.env.SANITY_API_READ_TOKEN
@@ -7,7 +7,7 @@ if (!token) {
   throw new Error('Missing SANITY_API_READ_TOKEN')
 }
 
-const { loadQuery, setServerClient } = serverOnly
+const {loadQuery, setServerClient} = serverOnly
 setServerClient(
   client.withConfig({
     token,
@@ -17,4 +17,4 @@ setServerClient(
 )
 
 // Exports to be used by getInitialProps, getServerSideProps, getStaticProps
-export { loadQuery }
+export {loadQuery}

@@ -6,4 +6,4 @@ export interface SanityImageValue {
   }
 }
 
-export type SanityArrayValue<T> = { _key: string } & T
+export type SanityArrayValue<T> = {_key: string} & T

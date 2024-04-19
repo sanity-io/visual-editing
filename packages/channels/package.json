@@ -17,13 +17,7 @@
     "lint": "eslint .",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
-  "prettier": {
-    "plugins": [
-      "prettier-plugin-packagejson"
-    ],
-    "semi": false,
-    "singleQuote": true
-  },
+  "prettier": "@sanity/prettier-config",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {

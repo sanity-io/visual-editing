@@ -1,13 +1,13 @@
-import type { ClientPerspective, QueryParams } from '@sanity/client'
+import type {ClientPerspective, QueryParams} from '@sanity/client'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,
 } from '@sanity/preview-url-secret/define-preview-url'
-import type { ComponentType } from 'react'
-import type { Observable } from 'rxjs'
-import type { DocumentStore, SanityClient } from 'sanity'
+import type {ComponentType} from 'react'
+import type {Observable} from 'rxjs'
+import type {DocumentStore, SanityClient} from 'sanity'
 
-export type { PreviewUrlResolver, PreviewUrlResolverOptions }
+export type {PreviewUrlResolver, PreviewUrlResolverOptions}
 
 export interface DocumentLocation {
   title: string
@@ -21,8 +21,8 @@ export interface DocumentLocationsState {
 }
 
 export type DocumentLocationResolver = (
-  params: { id: string; type: string },
-  context: { documentStore: DocumentStore },
+  params: {id: string; type: string},
+  context: {documentStore: DocumentStore},
 ) =>
   | DocumentLocationsState
   | null
@@ -35,10 +35,7 @@ export interface NavigatorOptions {
   component: ComponentType
 }
 
-export type PreviewUrlOption =
-  | string
-  | PreviewUrlResolver<SanityClient>
-  | PreviewUrlResolverOptions
+export type PreviewUrlOption = string | PreviewUrlResolver<SanityClient> | PreviewUrlResolverOptions
 
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
@@ -79,9 +76,7 @@ export interface StructureDocumentPaneParams {
   comment?: string
 }
 
-export interface PresentationParams
-  extends PresentationStateParams,
-    StructureDocumentPaneParams {
+export interface PresentationParams extends PresentationStateParams, StructureDocumentPaneParams {
   id?: string
   preview?: string
   perspective?: string

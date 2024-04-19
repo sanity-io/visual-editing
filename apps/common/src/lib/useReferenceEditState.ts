@@ -1,15 +1,8 @@
-import { useEffect, useState } from 'react'
-import { EMPTY, switchMap } from 'rxjs'
-import {
-  EditStateFor,
-  getPublishedId,
-  useDocumentPreviewStore,
-  useDocumentStore,
-} from 'sanity'
+import {useEffect, useState} from 'react'
+import {EMPTY, switchMap} from 'rxjs'
+import {type EditStateFor, getPublishedId, useDocumentPreviewStore, useDocumentStore} from 'sanity'
 
-export function useReferenceEditState(
-  documentId?: string,
-): EditStateFor | undefined {
+export function useReferenceEditState(documentId?: string): EditStateFor | undefined {
   const documentStore = useDocumentStore()
   const previewStore = useDocumentPreviewStore()
   const [editState, setEditState] = useState<EditStateFor | undefined>()
@@ -28,7 +21,7 @@ export function useReferenceEditState(
       }),
     )
 
-    const sub = editState$.subscribe({ next: setEditState })
+    const sub = editState$.subscribe({next: setEditState})
 
     return () => sub.unsubscribe()
   }, [documentId, documentStore, previewStore])

@@ -1,30 +1,12 @@
-import {
-  usePresentationNavigate,
-  usePresentationParams,
-} from '@sanity/presentation'
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuItem,
-  Stack,
-  Text,
-} from '@sanity/ui'
-import {
-  AddIcon,
-  BulbOutlineIcon,
-  DocumentIcon,
-  SchemaIcon,
-} from '@sanity/icons'
-import { useIntentLink } from 'sanity/router'
+import {usePresentationNavigate, usePresentationParams} from '@sanity/presentation'
+import {Box, Button, Card, Flex, Menu, MenuButton, MenuItem, Stack, Text} from '@sanity/ui'
+import {AddIcon, BulbOutlineIcon, DocumentIcon, SchemaIcon} from '@sanity/icons'
+import {useIntentLink} from 'sanity/router'
 
 export function CustomNavigator() {
   const navigate = usePresentationNavigate()
   const params = usePresentationParams()
-  const { preview } = params
+  const {preview} = params
 
   return (
     <Card flex={1} height="fill">
@@ -173,7 +155,7 @@ export function CustomNavigator() {
                 </MenuItem>
               </Menu>
             }
-            popover={{ portal: true }}
+            popover={{portal: true}}
           />
         </Stack>
       </Flex>

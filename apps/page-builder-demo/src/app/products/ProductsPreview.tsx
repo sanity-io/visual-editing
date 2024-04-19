@@ -2,9 +2,9 @@
 
 import groq from 'groq'
 
-import { useQuery } from '@/sanity'
-import { SITE_SETTINGS_QUERY } from '../queries'
-import { ProductsPage, ProductsPageData } from './ProductsPage'
+import {useQuery} from '@/sanity'
+import {SITE_SETTINGS_QUERY} from '../queries'
+import {ProductsPage, ProductsPageData} from './ProductsPage'
 
 const PAGE_QUERY = groq`{
   "products": *[_type == "product" && defined(slug.current)]{
@@ -18,7 +18,7 @@ const PAGE_QUERY = groq`{
 }`
 
 export function ProductsPreview() {
-  const { data, loading } = useQuery<ProductsPageData>(PAGE_QUERY)
+  const {data, loading} = useQuery<ProductsPageData>(PAGE_QUERY)
 
   if (loading || !data) {
     return <div>Loading…</div>

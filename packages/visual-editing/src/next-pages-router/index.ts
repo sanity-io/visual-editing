@@ -5,8 +5,8 @@ export type {
   HistoryUpdate,
   VisualEditingOptions,
 } from '../types'
-export { VisualEditing } from './VisualEditing'
-export type { VisualEditingProps } from './VisualEditingComponent'
+export {VisualEditing} from './VisualEditing'
+export type {VisualEditingProps} from './VisualEditingComponent'
 export {
   type CreateDataAttribute,
   createDataAttribute,

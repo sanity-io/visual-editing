@@ -1,24 +1,21 @@
-import { useRouter } from 'next/router.js'
-import { useEffect, useRef, useState } from 'react'
+import {useRouter} from 'next/router.js'
+import {useEffect, useRef, useState} from 'react'
 
-import type { HistoryAdapterNavigate, VisualEditingOptions } from '../types'
-import { enableVisualEditing } from '../ui/enableVisualEditing'
+import type {HistoryAdapterNavigate, VisualEditingOptions} from '../types'
+import {enableVisualEditing} from '../ui/enableVisualEditing'
 
 /**
  * @public
  */
-export interface VisualEditingProps
-  extends Omit<VisualEditingOptions, 'history'> {
+export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'> {
   /**
    * @deprecated The histoy adapter is already implemented
    */
   history?: never
 }
 
-export default function VisualEditingComponent(
-  props: VisualEditingProps,
-): null {
-  const { refresh, zIndex } = props
+export default function VisualEditingComponent(props: VisualEditingProps): null {
+  const {refresh, zIndex} = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -53,14 +50,14 @@ export default function VisualEditingComponent(
     return () => disable()
   }, [refresh, zIndex])
 
-  const { asPath, basePath, locale, isReady } = useRouter()
+  const {asPath, basePath, locale, isReady} = useRouter()
   useEffect(() => {
     if (navigate && isReady) {
       const url =
         basePath || locale
           ? `${basePath}${locale ? `/${locale}` : ''}${asPath === '/' ? '' : asPath}`
           : asPath
-      navigate({ type: 'push', url })
+      navigate({type: 'push', url})
     }
   }, [asPath, basePath, isReady, locale, navigate])
 

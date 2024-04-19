@@ -1,7 +1,7 @@
-import { type MutableRefObject, useEffect, useRef } from 'react'
+import {type MutableRefObject, useEffect, useRef} from 'react'
 
-import { createOverlayController } from '../controller'
-import type { OverlayController, OverlayEventHandler } from '../types'
+import {createOverlayController} from '../controller'
+import type {OverlayController, OverlayEventHandler} from '../types'
 
 /**
  * Hook for using an overlay controller

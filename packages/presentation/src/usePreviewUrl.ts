@@ -1,23 +1,18 @@
-import { createPreviewSecret } from '@sanity/preview-url-secret/create-secret'
-import { definePreviewUrl } from '@sanity/preview-url-secret/define-preview-url'
-import { startTransition, useEffect, useMemo, useState } from 'react'
-import {
-  type SanityClient,
-  useActiveWorkspace,
-  useClient,
-  useCurrentUser,
-} from 'sanity'
-import { suspend } from 'suspend-react'
+import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
+import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
+import {startTransition, useEffect, useMemo, useState} from 'react'
+import {type SanityClient, useActiveWorkspace, useClient, useCurrentUser} from 'sanity'
+import {suspend} from 'suspend-react'
 
-import { API_VERSION } from './constants'
-import { PreviewUrlOption } from './types'
+import {API_VERSION} from './constants'
+import type {PreviewUrlOption} from './types'
 
 export function usePreviewUrl(
   previewUrl: PreviewUrlOption,
   toolName: string,
   previewSearchParam: string | null,
 ): URL {
-  const client = useClient({ apiVersion: API_VERSION })
+  const client = useClient({apiVersion: API_VERSION})
   const workspace = useActiveWorkspace()
   const basePath = workspace?.activeWorkspace?.basePath || '/'
   const workspaceName = workspace?.activeWorkspace?.name || 'default'
@@ -48,17 +43,14 @@ export function usePreviewUrl(
       // Prevent infinite recursion
       if (
         location.origin === resultUrl.origin &&
-        (resultUrl.pathname.startsWith(`${basePath}/`) ||
-          resultUrl.pathname === basePath)
+        (resultUrl.pathname.startsWith(`${basePath}/`) || resultUrl.pathname === basePath)
       ) {
         return resolvedUrl
       }
       return resultUrl
     }
     const resolvePreviewUrl =
-      typeof previewUrl === 'object'
-        ? definePreviewUrl<SanityClient>(previewUrl)
-        : previewUrl
+      typeof previewUrl === 'object' ? definePreviewUrl<SanityClient>(previewUrl) : previewUrl
     const resolvedUrl = await resolvePreviewUrl({
       client,
       previewUrlSecret: previewUrlSecret!,
@@ -73,11 +65,7 @@ export function usePreviewUrl(
 // https://github.com/pmndrs/suspend-react?tab=readme-ov-file#making-cache-keys-unique
 const resolveUUID = Symbol()
 
-function useSuspendCacheKeys(
-  toolName: string,
-  basePath: string,
-  workspaceName: string,
-) {
+function useSuspendCacheKeys(toolName: string, basePath: string, workspaceName: string) {
   const currentUser = useCurrentUser()
   return useMemo(
     () => [
@@ -93,11 +81,8 @@ function useSuspendCacheKeys(
   )
 }
 
-function usePreviewUrlSecret(
-  enabled: boolean,
-  deps: (string | symbol | undefined)[],
-) {
-  const client = useClient({ apiVersion: API_VERSION })
+function usePreviewUrlSecret(enabled: boolean, deps: (string | symbol | undefined)[]) {
+  const client = useClient({apiVersion: API_VERSION})
   const currentUser = useCurrentUser()
   const [secretLastExpiredAt, setSecretLastExpiredAt] = useState<string>('')
 
@@ -115,9 +100,7 @@ function usePreviewUrlSecret(
   useEffect(() => {
     if (!previewUrlSecret) return
     const timeout = setTimeout(() => {
-      startTransition(() =>
-        setSecretLastExpiredAt(previewUrlSecret.expiresAt.toString()),
-      )
+      startTransition(() => setSecretLastExpiredAt(previewUrlSecret.expiresAt.toString()))
     }, previewUrlSecret.expiresAt.getTime() - Date.now())
     return () => clearTimeout(timeout)
   }, [previewUrlSecret])

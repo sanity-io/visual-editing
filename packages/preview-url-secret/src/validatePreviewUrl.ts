@@ -1,12 +1,8 @@
-import { isDev } from './constants'
-import { createClientWithConfig } from './createClientWithConfig'
-import { parsePreviewUrl } from './parsePreviewUrl'
-import {
-  ParsedPreviewUrl,
-  PreviewUrlValidateUrlResult,
-  SanityClientLike,
-} from './types'
-import { validateSecret } from './validateSecret'
+import {isDev} from './constants'
+import {createClientWithConfig} from './createClientWithConfig'
+import {parsePreviewUrl} from './parsePreviewUrl'
+import type {ParsedPreviewUrl, PreviewUrlValidateUrlResult, SanityClientLike} from './types'
+import {validateSecret} from './validateSecret'
 
 /**
  * @public
@@ -18,8 +14,7 @@ export async function validatePreviewUrl(
    * @deprecated - this option is automatically determined based on the environment
    */
   // Default value based on https://developers.cloudflare.com/workers/runtime-apis/web-standards/#navigatoruseragent
-  disableCacheNoStore: boolean = globalThis.navigator?.userAgent ===
-    'Cloudflare-Workers',
+  disableCacheNoStore: boolean = globalThis.navigator?.userAgent === 'Cloudflare-Workers',
 ): Promise<PreviewUrlValidateUrlResult> {
   const client = createClientWithConfig(_client)
   let parsedPreviewUrl: ParsedPreviewUrl
@@ -33,10 +28,10 @@ export async function validatePreviewUrl(
         client,
       })
     }
-    return { isValid: false }
+    return {isValid: false}
   }
 
-  const { isValid, studioUrl } = await validateSecret(
+  const {isValid, studioUrl} = await validateSecret(
     client,
     parsedPreviewUrl.secret,
     disableCacheNoStore,
@@ -57,7 +52,7 @@ export async function validatePreviewUrl(
     }
   }
 
-  return { isValid, redirectTo, studioOrigin }
+  return {isValid, redirectTo, studioOrigin}
 }
 
-export type { PreviewUrlValidateUrlResult, SanityClientLike }
+export type {PreviewUrlValidateUrlResult, SanityClientLike}

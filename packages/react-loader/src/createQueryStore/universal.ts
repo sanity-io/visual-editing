@@ -1,13 +1,13 @@
-import type { QueryParams } from '@sanity/client'
+import type {QueryParams} from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import { defineStudioUrlStore } from '../defineStudioUrlStore'
-import { defineUseLiveMode } from '../defineUseLiveMode'
-import { defineUseQuery } from '../defineUseQuery'
-import {
+import {defineStudioUrlStore} from '../defineStudioUrlStore'
+import {defineUseLiveMode} from '../defineUseLiveMode'
+import {defineUseQuery} from '../defineUseQuery'
+import type {
   NonUndefinedGuard,
   QueryResponseInitial,
   QueryStore,
@@ -18,18 +18,16 @@ import {
 
 export type * from '../types'
 
-export const createQueryStore = (
-  options: CreateQueryStoreOptions,
-): QueryStore => {
+export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore => {
   const {
     createFetcherStore,
     setServerClient,
     enableLiveMode,
     unstable__cache,
     unstable__serverClient,
-  } = createCoreQueryStore({ tag: 'react-loader', ...options })
+  } = createCoreQueryStore({tag: 'react-loader', ...options})
   const studioUrlStore = defineStudioUrlStore(options.client)
-  const useQuery = defineUseQuery({ createFetcherStore, studioUrlStore })
+  const useQuery = defineUseQuery({createFetcherStore, studioUrlStore})
   const useLiveMode: UseLiveModeHook = defineUseLiveMode({
     enableLiveMode,
     setStudioUrl: studioUrlStore.setStudioUrl,
@@ -41,9 +39,7 @@ export const createQueryStore = (
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
     const perspective =
-      options.perspective ||
-      unstable__serverClient.instance?.config().perspective ||
-      'published'
+      options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
 
     if (typeof document !== 'undefined') {
       throw new Error(
@@ -61,30 +57,23 @@ export const createQueryStore = (
           `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
         )
       }
-      const { result, resultSourceMap } =
-        await unstable__serverClient.instance!.fetch<QueryResponseResult>(
-          query,
-          params,
-          {
-            filterResponse: false,
-            resultSourceMap: 'withKeyArraySelector',
-            perspective,
-            useCdn: false,
-          },
-        )
+      const {result, resultSourceMap} =
+        await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
+          filterResponse: false,
+          resultSourceMap: 'withKeyArraySelector',
+          perspective,
+          useCdn: false,
+        })
       // @ts-expect-error - update typings
       return resultSourceMap
-        ? { data: result, sourceMap: resultSourceMap, perspective }
-        : { data: result, perspective }
+        ? {data: result, sourceMap: resultSourceMap, perspective}
+        : {data: result, perspective}
     }
-    const { result, resultSourceMap } =
-      await unstable__cache.instance.fetch<QueryResponseResult>(
-        JSON.stringify({ query, params }),
-      )
+    const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
+      JSON.stringify({query, params}),
+    )
     // @ts-expect-error - update typings
-    return resultSourceMap
-      ? { data: result, sourceMap: resultSourceMap }
-      : { data: result }
+    return resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
   }
 
   return {
@@ -109,8 +98,7 @@ export type {
  * Shortcut setup for the main SSR use-case.
  * @public
  */
-export const { loadQuery, setServerClient, useLiveMode, useQuery } =
-  createQueryStore({
-    client: false,
-    ssr: true,
-  })
+export const {loadQuery, setServerClient, useLiveMode, useQuery} = createQueryStore({
+  client: false,
+  ssr: true,
+})

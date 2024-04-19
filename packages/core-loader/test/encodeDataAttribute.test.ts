@@ -1,7 +1,7 @@
-import { ContentSourceMap } from '@sanity/client/csm'
-import { describe, expect, test } from 'vitest'
+import {ContentSourceMap} from '@sanity/client/csm'
+import {describe, expect, test} from 'vitest'
 
-import { defineEncodeDataAttribute } from '../src/encodeDataAttribute'
+import {defineEncodeDataAttribute} from '../src/encodeDataAttribute'
 
 const result = {
   page: {
@@ -706,11 +706,7 @@ const resultSourceMap = {
 } satisfies ContentSourceMap
 
 describe('encodeDataAttribute', () => {
-  const encodeDataAttribute = defineEncodeDataAttribute(
-    result,
-    resultSourceMap,
-    '/studio',
-  )
+  const encodeDataAttribute = defineEncodeDataAttribute(result, resultSourceMap, '/studio')
 
   test('string paths', () => {
     expect(encodeDataAttribute('page.sections[4].style')).toMatchInlineSnapshot(
@@ -718,20 +714,14 @@ describe('encodeDataAttribute', () => {
     )
   })
   test('array paths', () => {
-    expect(
-      encodeDataAttribute(['page', 'sections', 4, 'style']),
-    ).toMatchInlineSnapshot(
+    expect(encodeDataAttribute(['page', 'sections', 4, 'style'])).toMatchInlineSnapshot(
       `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio;isDraft"`,
     )
   })
 })
 
 describe('scoping', () => {
-  const encodeDataAttribute = defineEncodeDataAttribute(
-    result,
-    resultSourceMap,
-    '/studio',
-  )
+  const encodeDataAttribute = defineEncodeDataAttribute(result, resultSourceMap, '/studio')
   test('string paths', () => {
     const scoped = encodeDataAttribute.scope('page.sections[4]')
     expect(scoped('style')).toMatchInlineSnapshot(

@@ -77,12 +77,12 @@ importers:
       '@sanity/pkg-utils':
         specifier: 6.7.1
         version: 6.7.1(typescript@5.4.5)
+      '@sanity/prettier-config':
+        specifier: 1.0.2
+        version: 1.0.2(prettier@3.2.5)
       prettier:
         specifier: 3.2.5
         version: 3.2.5
-      prettier-plugin-packagejson:
-        specifier: 2.5.0
-        version: 2.5.0(prettier@3.2.5)
       prettier-plugin-svelte:
         specifier: 3.2.3
         version: 3.2.3(prettier@3.2.5)(svelte@4.2.15)
@@ -1218,7 +1218,7 @@ importers:
         version: 0.1.0
       next:
         specifier: '>= 13 || >=14.3.0-canary.0 <14.3.0'
-        version: 14.3.0-canary.8(@babel/core@7.24.4)(react-dom@18.2.0)(react@18.2.0)
+        version: 14.2.1(@babel/core@7.24.4)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -5793,6 +5793,15 @@ packages:
     transitivePeerDependencies:
       - react-dom
       - supports-color
+
+  /@sanity/prettier-config@1.0.2(prettier@3.2.5):
+    resolution: {integrity: sha512-V4HinfhMYxQoyXefJ2B8zJnwlf7A8mVzAzKk24B/iCg4pkVlMGc8bj0buu9Uieh4bNeHvEAHOIQv+Xd7tiLuNA==}
+    peerDependencies:
+      prettier: ^3.2.5
+    dependencies:
+      prettier: 3.2.5
+      prettier-plugin-packagejson: 2.5.0(prettier@3.2.5)
+    dev: true
 
   /@sanity/preview-kit@5.0.42(@sanity/client@6.15.17)(react@18.2.0):
     resolution: {integrity: sha512-Gl16LQxcNjqiiGCnGMfDs5frQjNhF/h2eVGy/BePd2UAEbph/xkSblt/RlhIwk1KMlbUmtxC8Lg26NNlNowKLQ==}

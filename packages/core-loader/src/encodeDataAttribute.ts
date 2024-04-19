@@ -1,4 +1,4 @@
-import { encodeSanityNodeData } from '@repo/visual-editing-helpers/csm'
+import {encodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
 import {
   type ContentSourceMap,
   jsonPathToStudioPath,
@@ -7,9 +7,9 @@ import {
   type StudioPathLike,
   studioPathToJsonPath,
 } from '@sanity/client/csm'
-import type { StegaConfig } from '@sanity/client/stega'
+import type {StegaConfig} from '@sanity/client/stega'
 
-import type { EncodeDataAttribute } from './types'
+import type {EncodeDataAttribute} from './types'
 
 /** @public */
 export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
@@ -45,7 +45,7 @@ export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
   })
 }
 
-export type { EncodeDataAttribute }
+export type {EncodeDataAttribute}
 
 /**
  * @public
@@ -74,10 +74,7 @@ export function defineEncodeDataAttribute<QueryResponseResult = unknown>(
   // This function should encode the given attribute based on the result, sourceMap, and studioUrl
   return Object.assign(
     (path: StudioPathLike) =>
-      encodeDataAttribute(result, sourceMap, studioUrl, [
-        ...parsedBasePath,
-        ...parse(path),
-      ]),
+      encodeDataAttribute(result, sourceMap, studioUrl, [...parsedBasePath, ...parse(path)]),
     // The scope method creates a scoped version of encodeDataAttribute
     {
       scope: (scope: StudioPathLike) =>

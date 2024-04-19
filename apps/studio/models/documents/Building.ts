@@ -45,8 +45,8 @@ const Building = {
       validation: (Rule: any) => Rule.required(),
       options: {
         list: [
-          { title: 'Closed', value: '1a' },
-          { title: 'Open', value: '2a' },
+          {title: 'Closed', value: '1a'},
+          {title: 'Open', value: '2a'},
         ],
         layout: 'radio',
       },
@@ -74,7 +74,7 @@ const Building = {
       of: [
         {
           type: 'reference',
-          to: [{ type: 'Floor' }],
+          to: [{type: 'Floor'}],
         },
       ],
     },

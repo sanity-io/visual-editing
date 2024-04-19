@@ -1,12 +1,12 @@
-import { WrappedValue, unwrapData } from '@sanity/react-loader/jsx'
-import { sanity } from '@sanity/react-loader/jsx'
+import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
+import {sanity} from '@sanity/react-loader/jsx'
 import Link from 'next/link'
 
-import { AppLayout } from '../AppLayout'
-import { SiteSettingsData } from '../types'
-import { Image } from '@/components/image'
-import { SimpleContent } from '@/components/page'
-import { SanityArrayValue, SanityImageValue, dataAttribute } from '@/sanity'
+import {AppLayout} from '../AppLayout'
+import {SiteSettingsData} from '../types'
+import {Image} from '@/components/image'
+import {SimpleContent} from '@/components/page'
+import {SanityArrayValue, SanityImageValue, dataAttribute} from '@/sanity'
 
 export interface ProductsPageData {
   products: {
@@ -21,11 +21,11 @@ export interface ProductsPageData {
   siteSettings: SiteSettingsData | null
 }
 
-export function ProductsPage(props: { data: WrappedValue<ProductsPageData> }) {
-  const { data } = props
+export function ProductsPage(props: {data: WrappedValue<ProductsPageData>}) {
+  const {data} = props
 
   return (
-    <AppLayout data={{ siteSettings: data.siteSettings }}>
+    <AppLayout data={{siteSettings: data.siteSettings}}>
       <main className="mx-auto max-w-4xl">
         <div className="p-5">
           <h1 className="text-2xl font-extrabold">Products</h1>
@@ -37,10 +37,7 @@ export function ProductsPage(props: { data: WrappedValue<ProductsPageData> }) {
               {data.products.map((product) => (
                 <Link
                   className="block rounded border border-white p-4 hover:border-gray-100 sm:flex sm:gap-5 dark:border-black dark:hover:border-gray-800"
-                  href={
-                    product.slug?.current &&
-                    `/product/${product.slug.current.value}`
-                  }
+                  href={product.slug?.current && `/product/${product.slug.current.value}`}
                   key={product._id}
                 >
                   <div className="flex-none sm:w-64">

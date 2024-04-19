@@ -1,16 +1,13 @@
-import { validatePreviewUrl } from '@sanity/preview-url-secret'
-import { error, type Handle, redirect } from '@sveltejs/kit'
+import {validatePreviewUrl} from '@sanity/preview-url-secret'
+import {error, type Handle, redirect} from '@sveltejs/kit'
 import crypto from 'crypto'
 
-import type { HandlePreviewOptions } from './types'
+import type {HandlePreviewOptions} from './types'
 
 /**
  * @public
  */
-export const handlePreview = ({
-  client,
-  preview,
-}: HandlePreviewOptions): Handle => {
+export const handlePreview = ({client, preview}: HandlePreviewOptions): Handle => {
   const cookieName = preview?.cookie || '__sanity_preview'
   const enablePath = preview?.endpoints?.enable || '/preview/enable'
   const disablePath = preview?.endpoints?.disable || '/preview/disable'
@@ -18,8 +15,8 @@ export const handlePreview = ({
 
   if (!client) throw new Error('No client configured for preview')
 
-  return async ({ event, resolve }) => {
-    const { cookies, url } = event
+  return async ({event, resolve}) => {
+    const {cookies, url} = event
 
     // Check the cookie to see if it preview is enabled
     event.locals.preview = event.cookies.get(cookieName) === secret
@@ -30,10 +27,7 @@ export const handlePreview = ({
 
     // Check if the request is to enable or disable previews
     if (event.url.pathname === enablePath) {
-      const { isValid, redirectTo = '/' } = await validatePreviewUrl(
-        client,
-        url.toString(),
-      )
+      const {isValid, redirectTo = '/'} = await validatePreviewUrl(client, url.toString())
 
       if (!isValid) {
         throw error(401, 'Invalid secret')
@@ -51,7 +45,7 @@ export const handlePreview = ({
     }
 
     if (event.url.pathname === disablePath) {
-      cookies.delete(cookieName, { path: '/' })
+      cookies.delete(cookieName, {path: '/'})
       return redirect(307, url.searchParams.get('redirect') || '/')
     }
 

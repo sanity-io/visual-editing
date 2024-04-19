@@ -1,10 +1,10 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { useQuery } from '@sanity/react-loader'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import {useQuery} from '@sanity/react-loader'
 import Link from 'next/link'
-import { ClientConfig, createClient } from '@sanity/client'
-import { workspaces, studioUrl as baseUrl, apiVersion } from 'apps-common/env'
+import {ClientConfig, createClient} from '@sanity/client'
+import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
 
-const { projectId, dataset, workspace } = workspaces['next-pages-router']
+const {projectId, dataset, workspace} = workspaces['next-pages-router']
 const studioUrl = `${baseUrl}/${workspace}`
 
 const sanityToken = process.env.SANITY_API_READ_TOKEN
@@ -15,7 +15,7 @@ function createSanityClient(config: ClientConfig) {
     dataset,
     apiVersion,
     stega: {
-      studioUrl: ({ _dataset }) =>
+      studioUrl: ({_dataset}) =>
         _dataset === workspaces['cross-dataset-references'].dataset
           ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
           : studioUrl,
@@ -37,8 +37,8 @@ const cdnSanityClient = createSanityClient({
 })
 
 export const getStaticProps = (async (context) => {
-  const { draftMode = false } = context
-  const { query, params } = getPageQuery('ISSUE-BUILDING')
+  const {draftMode = false} = context
+  const {query, params} = getPageQuery('ISSUE-BUILDING')
   const client = draftMode ? sanityClient : cdnSanityClient
 
   const data = await client.fetch(query, params, {
@@ -46,12 +46,12 @@ export const getStaticProps = (async (context) => {
   })
 
   return {
-    props: { data, query, params, draftMode },
+    props: {data, query, params, draftMode},
   }
 }) satisfies GetStaticProps
 
 const Page = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { query, params } = props
+  const {query, params} = props
   const hook = useQuery<any>(query, params, {
     // @ts-expect-error
     initial: null,
@@ -71,9 +71,7 @@ const Page = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           <h4 className="text-lg font-bold">{floor?.title}</h4>
 
           <div className="flex flex-wrap justify-around gap-4">
-            {floor?.spaces?.map((space: any) => (
-              <SpaceCard space={space} key={space._id} />
-            ))}
+            {floor?.spaces?.map((space: any) => <SpaceCard space={space} key={space._id} />)}
           </div>
         </div>
       ))}
@@ -87,7 +85,7 @@ interface SpaceCardProps {
   space: any
 }
 
-const SpaceCard: React.FC<SpaceCardProps> = ({ space }) => {
+const SpaceCard: React.FC<SpaceCardProps> = ({space}) => {
   return (
     <div className="rounded-lg border-2 border-blue-500 p-2">
       <h4>{space.name}</h4>
@@ -129,6 +127,6 @@ const getPageQuery = (path: string) => {
         }
       }
     `,
-    params: { path },
+    params: {path},
   }
 }

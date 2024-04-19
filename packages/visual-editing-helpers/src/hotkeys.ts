@@ -1,14 +1,12 @@
 const IS_MAC =
-  typeof window != 'undefined' &&
-  /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
+  typeof window != 'undefined' && /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
 
-const MODIFIERS: Record<string, 'altKey' | 'ctrlKey' | 'metaKey' | 'shiftKey'> =
-  {
-    alt: 'altKey',
-    ctrl: 'ctrlKey',
-    mod: IS_MAC ? 'metaKey' : 'ctrlKey',
-    shift: 'shiftKey',
-  }
+const MODIFIERS: Record<string, 'altKey' | 'ctrlKey' | 'metaKey' | 'shiftKey'> = {
+  alt: 'altKey',
+  ctrl: 'ctrlKey',
+  mod: IS_MAC ? 'metaKey' : 'ctrlKey',
+  shift: 'shiftKey',
+}
 
 export function isHotkey(keys: string[], event: KeyboardEvent): boolean {
   return keys.every((key) => {

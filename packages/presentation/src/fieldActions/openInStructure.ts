@@ -1,22 +1,22 @@
-import { MasterDetailIcon } from '@sanity/icons'
-import { useContext, useMemo } from 'react'
+import {MasterDetailIcon} from '@sanity/icons'
+import {useContext, useMemo} from 'react'
 import {
   defineDocumentFieldAction,
-  DocumentFieldActionItem,
+  type DocumentFieldActionItem,
   isRecord,
   pathToString,
-  Tool,
+  type Tool,
   useWorkspace,
 } from 'sanity'
-import { useRouter } from 'sanity/router'
+import {useRouter} from 'sanity/router'
 
-import { PresentationContext } from '../PresentationContext'
+import {PresentationContext} from '../PresentationContext'
 
 export const openInStructure = defineDocumentFieldAction({
   name: 'presentation/openInStructure',
-  useAction({ documentId, documentType, path }) {
+  useAction({documentId, documentType, path}) {
     const workspace = useWorkspace()
-    const { navigateIntent } = useRouter()
+    const {navigateIntent} = useRouter()
     const presentation = useContext(PresentationContext)
 
     const defaultStructureTool = useMemo(
@@ -58,10 +58,10 @@ function findStructureTool(
       {},
     )
 
-    return { tool: t, match }
+    return {tool: t, match}
   })
 
-  const modeMatches = results.filter((t) => isRecord(t.match) && t.match.mode)
+  const modeMatches = results.filter((t) => isRecord(t.match) && t.match['mode'])
 
   if (modeMatches.length > 0) {
     return modeMatches[0].tool

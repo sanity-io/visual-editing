@@ -1,7 +1,7 @@
-import type { Root } from 'react-dom/client'
+import type {Root} from 'react-dom/client'
 
-import { OVERLAY_ID } from '../constants'
-import type { DisableVisualEditing, VisualEditingOptions } from '../types'
+import {OVERLAY_ID} from '../constants'
+import type {DisableVisualEditing, VisualEditingOptions} from '../types'
 
 let node: HTMLElement | null = null
 let root: Root | null = null
@@ -13,15 +13,13 @@ let cleanup: number | null = null
  * This will overlay UI on hovered elements that deep-links to Sanity Studio.
  * @public
  */
-export function enableVisualEditing(
-  options: VisualEditingOptions = {},
-): DisableVisualEditing {
+export function enableVisualEditing(options: VisualEditingOptions = {}): DisableVisualEditing {
   if (cleanup) clearTimeout(cleanup)
   const controller = new AbortController()
 
   // Lazy load everything needed to render the app
   Promise.all([import('react-dom/client'), import('./VisualEditing')]).then(
-    ([reactClient, { VisualEditing }]) => {
+    ([reactClient, {VisualEditing}]) => {
       if (controller.signal.aborted) return
 
       if (!node) {
@@ -31,8 +29,7 @@ export function enableVisualEditing(
       }
 
       if (!root) {
-        const { createRoot } =
-          'default' in reactClient ? reactClient.default : reactClient
+        const {createRoot} = 'default' in reactClient ? reactClient.default : reactClient
         root = createRoot(node)
       }
 

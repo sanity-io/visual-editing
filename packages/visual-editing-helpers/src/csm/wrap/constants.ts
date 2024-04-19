@@ -1,4 +1,4 @@
-import { SanityKey } from './types'
+import type {SanityKey} from './types'
 
 export const SANITY_KEYS: SanityKey[] = [
   '_createdAt',

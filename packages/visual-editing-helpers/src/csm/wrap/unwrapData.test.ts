@@ -1,7 +1,7 @@
-import { expect, test } from 'vitest'
+import {expect, test} from 'vitest'
 
-import { WrappedValue } from './types'
-import { unwrapData } from './unwrapData'
+import type {WrappedValue} from './types'
+import {unwrapData} from './unwrapData'
 
 test('unwrap sanity image', () => {
   interface Data {

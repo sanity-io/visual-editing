@@ -1,16 +1,16 @@
-import { urlForImage } from '@/lib/image'
-import { loadQuery } from '@/lib/loadQuery'
+import {urlForImage} from '@/lib/image'
+import {loadQuery} from '@/lib/loadQuery'
 import Image from 'next/image'
 import Balancer from 'react-wrap-balancer'
 
 const query = /* groq */ `*[_type == "author" && _id == $id][0]`
 
-export async function AuthorAvatar(params: { id: string }) {
+export async function AuthorAvatar(params: {id: string}) {
   const data = await loadQuery<any>({
     query,
     params,
   })
-  const { name = 'Anonymous', image } = data ?? {}
+  const {name = 'Anonymous', image} = data ?? {}
   return (
     <>
       <div className="flex items-center">
@@ -39,9 +39,7 @@ export function AuthorAvatarFallback() {
   return (
     <div className="flex animate-pulse items-center">
       <div className="relative mr-4 h-12 w-12 rounded-full bg-gray-800/50 opacity-25" />
-      <div className="text-xl font-bold opacity-30">
-        Fetching author&hellip;
-      </div>
+      <div className="text-xl font-bold opacity-30">Fetching author&hellip;</div>
     </div>
   )
 }

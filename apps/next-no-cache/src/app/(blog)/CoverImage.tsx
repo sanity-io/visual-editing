@@ -1,4 +1,4 @@
-import { urlForImage } from '@/lib/image'
+import {urlForImage} from '@/lib/image'
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,12 +6,12 @@ import Link from 'next/link'
 interface CoverImageProps {
   title: string
   slug?: string
-  image?: { asset?: any; alt?: string }
+  image?: {asset?: any; alt?: string}
   priority?: boolean
 }
 
 export default function CoverImage(props: CoverImageProps) {
-  const { title, slug, image: source, priority } = props
+  const {title, slug, image: source, priority} = props
   const image = source?.asset?._ref ? (
     <div
       className={cn('shadow-small', {
@@ -29,7 +29,7 @@ export default function CoverImage(props: CoverImageProps) {
       />
     </div>
   ) : (
-    <div style={{ paddingTop: '50%', backgroundColor: '#ddd' }} />
+    <div style={{paddingTop: '50%', backgroundColor: '#ddd'}} />
   )
 
   return (

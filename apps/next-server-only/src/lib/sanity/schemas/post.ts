@@ -1,9 +1,9 @@
-import { BookIcon } from '@sanity/icons'
-import { defineField, defineType } from 'sanity'
+import {BookIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
-import { format, parseISO } from 'date-fns'
-import { author as authorType } from './author'
-import { blockContent } from './blockContent'
+import {format, parseISO} from 'date-fns'
+import {author as authorType} from './author'
+import {blockContent} from './blockContent'
 
 export const post = defineType({
   name: 'post',
@@ -32,7 +32,7 @@ export const post = defineType({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: [{ type: authorType.name }],
+      to: [{type: authorType.name}],
     }),
     defineField({
       name: 'mainImage',
@@ -74,13 +74,13 @@ export const post = defineType({
       media: 'mainImage',
       publishedAt: 'publishedAt',
     },
-    prepare({ title, media, author, publishedAt }) {
+    prepare({title, media, author, publishedAt}) {
       const subtitles = [
         author && `by ${author}`,
         publishedAt && `on ${format(parseISO(publishedAt), 'LLL d, yyyy')}`,
       ].filter(Boolean)
 
-      return { title, media, subtitle: subtitles.join(' ') }
+      return {title, media, subtitle: subtitles.join(' ')}
     },
   },
 })

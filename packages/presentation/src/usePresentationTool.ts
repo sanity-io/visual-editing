@@ -1,9 +1,6 @@
-import { useContext } from 'react'
+import {useContext} from 'react'
 
-import {
-  PresentationContext,
-  PresentationContextValue,
-} from './PresentationContext'
+import {PresentationContext, type PresentationContextValue} from './PresentationContext'
 
 export function usePresentationTool(): PresentationContextValue {
   const presentation = useContext(PresentationContext)

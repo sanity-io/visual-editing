@@ -1,4 +1,4 @@
-import type { ChannelMsgType } from './types'
+import type {ChannelMsgType} from './types'
 
 export const RESPONSE_TIMEOUT = 1000
 export const HEARTBEAT_INTERVAL = 1000

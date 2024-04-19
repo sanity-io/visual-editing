@@ -53,13 +53,7 @@
     "watch": "pkg watch --strict"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": {
-    "plugins": [
-      "prettier-plugin-packagejson"
-    ],
-    "semi": false,
-    "singleQuote": true
-  },
+  "prettier": "@sanity/prettier-config",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {

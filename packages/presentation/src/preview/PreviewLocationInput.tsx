@@ -1,16 +1,16 @@
-import { ResetIcon } from '@sanity/icons'
-import { TextInput, type TextInputClearButtonProps } from '@sanity/ui'
+import {ResetIcon} from '@sanity/icons'
+import {TextInput, type TextInputClearButtonProps} from '@sanity/ui'
 import {
-  ChangeEvent,
-  FunctionComponent,
-  KeyboardEvent,
+  type ChangeEvent,
+  type FunctionComponent,
+  type KeyboardEvent,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
-import { useActiveWorkspace } from 'sanity'
+import {useActiveWorkspace} from 'sanity'
 
 export const PreviewLocationInput: FunctionComponent<{
   fontSize?: number
@@ -19,15 +19,11 @@ export const PreviewLocationInput: FunctionComponent<{
   padding?: number
   value: string
 }> = function (props) {
-  const { basePath = '/' } = useActiveWorkspace()?.activeWorkspace || {}
-  const { fontSize = 1, onChange, origin, padding = 3, value } = props
+  const {basePath = '/'} = useActiveWorkspace()?.activeWorkspace || {}
+  const {fontSize = 1, onChange, origin, padding = 3, value} = props
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const [sessionValue, setSessionValue] = useState<string | undefined>(
-    undefined,
-  )
-  const [customValidity, setCustomValidity] = useState<string | undefined>(
-    undefined,
-  )
+  const [sessionValue, setSessionValue] = useState<string | undefined>(undefined)
+  const [customValidity, setCustomValidity] = useState<string | undefined>(undefined)
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSessionValue(event.currentTarget.value)
@@ -45,27 +41,17 @@ export const PreviewLocationInput: FunctionComponent<{
             ? `${origin}${sessionValue}`
             : sessionValue
 
-        if (
-          !absoluteValue.startsWith(origin + '/') &&
-          absoluteValue !== origin
-        ) {
+        if (!absoluteValue.startsWith(origin + '/') && absoluteValue !== origin) {
           setCustomValidity(`URL must start with ${origin}`)
           return
         }
         // `origin` is an empty string '' if the Studio is embedded, and that's when we need to protect against recursion
-        if (
-          !origin &&
-          (absoluteValue.startsWith(`${basePath}/`) ||
-            absoluteValue === basePath)
-        ) {
-          setCustomValidity(
-            `URL can't have the same base path as the Studio ${basePath}`,
-          )
+        if (!origin && (absoluteValue.startsWith(`${basePath}/`) || absoluteValue === basePath)) {
+          setCustomValidity(`URL can't have the same base path as the Studio ${basePath}`)
           return
         }
 
-        const nextValue =
-          absoluteValue === origin ? origin + '/' : absoluteValue
+        const nextValue = absoluteValue === origin ? origin + '/' : absoluteValue
 
         setCustomValidity(undefined)
         setSessionValue(undefined)
@@ -93,10 +79,7 @@ export const PreviewLocationInput: FunctionComponent<{
     setSessionValue(undefined)
   }, [origin, value])
 
-  const resetButton: TextInputClearButtonProps = useMemo(
-    () => ({ icon: ResetIcon }),
-    [],
-  )
+  const resetButton: TextInputClearButtonProps = useMemo(() => ({icon: ResetIcon}), [])
 
   return (
     <>
@@ -112,7 +95,7 @@ export const PreviewLocationInput: FunctionComponent<{
         onChange={handleChange}
         onKeyDownCapture={handleKeyDown}
         padding={padding}
-        style={{ zIndex: 1 }}
+        style={{zIndex: 1}}
         radius={2}
         ref={inputRef}
         space={padding}

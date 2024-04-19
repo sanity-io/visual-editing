@@ -1,22 +1,22 @@
 'use client'
 
-import { PortableText } from '@portabletext/react'
-import { QueryResponseInitial, useQuery } from '@sanity/react-loader'
-import { shoe, type ShoeParams, type ShoeResult } from 'apps-common/queries'
-import { formatCurrency } from 'apps-common/utils'
+import {PortableText} from '@portabletext/react'
+import {QueryResponseInitial, useQuery} from '@sanity/react-loader'
+import {shoe, type ShoeParams, type ShoeResult} from 'apps-common/queries'
+import {formatCurrency} from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { use } from 'react'
-import { urlFor, urlForCrossDatasetReference } from '../utils'
-import { LemonIcon } from '@sanity/icons'
+import {use} from 'react'
+import {urlFor, urlForCrossDatasetReference} from '../utils'
+import {LemonIcon} from '@sanity/icons'
 
 type Props = {
-  params: { slug: string }
+  params: {slug: string}
   initial: Promise<QueryResponseInitial<ShoeResult>>
 }
 
 export default function ShoePage(props: Props) {
-  const { params } = props
+  const {params} = props
   const initial = use(props.initial)
 
   const {
@@ -24,7 +24,7 @@ export default function ShoePage(props: Props) {
     error,
     loading: _loading,
     encodeDataAttribute,
-  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, { initial })
+  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, {initial})
 
   if (error) {
     throw error
@@ -40,10 +40,7 @@ export default function ShoePage(props: Props) {
         <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <li>
             <div className="flex items-center">
-              <Link
-                href="/shoes"
-                className="mr-2 text-sm font-medium text-gray-900"
-              >
+              <Link href="/shoes" className="mr-2 text-sm font-medium text-gray-900">
                 Shoes
               </Link>
               <svg
@@ -58,7 +55,7 @@ export default function ShoePage(props: Props) {
               </svg>
             </div>
           </li>
-          <li className="text-sm" style={{ ['textWrap' as any]: 'balance' }}>
+          <li className="text-sm" style={{['textWrap' as any]: 'balance'}}>
             <Link
               href={`/shoes/${params.slug}`}
               aria-current="page"
@@ -135,7 +132,7 @@ export default function ShoePage(props: Props) {
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1
                 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-                style={{ ['textWrap' as any]: 'balance' }}
+                style={{['textWrap' as any]: 'balance'}}
               >
                 {product.title}
               </h1>
@@ -168,9 +165,7 @@ export default function ShoePage(props: Props) {
                       height={24}
                       alt={product.brand?.logo?.alt || ''}
                     />
-                    <span className="text-lg font-bold">
-                      {product.brand.name}
-                    </span>
+                    <span className="text-lg font-bold">{product.brand.name}</span>
                   </div>
                 </div>
               )}

@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import getSanityConfig from '../sanity.config'
-import { renderStudio } from 'sanity'
+import {renderStudio} from 'sanity'
 
 const nuxtConfig = useRuntimeConfig()
 const sanityConfig = getSanityConfig(nuxtConfig.public.sanity)

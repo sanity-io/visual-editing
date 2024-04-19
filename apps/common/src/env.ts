@@ -4,20 +4,20 @@ export const projectId = 'hiomol4a'
 // https://www.sanity.io/organizations/oSyH1iET5/project/hiomol4a/datasets
 export const datasets = {
   // @TODO unknown, demo data?
-  production: 'production',
+  'production': 'production',
   // Test data, used for e2e during development
-  development: 'development',
+  'development': 'development',
   // Also test data, used with cross dataset references to ensure we fully support it
   'cross-dataset-references': 'cross-dataset-references',
   // demo dataset used for early prototyping
   'page-builder-demo': 'preview-poc',
   // Used for testing the Next.js official Sanity Blog starter
-  blog: 'blog',
+  'blog': 'blog',
 } as const
 
 function maybeGitBranchStudioUrl(url: string) {
   if (typeof document === 'undefined') return url
-  const { hostname } = document.location
+  const {hostname} = document.location
 
   if (hostname.endsWith('.sanity.build') && hostname.includes('-git-')) {
     return `https://visual-editing-studio-git-${hostname.split('-git-')[1]}`
@@ -27,13 +27,17 @@ function maybeGitBranchStudioUrl(url: string) {
 let isStablePreviewBranch: boolean | undefined = false
 try {
   isStablePreviewBranch =
-    process.env.VERCEL_BRANCH_URL?.includes('-git-preview') ||
+    process.env['VERCEL_BRANCH_URL']?.includes('-git-preview') ||
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore has to be exact for string replacement to work
     process.env.NEXT_PUBLIC_VERCEL_URL?.includes('-git-preview')
 } catch {
   //ignore
 }
 
 export const studioUrl = maybeGitBranchStudioUrl(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore has to be exact for string replacement to work
   process.env.NODE_ENV !== 'production'
     ? 'http://localhost:3333'
     : isStablePreviewBranch
@@ -44,7 +48,7 @@ export const studioUrl = maybeGitBranchStudioUrl(
 export const apiVersion = '2023-10-11'
 
 export const workspaces = {
-  remix: {
+  'remix': {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'remix',
@@ -62,7 +66,7 @@ export const workspaces = {
     workspace: 'next',
     tool: 'pages-router',
   },
-  nuxt: {
+  'nuxt': {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'nuxt',

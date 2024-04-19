@@ -1,19 +1,8 @@
-import {
-  ElementMap,
-  InitialDragState,
-  PanelElement,
-  PanelsState,
-  ResizerElement,
-} from './types'
+import type {ElementMap, InitialDragState, PanelElement, PanelsState, ResizerElement} from './types'
 
-function getNextWidth(
-  panel: PanelElement,
-  nextWidth: number,
-  containerWidth: number,
-) {
-  const { maxWidth: maxWidthPx, minWidth: minWidthPx } = panel
-  const maxWidth =
-    maxWidthPx == null ? 100 : (maxWidthPx / containerWidth) * 100
+function getNextWidth(panel: PanelElement, nextWidth: number, containerWidth: number) {
+  const {maxWidth: maxWidthPx, minWidth: minWidthPx} = panel
+  const maxWidth = maxWidthPx == null ? 100 : (maxWidthPx / containerWidth) * 100
   const minWidth = (minWidthPx / containerWidth) * 100
   return Math.min(maxWidth, Math.max(minWidth, nextWidth))
 }
@@ -26,8 +15,8 @@ export function getNextWidths(
   panelsState: PanelsState,
   initialDragState: InitialDragState,
 ): number[] {
-  const { panels, widths: prevWidths } = panelsState
-  const { widths: initialWidths } = initialDragState
+  const {panels, widths: prevWidths} = panelsState
+  const {widths: initialWidths} = initialDragState
 
   const widths = initialWidths || prevWidths
   const nextWidths = [...widths]
@@ -36,11 +25,7 @@ export function getNextWidths(
     const pivotPanel = delta < 0 ? panelAfter : panelBefore
     const index = panels.findIndex((panel) => panel.id === pivotPanel.id)
     const width = widths[index]
-    const nextWidth = getNextWidth(
-      pivotPanel,
-      width + Math.abs(delta),
-      containerWidth,
-    )
+    const nextWidth = getNextWidth(pivotPanel, width + Math.abs(delta), containerWidth)
     if (width === nextWidth) {
       return widths
     } else {
@@ -59,22 +44,16 @@ export function getNextWidths(
 
     const deltaRemaining = Math.abs(delta) - Math.abs(deltaApplied)
 
-    const nextWidth = getNextWidth(
-      panel,
-      width - deltaRemaining,
-      containerWidth,
-    )
+    const nextWidth = getNextWidth(panel, width - deltaRemaining, containerWidth)
 
     if (width !== nextWidth) {
       deltaApplied += width - nextWidth
       nextWidths[index] = nextWidth
 
       if (
-        deltaApplied
-          .toPrecision(10)
-          .localeCompare(Math.abs(delta).toPrecision(10), undefined, {
-            numeric: true,
-          }) >= 0
+        deltaApplied.toPrecision(10).localeCompare(Math.abs(delta).toPrecision(10), undefined, {
+          numeric: true,
+        }) >= 0
       ) {
         break
       }
@@ -102,11 +81,7 @@ export function getNextWidths(
   return nextWidths
 }
 
-export function getPanelWidth(
-  panels: PanelElement[],
-  id: string,
-  widths: number[],
-): string {
+export function getPanelWidth(panels: PanelElement[], id: string, widths: number[]): string {
   if (panels.length === 1) return '100'
 
   const index = panels.findIndex((panel) => panel.id === id)
@@ -131,22 +106,16 @@ export function getOffset(
   return pointerOffset - elementOffset - initialOffset
 }
 
-export function isPanel(
-  element: PanelElement | ResizerElement,
-): element is PanelElement {
+export function isPanel(element: PanelElement | ResizerElement): element is PanelElement {
   return element.type === 'panel'
 }
 
-export function isResizer(
-  element: PanelElement | ResizerElement,
-): element is ResizerElement {
+export function isResizer(element: PanelElement | ResizerElement): element is ResizerElement {
   return element.type === 'resizer'
 }
 
-export function getSortedElements(
-  elements: ElementMap,
-): Array<PanelElement | ResizerElement> {
-  return Array.from(elements.values()).sort(({ order: a }, { order: b }) => {
+export function getSortedElements(elements: ElementMap): Array<PanelElement | ResizerElement> {
+  return Array.from(elements.values()).sort(({order: a}, {order: b}) => {
     if (a == null && b == null) return 0
     if (a == null) return -1
     if (b == null) return 1
@@ -179,7 +148,7 @@ export function validateWidths(
     for (let index = 0; index < panels.length; index++) {
       const panel = panels[index]
 
-      let { maxWidth, minWidth } = panel
+      let {maxWidth, minWidth} = panel
 
       minWidth = (minWidth / containerWidth) * 100
       if (maxWidth != null) {

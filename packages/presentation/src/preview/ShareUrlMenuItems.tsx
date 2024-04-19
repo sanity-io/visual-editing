@@ -1,15 +1,15 @@
-import { CopyIcon, LaunchIcon } from '@sanity/icons'
-import { createPreviewSecret } from '@sanity/preview-url-secret/create-secret'
+import {CopyIcon, LaunchIcon} from '@sanity/icons'
+import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {
   hasSecretSearchParams,
   setSecretSearchParams,
 } from '@sanity/preview-url-secret/without-secret-search-params'
-import { MenuItem, useToast } from '@sanity/ui'
-import { useCallback, useState } from 'react'
-import { useClient, useCurrentUser } from 'sanity'
+import {MenuItem, useToast} from '@sanity/ui'
+import {useCallback, useState} from 'react'
+import {useClient, useCurrentUser} from 'sanity'
 
-import { API_VERSION } from '../constants'
-import type { PreviewFrameProps } from './PreviewFrame'
+import {API_VERSION} from '../constants'
+import type {PreviewFrameProps} from './PreviewFrame'
 
 /** @internal */
 export function ShareUrlMenuItems(
@@ -18,8 +18,7 @@ export function ShareUrlMenuItems(
     previewLocationRoute: string
   },
 ): React.ReactNode {
-  const { initialUrl, openPopup, previewLocationOrigin, previewLocationRoute } =
-    props
+  const {initialUrl, openPopup, previewLocationOrigin, previewLocationRoute} = props
 
   const handleOpenPopup = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -56,10 +55,10 @@ function CopyUrlMenuButton(
     previewLocationRoute: string
   },
 ) {
-  const { initialUrl, previewLocationOrigin, previewLocationRoute } = props
+  const {initialUrl, previewLocationOrigin, previewLocationRoute} = props
 
-  const { push: pushToast } = useToast()
-  const client = useClient({ apiVersion: API_VERSION })
+  const {push: pushToast} = useToast()
+  const client = useClient({apiVersion: API_VERSION})
   const currentUser = useCurrentUser()
   const [disabled, setDisabled] = useState(false)
 
@@ -97,10 +96,7 @@ function CopyUrlMenuButton(
           })
           setDisabled(false)
         }
-        if (
-          hasSecretSearchParams(initialUrl) &&
-          typeof ClipboardItem !== 'undefined'
-        ) {
+        if (hasSecretSearchParams(initialUrl) && typeof ClipboardItem !== 'undefined') {
           const type = 'text/plain'
           const resolvePreviewUrl = async () => {
             id = pushToast({
@@ -120,7 +116,7 @@ function CopyUrlMenuButton(
               previewLocationRoute,
             )
             url = newUrl.toString()
-            return new Blob([url], { type })
+            return new Blob([url], {type})
           }
 
           // Try to save to clipboard then save it in the state if worked

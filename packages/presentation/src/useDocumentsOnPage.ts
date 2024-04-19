@@ -1,9 +1,9 @@
-import type { ClientPerspective } from '@sanity/client'
+import type {ClientPerspective} from '@sanity/client'
 import isEqual from 'fast-deep-equal'
-import { MutableRefObject, useCallback, useMemo, useRef, useState } from 'react'
+import {type MutableRefObject, useCallback, useMemo, useRef, useState} from 'react'
 
-import type { PresentationState } from './reducers/presentationReducer'
-import type { FrameState } from './types'
+import type {PresentationState} from './reducers/presentationReducer'
+import type {FrameState} from './types'
 
 export type DocumentOnPage = {
   _id: string
@@ -20,11 +20,7 @@ export function useDocumentsOnPage(
   frameStateRef: MutableRefObject<FrameState>,
 ): [
   DocumentOnPage[],
-  (
-    key: string,
-    perspective: PresentationState['perspective'],
-    state: DocumentOnPage[],
-  ) => void,
+  (key: string, perspective: PresentationState['perspective'], state: DocumentOnPage[]) => void,
 ] {
   if (perspective !== 'published' && perspective !== 'previewDrafts') {
     throw new Error(`Invalid perspective: ${perspective}`)
@@ -38,11 +34,7 @@ export function useDocumentsOnPage(
   const urlRef = useRef<string | undefined>('')
 
   const setDocumentsOnPage = useCallback(
-    (
-      key: string,
-      perspective: ClientPerspective,
-      sourceDocuments: DocumentOnPage[] = [],
-    ) => {
+    (key: string, perspective: ClientPerspective, sourceDocuments: DocumentOnPage[] = []) => {
       const documents = sourceDocuments.filter((sourceDocument) => {
         if ('_projectId' in sourceDocument && sourceDocument._projectId) {
           // @TODO Handle cross dataset references
@@ -59,8 +51,7 @@ export function useDocumentsOnPage(
         return sourceDocument
       })
 
-      const setCache =
-        perspective === 'published' ? setPublished : setPreviewDrafts
+      const setCache = perspective === 'published' ? setPublished : setPreviewDrafts
 
       setCache((cache) => {
         // Create the `next` documents, dedupe by `_id`
@@ -72,13 +63,13 @@ export function useDocumentsOnPage(
         // If the frame url has changed, replace the entire cache with the next documents
         if (urlRef.current !== frameStateRef.current.url) {
           urlRef.current = frameStateRef.current.url
-          return { [key]: next }
+          return {[key]: next}
         }
 
         // If the keyed cache has changed, return the entire cache and replace the keyed part
         const prev = cache[key]
         if (!isEqual(prev, next)) {
-          return { ...cache, [key]: next }
+          return {...cache, [key]: next}
         }
 
         // Otherwise return the entire cache as is

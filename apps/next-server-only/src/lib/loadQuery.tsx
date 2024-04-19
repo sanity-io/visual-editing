@@ -1,9 +1,9 @@
-import type { QueryParams } from 'next-sanity'
-import { draftMode } from 'next/headers'
+import type {QueryParams} from 'next-sanity'
+import {draftMode} from 'next/headers'
 import 'server-only'
-import { client } from './client'
-import { token } from './env'
-import { UnfilteredResponseQueryOptions } from '@sanity/client'
+import {client} from './client'
+import {token} from './env'
+import {UnfilteredResponseQueryOptions} from '@sanity/client'
 
 const DEFAULT_PARAMS = {} as QueryParams
 
@@ -18,9 +18,7 @@ export async function loadQuery<QueryResponse>({
 }): Promise<QueryResponse> {
   const isDraftMode = draftMode().isEnabled
   if (isDraftMode && !token) {
-    throw new Error(
-      'The `SANITY_API_READ_TOKEN` environment variable is required in Draft Mode.',
-    )
+    throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required in Draft Mode.')
   }
 
   // https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnextrevalidate

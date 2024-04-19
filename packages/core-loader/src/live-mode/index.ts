@@ -1,14 +1,11 @@
-import { runtime } from '../env'
-import type { EnableLiveMode, EnableLiveModeOptions } from '../types'
-import type { LazyEnableLiveModeOptions } from './enableLiveMode'
+import {runtime} from '../env'
+import type {EnableLiveMode, EnableLiveModeOptions} from '../types'
+import type {LazyEnableLiveModeOptions} from './enableLiveMode'
 
 export const defineEnableLiveMode: (
-  config: Omit<
-    LazyEnableLiveModeOptions,
-    Exclude<keyof EnableLiveModeOptions, 'client'>
-  >,
+  config: Omit<LazyEnableLiveModeOptions, Exclude<keyof EnableLiveModeOptions, 'client'>>,
 ) => EnableLiveMode = (config) => {
-  const { ssr, setFetcher } = config
+  const {ssr, setFetcher} = config
 
   return (options) => {
     if (runtime === 'server') {
@@ -21,9 +18,9 @@ export const defineEnableLiveMode: (
     const client = options.client || config.client || undefined
     const controller = new AbortController()
     let disableLiveMode: (() => void) | undefined
-    import('./enableLiveMode').then(({ enableLiveMode }) => {
+    import('./enableLiveMode').then(({enableLiveMode}) => {
       if (controller.signal.aborted) return
-      disableLiveMode = enableLiveMode({ ...options, client, setFetcher, ssr })
+      disableLiveMode = enableLiveMode({...options, client, setFetcher, ssr})
     })
     return () => {
       controller.abort()
