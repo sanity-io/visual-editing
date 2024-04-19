@@ -36,6 +36,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.4.18](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.4.17...preview-kit-compat-v1.4.18) (2024-04-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.19 ([#1374](https://github.com/sanity-io/visual-editing/issues/1374)) ([fde2034](https://github.com/sanity-io/visual-editing/commit/fde203405fe8899fd1bd241523853b732c095b37))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.6 to 0.6.7
+
 ## [1.4.17](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.4.16...preview-kit-compat-v1.4.17) (2024-04-17)
 
 
