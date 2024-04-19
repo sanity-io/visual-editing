@@ -21,6 +21,7 @@ const nextConfig = {
   },
 
   experimental: {
+    ppr: true,
     staticWorkerRequestDeduping: true,
     taint: true,
   },
