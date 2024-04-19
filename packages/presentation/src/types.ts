@@ -72,7 +72,6 @@ export type DocumentResolver =
           params?: Record<string, string>
         }
       | undefined
-      | void
     >
 
 export interface DocumentResolverDefinition {

@@ -47,13 +47,13 @@ export function defineDocuments(resolvers: DocumentResolverDefinition[]): typeof
 
 export const presentationTool = definePlugin<PresentationPluginOptions>((options) => {
   const toolName = options.name || DEFAULT_TOOL_NAME
+  const hasLocationsResolver = !!(options.resolve?.locations || options.locate)
 
   function PresentationDocumentInput(props: InputProps) {
     const value = props.value as SanityDocument
     const documentId = value?._id ? getPublishedId(value?._id) : undefined
 
     if (isDocumentSchemaType(props.schemaType)) {
-      const hasLocationsResolver = !!(options.resolve?.locations || options.locate)
       return (
         <PresentationDocumentProvider options={options}>
           {hasLocationsResolver && documentId && (

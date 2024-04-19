@@ -174,6 +174,13 @@ const presentationWorkspaces = Object.entries({
           name: toolName,
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           // @TODO fix the locator for the pages-router
+          resolve:
+            toolName === 'pages-router'
+              ? undefined
+              : {
+                  documents: documentResolvers,
+                  locations: documentLocationResolvers,
+                },
           locate: toolName === 'pages-router' ? undefined : locate,
           unstable_showUnsafeShareUrl: toolName === 'app-router',
         })
