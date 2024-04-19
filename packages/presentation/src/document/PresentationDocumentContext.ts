@@ -1,6 +1,6 @@
 import {createContext} from 'react'
 
-import {PresentationDocumentContextValue} from './types'
+import type {PresentationDocumentContextValue} from './types'
 
 export const PresentationDocumentContext = createContext<PresentationDocumentContextValue | null>(
   null,

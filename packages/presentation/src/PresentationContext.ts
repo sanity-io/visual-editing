@@ -1,6 +1,6 @@
 import {createContext} from 'react'
 
-import {PresentationNavigate, PresentationParams, StructureDocumentPaneParams} from './types'
+import type {PresentationNavigate, PresentationParams, StructureDocumentPaneParams} from './types'
 
 export interface PresentationContextValue {
   devMode: boolean

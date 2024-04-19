@@ -2,7 +2,7 @@ import {useContext} from 'react'
 
 import {
   PresentationNavigateContext,
-  PresentationNavigateContextValue,
+  type PresentationNavigateContextValue,
 } from './PresentationNavigateContext'
 
 export function usePresentationNavigate(): PresentationNavigateContextValue {

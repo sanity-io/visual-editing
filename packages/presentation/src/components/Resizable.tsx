@@ -1,7 +1,7 @@
-import {Box, BoxProps} from '@sanity/ui'
+import {Box, type BoxProps} from '@sanity/ui'
 import {
-  FunctionComponent,
-  HTMLProps,
+  type FunctionComponent,
+  type HTMLProps,
   useCallback,
   useEffect,
   useMemo,

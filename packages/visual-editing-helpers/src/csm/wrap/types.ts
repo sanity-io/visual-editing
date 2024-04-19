@@ -1,4 +1,4 @@
-import {SanityNode} from '../../index'
+import type {SanityNode} from '../../index'
 
 /** @public */
 export type SanityKey =

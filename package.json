@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --filter='./packages/*'",
     "dev": "turbo run dev --filter=./apps/* --filter=!./apps/next-server-only --filter=!./apps/next-no-cache",
     "format": "prettier --cache --write .",
     "lint": "turbo run lint",

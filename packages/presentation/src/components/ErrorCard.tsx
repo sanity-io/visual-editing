@@ -1,5 +1,5 @@
-import {Box, Button, Card, CardProps, Container, Flex, Inline, Stack, Text} from '@sanity/ui'
-import {ReactElement, ReactNode} from 'react'
+import {Box, Button, Card, type CardProps, Container, Flex, Inline, Stack, Text} from '@sanity/ui'
+import type {ReactElement, ReactNode} from 'react'
 
 export function ErrorCard(
   props: {

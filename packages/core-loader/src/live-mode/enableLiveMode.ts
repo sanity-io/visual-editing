@@ -12,9 +12,9 @@ import {
   SanityClient,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
-import {atom, MapStore} from 'nanostores'
+import {atom, type MapStore} from 'nanostores'
 
-import {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
+import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 
 /** @internal */
 export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {

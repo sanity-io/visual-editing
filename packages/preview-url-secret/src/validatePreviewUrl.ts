@@ -1,7 +1,7 @@
 import {isDev} from './constants'
 import {createClientWithConfig} from './createClientWithConfig'
 import {parsePreviewUrl} from './parsePreviewUrl'
-import {ParsedPreviewUrl, PreviewUrlValidateUrlResult, SanityClientLike} from './types'
+import type {ParsedPreviewUrl, PreviewUrlValidateUrlResult, SanityClientLike} from './types'
 import {validateSecret} from './validateSecret'
 
 /**

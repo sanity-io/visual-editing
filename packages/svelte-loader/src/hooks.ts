@@ -3,7 +3,7 @@ import {type Handle} from '@sveltejs/kit'
 import {sequence} from '@sveltejs/kit/hooks'
 
 import {loadQuery as defaultLoadQuery, unstable__serverClient} from './createQueryStore'
-import {HandleOptions} from './types'
+import type {HandleOptions} from './types'
 
 /**
  * @beta

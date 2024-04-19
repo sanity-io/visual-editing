@@ -10,7 +10,7 @@ import {
 import {resolveSanityNode} from '../resolveSanityNode'
 import {SANITY_KEYS} from './constants'
 import {isArray, isRecord} from './helpers'
-import {SanityKey, SanityNodeContext, WrappedValue} from './types'
+import type {SanityKey, SanityNodeContext, WrappedValue} from './types'
 
 /** @public */
 export function wrapData<T>(
@@ -36,8 +36,8 @@ export function wrapData<T>(
         sourceMap,
         resultPath.concat(idx),
         keyedResultPath.concat(
-          isRecord(t) && '_key' in t && typeof t._key === 'string'
-            ? {_key: t._key, _index: idx}
+          isRecord(t) && '_key' in t && typeof t['_key'] === 'string'
+            ? {_key: t['_key'], _index: idx}
             : idx,
         ),
       ),

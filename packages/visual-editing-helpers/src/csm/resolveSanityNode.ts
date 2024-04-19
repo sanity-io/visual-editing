@@ -8,8 +8,8 @@ import {
   studioPath,
 } from '@sanity/client/csm'
 
-import {SanityNode} from '../types'
-import {SanityNodeContext} from './wrap/types'
+import type {SanityNode} from '../types'
+import type {SanityNodeContext} from './wrap/types'
 
 /** @internal */
 export function resolveSanityNode(

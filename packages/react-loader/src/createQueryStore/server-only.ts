@@ -4,7 +4,7 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import {QueryStore as BaseQueryStore, QueryStore} from '../types'
+import type {QueryStore as BaseQueryStore, QueryStore} from '../types'
 
 export type * from '../types'
 

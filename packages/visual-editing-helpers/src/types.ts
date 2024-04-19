@@ -4,7 +4,7 @@ import type {
   ContentSourceMapDocuments,
   QueryParams,
 } from '@sanity/client'
-import {StudioPathLike} from '@sanity/client/csm'
+import type {StudioPathLike} from '@sanity/client/csm'
 
 export type {Path} from '@sanity/client/csm'
 

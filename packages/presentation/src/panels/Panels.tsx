@@ -4,7 +4,7 @@
 import {
   type CSSProperties,
   type FunctionComponent,
-  PropsWithChildren,
+  type PropsWithChildren,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -15,7 +15,7 @@ import {
 import {styled} from 'styled-components'
 
 import {PanelsContext} from './PanelsContext'
-import {ElementMap, InitialDragState, PanelElement, PanelsState, ResizerElement} from './types'
+import type {ElementMap, InitialDragState, PanelElement, PanelsState, ResizerElement} from './types'
 import {usePanelsStorage} from './usePanelsStorage'
 import {
   getDefaultWidths,

@@ -306,8 +306,8 @@ function createChannelsControllerInternal<
         const {data: eventData} = e
         if (
           eventData.type === 'channel/response' &&
-          eventData.data?.responseTo &&
-          eventData.data.responseTo === msg.id
+          eventData.data?.['responseTo'] &&
+          eventData.data['responseTo'] === msg.id
         ) {
           window.removeEventListener('message', transact, false)
           clearTimeout(maxWait)

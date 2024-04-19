@@ -113,7 +113,7 @@ export function findSanityNodes(
     for (const node of el.childNodes) {
       const {nodeType, parentElement, textContent} = node
       // If an edit target is found, find common paths
-      if (isElementNode(node) && node.dataset?.sanityEditTarget !== undefined) {
+      if (isElementNode(node) && node.dataset?.['sanityEditTarget'] !== undefined) {
         const nodesInTarget = findSanityNodes(node).map(({sanity}) => sanity)
         // If there are inconsistent node types, continue
         if (!nodesInTarget.map((n) => isSanityNode(n)).every((n, _i, arr) => n === arr[0])) {
@@ -147,12 +147,12 @@ export function findSanityNodes(
         }
 
         // Prefer elements with explicit data attributes
-        if (node.dataset?.sanity) {
-          addElement(node, node.dataset.sanity)
+        if (node.dataset?.['sanity']) {
+          addElement(node, node.dataset['sanity'])
         }
         // Look for legacy sanity data attributes
-        else if (node.dataset?.sanityEditInfo) {
-          addElement(node, node.dataset.sanityEditInfo)
+        else if (node.dataset?.['sanityEditInfo']) {
+          addElement(node, node.dataset['sanityEditInfo'])
         } else if (isImgElement(node)) {
           const data = testAndDecodeStega(node.alt, true)
           if (!data) continue

@@ -1,6 +1,6 @@
 import type {ClientPerspective} from '@sanity/client'
 import isEqual from 'fast-deep-equal'
-import {MutableRefObject, useCallback, useMemo, useRef, useState} from 'react'
+import {type MutableRefObject, useCallback, useMemo, useRef, useState} from 'react'
 
 import type {PresentationState} from './reducers/presentationReducer'
 import type {FrameState} from './types'

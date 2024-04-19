@@ -1,4 +1,4 @@
-import {ElementMap, InitialDragState, PanelElement, PanelsState, ResizerElement} from './types'
+import type {ElementMap, InitialDragState, PanelElement, PanelsState, ResizerElement} from './types'
 
 function getNextWidth(panel: PanelElement, nextWidth: number, containerWidth: number) {
   const {maxWidth: maxWidthPx, minWidth: minWidthPx} = panel

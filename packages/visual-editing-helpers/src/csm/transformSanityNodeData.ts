@@ -2,7 +2,7 @@ import {getPublishedId, studioPath} from '@sanity/client/csm'
 import {is, minLength, object, optional, parse, record, safeParse, string, unknown} from 'valibot'
 
 import {pathToUrlString} from '../pathToUrlString'
-import {SanityNode, SanityStegaNode} from '../types'
+import type {SanityNode, SanityStegaNode} from '../types'
 import {urlStringToPath} from '../urlStringToPath'
 
 export type {SanityNode, SanityStegaNode}

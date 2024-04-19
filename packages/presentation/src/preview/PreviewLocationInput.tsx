@@ -1,9 +1,9 @@
 import {ResetIcon} from '@sanity/icons'
 import {TextInput, type TextInputClearButtonProps} from '@sanity/ui'
 import {
-  ChangeEvent,
-  FunctionComponent,
-  KeyboardEvent,
+  type ChangeEvent,
+  type FunctionComponent,
+  type KeyboardEvent,
   useCallback,
   useEffect,
   useMemo,

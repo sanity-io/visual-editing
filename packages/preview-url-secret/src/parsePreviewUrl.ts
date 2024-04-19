@@ -1,5 +1,5 @@
 import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
-import {ParsedPreviewUrl} from './types'
+import type {ParsedPreviewUrl} from './types'
 
 /**
  * @internal

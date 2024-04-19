@@ -1,6 +1,6 @@
 import {
-  ReactElement,
-  ReactNode,
+  type ReactElement,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -9,9 +9,9 @@ import {
   useState,
 } from 'react'
 
-import {PresentationPluginOptions} from '../types'
+import type {PresentationPluginOptions} from '../types'
 import {PresentationDocumentContext} from './PresentationDocumentContext'
-import {PresentationDocumentContextValue} from './types'
+import type {PresentationDocumentContextValue} from './types'
 
 /** @internal */
 export function PresentationDocumentProvider(props: {

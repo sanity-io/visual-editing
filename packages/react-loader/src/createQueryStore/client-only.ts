@@ -6,7 +6,7 @@ import {
 import {defineStudioUrlStore} from '../defineStudioUrlStore'
 import {defineUseLiveMode} from '../defineUseLiveMode'
 import {defineUseQuery} from '../defineUseQuery'
-import {
+import type {
   NonUndefinedGuard,
   QueryResponseInitial,
   QueryStore,

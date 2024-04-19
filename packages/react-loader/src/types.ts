@@ -5,12 +5,12 @@ import type {
   ResponseQueryOptions,
 } from '@sanity/client'
 import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
-import {
+import type {
   createQueryStore as createCoreQueryStore,
   EnableLiveModeOptions,
-  type QueryStoreState,
+  QueryStoreState,
 } from '@sanity/core-loader'
-import {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
+import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
 
 export type * from '@sanity/core-loader'
 

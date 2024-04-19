@@ -1,7 +1,7 @@
 import {useContext} from 'react'
 
 import {PresentationParamsContext} from './PresentationParamsContext'
-import {PresentationParams} from './types'
+import type {PresentationParams} from './types'
 
 export function usePresentationParams(): PresentationParams {
   const params = useContext(PresentationParamsContext)

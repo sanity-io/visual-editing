@@ -2,10 +2,10 @@ import {MasterDetailIcon} from '@sanity/icons'
 import {useContext, useMemo} from 'react'
 import {
   defineDocumentFieldAction,
-  DocumentFieldActionItem,
+  type DocumentFieldActionItem,
   isRecord,
   pathToString,
-  Tool,
+  type Tool,
   useWorkspace,
 } from 'sanity'
 import {useRouter} from 'sanity/router'
@@ -61,7 +61,7 @@ function findStructureTool(
     return {tool: t, match}
   })
 
-  const modeMatches = results.filter((t) => isRecord(t.match) && t.match.mode)
+  const modeMatches = results.filter((t) => isRecord(t.match) && t.match['mode'])
 
   if (modeMatches.length > 0) {
     return modeMatches[0].tool

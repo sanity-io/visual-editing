@@ -1,9 +1,9 @@
 import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
-import {ErrorInfo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
+import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
 import {
   DocumentListPane as StructureDocumentListPane,
   PaneLayout,
-  PaneNode,
+  type PaneNode,
   StructureToolProvider,
 } from 'sanity/structure'
 import {styled} from 'styled-components'

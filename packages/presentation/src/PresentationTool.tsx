@@ -26,7 +26,7 @@ import {
 } from 'react'
 import {useUnique, useWorkspace} from 'sanity'
 import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} from 'sanity'
-import {RouterContextValue, useRouter} from 'sanity/router'
+import {type RouterContextValue, useRouter} from 'sanity/router'
 import {type CommentIntentGetter, CommentsIntentProvider} from 'sanity/structure'
 import {styled} from 'styled-components'
 
@@ -87,7 +87,7 @@ export default function PresentationTool(props: {
   const initialPreviewUrl = usePreviewUrl(
     _previewUrl || '/',
     name,
-    routerSearchParams.preview || null,
+    routerSearchParams['preview'] || null,
   )
 
   const [devMode] = useState(() => {

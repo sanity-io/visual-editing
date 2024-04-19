@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 
-import {forwardRef, PropsWithChildren, ReactElement, useCallback, useMemo} from 'react'
+import {forwardRef, type PropsWithChildren, type ReactElement, useCallback, useMemo} from 'react'
 import {getPublishedId, useUnique} from 'sanity'
 import {StateLink, useRouter} from 'sanity/router'
 import {
-  BackLinkProps,
+  type BackLinkProps,
   PaneRouterContext,
-  PaneRouterContextValue,
-  ReferenceChildLinkProps,
+  type PaneRouterContextValue,
+  type ReferenceChildLinkProps,
 } from 'sanity/structure'
 
 import type {PresentationParams, StructureDocumentPaneParams} from '../types'
@@ -169,7 +169,7 @@ export function PresentationPaneRouterProvider(
         // @todo set inspect param to undefined manually as param is missing from object when closing inspector
         onStructureParams({
           ...nextParams,
-          inspect: nextParams.inspect ?? undefined,
+          inspect: nextParams['inspect'] ?? undefined,
         } as StructureDocumentPaneParams)
       },
       setPayload: (payload) => {

@@ -6,13 +6,20 @@ import {
   WarningOutlineIcon,
 } from '@sanity/icons'
 import {Box, Card, Flex, Stack, Text} from '@sanity/ui'
-import {ComponentType, createElement, ReactNode, useCallback, useContext, useState} from 'react'
-import {ObjectSchemaType} from 'sanity'
+import {
+  type ComponentType,
+  createElement,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from 'react'
+import type {ObjectSchemaType} from 'sanity'
 import {useIntentLink} from 'sanity/router'
 
 import {DEFAULT_TOOL_NAME, DEFAULT_TOOL_TITLE} from '../constants'
 import {PresentationContext} from '../PresentationContext'
-import {DocumentLocation, PresentationPluginOptions} from '../types'
+import type {DocumentLocation, PresentationPluginOptions} from '../types'
 import {useDocumentLocations} from '../useDocumentLocations'
 
 const LENGTH_FORMAT: Record<number, string> = {

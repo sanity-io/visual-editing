@@ -10,7 +10,7 @@ import {
   tag,
 } from './constants'
 import {generateUrlSecret} from './generateSecret'
-import {SanityClientLike} from './types'
+import type {SanityClientLike} from './types'
 
 /** @internal */
 export async function createPreviewSecret(

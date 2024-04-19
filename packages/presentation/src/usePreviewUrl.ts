@@ -5,7 +5,7 @@ import {type SanityClient, useActiveWorkspace, useClient, useCurrentUser} from '
 import {suspend} from 'suspend-react'
 
 import {API_VERSION} from './constants'
-import {PreviewUrlOption} from './types'
+import type {PreviewUrlOption} from './types'
 
 export function usePreviewUrl(
   previewUrl: PreviewUrlOption,

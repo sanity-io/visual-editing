@@ -11,7 +11,7 @@ import {
   type EnableLiveModeOptions,
   type QueryStoreState,
 } from '@sanity/core-loader'
-import {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
+import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
 import type {HandlePreviewOptions, VisualEditingLocals} from '@sanity/visual-editing/svelte'
 import type {Readable} from 'svelte/store'
 

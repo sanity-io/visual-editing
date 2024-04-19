@@ -1,6 +1,6 @@
 import type {SanityDocument} from '@sanity/client'
 import {lazy, Suspense} from 'react'
-import {definePlugin, getPublishedId, InputProps, isDocumentSchemaType} from 'sanity'
+import {definePlugin, getPublishedId, type InputProps, isDocumentSchemaType} from 'sanity'
 
 import {DEFAULT_TOOL_ICON, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
 import {PresentationDocumentHeader} from './document/PresentationDocumentHeader'
@@ -8,7 +8,7 @@ import {PresentationDocumentProvider} from './document/PresentationDocumentProvi
 import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
 import {router} from './router'
-import {PresentationPluginOptions} from './types'
+import type {PresentationPluginOptions} from './types'
 
 const PresentationTool = lazy(() => import('./PresentationTool'))
 const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplayedDocument'))
@@ -47,7 +47,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
       return false
     }
 
-    if ('presentation' in params && params.presentation !== toolName) {
+    if ('presentation' in params && params['presentation'] !== toolName) {
       return false
     }
 
@@ -60,11 +60,11 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
       return false
     }
 
-    if ('presentation' in params && params.presentation !== toolName) {
+    if ('presentation' in params && params['presentation'] !== toolName) {
       return false
     }
 
-    return 'mode' in params ? {mode: params.mode === EDIT_INTENT_MODE} : true
+    return 'mode' in params ? {mode: params['mode'] === EDIT_INTENT_MODE} : true
   }
 
   return {

@@ -1,4 +1,4 @@
-import {ContentSourceMap} from '@sanity/client'
+import type {ContentSourceMap} from '@sanity/client'
 
 interface SanityReferenceValue {
   _type: 'reference'

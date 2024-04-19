@@ -1,10 +1,10 @@
-import {MutableRefObject, useEffect, useMemo, useRef} from 'react'
+import {type MutableRefObject, useEffect, useMemo, useRef} from 'react'
 import {getPublishedId} from 'sanity'
-import {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
+import type {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
 
 import {debounce} from './lib/debounce'
 import {parseRouterState} from './lib/parse'
-import {
+import type {
   FrameState,
   PresentationNavigate,
   PresentationParams,
@@ -48,20 +48,20 @@ export function useParams({
       type,
       path,
       preview:
-        routerSearchParams.preview || `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
-      perspective: routerSearchParams.perspective,
-      viewport: routerSearchParams.viewport,
-      inspect: routerSearchParams.inspect,
-      rev: routerSearchParams.rev,
-      since: routerSearchParams.since,
-      template: routerSearchParams.template,
-      templateParams: routerSearchParams.templateParams,
-      view: routerSearchParams.view,
+        routerSearchParams['preview'] || `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
+      perspective: routerSearchParams['perspective'],
+      viewport: routerSearchParams['viewport'],
+      inspect: routerSearchParams['inspect'],
+      rev: routerSearchParams['rev'],
+      since: routerSearchParams['since'],
+      template: routerSearchParams['template'],
+      templateParams: routerSearchParams['templateParams'],
+      view: routerSearchParams['view'],
       // assist
-      pathKey: routerSearchParams.pathKey,
-      instruction: routerSearchParams.instruction,
+      pathKey: routerSearchParams['pathKey'],
+      instruction: routerSearchParams['instruction'],
       // comments
-      comment: routerSearchParams.comment,
+      comment: routerSearchParams['comment'],
     }
   }, [routerState, routerSearchParams, initialPreviewUrl])
 
@@ -128,7 +128,7 @@ export function useParams({
         })
 
         // If the document has changed, clear the template and templateParams
-        if (routerState.id !== state.id) {
+        if (routerState.id !== state['id']) {
           delete searchState.template
           delete searchState.templateParams
         }

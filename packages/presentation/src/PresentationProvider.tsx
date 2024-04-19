@@ -1,7 +1,7 @@
-import {FunctionComponent, PropsWithChildren, useMemo} from 'react'
+import {type FunctionComponent, type PropsWithChildren, useMemo} from 'react'
 
-import {PresentationContext, PresentationContextValue} from './PresentationContext'
-import {PresentationNavigate, PresentationParams, StructureDocumentPaneParams} from './types'
+import {PresentationContext, type PresentationContextValue} from './PresentationContext'
+import type {PresentationNavigate, PresentationParams, StructureDocumentPaneParams} from './types'
 
 export const PresentationProvider: FunctionComponent<
   PropsWithChildren<{

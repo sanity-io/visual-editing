@@ -1,10 +1,10 @@
-import {FunctionComponent, PropsWithChildren, useCallback} from 'react'
+import {type FunctionComponent, type PropsWithChildren, useCallback} from 'react'
 
 import {
   PresentationNavigateContext,
-  PresentationNavigateContextValue,
+  type PresentationNavigateContextValue,
 } from './PresentationNavigateContext'
-import {PresentationNavigate} from './types'
+import type {PresentationNavigate} from './types'
 
 export const PresentationNavigateProvider: FunctionComponent<
   PropsWithChildren<{

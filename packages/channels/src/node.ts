@@ -1,7 +1,7 @@
 import {v4 as uuid} from 'uuid'
 
 import {isHandshakeMessage, isInternalMessage, isLegacyHandshakeMessage} from './helpers'
-import {
+import type {
   ChannelMsg,
   ChannelsEventSubscriber,
   ChannelsNode,
@@ -105,12 +105,12 @@ export function createChannelsNode<
       if (isHandshakeMessage(data.type) && data.data) {
         if (data.type === 'handshake/syn') {
           channel.origin = e.origin
-          channel.id = data.data.id as string
+          channel.id = data.data['id'] as string
           setConnectionStatus('connecting')
           send('handshake/syn-ack', {id: channel.id})
           return
         }
-        if (data.type === 'handshake/ack' && data.data.id === channel.id) {
+        if (data.type === 'handshake/ack' && data.data['id'] === channel.id) {
           setConnectionStatus('connected')
           return
         }

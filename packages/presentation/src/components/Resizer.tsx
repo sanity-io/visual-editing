@@ -1,4 +1,9 @@
-import {FunctionComponent, MouseEvent as ReactMouseEvent, useCallback, useRef} from 'react'
+import {
+  type FunctionComponent,
+  type MouseEvent as ReactMouseEvent,
+  useCallback,
+  useRef,
+} from 'react'
 import {styled} from 'styled-components'
 
 const Root = styled.div`

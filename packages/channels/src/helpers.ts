@@ -1,5 +1,5 @@
 import {HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES} from './constants'
-import {ChannelMsgType, HandshakeMsgType, InternalMsgType} from './types'
+import type {ChannelMsgType, HandshakeMsgType, InternalMsgType} from './types'
 
 export const isInternalMessage = (
   type: ChannelMsgType | InternalMsgType,

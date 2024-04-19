@@ -1,6 +1,6 @@
 import {
   type FunctionComponent,
-  MouseEvent as ReactMouseEvent,
+  type MouseEvent as ReactMouseEvent,
   useCallback,
   useContext,
   useEffect,

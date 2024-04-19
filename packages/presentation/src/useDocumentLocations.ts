@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {isObservable, of} from 'rxjs'
 import {useDocumentStore} from 'sanity'
 
-import {DocumentLocationResolver, DocumentLocationsState} from './types'
+import type {DocumentLocationResolver, DocumentLocationsState} from './types'
 
 const INITIAL_STATE: DocumentLocationsState = {locations: []}
 
