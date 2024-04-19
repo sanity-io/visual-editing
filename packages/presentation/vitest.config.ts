@@ -9,5 +9,8 @@ export default defineConfig({
       },
     },
     environment: 'happy-dom',
+    typecheck: {
+      tsconfig: 'tsconfig.build.json',
+    },
   },
 })

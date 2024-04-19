@@ -1,4 +1,4 @@
-import type { FieldMember, ObjectMember } from 'sanity'
+import type {FieldMember, ObjectMember} from 'sanity'
 
 /** @alpha */
 export function isFieldMember(member: ObjectMember): member is FieldMember {
