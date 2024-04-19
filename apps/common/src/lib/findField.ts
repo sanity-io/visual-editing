@@ -1,4 +1,4 @@
-import {FieldMember, ObjectFormNode} from 'sanity'
+import type {FieldMember, ObjectFormNode} from 'sanity'
 
 import {isFieldMember} from './isFieldMember'
 

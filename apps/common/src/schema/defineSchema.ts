@@ -1,4 +1,4 @@
-import {isArray, SchemaTypeDefinition} from 'sanity'
+import {isArray, type SchemaTypeDefinition} from 'sanity'
 
 export function defineSchema(options: SchemaTypeDefinition[]): {
   types: SchemaTypeDefinition[]

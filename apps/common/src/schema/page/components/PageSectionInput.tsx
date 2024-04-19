@@ -1,13 +1,13 @@
 import {EditIcon, RevertIcon} from '@sanity/icons'
 import {Card, Code, Stack} from '@sanity/ui'
-import {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react'
+import {type ReactElement, useCallback, useEffect, useMemo, useRef} from 'react'
 import {
   defineDocumentFieldAction,
-  DocumentFieldActionItem,
-  FieldProps,
+  type DocumentFieldActionItem,
+  type FieldProps,
   FormFieldSet,
   ObjectInputMember,
-  ObjectInputProps,
+  type ObjectInputProps,
   set,
   unset,
 } from 'sanity'
@@ -28,7 +28,7 @@ export function PageSectionInput(props: ObjectInputProps): ReactElement {
     value,
   } = props
   const symbolFieldMember = findFieldMember(props, 'symbol')
-  const refEditState = useReferenceEditState(value?.symbol?._ref)
+  const refEditState = useReferenceEditState(value?.['symbol']?._ref)
   const symbolValue = refEditState?.draft || refEditState?.published || undefined
   const symbolValueRef = useRef(symbolValue)
 

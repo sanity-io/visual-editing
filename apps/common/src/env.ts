@@ -27,13 +27,17 @@ function maybeGitBranchStudioUrl(url: string) {
 let isStablePreviewBranch: boolean | undefined = false
 try {
   isStablePreviewBranch =
-    process.env.VERCEL_BRANCH_URL?.includes('-git-preview') ||
+    process.env['VERCEL_BRANCH_URL']?.includes('-git-preview') ||
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore has to be exact for string replacement to work
     process.env.NEXT_PUBLIC_VERCEL_URL?.includes('-git-preview')
 } catch {
   //ignore
 }
 
 export const studioUrl = maybeGitBranchStudioUrl(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore has to be exact for string replacement to work
   process.env.NODE_ENV !== 'production'
     ? 'http://localhost:3333'
     : isStablePreviewBranch
