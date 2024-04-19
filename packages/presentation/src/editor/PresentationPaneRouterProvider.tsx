@@ -57,6 +57,8 @@ const BackLink = forwardRef(function BackLink(
         type: undefined,
         _searchParams: Object.entries({
           ...structureParams,
+          mainDocument: params.mainDocument,
+          perspective: params.perspective,
           preview: params.preview,
         }),
       }}

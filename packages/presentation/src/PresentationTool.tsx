@@ -27,7 +27,7 @@ import {
 import {useUnique, useWorkspace} from 'sanity'
 import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} from 'sanity'
 import {type RouterContextValue, useRouter} from 'sanity/router'
-import {type CommentIntentGetter, CommentsIntentProvider} from 'sanity/structure'
+import {type CommentIntentGetter} from 'sanity/structure'
 import {styled} from 'styled-components'
 
 import {
@@ -36,11 +36,9 @@ import {
   EDIT_INTENT_MODE,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
-import {ContentEditor} from './editor/ContentEditor'
-import {DisplayedDocumentBroadcasterProvider} from './loader/DisplayedDocumentBroadcaster'
 import {Panel} from './panels/Panel'
-import {PanelResizer} from './panels/PanelResizer'
 import {Panels} from './panels/Panels'
+import {PresentationContent} from './PresentationContent'
 import {PresentationNavigateProvider} from './PresentationNavigateProvider'
 import {usePresentationNavigator} from './PresentationNavigator'
 import {PresentationParamsProvider} from './PresentationParamsProvider'
@@ -62,6 +60,7 @@ import type {
   StructureDocumentPaneParams,
 } from './types'
 import {useDocumentsOnPage} from './useDocumentsOnPage'
+import {type MainDocumentResolverDefinition, useMainDocument} from './useMainDocument'
 import {useParams} from './useParams'
 import {usePreviewUrl} from './usePreviewUrl'
 
@@ -125,7 +124,11 @@ export default function PresentationTool(props: {
 
   const [state, dispatch] = useReducer(
     presentationReducer,
-    {perspective: params.perspective, viewport: params.viewport},
+    {
+      mainDocument: params.mainDocument,
+      perspective: params.perspective,
+      viewport: params.viewport,
+    },
     presentationReducerInit,
   )
 
@@ -133,6 +136,42 @@ export default function PresentationTool(props: {
 
   const projectId = useProjectId()
   const dataset = useDataset()
+
+  const mainDocumentResolvers = useMemo(
+    () =>
+      (props.tool.options?.resolve?.documents || []).filter(
+        (r) => !!r.mainDocument,
+      ) as MainDocumentResolverDefinition[],
+    [props.tool.options?.resolve?.documents],
+  )
+
+  const {mainDocument} = useMainDocument({
+    resolvers: mainDocumentResolvers,
+    previewUrl: props.tool.options?.previewUrl,
+    path: params.preview,
+  })
+
+  useEffect(() => {
+    if (state.mainDocument !== params.mainDocument) {
+      const nextState = state.mainDocument
+        ? {
+            id: mainDocument?._id || params.id,
+            type: mainDocument?._type || params.type,
+          }
+        : {}
+
+      const nextSearchState = {
+        mainDocument: state.mainDocument ? 'true' : undefined,
+      }
+      navigate(nextState, nextSearchState)
+    }
+  }, [mainDocument, params.mainDocument, params.id, params.type, state.mainDocument, navigate])
+
+  useEffect(() => {
+    if (params.mainDocument) {
+      navigate({id: mainDocument?._id, type: mainDocument?._type})
+    }
+  }, [mainDocument, params.mainDocument, navigate])
 
   // Update the perspective and viewport when the param changes
   useEffect(() => {
@@ -528,25 +567,16 @@ export default function PresentationTool(props: {
                     </BoundaryElementProvider>
                   </Flex>
                 </Panel>
-                <PanelResizer order={4} />
-                <Panel id="content" minWidth={325} order={5}>
-                  <DisplayedDocumentBroadcasterProvider
-                    documentId={params.id}
-                    setDisplayedDocument={setDisplayedDocument}
-                  >
-                    <CommentsIntentProvider getIntent={getCommentIntent}>
-                      <ContentEditor
-                        documentId={params.id}
-                        documentType={params.type}
-                        onFocusPath={handleFocusPath}
-                        onStructureParams={handleStructureParams}
-                        previewUrl={params.preview}
-                        refs={documentsOnPage}
-                        structureParams={structureParams}
-                      />
-                    </CommentsIntentProvider>
-                  </DisplayedDocumentBroadcasterProvider>
-                </Panel>
+                <PresentationContent
+                  mainDocument={mainDocument}
+                  params={params}
+                  documentsOnPage={documentsOnPage}
+                  getCommentIntent={getCommentIntent}
+                  onFocusPath={handleFocusPath}
+                  onStructureParams={handleStructureParams}
+                  setDisplayedDocument={setDisplayedDocument}
+                  structureParams={structureParams}
+                />
               </Panels>
             </Container>
           </PresentationParamsProvider>

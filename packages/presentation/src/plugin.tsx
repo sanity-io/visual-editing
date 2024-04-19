@@ -8,10 +8,42 @@ import {PresentationDocumentProvider} from './document/PresentationDocumentProvi
 import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
 import {router} from './router'
-import type {PresentationPluginOptions} from './types'
+import type {
+  DocumentLocationResolverSimple,
+  DocumentResolverDefinition,
+  PresentationPluginOptions,
+} from './types'
 
 const PresentationTool = lazy(() => import('./PresentationTool'))
 const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplayedDocument'))
+
+/**
+ * Define locations for a given document type.
+ *
+ * This function doesn't do anything itself, it is used to provide type information.
+ *
+ * @param resolver - resolver that return locations for a document.
+ *
+ * @beta
+ */
+export function defineLocations<K extends string>(
+  resolver: DocumentLocationResolverSimple<K>,
+): typeof resolver {
+  return resolver
+}
+
+/**
+ * Define documents for a given location.
+ *
+ * This function doesn't do anything itself, it is used to provide type information.
+ *
+ * @param resolvers - resolvers that return documents.
+ *
+ * @beta
+ */
+export function defineDocuments(resolvers: DocumentResolverDefinition[]): typeof resolvers {
+  return resolvers
+}
 
 export const presentationTool = definePlugin<PresentationPluginOptions>((options) => {
   const toolName = options.name || DEFAULT_TOOL_NAME
@@ -21,9 +53,10 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
     const documentId = value?._id ? getPublishedId(value?._id) : undefined
 
     if (isDocumentSchemaType(props.schemaType)) {
+      const hasLocationsResolver = !!(options.resolve?.locations || options.locate)
       return (
         <PresentationDocumentProvider options={options}>
-          {options.locate && documentId && (
+          {hasLocationsResolver && documentId && (
             <PresentationDocumentHeader
               documentId={documentId}
               options={options}

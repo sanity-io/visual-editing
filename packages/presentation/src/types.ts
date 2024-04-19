@@ -20,6 +20,8 @@ export interface DocumentLocationsState {
   tone?: 'positive' | 'caution' | 'critical'
 }
 
+export type DocumentLocationsStatus = 'empty' | 'resolving' | 'resolved'
+
 export type DocumentLocationResolver = (
   params: {id: string; type: string},
   context: {documentStore: DocumentStore},
@@ -37,12 +39,57 @@ export interface NavigatorOptions {
 
 export type PreviewUrlOption = string | PreviewUrlResolver<SanityClient> | PreviewUrlResolverOptions
 
+export type DocumentLocationResolvers = Record<
+  string,
+  DocumentLocationResolverSimple | DocumentLocationsState
+>
+
+export type DocumentLocationResolverSimple<K extends string = string> = {
+  select: Record<K, string>
+  resolve: (value: Record<K, any> | null) => DocumentLocationsState | null | undefined | void
+}
+
+export interface PathResolverParams {
+  url: URL
+  groups: string[]
+}
+export interface DocumentResolverContext {
+  params: Record<string, string>
+  path: string
+}
+
+export type ContextFn<T> = (context: DocumentResolverContext) => T
+
+export type DocumentResolver =
+  | {type: string}
+  | {
+      filter: ContextFn<string> | string
+      params?: ContextFn<Record<string, string>> | Record<string, string>
+    }
+  | ContextFn<
+      | {
+          filter: string
+          params?: Record<string, string>
+        }
+      | undefined
+      | void
+    >
+
+export interface DocumentResolverDefinition {
+  path: string
+  mainDocument?: DocumentResolver
+}
+
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
   icon?: ComponentType
   name?: string
   title?: string
   locate?: DocumentLocationResolver
+  resolve?: {
+    documents?: DocumentResolverDefinition[]
+    locations?: DocumentLocationResolvers | DocumentLocationResolver
+  }
   previewUrl: PreviewUrlOption
   components?: {
     unstable_navigator?: NavigatorOptions
@@ -79,11 +126,13 @@ export interface StructureDocumentPaneParams {
 export interface PresentationParams extends PresentationStateParams, StructureDocumentPaneParams {
   id?: string
   preview?: string
+  mainDocument?: boolean
   perspective?: string
   viewport?: string
 }
 
 export interface PresentationSearchParams extends StructureDocumentPaneParams {
+  mainDocument?: string
   preview?: string
   perspective?: string
   viewport?: string
