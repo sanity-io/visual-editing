@@ -41,7 +41,6 @@ import {
   useState,
 } from 'react'
 import {Hotkeys} from 'sanity'
-import {styled} from 'styled-components'
 
 import {ErrorCard} from '../components/ErrorCard'
 import {MAX_TIME_TO_OVERLAYS_CONNECTION} from '../constants'
@@ -60,32 +59,6 @@ import {PreviewLocationInput} from './PreviewLocationInput'
 import {ShareUrlMenuItems} from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
-
-const StyledSwitch = styled(Switch)`
-  & > span {
-    width: 21px;
-    height: 13px;
-    overflow: hidden;
-
-    & > span:nth-child(1) {
-      width: 21px;
-      height: 13px;
-    }
-
-    & > span:nth-child(2) {
-      width: 9px;
-      height: 9px;
-      top: 2px;
-      left: 2px;
-    }
-  }
-
-  & input:checked + span {
-    & > span:nth-child(2) {
-      transform: translate3d(8px, 0, 0) !important;
-    }
-  }
-`
 
 const PERSPECTIVE_TITLES: Record<PresentationState['perspective'], string> = {
   previewDrafts: 'Drafts',
@@ -271,26 +244,28 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
         <TooltipDelayGroupProvider delay={1000}>
           <Card flex="none" padding={2} shadow={1} style={{position: 'relative'}}>
-            <Flex align="center" gap={2} style={{minHeight: 0}}>
+            <Flex align="center" style={{minHeight: 0}}>
               {toggleNavigator && (
-                <Tooltip
-                  animate
-                  content={<Text size={1}>Toggle navigator</Text>}
-                  fallbackPlacements={['bottom-start']}
-                  padding={2}
-                  placement="bottom"
-                  portal
-                >
-                  <Button
-                    aria-label="Toggle navigator"
-                    fontSize={1}
-                    icon={PanelLeftIcon}
-                    mode="bleed"
-                    onClick={toggleNavigator}
-                    padding={3}
-                    selected={navigatorEnabled}
-                  />
-                </Tooltip>
+                <Box flex="none" marginRight={1} padding={1}>
+                  <Tooltip
+                    animate
+                    content={<Text size={1}>Toggle navigator</Text>}
+                    fallbackPlacements={['bottom-start']}
+                    padding={2}
+                    placement="bottom"
+                    portal
+                  >
+                    <Button
+                      aria-label="Toggle navigator"
+                      fontSize={1}
+                      icon={PanelLeftIcon}
+                      mode="bleed"
+                      onClick={toggleNavigator}
+                      padding={2}
+                      selected={navigatorEnabled}
+                    />
+                  </Tooltip>
+                </Box>
               )}
 
               <Tooltip
@@ -315,100 +290,112 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 <Card
                   as="label"
                   flex="none"
+                  marginRight={1}
                   padding={3}
                   style={{
                     lineHeight: 0,
                     borderRadius: 999,
                     userSelect: 'none',
                   }}
-                  tone={overlaysEnabled ? 'positive' : undefined}
+                  tone={overlaysEnabled ? 'transparent' : undefined}
                 >
-                  <Flex align="center" gap={2}>
-                    <div style={{margin: -2}}>
-                      <StyledSwitch
+                  <Flex align="center" gap={3}>
+                    <div style={{margin: -4}}>
+                      <Switch
                         checked={overlaysEnabled}
                         onChange={toggleOverlay}
                         disabled={iframe.status === 'loading' || overlaysConnection !== 'connected'}
                       />
                     </div>
                     <Box>
-                      <Text muted size={1} weight="medium">
+                      <Text muted={!overlaysEnabled} size={1} weight="medium">
                         Edit
                       </Text>
                     </Box>
                   </Flex>
                 </Card>
               </Tooltip>
-              <Tooltip
-                animate
-                content={
-                  <Text size={1}>
-                    {iframe.status === 'loading'
-                      ? 'Loading…'
-                      : iframe.status === 'reloading'
-                        ? 'Refreshing…'
-                        : iframe.status === 'refreshing'
-                          ? 'Refreshing…'
-                          : 'Refresh preview'}
-                  </Text>
-                }
-                fallbackPlacements={['bottom-start']}
-                padding={2}
-                placement="bottom"
-                portal
-              >
-                <Button
-                  aria-label="Refresh preview"
-                  fontSize={1}
-                  icon={RefreshIcon}
-                  mode="bleed"
-                  loading={iframe.status === 'reloading' || iframe.status === 'refreshing'}
-                  onClick={handleRefresh}
-                  padding={3}
-                />
-              </Tooltip>
 
-              <Box flex={1}>
+              <Box flex={1} marginX={1}>
                 <PreviewLocationInput
+                  prefix={
+                    <Box padding={1}>
+                      <Tooltip
+                        animate
+                        content={
+                          <Text size={1}>
+                            {iframe.status === 'loading'
+                              ? 'Loading…'
+                              : iframe.status === 'reloading'
+                                ? 'Refreshing…'
+                                : iframe.status === 'refreshing'
+                                  ? 'Refreshing…'
+                                  : 'Refresh preview'}
+                          </Text>
+                        }
+                        fallbackPlacements={['bottom-start']}
+                        padding={2}
+                        placement="bottom"
+                        portal
+                      >
+                        <Button
+                          aria-label="Refresh preview"
+                          fontSize={1}
+                          icon={RefreshIcon}
+                          mode="bleed"
+                          loading={iframe.status === 'reloading' || iframe.status === 'refreshing'}
+                          onClick={handleRefresh}
+                          padding={2}
+                        />
+                      </Tooltip>
+                    </Box>
+                  }
                   onChange={onPathChange}
                   origin={previewLocationOrigin}
+                  suffix={
+                    <Box padding={1}>
+                      <MenuButton
+                        button={
+                          <Button
+                            fontSize={1}
+                            iconRight={ShareIcon}
+                            mode="bleed"
+                            padding={2}
+                            space={2}
+                          />
+                        }
+                        id="location-menu"
+                        menu={
+                          <Menu>
+                            <ShareUrlMenuItems
+                              initialUrl={initialUrl}
+                              openPopup={openPopup}
+                              previewLocationOrigin={previewLocationOrigin}
+                              previewLocationRoute={previewLocationRoute}
+                            />
+                          </Menu>
+                        }
+                        popover={{
+                          animate: true,
+                          constrainSize: true,
+                          placement: 'bottom',
+                          portal: true,
+                        }}
+                      />
+                    </Box>
+                  }
                   value={previewLocationRoute}
                 />
               </Box>
 
-              <Flex align="center" flex="none" gap={1}>
-                <MenuButton
-                  button={
-                    <Button fontSize={1} iconRight={ShareIcon} mode="bleed" padding={3} space={2} />
-                  }
-                  id="location-menu"
-                  menu={
-                    <Menu>
-                      <ShareUrlMenuItems
-                        initialUrl={initialUrl}
-                        openPopup={openPopup}
-                        previewLocationOrigin={previewLocationOrigin}
-                        previewLocationRoute={previewLocationRoute}
-                      />
-                    </Menu>
-                  }
-                  popover={{
-                    animate: true,
-                    constrainSize: true,
-                    placement: 'bottom',
-                    portal: true,
-                  }}
-                />
-              </Flex>
-
-              <Flex align="center" flex="none" gap={1}>
+              <Flex align="center" flex="none" gap={1} padding={1}>
                 <MenuButton
                   button={
                     <Button
                       fontSize={1}
                       iconRight={ChevronDownIcon}
                       mode="bleed"
-                      padding={3}
+                      padding={2}
                       space={2}
                       text={
                         PERSPECTIVE_TITLES[
@@ -507,7 +494,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 />
               </Flex>
 
-              <Flex align="center" flex="none" gap={1}>
+              <Flex align="center" flex="none" gap={1} padding={1}>
                 <Tooltip
                   animate
                   content={<Text size={1}>Full viewport</Text>}
@@ -522,7 +509,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     icon={DesktopIcon}
                     mode="bleed"
                     onClick={setDesktopMode}
-                    padding={3}
+                    padding={2}
                     selected={viewport === 'desktop'}
                   />
                 </Tooltip>
@@ -539,7 +526,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     icon={MobileDeviceIcon}
                     mode="bleed"
                     onClick={setMobileMode}
-                    padding={3}
+                    padding={2}
                     selected={viewport === 'mobile'}
                   />
                 </Tooltip>

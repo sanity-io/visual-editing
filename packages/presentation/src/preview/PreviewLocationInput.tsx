@@ -4,6 +4,7 @@ import {
   type ChangeEvent,
   type FunctionComponent,
   type KeyboardEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -17,10 +18,12 @@ export const PreviewLocationInput: FunctionComponent<{
   onChange: (value: string) => void
   origin: string
   padding?: number
+  prefix?: ReactNode
+  suffix?: ReactNode
   value: string
 }> = function (props) {
   const {basePath = '/'} = useActiveWorkspace()?.activeWorkspace || {}
-  const {fontSize = 1, onChange, origin, padding = 3, value} = props
+  const {fontSize = 1, onChange, origin, padding = 3, prefix, suffix, value} = props
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [sessionValue, setSessionValue] = useState<string | undefined>(undefined)
   const [customValidity, setCustomValidity] = useState<string | undefined>(undefined)
@@ -95,10 +98,12 @@ export const PreviewLocationInput: FunctionComponent<{
         onChange={handleChange}
         onKeyDownCapture={handleKeyDown}
         padding={padding}
+        prefix={prefix}
         style={{zIndex: 1}}
         radius={2}
         ref={inputRef}
         space={padding}
+        suffix={suffix}
         value={sessionValue === undefined ? `${origin}${value}` : sessionValue}
       />
     </>
