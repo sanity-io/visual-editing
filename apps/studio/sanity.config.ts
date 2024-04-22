@@ -48,12 +48,12 @@ const sharedSettings = definePlugin({
 function maybeGitBranchUrl(url: string) {
   if (
     !url.includes('.sanity.build') ||
-    process.env['SANITY_STUDIO_VERCEL_ENV'] !== 'preview' ||
-    !process.env['SANITY_STUDIO_VERCEL_BRANCH_URL']
+    process.env.SANITY_STUDIO_VERCEL_ENV !== 'preview' ||
+    !process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
   ) {
     return url
   }
-  const branchUrl = process.env['SANITY_STUDIO_VERCEL_BRANCH_URL'].replace(
+  const branchUrl = process.env.SANITY_STUDIO_VERCEL_BRANCH_URL.replace(
     'visual-editing-studio-git-',
     '',
   )
@@ -99,23 +99,22 @@ function definePreviewUrl(
 }
 
 const presentationWorkspaces = Object.entries({
-  'remix': process.env['SANITY_STUDIO_REMIX_PREVIEW_URL'] || 'http://localhost:3000/shoes',
+  'remix': process.env.SANITY_STUDIO_REMIX_PREVIEW_URL || 'http://localhost:3000/shoes',
   'next': {
     'app-router':
-      process.env['SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL'] || 'http://localhost:3001/shoes',
+      process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL || 'http://localhost:3001/shoes',
     'pages-router':
-      process.env['SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL'] ||
+      process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
       'http://localhost:3001/pages-router/shoes',
   },
-  'nuxt': process.env['SANITY_STUDIO_NUXT_PREVIEW_URL'] || 'http://localhost:3003/shoes',
+  'nuxt': process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
   'svelte': {
-    'svelte-basic':
-      process.env['SANITY_STUDIO_SVELTE_PREVIEW_URL'] || 'http://localhost:3004/shoes',
+    'svelte-basic': process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes',
     'svelte-loaders':
-      process.env['SANITY_STUDIO_SVELTE_PREVIEW_URL'] || 'http://localhost:3004/shoes-with-loaders',
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes-with-loaders',
   },
   'page-builder-demo':
-    process.env['SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL'] || 'http://localhost:3005/',
+    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
 } as const).map(([name, previewUrl]) => {
   const {
     projectId,
@@ -162,9 +161,7 @@ const presentationWorkspaces = Object.entries({
     projectId,
     dataset,
     form:
-      process.env['SANITY_STUDIO_STEGA_DEBUG'] === 'true'
-        ? {components: {input: StegaDebugger}}
-        : {},
+      process.env.SANITY_STUDIO_STEGA_DEBUG === 'true' ? {components: {input: StegaDebugger}} : {},
     plugins: [
       ...Object.entries(previewUrl).map(([name, previewUrl]) => {
         const {tool: toolName} = Object.values(workspaces).find(
@@ -291,7 +288,7 @@ const performanceTestWorkspace = defineConfig({
     presentationTool({
       previewUrl: {
         ...(definePreviewUrl(
-          process.env['SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL'] ||
+          process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
             'http://localhost:3001/pages-router/shoes',
           'next',
           'pages-router',
