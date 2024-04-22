@@ -73,7 +73,7 @@ export function ContentEditor(props: {
               />
             </Card>
           ) : (
-            <Card padding={3} radius={2} tone="inherit">
+            <Card padding={2} radius={2} tone="inherit">
               <Flex gap={3}>
                 <Box flex="none">
                   <Text size={1}>
