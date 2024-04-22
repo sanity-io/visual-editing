@@ -20,6 +20,7 @@ import {useIntentLink} from 'sanity/router'
 import {DEFAULT_TOOL_NAME, DEFAULT_TOOL_TITLE} from '../constants'
 import {PresentationContext} from '../PresentationContext'
 import type {DocumentLocation, DocumentLocationsState, PresentationPluginOptions} from '../types'
+import {useCurrentPresentationToolName} from './useCurrentPresentationToolName'
 
 const LENGTH_FORMAT: Record<number, string> = {
   1: 'one',
@@ -150,6 +151,8 @@ function LocationItem(props: {
 }) {
   const {documentId, documentType, node, active, toolName} = props
   const presentation = useContext(PresentationContext)
+  const currentPresentationToolName = useCurrentPresentationToolName()
+  const isCurrentTool = toolName === currentPresentationToolName
   const navigate = presentation?.navigate
 
   const presentationLinkProps = useIntentLink({
@@ -164,16 +167,16 @@ function LocationItem(props: {
     },
   })
 
-  const handleClick = useCallback(() => {
+  const handleCurrentToolClick = useCallback(() => {
     navigate?.({}, {preview: node.href})
   }, [node.href, navigate])
 
   return (
     <Card
-      {...(presentation ? {} : presentationLinkProps)}
-      as={presentation ? 'button' : 'a'}
+      {...(isCurrentTool ? {} : presentationLinkProps)}
+      as="a"
       key={node.href}
-      onClick={handleClick}
+      onClick={isCurrentTool ? handleCurrentToolClick : presentationLinkProps.onClick}
       padding={3}
       radius={1}
       pressed={active}
@@ -187,7 +190,7 @@ function LocationItem(props: {
         </Box>
         <Stack flex={1} space={2}>
           <Text size={1} weight="medium">
-            {node.title}
+            {node.title} ({toolName})
           </Text>
           <Text muted size={1} textOverflow="ellipsis">
             {node.href}

@@ -5,7 +5,6 @@ import {styled} from 'styled-components'
 
 import type {PresentationPluginOptions} from '../types'
 import {useDocumentLocations} from '../useDocumentLocations'
-import {usePresentationTool} from '../usePresentationTool'
 import {LocationsBanner} from './LocationsBanner'
 import {PresentationDocumentContext} from './PresentationDocumentContext'
 
@@ -17,14 +16,6 @@ const LocationStack = styled(Stack)`
   }
 `
 
-function useCurrentPresentationToolName(): string | undefined {
-  try {
-    return usePresentationTool().name
-  } catch {
-    return undefined
-  }
-}
-
 export function PresentationDocumentHeader(props: {
   documentId: PublishedId
   options: PresentationPluginOptions
@@ -33,7 +24,6 @@ export function PresentationDocumentHeader(props: {
   const {documentId, options, schemaType} = props
 
   const context = useContext(PresentationDocumentContext)
-  const presentationToolName = useCurrentPresentationToolName()
   const {state, status} = useDocumentLocations({
     id: documentId,
     resolvers: options.resolve?.locations || options.locate,
@@ -46,9 +36,7 @@ export function PresentationDocumentHeader(props: {
 
   // If we are in the context of a Presentation tool, filter out the options
   // that are not relevant to the current tool instance
-  const relevantOptions = (context?.options || []).filter(({name}) =>
-    presentationToolName ? name === presentationToolName : true,
-  )
+  const relevantOptions = context?.options || []
 
   return (
     <LocationStack marginBottom={5} space={5}>
