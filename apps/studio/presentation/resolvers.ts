@@ -18,21 +18,15 @@ export const documentResolvers = defineDocuments([
     },
   },
   {
-    path: '/shoes',
+    path: '/products',
     mainDocument: {
-      type: 'siteSettings',
+      filter: `_type == "page" && slug.current == "products"`,
     },
   },
   {
     path: '/',
     mainDocument: {
       filter: `_type == "page" && (*[_id == "siteSettings"][0].frontPage._ref == _id)`,
-    },
-  },
-  {
-    path: '/products',
-    mainDocument: {
-      filter: `_type == "page" && slug.current == "products"`,
     },
   },
 ])
