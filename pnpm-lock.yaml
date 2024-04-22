@@ -452,9 +452,6 @@ importers:
       '@sanity/client':
         specifier: ^6.15.19
         version: 6.15.19(debug@3.2.7)
-      '@sanity/presentation':
-        specifier: workspace:*
-        version: link:../../packages/presentation
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
@@ -492,6 +489,12 @@ importers:
         specifier: 0.0.1
         version: 0.0.1
     devDependencies:
+      '@sanity/presentation':
+        specifier: workspace:*
+        version: link:../../packages/presentation
+      '@sanity/visual-editing':
+        specifier: workspace:*
+        version: link:../../packages/visual-editing
       '@types/react':
         specifier: ^18.2.79
         version: 18.2.79
