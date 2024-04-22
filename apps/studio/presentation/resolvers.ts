@@ -23,6 +23,18 @@ export const documentResolvers = defineDocuments([
       type: 'siteSettings',
     },
   },
+  {
+    path: '/',
+    mainDocument: {
+      filter: `_type == "page" && (*[_id == "siteSettings"][0].frontPage._ref == _id)`,
+    },
+  },
+  {
+    path: '/products',
+    mainDocument: {
+      filter: `_type == "page" && slug.current == "products"`,
+    },
+  },
 ])
 
 export const documentLocationResolvers = {
