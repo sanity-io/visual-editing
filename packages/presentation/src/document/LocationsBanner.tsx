@@ -190,7 +190,7 @@ function LocationItem(props: {
         </Box>
         <Stack flex={1} space={2}>
           <Text size={1} weight="medium">
-            {node.title} ({toolName})
+            {node.title}
           </Text>
           <Text muted size={1} textOverflow="ellipsis">
             {node.href}
