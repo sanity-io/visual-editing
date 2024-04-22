@@ -10,6 +10,7 @@ import {getIntentState} from './getIntentState'
 import {router} from './router'
 import type {
   DocumentLocationResolverSimple,
+  DocumentLocationsState,
   DocumentResolverDefinition,
   PresentationPluginOptions,
 } from './types'
@@ -27,7 +28,7 @@ const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplaye
  * @beta
  */
 export function defineLocations<K extends string>(
-  resolver: DocumentLocationResolverSimple<K>,
+  resolver: DocumentLocationResolverSimple<K> | DocumentLocationsState,
 ): typeof resolver {
   return resolver
 }

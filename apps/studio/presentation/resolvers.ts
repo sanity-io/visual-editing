@@ -62,8 +62,8 @@ export const documentLocationResolvers = {
       ],
     }),
   }),
-  siteSettings: {
+  siteSettings: defineLocations({
     message: 'This document is used on all pages',
     tone: 'caution',
-  },
+  }),
 } satisfies DocumentLocationResolvers
