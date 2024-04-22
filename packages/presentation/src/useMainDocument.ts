@@ -85,6 +85,8 @@ export function useMainDocument(props: {
   }, [path, previewUrl, routerState])
 
   useEffect(() => {
+    setMainDocumentState(undefined)
+
     if (!resolvers.length || !url) return undefined
     const controller = new AbortController()
 
@@ -122,6 +124,7 @@ export function useMainDocument(props: {
           perspective: 'previewDrafts',
           signal: controller.signal,
         }
+
         client
           .fetch<MainDocument>(query, params, options)
           .then((doc) => setMainDocumentState({document: doc || undefined}))
