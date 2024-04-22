@@ -6,7 +6,8 @@
     "paths": {
       "@sanity/presentation": ["../../packages/presentation/src"],
       "@sanity/preview-url-secret": ["../../packages/preview-url-secret/src"]
-    }
+    },
+    "noPropertyAccessFromIndexSignature": false
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
