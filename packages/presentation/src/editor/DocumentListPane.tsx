@@ -1,5 +1,6 @@
 import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
 import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
+import {getPublishedId} from 'sanity'
 import {
   DocumentListPane as StructureDocumentListPane,
   PaneLayout,
@@ -29,26 +30,32 @@ const WrappedCode = styled(Code)`
 `
 
 export function DocumentListPane(props: {
+  mainDocument?: {_id: string; _type: string}
   onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
   refs: {_id: string; _type: string}[]
 }): ReactElement {
-  const {onStructureParams, previewUrl, refs} = props
+  const {mainDocument, onStructureParams, previewUrl, refs} = props
   const {devMode} = usePresentationTool()
+
+  const ids = useMemo(
+    () => refs.filter((r) => getPublishedId(r._id) !== mainDocument?._id).map((r) => r._id),
+    [mainDocument, refs],
+  )
 
   const pane: Extract<PaneNode, {type: 'documentList'}> = useMemo(
     () => ({
       id: '$root',
       options: {
         filter: '_id in $ids',
-        params: {ids: refs.map((r) => r._id)},
-        // defaultOrdering: [{ field: '_updatedAt', direction: 'desc' }],
+        params: {ids},
+        // defaultOrdering: [{field: '_updatedAt', direction: 'desc'}],
       },
       schemaTypeName: '',
       title: 'Documents on this page',
       type: 'documentList',
     }),
-    [refs],
+    [ids],
   )
 
   const [errorParams, setErrorParams] = useState<{

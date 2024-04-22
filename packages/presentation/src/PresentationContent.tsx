@@ -75,6 +75,7 @@ export const PresentationContent: FunctionComponent<PresentationContentProps> = 
         <ContentEditor
           documentId={params.id}
           documentType={params.type}
+          mainDocument={mainDocument}
           onFocusPath={onFocusPath}
           onStructureParams={onStructureParams}
           previewUrl={params.preview}
