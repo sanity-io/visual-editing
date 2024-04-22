@@ -48,7 +48,7 @@ export interface PreviewUrlValidateUrlResult {
    */
   redirectTo?: string
   /**
-   * If the URL is valid, and the studior URL is known and valid, then its origin will be here
+   * If the URL is valid, and the studio URL is known and valid, then its origin will be here
    */
   studioOrigin?: string
 }
