@@ -145,7 +145,7 @@ export default function PresentationTool(props: {
     [props.tool.options?.resolve?.documents],
   )
 
-  const {mainDocument} = useMainDocument({
+  const mainDocumentState = useMainDocument({
     resolvers: mainDocumentResolvers,
     previewUrl: props.tool.options?.previewUrl,
     path: params.preview,
@@ -155,8 +155,8 @@ export default function PresentationTool(props: {
     if (state.mainDocument !== params.mainDocument) {
       const nextState = state.mainDocument
         ? {
-            id: mainDocument?._id || params.id,
-            type: mainDocument?._type || params.type,
+            id: mainDocumentState?.document?._id || params.id,
+            type: mainDocumentState?.document?._type || params.type,
           }
         : {}
 
@@ -165,13 +165,7 @@ export default function PresentationTool(props: {
       }
       navigate(nextState, nextSearchState)
     }
-  }, [mainDocument, params.mainDocument, params.id, params.type, state.mainDocument, navigate])
-
-  useEffect(() => {
-    if (params.mainDocument) {
-      navigate({id: mainDocument?._id, type: mainDocument?._type})
-    }
-  }, [mainDocument, params.mainDocument, navigate])
+  }, [mainDocumentState, params.mainDocument, params.id, params.type, state.mainDocument, navigate])
 
   // Update the perspective and viewport when the param changes
   useEffect(() => {
@@ -568,7 +562,7 @@ export default function PresentationTool(props: {
                   </Flex>
                 </Panel>
                 <PresentationContent
-                  mainDocument={mainDocument}
+                  mainDocumentState={mainDocumentState}
                   params={params}
                   documentsOnPage={documentsOnPage}
                   getCommentIntent={getCommentIntent}

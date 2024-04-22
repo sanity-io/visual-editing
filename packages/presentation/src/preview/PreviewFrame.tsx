@@ -3,7 +3,6 @@ import {
   CheckmarkIcon,
   ChevronDownIcon,
   DesktopIcon,
-  DocumentIcon,
   EditIcon,
   MobileDeviceIcon,
   PanelLeftIcon,
@@ -48,7 +47,6 @@ import {MAX_TIME_TO_OVERLAYS_CONNECTION} from '../constants'
 import {
   ACTION_IFRAME_LOADED,
   ACTION_IFRAME_RELOAD,
-  ACTION_MAIN_DOCUMENT,
   ACTION_PERSPECTIVE,
   ACTION_VIEWPORT,
   type DispatchPresentationAction,
@@ -118,20 +116,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
 
     const prefersReducedMotion = usePrefersReducedMotion()
 
-    const toggleMainDocumentView = useCallback(() => {
-      dispatch({
-        type: ACTION_MAIN_DOCUMENT,
-        mainDocument: !params.mainDocument,
-      })
-    }, [params.mainDocument, dispatch])
-
-    const toggleViewportSize = useCallback(
-      () =>
-        dispatch({
-          type: ACTION_VIEWPORT,
-          viewport: viewport === 'desktop' ? 'mobile' : 'desktop',
-        }),
-      [dispatch, viewport],
+    const setDesktopMode = useCallback(
+      () => dispatch({type: ACTION_VIEWPORT, viewport: 'desktop'}),
+      [dispatch],
+    )
+    const setMobileMode = useCallback(
+      () => dispatch({type: ACTION_VIEWPORT, viewport: 'mobile'}),
+      [dispatch],
     )
     const loading = iframe.status === 'loading' || iframe.status === 'reloading'
     const [timedOut, setTimedOut] = useState(false)
@@ -503,51 +494,39 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 />
               </Flex>
 
-              <Flex align="center" flex="none" gap={1}>
+              <Flex align="center" flex="none" gap={1} padding={1}>
                 <Tooltip
                   animate
-                  content={
-                    <Text size={1}>
-                      Switch to {viewport === 'desktop' ? 'narrow' : 'full'} viewport
-                    </Text>
-                  }
+                  content={<Text size={1}>Full viewport</Text>}
                   fallbackPlacements={['bottom-start']}
                   padding={2}
                   placement="bottom"
                   portal
                 >
                   <Button
-                    aria-label={`Toggle viewport size`}
+                    aria-label="Full viewport"
                     fontSize={1}
-                    icon={viewport === 'desktop' ? MobileDeviceIcon : DesktopIcon}
+                    icon={DesktopIcon}
                     mode="bleed"
                     onClick={setDesktopMode}
-                    padding={3}
+                    padding={2}
                     selected={viewport === 'desktop'}
                   />
                 </Tooltip>
-              </Flex>
-
-              <Flex align="center" flex="none" gap={1}>
                 <Tooltip
                   animate
-                  content={
-                    <Text size={1}>
-                      {params.mainDocument ? 'Disable' : 'Enable'} main document mode
-                    </Text>
-                  }
-                  fallbackPlacements={['bottom-start']}
+                  content={<Text size={1}>Narrow viewport</Text>}
                   padding={2}
                   placement="bottom"
                   portal
                 >
                   <Button
-                    aria-label="Main document"
+                    aria-label="Narrow viewport"
                     fontSize={1}
-                    icon={DocumentIcon}
+                    icon={MobileDeviceIcon}
                     mode="bleed"
                     onClick={setMobileMode}
-                    padding={3}
+                    padding={2}
                     selected={viewport === 'mobile'}
                   />
                 </Tooltip>
@@ -786,3 +765,23 @@ const iframeVariants = {
   },
   mobile: {
     ...sizes.mobile,
+    boxShadow: '0 0 0 1px var(--card-border-color)',
+  },
+  background: {
+    opacity: 0,
+    scale: 1,
+  },
+  idle: {
+    scale: 1,
+  },
+  reloading: {
+    scale: [1, 1, 1, 0.98],
+  },
+  active: {
+    opacity: [0, 0, 1],
+    scale: 1,
+  },
+  timedOut: {
+    opacity: [0, 0, 1],
+  },
+}

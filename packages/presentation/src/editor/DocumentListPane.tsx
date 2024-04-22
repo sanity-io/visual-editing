@@ -10,7 +10,7 @@ import {
 import {styled} from 'styled-components'
 
 import {ErrorCard} from '../components/ErrorCard'
-import type {StructureDocumentPaneParams} from '../types'
+import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
@@ -30,17 +30,20 @@ const WrappedCode = styled(Code)`
 `
 
 export function DocumentListPane(props: {
-  mainDocument?: {_id: string; _type: string}
+  mainDocumentState?: MainDocumentState
   onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
   refs: {_id: string; _type: string}[]
 }): ReactElement {
-  const {mainDocument, onStructureParams, previewUrl, refs} = props
+  const {mainDocumentState, onStructureParams, previewUrl, refs} = props
   const {devMode} = usePresentationTool()
 
   const ids = useMemo(
-    () => refs.filter((r) => getPublishedId(r._id) !== mainDocument?._id).map((r) => r._id),
-    [mainDocument, refs],
+    () =>
+      refs
+        .filter((r) => getPublishedId(r._id) !== mainDocumentState?.document?._id)
+        .map((r) => r._id),
+    [mainDocumentState, refs],
   )
 
   const pane: Extract<PaneNode, {type: 'documentList'}> = useMemo(

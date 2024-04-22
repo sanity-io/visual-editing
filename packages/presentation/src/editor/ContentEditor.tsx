@@ -1,16 +1,17 @@
-import {Badge, Card, Flex} from '@sanity/ui'
+import {WarningOutlineIcon} from '@sanity/icons'
+import {Badge, Box, Card, Flex, Text} from '@sanity/ui'
 import {type HTMLProps, type ReactElement, useCallback} from 'react'
 import {type Path, Preview, useSchema} from 'sanity'
 import {StateLink} from 'sanity/router'
 
-import type {StructureDocumentPaneParams} from '../types'
+import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
 import {DocumentListPane} from './DocumentListPane'
 import {DocumentPanel} from './DocumentPanel'
 
 export function ContentEditor(props: {
   documentId?: string
   documentType?: string
-  mainDocument?: {_id: string; _type: string}
+  mainDocumentState?: MainDocumentState
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
@@ -20,7 +21,7 @@ export function ContentEditor(props: {
   const {
     documentId,
     documentType,
-    mainDocument,
+    mainDocumentState,
     onFocusPath,
     onStructureParams,
     previewUrl,
@@ -36,14 +37,14 @@ export function ContentEditor(props: {
         <StateLink
           {...props}
           state={{
-            id: mainDocument!._id,
-            type: mainDocument!._type,
+            id: mainDocumentState!.document!._id,
+            type: mainDocumentState!.document!._type,
             _searchParams: Object.entries({preview: previewUrl}),
           }}
         />
       )
     },
-    [mainDocument, previewUrl],
+    [mainDocumentState, previewUrl],
   )
 
   if (documentId && documentType) {
@@ -61,20 +62,37 @@ export function ContentEditor(props: {
 
   return (
     <Flex direction="column" flex={1} height="fill">
-      {mainDocument && (
-        <Card borderBottom padding={3}>
-          <Card as={MainDocumentLink} data-as="a" padding={0} radius={2}>
-            <Preview
-              schemaType={schema.get(mainDocument._type)!}
-              status={<Badge>Main document</Badge>}
-              value={mainDocument}
-            />
-          </Card>
+      {mainDocumentState && (
+        <Card padding={3} tone={mainDocumentState.document ? 'inherit' : 'caution'}>
+          {mainDocumentState.document ? (
+            <Card as={MainDocumentLink} data-as="a" padding={0} radius={2}>
+              <Preview
+                schemaType={schema.get(mainDocumentState.document._type)!}
+                status={<Badge>Main document</Badge>}
+                value={mainDocumentState.document}
+              />
+            </Card>
+          ) : (
+            <Card padding={3} radius={2} tone="inherit">
+              <Flex gap={3}>
+                <Box flex="none">
+                  <Text size={1}>
+                    <WarningOutlineIcon />
+                  </Text>
+                </Box>
+                <Box flex={1}>
+                  <Text size={1}>
+                    Missing a main document for <code>{previewUrl}</code>
+                  </Text>
+                </Box>
+              </Flex>
+            </Card>
+          )}
         </Card>
       )}
 
       <DocumentListPane
-        mainDocument={mainDocument}
+        mainDocumentState={mainDocumentState}
         onStructureParams={onStructureParams}
         previewUrl={previewUrl}
         refs={refs}

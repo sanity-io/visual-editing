@@ -165,3 +165,12 @@ export interface FrameState {
   title: string | undefined
   url: string | undefined
 }
+
+export interface MainDocument {
+  _id: string
+  _type: string
+}
+
+export interface MainDocumentState {
+  document: MainDocument | undefined
+}

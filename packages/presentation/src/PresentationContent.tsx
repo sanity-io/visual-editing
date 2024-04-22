@@ -1,16 +1,20 @@
-import type {Dispatch, FunctionComponent, PropsWithChildren, SetStateAction} from 'react'
+import {
+  type Dispatch,
+  type FunctionComponent,
+  type PropsWithChildren,
+  type SetStateAction,
+} from 'react'
 import type {Path, SanityDocument} from 'sanity'
 import {type CommentIntentGetter, CommentsIntentProvider} from 'sanity/structure'
 
 import {ContentEditor} from './editor/ContentEditor'
-import {MainDocumentEditor} from './editor/MainDocumentEditor'
 import {DisplayedDocumentBroadcasterProvider} from './loader/DisplayedDocumentBroadcaster'
 import {Panel} from './panels/Panel'
 import {PanelResizer} from './panels/PanelResizer'
-import type {PresentationParams, StructureDocumentPaneParams} from './types'
+import type {MainDocumentState, PresentationParams, StructureDocumentPaneParams} from './types'
 
 export interface PresentationContentProps {
-  mainDocument: {_id: string; _type: string} | undefined
+  mainDocumentState: MainDocumentState | undefined
   params: PresentationParams
   documentsOnPage: {_id: string; _type: string}[]
   getCommentIntent: CommentIntentGetter
@@ -49,7 +53,7 @@ export const PresentationContent: FunctionComponent<PresentationContentProps> = 
   const {
     documentsOnPage,
     getCommentIntent,
-    mainDocument,
+    mainDocumentState,
     onFocusPath,
     onStructureParams,
     params,
@@ -63,26 +67,16 @@ export const PresentationContent: FunctionComponent<PresentationContentProps> = 
       getCommentIntent={getCommentIntent}
       setDisplayedDocument={setDisplayedDocument}
     >
-      {params.mainDocument ? (
-        <MainDocumentEditor
-          mainDocument={mainDocument}
-          onFocusPath={onFocusPath}
-          onStructureParams={onStructureParams}
-          params={params}
-          structureParams={structureParams}
-        />
-      ) : (
-        <ContentEditor
-          documentId={params.id}
-          documentType={params.type}
-          mainDocument={mainDocument}
-          onFocusPath={onFocusPath}
-          onStructureParams={onStructureParams}
-          previewUrl={params.preview}
-          refs={documentsOnPage}
-          structureParams={structureParams}
-        />
-      )}
+      <ContentEditor
+        documentId={params.id}
+        documentType={params.type}
+        mainDocumentState={mainDocumentState}
+        onFocusPath={onFocusPath}
+        onStructureParams={onStructureParams}
+        previewUrl={params.preview}
+        refs={documentsOnPage}
+        structureParams={structureParams}
+      />
     </PresentationContentWrapper>
   )
 }

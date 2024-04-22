@@ -1,3 +1,4 @@
+import type {ResponseQueryOptions} from '@sanity/client'
 import {match} from 'path-to-regexp'
 import {useEffect, useMemo, useState} from 'react'
 import {useClient, useDocumentStore} from 'sanity'
@@ -8,13 +9,10 @@ import type {
   DocumentResolver,
   DocumentResolverContext,
   DocumentResolverDefinition,
+  MainDocument,
+  MainDocumentState,
   PreviewUrlOption,
 } from './types'
-
-interface MainDocument {
-  _id: string
-  _type: string
-}
 
 export type MainDocumentResolverDefinition = Required<
   Pick<DocumentResolverDefinition, 'path' | 'mainDocument'>
@@ -61,14 +59,16 @@ export function useMainDocument(props: {
   path?: string
   previewUrl?: PreviewUrlOption
   resolvers: MainDocumentResolverDefinition[]
-}): {mainDocument: MainDocument | undefined} {
+}): MainDocumentState | undefined {
   const {resolvers, path, previewUrl} = props
 
   const {state: routerState} = useRouter()
   const documentStore = useDocumentStore()
   const client = useClient({apiVersion: API_VERSION})
 
-  const [mainDocument, setMainDocument] = useState<MainDocument | undefined>(undefined)
+  const [mainDocumentState, setMainDocumentState] = useState<MainDocumentState | undefined>(
+    undefined,
+  )
 
   const url = useMemo(() => {
     const relativeUrl =
@@ -118,10 +118,13 @@ export function useMainDocument(props: {
       const params = getParamsFromResult(result.resolver.mainDocument, result.context)
 
       if (query) {
-        const options = {signal: controller.signal}
+        const options: ResponseQueryOptions = {
+          perspective: 'previewDrafts',
+          signal: controller.signal,
+        }
         client
           .fetch<MainDocument>(query, params, options)
-          .then(setMainDocument)
+          .then((doc) => setMainDocumentState({document: doc || undefined}))
           .catch((e) => {
             if (e instanceof Error && e.name === 'AbortError') return
           })
@@ -160,5 +163,5 @@ export function useMainDocument(props: {
     }
   }, [client, documentStore, resolvers, url])
 
-  return {mainDocument}
+  return mainDocumentState
 }
