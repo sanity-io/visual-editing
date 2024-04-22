@@ -36,6 +36,7 @@ import {
   EDIT_INTENT_MODE,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
+import {debounce} from './lib/debounce'
 import {Panel} from './panels/Panel'
 import {Panels} from './panels/Panels'
 import {PresentationContent} from './PresentationContent'
@@ -55,6 +56,7 @@ import type {
   FrameState,
   LiveQueriesState,
   LiveQueriesStateValue,
+  PresentationNavigate,
   PresentationPluginOptions,
   PresentationStateParams,
   StructureDocumentPaneParams,
@@ -114,13 +116,20 @@ export default function PresentationTool(props: {
     url: undefined,
   })
 
-  const {navigate, params, structureParams} = useParams({
+  const {
+    navigate: _navigate,
+    params,
+    structureParams,
+  } = useParams({
     initialPreviewUrl,
     routerNavigate,
     routerState,
     routerSearchParams,
     frameStateRef,
   })
+
+  // Most navigation events should be debounced, so use this unless explicitly needed
+  const navigate = useMemo(() => debounce<PresentationNavigate>(_navigate, 50), [_navigate])
 
   const [state, dispatch] = useReducer(
     presentationReducer,
@@ -149,6 +158,8 @@ export default function PresentationTool(props: {
     resolvers: mainDocumentResolvers,
     previewUrl: props.tool.options?.previewUrl,
     path: params.preview,
+    // Prevent flash of content by using immediate navigation
+    navigate: _navigate,
   })
 
   useEffect(() => {
