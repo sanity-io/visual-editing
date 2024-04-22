@@ -84,6 +84,9 @@ export interface PresentationPluginOptions {
   icon?: ComponentType
   name?: string
   title?: string
+  /**
+   * @deprecated use `resolve.locations` instead
+   */
   locate?: DocumentLocationResolver
   resolve?: {
     documents?: DocumentResolverDefinition[]

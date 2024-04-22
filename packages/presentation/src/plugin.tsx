@@ -48,6 +48,11 @@ export function defineDocuments(resolvers: DocumentResolverDefinition[]): typeof
 
 export const presentationTool = definePlugin<PresentationPluginOptions>((options) => {
   const toolName = options.name || DEFAULT_TOOL_NAME
+
+  if ('locate' in options) {
+    console.warn('Presentation’s `locate` option is deprecated. Use `resolve.locations` instead.')
+  }
+
   const hasLocationsResolver = !!(options.resolve?.locations || options.locate)
 
   function PresentationDocumentInput(props: InputProps) {
