@@ -34,21 +34,19 @@ export function PresentationDocumentHeader(props: {
     return null
   }
 
-  // If we are in the context of a Presentation tool, filter out the options
-  // that are not relevant to the current tool instance
-  const relevantOptions = context?.options || []
+  const contextOptions = context?.options || []
 
   return (
     <LocationStack marginBottom={5} space={5}>
       <Stack space={2}>
-        {relevantOptions.map((options, idx) => (
+        {contextOptions.map((options, idx) => (
           <LocationsBanner
             documentId={documentId}
             isResolving={status === 'resolving'}
             key={idx}
             options={options}
             schemaType={schemaType}
-            showPresentationTitle={relevantOptions.length > 1}
+            showPresentationTitle={contextOptions.length > 1}
             state={state}
           />
         ))}
