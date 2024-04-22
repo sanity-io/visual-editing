@@ -3,6 +3,9 @@
   "scripts": {
     "build": "turbo run build --filter='./packages/*'",
     "dev": "turbo run dev --filter=./apps/* --filter=!./apps/next-server-only --filter=!./apps/next-no-cache",
+    "dev:next": "turbo run dev --filter=./apps/next --filter=./apps/studio",
+    "dev:nuxt": "turbo run dev --filter=./apps/nuxt --filter=./apps/studio",
+    "dev:svelte": "turbo run dev --filter=./apps/svelte --filter=./apps/studio",
     "format": "prettier --cache --write .",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
