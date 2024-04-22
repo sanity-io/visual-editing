@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.7...visual-editing-helpers-v0.6.8) (2024-04-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.20 ([#1385](https://github.com/sanity-io/visual-editing/issues/1385)) ([8ead6bf](https://github.com/sanity-io/visual-editing/commit/8ead6bf64505b194ebe1b084d6f5b6d4f1d7196e))
+
 ## [0.6.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.6...visual-editing-helpers-v0.6.7) (2024-04-19)
 
 
