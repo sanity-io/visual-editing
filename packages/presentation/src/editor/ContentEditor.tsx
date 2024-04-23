@@ -82,7 +82,7 @@ export function ContentEditor(props: {
                 </Box>
                 <Box flex={1}>
                   <Text size={1}>
-                    Missing a main document for <code>{previewUrl}</code>
+                    Missing a main document for <code>{mainDocumentState.path}</code>
                   </Text>
                 </Box>
               </Flex>

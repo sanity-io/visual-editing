@@ -132,7 +132,7 @@ export function useMainDocument(props: {
             .fetch<MainDocument>(query, params, options)
             .then((doc) => {
               if (!doc) throw new Error()
-              setMainDocumentState({document: doc})
+              setMainDocumentState({document: doc, path: url.pathname})
               if (mainDocumentIdRef.current !== doc._id) {
                 navigate?.({
                   id: doc._id,
@@ -143,7 +143,7 @@ export function useMainDocument(props: {
             })
             .catch((e) => {
               if (e instanceof Error && e.name === 'AbortError') return
-              setMainDocumentState({document: undefined})
+              setMainDocumentState({document: undefined, path: url.pathname})
               mainDocumentIdRef.current = undefined
             })
           return () => {

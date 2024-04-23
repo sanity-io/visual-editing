@@ -175,5 +175,6 @@ export interface MainDocument {
 }
 
 export interface MainDocumentState {
+  path: string
   document: MainDocument | undefined
 }
