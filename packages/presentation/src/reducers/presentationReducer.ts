@@ -23,7 +23,6 @@ export interface PresentationState {
 export const ACTION_IFRAME_LOADED = 'ACTION_IFRAME_LOADED'
 export const ACTION_IFRAME_REFRESH = 'ACTION_IFRAME_REFRESH'
 export const ACTION_IFRAME_RELOAD = 'ACTION_IFRAME_RELOAD'
-export const ACTION_MAIN_DOCUMENT = 'ACTION_MAIN_DOCUMENT'
 export const ACTION_PERSPECTIVE = 'ACTION_PERSPECTIVE'
 export const ACTION_VIEWPORT = 'ACTION_VIEWPORT'
 export const ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE = 'ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE'
@@ -36,10 +35,6 @@ interface IframeRefreshAction {
 }
 interface IframeReloadAction {
   type: typeof ACTION_IFRAME_RELOAD
-}
-interface MainDocumentAction {
-  type: typeof ACTION_MAIN_DOCUMENT
-  mainDocument: PresentationState['mainDocument']
 }
 interface PerspectiveAction {
   type: typeof ACTION_PERSPECTIVE
@@ -58,7 +53,6 @@ type PresentationAction =
   | IframeLoadedAction
   | IframeRefreshAction
   | IframeReloadAction
-  | MainDocumentAction
   | PerspectiveAction
   | ViewportAction
   | VisualEditingOverlaysToggleAction
@@ -98,11 +92,6 @@ export const presentationReducer: Reducer<
               status: 'reloading',
             },
           }
-    case ACTION_MAIN_DOCUMENT:
-      return {
-        ...state,
-        mainDocument: parse(mainDocumentSchema, action.mainDocument),
-      }
     case ACTION_PERSPECTIVE:
       return {
         ...state,

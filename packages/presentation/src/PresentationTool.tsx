@@ -134,7 +134,6 @@ export default function PresentationTool(props: {
   const [state, dispatch] = useReducer(
     presentationReducer,
     {
-      mainDocument: params.mainDocument,
       perspective: params.perspective,
       viewport: params.viewport,
     },
@@ -161,22 +160,6 @@ export default function PresentationTool(props: {
     // Prevent flash of content by using immediate navigation
     navigate: _navigate,
   })
-
-  useEffect(() => {
-    if (state.mainDocument !== params.mainDocument) {
-      const nextState = state.mainDocument
-        ? {
-            id: mainDocumentState?.document?._id || params.id,
-            type: mainDocumentState?.document?._type || params.type,
-          }
-        : {}
-
-      const nextSearchState = {
-        mainDocument: state.mainDocument ? 'true' : undefined,
-      }
-      navigate(nextState, nextSearchState)
-    }
-  }, [mainDocumentState, params.mainDocument, params.id, params.type, state.mainDocument, navigate])
 
   // Update the perspective and viewport when the param changes
   useEffect(() => {

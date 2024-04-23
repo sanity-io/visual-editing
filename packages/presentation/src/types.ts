@@ -128,13 +128,11 @@ export interface StructureDocumentPaneParams {
 export interface PresentationParams extends PresentationStateParams, StructureDocumentPaneParams {
   id?: string
   preview?: string
-  mainDocument?: boolean
   perspective?: string
   viewport?: string
 }
 
 export interface PresentationSearchParams extends StructureDocumentPaneParams {
-  mainDocument?: string
   preview?: string
   perspective?: string
   viewport?: string

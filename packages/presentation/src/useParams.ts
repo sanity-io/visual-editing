@@ -48,7 +48,6 @@ export function useParams({
       path,
       preview:
         routerSearchParams['preview'] || `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
-      mainDocument: routerSearchParams['mainDocument'] === 'true' ? true : false,
       perspective: routerSearchParams['perspective'],
       viewport: routerSearchParams['viewport'],
       inspect: routerSearchParams['inspect'],
