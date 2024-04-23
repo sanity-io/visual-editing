@@ -14,7 +14,6 @@ export default defineCliConfig({
         'apps-common': require.resolve('../common/src'),
         '@sanity/presentation': require.resolve('../../packages/presentation/src'),
         'sanity/_internal': require.resolve('sanity/_internal'),
-        'sanity/_internalBrowser': require.resolve('sanity/_internalBrowser'),
         'sanity/cli': require.resolve('sanity/cli'),
         'sanity/desk': require.resolve('sanity/desk'),
         'sanity/router': require.resolve('sanity/router'),
