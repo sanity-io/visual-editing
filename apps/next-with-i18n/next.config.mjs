@@ -29,7 +29,6 @@ const config = {
       ...config.resolve.alias,
       '@sanity/presentation': requireResolve('@sanity/presentation'),
       '@sanity/vision': requireResolve('@sanity/vision'),
-      'sanity/_internalBrowser': requireResolve('sanity/_internalBrowser'),
       'sanity/desk': requireResolve('sanity/desk'),
       'sanity/presentation': requireResolve('sanity/presentation'),
       'sanity/router': requireResolve('sanity/router'),
