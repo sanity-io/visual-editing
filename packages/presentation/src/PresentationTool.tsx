@@ -53,6 +53,7 @@ import {
   presentationReducerInit,
 } from './reducers/presentationReducer'
 import type {
+  DocumentResolver,
   FrameState,
   LiveQueriesState,
   LiveQueriesStateValue,
@@ -62,7 +63,7 @@ import type {
   StructureDocumentPaneParams,
 } from './types'
 import {useDocumentsOnPage} from './useDocumentsOnPage'
-import {type MainDocumentResolverDefinition, useMainDocument} from './useMainDocument'
+import {useMainDocument} from './useMainDocument'
 import {useParams} from './useParams'
 import {usePreviewUrl} from './usePreviewUrl'
 
@@ -145,16 +146,8 @@ export default function PresentationTool(props: {
   const projectId = useProjectId()
   const dataset = useDataset()
 
-  const mainDocumentResolvers = useMemo(
-    () =>
-      (props.tool.options?.resolve?.documents || []).filter(
-        (r) => !!r.mainDocument,
-      ) as MainDocumentResolverDefinition[],
-    [props.tool.options?.resolve?.documents],
-  )
-
   const mainDocumentState = useMainDocument({
-    resolvers: mainDocumentResolvers,
+    resolvers: props.tool.options?.resolve?.mainDocuments,
     previewUrl: props.tool.options?.previewUrl,
     path: params.preview,
     // Prevent flash of content by using immediate navigation

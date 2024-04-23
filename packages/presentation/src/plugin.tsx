@@ -11,7 +11,7 @@ import {router} from './router'
 import type {
   DocumentLocationResolverSimple,
   DocumentLocationsState,
-  DocumentResolverDefinition,
+  DocumentResolver,
   PresentationPluginOptions,
 } from './types'
 
@@ -42,7 +42,7 @@ export function defineLocations<K extends string>(
  *
  * @beta
  */
-export function defineDocuments(resolvers: DocumentResolverDefinition[]): typeof resolvers {
+export function defineDocuments(resolvers: DocumentResolver[]): typeof resolvers {
   return resolvers
 }
 

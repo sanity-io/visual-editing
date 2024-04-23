@@ -8,16 +8,11 @@ import {API_VERSION} from './constants'
 import type {
   DocumentResolver,
   DocumentResolverContext,
-  DocumentResolverDefinition,
   MainDocument,
   MainDocumentState,
   PresentationNavigate,
   PreviewUrlOption,
 } from './types'
-
-export type MainDocumentResolverDefinition = Required<
-  Pick<DocumentResolverDefinition, 'path' | 'mainDocument'>
->
 
 // Helper function to "unwrap" a result when it is either explicitly provided or
 // returned as the result of a passed function
@@ -29,8 +24,8 @@ function getQueryFromResult(
   resolver: DocumentResolver,
   context: DocumentResolverContext,
 ): string | undefined {
-  if (typeof resolver === 'function') {
-    const filter = resolver(context)?.filter
+  if (resolver.resolve) {
+    const filter = resolver.resolve(context)?.filter
     return filter ? `*[${filter}][0]{_id, _type}` : undefined
   }
 
@@ -45,8 +40,8 @@ function getParamsFromResult(
   resolver: DocumentResolver,
   context: DocumentResolverContext,
 ): Record<string, string> {
-  if (typeof resolver === 'function') {
-    return resolver(context)?.params ?? context.params
+  if (resolver.resolve) {
+    return resolver.resolve(context)?.params ?? context.params
   }
 
   if ('type' in resolver) {
@@ -60,9 +55,9 @@ export function useMainDocument(props: {
   navigate?: PresentationNavigate
   path?: string
   previewUrl?: PreviewUrlOption
-  resolvers: MainDocumentResolverDefinition[]
+  resolvers?: DocumentResolver[]
 }): MainDocumentState | undefined {
-  const {navigate, resolvers, path, previewUrl} = props
+  const {navigate, resolvers = [], path, previewUrl} = props
 
   const {state: routerState} = useRouter()
   const documentStore = useDocumentStore()
@@ -97,7 +92,7 @@ export function useMainDocument(props: {
       let result:
         | {
             context: DocumentResolverContext
-            resolver: MainDocumentResolverDefinition
+            resolver: DocumentResolver
           }
         | undefined
 
@@ -118,8 +113,8 @@ export function useMainDocument(props: {
       }
 
       if (result) {
-        const query = getQueryFromResult(result.resolver.mainDocument, result.context)
-        const params = getParamsFromResult(result.resolver.mainDocument, result.context)
+        const query = getQueryFromResult(result.resolver, result.context)
+        const params = getParamsFromResult(result.resolver, result.context)
 
         if (query) {
           const controller = new AbortController()

@@ -4,30 +4,22 @@ import {
   type DocumentLocationResolvers,
 } from '@sanity/presentation'
 
-export const documentResolvers = defineDocuments([
+export const mainDocumentResolvers = defineDocuments([
   {
     path: '/shoes/:slug',
-    mainDocument: {
-      filter: `_type == "shoe" && slug.current == $slug`,
-    },
+    filter: `_type == "shoe" && slug.current == $slug`,
   },
   {
     path: '/product/:slug',
-    mainDocument: {
-      filter: `_type == "product" && slug.current == $slug`,
-    },
+    filter: `_type == "product" && slug.current == $slug`,
   },
   {
     path: '/products',
-    mainDocument: {
-      filter: `_type == "page" && slug.current == "products"`,
-    },
+    filter: `_type == "page" && slug.current == "products"`,
   },
   {
     path: '/',
-    mainDocument: {
-      filter: `_type == "page" && (*[_id == "siteSettings"][0].frontPage._ref == _id)`,
-    },
+    filter: `_type == "page" && (*[_id == "siteSettings"][0].frontPage._ref == _id)`,
   },
 ])
 

@@ -61,23 +61,33 @@ export interface DocumentResolverContext {
 export type ContextFn<T> = (context: DocumentResolverContext) => T
 
 export type DocumentResolver =
-  | {type: string}
   | {
+      path: string
+      type: string
+      filter?: never
+      params?: never
+      resolve?: never
+    }
+  | {
+      path: string
+      type?: never
       filter: ContextFn<string> | string
       params?: ContextFn<Record<string, string>> | Record<string, string>
+      resolve?: never
     }
-  | ContextFn<
-      | {
-          filter: string
-          params?: Record<string, string>
-        }
-      | undefined
-    >
-
-export interface DocumentResolverDefinition {
-  path: string
-  mainDocument?: DocumentResolver
-}
+  | {
+      path: string
+      type?: never
+      filter?: never
+      params?: never
+      resolve: ContextFn<
+        | {
+            filter: string
+            params?: Record<string, string>
+          }
+        | undefined
+      >
+    }
 
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
@@ -89,7 +99,7 @@ export interface PresentationPluginOptions {
    */
   locate?: DocumentLocationResolver
   resolve?: {
-    documents?: DocumentResolverDefinition[]
+    mainDocuments?: DocumentResolver[]
     locations?: DocumentLocationResolvers | DocumentLocationResolver
   }
   previewUrl: PreviewUrlOption
