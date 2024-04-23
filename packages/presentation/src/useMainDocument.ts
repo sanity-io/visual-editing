@@ -85,7 +85,7 @@ export function useMainDocument(props: {
           : location.origin
 
     return new URL(relativeUrl, base)
-  }, [path, previewUrl, routerState])
+  }, [path, previewUrl, routerState._searchParams])
 
   const clearState = useCallback(() => {
     setMainDocumentState(undefined)
@@ -129,16 +129,18 @@ export function useMainDocument(props: {
           }
 
           client
-            .fetch<MainDocument>(query, params, options)
+            .fetch<MainDocument | undefined>(query, params, options)
             .then((doc) => {
-              if (!doc) throw new Error()
-              setMainDocumentState({document: doc, path: url.pathname})
-              if (mainDocumentIdRef.current !== doc._id) {
-                navigate?.({
-                  id: doc._id,
-                  type: doc._type,
+              if (!doc || mainDocumentIdRef.current !== doc._id) {
+                setMainDocumentState({
+                  document: doc,
+                  path: url.pathname,
                 })
-                mainDocumentIdRef.current = doc._id
+                navigate?.({
+                  id: doc?._id,
+                  type: doc?._type,
+                })
+                mainDocumentIdRef.current = doc?._id
               }
             })
             .catch((e) => {
