@@ -53,7 +53,6 @@ import {
   presentationReducerInit,
 } from './reducers/presentationReducer'
 import type {
-  DocumentResolver,
   FrameState,
   LiveQueriesState,
   LiveQueriesStateValue,

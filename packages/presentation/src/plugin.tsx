@@ -50,6 +50,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
   const toolName = options.name || DEFAULT_TOOL_NAME
 
   if ('locate' in options) {
+    // eslint-disable-next-line no-console
     console.warn('Presentation’s `locate` option is deprecated. Use `resolve.locations` instead.')
   }
 
