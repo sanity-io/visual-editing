@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.12.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.7...presentation-v1.12.8) (2024-04-25)
+
+
+### Bug Fixes
+
+* remove `unrecognized previewUrl prop on DOM element` warning ([#1400](https://github.com/sanity-io/visual-editing/issues/1400)) ([abb4a3e](https://github.com/sanity-io/visual-editing/commit/abb4a3eaa3ac0dfb991e21f9272e666db242a784))
+
 ## [1.12.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.6...presentation-v1.12.7) (2024-04-22)
 
 
