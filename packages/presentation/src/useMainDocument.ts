@@ -1,5 +1,5 @@
 import type {ResponseQueryOptions} from '@sanity/client'
-import {match} from 'path-to-regexp'
+import {match, type Path} from 'path-to-regexp'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {useClient, useDocumentStore} from 'sanity'
 import {useRouter} from 'sanity/router'
@@ -51,6 +51,41 @@ function getParamsFromResult(
   return fnOrObj(resolver.params, context) ?? context.params
 }
 
+export function getRouteContext(route: Path, url: URL): DocumentResolverContext | undefined {
+  const routes = Array.isArray(route) ? route : [route]
+
+  for (route of routes) {
+    let origin: DocumentResolverContext['origin'] = undefined
+    let path = route
+
+    // Handle absolute URLs
+    if (typeof route === 'string') {
+      try {
+        const absolute = new URL(route)
+        origin = absolute.origin
+        path = absolute.pathname
+      } catch {
+        // Ignore, as we assume a relative path
+      }
+    }
+
+    // If an origin has been explicitly provided, check that it matches
+    if (origin && url.origin !== origin) continue
+
+    try {
+      const matcher = match<Record<string, string>>(path, {decode: decodeURIComponent})
+      const result = matcher(url.pathname)
+      if (result) {
+        const {params, path} = result
+        return {origin, params, path}
+      }
+    } catch (e) {
+      throw new Error(`"${route}" is not a valid route pattern`)
+    }
+  }
+  return undefined
+}
+
 export function useMainDocument(props: {
   navigate?: PresentationNavigate
   path?: string
@@ -97,18 +132,10 @@ export function useMainDocument(props: {
         | undefined
 
       for (const resolver of resolvers) {
-        try {
-          const _result = match<Record<string, string>>(resolver.path, {
-            decode: decodeURIComponent,
-          })(url.pathname)
-          if (_result) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const {index, ...context} = _result
-            result = {context, resolver}
-            break
-          }
-        } catch (e) {
-          throw new Error(`"${resolver.path}" is not a valid path pattern`)
+        const context = getRouteContext(resolver.route, url)
+        if (context) {
+          result = {context, resolver}
+          break
         }
       }
 
