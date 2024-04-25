@@ -21,17 +21,17 @@
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
-    "./encode-data-attribute": {
-      "source": "./src/encodeDataAttribute.ts",
-      "import": "./dist/encode-data-attribute.js",
-      "require": "./dist/encode-data-attribute.cjs",
-      "default": "./dist/encode-data-attribute.js"
-    },
     "./create-data-attribute": {
       "source": "./src/createDataAttribute.ts",
       "import": "./dist/create-data-attribute.js",
       "require": "./dist/create-data-attribute.cjs",
       "default": "./dist/create-data-attribute.js"
+    },
+    "./encode-data-attribute": {
+      "source": "./src/encodeDataAttribute.ts",
+      "import": "./dist/encode-data-attribute.js",
+      "require": "./dist/encode-data-attribute.cjs",
+      "default": "./dist/encode-data-attribute.js"
     },
     "./package.json": "./package.json"
   },
@@ -40,11 +40,11 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
-      "encode-data-attribute": [
-        "./dist/encode-data-attribute.d.ts"
-      ],
       "create-data-attribute": [
         "./dist/create-data-attribute.d.ts"
+      ],
+      "encode-data-attribute": [
+        "./dist/encode-data-attribute.d.ts"
       ]
     }
   },

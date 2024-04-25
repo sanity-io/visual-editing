@@ -8,8 +8,7 @@ import {
   studioPathToJsonPath,
 } from '@sanity/client/csm'
 import type {StegaConfig} from '@sanity/client/stega'
-
-import type {EncodeDataAttribute} from './types'
+import type {EncodeDataAttribute} from '@sanity/core-loader'
 
 /** @public */
 export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
@@ -44,8 +43,6 @@ export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
         : studioPath.toString(jsonPathToStudioPath(editInfo.path)),
   })
 }
-
-export type {EncodeDataAttribute}
 
 /**
  * @public

@@ -1,8 +1,14 @@
 {
   "extends": "@sanity/pkg-utils/tsconfig/strictest.json",
   "compilerOptions": {
+    "paths": {
+      "@sanity/core-loader/create-data-attribute": ["./src/createDataAttribute.ts"],
+      "@sanity/core-loader/encode-data-attribute": ["./src/encodeDataAttribute.ts"],
+      "@sanity/core-loader": ["./src/index"]
+    },
     "baseUrl": ".",
     "rootDir": ".",
+    "outDir": "dist",
     "noUnusedLocals": false,
     "noUnusedParameters": false
   }
