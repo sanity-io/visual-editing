@@ -9,6 +9,7 @@ export function getClient() {
     dataset,
     useCdn: false,
     apiVersion,
+    perspective: 'previewDrafts',
     stega: {
       enabled: true,
       studioUrl: () => ({baseUrl: studioUrl, workspace}),

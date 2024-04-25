@@ -1,10 +1,10 @@
 'use client'
 
-import {useLiveMode} from '@/sanity'
+import {client, useLiveMode} from '@/sanity'
 import {VisualEditing} from 'next-sanity'
 
 export default function LiveVisualEditing() {
-  useLiveMode({})
+  useLiveMode({client})
 
   return <VisualEditing />
 }
