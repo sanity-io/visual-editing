@@ -4,7 +4,7 @@ import {type SanityDocument, useDocumentStore} from 'sanity'
 
 import type {
   DocumentLocationResolver,
-  DocumentLocationResolverSimple,
+  DocumentLocationResolvers,
   DocumentLocationsState,
   DocumentLocationsStatus,
 } from './types'
@@ -13,9 +13,7 @@ const INITIAL_STATE: DocumentLocationsState = {locations: []}
 
 export function useDocumentLocations(props: {
   id: string
-  resolvers?:
-    | DocumentLocationResolver
-    | Record<string, DocumentLocationResolverSimple | DocumentLocationsState>
+  resolvers?: DocumentLocationResolver | DocumentLocationResolvers
   type: string
 }): {
   state: DocumentLocationsState

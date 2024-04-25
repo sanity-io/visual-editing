@@ -41,10 +41,10 @@ export type PreviewUrlOption = string | PreviewUrlResolver<SanityClient> | Previ
 
 export type DocumentLocationResolvers = Record<
   string,
-  DocumentLocationResolverSimple | DocumentLocationsState
+  DocumentLocationResolverObject | DocumentLocationsState
 >
 
-export type DocumentLocationResolverSimple<K extends string = string> = {
+export type DocumentLocationResolverObject<K extends string = string> = {
   select: Record<K, string>
   resolve: (value: Record<K, any> | null) => DocumentLocationsState | null | undefined | void
 }
@@ -54,6 +54,7 @@ export interface PathResolverParams {
   groups: string[]
 }
 export interface DocumentResolverContext {
+  origin: string | undefined
   params: Record<string, string>
   path: string
 }
@@ -62,21 +63,21 @@ export type ContextFn<T> = (context: DocumentResolverContext) => T
 
 export type DocumentResolver =
   | {
-      path: string
+      route: string | Array<string>
       type: string
       filter?: never
       params?: never
       resolve?: never
     }
   | {
-      path: string
+      route: string | Array<string>
       type?: never
       filter: ContextFn<string> | string
       params?: ContextFn<Record<string, string>> | Record<string, string>
       resolve?: never
     }
   | {
-      path: string
+      route: string | Array<string>
       type?: never
       filter?: never
       params?: never

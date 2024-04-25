@@ -6,19 +6,19 @@ import {
 
 export const mainDocumentResolvers = defineDocuments([
   {
-    path: '/shoes/:slug',
+    route: '/shoes/:slug',
     filter: `_type == "shoe" && slug.current == $slug`,
   },
   {
-    path: '/product/:slug',
+    route: '/product/:slug',
     filter: `_type == "product" && slug.current == $slug`,
   },
   {
-    path: '/products',
+    route: '/products',
     filter: `_type == "page" && slug.current == "products"`,
   },
   {
-    path: '/',
+    route: '/',
     filter: `_type == "page" && (*[_id == "siteSettings"][0].frontPage._ref == _id)`,
   },
 ])

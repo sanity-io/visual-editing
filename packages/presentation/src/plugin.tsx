@@ -9,7 +9,7 @@ import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
 import {router} from './router'
 import type {
-  DocumentLocationResolverSimple,
+  DocumentLocationResolverObject,
   DocumentLocationsState,
   DocumentResolver,
   PresentationPluginOptions,
@@ -28,7 +28,7 @@ const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplaye
  * @beta
  */
 export function defineLocations<K extends string>(
-  resolver: DocumentLocationResolverSimple<K> | DocumentLocationsState,
+  resolver: DocumentLocationResolverObject<K> | DocumentLocationsState,
 ): typeof resolver {
   return resolver
 }
