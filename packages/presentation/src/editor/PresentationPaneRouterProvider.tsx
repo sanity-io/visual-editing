@@ -70,7 +70,7 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {documentId, documentType, parentRefPath, template, ...restProps} = props
+  const {documentId, documentType, parentRefPath, template, previewUrl, ...restProps} = props
 
   return (
     <StateLink
@@ -79,7 +79,7 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
       state={{
         id: documentId,
         type: documentType,
-        _searchParams: Object.entries({preview: props.previewUrl}),
+        _searchParams: Object.entries({preview: previewUrl}),
       }}
       title={undefined}
     />
