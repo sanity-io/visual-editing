@@ -20,7 +20,7 @@ const getKeyForPanels = (panels: PanelElement[]) => {
 }
 
 export function usePanelsStorage(): {
-  get: (panels: PanelElement[]) => number[]
+  get: (panels: PanelElement[]) => number[] | undefined
   set: (panels: PanelElement[], widths: number[]) => void
   setDebounced: (panels: PanelElement[], widths: number[]) => void
 } {
@@ -28,7 +28,9 @@ export function usePanelsStorage(): {
     const get = (panels: PanelElement[]) => {
       const stored = getStoredItem()
       const key = getKeyForPanels(panels)
-      return stored[key]
+      return Array.isArray(stored[key]) && stored[key].some((val) => val === null)
+        ? undefined
+        : stored[key]
     }
 
     const set = (panels: PanelElement[], widths: number[]) => {
