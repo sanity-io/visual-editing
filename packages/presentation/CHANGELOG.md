@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.12.10](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.9...presentation-v1.12.10) (2024-04-26)
+
+
+### Bug Fixes
+
+* the intial `preview` param no longer "sticks" until page reload ([#1418](https://github.com/sanity-io/visual-editing/issues/1418)) ([2d1bd73](https://github.com/sanity-io/visual-editing/commit/2d1bd7326a0400a47ea369d5336fdecfda65ebbc))
+
 ## [1.12.9](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.8...presentation-v1.12.9) (2024-04-26)
 
 
