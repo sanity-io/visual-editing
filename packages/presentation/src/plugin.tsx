@@ -20,12 +20,9 @@ const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplaye
 
 /**
  * Define locations for a given document type.
- *
  * This function doesn't do anything itself, it is used to provide type information.
- *
  * @param resolver - resolver that return locations for a document.
- *
- * @beta
+ * @public
  */
 export function defineLocations<K extends string>(
   resolver: DocumentLocationResolverObject<K> | DocumentLocationsState,
@@ -35,12 +32,9 @@ export function defineLocations<K extends string>(
 
 /**
  * Define documents for a given location.
- *
  * This function doesn't do anything itself, it is used to provide type information.
- *
  * @param resolvers - resolvers that return documents.
- *
- * @beta
+ * @public
  */
 export function defineDocuments(resolvers: DocumentResolver[]): typeof resolvers {
   return resolvers

@@ -175,32 +175,6 @@ export function useMainDocument(props: {
           }
         }
       }
-
-      // if (result) {
-      //   const query =
-      //     typeof result === 'string'
-      //       ? `*[_type == "${result}"][0]{_id, _type}`
-      //       : `*[${result.filter}][0]{_id, _type}`
-      //   const params = typeof result === 'string' ? {} : result.params || {}
-      //   const options = { signal: controller.signal }
-
-      //   // setFetching(true)
-      //   // const doc$ = documentStore.listenQuery(query, params, {
-      //   //   perspective: 'previewDrafts',
-      //   // }) as Observable<SanityDocument | null>
-
-      //   // const sub = doc$.subscribe((d) => {
-      //   //   console.log('set main document')
-      //   //   setFetching(false)
-      //   //   setMainDocument(d || undefined)
-      //   // })
-
-      //   // // const locations$ = doc$.pipe(map(locate.resolve))
-
-      //   // return () => {
-      //   //   sub.unsubscribe()
-      //   // }
-      //   // setMainDocument(undefined)
     }
     clearState()
     return undefined
