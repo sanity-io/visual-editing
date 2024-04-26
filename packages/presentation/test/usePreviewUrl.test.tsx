@@ -6,7 +6,7 @@ import type {SanityClient} from 'sanity'
 import {suspend} from 'suspend-react'
 import {beforeEach, describe, expect, test, vi} from 'vitest'
 
-import {PreviewUrlOption} from '../src/types'
+import type {PreviewUrlOption} from '../src/types'
 import {usePreviewUrl} from '../src/usePreviewUrl'
 
 vi.mock('sanity', () => {

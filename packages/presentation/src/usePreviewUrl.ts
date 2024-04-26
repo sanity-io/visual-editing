@@ -1,6 +1,6 @@
 import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
-import {startTransition, useEffect, useMemo, useState} from 'react'
+import {startTransition, useEffect, useMemo, useRef, useState} from 'react'
 import {type SanityClient, useActiveWorkspace, useClient, useCurrentUser} from 'sanity'
 import {suspend} from 'suspend-react'
 
@@ -16,11 +16,12 @@ export function usePreviewUrl(
   const workspace = useActiveWorkspace()
   const basePath = workspace?.activeWorkspace?.basePath || '/'
   const workspaceName = workspace?.activeWorkspace?.name || 'default'
-  const deps = useSuspendCacheKeys(toolName, basePath, workspaceName)
+  const deps = useSuspendCacheKeys(toolName, basePath, workspaceName, previewSearchParam)
   const previewUrlSecret = usePreviewUrlSecret(
     typeof previewUrl === 'object' || typeof previewUrl === 'function',
     deps,
   )
+
   return suspend(async () => {
     if (typeof previewUrl === 'string') {
       const resolvedUrl = new URL(previewUrl, location.origin)
@@ -65,7 +66,30 @@ export function usePreviewUrl(
 // https://github.com/pmndrs/suspend-react?tab=readme-ov-file#making-cache-keys-unique
 const resolveUUID = Symbol()
 
-function useSuspendCacheKeys(toolName: string, basePath: string, workspaceName: string) {
+function useSuspendCacheKeys(
+  toolName: string,
+  basePath: string,
+  workspaceName: string,
+  previewSearchParam: string | null,
+) {
+  // Allow busting the cache when the Presentation Tool is reloaded, without causing it to suspend on every render that changes the `preview` parameter
+  const [cachedPreviewSearchParam, setCachedPreviewSearchParam] = useState(
+    () => previewSearchParam || '',
+  )
+  const timeoutRef = useRef(0)
+  useEffect(() => {
+    if (cachedPreviewSearchParam && previewSearchParam) {
+      // Handle resets, like when the Presentation Tool is clicked in the navbar
+      window.clearTimeout(timeoutRef.current)
+      return () => {
+        timeoutRef.current = window.setTimeout(() => {
+          setCachedPreviewSearchParam('')
+        }, 100)
+      }
+    }
+    return
+  }, [cachedPreviewSearchParam, previewSearchParam])
+
   const currentUser = useCurrentUser()
   return useMemo(
     () => [
@@ -76,8 +100,9 @@ function useSuspendCacheKeys(toolName: string, basePath: string, workspaceName: 
       toolName,
       currentUser?.id,
       resolveUUID,
+      cachedPreviewSearchParam,
     ],
-    [basePath, currentUser?.id, toolName, workspaceName],
+    [basePath, currentUser?.id, toolName, workspaceName, cachedPreviewSearchParam],
   )
 }
 
