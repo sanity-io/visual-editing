@@ -38,6 +38,23 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.9.15](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.14...react-loader-v1.9.15) (2024-04-26)
+
+
+### Bug Fixes
+
+* **deps:** Update react monorepo to ^18.3.0 ([#1409](https://github.com/sanity-io/visual-editing/issues/1409)) ([1dedfee](https://github.com/sanity-io/visual-editing/commit/1dedfee39a056308f68e8dc77e9d0295f82a53a7))
+* revert react peer dep to ^18.2.0 ([#1414](https://github.com/sanity-io/visual-editing/issues/1414)) ([3578262](https://github.com/sanity-io/visual-editing/commit/3578262da3f94df17b626e31981bef473cd21840))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped from 1.6.9 to 1.6.10
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.8 to 0.6.9
+
 ## [1.9.14](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.13...react-loader-v1.9.14) (2024-04-22)
 
 

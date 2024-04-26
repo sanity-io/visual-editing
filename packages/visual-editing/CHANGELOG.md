@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.8.16](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.15...visual-editing-v1.8.16) (2024-04-26)
+
+
+### Bug Fixes
+
+* **deps:** Update react monorepo to ^18.3.0 ([#1409](https://github.com/sanity-io/visual-editing/issues/1409)) ([1dedfee](https://github.com/sanity-io/visual-editing/commit/1dedfee39a056308f68e8dc77e9d0295f82a53a7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.8 to 0.6.9
+
 ## [1.8.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.14...visual-editing-v1.8.15) (2024-04-22)
 
 

@@ -12,6 +12,21 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.12.9](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.8...presentation-v1.12.9) (2024-04-26)
+
+
+### Bug Fixes
+
+* **deps:** Update react monorepo to ^18.3.0 ([#1409](https://github.com/sanity-io/visual-editing/issues/1409)) ([1dedfee](https://github.com/sanity-io/visual-editing/commit/1dedfee39a056308f68e8dc77e9d0295f82a53a7))
+* panels should recover from broken local storage state ([#1412](https://github.com/sanity-io/visual-editing/issues/1412)) ([6c92a9e](https://github.com/sanity-io/visual-editing/commit/6c92a9e3f4a4d2d6fadd8ba774b1be6d18692cee))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.8 to 0.6.9
+
 ## [1.12.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.7...presentation-v1.12.8) (2024-04-25)
 
 
