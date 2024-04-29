@@ -14,6 +14,7 @@ import {locate} from './locate'
 import {StegaDebugger} from './presentation/DebugStega'
 import {CustomNavigator} from './presentation/CustomNavigator'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {documentLocationResolvers, mainDocumentResolvers} from './presentation/resolvers'
 import Building from './models/documents/Building'
 import Floor from './models/documents/Floor'
 import Space from './models/documents/Space'
@@ -132,6 +133,10 @@ const presentationWorkspaces = Object.entries({
         presentationTool({
           name: toolName,
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
+          resolve: {
+            mainDocuments: mainDocumentResolvers,
+            locations: documentLocationResolvers,
+          },
           locate,
           components:
             name === 'page-builder-demo'
@@ -166,6 +171,13 @@ const presentationWorkspaces = Object.entries({
           name: toolName,
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           // @TODO fix the locator for the pages-router
+          resolve:
+            toolName === 'pages-router'
+              ? undefined
+              : {
+                  mainDocuments: mainDocumentResolvers,
+                  locations: documentLocationResolvers,
+                },
           locate: toolName === 'pages-router' ? undefined : locate,
           unstable_showUnsafeShareUrl: toolName === 'app-router',
         })

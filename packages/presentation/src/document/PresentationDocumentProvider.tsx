@@ -3,7 +3,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -50,7 +50,7 @@ export function PresentationDocumentProvider(props: {
     [optionsArray, parent, register],
   )
 
-  useEffect(() => registerRef.current(options), [options])
+  useLayoutEffect(() => registerRef.current(options), [options])
 
   return (
     <PresentationDocumentContext.Provider value={context}>

@@ -4,7 +4,7 @@
   "scripts": {
     "build": "nuxt build",
     "predev": "nuxt prepare",
-    "dev": "nuxt dev -p 3003",
+    "dev": "nuxt dev -p 3003 --dotenv .env.local",
     "generate": "nuxt generate",
     "preview": "nuxt preview"
   },

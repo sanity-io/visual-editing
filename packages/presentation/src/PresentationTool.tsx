@@ -27,7 +27,7 @@ import {
 import {useUnique, useWorkspace} from 'sanity'
 import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} from 'sanity'
 import {type RouterContextValue, useRouter} from 'sanity/router'
-import {type CommentIntentGetter, CommentsIntentProvider} from 'sanity/structure'
+import {type CommentIntentGetter} from 'sanity/structure'
 import {styled} from 'styled-components'
 
 import {
@@ -36,11 +36,10 @@ import {
   EDIT_INTENT_MODE,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
-import {ContentEditor} from './editor/ContentEditor'
-import {DisplayedDocumentBroadcasterProvider} from './loader/DisplayedDocumentBroadcaster'
+import {debounce} from './lib/debounce'
 import {Panel} from './panels/Panel'
-import {PanelResizer} from './panels/PanelResizer'
 import {Panels} from './panels/Panels'
+import {PresentationContent} from './PresentationContent'
 import {PresentationNavigateProvider} from './PresentationNavigateProvider'
 import {usePresentationNavigator} from './PresentationNavigator'
 import {PresentationParamsProvider} from './PresentationParamsProvider'
@@ -57,11 +56,13 @@ import type {
   FrameState,
   LiveQueriesState,
   LiveQueriesStateValue,
+  PresentationNavigate,
   PresentationPluginOptions,
   PresentationStateParams,
   StructureDocumentPaneParams,
 } from './types'
 import {useDocumentsOnPage} from './useDocumentsOnPage'
+import {useMainDocument} from './useMainDocument'
 import {useParams} from './useParams'
 import {usePreviewUrl} from './usePreviewUrl'
 
@@ -115,7 +116,11 @@ export default function PresentationTool(props: {
     url: undefined,
   })
 
-  const {navigate, params, structureParams} = useParams({
+  const {
+    navigate: _navigate,
+    params,
+    structureParams,
+  } = useParams({
     initialPreviewUrl,
     routerNavigate,
     routerState,
@@ -123,9 +128,15 @@ export default function PresentationTool(props: {
     frameStateRef,
   })
 
+  // Most navigation events should be debounced, so use this unless explicitly needed
+  const navigate = useMemo(() => debounce<PresentationNavigate>(_navigate, 50), [_navigate])
+
   const [state, dispatch] = useReducer(
     presentationReducer,
-    {perspective: params.perspective, viewport: params.viewport},
+    {
+      perspective: params.perspective,
+      viewport: params.viewport,
+    },
     presentationReducerInit,
   )
 
@@ -133,6 +144,14 @@ export default function PresentationTool(props: {
 
   const projectId = useProjectId()
   const dataset = useDataset()
+
+  const mainDocumentState = useMainDocument({
+    resolvers: props.tool.options?.resolve?.mainDocuments,
+    previewUrl: props.tool.options?.previewUrl,
+    path: params.preview,
+    // Prevent flash of content by using immediate navigation
+    navigate: _navigate,
+  })
 
   // Update the perspective and viewport when the param changes
   useEffect(() => {
@@ -528,25 +547,16 @@ export default function PresentationTool(props: {
                     </BoundaryElementProvider>
                   </Flex>
                 </Panel>
-                <PanelResizer order={4} />
-                <Panel id="content" minWidth={325} order={5}>
-                  <DisplayedDocumentBroadcasterProvider
-                    documentId={params.id}
-                    setDisplayedDocument={setDisplayedDocument}
-                  >
-                    <CommentsIntentProvider getIntent={getCommentIntent}>
-                      <ContentEditor
-                        documentId={params.id}
-                        documentType={params.type}
-                        onFocusPath={handleFocusPath}
-                        onStructureParams={handleStructureParams}
-                        previewUrl={params.preview}
-                        refs={documentsOnPage}
-                        structureParams={structureParams}
-                      />
-                    </CommentsIntentProvider>
-                  </DisplayedDocumentBroadcasterProvider>
-                </Panel>
+                <PresentationContent
+                  mainDocumentState={mainDocumentState}
+                  params={params}
+                  documentsOnPage={documentsOnPage}
+                  getCommentIntent={getCommentIntent}
+                  onFocusPath={handleFocusPath}
+                  onStructureParams={handleStructureParams}
+                  setDisplayedDocument={setDisplayedDocument}
+                  structureParams={structureParams}
+                />
               </Panels>
             </Container>
           </PresentationParamsProvider>

@@ -3,6 +3,7 @@ import type {Dispatch, Reducer} from 'react'
 import {boolean, fallback, object, parse, picklist} from 'valibot'
 
 export interface PresentationState {
+  mainDocument: boolean
   iframe: {
     status: 'loading' | 'loaded' | 'refreshing' | 'reloading'
   }
@@ -122,6 +123,8 @@ const toggleVisualEditingOverlays: Reducer<
   }
 }
 
+const mainDocumentSchema = fallback(boolean(), false)
+
 const iframeStatusSchema = picklist(['loading', 'loaded', 'refreshing', 'reloading'])
 const perspectiveSchema = fallback(
   picklist(['published', 'previewDrafts'] satisfies PresentationState['perspective'][]),
@@ -132,6 +135,7 @@ const viewportSchema = fallback(
   'desktop',
 )
 const initStateSchema = object({
+  mainDocument: mainDocumentSchema,
   iframe: object({
     status: iframeStatusSchema,
   }),
@@ -141,6 +145,7 @@ const initStateSchema = object({
 })
 
 const INITIAL_PRESENTATION_STATE = {
+  mainDocument: false,
   iframe: {
     status: 'loading',
   },
@@ -153,6 +158,7 @@ const INITIAL_PRESENTATION_STATE = {
 export function presentationReducerInit(
   state: Readonly<
     Partial<{
+      mainDocument: boolean
       perspective: string
       viewport: string
     }>
