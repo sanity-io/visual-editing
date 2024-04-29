@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.13.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.10...presentation-v1.13.0) (2024-04-29)
+
+
+### Features
+
+* **presentation:** add resolver APIs ([#1388](https://github.com/sanity-io/visual-editing/issues/1388)) ([6bd98e9](https://github.com/sanity-io/visual-editing/commit/6bd98e949ed1a46c98c45c9d0e36956b4803d189))
+
 ## [1.12.10](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.9...presentation-v1.12.10) (2024-04-26)
 
 
