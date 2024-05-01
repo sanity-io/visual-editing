@@ -24,7 +24,7 @@ export function useController(
     })
 
     return () => {
-      overlayController.current?.deactivate()
+      overlayController.current?.destroy()
       overlayController.current = undefined
     }
   }, [element, handler, preventDefault])

@@ -38,7 +38,7 @@ export function createOverlayController({
   const measureElements = new WeakMap<ElementNode, ElementNode>()
 
   let ro: ResizeObserver
-  let io: IntersectionObserver
+  let io: IntersectionObserver | undefined
   let mo: MutationObserver
 
   // The `hoverStack` is used as a container for tracking which elements are hovered at any time.
@@ -220,8 +220,7 @@ export function createOverlayController({
     elementIdMap.set(id, element)
     elementsMap.set(element, sanityNode)
 
-    io.observe(element)
-    ro.observe(measureElement)
+    io?.observe(element)
 
     handler({
       type: 'element/register',
@@ -229,8 +228,6 @@ export function createOverlayController({
       rect: getRect(element),
       sanity,
     })
-
-    activateElement(sanityNode)
   }
 
   function registerElements(node: ElementNode | {childNodes: ElementNode[]}) {
@@ -325,6 +322,7 @@ export function createOverlayController({
   }
 
   function handleIntersection(entries: IntersectionObserverEntry[]) {
+    if (!activated) return
     for (const entry of entries) {
       const {target} = entry
       const match = isElementNode(target) && elementsMap.get(target)
@@ -364,12 +362,37 @@ export function createOverlayController({
     }
   }
 
+  function activate() {
+    if (activated) return
+    io = new IntersectionObserver(handleIntersection, {
+      threshold: 0.3,
+    })
+    elementSet.forEach((element) => io!.observe(element))
+    handler({
+      type: 'overlay/activate',
+    })
+    activated = true
+  }
+
   function deactivate() {
     if (!activated) return
+    io?.disconnect()
+    elementSet.forEach((element) => {
+      const overlayElement = elementsMap.get(element)
+      if (overlayElement) {
+        deactivateElement(overlayElement)
+      }
+    })
+    handler({
+      type: 'overlay/deactivate',
+    })
+    activated = false
+  }
+
+  function destroy() {
     window.removeEventListener('click', handleBlur)
     window.removeEventListener('resize', handleWindowResize)
     window.removeEventListener('scroll', handleWindowScroll)
-    io.disconnect()
     mo.disconnect()
     ro.disconnect()
 
@@ -381,22 +404,15 @@ export function createOverlayController({
     elementSet.clear()
 
     hoverStack = []
-    activated = false
-    handler({
-      type: 'overlay/deactivate',
-    })
+    deactivate()
   }
 
-  function activate() {
-    if (activated) return
+  function create() {
     window.addEventListener('click', handleBlur)
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('scroll', handleWindowScroll, {
       capture: true,
       passive: true,
-    })
-    io = new IntersectionObserver(handleIntersection, {
-      threshold: 0.3,
     })
     ro = new ResizeObserver(handleResize)
     mo = new MutationObserver(handleMutation)
@@ -408,10 +424,7 @@ export function createOverlayController({
     })
 
     registerElements(document.body)
-    activated = true
-    handler({
-      type: 'overlay/activate',
-    })
+    activate()
   }
 
   window.document.fonts.ready.then(() => {
@@ -420,10 +433,11 @@ export function createOverlayController({
     }
   })
 
-  activate()
+  create()
 
   return {
     activate,
     deactivate,
+    destroy,
   }
 }
