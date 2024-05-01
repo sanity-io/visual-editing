@@ -40,7 +40,7 @@ npm install @sanity/visual-editing
 ### Plain JS
 
 ```ts
-import {enableVisualEditing} from '@sanity/vision-editing'
+import {enableVisualEditing} from '@sanity/visual-editing'
 
 // Enables visual editing overlays
 enableVisualEditing()
@@ -193,7 +193,7 @@ export default function App() {
 On React apps that don't have a first-class framework integration may use the `enableVisualEditing` function directly in a `useEffect` hook.
 
 ```tsx
-import { enableVisualEditing } from '@sanity/vision-editing'
+import { enableVisualEditing } from '@sanity/visual-editing'
 import { useEffect } from 'react'
 
 export default function VisualEditing() {
