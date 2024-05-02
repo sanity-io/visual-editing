@@ -125,6 +125,7 @@ export interface OverlayOptions {
 export interface OverlayController {
   activate: () => void
   deactivate: () => void
+  destroy: () => void
 }
 
 /**
