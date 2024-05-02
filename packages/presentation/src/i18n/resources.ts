@@ -35,7 +35,7 @@ export default {
   'presentation-error.label': 'Error message',
   /** The text shown when the preview frame cannot connect to Presentation */
   'preview-frame.connection.error.text': 'Could not connect to the preview',
-  /** The text shown on the button for retrying after a timeout */
+  /** The text shown on the button for dismissing the error overlay after a timeout */
   'preview-frame.continue-button.text': 'Continue anyway',
   /** The label for the loader's connection status */
   'preview-frame.loader.connection-status.label': 'Loader connection status',
