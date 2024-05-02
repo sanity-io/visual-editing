@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.17](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.16...visual-editing-v1.8.17) (2024-05-02)
+
+
+### Bug Fixes
+
+* **visual-editing:** maintain overlay element registration when toggling ([#1437](https://github.com/sanity-io/visual-editing/issues/1437)) ([647d07d](https://github.com/sanity-io/visual-editing/commit/647d07d1db81022066c14d9f30e8c3b89c3c3d61))
+
 ## [1.8.16](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.15...visual-editing-v1.8.16) (2024-04-26)
 
 
