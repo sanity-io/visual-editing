@@ -72,6 +72,15 @@ All notable changes to this project will be documented in this file. See
   * dependencies
     * @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [2.3.43](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.42...overlays-v2.3.43) (2024-05-02)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.16 to 1.8.17
+
 ## [2.3.42](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.41...overlays-v2.3.42) (2024-04-26)
 
 
