@@ -14,6 +14,7 @@ import type {
   DocumentResolver,
   PresentationPluginOptions,
 } from './types'
+import {presentationUsEnglishLocaleBundle} from './i18n'
 
 const PresentationTool = lazy(() => import('./PresentationTool'))
 const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplayedDocument'))
@@ -102,6 +103,9 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
   }
 
   return {
+    i18n: {
+      bundles: [presentationUsEnglishLocaleBundle],
+    },
     document: {
       unstable_fieldActions: (prev) => {
         return [

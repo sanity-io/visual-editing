@@ -40,10 +40,11 @@ import {
   useMemo,
   useState,
 } from 'react'
-import {Hotkeys} from 'sanity'
+import {Hotkeys, useTranslation} from 'sanity'
 
 import {ErrorCard} from '../components/ErrorCard'
 import {MAX_TIME_TO_OVERLAYS_CONNECTION} from '../constants'
+import {presentationLocaleNamespace} from '../i18n'
 import {
   ACTION_IFRAME_LOADED,
   ACTION_IFRAME_RELOAD,
@@ -60,9 +61,9 @@ import {ShareUrlMenuItems} from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
 
-const PERSPECTIVE_TITLES: Record<PresentationState['perspective'], string> = {
-  previewDrafts: 'Drafts',
-  published: 'Published',
+const PERSPECTIVE_TITLE_KEY: Record<PresentationState['perspective'], string> = {
+  previewDrafts: 'preview-frame.perspective.previewDrafts.title',
+  published: 'preview-frame.perspective.published.title',
 }
 
 const PERSPECTIVE_TONES: Record<PresentationState['perspective'], ButtonTone> = {
@@ -112,8 +113,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       visualEditing: {overlaysEnabled},
     } = props
 
+    const {t} = useTranslation(presentationLocaleNamespace)
     const {devMode} = usePresentationTool()
-
     const prefersReducedMotion = usePrefersReducedMotion()
 
     const setDesktopMode = useCallback(
@@ -249,14 +250,16 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 <Box flex="none" marginRight={1} padding={1}>
                   <Tooltip
                     animate
-                    content={<Text size={1}>Toggle navigator</Text>}
+                    content={
+                      <Text size={1}>{t('preview-frame.navigator.toggle-button.tooltip')}</Text>
+                    }
                     fallbackPlacements={['bottom-start']}
                     padding={2}
                     placement="bottom"
                     portal
                   >
                     <Button
-                      aria-label="Toggle navigator"
+                      aria-label={t('preview-frame.navigator.toggle-button.aria-label')}
                       fontSize={1}
                       icon={PanelLeftIcon}
                       mode="bleed"
@@ -274,7 +277,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   <Flex align="center" style={{whiteSpace: 'nowrap'}}>
                     <Box padding={1}>
                       <Text size={1}>
-                        {overlaysEnabled ? 'Disable edit overlay' : 'Enable edit overlay'}
+                        {t('preview-frame.overlay.toggle-button.tooltip', {
+                          context: overlaysEnabled ? 'disable' : 'enable',
+                        })}
                       </Text>
                     </Box>
                     <Box paddingY={1}>
@@ -309,7 +314,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     </div>
                     <Box>
                       <Text muted={!overlaysEnabled} size={1} weight="medium">
-                        Edit
+                        {t('preview-frame.overlay.toggle-button.text')}
                       </Text>
                     </Box>
                   </Flex>
@@ -324,13 +329,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                         animate
                         content={
                           <Text size={1}>
-                            {iframe.status === 'loading'
-                              ? 'Loading…'
-                              : iframe.status === 'reloading'
-                                ? 'Refreshing…'
-                                : iframe.status === 'refreshing'
-                                  ? 'Refreshing…'
-                                  : 'Refresh preview'}
+                            {iframe.status
+                              ? t('preview-frame.status', {context: iframe.status})
+                              : t('preview-frame.refresh-button.tooltip')}
                           </Text>
                         }
                         fallbackPlacements={['bottom-start']}
@@ -339,7 +340,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                         portal
                       >
                         <Button
-                          aria-label="Refresh preview"
+                          aria-label={t('preview-frame.refresh-button.aria-label')}
                           fontSize={1}
                           icon={RefreshIcon}
                           mode="bleed"
@@ -397,11 +398,11 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       mode="bleed"
                       padding={2}
                       space={2}
-                      text={
-                        PERSPECTIVE_TITLES[
+                      text={t(
+                        PERSPECTIVE_TITLE_KEY[
                           loadersConnection === 'connected' ? perspective : 'previewDrafts'
-                        ]
-                      }
+                        ],
+                      )}
                       loading={loadersConnection === 'reconnecting' && iframe.status !== 'loaded'}
                       disabled={loadersConnection !== 'connected'}
                     />
@@ -427,10 +428,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                           </Box>
                           <Stack flex={1} space={2}>
                             <Text size={1} weight="medium">
-                              {PERSPECTIVE_TITLES.previewDrafts}
+                              {t(PERSPECTIVE_TITLE_KEY['previewDrafts'])}
                             </Text>
                             <Text muted size={1}>
-                              View this page with latest draft content
+                              {t('preview-frame.perspective.previewDrafts.text')}
                             </Text>
                           </Stack>
                           <Box flex="none">
@@ -464,10 +465,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                           </Box>
                           <Stack flex={1} space={2}>
                             <Text size={1} weight="medium">
-                              {PERSPECTIVE_TITLES.published}
+                              {t(PERSPECTIVE_TITLE_KEY['published'])}
                             </Text>
                             <Text muted size={1}>
-                              View this page with published content
+                              {t('preview-frame.perspective.published.text')}
                             </Text>
                           </Stack>
                           <Box flex="none">
@@ -497,14 +498,14 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
               <Flex align="center" flex="none" gap={1} padding={1}>
                 <Tooltip
                   animate
-                  content={<Text size={1}>Full viewport</Text>}
+                  content={<Text size={1}>{t('preview-frame.viewport-full-button.tooltip')}</Text>}
                   fallbackPlacements={['bottom-start']}
                   padding={2}
                   placement="bottom"
                   portal
                 >
                   <Button
-                    aria-label="Full viewport"
+                    aria-label={t('preview-frame.viewport-full-button.aria-label')}
                     fontSize={1}
                     icon={DesktopIcon}
                     mode="bleed"
@@ -515,13 +516,15 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 </Tooltip>
                 <Tooltip
                   animate
-                  content={<Text size={1}>Narrow viewport</Text>}
+                  content={
+                    <Text size={1}>{t('preview-frame.viewport-narrow-button.tooltip')}</Text>
+                  }
                   padding={2}
                   placement="bottom"
                   portal
                 >
                   <Button
-                    aria-label="Narrow viewport"
+                    aria-label={t('preview-frame.viewport-narrow-button.aria-label')}
                     fontSize={1}
                     icon={MobileDeviceIcon}
                     mode="bleed"
@@ -586,7 +589,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                           disabled
                           fontSize={1}
                           mode="ghost"
-                          text="Continue anyway"
+                          text={t('preview-frame.continue-button.text')}
                           style={{opacity: 0}}
                         />
                       )}
@@ -599,13 +602,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                         <Flex justify="center" align="center" direction="column" gap={4}>
                           <Spinner muted />
                           <Text muted size={1}>
-                            {timedOut ? (
-                              <>
-                                Unable to connect, check the browser console for more information.
-                              </>
-                            ) : (
-                              'Connecting…'
-                            )}
+                            {timedOut
+                              ? t('preview-frame.status', {context: 'timeout'})
+                              : t('preview-frame.status', {context: 'connecting'})}
                           </Text>
                         </Flex>
                       </Card>
@@ -615,7 +614,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                           // mode="ghost"
                           tone="critical"
                           onClick={handleContinueAnyway}
-                          text="Continue anyway"
+                          text={t('preview-frame.continue-button.text')}
                         />
                       )}
                     </Flex>
@@ -645,7 +644,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     >
                       <Spinner muted />
                       <Text muted size={1}>
-                        Loading…
+                        {t('preview-frame.status', {context: 'loading'})}
                       </Text>
                     </Flex>
                   </MotionFlex>
@@ -667,7 +666,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   >
                     <ErrorCard
                       flex={1}
-                      message="Could not connect to the preview"
+                      message={t('preview-frame.connection.error.text')}
                       onRetry={handleRetry}
                       onContinueAnyway={handleContinueAnyway}
                     >
@@ -677,7 +676,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                             <Card padding={3} radius={2} tone="critical">
                               <Stack space={3}>
                                 <Label muted size={0}>
-                                  Overlay connection status
+                                  {t('preview-frame.overlay.connection-status.label')}
                                 </Label>
                                 <Code size={1}>{overlaysConnection}</Code>
                               </Stack>
@@ -688,7 +687,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                             <Card padding={3} radius={2} tone="critical">
                               <Stack space={3}>
                                 <Label muted size={0}>
-                                  Loader connection status
+                                  {t('preview-frame.loader.connection-status.label')}
                                 </Label>
                                 <Code size={1}>{loadersConnection}</Code>
                               </Stack>

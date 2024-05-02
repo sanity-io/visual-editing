@@ -1,6 +1,6 @@
 import {Card, Code, ErrorBoundary, Label, Stack} from '@sanity/ui'
 import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
-import type {Path} from 'sanity'
+import {type Path, useTranslation} from 'sanity'
 import {decodeJsonParams} from 'sanity/router'
 import {
   DocumentPane as StructureDocumentPane,
@@ -10,6 +10,7 @@ import {
 import {styled} from 'styled-components'
 
 import {ErrorCard} from '../components/ErrorCard'
+import {presentationLocaleNamespace} from '../i18n'
 import type {StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
@@ -28,6 +29,8 @@ export function DocumentPane(props: {
 }): ReactElement {
   const {documentId, documentType, onFocusPath, onStructureParams, params, previewUrl} = props
   const {template, templateParams} = params
+
+  const {t} = useTranslation(presentationLocaleNamespace)
   const {devMode} = usePresentationTool()
 
   const paneDocumentNode: DocumentPaneNode = useMemo(
@@ -59,13 +62,13 @@ export function DocumentPane(props: {
 
   if (errorParams) {
     return (
-      <ErrorCard flex={1} message="Could not render the document editor" onRetry={handleRetry}>
+      <ErrorCard flex={1} message={t('document-pane.error.text')} onRetry={handleRetry}>
         {devMode && (
           // show runtime error message in dev mode
           <Card overflow="auto" padding={3} radius={2} tone="critical">
             <Stack space={3}>
               <Label muted size={0}>
-                Error message
+                {t('presentation-error.label')}
               </Label>
               <WrappedCode size={1}>{errorParams.error.message}</WrappedCode>
             </Stack>
