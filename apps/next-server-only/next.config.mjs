@@ -30,6 +30,7 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       'sanity/_internal': require.resolve('sanity/_internal'),
+      'sanity/_singletons': require.resolve('sanity/_singletons'),
       'sanity/cli': require.resolve('sanity/cli'),
       'sanity/desk': require.resolve('sanity/desk'),
       'sanity/router': require.resolve('sanity/router'),
