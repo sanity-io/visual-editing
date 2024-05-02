@@ -678,7 +678,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                                 <Label muted size={0}>
                                   {t('preview-frame.overlay.connection-status.label')}
                                 </Label>
-                                <Code size={1}>{overlaysConnection}</Code>
+                                <Code size={1}>
+                                  {t('channel.status', {context: overlaysConnection})}
+                                </Code>
                               </Stack>
                             </Card>
                           )}
@@ -689,7 +691,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                                 <Label muted size={0}>
                                   {t('preview-frame.loader.connection-status.label')}
                                 </Label>
-                                <Code size={1}>{loadersConnection}</Code>
+                                <Code size={1}>
+                                  {t('channel.status', {context: loadersConnection})}
+                                </Code>
                               </Stack>
                             </Card>
                           )}

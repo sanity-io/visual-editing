@@ -3,6 +3,14 @@ export default {
   'document-list-pane.document-list.title': 'Documents on this page',
   /** The text shown if the document list is unable to render */
   'document-list-pane.error.text': 'Could not render the document list',
+  /** The status of the channel connection */
+  'channel.status_connected': 'Connected',
+  /** The status of the channel connection */
+  'channel.status_connecting': 'Connecting',
+  /** The status of the channel connection */
+  'channel.status_disconnected': 'Disconnected',
+  /** The status of the channel connection */
+  'channel.status_reconnecting': 'Reconnecting',
   /** The text shown if the document editor is unable to render */
   'document-pane.error.text': 'Could not render the document editor',
   /** The text shown on the button for bypassing after a connection has failed */
