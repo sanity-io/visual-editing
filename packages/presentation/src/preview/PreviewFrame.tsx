@@ -329,9 +329,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                         animate
                         content={
                           <Text size={1}>
-                            {iframe.status
-                              ? t('preview-frame.status', {context: iframe.status})
-                              : t('preview-frame.refresh-button.tooltip')}
+                            {iframe.status === 'loaded'
+                              ? t('preview-frame.refresh-button.tooltip')
+                              : t('preview-frame.status', {context: iframe.status})}
                           </Text>
                         }
                         fallbackPlacements={['bottom-start']}
