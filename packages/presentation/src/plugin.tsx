@@ -7,6 +7,7 @@ import {PresentationDocumentHeader} from './document/PresentationDocumentHeader'
 import {PresentationDocumentProvider} from './document/PresentationDocumentProvider'
 import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
+import {presentationUsEnglishLocaleBundle} from './i18n'
 import {router} from './router'
 import type {
   DocumentLocationResolverObject,
@@ -14,7 +15,6 @@ import type {
   DocumentResolver,
   PresentationPluginOptions,
 } from './types'
-import {presentationUsEnglishLocaleBundle} from './i18n'
 
 const PresentationTool = lazy(() => import('./PresentationTool'))
 const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplayedDocument'))
