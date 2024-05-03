@@ -489,7 +489,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   animate
                   content={
                     <Text size={1}>
-                      Switch to {viewport === 'desktop' ? 'narrow' : 'full'} viewport
+                      {t('preview-frame.viewport-button.tooltip', {
+                        context: viewport === 'desktop' ? 'narrow' : 'full',
+                      })}
                     </Text>
                   }
                   fallbackPlacements={['bottom-start']}
@@ -498,7 +500,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   portal
                 >
                   <Button
-                    aria-label={`Toggle viewport size`}
+                    aria-label={t('preview-frame.viewport-button.aria-label')}
                     fontSize={1}
                     icon={viewport === 'desktop' ? MobileDeviceIcon : DesktopIcon}
                     mode="bleed"
