@@ -6,9 +6,10 @@ import {
 } from '@sanity/preview-url-secret/without-secret-search-params'
 import {MenuItem, useToast} from '@sanity/ui'
 import {useCallback, useState} from 'react'
-import {useClient, useCurrentUser} from 'sanity'
+import {useClient, useCurrentUser, useTranslation} from 'sanity'
 
 import {API_VERSION} from '../constants'
+import {presentationLocaleNamespace} from '../i18n'
 import type {PreviewFrameProps} from './PreviewFrame'
 
 /** @internal */
@@ -19,6 +20,8 @@ export function ShareUrlMenuItems(
   },
 ): React.ReactNode {
   const {initialUrl, openPopup, previewLocationOrigin, previewLocationRoute} = props
+
+  const {t} = useTranslation(presentationLocaleNamespace)
 
   const handleOpenPopup = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -37,7 +40,7 @@ export function ShareUrlMenuItems(
       />
       <MenuItem
         icon={LaunchIcon}
-        text="Open preview"
+        text={t('share-url.menu-item.open.text')}
         as="a"
         href={`${previewLocationOrigin}${previewLocationRoute}`}
         // @ts-expect-error the `as="a"` prop isn't enough to change the type of event.target from <div> to <a>
@@ -57,6 +60,7 @@ function CopyUrlMenuButton(
 ) {
   const {initialUrl, previewLocationOrigin, previewLocationRoute} = props
 
+  const {t} = useTranslation(presentationLocaleNamespace)
   const {push: pushToast} = useToast()
   const client = useClient({apiVersion: API_VERSION})
   const currentUser = useCurrentUser()
@@ -70,7 +74,7 @@ function CopyUrlMenuButton(
           pushToast({
             closable: true,
             status: 'error',
-            title: 'Clipboard not supported',
+            title: t('share-url.clipboard.status', {context: 'unsupported'}),
           })
           return false
         }
@@ -83,7 +87,7 @@ function CopyUrlMenuButton(
             id,
             closable: true,
             status: 'success',
-            title: 'The URL is copied to the clipboard',
+            title: t('share-url.clipboard.status', {context: 'success'}),
           })
           setDisabled(false)
         }
@@ -91,7 +95,7 @@ function CopyUrlMenuButton(
           pushToast({
             closable: true,
             status: 'error',
-            title: 'Copy failed',
+            title: t('share-url.clipboard.status', {context: 'failed'}),
             description: error.message || error.toString(),
           })
           setDisabled(false)
@@ -101,7 +105,7 @@ function CopyUrlMenuButton(
           const resolvePreviewUrl = async () => {
             id = pushToast({
               closable: true,
-              title: 'Copying URL to clipboard…',
+              title: t('share-url.clipboard.status', {context: 'copying'}),
             })
             const previewUrlSecret = await createPreviewSecret(
               client,
@@ -129,7 +133,7 @@ function CopyUrlMenuButton(
         }
         return
       }}
-      text="Copy link"
+      text={t('share-url.menu-item.copy.text')}
       icon={CopyIcon}
     />
   )

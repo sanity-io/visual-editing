@@ -1,6 +1,6 @@
 import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
 import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
-import {getPublishedId} from 'sanity'
+import {getPublishedId, useTranslation} from 'sanity'
 import {
   DocumentListPane as StructureDocumentListPane,
   PaneLayout,
@@ -10,6 +10,7 @@ import {
 import {styled} from 'styled-components'
 
 import {ErrorCard} from '../components/ErrorCard'
+import {presentationLocaleNamespace} from '../i18n'
 import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
@@ -36,6 +37,8 @@ export function DocumentListPane(props: {
   refs: {_id: string; _type: string}[]
 }): ReactElement {
   const {mainDocumentState, onStructureParams, previewUrl, refs} = props
+
+  const {t} = useTranslation(presentationLocaleNamespace)
   const {devMode} = usePresentationTool()
 
   const ids = useMemo(
@@ -55,10 +58,10 @@ export function DocumentListPane(props: {
         // defaultOrdering: [{field: '_updatedAt', direction: 'desc'}],
       },
       schemaTypeName: '',
-      title: 'Documents on this page',
+      title: t('document-list-pane.document-list.title'),
       type: 'documentList',
     }),
-    [ids],
+    [ids, t],
   )
 
   const [errorParams, setErrorParams] = useState<{
@@ -75,13 +78,13 @@ export function DocumentListPane(props: {
 
   if (errorParams) {
     return (
-      <ErrorCard flex={1} message="Could not render the document list" onRetry={handleRetry}>
+      <ErrorCard flex={1} message={t('document-list-pane.error.text')} onRetry={handleRetry}>
         {devMode && (
           // show runtime error message in dev mode
           <Card overflow="auto" padding={3} radius={2} tone="critical">
             <Stack space={3}>
               <Label muted size={0}>
-                Error message
+                {t('presentation-error.label')}
               </Label>
               <WrappedCode size={1}>{errorParams.error.message}</WrappedCode>
             </Stack>
