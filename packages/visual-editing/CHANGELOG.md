@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.8.18](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.17...visual-editing-v1.8.18) (2024-05-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.17.2 ([#1449](https://github.com/sanity-io/visual-editing/issues/1449)) ([928b45c](https://github.com/sanity-io/visual-editing/commit/928b45c47c66c5e1ddbe8b00783efd399b9fa17a))
+* **deps:** Update dependency @vercel/stega to v0.1.2 ([#1447](https://github.com/sanity-io/visual-editing/issues/1447)) ([31d40cf](https://github.com/sanity-io/visual-editing/commit/31d40cfd018ccb90b5f180dd15ebcbd7de73f0c0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.11 to ^1.6.12
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.9 to 0.6.10
+
 ## [1.8.17](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.16...visual-editing-v1.8.17) (2024-05-02)
 
 
