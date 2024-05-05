@@ -367,7 +367,7 @@ You can use `payload.livePreviewEnabled` and `payload.document` to better target
 
 For Remix apps the implementation is much like the one for [Next.js App Router][next-app-router] when it comes to what happens depending on the `source` and `livePreviewEnabled` properties of the payload.
 
-Remix doesn't have [Server Actions][server-actions] yet, under the hood the [`useRevalidator`][https://remix.run/docs/en/main/hooks/use-revalidator] hook is used. Here's the default internal implementation (simplified):
+Remix doesn't have [Server Actions][server-actions] yet, under the hood the [`useRevalidator`](https://remix.run/docs/en/main/hooks/use-revalidator) hook is used. Here's the default internal implementation (simplified):
 
 ```tsx
 // app/root.tsx
