@@ -1016,7 +1016,7 @@ importers:
         specifier: workspace:*
         version: link:../preview-url-secret
       '@sanity/ui':
-        specifier: ^2.1.4
+        specifier: ^2.1.6
         version: 2.1.6(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.9)
       '@sanity/uuid':
         specifier: 3.0.2
@@ -1348,8 +1348,8 @@ importers:
         specifier: 6.8.11
         version: 6.8.11(typescript@5.4.5)
       '@sanity/ui':
-        specifier: 2.1.4
-        version: 2.1.4(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.9)
+        specifier: 2.1.6
+        version: 2.1.6(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.9)
       '@sveltejs/adapter-auto':
         specifier: ^3.2.0
         version: 3.2.0(@sveltejs/kit@2.5.7)
@@ -6245,27 +6245,6 @@ packages:
       '@types/react': 18.3.1
     transitivePeerDependencies:
       - debug
-
-  /@sanity/ui@2.1.4(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.9):
-    resolution: {integrity: sha512-upOLalVCaDrW774mOwNo/f5rNsHcJASGElf/e1vLCViltdSmJ3rb7rdTRKIT26+LE4Jl0ACJIkli6J/qbGWpjQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-      react-is: ^18
-      styled-components: 6.1.9
-    dependencies:
-      '@floating-ui/react-dom': 2.0.9(react-dom@18.3.1)(react@18.3.1)
-      '@sanity/color': 3.0.6
-      '@sanity/icons': 2.11.8(react@18.3.1)
-      csstype: 3.1.3
-      framer-motion: 11.0.8(react-dom@18.3.1)(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-is: 18.3.1
-      react-refractor: 2.1.7(react@18.3.1)
-      styled-components: 6.1.9(react-dom@18.3.1)(react@18.3.1)
-    dev: true
 
   /@sanity/ui@2.1.6(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.9):
     resolution: {integrity: sha512-dKhpce2ONy0shM4EbiEKiLuJtLesqU58ncD6Eb6uXMeq/St6Rzah3Hy23+WlCoBRu2saO2FtikHgHqbzz/66bg==}
