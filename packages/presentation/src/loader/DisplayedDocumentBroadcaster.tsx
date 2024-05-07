@@ -10,7 +10,8 @@ import isEqual from 'fast-deep-equal'
 import {createContext, type PropsWithChildren, useCallback, useContext, useEffect} from 'react'
 import {type SanityDocument} from 'sanity'
 
-type SetDisplayedDocument = (displayed: Partial<SanityDocument> | null | undefined) => void
+/** @internal */
+export type SetDisplayedDocument = (displayed: Partial<SanityDocument> | null | undefined) => void
 
 const Context = createContext<SetDisplayedDocument | null>(null)
 

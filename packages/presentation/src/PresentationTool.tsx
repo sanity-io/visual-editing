@@ -164,7 +164,15 @@ export default function PresentationTool(props: {
         },
       )
     }
-  }, [params.perspective, state.perspective, navigate, state.viewport, params.viewport])
+  }, [
+    params.perspective,
+    state.perspective,
+    navigate,
+    state.viewport,
+    params.viewport,
+    params.rev,
+    params.prefersLatestPublished,
+  ])
 
   const [overlaysConnection, setOverlaysConnection] = useState<ChannelStatus>('connecting')
   const [loadersConnection, setLoadersConnection] = useState<ChannelStatus>('connecting')
@@ -192,6 +200,12 @@ export default function PresentationTool(props: {
     }
   }, [channel, popups, popups.size])
 
+  // This workaround can be removed once the need to set prefersLatestPublished is no longer there
+  const perspectiveRef = useRef(state.perspective)
+  useEffect(() => {
+    perspectiveRef.current = state.perspective
+  }, [state.perspective])
+
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
 
@@ -212,11 +226,19 @@ export default function PresentationTool(props: {
           onStatusUpdate: setOverlaysConnection,
           onEvent(type, data) {
             if ((type === 'visual-editing/focus' || type === 'overlay/focus') && 'id' in data) {
-              navigate({
-                type: data.type,
-                id: data.id,
-                path: data.path,
-              })
+              navigate(
+                {
+                  type: data.type,
+                  id: data.id,
+                  path: data.path,
+                },
+                {
+                  prefersLatestPublished:
+                    'isDraft' in data || perspectiveRef.current === 'previewDrafts'
+                      ? undefined
+                      : 'true',
+                },
+              )
             } else if (type === 'visual-editing/navigate' || type === 'overlay/navigate') {
               const {title, url} = data
               if (frameStateRef.current.url !== url) {
@@ -393,6 +415,18 @@ export default function PresentationTool(props: {
       channel?.send('overlays', 'presentation/blur', undefined)
     }
   }, [channel, params.id, params.path])
+
+  // Handle opening the published document when previewing published
+  useEffect(() => {
+    if (
+      state.perspective === 'published' &&
+      params.id &&
+      !params.rev &&
+      !params.prefersLatestPublished
+    ) {
+      navigate({}, {prefersLatestPublished: 'true'})
+    }
+  }, [navigate, params.id, params.prefersLatestPublished, params.rev, state.perspective])
 
   // Dispatch a navigation message when the preview param changes
   useEffect(() => {

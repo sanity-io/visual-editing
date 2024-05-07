@@ -67,7 +67,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
           )}
           {props.renderDefault(props)}
           <Suspense key="broadcast-displayed-document">
-            <BroadcastDisplayedDocument value={value} />
+            <BroadcastDisplayedDocument key={documentId} value={value} />
           </Suspense>
         </PresentationDocumentProvider>
       )
