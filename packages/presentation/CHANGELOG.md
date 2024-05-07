@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.14.0...presentation-v1.15.0) (2024-05-07)
+
+
+### Features
+
+* open last published document when published perspective ([#1463](https://github.com/sanity-io/visual-editing/issues/1463)) ([5fea985](https://github.com/sanity-io/visual-editing/commit/5fea985f5de833350495752d92960eade01642de))
+
 ## [1.14.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.13.0...presentation-v1.14.0) (2024-05-05)
 
 
