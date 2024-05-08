@@ -10,14 +10,21 @@
     "dev:page-builder-demo": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
     "dev:svelte": "turbo run dev --filter=./apps/svelte --filter=./apps/studio",
     "format": "prettier --cache --write .",
+    "format:staged": "pretty-quick --staged",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
     "next-no-cache:dev": "turbo run dev --filter=./apps/next-no-cache",
     "next-server-only:dev": "turbo run dev --filter=./apps/next-server-only",
     "page-builder-demo:dev": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
+    "prepare": "husky",
     "preview": "turbo run preview",
     "test": "turbo run test",
     "watch": "turbo run watch"
+  },
+  "lint-staged": {
+    "*": [
+      "pnpm format:staged"
+    ]
   },
   "dependencies": {
     "@sanity/block-tools": "3.41.0",
@@ -38,10 +45,13 @@
   "devDependencies": {
     "@sanity/pkg-utils": "6.8.13",
     "@sanity/prettier-config": "1.0.2",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "3.2.5",
     "prettier-plugin-astro": "^0.13.0",
     "prettier-plugin-svelte": "3.2.3",
     "prettier-plugin-tailwindcss": "0.5.14",
+    "pretty-quick": "^4.0.0",
     "turbo": "1.13.3",
     "typescript": "5.4.5"
   },
