@@ -111,7 +111,7 @@ export function useMainDocument(props: {
       typeof previewUrl === 'string'
         ? previewUrl
         : typeof previewUrl === 'object'
-          ? previewUrl?.origin
+          ? previewUrl?.origin || location.origin
           : location.origin
 
     return new URL(relativeUrl, base)
