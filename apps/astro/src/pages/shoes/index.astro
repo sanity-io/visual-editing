@@ -3,7 +3,7 @@ import {sanityClient} from 'sanity:client'
 import {shoesList, type ShoesListResult} from 'apps-common/queries'
 import {urlFor, urlForCrossDatasetReference} from '../../sanity'
 import {formatCurrency} from 'apps-common/utils'
-import Layout from '../../../layouts/layout.astro'
+import Layout from '../../layouts/layout.astro'
 
 const products = await sanityClient.fetch<ShoesListResult>(shoesList)
 const _loading = false
