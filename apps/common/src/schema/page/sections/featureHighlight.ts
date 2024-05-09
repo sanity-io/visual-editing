@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField } from 'sanity'
+import {defineArrayMember, defineField} from 'sanity'
 
 export const featureHighlightSectionType = defineArrayMember({
   type: 'object',
@@ -48,7 +48,7 @@ export const featureHighlightSectionType = defineArrayMember({
       type: 'reference',
       name: 'product',
       title: 'Product',
-      to: [{ type: 'product' }],
+      to: [{type: 'product'}],
     }),
     defineField({
       type: 'sectionStyle',

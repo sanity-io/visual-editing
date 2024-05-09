@@ -43,7 +43,7 @@ Create and export an instance of Sanity client using the previously defined envi
 
 ```ts
 // src/lib/sanity.ts
-import { createClient } from '@sanity/client'
+import {createClient} from '@sanity/client'
 import {
   PUBLIC_SANITY_API_VERSION,
   PUBLIC_SANITY_DATASET,
@@ -66,8 +66,8 @@ On the server, we use a Sanity client configured with a read token to allow the 
 
 ```ts
 // src/lib/server/sanity.ts
-import { SANITY_API_READ_TOKEN } from '$env/static/private'
-import { client } from '$lib/sanity'
+import {SANITY_API_READ_TOKEN} from '$env/static/private'
+import {client} from '$lib/sanity'
 
 export const serverClient = client.withConfig({
   token: SANITY_API_READ_TOKEN,
@@ -88,8 +88,8 @@ The loader package also exports an optional `createRequestHandler` for creating 
 
 ```ts
 // src/hooks.server.ts
-import { createRequestHandler, setServerClient } from '@sanity/svelte-loader'
-import { serverClient } from '$lib/server/sanity'
+import {createRequestHandler, setServerClient} from '@sanity/svelte-loader'
+import {serverClient} from '$lib/server/sanity'
 
 setServerClient(serverClient)
 
@@ -105,7 +105,7 @@ export const handle = createRequestHandler()
 
 ```ts
 // app.d.ts
-import type { LoaderLocals } from '@sanity/svelte-loader'
+import type {LoaderLocals} from '@sanity/svelte-loader'
 
 declare global {
   namespace App {
@@ -122,10 +122,10 @@ To access the preview state on the client side of our application, we pass it vi
 
 ```ts
 // src/routes/+layout.server.ts
-import type { LayoutServerLoad } from './$types'
+import type {LayoutServerLoad} from './$types'
 
-export const load: LayoutServerLoad = ({ locals: { preview } }) => {
-  return { preview }
+export const load: LayoutServerLoad = ({locals: {preview}}) => {
+  return {preview}
 }
 ```
 
@@ -133,10 +133,10 @@ We then access the passed `preview` value via the `LoadEvent.data` property, and
 
 ```ts
 // src/routes/+layout.ts
-import { setPreviewing } from '@sanity/svelte-loader'
-import type { LayoutLoad } from './$types'
+import {setPreviewing} from '@sanity/svelte-loader'
+import type {LayoutLoad} from './$types'
 
-export const load: LayoutLoad = ({ data: { preview } }) => {
+export const load: LayoutLoad = ({data: {preview}}) => {
   setPreviewing(preview)
 }
 ```
@@ -178,18 +178,15 @@ Create a server `load` function for our page that will handle fetching data from
 
 ```ts
 // src/routes/[slug]/+page.server.ts
-import { pageQuery, type PageResult } from '$lib/queries'
-import type { PageServerLoad } from './$types'
+import {pageQuery, type PageResult} from '$lib/queries'
+import type {PageServerLoad} from './$types'
 
-export const load: PageServerLoad = async ({
-  params,
-  locals: { loadQuery },
-}) => {
-  const { slug } = params
+export const load: PageServerLoad = async ({params, locals: {loadQuery}}) => {
+  const {slug} = params
 
-  const initial = await loadQuery<PageResult>(pageQuery, { slug })
+  const initial = await loadQuery<PageResult>(pageQuery, {slug})
 
-  return { initial, params: { slug } }
+  return {initial, params: {slug}}
 }
 ```
 

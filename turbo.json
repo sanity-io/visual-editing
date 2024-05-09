@@ -1,19 +1,22 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local", "package.config.ts"],
+  "globalDependencies": ["**/.env.*local"],
   "globalEnv": ["RUNNER_OS"],
   "pipeline": {
     "build": {
       "env": ["GITHUB_ACTIONS"],
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "outputMode": "new-only"
     },
     "test": {
       "env": ["GITHUB_ACTIONS"],
       "dependsOn": ["^build"],
       "cache": false
     },
-    "lint": {},
+    "lint": {
+      "outputMode": "errors-only"
+    },
     "preview": {
       "dependsOn": ["^build"]
     },

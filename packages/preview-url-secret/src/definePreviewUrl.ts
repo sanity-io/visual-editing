@@ -1,7 +1,4 @@
-import {
-  urlSearchParamPreviewPathname,
-  urlSearchParamPreviewSecret,
-} from './constants'
+import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverContext,
@@ -17,16 +14,12 @@ export function definePreviewUrl<SanityClientType>(
   const {
     draftMode,
     previewMode,
-    origin = typeof location === 'undefined'
-      ? 'https://localhost'
-      : location.origin,
+    origin = typeof location === 'undefined' ? 'https://localhost' : location.origin,
   } = options
   const enableUrl = previewMode?.enable || draftMode?.enable
-  let { preview = '/' } = options
+  let {preview = '/'} = options
   const productionUrl = new URL(preview, origin)
-  const enablePreviewModeUrl = enableUrl
-    ? new URL(enableUrl, origin)
-    : undefined
+  const enablePreviewModeUrl = enableUrl ? new URL(enableUrl, origin) : undefined
 
   return async (context): Promise<string> => {
     try {
@@ -49,15 +42,14 @@ export function definePreviewUrl<SanityClientType>(
       typeof location !== 'undefined' &&
       location.origin === productionUrl.origin &&
       context.studioBasePath &&
-      (preview.startsWith(`${context.studioBasePath}/`) ||
-        preview === context.studioBasePath)
+      (preview.startsWith(`${context.studioBasePath}/`) || preview === context.studioBasePath)
     ) {
       preview = options.preview || '/'
     }
     const previewUrl = new URL(preview, productionUrl)
     if (enablePreviewModeUrl) {
       const enablePreviewModeRequestUrl = new URL(enablePreviewModeUrl)
-      const { searchParams } = enablePreviewModeRequestUrl
+      const {searchParams} = enablePreviewModeRequestUrl
       searchParams.set(urlSearchParamPreviewSecret, context.previewUrlSecret)
       if (previewUrl.pathname !== enablePreviewModeRequestUrl.pathname) {
         searchParams.set(
@@ -72,8 +64,4 @@ export function definePreviewUrl<SanityClientType>(
   }
 }
 
-export type {
-  PreviewUrlResolver,
-  PreviewUrlResolverContext,
-  PreviewUrlResolverOptions,
-}
+export type {PreviewUrlResolver, PreviewUrlResolverContext, PreviewUrlResolverOptions}

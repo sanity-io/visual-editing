@@ -1,14 +1,14 @@
-import { HTMLProps } from 'react'
+import {HTMLProps} from 'react'
 
-import { imageUrlBuilder, SanityImageValue } from '@/sanity'
+import {imageUrlBuilder, SanityImageValue} from '@/sanity'
 
 export function Image(
-  props: { value: SanityImageValue; width?: number; height?: number } & Omit<
+  props: {value: SanityImageValue; width?: number; height?: number} & Omit<
     HTMLProps<HTMLImageElement>,
     'src' | 'value' | 'width' | 'height'
   >,
 ) {
-  const { value, width = 800, height = 800, ...rest } = props
+  const {value, width = 800, height = 800, ...rest} = props
 
   return (
     <img

@@ -20,13 +20,7 @@
     "lint": "eslint .",
     "test": "tsc --noEmit"
   },
-  "prettier": {
-    "plugins": [
-      "prettier-plugin-packagejson"
-    ],
-    "semi": false,
-    "singleQuote": true
-  },
+  "prettier": "@sanity/prettier-config",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -83,24 +77,24 @@
     "root": true
   },
   "dependencies": {
-    "@sanity/icons": "^2.11.4",
+    "@sanity/icons": "^2.11.8",
     "@sanity/react-loader": "workspace:*",
-    "@sanity/ui": "2.0.12",
-    "@vercel/stega": "0.1.0"
+    "@sanity/ui": "2.1.6",
+    "@vercel/stega": "0.1.2"
   },
   "devDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rxjs": "^7.8.1",
-    "sanity": "^3.35.2",
-    "styled-components": "6.1.8",
-    "typescript": "5.4.3"
+    "sanity": "^3.41.0",
+    "styled-components": "6.1.10",
+    "typescript": "5.4.5"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
     "rxjs": "^7.8.1",
-    "sanity": "^3.35.2",
+    "sanity": "^3.41.0",
     "styled-components": "^6.1.8"
   },
   "engines": {

@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const productType = defineType({
   type: 'document',
@@ -13,7 +13,7 @@ export const productType = defineType({
       type: 'slug',
       name: 'slug',
       title: 'Slug',
-      options: { source: 'title' },
+      options: {source: 'title'},
     }),
     defineField({
       type: 'array',
@@ -31,20 +31,20 @@ export const productType = defineType({
           ],
         },
       ],
-      options: { layout: 'grid' },
+      options: {layout: 'grid'},
     }),
     defineField({
       type: 'array',
       name: 'description',
       title: 'Description',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'}],
     }),
     defineField({
       title: 'Brand',
       name: 'brandReference',
       type: 'crossDatasetReference',
       dataset: 'cross-dataset-references',
-      studioUrl: ({ type, id }) =>
+      studioUrl: ({type, id}) =>
         new URL(
           `/cross-dataset-references/desk/intent/edit/id=${id};type=${type}/`,
           location.href,
@@ -75,13 +75,13 @@ export const productType = defineType({
           type: 'array',
           name: 'collectionNotes',
           title: 'Collection notes',
-          of: [{ type: 'block' }],
+          of: [{type: 'block'}],
         }),
         defineField({
           type: 'array',
           name: 'performance',
           title: 'Performance',
-          of: [{ type: 'block' }],
+          of: [{type: 'block'}],
         }),
         defineField({
           type: 'string',
@@ -92,7 +92,7 @@ export const productType = defineType({
           type: 'array',
           name: 'certifications',
           title: 'Certifications',
-          of: [{ type: 'string' }],
+          of: [{type: 'string'}],
         }),
       ],
     }),

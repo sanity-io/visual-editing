@@ -1,4 +1,4 @@
-import { VisualEditingLocals } from './types'
+import {VisualEditingLocals} from './types'
 
 declare global {
   namespace App {

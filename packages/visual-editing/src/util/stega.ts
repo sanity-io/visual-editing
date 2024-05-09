@@ -1,7 +1,7 @@
-import type { SanityStegaNode } from '@sanity/visual-editing-helpers'
-import { vercelStegaDecode } from '@vercel/stega'
+import type {SanityStegaNode} from '@repo/visual-editing-helpers'
+import {vercelStegaDecode} from '@vercel/stega'
 
-import { VERCEL_STEGA_REGEX } from '../constants'
+import {VERCEL_STEGA_REGEX} from '../constants'
 
 /**
  * JavaScript regexps are stateful. Have to reset lastIndex between runs to ensure consistent behaviour for the same string
@@ -24,20 +24,12 @@ function decodeStega(str: string, isAltText = false): SanityStegaNode | null {
     return decoded
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error(
-      'Failed to decode stega for string: ',
-      str,
-      'with the original error: ',
-      err,
-    )
+    console.error('Failed to decode stega for string: ', str, 'with the original error: ', err)
     return null
   }
 }
 
-export function testAndDecodeStega(
-  str: string,
-  isAltText = false,
-): SanityStegaNode | null {
+export function testAndDecodeStega(str: string, isAltText = false): SanityStegaNode | null {
   if (testVercelStegaRegex(str)) {
     return decodeStega(str, isAltText)
   }

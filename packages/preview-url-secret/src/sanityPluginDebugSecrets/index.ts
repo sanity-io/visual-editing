@@ -1,7 +1,7 @@
-import { definePlugin } from 'sanity'
+import {definePlugin} from 'sanity'
 
-import { schemaType } from '../constants'
-import { debugUrlSecretsType } from './debugUrlSecrets'
+import {schemaType} from '../constants'
+import {debugUrlSecretsType} from './debugUrlSecrets'
 
 export const debugSecrets = definePlugin<void>(() => {
   return {
@@ -14,7 +14,7 @@ export const debugSecrets = definePlugin<void>(() => {
         if (context.schemaType !== schemaType) {
           return prev
         }
-        return prev.filter(({ action }) => action === 'delete')
+        return prev.filter(({action}) => action === 'delete')
       },
       inspectors: (prev, context) => {
         if (context.documentType !== schemaType) {

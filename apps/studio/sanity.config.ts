@@ -1,19 +1,20 @@
-import { visionTool } from '@sanity/vision'
-import { defineConfig, definePlugin, defineType, defineField } from 'sanity'
-import { structureTool } from 'sanity/structure'
+import {visionTool} from '@sanity/vision'
+import {defineConfig, definePlugin, defineType, defineField} from 'sanity'
+import {structureTool} from 'sanity/structure'
 import {
   presentationTool,
   type PreviewUrlResolverOptions,
   type PreviewUrlOption,
 } from '@sanity/presentation'
-import { schema } from 'apps-common'
-import { workspaces } from 'apps-common/env'
-import { assist } from '@sanity/assist'
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
-import { locate } from './locate'
-import { StegaDebugger } from './presentation/DebugStega'
-import { CustomNavigator } from './presentation/CustomNavigator'
-import { debugSecrets } from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {schema} from 'apps-common'
+import {workspaces} from 'apps-common/env'
+import {assist} from '@sanity/assist'
+import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {locate} from './locate'
+import {StegaDebugger} from './presentation/DebugStega'
+import {CustomNavigator} from './presentation/CustomNavigator'
+import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {documentLocationResolvers, mainDocumentResolvers} from './presentation/resolvers'
 import Building from './models/documents/Building'
 import Floor from './models/documents/Floor'
 import Space from './models/documents/Space'
@@ -29,7 +30,7 @@ const sharedSettings = definePlugin({
         id: 'page-basic',
         title: 'Basic page',
         schemaType: 'page',
-        parameters: [{ name: 'title', title: 'Page Title', type: 'string' }],
+        parameters: [{name: 'title', title: 'Page Title', type: 'string'}],
         value: (params: any) => {
           return {
             title: params.title,
@@ -68,69 +69,60 @@ function definePreviewUrl(
 ): PreviewUrlOption {
   const previewUrl = maybeGitBranchUrl(_previewUrl)
   if (workspaceName === 'next' && toolName === 'pages-router') {
-    const { origin, pathname } = new URL(previewUrl)
+    const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
       enable: '/api/pages-draft',
       check: '/api/pages-check-draft',
       disable: '/api/pages-disable-draft',
     } satisfies PreviewUrlResolverOptions['previewMode']
-    return { origin, preview: pathname, previewMode }
+    return {origin, preview: pathname, previewMode}
   }
   if (workspaceName === 'next' && toolName === 'app-router') {
-    const { origin, pathname } = new URL(previewUrl)
+    const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
       enable: '/api/draft',
       check: '/api/check-draft',
       disable: '/api/disable-draft',
     } satisfies PreviewUrlResolverOptions['previewMode']
-    return { origin, preview: pathname, previewMode }
+    return {origin, preview: pathname, previewMode}
   }
   if (workspaceName === 'svelte' || workspaceName === 'nuxt') {
-    const { origin, pathname } = new URL(previewUrl)
+    const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
       enable: '/preview/enable',
       disable: '/preview/disable',
     } satisfies PreviewUrlResolverOptions['previewMode']
-    return { origin, preview: pathname, previewMode }
+    return {origin, preview: pathname, previewMode}
   }
 
   return previewUrl
 }
 
 const presentationWorkspaces = Object.entries({
-  remix:
-    process.env.SANITY_STUDIO_REMIX_PREVIEW_URL ||
-    'http://localhost:3000/shoes',
-  next: {
+  'remix': process.env.SANITY_STUDIO_REMIX_PREVIEW_URL || 'http://localhost:3000/shoes',
+  'next': {
     'app-router':
-      process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/shoes',
+      process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL || 'http://localhost:3001/shoes',
     'pages-router':
       process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
       'http://localhost:3001/pages-router/shoes',
   },
-  nuxt:
-    process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
-  svelte: {
-    'svelte-basic':
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL ||
-      'http://localhost:3004/shoes',
+  'nuxt': process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
+  'svelte': {
+    'svelte-basic': process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes',
     'svelte-loaders':
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL ||
-      'http://localhost:3004/shoes-with-loaders',
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes-with-loaders',
   },
   'page-builder-demo':
-    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL ||
-    'http://localhost:3005/',
+    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
+  'astro': process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL || 'http://localhost:3006/shoes',
 } as const).map(([name, previewUrl]) => {
   const {
     projectId,
     dataset,
     tool: toolName,
     workspace: workspaceName,
-  } = Object.values(workspaces).find(
-    (workspace) => workspace.workspace === name,
-  )!
+  } = Object.values(workspaces).find((workspace) => workspace.workspace === name)!
 
   if (typeof previewUrl === 'string') {
     return defineConfig({
@@ -142,6 +134,10 @@ const presentationWorkspaces = Object.entries({
         presentationTool({
           name: toolName,
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
+          resolve: {
+            mainDocuments: mainDocumentResolvers,
+            locations: documentLocationResolvers,
+          },
           locate,
           components:
             name === 'page-builder-demo'
@@ -166,18 +162,23 @@ const presentationWorkspaces = Object.entries({
     projectId,
     dataset,
     form:
-      process.env.SANITY_STUDIO_STEGA_DEBUG === 'true'
-        ? { components: { input: StegaDebugger } }
-        : {},
+      process.env.SANITY_STUDIO_STEGA_DEBUG === 'true' ? {components: {input: StegaDebugger}} : {},
     plugins: [
       ...Object.entries(previewUrl).map(([name, previewUrl]) => {
-        const { tool: toolName } = Object.values(workspaces).find(
+        const {tool: toolName} = Object.values(workspaces).find(
           (workspace) => workspace.tool === name,
         )!
         return presentationTool({
           name: toolName,
           previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
           // @TODO fix the locator for the pages-router
+          resolve:
+            toolName === 'pages-router'
+              ? undefined
+              : {
+                  mainDocuments: mainDocumentResolvers,
+                  locations: documentLocationResolvers,
+                },
           locate: toolName === 'pages-router' ? undefined : locate,
           unstable_showUnsafeShareUrl: toolName === 'app-router',
         })
@@ -215,7 +216,7 @@ const crossDatasetReferencesWorkspace = defineConfig({
             type: 'slug',
             name: 'slug',
             title: 'Slug',
-            options: { source: 'name' },
+            options: {source: 'name'},
           }),
           defineField({
             type: 'image',
@@ -259,7 +260,7 @@ const crossDatasetReferencesWorkspace = defineConfig({
             type: 'reference',
             name: 'author',
             title: 'Author',
-            to: [{ type: 'author' }],
+            to: [{type: 'author'}],
           }),
         ],
       }),

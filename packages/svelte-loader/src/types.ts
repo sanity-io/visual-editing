@@ -5,34 +5,25 @@ import type {
   ResponseQueryOptions,
   SanityClient,
 } from '@sanity/client'
-import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
+import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
 import {
   createQueryStore as createCoreQueryStore,
   type EnableLiveModeOptions,
   type QueryStoreState,
 } from '@sanity/core-loader'
-import { EncodeDataAttributeFunction } from '@sanity/core-loader/encode-data-attribute'
-import type {
-  HandlePreviewOptions,
-  VisualEditingLocals,
-} from '@sanity/visual-editing/svelte'
-import type { Readable } from 'svelte/store'
+import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
+import type {HandlePreviewOptions, VisualEditingLocals} from '@sanity/visual-editing/svelte'
+import type {Readable} from 'svelte/store'
 
 export type * from '@sanity/core-loader'
-export type {
-  HandlePreviewOptions,
-  VisualEditingLocals,
-} from '@sanity/visual-editing/svelte'
+export type {HandlePreviewOptions, VisualEditingLocals} from '@sanity/visual-editing/svelte'
 
 /** @public */
 export type WithEncodeDataAttribute = {
   encodeDataAttribute: EncodeDataAttributeFunction
 }
 
-export type UseQuery = <
-  QueryResponseResult = unknown,
-  QueryResponseError = unknown,
->(
+export type UseQuery = <QueryResponseResult = unknown, QueryResponseError = unknown>(
   query:
     | string
     | {
@@ -42,10 +33,7 @@ export type UseQuery = <
       },
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
-) => Readable<
-  QueryStoreState<QueryResponseResult, QueryResponseError> &
-    WithEncodeDataAttribute
->
+) => Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>
 
 /** @public */
 export interface QueryResponseInitial<QueryResponseResult> {
@@ -161,10 +149,7 @@ export interface QueryStore {
           },
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
-    ): Readable<
-      QueryStoreState<QueryResponseResult, QueryResponseError> &
-        WithEncodeDataAttribute
-    >
+    ): Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
       query:
         | string

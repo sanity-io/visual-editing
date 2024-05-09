@@ -1,8 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --filter='./packages/*'",
+    "build:astro": "turbo run build --filter=./apps/astro",
     "dev": "turbo run dev --filter=./apps/* --filter=!./apps/next-server-only --filter=!./apps/next-no-cache",
+    "dev:astro": "turbo run dev --filter=./apps/astro --filter=./apps/studio",
+    "dev:next": "turbo run dev --filter=./apps/next --filter=./apps/studio",
+    "dev:nuxt": "turbo run dev --filter=./apps/nuxt --filter=./apps/studio",
+    "dev:page-builder-demo": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
+    "dev:svelte": "turbo run dev --filter=./apps/svelte --filter=./apps/studio",
     "format": "prettier --cache --write .",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
@@ -13,44 +19,33 @@
     "test": "turbo run test",
     "watch": "turbo run watch"
   },
-  "prettier": {
-    "plugins": [
-      "prettier-plugin-packagejson",
-      "prettier-plugin-svelte",
-      "prettier-plugin-tailwindcss"
-    ],
-    "semi": false,
-    "singleQuote": true
-  },
   "dependencies": {
-    "@sanity/block-tools": "^3.35.2",
-    "@sanity/cli": "^3.35.2",
-    "@sanity/client": "^6.15.7",
-    "@sanity/diff": "^3.35.2",
-    "@sanity/export": "^3.35.2",
-    "@sanity/import": "^3.35.2",
-    "@sanity/import-cli": "^3.35.2",
-    "@sanity/mutator": "^3.35.2",
-    "@sanity/portable-text-editor": "^3.35.2",
-    "@sanity/schema": "^3.35.2",
-    "@sanity/types": "^3.35.2",
-    "@sanity/util": "^3.35.2",
-    "@sanity/vision": "^3.35.2",
-    "create-sanity": "^3.35.2",
-    "groq": "^3.35.2",
-    "sanity": "^3.35.2",
-    "styled-components": "6.1.8"
+    "@sanity/block-tools": "3.41.0",
+    "@sanity/cli": "3.41.0",
+    "@sanity/client": "^6.18.0",
+    "@sanity/diff": "3.41.0",
+    "@sanity/mutator": "3.41.0",
+    "@sanity/portable-text-editor": "3.41.0",
+    "@sanity/schema": "3.41.0",
+    "@sanity/types": "3.41.0",
+    "@sanity/util": "3.41.0",
+    "@sanity/vision": "3.41.0",
+    "create-sanity": "3.41.0",
+    "groq": "3.41.0",
+    "sanity": "3.41.0",
+    "styled-components": "6.1.10"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "^5.1.4",
+    "@sanity/pkg-utils": "6.8.13",
+    "@sanity/prettier-config": "1.0.2",
     "prettier": "3.2.5",
-    "prettier-plugin-packagejson": "2.4.12",
-    "prettier-plugin-svelte": "3.2.2",
-    "prettier-plugin-tailwindcss": "0.5.12",
-    "turbo": "1.13.0",
-    "typescript": "5.4.2"
+    "prettier-plugin-astro": "^0.13.0",
+    "prettier-plugin-svelte": "3.2.3",
+    "prettier-plugin-tailwindcss": "0.5.14",
+    "turbo": "1.13.3",
+    "typescript": "5.4.5"
   },
-  "packageManager": "pnpm@8.15.5",
+  "packageManager": "pnpm@8.15.8",
   "pnpm": {
     "overrides": {
       "@sanity/block-tools": "$@sanity/block-tools",
@@ -58,9 +53,6 @@
       "@sanity/client": "$@sanity/client",
       "@sanity/core-loader": "workspace:*",
       "@sanity/diff": "$@sanity/diff",
-      "@sanity/export": "$@sanity/export",
-      "@sanity/import-cli": "$@sanity/import-cli",
-      "@sanity/import": "$@sanity/import",
       "@sanity/mutator": "$@sanity/mutator",
       "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
       "@sanity/presentation": "workspace:*",

@@ -4,4 +4,4 @@ export {
   type PresentationNavigateContextValue,
   usePresentationNavigate,
 } from './usePresentationNavigate'
-export { usePresentationParams } from './usePresentationParams'
+export {usePresentationParams} from './usePresentationParams'

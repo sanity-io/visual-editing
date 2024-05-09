@@ -1,4 +1,4 @@
-import type { ClientPerspective, QueryParams } from '@sanity/client'
+import type {ClientPerspective, QueryParams} from '@sanity/client'
 
 /**
  * @internal

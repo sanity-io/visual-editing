@@ -1,4 +1,16 @@
 export * from './jsx'
+export {
+  encodeSanityNodeData,
+  type SanityKey,
+  type SanityNode,
+  type SanityNodeContext,
+  type SanityPrimitive,
+  type SourceNode,
+  unwrapData,
+  type UnwrappedValue,
+  wrapData,
+  type WrappedValue,
+} from '@repo/visual-editing-helpers/csm'
 export type {
   Any,
   ContentSourceMap,
@@ -22,15 +34,3 @@ export type {
   PathSegment,
   SanityDocument,
 } from '@sanity/client/csm'
-export {
-  encodeSanityNodeData,
-  type SanityKey,
-  type SanityNode,
-  type SanityNodeContext,
-  type SanityPrimitive,
-  type SourceNode,
-  unwrapData,
-  type UnwrappedValue,
-  wrapData,
-  type WrappedValue,
-} from '@sanity/visual-editing-helpers/csm'

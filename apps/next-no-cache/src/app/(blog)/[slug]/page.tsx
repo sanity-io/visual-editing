@@ -1,19 +1,19 @@
-import type { Metadata, ResolvingMetadata } from 'next'
-import { notFound } from 'next/navigation'
-import { Suspense } from 'react'
+import type {Metadata, ResolvingMetadata} from 'next'
+import {notFound} from 'next/navigation'
+import {Suspense} from 'react'
 import Balancer from 'react-wrap-balancer'
 
-import { AuthorAvatar, AuthorAvatarFallback } from '../AuthorAvatar'
+import {AuthorAvatar, AuthorAvatarFallback} from '../AuthorAvatar'
 import CoverImage from '../CoverImage'
 import MoreStories from '../MoreStories'
 import PostBody from '../PostBody'
 import PostDate from '../PostDate'
-import { urlForImage } from '@/lib/image'
-import { postFields } from '@/lib/queries'
-import { loadQuery } from '@/lib/loadQuery'
+import {urlForImage} from '@/lib/image'
+import {postFields} from '@/lib/queries'
+import {loadQuery} from '@/lib/loadQuery'
 
 type Props = {
-  params: { slug: string }
+  params: {slug: string}
 }
 
 const query = /* groq */ `*[_type == "post" && slug.current == $slug][0] {
@@ -21,11 +21,11 @@ const query = /* groq */ `*[_type == "post" && slug.current == $slug][0] {
 }`
 
 export async function generateMetadata(
-  { params }: Props,
+  {params}: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const [post, authorName] = await Promise.all([
-    loadQuery<any>({ query, params }),
+    loadQuery<any>({query, params}),
     // @TODO necessary as there's problems with type inference when `author-{name,image}` is used
     loadQuery<string | null>({
       query: /* groq */ `*[_type == "post" && slug.current == $slug][0].author->name`,
@@ -37,21 +37,18 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || []
 
   return {
-    authors: authorName ? [{ name: authorName }] : [],
+    authors: authorName ? [{name: authorName}] : [],
     title: `${parentTitle} | ${post?.title}`,
     openGraph: {
       images: post?.mainImage?.asset?._ref
-        ? [
-            urlForImage(post.mainImage).height(1000).width(2000).url(),
-            ...previousImages,
-          ]
+        ? [urlForImage(post.mainImage).height(1000).width(2000).url(), ...previousImages]
         : previousImages,
     },
   } satisfies Metadata
 }
 
-export default async function BlogPostPage({ params }: Props) {
-  const { slug } = params
+export default async function BlogPostPage({params}: Props) {
+  const {slug} = params
   const data = await loadQuery<any>({
     query,
     params,
@@ -61,7 +58,7 @@ export default async function BlogPostPage({ params }: Props) {
     return notFound()
   }
 
-  const { _id, title = 'Untitled', author, mainImage, body } = data ?? {}
+  const {_id, title = 'Untitled', author, mainImage, body} = data ?? {}
   return (
     <>
       <article>

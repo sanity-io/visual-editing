@@ -1,8 +1,9 @@
-import type { ClientPerspective } from '@sanity/client'
-import type { Dispatch, Reducer } from 'react'
-import { boolean, fallback, object, parse, picklist } from 'valibot'
+import type {ClientPerspective} from '@sanity/client'
+import type {Dispatch, Reducer} from 'react'
+import {boolean, fallback, object, parse, picklist} from 'valibot'
 
 export interface PresentationState {
+  mainDocument: boolean
   iframe: {
     status: 'loading' | 'loaded' | 'refreshing' | 'reloading'
   }
@@ -24,8 +25,7 @@ export const ACTION_IFRAME_REFRESH = 'ACTION_IFRAME_REFRESH'
 export const ACTION_IFRAME_RELOAD = 'ACTION_IFRAME_RELOAD'
 export const ACTION_PERSPECTIVE = 'ACTION_PERSPECTIVE'
 export const ACTION_VIEWPORT = 'ACTION_VIEWPORT'
-export const ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE =
-  'ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE'
+export const ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE = 'ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE'
 
 interface IframeLoadedAction {
   type: typeof ACTION_IFRAME_LOADED
@@ -123,17 +123,11 @@ const toggleVisualEditingOverlays: Reducer<
   }
 }
 
-const iframeStatusSchema = picklist([
-  'loading',
-  'loaded',
-  'refreshing',
-  'reloading',
-])
+const mainDocumentSchema = fallback(boolean(), false)
+
+const iframeStatusSchema = picklist(['loading', 'loaded', 'refreshing', 'reloading'])
 const perspectiveSchema = fallback(
-  picklist([
-    'published',
-    'previewDrafts',
-  ] satisfies PresentationState['perspective'][]),
+  picklist(['published', 'previewDrafts'] satisfies PresentationState['perspective'][]),
   'previewDrafts',
 )
 const viewportSchema = fallback(
@@ -141,15 +135,17 @@ const viewportSchema = fallback(
   'desktop',
 )
 const initStateSchema = object({
+  mainDocument: mainDocumentSchema,
   iframe: object({
     status: iframeStatusSchema,
   }),
   perspective: perspectiveSchema,
   viewport: viewportSchema,
-  visualEditing: object({ overlaysEnabled: boolean() }),
+  visualEditing: object({overlaysEnabled: boolean()}),
 })
 
 const INITIAL_PRESENTATION_STATE = {
+  mainDocument: false,
   iframe: {
     status: 'loading',
   },
@@ -162,12 +158,13 @@ const INITIAL_PRESENTATION_STATE = {
 export function presentationReducerInit(
   state: Readonly<
     Partial<{
+      mainDocument: boolean
       perspective: string
       viewport: string
     }>
   >,
 ): Readonly<PresentationState> {
-  return parse(initStateSchema, { ...INITIAL_PRESENTATION_STATE, ...state })
+  return parse(initStateSchema, {...INITIAL_PRESENTATION_STATE, ...state})
 }
 
 export type DispatchPresentationAction = Dispatch<Readonly<PresentationAction>>

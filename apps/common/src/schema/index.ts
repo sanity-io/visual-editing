@@ -1,9 +1,9 @@
-import { defineSchema } from './defineSchema'
-import { pageSchema } from './page'
-import { productSchema } from './product'
-import { projectSchema } from './project'
-import { shoeSchema } from './shoe'
-import { siteSettingsSchema } from './siteSettings'
+import {defineSchema} from './defineSchema'
+import {pageSchema} from './page'
+import {productSchema} from './product'
+import {projectSchema} from './project'
+import {shoeSchema} from './shoe'
+import {siteSettingsSchema} from './siteSettings'
 
 /** @public */
 export const schema = defineSchema([

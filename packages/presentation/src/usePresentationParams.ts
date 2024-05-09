@@ -1,12 +1,17 @@
-import { useContext } from 'react'
+import {useContext} from 'react'
 
-import { PresentationParamsContext } from './PresentationParamsContext'
-import { PresentationParams } from './types'
+import {PresentationParamsContext} from './PresentationParamsContext'
+import type {PresentationParams} from './types'
 
-export function usePresentationParams(): PresentationParams {
+/** @public */
+export function usePresentationParams(throwOnMissingContext?: true): PresentationParams
+/** @public */
+export function usePresentationParams(throwOnMissingContext: false): PresentationParams | null
+/** @public */
+export function usePresentationParams(throwOnMissingContext = true): PresentationParams | null {
   const params = useContext(PresentationParamsContext)
 
-  if (!params) {
+  if (throwOnMissingContext && !params) {
     throw new Error('Presentation params context is missing')
   }
 

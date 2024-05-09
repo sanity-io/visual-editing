@@ -1,4 +1,4 @@
-import { SanityArrayValue, SanityImageValue } from '@/sanity'
+import {SanityArrayValue, SanityImageValue} from '@/sanity'
 
 export interface SectionStyleData {
   variant?: 'default' | 'inverted'
@@ -27,7 +27,7 @@ export interface FeaturedProductsSectionData {
   headline?: string
   products?: SanityArrayValue<{
     _type: 'product'
-    slug?: { current?: string }
+    slug?: {current?: string}
     title?: string
     media?: SanityImageValue
   }>[]
@@ -42,7 +42,7 @@ export interface FeatureHighlightSectionData {
   image?: SanityImageValue
   product?: {
     _type: 'product'
-    slug?: { current?: string }
+    slug?: {current?: string}
     title?: string
     media?: SanityImageValue
   }

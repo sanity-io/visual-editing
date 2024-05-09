@@ -1,11 +1,11 @@
-import { WrappedValue } from '@sanity/react-loader/jsx'
-import { sanity } from '@sanity/react-loader/jsx'
+import {WrappedValue} from '@sanity/react-loader/jsx'
+import {sanity} from '@sanity/react-loader/jsx'
 
-import { AppLayout } from '@/app/AppLayout'
-import { SiteSettingsData } from '@/app/types'
-import { SanityArrayValue, SanityImageValue, dataAttribute } from '@/sanity'
-import { SimpleContent } from '@/components/page'
-import { Slideshow } from '@/components/slideshow'
+import {AppLayout} from '@/app/AppLayout'
+import {SiteSettingsData} from '@/app/types'
+import {SanityArrayValue, SanityImageValue, dataAttribute} from '@/sanity'
+import {SimpleContent} from '@/components/page'
+import {Slideshow} from '@/components/slideshow'
 
 export interface ProductData {
   _id: string
@@ -27,11 +27,11 @@ export interface ProductPageData {
   siteSettings: SiteSettingsData | null
 }
 
-export function ProductPage(props: { data: WrappedValue<ProductPageData> }) {
-  const { data } = props
+export function ProductPage(props: {data: WrappedValue<ProductPageData>}) {
+  const {data} = props
 
   return (
-    <AppLayout data={{ siteSettings: data.siteSettings }}>
+    <AppLayout data={{siteSettings: data.siteSettings}}>
       <main className="mx-auto max-w-4xl p-5">
         <h1 className="text-2xl font-extrabold sm:text-4xl">
           <sanity.span>{data?.product?.title}</sanity.span>
@@ -72,9 +72,7 @@ export function ProductPage(props: { data: WrappedValue<ProductPageData> }) {
                   <div className="mt-4">
                     <div className="font-bold">Materials</div>
                     <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                      <sanity.span>
-                        {data.product?.details.materials}
-                      </sanity.span>
+                      <sanity.span>{data.product?.details.materials}</sanity.span>
                     </div>
                   </div>
                 )}
@@ -90,9 +88,7 @@ export function ProductPage(props: { data: WrappedValue<ProductPageData> }) {
                         path: 'details.collectionNotes',
                       })}
                     >
-                      <SimpleContent
-                        value={data.product?.details.collectionNotes}
-                      />
+                      <SimpleContent value={data.product?.details.collectionNotes} />
                     </div>
                   </div>
                 )}
@@ -108,9 +104,7 @@ export function ProductPage(props: { data: WrappedValue<ProductPageData> }) {
                         path: 'details.performance',
                       })}
                     >
-                      <SimpleContent
-                        value={data.product?.details.performance}
-                      />
+                      <SimpleContent value={data.product?.details.performance} />
                     </div>
                   </div>
                 )}
@@ -119,9 +113,7 @@ export function ProductPage(props: { data: WrappedValue<ProductPageData> }) {
                   <div className="mt-4">
                     <div className="font-bold">LED Lifespan</div>
                     <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                      <sanity.span>
-                        {data.product?.details.ledLifespan}
-                      </sanity.span>
+                      <sanity.span>{data.product?.details.ledLifespan}</sanity.span>
                     </div>
                   </div>
                 )}

@@ -2,7 +2,7 @@
 // Common utils used in templates, demos and tests.
 // The JS in here needs to be able to run server side, browser side, in any fw
 
-import { vercelStegaSplit } from '@vercel/stega'
+import {vercelStegaSplit} from '@vercel/stega'
 
 export function formatCurrency(_value: number | string): string {
   let value = typeof _value === 'string' ? undefined : _value
@@ -21,7 +21,7 @@ export function formatCurrency(_value: number | string): string {
   return `${formatter.format(value!)}${encoded}`
 }
 
-const rtf = new Intl.RelativeTimeFormat('en', { style: 'short' })
+const rtf = new Intl.RelativeTimeFormat('en', {style: 'short'})
 export function formatTimeSince(from: Date, to: Date): string {
   const seconds = Math.floor((from.getTime() - to.getTime()) / 1000)
   if (seconds > -60) {

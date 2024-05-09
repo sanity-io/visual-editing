@@ -2,11 +2,7 @@
 export type PreviewUrlSecretSchemaIdPrefix = `sanity-preview-url-secret`
 
 /** @internal */
-export type PreviewUrlSecretSchemaIdToolName =
-  | 'presentation'
-  | 'desk'
-  | 'production-url'
-  | string
+export type PreviewUrlSecretSchemaIdToolName = 'presentation' | 'desk' | 'production-url' | string
 
 /** @internal */
 export type PreviewUrlSecretSchemaIdType =
@@ -22,7 +18,7 @@ export type PreviewUrlSecretSchemaType = `sanity.previewUrlSecret`
  * @internal
  */
 export type SanityClientLike = {
-  config(): { token?: string }
+  config(): {token?: string}
   withConfig(config: {
     apiVersion?: string
     useCdn?: boolean
@@ -38,7 +34,7 @@ export type SanityClientLike = {
   >(
     query: string,
     params: Q,
-    options: { tag?: string },
+    options: {tag?: string},
   ): Promise<R>
 }
 
@@ -52,7 +48,7 @@ export interface PreviewUrlValidateUrlResult {
    */
   redirectTo?: string
   /**
-   * If the URL is valid, and the studior URL is known and valid, then its origin will be here
+   * If the URL is valid, and the studio URL is known and valid, then its origin will be here
    */
   studioOrigin?: string
 }

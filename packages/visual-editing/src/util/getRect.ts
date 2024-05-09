@@ -1,4 +1,4 @@
-import { OverlayRect } from '../types'
+import type {OverlayRect} from '../types'
 
 export function getRect(element: Element): OverlayRect {
   const domRect = element.getBoundingClientRect()

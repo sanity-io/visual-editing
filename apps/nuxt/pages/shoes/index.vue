@@ -1,13 +1,11 @@
 <template>
   <div class="min-h-screen bg-white">
     <nav aria-label="Breadcrumb" class="pt-16 sm:pt-24">
-      <ol
-        class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-      >
+      <ol class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <li>
           <div class="flex items-center">
             <NuxtLink
-              :to="{ name: 'shoes' }"
+              :to="{name: 'shoes'}"
               aria-current="page"
               class="mr-2 text-sm font-medium text-gray-900"
             >
@@ -17,9 +15,7 @@
         </li>
       </ol>
     </nav>
-    <div
-      class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
-    >
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
       <h1 class="sr-only">Products</h1>
 
       <div v-if="pending" class="animate-pulse">Loading...</div>
@@ -32,7 +28,7 @@
           :key="product.slug.current"
           :to="{
             name: 'shoes-slug',
-            params: { slug: product.slug.current },
+            params: {slug: product.slug.current},
           }"
           class="group relative"
         >
@@ -51,35 +47,22 @@
               :alt="product.media?.alt || ''"
             />
           </div>
-          <h2
-            class="mb-8 mt-4 text-sm text-gray-700"
-            :style="{ ['textWrap' as any]: 'balance' }"
-          >
+          <h2 class="mb-8 mt-4 text-sm text-gray-700" :style="{['textWrap' as any]: 'balance'}">
             {{ product.title }}
           </h2>
-          <p
-            class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900"
-          >
+          <p class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900">
             {{ product.price ? formatCurrency(product.price) : 'FREE' }}
           </p>
-          <div
-            v-if="product.brand"
-            class="absolute bottom-0.5 right-0 flex items-center gap-x-2"
-          >
+          <div v-if="product.brand" class="absolute bottom-0.5 right-0 flex items-center gap-x-2">
             <img
               class="h-6 w-6 rounded-full bg-gray-50"
               width="24"
               height="24"
               :src="
                 product.brand?.logo?.asset
-                  ? urlForCrossDatasetReference(product.brand.logo)
-                      .width(48)
-                      .height(48)
-                      .url()
+                  ? urlForCrossDatasetReference(product.brand.logo).width(48).height(48).url()
                   : `https://source.unsplash.com/featured/48x48?${
-                      product.brand.name
-                        ? encodeURIComponent(product.brand.name)
-                        : `brand&r=${i}`
+                      product.brand.name ? encodeURIComponent(product.brand.name) : `brand&r=${i}`
                     }`
               "
               :alt="product.brand?.logo?.alt || ''"
@@ -95,10 +78,9 @@
 </template>
 
 <script setup lang="ts">
-import { formatCurrency } from 'apps-common/utils'
-import { shoesList, type ShoesListResult } from 'apps-common/queries'
-import { urlFor, urlForCrossDatasetReference } from '~/utils'
+import {formatCurrency} from 'apps-common/utils'
+import {shoesList, type ShoesListResult} from 'apps-common/queries'
+import {urlFor, urlForCrossDatasetReference} from '~/utils'
 
-const { data: products, pending } =
-  await useSanityQuery<ShoesListResult>(shoesList)
+const {data: products, pending} = await useSanityQuery<ShoesListResult>(shoesList)
 </script>

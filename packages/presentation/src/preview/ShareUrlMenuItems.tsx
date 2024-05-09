@@ -1,15 +1,16 @@
-import { CopyIcon, LaunchIcon } from '@sanity/icons'
-import { createPreviewSecret } from '@sanity/preview-url-secret/create-secret'
+import {CopyIcon, LaunchIcon} from '@sanity/icons'
+import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {
   hasSecretSearchParams,
   setSecretSearchParams,
 } from '@sanity/preview-url-secret/without-secret-search-params'
-import { MenuItem, useToast } from '@sanity/ui'
-import { useCallback, useState } from 'react'
-import { useClient, useCurrentUser } from 'sanity'
+import {MenuItem, useToast} from '@sanity/ui'
+import {useCallback, useState} from 'react'
+import {useClient, useCurrentUser, useTranslation} from 'sanity'
 
-import { API_VERSION } from '../constants'
-import type { PreviewFrameProps } from './PreviewFrame'
+import {API_VERSION} from '../constants'
+import {presentationLocaleNamespace} from '../i18n'
+import type {PreviewFrameProps} from './PreviewFrame'
 
 /** @internal */
 export function ShareUrlMenuItems(
@@ -18,8 +19,9 @@ export function ShareUrlMenuItems(
     previewLocationRoute: string
   },
 ): React.ReactNode {
-  const { initialUrl, openPopup, previewLocationOrigin, previewLocationRoute } =
-    props
+  const {initialUrl, openPopup, previewLocationOrigin, previewLocationRoute} = props
+
+  const {t} = useTranslation(presentationLocaleNamespace)
 
   const handleOpenPopup = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -38,7 +40,7 @@ export function ShareUrlMenuItems(
       />
       <MenuItem
         icon={LaunchIcon}
-        text="Open preview"
+        text={t('share-url.menu-item.open.text')}
         as="a"
         href={`${previewLocationOrigin}${previewLocationRoute}`}
         // @ts-expect-error the `as="a"` prop isn't enough to change the type of event.target from <div> to <a>
@@ -56,10 +58,11 @@ function CopyUrlMenuButton(
     previewLocationRoute: string
   },
 ) {
-  const { initialUrl, previewLocationOrigin, previewLocationRoute } = props
+  const {initialUrl, previewLocationOrigin, previewLocationRoute} = props
 
-  const { push: pushToast } = useToast()
-  const client = useClient({ apiVersion: API_VERSION })
+  const {t} = useTranslation(presentationLocaleNamespace)
+  const {push: pushToast} = useToast()
+  const client = useClient({apiVersion: API_VERSION})
   const currentUser = useCurrentUser()
   const [disabled, setDisabled] = useState(false)
 
@@ -71,7 +74,7 @@ function CopyUrlMenuButton(
           pushToast({
             closable: true,
             status: 'error',
-            title: 'Clipboard not supported',
+            title: t('share-url.clipboard.status', {context: 'unsupported'}),
           })
           return false
         }
@@ -84,7 +87,7 @@ function CopyUrlMenuButton(
             id,
             closable: true,
             status: 'success',
-            title: 'The URL is copied to the clipboard',
+            title: t('share-url.clipboard.status', {context: 'success'}),
           })
           setDisabled(false)
         }
@@ -92,20 +95,17 @@ function CopyUrlMenuButton(
           pushToast({
             closable: true,
             status: 'error',
-            title: 'Copy failed',
+            title: t('share-url.clipboard.status', {context: 'failed'}),
             description: error.message || error.toString(),
           })
           setDisabled(false)
         }
-        if (
-          hasSecretSearchParams(initialUrl) &&
-          typeof ClipboardItem !== 'undefined'
-        ) {
+        if (hasSecretSearchParams(initialUrl) && typeof ClipboardItem !== 'undefined') {
           const type = 'text/plain'
           const resolvePreviewUrl = async () => {
             id = pushToast({
               closable: true,
-              title: 'Copying URL to clipboard…',
+              title: t('share-url.clipboard.status', {context: 'copying'}),
             })
             const previewUrlSecret = await createPreviewSecret(
               client,
@@ -120,7 +120,7 @@ function CopyUrlMenuButton(
               previewLocationRoute,
             )
             url = newUrl.toString()
-            return new Blob([url], { type })
+            return new Blob([url], {type})
           }
 
           // Try to save to clipboard then save it in the state if worked
@@ -131,8 +131,9 @@ function CopyUrlMenuButton(
         } else {
           navigator.clipboard.writeText(url).then(onFinally).catch(onError)
         }
+        return
       }}
-      text="Copy link"
+      text={t('share-url.menu-item.copy.text')}
       icon={CopyIcon}
     />
   )

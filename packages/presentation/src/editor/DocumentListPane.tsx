@@ -1,24 +1,19 @@
-import { Card, Code, ErrorBoundary, Flex, Label, Stack } from '@sanity/ui'
-import {
-  ErrorInfo,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
+import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
+import {getPublishedId, useTranslation} from 'sanity'
 import {
   DocumentListPane as StructureDocumentListPane,
   PaneLayout,
-  PaneNode,
+  type PaneNode,
   StructureToolProvider,
 } from 'sanity/structure'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import { ErrorCard } from '../components/ErrorCard'
-import type { StructureDocumentPaneParams } from '../types'
-import { usePresentationTool } from '../usePresentationTool'
-import { PresentationPaneRouterProvider } from './PresentationPaneRouterProvider'
+import {ErrorCard} from '../components/ErrorCard'
+import {presentationLocaleNamespace} from '../i18n'
+import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
+import {usePresentationTool} from '../usePresentationTool'
+import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
 const RootLayout = styled(PaneLayout)`
   height: 100%;
@@ -36,26 +31,37 @@ const WrappedCode = styled(Code)`
 `
 
 export function DocumentListPane(props: {
+  mainDocumentState?: MainDocumentState
   onStructureParams: (params: StructureDocumentPaneParams) => void
   previewUrl?: string
-  refs: { _id: string; _type: string }[]
+  refs: {_id: string; _type: string}[]
 }): ReactElement {
-  const { onStructureParams, previewUrl, refs } = props
-  const { devMode } = usePresentationTool()
+  const {mainDocumentState, onStructureParams, previewUrl, refs} = props
 
-  const pane: Extract<PaneNode, { type: 'documentList' }> = useMemo(
+  const {t} = useTranslation(presentationLocaleNamespace)
+  const {devMode} = usePresentationTool()
+
+  const ids = useMemo(
+    () =>
+      refs
+        .filter((r) => getPublishedId(r._id) !== mainDocumentState?.document?._id)
+        .map((r) => r._id),
+    [mainDocumentState, refs],
+  )
+
+  const pane: Extract<PaneNode, {type: 'documentList'}> = useMemo(
     () => ({
       id: '$root',
       options: {
         filter: '_id in $ids',
-        params: { ids: refs.map((r) => r._id) },
-        // defaultOrdering: [{ field: '_updatedAt', direction: 'desc' }],
+        params: {ids},
+        // defaultOrdering: [{field: '_updatedAt', direction: 'desc'}],
       },
       schemaTypeName: '',
-      title: 'Documents on this page',
+      title: t('document-list-pane.document-list.title'),
       type: 'documentList',
     }),
-    [refs],
+    [ids, t],
   )
 
   const [errorParams, setErrorParams] = useState<{
@@ -72,17 +78,13 @@ export function DocumentListPane(props: {
 
   if (errorParams) {
     return (
-      <ErrorCard
-        flex={1}
-        message="Could not render the document list"
-        onRetry={handleRetry}
-      >
+      <ErrorCard flex={1} message={t('document-list-pane.error.text')} onRetry={handleRetry}>
         {devMode && (
           // show runtime error message in dev mode
           <Card overflow="auto" padding={3} radius={2} tone="critical">
             <Stack space={3}>
               <Label muted size={0}>
-                Error message
+                {t('presentation-error.label')}
               </Label>
               <WrappedCode size={1}>{errorParams.error.message}</WrappedCode>
             </Stack>
@@ -103,12 +105,7 @@ export function DocumentListPane(props: {
             refs={refs}
           >
             <Root direction="column" flex={1}>
-              <StructureDocumentListPane
-                index={0}
-                itemId="$root"
-                pane={pane}
-                paneKey="$root"
-              />
+              <StructureDocumentListPane index={0} itemId="$root" pane={pane} paneKey="$root" />
             </Root>
           </PresentationPaneRouterProvider>
         </StructureToolProvider>

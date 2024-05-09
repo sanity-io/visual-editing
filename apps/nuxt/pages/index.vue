@@ -3,31 +3,19 @@
     class="flex flex-col items-center justify-between p-8 lg:p-24"
     :class="[
       expandedDocument ? 'min-h-[200vh]' : 'min-h-screen',
-      { 'transition-all duration-500': animateDocument },
+      {'transition-all duration-500': animateDocument},
     ]"
   >
     <div
       class="flex w-full flex-col items-center justify-start gap-4 font-mono text-sm lg:max-w-5xl lg:flex-row"
     >
-      <button
-        class="button"
-        type="button"
-        @click.prevent="elementAdded = !elementAdded"
-      >
+      <button class="button" type="button" @click.prevent="elementAdded = !elementAdded">
         {{ elementAdded ? 'Remove' : 'Add' }} Dynamic Element
       </button>
-      <button
-        class="button"
-        type="button"
-        @click.prevent="expandedDocument = !expandedDocument"
-      >
+      <button class="button" type="button" @click.prevent="expandedDocument = !expandedDocument">
         {{ expandedDocument ? 'Contract' : 'Expand' }} Document
       </button>
-      <button
-        class="button"
-        type="button"
-        @click.prevent="animateDocument = !animateDocument"
-      >
+      <button class="button" type="button" @click.prevent="animateDocument = !animateDocument">
         {{ animateDocument ? 'Disable' : 'Enable' }} Animation
       </button>
     </div>
@@ -50,13 +38,8 @@
         </svg>
       </a>
     </div>
-    <div
-      class="mb-32 grid w-full text-center lg:mb-0 lg:max-w-5xl lg:grid-cols-3 lg:text-left"
-    >
-      <div
-        class="block"
-        :data-sanity-edit-info="JSON.stringify(sanityEditData)"
-      >
+    <div class="mb-32 grid w-full text-center lg:mb-0 lg:max-w-5xl lg:grid-cols-3 lg:text-left">
+      <div class="block" :data-sanity-edit-info="JSON.stringify(sanityEditData)">
         <h2>JSON data attribute</h2>
         <p>data-sanity-edit-info</p>
       </div>
@@ -71,12 +54,7 @@
         <p>
           <span>
             <span>
-              {{
-                vercelStegaCombine(
-                  'Nested stega in inline element',
-                  sanityEditData,
-                )
-              }}
+              {{ vercelStegaCombine('Nested stega in inline element', sanityEditData) }}
             </span>
           </span>
         </p>
@@ -96,9 +74,7 @@
         <h2>Target (Info)</h2>
         <div class="m-0 text-sm opacity-50">
           <div :data-sanity="JSON.stringify(sanityData)">First data-sanity</div>
-          <div :data-sanity="JSON.stringify(sanityDataDiff)">
-            Second data-sanity
-          </div>
+          <div :data-sanity="JSON.stringify(sanityDataDiff)">Second data-sanity</div>
         </div>
       </div>
 
@@ -117,7 +93,7 @@
 </template>
 
 <script lang="ts" setup>
-import { vercelStegaCombine } from '@vercel/stega'
+import {vercelStegaCombine} from '@vercel/stega'
 const elementAdded = ref(false)
 const expandedDocument = ref(false)
 const animateDocument = ref(false)

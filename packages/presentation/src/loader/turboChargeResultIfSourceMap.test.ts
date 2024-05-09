@@ -1,10 +1,10 @@
-import type { ContentSourceMap } from '@sanity/client'
+import type {ContentSourceMap} from '@sanity/client'
 import LRUCache from 'mnemonist/lru-cache-with-delete'
-import { SanityDocument } from 'sanity'
-import { expect, test } from 'vitest'
+import type {SanityDocument} from 'sanity'
+import {expect, test} from 'vitest'
 
-import { LIVE_QUERY_CACHE_SIZE } from '../constants'
-import { turboChargeResultIfSourceMap } from './LoaderQueries'
+import {LIVE_QUERY_CACHE_SIZE} from '../constants'
+import {turboChargeResultIfSourceMap} from './LoaderQueries'
 
 const perspective = 'previewDrafts'
 
@@ -21,8 +21,7 @@ test('Can apply an array keyed field update', () => {
           _type: 'hero',
           tagline: 'ACME’s elegant construction is both minimal and inviting.',
           headline: 'Touch of Texture ',
-          subline:
-            'You can follow us on Twitter, Twitch, LinkedIn, and GitHub.',
+          subline: 'You can follow us on Twitter, Twitch, LinkedIn, and GitHub.',
           style: {
             _type: 'sectionStyle',
             variant: 'default',
@@ -36,8 +35,7 @@ test('Can apply an array keyed field update', () => {
           products: null,
           _type: 'hero',
           _key: '50692538e3551f1805206202c8838ea5',
-          subline:
-            'You can follow us on Twitter, Twitch, LinkedIn, and GitHub..',
+          subline: 'You can follow us on Twitter, Twitch, LinkedIn, and GitHub..',
           symbol: null,
           tagline: 'ACME’s elegant construction is both minimal and inviting.',
           style: {
@@ -828,7 +826,5 @@ test('Can apply an array keyed field update', () => {
     resultSourceMap,
   )
   expect(result.page.sections[0].headline).not.toBe(draft.sections[0].headline)
-  expect(turboCharged.page.sections[0].headline).toBe(
-    draft.sections[0].headline,
-  )
+  expect(turboCharged.page.sections[0].headline).toBe(draft.sections[0].headline)
 })

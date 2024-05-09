@@ -1,6 +1,6 @@
-import { createContext, type CSSProperties } from 'react'
+import {createContext, type CSSProperties} from 'react'
 
-import { PanelElement, ResizerElement } from './types'
+import type {PanelElement, ResizerElement} from './types'
 
 export const PanelsContext = createContext<{
   activeResizer: string | null

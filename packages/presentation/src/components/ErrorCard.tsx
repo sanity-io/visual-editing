@@ -1,15 +1,8 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardProps,
-  Container,
-  Flex,
-  Inline,
-  Stack,
-  Text,
-} from '@sanity/ui'
-import { ReactElement, ReactNode } from 'react'
+import {Box, Button, Card, type CardProps, Container, Flex, Inline, Stack, Text} from '@sanity/ui'
+import type {ReactElement, ReactNode} from 'react'
+import {useTranslation} from 'sanity'
+
+import {presentationLocaleNamespace} from '../i18n'
 
 export function ErrorCard(
   props: {
@@ -19,10 +12,12 @@ export function ErrorCard(
     onContinueAnyway?: () => void
   } & CardProps,
 ): ReactElement {
-  const { children, message, onRetry, onContinueAnyway, ...restProps } = props
+  const {children, message, onRetry, onContinueAnyway, ...restProps} = props
+
+  const {t} = useTranslation(presentationLocaleNamespace)
 
   const retryButton = (
-    <Button fontSize={1} mode="ghost" onClick={onRetry} text="Retry" />
+    <Button fontSize={1} mode="ghost" onClick={onRetry} text={t('error-card.retry-button.text')} />
   )
   const continueAnywayButton = (
     <Button
@@ -30,7 +25,7 @@ export function ErrorCard(
       mode="ghost"
       tone="critical"
       onClick={onContinueAnyway}
-      text="Continue anyway"
+      text={t('error-card.continue-button.text')}
     />
   )
 
@@ -41,7 +36,7 @@ export function ErrorCard(
           <Stack space={4}>
             <Stack space={3}>
               <Text size={1} weight="semibold">
-                An error occured
+                {t('error-card.title')}
               </Text>
               <Text muted size={1}>
                 {message}

@@ -1,29 +1,19 @@
-import type {
-  ForwardRefExoticComponent,
-  HTMLProps,
-  ReactElement,
-  Ref,
-  SVGProps,
-} from 'react'
-import { createElement, forwardRef } from 'react'
+import type {ForwardRefExoticComponent, HTMLProps, ReactElement, Ref, SVGProps} from 'react'
+import {createElement, forwardRef} from 'react'
 
-import { htmlElements } from './html'
-import type { SanityElementProps } from './SanityElement'
-import { SanityElement } from './SanityElement'
-import { svgElements } from './svg'
+import {htmlElements} from './html'
+import type {SanityElementProps} from './SanityElement'
+import {SanityElement} from './SanityElement'
+import {svgElements} from './svg'
 
 export type SanityHTMLElements = Record<
   (typeof htmlElements)[number],
-  ForwardRefExoticComponent<
-    SanityElementProps & Omit<HTMLProps<HTMLElement>, 'children' | 'ref'>
-  >
+  ForwardRefExoticComponent<SanityElementProps & Omit<HTMLProps<HTMLElement>, 'children' | 'ref'>>
 >
 
 export type SanitySVGElements = Record<
   (typeof svgElements)[number],
-  ForwardRefExoticComponent<
-    SanityElementProps & Omit<SVGProps<SVGElement>, 'children' | 'ref'>
-  >
+  ForwardRefExoticComponent<SanityElementProps & Omit<SVGProps<SVGElement>, 'children' | 'ref'>>
 >
 
 export type SanityElements = SanityHTMLElements & SanitySVGElements
@@ -42,11 +32,10 @@ const sanity = new Proxy({} as SanityElements, {
       if (target[prop]) return target[prop]
 
       const SanityComponent = forwardRef(function SanityComponent(
-        props: SanityElementProps &
-          Omit<HTMLProps<HTMLElement>, 'children' | 'ref'>,
+        props: SanityElementProps & Omit<HTMLProps<HTMLElement>, 'children' | 'ref'>,
         ref: Ref<HTMLElement>,
       ): ReactElement {
-        return createElement(SanityElement, { as: prop, ref, ...props })
+        return createElement(SanityElement, {as: prop, ref, ...props})
       })
 
       SanityComponent.displayName = `sanity.${prop}`
@@ -60,11 +49,10 @@ const sanity = new Proxy({} as SanityElements, {
       if (target[prop]) return target[prop]
 
       const SanityComponent = forwardRef(function SanityComponent(
-        props: SanityElementProps &
-          Omit<SVGProps<SVGElement>, 'children' | 'ref'>,
+        props: SanityElementProps & Omit<SVGProps<SVGElement>, 'children' | 'ref'>,
         ref: Ref<SVGElement>,
       ): ReactElement {
-        return createElement(SanityElement, { as: prop, ref, ...props } as any)
+        return createElement(SanityElement, {as: prop, ref, ...props} as any)
       })
 
       SanityComponent.displayName = `sanity.${prop}`
@@ -78,4 +66,4 @@ const sanity = new Proxy({} as SanityElements, {
   },
 })
 
-export { type htmlElements, sanity, type SanityElementProps, type svgElements }
+export {type htmlElements, sanity, type SanityElementProps, type svgElements}

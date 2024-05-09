@@ -1,19 +1,13 @@
-import type { ContentSourceMap } from '@sanity/client'
-import type {
-  ResolveStudioUrl,
-  StudioPathLike,
-  StudioUrl,
-} from '@sanity/client/csm'
+import type {ContentSourceMap} from '@sanity/client'
+import type {ResolveStudioUrl, StudioPathLike, StudioUrl} from '@sanity/client/csm'
 import {
   defineEncodeDataAttribute,
   type EncodeDataAttributeFunction,
 } from '@sanity/core-loader/encode-data-attribute'
-import { useMemo } from 'react'
+import {useMemo} from 'react'
 
 /** @public */
-export type EncodeDataAttributeCallback = (
-  path: StudioPathLike,
-) => string | undefined
+export type EncodeDataAttributeCallback = (path: StudioPathLike) => string | undefined
 
 /** @public */
 export function useEncodeDataAttribute<QueryResponseResult = unknown>(
@@ -27,4 +21,4 @@ export function useEncodeDataAttribute<QueryResponseResult = unknown>(
   )
 }
 
-export type { ContentSourceMap, ResolveStudioUrl, StudioPathLike, StudioUrl }
+export type {ContentSourceMap, ResolveStudioUrl, StudioPathLike, StudioUrl}

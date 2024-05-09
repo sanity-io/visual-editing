@@ -1,4 +1,4 @@
-import { HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES } from './constants'
+import {HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES} from './constants'
 
 /**
  * @public
@@ -34,18 +34,12 @@ export type ProtocolMsg<T extends ChannelMsg> = {
 /**
  * @internal
  */
-export type ToArgs<T extends ChannelMsg> = T extends T
-  ? [type: T['type'], data: T['data']]
-  : never
+export type ToArgs<T extends ChannelMsg> = T extends T ? [type: T['type'], data: T['data']] : never
 
 /**
  * @public
  */
-export type ChannelStatus =
-  | 'connecting'
-  | 'connected'
-  | 'reconnecting'
-  | 'disconnected'
+export type ChannelStatus = 'connecting' | 'connected' | 'reconnecting' | 'disconnected'
 
 /**
  * @internal
@@ -135,10 +129,7 @@ export interface ChannelsController<
 > {
   addSource: (source: MessageEventSource) => void
   destroy: () => void
-  send: (
-    id: ConnectionIds | ConnectionIds[] | undefined,
-    ...args: ToArgs<Sends>
-  ) => void
+  send: (id: ConnectionIds | ConnectionIds[] | undefined, ...args: ToArgs<Sends>) => void
 }
 
 /**
@@ -175,10 +166,7 @@ export type ChannelsNodeStatusSubscriber = (status: ChannelStatus) => void
 /**
  * @public
  */
-export interface ChannelsNode<
-  Sends extends ChannelMsg,
-  Receives extends ChannelMsg,
-> {
+export interface ChannelsNode<Sends extends ChannelMsg, Receives extends ChannelMsg> {
   destroy: () => void
   inFrame: boolean
   onStatusUpdate: (subscriber: ChannelsNodeStatusSubscriber) => () => void

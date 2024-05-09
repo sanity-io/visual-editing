@@ -1,4 +1,4 @@
-export { createOverlayController } from './controller'
+export {createOverlayController} from './controller'
 export type {
   DisableVisualEditing,
   ElementFocusedState,
@@ -29,9 +29,9 @@ export type {
   SanityStegaNode,
   VisualEditingOptions,
 } from './types'
-export { enableVisualEditing } from './ui/enableVisualEditing'
+export {enableVisualEditing} from './ui/enableVisualEditing'
 export {
   type CreateDataAttribute,
   createDataAttribute,
   type CreateDataAttributeProps,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'

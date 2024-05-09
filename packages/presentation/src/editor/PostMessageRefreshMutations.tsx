@@ -1,10 +1,7 @@
-import type { ChannelsController, ChannelStatus } from '@sanity/channels'
-import type {
-  PresentationMsg,
-  VisualEditingConnectionIds,
-} from '@sanity/visual-editing-helpers'
-import { memo, startTransition, useEffect, useMemo, useState } from 'react'
-import { getPublishedId, type SanityDocument, useEditState } from 'sanity'
+import type {ChannelsController, ChannelStatus} from '@repo/channels'
+import type {PresentationMsg, VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
+import {memo, startTransition, useEffect, useMemo, useState} from 'react'
+import {getPublishedId, type SanityDocument, useEditState} from 'sanity'
 
 export interface PostMessageRefreshMutationsProps {
   id: string
@@ -14,12 +11,10 @@ export interface PostMessageRefreshMutationsProps {
   loadersConnection: ChannelStatus
 }
 
-function PostMessageRefreshMutations(
-  props: PostMessageRefreshMutationsProps,
-): React.ReactNode {
-  const { channel, type, previewKitConnection, loadersConnection } = props
+function PostMessageRefreshMutations(props: PostMessageRefreshMutationsProps): React.ReactNode {
+  const {channel, type, previewKitConnection, loadersConnection} = props
   const id = useMemo(() => getPublishedId(props.id), [props.id])
-  const { draft, published, ready } = useEditState(id, type, 'low')
+  const {draft, published, ready} = useEditState(id, type, 'low')
   const livePreviewEnabled =
     previewKitConnection === 'connected' || loadersConnection === 'connected'
 
@@ -44,10 +39,8 @@ interface PostMessageRefreshMutationsInnerProps
   draft: SanityDocument | null
   published: SanityDocument | null
 }
-function PostMessageRefreshMutationsInner(
-  props: PostMessageRefreshMutationsInnerProps,
-) {
-  const { channel, draft, published, livePreviewEnabled } = props
+function PostMessageRefreshMutationsInner(props: PostMessageRefreshMutationsInnerProps) {
+  const {channel, draft, published, livePreviewEnabled} = props
   const [prevDraft, setPrevDraft] = useState(draft)
   const [prevPublished, setPrevPublished] = useState(published)
 
@@ -72,28 +65,19 @@ function PostMessageRefreshMutationsInner(
         })
       }
     }
-  }, [
-    channel,
-    draft,
-    livePreviewEnabled,
-    prevDraft?._rev,
-    prevPublished?._rev,
-    published,
-  ])
+  }, [channel, draft, livePreviewEnabled, prevDraft?._rev, prevPublished?._rev, published])
 
   return null
 }
 
-function parseDocument(
-  document: SanityDocument & { slug?: { current?: string | null } },
-): {
+function parseDocument(document: SanityDocument & {slug?: {current?: string | null}}): {
   _id: string
   _type: string
   _rev: string
-  slug?: { current?: string | null }
+  slug?: {current?: string | null}
 } {
-  const { _id, _type, _rev, slug } = document
-  return { _id, _type, _rev, slug }
+  const {_id, _type, _rev, slug} = document
+  return {_id, _type, _rev, slug}
 }
 
 export default memo(PostMessageRefreshMutations)

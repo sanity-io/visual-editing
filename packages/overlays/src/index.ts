@@ -12,9 +12,7 @@ import {
 /**
  * @deprecated use `import {createOverlayController} from '@sanity/visual-editing'` instead
  */
-export const createOverlayController: typeof _createOverlayController = (
-  options,
-) => {
+export const createOverlayController: typeof _createOverlayController = (options) => {
   warn()
   return _createOverlayController(options)
 }
@@ -68,7 +66,5 @@ export type ElementState = _ElementState
 
 function warn() {
   // eslint-disable-next-line no-console
-  console.warn(
-    '@sanity/overlays is deprecated. Use @sanity/visual-editing instead.',
-  )
+  console.warn('@sanity/overlays is deprecated. Use @sanity/visual-editing instead.')
 }

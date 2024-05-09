@@ -1,4 +1,4 @@
-import type { ChannelsNode } from '@sanity/channels'
+import type {ChannelsNode} from '@repo/channels'
 import type {
   HistoryRefresh,
   HistoryUpdate,
@@ -7,14 +7,14 @@ import type {
   SanityNode,
   SanityStegaNode,
   VisualEditingMsg,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'
 
 export type {
   HistoryRefresh,
   HistoryUpdate,
   SanityNode,
   SanityStegaNode,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'
 
 /**
  * @public
@@ -36,8 +36,7 @@ export interface Msg<T extends string> {
 }
 
 /** @public */
-export interface OverlayMsgElement<T extends string>
-  extends Msg<`element/${T}`> {
+export interface OverlayMsgElement<T extends string> extends Msg<`element/${T}`> {
   id: string
 }
 
@@ -126,6 +125,7 @@ export interface OverlayOptions {
 export interface OverlayController {
   activate: () => void
   deactivate: () => void
+  destroy: () => void
 }
 
 /**

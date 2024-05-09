@@ -1,6 +1,6 @@
-import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
-import type { VisualEditingConnectionIds } from '@sanity/visual-editing-helpers'
-import { useEffect, useState } from 'react'
+import {type ChannelsNode, createChannelsNode} from '@repo/channels'
+import type {VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
+import {useEffect, useState} from 'react'
 
 import type {
   VisualEditingChannelReceives as Receives,
@@ -15,11 +15,7 @@ export function useChannel(): ChannelsNode<Sends, Receives> | undefined {
   const [channel, setChannel] = useState<ChannelsNode<Sends, Receives>>()
 
   useEffect(() => {
-    const channelInstance = createChannelsNode<
-      VisualEditingConnectionIds,
-      Sends,
-      Receives
-    >({
+    const channelInstance = createChannelsNode<VisualEditingConnectionIds, Sends, Receives>({
       id: 'overlays',
       connectTo: 'presentation',
     })

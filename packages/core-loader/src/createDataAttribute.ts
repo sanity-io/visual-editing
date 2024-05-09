@@ -11,4 +11,4 @@ export {
    * @deprecated use `import type {CreateDataAttributeProps} from '@sanity/visual-editing'` instead
    */
   type CreateDataAttributeProps,
-} from '@sanity/visual-editing-helpers'
+} from '@repo/visual-editing-helpers'

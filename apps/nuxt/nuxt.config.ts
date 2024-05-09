@@ -1,11 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { projectId, datasets, studioUrl } from 'apps-common/env'
+import {projectId, datasets, studioUrl} from 'apps-common/env'
 
 export default defineNuxtConfig({
   build: {
     transpile: ['rxjs'],
   },
-  devtools: { enabled: false },
+  devtools: {enabled: false},
   imports: {
     transform: {
       exclude: [/\bpackages\/.+\b/],

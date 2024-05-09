@@ -1,4 +1,9 @@
-import { createChannelsNode } from '@sanity/channels'
+import {createChannelsNode} from '@repo/channels'
+import type {
+  LoaderMsg,
+  LoaderPayloads,
+  VisualEditingConnectionIds,
+} from '@repo/visual-editing-helpers'
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -6,15 +11,10 @@ import {
   type QueryParams,
   SanityClient,
 } from '@sanity/client'
-import { stegaEncodeSourceMap } from '@sanity/client/stega'
-import type {
-  LoaderMsg,
-  LoaderPayloads,
-  VisualEditingConnectionIds,
-} from '@sanity/visual-editing-helpers'
-import { atom, MapStore } from 'nanostores'
+import {stegaEncodeSourceMap} from '@sanity/client/stega'
+import {atom, type MapStore} from 'nanostores'
 
-import { EnableLiveModeOptions, QueryStoreState, SetFetcher } from '../types'
+import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 
 /** @internal */
 export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
@@ -25,7 +25,7 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
 const LISTEN_HEARTBEAT_INTERVAL = 1000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
-  const { client, setFetcher, onConnect, onDisconnect } = options
+  const {client, setFetcher, onConnect, onDisconnect} = options
   if (!client || !(client instanceof SanityClient)) {
     throw new Error(
       `Expected \`client\` to be an instance of SanityClient or SanityStegaClient: ${JSON.stringify(
@@ -33,7 +33,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       )}`,
     )
   }
-  const { projectId, dataset } = client.config()
+  const {projectId, dataset} = client.config()
   const $perspective = atom<Exclude<ClientPerspective, 'raw'>>('previewDrafts')
   const $connected = atom(false)
 
@@ -51,11 +51,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const channel = createChannelsNode<
-    VisualEditingConnectionIds,
-    LoaderMsg,
-    LoaderMsg
-  >({
+  const channel = createChannelsNode<VisualEditingConnectionIds, LoaderMsg, LoaderMsg>({
     id: 'loaders',
     connectTo: 'presentation',
   })
@@ -69,18 +65,9 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   })
 
   channel.subscribe((type, data) => {
-    if (
-      type === 'loader/perspective' &&
-      data.projectId === projectId &&
-      data.dataset === dataset
-    ) {
-      if (
-        data.perspective !== 'published' &&
-        data.perspective !== 'previewDrafts'
-      ) {
-        throw new Error(
-          `Unsupported perspective: ${JSON.stringify(data.perspective)}`,
-        )
+    if (type === 'loader/perspective' && data.projectId === projectId && data.dataset === dataset) {
+      if (data.perspective !== 'published' && data.perspective !== 'previewDrafts') {
+        throw new Error(`Unsupported perspective: ${JSON.stringify(data.perspective)}`)
       }
       $perspective.set(data.perspective)
       updateLiveQueries()
@@ -89,13 +76,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       data.projectId === projectId &&
       data.dataset === dataset
     ) {
-      const { perspective, query, params } = data
+      const {perspective, query, params} = data
       if (
         data.result !== undefined &&
         data.resultSourceMap !== undefined &&
         (client as SanityClient).config().stega.enabled
       ) {
-        cache.set(JSON.stringify({ perspective, query, params }), {
+        cache.set(JSON.stringify({perspective, query, params}), {
           ...data,
           result: stegaEncodeSourceMap(
             data.result,
@@ -104,7 +91,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
           ),
         })
       } else {
-        cache.set(JSON.stringify({ perspective, query, params }), data)
+        cache.set(JSON.stringify({perspective, query, params}), data)
       }
 
       updateLiveQueries()
@@ -123,10 +110,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             params,
           })
           const snapshot = cache.get(key)
-          if (
-            snapshot?.result !== undefined &&
-            snapshot?.resultSourceMap !== undefined
-          ) {
+          if (snapshot?.result !== undefined && snapshot?.resultSourceMap !== undefined) {
             return {
               loading: false,
               error: undefined,
@@ -149,9 +133,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         fetch: <QueryResponseResult, QueryResponseError>(
           query: string,
           params: QueryParams,
-          $fetch: MapStore<
-            QueryStoreState<QueryResponseResult, QueryResponseError>
-          >,
+          $fetch: MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>,
           controller: AbortController,
         ) => {
           try {
@@ -192,13 +174,10 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     params: QueryParams,
     $fetch: MapStore<QueryStoreState<any, any>>,
   ) => {
-    const liveQuery = { query, params, $fetch }
+    const liveQuery = {query, params, $fetch}
     liveQueries.add(liveQuery)
     emitQueryListen()
-    const interval = setInterval(
-      () => emitQueryListen(true),
-      LISTEN_HEARTBEAT_INTERVAL,
-    )
+    const interval = setInterval(() => emitQueryListen(true), LISTEN_HEARTBEAT_INTERVAL)
     return () => {
       clearInterval(interval)
       liveQueries.delete(liveQuery)
@@ -210,7 +189,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       throw new Error('No channel')
     }
     const perspective = $perspective.get()
-    for (const { query, params, $fetch } of liveQueries) {
+    for (const {query, params, $fetch} of liveQueries) {
       channel.send('loader/query-listen', {
         projectId: projectId!,
         dataset: dataset!,
@@ -229,8 +208,8 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     const perspective = $perspective.get()
     const documentsOnPage: ContentSourceMapDocuments = []
     // Loop over liveQueries and apply cache
-    for (const { query, params, $fetch } of liveQueries) {
-      const key = JSON.stringify({ perspective, query, params })
+    for (const {query, params, $fetch} of liveQueries) {
+      const key = JSON.stringify({perspective, query, params})
       const value = cache.get(key)
       if (value) {
         $fetch.set({

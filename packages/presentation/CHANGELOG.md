@@ -12,6 +12,176 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.0...presentation-v1.15.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* regression causing a crash in embedded studios ([#1482](https://github.com/sanity-io/visual-editing/issues/1482)) ([6e7fc04](https://github.com/sanity-io/visual-editing/commit/6e7fc043c0052a1306343551501047d1545f203e))
+
+## [1.15.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.14.0...presentation-v1.15.0) (2024-05-07)
+
+
+### Features
+
+* open last published document when published perspective ([#1463](https://github.com/sanity-io/visual-editing/issues/1463)) ([5fea985](https://github.com/sanity-io/visual-editing/commit/5fea985f5de833350495752d92960eade01642de))
+
+## [1.14.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.13.0...presentation-v1.14.0) (2024-05-05)
+
+
+### Features
+
+* **presentation:** support i18n and add default locale resources ([#1451](https://github.com/sanity-io/visual-editing/issues/1451)) ([d6ba3e4](https://github.com/sanity-io/visual-editing/commit/d6ba3e4ebcc0aa72012db76a564eda3c46e5dcb3))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.17.2 ([#1449](https://github.com/sanity-io/visual-editing/issues/1449)) ([928b45c](https://github.com/sanity-io/visual-editing/commit/928b45c47c66c5e1ddbe8b00783efd399b9fa17a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.11 to ^1.6.12
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.9 to 0.6.10
+
+## [1.13.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.10...presentation-v1.13.0) (2024-04-29)
+
+
+### Features
+
+* **presentation:** add resolver APIs ([#1388](https://github.com/sanity-io/visual-editing/issues/1388)) ([6bd98e9](https://github.com/sanity-io/visual-editing/commit/6bd98e949ed1a46c98c45c9d0e36956b4803d189))
+
+## [1.12.10](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.9...presentation-v1.12.10) (2024-04-26)
+
+
+### Bug Fixes
+
+* the intial `preview` param no longer "sticks" until page reload ([#1418](https://github.com/sanity-io/visual-editing/issues/1418)) ([2d1bd73](https://github.com/sanity-io/visual-editing/commit/2d1bd7326a0400a47ea369d5336fdecfda65ebbc))
+
+## [1.12.9](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.8...presentation-v1.12.9) (2024-04-26)
+
+
+### Bug Fixes
+
+* **deps:** Update react monorepo to ^18.3.0 ([#1409](https://github.com/sanity-io/visual-editing/issues/1409)) ([1dedfee](https://github.com/sanity-io/visual-editing/commit/1dedfee39a056308f68e8dc77e9d0295f82a53a7))
+* panels should recover from broken local storage state ([#1412](https://github.com/sanity-io/visual-editing/issues/1412)) ([6c92a9e](https://github.com/sanity-io/visual-editing/commit/6c92a9e3f4a4d2d6fadd8ba774b1be6d18692cee))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.8 to 0.6.9
+
+## [1.12.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.7...presentation-v1.12.8) (2024-04-25)
+
+
+### Bug Fixes
+
+* remove `unrecognized previewUrl prop on DOM element` warning ([#1400](https://github.com/sanity-io/visual-editing/issues/1400)) ([abb4a3e](https://github.com/sanity-io/visual-editing/commit/abb4a3eaa3ac0dfb991e21f9272e666db242a784))
+
+## [1.12.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.6...presentation-v1.12.7) (2024-04-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.20 ([#1385](https://github.com/sanity-io/visual-editing/issues/1385)) ([8ead6bf](https://github.com/sanity-io/visual-editing/commit/8ead6bf64505b194ebe1b084d6f5b6d4f1d7196e))
+* **presentation:** adjust toolbar item sizes and spacing ([#1382](https://github.com/sanity-io/visual-editing/issues/1382)) ([389c0c9](https://github.com/sanity-io/visual-editing/commit/389c0c9d152d1eacf364884dd06cca651fa53bc9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.10 to ^1.6.11
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.7 to 0.6.8
+
+## [1.12.6](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.5...presentation-v1.12.6) (2024-04-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.19 ([#1374](https://github.com/sanity-io/visual-editing/issues/1374)) ([fde2034](https://github.com/sanity-io/visual-editing/commit/fde203405fe8899fd1bd241523853b732c095b37))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.9 to ^1.6.10
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.6 to 0.6.7
+
+## [1.12.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.4...presentation-v1.12.5) (2024-04-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.17 ([d203cbd](https://github.com/sanity-io/visual-editing/commit/d203cbd6a9aa1b289c41667406540da30ca72be1))
+* inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.8 to ^1.6.9
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.5 to 0.6.6
+
+## [1.12.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.3...presentation-v1.12.4) (2024-04-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.13 ([#1327](https://github.com/sanity-io/visual-editing/issues/1327)) ([a52f2c2](https://github.com/sanity-io/visual-editing/commit/a52f2c2180e1da09a8166e516aaeb206e13e13ae))
+* **deps:** Update dependency mendoza to v3.0.7 ([#1326](https://github.com/sanity-io/visual-editing/issues/1326)) ([52f9c70](https://github.com/sanity-io/visual-editing/commit/52f9c70647b30ea634a31219439c946fb04a96f4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.7 to ^1.6.8
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.4 to 0.6.5
+
+## [1.12.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.2...presentation-v1.12.3) (2024-04-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.11 ([#1273](https://github.com/sanity-io/visual-editing/issues/1273)) ([d2131b7](https://github.com/sanity-io/visual-editing/commit/d2131b7ec338b9d00a0040c6113b78b828ef4f2f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.6 to ^1.6.7
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.3 to 0.6.4
+
+## [1.12.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.1...presentation-v1.12.2) (2024-04-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.10 ([#1258](https://github.com/sanity-io/visual-editing/issues/1258)) ([9bf3cdb](https://github.com/sanity-io/visual-editing/commit/9bf3cdbcb7924cdcb96b7de15a159457385e8fec))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.5 to ^1.6.6
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.2 to 0.6.3
+
 ## [1.12.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.0...presentation-v1.12.1) (2024-03-21)
 
 

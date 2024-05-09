@@ -1,5 +1,176 @@
 # Changelog
 
+## [1.8.18](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.17...visual-editing-v1.8.18) (2024-05-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.17.2 ([#1449](https://github.com/sanity-io/visual-editing/issues/1449)) ([928b45c](https://github.com/sanity-io/visual-editing/commit/928b45c47c66c5e1ddbe8b00783efd399b9fa17a))
+* **deps:** Update dependency @vercel/stega to v0.1.2 ([#1447](https://github.com/sanity-io/visual-editing/issues/1447)) ([31d40cf](https://github.com/sanity-io/visual-editing/commit/31d40cfd018ccb90b5f180dd15ebcbd7de73f0c0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.11 to ^1.6.12
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.9 to 0.6.10
+
+## [1.8.17](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.16...visual-editing-v1.8.17) (2024-05-02)
+
+
+### Bug Fixes
+
+* **visual-editing:** maintain overlay element registration when toggling ([#1437](https://github.com/sanity-io/visual-editing/issues/1437)) ([647d07d](https://github.com/sanity-io/visual-editing/commit/647d07d1db81022066c14d9f30e8c3b89c3c3d61))
+
+## [1.8.16](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.15...visual-editing-v1.8.16) (2024-04-26)
+
+
+### Bug Fixes
+
+* **deps:** Update react monorepo to ^18.3.0 ([#1409](https://github.com/sanity-io/visual-editing/issues/1409)) ([1dedfee](https://github.com/sanity-io/visual-editing/commit/1dedfee39a056308f68e8dc77e9d0295f82a53a7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.8 to 0.6.9
+
+## [1.8.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.14...visual-editing-v1.8.15) (2024-04-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.20 ([#1385](https://github.com/sanity-io/visual-editing/issues/1385)) ([8ead6bf](https://github.com/sanity-io/visual-editing/commit/8ead6bf64505b194ebe1b084d6f5b6d4f1d7196e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.10 to ^1.6.11
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.7 to 0.6.8
+
+## [1.8.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.13...visual-editing-v1.8.14) (2024-04-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.19 ([#1374](https://github.com/sanity-io/visual-editing/issues/1374)) ([fde2034](https://github.com/sanity-io/visual-editing/commit/fde203405fe8899fd1bd241523853b732c095b37))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.9 to ^1.6.10
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.6 to 0.6.7
+
+## [1.8.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.12...visual-editing-v1.8.13) (2024-04-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.17 ([#1368](https://github.com/sanity-io/visual-editing/issues/1368)) ([e5a3202](https://github.com/sanity-io/visual-editing/commit/e5a3202dd2788dc31ae7cf2365f85aa882cdbfcc))
+
+## [1.8.12](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.11...visual-editing-v1.8.12) (2024-04-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.17 ([#1360](https://github.com/sanity-io/visual-editing/issues/1360)) ([635d9f9](https://github.com/sanity-io/visual-editing/commit/635d9f92aa81d98826c64f5c806c8295f4a075c5))
+
+## [1.8.11](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.10...visual-editing-v1.8.11) (2024-04-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.17 ([d203cbd](https://github.com/sanity-io/visual-editing/commit/d203cbd6a9aa1b289c41667406540da30ca72be1))
+* inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.8 to ^1.6.9
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.5 to 0.6.6
+
+## [1.8.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.9...visual-editing-v1.8.10) (2024-04-16)
+
+
+### Bug Fixes
+
+* update allowed canary range for `next` ([3c2c0ae](https://github.com/sanity-io/visual-editing/commit/3c2c0aec8e01ca4462ddaf4c1d2b7425a240da62))
+
+## [1.8.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.8...visual-editing-v1.8.9) (2024-04-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.13 ([#1327](https://github.com/sanity-io/visual-editing/issues/1327)) ([a52f2c2](https://github.com/sanity-io/visual-editing/commit/a52f2c2180e1da09a8166e516aaeb206e13e13ae))
+* update allowed canary range for `next` ([564e965](https://github.com/sanity-io/visual-editing/commit/564e965f36d581d5f97c952e9974cda1d15cf670))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.7 to ^1.6.8
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.4 to 0.6.5
+
+## [1.8.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.7...visual-editing-v1.8.8) (2024-04-11)
+
+
+### Bug Fixes
+
+* allow canary releases of next ([eb3b92a](https://github.com/sanity-io/visual-editing/commit/eb3b92a948bc722a5ca3ab3a7e13e09ff1e3874a))
+
+## [1.8.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.6...visual-editing-v1.8.7) (2024-04-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.11 ([#1273](https://github.com/sanity-io/visual-editing/issues/1273)) ([d2131b7](https://github.com/sanity-io/visual-editing/commit/d2131b7ec338b9d00a0040c6113b78b828ef4f2f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.6 to ^1.6.7
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.3 to 0.6.4
+
+## [1.8.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.5...visual-editing-v1.8.6) (2024-04-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.15.10 ([#1258](https://github.com/sanity-io/visual-editing/issues/1258)) ([9bf3cdb](https://github.com/sanity-io/visual-editing/commit/9bf3cdbcb7924cdcb96b7de15a159457385e8fec))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.5 to ^1.6.6
+  * devDependencies
+    * @sanity/visual-editing-helpers bumped from 0.6.2 to 0.6.3
+
+## [1.8.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.4...visual-editing-v1.8.5) (2024-04-02)
+
+
+### Bug Fixes
+
+* **visual-editing:** prevent focusing both clicked and focused elements ([#1238](https://github.com/sanity-io/visual-editing/issues/1238)) ([cc04b4e](https://github.com/sanity-io/visual-editing/commit/cc04b4ef46cdf9e98ead01e43489f3b38096152d))
+
 ## [1.8.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.3...visual-editing-v1.8.4) (2024-03-21)
 
 

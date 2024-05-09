@@ -72,6 +72,137 @@ All notable changes to this project will be documented in this file. See
   * dependencies
     * @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [2.3.44](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.43...overlays-v2.3.44) (2024-05-05)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.17 to 1.8.18
+
+## [2.3.43](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.42...overlays-v2.3.43) (2024-05-02)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.16 to 1.8.17
+
+## [2.3.42](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.41...overlays-v2.3.42) (2024-04-26)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.15 to 1.8.16
+
+## [2.3.41](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.40...overlays-v2.3.41) (2024-04-22)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.14 to 1.8.15
+
+## [2.3.40](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.39...overlays-v2.3.40) (2024-04-19)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.13 to 1.8.14
+
+## [2.3.39](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.38...overlays-v2.3.39) (2024-04-19)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.12 to 1.8.13
+
+## [2.3.38](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.37...overlays-v2.3.38) (2024-04-17)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.11 to 1.8.12
+
+## [2.3.37](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.36...overlays-v2.3.37) (2024-04-17)
+
+
+### Bug Fixes
+
+* inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.10 to 1.8.11
+
+## [2.3.36](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.35...overlays-v2.3.36) (2024-04-16)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.9 to 1.8.10
+
+## [2.3.35](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.34...overlays-v2.3.35) (2024-04-16)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.8 to 1.8.9
+
+## [2.3.34](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.33...overlays-v2.3.34) (2024-04-11)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.7 to 1.8.8
+
+## [2.3.33](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.32...overlays-v2.3.33) (2024-04-05)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.6 to 1.8.7
+
+## [2.3.32](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.31...overlays-v2.3.32) (2024-04-05)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.5 to 1.8.6
+
+## [2.3.31](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.30...overlays-v2.3.31) (2024-04-02)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing bumped from 1.8.4 to 1.8.5
+
 ## [2.3.30](https://github.com/sanity-io/visual-editing/compare/overlays-v2.3.29...overlays-v2.3.30) (2024-03-21)
 
 

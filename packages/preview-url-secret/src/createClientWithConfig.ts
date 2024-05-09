@@ -1,14 +1,12 @@
-import { apiVersion } from './constants'
-import { SanityClientLike } from './types'
+import {apiVersion} from './constants'
+import type {SanityClientLike} from './types'
 
 /**
  * Validates the passed in client instance, then clones it and reconfigures it to fit the needs and spec of
  * this package.
  * @internal
  */
-export function createClientWithConfig(
-  client: SanityClientLike,
-): SanityClientLike {
+export function createClientWithConfig(client: SanityClientLike): SanityClientLike {
   if (!client) {
     throw new TypeError('`client` is required')
   }

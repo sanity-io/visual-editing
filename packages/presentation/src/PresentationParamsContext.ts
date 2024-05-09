@@ -1,6 +1,5 @@
-import { createContext } from 'react'
+import {createContext} from 'react'
 
-import { PresentationParams } from './types'
+import type {PresentationParams} from './types'
 
-export const PresentationParamsContext =
-  createContext<PresentationParams | null>(null)
+export const PresentationParamsContext = createContext<PresentationParams | null>(null)

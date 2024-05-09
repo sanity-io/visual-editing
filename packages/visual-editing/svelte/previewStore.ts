@@ -1,4 +1,4 @@
-import { readonly, writable } from 'svelte/store'
+import {readonly, writable} from 'svelte/store'
 
 const previewStore = writable(false)
 

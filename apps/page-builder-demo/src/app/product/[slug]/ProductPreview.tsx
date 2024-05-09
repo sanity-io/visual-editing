@@ -1,24 +1,16 @@
 'use client'
 
-import groq from 'groq'
+import {useQuery} from '@/sanity'
+import {ProductPage, ProductPageData} from './ProductPage'
 
-import { SITE_SETTINGS_QUERY } from '@/app/queries'
-import { useQuery } from '@/sanity'
-import { ProductPage, ProductPageData } from './ProductPage'
+export function ProductPreview(props: {query: string; slug: string; initial: any}) {
+  const {query, slug, initial} = props
 
-const PAGE_QUERY = groq`{
-  "product": *[_type == "product" && slug.current == $slug][0],
-  "siteSettings": ${SITE_SETTINGS_QUERY}
-}`
+  const {data, loading} = useQuery<ProductPageData>(query, {slug}, {initial})
 
-export function ProductPreview(props: { slug: string }) {
-  const { slug } = props
-
-  const { data, loading } = useQuery<ProductPageData>(PAGE_QUERY, { slug })
-
-  if (loading || !data) {
+  if (loading && !data) {
     return <div>Loading…</div>
   }
 
-  return <ProductPage data={data} />
+  return <ProductPage data={data as any} />
 }

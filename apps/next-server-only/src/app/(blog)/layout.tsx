@@ -1,17 +1,13 @@
 import Link from 'next/link'
 
 import BlogHeader from './BlogHeader'
-import { EXAMPLE_NAME } from '@/lib/constants'
+import {EXAMPLE_NAME} from '@/lib/constants'
 import PreviewBanner from './PreviewBanner'
-import { draftMode } from 'next/headers'
-import { revalidatePath, revalidateTag } from 'next/cache'
-import { VisualEditing } from 'next-sanity'
+import {draftMode} from 'next/headers'
+import {revalidatePath, revalidateTag} from 'next/cache'
+import {VisualEditing} from 'next-sanity'
 
-export default function BlogLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function BlogLayout({children}: {children: React.ReactNode}) {
   return (
     <>
       {draftMode().isEnabled && <PreviewBanner />}
@@ -30,9 +26,7 @@ export default function BlogLayout({
           refresh={async (payload) => {
             'use server'
             if (!draftMode().isEnabled) {
-              console.debug(
-                'Skipped manual refresh because draft mode is not enabled',
-              )
+              console.debug('Skipped manual refresh because draft mode is not enabled')
               return
             }
             if (payload.source === 'mutation') {

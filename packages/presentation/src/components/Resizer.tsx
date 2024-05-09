@@ -1,10 +1,10 @@
 import {
-  FunctionComponent,
-  MouseEvent as ReactMouseEvent,
+  type FunctionComponent,
+  type MouseEvent as ReactMouseEvent,
   useCallback,
   useRef,
 } from 'react'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
 const Root = styled.div`
   position: absolute;
@@ -52,7 +52,7 @@ export const Resizer: FunctionComponent<{
   onResizeStart?: () => void
   onResizeEnd?: () => void
 }> = function (props) {
-  const { onResize, onResizeStart, onResizeEnd } = props
+  const {onResize, onResizeStart, onResizeEnd} = props
 
   const mouseXRef = useRef(0)
 

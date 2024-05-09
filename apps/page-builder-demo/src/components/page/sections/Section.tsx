@@ -1,15 +1,15 @@
-import { WrappedValue } from '@sanity/react-loader/jsx'
-import { sanity } from '@sanity/react-loader/jsx'
+import {WrappedValue} from '@sanity/react-loader/jsx'
+import {sanity} from '@sanity/react-loader/jsx'
 
-import { dataAttribute } from '@/sanity'
-import { PageSection } from '../PageSection'
-import { PageData, PageSectionData } from '../types'
+import {dataAttribute} from '@/sanity'
+import {PageSection} from '../PageSection'
+import {PageData, PageSectionData} from '../types'
 
 export function Section(props: {
   page: WrappedValue<PageData>
   section: WrappedValue<PageSectionData>
 }) {
-  const { page, section } = props
+  const {page, section} = props
 
   return (
     <PageSection
@@ -22,9 +22,7 @@ export function Section(props: {
     >
       {section.headline ? (
         <h1 className="text-3xl font-extrabold sm:text-5xl md:text-7xl">
-          <sanity.span style={{ outline: 'none' }}>
-            {section.headline}
-          </sanity.span>
+          <sanity.span style={{outline: 'none'}}>{section.headline}</sanity.span>
         </h1>
       ) : (
         <h1 className="text-3xl font-extrabold text-gray-200 sm:text-5xl md:text-7xl dark:text-gray-800">

@@ -1,4 +1,4 @@
-import { Path } from './types'
+import type {Path} from './types'
 
 const RE_SEGMENT_WITH_INDEX = /^([A-Za-z]+):([0-9]+)$/
 const RE_SEGMENT_WITH_TUPLE = /^([A-Za-z]+):([0-9]+),([0-9]+)$/
@@ -26,7 +26,7 @@ export function urlStringToPath(str: string): Path {
     const withKey = RE_SEGMENT_WITH_KEY.exec(segment)
 
     if (withKey) {
-      path.push(withKey[1], { _key: withKey[2] })
+      path.push(withKey[1], {_key: withKey[2]})
       continue
     }
 

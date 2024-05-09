@@ -4,13 +4,13 @@ import type {
   QueryParams,
   ResponseQueryOptions,
 } from '@sanity/client'
-import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
-import {
+import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
+import type {
   createQueryStore as createCoreQueryStore,
   EnableLiveModeOptions,
-  type QueryStoreState,
+  QueryStoreState,
 } from '@sanity/core-loader'
-import { EncodeDataAttributeFunction } from '@sanity/core-loader/encode-data-attribute'
+import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
 
 export type * from '@sanity/core-loader'
 
@@ -18,15 +18,11 @@ export type WithEncodeDataAttribute = {
   encodeDataAttribute: EncodeDataAttributeFunction
 }
 
-export type UseQueryHook = <
-  QueryResponseResult = unknown,
-  QueryResponseError = unknown,
->(
+export type UseQueryHook = <QueryResponseResult = unknown, QueryResponseError = unknown>(
   query: string,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
-) => QueryStoreState<QueryResponseResult, QueryResponseError> &
-  WithEncodeDataAttribute
+) => QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute
 
 export interface QueryResponseInitial<QueryResponseResult> {
   data: QueryResponseResult
@@ -111,10 +107,7 @@ export interface QueryStore {
   loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: Pick<
-      ResponseQueryOptions,
-      'perspective' | 'cache' | 'next' | 'useCdn' | 'stega'
-    >,
+    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next' | 'useCdn' | 'stega'>,
   ) => Promise<QueryResponseInitial<QueryResponseResult>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
@@ -122,16 +115,14 @@ export interface QueryStore {
       query: string,
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
-    ): QueryStoreState<QueryResponseResult, QueryResponseError> &
-      WithEncodeDataAttribute
+    ): QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
       query: string,
       params?: QueryParams,
       options?: UseQueryOptionsDefinedInitial<QueryResponseResult>,
-    ): Omit<
-      QueryStoreState<QueryResponseResult, QueryResponseError>,
-      'data'
-    > & { data: QueryResponseResult } & WithEncodeDataAttribute
+    ): Omit<QueryStoreState<QueryResponseResult, QueryResponseError>, 'data'> & {
+      data: QueryResponseResult
+    } & WithEncodeDataAttribute
     // <QueryResponseResult = unknown, QueryResponseError = unknown>(
     //   query: string,
     //   params?: QueryParams,

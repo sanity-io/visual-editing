@@ -1,9 +1,9 @@
-import { type ReactElement } from 'react'
-import { type Path } from 'sanity'
-import { StructureToolProvider } from 'sanity/structure'
+import {type ReactElement} from 'react'
+import {type Path} from 'sanity'
+import {StructureToolProvider} from 'sanity/structure'
 
-import type { StructureDocumentPaneParams } from '../types'
-import { DocumentPane } from './DocumentPane'
+import type {StructureDocumentPaneParams} from '../types'
+import {DocumentPane} from './DocumentPane'
 
 export function DocumentPanel(props: {
   documentId: string
@@ -13,14 +13,8 @@ export function DocumentPanel(props: {
   previewUrl?: string
   structureParams: StructureDocumentPaneParams
 }): ReactElement {
-  const {
-    documentId,
-    documentType,
-    onFocusPath,
-    onStructureParams,
-    previewUrl,
-    structureParams,
-  } = props
+  const {documentId, documentType, onFocusPath, onStructureParams, previewUrl, structureParams} =
+    props
   return (
     <StructureToolProvider>
       <DocumentPane

@@ -1,22 +1,15 @@
 'use client'
 
-import groq from 'groq'
+import {useQuery} from '@/sanity'
+import {ProjectsPage, ProjectsPageData} from './ProjectsPage'
 
-import { useQuery } from '@/sanity'
-import { SITE_SETTINGS_QUERY } from '../queries'
-import { ProjectsPage, ProjectsPageData } from './ProjectsPage'
+export function ProjectsPreview(props: {query: string; initial: any}) {
+  const {query, initial} = props
+  const {data, loading} = useQuery<ProjectsPageData>(query, {}, {initial})
 
-const PAGE_QUERY = groq`{
-  "projects": *[_type == "project" && defined(slug.current)],
-  "siteSettings": ${SITE_SETTINGS_QUERY}
-}`
-
-export function ProjectsPreview() {
-  const { data, loading } = useQuery<ProjectsPageData>(PAGE_QUERY)
-
-  if (loading || !data) {
+  if (loading && !data) {
     return <div>Loading…</div>
   }
 
-  return <ProjectsPage data={data} />
+  return <ProjectsPage data={data as any} />
 }

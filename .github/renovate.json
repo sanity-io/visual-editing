@@ -1,13 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>sanity-io/renovate-config"],
-  "ignorePresets": [
-    ":ignoreModulesAndTests",
-    "github>sanity-io/renovate-config:group-non-major"
-  ],
+  "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"],
   "packageRules": [
     {
-      "group": { "semanticCommitType": "chore" },
+      "group": {"semanticCommitType": "chore"},
       "matchDepTypes": [
         "dependencies",
         "devDependencies",
@@ -23,10 +20,7 @@
     },
     {
       "matchDepNames": ["next", "@next/bundle-analyzer"],
-      "matchFileNames": [
-        "apps/next-server-only/package.json",
-        "apps/next-no-cache/package.json"
-      ],
+      "matchFileNames": ["apps/next-server-only/package.json", "apps/next-no-cache/package.json"],
       "followTag": "canary"
     },
     {
@@ -42,7 +36,10 @@
         "next",
         "vue-router",
         "nuxt",
-        "@remix-run/react"
+        "@remix-run/react",
+        "react",
+        "react-dom",
+        "styled-components"
       ],
       "rangeStrategy": "bump"
     },
@@ -61,9 +58,11 @@
     },
     {
       "matchDepNames": [
-        "@sanity/client",
-        "nanostores",
         "@nanostores/vue",
+        "@sanity/client",
+        "async-cache-dedupe",
+        "fast-deep-equal",
+        "nanostores",
         "nuxt"
       ],
       "semanticCommitType": "fix"

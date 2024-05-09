@@ -26,11 +26,11 @@
 </template>
 
 <script lang="ts" setup>
-import { type ChannelsNode, createChannelsNode } from '@sanity/channels'
+import {type ChannelsNode, createChannelsNode} from '@repo/channels'
 
 interface Sends {
   type: 'child/event'
-  data: { datetime: string }
+  data: {datetime: string}
 }
 
 const log = ref<any[]>([])
@@ -42,7 +42,7 @@ onMounted(() => {
     connectTo: 'parent',
   })
   channel.value.subscribe((type, data) => {
-    log.value.unshift({ ...data, type })
+    log.value.unshift({...data, type})
   })
 })
 

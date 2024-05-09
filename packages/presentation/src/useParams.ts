@@ -1,10 +1,9 @@
-import { MutableRefObject, useEffect, useMemo, useRef } from 'react'
-import { getPublishedId } from 'sanity'
-import { RouterContextValue, RouterState, SearchParam } from 'sanity/router'
+import {type MutableRefObject, useCallback, useEffect, useMemo, useRef} from 'react'
+import {getPublishedId} from 'sanity'
+import type {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
 
-import { debounce } from './lib/debounce'
-import { parseRouterState } from './lib/parse'
-import {
+import {parseRouterState} from './lib/parse'
+import type {
   FrameState,
   PresentationNavigate,
   PresentationParams,
@@ -41,28 +40,28 @@ export function useParams({
   structureParams: StructureDocumentPaneParams
 } {
   const params = useMemo<PresentationParams>(() => {
-    const { id, path, type } = parseRouterState(routerState)
+    const {id, path, type} = parseRouterState(routerState)
 
     return {
       id,
       type,
       path,
       preview:
-        routerSearchParams.preview ||
-        `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
-      perspective: routerSearchParams.perspective,
-      viewport: routerSearchParams.viewport,
-      inspect: routerSearchParams.inspect,
-      rev: routerSearchParams.rev,
-      since: routerSearchParams.since,
-      template: routerSearchParams.template,
-      templateParams: routerSearchParams.templateParams,
-      view: routerSearchParams.view,
+        routerSearchParams['preview'] || `${initialPreviewUrl.pathname}${initialPreviewUrl.search}`,
+      perspective: routerSearchParams['perspective'],
+      viewport: routerSearchParams['viewport'],
+      inspect: routerSearchParams['inspect'],
+      rev: routerSearchParams['rev'],
+      prefersLatestPublished: routerSearchParams['prefersLatestPublished'],
+      since: routerSearchParams['since'],
+      template: routerSearchParams['template'],
+      templateParams: routerSearchParams['templateParams'],
+      view: routerSearchParams['view'],
       // assist
-      pathKey: routerSearchParams.pathKey,
-      instruction: routerSearchParams.instruction,
+      pathKey: routerSearchParams['pathKey'],
+      instruction: routerSearchParams['instruction'],
       // comments
-      comment: routerSearchParams.comment,
+      comment: routerSearchParams['comment'],
     }
   }, [routerState, routerSearchParams, initialPreviewUrl])
 
@@ -71,6 +70,7 @@ export function useParams({
       inspect: params.inspect,
       path: params.path,
       rev: params.rev,
+      prefersLatestPublished: params.prefersLatestPublished,
       since: params.since,
       template: params.template,
       templateParams: params.templateParams,
@@ -88,6 +88,7 @@ export function useParams({
     params.instruction,
     params.path,
     params.pathKey,
+    params.prefersLatestPublished,
     params.rev,
     params.since,
     params.template,
@@ -101,55 +102,47 @@ export function useParams({
     routerStateRef.current = routerState
   }, [routerState])
 
-  const navigate = useMemo(
-    () =>
-      debounce<PresentationNavigate>(
-        (nextState, nextSearchState = {}, forceReplace) => {
-          // Force navigation to use published IDs only
-          if (nextState.id) nextState.id = getPublishedId(nextState.id)
+  const navigate = useCallback<PresentationNavigate>(
+    (nextState, nextSearchState = {}, forceReplace) => {
+      // Force navigation to use published IDs only
+      if (nextState.id) nextState.id = getPublishedId(nextState.id)
 
-          // Extract type, id and path as 'routerState'
-          const { _searchParams: routerSearchParams, ...routerState } =
-            routerStateRef.current
+      // Extract type, id and path as 'routerState'
+      const {_searchParams: routerSearchParams, ...routerState} = routerStateRef.current
 
-          // Convert array of search params to an object
-          const routerSearchState = (routerSearchParams || []).reduce(
-            (acc, [key, value]) => (
-              (acc[key as keyof PresentationSearchParams] = value), acc
-            ),
-            {} as PresentationSearchParams,
-          )
+      // Convert array of search params to an object
+      const routerSearchState = (routerSearchParams || []).reduce(
+        (acc, [key, value]) => ((acc[key as keyof PresentationSearchParams] = value), acc),
+        {} as PresentationSearchParams,
+      )
 
-          // Merge routerState and incoming state
-          const state: RouterState = pruneObject({
-            ...routerState,
-            ...nextState,
-          })
+      // Merge routerState and incoming state
+      const state: RouterState = pruneObject({
+        ...routerState,
+        ...nextState,
+      })
 
-          // Merge routerSearchState and incoming searchState
-          const searchState = pruneObject({
-            ...routerSearchState,
-            ...nextSearchState,
-          })
+      // Merge routerSearchState and incoming searchState
+      const searchState = pruneObject({
+        ...routerSearchState,
+        ...nextSearchState,
+      })
 
-          // If the document has changed, clear the template and templateParams
-          if (routerState.id !== state.id) {
-            delete searchState.template
-            delete searchState.templateParams
-          }
+      // If the document has changed, clear the template and templateParams
+      if (routerState.id !== state['id']) {
+        delete searchState.template
+        delete searchState.templateParams
+      }
 
-          state._searchParams = Object.entries(searchState).reduce(
-            (acc, [key, value]) => [...acc, [key, value]],
-            [] as SearchParam[],
-          )
+      state._searchParams = Object.entries(searchState).reduce(
+        (acc, [key, value]) => [...acc, [key, value]],
+        [] as SearchParam[],
+      )
 
-          const replace =
-            forceReplace ?? searchState.preview === frameStateRef.current.url
+      const replace = forceReplace ?? searchState.preview === frameStateRef.current.url
 
-          routerNavigate(state, { replace })
-        },
-        50,
-      ),
+      routerNavigate(state, {replace})
+    },
     [routerNavigate, frameStateRef],
   )
 

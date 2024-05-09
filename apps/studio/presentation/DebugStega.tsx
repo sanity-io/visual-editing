@@ -1,15 +1,11 @@
-import {
-  ContentSourceMap,
-  ContentSourceMapDocuments,
-  studioPath,
-} from '@sanity/client/csm'
-import { stegaEncodeSourceMap } from '@sanity/client/stega'
-import { Box, Button, Card, Code, Label, Stack } from '@sanity/ui'
-import { vercelStegaDecodeAll } from '@vercel/stega'
-import { useEffect, useMemo } from 'react'
-import { InputProps, isDocumentSchemaType } from 'sanity'
-import { useDocumentPane, usePaneRouter } from 'sanity/structure'
-import { styled } from 'styled-components'
+import {type ContentSourceMap, type ContentSourceMapDocuments, studioPath} from '@sanity/client/csm'
+import {stegaEncodeSourceMap} from '@sanity/client/stega'
+import {Box, Button, Card, Code, Label, Stack} from '@sanity/ui'
+import {vercelStegaDecodeAll} from '@vercel/stega'
+import {useMemo} from 'react'
+import {type InputProps, isDocumentSchemaType} from 'sanity'
+import {useDocumentPane, usePaneRouter} from 'sanity/structure'
+import {styled} from 'styled-components'
 
 export function StegaDebugger(props: InputProps): JSX.Element {
   if (isDocumentSchemaType(props.schemaType)) {
@@ -38,7 +34,7 @@ const HoverCard = styled(Card)`
   }
 `
 function DocumentDebugger() {
-  const { focusPath } = useDocumentPane()
+  const {focusPath} = useDocumentPane()
   // if (!focusPath || focusPath.length < 1) return null
   return (
     <HoverCard
@@ -107,11 +103,11 @@ function InputDebugger(props: InputProps) {
       },
     }
 
-    return { documents, paths, mappings } satisfies ContentSourceMap
+    return {documents, paths, mappings} satisfies ContentSourceMap
   }, [documentId, documentType, props.path])
   const stegaResult = useMemo(
     () =>
-      stegaEncodeSourceMap({ [sourcePath]: value }, resultSourceMap, {
+      stegaEncodeSourceMap({[sourcePath]: value}, resultSourceMap, {
         enabled: true,
         studioUrl: '/stega',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -130,12 +126,10 @@ function InputDebugger(props: InputProps) {
         <Label size={0}>edit links that updates focus path</Label>
         <Box overflow="auto" padding={1}>
           <Stack space={2}>
-            {stegaEditLinks?.map(({ href }: any) => {
+            {stegaEditLinks?.map(({href}: any) => {
               const [, relativePath] = href.split('/intent/edit/')
               const [pathname] = relativePath.split('?')
-              const prettyPath = new URLSearchParams(
-                pathname.split(';').join('&'),
-              ).get('path')
+              const prettyPath = new URLSearchParams(pathname.split(';').join('&')).get('path')
 
               return (
                 <Button

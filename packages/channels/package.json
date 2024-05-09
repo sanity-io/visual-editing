@@ -1,5 +1,5 @@
 {
-  "name": "@sanity/channels",
+  "name": "@repo/channels",
   "version": "0.4.0",
   "private": true,
   "license": "MIT",
@@ -17,13 +17,7 @@
     "lint": "eslint .",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
-  "prettier": {
-    "plugins": [
-      "prettier-plugin-packagejson"
-    ],
-    "semi": false,
-    "singleQuote": true
-  },
+  "prettier": "@sanity/prettier-config",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -77,14 +71,14 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-simple-import-sort": "^12.0.0",
-    "typescript": "5.4.2",
-    "vitest": "^1.4.0"
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "typescript": "5.4.5",
+    "vitest": "^1.6.0"
   },
   "engines": {
     "node": ">=18"

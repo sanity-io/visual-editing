@@ -1,21 +1,16 @@
-import type {
-  ClientPerspective,
-  ContentSourceMap,
-  QueryParams,
-  SanityClient,
-} from '@sanity/client'
-import type { SanityStegaClient } from '@sanity/client/stega'
-import { type Cache, createCache } from 'async-cache-dedupe'
-import { atom, map, type MapStore, onMount, startTask } from 'nanostores'
+import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
+import type {SanityStegaClient} from '@sanity/client/stega'
+import {type Cache, createCache} from 'async-cache-dedupe'
+import {atom, map, type MapStore, onMount, startTask} from 'nanostores'
 
-import { runtime } from './env'
-import { defineEnableLiveMode } from './live-mode'
-import type { EnableLiveMode, Fetcher, QueryStoreState } from './types'
+import {runtime} from './env'
+import {defineEnableLiveMode} from './live-mode'
+import type {EnableLiveMode, Fetcher, QueryStoreState} from './types'
 
-export type { MapStore }
+export type {MapStore}
 
 export type * from './types'
-export type { WritableAtom } from 'nanostores'
+export type {WritableAtom} from 'nanostores'
 
 /** @public */
 export interface CreateQueryStoreOptions {
@@ -39,10 +34,7 @@ export interface CreateQueryStoreOptions {
 
 /** @public */
 export interface QueryStore {
-  createFetcherStore: <
-    QueryResponseResult = unknown,
-    QueryResponseError = unknown,
-  >(
+  createFetcherStore: <QueryResponseResult = unknown, QueryResponseError = unknown>(
     query: string,
     params?: QueryParams,
     /**
@@ -90,26 +82,20 @@ function cloneClientWithConfig(newClient: SanityClient): SanityClient {
 }
 
 /** @public */
-export const createQueryStore = (
-  options: CreateQueryStoreOptions,
-): QueryStore => {
-  const { ssr = false, tag = 'core-loader' } = options
+export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore => {
+  const {ssr = false, tag = 'core-loader'} = options
   if (ssr && options.client) {
     throw new TypeError(
       '`client` option is not allowed when `ssr: true`, use `setServerClient` from your server entry point instead',
     )
   }
   if (!ssr && options.client === false) {
-    throw new TypeError(
-      `You must set \`ssr: true\` when \`client: false\` is used`,
-    )
+    throw new TypeError(`You must set \`ssr: true\` when \`client: false\` is used`)
   }
   if (!ssr && !options.client) {
     throw new TypeError(`\`client\` is required`)
   }
-  let client = ssr
-    ? undefined
-    : cloneClientWithConfig(options.client as SanityClient)
+  let client = ssr ? undefined : cloneClientWithConfig(options.client as SanityClient)
 
   function createDefaultCache(client: SanityClient | undefined) {
     return createCache().define('fetch', async (key: string) => {
@@ -118,14 +104,14 @@ export const createQueryStore = (
           `You have to set the Sanity client with \`setServerClient\` before any data fetching is done`,
         )
       }
-      const { query, params = {}, perspective, useCdn } = JSON.parse(key)
-      const { result, resultSourceMap } = await client.fetch(query, params, {
+      const {query, params = {}, perspective, useCdn} = JSON.parse(key)
+      const {result, resultSourceMap} = await client.fetch(query, params, {
         tag,
         filterResponse: false,
         perspective,
         useCdn,
       })
-      return { result, resultSourceMap }
+      return {result, resultSourceMap}
     })
   }
 
@@ -136,8 +122,7 @@ export const createQueryStore = (
 
     return {
       hydrate: (_query, _params, initial) => ({
-        loading:
-          initial?.data === undefined || initial?.sourceMap === undefined,
+        loading: initial?.data === undefined || initial?.sourceMap === undefined,
         error: undefined,
         data: initial?.data,
         sourceMap: initial?.sourceMap,
@@ -151,7 +136,7 @@ export const createQueryStore = (
         $fetch.setKey('loading', true)
         $fetch.setKey('error', undefined)
         unstable__cache
-          .instance!.fetch(JSON.stringify({ query, params }))
+          .instance!.fetch(JSON.stringify({query, params}))
           .then((response) => {
             if (controller.signal.aborted) return
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -174,9 +159,7 @@ export const createQueryStore = (
     instance: createDefaultCache(client),
   }
 
-  const $fetcher = atom<Fetcher | undefined>(
-    client ? createDefaultFetcher() : undefined,
-  )
+  const $fetcher = atom<Fetcher | undefined>(client ? createDefaultFetcher() : undefined)
 
   const enableLiveMode = defineEnableLiveMode({
     client: client || undefined,
@@ -200,9 +183,7 @@ export const createQueryStore = (
     >,
   ): MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>> => {
     const fetcher = $fetcher.get()
-    const $fetch = map<
-      QueryStoreState<QueryResponseResult, QueryResponseError>
-    >(
+    const $fetch = map<QueryStoreState<QueryResponseResult, QueryResponseError>>(
       fetcher
         ? fetcher.hydrate(query, params, initial)
         : {
@@ -250,9 +231,7 @@ export const createQueryStore = (
     if (!ssr) {
       throw new Error('`setServerClient` can only be called when `ssr: true`')
     }
-    unstable__serverClient.instance = client = cloneClientWithConfig(
-      newClient as SanityClient,
-    )
+    unstable__serverClient.instance = client = cloneClientWithConfig(newClient as SanityClient)
     unstable__serverClient.canPreviewDrafts = !!client.config().token
     $fetcher.set(createDefaultFetcher())
   }
@@ -266,4 +245,4 @@ export const createQueryStore = (
   }
 }
 
-export { runtime } from './env'
+export {runtime} from './env'

@@ -1,24 +1,13 @@
 {
+  "extends": "@sanity/pkg-utils/tsconfig/strictest.json",
   "compilerOptions": {
-    "target": "esnext",
+    "rootDir": ".",
     "types": ["vite/client"],
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
     "paths": {
       "@sanity/presentation": ["../../packages/presentation/src"],
       "@sanity/preview-url-secret": ["../../packages/preview-url-secret/src"]
-    }
+    },
+    "noPropertyAccessFromIndexSignature": false
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

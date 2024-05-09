@@ -2,6 +2,9 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    taint: true,
+  },
   logging: {
     fetches: {
       fullUrl: true,
@@ -10,10 +13,9 @@ const nextConfig = {
 
   transpilePackages: [
     '@sanity/visual-editing',
-    '@sanity/react-loader',
     'apps-common',
-    '@sanity/channels',
-    '@sanity/visual-editing-helpers',
+    '@repo/channels',
+    '@repo/visual-editing-helpers',
   ],
 }
 

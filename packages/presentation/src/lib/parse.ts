@@ -1,7 +1,7 @@
-import { studioPath } from '@sanity/client/csm'
-import { urlStringToPath } from '@sanity/visual-editing-helpers'
+import {urlStringToPath} from '@repo/visual-editing-helpers'
+import {studioPath} from '@sanity/client/csm'
 
-import type { PresentationStateParams } from '../types'
+import type {PresentationStateParams} from '../types'
 
 export function parseId(rawId: string | undefined): string | undefined {
   if (rawId === undefined) {
@@ -25,9 +25,7 @@ export function parsePath(rawPath: string | undefined): string | undefined {
   return studioPath.toString(urlStringToPath(decodeURIComponent(rawPath)))
 }
 
-export function parseRouterState(
-  state: PresentationStateParams,
-): PresentationStateParams {
+export function parseRouterState(state: PresentationStateParams): PresentationStateParams {
   return {
     id: parseId(state.id),
     path: parsePath(state.path),

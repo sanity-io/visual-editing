@@ -3,10 +3,10 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import { defineStudioUrlStore } from '../defineStudioUrlStore'
-import { defineUseLiveMode } from '../defineUseLiveMode'
-import { defineUseQuery } from '../defineUseQuery'
-import {
+import {defineStudioUrlStore} from '../defineStudioUrlStore'
+import {defineUseLiveMode} from '../defineUseLiveMode'
+import {defineUseQuery} from '../defineUseQuery'
+import type {
   NonUndefinedGuard,
   QueryResponseInitial,
   QueryStore,
@@ -17,15 +17,13 @@ import {
 
 export type * from '../types'
 
-export const createQueryStore = (
-  options: CreateQueryStoreOptions,
-): QueryStore => {
-  const { createFetcherStore, enableLiveMode } = createCoreQueryStore({
+export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore => {
+  const {createFetcherStore, enableLiveMode} = createCoreQueryStore({
     tag: 'react-loader',
     ...options,
   })
   const studioUrlStore = defineStudioUrlStore(options.client)
-  const useQuery = defineUseQuery({ createFetcherStore, studioUrlStore })
+  const useQuery = defineUseQuery({createFetcherStore, studioUrlStore})
   const useLiveMode: UseLiveModeHook = defineUseLiveMode({
     enableLiveMode,
     setStudioUrl: studioUrlStore.setStudioUrl,
@@ -61,8 +59,7 @@ export type {
  * Shortcut setup for the main SSR use-case.
  * @public
  */
-export const { loadQuery, setServerClient, useLiveMode, useQuery } =
-  createQueryStore({
-    client: false,
-    ssr: true,
-  })
+export const {loadQuery, setServerClient, useLiveMode, useQuery} = createQueryStore({
+  client: false,
+  ssr: true,
+})

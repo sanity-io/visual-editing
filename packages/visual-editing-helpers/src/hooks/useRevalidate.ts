@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useSyncExternalStore } from 'react'
+import {useCallback, useEffect, useState, useSyncExternalStore} from 'react'
 
 /**
  * 'hit' - the cache is fresh and valid
@@ -17,7 +17,7 @@ export function useRevalidate(props: {
    */
   refreshInterval: number
 }): [RevalidateState, () => () => void] {
-  const { refreshInterval } = props
+  const {refreshInterval} = props
 
   const shouldPause = useShouldPause()
   const [state, setState] = useState<RevalidateState>('hit')

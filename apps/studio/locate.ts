@@ -1,20 +1,18 @@
-import {
+import type {
   DocumentLocationResolver,
   DocumentLocationsState,
 } from '../../packages/presentation/src'
-import { Observable, combineLatest, map, switchMap } from 'rxjs'
+import {Observable, map} from 'rxjs'
 
 export const locate: DocumentLocationResolver = (params, context) => {
-  const { documentStore } = context
+  const {documentStore} = context
 
   if (params.type === 'shoe') {
     // Listen to the query and fetch the draft and published document
-    const doc$ = documentStore.listenQuery(
-      `*[_id == $id][0]{slug,title}`,
-      params,
-      { perspective: 'previewDrafts' },
-    ) as Observable<{
-      slug: { current: string | null } | null
+    const doc$ = documentStore.listenQuery(`*[_id == $id][0]{slug,title}`, params, {
+      perspective: 'previewDrafts',
+    }) as Observable<{
+      slug: {current: string | null} | null
       title: string | null
     } | null>
 
@@ -46,12 +44,10 @@ export const locate: DocumentLocationResolver = (params, context) => {
   }
 
   if (params.type === 'product') {
-    const doc$ = context.documentStore.listenQuery(
-      `*[_id==$id]{slug,title}[0]`,
-      params,
-      { perspective: 'previewDrafts' },
-    ) as Observable<{
-      slug: { current: string }
+    const doc$ = context.documentStore.listenQuery(`*[_id==$id]{slug,title}[0]`, params, {
+      perspective: 'previewDrafts',
+    }) as Observable<{
+      slug: {current: string}
       title: string | null
     } | null>
 
@@ -75,12 +71,10 @@ export const locate: DocumentLocationResolver = (params, context) => {
   }
 
   if (params.type === 'project') {
-    const doc$ = context.documentStore.listenQuery(
-      `*[_id==$id]{slug,title}[0]`,
-      params,
-      { perspective: 'previewDrafts' },
-    ) as Observable<{
-      slug: { current: string }
+    const doc$ = context.documentStore.listenQuery(`*[_id==$id]{slug,title}[0]`, params, {
+      perspective: 'previewDrafts',
+    }) as Observable<{
+      slug: {current: string}
       title: string | null
     } | null>
 

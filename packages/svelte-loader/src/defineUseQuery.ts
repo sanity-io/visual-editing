@@ -1,12 +1,12 @@
-import type { QueryParams } from '@sanity/client'
-import { type QueryStore, QueryStoreState } from '@sanity/core-loader'
+import type {QueryParams} from '@sanity/client'
+import type {QueryStore, QueryStoreState} from '@sanity/core-loader'
 import isEqual from 'fast-deep-equal'
-import { onMount } from 'svelte'
-import { derived, get, writable } from 'svelte/store'
+import {onMount} from 'svelte'
+import {derived, get, writable} from 'svelte/store'
 
-import { defineStudioUrlStore } from './defineStudioUrlStore'
-import type { UseQuery, UseQueryOptions } from './types'
-import { useEncodeDataAttribute } from './useEncodeDataAttribute'
+import {defineStudioUrlStore} from './defineStudioUrlStore'
+import type {UseQuery, UseQueryOptions} from './types'
+import {useEncodeDataAttribute} from './useEncodeDataAttribute'
 
 export function defineUseQuery({
   createFetcherStore,
@@ -43,16 +43,17 @@ export function defineUseQuery({
     const $params = JSON.stringify(params)
 
     // Core loader fetcher store
-    const $fetcher = createFetcherStore<
-      QueryResponseResult,
-      QueryResponseError
-    >(query, JSON.parse($params), initial)
+    const $fetcher = createFetcherStore<QueryResponseResult, QueryResponseError>(
+      query,
+      JSON.parse($params),
+      initial,
+    )
 
     // If $fetcher were returned directly, svelte would trigger the nanostores onMount method
     // on the server, so create a new store and keep it in sync
-    const $writeable = writable<
-      QueryStoreState<QueryResponseResult, QueryResponseError>
-    >($fetcher.value)
+    const $writeable = writable<QueryStoreState<QueryResponseResult, QueryResponseError>>(
+      $fetcher.value,
+    )
 
     // Only call subscribe on the client
     onMount(() =>
@@ -80,11 +81,7 @@ export function defineUseQuery({
     // Return the store data with encodeDataAttribute
     return derived([$writeable, studioUrlStore], ([value, studioUrl]) => ({
       ...value,
-      encodeDataAttribute: useEncodeDataAttribute(
-        value.data,
-        value.sourceMap,
-        studioUrl,
-      ),
+      encodeDataAttribute: useEncodeDataAttribute(value.data, value.sourceMap, studioUrl),
     }))
   }
 }

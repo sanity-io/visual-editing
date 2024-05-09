@@ -1,11 +1,11 @@
-import type { QueryParams } from '@sanity/client'
-import type { QueryStore, QueryStoreState } from '@sanity/core-loader'
+import type {QueryParams} from '@sanity/client'
+import type {QueryStore, QueryStoreState} from '@sanity/core-loader'
 import isEqual from 'fast-deep-equal'
-import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
+import {useEffect, useMemo, useState, useSyncExternalStore} from 'react'
 
-import { defineStudioUrlStore } from './defineStudioUrlStore'
-import type { UseQueryOptions, WithEncodeDataAttribute } from './types'
-import { useEncodeDataAttribute } from './useEncodeDataAttribute'
+import {defineStudioUrlStore} from './defineStudioUrlStore'
+import type {UseQueryOptions, WithEncodeDataAttribute} from './types'
+import {useEncodeDataAttribute} from './useEncodeDataAttribute'
 
 export function defineUseQuery({
   createFetcherStore,
@@ -16,8 +16,7 @@ export function defineUseQuery({
   query: string,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
-) => QueryStoreState<QueryResponseResult, QueryResponseError> &
-  WithEncodeDataAttribute {
+) => QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute {
   const DEFAULT_PARAMS = {}
   return <QueryResponseResult, QueryResponseError>(
     query: string,
@@ -25,10 +24,7 @@ export function defineUseQuery({
     options: UseQueryOptions<QueryResponseResult> = {},
   ) => {
     const initial = useMemo(
-      () =>
-        options.initial
-          ? { perspective: 'published' as const, ...options.initial }
-          : undefined,
+      () => (options.initial ? {perspective: 'published' as const, ...options.initial} : undefined),
       [options.initial],
     )
     const $params = useMemo(() => JSON.stringify(params), [params])
@@ -36,17 +32,19 @@ export function defineUseQuery({
     const [snapshot, setSnapshot] = useState<
       QueryStoreState<QueryResponseResult, QueryResponseError>
     >(() => {
-      const fetcher = createFetcherStore<
-        QueryResponseResult,
-        QueryResponseError
-      >(query, JSON.parse($params), initial)
+      const fetcher = createFetcherStore<QueryResponseResult, QueryResponseError>(
+        query,
+        JSON.parse($params),
+        initial,
+      )
       return fetcher.value!
     })
     useEffect(() => {
-      const fetcher = createFetcherStore<
-        QueryResponseResult,
-        QueryResponseError
-      >(query, JSON.parse($params), initial)
+      const fetcher = createFetcherStore<QueryResponseResult, QueryResponseError>(
+        query,
+        JSON.parse($params),
+        initial,
+      )
       const unlisten = fetcher.subscribe((snapshot) => {
         setSnapshot((prev) => {
           /*
@@ -103,14 +101,7 @@ export function defineUseQuery({
       studioUrlStore.getSnapshot,
       studioUrlStore.getServerSnapshot,
     )
-    const encodeDataAttribute = useEncodeDataAttribute(
-      snapshot.data,
-      snapshot.sourceMap,
-      studioUrl,
-    )
-    return useMemo(
-      () => ({ ...snapshot, encodeDataAttribute }),
-      [snapshot, encodeDataAttribute],
-    )
+    const encodeDataAttribute = useEncodeDataAttribute(snapshot.data, snapshot.sourceMap, studioUrl)
+    return useMemo(() => ({...snapshot, encodeDataAttribute}), [snapshot, encodeDataAttribute])
   }
 }

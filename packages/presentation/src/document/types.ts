@@ -1,4 +1,4 @@
-import { PresentationPluginOptions } from '../types'
+import type {PresentationPluginOptions} from '../types'
 
 export interface PresentationDocumentContextValue {
   options: PresentationPluginOptions[]

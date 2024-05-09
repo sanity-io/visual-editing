@@ -3,23 +3,16 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import { defineStudioUrlStore } from './defineStudioUrlStore'
-import { defineUseLiveMode } from './defineUseLiveMode'
-import { defineUseQuery } from './defineUseQuery'
-import type {
-  LoadQuery,
-  QueryResponseInitial,
-  QueryStore,
-  UseLiveMode,
-} from './types'
+import {defineStudioUrlStore} from './defineStudioUrlStore'
+import {defineUseLiveMode} from './defineUseLiveMode'
+import {defineUseQuery} from './defineUseQuery'
+import type {LoadQuery, QueryResponseInitial, QueryStore, UseLiveMode} from './types'
 
 /**
  * Create a query store
  * @public
  */
-export const createQueryStore = (
-  options: CreateQueryStoreOptions,
-): QueryStore => {
+export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore => {
   const {
     createFetcherStore,
     setServerClient,
@@ -32,7 +25,7 @@ export const createQueryStore = (
   })
 
   const studioUrlStore = defineStudioUrlStore(options.client)
-  const useQuery = defineUseQuery({ createFetcherStore, studioUrlStore })
+  const useQuery = defineUseQuery({createFetcherStore, studioUrlStore})
   const useLiveMode: UseLiveMode = defineUseLiveMode({
     enableLiveMode,
     studioUrlStore,
@@ -44,9 +37,7 @@ export const createQueryStore = (
     options: Parameters<LoadQuery>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
     const perspective =
-      options.perspective ||
-      unstable__serverClient.instance?.config().perspective ||
-      'published'
+      options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
 
     if (typeof document !== 'undefined') {
       throw new Error(
@@ -64,32 +55,24 @@ export const createQueryStore = (
           `You cannot use "previewDrafts" unless you set a "token" in the "client" instance passed to "setServerClient".`,
         )
       }
-      const { result, resultSourceMap } =
-        await unstable__serverClient.instance!.fetch<QueryResponseResult>(
-          query,
-          params,
-          {
-            filterResponse: false,
-            resultSourceMap: 'withKeyArraySelector',
-            perspective,
-            useCdn: false,
-          },
-        )
-      return { data: result, sourceMap: resultSourceMap, perspective }
+      const {result, resultSourceMap} =
+        await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
+          filterResponse: false,
+          resultSourceMap: 'withKeyArraySelector',
+          perspective,
+          useCdn: false,
+        })
+      return {data: result, sourceMap: resultSourceMap, perspective}
     }
 
-    const useCdn =
-      options.useCdn || unstable__serverClient.instance!.config().useCdn
+    const useCdn = options.useCdn || unstable__serverClient.instance!.config().useCdn
 
-    const { result, resultSourceMap } =
-      await unstable__cache.instance.fetch<QueryResponseResult>(
-        JSON.stringify({ query, params, perspective, useCdn }),
-      )
+    const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
+      JSON.stringify({query, params, perspective, useCdn}),
+    )
 
     // @ts-expect-error - update typings
-    return resultSourceMap
-      ? { data: result, sourceMap: resultSourceMap }
-      : { data: result }
+    return resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
   }
 
   return {

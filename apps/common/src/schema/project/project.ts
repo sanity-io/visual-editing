@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 export const projectType = defineType({
   type: 'document',
@@ -13,7 +13,7 @@ export const projectType = defineType({
       type: 'slug',
       name: 'slug',
       title: 'Slug',
-      options: { source: 'title' },
+      options: {source: 'title'},
     }),
   ],
 })

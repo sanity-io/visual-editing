@@ -1,4 +1,4 @@
-import type { ChannelStatus } from '@sanity/channels'
+import type {ChannelStatus} from '@repo/channels'
 import {
   CheckmarkIcon,
   ChevronDownIcon,
@@ -10,7 +10,7 @@ import {
   RefreshIcon,
   ShareIcon,
 } from '@sanity/icons'
-import { withoutSecretSearchParams } from '@sanity/preview-url-secret/without-secret-search-params'
+import {withoutSecretSearchParams} from '@sanity/preview-url-secret/without-secret-search-params'
 import {
   Box,
   Button,
@@ -30,7 +30,7 @@ import {
   TooltipDelayGroupProvider,
   usePrefersReducedMotion,
 } from '@sanity/ui'
-import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
+import {AnimatePresence, motion, MotionConfig} from 'framer-motion'
 import {
   type ComponentType,
   createElement,
@@ -40,11 +40,11 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { Hotkeys } from 'sanity'
-import { styled } from 'styled-components'
+import {Hotkeys, useTranslation} from 'sanity'
 
-import { ErrorCard } from '../components/ErrorCard'
-import { MAX_TIME_TO_OVERLAYS_CONNECTION } from '../constants'
+import {ErrorCard} from '../components/ErrorCard'
+import {MAX_TIME_TO_OVERLAYS_CONNECTION} from '../constants'
+import {presentationLocaleNamespace} from '../i18n'
 import {
   ACTION_IFRAME_LOADED,
   ACTION_IFRAME_RELOAD,
@@ -53,64 +53,31 @@ import {
   type DispatchPresentationAction,
   type PresentationState,
 } from '../reducers/presentationReducer'
-import type { PresentationParams } from '../types'
-import { usePresentationTool } from '../usePresentationTool'
-import { IFrame } from './IFrame'
-import { PreviewLocationInput } from './PreviewLocationInput'
-import { ShareUrlMenuItems } from './ShareUrlMenuItems'
+import type {PresentationParams} from '../types'
+import {usePresentationTool} from '../usePresentationTool'
+import {IFrame} from './IFrame'
+import {PreviewLocationInput} from './PreviewLocationInput'
+import {ShareUrlMenuItems} from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
 
-const StyledSwitch = styled(Switch)`
-  & > span {
-    width: 21px;
-    height: 13px;
-    overflow: hidden;
-
-    & > span:nth-child(1) {
-      width: 21px;
-      height: 13px;
-    }
-
-    & > span:nth-child(2) {
-      width: 9px;
-      height: 9px;
-      top: 2px;
-      left: 2px;
-    }
-  }
-
-  & input:checked + span {
-    & > span:nth-child(2) {
-      transform: translate3d(8px, 0, 0) !important;
-    }
-  }
-`
-
-const PERSPECTIVE_TITLES: Record<PresentationState['perspective'], string> = {
-  previewDrafts: 'Drafts',
-  published: 'Published',
+const PERSPECTIVE_TITLE_KEY: Record<PresentationState['perspective'], string> = {
+  previewDrafts: 'preview-frame.perspective.previewDrafts.title',
+  published: 'preview-frame.perspective.published.title',
 }
 
-const PERSPECTIVE_TONES: Record<PresentationState['perspective'], ButtonTone> =
-  {
-    previewDrafts: 'caution',
-    published: 'positive',
-  }
+const PERSPECTIVE_TONES: Record<PresentationState['perspective'], ButtonTone> = {
+  previewDrafts: 'caution',
+  published: 'positive',
+}
 
-const PERSPECTIVE_ICONS: Record<
-  PresentationState['perspective'],
-  ComponentType
-> = {
+const PERSPECTIVE_ICONS: Record<PresentationState['perspective'], ComponentType> = {
   previewDrafts: EditIcon,
   published: PublishIcon,
 }
 
 export interface PreviewFrameProps
-  extends Pick<
-    PresentationState,
-    'iframe' | 'perspective' | 'viewport' | 'visualEditing'
-  > {
+  extends Pick<PresentationState, 'iframe' | 'perspective' | 'viewport' | 'visualEditing'> {
   dispatch: DispatchPresentationAction
   initialUrl: URL
   loadersConnection: ChannelStatus
@@ -143,27 +110,26 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       toggleNavigator,
       toggleOverlay,
       viewport,
-      visualEditing: { overlaysEnabled },
+      visualEditing: {overlaysEnabled},
     } = props
 
-    const { devMode } = usePresentationTool()
-
+    const {t} = useTranslation(presentationLocaleNamespace)
+    const {devMode} = usePresentationTool()
     const prefersReducedMotion = usePrefersReducedMotion()
 
     const setDesktopMode = useCallback(
-      () => dispatch({ type: ACTION_VIEWPORT, viewport: 'desktop' }),
+      () => dispatch({type: ACTION_VIEWPORT, viewport: 'desktop'}),
       [dispatch],
     )
     const setMobileMode = useCallback(
-      () => dispatch({ type: ACTION_VIEWPORT, viewport: 'mobile' }),
+      () => dispatch({type: ACTION_VIEWPORT, viewport: 'mobile'}),
       [dispatch],
     )
     const loading = iframe.status === 'loading' || iframe.status === 'reloading'
     const [timedOut, setTimedOut] = useState(false)
     const refreshing = iframe.status === 'refreshing'
     const [somethingIsWrong, setSomethingIsWrong] = useState(false)
-    const iframeIsBusy =
-      loading || refreshing || overlaysConnection === 'connecting'
+    const iframeIsBusy = loading || refreshing || overlaysConnection === 'connecting'
 
     const previewLocationOrigin = useMemo(() => {
       return targetOrigin === location.origin ? '' : targetOrigin
@@ -174,7 +140,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
         if (typeof ref === 'function' || !ref?.current) {
           return
         }
-        dispatch({ type: ACTION_IFRAME_RELOAD })
+        dispatch({type: ACTION_IFRAME_RELOAD})
         // Funky way to reload an iframe without CORS issues
         // eslint-disable-next-line no-self-assign
         // ref.current.src = ref.current.src
@@ -188,24 +154,20 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
 
       ref.current.src = initialUrl.toString()
 
-      dispatch({ type: ACTION_IFRAME_RELOAD })
+      dispatch({type: ACTION_IFRAME_RELOAD})
     }, [dispatch, ref, initialUrl])
     const handleContinueAnyway = useCallback(() => {
       setContinueAnyway(true)
     }, [])
 
     const [continueAnyway, setContinueAnyway] = useState(false)
-    const [showOverlaysConnectionStatus, setShowOverlaysConnectionState] =
-      useState(false)
+    const [showOverlaysConnectionStatus, setShowOverlaysConnectionState] = useState(false)
     useEffect(() => {
       if (loading || refreshing) {
         return
       }
 
-      if (
-        overlaysConnection === 'connecting' ||
-        overlaysConnection === 'reconnecting'
-      ) {
+      if (overlaysConnection === 'connecting' || overlaysConnection === 'reconnecting') {
         const timeout = setTimeout(() => {
           setShowOverlaysConnectionState(true)
         }, 1000)
@@ -249,13 +211,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
 
     const previewLocationRoute = useMemo(() => {
       const previewUrl = new URL(params.preview || '/', targetOrigin)
-      const { pathname, search } = withoutSecretSearchParams(previewUrl)
+      const {pathname, search} = withoutSecretSearchParams(previewUrl)
 
       return `${pathname}${search}`
     }, [params.preview, targetOrigin])
 
     const onIFrameLoad = useCallback(() => {
-      dispatch({ type: ACTION_IFRAME_LOADED })
+      dispatch({type: ACTION_IFRAME_LOADED})
     }, [dispatch])
 
     /**
@@ -271,9 +233,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
           return
         }
 
-        instance.dispatchEvent(
-          new MouseEvent('mousedown', { bubbles: true, cancelable: true }),
-        )
+        instance.dispatchEvent(new MouseEvent('mousedown', {bubbles: true, cancelable: true}))
       }
       window.addEventListener('blur', handleBlur)
       return () => {
@@ -282,54 +242,48 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     }, [ref])
 
     return (
-      <MotionConfig
-        transition={prefersReducedMotion ? { duration: 0 } : undefined}
-      >
+      <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
         <TooltipDelayGroupProvider delay={1000}>
-          <Card
-            flex="none"
-            padding={2}
-            shadow={1}
-            style={{ position: 'relative' }}
-          >
-            <Flex align="center" gap={2} style={{ minHeight: 0 }}>
+          <Card flex="none" padding={2} shadow={1} style={{position: 'relative'}}>
+            <Flex align="center" style={{minHeight: 0}}>
               {toggleNavigator && (
-                <Tooltip
-                  animate
-                  content={<Text size={1}>Toggle navigator</Text>}
-                  fallbackPlacements={['bottom-start']}
-                  padding={2}
-                  placement="bottom"
-                  portal
-                >
-                  <Button
-                    aria-label="Toggle navigator"
-                    fontSize={1}
-                    icon={PanelLeftIcon}
-                    mode="bleed"
-                    onClick={toggleNavigator}
-                    padding={3}
-                    selected={navigatorEnabled}
-                  />
-                </Tooltip>
+                <Box flex="none" marginRight={1} padding={1}>
+                  <Tooltip
+                    animate
+                    content={
+                      <Text size={1}>{t('preview-frame.navigator.toggle-button.tooltip')}</Text>
+                    }
+                    fallbackPlacements={['bottom-start']}
+                    padding={2}
+                    placement="bottom"
+                    portal
+                  >
+                    <Button
+                      aria-label={t('preview-frame.navigator.toggle-button.aria-label')}
+                      fontSize={1}
+                      icon={PanelLeftIcon}
+                      mode="bleed"
+                      onClick={toggleNavigator}
+                      padding={2}
+                      selected={navigatorEnabled}
+                    />
+                  </Tooltip>
+                </Box>
               )}
 
               <Tooltip
                 animate
                 content={
-                  <Flex align="center" style={{ whiteSpace: 'nowrap' }}>
+                  <Flex align="center" style={{whiteSpace: 'nowrap'}}>
                     <Box padding={1}>
                       <Text size={1}>
-                        {overlaysEnabled
-                          ? 'Disable edit overlay'
-                          : 'Enable edit overlay'}
+                        {t('preview-frame.overlay.toggle-button.tooltip', {
+                          context: overlaysEnabled ? 'disable' : 'enable',
+                        })}
                       </Text>
                     </Box>
                     <Box paddingY={1}>
-                      <Hotkeys
-                        keys={['Alt']}
-                        style={{ marginTop: -4, marginBottom: -4 }}
-                      />
+                      <Hotkeys keys={['Alt']} style={{marginTop: -4, marginBottom: -4}} />
                     </Box>
                   </Flex>
                 }
@@ -341,130 +295,121 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 <Card
                   as="label"
                   flex="none"
+                  marginRight={1}
                   padding={3}
                   style={{
                     lineHeight: 0,
                     borderRadius: 999,
                     userSelect: 'none',
                   }}
-                  tone={overlaysEnabled ? 'positive' : undefined}
+                  tone={overlaysEnabled ? 'transparent' : undefined}
                 >
-                  <Flex align="center" gap={2}>
-                    <div style={{ margin: -2 }}>
-                      <StyledSwitch
+                  <Flex align="center" gap={3}>
+                    <div style={{margin: -4}}>
+                      <Switch
                         checked={overlaysEnabled}
                         onChange={toggleOverlay}
-                        disabled={
-                          iframe.status === 'loading' ||
-                          overlaysConnection !== 'connected'
-                        }
+                        disabled={iframe.status === 'loading' || overlaysConnection !== 'connected'}
                       />
                     </div>
                     <Box>
-                      <Text muted size={1} weight="medium">
-                        Edit
+                      <Text muted={!overlaysEnabled} size={1} weight="medium">
+                        {t('preview-frame.overlay.toggle-button.text')}
                       </Text>
                     </Box>
                   </Flex>
                 </Card>
               </Tooltip>
-              <Tooltip
-                animate
-                content={
-                  <Text size={1}>
-                    {iframe.status === 'loading'
-                      ? 'Loading…'
-                      : iframe.status === 'reloading'
-                        ? 'Refreshing…'
-                        : iframe.status === 'refreshing'
-                          ? 'Refreshing…'
-                          : 'Refresh preview'}
-                  </Text>
-                }
-                fallbackPlacements={['bottom-start']}
-                padding={2}
-                placement="bottom"
-                portal
-              >
-                <Button
-                  aria-label="Refresh preview"
-                  fontSize={1}
-                  icon={RefreshIcon}
-                  mode="bleed"
-                  loading={
-                    iframe.status === 'reloading' ||
-                    iframe.status === 'refreshing'
-                  }
-                  onClick={handleRefresh}
-                  padding={3}
-                />
-              </Tooltip>
 
-              <Box flex={1}>
+              <Box flex={1} marginX={1}>
                 <PreviewLocationInput
+                  prefix={
+                    <Box padding={1}>
+                      <Tooltip
+                        animate
+                        content={
+                          <Text size={1}>
+                            {iframe.status === 'loaded'
+                              ? t('preview-frame.refresh-button.tooltip')
+                              : t('preview-frame.status', {context: iframe.status})}
+                          </Text>
+                        }
+                        fallbackPlacements={['bottom-start']}
+                        padding={2}
+                        placement="bottom"
+                        portal
+                      >
+                        <Button
+                          aria-label={t('preview-frame.refresh-button.aria-label')}
+                          fontSize={1}
+                          icon={RefreshIcon}
+                          mode="bleed"
+                          loading={iframe.status === 'reloading' || iframe.status === 'refreshing'}
+                          onClick={handleRefresh}
+                          padding={2}
+                        />
+                      </Tooltip>
+                    </Box>
+                  }
                   onChange={onPathChange}
                   origin={previewLocationOrigin}
+                  suffix={
+                    <Box padding={1}>
+                      <MenuButton
+                        button={
+                          <Button
+                            fontSize={1}
+                            iconRight={ShareIcon}
+                            mode="bleed"
+                            padding={2}
+                            space={2}
+                          />
+                        }
+                        id="location-menu"
+                        menu={
+                          <Menu>
+                            <ShareUrlMenuItems
+                              initialUrl={initialUrl}
+                              openPopup={openPopup}
+                              previewLocationOrigin={previewLocationOrigin}
+                              previewLocationRoute={previewLocationRoute}
+                            />
+                          </Menu>
+                        }
+                        popover={{
+                          animate: true,
+                          constrainSize: true,
+                          placement: 'bottom',
+                          portal: true,
+                        }}
+                      />
+                    </Box>
+                  }
                   value={previewLocationRoute}
                 />
               </Box>
 
-              <Flex align="center" flex="none" gap={1}>
-                <MenuButton
-                  button={
-                    <Button
-                      fontSize={1}
-                      iconRight={ShareIcon}
-                      mode="bleed"
-                      padding={3}
-                      space={2}
-                    />
-                  }
-                  id="location-menu"
-                  menu={
-                    <Menu>
-                      <ShareUrlMenuItems
-                        initialUrl={initialUrl}
-                        openPopup={openPopup}
-                        previewLocationOrigin={previewLocationOrigin}
-                        previewLocationRoute={previewLocationRoute}
-                      />
-                    </Menu>
-                  }
-                  popover={{
-                    animate: true,
-                    constrainSize: true,
-                    placement: 'bottom',
-                    portal: true,
-                  }}
-                />
-              </Flex>
-
-              <Flex align="center" flex="none" gap={1}>
+              <Flex align="center" flex="none" gap={1} padding={1}>
                 <MenuButton
                   button={
                     <Button
                       fontSize={1}
                       iconRight={ChevronDownIcon}
                       mode="bleed"
-                      padding={3}
+                      padding={2}
                       space={2}
-                      text={
-                        PERSPECTIVE_TITLES[
-                          loadersConnection === 'connected'
-                            ? perspective
-                            : 'previewDrafts'
-                        ]
-                      }
-                      loading={
-                        loadersConnection === 'reconnecting' &&
-                        iframe.status !== 'loaded'
-                      }
+                      text={t(
+                        PERSPECTIVE_TITLE_KEY[
+                          loadersConnection === 'connected' ? perspective : 'previewDrafts'
+                        ],
+                      )}
+                      loading={loadersConnection === 'reconnecting' && iframe.status !== 'loaded'}
                       disabled={loadersConnection !== 'connected'}
                     />
                   }
                   id="perspective-menu"
                   menu={
-                    <Menu style={{ maxWidth: 240 }}>
+                    <Menu style={{maxWidth: 240}}>
                       <MenuItem
                         fontSize={1}
                         onClick={() =>
@@ -479,16 +424,14 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       >
                         <Flex align="flex-start" gap={3}>
                           <Box flex="none">
-                            <Text size={1}>
-                              {createElement(PERSPECTIVE_ICONS.previewDrafts)}
-                            </Text>
+                            <Text size={1}>{createElement(PERSPECTIVE_ICONS.previewDrafts)}</Text>
                           </Box>
                           <Stack flex={1} space={2}>
                             <Text size={1} weight="medium">
-                              {PERSPECTIVE_TITLES.previewDrafts}
+                              {t(PERSPECTIVE_TITLE_KEY['previewDrafts'])}
                             </Text>
                             <Text muted size={1}>
-                              View this page with latest draft content
+                              {t('preview-frame.perspective.previewDrafts.text')}
                             </Text>
                           </Stack>
                           <Box flex="none">
@@ -496,8 +439,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                               muted
                               size={1}
                               style={{
-                                opacity:
-                                  perspective === 'previewDrafts' ? 1 : 0,
+                                opacity: perspective === 'previewDrafts' ? 1 : 0,
                               }}
                             >
                               <CheckmarkIcon />
@@ -519,16 +461,14 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       >
                         <Flex align="flex-start" gap={3}>
                           <Box flex="none">
-                            <Text size={1}>
-                              {createElement(PERSPECTIVE_ICONS.published)}
-                            </Text>
+                            <Text size={1}>{createElement(PERSPECTIVE_ICONS.published)}</Text>
                           </Box>
                           <Stack flex={1} space={2}>
                             <Text size={1} weight="medium">
-                              {PERSPECTIVE_TITLES.published}
+                              {t(PERSPECTIVE_TITLE_KEY['published'])}
                             </Text>
                             <Text muted size={1}>
-                              View this page with published content
+                              {t('preview-frame.perspective.published.text')}
                             </Text>
                           </Stack>
                           <Box flex="none">
@@ -555,39 +495,41 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 />
               </Flex>
 
-              <Flex align="center" flex="none" gap={1}>
+              <Flex align="center" flex="none" gap={1} padding={1}>
                 <Tooltip
                   animate
-                  content={<Text size={1}>Full viewport</Text>}
+                  content={<Text size={1}>{t('preview-frame.viewport-full-button.tooltip')}</Text>}
                   fallbackPlacements={['bottom-start']}
                   padding={2}
                   placement="bottom"
                   portal
                 >
                   <Button
-                    aria-label="Full viewport"
+                    aria-label={t('preview-frame.viewport-full-button.aria-label')}
                     fontSize={1}
                     icon={DesktopIcon}
                     mode="bleed"
                     onClick={setDesktopMode}
-                    padding={3}
+                    padding={2}
                     selected={viewport === 'desktop'}
                   />
                 </Tooltip>
                 <Tooltip
                   animate
-                  content={<Text size={1}>Narrow viewport</Text>}
+                  content={
+                    <Text size={1}>{t('preview-frame.viewport-narrow-button.tooltip')}</Text>
+                  }
                   padding={2}
                   placement="bottom"
                   portal
                 >
                   <Button
-                    aria-label="Narrow viewport"
+                    aria-label={t('preview-frame.viewport-narrow-button.aria-label')}
                     fontSize={1}
                     icon={MobileDeviceIcon}
                     mode="bleed"
                     onClick={setMobileMode}
-                    padding={3}
+                    padding={2}
                     selected={viewport === 'mobile'}
                   />
                 </Tooltip>
@@ -626,19 +568,17 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       backdropFilter: timedOut
                         ? 'blur(16px) saturate(0.5) grayscale(0.5)'
                         : 'blur(2px)',
-                      ['transition' as string]:
-                        'backdrop-filter 0.2s ease-in-out',
+                      ['transition' as string]: 'backdrop-filter 0.2s ease-in-out',
                       // @TODO Because of Safari we have to do this
                       WebkitBackdropFilter: timedOut
                         ? 'blur(16px) saturate(0.5) grayscale(0.5)'
                         : 'blur(2px)',
-                      WebkitTransition:
-                        '-webkit-backdrop-filter 0.2s ease-in-out',
+                      WebkitTransition: '-webkit-backdrop-filter 0.2s ease-in-out',
                       zIndex: 1,
                     }}
                   >
                     <Flex
-                      style={{ ...sizes[viewport] }}
+                      style={{...sizes[viewport]}}
                       justify="center"
                       align="center"
                       direction="column"
@@ -649,8 +589,8 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                           disabled
                           fontSize={1}
                           mode="ghost"
-                          text="Continue anyway"
-                          style={{ opacity: 0 }}
+                          text={t('preview-frame.continue-button.text')}
+                          style={{opacity: 0}}
                         />
                       )}
                       <Card
@@ -659,22 +599,12 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                         padding={4}
                         shadow={1}
                       >
-                        <Flex
-                          justify="center"
-                          align="center"
-                          direction="column"
-                          gap={4}
-                        >
+                        <Flex justify="center" align="center" direction="column" gap={4}>
                           <Spinner muted />
                           <Text muted size={1}>
-                            {timedOut ? (
-                              <>
-                                Unable to connect, check the browser console for
-                                more information.
-                              </>
-                            ) : (
-                              'Connecting…'
-                            )}
+                            {timedOut
+                              ? t('preview-frame.status', {context: 'timeout'})
+                              : t('preview-frame.status', {context: 'connecting'})}
                           </Text>
                         </Flex>
                       </Card>
@@ -684,14 +614,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                           // mode="ghost"
                           tone="critical"
                           onClick={handleContinueAnyway}
-                          text="Continue anyway"
+                          text={t('preview-frame.continue-button.text')}
                         />
                       )}
                     </Flex>
                   </MotionFlex>
                 ) : (loading ||
-                    (overlaysConnection === 'connecting' &&
-                      iframe.status !== 'refreshing')) &&
+                    (overlaysConnection === 'connecting' && iframe.status !== 'refreshing')) &&
                   !continueAnyway ? (
                   <MotionFlex
                     initial="initial"
@@ -707,7 +636,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     }}
                   >
                     <Flex
-                      style={{ ...sizes[viewport] }}
+                      style={{...sizes[viewport]}}
                       justify="center"
                       align="center"
                       direction="column"
@@ -715,7 +644,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     >
                       <Spinner muted />
                       <Text muted size={1}>
-                        Loading…
+                        {t('preview-frame.status', {context: 'loading'})}
                       </Text>
                     </Flex>
                   </MotionFlex>
@@ -737,7 +666,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                   >
                     <ErrorCard
                       flex={1}
-                      message="Could not connect to the preview"
+                      message={t('preview-frame.connection.error.text')}
                       onRetry={handleRetry}
                       onContinueAnyway={handleContinueAnyway}
                     >
@@ -747,9 +676,11 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                             <Card padding={3} radius={2} tone="critical">
                               <Stack space={3}>
                                 <Label muted size={0}>
-                                  Overlay connection status
+                                  {t('preview-frame.overlay.connection-status.label')}
                                 </Label>
-                                <Code size={1}>{overlaysConnection}</Code>
+                                <Code size={1}>
+                                  {t('channel.status', {context: overlaysConnection})}
+                                </Code>
                               </Stack>
                             </Card>
                           )}
@@ -758,9 +689,11 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                             <Card padding={3} radius={2} tone="critical">
                               <Stack space={3}>
                                 <Label muted size={0}>
-                                  Loader connection status
+                                  {t('preview-frame.loader.connection-status.label')}
                                 </Label>
-                                <Code size={1}>{loadersConnection}</Code>
+                                <Code size={1}>
+                                  {t('channel.status', {context: loadersConnection})}
+                                </Code>
                               </Stack>
                             </Card>
                           )}
@@ -775,8 +708,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 style={{
                   pointerEvents:
                     (loading ||
-                      (overlaysConnection === 'connecting' &&
-                        iframe.status !== 'refreshing')) &&
+                      (overlaysConnection === 'connecting' && iframe.status !== 'refreshing')) &&
                     !continueAnyway
                       ? 'none'
                       : 'auto',
@@ -788,16 +720,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 variants={iframeVariants}
                 animate={[
                   (loading ||
-                    (overlaysConnection === 'connecting' &&
-                      iframe.status !== 'refreshing')) &&
+                    (overlaysConnection === 'connecting' && iframe.status !== 'refreshing')) &&
                   !continueAnyway
                     ? 'background'
                     : 'active',
                   loading ? 'reloading' : 'idle',
                   viewport,
-                  showOverlaysConnectionStatus && !continueAnyway
-                    ? 'timedOut'
-                    : '',
+                  showOverlaysConnectionStatus && !continueAnyway ? 'timedOut' : '',
                 ]}
                 onLoad={onIFrameLoad}
               />
@@ -821,15 +750,15 @@ const sizes = {
 }
 
 const spinnerVariants = {
-  initial: { opacity: 1 },
-  animate: { opacity: [0, 0, 1] },
-  exit: { opacity: [1, 0, 0] },
+  initial: {opacity: 1},
+  animate: {opacity: [0, 0, 1]},
+  exit: {opacity: [1, 0, 0]},
 }
 
 const errorVariants = {
-  initial: { opacity: 1 },
-  animate: { opacity: [0, 0, 1] },
-  exit: { opacity: [1, 0, 0] },
+  initial: {opacity: 1},
+  animate: {opacity: [0, 0, 1]},
+  exit: {opacity: [1, 0, 0]},
 }
 
 const iframeVariants = {

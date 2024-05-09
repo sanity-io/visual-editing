@@ -1,8 +1,5 @@
-import {
-  urlSearchParamPreviewPathname,
-  urlSearchParamPreviewSecret,
-} from './constants'
-import { ParsedPreviewUrl } from './types'
+import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
+import type {ParsedPreviewUrl} from './types'
 
 /**
  * @internal
@@ -16,8 +13,8 @@ export function parsePreviewUrl(unsafeUrl: string): ParsedPreviewUrl {
   let redirectTo = undefined
   const unsafeRedirectTo = url.searchParams.get(urlSearchParamPreviewPathname)
   if (unsafeRedirectTo) {
-    const { pathname, search } = new URL(unsafeRedirectTo, 'http://localhost')
-    redirectTo = `${pathname}${search}`
+    const {pathname, search, hash} = new URL(unsafeRedirectTo, 'http://localhost')
+    redirectTo = `${pathname}${search}${hash}`
   }
-  return { secret, redirectTo }
+  return {secret, redirectTo}
 }

@@ -1,11 +1,12 @@
-import { rem, Stack } from '@sanity/ui'
-import { type ReactNode, useContext } from 'react'
-import { type ObjectSchemaType, type PublishedId } from 'sanity'
-import { styled } from 'styled-components'
+import {rem, Stack} from '@sanity/ui'
+import {type ReactNode, useContext} from 'react'
+import {type ObjectSchemaType, type PublishedId} from 'sanity'
+import {styled} from 'styled-components'
 
-import type { PresentationPluginOptions } from '../types'
-import { LocationsBanner } from './LocationsBanner'
-import { PresentationDocumentContext } from './PresentationDocumentContext'
+import type {PresentationPluginOptions} from '../types'
+import {useDocumentLocations} from '../useDocumentLocations'
+import {LocationsBanner} from './LocationsBanner'
+import {PresentationDocumentContext} from './PresentationDocumentContext'
 
 const LocationStack = styled(Stack)`
   min-height: ${rem(42)};
@@ -20,26 +21,33 @@ export function PresentationDocumentHeader(props: {
   options: PresentationPluginOptions
   schemaType: ObjectSchemaType
 }): ReactNode {
-  const { documentId, options, schemaType } = props
+  const {documentId, options, schemaType} = props
 
   const context = useContext(PresentationDocumentContext)
+  const {state, status} = useDocumentLocations({
+    id: documentId,
+    resolvers: options.resolve?.locations || options.locate,
+    type: schemaType.name,
+  })
 
-  if (context && context.options[0] !== options) {
-    return <LocationStack marginBottom={5} space={5} />
+  if ((context && context.options[0] !== options) || status === 'empty') {
+    return null
   }
 
-  const len = context?.options?.length || 0
+  const contextOptions = context?.options || []
 
   return (
     <LocationStack marginBottom={5} space={5}>
       <Stack space={2}>
-        {context?.options.map((o, idx) => (
+        {contextOptions.map((options, idx) => (
           <LocationsBanner
             documentId={documentId}
+            isResolving={status === 'resolving'}
             key={idx}
-            options={o}
+            options={options}
             schemaType={schemaType}
-            showPresentationTitle={len > 1}
+            showPresentationTitle={contextOptions.length > 1}
+            state={state}
           />
         ))}
       </Stack>

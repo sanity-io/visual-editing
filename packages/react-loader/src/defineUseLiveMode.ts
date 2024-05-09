@@ -1,9 +1,9 @@
-import type { SanityClient } from '@sanity/client'
-import type { ResolveStudioUrl, StudioUrl } from '@sanity/client/csm'
-import type { QueryStore } from '@sanity/core-loader'
-import { useEffect } from 'react'
+import type {SanityClient} from '@sanity/client'
+import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
+import type {QueryStore} from '@sanity/core-loader'
+import {useEffect} from 'react'
 
-import type { UseLiveModeHook } from './types'
+import type {UseLiveModeHook} from './types'
 
 export function defineUseLiveMode({
   enableLiveMode,
@@ -11,13 +11,7 @@ export function defineUseLiveMode({
 }: Pick<QueryStore, 'enableLiveMode'> & {
   setStudioUrl: (studioUrl: StudioUrl | ResolveStudioUrl | undefined) => void
 }): UseLiveModeHook {
-  return ({
-    allowStudioOrigin,
-    client,
-    onConnect,
-    onDisconnect,
-    studioUrl,
-  }) => {
+  return ({allowStudioOrigin, client, onConnect, onDisconnect, studioUrl}) => {
     useEffect(() => {
       if (allowStudioOrigin) {
         // eslint-disable-next-line no-console

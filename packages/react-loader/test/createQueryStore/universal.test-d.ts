@@ -1,19 +1,15 @@
-import { createClient } from '@sanity/client'
-import { describe, expectTypeOf, test } from 'vitest'
+import {createClient} from '@sanity/client'
+import {describe, expectTypeOf, test} from 'vitest'
 
-import { createQueryStore } from '../../src/createQueryStore/universal'
+import {createQueryStore} from '../../src/createQueryStore/universal'
 
 describe('useQuery', () => {
-  const { useQuery } = createQueryStore({ client: createClient({}) })
+  const {useQuery} = createQueryStore({client: createClient({})})
   test('should type `data` as `T | undefined`', async () => {
-    expectTypeOf(useQuery<boolean>('').data).toMatchTypeOf<
-      boolean | undefined
-    >()
+    expectTypeOf(useQuery<boolean>('').data).toMatchTypeOf<boolean | undefined>()
   })
   test('should type `data` as `T | undefined`', async () => {
-    expectTypeOf(useQuery<boolean>('', {}, {}).data).toMatchTypeOf<
-      boolean | undefined
-    >()
+    expectTypeOf(useQuery<boolean>('', {}, {}).data).toMatchTypeOf<boolean | undefined>()
   })
   test('should infer `data` as `typeof options.initial`', async () => {
     expectTypeOf(

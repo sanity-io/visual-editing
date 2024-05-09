@@ -1,20 +1,8 @@
-import type { ChannelStatus } from '@sanity/channels'
-import type {
-  ClientPerspective,
-  ContentSourceMapDocuments,
-} from '@sanity/client'
-import {
-  isHTMLAnchorElement,
-  isHTMLElement,
-  studioTheme,
-  ThemeProvider,
-} from '@sanity/ui'
-import {
-  isAltKey,
-  isHotkey,
-  type SanityNode,
-} from '@sanity/visual-editing-helpers'
-import { DRAFTS_PREFIX } from '@sanity/visual-editing-helpers/csm'
+import type {ChannelStatus} from '@repo/channels'
+import {isAltKey, isHotkey, type SanityNode} from '@repo/visual-editing-helpers'
+import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
+import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
+import {isHTMLAnchorElement, isHTMLElement, studioTheme, ThemeProvider} from '@sanity/ui'
 import {
   type FunctionComponent,
   useCallback,
@@ -24,16 +12,12 @@ import {
   useRef,
   useState,
 } from 'react'
-import { styled } from 'styled-components'
+import {styled} from 'styled-components'
 
-import type {
-  HistoryAdapter,
-  OverlayEventHandler,
-  VisualEditingChannel,
-} from '../types'
-import { ElementOverlay } from './ElementOverlay'
-import { overlayStateReducer } from './overlayStateReducer'
-import { useController } from './useController'
+import type {HistoryAdapter, OverlayEventHandler, VisualEditingChannel} from '../types'
+import {ElementOverlay} from './ElementOverlay'
+import {overlayStateReducer} from './overlayStateReducer'
+import {useController} from './useController'
 
 const Root = styled.div<{
   $zIndex?: string | number
@@ -45,7 +29,7 @@ const Root = styled.div<{
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: ${({ $zIndex }) => $zIndex ?? '9999999'};
+  z-index: ${({$zIndex}) => $zIndex ?? '9999999'};
 `
 
 function raf2(fn: () => void) {
@@ -77,19 +61,16 @@ export const Overlays: FunctionComponent<{
   history?: HistoryAdapter
   zIndex?: string | number
 }> = (props) => {
-  const { channel, history, zIndex } = props
+  const {channel, history, zIndex} = props
 
   const [status, setStatus] = useState<ChannelStatus>()
 
-  const [{ elements, wasMaybeCollapsed, perspective }, dispatch] = useReducer(
-    overlayStateReducer,
-    {
-      elements: [],
-      focusPath: '',
-      wasMaybeCollapsed: false,
-      perspective: 'published',
-    },
-  )
+  const [{elements, wasMaybeCollapsed, perspective}, dispatch] = useReducer(overlayStateReducer, {
+    elements: [],
+    focusPath: '',
+    wasMaybeCollapsed: false,
+    perspective: 'published',
+  })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -97,11 +78,11 @@ export const Overlays: FunctionComponent<{
     const unsubscribeFromStatus = channel.onStatusUpdate(setStatus)
     const unsubscribeFromEvents = channel.subscribe((type, data) => {
       if (type === 'presentation/focus' && data.path?.length) {
-        dispatch({ type, data })
+        dispatch({type, data})
       } else if (type === 'presentation/blur') {
-        dispatch({ type, data })
+        dispatch({type, data})
       } else if (type === 'presentation/perspective') {
-        dispatch({ type, data })
+        dispatch({type, data})
       } else if (type === 'presentation/navigate') {
         history?.update(data)
       } else if (type === 'presentation/toggleOverlay') {
@@ -139,7 +120,7 @@ export const Overlays: FunctionComponent<{
     // necessary document data.
     const nodes = elements
       .map((e) => {
-        const { sanity } = e
+        const {sanity} = e
         if (!('id' in sanity)) return null
         return {
           ...sanity,
@@ -158,16 +139,14 @@ export const Overlays: FunctionComponent<{
       !isEqualSets(nodeIds, lastReported.current.nodeIds) ||
       perspective !== lastReported.current.perspective
     ) {
-      const documentsOnPage: ContentSourceMapDocuments = Array.from(
-        nodeIds,
-      ).map((_id) => {
+      const documentsOnPage: ContentSourceMapDocuments = Array.from(nodeIds).map((_id) => {
         const node = nodes.find((node) => node.id === _id)!
-        const { type, projectId: _projectId, dataset: _dataset } = node
+        const {type, projectId: _projectId, dataset: _dataset} = node
         return _projectId && _dataset
-          ? { _id, _type: type!, _projectId, _dataset }
-          : { _id, _type: type! }
+          ? {_id, _type: type!, _projectId, _dataset}
+          : {_id, _type: type!}
       })
-      lastReported.current = { nodeIds, perspective }
+      lastReported.current = {nodeIds, perspective}
       reportDocuments(documentsOnPage, perspective)
     }
   }, [elements, perspective, reportDocuments])
@@ -175,23 +154,19 @@ export const Overlays: FunctionComponent<{
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
       if (message.type === 'element/click') {
-        const { sanity } = message
+        const {sanity} = message
         channel.send('overlay/focus', sanity)
       } else if (message.type === 'overlay/activate') {
-        channel.send('overlay/toggle', { enabled: true })
+        channel.send('overlay/toggle', {enabled: true})
       } else if (message.type === 'overlay/deactivate') {
-        channel.send('overlay/toggle', { enabled: false })
+        channel.send('overlay/toggle', {enabled: false})
       }
       dispatch(message)
     },
     [channel],
   )
 
-  const controller = useController(
-    rootElement,
-    overlayEventHandler,
-    !!channel.inFrame,
-  )
+  const controller = useController(rootElement, overlayEventHandler, !!channel.inFrame)
 
   useEffect(() => {
     if (overlayEnabled) {
@@ -207,8 +182,7 @@ export const Overlays: FunctionComponent<{
 
       // We only need to modify the default behavior if the target is a link
       const targetsLink = Boolean(
-        isHTMLAnchorElement(target) ||
-          (isHTMLElement(target) && target.closest('a')),
+        isHTMLAnchorElement(target) || (isHTMLElement(target) && target.closest('a')),
       )
 
       if (targetsLink && event.altKey) {
@@ -302,7 +276,7 @@ export const Overlays: FunctionComponent<{
         ref={setRootElement}
         $zIndex={zIndex}
       >
-        {elementsToRender.map(({ id, focused, hovered, rect, sanity }) => {
+        {elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
           return (
             <ElementOverlay
               key={id}
