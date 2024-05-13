@@ -12,6 +12,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.1...presentation-v1.15.2) (2024-05-13)
+
+
+### Bug Fixes
+
+* **presentation:** remove use of startTransition ([#1496](https://github.com/sanity-io/visual-editing/issues/1496)) ([ca53919](https://github.com/sanity-io/visual-editing/commit/ca539194ba3e0453da8598962d876061329a1454))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.10 to 0.6.11
+
 ## [1.15.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.0...presentation-v1.15.1) (2024-05-08)
 
 
