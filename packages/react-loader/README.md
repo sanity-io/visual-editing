@@ -197,13 +197,13 @@ You use `encodeDataAttribute` by giving it a path to the data you want to be lin
 
 ```tsx
 // ./src/app/templates/product.tsx
-import {StudioPathLike} from '@sanity/react-loader'
+import {EncodeDataAttributeCallback} from '@sanity/react-loader'
 
 interface Product {}
 
 interface Props {
   data: Product
-  encodeDataAttribute: (path: StudioPathLike) => string | undefined
+  encodeDataAttribute: EncodeDataAttributeCallback
 }
 export default function ProductTemplate(props: Props) {
   const {data, encodeDataAttribute} = props
