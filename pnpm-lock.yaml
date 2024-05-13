@@ -115,13 +115,13 @@ importers:
         version: 0.6.0(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.5)
       '@astrojs/tailwind':
         specifier: ^5.1.0
-        version: 5.1.0(astro@4.8.2)(tailwindcss@3.4.3)
+        version: 5.1.0(astro@4.8.3)(tailwindcss@3.4.3)
       '@astrojs/vercel':
         specifier: ^7.6.0
-        version: 7.6.0(astro@4.8.2)(react@18.3.1)
+        version: 7.6.0(astro@4.8.3)(react@18.3.1)
       '@sanity/astro':
         specifier: ^3.0.0
-        version: 3.0.0(@sanity/client@6.18.0)(astro@4.8.2)(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(sanity@3.41.1)(styled-components@6.1.11)
+        version: 3.0.0(@sanity/client@6.18.0)(astro@4.8.3)(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(sanity@3.41.1)(styled-components@6.1.11)
       '@sanity/client':
         specifier: ^6.18.0
         version: 6.18.0(debug@3.2.7)
@@ -132,8 +132,8 @@ importers:
         specifier: workspace:^
         version: link:../common
       astro:
-        specifier: ^4.8.2
-        version: 4.8.2(typescript@5.4.5)
+        specifier: ^4.8.3
+        version: 4.8.3(typescript@5.4.5)
       astro-portabletext:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1648,13 +1648,13 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /@astrojs/tailwind@5.1.0(astro@4.8.2)(tailwindcss@3.4.3):
+  /@astrojs/tailwind@5.1.0(astro@4.8.3)(tailwindcss@3.4.3):
     resolution: {integrity: sha512-BJoCDKuWhU9FT2qYg+fr6Nfb3qP4ShtyjXGHKA/4mHN94z7BGcmauQK23iy+YH5qWvTnhqkd6mQPQ1yTZTe9Ig==}
     peerDependencies:
       astro: ^3.0.0 || ^4.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 4.8.2(typescript@5.4.5)
+      astro: 4.8.3(typescript@5.4.5)
       autoprefixer: 10.4.19(postcss@8.4.38)
       postcss: 8.4.38
       postcss-load-config: 4.0.2(postcss@8.4.38)
@@ -1678,7 +1678,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vercel@7.6.0(astro@4.8.2)(react@18.3.1):
+  /@astrojs/vercel@7.6.0(astro@4.8.3)(react@18.3.1):
     resolution: {integrity: sha512-LLOpXWYwTlYgZJCC+ulCpSUnUzOzLrlna2T0WCkhkH1UeavBY5NI0Agpq3rcQd012I7Vr2io+ZKUgKGW+EFvhg==}
     peerDependencies:
       astro: ^4.2.0
@@ -1687,7 +1687,7 @@ packages:
       '@vercel/analytics': 1.2.2(react@18.3.1)
       '@vercel/edge': 1.1.1
       '@vercel/nft': 0.26.5
-      astro: 4.8.2(typescript@5.4.5)
+      astro: 4.8.3(typescript@5.4.5)
       esbuild: 0.21.2
       fast-glob: 3.3.2
       set-cookie-parser: 2.6.0
@@ -6188,7 +6188,7 @@ packages:
       - react-is
     dev: false
 
-  /@sanity/astro@3.0.0(@sanity/client@6.18.0)(astro@4.8.2)(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(sanity@3.41.1)(styled-components@6.1.11):
+  /@sanity/astro@3.0.0(@sanity/client@6.18.0)(astro@4.8.3)(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(sanity@3.41.1)(styled-components@6.1.11):
     resolution: {integrity: sha512-34k5wv15lExqtWed6lHFSrqZqNdwkwvHXJTifKy9MNSxa7dP6WPHYQm+gmBnZOGiE5a6x/6I4+lO5iroYPFbog==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     peerDependencies:
@@ -6200,7 +6200,7 @@ packages:
     dependencies:
       '@sanity/client': 6.18.0
       '@sanity/ui': 1.9.3(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11)
-      astro: 4.8.2(typescript@5.4.5)
+      astro: 4.8.3(typescript@5.4.5)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       sanity: 3.41.1(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.11)
@@ -9259,8 +9259,8 @@ packages:
       '@portabletext/types': 2.0.13
     dev: false
 
-  /astro@4.8.2(typescript@5.4.5):
-    resolution: {integrity: sha512-WBrnNePQ03cF5c+9sjD3TeyJodWMuPCwygDOUo7r+7LbKDN9TJK+KxIxo01AOX4HcexhxcLiTVVCBLSsi+OX9A==}
+  /astro@4.8.3(typescript@5.4.5):
+    resolution: {integrity: sha512-pgIKopkmAUXY3EJHdG7zQpudtBzYAsd94A1R7jmLpH2LFZvzHEkAdHnunmSVmgikJCNqtEo3bUCHgLnCPQaN1g==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     dependencies:
