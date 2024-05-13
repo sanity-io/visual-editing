@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.8.19](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.18...visual-editing-v1.8.19) (2024-05-13)
+
+
+### Bug Fixes
+
+* improve createDataAttribute types ([#1458](https://github.com/sanity-io/visual-editing/issues/1458)) ([e51189f](https://github.com/sanity-io/visual-editing/commit/e51189fa301e97bcd892d73df5070c153146e867))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.10 to 0.6.11
+
 ## [1.8.18](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.17...visual-editing-v1.8.18) (2024-05-05)
 
 

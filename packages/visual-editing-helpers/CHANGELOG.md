@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.11](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.10...visual-editing-helpers-v0.6.11) (2024-05-13)
+
+
+### Bug Fixes
+
+* improve createDataAttribute types ([#1458](https://github.com/sanity-io/visual-editing/issues/1458)) ([e51189f](https://github.com/sanity-io/visual-editing/commit/e51189fa301e97bcd892d73df5070c153146e867))
+
 ## [0.6.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.9...visual-editing-helpers-v0.6.10) (2024-05-05)
 
 
