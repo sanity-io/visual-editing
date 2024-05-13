@@ -15,7 +15,6 @@ import {BoundaryElementProvider, Flex} from '@sanity/ui'
 import {
   lazy,
   type ReactElement,
-  startTransition,
   Suspense,
   useCallback,
   useEffect,
@@ -342,30 +341,28 @@ export default function PresentationTool(props: {
   useEffect(() => {
     const interval = setInterval(
       () =>
-        startTransition(() =>
-          setLiveQueries((liveQueries) => {
-            if (Object.keys(liveQueries).length < 1) {
-              return liveQueries
-            }
+        setLiveQueries((liveQueries) => {
+          if (Object.keys(liveQueries).length < 1) {
+            return liveQueries
+          }
 
-            const now = Date.now()
-            const hasAnyExpired = Object.values(liveQueries).some(
-              (liveQuery) =>
-                liveQuery.heartbeat !== false && now > liveQuery.receivedAt + liveQuery.heartbeat,
-            )
-            if (!hasAnyExpired) {
-              return liveQueries
+          const now = Date.now()
+          const hasAnyExpired = Object.values(liveQueries).some(
+            (liveQuery) =>
+              liveQuery.heartbeat !== false && now > liveQuery.receivedAt + liveQuery.heartbeat,
+          )
+          if (!hasAnyExpired) {
+            return liveQueries
+          }
+          const next = {} as LiveQueriesState
+          for (const [key, value] of Object.entries(liveQueries)) {
+            if (value.heartbeat !== false && now > value.receivedAt + value.heartbeat) {
+              continue
             }
-            const next = {} as LiveQueriesState
-            for (const [key, value] of Object.entries(liveQueries)) {
-              if (value.heartbeat !== false && now > value.receivedAt + value.heartbeat) {
-                continue
-              }
-              next[key] = value
-            }
-            return next
-          }),
-        ),
+            next[key] = value
+          }
+          return next
+        }),
       MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
     )
     return () => clearInterval(interval)
