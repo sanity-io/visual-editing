@@ -11,7 +11,9 @@ import {
   useRef,
   useState,
 } from 'react'
-import {useActiveWorkspace} from 'sanity'
+import {useActiveWorkspace, useTranslation} from 'sanity'
+
+import {presentationLocaleNamespace} from '../i18n'
 
 export const PreviewLocationInput: FunctionComponent<{
   fontSize?: number
@@ -22,8 +24,11 @@ export const PreviewLocationInput: FunctionComponent<{
   suffix?: ReactNode
   value: string
 }> = function (props) {
-  const {basePath = '/'} = useActiveWorkspace()?.activeWorkspace || {}
   const {fontSize = 1, onChange, origin, padding = 3, prefix, suffix, value} = props
+
+  const {t} = useTranslation(presentationLocaleNamespace)
+  const {basePath = '/'} = useActiveWorkspace()?.activeWorkspace || {}
+
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [sessionValue, setSessionValue] = useState<string | undefined>(undefined)
   const [customValidity, setCustomValidity] = useState<string | undefined>(undefined)
@@ -45,12 +50,14 @@ export const PreviewLocationInput: FunctionComponent<{
             : sessionValue
 
         if (!absoluteValue.startsWith(origin + '/') && absoluteValue !== origin) {
-          setCustomValidity(`URL must start with ${origin}`)
+          setCustomValidity(t('preview-location-input.error', {origin, context: 'missing-origin'}))
           return
         }
         // `origin` is an empty string '' if the Studio is embedded, and that's when we need to protect against recursion
         if (!origin && (absoluteValue.startsWith(`${basePath}/`) || absoluteValue === basePath)) {
-          setCustomValidity(`URL can't have the same base path as the Studio ${basePath}`)
+          setCustomValidity(
+            t('preview-location-input.error', {basePath, context: 'same-base-path'}),
+          )
           return
         }
 
@@ -69,7 +76,7 @@ export const PreviewLocationInput: FunctionComponent<{
         setSessionValue(undefined)
       }
     },
-    [basePath, onChange, origin, sessionValue],
+    [basePath, onChange, origin, sessionValue, t],
   )
 
   const handleBlur = useCallback(() => {

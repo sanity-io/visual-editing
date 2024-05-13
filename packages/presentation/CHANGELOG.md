@@ -12,6 +12,41 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.0...presentation-v1.15.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* regression causing a crash in embedded studios ([#1482](https://github.com/sanity-io/visual-editing/issues/1482)) ([6e7fc04](https://github.com/sanity-io/visual-editing/commit/6e7fc043c0052a1306343551501047d1545f203e))
+
+## [1.15.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.14.0...presentation-v1.15.0) (2024-05-07)
+
+
+### Features
+
+* open last published document when published perspective ([#1463](https://github.com/sanity-io/visual-editing/issues/1463)) ([5fea985](https://github.com/sanity-io/visual-editing/commit/5fea985f5de833350495752d92960eade01642de))
+
+## [1.14.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.13.0...presentation-v1.14.0) (2024-05-05)
+
+
+### Features
+
+* **presentation:** support i18n and add default locale resources ([#1451](https://github.com/sanity-io/visual-editing/issues/1451)) ([d6ba3e4](https://github.com/sanity-io/visual-editing/commit/d6ba3e4ebcc0aa72012db76a564eda3c46e5dcb3))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.17.2 ([#1449](https://github.com/sanity-io/visual-editing/issues/1449)) ([928b45c](https://github.com/sanity-io/visual-editing/commit/928b45c47c66c5e1ddbe8b00783efd399b9fa17a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.11 to ^1.6.12
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.9 to 0.6.10
+
 ## [1.13.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.12.10...presentation-v1.13.0) (2024-04-29)
 
 

@@ -14,25 +14,14 @@ import {
   useContext,
   useState,
 } from 'react'
-import type {ObjectSchemaType} from 'sanity'
+import {type ObjectSchemaType, useTranslation} from 'sanity'
 import {useIntentLink} from 'sanity/router'
 
 import {DEFAULT_TOOL_NAME, DEFAULT_TOOL_TITLE} from '../constants'
+import {presentationLocaleNamespace} from '../i18n'
 import {PresentationContext} from '../PresentationContext'
 import type {DocumentLocation, DocumentLocationsState, PresentationPluginOptions} from '../types'
 import {useCurrentPresentationToolName} from './useCurrentPresentationToolName'
-
-const LENGTH_FORMAT: Record<number, string> = {
-  1: 'one',
-  2: 'two',
-  3: 'three',
-  4: 'four',
-  5: 'five',
-  6: 'six',
-  7: 'seven',
-  8: 'eight',
-  9: 'nine',
-}
 
 const TONE_ICONS: Record<'positive' | 'caution' | 'critical', ComponentType> = {
   positive: InfoOutlineIcon,
@@ -52,6 +41,7 @@ export function LocationsBanner(props: {
   const {locations, message, tone} = props.state
   const len = locations?.length || 0
 
+  const {t} = useTranslation(presentationLocaleNamespace)
   const presentation = useContext(PresentationContext)
   const [expanded, setExpanded] = useState(false)
   const toggle = useCallback(() => {
@@ -60,11 +50,8 @@ export function LocationsBanner(props: {
   }, [len])
 
   const title = isResolving
-    ? 'Resolving locations...'
-    : message ||
-      (len
-        ? `Used on ${LENGTH_FORMAT[len] || len} page${len === 1 ? '' : 's'}`
-        : 'Not used on any pages')
+    ? t('locations-banner.resolving.text')
+    : message || t('locations-banner.locations-count', {count: len})
 
   return (
     <Card padding={1} radius={2} border tone={tone}>

@@ -115,6 +115,7 @@ const presentationWorkspaces = Object.entries({
   },
   'page-builder-demo':
     process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
+  'astro': process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL || 'http://localhost:3006/shoes',
 } as const).map(([name, previewUrl]) => {
   const {
     projectId,

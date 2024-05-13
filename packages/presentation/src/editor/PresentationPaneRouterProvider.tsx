@@ -30,6 +30,7 @@ function resolveQueryStringFromParams(nextParams: Record<string, string | undefi
     'rev',
     'since',
     'template',
+    'prefersLatestPublished',
     'view',
   ] satisfies Array<keyof PresentationParams> as string[]
 
@@ -70,8 +71,17 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
   props: ReferenceChildLinkProps & {previewUrl?: string},
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {documentId, documentType, parentRefPath, template, previewUrl, ...restProps} = props
+  const {
+    documentId,
+    documentType,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    parentRefPath,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    template,
+    previewUrl,
+    ...restProps
+  } = props
+  const {params} = usePresentationTool()
 
   return (
     <StateLink
@@ -80,7 +90,10 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
       state={{
         id: documentId,
         type: documentType,
-        _searchParams: Object.entries({preview: previewUrl}),
+        _searchParams: Object.entries({
+          preview: previewUrl,
+          prefersLatestPublished: params.perspective === 'published' ? 'true' : undefined,
+        }),
       }}
       title={undefined}
     />
@@ -126,6 +139,7 @@ export function PresentationPaneRouterProvider(
       ChildLink: (childLinkProps) => {
         const {childId, ...restProps} = childLinkProps
         const ref = refs?.find((r) => r._id === childId || getPublishedId(r._id) === childId)
+        const {params} = usePresentationTool()
 
         if (ref) {
           return (
@@ -134,7 +148,10 @@ export function PresentationPaneRouterProvider(
               state={{
                 id: childId,
                 type: ref._type,
-                _searchParams: Object.entries({preview: previewUrl}),
+                _searchParams: Object.entries({
+                  preview: previewUrl,
+                  prefersLatestPublished: params.perspective === 'published' ? 'true' : undefined,
+                }),
               }}
             />
           )

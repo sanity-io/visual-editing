@@ -289,44 +289,73 @@ export type PreviewKitMsg = {
 export type VisualEditingConnectionIds = 'presentation' | 'loaders' | 'overlays' | 'preview-kit'
 
 /**
+ * Helper
+ * @internal
+ */
+export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]}
+
+/**
+ * The metadata that can be embedded in a data attribute.
+ * All values are marked optional in the base type as they can be provided incrementally using the `createDataAttribute` function.
  * @public
  */
 export interface CreateDataAttributeProps {
+  /** The studio base URL, optional */
   baseUrl?: string
+  /** The dataset, optional */
   dataset?: string
+  /** The document ID, required */
   id?: string
+  /** The field path, required */
   path?: StudioPathLike
+  /** The project ID, optional */
   projectId?: string
+  /** The studio tool name, optional */
   tool?: string
+  /** The document type, required */
   type?: string
+  /** The studio workspace, optional */
   workspace?: string
 }
 
 /**
  * @public
  */
-export type CreateDataAttribute = {
+export type CreateDataAttribute<T extends CreateDataAttributeProps> = (T extends WithRequired<
+  CreateDataAttributeProps,
+  'id' | 'type' | 'path'
+>
+  ? {
+      /**
+       * Returns a string representation of the data attribute
+       * @param path - An optional path to concatenate with any existing path
+       * @public
+       */
+      (path?: StudioPathLike): string
+      /**
+       * Returns a string representation of the data attribute
+       * @public
+       */
+      toString(): string
+    }
+  : T extends WithRequired<CreateDataAttributeProps, 'id' | 'type'>
+    ? /**
+       * Returns a string representation of the data attribute
+       * @param path - An optional path to concatenate with any existing path
+       * @public
+       */
+      (path: StudioPathLike) => string
+    : object) & {
   /**
-   * @public
-   * Returns a string representation of the data attribute
-   * @param path - An optional path to concatenate with any existing path
-   */
-  (path?: StudioPathLike): string
-  /**
-   * @public
-   * Concatenate the data attribute current path with a new path
+   * Concatenate the current path with a new path
    * @param path - A path to concatenate with any existing path
-   */
-  scope(path: StudioPathLike): CreateDataAttribute
-  /**
    * @public
-   * Combines the current data attribute props with additional props
+   */
+  scope(path: StudioPathLike): CreateDataAttribute<T & {path: StudioPathLike}>
+  /**
+   * Combines the current props with additional props
    * @param props - New props to merge with any existing props
-   */
-  combine(props: CreateDataAttributeProps): CreateDataAttribute
-  /**
    * @public
-   * Returns a string representation of the data attribute
    */
-  toString(): string
+  combine: <U extends CreateDataAttributeProps>(props: U) => CreateDataAttribute<T & U>
 }

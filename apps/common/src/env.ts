@@ -48,6 +48,12 @@ export const studioUrl = maybeGitBranchStudioUrl(
 export const apiVersion = '2023-10-11'
 
 export const workspaces = {
+  'astro': {
+    projectId: projectId,
+    dataset: datasets.development,
+    workspace: 'astro',
+    tool: 'presentation',
+  },
   'remix': {
     projectId: projectId,
     dataset: datasets.development,

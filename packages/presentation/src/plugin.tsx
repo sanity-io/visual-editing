@@ -7,6 +7,7 @@ import {PresentationDocumentHeader} from './document/PresentationDocumentHeader'
 import {PresentationDocumentProvider} from './document/PresentationDocumentProvider'
 import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
+import {presentationUsEnglishLocaleBundle} from './i18n'
 import {router} from './router'
 import type {
   DocumentLocationResolverObject,
@@ -66,7 +67,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
           )}
           {props.renderDefault(props)}
           <Suspense key="broadcast-displayed-document">
-            <BroadcastDisplayedDocument value={value} />
+            <BroadcastDisplayedDocument key={documentId} value={value} />
           </Suspense>
         </PresentationDocumentProvider>
       )
@@ -102,6 +103,9 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
   }
 
   return {
+    i18n: {
+      bundles: [presentationUsEnglishLocaleBundle],
+    },
     document: {
       unstable_fieldActions: (prev) => {
         return [
