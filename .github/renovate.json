@@ -4,6 +4,11 @@
   "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"],
   "packageRules": [
     {
+      "description": "Enable automerge with GitHub merge queues (note that this doesn't bypass required checks and code reviews)",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
       "group": {"semanticCommitType": "chore"},
       "matchDepTypes": [
         "dependencies",
