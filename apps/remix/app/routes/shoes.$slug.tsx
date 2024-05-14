@@ -79,7 +79,7 @@ export default function ShoePage() {
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
-              {loadingShoe ? 'Loading' : <span>{product?.title}</span> || 'Untitled'}
+              {loadingShoe ? 'Loading' : product?.title || 'Untitled'}
             </Link>
           </li>
         </ol>
