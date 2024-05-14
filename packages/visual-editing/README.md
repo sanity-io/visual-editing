@@ -140,15 +140,7 @@ For Remix apps you should use `VisualEditing` from `@sanity/visual-editing/remix
 
 ```tsx
 import {json} from '@remix-run/node'
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from '@remix-run/react'
+import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
 import {VisualEditing} from '@sanity/visual-editing/remix'
 
 export const loader = () => {
@@ -181,7 +173,6 @@ export default function App() {
         )}
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   )

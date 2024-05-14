@@ -1,13 +1,5 @@
 import {json, type LinksFunction} from '@vercel/remix'
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from '@remix-run/react'
+import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
 import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
 
 import styles from '~/tailwind.css?url'
@@ -44,7 +36,6 @@ export default function App() {
         </Suspense>
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
         <span className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100">
           {data.vercelEnv}
           {', '}
