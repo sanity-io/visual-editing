@@ -53,4 +53,42 @@ export {
  * but now it resolves to:
  * import {DocumentListPane} from 'sanity/src/structure/panes/documentList/PaneContainer.tsx'
  * ref: https://github.com/sanity-io/sanity/commit/b8f9987666c441d7ab307f004eece33344770a71#diff-90bd90c70a2b60fb25bddbe5b2663b20a5e081a01d19bbaecec9b10851c7fe02
+ *
+ *
+ * old DocumentListPane used to rely on
+ * useSource()
+ * useStructureToolSetting()
+ * and wrap
+ * <SourceProvider name={sourceName || parentSourceName}>
+ * <Pane
+        currentMaxWidth={350}
+        data-ui="DocumentListPane"
+        id={paneKey}
+        maxWidth={640}
+        minWidth={320}
+        selected={isSelected}
+      >
+ * https://github.com/sanity-io/sanity/commit/b8f9987666c441d7ab307f004eece33344770a71#diff-71a2d7c047c474382fa70a7d481f226708d6355b9cb7bc1f2c8a6adea372d051
+ *
+ * PaneContainer
+ * SourceProvider,
+ * useI18nText,
+ * useSource,
+ *  <SourceProvider name={sourceName || parentSourceName}>
+ * <Pane
+        data-ui="DocumentListPane"
+        id={paneKey}
+        minWidth={320}
+        {...(isSheetListLayout ? {} : {currentMaxWidth: 350, maxWidth: 640})}
+        selected={isSelected}
+      >
+      <PaneHeader
+          index={index}
+          initialValueTemplates={initialValueTemplates}
+          menuItemGroups={menuItemGroups}
+          menuItems={menuItemsWithSelectedState}
+          setLayout={setLayout}
+          setSortOrder={setSortOrder}
+          title={title}
+        />
  */
