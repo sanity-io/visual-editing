@@ -35,3 +35,22 @@ export {
   StructureToolProvider,
   useDocumentPane,
 } from 'sanity/structure'
+
+/**
+ * Changed
+ * DocumentListPane
+ * New
+ * DocumentSheetListPane
+ * PaneContainer
+ * Moved
+ * DocumentListPaneHeader => PaneHeader
+ *
+ *
+ * under the hood, this import changed:
+ * import {DocumentListPane} from 'sanity/structure'
+ * it used to resolve to:
+ * import {DocumentListPane} from 'sanity/src/structure/panes/documentList/DocumentListPane.tsx'
+ * but now it resolves to:
+ * import {DocumentListPane} from 'sanity/src/structure/panes/documentList/PaneContainer.tsx'
+ * ref: https://github.com/sanity-io/sanity/commit/b8f9987666c441d7ab307f004eece33344770a71#diff-90bd90c70a2b60fb25bddbe5b2663b20a5e081a01d19bbaecec9b10851c7fe02
+ */
