@@ -5,7 +5,9 @@ import type {
 } from '@sanity/preview-url-secret/define-preview-url'
 import type {ComponentType} from 'react'
 import type {Observable} from 'rxjs'
-import type {DocumentStore, SanityClient} from 'sanity'
+import type {SanityClient} from 'sanity'
+
+import type {DocumentStore} from './internals'
 
 export type {PreviewUrlResolver, PreviewUrlResolverOptions}
 

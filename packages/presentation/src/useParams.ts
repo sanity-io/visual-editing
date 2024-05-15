@@ -1,7 +1,7 @@
 import {type MutableRefObject, useCallback, useEffect, useMemo, useRef} from 'react'
-import {getPublishedId} from 'sanity'
 import type {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
 
+import {getPublishedId} from './internals'
 import {parseRouterState} from './lib/parse'
 import type {
   FrameState,

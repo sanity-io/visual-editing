@@ -1,7 +1,7 @@
 import {memo, useEffect} from 'react'
 import type {SanityDocument} from 'sanity'
-import {useDocumentPane} from 'sanity/structure'
 
+import {useDocumentPane} from '../internals'
 import type {PresentationParams} from '../types'
 import {usePresentationParams} from '../usePresentationParams'
 import {

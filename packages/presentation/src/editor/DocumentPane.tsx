@@ -1,16 +1,16 @@
 import {Card, Code, ErrorBoundary, Label, Stack} from '@sanity/ui'
 import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
 import {type Path, useTranslation} from 'sanity'
-import {decodeJsonParams} from 'sanity/router'
-import {
-  DocumentPane as StructureDocumentPane,
-  type DocumentPaneNode,
-  PaneLayout,
-} from 'sanity/structure'
 import {styled} from 'styled-components'
 
 import {ErrorCard} from '../components/ErrorCard'
 import {presentationLocaleNamespace} from '../i18n'
+import {
+  decodeJsonParams,
+  DocumentPane as StructureDocumentPane,
+  type DocumentPaneNode,
+  PaneLayout,
+} from '../internals'
 import type {StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'

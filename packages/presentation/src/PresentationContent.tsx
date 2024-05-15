@@ -5,9 +5,9 @@ import {
   type SetStateAction,
 } from 'react'
 import type {Path, SanityDocument} from 'sanity'
-import {type CommentIntentGetter, CommentsIntentProvider} from 'sanity/structure'
 
 import {ContentEditor} from './editor/ContentEditor'
+import {type CommentIntentGetter, CommentsIntentProvider} from './internals'
 import {DisplayedDocumentBroadcasterProvider} from './loader/DisplayedDocumentBroadcaster'
 import {Panel} from './panels/Panel'
 import {PanelResizer} from './panels/PanelResizer'

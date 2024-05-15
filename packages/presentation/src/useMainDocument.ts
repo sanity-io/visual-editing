@@ -1,10 +1,11 @@
 import type {ResponseQueryOptions} from '@sanity/client'
 import {match, type Path} from 'path-to-regexp'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import {useClient, useDocumentStore} from 'sanity'
+import {useClient} from 'sanity'
 import {useRouter} from 'sanity/router'
 
 import {API_VERSION} from './constants'
+import {useDocumentStore} from './internals'
 import type {
   DocumentResolver,
   DocumentResolverContext,
