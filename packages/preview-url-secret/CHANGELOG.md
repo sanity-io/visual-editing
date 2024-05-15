@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.6.13](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.12...preview-url-secret-v1.6.13) (2024-05-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.18.2 ([#1519](https://github.com/sanity-io/visual-editing/issues/1519)) ([78c387e](https://github.com/sanity-io/visual-editing/commit/78c387eba9c29c9a6f6e7d6b392a04a9cd5724ab))
+
 ## [1.6.12](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.11...preview-url-secret-v1.6.12) (2024-05-05)
 
 
