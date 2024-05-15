@@ -15,10 +15,9 @@ export default defineConfig({
       dataset,
       useCdn: true,
       apiVersion,
-      studioUrl: ({_dataset}) =>
-        _dataset === workspaces['cross-dataset-references'].dataset
-          ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
-          : studioUrl,
+      stega: {
+        studioUrl,
+      },
     }),
     tailwind(),
   ],

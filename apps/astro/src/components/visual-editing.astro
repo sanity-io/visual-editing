@@ -1,0 +1,50 @@
+---
+const visualEditingEnabled = import.meta.env.SANITY_VISUAL_EDITING_ENABLED
+---
+
+<sanity-astro-visual-editing enabled={visualEditingEnabled}></sanity-astro-visual-editing>
+
+<script>
+  import {enableVisualEditing} from '@sanity/visual-editing'
+
+  class SanityAstroVisualEditing extends HTMLElement {
+    static observedAttributes = ['enabled']
+    private unsubscribe: (() => void) | null = null
+
+    constructor() {
+      super()
+    }
+
+    disconnectedCallback() {
+      this.teardownVisualEditing()
+    }
+
+    attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+      if (name === 'enabled' && oldValue !== newValue) {
+        this.updateVisualEditing(newValue === 'true')
+      }
+    }
+
+    private updateVisualEditing(enabled: boolean) {
+      if (enabled) {
+        this.unsubscribe = enableVisualEditing({
+          refresh: () => {
+            return new Promise((resolve) => {
+              window.location.reload()
+              resolve()
+            })
+          },
+        })
+      } else {
+        this.teardownVisualEditing()
+      }
+    }
+
+    private teardownVisualEditing() {
+      this.unsubscribe?.()
+      this.unsubscribe = null
+    }
+  }
+
+  customElements.define('sanity-astro-visual-editing', SanityAstroVisualEditing)
+</script>
