@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.21](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.20...visual-editing-v1.8.21) (2024-05-15)
+
+
+### Bug Fixes
+
+* improve lazy loading of `enableVisualEditing` ([#1528](https://github.com/sanity-io/visual-editing/issues/1528)) ([2f83a85](https://github.com/sanity-io/visual-editing/commit/2f83a85dbca0fb63f918c544f6c35d67840aaae6))
+
 ## [1.8.20](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.19...visual-editing-v1.8.20) (2024-05-15)
 
 
