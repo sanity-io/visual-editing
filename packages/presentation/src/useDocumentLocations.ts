@@ -1,7 +1,8 @@
 import {useEffect, useMemo, useState} from 'react'
 import {isObservable, map, type Observable, of} from 'rxjs'
-import {type SanityDocument, useDocumentStore} from 'sanity'
+import {type SanityDocument} from 'sanity'
 
+import {useDocumentStore} from './internals'
 import type {
   DocumentLocationResolver,
   DocumentLocationResolvers,

@@ -1,10 +1,11 @@
 import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
 import {startTransition, useEffect, useMemo, useRef, useState} from 'react'
-import {type SanityClient, useActiveWorkspace, useClient, useCurrentUser} from 'sanity'
+import {type SanityClient, useClient, useCurrentUser} from 'sanity'
 import {suspend} from 'suspend-react'
 
 import {API_VERSION} from './constants'
+import {useActiveWorkspace} from './internals'
 import type {PreviewUrlOption} from './types'
 
 export function usePreviewUrl(

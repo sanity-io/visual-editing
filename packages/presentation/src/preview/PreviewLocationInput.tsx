@@ -11,9 +11,10 @@ import {
   useRef,
   useState,
 } from 'react'
-import {useActiveWorkspace, useTranslation} from 'sanity'
+import {useTranslation} from 'sanity'
 
 import {presentationLocaleNamespace} from '../i18n'
+import {useActiveWorkspace} from '../internals'
 
 export const PreviewLocationInput: FunctionComponent<{
   fontSize?: number

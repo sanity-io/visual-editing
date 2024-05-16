@@ -1,7 +1,9 @@
 import type {ChannelsController, ChannelStatus} from '@repo/channels'
 import type {PresentationMsg, VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
 import {memo, startTransition, useEffect, useMemo, useState} from 'react'
-import {getPublishedId, type SanityDocument, useEditState} from 'sanity'
+import {type SanityDocument} from 'sanity'
+
+import {getPublishedId, useEditState} from '../internals'
 
 export interface PostMessageRefreshMutationsProps {
   id: string

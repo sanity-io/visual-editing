@@ -1,7 +1,7 @@
 import {uuid} from '@sanity/uuid'
-import {getPublishedId} from 'sanity'
-import {encodeJsonParams, type SearchParam} from 'sanity/router'
+import {type SearchParam} from 'sanity/router'
 
+import {encodeJsonParams, getPublishedId} from './internals'
 import type {PresentationStateParams} from './types'
 
 /**

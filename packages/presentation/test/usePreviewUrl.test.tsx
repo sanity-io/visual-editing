@@ -9,13 +9,17 @@ import {beforeEach, describe, expect, test, vi} from 'vitest'
 import type {PreviewUrlOption} from '../src/types'
 import {usePreviewUrl} from '../src/usePreviewUrl'
 
-vi.mock('sanity', () => {
+vi.mock('sanity', async () => {
+  const sanity = await vi.importActual('sanity')
   return {
+    ...sanity,
     useActiveWorkspace: () => null,
     useClient: () => null,
     useCurrentUser: () => null,
   }
 })
+vi.mock('sanity/router')
+vi.mock('sanity/structure')
 vi.mock('suspend-react')
 
 beforeEach(() => {

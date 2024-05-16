@@ -1,10 +1,11 @@
 import {WarningOutlineIcon} from '@sanity/icons'
 import {Badge, Box, Card, Flex, Text} from '@sanity/ui'
 import {type HTMLProps, type ReactElement, useCallback} from 'react'
-import {type Path, Preview, Translate, useSchema, useTranslation} from 'sanity'
+import {type Path, Translate, useSchema, useTranslation} from 'sanity'
 import {StateLink} from 'sanity/router'
 
 import {presentationLocaleNamespace} from '../i18n'
+import {Preview} from '../internals'
 import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
 import {DocumentListPane} from './DocumentListPane'
 import {DocumentPanel} from './DocumentPanel'

@@ -23,10 +23,8 @@ import {
   useRef,
   useState,
 } from 'react'
-import {useUnique, useWorkspace} from 'sanity'
 import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} from 'sanity'
 import {type RouterContextValue, useRouter} from 'sanity/router'
-import {type CommentIntentGetter} from 'sanity/structure'
 import {styled} from 'styled-components'
 
 import {
@@ -35,6 +33,7 @@ import {
   EDIT_INTENT_MODE,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from './constants'
+import {type CommentIntentGetter, useUnique, useWorkspace} from './internals'
 import {debounce} from './lib/debounce'
 import {Panel} from './panels/Panel'
 import {Panels} from './panels/Panels'

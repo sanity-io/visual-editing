@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
 
 import {forwardRef, type PropsWithChildren, type ReactElement, useCallback, useMemo} from 'react'
-import {getPublishedId, useUnique} from 'sanity'
 import {StateLink, useRouter} from 'sanity/router'
+
 import {
   type BackLinkProps,
+  getPublishedId,
   PaneRouterContext,
   type PaneRouterContextValue,
   type ReferenceChildLinkProps,
-} from 'sanity/structure'
-
+  useUnique,
+} from '../internals'
 import type {PresentationParams, StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 

@@ -1,6 +1,6 @@
 import type {SanityDocument} from '@sanity/client'
 import {lazy, Suspense} from 'react'
-import {definePlugin, getPublishedId, type InputProps, isDocumentSchemaType} from 'sanity'
+import {definePlugin, type InputProps, isDocumentSchemaType} from 'sanity'
 
 import {DEFAULT_TOOL_ICON, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
 import {PresentationDocumentHeader} from './document/PresentationDocumentHeader'
@@ -8,6 +8,7 @@ import {PresentationDocumentProvider} from './document/PresentationDocumentProvi
 import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
 import {presentationUsEnglishLocaleBundle} from './i18n'
+import {getPublishedId} from './internals'
 import {router} from './router'
 import type {
   DocumentLocationResolverObject,
