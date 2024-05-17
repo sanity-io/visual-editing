@@ -1,10 +1,11 @@
 ---
-import VisualEditing from '../components/visual-editing.astro'
+import {VisualEditing} from '@sanity/visual-editing/astro'
 
 export type props = {
   title: string
 }
 const {title} = Astro.props
+const visualEditingEnabled = import.meta.env.SANITY_VISUAL_EDITING_ENABLED == 'true'
 ---
 
 <html lang="en">
@@ -17,6 +18,7 @@ const {title} = Astro.props
   </head>
   <body>
     <slot />
-    <VisualEditing />
+    <VisualEditing enabled={visualEditingEnabled} zIndex={1000} />
+    <!--                                          ^optional -->
   </body>
 </html>

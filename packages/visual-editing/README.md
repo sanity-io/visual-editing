@@ -22,6 +22,7 @@ npm install @sanity/visual-editing
     - [Pages Router](#pages-router)
   - [Remix](#remix)
   - [React.js](#reactjs)
+  - [Astro](#astro)
 - [Refresh API](#refresh-api)
   - [Plain JS](#plain-js-1)
     - [`source: 'manual'`](#source-manual)
@@ -198,6 +199,37 @@ export default function VisualEditing() {
 
   return null
 }
+```
+
+### Astro
+
+For [Astro][astro] apps, you should use `VisualEditing` from `@sanity/visual-editing/astro` in your ["page shell" layout](https://docs.astro.build/en/basics/layouts/):
+
+```ts
+---
+import {VisualEditing} from '@sanity/visual-editing/astro'
+
+export type props = {
+  title: string
+}
+const {title} = Astro.props
+const visualEditingEnabled = import.meta.env.SANITY_VISUAL_EDITING_ENABLED == 'true'
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <VisualEditing enabled={visualEditingEnabled} zIndex={1000} />
+    <!--                                          ^optional -->
+  </body>
+</html>
 ```
 
 ## Refresh API
@@ -445,6 +477,7 @@ enableVisualEditing({
 })
 ```
 
+[astro]: https://astro.build/
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/visual-editing?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/visual-editing?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/visual-editing
