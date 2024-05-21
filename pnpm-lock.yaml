@@ -23,7 +23,7 @@ overrides:
   '@sanity/vision': 3.42.1
   '@sanity/visual-editing': workspace:*
   create-sanity: 3.42.1
-  framer-motion: 11.2.3
+  framer-motion: 11.0.8
   groq: 3.42.1
   sanity: 3.42.1
   styled-components: 6.1.11
@@ -82,8 +82,8 @@ importers:
         specifier: 1.0.2
         version: 1.0.2(prettier@3.2.5)
       framer-motion:
-        specifier: 11.2.3
-        version: 11.2.3(react-dom@18.3.1)(react@18.3.1)
+        specifier: 11.0.8
+        version: 11.0.8(react-dom@18.3.1)(react@18.3.1)
       husky:
         specifier: ^9.0.11
         version: 9.0.11
@@ -1092,8 +1092,8 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
       framer-motion:
-        specifier: 11.2.3
-        version: 11.2.3(react-dom@18.3.1)(react@18.3.1)
+        specifier: 11.0.8
+        version: 11.0.8(react-dom@18.3.1)(react@18.3.1)
       lodash.isequal:
         specifier: ^4.5.0
         version: 4.5.0
@@ -3167,10 +3167,22 @@ packages:
   /@emotion/hash@0.9.1:
     resolution: {integrity: sha512-gJB6HLm5rYwSLI6PQa+X1t5CFGrv1J1TWG+sOyMCeKz2ojaj6Fnl/rZEspogG+cvqbt4AE/2eIyD2QfLKTBNlQ==}
 
+  /@emotion/is-prop-valid@0.8.8:
+    resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
+    requiresBuild: true
+    dependencies:
+      '@emotion/memoize': 0.7.4
+    optional: true
+
   /@emotion/is-prop-valid@1.2.2:
     resolution: {integrity: sha512-uNsoYd37AFmaCdXlg6EYD1KaPOaRWRByMCYzbKUX4+hhMfrxdVSelShywL4JVaAeM/eHUOSprYBQls+/neX3pw==}
     dependencies:
       '@emotion/memoize': 0.8.1
+
+  /@emotion/memoize@0.7.4:
+    resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
+    requiresBuild: true
+    optional: true
 
   /@emotion/memoize@0.8.1:
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
@@ -6200,7 +6212,6 @@ packages:
       sanity: 3.42.1(@types/node@20.8.7)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.11)
       styled-components: 6.1.11(react-dom@18.3.1)(react@18.3.1)
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - react-dom
       - react-is
     dev: false
@@ -6222,7 +6233,6 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
       sanity: 3.42.1(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.11)
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - react-is
       - styled-components
     dev: false
@@ -6746,14 +6756,12 @@ packages:
       '@sanity/color': 2.2.5
       '@sanity/icons': 2.11.8(react@18.3.1)
       csstype: 3.1.3
-      framer-motion: 11.2.3(react-dom@18.3.1)(react@18.3.1)
+      framer-motion: 11.0.8(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
       react-refractor: 2.1.7(react@18.3.1)
       styled-components: 6.1.11(react-dom@18.3.1)(react@18.3.1)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
     dev: false
 
   /@sanity/ui@2.1.10(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11):
@@ -6769,14 +6777,12 @@ packages:
       '@sanity/color': 3.0.6
       '@sanity/icons': 2.11.8(react@18.3.1)
       csstype: 3.1.3
-      framer-motion: 11.2.3(react-dom@18.3.1)(react@18.3.1)
+      framer-motion: 11.0.8(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
       react-refractor: 2.1.7(react@18.3.1)
       styled-components: 6.1.11(react-dom@18.3.1)(react@18.3.1)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
 
   /@sanity/util@3.42.1:
     resolution: {integrity: sha512-A+qMK6X5FP+V3GdY3OGOyByoUO2jGMxGOfbx9JImk4ZZleRv3RjqqSGPJIyKoTFUx68tobZloLvZbbyy7BAf1w==}
@@ -6852,7 +6858,6 @@ packages:
       - '@babel/runtime'
       - '@codemirror/lint'
       - '@codemirror/theme-one-dark'
-      - '@emotion/is-prop-valid'
       - '@lezer/common'
       - codemirror
       - react-dom
@@ -7136,7 +7141,6 @@ packages:
       react-rx: 2.1.3(react@18.3.1)(rxjs@7.8.1)
       sanity: 3.42.1(@types/node@20.8.7)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.11)
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - '@sanity/mutator'
       - '@sanity/util'
       - '@types/node'
@@ -7173,7 +7177,6 @@ packages:
       sanity: 3.42.1(@types/node@20.8.7)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.11)
       speakingurl: 14.0.1
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - '@types/node'
       - '@types/react'
       - bufferutil
@@ -12392,15 +12395,12 @@ packages:
   /fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
-  /framer-motion@11.2.3(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-SKp4jSyRKo5bUzbHp5f/TLiYLxUthh5SpO0MJ5RFtuHa9h4UZlSxQDe7ydmemj2SOYHXwJhJ8DNQ3ZRz+ydkuw==}
+  /framer-motion@11.0.8(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-1KSGNuqe1qZkS/SWQlDnqK2VCVzRVEoval379j0FiUBJAZoqgwyvqFkfvJbgW2IPFo4wX16K+M0k5jO23lCIjA==}
     peerDependencies:
-      '@emotion/is-prop-valid': '*'
       react: ^18.0.0
       react-dom: ^18.0.0
     peerDependenciesMeta:
-      '@emotion/is-prop-valid':
-        optional: true
       react:
         optional: true
       react-dom:
@@ -12409,6 +12409,8 @@ packages:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.6.2
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
 
   /fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
@@ -19116,7 +19118,6 @@ packages:
       sanity: 3.42.1(@types/node@20.8.7)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.11)
       styled-components: 6.1.11(react-dom@18.3.1)(react@18.3.1)
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - react-dom
       - react-is
     dev: false
@@ -19234,7 +19235,7 @@ packages:
       esbuild-register: 3.5.0(esbuild@0.21.3)
       execa: 2.1.0
       exif-component: 1.0.1
-      framer-motion: 11.2.3(react-dom@18.3.1)(react@18.3.1)
+      framer-motion: 11.0.8(react-dom@18.3.1)(react@18.3.1)
       get-it: 8.4.30(debug@4.3.4)
       get-random-values-esm: 1.0.2
       groq-js: 1.8.0
@@ -19292,7 +19293,6 @@ packages:
       vite: 4.5.3(@types/node@20.8.7)
       yargs: 17.7.2
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - '@types/node'
       - '@types/react'
       - bufferutil
@@ -19372,7 +19372,7 @@ packages:
       esbuild-register: 3.5.0(esbuild@0.21.3)
       execa: 2.1.0
       exif-component: 1.0.1
-      framer-motion: 11.2.3(react-dom@18.3.1)(react@18.3.1)
+      framer-motion: 11.0.8(react-dom@18.3.1)(react@18.3.1)
       get-it: 8.4.30(debug@4.3.4)
       get-random-values-esm: 1.0.2
       groq-js: 1.8.0
@@ -19430,7 +19430,6 @@ packages:
       vite: 4.5.3(@types/node@20.8.7)
       yargs: 17.7.2
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - '@types/node'
       - '@types/react'
       - bufferutil
