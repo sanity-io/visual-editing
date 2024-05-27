@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.8.22](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.21...visual-editing-v1.8.22) (2024-05-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.18.3 ([#1563](https://github.com/sanity-io/visual-editing/issues/1563)) ([609a3b1](https://github.com/sanity-io/visual-editing/commit/609a3b1ad00b0809ba1f926328cee4d082668bf1))
+* **visual-editing:** move react-is to devDependencies ([#1566](https://github.com/sanity-io/visual-editing/issues/1566)) ([3441313](https://github.com/sanity-io/visual-editing/commit/3441313796683e65465a774b2a89ff556f07add5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.13 to ^1.6.14
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.12 to 0.6.13
+
 ## [1.8.21](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.20...visual-editing-v1.8.21) (2024-05-15)
 
 

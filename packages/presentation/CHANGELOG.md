@@ -12,6 +12,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.9](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.8...presentation-v1.15.9) (2024-05-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.18.3 ([#1563](https://github.com/sanity-io/visual-editing/issues/1563)) ([609a3b1](https://github.com/sanity-io/visual-editing/commit/609a3b1ad00b0809ba1f926328cee4d082668bf1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.13 to ^1.6.14
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.12 to 0.6.13
+
 ## [1.15.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.7...presentation-v1.15.8) (2024-05-21)
 
 
