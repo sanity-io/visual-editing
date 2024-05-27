@@ -1383,9 +1383,6 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-is:
-        specifier: 18.3.1
-        version: 18.3.1
       scroll-into-view-if-needed:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1459,6 +1456,9 @@ importers:
       ls-engines:
         specifier: ^0.9.1
         version: 0.9.1
+      react-is:
+        specifier: ^18.3.1
+        version: 18.3.1
       rimraf:
         specifier: ^5.0.5
         version: 5.0.5
@@ -13670,6 +13670,7 @@ packages:
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dependencies:
       safer-buffer: 2.1.2
 
