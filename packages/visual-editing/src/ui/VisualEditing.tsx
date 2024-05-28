@@ -7,7 +7,7 @@ import {Refresh} from './Refresh'
 import {useChannel} from './useChannel'
 
 /**
- * @internal
+ * @public
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
   const {history, refresh, zIndex} = props

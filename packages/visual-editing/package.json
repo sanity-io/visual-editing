@@ -40,6 +40,12 @@
       "require": "./dist/next-pages-router/index.cjs",
       "default": "./dist/next-pages-router/index.js"
     },
+    "./react": {
+      "source": "./src/react/index.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs",
+      "default": "./dist/react/index.js"
+    },
     "./remix": {
       "source": "./src/remix/index.ts",
       "import": "./dist/remix/index.js",
