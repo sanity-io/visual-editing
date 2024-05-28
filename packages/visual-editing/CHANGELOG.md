@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.22...visual-editing-v2.0.0) (2024-05-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* move `react` and `react-dom` to peer deps ([#1570](https://github.com/sanity-io/visual-editing/issues/1570))
+
+### Bug Fixes
+
+* move `react` and `react-dom` to peer deps ([#1570](https://github.com/sanity-io/visual-editing/issues/1570)) ([a5cf71c](https://github.com/sanity-io/visual-editing/commit/a5cf71c586f7470e7e170aa46aa0b3774971df76))
+
 ## [1.8.22](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.21...visual-editing-v1.8.22) (2024-05-27)
 
 
