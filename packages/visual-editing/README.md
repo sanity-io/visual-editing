@@ -10,7 +10,7 @@ This package is used with the [Presentation](https://www.sanity.io/docs/presenta
 ## Getting started
 
 ```sh
-npm install @sanity/visual-editing
+npm install @sanity/visual-editing react react-dom
 ```
 
 ## Table of contents
