@@ -1,5 +1,5 @@
 import type {ForwardRefExoticComponent, HTMLProps, ReactElement, Ref, SVGProps} from 'react'
-import {createElement, forwardRef} from 'react'
+import {forwardRef} from 'react'
 
 import {htmlElements} from './html'
 import type {SanityElementProps} from './SanityElement'
@@ -35,7 +35,7 @@ const sanity = new Proxy({} as SanityElements, {
         props: SanityElementProps & Omit<HTMLProps<HTMLElement>, 'children' | 'ref'>,
         ref: Ref<HTMLElement>,
       ): ReactElement {
-        return createElement(SanityElement, {as: prop, ref, ...props})
+        return <SanityElement {...props} as={prop} ref={ref} />
       })
 
       SanityComponent.displayName = `sanity.${prop}`
@@ -52,7 +52,7 @@ const sanity = new Proxy({} as SanityElements, {
         props: SanityElementProps & Omit<SVGProps<SVGElement>, 'children' | 'ref'>,
         ref: Ref<SVGElement>,
       ): ReactElement {
-        return createElement(SanityElement, {as: prop, ref, ...props} as any)
+        return <SanityElement {...(props as any)} as={prop} ref={ref} />
       })
 
       SanityComponent.displayName = `sanity.${prop}`
