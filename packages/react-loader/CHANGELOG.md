@@ -38,6 +38,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.10.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.21...react-loader-v1.10.0) (2024-05-29)
+
+
+### Features
+
+* support react 19 ([#1592](https://github.com/sanity-io/visual-editing/issues/1592)) ([da27d3c](https://github.com/sanity-io/visual-editing/commit/da27d3c6c39e356d35aba8c7148d6a551f334165))
+
 ## [1.9.21](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.9.20...react-loader-v1.9.21) (2024-05-28)
 
 
