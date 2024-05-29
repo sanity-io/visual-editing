@@ -163,8 +163,8 @@ importers:
   apps/common:
     dependencies:
       '@sanity/icons':
-        specifier: ^2.11.8
-        version: 2.11.8(react@18.3.1)
+        specifier: ^3.0.0
+        version: 3.0.0(react@18.3.1)
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -293,8 +293,8 @@ importers:
         specifier: ^6.19.0
         version: 6.19.0
       '@sanity/icons':
-        specifier: ^2.11.8
-        version: 2.11.8(react@19.0.0-rc-f994737d14-20240522)
+        specifier: ^3.0.0
+        version: 3.0.0(react@19.0.0-rc-f994737d14-20240522)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -351,7 +351,7 @@ importers:
         version: 14.3.0-canary.87(@babel/core@7.24.5)(react-dom@19.0.0-rc-f994737d14-20240522)(react@19.0.0-rc-f994737d14-20240522)
       next-sanity:
         specifier: 9.3.7
-        version: 9.3.7(@sanity/client@6.19.0)(@sanity/icons@2.11.8)(@sanity/types@3.43.0)(@sanity/ui@2.1.13)(next@14.3.0-canary.87)(react@19.0.0-rc-f994737d14-20240522)(sanity@3.43.0)(styled-components@6.1.11)
+        version: 9.3.7(@sanity/client@6.19.0)(@sanity/icons@3.0.0)(@sanity/types@3.43.0)(@sanity/ui@2.1.13)(next@14.3.0-canary.87)(react@19.0.0-rc-f994737d14-20240522)(sanity@3.43.0)(styled-components@6.1.11)
       react:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522
@@ -408,8 +408,8 @@ importers:
         specifier: ^6.19.0
         version: 6.19.0
       '@sanity/icons':
-        specifier: ^2.11.8
-        version: 2.11.8(react@19.0.0-rc-f994737d14-20240522)
+        specifier: ^3.0.0
+        version: 3.0.0(react@19.0.0-rc-f994737d14-20240522)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -466,7 +466,7 @@ importers:
         version: 14.3.0-canary.87(@babel/core@7.24.5)(react-dom@19.0.0-rc-f994737d14-20240522)(react@19.0.0-rc-f994737d14-20240522)
       next-sanity:
         specifier: 9.3.7
-        version: 9.3.7(@sanity/client@6.19.0)(@sanity/icons@2.11.8)(@sanity/types@3.43.0)(@sanity/ui@2.1.13)(next@14.3.0-canary.87)(react@19.0.0-rc-f994737d14-20240522)(sanity@3.43.0)(styled-components@6.1.11)
+        version: 9.3.7(@sanity/client@6.19.0)(@sanity/icons@3.0.0)(@sanity/types@3.43.0)(@sanity/ui@2.1.13)(next@14.3.0-canary.87)(react@19.0.0-rc-f994737d14-20240522)(sanity@3.43.0)(styled-components@6.1.11)
       react:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522
@@ -6525,6 +6525,24 @@ packages:
 
   /@sanity/icons@2.11.8(react@19.0.0-rc-f994737d14-20240522):
     resolution: {integrity: sha512-C4ViXtk6eyiNTQ5OmxpfmcK6Jw+LLTi9zg9XBUD15DzC4xTHaGW9SVfUa43YtPGs3WC3M0t0K59r0GDjh52HIg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 19.0.0-rc-f994737d14-20240522
+    dev: false
+
+  /@sanity/icons@3.0.0(react@18.3.1):
+    resolution: {integrity: sha512-tvAxP5XaqZ6lG3JpAe+ZHWF4JqjFHnvtheY64VyLLO/8lwbiy7Q/Xhh0hYw9Anm0k0HCONcahyMvO+Q18n05tw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.3.1
+    dev: false
+
+  /@sanity/icons@3.0.0(react@19.0.0-rc-f994737d14-20240522):
+    resolution: {integrity: sha512-tvAxP5XaqZ6lG3JpAe+ZHWF4JqjFHnvtheY64VyLLO/8lwbiy7Q/Xhh0hYw9Anm0k0HCONcahyMvO+Q18n05tw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '*'
@@ -16229,7 +16247,7 @@ packages:
       styled-components: 6.1.11(react-dom@18.3.1)(react@18.3.1)
     dev: false
 
-  /next-sanity@9.3.7(@sanity/client@6.19.0)(@sanity/icons@2.11.8)(@sanity/types@3.43.0)(@sanity/ui@2.1.13)(next@14.3.0-canary.87)(react@19.0.0-rc-f994737d14-20240522)(sanity@3.43.0)(styled-components@6.1.11):
+  /next-sanity@9.3.7(@sanity/client@6.19.0)(@sanity/icons@3.0.0)(@sanity/types@3.43.0)(@sanity/ui@2.1.13)(next@14.3.0-canary.87)(react@19.0.0-rc-f994737d14-20240522)(sanity@3.43.0)(styled-components@6.1.11):
     resolution: {integrity: sha512-JXKEh5Yo2zqIfTEwGGnCotzx32t8C5a2DyJessSRjM7GlnibD85P/xt3Nx+hSzZRpQJbXpZU8dw7/d8jq9FDOA==}
     engines: {node: '>=18.17'}
     peerDependencies:
@@ -16244,7 +16262,7 @@ packages:
     dependencies:
       '@portabletext/react': 3.1.0(react@19.0.0-rc-f994737d14-20240522)
       '@sanity/client': 6.19.0
-      '@sanity/icons': 2.11.8(react@19.0.0-rc-f994737d14-20240522)
+      '@sanity/icons': 3.0.0(react@19.0.0-rc-f994737d14-20240522)
       '@sanity/preview-kit': 5.0.60(@sanity/client@6.19.0)(react@19.0.0-rc-f994737d14-20240522)
       '@sanity/types': 3.43.0
       '@sanity/ui': 2.1.13(react-dom@19.0.0-rc-f994737d14-20240522)(react-is@18.3.1)(react@19.0.0-rc-f994737d14-20240522)(styled-components@6.1.11)
