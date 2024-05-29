@@ -36,6 +36,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.5.0](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.4.25...preview-kit-compat-v1.5.0) (2024-05-29)
+
+
+### Features
+
+* support react 19 ([#1593](https://github.com/sanity-io/visual-editing/issues/1593)) ([f143fda](https://github.com/sanity-io/visual-editing/commit/f143fda6c11f199f0eb4fdb6c9826cb8a693a82d))
+
 ## [1.4.25](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.4.24...preview-kit-compat-v1.4.25) (2024-05-28)
 
 
