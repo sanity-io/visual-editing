@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.0...visual-editing-v2.1.1) (2024-05-29)
+
+
+### Bug Fixes
+
+* **types:** add react export to typeVersions ([#1580](https://github.com/sanity-io/visual-editing/issues/1580)) ([c8dfd69](https://github.com/sanity-io/visual-editing/commit/c8dfd690dfb04221cba050b36015c17bc98af2ba))
+
 ## [2.1.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.0.0...visual-editing-v2.1.0) (2024-05-28)
 
 
