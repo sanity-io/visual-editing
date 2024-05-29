@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.6.16](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.15...preview-url-secret-v1.6.16) (2024-05-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/icons to v3 ([#1588](https://github.com/sanity-io/visual-editing/issues/1588)) ([dd087e4](https://github.com/sanity-io/visual-editing/commit/dd087e4aac114eaaeb79ad52beae0ff36624dd64))
+
 ## [1.6.15](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.14...preview-url-secret-v1.6.15) (2024-05-28)
 
 
