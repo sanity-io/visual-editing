@@ -1,6 +1,7 @@
 import {defineConfig} from 'astro/config'
 import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
 import sanity from '@sanity/astro'
+import react from '@astrojs/react'
 import tailwind from '@astrojs/tailwind'
 import vercel from '@astrojs/vercel/serverless'
 const {projectId, dataset, workspace} = workspaces['astro']
@@ -19,6 +20,7 @@ export default defineConfig({
         studioUrl,
       },
     }),
+    react(),
     tailwind(),
   ],
   adapter: vercel(),
