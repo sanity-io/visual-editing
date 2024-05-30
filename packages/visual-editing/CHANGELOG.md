@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.1.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.2...visual-editing-v2.1.3) (2024-05-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.19.1 ([#1602](https://github.com/sanity-io/visual-editing/issues/1602)) ([ebaa50c](https://github.com/sanity-io/visual-editing/commit/ebaa50ca0bf6f6324819a9b3ceb85eb1326d7d72))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.16 to ^1.6.17
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.14 to 0.6.15
+
 ## [2.1.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.1...visual-editing-v2.1.2) (2024-05-29)
 
 
