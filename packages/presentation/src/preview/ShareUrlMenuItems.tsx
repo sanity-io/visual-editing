@@ -81,7 +81,7 @@ function CopyUrlMenuButton(
         setDisabled(true)
 
         let id: string | undefined = undefined
-        let url = `${previewLocationOrigin}${previewLocationRoute}`
+        const url = `${previewLocationOrigin}${previewLocationRoute}`
         const onFinally = () => {
           pushToast({
             id,
@@ -100,8 +100,7 @@ function CopyUrlMenuButton(
           })
           setDisabled(false)
         }
-        if (hasSecretSearchParams(initialUrl) && typeof ClipboardItem !== 'undefined') {
-          const type = 'text/plain'
+        if (hasSecretSearchParams(initialUrl)) {
           const resolvePreviewUrl = async () => {
             id = pushToast({
               closable: true,
@@ -119,15 +118,21 @@ function CopyUrlMenuButton(
               previewUrlSecret.secret,
               previewLocationRoute,
             )
-            url = newUrl.toString()
-            return new Blob([url], {type})
+            return newUrl.toString()
           }
-
-          // Try to save to clipboard then save it in the state if worked
-          const item = new ClipboardItem({
-            [type]: resolvePreviewUrl(),
-          })
-          navigator.clipboard.write([item]).then(onFinally).catch(onError)
+          if (typeof ClipboardItem !== 'undefined') {
+            const type = 'text/plain'
+            // Try to save to clipboard then save it in the state if worked
+            const item = new ClipboardItem({
+              [type]: resolvePreviewUrl().then((url) => new Blob([url], {type})),
+            })
+            navigator.clipboard.write([item]).then(onFinally).catch(onError)
+          } else {
+            resolvePreviewUrl()
+              .then((url) => navigator.clipboard.writeText(url))
+              .then(onFinally)
+              .catch(onError)
+          }
         } else {
           navigator.clipboard.writeText(url).then(onFinally).catch(onError)
         }
