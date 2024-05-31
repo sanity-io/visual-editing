@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.13](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.12...presentation-v1.15.13) (2024-05-31)
+
+
+### Bug Fixes
+
+* add firefox support to "Copy URL" action ([9a9cfde](https://github.com/sanity-io/visual-editing/commit/9a9cfde5425a25206fc721e64cf80621039eae2f))
+
 ## [1.15.12](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.11...presentation-v1.15.12) (2024-05-30)
 
 
