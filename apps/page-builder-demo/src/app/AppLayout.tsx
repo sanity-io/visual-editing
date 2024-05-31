@@ -51,7 +51,7 @@ export function AppLayout(props: {
           {links.map((link, idx) => (
             <Link
               className={clsx(
-                'text-md rounded p-3 leading-none hover:bg-gray-50  dark:hover:bg-gray-950',
+                'text-md rounded p-3 leading-none hover:bg-gray-50 dark:hover:bg-gray-950',
                 link.href === pathname
                   ? 'bg-gray-50 text-black dark:bg-gray-950 dark:text-white'
                   : 'text-gray-600 active:text-black dark:text-gray-400 dark:active:text-white',
