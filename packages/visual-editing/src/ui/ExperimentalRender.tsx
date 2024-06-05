@@ -1,8 +1,8 @@
-import {type FunctionComponent, useEffect, useInsertionEffect} from 'react'
+import {type FunctionComponent, useEffect} from 'react'
 
 import type {VisualEditingChannel} from '../types'
 
-const isInserted = new Set<string>()
+// const isInserted = new Set<string>()
 
 /**
  * @internal
@@ -19,27 +19,30 @@ export const ExperimentalRender: FunctionComponent<{
     console.log('ExperimentalRender', rsc, channel)
   }, [channel, rsc])
 
-  useInsertionEffect(() => {
-    if (rsc?.styleTags && !isInserted.has(rsc.styleTags)) {
-      // eslint-disable-next-line no-console
-      console.log('ExperimentalRender: Inserting style tags', rsc.styleTags)
-      const {styleTags} = rsc
-      isInserted.add(styleTags)
-      const wip = document.createElement('head')
-      wip.innerHTML = styleTags
-      const [styleElement] = wip.childNodes
-      document.head.appendChild(styleElement)
+  // useInsertionEffect(() => {
+  //   if (rsc?.styleTags && !isInserted.has(rsc.styleTags)) {
+  //     // eslint-disable-next-line no-console
+  //     console.log('ExperimentalRender: Inserting style tags', rsc.styleTags)
+  //     const {styleTags} = rsc
+  //     isInserted.add(styleTags)
+  //     const wip = document.createElement('head')
+  //     wip.innerHTML = styleTags
+  //     const [styleElement] = wip.childNodes
+  //     document.head.appendChild(styleElement)
 
-      return () => {
-        isInserted.delete(styleTags)
-        document.head.removeChild(styleElement)
-      }
-    }
-    return undefined
-  }, [rsc])
+  //     return () => {
+  //       isInserted.delete(styleTags)
+  //       document.head.removeChild(styleElement)
+  //     }
+  //   }
+  //   return undefined
+  // }, [rsc])
 
   return (
     <>
+      {rsc.styleTags && (
+        <div style={{display: 'none'}} dangerouslySetInnerHTML={{__html: rsc.styleTags}} />
+      )}
       {rsc.html && (
         <div style={{display: 'contents'}} dangerouslySetInnerHTML={{__html: rsc.html}} />
       )}
