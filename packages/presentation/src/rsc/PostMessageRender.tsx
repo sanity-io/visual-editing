@@ -1,7 +1,7 @@
 import type {ChannelsController} from '@repo/channels'
 import type {PresentationMsg, VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
 import {DesktopIcon} from '@sanity/icons'
-import {Card, ThemeProvider, useRootTheme, useTheme, useTheme_v2} from '@sanity/ui'
+import {Button, ThemeProvider, useRootTheme} from '@sanity/ui'
 import {memo, useEffect, useMemo} from 'react'
 import {renderToString} from 'react-dom/server'
 import {ServerStyleSheet, StyleSheetManager} from 'styled-components'
@@ -20,16 +20,11 @@ function PostMessageRender(props: PostMessageRenderProps): JSX.Element | null {
 
   const element = useMemo(
     () => (
-      <Card
-        muted
-        padding={2}
-        border
-        radius={2}
-        display="inline-block"
+      <Button
+        icon={<DesktopIcon />}
         style={{position: 'fixed', top: '5px', left: '5px'}}
-      >
-        <DesktopIcon />
-      </Card>
+        text="Hero"
+      />
     ),
     [],
   )
