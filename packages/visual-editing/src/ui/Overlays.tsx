@@ -16,6 +16,8 @@ import {styled} from 'styled-components'
 
 import type {HistoryAdapter, OverlayEventHandler, VisualEditingChannel} from '../types'
 import {ElementOverlay} from './ElementOverlay'
+import {ExperimentalRender} from './ExperimentalRender'
+import {ExperimentalSchema} from './ExperimentalSchema'
 import {overlayStateReducer} from './overlayStateReducer'
 import {useController} from './useController'
 
@@ -65,12 +67,17 @@ export const Overlays: FunctionComponent<{
 
   const [status, setStatus] = useState<ChannelStatus>()
 
-  const [{elements, wasMaybeCollapsed, perspective}, dispatch] = useReducer(overlayStateReducer, {
-    elements: [],
-    focusPath: '',
-    wasMaybeCollapsed: false,
-    perspective: 'published',
-  })
+  const [{elements, wasMaybeCollapsed, perspective, schema, rsc}, dispatch] = useReducer(
+    overlayStateReducer,
+    {
+      elements: [],
+      focusPath: '',
+      wasMaybeCollapsed: false,
+      perspective: 'published',
+      schema: null,
+      rsc: null,
+    },
+  )
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -82,6 +89,10 @@ export const Overlays: FunctionComponent<{
       } else if (type === 'presentation/blur') {
         dispatch({type, data})
       } else if (type === 'presentation/perspective') {
+        dispatch({type, data})
+      } else if (type === 'presentation/schema') {
+        dispatch({type, data})
+      } else if (type === 'presentation/rsc') {
         dispatch({type, data})
       } else if (type === 'presentation/navigate') {
         history?.update(data)
@@ -269,27 +280,31 @@ export const Overlays: FunctionComponent<{
   }, [channel, elements, status])
 
   return (
-    <ThemeProvider theme={studioTheme} tone="transparent">
-      <Root
-        data-fading-out={fadingOut ? '' : undefined}
-        data-overlays={overlaysFlash ? '' : undefined}
-        ref={setRootElement}
-        $zIndex={zIndex}
-      >
-        {elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
-          return (
-            <ElementOverlay
-              key={id}
-              rect={rect}
-              focused={focused}
-              hovered={hovered}
-              showActions={!channel.inFrame}
-              sanity={sanity}
-              wasMaybeCollapsed={focused && wasMaybeCollapsed}
-            />
-          )
-        })}
-      </Root>
-    </ThemeProvider>
+    <>
+      <ThemeProvider theme={studioTheme} tone="transparent">
+        <Root
+          data-fading-out={fadingOut ? '' : undefined}
+          data-overlays={overlaysFlash ? '' : undefined}
+          ref={setRootElement}
+          $zIndex={zIndex}
+        >
+          {elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+            return (
+              <ElementOverlay
+                key={id}
+                rect={rect}
+                focused={focused}
+                hovered={hovered}
+                showActions={!channel.inFrame}
+                sanity={sanity}
+                wasMaybeCollapsed={focused && wasMaybeCollapsed}
+              />
+            )
+          })}
+        </Root>
+      </ThemeProvider>
+      {schema && <ExperimentalSchema channel={channel} schema={schema} />}
+      {rsc && <ExperimentalRender channel={channel} rsc={rsc} />}
+    </>
   )
 }
