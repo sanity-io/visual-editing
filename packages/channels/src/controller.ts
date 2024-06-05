@@ -358,7 +358,7 @@ function createChannelsControllerInternal<
 
     channelsToSend.forEach((id) => {
       const channel = channels.find((channel) => channel.config.id === id)
-      if (!channel) throw new Error('Invalid channel ID')
+      if (!channel) throw new Error(`Invalid channel ID: ${id}`)
       send(channel, type, data)
     })
   }

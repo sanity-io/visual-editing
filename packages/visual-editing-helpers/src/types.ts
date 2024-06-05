@@ -124,6 +124,14 @@ export type PresentationMsg =
       data: HistoryRefresh
     }
   | {
+      type: 'presentation/rsc'
+      data: any
+    }
+  | {
+      type: 'presentation/schema'
+      data: any
+    }
+  | {
       type: 'presentation/perspective'
       data: {
         perspective: ClientPerspective
