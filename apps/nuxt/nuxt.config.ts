@@ -11,6 +11,9 @@ export default defineNuxtConfig({
       exclude: [/\bpackages\/.+\b/],
     },
   },
+  routeRules: {
+    '/shoes': {isr: 10},
+  },
   modules: ['@nuxtjs/tailwindcss', '@nuxtjs/sanity'],
   sanity: {
     globalHelper: true,
