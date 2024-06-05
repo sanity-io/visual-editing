@@ -4,7 +4,7 @@ import {DesktopIcon} from '@sanity/icons'
 import {Card, ThemeProvider, useRootTheme, useTheme, useTheme_v2} from '@sanity/ui'
 import {memo, useEffect, useMemo} from 'react'
 import {renderToString} from 'react-dom/server'
-import {ServerStyleSheet} from 'styled-components'
+import {ServerStyleSheet, StyleSheetManager} from 'styled-components'
 
 export interface PostMessageRenderProps {
   channel: ChannelsController<VisualEditingConnectionIds, PresentationMsg> | undefined
@@ -38,14 +38,14 @@ function PostMessageRender(props: PostMessageRenderProps): JSX.Element | null {
     const sheet = new ServerStyleSheet()
     try {
       const html = renderToString(
-        sheet.collectStyles(
+        <StyleSheetManager sheet={sheet.instance}>
           <ThemeProvider theme={theme} scheme={scheme} tone={tone}>
             {element}
-          </ThemeProvider>,
-        ),
+          </ThemeProvider>
+        </StyleSheetManager>,
       )
-      const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
-      channel?.send('overlays', 'presentation/rsc', {html, styleTags})
+      const css = sheet.instance.toString()
+      channel?.send('overlays', 'presentation/rsc', {html, css})
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
