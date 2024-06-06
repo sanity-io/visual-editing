@@ -1,0 +1,1 @@
+# `@sanity/insert-menu`
