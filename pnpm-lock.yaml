@@ -76,8 +76,8 @@ importers:
         version: 6.1.11(react-dom@18.3.1)(react@18.3.1)
     devDependencies:
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@sanity/prettier-config':
         specifier: 1.0.2
         version: 1.0.2(prettier@3.3.1)
@@ -978,8 +978,8 @@ importers:
         specifier: ^6.19.1
         version: 6.19.1
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.12.0
         version: 7.12.0(@typescript-eslint/parser@7.12.0)(eslint@8.57.0)(typescript@5.4.5)
@@ -1070,8 +1070,8 @@ importers:
         specifier: workspace:*
         version: link:../package.config
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -1175,8 +1175,8 @@ importers:
         specifier: ^6.19.1
         version: 6.19.1
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       happy-dom:
         specifier: ^14.12.0
         version: 14.12.0
@@ -1214,8 +1214,8 @@ importers:
         specifier: ^6.19.1
         version: 6.19.1
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -1266,8 +1266,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(react@18.3.1)
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.12.0
         version: 7.12.0(@typescript-eslint/parser@7.12.0)(eslint@8.57.0)(typescript@5.4.5)
@@ -1315,8 +1315,8 @@ importers:
         specifier: ^6.19.1
         version: 6.19.1
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -1373,8 +1373,8 @@ importers:
         specifier: ^6.19.1
         version: 6.19.1
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -1449,8 +1449,8 @@ importers:
         specifier: ^6.19.1
         version: 6.19.1
       '@sanity/pkg-utils':
-        specifier: 6.9.0
-        version: 6.9.0(typescript@5.4.5)
+        specifier: 6.9.1
+        version: 6.9.1(typescript@5.4.5)
       '@sanity/ui':
         specifier: 2.2.0
         version: 2.2.0(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11)
@@ -6881,63 +6881,6 @@ packages:
       lodash: 4.17.21
     transitivePeerDependencies:
       - supports-color
-
-  /@sanity/pkg-utils@6.9.0(typescript@5.4.5):
-    resolution: {integrity: sha512-INw1MH3xtvZCFOTp2YKzCOrHsRh9d+cLBNc+h/Mky1GxVbCKUB89LhRWxMfQFujdtYHLI2ltPxaD0ss0Y4bNYA==}
-    engines: {node: '>=18.17.0'}
-    hasBin: true
-    peerDependencies:
-      typescript: 5.4.x
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/preset-typescript': 7.24.7(@babel/core@7.24.7)
-      '@babel/types': 7.24.7
-      '@microsoft/api-extractor': 7.47.0
-      '@microsoft/tsdoc-config': 0.17.0
-      '@optimize-lodash/rollup-plugin': 4.0.4(rollup@4.18.0)
-      '@rollup/plugin-alias': 5.1.0(rollup@4.18.0)
-      '@rollup/plugin-babel': 6.0.4(@babel/core@7.24.7)(rollup@4.18.0)
-      '@rollup/plugin-commonjs': 25.0.8(rollup@4.18.0)
-      '@rollup/plugin-json': 6.1.0(rollup@4.18.0)
-      '@rollup/plugin-node-resolve': 15.2.3(rollup@4.18.0)
-      '@rollup/plugin-replace': 5.0.7(rollup@4.18.0)
-      '@rollup/plugin-terser': 0.4.4(rollup@4.18.0)
-      '@sanity/browserslist-config': 1.0.3
-      babel-plugin-react-compiler: 0.0.0-experimental-938cd9a-20240601
-      browserslist: 4.23.0
-      cac: 6.7.14
-      chalk: 4.1.2
-      chokidar: 3.6.0
-      esbuild: 0.21.4
-      esbuild-register: 3.5.0(esbuild@0.21.4)
-      find-config: 1.0.0
-      get-latest-version: 5.1.0
-      git-url-parse: 14.0.0
-      globby: 11.1.0
-      jsonc-parser: 3.2.1
-      mkdirp: 3.0.1
-      outdent: 0.8.0
-      parse-git-config: 3.0.0
-      pkg-up: 3.1.0
-      prettier: 3.3.1
-      pretty-bytes: 5.6.0
-      prompts: 2.4.2
-      recast: 0.23.9
-      rimraf: 4.4.1
-      rollup: 4.18.0
-      rollup-plugin-esbuild: 6.1.1(esbuild@0.21.4)(rollup@4.18.0)
-      rxjs: 7.8.1
-      treeify: 1.1.0
-      typescript: 5.4.5
-      uuid: 9.0.1
-      zod: 3.23.8
-      zod-validation-error: 3.3.0(zod@3.23.8)
-    transitivePeerDependencies:
-      - '@types/babel__core'
-      - '@types/node'
-      - debug
-      - supports-color
-    dev: true
 
   /@sanity/pkg-utils@6.9.1(typescript@5.4.5):
     resolution: {integrity: sha512-aexUuTqVoDhw9Rk6I4VVsMLv2POty+r0x5ygUmaa2eTItk4ByIWP07i4gq3sz+3A+KpXMiKRPRse9cQ+iqM5qQ==}
