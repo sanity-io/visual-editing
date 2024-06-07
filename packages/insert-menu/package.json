@@ -34,7 +34,7 @@
   "scripts": {
     "build": "pkg build --strict --clean --check",
     "lint": "eslint .",
-    "ts:check": "tsc --build"
+    "ts:check": "tsc --noEmit"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
@@ -51,12 +51,14 @@
     "lint-staged": "^15.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-is": "^18.3.1",
     "sanity": "3.45.0",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "react": "^18.3 || >=19.0.0-rc",
-    "react-dom": "^18.3 || >=19.0.0-rc"
+    "react-dom": "^18.3 || >=19.0.0-rc",
+    "react-is": "^18.3 || >=19.0.0-rc"
   },
   "engines": {
     "node": ">=18.0.0"
