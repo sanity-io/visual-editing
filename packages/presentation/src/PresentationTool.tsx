@@ -66,7 +66,6 @@ import {usePreviewUrl} from './usePreviewUrl'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
-const PostMessageRender = lazy(() => import('./rsc/PostMessageRender'))
 const PostMessageSchema = lazy(() => import('./overlays/PostMessageSchema'))
 
 const Container = styled(Flex)`
@@ -619,11 +618,6 @@ export default function PresentationTool(props: {
       {channel && (
         <Suspense>
           <PostMessageSchema channel={channel} />
-        </Suspense>
-      )}
-      {channel && (
-        <Suspense>
-          <PostMessageRender channel={channel} />
         </Suspense>
       )}
     </>
