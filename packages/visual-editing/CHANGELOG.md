@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.1.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.3...visual-editing-v2.1.4) (2024-06-07)
+
+
+### Bug Fixes
+
+* add next 15 to peer dep range ([#1627](https://github.com/sanity-io/visual-editing/issues/1627)) ([ae5871f](https://github.com/sanity-io/visual-editing/commit/ae5871faccf15ce816598487e7ab57e5ab83d699))
+* **deps:** Update dependency valibot to v0.31.0 ([#1636](https://github.com/sanity-io/visual-editing/issues/1636)) ([b4228b8](https://github.com/sanity-io/visual-editing/commit/b4228b851cc0bf0aef083bfbc3ae8c8ce2593000))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.15 to 0.6.16
+
 ## [2.1.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.2...visual-editing-v2.1.3) (2024-05-30)
 
 
