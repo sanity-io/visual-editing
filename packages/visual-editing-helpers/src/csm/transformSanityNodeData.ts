@@ -1,5 +1,16 @@
 import {getPublishedId, studioPath} from '@sanity/client/csm'
-import {is, minLength, object, optional, parse, record, safeParse, string, unknown} from 'valibot'
+import {
+  is,
+  minLength,
+  object,
+  optional,
+  parse,
+  pipe,
+  record,
+  safeParse,
+  string,
+  unknown,
+} from 'valibot'
 
 import {pathToUrlString} from '../pathToUrlString'
 import type {SanityNode, SanityStegaNode} from '../types'
@@ -9,7 +20,7 @@ export type {SanityNode, SanityStegaNode}
 
 export const DRAFTS_PREFIX = 'drafts.'
 
-const lengthyStr = string([minLength(1)])
+const lengthyStr = pipe(string(), minLength(1))
 const optionalLengthyStr = optional(lengthyStr)
 
 const sanityNodeSchema = object({
