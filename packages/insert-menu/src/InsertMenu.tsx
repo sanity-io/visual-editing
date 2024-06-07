@@ -26,14 +26,14 @@ type InsertMenuViews = NonNullable<InsertMenuOptions['views']>
 type InsertMenuView = InsertMenuViews[number]
 
 type InsertMenuEvent =
-  | {type: 'toggle view'; name: InsertMenuView}
+  | {type: 'toggle view'; name: InsertMenuView['name']}
   | {type: 'change query'; query: string}
   | {type: 'select group'; name: string | undefined}
 
 type InsertMenuState = {
   query: string
   groups: Array<InsertMenuGroup>
-  views: Array<{name: InsertMenuViews[number]; selected: boolean}>
+  views: Array<InsertMenuViews[number] & {selected: boolean}>
 }
 
 function fullInsertMenuReducer(state: InsertMenuState, event: InsertMenuEvent): InsertMenuState {
@@ -51,17 +51,6 @@ function fullInsertMenuReducer(state: InsertMenuState, event: InsertMenuEvent): 
 }
 
 const ALL_ITEMS_GROUP_NAME = 'all-items'
-
-const viewContainer = {
-  grid: {
-    component: Grid,
-    props: {autoRows: 'max', columns: 3, gap: 1},
-  },
-  list: {
-    component: Stack,
-    props: {space: 1},
-  },
-} as const
 
 /** @alpha */
 export type InsertMenuProps = InsertMenuOptions & {
@@ -91,11 +80,13 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
           ...props.groups.map((group) => ({...group, selected: false})),
         ]
       : [],
-    views: (props.views ?? ['list']).map((name, index) => ({name, selected: index === 0})),
+    views: (props.views ?? [{name: 'list'}]).map((view, index) => ({
+      ...view,
+      selected: index === 0,
+    })),
   })
   const filteredSchemaTypes = filterSchemaTypes(props.schemaTypes, state.query, state.groups)
-  const selectedView = state.views.find((view) => view.selected)?.name ?? 'list'
-  const {component: ViewContainer, props: viewContainerProps} = viewContainer[selectedView]
+  const selectedView = state.views.find((view) => view.selected)
 
   return (
     <Menu padding={0}>
@@ -150,30 +141,33 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                 {props.labels['insert-menu.search.no-results']}
               </Text>
             </Box>
+          ) : !selectedView ? null : selectedView.name === 'grid' ? (
+            <Grid flex={1} autoRows="max" columns={3} gap={1}>
+              {filteredSchemaTypes.map((schemaType) => (
+                <GridMenuItem
+                  key={schemaType.name}
+                  icon={showIcons ? getSchemaTypeIcon(schemaType) : undefined}
+                  onClick={() => {
+                    props.onSelect(schemaType)
+                  }}
+                  previewUrl={selectedView.previewUrl}
+                  schemaType={schemaType}
+                />
+              ))}
+            </Grid>
           ) : (
-            <ViewContainer flex={1} {...viewContainerProps}>
-              {filteredSchemaTypes.map((schemaType) =>
-                selectedView === 'grid' ? (
-                  <GridMenuItem
-                    key={schemaType.name}
-                    icon={showIcons ? getSchemaTypeIcon(schemaType) : undefined}
-                    onClick={() => {
-                      props.onSelect(schemaType)
-                    }}
-                    schemaType={schemaType}
-                  />
-                ) : (
-                  <MenuItem
-                    key={schemaType.name}
-                    icon={showIcons ? getSchemaTypeIcon(schemaType) : undefined}
-                    onClick={() => {
-                      props.onSelect(schemaType)
-                    }}
-                    text={schemaType.title ?? schemaType.name}
-                  />
-                ),
-              )}
-            </ViewContainer>
+            <Stack flex={1} space={1}>
+              {filteredSchemaTypes.map((schemaType) => (
+                <MenuItem
+                  key={schemaType.name}
+                  icon={showIcons ? getSchemaTypeIcon(schemaType) : undefined}
+                  onClick={() => {
+                    props.onSelect(schemaType)
+                  }}
+                  text={schemaType.title ?? schemaType.name}
+                />
+              ))}
+            </Stack>
           )}
         </Box>
       </Flex>
@@ -181,19 +175,19 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
   )
 }
 
-const viewToggleIcon: Record<InsertMenuViews[number], React.ElementType> = {
+const viewToggleIcon: Record<InsertMenuView['name'], React.ElementType> = {
   grid: ThLargeIcon,
   list: UlistIcon,
 }
 
-const viewToggleTooltip: Record<InsertMenuViews[number], keyof ViewToggleProps['labels']> = {
+const viewToggleTooltip: Record<InsertMenuView['name'], keyof ViewToggleProps['labels']> = {
   grid: 'insert-menu.toggle-grid-view.tooltip',
   list: 'insert-menu.toggle-list-view.tooltip',
 }
 
 type ViewToggleProps = {
   views: InsertMenuState['views']
-  onToggle: (viewName: InsertMenuViews[number]) => void
+  onToggle: (viewName: InsertMenuView['name']) => void
   labels: Pick<
     InsertMenuProps['labels'],
     'insert-menu.toggle-grid-view.tooltip' | 'insert-menu.toggle-list-view.tooltip'
@@ -205,7 +199,7 @@ function ViewToggle(props: ViewToggleProps) {
   const nextView = props.views[viewIndex + 1] ?? props.views[0]
 
   return (
-    <Tooltip content={viewToggleTooltip[nextView.name]} portal>
+    <Tooltip content={props.labels[viewToggleTooltip[nextView.name]]} portal>
       <Button
         mode="bleed"
         icon={viewToggleIcon[nextView.name]}
@@ -221,6 +215,7 @@ type GridMenuItemProps = {
   onClick: () => void
   schemaType: SchemaType
   icon: MenuItemProps['icon']
+  previewUrl: Extract<NonNullable<InsertMenuOptions['views']>[number], {name: 'grid'}>['previewUrl']
 }
 
 function GridMenuItem(props: GridMenuItemProps) {
@@ -249,7 +244,7 @@ function GridMenuItem(props: GridMenuItemProps) {
             : null}
           {failedToLoad ? null : (
             <img
-              src={`/static/preview-${props.schemaType.name}.png`}
+              src={props.previewUrl(props.schemaType.name)}
               style={{
                 objectFit: 'contain',
                 width: '100%',

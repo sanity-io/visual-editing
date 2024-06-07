@@ -5,6 +5,6 @@ export interface InsertMenuOptions {
   groups?: Array<{name: string; title?: string; of?: Array<string>}>
   /** defaultValue `true` */
   icons?: boolean
-  /** @defaultValue `['list']` */
-  views?: Array<'list' | 'grid'>
+  /** @defaultValue `[{name: 'list'}]` */
+  views?: Array<{name: 'list'} | {name: 'grid'; previewUrl: (schemaTypeName: string) => string}>
 }
