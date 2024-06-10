@@ -370,7 +370,9 @@ export default function PresentationTool(props: {
 
   const handleStructureParams = useCallback(
     (structureParams: StructureDocumentPaneParams) => {
-      navigate({}, structureParams)
+      // Omit the prefersLatestPublished param as it causes an internal studio
+      // useEffect to run and replace the revision with the previous value
+      navigate({}, {...structureParams, prefersLatestPublished: undefined})
     },
     [navigate],
   )
@@ -395,9 +397,19 @@ export default function PresentationTool(props: {
   }, [channel, params.id, params.path])
 
   // Handle opening the published document when previewing published
+  const latestPublishedIdRef = useRef<string | undefined>(undefined)
   useEffect(() => {
-    if (perspective === 'published' && params.id && !params.rev && !params.prefersLatestPublished) {
+    if (
+      perspective === 'published' &&
+      params.id &&
+      params.id !== latestPublishedIdRef.current &&
+      !params.rev &&
+      !params.prefersLatestPublished
+    ) {
       navigate({}, {prefersLatestPublished: 'true'}, true)
+      latestPublishedIdRef.current = params.id
+    } else if (!params.id) {
+      latestPublishedIdRef.current = undefined
     }
   }, [navigate, params.id, params.prefersLatestPublished, params.rev, perspective])
 
