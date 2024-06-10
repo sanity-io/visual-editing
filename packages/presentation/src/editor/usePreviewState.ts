@@ -16,7 +16,7 @@ interface PreviewState {
 
 export default function usePreviewState(documentId: string, schemaType?: SchemaType): PreviewState {
   const documentPreviewStore = useDocumentPreviewStore()
-  const [paneItemPreview, setPaneItemPreview] = useState<PreviewState>({})
+  const [preview, setPreview] = useState<PreviewState>({})
 
   useEffect(() => {
     if (!schemaType) {
@@ -28,7 +28,7 @@ export default function usePreviewState(documentId: string, schemaType?: SchemaT
       documentId,
       '',
     ).subscribe((state) => {
-      setPaneItemPreview(state)
+      setPreview(state)
     })
 
     return () => {
@@ -36,5 +36,5 @@ export default function usePreviewState(documentId: string, schemaType?: SchemaT
     }
   }, [documentPreviewStore, schemaType, documentId])
 
-  return paneItemPreview
+  return preview
 }
