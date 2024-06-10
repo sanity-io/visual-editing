@@ -179,24 +179,32 @@ export interface StructureDocumentPaneParams {
   comment?: string
 }
 
-export interface PresentationParams extends PresentationStateParams, StructureDocumentPaneParams {
-  id?: string
+export interface PersistentSearchParams {
   preview?: string
   perspective?: string
   viewport?: string
 }
 
-export interface PresentationSearchParams extends StructureDocumentPaneParams {
-  preview?: string
-  perspective?: string
-  viewport?: string
+export interface PresentationParams
+  extends PresentationStateParams,
+    StructureDocumentPaneParams,
+    PersistentSearchParams {
+  id?: string
 }
+
+export interface PresentationSearchParams
+  extends StructureDocumentPaneParams,
+    PersistentSearchParams {}
 
 export type PresentationNavigate = (
   nextState: PresentationStateParams,
   nextSearchState?: PresentationSearchParams,
   forceReplace?: boolean,
 ) => void
+
+export type PresentationPerspective = Extract<'published' | 'previewDrafts', ClientPerspective>
+
+export type PresentationViewport = 'desktop' | 'mobile'
 
 /** @internal */
 export type LiveQueriesState = Record<string, LiveQueriesStateValue>

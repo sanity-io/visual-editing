@@ -55,8 +55,10 @@ import type {
   LiveQueriesState,
   LiveQueriesStateValue,
   PresentationNavigate,
+  PresentationPerspective,
   PresentationPluginOptions,
   PresentationStateParams,
+  PresentationViewport,
   StructureDocumentPaneParams,
 } from './types'
 import {useDocumentsOnPage} from './useDocumentsOnPage'
@@ -117,6 +119,7 @@ export default function PresentationTool(props: {
   const {
     navigate: _navigate,
     params,
+    searchParams,
     structureParams,
   } = useParams({
     initialPreviewUrl,
@@ -129,16 +132,16 @@ export default function PresentationTool(props: {
   // Most navigation events should be debounced, so use this unless explicitly needed
   const navigate = useMemo(() => debounce<PresentationNavigate>(_navigate, 50), [_navigate])
 
-  const [state, dispatch] = useReducer(
-    presentationReducer,
-    {
-      perspective: params.perspective,
-      viewport: params.viewport,
-    },
-    presentationReducerInit,
+  const [state, dispatch] = useReducer(presentationReducer, {}, presentationReducerInit)
+
+  const perspective = useMemo(
+    () => (params.perspective ? 'published' : 'previewDrafts'),
+    [params.perspective],
   )
 
-  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(state.perspective, frameStateRef)
+  const viewport = useMemo(() => (params.viewport ? 'mobile' : 'desktop'), [params.viewport])
+
+  const [documentsOnPage, setDocumentsOnPage] = useDocumentsOnPage(perspective, frameStateRef)
 
   const projectId = useProjectId()
   const dataset = useDataset()
@@ -150,27 +153,6 @@ export default function PresentationTool(props: {
     // Prevent flash of content by using immediate navigation
     navigate: _navigate,
   })
-
-  // Update the perspective and viewport when the param changes
-  useEffect(() => {
-    if (state.perspective !== params.perspective || state.viewport !== params.viewport) {
-      navigate(
-        {},
-        {
-          perspective: state.perspective === 'previewDrafts' ? undefined : state.perspective,
-          viewport: state.viewport === 'desktop' ? undefined : state.viewport,
-        },
-      )
-    }
-  }, [
-    params.perspective,
-    state.perspective,
-    navigate,
-    state.viewport,
-    params.viewport,
-    params.rev,
-    params.prefersLatestPublished,
-  ])
 
   const [overlaysConnection, setOverlaysConnection] = useState<ChannelStatus>('connecting')
   const [loadersConnection, setLoadersConnection] = useState<ChannelStatus>('connecting')
@@ -199,10 +181,10 @@ export default function PresentationTool(props: {
   }, [channel, popups, popups.size])
 
   // This workaround can be removed once the need to set prefersLatestPublished is no longer there
-  const perspectiveRef = useRef(state.perspective)
+  const perspectiveRef = useRef(perspective)
   useEffect(() => {
-    perspectiveRef.current = state.perspective
-  }, [state.perspective])
+    perspectiveRef.current = perspective
+  }, [perspective])
 
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
@@ -396,9 +378,9 @@ export default function PresentationTool(props: {
   // Dispatch a perspective message when the perspective changes
   useEffect(() => {
     channel?.send('overlays', 'presentation/perspective', {
-      perspective: state.perspective,
+      perspective: perspective,
     })
-  }, [channel, state.perspective])
+  }, [channel, perspective])
 
   // Dispatch a focus or blur message when the id or path change
   useEffect(() => {
@@ -414,15 +396,10 @@ export default function PresentationTool(props: {
 
   // Handle opening the published document when previewing published
   useEffect(() => {
-    if (
-      state.perspective === 'published' &&
-      params.id &&
-      !params.rev &&
-      !params.prefersLatestPublished
-    ) {
-      navigate({}, {prefersLatestPublished: 'true'})
+    if (perspective === 'published' && params.id && !params.rev && !params.prefersLatestPublished) {
+      navigate({}, {prefersLatestPublished: 'true'}, true)
     }
-  }, [navigate, params.id, params.prefersLatestPublished, params.rev, state.perspective])
+  }, [navigate, params.id, params.prefersLatestPublished, params.rev, perspective])
 
   // Dispatch a navigation message when the preview param changes
   useEffect(() => {
@@ -533,6 +510,26 @@ export default function PresentationTool(props: {
     [params.preview, workspace.name],
   )
 
+  const setViewport = useCallback(
+    (next: PresentationViewport) => {
+      // Omit the viewport URL search param if the next viewport state is the
+      // default: 'desktop'
+      const viewport = next === 'desktop' ? undefined : 'mobile'
+      navigate({}, {viewport}, true)
+    },
+    [navigate],
+  )
+
+  const setPerspective = useCallback(
+    (next: PresentationPerspective) => {
+      // Omit the perspective URL search param if the next perspective state is
+      // the default: 'previewDrafts'
+      const perspective = next === 'previewDrafts' ? undefined : next
+      navigate({}, {perspective})
+    },
+    [navigate],
+  )
+
   return (
     <>
       <PresentationProvider
@@ -540,6 +537,7 @@ export default function PresentationTool(props: {
         name={name}
         navigate={navigate}
         params={params}
+        searchParams={searchParams}
         structureParams={structureParams}
       >
         <PresentationNavigateProvider navigate={navigate}>
@@ -565,25 +563,29 @@ export default function PresentationTool(props: {
                         onRefresh={handleRefresh}
                         openPopup={handleOpenPopup}
                         overlaysConnection={overlaysConnection}
-                        params={params}
-                        perspective={state.perspective}
+                        previewUrl={params.preview}
+                        perspective={perspective}
                         ref={iframeRef}
+                        setPerspective={setPerspective}
+                        setViewport={setViewport}
                         targetOrigin={targetOrigin}
                         toggleNavigator={toggleNavigator}
                         toggleOverlay={toggleOverlay}
-                        viewport={state.viewport}
+                        viewport={viewport}
                         visualEditing={state.visualEditing}
                       />
                     </BoundaryElementProvider>
                   </Flex>
                 </Panel>
                 <PresentationContent
-                  mainDocumentState={mainDocumentState}
-                  params={params}
+                  documentId={params.id}
                   documentsOnPage={documentsOnPage}
+                  documentType={params.type}
                   getCommentIntent={getCommentIntent}
+                  mainDocumentState={mainDocumentState}
                   onFocusPath={handleFocusPath}
                   onStructureParams={handleStructureParams}
+                  searchParams={searchParams}
                   setDisplayedDocument={setDisplayedDocument}
                   structureParams={structureParams}
                 />
@@ -597,7 +599,7 @@ export default function PresentationTool(props: {
           <LoaderQueries
             channel={channel}
             liveQueries={liveQueries}
-            perspective={state.perspective}
+            perspective={perspective}
             liveDocument={displayedDocument}
             documentsOnPage={documentsOnPage}
           />

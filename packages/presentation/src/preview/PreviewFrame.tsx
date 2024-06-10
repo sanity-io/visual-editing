@@ -48,12 +48,10 @@ import {presentationLocaleNamespace} from '../i18n'
 import {
   ACTION_IFRAME_LOADED,
   ACTION_IFRAME_RELOAD,
-  ACTION_PERSPECTIVE,
-  ACTION_VIEWPORT,
   type DispatchPresentationAction,
   type PresentationState,
 } from '../reducers/presentationReducer'
-import type {PresentationParams} from '../types'
+import type {PresentationPerspective, PresentationViewport} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {IFrame} from './IFrame'
 import {PreviewLocationInput} from './PreviewLocationInput'
@@ -61,23 +59,22 @@ import {ShareUrlMenuItems} from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
 
-const PERSPECTIVE_TITLE_KEY: Record<PresentationState['perspective'], string> = {
+const PERSPECTIVE_TITLE_KEY: Record<PresentationPerspective, string> = {
   previewDrafts: 'preview-frame.perspective.previewDrafts.title',
   published: 'preview-frame.perspective.published.title',
 }
 
-const PERSPECTIVE_TONES: Record<PresentationState['perspective'], ButtonTone> = {
+const PERSPECTIVE_TONES: Record<PresentationPerspective, ButtonTone> = {
   previewDrafts: 'caution',
   published: 'positive',
 }
 
-const PERSPECTIVE_ICONS: Record<PresentationState['perspective'], ComponentType> = {
+const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
   previewDrafts: EditIcon,
   published: PublishIcon,
 }
 
-export interface PreviewFrameProps
-  extends Pick<PresentationState, 'iframe' | 'perspective' | 'viewport' | 'visualEditing'> {
+export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'visualEditing'> {
   dispatch: DispatchPresentationAction
   initialUrl: URL
   loadersConnection: ChannelStatus
@@ -86,10 +83,14 @@ export interface PreviewFrameProps
   onRefresh: (fallback: () => void) => void
   openPopup: (url: string) => void
   overlaysConnection: ChannelStatus
-  params: PresentationParams
+  perspective: PresentationPerspective
+  previewUrl?: string
+  setPerspective: (perspective: 'previewDrafts' | 'published') => void
+  setViewport: (mode: 'desktop' | 'mobile') => void
   targetOrigin: string
   toggleNavigator?: () => void
   toggleOverlay: () => void
+  viewport: PresentationViewport
 }
 
 export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
@@ -104,8 +105,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       onRefresh,
       openPopup,
       overlaysConnection,
-      params,
       perspective,
+      previewUrl,
+      setPerspective,
+      setViewport,
       targetOrigin,
       toggleNavigator,
       toggleOverlay,
@@ -117,14 +120,6 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     const {devMode} = usePresentationTool()
     const prefersReducedMotion = usePrefersReducedMotion()
 
-    const setDesktopMode = useCallback(
-      () => dispatch({type: ACTION_VIEWPORT, viewport: 'desktop'}),
-      [dispatch],
-    )
-    const setMobileMode = useCallback(
-      () => dispatch({type: ACTION_VIEWPORT, viewport: 'mobile'}),
-      [dispatch],
-    )
     const loading = iframe.status === 'loading' || iframe.status === 'reloading'
     const [timedOut, setTimedOut] = useState(false)
     const refreshing = iframe.status === 'refreshing'
@@ -144,9 +139,9 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
         // Funky way to reload an iframe without CORS issues
         // eslint-disable-next-line no-self-assign
         // ref.current.src = ref.current.src
-        ref.current.src = `${targetOrigin}${params.preview || '/'}`
+        ref.current.src = `${targetOrigin}${previewUrl || '/'}`
       })
-    }, [dispatch, onRefresh, params.preview, targetOrigin, ref])
+    }, [dispatch, onRefresh, previewUrl, targetOrigin, ref])
     const handleRetry = useCallback(() => {
       if (typeof ref === 'function' || !ref?.current) {
         return
@@ -210,11 +205,11 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     }, [loading, overlaysConnection, refreshing, showOverlaysConnectionStatus])
 
     const previewLocationRoute = useMemo(() => {
-      const previewUrl = new URL(params.preview || '/', targetOrigin)
-      const {pathname, search} = withoutSecretSearchParams(previewUrl)
+      const previewURL = new URL(previewUrl || '/', targetOrigin)
+      const {pathname, search} = withoutSecretSearchParams(previewURL)
 
       return `${pathname}${search}`
-    }, [params.preview, targetOrigin])
+    }, [previewUrl, targetOrigin])
 
     const onIFrameLoad = useCallback(() => {
       dispatch({type: ACTION_IFRAME_LOADED})
@@ -412,12 +407,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     <Menu style={{maxWidth: 240}}>
                       <MenuItem
                         fontSize={1}
-                        onClick={() =>
-                          dispatch({
-                            type: ACTION_PERSPECTIVE,
-                            perspective: 'previewDrafts',
-                          })
-                        }
+                        onClick={() => setPerspective('previewDrafts')}
                         padding={3}
                         pressed={perspective === 'previewDrafts'}
                         tone={PERSPECTIVE_TONES.previewDrafts}
@@ -449,12 +439,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                       </MenuItem>
                       <MenuItem
                         fontSize={1}
-                        onClick={() =>
-                          dispatch({
-                            type: ACTION_PERSPECTIVE,
-                            perspective: 'published',
-                          })
-                        }
+                        onClick={() => setPerspective('published')}
                         padding={3}
                         pressed={perspective === 'published'}
                         tone={PERSPECTIVE_TONES.published}
@@ -509,7 +494,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     fontSize={1}
                     icon={DesktopIcon}
                     mode="bleed"
-                    onClick={setDesktopMode}
+                    onClick={() => setViewport('desktop')}
                     padding={2}
                     selected={viewport === 'desktop'}
                   />
@@ -528,7 +513,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                     fontSize={1}
                     icon={MobileDeviceIcon}
                     mode="bleed"
-                    onClick={setMobileMode}
+                    onClick={() => setViewport('mobile')}
                     padding={2}
                     selected={viewport === 'mobile'}
                   />

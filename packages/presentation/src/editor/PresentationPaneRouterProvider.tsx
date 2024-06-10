@@ -11,8 +11,11 @@ import {
   type ReferenceChildLinkProps,
   useUnique,
 } from '../internals'
-import type {PresentationParams, StructureDocumentPaneParams} from '../types'
-import {usePresentationTool} from '../usePresentationTool'
+import type {
+  PersistentSearchParams,
+  PresentationParams,
+  StructureDocumentPaneParams,
+} from '../types'
 
 function encodeQueryString(params: Record<string, unknown> = {}): string {
   const parts = Object.entries(params)
@@ -46,22 +49,17 @@ function resolveQueryStringFromParams(nextParams: Record<string, string | undefi
 }
 
 const BackLink = forwardRef(function BackLink(
-  props: BackLinkProps,
+  props: BackLinkProps & {searchParams: PersistentSearchParams},
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  const {params, structureParams} = usePresentationTool()
-
+  const {searchParams, ...restProps} = props
   return (
     <StateLink
-      {...props}
+      {...restProps}
       ref={ref}
       state={{
         type: undefined,
-        _searchParams: Object.entries({
-          ...structureParams,
-          perspective: params.perspective,
-          preview: params.preview,
-        }),
+        _searchParams: Object.entries(searchParams),
       }}
       title={undefined}
     />
@@ -69,7 +67,7 @@ const BackLink = forwardRef(function BackLink(
 })
 
 const ReferenceChildLink = forwardRef(function ReferenceChildLink(
-  props: ReferenceChildLinkProps & {previewUrl?: string},
+  props: ReferenceChildLinkProps & {searchParams: PersistentSearchParams},
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   const {
@@ -79,10 +77,9 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
     parentRefPath,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     template,
-    previewUrl,
+    searchParams,
     ...restProps
   } = props
-  const {params} = usePresentationTool()
 
   return (
     <StateLink
@@ -92,8 +89,8 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
         id: documentId,
         type: documentType,
         _searchParams: Object.entries({
-          preview: previewUrl,
-          prefersLatestPublished: params.perspective === 'published' ? 'true' : undefined,
+          ...searchParams,
+          prefersLatestPublished: searchParams.perspective === 'published' ? 'true' : undefined,
         }),
       }}
       title={undefined}
@@ -104,12 +101,12 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
 export function PresentationPaneRouterProvider(
   props: PropsWithChildren<{
     onStructureParams: (params: StructureDocumentPaneParams) => void
-    params: StructureDocumentPaneParams
-    previewUrl?: string
     refs?: {_id: string; _type: string}[]
+    searchParams: PersistentSearchParams
+    structureParams: StructureDocumentPaneParams
   }>,
 ): ReactElement {
-  const {children, onStructureParams, params, previewUrl, refs} = props
+  const {children, onStructureParams, structureParams, searchParams, refs} = props
 
   const {state: routerState, resolvePathFromState} = useRouter()
 
@@ -133,15 +130,13 @@ export function PresentationPaneRouterProvider(
       groupIndex: 0,
       siblingIndex: 0,
       payload: {},
-      params: params as any,
+      params: structureParams as any,
       hasGroupSiblings: false,
       groupLength: 1,
       routerPanesState: [],
       ChildLink: (childLinkProps) => {
         const {childId, ...restProps} = childLinkProps
         const ref = refs?.find((r) => r._id === childId || getPublishedId(r._id) === childId)
-        const {params} = usePresentationTool()
-
         if (ref) {
           return (
             <StateLink
@@ -150,8 +145,9 @@ export function PresentationPaneRouterProvider(
                 id: childId,
                 type: ref._type,
                 _searchParams: Object.entries({
-                  preview: previewUrl,
-                  prefersLatestPublished: params.perspective === 'published' ? 'true' : undefined,
+                  ...searchParams,
+                  prefersLatestPublished:
+                    searchParams?.perspective === 'published' ? 'true' : undefined,
                 }),
               }}
             />
@@ -160,9 +156,9 @@ export function PresentationPaneRouterProvider(
 
         return <div {...restProps} />
       },
-      BackLink,
+      BackLink: (backLinkProps) => <BackLink {...backLinkProps} searchParams={searchParams} />,
       ReferenceChildLink: (childLinkProps) => (
-        <ReferenceChildLink {...childLinkProps} previewUrl={previewUrl} />
+        <ReferenceChildLink {...childLinkProps} searchParams={searchParams} />
       ),
       ParameterizedLink: () => <>ParameterizedLink</>,
       closeCurrentAndAfter: () => {
@@ -199,7 +195,7 @@ export function PresentationPaneRouterProvider(
       },
       createPathWithParams,
     }
-  }, [createPathWithParams, onStructureParams, params, previewUrl, refs])
+  }, [createPathWithParams, onStructureParams, refs, searchParams, structureParams])
 
   return <PaneRouterContext.Provider value={context}>{children}</PaneRouterContext.Provider>
 }

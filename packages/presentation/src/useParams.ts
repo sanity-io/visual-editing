@@ -5,6 +5,7 @@ import {getPublishedId} from './internals'
 import {parseRouterState} from './lib/parse'
 import type {
   FrameState,
+  PersistentSearchParams,
   PresentationNavigate,
   PresentationParams,
   PresentationSearchParams,
@@ -37,6 +38,7 @@ export function useParams({
 }): {
   navigate: PresentationNavigate
   params: PresentationParams
+  searchParams: PersistentSearchParams
   structureParams: StructureDocumentPaneParams
 } {
   const params = useMemo<PresentationParams>(() => {
@@ -96,6 +98,15 @@ export function useParams({
     params.view,
   ])
 
+  const searchParams = useMemo<PersistentSearchParams>(() => {
+    const pruned = pruneObject({
+      perspective: params.perspective,
+      preview: params.preview,
+      viewport: params.viewport,
+    })
+    return pruned
+  }, [params.perspective, params.preview, params.viewport])
+
   const routerStateRef = useRef(routerState)
 
   useEffect(() => {
@@ -147,8 +158,9 @@ export function useParams({
   )
 
   return {
-    structureParams,
     navigate,
     params,
+    searchParams,
+    structureParams,
   }
 }
