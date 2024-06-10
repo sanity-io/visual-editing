@@ -87,6 +87,10 @@ export function extractSchema(
     schema.push(base)
   })
 
+  function isConverted(schemaType: SanitySchemaType) {
+    return inlineFields.has(schemaType)
+  }
+
   function convertBaseType(
     schemaType: SanitySchemaType,
   ): DocumentSchemaType | TypeDeclarationSchemaType | null {
@@ -100,7 +104,7 @@ export function extractSchema(
     if (typeName === 'document' && isObjectType(schemaType)) {
       const defaultAttributes = documentDefaultFields(schemaType.name)
 
-      const object = createObject(schemaType)
+      const object = createObject(schemaType, isConverted, extractOptions)
       if (object.type === 'unknown') {
         return null
       }
@@ -115,7 +119,7 @@ export function extractSchema(
       }
     }
 
-    const value = convertSchemaType(schemaType)
+    const value = convertSchemaType(schemaType, isConverted, extractOptions)
     if (value.type === 'unknown') {
       return null
     }
@@ -146,148 +150,159 @@ export function extractSchema(
     }
   }
 
-  function convertSchemaType(schemaType: SanitySchemaType): TypeNode {
-    if (lastType(schemaType)?.name === 'document') {
-      return createReferenceTypeNode(schemaType.name)
-    }
+  return schema
+}
 
-    // if we have already seen the base type, we can just reference it
-    if (inlineFields.has(schemaType.type!)) {
-      return {type: 'inline', name: schemaType.type!.name} satisfies InlineTypeNode
-    }
-
-    // If we have a type that is point to a type, that is pointing to a type, we assume this is a circular reference
-    // and we return an inline type referencing it instead
-    if (schemaType.type?.type?.name === 'object') {
-      return {type: 'inline', name: schemaType.type.name} satisfies InlineTypeNode
-    }
-
-    if (isStringType(schemaType)) {
-      return createStringTypeNodeDefintion(schemaType)
-    }
-
-    if (isNumberType(schemaType)) {
-      return createNumberTypeNodeDefintion(schemaType)
-    }
-
-    // map some known types
-    if (schemaType.type && typesMap.has(schemaType.type.name)) {
-      return typesMap.get(schemaType.type.name)!
-    }
-
-    // Cross dataset references are not supported
-    if (isCrossDatasetReferenceType(schemaType)) {
-      return {type: 'unknown'} satisfies UnknownTypeNode // we don't support cross-dataset references at the moment
-    }
-
-    if (isReferenceType(schemaType)) {
-      return createReferenceTypeNodeDefintion(schemaType)
-    }
-
-    if (isArrayType(schemaType)) {
-      return createArray(schemaType)
-    }
-
-    if (isObjectType(schemaType)) {
-      return createObject(schemaType)
-    }
-
-    throw new Error(`Type "${schemaType.name}" not found`)
+/** @internal */
+export function convertSchemaType(
+  schemaType: SanitySchemaType,
+  isConverted: (type: SanitySchemaType) => boolean,
+  extractOptions: ExtractSchemaOptions = {},
+): TypeNode {
+  if (lastType(schemaType)?.name === 'document') {
+    return createReferenceTypeNode(schemaType.name)
   }
 
-  function createObject(
-    schemaType: ObjectSchemaType | SanitySchemaType,
-  ): ObjectTypeNode | UnknownTypeNode {
-    const attributes: Record<string, ObjectAttribute> = {}
+  // if we have already seen the base type, we can just reference it
+  if (isConverted(schemaType.type!)) {
+    return {type: 'inline', name: schemaType.type!.name} satisfies InlineTypeNode
+  }
 
-    const fields = gatherFields(schemaType)
-    for (const field of fields) {
-      const fieldIsRequired = isFieldRequired(field)
-      const value = convertSchemaType(field.type)
-      if (value === null) {
-        continue
-      }
+  // If we have a type that is point to a type, that is pointing to a type, we assume this is a circular reference
+  // and we return an inline type referencing it instead
+  if (schemaType.type?.type?.name === 'object') {
+    return {type: 'inline', name: schemaType.type.name} satisfies InlineTypeNode
+  }
 
-      // if the field sets assetRequired() we will mark the asset attribute as required
-      // also guard against the case where the field is not an object, though type validation should catch this
-      if (hasAssetRequired(field) && value.type === 'object') {
-        value.attributes['asset'].optional = false
-      }
+  if (isStringType(schemaType)) {
+    return createStringTypeNodeDefintion(schemaType)
+  }
 
-      // if we extract with enforceRequiredFields, we will mark the field as optional only if it is not a required field,
-      // else we will always mark it as optional
-      const optional = extractOptions.enforceRequiredFields ? fieldIsRequired === false : true
+  if (isNumberType(schemaType)) {
+    return createNumberTypeNodeDefintion(schemaType)
+  }
 
-      attributes[field.name] = {
-        type: 'objectAttribute',
-        value,
-        optional,
-      }
+  // map some known types
+  if (schemaType.type && typesMap.has(schemaType.type.name)) {
+    return typesMap.get(schemaType.type.name)!
+  }
+
+  // Cross dataset references are not supported
+  if (isCrossDatasetReferenceType(schemaType)) {
+    return {type: 'unknown'} satisfies UnknownTypeNode // we don't support cross-dataset references at the moment
+  }
+
+  if (isReferenceType(schemaType)) {
+    return createReferenceTypeNodeDefintion(schemaType)
+  }
+
+  if (isArrayType(schemaType)) {
+    return createArray(schemaType, isConverted, extractOptions)
+  }
+
+  if (isObjectType(schemaType)) {
+    return createObject(schemaType, isConverted, extractOptions)
+  }
+
+  throw new Error(`Type "${schemaType.name}" not found`)
+}
+
+function createObject(
+  schemaType: ObjectSchemaType | SanitySchemaType,
+  isConverted: (schemaType: SanitySchemaType) => boolean,
+  extractOptions: ExtractSchemaOptions = {},
+): ObjectTypeNode | UnknownTypeNode {
+  const attributes: Record<string, ObjectAttribute> = {}
+
+  const fields = gatherFields(schemaType)
+  for (const field of fields) {
+    const fieldIsRequired = isFieldRequired(field)
+    const value = convertSchemaType(field.type, isConverted, extractOptions)
+    if (value === null) {
+      continue
     }
 
-    // Ignore empty objects
-    if (Object.keys(attributes).length === 0) {
-      return {type: 'unknown'} satisfies UnknownTypeNode
+    // if the field sets assetRequired() we will mark the asset attribute as required
+    // also guard against the case where the field is not an object, though type validation should catch this
+    if (hasAssetRequired(field) && value.type === 'object') {
+      value.attributes['asset'].optional = false
     }
 
-    if (schemaType.type?.name !== 'document' && schemaType.name !== 'object') {
-      attributes['_type'] = {
-        type: 'objectAttribute',
-        value: {
-          type: 'string',
-          value: schemaType.name,
+    // if we extract with enforceRequiredFields, we will mark the field as optional only if it is not a required field,
+    // else we will always mark it as optional
+    const optional = extractOptions.enforceRequiredFields ? fieldIsRequired === false : true
+
+    attributes[field.name] = {
+      type: 'objectAttribute',
+      value,
+      optional,
+    }
+  }
+
+  // Ignore empty objects
+  if (Object.keys(attributes).length === 0) {
+    return {type: 'unknown'} satisfies UnknownTypeNode
+  }
+
+  if (schemaType.type?.name !== 'document' && schemaType.name !== 'object') {
+    attributes['_type'] = {
+      type: 'objectAttribute',
+      value: {
+        type: 'string',
+        value: schemaType.name,
+      },
+    }
+  }
+
+  return {
+    type: 'object',
+    attributes,
+  }
+}
+
+function createArray(
+  arraySchemaType: ArraySchemaType,
+  isConverted: (schemaType: SanitySchemaType) => boolean,
+  extractOptions: ExtractSchemaOptions = {},
+): ArrayTypeNode | NullTypeNode {
+  const of: TypeNode[] = []
+  for (const item of arraySchemaType.of) {
+    const field = convertSchemaType(item, isConverted, extractOptions)
+    if (field.type === 'inline') {
+      of.push({
+        type: 'object',
+        attributes: {
+          _key: createKeyField(),
+        },
+        rest: field,
+      } satisfies ObjectTypeNode)
+    } else if (field.type === 'object') {
+      field.rest = {
+        type: 'object',
+        attributes: {
+          _key: createKeyField(),
         },
       }
-    }
-
-    return {
-      type: 'object',
-      attributes,
+      of.push(field)
+    } else {
+      of.push(field)
     }
   }
 
-  function createArray(arraySchemaType: ArraySchemaType): ArrayTypeNode | NullTypeNode {
-    const of: TypeNode[] = []
-    for (const item of arraySchemaType.of) {
-      const field = convertSchemaType(item)
-      if (field.type === 'inline') {
-        of.push({
-          type: 'object',
-          attributes: {
-            _key: createKeyField(),
-          },
-          rest: field,
-        } satisfies ObjectTypeNode)
-      } else if (field.type === 'object') {
-        field.rest = {
-          type: 'object',
-          attributes: {
-            _key: createKeyField(),
-          },
-        }
-        of.push(field)
-      } else {
-        of.push(field)
-      }
-    }
-
-    if (of.length === 0) {
-      return {type: 'null'}
-    }
-
-    return {
-      type: 'array',
-      of:
-        of.length > 1
-          ? {
-              type: 'union',
-              of,
-            }
-          : of[0],
-    }
+  if (of.length === 0) {
+    return {type: 'null'}
   }
 
-  return schema
+  return {
+    type: 'array',
+    of:
+      of.length > 1
+        ? {
+            type: 'union',
+            of,
+          }
+        : of[0],
+  }
 }
 
 function createKeyField(): ObjectAttribute<StringTypeNode> {
