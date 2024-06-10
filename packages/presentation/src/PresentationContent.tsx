@@ -13,8 +13,8 @@ import {Panel} from './panels/Panel'
 import {PanelResizer} from './panels/PanelResizer'
 import type {
   MainDocumentState,
-  PersistentSearchParams,
   PresentationParams,
+  PresentationSearchParams,
   StructureDocumentPaneParams,
 } from './types'
 
@@ -26,7 +26,7 @@ export interface PresentationContentProps {
   mainDocumentState: MainDocumentState | undefined
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
-  searchParams: PersistentSearchParams
+  searchParams: PresentationSearchParams
   setDisplayedDocument: Dispatch<SetStateAction<Partial<SanityDocument> | null | undefined>>
   structureParams: StructureDocumentPaneParams
 }

@@ -11,7 +11,7 @@ import {
   type DocumentPaneNode,
   PaneLayout,
 } from '../internals'
-import type {PersistentSearchParams, StructureDocumentPaneParams} from '../types'
+import type {PresentationSearchParams, StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
@@ -25,7 +25,7 @@ export function DocumentPane(props: {
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
   structureParams: StructureDocumentPaneParams
-  searchParams: PersistentSearchParams
+  searchParams: PresentationSearchParams
 }): ReactElement {
   const {documentId, documentType, onFocusPath, onStructureParams, searchParams, structureParams} =
     props

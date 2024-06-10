@@ -1,9 +1,9 @@
 import {createContext} from 'react'
 
 import type {
-  PersistentSearchParams,
   PresentationNavigate,
   PresentationParams,
+  PresentationSearchParams,
   StructureDocumentPaneParams,
 } from './types'
 
@@ -13,7 +13,7 @@ export interface PresentationContextValue {
   navigate: PresentationNavigate
   params: PresentationParams
   structureParams: StructureDocumentPaneParams
-  searchParams: PersistentSearchParams
+  searchParams: PresentationSearchParams
 }
 
 export const PresentationContext = createContext<PresentationContextValue | null>(null)

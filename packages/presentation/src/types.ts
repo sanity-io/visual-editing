@@ -155,12 +155,32 @@ export interface PresentationPluginOptions {
   unstable_showUnsafeShareUrl?: boolean
 }
 
+/**
+ * Presentation specific state that is stored in the pathname section of the URL
+ * @internal
+ */
 export interface PresentationStateParams {
   type?: string
   id?: string
   path?: string
 }
 
+/**
+ * Presentation specific URL search parameters, they should persist when
+ * navigating between the document pane and document list pane
+ * @internal
+ */
+export interface PresentationSearchParams {
+  preview?: string
+  perspective?: string
+  viewport?: string
+}
+
+/**
+ * Document Pane specific URL search parameters, they should not persist when
+ * navigating between the document pane and document list pane
+ * @internal
+ */
 export interface StructureDocumentPaneParams {
   inspect?: string
   path?: string
@@ -179,26 +199,24 @@ export interface StructureDocumentPaneParams {
   comment?: string
 }
 
-export interface PersistentSearchParams {
-  preview?: string
-  perspective?: string
-  viewport?: string
-}
-
-export interface PresentationParams
-  extends PresentationStateParams,
-    StructureDocumentPaneParams,
-    PersistentSearchParams {
-  id?: string
-}
-
-export interface PresentationSearchParams
+/**
+ * All possible URL search parameters used by the Presentation tool
+ * @internal
+ */
+export interface CombinedSearchParams
   extends StructureDocumentPaneParams,
-    PersistentSearchParams {}
+    PresentationSearchParams {}
+
+/**
+ * All possible parameters that can be used to describe the state of the
+ * Presentation tool, stored in the pathname and as search parameters of the URL
+ * @internal
+ */
+export interface PresentationParams extends PresentationStateParams, CombinedSearchParams {}
 
 export type PresentationNavigate = (
   nextState: PresentationStateParams,
-  nextSearchState?: PresentationSearchParams,
+  nextSearchState?: CombinedSearchParams,
   forceReplace?: boolean,
 ) => void
 

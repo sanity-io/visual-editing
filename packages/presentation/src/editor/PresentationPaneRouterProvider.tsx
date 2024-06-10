@@ -12,8 +12,8 @@ import {
   useUnique,
 } from '../internals'
 import type {
-  PersistentSearchParams,
   PresentationParams,
+  PresentationSearchParams,
   StructureDocumentPaneParams,
 } from '../types'
 
@@ -49,7 +49,7 @@ function resolveQueryStringFromParams(nextParams: Record<string, string | undefi
 }
 
 const BackLink = forwardRef(function BackLink(
-  props: BackLinkProps & {searchParams: PersistentSearchParams},
+  props: BackLinkProps & {searchParams: PresentationSearchParams},
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   const {searchParams, ...restProps} = props
@@ -67,7 +67,7 @@ const BackLink = forwardRef(function BackLink(
 })
 
 const ReferenceChildLink = forwardRef(function ReferenceChildLink(
-  props: ReferenceChildLinkProps & {searchParams: PersistentSearchParams},
+  props: ReferenceChildLinkProps & {searchParams: PresentationSearchParams},
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   const {
@@ -102,7 +102,7 @@ export function PresentationPaneRouterProvider(
   props: PropsWithChildren<{
     onStructureParams: (params: StructureDocumentPaneParams) => void
     refs?: {_id: string; _type: string}[]
-    searchParams: PersistentSearchParams
+    searchParams: PresentationSearchParams
     structureParams: StructureDocumentPaneParams
   }>,
 ): ReactElement {

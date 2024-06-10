@@ -2,9 +2,9 @@ import {type FunctionComponent, type PropsWithChildren, useMemo} from 'react'
 
 import {PresentationContext, type PresentationContextValue} from './PresentationContext'
 import type {
-  PersistentSearchParams,
   PresentationNavigate,
   PresentationParams,
+  PresentationSearchParams,
   StructureDocumentPaneParams,
 } from './types'
 
@@ -14,7 +14,7 @@ export const PresentationProvider: FunctionComponent<
     name: string
     navigate: PresentationNavigate
     params: PresentationParams
-    searchParams: PersistentSearchParams
+    searchParams: PresentationSearchParams
     structureParams: StructureDocumentPaneParams
   }>
 > = function (props) {

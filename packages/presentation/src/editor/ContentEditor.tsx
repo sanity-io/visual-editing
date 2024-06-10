@@ -14,7 +14,11 @@ import {
   useSchema,
   useTranslation,
 } from '../internals'
-import type {MainDocumentState, PersistentSearchParams, StructureDocumentPaneParams} from '../types'
+import type {
+  MainDocumentState,
+  PresentationSearchParams,
+  StructureDocumentPaneParams,
+} from '../types'
 import {DocumentListPane} from './DocumentListPane'
 import {DocumentPanel} from './DocumentPanel'
 import usePreviewState from './usePreviewState'
@@ -27,7 +31,7 @@ export function ContentEditor(props: {
   onStructureParams: (params: StructureDocumentPaneParams) => void
   refs: {_id: string; _type: string}[]
   structureParams: StructureDocumentPaneParams
-  searchParams: PersistentSearchParams
+  searchParams: PresentationSearchParams
 }): ReactElement {
   const {
     documentId,

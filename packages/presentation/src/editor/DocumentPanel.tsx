@@ -2,7 +2,7 @@ import {type ReactElement} from 'react'
 import {type Path} from 'sanity'
 
 import {StructureToolProvider} from '../internals'
-import type {PersistentSearchParams, StructureDocumentPaneParams} from '../types'
+import type {PresentationSearchParams, StructureDocumentPaneParams} from '../types'
 import {DocumentPane} from './DocumentPane'
 
 export function DocumentPanel(props: {
@@ -10,7 +10,7 @@ export function DocumentPanel(props: {
   documentType: string
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
-  searchParams: PersistentSearchParams
+  searchParams: PresentationSearchParams
   structureParams: StructureDocumentPaneParams
 }): ReactElement {
   const {documentId, documentType, onFocusPath, onStructureParams, searchParams, structureParams} =
