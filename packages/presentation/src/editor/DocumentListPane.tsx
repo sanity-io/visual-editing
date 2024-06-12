@@ -12,7 +12,11 @@ import {
   type PaneNode,
   StructureToolProvider,
 } from '../internals'
-import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
+import type {
+  MainDocumentState,
+  PresentationSearchParams,
+  StructureDocumentPaneParams,
+} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
@@ -34,10 +38,10 @@ const WrappedCode = styled(Code)`
 export function DocumentListPane(props: {
   mainDocumentState?: MainDocumentState
   onStructureParams: (params: StructureDocumentPaneParams) => void
-  previewUrl?: string
+  searchParams: PresentationSearchParams
   refs: {_id: string; _type: string}[]
 }): ReactElement {
-  const {mainDocumentState, onStructureParams, previewUrl, refs} = props
+  const {mainDocumentState, onStructureParams, searchParams, refs} = props
 
   const {t} = useTranslation(presentationLocaleNamespace)
   const {devMode} = usePresentationTool()
@@ -101,8 +105,8 @@ export function DocumentListPane(props: {
         <StructureToolProvider>
           <PresentationPaneRouterProvider
             onStructureParams={onStructureParams}
-            params={structureParams}
-            previewUrl={previewUrl}
+            structureParams={structureParams}
+            searchParams={searchParams}
             refs={refs}
           >
             <Root direction="column" flex={1}>

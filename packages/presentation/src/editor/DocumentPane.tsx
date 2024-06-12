@@ -11,7 +11,7 @@ import {
   type DocumentPaneNode,
   PaneLayout,
 } from '../internals'
-import type {StructureDocumentPaneParams} from '../types'
+import type {PresentationSearchParams, StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
@@ -24,11 +24,12 @@ export function DocumentPane(props: {
   documentType: string
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
-  params: StructureDocumentPaneParams
-  previewUrl?: string
+  structureParams: StructureDocumentPaneParams
+  searchParams: PresentationSearchParams
 }): ReactElement {
-  const {documentId, documentType, onFocusPath, onStructureParams, params, previewUrl} = props
-  const {template, templateParams} = params
+  const {documentId, documentType, onFocusPath, onStructureParams, searchParams, structureParams} =
+    props
+  const {template, templateParams} = structureParams
 
   const {t} = useTranslation(presentationLocaleNamespace)
   const {devMode} = usePresentationTool()
@@ -58,7 +59,7 @@ export function DocumentPane(props: {
   // Reset error state when parameters change
   useEffect(() => {
     setErrorParams(null)
-  }, [documentId, documentType, params])
+  }, [documentId, documentType, structureParams])
 
   if (errorParams) {
     return (
@@ -82,9 +83,9 @@ export function DocumentPane(props: {
     <ErrorBoundary onCatch={setErrorParams}>
       <PaneLayout style={{height: '100%'}}>
         <PresentationPaneRouterProvider
+          searchParams={searchParams}
           onStructureParams={onStructureParams}
-          params={params}
-          previewUrl={previewUrl}
+          structureParams={structureParams}
         >
           <StructureDocumentPane
             paneKey="document"

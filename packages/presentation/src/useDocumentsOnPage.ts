@@ -2,8 +2,7 @@ import type {ClientPerspective} from '@sanity/client'
 import isEqual from 'fast-deep-equal'
 import {type MutableRefObject, useCallback, useMemo, useRef, useState} from 'react'
 
-import type {PresentationState} from './reducers/presentationReducer'
-import type {FrameState} from './types'
+import type {FrameState, PresentationPerspective} from './types'
 
 export type DocumentOnPage = {
   _id: string
@@ -16,11 +15,11 @@ type KeyedDocumentCache = Record<string, DocumentCache>
 let warnedAboutCrossDatasetReference = false
 
 export function useDocumentsOnPage(
-  perspective: PresentationState['perspective'],
+  perspective: PresentationPerspective,
   frameStateRef: MutableRefObject<FrameState>,
 ): [
   DocumentOnPage[],
-  (key: string, perspective: PresentationState['perspective'], state: DocumentOnPage[]) => void,
+  (key: string, perspective: PresentationPerspective, state: DocumentOnPage[]) => void,
 ] {
   if (perspective !== 'published' && perspective !== 'previewDrafts') {
     throw new Error(`Invalid perspective: ${perspective}`)

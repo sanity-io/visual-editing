@@ -4,6 +4,7 @@ import type {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
 import {getPublishedId} from './internals'
 import {parseRouterState} from './lib/parse'
 import type {
+  CombinedSearchParams,
   FrameState,
   PresentationNavigate,
   PresentationParams,
@@ -37,6 +38,7 @@ export function useParams({
 }): {
   navigate: PresentationNavigate
   params: PresentationParams
+  searchParams: PresentationSearchParams
   structureParams: StructureDocumentPaneParams
 } {
   const params = useMemo<PresentationParams>(() => {
@@ -96,6 +98,15 @@ export function useParams({
     params.view,
   ])
 
+  const searchParams = useMemo<PresentationSearchParams>(() => {
+    const pruned = pruneObject({
+      perspective: params.perspective,
+      preview: params.preview,
+      viewport: params.viewport,
+    })
+    return pruned
+  }, [params.perspective, params.preview, params.viewport])
+
   const routerStateRef = useRef(routerState)
 
   useEffect(() => {
@@ -112,8 +123,8 @@ export function useParams({
 
       // Convert array of search params to an object
       const routerSearchState = (routerSearchParams || []).reduce(
-        (acc, [key, value]) => ((acc[key as keyof PresentationSearchParams] = value), acc),
-        {} as PresentationSearchParams,
+        (acc, [key, value]) => ((acc[key as keyof CombinedSearchParams] = value), acc),
+        {} as CombinedSearchParams,
       )
 
       // Merge routerState and incoming state
@@ -147,8 +158,9 @@ export function useParams({
   )
 
   return {
-    structureParams,
     navigate,
     params,
+    searchParams,
+    structureParams,
   }
 }
