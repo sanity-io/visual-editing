@@ -407,10 +407,8 @@ export default function PresentationTool(props: {
       !params.prefersLatestPublished
     ) {
       navigate({}, {prefersLatestPublished: 'true'}, true)
-      latestPublishedIdRef.current = params.id
-    } else if (!params.id) {
-      latestPublishedIdRef.current = undefined
     }
+    latestPublishedIdRef.current = params.id
   }, [navigate, params.id, params.prefersLatestPublished, params.rev, perspective])
 
   // Dispatch a navigation message when the preview param changes
