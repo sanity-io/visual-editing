@@ -5,7 +5,6 @@ import {useClient} from 'sanity'
 import {useRouter} from 'sanity/router'
 
 import {API_VERSION} from './constants'
-import {useDocumentStore} from './internals'
 import type {
   DocumentResolver,
   DocumentResolverContext,
@@ -96,7 +95,6 @@ export function useMainDocument(props: {
   const {navigate, resolvers = [], path, previewUrl} = props
 
   const {state: routerState} = useRouter()
-  const documentStore = useDocumentStore()
   const client = useClient({apiVersion: API_VERSION})
 
   const [mainDocumentState, setMainDocumentState] = useState<MainDocumentState | undefined>(
@@ -179,7 +177,7 @@ export function useMainDocument(props: {
     }
     clearState()
     return undefined
-  }, [client, clearState, documentStore, navigate, resolvers, url])
+  }, [client, clearState, navigate, resolvers, url])
 
   return mainDocumentState
 }
