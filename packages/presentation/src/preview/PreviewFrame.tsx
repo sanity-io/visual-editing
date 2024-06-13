@@ -120,6 +120,10 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     const {devMode} = usePresentationTool()
     const prefersReducedMotion = usePrefersReducedMotion()
 
+    const toggleViewportSize = useCallback(
+      () => setViewport(viewport === 'desktop' ? 'mobile' : 'desktop'),
+      [setViewport, viewport],
+    )
     const loading = iframe.status === 'loading' || iframe.status === 'reloading'
     const [timedOut, setTimedOut] = useState(false)
     const refreshing = iframe.status === 'refreshing'
@@ -480,42 +484,26 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 />
               </Flex>
 
-              <Flex align="center" flex="none" gap={1} padding={1}>
+              <Flex align="center" flex="none" gap={1}>
                 <Tooltip
                   animate
-                  content={<Text size={1}>{t('preview-frame.viewport-full-button.tooltip')}</Text>}
+                  content={
+                    <Text size={1}>
+                      Switch to {viewport === 'desktop' ? 'narrow' : 'full'} viewport
+                    </Text>
+                  }
                   fallbackPlacements={['bottom-start']}
                   padding={2}
                   placement="bottom"
                   portal
                 >
                   <Button
-                    aria-label={t('preview-frame.viewport-full-button.aria-label')}
+                    aria-label={`Toggle viewport size`}
                     fontSize={1}
-                    icon={DesktopIcon}
+                    icon={viewport === 'desktop' ? MobileDeviceIcon : DesktopIcon}
                     mode="bleed"
-                    onClick={() => setViewport('desktop')}
+                    onClick={toggleViewportSize}
                     padding={2}
-                    selected={viewport === 'desktop'}
-                  />
-                </Tooltip>
-                <Tooltip
-                  animate
-                  content={
-                    <Text size={1}>{t('preview-frame.viewport-narrow-button.tooltip')}</Text>
-                  }
-                  padding={2}
-                  placement="bottom"
-                  portal
-                >
-                  <Button
-                    aria-label={t('preview-frame.viewport-narrow-button.aria-label')}
-                    fontSize={1}
-                    icon={MobileDeviceIcon}
-                    mode="bleed"
-                    onClick={() => setViewport('mobile')}
-                    padding={2}
-                    selected={viewport === 'mobile'}
                   />
                 </Tooltip>
               </Flex>
