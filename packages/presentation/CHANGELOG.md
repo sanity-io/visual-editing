@@ -12,6 +12,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.15](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.14...presentation-v1.15.15) (2024-06-13)
+
+
+### Bug Fixes
+
+* **presentation:** dedupe search param derived state ([#1646](https://github.com/sanity-io/visual-editing/issues/1646)) ([6f21b7c](https://github.com/sanity-io/visual-editing/commit/6f21b7c6ff1d71b62490d9b05c84ea8118892d06))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.16 to 0.6.17
+
 ## [1.15.14](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.13...presentation-v1.15.14) (2024-06-07)
 
 
