@@ -15,7 +15,7 @@ import {
   TextInput,
   Tooltip,
 } from '@sanity/ui'
-import {type ChangeEvent, createElement, useReducer, useState} from 'react'
+import {type ChangeEvent, createElement, type CSSProperties, useReducer, useState} from 'react'
 import {isValidElementType} from 'react-is'
 
 import {getSchemaTypeIcon} from './getSchemaTypeIcon'
@@ -51,6 +51,10 @@ function fullInsertMenuReducer(state: InsertMenuState, event: InsertMenuEvent): 
 }
 
 const ALL_ITEMS_GROUP_NAME = 'all-items'
+
+const gridStyle: CSSProperties = {
+  gridTemplateColumns: 'repeat(auto-fill, minmax(118px, 1fr))',
+}
 
 /** @alpha */
 export type InsertMenuProps = InsertMenuOptions & {
@@ -91,11 +95,13 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
   return (
     <Menu padding={0}>
       <Flex direction="column" height="fill">
-        <Flex flex="none" align="center" paddingX={1} gap={1}>
+        {/* filter and views button */}
+        <Flex flex="none" align="center" padding={1} gap={1}>
           {props.filter ? (
-            <Box flex={1} paddingTop={1}>
+            <Box flex={1}>
               <TextInput
                 autoFocus
+                border={false}
                 fontSize={1}
                 icon={SearchIcon}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -118,9 +124,15 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
             </Box>
           ) : null}
         </Flex>
-        <Box padding={1}>
+
+        {/* tabs */}
+        <Box
+          paddingX={1}
+          paddingBottom={1}
+          style={{borderBottom: '1px solid var(--card-border-color)'}}
+        >
           {state.groups && state.groups.length > 0 ? (
-            <TabList paddingY={1} space={1}>
+            <TabList space={1}>
               {state.groups.map((group) => (
                 <Tab
                   id={`${group.name}-tab`}
@@ -135,14 +147,18 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
               ))}
             </TabList>
           ) : null}
+        </Box>
+
+        {/* results */}
+        <Box padding={1}>
           {filteredSchemaTypes.length === 0 ? (
-            <Box padding={3}>
-              <Text align="center" muted size={1}>
+            <Box padding={2}>
+              <Text muted size={1}>
                 {props.labels['insert-menu.search.no-results']}
               </Text>
             </Box>
           ) : !selectedView ? null : selectedView.name === 'grid' ? (
-            <Grid flex={1} autoRows="max" columns={3} gap={1}>
+            <Grid autoRows="auto" flex={1} gap={1} style={gridStyle}>
               {filteredSchemaTypes.map((schemaType) => (
                 <GridMenuItem
                   key={schemaType.name}
@@ -199,7 +215,11 @@ function ViewToggle(props: ViewToggleProps) {
   const nextView = props.views[viewIndex + 1] ?? props.views[0]
 
   return (
-    <Tooltip content={props.labels[viewToggleTooltip[nextView.name]]} portal>
+    <Tooltip
+      content={<Text size={1}>{props.labels[viewToggleTooltip[nextView.name]]}</Text>}
+      placeholder="top"
+      portal
+    >
       <Button
         mode="bleed"
         icon={viewToggleIcon[nextView.name]}
@@ -222,8 +242,8 @@ function GridMenuItem(props: GridMenuItemProps) {
   const [failedToLoad, setFailedToLoad] = useState(false)
 
   return (
-    <MenuItem padding={0} onClick={props.onClick}>
-      <Flex direction="column" gap={3} padding={2}>
+    <MenuItem padding={0} radius={2} onClick={props.onClick} style={{overflow: 'hidden'}}>
+      <Flex direction="column" gap={1} padding={1}>
         <Box
           flex="none"
           style={{
@@ -232,16 +252,21 @@ function GridMenuItem(props: GridMenuItemProps) {
             position: 'relative',
           }}
         >
-          {isValidElementType(props.icon)
-            ? createElement(props.icon, {
-                style: {
-                  position: 'absolute',
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translateX(-50%) translateY(-50%)',
-                },
-              })
-            : null}
+          {isValidElementType(props.icon) ? (
+            <Flex
+              align="center"
+              justify="center"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              <Text size={1}>{createElement(props.icon)}</Text>
+            </Flex>
+          ) : null}
           {failedToLoad ? null : (
             <img
               src={props.previewUrl(props.schemaType.name)}
@@ -257,8 +282,20 @@ function GridMenuItem(props: GridMenuItemProps) {
               }}
             />
           )}
+
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              boxShadow: 'inset 0 0 0 0.5px var(--card-fg-color)',
+              opacity: 0.1,
+            }}
+          />
         </Box>
-        <Box flex={1}>
+        <Box flex={1} padding={2}>
           <Text size={1} weight="medium">
             {props.schemaType.title ?? props.schemaType.name}
           </Text>
