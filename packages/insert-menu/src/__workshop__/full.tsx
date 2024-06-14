@@ -1,7 +1,7 @@
 import {CommentIcon, DesktopIcon, EnvelopeIcon, InfoOutlineIcon, SyncIcon} from '@sanity/icons'
 import type {ObjectSchemaType} from '@sanity/types'
 import {Box, Card, LayerProvider} from '@sanity/ui'
-import {useAction} from '@sanity/ui-workshop'
+import {useAction, useSelect} from '@sanity/ui-workshop'
 
 import {InsertMenu, type InsertMenuProps} from '../InsertMenu'
 
@@ -70,6 +70,11 @@ const views: InsertMenuProps['views'] = [
 ]
 
 export default function FullStory() {
+  const iconsEnabled = useSelect('icons', {true: true, false: false}, true)
+  const filterEnabled = useSelect('filter', {true: true, false: false}, true)
+  const groupsEnabled = useSelect('groups', {true: true, false: false}, true)
+  const viewsEnabled = useSelect('views', {true: true, false: false}, true)
+
   const onSelect = useAction('onSelect')
 
   return (
@@ -77,18 +82,13 @@ export default function FullStory() {
       <Card radius={3} shadow={3}>
         <LayerProvider>
           <InsertMenu
-            //
-            filter
-            groups={groups}
+            icons={iconsEnabled}
+            filter={filterEnabled}
+            groups={groupsEnabled ? groups : undefined}
+            views={viewsEnabled ? views : undefined}
             labels={labels}
             onSelect={onSelect}
             schemaTypes={schemaTypes}
-            views={views}
-            // groups?: Array<{name: string; title?: string; of?: Array<string>}>
-            // /** defaultValue `true` */
-            // icons?: boolean
-            // /** @defaultValue `[{name: 'list'}]` */
-            // views?: Array<{name: 'list'} | {name: 'grid'; previewUrl: (schemaTypeName: string) => string}></string>
           />
         </LayerProvider>
       </Card>
