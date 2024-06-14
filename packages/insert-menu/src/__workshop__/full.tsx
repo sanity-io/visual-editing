@@ -1,10 +1,10 @@
 import {
   CommentIcon,
   DesktopIcon,
+  DocumentVideoIcon,
   EnvelopeIcon,
   InfoOutlineIcon,
   SyncIcon,
-  DocumentVideoIcon,
 } from '@sanity/icons'
 import type {ObjectSchemaType} from '@sanity/types'
 import {Box, Card, LayerProvider} from '@sanity/ui'
