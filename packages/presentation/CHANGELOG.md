@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.15.16](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.15...presentation-v1.15.16) (2024-06-14)
+
+
+### Bug Fixes
+
+* **presentation:** support references in location resolver selections ([#1652](https://github.com/sanity-io/visual-editing/issues/1652)) ([67988f9](https://github.com/sanity-io/visual-editing/commit/67988f9c1aad8cfef054be21935c1c277525b2a8))
+
 ## [1.15.15](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.14...presentation-v1.15.15) (2024-06-13)
 
 

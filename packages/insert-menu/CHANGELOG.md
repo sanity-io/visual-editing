@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.2...insert-menu-v1.0.3) (2024-06-14)
+
+
+### Bug Fixes
+
+* **insert-menu:** remove border and extra spacing when there are no options ([#1660](https://github.com/sanity-io/visual-editing/issues/1660)) ([5dc50e3](https://github.com/sanity-io/visual-editing/commit/5dc50e3ee824f7977f16d524557784de73018374))
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.1...insert-menu-v1.0.2) (2024-06-13)
 
 
