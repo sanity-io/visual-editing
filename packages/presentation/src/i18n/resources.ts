@@ -74,14 +74,12 @@ export default {
   /** Text describing the current status of the preview frame */
   'preview-frame.status_timeout':
     'Unable to connect, check the browser console for more information.',
-  /** The `aria-label` for the button that switches to a full viewport */
-  'preview-frame.viewport-full-button.aria-label': 'Full viewport',
-  /** The tooltip text for the button that switches to a full viewport */
-  'preview-frame.viewport-full-button.tooltip': 'Full viewport',
-  /** The `aria-label` for the button that switches to a narrow viewport */
-  'preview-frame.viewport-narrow-button.aria-label': 'Narrow viewport',
-  /** The tooltip text for the button that switches to a narrow viewport */
-  'preview-frame.viewport-narrow-button.tooltip': 'Narrow viewport',
+  /** The `aria-label` for the button that switches viewport size */
+  'preview-frame.viewport-button.aria-label': 'Toggle viewport size',
+  /** The viewport size button tooltip text when switching to a full width viewport */
+  'preview-frame.viewport-button.tooltip_full': 'Switch to full viewport',
+  /** The viewport size button tooltip text when switching to a narrow viewport */
+  'preview-frame.viewport-button.tooltip_narrow': 'Switch to narrow viewport',
   /** The validation error message shown when the preview location input is missing an origin */
   'preview-location-input.error_missing-origin': 'URL must start with ${{origin}}',
   /** The validation error message shown when the preview location input's base path matches that of the studio */
