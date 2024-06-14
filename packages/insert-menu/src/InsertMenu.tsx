@@ -91,61 +91,71 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
   })
   const filteredSchemaTypes = filterSchemaTypes(props.schemaTypes, state.query, state.groups)
   const selectedView = state.views.find((view) => view.selected)
+  const showingFilterOrViews = props.filter || state.views.length > 1
+  const showingTabs = state.groups && state.groups.length > 0
+  const showingAnyOptions = showingFilterOrViews || showingTabs
 
   return (
     <Menu padding={0}>
       <Flex direction="column" height="fill">
-        {/* filter and views button */}
-        <Flex flex="none" align="center" padding={1} gap={1}>
-          {props.filter ? (
-            <Box flex={1}>
-              <TextInput
-                autoFocus
-                border={false}
-                fontSize={1}
-                icon={SearchIcon}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  send({type: 'change query', query: event.target.value})
-                }}
-                placeholder={props.labels['insert-menu.search.placeholder']}
-                value={state.query}
-              />
-            </Box>
-          ) : null}
-          {state.views.length > 1 ? (
-            <Box flex="none">
-              <ViewToggle
-                views={state.views}
-                onToggle={(name) => {
-                  send({type: 'toggle view', name})
-                }}
-                labels={props.labels}
-              />
-            </Box>
-          ) : null}
-        </Flex>
-
-        {/* tabs */}
         <Box
-          paddingX={1}
-          paddingBottom={1}
-          style={{borderBottom: '1px solid var(--card-border-color)'}}
+          {...(showingAnyOptions
+            ? {
+                style: {borderBottom: '1px solid var(--card-border-color)'},
+                paddingBottom: 1,
+              }
+            : {})}
         >
-          {state.groups && state.groups.length > 0 ? (
-            <TabList space={1}>
-              {state.groups.map((group) => (
-                <Tab
-                  id={`${group.name}-tab`}
-                  aria-controls={`${group.name}-panel`}
-                  key={group.name}
-                  label={group.title ?? group.name}
-                  selected={group.selected}
-                  onClick={() => {
-                    send({type: 'select group', name: group.name})
-                  }}
-                />
-              ))}
-            </TabList>
+          {/* filter and views button */}
+          {showingFilterOrViews ? (
+            <Flex flex="none" align="center" paddingTop={1} paddingX={1} gap={1}>
+              {props.filter ? (
+                <Box flex={1}>
+                  <TextInput
+                    autoFocus
+                    border={false}
+                    fontSize={1}
+                    icon={SearchIcon}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      send({type: 'change query', query: event.target.value})
+                    }}
+                    placeholder={props.labels['insert-menu.search.placeholder']}
+                    value={state.query}
+                  />
+                </Box>
+              ) : null}
+              {state.views.length > 1 ? (
+                <Box flex="none">
+                  <ViewToggle
+                    views={state.views}
+                    onToggle={(name) => {
+                      send({type: 'toggle view', name})
+                    }}
+                    labels={props.labels}
+                  />
+                </Box>
+              ) : null}
+            </Flex>
+          ) : null}
+
+          {/* tabs */}
+          {showingTabs ? (
+            <Box paddingTop={1} paddingX={1}>
+              <TabList space={1}>
+                {state.groups.map((group) => (
+                  <Tab
+                    id={`${group.name}-tab`}
+                    aria-controls={`${group.name}-panel`}
+                    key={group.name}
+                    label={group.title ?? group.name}
+                    selected={group.selected}
+                    onClick={() => {
+                      send({type: 'select group', name: group.name})
+                    }}
+                  />
+                ))}
+              </TabList>
+            </Box>
           ) : null}
         </Box>
 
