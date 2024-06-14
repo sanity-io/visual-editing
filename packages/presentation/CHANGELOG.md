@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.16.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.16...presentation-v1.16.0) (2024-06-14)
+
+
+### Features
+
+* **presentation:** combine viewport buttons into single toggle ([#1392](https://github.com/sanity-io/visual-editing/issues/1392)) ([b871987](https://github.com/sanity-io/visual-editing/commit/b8719877cad2830442c54a8f552f008fd79f17a1))
+
 ## [1.15.16](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.15...presentation-v1.15.16) (2024-06-14)
 
 

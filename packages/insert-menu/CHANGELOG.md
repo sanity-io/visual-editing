@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.3...insert-menu-v1.0.4) (2024-06-14)
+
+
+### Bug Fixes
+
+* **insert-menu:** adjust `InsertMenuOptions` slightly ([#1662](https://github.com/sanity-io/visual-editing/issues/1662)) ([e34268d](https://github.com/sanity-io/visual-editing/commit/e34268d86928e0b33d8dd473457bc1a172924392))
+
 ## [1.0.3](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.2...insert-menu-v1.0.3) (2024-06-14)
 
 
