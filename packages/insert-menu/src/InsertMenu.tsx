@@ -71,7 +71,7 @@ export type InsertMenuProps = InsertMenuOptions & {
 
 /** @alpha */
 export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
-  const showIcons = props.icons === undefined ? true : props.icons
+  const showIcons = props.showIcons === undefined ? true : props.showIcons
   const [state, send] = useReducer(fullInsertMenuReducer, {
     query: '',
     groups: props.groups

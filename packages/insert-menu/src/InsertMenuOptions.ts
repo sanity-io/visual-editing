@@ -4,7 +4,7 @@ export interface InsertMenuOptions {
   filter?: boolean
   groups?: Array<{name: string; title?: string; of?: Array<string>}>
   /** defaultValue `true` */
-  icons?: boolean
+  showIcons?: boolean
   /** @defaultValue `[{name: 'list'}]` */
   views?: Array<{name: 'list'} | {name: 'grid'; previewUrl: (schemaTypeName: string) => string}>
 }

@@ -65,12 +65,12 @@ const views: InsertMenuProps['views'] = [
   {name: 'list'},
   {
     name: 'grid',
-    previewUrl: (_typeName) => '', // `https://prj-page-builder.sanity.build/preview-${typeName}.png`,
+    previewImageUrl: (_typeName) => '', // `https://prj-page-builder.sanity.build/preview-${typeName}.png`,
   },
 ]
 
 export default function FullStory() {
-  const iconsEnabled = useSelect('icons', {true: true, false: false}, true)
+  const iconsEnabled = useSelect('showIcons', {true: true, false: false}, true)
   const filterEnabled = useSelect('filter', {true: true, false: false}, true)
   const groupsEnabled = useSelect('groups', {true: true, false: false}, true)
   const viewsEnabled = useSelect('views', {true: true, false: false}, true)
@@ -82,7 +82,7 @@ export default function FullStory() {
       <Card radius={3} shadow={3}>
         <LayerProvider>
           <InsertMenu
-            icons={iconsEnabled}
+            showIcons={iconsEnabled}
             filter={filterEnabled}
             groups={groupsEnabled ? groups : undefined}
             views={viewsEnabled ? views : undefined}
