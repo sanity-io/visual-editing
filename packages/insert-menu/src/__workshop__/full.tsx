@@ -1,4 +1,11 @@
-import {CommentIcon, DesktopIcon, EnvelopeIcon, InfoOutlineIcon, SyncIcon} from '@sanity/icons'
+import {
+  CommentIcon,
+  DesktopIcon,
+  EnvelopeIcon,
+  InfoOutlineIcon,
+  SyncIcon,
+  DocumentVideoIcon,
+} from '@sanity/icons'
 import type {ObjectSchemaType} from '@sanity/types'
 import {Box, Card, LayerProvider} from '@sanity/ui'
 import {useAction, useSelect} from '@sanity/ui-workshop'
@@ -54,6 +61,14 @@ const schemaTypes: ObjectSchemaType[] = [
     fields: [],
     __experimental_search: [],
   },
+  {
+    jsonType: 'object',
+    name: 'videos',
+    title: 'Videos',
+    icon: DocumentVideoIcon,
+    fields: [],
+    __experimental_search: [],
+  },
 ]
 
 const groups: InsertMenuProps['groups'] = [
@@ -65,13 +80,17 @@ const views: InsertMenuProps['views'] = [
   {name: 'list'},
   {
     name: 'grid',
-    previewUrl: (_typeName) => '', // `https://prj-page-builder.sanity.build/preview-${typeName}.png`,
+    previewImageUrl: (_typeName) => undefined, // `https://prj-page-builder.sanity.build/preview-${typeName}.png`,
   },
 ]
 
 export default function FullStory() {
-  const iconsEnabled = useSelect('icons', {true: true, false: false}, true)
-  const filterEnabled = useSelect('filter', {true: true, false: false}, true)
+  const iconsEnabled = useSelect('showIcons', {true: true, false: false}, true)
+  const filterEnabled = useSelect(
+    'filter',
+    {true: true, false: false, undefined: 'undefined'},
+    true,
+  )
   const groupsEnabled = useSelect('groups', {true: true, false: false}, true)
   const viewsEnabled = useSelect('views', {true: true, false: false}, true)
 
@@ -82,8 +101,8 @@ export default function FullStory() {
       <Card radius={3} shadow={3}>
         <LayerProvider>
           <InsertMenu
-            icons={iconsEnabled}
-            filter={filterEnabled}
+            showIcons={iconsEnabled}
+            filter={filterEnabled === 'undefined' ? undefined : filterEnabled}
             groups={groupsEnabled ? groups : undefined}
             views={viewsEnabled ? views : undefined}
             labels={labels}

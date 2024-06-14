@@ -71,7 +71,8 @@ export type InsertMenuProps = InsertMenuOptions & {
 
 /** @alpha */
 export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
-  const showIcons = props.icons === undefined ? true : props.icons
+  const showIcons = props.showIcons === undefined ? true : props.showIcons
+  const showFilter = props.filter ?? props.schemaTypes.length > 5
   const [state, send] = useReducer(fullInsertMenuReducer, {
     query: '',
     groups: props.groups
@@ -91,7 +92,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
   })
   const filteredSchemaTypes = filterSchemaTypes(props.schemaTypes, state.query, state.groups)
   const selectedView = state.views.find((view) => view.selected)
-  const showingFilterOrViews = props.filter || state.views.length > 1
+  const showingFilterOrViews = showFilter || state.views.length > 1
   const showingTabs = state.groups && state.groups.length > 0
   const showingAnyOptions = showingFilterOrViews || showingTabs
 
@@ -109,7 +110,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
           {/* filter and views button */}
           {showingFilterOrViews ? (
             <Flex flex="none" align="center" paddingTop={1} paddingX={1} gap={1}>
-              {props.filter ? (
+              {showFilter ? (
                 <Box flex={1}>
                   <TextInput
                     autoFocus
@@ -176,7 +177,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                   onClick={() => {
                     props.onSelect(schemaType)
                   }}
-                  previewUrl={selectedView.previewUrl}
+                  previewImageUrl={selectedView.previewImageUrl(schemaType.name)}
                   schemaType={schemaType}
                 />
               ))}
@@ -245,7 +246,9 @@ type GridMenuItemProps = {
   onClick: () => void
   schemaType: SchemaType
   icon: MenuItemProps['icon']
-  previewUrl: Extract<NonNullable<InsertMenuOptions['views']>[number], {name: 'grid'}>['previewUrl']
+  previewImageUrl: ReturnType<
+    Extract<NonNullable<InsertMenuOptions['views']>[number], {name: 'grid'}>['previewImageUrl']
+  >
 }
 
 function GridMenuItem(props: GridMenuItemProps) {
@@ -277,9 +280,9 @@ function GridMenuItem(props: GridMenuItemProps) {
               <Text size={1}>{createElement(props.icon)}</Text>
             </Flex>
           ) : null}
-          {failedToLoad ? null : (
+          {!props.previewImageUrl || failedToLoad ? null : (
             <img
-              src={props.previewUrl(props.schemaType.name)}
+              src={props.previewImageUrl}
               style={{
                 objectFit: 'contain',
                 width: '100%',
