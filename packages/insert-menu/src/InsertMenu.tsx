@@ -176,7 +176,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                   onClick={() => {
                     props.onSelect(schemaType)
                   }}
-                  previewUrl={selectedView.previewUrl}
+                  previewImageUrl={selectedView.previewImageUrl}
                   schemaType={schemaType}
                 />
               ))}
@@ -245,7 +245,10 @@ type GridMenuItemProps = {
   onClick: () => void
   schemaType: SchemaType
   icon: MenuItemProps['icon']
-  previewUrl: Extract<NonNullable<InsertMenuOptions['views']>[number], {name: 'grid'}>['previewUrl']
+  previewImageUrl: Extract<
+    NonNullable<InsertMenuOptions['views']>[number],
+    {name: 'grid'}
+  >['previewImageUrl']
 }
 
 function GridMenuItem(props: GridMenuItemProps) {
@@ -279,7 +282,7 @@ function GridMenuItem(props: GridMenuItemProps) {
           ) : null}
           {failedToLoad ? null : (
             <img
-              src={props.previewUrl(props.schemaType.name)}
+              src={props.previewImageUrl(props.schemaType.name)}
               style={{
                 objectFit: 'contain',
                 width: '100%',
