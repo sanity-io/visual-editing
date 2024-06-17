@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.4...insert-menu-v1.0.5) (2024-06-17)
+
+
+### Bug Fixes
+
+* **insert-menu:** use enum for InsertMenuOptions.filter ([#1664](https://github.com/sanity-io/visual-editing/issues/1664)) ([c300513](https://github.com/sanity-io/visual-editing/commit/c300513fd827c16ec9f0edbdb7e69c43ffc4af3c))
+
 ## [1.0.4](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.3...insert-menu-v1.0.4) (2024-06-14)
 
 
