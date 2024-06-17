@@ -1,7 +1,11 @@
 /** @alpha This API may change */
 export interface InsertMenuOptions {
-  /** @defaultValue `false` */
-  filter?: boolean
+  /**
+   * @defaultValue `'auto'`
+   * `filter: 'auto'` automatically turns on filtering if there are more than 5
+   * schema types added to the menu.
+   */
+  filter?: 'auto' | 'on' | 'off'
   groups?: Array<{name: string; title?: string; of?: Array<string>}>
   /** defaultValue `true` */
   showIcons?: boolean

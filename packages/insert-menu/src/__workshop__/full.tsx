@@ -86,11 +86,7 @@ const views: InsertMenuProps['views'] = [
 
 export default function FullStory() {
   const iconsEnabled = useSelect('showIcons', {true: true, false: false}, true)
-  const filterEnabled = useSelect(
-    'filter',
-    {true: true, false: false, undefined: 'undefined'},
-    true,
-  )
+  const filter = useSelect('filter', {undefined: 'undefined', auto: 'auto', on: 'on', off: 'off'})
   const groupsEnabled = useSelect('groups', {true: true, false: false}, true)
   const viewsEnabled = useSelect('views', {true: true, false: false}, true)
 
@@ -102,7 +98,7 @@ export default function FullStory() {
         <LayerProvider>
           <InsertMenu
             showIcons={iconsEnabled}
-            filter={filterEnabled === 'undefined' ? undefined : filterEnabled}
+            filter={filter === 'undefined' ? undefined : filter}
             groups={groupsEnabled ? groups : undefined}
             views={viewsEnabled ? views : undefined}
             labels={labels}
