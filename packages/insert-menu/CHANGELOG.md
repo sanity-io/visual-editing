@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.5...insert-menu-v1.0.6) (2024-06-18)
+
+
+### Bug Fixes
+
+* **insert-menu:** adjust API and auto-capitalise group.name/schemaType.name if used as title fallback ([#1679](https://github.com/sanity-io/visual-editing/issues/1679)) ([0fe7cf3](https://github.com/sanity-io/visual-editing/commit/0fe7cf306d75a50b76b44f73a8056aa17461be07))
+
 ## [1.0.5](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.4...insert-menu-v1.0.5) (2024-06-17)
 
 
