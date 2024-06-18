@@ -5,12 +5,13 @@ export interface InsertMenuOptions {
    * `filter: 'auto'` automatically turns on filtering if there are more than 5
    * schema types added to the menu.
    */
-  filter?: 'auto' | 'on' | 'off'
+  filter?: 'auto' | boolean
   groups?: Array<{name: string; title?: string; of?: Array<string>}>
   /** defaultValue `true` */
   showIcons?: boolean
   /** @defaultValue `[{name: 'list'}]` */
   views?: Array<
-    {name: 'list'} | {name: 'grid'; previewImageUrl: (schemaTypeName: string) => string | undefined}
+    | {name: 'list'}
+    | {name: 'grid'; previewImageUrl?: (schemaTypeName: string) => string | undefined}
   >
 }

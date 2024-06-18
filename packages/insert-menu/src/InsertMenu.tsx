@@ -15,6 +15,7 @@ import {
   TextInput,
   Tooltip,
 } from '@sanity/ui'
+import startCase from 'lodash.startcase'
 import {type ChangeEvent, createElement, type CSSProperties, useReducer, useState} from 'react'
 import {isValidElementType} from 'react-is'
 
@@ -73,7 +74,9 @@ export type InsertMenuProps = InsertMenuOptions & {
 export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
   const showIcons = props.showIcons === undefined ? true : props.showIcons
   const showFilter =
-    props.filter === 'on' ? true : props.filter === 'off' ? false : props.schemaTypes.length > 5
+    props.filter === undefined || props.filter === 'auto'
+      ? props.schemaTypes.length > 5
+      : props.filter
   const [state, send] = useReducer(fullInsertMenuReducer, {
     query: '',
     groups: props.groups
@@ -149,7 +152,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                     id={`${group.name}-tab`}
                     aria-controls={`${group.name}-panel`}
                     key={group.name}
-                    label={group.title ?? group.name}
+                    label={group.title ?? startCase(group.name)}
                     selected={group.selected}
                     onClick={() => {
                       send({type: 'select group', name: group.name})
@@ -178,7 +181,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                   onClick={() => {
                     props.onSelect(schemaType)
                   }}
-                  previewImageUrl={selectedView.previewImageUrl(schemaType.name)}
+                  previewImageUrl={selectedView.previewImageUrl?.(schemaType.name)}
                   schemaType={schemaType}
                 />
               ))}
@@ -192,7 +195,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                   onClick={() => {
                     props.onSelect(schemaType)
                   }}
-                  text={schemaType.title ?? schemaType.name}
+                  text={schemaType.title ?? startCase(schemaType.name)}
                 />
               ))}
             </Stack>
@@ -248,7 +251,9 @@ type GridMenuItemProps = {
   schemaType: SchemaType
   icon: MenuItemProps['icon']
   previewImageUrl: ReturnType<
-    Extract<NonNullable<InsertMenuOptions['views']>[number], {name: 'grid'}>['previewImageUrl']
+    NonNullable<
+      Extract<NonNullable<InsertMenuOptions['views']>[number], {name: 'grid'}>['previewImageUrl']
+    >
   >
 }
 
