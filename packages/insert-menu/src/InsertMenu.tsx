@@ -15,6 +15,7 @@ import {
   TextInput,
   Tooltip,
 } from '@sanity/ui'
+import startCase from 'lodash.startcase'
 import {type ChangeEvent, createElement, type CSSProperties, useReducer, useState} from 'react'
 import {isValidElementType} from 'react-is'
 
@@ -151,7 +152,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                     id={`${group.name}-tab`}
                     aria-controls={`${group.name}-panel`}
                     key={group.name}
-                    label={group.title ?? group.name}
+                    label={group.title ?? startCase(group.name)}
                     selected={group.selected}
                     onClick={() => {
                       send({type: 'select group', name: group.name})
