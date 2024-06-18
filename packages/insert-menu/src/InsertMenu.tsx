@@ -195,7 +195,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                   onClick={() => {
                     props.onSelect(schemaType)
                   }}
-                  text={schemaType.title ?? schemaType.name}
+                  text={schemaType.title ?? startCase(schemaType.name)}
                 />
               ))}
             </Stack>

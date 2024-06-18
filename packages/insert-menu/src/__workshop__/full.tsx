@@ -64,7 +64,6 @@ const schemaTypes: ObjectSchemaType[] = [
   {
     jsonType: 'object',
     name: 'videos',
-    title: 'Videos',
     icon: DocumentVideoIcon,
     fields: [],
     __experimental_search: [],
