@@ -86,7 +86,12 @@ const views: InsertMenuProps['views'] = [
 
 export default function FullStory() {
   const iconsEnabled = useSelect('showIcons', {true: true, false: false}, true)
-  const filter = useSelect('filter', {undefined: 'undefined', auto: 'auto', on: 'on', off: 'off'})
+  const filter = useSelect('filter', {
+    undefined: 'undefined',
+    auto: 'auto',
+    true: true,
+    false: false,
+  })
   const groupsEnabled = useSelect('groups', {true: true, false: false}, true)
   const viewsEnabled = useSelect('views', {true: true, false: false}, true)
 
