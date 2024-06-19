@@ -232,7 +232,7 @@ function ViewToggle(props: ViewToggleProps) {
   return (
     <Tooltip
       content={<Text size={1}>{props.labels[viewToggleTooltip[nextView.name]]}</Text>}
-      placeholder="top"
+      placement="top"
       portal
     >
       <Button
