@@ -75,7 +75,7 @@ export function ContentEditor(props: {
   const previewState = usePreviewState(mainDocumentState?.document?._id || '', schemaType)
 
   const preview = useMemo(() => {
-    if (!mainDocumentState) return null
+    if (!mainDocumentState?.document) return null
     return (
       <SanityDefaultPreview
         {...getPreviewValueWithFallback({
