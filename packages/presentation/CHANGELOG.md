@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.16.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.0...presentation-v1.16.1) (2024-06-26)
+
+
+### Bug Fixes
+
+* **presentation:** add content editor preview document check ([#1687](https://github.com/sanity-io/visual-editing/issues/1687)) ([cac4597](https://github.com/sanity-io/visual-editing/commit/cac4597e87d0e13e8e296c98ad816793dca59cce))
+
 ## [1.16.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.15.16...presentation-v1.16.0) (2024-06-14)
 
 

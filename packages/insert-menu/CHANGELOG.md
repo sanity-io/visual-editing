@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.7](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.6...insert-menu-v1.0.7) (2024-06-26)
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to v3.47.1 ([#1678](https://github.com/sanity-io/visual-editing/issues/1678)) ([9515f4c](https://github.com/sanity-io/visual-editing/commit/9515f4cbe30fe68c09b60a524e634c6514d832ba))
+* **insert-menu:** set `placement` property of tooltip ([#1683](https://github.com/sanity-io/visual-editing/issues/1683)) ([d88ef8d](https://github.com/sanity-io/visual-editing/commit/d88ef8df0116511e7b66859c96b26d745ae73bcc))
+
 ## [1.0.6](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.5...insert-menu-v1.0.6) (2024-06-18)
 
 
