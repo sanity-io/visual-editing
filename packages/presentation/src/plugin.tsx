@@ -1,6 +1,14 @@
 import type {SanityDocument} from '@sanity/client'
-import {lazy, Suspense} from 'react'
-import {definePlugin, type InputProps, isDocumentSchemaType} from 'sanity'
+import {lazy, Suspense, useEffect, useMemo} from 'react'
+import {
+  definePlugin,
+  type InputProps,
+  isDocumentSchemaType,
+  type BaseFormNode,
+  type ObjectSchemaType,
+  type ObjectInputProps,
+  pathToString,
+} from 'sanity'
 
 import {DEFAULT_TOOL_ICON, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
 import {PresentationDocumentHeader} from './document/PresentationDocumentHeader'
@@ -8,7 +16,7 @@ import {PresentationDocumentProvider} from './document/PresentationDocumentProvi
 import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
 import {presentationUsEnglishLocaleBundle} from './i18n'
-import {getPublishedId} from './internals'
+import {getPublishedId, useDocumentPane} from './internals'
 import {router} from './router'
 import type {
   DocumentLocationResolverObject,
@@ -52,21 +60,43 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
 
   const hasLocationsResolver = !!(options.resolve?.locations || options.locate)
 
-  function PresentationDocumentInput(props: InputProps) {
-    const value = props.value as SanityDocument
+  function PresentationDocumentInput(input: InputProps) {
+    const value = input.value as SanityDocument
     const documentId = value?._id ? getPublishedId(value?._id) : undefined
+    const {focusPath} = useDocumentPane()
 
-    if (isDocumentSchemaType(props.schemaType)) {
+    if (isDocumentSchemaType(input.schemaType)) {
+      const props = input as ObjectInputProps<ObjectSchemaType>
+
+      // Create a fast index of the groups for all fields in the schema
+      const fieldGroupIndex = useMemo(() => {
+        const index = new Map<string, string>()
+        props.schemaType.fields.forEach((field) => {
+          index.set(field.name, field?.group?.[0] ?? 'all-fields')
+        })
+        return index
+      }, [props.schemaType.fields])
+
+      // Watch value of props.focusPath
+      useEffect(() => {
+        if (!focusPath || focusPath.length === 0) return
+        const focusFieldPath = focusPath[0]
+        const group = fieldGroupIndex.get(focusFieldPath?.toString()) ?? 'all-fields'
+        if (group) {
+          props.onFieldGroupSelect(group)
+        }
+      }, [focusPath])
+
       return (
         <PresentationDocumentProvider options={options}>
           {hasLocationsResolver && documentId && (
             <PresentationDocumentHeader
               documentId={documentId}
               options={options}
-              schemaType={props.schemaType}
+              schemaType={input.schemaType}
             />
           )}
-          {props.renderDefault(props)}
+          {input.renderDefault(props)}
           <Suspense key="broadcast-displayed-document">
             <BroadcastDisplayedDocument key={documentId} value={value} />
           </Suspense>
@@ -74,7 +104,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
       )
     }
 
-    return props.renderDefault(props)
+    return input.renderDefault(input)
   }
 
   function canHandleCreateIntent(params: Record<string, unknown>) {
