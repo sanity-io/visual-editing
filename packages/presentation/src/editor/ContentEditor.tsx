@@ -76,6 +76,7 @@ export function ContentEditor(props: {
 
   const preview = useMemo(() => {
     if (!mainDocumentState?.document) return null
+
     return (
       <SanityDefaultPreview
         {...getPreviewValueWithFallback({
