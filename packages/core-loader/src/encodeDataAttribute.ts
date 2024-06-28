@@ -21,13 +21,16 @@ export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
   if (!sourceMap || !studioUrl) {
     return undefined
   }
+  console.log('studioPathLike', studioPathLike)
   const resultPath = studioPathToJsonPath(studioPathLike)
+  console.log('resultPath', resultPath)
 
   const editInfo = resolveEditInfo({
     resultPath,
     resultSourceMap: sourceMap,
     studioUrl,
   })
+  console.log('editInfo', editInfo)
   if (!editInfo) {
     return undefined
   }

@@ -56,6 +56,17 @@ export type OverlayMsgActivate = Msg<'overlay/activate'>
 export type OverlayMsgDeactivate = Msg<'overlay/deactivate'>
 
 /** @public */
+export type OverlayMsgElementContextMenu =
+  | OverlayMsgElement<'contextmenu'>
+  | (OverlayMsgElement<'contextmenu'> & {
+      position: {
+        x: number
+        y: number
+      }
+      sanity: SanityNode | SanityStegaNode
+    })
+
+/** @public */
 export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
 
 /** @public */
@@ -90,11 +101,12 @@ export type OverlayMsgElementUpdateRect = OverlayMsgElement<'updateRect'> & {
  * @public
  */
 export type OverlayMsg =
-  | OverlayMsgBlur
   | OverlayMsgActivate
+  | OverlayMsgBlur
   | OverlayMsgDeactivate
   | OverlayMsgElementActivate
   | OverlayMsgElementClick
+  | OverlayMsgElementContextMenu
   | OverlayMsgElementDeactivate
   | OverlayMsgElementMouseEnter
   | OverlayMsgElementMouseLeave
@@ -201,11 +213,12 @@ export interface OverlayElement {
  * @internal
  */
 export interface EventHandlers {
-  click: (event: Event) => void
-  mousedown: (event: Event) => void
-  mouseenter: (event: Event) => void
-  mouseleave: (event: Event) => void
-  mousemove: (event: Event) => void
+  click: (event: MouseEvent) => void
+  contextmenu: (event: MouseEvent) => void
+  mousedown: (event: MouseEvent) => void
+  mouseenter: (event: MouseEvent) => void
+  mouseleave: (event: MouseEvent) => void
+  mousemove: (event: MouseEvent) => void
 }
 
 /**
@@ -248,4 +261,16 @@ export interface VisualEditingOptions {
    * The CSS z-index on the root node that renders overlays, tweak it accordingly to what layout you have.
    */
   zIndex?: string | number
+  /**
+   * @alpha
+   */
+  components?: {
+    type: string
+    name?: string
+    path?: string
+    component: React.ComponentType<{
+      sanity: SanityNode
+      dispatch: (data: {id: string; type: string; patch: Record<string, unknown>}) => void
+    }>
+  }[]
 }

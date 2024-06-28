@@ -14,11 +14,11 @@ export function Page(props: {data: WrappedValue<PageData>}) {
 
   return (
     <main
-      data-sanity={dataAttribute({
-        id: data._id,
-        type: data._type,
-        path: 'sections',
-      })}
+    // data-sanity={dataAttribute({
+    //   id: data._id,
+    //   type: data._type,
+    //   path: 'sections',
+    // })}
     >
       {isArray(data.sections) &&
         data.sections.map((section) => {

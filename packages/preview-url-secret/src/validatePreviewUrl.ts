@@ -31,6 +31,7 @@ export async function validatePreviewUrl(
     return {isValid: false}
   }
 
+  console.log('try and validate this', parsedPreviewUrl.secret)
   const {isValid, studioUrl} = await validateSecret(
     client,
     parsedPreviewUrl.secret,

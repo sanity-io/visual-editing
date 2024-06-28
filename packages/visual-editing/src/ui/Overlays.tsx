@@ -1,8 +1,21 @@
 import type {ChannelStatus} from '@repo/channels'
-import {isAltKey, isHotkey, type SanityNode} from '@repo/visual-editing-helpers'
+import {
+  isAltKey,
+  isHotkey,
+  type SanityNode,
+  type UnresolvedPath,
+} from '@repo/visual-editing-helpers'
 import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
-import {isHTMLAnchorElement, isHTMLElement, studioTheme, ThemeProvider} from '@sanity/ui'
+import {
+  BoundaryElementProvider,
+  isHTMLAnchorElement,
+  isHTMLElement,
+  LayerProvider,
+  PortalProvider,
+  studioTheme,
+  ThemeProvider,
+} from '@sanity/ui'
 import {
   type FunctionComponent,
   useCallback,
@@ -14,7 +27,14 @@ import {
 } from 'react'
 import {styled} from 'styled-components'
 
-import type {HistoryAdapter, OverlayEventHandler, VisualEditingChannel} from '../types'
+import type {
+  ElementState,
+  HistoryAdapter,
+  OverlayEventHandler,
+  VisualEditingChannel,
+  VisualEditingOptions,
+} from '../types'
+import {ContextMenu} from './ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
 import {overlayStateReducer} from './overlayStateReducer'
 import {useController} from './useController'
@@ -23,13 +43,22 @@ const Root = styled.div<{
   $zIndex?: string | number
 }>`
   background-color: transparent;
+  inset: 0;
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  z-index: ${({$zIndex}) => $zIndex ?? '9999999'};
+`
+
+const Elements = styled.div`
+  background: transparent
   direction: ltr;
   inset: 0;
   pointer-events: none;
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: ${({$zIndex}) => $zIndex ?? '9999999'};
 `
 
 function raf2(fn: () => void) {
@@ -53,26 +82,88 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
   return true
 }
 
+// function getTypesToResolve(elements: ElementState[]): UnresolvedPath[] {
+//   const typesToResolve = elements.reduce(
+//     (acc, element) => {
+//       const {sanity} = element
+//       if (!('id' in sanity) || !sanity.path.includes('[_key==')) return acc
+//       const path = sanity.path
+//         .split('.')
+//         .toReversed()
+//         .reduce((acc, part) => {
+//           if (acc.length) return [part, ...acc]
+//           if (part.includes('[_key==')) return [part]
+//           return []
+//         }, [] as string[])
+//         .join('.')
+//       if (acc[sanity.id]) {
+//         acc[sanity.id].paths.add(path)
+//       } else {
+//         acc[sanity.id] = {type: sanity.type!, paths: new Set<string>([path])}
+//       }
+//       return acc
+//     },
+//     {} as Record<string, {type: string; paths: Set<string>}>,
+//   )
+
+//   return Object.entries(typesToResolve).reduce(
+//     (acc, [id, {type, paths}]) => [...acc, {id, type, paths: Array.from(paths)}],
+//     [] as UnresolvedPath[],
+//   )
+// }
+
+function popUnkeyedPathSegments(path: string): string {
+  return path
+    .split('.')
+    .toReversed()
+    .reduce((acc, part) => {
+      if (acc.length) return [part, ...acc]
+      if (part.includes('[_key==')) return [part]
+      return []
+    }, [] as string[])
+    .join('.')
+}
+
+function getPathsWithUnresolvedTypes(elements: ElementState[]): {id: string; path: string}[] {
+  return elements.reduce((acc, element) => {
+    const {sanity} = element
+    if (!('id' in sanity) || !sanity.path.includes('[_key==')) return acc
+    const path = popUnkeyedPathSegments(sanity.path)
+    if (!acc.find((item) => item.id === sanity.id && item.path === path)) {
+      acc.push({id: sanity.id, path})
+    }
+    return acc
+  }, [] as UnresolvedPath[])
+}
+
 /**
  * @internal
  */
 export const Overlays: FunctionComponent<{
+  components?: VisualEditingOptions['components']
   channel: VisualEditingChannel
   history?: HistoryAdapter
   zIndex?: string | number
 }> = (props) => {
-  const {channel, history, zIndex} = props
+  const {components, channel, history, zIndex} = props
 
   const [status, setStatus] = useState<ChannelStatus>()
 
-  const [{elements, wasMaybeCollapsed, perspective}, dispatch] = useReducer(overlayStateReducer, {
-    elements: [],
-    focusPath: '',
-    wasMaybeCollapsed: false,
-    perspective: 'published',
-  })
+  const [{contextMenu, elements, wasMaybeCollapsed, perspective, schema}, dispatch] = useReducer(
+    overlayStateReducer,
+    {
+      contextMenu: null,
+      elements: [],
+      focusPath: '',
+      perspective: 'published',
+      schema: null,
+      wasMaybeCollapsed: false,
+    },
+  )
+
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
+  const [resolvedTypes, setResolvedTypes] = useState(new Map())
 
   useEffect(() => {
     const unsubscribeFromStatus = channel.onStatusUpdate(setStatus)
@@ -87,6 +178,12 @@ export const Overlays: FunctionComponent<{
         history?.update(data)
       } else if (type === 'presentation/toggleOverlay') {
         setOverlayEnabled((enabled) => !enabled)
+      } else if (type === 'presentation/schema') {
+        console.log('[Overlays] Received schema', data)
+        dispatch({type, data})
+      } else if (type === 'presentation/schemaTypes') {
+        console.log('[Overlays] Received resolved schema types', data)
+        setResolvedTypes(data.types)
       }
     })
 
@@ -104,6 +201,49 @@ export const Overlays: FunctionComponent<{
     | undefined
   >(undefined)
 
+  const elementIdsRef = useRef<string[]>(elements.map((e) => e.id))
+  const [uniqueElements, setUniqueElements] = useState(elements)
+
+  useEffect(() => {
+    setUniqueElements((uniqueElements) => {
+      if (
+        elements.length === elementIdsRef.current.length &&
+        elements.every((e, i) => e.id === elementIdsRef.current[i])
+      ) {
+        return uniqueElements
+      }
+      elementIdsRef.current = elements.map((e) => e.id)
+      return elements
+    })
+  }, [elements])
+
+  // We report a list of paths that reference array items using a _key. We need
+  // to resolve the types of each of these items so we can map them to the
+  // correct schema types. One day CSM might include this data for us.
+  const reportPaths = useCallback(
+    (paths: UnresolvedPath[]) => {
+      channel?.send('visual-editing/schemaPaths', {
+        paths,
+      })
+    },
+    [channel],
+  )
+
+  const doPatch = useCallback(
+    (data: {id: string; type: string; patch: Record<string, unknown>}) => {
+      channel?.send('visual-editing/patch', data)
+    },
+    [channel],
+  )
+
+  useEffect(() => {
+    const paths = getPathsWithUnresolvedTypes(uniqueElements)
+    reportPaths(paths)
+  }, [uniqueElements, reportPaths])
+
+  // We report the documents currently in use in the DOM, along with the current
+  // perspective. This means Presentation can display a list of documents
+  // _without_ the need for loaders.
   const reportDocuments = useCallback(
     (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
       channel?.send('visual-editing/documents', {
@@ -118,7 +258,7 @@ export const Overlays: FunctionComponent<{
     // Report only nodes of type `SanityNode`. Untransformed `SanityStegaNode`
     // nodes without an `id`, are not reported as they will not contain the
     // necessary document data.
-    const nodes = elements
+    const nodes = uniqueElements
       .map((e) => {
         const {sanity} = e
         if (!('id' in sanity)) return null
@@ -149,7 +289,7 @@ export const Overlays: FunctionComponent<{
       lastReported.current = {nodeIds, perspective}
       reportDocuments(documentsOnPage, perspective)
     }
-  }, [elements, perspective, reportDocuments])
+  }, [uniqueElements, perspective, reportDocuments])
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
@@ -265,31 +405,58 @@ export const Overlays: FunctionComponent<{
     if (!channel || (channel.inFrame && status !== 'connected')) {
       return []
     }
-    return elements.filter((e) => e.activated || e.focused)
+    return elements.filter((e) => e.activated || e.hovered || e.focused)
   }, [channel, elements, status])
+
+  const closeContextMenu = useCallback(() => {
+    dispatch({type: 'element/contextmenu', id: ''})
+  }, [])
 
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
-      <Root
-        data-fading-out={fadingOut ? '' : undefined}
-        data-overlays={overlaysFlash ? '' : undefined}
-        ref={setRootElement}
-        $zIndex={zIndex}
-      >
-        {elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
-          return (
-            <ElementOverlay
-              key={id}
-              rect={rect}
-              focused={focused}
-              hovered={hovered}
-              showActions={!channel.inFrame}
-              sanity={sanity}
-              wasMaybeCollapsed={focused && wasMaybeCollapsed}
-            />
-          )
-        })}
-      </Root>
+      <LayerProvider>
+        <Root
+          data-fading-out={fadingOut ? '' : undefined}
+          data-overlays={overlaysFlash ? '' : undefined}
+          ref={setRootElement}
+          $zIndex={zIndex}
+        >
+          {/* <BoundaryElementProvider element={rootElement}> */}
+
+          <PortalProvider element={rootElement}>
+            {contextMenu && schema && (
+              <ContextMenu
+                schema={schema}
+                resolvedTypes={resolvedTypes}
+                node={contextMenu.node}
+                position={contextMenu.position}
+                onClose={closeContextMenu}
+              />
+            )}
+            <Elements>
+              {elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+                return (
+                  <ElementOverlay
+                    key={id}
+                    components={components}
+                    doPatch={doPatch}
+                    dispatch={overlayEventHandler}
+                    focused={focused}
+                    hovered={hovered}
+                    id={id}
+                    rect={rect}
+                    resolvedTypes={resolvedTypes}
+                    sanity={sanity}
+                    schema={schema}
+                    showActions={!channel.inFrame}
+                    wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                  />
+                )
+              })}
+            </Elements>
+          </PortalProvider>
+        </Root>
+      </LayerProvider>
     </ThemeProvider>
   )
 }

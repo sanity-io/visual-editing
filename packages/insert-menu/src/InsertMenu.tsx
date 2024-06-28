@@ -95,6 +95,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
     })),
   })
   const filteredSchemaTypes = filterSchemaTypes(props.schemaTypes, state.query, state.groups)
+  // console.log('filteredSchemaTypes', filteredSchemaTypes)
   const selectedView = state.views.find((view) => view.selected)
   const showingFilterOrViews = showFilter || state.views.length > 1
   const showingTabs = state.groups && state.groups.length > 0
@@ -337,6 +338,7 @@ function filterSchemaTypes(
 function passesQueryFilter(schemaType: SchemaType, query: string) {
   const sanitizedQuery = query.trim().toLowerCase()
 
+  // console.log('passesQueryFilter', schemaType, sanitizedQuery)
   return schemaType.title
     ? schemaType.title?.toLowerCase().includes(sanitizedQuery)
     : schemaType.name.includes(sanitizedQuery)

@@ -34,6 +34,55 @@ export const productType = defineType({
       options: {layout: 'grid'},
     }),
     defineField({
+      type: 'object',
+      name: 'model',
+      title: 'Model',
+      fields: [
+        defineField({
+          type: 'file',
+          name: 'file',
+          options: {storeOriginalFilename: true},
+        }),
+
+        defineField({
+          type: 'object',
+          name: 'light',
+          title: 'Light',
+          hidden: true,
+          fields: [
+            defineField({
+              type: 'number',
+              name: 'intensity',
+              initialValue: 0,
+            }),
+          ],
+        }),
+        defineField({
+          type: 'object',
+          name: 'rotation',
+          title: 'Rotation',
+          hidden: true,
+          fields: [
+            defineField({
+              type: 'number',
+              name: 'x',
+              initialValue: 0,
+            }),
+            defineField({
+              type: 'number',
+              name: 'y',
+              initialValue: 0,
+            }),
+            defineField({
+              type: 'number',
+              name: 'z',
+              initialValue: 0,
+            }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
       type: 'array',
       name: 'description',
       title: 'Description',

@@ -247,6 +247,7 @@ function createChannelsControllerInternal<
     try {
       target?.postMessage(msg, {targetOrigin: '*'})
     } catch (e) {
+      console.log('e')
       throw new Error(`Failed to postMessage '${msg.id}' on '${config.id}'`)
     }
   }

@@ -23,11 +23,24 @@ import {
   useRef,
   useState,
 } from 'react'
-import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} from 'sanity'
+import {useObservable} from 'react-rx'
+import {EMPTY, first} from 'rxjs'
+import {
+  PatchEvent,
+  type Path,
+  type SanityDocument,
+  type Tool,
+  useDataset,
+  useDocumentOperation,
+  useDocumentStore,
+  useProjectId,
+  useClient,
+} from 'sanity'
 import {type RouterContextValue, useRouter} from 'sanity/router'
 import {styled} from 'styled-components'
 
 import {
+  API_VERSION,
   COMMENTS_INSPECTOR_NAME,
   DEFAULT_TOOL_NAME,
   EDIT_INTENT_MODE,
@@ -65,9 +78,11 @@ import {useDocumentsOnPage} from './useDocumentsOnPage'
 import {useMainDocument} from './useMainDocument'
 import {useParams} from './useParams'
 import {usePreviewUrl} from './usePreviewUrl'
+import {useResolveUnionTypes} from './useResolveUnionTypes'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
+const PostMessageSchema = lazy(() => import('./overlays/PostMessageSchema'))
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -186,6 +201,12 @@ export default function PresentationTool(props: {
     perspectiveRef.current = perspective
   }, [perspective])
 
+  const {setPaths} = useResolveUnionTypes({channel, perspective})
+
+  const client = useClient({apiVersion: API_VERSION})
+
+  const documentStore = useDocumentStore()
+
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
 
@@ -245,6 +266,15 @@ export default function PresentationTool(props: {
               dispatch({type: ACTION_IFRAME_REFRESH})
             } else if (type === 'visual-editing/refreshed') {
               dispatch({type: ACTION_IFRAME_LOADED})
+            } else if (type === 'visual-editing/schemaPaths') {
+              setPaths(data.paths)
+            } else if (type === 'visual-editing/patch') {
+              documentStore.pair
+                .editOperations(data.id, data.type)
+                .pipe(first())
+                .subscribe((ops) => {
+                  ops.patch.execute([data.patch])
+                })
             }
           },
         },
@@ -317,7 +347,16 @@ export default function PresentationTool(props: {
       nextChannel.destroy()
       setChannel(undefined)
     }
-  }, [dataset, projectId, setDocumentsOnPage, navigate, targetOrigin])
+  }, [
+    client,
+    documentStore.pair,
+    dataset,
+    projectId,
+    setDocumentsOnPage,
+    setPaths,
+    navigate,
+    targetOrigin,
+  ])
 
   useEffect(() => {
     const interval = setInterval(
@@ -624,6 +663,11 @@ export default function PresentationTool(props: {
             loadersConnection={loadersConnection}
             previewKitConnection={previewKitConnection}
           />
+        </Suspense>
+      )}
+      {channel && (
+        <Suspense>
+          <PostMessageSchema channel={channel} />
         </Suspense>
       )}
     </>

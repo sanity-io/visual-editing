@@ -1,3 +1,4 @@
+import {BlockElementIcon} from '@sanity/icons'
 import {defineArrayMember, defineField} from 'sanity'
 
 import {PageSectionInput} from './components/PageSectionInput'
@@ -6,6 +7,7 @@ import {pageSectionType} from './pageSectionType'
 export const pageSectionArrayMember = defineArrayMember({
   type: 'object',
   name: 'section',
+  icon: BlockElementIcon,
   fields: [
     defineField({
       type: 'reference',

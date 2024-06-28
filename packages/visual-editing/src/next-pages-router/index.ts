@@ -3,6 +3,7 @@ export type {
   HistoryAdapterNavigate,
   HistoryRefresh,
   HistoryUpdate,
+  SanityNode,
   VisualEditingOptions,
 } from '../types'
 export {VisualEditing} from './VisualEditing'

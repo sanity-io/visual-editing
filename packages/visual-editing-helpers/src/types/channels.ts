@@ -4,41 +4,15 @@ import type {
   ContentSourceMapDocuments,
   QueryParams,
 } from '@sanity/client'
-import type {StudioPathLike} from '@sanity/client/csm'
 
-export type {Path} from '@sanity/client/csm'
+import type {SanityNode, SanityStegaNode} from './overlays'
+import type {SchemaType} from './schema'
 
 /**
  * @internal
  * client.fetch(query, params) => `${query}-${JSON.stringify(params)}`
  */
 export type QueryCacheKey = `${string}-${string}`
-
-/**
- * Data resolved from a Sanity node
- * @public
- */
-export type SanityNode = {
-  baseUrl: string
-  dataset?: string
-  id: string
-  isDraft?: string
-  path: string
-  projectId?: string
-  tool?: string
-  type?: string
-  workspace?: string
-}
-
-/**
- * Data resolved from a Sanity Stega node
- * @public
- */
-export type SanityStegaNode = {
-  origin: string
-  href: string
-  data?: unknown
-}
 
 /**
  * Preview frame history update
@@ -129,6 +103,24 @@ export type PresentationMsg =
         perspective: ClientPerspective
       }
     }
+  | {
+      type: 'presentation/schema'
+      data: {
+        schema: SchemaType[]
+      }
+    }
+  | {
+      type: 'presentation/schemaTypes'
+      data: {
+        types: Map<string, Map<string, string>>
+      }
+    }
+
+/**@public */
+export interface UnresolvedPath {
+  id: string
+  path: string
+}
 
 /**@public */
 export interface VisualEditingPayloads {
@@ -147,6 +139,14 @@ export interface VisualEditingPayloads {
     enabled: boolean
   }
   refresh: HistoryRefresh
+  schemaPaths: {
+    paths: UnresolvedPath[]
+  }
+  patch: {
+    id: string
+    type: string
+    patch: Record<string, unknown>
+  }
 }
 
 /**
@@ -199,6 +199,14 @@ export type VisualEditingMsg =
   | {
       type: 'visual-editing/refreshed'
       data: VisualEditingPayloads['refresh']
+    }
+  | {
+      type: 'visual-editing/schemaPaths'
+      data: VisualEditingPayloads['schemaPaths']
+    }
+  | {
+      type: 'visual-editing/patch'
+      data: VisualEditingPayloads['patch']
     }
 
 /** @public */
@@ -287,75 +295,3 @@ export type PreviewKitMsg = {
  * @public
  */
 export type VisualEditingConnectionIds = 'presentation' | 'loaders' | 'overlays' | 'preview-kit'
-
-/**
- * Helper
- * @internal
- */
-export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]}
-
-/**
- * The metadata that can be embedded in a data attribute.
- * All values are marked optional in the base type as they can be provided incrementally using the `createDataAttribute` function.
- * @public
- */
-export interface CreateDataAttributeProps {
-  /** The studio base URL, optional */
-  baseUrl?: string
-  /** The dataset, optional */
-  dataset?: string
-  /** The document ID, required */
-  id?: string
-  /** The field path, required */
-  path?: StudioPathLike
-  /** The project ID, optional */
-  projectId?: string
-  /** The studio tool name, optional */
-  tool?: string
-  /** The document type, required */
-  type?: string
-  /** The studio workspace, optional */
-  workspace?: string
-}
-
-/**
- * @public
- */
-export type CreateDataAttribute<T extends CreateDataAttributeProps> = (T extends WithRequired<
-  CreateDataAttributeProps,
-  'id' | 'type' | 'path'
->
-  ? {
-      /**
-       * Returns a string representation of the data attribute
-       * @param path - An optional path to concatenate with any existing path
-       * @public
-       */
-      (path?: StudioPathLike): string
-      /**
-       * Returns a string representation of the data attribute
-       * @public
-       */
-      toString(): string
-    }
-  : T extends WithRequired<CreateDataAttributeProps, 'id' | 'type'>
-    ? /**
-       * Returns a string representation of the data attribute
-       * @param path - An optional path to concatenate with any existing path
-       * @public
-       */
-      (path: StudioPathLike) => string
-    : object) & {
-  /**
-   * Concatenate the current path with a new path
-   * @param path - A path to concatenate with any existing path
-   * @public
-   */
-  scope(path: StudioPathLike): CreateDataAttribute<T & {path: StudioPathLike}>
-  /**
-   * Combines the current props with additional props
-   * @param props - New props to merge with any existing props
-   * @public
-   */
-  combine: <U extends CreateDataAttributeProps>(props: U) => CreateDataAttribute<T & U>
-}

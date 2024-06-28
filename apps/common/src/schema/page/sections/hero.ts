@@ -1,9 +1,11 @@
+import {ImageIcon} from '@sanity/icons'
 import {defineArrayMember, defineField} from 'sanity'
 
 export const heroSectionType = defineArrayMember({
   type: 'object',
   name: 'hero',
   title: 'Hero',
+  icon: ImageIcon,
   description: 'The hero section of the page',
   fields: [
     defineField({

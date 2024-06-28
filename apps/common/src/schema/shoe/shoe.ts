@@ -11,6 +11,11 @@ export const shoeType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      type: 'boolean',
+      name: 'boolian',
+      title: 'Bool Ian',
+    }),
+    defineField({
       type: 'slug',
       name: 'slug',
       title: 'Slug',

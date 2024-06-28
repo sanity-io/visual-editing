@@ -15,6 +15,10 @@ const links = [
     href: '/products',
     title: 'Products',
   },
+  {
+    href: '/experiment',
+    title: 'Experiment',
+  },
   // {
   //   href: '/about',
   //   title: 'About',
