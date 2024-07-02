@@ -118,6 +118,7 @@ export default function PresentationTool(props: {
 
   const {
     navigate: _navigate,
+    navigationHistory,
     params,
     searchParams,
     structureParams,
@@ -147,11 +148,12 @@ export default function PresentationTool(props: {
   const dataset = useDataset()
 
   const mainDocumentState = useMainDocument({
-    resolvers: props.tool.options?.resolve?.mainDocuments,
-    previewUrl: props.tool.options?.previewUrl,
-    path: params.preview,
     // Prevent flash of content by using immediate navigation
     navigate: _navigate,
+    navigationHistory,
+    path: params.preview,
+    previewUrl: props.tool.options?.previewUrl,
+    resolvers: props.tool.options?.resolve?.mainDocuments,
   })
 
   const [overlaysConnection, setOverlaysConnection] = useState<ChannelStatus>('connecting')

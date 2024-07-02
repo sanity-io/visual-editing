@@ -1,4 +1,4 @@
-import {type MutableRefObject, useCallback, useEffect, useMemo, useRef} from 'react'
+import {type MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import type {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
 
 import {getPublishedId} from './internals'
@@ -37,6 +37,7 @@ export function useParams({
   frameStateRef: MutableRefObject<FrameState>
 }): {
   navigate: PresentationNavigate
+  navigationHistory: RouterState[]
   params: PresentationParams
   searchParams: PresentationSearchParams
   structureParams: StructureDocumentPaneParams
@@ -113,6 +114,8 @@ export function useParams({
     routerStateRef.current = routerState
   }, [routerState])
 
+  const [navigationHistory, setNavigationHistory] = useState<RouterState[]>([routerState])
+
   const navigate = useCallback<PresentationNavigate>(
     (nextState, nextSearchState = {}, forceReplace) => {
       // Force navigation to use published IDs only
@@ -152,6 +155,7 @@ export function useParams({
 
       const replace = forceReplace ?? searchState.preview === frameStateRef.current.url
 
+      setNavigationHistory((prev) => [...prev, state])
       routerNavigate(state, {replace})
     },
     [routerNavigate, frameStateRef],
@@ -159,6 +163,7 @@ export function useParams({
 
   return {
     navigate,
+    navigationHistory,
     params,
     searchParams,
     structureParams,
