@@ -240,6 +240,22 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       }
     }, [ref])
 
+    const preventIframeInteraction = useMemo(() => {
+      return (
+        (loading || (overlaysConnection === 'connecting' && iframe.status !== 'refreshing')) &&
+        !continueAnyway
+      )
+    }, [continueAnyway, iframe.status, loading, overlaysConnection])
+
+    const iframeAnimations = useMemo(() => {
+      return [
+        preventIframeInteraction ? 'background' : 'active',
+        loading ? 'reloading' : 'idle',
+        viewport,
+        showOverlaysConnectionStatus && !continueAnyway ? 'timedOut' : '',
+      ]
+    }, [continueAnyway, loading, preventIframeInteraction, showOverlaysConnectionStatus, viewport])
+
     return (
       <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
         <TooltipDelayGroupProvider delay={1000}>
@@ -679,31 +695,13 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
                 ) : null}
               </AnimatePresence>
               <IFrame
-                ref={ref}
-                style={{
-                  pointerEvents:
-                    (loading ||
-                      (overlaysConnection === 'connecting' && iframe.status !== 'refreshing')) &&
-                    !continueAnyway
-                      ? 'none'
-                      : 'auto',
-                  boxShadow: '0 0 0 1px var(--card-border-color)',
-                  borderTop: '1px solid transparent',
-                }}
-                src={initialUrl.toString()}
+                animate={iframeAnimations}
                 initial={['background']}
-                variants={iframeVariants}
-                animate={[
-                  (loading ||
-                    (overlaysConnection === 'connecting' && iframe.status !== 'refreshing')) &&
-                  !continueAnyway
-                    ? 'background'
-                    : 'active',
-                  loading ? 'reloading' : 'idle',
-                  viewport,
-                  showOverlaysConnectionStatus && !continueAnyway ? 'timedOut' : '',
-                ]}
                 onLoad={onIFrameLoad}
+                preventClick={preventIframeInteraction}
+                ref={ref}
+                src={initialUrl.toString()}
+                variants={iframeVariants}
               />
             </Flex>
           </Card>
