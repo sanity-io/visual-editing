@@ -109,10 +109,12 @@ export const PanelResizer: FunctionComponent<{
 
     window.addEventListener('mousemove', onDrag)
     window.addEventListener('mouseup', onDragStop)
+    window.addEventListener('contextmenu', onDragStop)
 
     return () => {
       window.removeEventListener('mousemove', onDrag)
       window.removeEventListener('mouseup', onDragStop)
+      window.removeEventListener('contextmenu', onDragStop)
     }
   }, [disabled, isDragging, onDrag, onDragStop])
 
