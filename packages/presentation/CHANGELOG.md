@@ -12,6 +12,24 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.16.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.1...presentation-v1.16.2) (2024-07-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.20.1 ([#1680](https://github.com/sanity-io/visual-editing/issues/1680)) ([bb89688](https://github.com/sanity-io/visual-editing/commit/bb8968816838a60a32242ce803a3ef804f2f885e))
+* **presentation:** add iframe pointer events to prevent interference with resizing drag handler ([#1693](https://github.com/sanity-io/visual-editing/issues/1693)) ([ad3ba1f](https://github.com/sanity-io/visual-editing/commit/ad3ba1f0ccaba745c538eb1f392eaee5d8954630))
+* **presentation:** prevent displaying main document on explicit document navigation ([#1691](https://github.com/sanity-io/visual-editing/issues/1691)) ([f058555](https://github.com/sanity-io/visual-editing/commit/f058555d5dc38b5b8a920dfbbce1481a44cda0e5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.17 to ^1.6.18
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.17 to 0.6.18
+
 ## [1.16.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.0...presentation-v1.16.1) (2024-06-26)
 
 
