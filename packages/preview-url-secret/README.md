@@ -125,6 +125,111 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse<void>
 }
 ```
 
+## Remix.js
+
+Create a session cookie for draft mode, and put it's secret in an environment variable name `SANITY_SESSION_SECRET`:
+
+```ts
+// ./app/sessions.ts
+
+import {createCookieSessionStorage} from '@remix-run/node';
+
+export const DRAFT_SESSION_NAME = '__draft';
+
+if (!process.env.SANITY_SESSION_SECRET) {
+  throw new Error(`Missing SANITY_SESSION_SECRET in .env`);
+}
+
+const {getSession, commitSession, destroySession} =
+  createCookieSessionStorage({
+    cookie: {
+      name: DRAFT_SESSION_NAME,
+      secrets: [process.env.SANITY_SESSION_SECRET],
+      sameSite: 'lax',
+    },
+  });
+
+export {commitSession, destroySession, getSession};
+```
+
+Create an API token with viewer rights, and put it in an environment variable named `SANITY_API_READ_TOKEN`, then create the following resource route:
+
+```ts
+// ./app/routes/api.draft.ts
+
+import {redirect, type LoaderFunctionArgs} from '@remix-run/node';
+import {validatePreviewUrl} from '@sanity/preview-url-secret';
+
+import {client} from '~/sanity/client';
+import {commitSession, getSession} from '~/sessions';
+
+export const loader = async ({request}: LoaderFunctionArgs) => {
+  if (!process.env.SANITY_API_READ_TOKEN) {
+    throw new Response('Draft mode missing token!', {status: 401});
+  }
+
+  const clientWithToken = client.withConfig({
+    // Required, otherwise the URL preview secret can't be validated
+    token: process.env.SANITY_API_READ_TOKEN,
+  });
+
+  const {isValid, redirectTo = '/'} = await validatePreviewUrl(clientWithToken, request.url);
+
+  if (!isValid) {
+    throw new Response('Invalid secret!', {status: 401});
+  }
+
+  const session = await getSession(request.headers.get('Cookie'));
+  await session.set('projectId', client.config().projectId);
+
+  return redirect(redirectTo, {
+    headers: {
+      'Set-Cookie': await commitSession(session),
+    },
+  });
+};
+```
+
+It's also handy to make a resource route to disable draft mode, so you have an easy way of disabling it when leaving the Presentation Mode and return to your app:
+
+```ts
+// ./app/routes/api.disable-draft.ts
+
+import {redirect, type LoaderFunctionArgs} from '@remix-run/node';
+
+import {destroySession, getSession} from '~/sessions';
+
+export const loader = async ({request}: LoaderFunctionArgs) => {
+  const session = await getSession(request.headers.get('Cookie'));
+
+  return redirect('/', {
+    headers: {
+      'Set-Cookie': await destroySession(session),
+    },
+  });
+};
+```
+
+Now we can create a utility function that helps us get the draft mode from the session cookie in loaders:
+
+```ts
+// ./app/sanity/get-draft-mode.server.ts
+
+import {client} from '~/sanity/client';
+import {getSession} from '~/sessions';
+
+export async function getDraftMode(request: Request) {
+  const draftSession = await getSession(request.headers.get('Cookie'));
+  const draft = draftSession.get('projectId') === client.config().projectId;
+
+  if (draft && !process.env.SANITY_API_READ_TOKEN) {
+    throw new Error(`Cannot activate draft mode without a 'SANITY_API_READ_TOKEN' token in your environment variables.`);
+  }
+
+  return draft;
+}
+```
+
 ## Checking the Studio origin
 
 You can inspect the URL origin of the Studio that initiated the preview on the `studioOrigin` property of `validatePreviewUrl`:
