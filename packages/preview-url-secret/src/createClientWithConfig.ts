@@ -18,7 +18,7 @@ export function createClientWithConfig(client: SanityClientLike): SanityClientLi
   return client.withConfig({
     // Userland might be using an API version that's too old to use perspectives
     apiVersion,
-    // We can't use the CDN, the secret is typically validated rigth after it's created
+    // We can't use the CDN, the secret is typically validated right after it's created
     useCdn: false,
     // The documents that hold secrets are never drafts
     perspective: 'published',
