@@ -38,6 +38,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: QueryParams = {},
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
+    const stega = options.stega ?? unstable__serverClient.instance?.config().stega.enabled ?? false
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
 
@@ -57,21 +58,29 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
         )
       }
-      const {result, resultSourceMap} =
-        await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
-          filterResponse: false,
-          resultSourceMap: 'withKeyArraySelector',
-          perspective,
-          useCdn: false,
-        })
+      
+      const { result, resultSourceMap } =
+        await unstable__serverClient.instance!.fetch<QueryResponseResult>(
+          query,
+          params,
+          {
+            filterResponse: false,
+            resultSourceMap: 'withKeyArraySelector',
+            perspective,
+            useCdn: false,
+            stega
+          },
+        )
       // @ts-expect-error - update typings
       return resultSourceMap
         ? {data: result, sourceMap: resultSourceMap, perspective}
         : {data: result, perspective}
     }
-    const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
-      JSON.stringify({query, params}),
-    )
+
+    const { result, resultSourceMap } =
+      await unstable__cache.instance.fetch<QueryResponseResult>(
+        JSON.stringify({ query, params, perspective, stega }),
+      )
     // @ts-expect-error - update typings
     return resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
   }
