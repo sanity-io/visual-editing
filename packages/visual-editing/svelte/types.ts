@@ -1,6 +1,6 @@
 import type {SanityClient} from '@sanity/client'
 
-import type {HistoryRefresh, VisualEditingOptions} from '../src/types'
+import type {HistoryRefresh, VisualEditingOptions} from '../dist'
 
 /** @public */
 export interface VisualEditingProps {
