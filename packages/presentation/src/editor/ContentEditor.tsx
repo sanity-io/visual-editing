@@ -55,11 +55,7 @@ export function ContentEditor(props: {
           state={{
             id: mainDocumentState!.document!._id,
             type: mainDocumentState!.document!._type,
-            _searchParams: Object.entries({
-              ...searchParams,
-              prefersLatestPublished:
-                searchParams?.perspective === 'published' ? 'true' : undefined,
-            }),
+            _searchParams: Object.entries(searchParams),
           }}
         />
       )
