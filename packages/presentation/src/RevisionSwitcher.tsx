@@ -1,7 +1,16 @@
-import {type FunctionComponent, useEffect, useRef} from 'react'
+import {type FunctionComponent} from 'react'
 
 import {useEditState} from './internals'
 import type {PresentationNavigate} from './types'
+import {useEffectOnChange} from './util/useEffectOnChange'
+
+interface RevisionSwitcherProps {
+  documentId: string
+  documentRevision: string | undefined
+  documentType: string
+  navigate: PresentationNavigate
+  perspective: 'previewDrafts' | 'published'
+}
 
 /**
  * Renderless component to handle displaying the correct revision when the
@@ -11,32 +20,25 @@ import type {PresentationNavigate} from './types'
  * `rev` parameter is removed, as the latest draft should be displayed.
  * @internal
  */
-export const RevisionSwitcher: FunctionComponent<{
-  documentId: string
-  documentType: string
-  navigate: PresentationNavigate
-  perspective: 'previewDrafts' | 'published'
-  revision: string | undefined
-}> = function (props) {
-  const {documentId, documentType, navigate, perspective, revision} = props
+export const RevisionSwitcher: FunctionComponent<RevisionSwitcherProps> = function (props) {
+  const {documentId, documentType, navigate, perspective, documentRevision} = props
 
-  const perspectiveRef = useRef<string | undefined>(undefined)
   const editState = useEditState(documentId, documentType)
 
-  useEffect(() => {
-    if (perspectiveRef.current !== perspective) {
-      let rev = undefined
-      if (perspective === 'published' && editState.published) {
+  useEffectOnChange(
+    perspective,
+    (value) => {
+      let rev: string | undefined = undefined
+      if (value === 'published' && editState.published) {
         const {_updatedAt, _rev} = editState.published
         rev = `${_updatedAt}/${_rev}`
       }
-      if (revision !== rev) {
+      if (documentRevision !== rev) {
         navigate({}, {rev}, true)
       }
-    }
-
-    perspectiveRef.current = perspective
-  }, [documentId, editState, navigate, perspective, revision])
+    },
+    [editState, navigate, documentRevision],
+  )
 
   return null
 }

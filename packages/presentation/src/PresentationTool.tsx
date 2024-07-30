@@ -601,10 +601,10 @@ export default function PresentationTool(props: {
       {params.id && params.type && (
         <RevisionSwitcher
           documentId={params.id}
+          documentRevision={params.rev}
           documentType={params.type}
           navigate={navigate}
           perspective={perspective}
-          revision={params.rev}
         />
       )}
     </>
