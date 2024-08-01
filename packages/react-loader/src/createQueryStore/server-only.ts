@@ -25,7 +25,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     sourceMap: ContentSourceMap | undefined
     perspective?: ClientPerspective
   }> => {
-    const {cache, next, stega} = _options
+    const {cache, next, stega, headers, tag} = _options
     const perspective =
       _options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
     const useCdn = _options.useCdn || unstable__serverClient.instance!.config().useCdn
@@ -44,6 +44,8 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         perspective,
         useCdn: perspective === 'previewDrafts' ? false : useCdn,
         stega,
+        headers,
+        tag,
       })
     const payload = resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
     if (perspective === 'previewDrafts') {
