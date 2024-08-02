@@ -100,43 +100,22 @@ function observeDocument(
 }
 
 function observeForLocations(
-  doc: {id: string; type: string},
-  resolver:
-    | DocumentLocationsState
-    | DocumentLocationResolver
-    | DocumentLocationResolverObject<string>
-    | undefined,
+  documentId: string,
+  resolver: DocumentLocationResolverObject<string>,
   documentStore: DocumentStore,
 ) {
-  if (!resolver) return of(undefined)
-  const {id, type} = doc
-  // Original/advanced resolver which requires explicit use of Observables
-  if (typeof resolver === 'function') {
-    const params = {id, type}
-
-    const context = {documentStore}
-    const _result = resolver(params, context)
-    return isObservable(_result) ? _result : of(_result)
-  }
-
-  // Simplified resolver pattern which abstracts away Observable logic
-  if ('select' in resolver && 'resolve' in resolver) {
-    const {select} = resolver
-    const paths = Object.values(select).map((value) => String(value).split('.')) || []
-    const doc = {_type: 'reference', _ref: id}
-    return observeDocument(doc, paths, documentStore).pipe(
-      map((doc) => {
-        return Object.keys(select).reduce<Record<string, unknown>>((acc, key) => {
-          acc[key] = get(doc, select[key])
-          return acc
-        }, {})
-      }),
-      map(resolver.resolve),
-    )
-  }
-
-  // Resolver is explicitly provided state
-  return of(resolver)
+  const {select} = resolver
+  const paths = Object.values(select).map((value) => String(value).split('.')) || []
+  const doc = {_type: 'reference', _ref: documentId}
+  return observeDocument(doc, paths, documentStore).pipe(
+    map((doc) => {
+      return Object.keys(select).reduce<Record<string, unknown>>((acc, key) => {
+        acc[key] = get(doc, select[key])
+        return acc
+      }, {})
+    }),
+    map(resolver.resolve),
+  )
 }
 
 export function useDocumentLocations(props: {
@@ -170,7 +149,7 @@ export function useDocumentLocations(props: {
 
     // Simplified resolver pattern which abstracts away Observable logic
     if ('select' in resolver && 'resolve' in resolver) {
-      return observeForLocations({id, type}, resolver, documentStore)
+      return observeForLocations(id, resolver, documentStore)
     }
 
     // Resolver is explicitly provided state
