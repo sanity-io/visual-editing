@@ -12,6 +12,14 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.16.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.2...presentation-v1.16.3) (2024-08-02)
+
+
+### Bug Fixes
+
+* **presentation:** display correct revision when switching perspective ([#1699](https://github.com/sanity-io/visual-editing/issues/1699)) ([a3c9e17](https://github.com/sanity-io/visual-editing/commit/a3c9e170067258aa32a98074b280b508ac5117a8))
+* **presentation:** preserve tool state across intent link navigations ([#1692](https://github.com/sanity-io/visual-editing/issues/1692)) ([e8809f8](https://github.com/sanity-io/visual-editing/commit/e8809f8131988af7888ea7d8e10524e55df52e9e))
+
 ## [1.16.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.1...presentation-v1.16.2) (2024-07-03)
 
 

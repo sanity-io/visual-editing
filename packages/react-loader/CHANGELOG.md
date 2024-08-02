@@ -38,6 +38,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.10.5](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.10.4...react-loader-v1.10.5) (2024-08-02)
+
+
+### Bug Fixes
+
+* pass `tag` and `headers` options to fetch ([#1701](https://github.com/sanity-io/visual-editing/issues/1701)) ([41f8165](https://github.com/sanity-io/visual-editing/commit/41f816574d1acdd5bfae6a28086a7e1bfdefc3d1))
+
 ## [1.10.4](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.10.3...react-loader-v1.10.4) (2024-07-03)
 
 
