@@ -34,7 +34,6 @@ function resolveQueryStringFromParams(nextParams: Record<string, string | undefi
     'rev',
     'since',
     'template',
-    'prefersLatestPublished',
     'view',
   ] satisfies Array<keyof PresentationParams> as string[]
 
@@ -88,10 +87,7 @@ const ReferenceChildLink = forwardRef(function ReferenceChildLink(
       state={{
         id: documentId,
         type: documentType,
-        _searchParams: Object.entries({
-          ...searchParams,
-          prefersLatestPublished: searchParams.perspective === 'published' ? 'true' : undefined,
-        }),
+        _searchParams: Object.entries(searchParams),
       }}
       title={undefined}
     />
@@ -144,11 +140,7 @@ export function PresentationPaneRouterProvider(
               state={{
                 id: childId,
                 type: ref._type,
-                _searchParams: Object.entries({
-                  ...searchParams,
-                  prefersLatestPublished:
-                    searchParams?.perspective === 'published' ? 'true' : undefined,
-                }),
+                _searchParams: Object.entries(searchParams),
               }}
             />
           )
