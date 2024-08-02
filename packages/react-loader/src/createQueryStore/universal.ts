@@ -38,6 +38,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: QueryParams = {},
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
+    const {headers, tag} = options
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
 
@@ -63,6 +64,8 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           resultSourceMap: 'withKeyArraySelector',
           perspective,
           useCdn: false,
+          headers,
+          tag,
         })
       // @ts-expect-error - update typings
       return resultSourceMap
