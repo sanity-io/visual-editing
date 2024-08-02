@@ -12,6 +12,24 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.16.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.2...presentation-v1.16.3) (2024-08-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.21.1 ([#1704](https://github.com/sanity-io/visual-editing/issues/1704)) ([32f1ef8](https://github.com/sanity-io/visual-editing/commit/32f1ef8582134a130d6325320274a981217ee2e8))
+* **presentation:** display correct revision when switching perspective ([#1699](https://github.com/sanity-io/visual-editing/issues/1699)) ([a3c9e17](https://github.com/sanity-io/visual-editing/commit/a3c9e170067258aa32a98074b280b508ac5117a8))
+* **presentation:** preserve tool state across intent link navigations ([#1692](https://github.com/sanity-io/visual-editing/issues/1692)) ([e8809f8](https://github.com/sanity-io/visual-editing/commit/e8809f8131988af7888ea7d8e10524e55df52e9e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.18 to ^1.6.19
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.18 to 0.6.19
+
 ## [1.16.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.1...presentation-v1.16.2) (2024-07-03)
 
 
