@@ -36,6 +36,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: Parameters<LoadQuery>[1] = {},
     options: Parameters<LoadQuery>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
+    const {headers, tag} = options
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
 
@@ -61,6 +62,8 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           resultSourceMap: 'withKeyArraySelector',
           perspective,
           useCdn: false,
+          headers,
+          tag,
         })
       return {data: result, sourceMap: resultSourceMap, perspective}
     }
