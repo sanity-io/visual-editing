@@ -50,6 +50,7 @@ import {
   presentationReducer,
   presentationReducerInit,
 } from './reducers/presentationReducer'
+import {RevisionSwitcher} from './RevisionSwitcher'
 import type {
   FrameState,
   LiveQueriesState,
@@ -182,12 +183,6 @@ export default function PresentationTool(props: {
     }
   }, [channel, popups, popups.size])
 
-  // This workaround can be removed once the need to set prefersLatestPublished is no longer there
-  const perspectiveRef = useRef(perspective)
-  useEffect(() => {
-    perspectiveRef.current = perspective
-  }, [perspective])
-
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
 
@@ -208,19 +203,11 @@ export default function PresentationTool(props: {
           onStatusUpdate: setOverlaysConnection,
           onEvent(type, data) {
             if ((type === 'visual-editing/focus' || type === 'overlay/focus') && 'id' in data) {
-              navigate(
-                {
-                  type: data.type,
-                  id: data.id,
-                  path: data.path,
-                },
-                {
-                  prefersLatestPublished:
-                    'isDraft' in data || perspectiveRef.current === 'previewDrafts'
-                      ? undefined
-                      : 'true',
-                },
-              )
+              navigate({
+                type: data.type,
+                id: data.id,
+                path: data.path,
+              })
             } else if (type === 'visual-editing/navigate' || type === 'overlay/navigate') {
               const {title, url} = data
               if (frameStateRef.current.url !== url) {
@@ -372,9 +359,7 @@ export default function PresentationTool(props: {
 
   const handleStructureParams = useCallback(
     (structureParams: StructureDocumentPaneParams) => {
-      // Omit the prefersLatestPublished param as it causes an internal studio
-      // useEffect to run and replace the revision with the previous value
-      navigate({}, {...structureParams, prefersLatestPublished: undefined})
+      navigate({}, structureParams)
     },
     [navigate],
   )
@@ -397,21 +382,6 @@ export default function PresentationTool(props: {
       channel?.send('overlays', 'presentation/blur', undefined)
     }
   }, [channel, params.id, params.path])
-
-  // Handle opening the published document when previewing published
-  const latestPublishedIdRef = useRef<string | undefined>(undefined)
-  useEffect(() => {
-    if (
-      perspective === 'published' &&
-      params.id &&
-      params.id !== latestPublishedIdRef.current &&
-      !params.rev &&
-      !params.prefersLatestPublished
-    ) {
-      navigate({}, {prefersLatestPublished: 'true'}, true)
-    }
-    latestPublishedIdRef.current = params.id
-  }, [navigate, params.id, params.prefersLatestPublished, params.rev, perspective])
 
   // Dispatch a navigation message when the preview param changes
   useEffect(() => {
@@ -627,6 +597,15 @@ export default function PresentationTool(props: {
             previewKitConnection={previewKitConnection}
           />
         </Suspense>
+      )}
+      {params.id && params.type && (
+        <RevisionSwitcher
+          documentId={params.id}
+          documentRevision={params.rev}
+          documentType={params.type}
+          navigate={navigate}
+          perspective={perspective}
+        />
       )}
     </>
   )
