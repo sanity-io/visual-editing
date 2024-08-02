@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.1.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.6...visual-editing-v2.1.7) (2024-08-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.21.1 ([#1704](https://github.com/sanity-io/visual-editing/issues/1704)) ([32f1ef8](https://github.com/sanity-io/visual-editing/commit/32f1ef8582134a130d6325320274a981217ee2e8))
+* **visual-editing:** import svelte types from dist over src ([#1700](https://github.com/sanity-io/visual-editing/issues/1700)) ([1642978](https://github.com/sanity-io/visual-editing/commit/1642978f72f78af1b3611234ed2e29e6048d0f70))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped from ^1.6.18 to ^1.6.19
+  * devDependencies
+    * @repo/visual-editing-helpers bumped from 0.6.18 to 0.6.19
+
 ## [2.1.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.5...visual-editing-v2.1.6) (2024-07-03)
 
 
