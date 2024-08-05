@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.7...visual-editing-v2.1.8) (2024-08-05)
+
+
+### Bug Fixes
+
+* **visual-editing:** improve overlay mutation handling ([#1705](https://github.com/sanity-io/visual-editing/issues/1705)) ([73cef51](https://github.com/sanity-io/visual-editing/commit/73cef51fb026878869f78d086605780729de13c7))
+
 ## [2.1.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.6...visual-editing-v2.1.7) (2024-08-02)
 
 
