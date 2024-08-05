@@ -34,6 +34,14 @@ export const elementsReducer = (
         }
         return e
       })
+    case 'element/update': {
+      return elements.map((e) => {
+        if (e.id === message.id) {
+          return {...e, sanity: message.sanity, rect: message.rect}
+        }
+        return e
+      })
+    }
     case 'element/unregister':
       return elements.filter((e) => e.id !== message.id)
     case 'element/deactivate':

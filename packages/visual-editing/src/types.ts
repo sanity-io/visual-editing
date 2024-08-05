@@ -41,10 +41,7 @@ export interface OverlayMsgElement<T extends string> extends Msg<`element/${T}`>
 }
 
 /** @public */
-export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
-  sanity: SanityNode | SanityStegaNode
-  rect: OverlayRect
-}
+export type OverlayMsgElementActivate = OverlayMsgElement<'activate'>
 
 /** @public */
 export type OverlayMsgBlur = Msg<'overlay/blur'>
@@ -78,6 +75,12 @@ export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
 }
 
 /** @public */
+export type OverlayMsgElementUpdate = OverlayMsgElement<'update'> & {
+  sanity: SanityNode | SanityStegaNode
+  rect: OverlayRect
+}
+
+/** @public */
 export type OverlayMsgElementUnregister = OverlayMsgElement<'unregister'>
 
 /** @public */
@@ -100,6 +103,7 @@ export type OverlayMsg =
   | OverlayMsgElementMouseLeave
   | OverlayMsgElementRegister
   | OverlayMsgElementUnregister
+  | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
 
 /**

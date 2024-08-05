@@ -22,6 +22,7 @@ export type {
   OverlayMsgElementMouseLeave,
   OverlayMsgElementRegister,
   OverlayMsgElementUnregister,
+  OverlayMsgElementUpdate,
   OverlayMsgElementUpdateRect,
   OverlayOptions,
   OverlayRect,
