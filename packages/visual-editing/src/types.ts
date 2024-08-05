@@ -41,10 +41,7 @@ export interface OverlayMsgElement<T extends string> extends Msg<`element/${T}`>
 }
 
 /** @public */
-export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
-  sanity: SanityNode | SanityStegaNode
-  rect: OverlayRect
-}
+export type OverlayMsgElementActivate = OverlayMsgElement<'activate'>
 
 /** @public */
 export type OverlayMsgBlur = Msg<'overlay/blur'>

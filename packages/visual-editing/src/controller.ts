@@ -88,15 +88,13 @@ export function createOverlayController({
    * Executed when element enters the viewport
    * Enables an element’s event handlers
    */
-  function activateElement({id, elements, handlers, sanity}: OverlayElement) {
+  function activateElement({id, elements, handlers}: OverlayElement) {
     const {element, measureElement} = elements
     addEventHandlers(element, handlers)
     ro.observe(measureElement)
     handler({
       type: 'element/activate',
       id,
-      rect: getRect(element),
-      sanity,
     })
   }
 
@@ -130,11 +128,14 @@ export function createOverlayController({
             event.preventDefault()
             event.stopPropagation()
           }
-          handler({
-            type: 'element/click',
-            id,
-            sanity,
-          })
+          const sanity = elementsMap.get(element)?.sanity
+          if (sanity) {
+            handler({
+              type: 'element/click',
+              id,
+              sanity,
+            })
+          }
         }
       },
       mousedown(event) {
@@ -232,12 +233,14 @@ export function createOverlayController({
   }
 
   function updateElement({elements, sanity}: ResolvedElement) {
-    const overlayElement = elementsMap.get(elements.element)
+    const {element} = elements
+    const overlayElement = elementsMap.get(element)
     if (overlayElement) {
+      elementsMap.set(element, {...overlayElement, sanity})
       handler({
         type: 'element/update',
         id: overlayElement.id,
-        rect: getRect(elements.element),
+        rect: getRect(element),
         sanity: sanity,
       })
     }
