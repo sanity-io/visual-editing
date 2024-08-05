@@ -228,15 +228,28 @@ export function createOverlayController({
       rect: getRect(element),
       sanity,
     })
+    activateElement(sanityNode)
   }
 
-  function registerElements(node: ElementNode | {childNodes: ElementNode[]}) {
+  function updateElement({elements, sanity}: ResolvedElement) {
+    const overlayElement = elementsMap.get(elements.element)
+    if (overlayElement) {
+      handler({
+        type: 'element/update',
+        id: overlayElement.id,
+        rect: getRect(elements.element),
+        sanity: sanity,
+      })
+    }
+  }
+
+  function parseElements(node: ElementNode | {childNodes: ElementNode[]}) {
     const sanityNodes = findSanityNodes(node)
     for (const sanityNode of sanityNodes) {
-      if (
-        isElementNode(sanityNode.elements.element) &&
-        !elementsMap.has(sanityNode.elements.element)
-      ) {
+      const {element} = sanityNode.elements
+      if (elementsMap.has(element)) {
+        updateElement(sanityNode)
+      } else {
         registerElement(sanityNode)
       }
     }
@@ -258,46 +271,41 @@ export function createOverlayController({
     }
   }
 
-  // Mutations
   function handleMutation(mutations: MutationRecord[]) {
-    const needsUpdate = !!mutations.filter((mutation) => {
-      const node: Node | null = mutation.target
-
-      // Ignore overlay elements and container
+    let mutationWasInScope = false
+    // For each DOM mutation, we find the relevant element node and register or
+    // update it. This function doesn't handle checking if the node actually
+    // contains any relevant Sanity data, it just detects new or changed DOM
+    // elements and hands them off to `parseElements` to and determine if we
+    // have Sanity nodes
+    for (const mutation of mutations) {
+      const {target, type} = mutation
+      // We need to target an element, so if the mutated node was just a text
+      // change, we look at that node's parent instead
+      const node: Node | null = type === 'characterData' ? target.parentElement : target
+      // We ignore any nodes related to the overlay container element
       if (node === overlayElement || overlayElement.contains(node)) {
-        return false
+        continue
       }
 
+      mutationWasInScope = true
       if (isElementNode(node)) {
-        // @todo - We need to handle cases where `data-sanity` attributes may
-        // have changed, so it's not enough to ignore previously registered
-        // elements. We can just unregister and re-register elements instead of
-        // attempting to update their data. Can this be made more efficient?
-        if (elementsMap.has(node)) {
-          unregisterElement(node)
-        }
-        registerElements({childNodes: [node]})
+        parseElements({childNodes: [node]})
       }
+    }
 
-      return true
-    }).length
-
-    if (needsUpdate) {
+    // If the mutation is "in scope" (i.e. happened outside of the overlay
+    // container) we need to check if it removed any of the elements we are
+    // currently tracking
+    if (mutationWasInScope) {
       for (const element of elementSet) {
-        if (element.isConnected) {
-          updateRect(element)
-        } else {
+        if (!element.isConnected) {
           unregisterElement(element)
         }
       }
     }
   }
 
-  /**
-
-   * Dispatches an event containing the size and position (rect) of an element
-   * @param el - Element to dispatch rect information for
-   */
   function updateRect(el: ElementNode) {
     const overlayElement = elementsMap.get(el)
     if (overlayElement) {
@@ -423,7 +431,7 @@ export function createOverlayController({
       subtree: true,
     })
 
-    registerElements(document.body)
+    parseElements(document.body)
     activate()
   }
 

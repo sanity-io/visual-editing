@@ -78,6 +78,12 @@ export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
 }
 
 /** @public */
+export type OverlayMsgElementUpdate = OverlayMsgElement<'update'> & {
+  sanity: SanityNode | SanityStegaNode
+  rect: OverlayRect
+}
+
+/** @public */
 export type OverlayMsgElementUnregister = OverlayMsgElement<'unregister'>
 
 /** @public */
@@ -100,6 +106,7 @@ export type OverlayMsg =
   | OverlayMsgElementMouseLeave
   | OverlayMsgElementRegister
   | OverlayMsgElementUnregister
+  | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
 
 /**
