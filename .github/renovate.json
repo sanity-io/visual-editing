@@ -1,7 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>sanity-io/renovate-config"],
-  "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"],
+  "ignorePresets": [
+    ":ignoreModulesAndTests",
+    "github>sanity-io/renovate-config:group-non-major"
+  ],
   "packageRules": [
     {
       "description": "Enable automerge with GitHub merge queues (note that this doesn't bypass required checks and code reviews)",
@@ -9,7 +12,9 @@
       "automerge": true
     },
     {
-      "group": {"semanticCommitType": "chore"},
+      "group": {
+        "semanticCommitType": "chore"
+      },
       "matchDepTypes": [
         "dependencies",
         "devDependencies",
@@ -25,7 +30,10 @@
     },
     {
       "matchDepNames": ["next", "@next/bundle-analyzer"],
-      "matchFileNames": ["apps/next-server-only/package.json", "apps/next-no-cache/package.json"],
+      "matchFileNames": [
+        "apps/next-server-only/package.json",
+        "apps/next-no-cache/package.json"
+      ],
       "followTag": "canary"
     },
     {
@@ -34,19 +42,19 @@
     },
     {
       "matchDepTypes": ["peerDependencies"],
-      "excludePackageNames": [
-        "@sveltejs/kit",
-        "svelte",
-        "vue",
-        "next",
-        "vue-router",
-        "nuxt",
-        "@remix-run/react",
-        "react",
-        "react-dom",
-        "styled-components"
-      ],
-      "rangeStrategy": "bump"
+      "rangeStrategy": "bump",
+      "matchPackageNames": [
+        "!@sveltejs/kit",
+        "!svelte",
+        "!vue",
+        "!next",
+        "!vue-router",
+        "!nuxt",
+        "!@remix-run/react",
+        "!react",
+        "!react-dom",
+        "!styled-components"
+      ]
     },
     {
       "matchDepNames": ["sanity", "@sanity/util"],
