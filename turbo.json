@@ -1,13 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["RUNNER_OS"],
-  "pipeline": {
+  "ui": "tui",
+  "globalDependencies": [".npmrc", ".prettierrc.cjs", "**/.env.*local"],
+  "tasks": {
     "build": {
       "env": ["GITHUB_ACTIONS"],
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
       "dependsOn": ["^build"],
-      "outputMode": "new-only"
+      "outputLogs": "new-only"
     },
     "test": {
       "env": ["GITHUB_ACTIONS"],
@@ -15,7 +15,7 @@
       "cache": false
     },
     "lint": {
-      "outputMode": "errors-only"
+      "outputLogs": "errors-only"
     },
     "preview": {
       "dependsOn": ["^build"]
@@ -23,6 +23,7 @@
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,
+      "interactive": true,
       "persistent": true
     },
     "watch": {
