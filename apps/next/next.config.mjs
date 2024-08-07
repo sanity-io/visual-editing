@@ -36,18 +36,6 @@ const nextConfig = {
       },
     ]
   },
-
-  /*
-  webpack(config) {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@sanity/visual-editing': require.resolve(
-        '../../packages/visual-editing/src/index.ts',
-      ),
-    }
-    return config
-  },
-  // */
 }
 
 export default withVercelToolbar()(
