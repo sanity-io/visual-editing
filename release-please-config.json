@@ -1,10 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
-  "bump-minor-pre-major": true,
-  "always-link-local": true,
   "plugins": ["node-workspace"],
   "packages": {
-    "packages/channels": {},
+    "packages/channels": {
+      "bump-minor-pre-major": true
+    },
     "packages/core-loader": {},
     "packages/insert-menu": {},
     "packages/overlays": {},
@@ -14,6 +14,8 @@
     "packages/react-loader": {},
     "packages/svelte-loader": {},
     "packages/visual-editing": {},
-    "packages/visual-editing-helpers": {}
+    "packages/visual-editing-helpers": {
+      "bump-minor-pre-major": true
+    }
   }
 }

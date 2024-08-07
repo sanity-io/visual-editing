@@ -966,13 +966,13 @@ importers:
   packages/core-loader:
     devDependencies:
       '@repo/channels':
-        specifier: 0.4.0
+        specifier: workspace:*
         version: link:../channels
       '@repo/package.config':
         specifier: workspace:*
         version: link:../package.config
       '@repo/visual-editing-helpers':
-        specifier: 0.6.19
+        specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
         specifier: ^6.21.1
@@ -1175,13 +1175,13 @@ importers:
         version: 0.1.3(react@18.3.1)
     devDependencies:
       '@repo/channels':
-        specifier: 0.4.0
+        specifier: workspace:*
         version: link:../channels
       '@repo/package.config':
         specifier: workspace:*
         version: link:../package.config
       '@repo/visual-editing-helpers':
-        specifier: 0.6.19
+        specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
         specifier: ^6.21.1
@@ -1217,13 +1217,13 @@ importers:
   packages/preview-kit-compat:
     devDependencies:
       '@repo/channels':
-        specifier: 0.4.0
+        specifier: workspace:*
         version: link:../channels
       '@repo/package.config':
         specifier: workspace:*
         version: link:../package.config
       '@repo/visual-editing-helpers':
-        specifier: 0.6.19
+        specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
         specifier: ^6.21.1
@@ -1269,7 +1269,7 @@ importers:
         version: 3.0.2
     devDependencies:
       '@repo/channels':
-        specifier: 0.4.0
+        specifier: workspace:*
         version: link:../channels
       '@repo/package.config':
         specifier: workspace:*
@@ -1318,13 +1318,13 @@ importers:
         version: link:../core-loader
     devDependencies:
       '@repo/channels':
-        specifier: 0.4.0
+        specifier: workspace:*
         version: link:../channels
       '@repo/package.config':
         specifier: workspace:*
         version: link:../package.config
       '@repo/visual-editing-helpers':
-        specifier: 0.6.19
+        specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
         specifier: ^6.21.1
@@ -1376,13 +1376,13 @@ importers:
         version: 3.1.3
     devDependencies:
       '@repo/channels':
-        specifier: 0.4.0
+        specifier: workspace:*
         version: link:../channels
       '@repo/package.config':
         specifier: workspace:*
         version: link:../package.config
       '@repo/visual-editing-helpers':
-        specifier: 0.6.19
+        specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
         specifier: ^6.21.1
@@ -1452,13 +1452,13 @@ importers:
         specifier: ^2.9.2
         version: 2.9.2(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
       '@repo/channels':
-        specifier: 0.4.0
+        specifier: workspace:*
         version: link:../channels
       '@repo/package.config':
         specifier: workspace:*
         version: link:../package.config
       '@repo/visual-editing-helpers':
-        specifier: 0.6.19
+        specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
         specifier: ^6.21.1
@@ -8384,7 +8384,6 @@ packages:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5):
     resolution: {integrity: sha512-tbsV1jPne5CkFQCgPBcDOt30ItF7aJoZL997JSF7MhGQqOeT3svWRYxiqlfA5RUdlHN6Fi+EI9bxqbdyAUZjYQ==}
@@ -8433,7 +8432,6 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/visitor-keys': 5.62.0
-    dev: true
 
   /@typescript-eslint/scope-manager@6.21.0:
     resolution: {integrity: sha512-OwLUIWZJry80O99zvqXVEioyniJMa+d2GrqpUTqi5/v5D5rOrppJVBPa0yKCblcigC0/aYAzxxqQ1B+DS2RYsg==}
@@ -8493,7 +8491,6 @@ packages:
   /@typescript-eslint/types@5.62.0:
     resolution: {integrity: sha512-87NVngcbVXUahrRTqIK27gD2t5Cu1yuCXxbLcFtCzZGlfyVWWh8mLHkoxzjsB6DDNnvdL+fW8MiwPEJyGJQDgQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    dev: true
 
   /@typescript-eslint/types@6.21.0:
     resolution: {integrity: sha512-1kFmZ1rOm5epu9NZEZm1kckCDGj5UJEf7P1kliH4LKu/RkwpsfqqGmY2OOcUs18lSlQBKLDYBOGxRVtrMN5lpg==}
@@ -8523,7 +8520,6 @@ packages:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/typescript-estree@6.21.0(typescript@5.4.5):
     resolution: {integrity: sha512-6npJTkZcO+y2/kr+z0hc4HwNfrrP4kNYh57ek7yCNlrBjWQ1Y0OS7jiZTkgumrvkX5HkEKXFZkkdFNkaW2wmUQ==}
@@ -8610,7 +8606,6 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       eslint-visitor-keys: 3.4.3
-    dev: true
 
   /@typescript-eslint/visitor-keys@6.21.0:
     resolution: {integrity: sha512-JJtkDduxLi9bivAB+cYOVMtbkqdPOhZ+ZI5LC47MIRrDV4Yn2o+ZnW10Nkmr28xRpSpdJ6Sm42Hjf2+REYXm0A==}
@@ -12198,7 +12193,6 @@ packages:
       resolve: 1.22.8
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
@@ -12230,7 +12224,6 @@ packages:
       - eslint-import-resolver-node
       - eslint-import-resolver-webpack
       - supports-color
-    dev: true
 
   /eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0):
     resolution: {integrity: sha512-xgdptdoi5W3niYeuQxKmzVDTATvLYqhpwmykwsh7f6HIOStGWEIL9iqZgQDF9u9OEzrRwR8no5q2VT+bjAujTg==}
@@ -12282,7 +12275,6 @@ packages:
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /eslint-module-utils@2.8.1(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     resolution: {integrity: sha512-rXDXR3h7cs7dy9RNpUlQf80nX31XWJEyGq1tRMo+6GsO5VmTe4UTwtmonAD4ZkAsrfMVDA2wlGJ3790Ys+D49Q==}
@@ -12312,7 +12304,6 @@ packages:
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /eslint-module-utils@2.8.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     resolution: {integrity: sha512-rXDXR3h7cs7dy9RNpUlQf80nX31XWJEyGq1tRMo+6GsO5VmTe4UTwtmonAD4ZkAsrfMVDA2wlGJ3790Ys+D49Q==}
@@ -12416,7 +12407,6 @@ packages:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
-    dev: true
 
   /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
@@ -12437,7 +12427,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -22446,7 +22436,6 @@ packages:
 
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
@@ -22467,7 +22456,6 @@ packages:
     dependencies:
       tslib: 1.14.1
       typescript: 5.4.5
-    dev: true
 
   /tuf-js@1.1.7:
     resolution: {integrity: sha512-i3P9Kgw3ytjELUfpuKVDNBJvk4u5bXL6gskv572mcevPbSKCV3zt3djhmlEQ65yERjIbOSncy7U4cQJaB1CBCg==}
