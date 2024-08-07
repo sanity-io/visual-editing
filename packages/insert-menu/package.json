@@ -36,7 +36,7 @@
     "dev": "pkg build --strict",
     "dev:workshop": "workshop dev",
     "lint": "eslint .",
-    "prepare": "turbo run build",
+    "prepack": "turbo run build",
     "ts:check": "tsc --noEmit"
   },
   "browserslist": "extends @sanity/browserslist-config",

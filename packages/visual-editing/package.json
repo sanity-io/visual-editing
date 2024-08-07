@@ -93,7 +93,7 @@
     "build:svelte": "svelte-kit sync && svelte-package -i ./svelte -o dist-svelte",
     "dev": "pnpm run build:main && pnpm run build:svelte",
     "lint": "eslint .",
-    "prepare": "turbo run build",
+    "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
