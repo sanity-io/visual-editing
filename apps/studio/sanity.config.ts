@@ -44,30 +44,12 @@ const sharedSettings = definePlugin({
   },
 })
 
-// If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
-function maybeGitBranchUrl(url: string) {
-  if (
-    !url.includes('.sanity.dev') ||
-    process.env.SANITY_STUDIO_VERCEL_ENV !== 'preview' ||
-    !process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
-  ) {
-    return url
-  }
-  const branchUrl = process.env.SANITY_STUDIO_VERCEL_BRANCH_URL.replace(
-    'visual-editing-studio-git-',
-    '',
-  )
-  const previewUrl = url.replace('.sanity.dev', `-git-${branchUrl}`)
-  return previewUrl
-}
-
 // Some apps have a Preview Mode, some don't
 function definePreviewUrl(
-  _previewUrl: string,
+  previewUrl: string,
   workspaceName: string,
   toolName: string,
 ): PreviewUrlOption {
-  const previewUrl = maybeGitBranchUrl(_previewUrl)
   if (workspaceName === 'next' && toolName === 'pages-router') {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
