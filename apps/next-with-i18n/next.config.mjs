@@ -1,6 +1,17 @@
+import path from 'node:path'
+import sanityPkg from 'sanity/package.json' assert { type: 'json' }
+
 function requireResolve(id) {
   return import.meta.resolve(id).replace('file://', '')
 }
+
+const sanityExports = {}
+for (const key of Object.keys(sanityPkg.exports)) {
+  if (key === '.') continue
+  const subexport = path.join('sanity', key)
+  sanityExports[subexport] = requireResolve(subexport)
+}
+sanityExports['sanity'] = requireResolve('sanity')
 
 /** @type {import('next').NextConfig} */
 const config = {
@@ -27,14 +38,9 @@ const config = {
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,
+      ...sanityExports,
       '@sanity/presentation': requireResolve('@sanity/presentation'),
       '@sanity/vision': requireResolve('@sanity/vision'),
-      'sanity/_singletons': requireResolve('sanity/_singletons'),
-      'sanity/desk': requireResolve('sanity/desk'),
-      'sanity/presentation': requireResolve('sanity/presentation'),
-      'sanity/router': requireResolve('sanity/router'),
-      'sanity/structure': requireResolve('sanity/structure'),
-      sanity: requireResolve('sanity'),
     }
     return config
   },

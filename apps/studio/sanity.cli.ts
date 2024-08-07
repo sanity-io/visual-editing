@@ -13,6 +13,7 @@ export default defineCliConfig({
           'apps-common/queries': require.resolve('../common/src/queries'),
           'apps-common/utils': require.resolve('../common/src/utils'),
           'apps-common': require.resolve('../common/src'),
+          '@sanity/insert-menu': require.resolve('../../packages/insert-menu/src'),
           '@sanity/presentation': require.resolve('../../packages/presentation/src'),
         },
       },
