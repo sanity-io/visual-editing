@@ -92,12 +92,12 @@ const presentationWorkspaces = Object.entries({
   'nuxt': process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
   'svelte': {
     'svelte-basic': new URL(
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
       '/shoes',
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
     ).toString(),
     'svelte-loaders': new URL(
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
       '/shoes-with-loaders',
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
     ).toString(),
   },
   'page-builder-demo':
