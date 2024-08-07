@@ -91,9 +91,14 @@ const presentationWorkspaces = Object.entries({
   },
   'nuxt': process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
   'svelte': {
-    'svelte-basic': process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes',
-    'svelte-loaders':
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes-with-loaders',
+    'svelte-basic': new URL(
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
+      '/shoes',
+    ).toString(),
+    'svelte-loaders': new URL(
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
+      '/shoes-with-loaders',
+    ).toString(),
   },
   'page-builder-demo':
     process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
