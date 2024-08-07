@@ -6,7 +6,7 @@
     "build": {
       "env": ["GITHUB_ACTIONS"],
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["@sanity/insert-menu#build", "^build"]
     },
     "test": {
       "env": ["GITHUB_ACTIONS"],

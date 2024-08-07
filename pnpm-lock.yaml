@@ -88,7 +88,7 @@ importers:
         version: 0.7.0(prettier-plugin-astro@0.14.0)(prettier@3.3.3)(typescript@5.4.5)
       '@astrojs/react':
         specifier: ^3.6.0
-        version: 3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@4.5.3(@types/node@20.8.7)(terser@5.31.3))
+        version: 3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.5(@types/node@20.8.7)(terser@5.31.3))
       '@astrojs/tailwind':
         specifier: ^5.1.0
         version: 5.1.0(astro@4.10.3(@types/node@20.8.7)(terser@5.31.3)(typescript@5.4.5))(tailwindcss@3.4.4)
@@ -582,9 +582,6 @@ importers:
       '@sanity/client':
         specifier: ^6.21.1
         version: 6.21.1(debug@4.3.6)
-      '@sanity/insert-menu':
-        specifier: workspace:*
-        version: link:../../packages/insert-menu
       '@sanity/presentation':
         specifier: workspace:*
         version: link:../../packages/presentation
@@ -625,9 +622,6 @@ importers:
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
-      '@sanity/insert-menu':
-        specifier: workspace:*
-        version: link:../../packages/insert-menu
       '@sanity/react-loader':
         specifier: workspace:*
         version: link:../../packages/react-loader
@@ -779,9 +773,6 @@ importers:
       '@sanity/assist':
         specifier: ^3.0.4
         version: 3.0.4(@sanity/mutator@3.53.0)(@sanity/styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(sanity@3.53.0(@sanity/styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@20.8.7)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.3))
-      '@sanity/insert-menu':
-        specifier: workspace:*
-        version: link:../../packages/insert-menu
       '@sanity/presentation':
         specifier: workspace:*
         version: link:../../packages/presentation
@@ -13062,11 +13053,11 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
-  '@astrojs/react@3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@4.5.3(@types/node@20.8.7)(terser@5.31.3))':
+  '@astrojs/react@3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.5(@types/node@20.8.7)(terser@5.31.3))':
     dependencies:
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
-      '@vitejs/plugin-react': 4.3.1(vite@4.5.3(@types/node@20.8.7)(terser@5.31.3))
+      '@vitejs/plugin-react': 4.3.1(vite@5.3.5(@types/node@20.8.7)(terser@5.31.3))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       ultrahtml: 1.5.3
