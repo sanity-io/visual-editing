@@ -13,13 +13,7 @@ const nextConfig = {
     },
   },
 
-  transpilePackages: [
-    '@sanity/visual-editing',
-    '@sanity/preview-kit-compat',
-    '@repo/channels',
-    '@repo/visual-editing-helpers',
-    'apps-common',
-  ],
+  transpilePackages: ['apps-common'],
 
   images: {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],

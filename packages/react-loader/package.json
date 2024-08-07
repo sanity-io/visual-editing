@@ -66,9 +66,9 @@
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
-    "dev": "pkg watch --strict",
+    "dev": "pkg build --strict",
     "lint": "eslint .",
-    "prepublishOnly": "pnpm build",
+    "prepare": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",

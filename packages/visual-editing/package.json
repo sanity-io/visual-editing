@@ -88,13 +88,13 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "pnpm run build:main && pnpm run build:svelte && pkg check --strict",
-    "build:main": "pkg build --strict --clean",
+    "build": "pnpm run build:main --clean && pnpm run build:svelte && pkg check --strict",
+    "build:main": "pkg build --strict",
     "build:svelte": "svelte-kit sync && svelte-package -i ./svelte -o dist-svelte",
+    "dev": "pnpm run build:main && pnpm run build:svelte",
     "lint": "eslint .",
-    "prepublishOnly": "pnpm build",
-    "test": "vitest --pass-with-no-tests --typecheck",
-    "watch": "pkg watch --strict"
+    "prepare": "turbo run build",
+    "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "eslintConfig": {

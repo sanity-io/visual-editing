@@ -6,8 +6,7 @@
     "build": {
       "env": ["GITHUB_ACTIONS"],
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
-      "dependsOn": ["^build"],
-      "outputLogs": "new-only"
+      "dependsOn": ["^build"]
     },
     "test": {
       "env": ["GITHUB_ACTIONS"],
@@ -21,12 +20,7 @@
       "dependsOn": ["^build"]
     },
     "dev": {
-      "dependsOn": ["^build"],
       "cache": false,
-      "interactive": true,
-      "persistent": true
-    },
-    "watch": {
       "persistent": true
     }
   }

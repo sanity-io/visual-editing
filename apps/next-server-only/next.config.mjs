@@ -15,7 +15,7 @@ const nextConfig = {
   },
   // */
 
-  transpilePackages: ['@repo/channels', 'apps-common'],
+  transpilePackages: ['apps-common'],
 
   images: {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],

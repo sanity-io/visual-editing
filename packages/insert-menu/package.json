@@ -32,9 +32,11 @@
     "src"
   ],
   "scripts": {
-    "build": "pkg build --strict --clean --check",
-    "dev": "workshop dev",
+    "build": "pkg build --strict --check --clean",
+    "dev": "pkg build --strict",
+    "dev:workshop": "workshop dev",
     "lint": "eslint .",
+    "prepare": "turbo run build",
     "ts:check": "tsc --noEmit"
   },
   "browserslist": "extends @sanity/browserslist-config",

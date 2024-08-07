@@ -84,10 +84,10 @@
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
+    "dev": "pkg build --strict",
     "lint": "eslint .",
-    "prepublishOnly": "pnpm build",
-    "test": "vitest --pass-with-no-tests --typecheck",
-    "watch": "pkg watch --strict"
+    "prepare": "turbo run build",
+    "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "prettier": "@sanity/prettier-config",
