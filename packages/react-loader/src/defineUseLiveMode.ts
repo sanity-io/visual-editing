@@ -26,7 +26,7 @@ export function defineUseLiveMode({
     }, [allowStudioOrigin, client, onConnect, onDisconnect])
     useEffect(() => {
       setStudioUrl(
-        (studioUrl ?? typeof client === 'object')
+        studioUrl ?? typeof client === 'object'
           ? (client as SanityClient)?.config().stega.studioUrl
           : undefined,
       )
