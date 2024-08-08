@@ -999,8 +999,8 @@ importers:
         specifier: 3.53.0
         version: 3.53.0(debug@4.3.6)
       '@sanity/ui-workshop':
-        specifier: ^2.0.15
-        version: 2.0.15(@sanity/icons@3.3.1(react@18.3.1))(@sanity/ui@2.8.8(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(@types/node@20.8.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.3)
+        specifier: ^2.0.16
+        version: 2.0.16(@sanity/icons@3.3.1(react@18.3.1))(@sanity/ui@2.8.8(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(@types/node@20.8.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.3)
       '@types/lodash.startcase':
         specifier: ^4.4.9
         version: 4.4.9
@@ -4339,8 +4339,8 @@ packages:
   '@sanity/types@3.53.0':
     resolution: {integrity: sha512-BktYxy5zFPboIQCiyaQy6VxGyTA87VsKr2VsfnZwjocnk7fb1lS/ShcKsW/RH0FKkh0Pe0D308TARNLZsjGFGw==}
 
-  '@sanity/ui-workshop@2.0.15':
-    resolution: {integrity: sha512-mlfD85OzEf35wZMMriX56S91Iu84oavbjAfj2Rs0xTCrkCuAzAmiaua0Szh+8+C9mnWSsqht3t7rn4SWjtQD6Q==}
+  '@sanity/ui-workshop@2.0.16':
+    resolution: {integrity: sha512-B0UCzBRstq0Jme1HbHVk97kJAfnb5end0fuzy/t8mWS4H/XGklkEfHk3sZfpInAZeavNTzFCbdlm2Tzw57HQ1A==}
     hasBin: true
     peerDependencies:
       '@sanity/icons': ^2 || ^3.0.0
@@ -6692,8 +6692,8 @@ packages:
     peerDependencies:
       esbuild: ^0.14.0 || ^0.15.0 || ^0.16.0 || ^0.17.0 || ^0.18.0 || ^0.19.0 || ^0.20.0
 
-  esbuild-register@3.5.0:
-    resolution: {integrity: sha512-+4G/XmakeBAsvJuDugJvtyF1x+XJT4FMocynNpxrvEBViirpfUn2PgNpCHedfWhF4WokNsO/OvMKrmJOIJsI5A==}
+  esbuild-register@3.6.0:
+    resolution: {integrity: sha512-H2/S7Pm8a9CL1uhp9OvjwrBh5Pvx0H8qVOxNu8Wed9Y7qv56MPtq+GGM8RJpq6glYJn9Wspr8uw7l55uyinNeg==}
     peerDependencies:
       esbuild: '>=0.12 <1'
 
@@ -16120,7 +16120,7 @@ snapshots:
       debug: 4.3.6
       decompress: 4.2.1
       esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild-register: 3.6.0(esbuild@0.21.5)
       get-it: 8.6.3(debug@4.3.6)
       groq-js: 1.12.0
       node-machine-id: 1.1.12
@@ -16144,7 +16144,7 @@ snapshots:
       debug: 4.3.6
       decompress: 4.2.1
       esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild-register: 3.6.0(esbuild@0.21.5)
       get-it: 8.6.3(debug@4.3.6)
       groq-js: 1.12.0
       node-machine-id: 1.1.12
@@ -16383,7 +16383,7 @@ snapshots:
       chalk: 4.1.2
       chokidar: 3.6.0
       esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild-register: 3.6.0(esbuild@0.21.5)
       find-config: 1.0.0
       get-latest-version: 5.1.0
       git-url-parse: 14.1.0
@@ -16498,7 +16498,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@sanity/ui-workshop@2.0.15(@sanity/icons@3.3.1(react@18.3.1))(@sanity/ui@2.8.8(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(@types/node@20.8.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.3)':
+  '@sanity/ui-workshop@2.0.16(@sanity/icons@3.3.1(react@18.3.1))(@sanity/ui@2.8.8(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(@types/node@20.8.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.3)':
     dependencies:
       '@sanity/icons': 3.3.1(react@18.3.1)
       '@sanity/ui': 2.8.8(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
@@ -16508,8 +16508,8 @@ snapshots:
       chokidar: 3.6.0
       cpx: 1.5.0
       dotenv-flow: 4.1.0
-      esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild: 0.23.0
+      esbuild-register: 3.6.0(esbuild@0.23.0)
       express: 4.19.2
       globby: 11.1.0
       lodash: 4.17.21
@@ -19677,10 +19677,17 @@ snapshots:
       local-pkg: 0.5.0
       resolve.exports: 2.0.2
 
-  esbuild-register@3.5.0(esbuild@0.21.5):
+  esbuild-register@3.6.0(esbuild@0.21.5):
     dependencies:
       debug: 4.3.6
       esbuild: 0.21.5
+    transitivePeerDependencies:
+      - supports-color
+
+  esbuild-register@3.6.0(esbuild@0.23.0):
+    dependencies:
+      debug: 4.3.6
+      esbuild: 0.23.0
     transitivePeerDependencies:
       - supports-color
 
@@ -25580,7 +25587,7 @@ snapshots:
       date-fns: 2.30.0
       debug: 4.3.6
       esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild-register: 3.6.0(esbuild@0.21.5)
       execa: 2.1.0
       exif-component: 1.0.1
       framer-motion: 11.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -25715,7 +25722,7 @@ snapshots:
       date-fns: 2.30.0
       debug: 4.3.6
       esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild-register: 3.6.0(esbuild@0.21.5)
       execa: 2.1.0
       exif-component: 1.0.1
       framer-motion: 11.0.8(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -25850,7 +25857,7 @@ snapshots:
       date-fns: 2.30.0
       debug: 4.3.6
       esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild-register: 3.6.0(esbuild@0.21.5)
       execa: 2.1.0
       exif-component: 1.0.1
       framer-motion: 11.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -25984,7 +25991,7 @@ snapshots:
       date-fns: 2.30.0
       debug: 4.3.6
       esbuild: 0.21.5
-      esbuild-register: 3.5.0(esbuild@0.21.5)
+      esbuild-register: 3.6.0(esbuild@0.21.5)
       execa: 2.1.0
       exif-component: 1.0.1
       framer-motion: 11.0.8(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@18.3.1))(react@18.3.1)
