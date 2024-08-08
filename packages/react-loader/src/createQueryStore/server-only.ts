@@ -38,7 +38,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
 
     const {result, resultSourceMap} =
       await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
-        cache: cache ?? next ? undefined : ('no-store' as any),
+        cache: (cache ?? next) ? undefined : ('no-store' as any),
         filterResponse: false,
         next,
         perspective,
