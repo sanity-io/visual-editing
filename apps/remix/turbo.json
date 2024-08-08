@@ -1,9 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dotEnv": [".env", ".env.local"],
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
       "env": ["VERCEL_ENV"],
       "outputs": [".output/**", "api/**", "build/**", "public/build/**"]
     }

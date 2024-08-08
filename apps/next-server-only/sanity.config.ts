@@ -5,9 +5,9 @@
 
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
+import {presentationTool} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
-import {presentationTool} from '@sanity/presentation'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import {apiVersion, dataset, projectId} from '@/lib/env'

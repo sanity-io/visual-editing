@@ -44,30 +44,12 @@ const sharedSettings = definePlugin({
   },
 })
 
-// If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
-function maybeGitBranchUrl(url: string) {
-  if (
-    !url.includes('.sanity.build') ||
-    process.env.SANITY_STUDIO_VERCEL_ENV !== 'preview' ||
-    !process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
-  ) {
-    return url
-  }
-  const branchUrl = process.env.SANITY_STUDIO_VERCEL_BRANCH_URL.replace(
-    'visual-editing-studio-git-',
-    '',
-  )
-  const previewUrl = url.replace('.sanity.build', `-git-${branchUrl}`)
-  return previewUrl
-}
-
 // Some apps have a Preview Mode, some don't
 function definePreviewUrl(
-  _previewUrl: string,
+  previewUrl: string,
   workspaceName: string,
   toolName: string,
 ): PreviewUrlOption {
-  const previewUrl = maybeGitBranchUrl(_previewUrl)
   if (workspaceName === 'next' && toolName === 'pages-router') {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
@@ -109,9 +91,14 @@ const presentationWorkspaces = Object.entries({
   },
   'nuxt': process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
   'svelte': {
-    'svelte-basic': process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes',
-    'svelte-loaders':
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes-with-loaders',
+    'svelte-basic': new URL(
+      '/shoes',
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
+    ).toString(),
+    'svelte-loaders': new URL(
+      '/shoes-with-loaders',
+      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
+    ).toString(),
   },
   'page-builder-demo':
     process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',

@@ -88,13 +88,13 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "pnpm run build:main && pnpm run build:svelte && pkg check --strict",
-    "build:main": "pkg build --strict --clean",
+    "build": "pnpm run build:main --clean && pnpm run build:svelte && pkg check --strict",
+    "build:main": "pkg build --strict",
     "build:svelte": "svelte-kit sync && svelte-package -i ./svelte -o dist-svelte",
+    "dev": "pnpm run build:main && pnpm run build:svelte",
     "lint": "eslint .",
-    "prepublishOnly": "pnpm build",
-    "test": "vitest --pass-with-no-tests --typecheck",
-    "watch": "pkg watch --strict"
+    "prepack": "turbo run build",
+    "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "eslintConfig": {
@@ -153,19 +153,19 @@
     "root": true
   },
   "dependencies": {
-    "@sanity/preview-url-secret": "^1.6.19",
+    "@sanity/preview-url-secret": "workspace:^",
     "@vercel/stega": "0.1.2",
     "scroll-into-view-if-needed": "^3.1.0",
     "valibot": "0.31.1"
   },
   "devDependencies": {
     "@remix-run/react": "^2.9.2",
-    "@repo/channels": "0.4.0",
+    "@repo/channels": "workspace:*",
     "@repo/package.config": "workspace:*",
-    "@repo/visual-editing-helpers": "0.6.19",
+    "@repo/visual-editing-helpers": "workspace:*",
     "@sanity/client": "6.21.1",
     "@sanity/pkg-utils": "6.9.3",
-    "@sanity/ui": "2.6.1",
+    "@sanity/ui": "2.8.8",
     "@sveltejs/adapter-auto": "^3.2.2",
     "@sveltejs/kit": "^2.5.16",
     "@sveltejs/package": "^2.3.2",

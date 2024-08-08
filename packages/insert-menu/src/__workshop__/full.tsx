@@ -79,7 +79,7 @@ const views: InsertMenuProps['views'] = [
   {name: 'list'},
   {
     name: 'grid',
-    previewImageUrl: (_typeName) => undefined, // `https://prj-page-builder.sanity.build/preview-${typeName}.png`,
+    previewImageUrl: (_typeName) => undefined, // `https://prj-page-builder.sanity.dev/preview-${typeName}.png`,
   },
 ]
 

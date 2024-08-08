@@ -13,13 +13,7 @@ const nextConfig = {
     },
   },
 
-  transpilePackages: [
-    '@sanity/visual-editing',
-    '@sanity/preview-kit-compat',
-    '@repo/channels',
-    '@repo/visual-editing-helpers',
-    'apps-common',
-  ],
+  transpilePackages: ['apps-common'],
 
   images: {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
@@ -36,24 +30,12 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: `frame-ancestors 'self' https://*.sanity.build http://localhost:3333`,
+            value: `frame-ancestors 'self' https://*.sanity.build https://*.sanity.dev http://localhost:3333`,
           },
         ],
       },
     ]
   },
-
-  /*
-  webpack(config) {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@sanity/visual-editing': require.resolve(
-        '../../packages/visual-editing/src/index.ts',
-      ),
-    }
-    return config
-  },
-  // */
 }
 
 export default withVercelToolbar()(

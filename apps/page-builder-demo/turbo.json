@@ -1,10 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dotEnv": [".env", ".env.local"],
-      "env": ["NEXT_PUBLIC_SANITY_*", "NEXT_PUBLIC_VERCEL_ENV"],
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
+      "env": ["NEXT_PUBLIC_SANITY_*", "NEXT_PUBLIC_VERCEL_ENV", "SANITY_API_READ_TOKEN"],
       "outputs": [".next/**", "!.next/cache/**"]
     }
   }

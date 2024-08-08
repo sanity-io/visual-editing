@@ -1,10 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dotEnv": [".env", ".env.local"],
-      "env": ["VERCEL_ENV"],
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
+      "env": ["VERCEL_ENV", "SANITY_API_READ_TOKEN"],
       "outputs": [".svelte-kit/**", ".vercel/**"]
     }
   }

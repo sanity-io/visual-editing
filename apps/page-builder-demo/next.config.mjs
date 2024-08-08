@@ -11,12 +11,7 @@ const nextConfig = {
     },
   },
 
-  transpilePackages: [
-    '@sanity/visual-editing',
-    'apps-common',
-    '@repo/channels',
-    '@repo/visual-editing-helpers',
-  ],
+  transpilePackages: ['apps-common'],
 }
 
 export default withBundleAnalyzer({

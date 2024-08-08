@@ -5,13 +5,17 @@ export default defineNuxtConfig({
   build: {
     transpile: ['rxjs'],
   },
+
   devtools: {enabled: false},
+
   imports: {
     transform: {
       exclude: [/\bpackages\/.+\b/],
     },
   },
+
   modules: ['@nuxtjs/tailwindcss', '@nuxtjs/sanity'],
+
   sanity: {
     globalHelper: true,
     projectId,
@@ -23,6 +27,7 @@ export default defineNuxtConfig({
       stega: true,
     },
   },
+
   runtimeConfig: {
     public: {
       vercel: {
@@ -30,4 +35,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2024-08-07',
 })

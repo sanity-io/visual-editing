@@ -1,25 +1,26 @@
 {
+  "name": "visual-editing-monorepo",
   "private": true,
   "scripts": {
     "build": "turbo run build --filter='./packages/*'",
     "build:astro": "turbo run build --filter=./apps/astro",
-    "dev": "turbo run dev --filter=./apps/* --filter=!./apps/next-server-only --filter=!./apps/next-no-cache",
-    "dev:astro": "turbo run dev --filter=./apps/astro --filter=./apps/studio",
-    "dev:next": "turbo run dev --filter=./apps/next --filter=./apps/studio",
-    "dev:nuxt": "turbo run dev --filter=./apps/nuxt --filter=./apps/studio",
-    "dev:page-builder-demo": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
-    "dev:svelte": "turbo run dev --filter=./apps/svelte --filter=./apps/studio",
+    "dev": "turbo run build --filter='./packages/*' && turbo watch dev --filter='./packages/*' --filter=./apps/* --filter=!next-no-cache --filter=!next-server-only --filter=!next-with-i18n",
+    "dev:astro": "turbo run build --filter=apps-astro^... --filter=apps-studio^... && turbo watch dev --filter=apps-astro... --filter=apps-studio...",
+    "dev:next": "turbo run build --filter=apps-next^... --filter=apps-studio^... && turbo watch dev --filter=apps-next... --filter=apps-studio...",
+    "dev:next-no-cache": "turbo run build --filter=next-no-cache^... && turbo watch dev --filter=next-no-cache...",
+    "dev:next-server-only": "turbo run build --filter=next-server-only^... && turbo watch dev --filter=next-server-only...",
+    "dev:next-with-i18n": "turbo run build --filter=next-with-i18n^... && turbo watch dev --filter=next-with-i18n...",
+    "dev:nuxt": "turbo run build --filter=apps-nuxt^... --filter=apps-studio^... && turbo watch dev --filter=apps-nuxt... --filter=apps-studio...",
+    "dev:page-builder-demo": "turbo run build --filter=page-builder-demo^... --filter=apps-studio^... && turbo watch dev --filter=page-builder-demo... --filter=apps-studio...",
+    "dev:remix": "turbo run build --filter=apps-remix^... --filter=apps-studio^... && turbo watch dev --filter=apps-remix... --filter=apps-studio...",
+    "dev:svelte": "turbo run build --filter=apps-svelte^... --filter=apps-studio^... && turbo watch dev --filter=apps-svelte... --filter=apps-studio...",
     "format": "prettier --cache --write .",
     "format:staged": "pretty-quick --staged",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
-    "next-no-cache:dev": "turbo run dev --filter=./apps/next-no-cache",
-    "next-server-only:dev": "turbo run dev --filter=./apps/next-server-only",
-    "page-builder-demo:dev": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
     "prepare": "husky",
     "preview": "turbo run preview",
-    "test": "turbo run test",
-    "watch": "turbo run watch"
+    "test": "turbo run test"
   },
   "lint-staged": {
     "*": [
@@ -27,20 +28,12 @@
     ]
   },
   "dependencies": {
-    "@sanity/block-tools": "3.47.1",
-    "@sanity/cli": "3.47.1",
     "@sanity/client": "^6.21.1",
-    "@sanity/diff": "3.47.1",
-    "@sanity/mutator": "3.47.1",
-    "@sanity/portable-text-editor": "3.47.1",
-    "@sanity/schema": "3.47.1",
-    "@sanity/types": "3.47.1",
-    "@sanity/util": "3.47.1",
-    "@sanity/vision": "3.47.1",
-    "create-sanity": "3.47.1",
-    "groq": "3.47.1",
-    "sanity": "3.47.1",
-    "styled-components": "6.1.11"
+    "@sanity/types": "3.53.0",
+    "@sanity/util": "3.53.0",
+    "@sanity/vision": "3.53.0",
+    "groq": "3.53.0",
+    "sanity": "3.53.0"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "6.9.3",
@@ -53,10 +46,10 @@
     "prettier-plugin-svelte": "3.2.4",
     "prettier-plugin-tailwindcss": "0.6.5",
     "pretty-quick": "^4.0.0",
-    "turbo": "1.13.4",
+    "turbo": "2.0.12",
     "typescript": "5.4.5"
   },
-  "packageManager": "pnpm@8.15.8",
+  "packageManager": "pnpm@9.7.0",
   "pnpm": {
     "peerDependencyRules": {
       "allowAny": [
@@ -65,28 +58,21 @@
       ]
     },
     "overrides": {
-      "@sanity/block-tools": "$@sanity/block-tools",
-      "@sanity/cli": "$@sanity/cli",
       "@sanity/client": "$@sanity/client",
       "@sanity/core-loader": "workspace:*",
-      "@sanity/diff": "$@sanity/diff",
-      "@sanity/mutator": "$@sanity/mutator",
-      "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
       "@sanity/presentation": "workspace:*",
       "@sanity/preview-kit-compat": "workspace:*",
       "@sanity/preview-url-secret": "workspace:*",
       "@sanity/react-loader": "workspace:*",
-      "@sanity/schema": "$@sanity/schema",
       "@sanity/svelte-loader": "workspace:*",
       "@sanity/types": "$@sanity/types",
       "@sanity/util": "$@sanity/util",
       "@sanity/vision": "$@sanity/vision",
       "@sanity/visual-editing": "workspace:*",
-      "create-sanity": "$create-sanity",
       "framer-motion": "$framer-motion",
       "groq": "$groq",
       "sanity": "$sanity",
-      "styled-components": "$styled-components"
+      "styled-components": "npm:@sanity/styled-components@6.1.13"
     }
   }
 }
