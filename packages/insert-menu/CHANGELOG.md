@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.7...insert-menu-v1.0.8) (2024-08-08)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/types to ^3.53.0 ([#1719](https://github.com/sanity-io/visual-editing/issues/1719)) ([6e6037a](https://github.com/sanity-io/visual-editing/commit/6e6037ac2580b7bc062cb555df7e93e058d83e77))
+
 ## [1.0.7](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.6...insert-menu-v1.0.7) (2024-06-26)
 
 
