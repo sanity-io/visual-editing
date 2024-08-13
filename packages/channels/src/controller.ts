@@ -1,5 +1,5 @@
 import {ChannelsChannel} from './channel'
-import {CHANNELS_DOMAIN} from './constants'
+import {DOMAIN, MSG_RESPONSE} from './constants'
 import type {ChannelMsg, ChannelsControllerAPI, ProtocolMsg} from './types'
 
 export class ChannelsController<
@@ -69,10 +69,10 @@ export class ChannelsController<
   private isValidMessageEvent(e: MessageEvent): e is MessageEvent<ProtocolMsg<Receives>> {
     const {data, origin} = e
     return (
-      data.domain === CHANNELS_DOMAIN &&
+      data.domain === DOMAIN &&
       data.to == this.id &&
       this.connections.has(data.from) &&
-      data.type !== 'channel/response' &&
+      data.type !== MSG_RESPONSE &&
       origin === this.targetOrigin
     )
   }

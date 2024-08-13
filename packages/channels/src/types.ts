@@ -1,4 +1,14 @@
-import type {CHANNELS_DOMAIN, HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES} from './constants'
+import type {
+  DOMAIN,
+  HANDSHAKE_MSG_TYPES,
+  INTERNAL_MSG_TYPES,
+  MSG_DISCONNECT,
+  MSG_HANDSHAKE_ACK,
+  MSG_HANDSHAKE_SYN,
+  MSG_HANDSHAKE_SYN_ACK,
+  MSG_HEARTBEAT,
+  MSG_RESPONSE,
+} from './constants'
 
 /**
  * @public
@@ -26,7 +36,7 @@ export type ProtocolMsg<T extends ChannelMsg = ChannelMsg> = {
   id: string
   connectionId: string
   data?: T['data']
-  domain: typeof CHANNELS_DOMAIN
+  domain: typeof DOMAIN
   from: string
   responseTo?: string
   to: string
@@ -52,20 +62,19 @@ export type InternalMsgType = InternalMsgTypeTuple[number]
  * @internal
  */
 export interface ChannelsDisconnectMsg {
-  type: 'channel/disconnect'
+  type: typeof MSG_DISCONNECT
   data: {
     id: string | null
   }
 }
 
 export interface ChannelsResponseMsg {
-  type: 'channel/response'
-  data: ChannelMsgData & {
-    responseTo: string
-  }
+  type: typeof MSG_RESPONSE
+  data: ChannelMsgData
 }
+
 export interface ChannelsHeartbeatMsg {
-  type: 'channel/heartbeat'
+  type: typeof MSG_HEARTBEAT
   data: undefined
 }
 
@@ -84,19 +93,19 @@ export type HandshakeMsgType = HandshakeMsgTypeTuple[number]
  */
 
 export interface HandshakeSynMsg {
-  type: 'handshake/syn'
+  type: typeof MSG_HANDSHAKE_SYN
   data: {id: string}
 }
 export interface HandshakeSynAckMsg {
-  type: 'handshake/syn-ack'
+  type: typeof MSG_HANDSHAKE_SYN_ACK
   data: {id: string}
 }
 export interface HandshakeAckMsg {
-  type: 'handshake/ack'
+  type: typeof MSG_HANDSHAKE_ACK
   data: {id: string}
 }
 
-export type ChannelsChannelInternalMsg =
+export type ChannelsInternalMsg =
   | ChannelsDisconnectMsg
   | ChannelsHeartbeatMsg
   | ChannelsResponseMsg

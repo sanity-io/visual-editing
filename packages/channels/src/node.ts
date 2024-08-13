@@ -1,9 +1,18 @@
 import {v4 as uuid} from 'uuid'
 
-import {CHANNELS_DOMAIN, RESPONSE_TIMEOUT} from './constants'
+import {
+  DOMAIN,
+  MSG_DISCONNECT,
+  MSG_HANDSHAKE_ACK,
+  MSG_HANDSHAKE_SYN,
+  MSG_HANDSHAKE_SYN_ACK,
+  MSG_RESPONSE,
+  RESPONSE_TIMEOUT,
+} from './constants'
 import {isHandshakeMessage, isInternalMessage, isLegacyHandshakeMessage} from './helpers'
 import type {
   ChannelMsg,
+  ChannelsInternalMsg,
   ChannelsNodeAPI,
   ChannelsNodeHandler,
   ChannelsNodeHandlerMap,
@@ -43,10 +52,10 @@ export class ChannelsNode<
   private isValidMessageEvent(e: MessageEvent): e is MessageEvent<ProtocolMsg<Receives>> {
     const {data} = e
     return (
-      data.domain === CHANNELS_DOMAIN &&
+      data.domain === DOMAIN &&
       data.to === this.nodeId &&
       data.from === this.controllerId &&
-      data.type !== 'channel/response'
+      data.type !== MSG_RESPONSE
     )
   }
 
@@ -54,13 +63,17 @@ export class ChannelsNode<
     const toFlush = [...this.buffer]
     this.buffer.splice(0, this.buffer.length)
     toFlush.forEach(({type, data, method, resolvable}) => {
-      this[method](type, data, resolvable)
+      if (method === 'fetch') {
+        this.fetch(type, data, resolvable)
+      } else {
+        this.post(type, data)
+      }
     })
   }
 
   private connect() {
     this.setStatus('connecting')
-    this.post('handshake/syn-ack', {id: this.connectionId})
+    this.postInternal(MSG_HANDSHAKE_SYN_ACK, {id: this.connectionId!})
   }
 
   private connected() {
@@ -84,21 +97,21 @@ export class ChannelsNode<
     if (!data.data) {
       throw new Error('No data')
     }
-    if (data.type === 'handshake/syn') {
+    if (data.type === MSG_HANDSHAKE_SYN) {
       this.origin = e.origin
       // @todo no casting
       this.connectionId = data.data['id'] as string
       this.connect()
       return
     }
-    if (data.type === 'handshake/ack' && data.data['id'] === this.connectionId) {
+    if (data.type === MSG_HANDSHAKE_ACK && data.data['id'] === this.connectionId) {
       this.connected()
       return
     }
   }
 
   private handleMessage(data: ProtocolMsg<Receives>) {
-    if (data.type === 'channel/disconnect') {
+    if (data.type === MSG_DISCONNECT) {
       this.disconnect()
       return
     }
@@ -107,7 +120,7 @@ export class ChannelsNode<
     if (handler) {
       handler.handler(data.data)
     }
-    this.post('channel/response', {responseTo: data.id})
+    this.postInternal(MSG_RESPONSE, undefined, data.id)
   }
 
   private handleEvent(e: MessageEvent): void {
@@ -134,7 +147,7 @@ export class ChannelsNode<
       this.source = e.source
     }
 
-    if (isHandshakeMessage(data.type) && data.data) {
+    if (isHandshakeMessage(data.type)) {
       this.handleHandshake(e)
       return
     }
@@ -162,12 +175,8 @@ export class ChannelsNode<
   }
 
   private shouldBuffer(type: string) {
-    const isHandshake = isHandshakeMessage(type)
-    const isInternal = isInternalMessage(type)
-
     if (
-      !isHandshake &&
-      !isInternal &&
+      !isInternalMessage(type) &&
       (this.status === 'connecting' || this.status === 'reconnecting')
     ) {
       return true
@@ -175,40 +184,53 @@ export class ChannelsNode<
     return false
   }
 
-  private createMessage<T extends Sends['type']>(type: T, data: Narrow<T, Sends>['data']) {
-    const id = `msg-${uuid()}`
-    const isHandshake = isHandshakeMessage(type)
-    const isInternal = isInternalMessage(type)
+  private createMessage<T extends Sends['type']>(
+    type: T,
+    data: Narrow<T, Sends>['data'],
+    responseTo?: string,
+  ) {
+    const {connectionId, controllerId, nodeId, origin, source} = this
 
-    if (this.connectionId && this.source && this.origin) {
-      const msg = {
-        connectionId: this.connectionId,
-        data,
-        domain: CHANNELS_DOMAIN,
-        from: this.nodeId,
-        id,
-        to: this.controllerId,
-        type: isInternal || isHandshake ? type : `${this.nodeId}/${type}`,
-      } satisfies ProtocolMsg
-      return msg
+    if (!connectionId || !source || !origin) {
+      throw new Error('No connection ID set')
     }
 
-    return undefined
+    return {
+      connectionId,
+      data,
+      domain: DOMAIN,
+      from: nodeId,
+      id: `msg-${uuid()}`,
+      to: controllerId,
+      type: isInternalMessage(type) ? type : `${nodeId}/${type}`,
+      responseTo,
+    } satisfies ProtocolMsg
   }
 
-  public post<T extends Sends['type']>(type: T, data: Narrow<T, Sends>['data']): void {
+  private postInternal<T extends ChannelsInternalMsg, U extends T['type']>(
+    type: U,
+    data: Narrow<U, T>['data'],
+    responseTo?: string,
+  ): void {
+    this.post(type, data, responseTo)
+  }
+
+  public post<T extends Sends['type']>(
+    type: T,
+    data: Narrow<T, Sends>['data'],
+    responseTo?: string,
+  ): void {
     if (this.shouldBuffer(type)) {
       this.buffer.push({type, data, method: 'post'})
       return
     }
 
-    const msg = this.createMessage(type, data)
-    if (msg) {
-      try {
-        this.source!.postMessage(msg, {targetOrigin: this.origin!})
-      } catch (e) {
-        throw new Error(`Failed to postMessage '${msg.id}' on '${this.nodeId}'`)
-      }
+    const msg = this.createMessage(type, data, responseTo)
+
+    try {
+      this.source!.postMessage(msg, {targetOrigin: this.origin!})
+    } catch (e) {
+      throw new Error(`Failed to postMessage '${msg.id}' on '${this.nodeId}'`)
     }
   }
 
@@ -227,39 +249,41 @@ export class ChannelsNode<
     }
 
     const msg = this.createMessage(type, data)
-    if (msg) {
-      const maxWait = setTimeout(() => {
-        // The channel may have changed, so only reject if the IDs match
-        if (msg.connectionId === this.connectionId) {
-          // Cleanup the transaction listener
-          window.removeEventListener('message', transact, false)
-          // eslint-disable-next-line no-console
-          console.warn(
-            `Received no response to message '${msg.type}' on client '${this.connectionId}' (ID: '${msg.id}').`,
-          )
-        }
-      }, RESPONSE_TIMEOUT)
 
-      const transact = (e: MessageEvent<ProtocolMsg<NonNullable<Narrow<T, Sends>>>>) => {
-        const {data: eventData} = e
-        if (
-          (e.source === this.source,
-          eventData.type === 'channel/response' && eventData?.['responseTo'] === msg.id)
-        ) {
-          this.post('channel/response', {responseTo: eventData.id})
-          window.removeEventListener('message', transact, false)
-          clearTimeout(maxWait)
-          resolvablePromise.resolve(eventData.data!)
-        }
+    const maxWait = setTimeout(() => {
+      // The channel may have changed, so only reject if the IDs match
+      if (msg.connectionId === this.connectionId) {
+        // Cleanup the transaction listener
+        window.removeEventListener('message', transact, false)
+        // eslint-disable-next-line no-console
+        console.warn(
+          `Received no response to message '${msg.type}' on client '${this.connectionId}' (ID: '${msg.id}').`,
+        )
       }
-      window.addEventListener('message', transact, false)
+    }, RESPONSE_TIMEOUT)
 
-      try {
-        this.source!.postMessage(msg, {targetOrigin: this.origin!})
-      } catch (e) {
-        throw new Error(`Failed to postMessage '${msg.id}' on '${this.nodeId}'`)
+    const transact = (e: MessageEvent<ProtocolMsg<NonNullable<Narrow<T, Sends>>>>) => {
+      const {data: eventData} = e
+
+      if (
+        e.source === this.source &&
+        eventData.type === MSG_RESPONSE &&
+        eventData['responseTo'] === msg.id
+      ) {
+        this.postInternal(MSG_RESPONSE, undefined, eventData.id)
+        window.removeEventListener('message', transact, false)
+        clearTimeout(maxWait)
+        resolvablePromise.resolve(eventData.data!)
       }
     }
+    window.addEventListener('message', transact, false)
+
+    try {
+      this.source!.postMessage(msg, {targetOrigin: this.origin!})
+    } catch (e) {
+      throw new Error(`Failed to postMessage '${msg.id}' on '${this.nodeId}'`)
+    }
+
     return resolvablePromise.promise
   }
 

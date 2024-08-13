@@ -125,7 +125,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
       }
     }
     return
-  }, [controller, dataset, documentsOnPage, onDocumentsOnPage, onLoadersConnection, projectId])
+  }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
 
   const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
   const studioClient = useClient({apiVersion: '2023-10-16'})
