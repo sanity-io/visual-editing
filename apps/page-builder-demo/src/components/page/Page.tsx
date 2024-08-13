@@ -7,10 +7,21 @@ import {FeatureHighlight} from './sections/FeatureHighlight'
 import {Hero} from './sections/Hero'
 import {Intro} from './sections/Intro'
 import {Section} from './sections/Section'
-import {PageData} from './types'
+import {PageData, PageSection} from './types'
+
+import {useOptimisticStateSelector} from '@sanity/visual-editing'
 
 export function Page(props: {data: WrappedValue<PageData>}) {
   const {data} = props
+
+  const sections = useOptimisticStateSelector(
+    {id: `drafts.${data?._id}`, path: 'sections'},
+    data.sections || [],
+    (sections, optimisticSections: WrappedValue<PageSection>[]) =>
+      optimisticSections?.map(
+        (section) => sections?.find((s) => s._key === section._key) || section,
+      ) || sections,
+  )
 
   return (
     <main
@@ -20,8 +31,8 @@ export function Page(props: {data: WrappedValue<PageData>}) {
         path: 'sections',
       })}
     >
-      {isArray(data.sections) &&
-        data.sections.map((section) => {
+      {isArray(sections) &&
+        sections.map((section) => {
           if (section._type === 'hero') {
             return <Hero page={data} key={section._key} section={section} />
           }

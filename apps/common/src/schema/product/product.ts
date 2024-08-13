@@ -34,6 +34,30 @@ export const productType = defineType({
       options: {layout: 'grid'},
     }),
     defineField({
+      type: 'object',
+      name: 'model',
+      title: 'Model',
+      fields: [
+        defineField({
+          type: 'file',
+          name: 'file',
+          options: {storeOriginalFilename: true},
+        }),
+        defineField({
+          type: 'number',
+          name: 'rotation',
+          title: 'Rotation',
+          initialValue: 0,
+        }),
+        defineField({
+          type: 'number',
+          name: 'lightIntensity',
+          title: 'Light Intensity',
+          initialValue: 0,
+        }),
+      ],
+    }),
+    defineField({
       type: 'array',
       name: 'description',
       title: 'Description',
@@ -92,7 +116,7 @@ export const productType = defineType({
           type: 'array',
           name: 'certifications',
           title: 'Certifications',
-          of: [{type: 'string'}],
+          of: [{type: 'string', title: 'Certification'}],
         }),
       ],
     }),
@@ -126,4 +150,14 @@ export const productType = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+    },
+    prepare({title}) {
+      return {
+        title: `Product: ${title}`,
+      }
+    },
+  },
 })

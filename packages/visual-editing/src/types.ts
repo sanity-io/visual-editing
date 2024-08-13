@@ -1,13 +1,10 @@
-import type {ChannelsNode} from '@repo/channels'
 import type {
   HistoryRefresh,
   HistoryUpdate,
-  OverlayMsg as OverlayChannelsMsg,
-  PresentationMsg,
   SanityNode,
   SanityStegaNode,
-  VisualEditingMsg,
 } from '@repo/visual-editing-helpers'
+import type {Operation} from '@sanity/mutate'
 
 export type {
   HistoryRefresh,
@@ -75,6 +72,17 @@ export type OverlayMsgActivate = Msg<'overlay/activate'>
 export type OverlayMsgDeactivate = Msg<'overlay/deactivate'>
 
 /** @public */
+export type OverlayMsgElementContextMenu =
+  | OverlayMsgElement<'contextmenu'>
+  | (OverlayMsgElement<'contextmenu'> & {
+      position: {
+        x: number
+        y: number
+      }
+      sanity: SanityNode | SanityStegaNode
+    })
+
+/** @public */
 export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
 
 /** @public */
@@ -131,11 +139,12 @@ export type OverlayMsgUpdateDragCursorPosition = Msg<'overlay/updateDragCursorPo
  * @public
  */
 export type OverlayMsg =
-  | OverlayMsgBlur
   | OverlayMsgActivate
+  | OverlayMsgBlur
   | OverlayMsgDeactivate
   | OverlayMsgElementActivate
   | OverlayMsgElementClick
+  | OverlayMsgElementContextMenu
   | OverlayMsgElementDeactivate
   | OverlayMsgElementMouseEnter
   | OverlayMsgElementMouseLeave
@@ -245,36 +254,37 @@ export interface OverlayElement {
  * @internal
  */
 export interface EventHandlers {
-  click: (event: Event) => void
-  mousedown: (event: Event) => void
-  mouseenter: (event: Event) => void
-  mouseleave: (event: Event) => void
-  mousemove: (event: Event) => void
+  click: (event: MouseEvent) => void
+  contextmenu: (event: MouseEvent) => void
+  mousedown: (event: MouseEvent) => void
+  mouseenter: (event: MouseEvent) => void
+  mouseleave: (event: MouseEvent) => void
+  mousemove: (event: MouseEvent) => void
 }
-
-/**
- * @internal
- */
-export type VisualEditingChannelSends = OverlayChannelsMsg | VisualEditingMsg
-
-/**
- * @internal
- */
-export type VisualEditingChannelReceives = PresentationMsg
-
-/**
- * @internal
- */
-export type VisualEditingChannel = ChannelsNode<
-  VisualEditingChannelSends,
-  VisualEditingChannelReceives
->
 
 /**
  * Cleanup function used when e.g. unmounting
  * @public
  */
 export type DisableVisualEditing = () => void
+
+/**
+ * @public
+ */
+export type VisualEditingOverlayComponent<T = Record<string, unknown>> = React.ComponentType<{
+  commit: () => void
+  node: SanityNode
+  mutate: (
+    operation: Operation,
+    options: {
+      commit?: boolean
+      id?: string
+      path?: string | string[]
+      type?: string
+    },
+  ) => void
+  value: T | undefined
+}>
 
 /**
  * @public
@@ -292,4 +302,13 @@ export interface VisualEditingOptions {
    * The CSS z-index on the root node that renders overlays, tweak it accordingly to what layout you have.
    */
   zIndex?: string | number
+  /**
+   * @alpha
+   */
+  components?: {
+    type: string
+    name?: string
+    path?: string
+    component: VisualEditingOverlayComponent
+  }[]
 }

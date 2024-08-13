@@ -1,9 +1,11 @@
+import {CreditCardIcon} from '@sanity/icons'
 import {defineArrayMember, defineField} from 'sanity'
 
 export const featuredProductsSectionType = defineArrayMember({
   type: 'object',
   name: 'featuredProducts',
   title: 'Featured Products',
+  icon: CreditCardIcon,
   fields: [
     defineField({
       type: 'string',

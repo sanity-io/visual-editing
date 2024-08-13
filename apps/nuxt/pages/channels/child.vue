@@ -26,23 +26,32 @@
 </template>
 
 <script lang="ts" setup>
-import {type ChannelsNode, createChannelsNode} from '@repo/channels'
+import {ChannelsNode} from '@repo/channels'
 
-interface Sends {
-  type: 'child/event'
-  data: {datetime: string}
+interface Msg {
+  type: 'event'
+  data: {
+    datetime: string
+  }
+}
+
+interface ChildAPI {
+  id: 'child'
+  controllerId: 'parent'
+  sends: Msg
+  receives: Msg
 }
 
 const log = ref<any[]>([])
-const channel = ref<ChannelsNode<Sends, any> | undefined>()
+const channel = ref<ChannelsNode<ChildAPI>>()
 
 onMounted(() => {
-  channel.value = createChannelsNode({
+  channel.value = new ChannelsNode<ChildAPI>({
     id: 'child',
     connectTo: 'parent',
   })
-  channel.value.subscribe((type, data) => {
-    log.value.unshift({...data, type})
+  channel.value.on('event', (data) => {
+    log.value.unshift(data)
   })
 })
 
@@ -51,7 +60,7 @@ onUnmounted(() => {
 })
 
 const sendMessage = () => {
-  channel.value?.send('child/event', {
+  channel.value?.get('event', {
     datetime: new Date().toISOString(),
   })
 }

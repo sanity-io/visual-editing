@@ -1,11 +1,48 @@
 import {pathToUrlString} from '@repo/visual-editing-helpers'
+import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
 import {createEditUrl, studioPath} from '@sanity/client/csm'
+import {DocumentIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
-import {memo, useEffect, useMemo, useRef} from 'react'
+import {
+  type CSSProperties,
+  type FunctionComponent,
+  memo,
+  type MouseEvent,
+  type PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
 
-import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
+import type {
+  ElementFocusedState,
+  OverlayMsg,
+  OverlayRect,
+  SanityNode,
+  SanityStegaNode,
+  VisualEditingOptions,
+  VisualEditingOverlayComponent,
+} from '../types'
+import {useOptimisticState} from './optimistic-state/useOptimisticState'
+import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
+import {getField, getSchemaType} from './schema/schema'
+import {useSchema} from './schema/useSchema'
+import {UnionOverlay} from './UnionOverlay'
+
+export interface ElementOverlayProps {
+  id: string
+  components?: VisualEditingOptions['components']
+  dispatch: (msg: OverlayMsg) => void
+  focused: ElementFocusedState
+  hovered: boolean
+  rect: OverlayRect
+  node: SanityNode | SanityStegaNode
+  showActions: boolean
+  wasMaybeCollapsed: boolean
+}
 
 const Root = styled(Card)`
   background-color: var(--overlay-bg);
@@ -15,6 +52,8 @@ const Root = styled(Card)`
   will-change: transform;
   box-shadow: var(--overlay-box-shadow);
   transition: none;
+  flex-direction: column;
+  justify-content: space-between;
 
   --overlay-bg: transparent;
   --overlay-box-shadow: inset 0 0 0 1px transparent;
@@ -49,6 +88,25 @@ const Root = styled(Card)`
 
   :link {
     text-decoration: none;
+  }
+`
+
+const Tab = styled(Flex)`
+  bottom: 100%;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+`
+
+const Labels = styled(Flex)`
+  background-color: var(--card-focus-ring-color);
+  right: 0;
+  border-radius: 3px;
+  & [data-ui='Text'],
+  & [data-sanity-icon] {
+    color: var(--card-bg-color);
+    white-space: nowrap;
   }
 `
 
@@ -88,19 +146,132 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-export const ElementOverlay = memo(function ElementOverlay(props: {
-  focused: ElementFocusedState
-  hovered: boolean
-  rect: OverlayRect
-  showActions: boolean
-  sanity: SanityNode | SanityStegaNode
-  wasMaybeCollapsed: boolean
-}) {
-  const {focused, hovered, rect, showActions, sanity, wasMaybeCollapsed} = props
+function ComponentWrapper<T>(
+  props: PropsWithChildren<{component: VisualEditingOverlayComponent<T>; sanity: SanityNode}>,
+) {
+  const {component: Component, sanity} = props
+  const {commit, mutate, value} = useOptimisticState<T>(sanity)
+  return (
+    <div style={{pointerEvents: 'all'}} data-sanity-overlay-element>
+      <Component node={sanity} mutate={mutate} commit={commit} value={value} />
+    </div>
+  )
+}
 
+const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
+  const {id, components, dispatch, focused, node, showActions} = props
+
+  const {schema, resolvedTypes} = useSchema()
+  const schemaType = getSchemaType(node, schema)
+  const {field, parent} = getField(node, schemaType, resolvedTypes)
+
+  const href = 'path' in node ? createIntentLink(node) : node.href
+
+  const onBubbledEvent = useCallback(
+    (event: MouseEvent) => {
+      if (event.type === 'contextmenu') {
+        dispatch({
+          type: 'element/contextmenu',
+          id,
+          position: {
+            x: event.clientX,
+            y: event.clientY,
+          },
+          sanity: node,
+        })
+      } else if (event.type === 'click') {
+        dispatch({
+          type: 'element/click',
+          id,
+          sanity: node,
+        })
+      }
+    },
+    [dispatch, id, node],
+  )
+
+  const previewSnapshots = usePreviewSnapshots()
+
+  const title = useMemo(() => {
+    if (!('path' in node)) return undefined
+    const id = 'isDraft' in node ? `${DRAFTS_PREFIX}${node.id}` : node.id
+    return previewSnapshots.find((snapshot) => snapshot._id === id)?.title
+  }, [node, previewSnapshots])
+
+  const Icon = useMemo(() => {
+    if (schemaType?.icon) return <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
+    return <DocumentIcon />
+  }, [schemaType?.icon])
+
+  const component = useMemo(
+    () =>
+      components?.find((c) => {
+        return (
+          'path' in node &&
+          c.name === node.type &&
+          c.path === node.path &&
+          c.type === field?.value.type
+        )
+      })?.component,
+    [components, field, node],
+  )
+
+  return (
+    <>
+      {showActions ? (
+        <Actions gap={1} paddingBottom={1}>
+          <Box
+            as="a"
+            href={href}
+            target="_blank"
+            rel="noopener"
+            // @ts-expect-error -- TODO update typings in @sanity/ui
+            referrerPolicy="no-referrer-when-downgrade"
+            data-sanity-overlay-element
+          >
+            <ActionOpen padding={2}>
+              <Text size={1} weight="medium">
+                Open in Studio
+              </Text>
+            </ActionOpen>
+          </Box>
+        </Actions>
+      ) : null}
+
+      {title && (
+        <Tab gap={1} paddingBottom={1}>
+          <Labels gap={2} padding={2}>
+            <Text size={1}>{Icon}</Text>
+            <Text size={1} weight="medium">
+              {title}
+            </Text>
+          </Labels>
+        </Tab>
+      )}
+
+      {'path' in node && parent && parent.type === 'union' && (
+        <UnionOverlay node={parent} onBubbledEvent={onBubbledEvent} sanity={node} />
+      )}
+      {focused && component && 'path' in node && (
+        <ComponentWrapper component={component} sanity={node} />
+      )}
+    </>
+  )
+}
+
+export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
+  const {focused, hovered, rect, wasMaybeCollapsed} = props
   const ref = useRef<HTMLDivElement>(null)
-
   const scrolledIntoViewRef = useRef(false)
+
+  const style = useMemo<CSSProperties>(
+    () => ({
+      width: `${rect.w}px`,
+      height: `${rect.h}px`,
+      transform: `translate(${rect.x}px, ${rect.y}px)`,
+    }),
+    [rect],
+  )
 
   useEffect(() => {
     if (!scrolledIntoViewRef.current && !wasMaybeCollapsed && focused === true && ref.current) {
@@ -128,17 +299,6 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     scrolledIntoViewRef.current = focused === true
   }, [focused, wasMaybeCollapsed])
 
-  const style = useMemo(
-    () => ({
-      width: `${rect.w}px`,
-      height: `${rect.h}px`,
-      transform: `translate(${rect.x}px, ${rect.y}px)`,
-    }),
-    [rect],
-  )
-
-  const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
-
   return (
     <Root
       data-focused={focused ? '' : undefined}
@@ -146,24 +306,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
       ref={ref}
       style={style}
     >
-      {showActions && hovered ? (
-        <Actions gap={1} paddingBottom={1}>
-          <Box
-            as="a"
-            href={href}
-            target="_blank"
-            rel="noopener"
-            // @ts-expect-error -- TODO update typings in @sanity/ui
-            referrerPolicy="no-referrer-when-downgrade"
-          >
-            <ActionOpen padding={2}>
-              <Text size={1} weight="medium">
-                Open in Studio
-              </Text>
-            </ActionOpen>
-          </Box>
-        </Actions>
-      ) : null}
+      {hovered && <ElementOverlayInner {...props} />}
     </Root>
   )
 })

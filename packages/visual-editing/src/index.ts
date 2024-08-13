@@ -1,4 +1,9 @@
 export {createOverlayController} from './controller'
+export {
+  type DocumentStoreState,
+  useOptimisticStateSelector,
+  useOptimisticStateStore,
+} from './ui/optimistic-state/optimisticState'
 export type {
   DisableVisualEditing,
   ElementFocusedState,
@@ -17,6 +22,7 @@ export type {
   OverlayMsgElement,
   OverlayMsgElementActivate,
   OverlayMsgElementClick,
+  OverlayMsgElementContextMenu,
   OverlayMsgElementDeactivate,
   OverlayMsgElementMouseEnter,
   OverlayMsgElementMouseLeave,
@@ -31,6 +37,7 @@ export type {
   SanityNode,
   SanityStegaNode,
   VisualEditingOptions,
+  VisualEditingOverlayComponent,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
 export {

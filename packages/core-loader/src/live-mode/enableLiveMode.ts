@@ -1,9 +1,5 @@
-import {createChannelsNode} from '@repo/channels'
-import type {
-  LoaderMsg,
-  LoaderPayloads,
-  VisualEditingConnectionIds,
-} from '@repo/visual-editing-helpers'
+import {ChannelsNode} from '@repo/channels'
+import type {LoaderPayloads, LoadersAPI} from '@repo/visual-editing-helpers'
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -51,12 +47,12 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const channel = createChannelsNode<VisualEditingConnectionIds, LoaderMsg, LoaderMsg>({
+  const channel = new ChannelsNode<LoadersAPI>({
     id: 'loaders',
     connectTo: 'presentation',
   })
 
-  channel.onStatusUpdate((status) => {
+  channel.onStatus((status) => {
     if (status === 'connected') {
       $connected.set(true)
     } else if (status === 'disconnected') {
@@ -64,18 +60,18 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   })
 
-  channel.subscribe((type, data) => {
-    if (type === 'loader/perspective' && data.projectId === projectId && data.dataset === dataset) {
+  channel.on('loader/perspective', (data) => {
+    if (data.projectId === projectId && data.dataset === dataset) {
       if (data.perspective !== 'published' && data.perspective !== 'previewDrafts') {
         throw new Error(`Unsupported perspective: ${JSON.stringify(data.perspective)}`)
       }
       $perspective.set(data.perspective)
       updateLiveQueries()
-    } else if (
-      type === 'loader/query-change' &&
-      data.projectId === projectId &&
-      data.dataset === dataset
-    ) {
+    }
+  })
+
+  channel.on('loader/query-change', (data) => {
+    if (data.projectId === projectId && data.dataset === dataset) {
       const {perspective, query, params} = data
       if (
         data.result !== undefined &&
@@ -190,7 +186,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
     const perspective = $perspective.get()
     for (const {query, params, $fetch} of liveQueries) {
-      channel.send('loader/query-listen', {
+      channel.post('query-listen', {
         projectId: projectId!,
         dataset: dataset!,
         perspective,
@@ -222,7 +218,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
       }
     }
-    channel?.send('loader/documents', {
+    channel.post('documents', {
       projectId: projectId!,
       dataset: dataset!,
       perspective,

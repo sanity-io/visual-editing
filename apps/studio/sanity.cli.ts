@@ -1,5 +1,7 @@
 import {defineCliConfig} from '@sanity/cli'
 
+const reactProductionProfiling = process.env.REACT_PRODUCTION_PROFILING === 'true'
+
 export default defineCliConfig({
   reactStrictMode: true,
   vite: (config) => {

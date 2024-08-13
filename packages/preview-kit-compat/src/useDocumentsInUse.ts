@@ -1,9 +1,5 @@
-import {type ChannelsNode, createChannelsNode} from '@repo/channels'
-import {
-  type PresentationMsg,
-  type PreviewKitMsg,
-  type VisualEditingConnectionIds,
-} from '@repo/visual-editing-helpers'
+import {ChannelsNode} from '@repo/channels'
+import {type PreviewKitAPI} from '@repo/visual-editing-helpers'
 import type {ContentSourceMapDocuments} from '@sanity/client/csm'
 import {useEffect, useState} from 'react'
 
@@ -16,18 +12,18 @@ export function useDocumentsInUse(
   projectId: string,
   dataset: string,
 ): void {
-  const [channel, setChannel] = useState<ChannelsNode<PreviewKitMsg, PresentationMsg> | undefined>()
+  const [channel, setChannel] = useState<ChannelsNode<PreviewKitAPI> | undefined>()
   const [connected, setConnected] = useState(false)
   useEffect(() => {
     if (window.self === window.top && !window.opener) {
       return
     }
-    const channel = createChannelsNode<VisualEditingConnectionIds, PreviewKitMsg, PresentationMsg>({
+    const channel = new ChannelsNode<PreviewKitAPI>({
       id: 'preview-kit',
       connectTo: 'presentation',
     })
 
-    channel.onStatusUpdate((status) => {
+    channel.onStatus((status) => {
       if (status === 'connected') {
         setConnected(true)
       } else if (status === 'disconnected') {
@@ -46,7 +42,7 @@ export function useDocumentsInUse(
   const changedKeys = JSON.stringify(Array.from(documentsInUse.keys()))
   useEffect(() => {
     if (changedKeys !== '[]' && channel && connected) {
-      channel.send('preview-kit/documents', {
+      channel.post('documents', {
         projectId,
         dataset,
         perspective: 'previewDrafts',

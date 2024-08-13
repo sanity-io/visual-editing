@@ -8,13 +8,10 @@ import type {
   OverlayOptions,
   ResolvedElement,
 } from './types'
-import {handleOverlayDrag} from './util/dragAndDrop'
 import {findSanityNodes, isSanityNode, sanityNodesExistInSameArray} from './util/findSanityNodes'
+import {handleOverlayDrag} from './util/dragAndDrop'
+import {findOverlayElement, isElementNode} from './util/elements'
 import {getRect} from './util/getRect'
-
-const isElementNode = (target: EventTarget | null): target is ElementNode => {
-  return target instanceof HTMLElement || target instanceof SVGElement
-}
 
 /**
  * Creates a controller which dispatches overlay related events
@@ -56,33 +53,39 @@ export function createOverlayController({
   const getHoveredElement = () => hoverStack[hoverStack.length - 1] as ElementNode | undefined
 
   function addEventHandlers(el: ElementNode, handlers: EventHandlers) {
-    el.addEventListener('click', handlers.click, {
+    el.addEventListener('click', handlers.click as EventListener, {
+      capture: true,
+    })
+    el.addEventListener('contextmenu', handlers.contextmenu as EventListener, {
       capture: true,
     })
     // We listen for the initial mousemove event, in case the overlay is enabled whilst the cursor is already over an element
     // mouseenter and mouseleave listeners are attached within this handler
-    el.addEventListener('mousemove', handlers.mousemove, {
+    el.addEventListener('mousemove', handlers.mousemove as EventListener, {
       once: true,
       capture: true,
     })
     // Listen for mousedown in case we need to prevent default behavior
-    el.addEventListener('mousedown', handlers.mousedown, {
+    el.addEventListener('mousedown', handlers.mousedown as EventListener, {
       capture: true,
     })
   }
 
   function removeEventHandlers(el: ElementNode, handlers: EventHandlers) {
-    el.removeEventListener('click', handlers.click, {
+    el.removeEventListener('click', handlers.click as EventListener, {
       capture: true,
     })
-    el.removeEventListener('mousemove', handlers.mousemove, {
+    el.removeEventListener('contextmenu', handlers.contextmenu as EventListener, {
       capture: true,
     })
-    el.removeEventListener('mousedown', handlers.mousedown, {
+    el.removeEventListener('mousemove', handlers.mousemove as EventListener, {
       capture: true,
     })
-    el.removeEventListener('mouseenter', handlers.mouseenter)
-    el.removeEventListener('mouseleave', handlers.mouseleave)
+    el.removeEventListener('mousedown', handlers.mousedown as EventListener, {
+      capture: true,
+    })
+    el.removeEventListener('mouseenter', handlers.mouseenter as EventListener)
+    el.removeEventListener('mouseleave', handlers.mouseleave as EventListener)
   }
 
   /**
@@ -139,6 +142,24 @@ export function createOverlayController({
           }
         }
       },
+      contextmenu(event) {
+        const target = event.target as ElementNode | null
+        if (element === getHoveredElement() && element.contains(target)) {
+          if (preventDefault) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          handler({
+            type: 'element/contextmenu',
+            id,
+            position: {
+              x: event.clientX,
+              y: event.clientY,
+            },
+            sanity,
+          })
+        }
+      },
       mousedown(event) {
         // prevent iframe from taking focus
         event.preventDefault()
@@ -171,8 +192,8 @@ export function createOverlayController({
         eventHandlers.mouseenter(event)
         const el = event.currentTarget as ElementNode | null
         if (el) {
-          el.addEventListener('mouseenter', eventHandlers.mouseenter)
-          el.addEventListener('mouseleave', eventHandlers.mouseleave)
+          el.addEventListener('mouseenter', eventHandlers.mouseenter as EventListener)
+          el.addEventListener('mouseleave', eventHandlers.mouseleave as EventListener)
         }
       },
       mouseenter() {
@@ -217,17 +238,27 @@ export function createOverlayController({
          * If moving to an element within the overlay which handles pointer events, attach a new
          * event handler to that element and defer the original leave event
          */
-        const {relatedTarget} = e as MouseEvent
-        const isInteractiveOverlayElement =
-          isElementNode(relatedTarget) && overlayElement.contains(relatedTarget)
-
-        if (isInteractiveOverlayElement) {
-          const deferredLeave = () => {
-            leave()
-            relatedTarget.removeEventListener('mouseleave', deferredLeave)
+        function addDeferredLeave(el: ElementNode) {
+          const deferredLeave = (e: MouseEvent) => {
+            const {relatedTarget} = e
+            const deferredContainer = findOverlayElement(relatedTarget)
+            if (!deferredContainer) {
+              el.removeEventListener('mouseleave', deferredLeave as EventListener)
+              leave()
+            } else if (relatedTarget && isElementNode(relatedTarget)) {
+              el.removeEventListener('mouseleave', deferredLeave as EventListener)
+              addDeferredLeave(relatedTarget)
+            }
           }
-          relatedTarget.addEventListener('mouseleave', deferredLeave)
-          return
+          el.addEventListener('mouseleave', deferredLeave as EventListener)
+        }
+
+        const {relatedTarget} = e as MouseEvent
+        const container = findOverlayElement(relatedTarget)
+        const isInteractiveOverlayElement = overlayElement.contains(container)
+
+        if (isElementNode(container) && isInteractiveOverlayElement) {
+          return addDeferredLeave(container)
         }
 
         leave()
@@ -371,11 +402,28 @@ export function createOverlayController({
     }
   }
 
-  function handleBlur() {
+  function handleBlur(event: MouseEvent) {
+    const element = findOverlayElement(event.target)
+
+    if (element && element.dataset['sanityOverlayElement'] !== 'noclick') {
+      event.preventDefault()
+      event.stopPropagation()
+      return
+    }
+
     hoverStack = []
     handler({
       type: 'overlay/blur',
     })
+  }
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      hoverStack = []
+      handler({
+        type: 'overlay/blur',
+      })
+    }
   }
 
   function handleWindowResize() {
@@ -427,6 +475,8 @@ export function createOverlayController({
 
   function destroy() {
     window.removeEventListener('click', handleBlur)
+    window.removeEventListener('contextmenu', handleBlur)
+    window.removeEventListener('keydown', handleKeydown)
     window.removeEventListener('resize', handleWindowResize)
     window.removeEventListener('scroll', handleWindowScroll)
     mo.disconnect()
@@ -445,6 +495,8 @@ export function createOverlayController({
 
   function create() {
     window.addEventListener('click', handleBlur)
+    window.addEventListener('contextmenu', handleBlur)
+    window.addEventListener('keydown', handleKeydown)
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('scroll', handleWindowScroll, {
       capture: true,

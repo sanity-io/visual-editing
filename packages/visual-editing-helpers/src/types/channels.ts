@@ -2,43 +2,21 @@ import type {
   ClientPerspective,
   ContentSourceMap,
   ContentSourceMapDocuments,
+  MutationEvent,
   QueryParams,
+  ReconnectEvent,
+  WelcomeEvent,
 } from '@sanity/client'
-import type {StudioPathLike} from '@sanity/client/csm'
+import type {PreviewValue, SanityDocument} from 'sanity'
 
-export type {Path} from '@sanity/client/csm'
+import type {SanityNode, SanityStegaNode} from './overlays'
+import type {ResolvedSchemaTypeMap, SchemaType} from './schema'
 
 /**
  * @internal
  * client.fetch(query, params) => `${query}-${JSON.stringify(params)}`
  */
 export type QueryCacheKey = `${string}-${string}`
-
-/**
- * Data resolved from a Sanity node
- * @public
- */
-export type SanityNode = {
-  baseUrl: string
-  dataset?: string
-  id: string
-  isDraft?: string
-  path: string
-  projectId?: string
-  tool?: string
-  type?: string
-  workspace?: string
-}
-
-/**
- * Data resolved from a Sanity Stega node
- * @public
- */
-export type SanityStegaNode = {
-  origin: string
-  href: string
-  data?: unknown
-}
 
 /**
  * Preview frame history update
@@ -104,31 +82,97 @@ export type HistoryRefresh =
  */
 export type PresentationMsg =
   | {
-      type: 'presentation/focus'
+      type: 'focus'
       data: {id: string; path: string}
     }
   | {
-      type: 'presentation/blur'
+      type: 'blur'
       data: undefined
     }
   | {
-      type: 'presentation/navigate'
+      type: 'navigate'
       data: HistoryUpdate
     }
   | {
-      type: 'presentation/toggleOverlay'
+      type: 'toggleOverlay'
       data: undefined
     }
   | {
-      type: 'presentation/refresh'
+      type: 'refresh'
       data: HistoryRefresh
     }
   | {
-      type: 'presentation/perspective'
+      type: 'perspective'
       data: {
         perspective: ClientPerspective
       }
     }
+  | {
+      type: 'schema'
+      data: {
+        schema: SchemaType[]
+      }
+    }
+  | {
+      type: 'previewSnapshots'
+      data: {
+        snapshots: Array<PreviewValue & {_id: string}>
+      }
+    }
+  | {
+      type: 'loader/perspective'
+      data: {
+        projectId: string
+        dataset: string
+        perspective: ClientPerspective
+      }
+    }
+  | {
+      type: 'loader/query-change'
+      data: {
+        projectId: string
+        dataset: string
+        perspective: ClientPerspective
+        query: string
+        params: QueryParams
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        result: any
+        resultSourceMap?: ContentSourceMap
+      }
+    }
+  | {
+      type: 'query-listen'
+      data: {
+        projectId: string
+        dataset: string
+        perspective: ClientPerspective
+        query: string
+        params: QueryParams
+        /**
+         * If above 0, then the loader will fire listen events on a heartbeat interval,
+         * allowing Presentation Tool to detect when it's no longer necessary to subscribe to a query.
+         */
+        heartbeat?: number
+      }
+    }
+  | {
+      type: 'mutation'
+      data: {
+        mutation: MutationEvent
+      }
+    }
+  | {
+      type: 'snapshot/event'
+      data: {
+        event: ReconnectEvent | WelcomeEvent | MutationEvent
+      }
+    }
+
+/**@public */
+export interface UnresolvedPath {
+  id: string
+  path: string
+}
 
 /**@public */
 export interface VisualEditingPayloads {
@@ -147,6 +191,22 @@ export interface VisualEditingPayloads {
     enabled: boolean
   }
   refresh: HistoryRefresh
+  schemaTypes: {
+    paths: UnresolvedPath[]
+  }
+  patch: {
+    id: string
+    type: string
+    patch: Record<string, unknown>
+  }
+  mutate: {
+    transactionId: string | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mutations: any[]
+  }
+  snapshot: {
+    documentId: string
+  }
 }
 
 /**
@@ -173,32 +233,56 @@ export type OverlayMsg =
  */
 export type VisualEditingMsg =
   | {
-      type: 'visual-editing/focus'
+      type: 'focus'
       data: VisualEditingPayloads['focus']
     }
   | {
-      type: 'visual-editing/navigate'
+      type: 'navigate'
       data: VisualEditingPayloads['navigate']
     }
   | {
-      type: 'visual-editing/toggle'
+      type: 'toggle'
       data: VisualEditingPayloads['toggle']
     }
   | {
-      type: 'visual-editing/meta'
+      type: 'meta'
       data: VisualEditingPayloads['meta']
     }
   | {
-      type: 'visual-editing/documents'
+      type: 'documents'
       data: VisualEditingPayloads['documents']
     }
   | {
-      type: 'visual-editing/refreshing'
+      type: 'refreshing'
       data: VisualEditingPayloads['refresh']
     }
   | {
-      type: 'visual-editing/refreshed'
+      type: 'refreshed'
       data: VisualEditingPayloads['refresh']
+    }
+  | {
+      type: 'schemaTypes'
+      data: VisualEditingPayloads['schemaTypes']
+      response: {
+        types: ResolvedSchemaTypeMap
+      }
+    }
+  | {
+      type: 'mutate'
+      data: VisualEditingPayloads['mutate']
+    }
+  | {
+      type: 'snapshots/snapshot'
+      data: VisualEditingPayloads['snapshot']
+      response: {
+        snapshot: SanityDocument | undefined
+      }
+    }
+  | {
+      type: 'snapshots/observe'
+      data: {
+        documentIds: string[]
+      }
     }
 
 /** @public */
@@ -244,15 +328,15 @@ export interface LoaderPayloads {
  */
 export type LoaderMsg =
   | {
-      type: 'loader/perspective'
+      type: 'perspective'
       data: LoaderPayloads['perspective']
     }
   | {
-      type: 'loader/query-change'
+      type: 'query-change'
       data: LoaderPayloads['query-change']
     }
   | {
-      type: 'loader/query-listen'
+      type: 'query-listen'
       data: LoaderPayloads['query-listen']
     }
   | {
@@ -260,7 +344,7 @@ export type LoaderMsg =
        * Sends over the CSM reported documents in use on the page. If there are multiple queries and thus
        * multiple CSM's, they're all deduped and concatenated into a single list.
        */
-      type: 'loader/documents'
+      type: 'documents'
       data: LoaderPayloads['documents']
     }
 
@@ -273,7 +357,7 @@ export type PreviewKitMsg = {
    * Sends over the CSM reported documents in use on the page. If there are multiple queries and thus
    * multiple CSM's, they're all deduped and concatenated into a single list.
    */
-  type: 'preview-kit/documents'
+  type: 'documents'
   data: {
     projectId: string
     dataset: string
@@ -288,74 +372,45 @@ export type PreviewKitMsg = {
  */
 export type VisualEditingConnectionIds = 'presentation' | 'loaders' | 'overlays' | 'preview-kit'
 
-/**
- * Helper
- * @internal
- */
-export type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]}
-
-/**
- * The metadata that can be embedded in a data attribute.
- * All values are marked optional in the base type as they can be provided incrementally using the `createDataAttribute` function.
- * @public
- */
-export interface CreateDataAttributeProps {
-  /** The studio base URL, optional */
-  baseUrl?: string
-  /** The dataset, optional */
-  dataset?: string
-  /** The document ID, required */
-  id?: string
-  /** The field path, required */
-  path?: StudioPathLike
-  /** The project ID, optional */
-  projectId?: string
-  /** The studio tool name, optional */
-  tool?: string
-  /** The document type, required */
-  type?: string
-  /** The studio workspace, optional */
-  workspace?: string
+/** @internal */
+export interface PresentationAPI {
+  id: 'presentation'
+  sends: PresentationMsg
+  nodes:
+    | {
+        id: 'visual-editing'
+        message: VisualEditingMsg
+      }
+    | {
+        id: 'loaders'
+        message: LoaderMsg
+      }
+    | {
+        id: 'preview-kit'
+        message: PreviewKitMsg
+      }
 }
 
-/**
- * @public
- */
-export type CreateDataAttribute<T extends CreateDataAttributeProps> = (T extends WithRequired<
-  CreateDataAttributeProps,
-  'id' | 'type' | 'path'
->
-  ? {
-      /**
-       * Returns a string representation of the data attribute
-       * @param path - An optional path to concatenate with any existing path
-       * @public
-       */
-      (path?: StudioPathLike): string
-      /**
-       * Returns a string representation of the data attribute
-       * @public
-       */
-      toString(): string
-    }
-  : T extends WithRequired<CreateDataAttributeProps, 'id' | 'type'>
-    ? /**
-       * Returns a string representation of the data attribute
-       * @param path - An optional path to concatenate with any existing path
-       * @public
-       */
-      (path: StudioPathLike) => string
-    : object) & {
-  /**
-   * Concatenate the current path with a new path
-   * @param path - A path to concatenate with any existing path
-   * @public
-   */
-  scope(path: StudioPathLike): CreateDataAttribute<T & {path: StudioPathLike}>
-  /**
-   * Combines the current props with additional props
-   * @param props - New props to merge with any existing props
-   * @public
-   */
-  combine: <U extends CreateDataAttributeProps>(props: U) => CreateDataAttribute<T & U>
+/** @internal */
+export interface VisualEditingAPI {
+  id: 'visual-editing'
+  controllerId: 'presentation'
+  sends: VisualEditingMsg
+  receives: PresentationMsg
+}
+
+/** @internal */
+export interface PreviewKitAPI {
+  id: 'preview-kit'
+  controllerId: 'presentation'
+  sends: PreviewKitMsg
+  receives: PresentationMsg
+}
+
+/** @internal */
+export interface LoadersAPI {
+  id: 'loaders'
+  controllerId: 'presentation'
+  sends: LoaderMsg
+  receives: PresentationMsg
 }

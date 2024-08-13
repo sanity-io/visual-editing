@@ -10,6 +10,7 @@ export {
   defineDocumentFieldAction,
   type DocumentFieldActionItem,
   type DocumentStore,
+  getDraftId,
   getPreviewStateObservable,
   getPreviewValueWithFallback,
   getPublishedId,

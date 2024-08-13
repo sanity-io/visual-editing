@@ -1,18 +1,18 @@
+import type {ChannelsNode} from '@repo/channels'
+import type {VisualEditingAPI} from '@repo/visual-editing-helpers'
 import {type FunctionComponent, useEffect} from 'react'
-
-import type {VisualEditingChannel} from '../types'
 
 /**
  * @internal
  */
 export const Meta: FunctionComponent<{
-  channel?: VisualEditingChannel
+  channel: ChannelsNode<VisualEditingAPI>
 }> = (props) => {
   const {channel} = props
 
   useEffect(() => {
     const sendMeta = () => {
-      channel?.send('visual-editing/meta', {title: document.title})
+      channel.post('meta', {title: document.title})
     }
 
     const observer = new MutationObserver(([mutation]) => {

@@ -1,17 +1,37 @@
-import {WrappedValue} from '@sanity/react-loader/jsx'
+import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
 import {sanity} from '@sanity/react-loader/jsx'
+import {stegaClean} from '@sanity/client/stega'
+import {createDataAttribute} from '@sanity/core-loader/create-data-attribute'
 
 import {AppLayout} from '@/app/AppLayout'
 import {SiteSettingsData} from '@/app/types'
 import {SanityArrayValue, SanityImageValue, dataAttribute} from '@/sanity'
 import {SimpleContent} from '@/components/page'
 import {Slideshow} from '@/components/slideshow'
+import {ProductModel} from './ProductModel'
+import {useMemo} from 'react'
+
+import {useOptimisticStateSelector} from '@sanity/visual-editing'
 
 export interface ProductData {
   _id: string
+  _originalId: string
+  _type: string
   title?: string
   media?: SanityArrayValue<SanityImageValue>[]
   description?: any[]
+  model?: {
+    _type: 'model'
+    file?: {
+      asset: {
+        extension: string
+        originalFilename: string
+        url: string
+      }
+    }
+    rotation?: number
+    lightIntensity?: number
+  }
   details?: {
     _type: 'details'
     materials?: string
@@ -29,6 +49,24 @@ export interface ProductPageData {
 
 export function ProductPage(props: {data: WrappedValue<ProductPageData>}) {
   const {data} = props
+
+  const fallbackModel = useMemo(
+    () => unwrapData(stegaClean(data?.product?.model)) || undefined,
+    [data.product?.model],
+  )
+
+  const model = useOptimisticStateSelector(
+    {id: `drafts.${data.product?._id}`, path: 'model'},
+    fallbackModel,
+    (model, optimistic?: {rotation?: number; lightIntensity?: number}) => {
+      if (!model || !model.file) return undefined
+      return {
+        uri: model.file.asset.url,
+        rotation: optimistic?.rotation || model.rotation || 180,
+        intensity: optimistic?.lightIntensity || model.lightIntensity || 0.5,
+      }
+    },
+  )
 
   return (
     <AppLayout data={{siteSettings: data.siteSettings}}>
@@ -133,6 +171,22 @@ export function ProductPage(props: {data: WrappedValue<ProductPageData>}) {
           </div>
         </div>
       </main>
+      {model && (
+        <div
+          style={{height: '40rem', width: '100%'}}
+          className="mt-5"
+          data-sanity={
+            data.product &&
+            createDataAttribute({
+              id: data.product?._originalId,
+              type: data.product?._type,
+              path: 'model',
+            })()
+          }
+        >
+          <ProductModel model={model} />
+        </div>
+      )}
     </AppLayout>
   )
 }

@@ -1,9 +1,11 @@
+import {BlockContentIcon} from '@sanity/icons'
 import {defineArrayMember, defineField} from 'sanity'
 
 export const introSectionType = defineArrayMember({
   type: 'object',
   name: 'intro',
   title: 'Intro',
+  icon: BlockContentIcon,
   fields: [
     defineField({
       type: 'string',

@@ -15,3 +15,5 @@ export const HANDSHAKE_MSG_TYPES = [
   'handshake/syn-ack',
   'handshake/ack',
 ] satisfies ChannelMsgType[]
+
+export const CHANNELS_DOMAIN = 'sanity/channels'

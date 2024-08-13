@@ -47,7 +47,7 @@ export const elementsReducer = (
     case 'element/deactivate':
       return elements.map((e) => {
         if (e.id === message.id) {
-          return {...e, activated: false, hovered: false}
+          return {...e, activated: false}
         }
         return e
       })
@@ -80,11 +80,11 @@ export const elementsReducer = (
       return elements.map((e) => {
         return {...e, focused: false}
       })
-    case 'presentation/blur':
+    case 'blur':
       return elements.map((e) => {
         return {...e, focused: false}
       })
-    case 'presentation/focus': {
+    case 'focus': {
       // Before setting the focus state of each element, check to see if any
       // element has gained focus from an `element/click` message. Presentation
       // tool "reflects" these back as a `presentation/focus` message.

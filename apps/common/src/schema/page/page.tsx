@@ -33,6 +33,32 @@ export const pageType = defineType({
         featureHighlightSectionType,
         pageSectionArrayMember,
       ],
+      options: {
+        insertMenu: {
+          filter: true,
+          views: [
+            {name: 'grid', previewImageUrl: (name: string) => `/static/preview-${name}.png`},
+            {name: 'list'},
+          ],
+          groups: [
+            {
+              name: 'intro',
+              title: 'Intro',
+              of: ['hero', 'intro'],
+            },
+            {
+              name: 'features',
+              title: 'Features',
+              of: ['featuredProducts', 'featureHighlight'],
+            },
+            {
+              name: 'pages',
+              title: 'Pages',
+              of: ['section'],
+            },
+          ],
+        },
+      },
     }),
   ],
 })
