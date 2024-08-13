@@ -20,35 +20,48 @@
 </template>
 
 <script lang="ts" setup>
-import {type ChannelsController, createChannelsController} from '@repo/channels'
+import {ChannelsController, ChannelsChannel} from '@repo/channels'
+
+interface Msg {
+  type: 'event'
+  data: {
+    datetime: string
+  }
+}
+
+interface ParentAPI {
+  id: 'controller'
+  sends: Msg
+  nodes: {
+    id: 'parent'
+    message: Msg
+  }
+}
 
 const log = ref<any[]>([])
-const channel = ref<ChannelsController | undefined>()
+const controller = ref<ChannelsController<ParentAPI>>()
+const channel = ref<ChannelsChannel<ParentAPI>>()
 const iframeEl = ref<HTMLIFrameElement | undefined>()
 
 onMounted(async () => {
-  channel.value = createChannelsController({
-    id: 'parent',
-    frame: iframeEl.value!,
-    frameOrigin: 'same-origin',
-    connectTo: [
-      {
-        id: 'child',
-      },
-    ],
-    onEvent(type, data) {
-      log.value.unshift({...data, type})
-    },
+  controller.value = new ChannelsController<ParentAPI>({
+    id: 'controller',
+    targetOrigin: 'same-origin',
   })
+  controller.value.addSource(iframeEl.value!.contentWindow!)
+  const {channel: _channel} = controller.value.createChannel({
+    id: 'parent',
+  })
+  channel.value = _channel
 })
 
 onUnmounted(() => {
-  channel.value?.destroy()
-  channel.value = undefined
+  controller.value?.destroy()
+  controller.value = undefined
 })
 
 const sendMessage = () => {
-  channel.value?.send('child', 'parent/event', {
+  channel.value?.get('event', {
     datetime: new Date().toISOString(),
   })
 }

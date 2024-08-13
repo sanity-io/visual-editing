@@ -2,7 +2,7 @@ import {decodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
 
 import {OVERLAY_ID} from '../constants'
 import type {ElementNode, ResolvedElement, SanityNode, SanityStegaNode} from '../types'
-import {findNonInlineElement} from './findNonInlineElement'
+import {findNonInlineElement} from './elements'
 import {testAndDecodeStega} from './stega'
 
 const isElementNode = (node: ChildNode): node is ElementNode => node.nodeType === Node.ELEMENT_NODE

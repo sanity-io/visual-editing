@@ -1,9 +1,9 @@
-import {HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES} from './constants'
+import type {CHANNELS_DOMAIN, HANDSHAKE_MSG_TYPES, INTERNAL_MSG_TYPES} from './constants'
 
 /**
  * @public
  */
-export type ChannelMsgType = `${string}/${string}`
+export type ChannelMsgType = string
 
 /**
  * @public
@@ -14,27 +14,24 @@ export type ChannelMsgData = Record<string, unknown> | undefined
  * @public
  */
 export interface ChannelMsg {
-  data: ChannelMsgData
   type: ChannelMsgType
+  data?: ChannelMsgData
+  response?: ChannelMsgData
 }
 
 /**
  * @internal
  */
-export type ProtocolMsg<T extends ChannelMsg> = {
+export type ProtocolMsg<T extends ChannelMsg = ChannelMsg> = {
   id: string
   connectionId: string
   data?: T['data']
-  domain: 'sanity/channels'
+  domain: typeof CHANNELS_DOMAIN
   from: string
+  responseTo?: string
   to: string
   type: T['type']
 }
-
-/**
- * @internal
- */
-export type ToArgs<T extends ChannelMsg> = T extends T ? [type: T['type'], data: T['data']] : never
 
 /**
  * @public
@@ -54,6 +51,27 @@ export type InternalMsgType = InternalMsgTypeTuple[number]
 /**
  * @internal
  */
+export interface ChannelsDisconnectMsg {
+  type: 'channel/disconnect'
+  data: {
+    id: string | null
+  }
+}
+
+export interface ChannelsResponseMsg {
+  type: 'channel/response'
+  data: ChannelMsgData & {
+    responseTo: string
+  }
+}
+export interface ChannelsHeartbeatMsg {
+  type: 'channel/heartbeat'
+  data: undefined
+}
+
+/**
+ * @internal
+ */
 export type HandshakeMsgTypeTuple = typeof HANDSHAKE_MSG_TYPES
 
 /**
@@ -62,114 +80,86 @@ export type HandshakeMsgTypeTuple = typeof HANDSHAKE_MSG_TYPES
 export type HandshakeMsgType = HandshakeMsgTypeTuple[number]
 
 /**
- * @public
- */
-export type ChannelsEventHandler<Receives extends ChannelMsg = ChannelMsg> = (
-  ...args: ToArgs<Receives>
-) => void
-
-/**
- * @public
- */
-export type ChannelsControllerStatusSubscriber = (
-  status: ChannelStatus,
-  connectionId: string,
-) => void
-
-/**
- * @public
- */
-export interface ChannelsControllerOptions<
-  ConnectionIds extends string,
-  Receives extends ChannelMsg = ChannelMsg,
-> {
-  id: ConnectionIds
-  connectTo: ChannelsControllerChannelOptions<ConnectionIds, Receives>[]
-  target: Window
-  targetOrigin: string
-  onEvent?: ChannelsEventHandler<Receives>
-  onStatusUpdate?: ChannelsControllerStatusSubscriber
-}
-
-/**
- * @public
- */
-export interface ChannelsControllerChannelOptions<
-  ConnectionIds extends string,
-  Receives extends ChannelMsg = ChannelMsg,
-> {
-  id: ConnectionIds
-  heartbeat?: boolean | number
-  onEvent?: ChannelsEventHandler<Receives>
-  onStatusUpdate?: ChannelsControllerStatusSubscriber
-}
-
-/**
  * @internal
  */
-export interface ChannelsControllerChannel<
-  ConnectionIds extends string,
-  Receives extends ChannelMsg = ChannelMsg,
-> {
-  id: string | null
-  buffer: ChannelMsg[]
-  config: ChannelsControllerChannelOptions<ConnectionIds, Receives>
-  handler: (e: MessageEvent<ProtocolMsg<Receives>>) => void
-  heartbeat: number | undefined
-  interval: number | undefined
-  status: ChannelStatus
+
+export interface HandshakeSynMsg {
+  type: 'handshake/syn'
+  data: {id: string}
+}
+export interface HandshakeSynAckMsg {
+  type: 'handshake/syn-ack'
+  data: {id: string}
+}
+export interface HandshakeAckMsg {
+  type: 'handshake/ack'
+  data: {id: string}
+}
+
+export type ChannelsChannelInternalMsg =
+  | ChannelsDisconnectMsg
+  | ChannelsHeartbeatMsg
+  | ChannelsResponseMsg
+  | HandshakeAckMsg
+  | HandshakeSynAckMsg
+  | HandshakeSynMsg
+
+/**
+ * @public
+ */
+export interface ChannelsControllerAPI {
+  id: string
+  sends: ChannelMsg
+  nodes: {
+    id: string
+    message: ChannelMsg
+  }
 }
 
 /**
  * @public
  */
-export interface ChannelsController<
-  ConnectionIds extends string,
-  Sends extends ChannelMsg = ChannelMsg,
-> {
-  addSource: (source: MessageEventSource) => void
-  destroy: () => void
-  send: (id: ConnectionIds | ConnectionIds[] | undefined, ...args: ToArgs<Sends>) => void
+export interface ChannelsNodeAPI {
+  id: string
+  controllerId: string
+  sends: ChannelMsg
+  receives: ChannelMsg
 }
 
 /**
  * @public
  */
-export interface ChannelsNodeOptions<ConnectionIds extends string> {
-  id: ConnectionIds
-  connectTo: ConnectionIds
-}
-
-/**
- * @internal
- */
-export interface ChannelsNodeChannel {
-  id: string | null
-  buffer: ChannelMsg[]
-  origin: string | null
-  source: MessageEventSource | null
-  status: ChannelStatus
-}
+export type ChannelsStatusHandler = (status: ChannelStatus) => void
 
 /**
  * @public
  */
-export type ChannelsEventSubscriber<Receives extends ChannelMsg> = (
-  ...args: ToArgs<Receives>
+export type Narrow<T extends ChannelMsg['type'], Msg extends ChannelMsg> = Extract<Msg, {type: T}>
+
+/**
+ * @public
+ */
+export type ChannelsNodeHandler<T extends ChannelMsg['type'], U extends ChannelMsg> = (
+  data: Narrow<T, U>['data'],
 ) => void
+/**
+ * @public
+ */
+export type ChannelsNodeHandlerMap<T extends ChannelMsg> = Map<
+  T['type'],
+  {type: T['type']; handler: ChannelsNodeHandler<T['type'], T>}
+>
 
 /**
  * @public
  */
-export type ChannelsNodeStatusSubscriber = (status: ChannelStatus) => void
-
+export type ChannelsChannelHandler<T extends ChannelMsg['type'], Receives extends ChannelMsg> = (
+  data: Narrow<T, Receives>['data'],
+) => Promise<Narrow<T, Receives>['response'] | undefined> | void
 /**
  * @public
  */
-export interface ChannelsNode<Sends extends ChannelMsg, Receives extends ChannelMsg> {
-  destroy: () => void
-  inFrame: boolean
-  onStatusUpdate: (subscriber: ChannelsNodeStatusSubscriber) => () => void
-  send: (...args: ToArgs<Sends>) => void
-  subscribe: (subscriber: ChannelsEventSubscriber<Receives>) => () => void
-}
+export type ChannelsChannelHandlerMap<Receives extends ChannelMsg> = Map<
+  Receives['type'],
+  ChannelsChannelHandler<Receives['type'], Receives>
+>

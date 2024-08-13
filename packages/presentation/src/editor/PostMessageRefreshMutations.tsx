@@ -1,5 +1,5 @@
-import type {ChannelsController, ChannelStatus} from '@repo/channels'
-import type {PresentationMsg, VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
+import type {ChannelsChannel, ChannelStatus} from '@repo/channels'
+import type {PresentationAPI} from '@repo/visual-editing-helpers'
 import {memo, startTransition, useEffect, useMemo, useState} from 'react'
 import {type SanityDocument} from 'sanity'
 
@@ -8,7 +8,7 @@ import {getPublishedId, useEditState} from '../internals'
 export interface PostMessageRefreshMutationsProps {
   id: string
   type: string
-  channel: ChannelsController<VisualEditingConnectionIds, PresentationMsg>
+  channel: ChannelsChannel<PresentationAPI, 'visual-editing'>
   previewKitConnection: ChannelStatus
   loadersConnection: ChannelStatus
 }
@@ -50,7 +50,7 @@ function PostMessageRefreshMutationsInner(props: PostMessageRefreshMutationsInne
     if (prevDraft?._rev !== draft?._rev) {
       startTransition(() => setPrevDraft(draft))
       if (draft) {
-        channel?.send('overlays', 'presentation/refresh', {
+        channel.post('refresh', {
           source: 'mutation',
           livePreviewEnabled,
           document: parseDocument(draft),
@@ -60,7 +60,7 @@ function PostMessageRefreshMutationsInner(props: PostMessageRefreshMutationsInne
     if (prevPublished?._rev !== published?._rev) {
       startTransition(() => setPrevPublished(published))
       if (published) {
-        channel?.send('overlays', 'presentation/refresh', {
+        channel.post('refresh', {
           source: 'mutation',
           livePreviewEnabled,
           document: parseDocument(published),

@@ -2,7 +2,7 @@
   "name": "apps-studio",
   "private": true,
   "scripts": {
-    "build": "sanity build --source-maps",
+    "build": "sanity build --no-minify --source-maps",
     "dev": "sanity dev"
   },
   "dependencies": {

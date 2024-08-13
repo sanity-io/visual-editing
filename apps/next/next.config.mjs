@@ -7,6 +7,7 @@ const require = createRequire(import.meta.url)
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  reactProductionProfiling: true,
   logging: {
     fetches: {
       fullUrl: true,
@@ -21,6 +22,7 @@ const nextConfig = {
 
   experimental: {
     taint: true,
+    reactCompiler: true,
   },
 
   async headers() {

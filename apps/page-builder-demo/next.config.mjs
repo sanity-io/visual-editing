@@ -2,9 +2,9 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    taint: true,
-  },
+  reactProductionProfiling: true,
+  reactStrictMode: true,
+
   logging: {
     fetches: {
       fullUrl: true,

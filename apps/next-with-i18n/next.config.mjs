@@ -15,6 +15,7 @@ sanityExports['sanity'] = requireResolve('sanity')
 
 /** @type {import('next').NextConfig} */
 const config = {
+  reactStrictMode: true,
   images: {
     remotePatterns: [{ hostname: 'cdn.sanity.io' }],
   },

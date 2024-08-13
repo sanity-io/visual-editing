@@ -1,13 +1,15 @@
+import type {ChannelsNode} from '@repo/channels'
+import type {VisualEditingAPI} from '@repo/visual-editing-helpers'
 import {type FunctionComponent, useEffect, useRef} from 'react'
 
-import type {VisualEditingChannel, VisualEditingOptions} from '../types'
+import type {VisualEditingOptions} from '../types'
 
 /**
  * @internal
  */
 export const Refresh: FunctionComponent<
   {
-    channel: VisualEditingChannel
+    channel: ChannelsNode<VisualEditingAPI>
   } & Required<Pick<VisualEditingOptions, 'refresh'>>
 > = (props) => {
   const {channel, refresh} = props
@@ -16,39 +18,39 @@ export const Refresh: FunctionComponent<
   const mutationRefreshRef = useRef(0)
   useEffect(
     () =>
-      channel.subscribe((type, data) => {
-        if (type === 'presentation/refresh' && data.source === 'manual') {
+      channel.on('refresh', (data) => {
+        if (data.source === 'manual') {
           clearTimeout(manualRefreshRef.current)
           const promise = refresh(data)
           if (promise === false) return
-          channel.send('visual-editing/refreshing', data)
+          channel.post('refreshing', data)
           let timedOut = false
           manualRefreshRef.current = window.setTimeout(() => {
-            channel.send('visual-editing/refreshed', data)
+            channel.post('refreshed', data)
             timedOut = true
           }, 3000)
           promise?.finally?.(() => {
             if (timedOut) return
             clearTimeout(manualRefreshRef.current)
-            channel.send('visual-editing/refreshed', data)
+            channel.post('refreshed', data)
           })
-        } else if (type === 'presentation/refresh' && data.source === 'mutation') {
+        } else if (data.source === 'mutation') {
           clearTimeout(mutationRefreshRef.current)
           const promise = refresh(data)
           if (promise === false) return
-          channel.send('visual-editing/refreshing', data)
+          channel.post('refreshing', data)
           // Send an additional refresh to account for Content Lake eventual consistency
           mutationRefreshRef.current = window.setTimeout(() => {
             const promise = refresh(data)
             if (promise === false) return
-            channel.send('visual-editing/refreshing', data)
+            channel.post('refreshing', data)
             promise?.finally?.(() => {
-              channel.send('visual-editing/refreshed', data)
-            }) || channel.send('visual-editing/refreshed', data)
+              channel.post('refreshed', data)
+            }) || channel.post('refreshed', data)
           }, 1000)
           promise?.finally?.(() => {
-            channel.send('visual-editing/refreshed', data)
-          }) || channel.send('visual-editing/refreshed', data)
+            channel.post('refreshed', data)
+          }) || channel.post('refreshed', data)
         }
       }),
     [channel, refresh],

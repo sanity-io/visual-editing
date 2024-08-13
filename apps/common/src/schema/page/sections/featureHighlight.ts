@@ -1,9 +1,11 @@
+import {HighlightIcon} from '@sanity/icons'
 import {defineArrayMember, defineField} from 'sanity'
 
 export const featureHighlightSectionType = defineArrayMember({
   type: 'object',
   name: 'featureHighlight',
   title: 'Feature Highlight',
+  icon: HighlightIcon,
   fields: [
     defineField({
       type: 'string',
