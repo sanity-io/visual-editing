@@ -3,7 +3,8 @@
   "extends": ["//"],
   "tasks": {
     "build-storybook": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "outputs": ["storybook-static/**"]
     },
     "storybook": {
       "persistent": false
