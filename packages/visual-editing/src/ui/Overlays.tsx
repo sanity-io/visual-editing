@@ -160,7 +160,12 @@ export const Overlays: FunctionComponent<{
         channel.send('overlay/toggle', {enabled: true})
       } else if (message.type === 'overlay/deactivate') {
         channel.send('overlay/toggle', {enabled: false})
+      } else if (message.type === 'overlay/updateDragInsertPosition') {
+        console.log(message)
+      } else if (message.type === 'overlay/updateDragCursorPosition') {
+        console.log(message)
       }
+
       dispatch(message)
     },
     [channel],

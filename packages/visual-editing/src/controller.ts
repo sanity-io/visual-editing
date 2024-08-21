@@ -7,12 +7,19 @@ import type {
   OverlayElement,
   OverlayOptions,
   ResolvedElement,
+  DragState,
 } from './types'
-import {findSanityNodes} from './util/findSanityNodes'
+import {findSanityNodes, isSanityNode, sanityNodesExistInSameArray} from './util/findSanityNodes'
 import {getRect} from './util/getRect'
+import {handleOverlayDrag} from './util/dragAndDrop'
 
 const isElementNode = (target: EventTarget | null): target is ElementNode => {
   return target instanceof HTMLElement || target instanceof SVGElement
+}
+
+const dragState: DragState = {
+  status: 'idle',
+  insertPosition: null,
 }
 
 /**
@@ -141,6 +148,32 @@ export function createOverlayController({
       mousedown(event) {
         // prevent iframe from taking focus
         event.preventDefault()
+
+        if (event.currentTarget !== hoverStack.at(-1)) return
+
+        const targetSanityData = elementsMap.get(element)?.sanity
+
+        if (!targetSanityData || !isSanityNode(targetSanityData)) return
+
+        const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
+          const elData = elementsMap.get(el)
+
+          if (
+            elData &&
+            isSanityNode(elData.sanity) &&
+            sanityNodesExistInSameArray(targetSanityData, elData.sanity)
+          ) {
+            acc.push(elData)
+          }
+
+          return acc
+        }, [])
+
+        if (group.length <= 1) return
+
+        dragState.status = 'dragging'
+
+        handleOverlayDrag(group, dragState, handler)
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)
@@ -151,6 +184,7 @@ export function createOverlayController({
         }
       },
       mouseenter() {
+        if (dragState.status === 'dragging') return
         // If the Vercel Visual Editing provided by Vercel Toolbar is active, do not overlap overlays
         if (
           (document.querySelector('vercel-live-feedback') &&
@@ -167,6 +201,8 @@ export function createOverlayController({
         })
       },
       mouseleave(e) {
+        if (dragState.status === 'dragging') return
+
         function leave() {
           hoverStack.pop()
           const hoveredElement = getHoveredElement()

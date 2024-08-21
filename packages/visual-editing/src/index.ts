@@ -24,6 +24,8 @@ export type {
   OverlayMsgElementUnregister,
   OverlayMsgElementUpdate,
   OverlayMsgElementUpdateRect,
+  OverlayMsgUpdateDragInsertPosition,
+  OverlayMsgUpdateDragCursorPosition,
   OverlayOptions,
   OverlayRect,
   SanityNode,
