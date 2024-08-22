@@ -184,7 +184,6 @@ export function createOverlayController({
         }
       },
       mouseenter() {
-        if (dragState.status === 'dragging') return
         // If the Vercel Visual Editing provided by Vercel Toolbar is active, do not overlap overlays
         if (
           (document.querySelector('vercel-live-feedback') &&
@@ -201,8 +200,6 @@ export function createOverlayController({
         })
       },
       mouseleave(e) {
-        if (dragState.status === 'dragging') return
-
         function leave() {
           hoverStack.pop()
           const hoveredElement = getHoveredElement()
