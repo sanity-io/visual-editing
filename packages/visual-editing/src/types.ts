@@ -48,12 +48,6 @@ export interface DragInsertPosition {
   right?: OverlayRect | null
 }
 
-/** @internal */
-export interface DragState {
-  status: 'idle' | 'dragging'
-  insertPosition: DragInsertPosition | null
-}
-
 /**
  * Base controller dispatched message
  * @typeParam T - Type of message

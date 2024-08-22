@@ -1,6 +1,5 @@
 import type {
   DragInsertPosition,
-  DragState,
   OverlayElement,
   OverlayEventHandler,
   OverlayMsgUpdateDragInsertPosition,
@@ -267,9 +266,10 @@ function resolveInsertMsg(
   }
 }
 
+let prevInsertPosition: DragInsertPosition | null = null
+
 export function handleOverlayDrag(
   overlayGroup: OverlayElement[],
-  dragState: DragState,
   handler: OverlayEventHandler,
 ): void {
   const rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
@@ -289,16 +289,14 @@ export function handleOverlayDrag(
 
     const insertPosition = calcInsertPosition(mousePos, rects, flow)
 
-    if (JSON.stringify(insertPosition) !== JSON.stringify(dragState.insertPosition)) {
-      dragState.insertPosition = insertPosition
+    if (JSON.stringify(insertPosition) !== JSON.stringify(prevInsertPosition)) {
+      prevInsertPosition = insertPosition
 
       handler(resolveInsertMsg(overlayGroup, insertPosition, flow))
     }
   }
 
   const handleMouseUp = (): void => {
-    dragState.status = 'idle'
-
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('mouseup', handleMouseUp)
   }

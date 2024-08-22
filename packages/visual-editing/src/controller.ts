@@ -1,7 +1,6 @@
 import {v4 as uuid} from 'uuid'
 
 import type {
-  DragState,
   ElementNode,
   EventHandlers,
   OverlayController,
@@ -15,11 +14,6 @@ import {getRect} from './util/getRect'
 
 const isElementNode = (target: EventTarget | null): target is ElementNode => {
   return target instanceof HTMLElement || target instanceof SVGElement
-}
-
-const dragState: DragState = {
-  status: 'idle',
-  insertPosition: null,
 }
 
 /**
@@ -171,9 +165,7 @@ export function createOverlayController({
 
         if (group.length <= 1) return
 
-        dragState.status = 'dragging'
-
-        handleOverlayDrag(group, dragState, handler)
+        handleOverlayDrag(group, handler)
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)
