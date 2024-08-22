@@ -161,7 +161,6 @@ export const Overlays: FunctionComponent<{
       } else if (message.type === 'overlay/deactivate') {
         channel.send('overlay/toggle', {enabled: false})
       }
-
       dispatch(message)
     },
     [channel],
