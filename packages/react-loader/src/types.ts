@@ -1,5 +1,6 @@
 import type {
   ClientPerspective,
+  ClientReturn,
   ContentSourceMap,
   QueryParams,
   ResponseQueryOptions,
@@ -42,7 +43,7 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
    * ```ts
    * const query = `*[_type == "author" && slug.current == $slug][0]`
    * export const getServerSideProps = async ({params}) => {
-   *   const initial = await loadQuery<AuhthorType>(query, params)
+   *   const initial = await loadQuery(query, params)
    *   return { props: { params, initial } }
    * }
    * export default function Page({params, initial}) {
@@ -62,7 +63,7 @@ export interface UseQueryOptionsUndefinedInitial {
    * ```ts
    * const query = `*[_type == "author" && slug.current == $slug][0]`
    * export const getServerSideProps = async ({params}) => {
-   *   const initial = await loadQuery<AuhthorType>(query, params)
+   *   const initial = await loadQuery(query, params)
    *   return { props: { params, initial } }
    * }
    * export default function Page({params, initial}) {
@@ -84,7 +85,7 @@ export interface UseQueryOptionsDefinedInitial<QueryResponseResult = unknown> {
    * ```ts
    * const query = `*[_type == "author" && slug.current == $slug][0]`
    * export const getServerSideProps = async ({params}) => {
-   *   const initial = await loadQuery<AuhthorType>(query, params)
+   *   const initial = await loadQuery(query, params)
    *   return { props: { params, initial } }
    * }
    * export default function Page({params, initial}) {
@@ -104,14 +105,14 @@ export type UseLiveModeHook = (
 ) => void
 
 export interface QueryStore {
-  loadQuery: <QueryResponseResult>(
-    query: string,
+  loadQuery: <const QueryString extends string>(
+    query: QueryString,
     params?: QueryParams,
     options?: Pick<
       ResponseQueryOptions,
       'perspective' | 'cache' | 'next' | 'useCdn' | 'stega' | 'tag' | 'headers'
     >,
-  ) => Promise<QueryResponseInitial<QueryResponseResult>>
+  ) => Promise<QueryResponseInitial<ClientReturn<QueryString>>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
