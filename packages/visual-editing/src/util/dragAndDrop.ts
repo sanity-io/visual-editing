@@ -125,7 +125,6 @@ function calcTargetFlow(targets: OverlayRect[]) {
       const others = targets.filter((t2) => !rectEqual(t1, t2))
 
       return others.some((t2) => {
-        // @TODO this could be more robust
         return t1.y === t2.y
       })
     })
@@ -290,7 +289,6 @@ export function handleOverlayDrag(
 
     const insertPosition = calcInsertPosition(mousePos, rects, flow)
 
-    // @TODO better insert position comparison
     if (JSON.stringify(insertPosition) !== JSON.stringify(dragState.insertPosition)) {
       dragState.insertPosition = insertPosition
 

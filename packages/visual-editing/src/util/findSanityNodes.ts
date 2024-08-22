@@ -177,7 +177,6 @@ export function findSanityNodes(
   return elements
 }
 
-// @TODO not sure how accurate/robust this is, needs further testing
 export function getSanityNodeArrayPath(sanityPath: string) {
   const split = sanityPath.split('.')
 
