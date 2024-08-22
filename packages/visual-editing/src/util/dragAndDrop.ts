@@ -1,13 +1,13 @@
 import type {
-  OverlayRect,
+  DragInsertPosition,
+  DragState,
   OverlayElement,
   OverlayEventHandler,
   OverlayMsgUpdateDragInsertPosition,
-  Ray2D,
+  OverlayRect,
   Point2D,
+  Ray2D,
   SanityNode,
-  DragInsertPosition,
-  DragState,
 } from '../types'
 import {getRect} from './getRect'
 
@@ -45,8 +45,8 @@ function rayIntersect(l1: Ray2D, l2: Ray2D): Point2D | false {
     return false
   }
 
-  let x = x1 + ua * (x2 - x1)
-  let y = y1 + ua * (y2 - y1)
+  const x = x1 + ua * (x2 - x1)
+  const y = y1 + ua * (y2 - y1)
 
   return {x, y}
 }

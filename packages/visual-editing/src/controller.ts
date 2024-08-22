@@ -1,17 +1,17 @@
 import {v4 as uuid} from 'uuid'
 
 import type {
+  DragState,
   ElementNode,
   EventHandlers,
   OverlayController,
   OverlayElement,
   OverlayOptions,
   ResolvedElement,
-  DragState,
 } from './types'
+import {handleOverlayDrag} from './util/dragAndDrop'
 import {findSanityNodes, isSanityNode, sanityNodesExistInSameArray} from './util/findSanityNodes'
 import {getRect} from './util/getRect'
-import {handleOverlayDrag} from './util/dragAndDrop'
 
 const isElementNode = (target: EventTarget | null): target is ElementNode => {
   return target instanceof HTMLElement || target instanceof SVGElement

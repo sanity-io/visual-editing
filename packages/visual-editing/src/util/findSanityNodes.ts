@@ -177,7 +177,7 @@ export function findSanityNodes(
   return elements
 }
 
-export function getSanityNodeArrayPath(sanityPath: string) {
+export function getSanityNodeArrayPath(sanityPath: string): string {
   const split = sanityPath.split('.')
 
   return split
@@ -185,6 +185,9 @@ export function getSanityNodeArrayPath(sanityPath: string) {
     .join('.')
 }
 
-export function sanityNodesExistInSameArray(sanityNode1: SanityNode, sanityNode2: SanityNode) {
+export function sanityNodesExistInSameArray(
+  sanityNode1: SanityNode,
+  sanityNode2: SanityNode,
+): boolean {
   return getSanityNodeArrayPath(sanityNode1.path) === getSanityNodeArrayPath(sanityNode2.path)
 }
