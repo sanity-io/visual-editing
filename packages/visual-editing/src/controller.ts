@@ -8,7 +8,8 @@ import type {
   OverlayOptions,
   ResolvedElement,
 } from './types'
-import {findSanityNodes} from './util/findSanityNodes'
+import {handleOverlayDrag} from './util/dragAndDrop'
+import {findSanityNodes, isSanityNode, sanityNodesExistInSameArray} from './util/findSanityNodes'
 import {getRect} from './util/getRect'
 
 const isElementNode = (target: EventTarget | null): target is ElementNode => {
@@ -141,6 +142,30 @@ export function createOverlayController({
       mousedown(event) {
         // prevent iframe from taking focus
         event.preventDefault()
+
+        if (event.currentTarget !== hoverStack.at(-1)) return
+
+        const targetSanityData = elementsMap.get(element)?.sanity
+
+        if (!targetSanityData || !isSanityNode(targetSanityData)) return
+
+        const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
+          const elData = elementsMap.get(el)
+
+          if (
+            elData &&
+            isSanityNode(elData.sanity) &&
+            sanityNodesExistInSameArray(targetSanityData, elData.sanity)
+          ) {
+            acc.push(elData)
+          }
+
+          return acc
+        }, [])
+
+        if (group.length <= 1) return
+
+        handleOverlayDrag(group, handler)
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)

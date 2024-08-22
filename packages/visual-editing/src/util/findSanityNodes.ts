@@ -14,7 +14,7 @@ const isTimeElement = (el: ElementNode): el is HTMLTimeElement => el.tagName ===
 const isSvgRootElement = (el: ElementNode): el is SVGSVGElement =>
   el.tagName.toUpperCase() === 'SVG'
 
-function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
+export function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
   return 'path' in node
 }
 
@@ -175,4 +175,19 @@ export function findSanityNodes(
     }
   }
   return elements
+}
+
+export function getSanityNodeArrayPath(sanityPath: string): string {
+  const split = sanityPath.split('.')
+
+  return split
+    .map((p, index) => (index === split.length - 1 ? p.replace(/\[.*?\]/g, '[]') : p))
+    .join('.')
+}
+
+export function sanityNodesExistInSameArray(
+  sanityNode1: SanityNode,
+  sanityNode2: SanityNode,
+): boolean {
+  return getSanityNodeArrayPath(sanityNode1.path) === getSanityNodeArrayPath(sanityNode2.path)
 }
