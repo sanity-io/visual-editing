@@ -55,7 +55,7 @@ export interface UseQueryOptions<QueryResponseResult = unknown> {
    * ```ts
    * const query = `*[_type == "author" && slug.current == $slug][0]`
    * export const getServerSideProps = async ({params}) => {
-   *   const initial = await loadQuery<AuhthorType>(query, params)
+   *   const initial = await loadQuery(query, params)
    *   return { props: { params, initial } }
    * }
    * export default function Page({params, initial}) {
@@ -76,7 +76,7 @@ export interface UseQueryOptionsUndefinedInitial {
    * ```ts
    * const query = `*[_type == "author" && slug.current == $slug][0]`
    * export const getServerSideProps = async ({params}) => {
-   *   const initial = await loadQuery<AuhthorType>(query, params)
+   *   const initial = await loadQuery(query, params)
    *   return { props: { params, initial } }
    * }
    * export default function Page({params, initial}) {
@@ -100,7 +100,7 @@ export interface UseQueryOptionsDefinedInitial<QueryResponseResult = unknown> {
    * ```ts
    * const query = `*[_type == "author" && slug.current == $slug][0]`
    * export const getServerSideProps = async ({params}) => {
-   *   const initial = await loadQuery<AuhthorType>(query, params)
+   *   const initial = await loadQuery(query, params)
    *   return { props: { params, initial } }
    * }
    * export default function Page({params, initial}) {

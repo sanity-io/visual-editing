@@ -178,13 +178,13 @@ Create a server `load` function for our page that will handle fetching data from
 
 ```ts
 // src/routes/[slug]/+page.server.ts
-import {pageQuery, type PageResult} from '$lib/queries'
+import {pageQuery} from '$lib/queries'
 import type {PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async ({params, locals: {loadQuery}}) => {
   const {slug} = params
 
-  const initial = await loadQuery<PageResult>(pageQuery, {slug})
+  const initial = await loadQuery(pageQuery, {slug})
 
   return {initial, params: {slug}}
 }
