@@ -26,6 +26,28 @@ export interface OverlayRect {
   h: number
 }
 
+/** @internal */
+export interface Ray2D {
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+}
+
+/** @internal */
+export interface Point2D {
+  x: number
+  y: number
+}
+
+/** @internal */
+export interface DragInsertPosition {
+  top?: OverlayRect | null
+  left?: OverlayRect | null
+  bottom?: OverlayRect | null
+  right?: OverlayRect | null
+}
+
 /**
  * Base controller dispatched message
  * @typeParam T - Type of message
@@ -88,6 +110,22 @@ export type OverlayMsgElementUpdateRect = OverlayMsgElement<'updateRect'> & {
   rect: OverlayRect
 }
 
+/** @public */
+export type OverlayMsgUpdateDragInsertPosition = Msg<'overlay/updateDragInsertPosition'> & {
+  insertPosition: {
+    top?: {rect: OverlayRect; sanity: SanityNode} | null
+    left?: {rect: OverlayRect; sanity: SanityNode} | null
+    bottom?: {rect: OverlayRect; sanity: SanityNode} | null
+    right?: {rect: OverlayRect; sanity: SanityNode} | null
+  } | null
+}
+
+/** @public */
+export type OverlayMsgUpdateDragCursorPosition = Msg<'overlay/updateDragCursorPosition'> & {
+  x: number
+  y: number
+}
+
 /**
  * Controller dispatched messages
  * @public
@@ -105,6 +143,8 @@ export type OverlayMsg =
   | OverlayMsgElementUnregister
   | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
+  | OverlayMsgUpdateDragInsertPosition
+  | OverlayMsgUpdateDragCursorPosition
 
 /**
  * Callback function used for handling dispatched controller messages
