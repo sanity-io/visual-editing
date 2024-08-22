@@ -87,7 +87,7 @@ const query = `*[_type == "product" && slug.current == $slug][0]`
 export const loader: LoaderFunction = async ({params}) => {
   return json({
     params,
-    initial: await loadQuery<Product>(query, params),
+    initial: await loadQuery(query, params),
   })
 }
 
@@ -98,7 +98,7 @@ export default function ProductPage() {
     throw new Error('No slug, 404?')
   }
 
-  const {data} = useQuery<Product>(query, params, {initial})
+  const {data} = useQuery(query, params, {initial})
 
   // Use `data` in your view, it'll mirror what the loader returns in production mode,
   // while Live Mode it becomes reactive and respons in real-time to your edits in the Presentation tool.
@@ -171,7 +171,7 @@ const query = `*[_type == "product" && slug.current == $slug][0]`
 export const loader: LoaderFunction = async ({params}) => {
   return json({
     params,
-    initial: await loadQuery<Product>(query, params),
+    initial: await loadQuery(query, params),
   })
 }
 

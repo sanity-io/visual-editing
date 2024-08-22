@@ -1,4 +1,4 @@
-import type {QueryParams} from '@sanity/client'
+import type {ClientReturn, QueryParams} from '@sanity/client'
 import type {QueryStore, QueryStoreState} from '@sanity/core-loader'
 import isEqual from 'fast-deep-equal'
 import {useEffect, useMemo, useState, useSyncExternalStore} from 'react'
@@ -12,23 +12,31 @@ export function defineUseQuery({
   studioUrlStore,
 }: Pick<QueryStore, 'createFetcherStore'> & {
   studioUrlStore: ReturnType<typeof defineStudioUrlStore>
-}): <QueryResponseResult, QueryResponseError>(
-  query: string,
+}): <
+  const QueryString extends string,
+  QueryResponseResult extends ClientReturn<QueryString>,
+  QueryResponseError,
+>(
+  query: QueryString,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
 ) => QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute {
   const DEFAULT_PARAMS = {}
-  return <QueryResponseResult, QueryResponseError>(
-    query: string,
+  return <
+    const QueryString extends string,
+    QueryResponseResult extends ClientReturn<QueryString>,
+    QueryResponseError,
+  >(
+    query: QueryString,
     params: QueryParams = DEFAULT_PARAMS,
     options: UseQueryOptions<QueryResponseResult> = {},
   ) => {
+    const $params = useMemo(() => JSON.stringify(params), [params])
+
     const initial = useMemo(
       () => (options.initial ? {perspective: 'published' as const, ...options.initial} : undefined),
       [options.initial],
     )
-    const $params = useMemo(() => JSON.stringify(params), [params])
-
     const [snapshot, setSnapshot] = useState<
       QueryStoreState<QueryResponseResult, QueryResponseError>
     >(() => {
