@@ -1,5 +1,5 @@
 import type {MetaFunction} from '@remix-run/node'
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {
   createController,
   type Controller,
@@ -18,17 +18,12 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  const frameRef = useRef<HTMLIFrameElement>(null)
   const [status, setStatus] = useState('idle')
   const [received, setReceived] = useState<Array<ProtocolMessage<WithoutResponse<NodeMessage>>>>([])
   const [buffered, setBuffered] = useState<Array<WithoutResponse<ControllerMessage>>>([])
 
-  // const [controller, setController] = useState<Channel<NodeMessage, ControllerMessage> | null>(null)
-
-  // const sources = useRef(new Set<MessageEventSource>())
   const [frames, setFrames] = useState(0)
   const frameRefs = useRef<Set<HTMLIFrameElement>>(new Set())
-  // const [frameState, setFrameState] = useState<Set<HTMLIFrameElement>>()
 
   const [controller, setController] = useState<Controller | null>(null)
   const [connection, setConnection] = useState<Connection<NodeMessage, ControllerMessage> | null>(
