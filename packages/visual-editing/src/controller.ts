@@ -165,7 +165,7 @@ export function createOverlayController({
 
         if (group.length <= 1) return
 
-        handleOverlayDrag(group, handler)
+        handleOverlayDrag(event as MouseEvent, group, handler)
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)

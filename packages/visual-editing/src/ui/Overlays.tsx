@@ -16,6 +16,8 @@ import {styled} from 'styled-components'
 
 import type {HistoryAdapter, OverlayEventHandler, VisualEditingChannel} from '../types'
 import {ElementOverlay} from './ElementOverlay'
+import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
+import {OverlayDragPreview} from './OverlayDragPreview'
 import {overlayStateReducer} from './overlayStateReducer'
 import {useController} from './useController'
 
@@ -65,12 +67,15 @@ export const Overlays: FunctionComponent<{
 
   const [status, setStatus] = useState<ChannelStatus>()
 
-  const [{elements, wasMaybeCollapsed, perspective}, dispatch] = useReducer(overlayStateReducer, {
-    elements: [],
-    focusPath: '',
-    wasMaybeCollapsed: false,
-    perspective: 'published',
-  })
+  const [{elements, wasMaybeCollapsed, isDragging, dragInsertPosition, perspective}, dispatch] =
+    useReducer(overlayStateReducer, {
+      elements: [],
+      focusPath: '',
+      wasMaybeCollapsed: false,
+      isDragging: false,
+      dragInsertPosition: null,
+      perspective: 'published',
+    })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -151,6 +156,21 @@ export const Overlays: FunctionComponent<{
     }
   }, [elements, perspective, reportDocuments])
 
+  const updateDragPreviewCustomProps = (
+    rootElement: HTMLElement | null,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+  ) => {
+    if (!rootElement) return
+
+    rootElement.style.setProperty('--drag-preview-x', `${x}px`)
+    rootElement.style.setProperty('--drag-preview-y', `${y - window.scrollY}px`)
+    rootElement.style.setProperty('--drag-preview-w', `${w / 4}px`)
+    rootElement.style.setProperty('--drag-preview-h', `${h / 4}px`)
+  }
+
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
       if (message.type === 'element/click') {
@@ -160,10 +180,23 @@ export const Overlays: FunctionComponent<{
         channel.send('overlay/toggle', {enabled: true})
       } else if (message.type === 'overlay/deactivate') {
         channel.send('overlay/toggle', {enabled: false})
+      } else if (message.type === 'overlay/dragEnd') {
+        // emit custom event
+      } else if (message.type === 'overlay/dragUpdateCursorPosition') {
+        updateDragPreviewCustomProps(
+          rootElement,
+          message.x,
+          message.y,
+          message.targetRect.w,
+          message.targetRect.h,
+        )
+
+        return
       }
+
       dispatch(message)
     },
-    [channel],
+    [channel, rootElement],
   )
 
   const controller = useController(rootElement, overlayEventHandler, !!channel.inFrame)
@@ -276,19 +309,23 @@ export const Overlays: FunctionComponent<{
         ref={setRootElement}
         $zIndex={zIndex}
       >
-        {elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
-          return (
-            <ElementOverlay
-              key={id}
-              rect={rect}
-              focused={focused}
-              hovered={hovered}
-              showActions={!channel.inFrame}
-              sanity={sanity}
-              wasMaybeCollapsed={focused && wasMaybeCollapsed}
-            />
-          )
-        })}
+        {!isDragging &&
+          elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+            return (
+              <ElementOverlay
+                key={id}
+                rect={rect}
+                focused={focused}
+                hovered={hovered}
+                showActions={!channel.inFrame}
+                sanity={sanity}
+                wasMaybeCollapsed={focused && wasMaybeCollapsed}
+              />
+            )
+          })}
+
+        {isDragging && <OverlayDragPreview />}
+        {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
       </Root>
     </ThemeProvider>
   )

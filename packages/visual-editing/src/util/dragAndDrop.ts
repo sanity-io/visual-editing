@@ -1,8 +1,8 @@
 import type {
-  DragInsertPosition,
+  DragInsertPositionRects,
   OverlayElement,
   OverlayEventHandler,
-  OverlayMsgUpdateDragInsertPosition,
+  OverlayMsgDragUpdateInsertPosition,
   OverlayRect,
   Point2D,
   Ray2D,
@@ -218,18 +218,18 @@ function findRectSanityData(rect: OverlayRect, overlayGroup: OverlayElement[]) {
 
 function resolveInsertMsg(
   overlayGroup: OverlayElement[],
-  insertPosition: DragInsertPosition,
+  insertPosition: DragInsertPositionRects,
   flow: string,
-): OverlayMsgUpdateDragInsertPosition {
+): OverlayMsgDragUpdateInsertPosition {
   if (Object.values(insertPosition).every((v) => v === null))
     return {
-      type: 'overlay/updateDragInsertPosition',
+      type: 'overlay/dragUpdateInsertPosition',
       insertPosition: null,
     }
 
   if (flow === 'horizontal') {
     return {
-      type: 'overlay/updateDragInsertPosition',
+      type: 'overlay/dragUpdateInsertPosition',
       insertPosition: {
         left: insertPosition.left
           ? {
@@ -247,7 +247,7 @@ function resolveInsertMsg(
     }
   } else {
     return {
-      type: 'overlay/updateDragInsertPosition',
+      type: 'overlay/dragUpdateInsertPosition',
       insertPosition: {
         top: insertPosition.top
           ? {
@@ -266,37 +266,64 @@ function resolveInsertMsg(
   }
 }
 
-let prevInsertPosition: DragInsertPosition | null = null
+function calcMousePos(e: MouseEvent) {
+  return {
+    x: e.clientX,
+    y: e.clientY + window.scrollY,
+  }
+}
+
+const minDragDelta = 8
 
 export function handleOverlayDrag(
+  mouseEvent: MouseEvent,
   overlayGroup: OverlayElement[],
   handler: OverlayEventHandler,
 ): void {
+  const targetRect = getRect(mouseEvent.currentTarget as Element)
   const rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
   const flow = calcTargetFlow(rects)
 
+  let insertPosition: DragInsertPositionRects | null = null
+
+  const initialMousePos = calcMousePos(mouseEvent)
+
+  let dragSequenceStarted = false
+
   const handleMouseMove = (e: MouseEvent): void => {
-    const mousePos = {
-      x: e.clientX,
-      y: e.clientY + window.scrollY,
+    const mousePos = calcMousePos(e)
+
+    if (Math.abs(pointDist(mousePos, initialMousePos)) < minDragDelta) return
+
+    if (!dragSequenceStarted) {
+      handler({
+        type: 'overlay/dragStart',
+      })
+
+      dragSequenceStarted = true
     }
 
     handler({
-      type: 'overlay/updateDragCursorPosition',
+      type: 'overlay/dragUpdateCursorPosition',
       x: mousePos.x,
       y: mousePos.y,
+      targetRect: targetRect,
     })
 
-    const insertPosition = calcInsertPosition(mousePos, rects, flow)
+    const newInsertPosition = calcInsertPosition(mousePos, rects, flow)
 
-    if (JSON.stringify(insertPosition) !== JSON.stringify(prevInsertPosition)) {
-      prevInsertPosition = insertPosition
+    if (JSON.stringify(insertPosition) !== JSON.stringify(newInsertPosition)) {
+      insertPosition = newInsertPosition
 
       handler(resolveInsertMsg(overlayGroup, insertPosition, flow))
     }
   }
 
   const handleMouseUp = (): void => {
+    handler({
+      type: 'overlay/dragEnd',
+    })
+
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('mouseup', handleMouseUp)
   }
