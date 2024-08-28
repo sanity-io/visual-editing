@@ -1,9 +1,10 @@
+import {v4 as uuid} from 'uuid'
 import type {MetaFunction} from '@remix-run/node'
-import {useCallback, useEffect, useRef, useState} from 'react'
+import {useCallback, useEffect, useMemo, useState} from 'react'
 import {
   createController,
   type Controller,
-  type Connection,
+  type ConnectionInstance,
   type ProtocolMessage,
   type WithoutResponse,
 } from '@sanity/comlink'
@@ -11,6 +12,7 @@ import {Card} from '../components/Card'
 import {Button} from '../components/Button'
 import {MessageStack} from '../components/MessageStack'
 import {MessageControls} from '../components/MessageControls'
+import {Frame} from '../components/Frame'
 import {type ControllerMessage, type NodeMessage} from '../types'
 
 export const meta: MetaFunction = () => {
@@ -18,23 +20,17 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  const [status, setStatus] = useState('idle')
+  const [statusMap, setStatusMap] = useState(new Map<string, string>())
   const [received, setReceived] = useState<Array<ProtocolMessage<WithoutResponse<NodeMessage>>>>([])
-  const [buffered, setBuffered] = useState<Array<WithoutResponse<ControllerMessage>>>([])
+  const [buffer, setBuffer] = useState<Array<WithoutResponse<ControllerMessage>>>([])
 
-  const [frames, setFrames] = useState(0)
-  const frameRefs = useRef<Set<HTMLIFrameElement>>(new Set())
+  const [frames, setFrames] = useState<string[]>([])
 
   const [controller, setController] = useState<Controller | null>(null)
-  const [connection, setConnection] = useState<Connection<NodeMessage, ControllerMessage> | null>(
-    null,
-  )
-
-  useEffect(() => {
-    frameRefs.current.forEach((el) => {
-      controller?.addSource(el.contentWindow!)
-    })
-  }, [controller, frames])
+  const [connection, setConnection] = useState<ConnectionInstance<
+    NodeMessage,
+    ControllerMessage
+  > | null>(null)
 
   useEffect(() => {
     const controller = createController()
@@ -42,29 +38,38 @@ export default function Index() {
 
     const connection = controller.createConnection<NodeMessage, ControllerMessage>({
       connectTo: 'iframe',
-      heartbeat: false,
-      id: 'window',
+      heartbeat: true,
+      name: 'window',
       origin: '*',
-      // sources: sources.current,
     })
 
     setConnection(connection)
 
-    connection.onInternal('_message', (event) => {
+    connection.onInternalEvent('_message', (event) => {
       console.log('_message', event)
       setReceived((prev) => [event.message, ...prev])
     })
 
-    connection.onInternal('_buffer.added', (event) => {
+    connection.onInternalEvent('_buffer.added', (event) => {
       console.log('_buffer.added', event)
-      setBuffered((prev) => [event.message, ...prev])
+      setBuffer((prev) => [event.message, ...prev])
     })
 
-    connection.onInternal('_buffer.flushed', () => {
-      setBuffered([])
+    connection.onInternalEvent('_buffer.flushed', () => {
+      setBuffer([])
     })
 
-    connection.onStatus(setStatus)
+    connection.onStatus((event) => {
+      setStatusMap((prev) => {
+        const next = new Map(prev)
+        if (event.status === 'disconnected') {
+          next.delete(event.channel)
+        } else {
+          next.set(event.channel, event.status)
+        }
+        return next
+      })
+    })
 
     connection.on('node', () => {
       return {message: 'world'}
@@ -84,56 +89,43 @@ export default function Index() {
     [connection],
   )
 
-  // const onConnection = useCallback(() => {
-  //   if (status === 'connected') {
-  //     connection?.disconnect()
-  //   } else if (status === 'idle') {
-  //     connection?.connect()
-  //   }
-  // }, [connection, status])
+  const [tab, setTab] = useState<'buffer' | 'received'>('received')
 
-  // const connectionText = useMemo(() => {
-  //   if (status === 'idle') return 'Connect'
-  //   if (status === 'disconnected') return 'Reconnect'
-  //   if (status === 'connected') return 'Disconnect'
-  //   return 'Connecting...'
-  // }, [status])
-
-  // const connectionDisabled = useMemo(
-  //   () => !['idle', 'connected', 'disconnected'].includes(status),
-  //   [status],
-  // )
+  const status = useMemo(() => {
+    const connected = Array.from(statusMap.values()).filter((status) => status === 'connected')
+    return connected.length ? `${connected.length} connected` : 'idle'
+  }, [statusMap])
 
   return (
     <div className="flex h-screen justify-evenly gap-8 bg-gradient-to-bl from-indigo-800 via-green-100 to-orange-800 font-sans">
-      <div className={`p-8 pr-0 transition-all ${frames > 1 ? 'w-1/3' : 'w-1/2'}`}>
+      <div className={`p-8 pr-0 transition-all ${frames.length > 1 ? 'w-1/3' : 'w-1/2'}`}>
         <Card title="Window" status={status}>
-          <MessageStack messages={received.length ? received : buffered} />
-          <MessageControls prefix="window" status={status} onSend={onSend}>
-            <Button onClick={() => setFrames((curr) => curr + 1)}>Add Frame</Button>
-            {/* <Button onClick={onConnection} disabled={connectionDisabled}>
-              {connectionText}
-            </Button> */}
+          <div className="flex justify-evenly border-y border-gray-300 bg-gray-200 p-1 text-xs">
+            <button
+              className={`w-full rounded p-1 leading-tight ${tab === 'buffer' && 'bg-gray-300'}`}
+              onClick={() => setTab('buffer')}
+            >
+              Buffer ({buffer.length})
+            </button>
+            <button
+              className={`w-full rounded p-1 leading-tight ${tab === 'received' && 'bg-gray-300'}`}
+              onClick={() => setTab('received')}
+            >
+              Received ({received.length})
+            </button>
+          </div>
+          {tab === 'buffer' && <MessageStack messages={buffer} />}
+          {tab === 'received' && <MessageStack messages={received} />}
+          <MessageControls onSend={onSend}>
+            <Button onClick={() => setFrames((curr) => [...curr, uuid()])}>Add Frame</Button>
+            <Button onClick={() => setFrames((curr) => curr.toSpliced(-1))}>Remove Frame</Button>
           </MessageControls>
         </Card>
       </div>
 
-      <div className={`flex flex-col px-8 pl-0 ${frames > 1 ? 'w-2/3' : 'w-1/2'}`}>
+      <div className={`flex flex-col px-8 pl-0 ${frames.length > 1 ? 'w-2/3' : 'w-1/2'}`}>
         <div className="-m-2 flex flex-grow flex-wrap overflow-y-scroll py-8">
-          {Array.from({length: frames}).map((_, i) => (
-            <div key={i} className="min-h-[20rem] w-1/2 flex-shrink-0 flex-grow p-2">
-              <iframe
-                src="/frame"
-                className="m-0 h-full w-full rounded-lg p-0"
-                ref={(el) => {
-                  if (el) {
-                    frameRefs.current.add(el)
-                  }
-                }}
-                title={i.toString()}
-              />
-            </div>
-          ))}
+          {controller && frames.map((id) => <Frame key={id} controller={controller} />)}
         </div>
       </div>
     </div>

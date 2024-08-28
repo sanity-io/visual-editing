@@ -12,7 +12,7 @@ export const listenInputFromContext =
     T extends {
       domain: string
       connectTo: string
-      id: string
+      name: string
       target: MessageEventSource | undefined
     },
   >({
@@ -28,7 +28,7 @@ export const listenInputFromContext =
       matches,
       responseType,
       target: context.target,
-      to: context.id,
+      to: context.name,
       type,
     }
   }

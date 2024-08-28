@@ -100,14 +100,14 @@ export const createRequestMachine = <
           responseTo: context.responseTo,
         }
       }),
-      'on fail': ({context, self}) => {
+      'on fail': sendParent(({context, self}) => {
         // eslint-disable-next-line no-console
         console.warn(
           `Received no response to message '${context.type}' on client '${context.from}' (ID: '${context.id}').`,
         )
         context.resolvable?.reject(new Error('No response received'))
         return {type: 'request.failed', requestId: self.id}
-      },
+      }),
     },
     guards: {
       expectsResponse: ({context}) => context.expectResponse,

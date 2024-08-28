@@ -83,6 +83,14 @@ export interface MessageEmitEvent<T extends Message> {
 /**
  * @public
  */
+export type InternalEmitEvent<R extends Message, S extends Message> =
+  | BufferAddedEmitEvent<S>
+  | BufferFlushedEmitEvent<R>
+  | MessageEmitEvent<R>
+
+/**
+ * @public
+ */
 export type ProtocolMessage<T extends Message = Message> = {
   id: string
   connectionId: string

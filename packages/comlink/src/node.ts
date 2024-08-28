@@ -35,7 +35,7 @@ import type {HeartbeatMessage, Message, ProtocolMessage} from './types'
  * @public
  */
 export interface NodeInput {
-  id: string
+  name: string
   connectTo: string
   domain?: string
 }
@@ -82,7 +82,7 @@ export const createNodeMachine = <
         connectionId: string | null
         connectTo: string
         domain: string
-        id: string
+        name: string
         origin: string | null
         requests: Array<RequestActorRef<S>>
         target: MessageEventSource | undefined
@@ -135,7 +135,7 @@ export const createNodeMachine = <
                 data: request.data,
                 domain: context.domain!,
                 expectResponse: request.expectResponse,
-                from: context.id,
+                from: context.name,
                 origin: context.origin!,
                 resolvable: request.resolvable,
                 responseTo: request.responseTo,
@@ -250,7 +250,7 @@ export const createNodeMachine = <
       connectionId: null,
       connectTo: input.connectTo,
       domain: input.domain ?? DOMAIN,
-      id: input.id,
+      name: input.name,
       origin: null,
       requests: [],
       target: undefined,

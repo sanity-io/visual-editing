@@ -7,8 +7,8 @@ export {
 } from './channel'
 export {MSG_HEARTBEAT, MSG_RESPONSE} from './constants'
 export {
-  type Connection,
   type ConnectionInput,
+  type ConnectionInstance,
   type Controller,
   createController,
 } from './controller'
@@ -19,6 +19,7 @@ export type {
   BufferFlushedEmitEvent,
   HeartbeatEmitEvent,
   HeartbeatMessage,
+  InternalEmitEvent,
   ListenInput,
   Message,
   MessageData,

@@ -3,12 +3,10 @@ import {Button} from './Button'
 
 export const MessageControls: FunctionComponent<
   PropsWithChildren<{
-    prefix: string
-    status: string
     onSend: (message: string) => void
   }>
 > = (props) => {
-  const {onSend, status, children} = props
+  const {onSend, children} = props
 
   const [msgMessage, setMsgMessage] = useState('')
 
@@ -31,10 +29,10 @@ export const MessageControls: FunctionComponent<
               onChange={(e) => setMsgMessage(e.target.value)}
             />
           </div>
+          <Button onClick={onClickSend} disabled={!msgMessage}>
+            &rarr;
+          </Button>
         </div>
-        <Button onClick={onClickSend} disabled={!msgMessage}>
-          {status === 'connected' ? 'Send' : 'Buffer'} Message
-        </Button>
         {children}
       </div>
     </div>

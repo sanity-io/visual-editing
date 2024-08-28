@@ -10,7 +10,7 @@ export const Card: FunctionComponent<
 
   const dotClasses = [
     'h-2 w-2 rounded-full',
-    status === 'connected'
+    status.includes('connected')
       ? 'bg-green-500'
       : status === 'idle'
         ? 'bg-gray-500'

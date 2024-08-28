@@ -46,6 +46,8 @@ export type Channel<R extends Message, S extends Message> = {
   actor: ChannelActor<R, S>
   connect: () => void
   disconnect: () => void
+  id: string
+  name: string
   machine: ReturnType<typeof createChannelMachine<R, S>>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
@@ -53,9 +55,10 @@ export type Channel<R extends Message, S extends Message> = {
   ) => () => void
   onStatus: (handler: (status: string) => void) => () => void
   post: (data: WithoutResponse<S>) => void
-  setSource: (source: MessageEventSource) => void
+  setTarget: (target: MessageEventSource) => void
   start: () => () => void
   stop: () => void
+  target: MessageEventSource | undefined
 }
 
 /**
@@ -65,7 +68,8 @@ export interface ChannelInput {
   connectTo: string
   domain?: string
   heartbeat?: boolean
-  id: string
+  name: string
+  id?: string
   origin: string
   target?: MessageEventSource
 }
@@ -107,6 +111,7 @@ export const createChannelMachine = <
         domain: string
         heartbeat: boolean
         id: string
+        name: string
         origin: string
         requests: Array<RequestActorRef<S>>
         target: MessageEventSource | undefined
@@ -130,8 +135,8 @@ export const createChannelMachine = <
             responseTo: string | undefined
           }
         | {type: 'request'; data: RequestData<S> | RequestData<S>[]}
-        | {type: 'source.set'; source: MessageEventSource}
         | {type: 'syn'}
+        | {type: 'target.set'; target: MessageEventSource}
       input: ChannelInput
     },
     actors: {
@@ -168,7 +173,7 @@ export const createChannelMachine = <
                 data: request.data,
                 domain: context.domain,
                 expectResponse: request.expectResponse,
-                from: context.id,
+                from: context.name,
                 origin: context.origin,
                 responseTo: request.responseTo,
                 sources: context.target!,
@@ -254,34 +259,35 @@ export const createChannelMachine = <
         type: 'request',
         data: {type: MSG_HANDSHAKE_SYN},
       }),
-      'set source': assign({
+      'set target': assign({
         target: ({event}) => {
-          assertEvent(event, 'source.set')
-          return event.source
+          assertEvent(event, 'target.set')
+          return event.target
         },
       }),
     },
     guards: {
-      'has source': ({context}) => !!context.target,
+      'has target': ({context}) => !!context.target,
       'should send heartbeats': ({context}) => context.heartbeat,
     },
   }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QGMAWBDAdpsAbAxAE5gCOArnAC4B0sZyycsA2gAwC6ioADgPawBLSgN6YuIAB6IAbACYAnNVYBGAKyr5Admkq5mgCwAaEAE9Ey1gA5q+1QGZld1nc2XLyzSoC+X42iw4BMTkVNQAZugCuJBsnEggfILCouJSCNJ2qtSyqq7Kso4WWsZmCPk+fhjYeNQCENH4yKI4yJSx4olCImLxaQWy1G6yrqqylqz6mdLSJYh249Qu8vqsBrmjqhUg-tW4tfVg+IltHB38XSm9iLJ2dtQeypY6q-PymZazCMOK+rJ6nq4AZZNFsdoFqFUILAMABrASYKD4WAmTDteKdZI9UBpZSTaiaOyTTSqVisVT6TQeD6mcwKTRKTSyViyWQUnS46SgqrgyHQ9BwhFEUgUWAnOI8c6Y1LmHT4v7qTTLeTyVSWeSffKk6jSR4quzyaTyBTySxcgI1Xmw+GI45oiVJbrSsq5aiqjROZyG-TSamlZQWfT3aSqyzkuRus27CFYKFWwUAWyY6Bg1GIjAEADcYqd0ZLHVcEHZDUow7ZMpMFKyNTkBhZLL9yb8tPpIzyY3yBYiIAJYE1qq07Qk85dsXNi2TvWXyXZK0YaWUKawbPoPDlDUa5C3fNtuTU+y1KJAjvwxWcHSPJIhlXd9EbHv75GppNpPm9lNl5pSG7c3CDt2C92aMBWiPYIRVPXNzyxS8EANQNbE8P4MnGNxfUQSxCXxUNVU-BDHlbQD+0PCAhVgPhMFgMBBwxfNR1g9xXX9TwJjJeQJmUT4CWsW5WXsW91lvAi9n3YDiPwRNYFgZMwFTYCwEzbNxSHKCnTeRQjQNYF6xZdlPmkFdBkVGcHGUQ0XD-SpzWEoCQJI7texsiD7QuaC0lyDUnmse8Z3GYkWSE6gRNsiEwHQQhKAAI1Cmg0GAzt8Go4dXMQNZ7kpIy1QcFdq2LZYPGWHiMPmAL7KCsSwKoRKVILSZrFZAofQUfIWU0Dz9JsVw-n0J5-R1EqezKo9bRzZypRqzJ7hUclnE6ix7A1bRrGZElGR1Zlfh8bdMF4CA4HEADcDPFynTnP1H2oDc-lWXIMnmU1-13PY6miI6xrotx7kffVQ0cbRcjsT55iXYE3lsN1fi6gLLX5a1XtomDRg1b7XRyVg2JNYYmoCwaIDhi83LGLC1UVVlpkZdV52VaRtUfetvRnJl1GxxzIBCsLIuivHkoQG6ia0I1vWfBQNTUellFpycDCBuxmaI1nUFC8KovQGKFeQTsuadTc+ZJwXyZyrzH2JQkdBWYZZYPeXFY5lXaDATBuwRTWCwNAZllGe81FJVr53yfRA0NR5SSNW5Rn6hy5dxyDjoLJklw0n03BXOQjY1A0sjfW5bmfYFVU2rwgA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGMAWBDAdpsAbAxLAPYCuATsmAHSxgAuA2gAwC6ioADkbAJZ09FM7EAA9EAdnFMqAJgCs4gBwA2RTMVqAzNoA0IAJ6IZTaQE4mymQBYrc7TYCM4qwF8XetFhwEyYAI4kcHQ0JMiUsLDMbEggXLz8gsJiCM6msppMVuYyznKKTnqGCA4WVLaaDhmmTpma+W4eGNh4+L4BQVQAZug8uJBRwnF8AkIxyeJycmXiOUxODlbKGVaFiA4yDSCezbhUPBB9+MiCOMiMrIPcw4lja3MyVMpWFnLWS6Z1DqspJVTiDio6qZ5DIKqZNttvHsDmB8HFztFOFcEqNQMlFBU-gpFCYZDJTFZFM5vsomGlxMpJnMbMZ6u4tk0oU0ILAMABrHiYKCEfSYAYxIYopJrDLiKiaOQOZTSuTS0lPb6yh4UyaKOSLSUS1z0yF4KjM1noDlc1r+QKwBGXeIjYXFTTWcVWOpWBwfJ1S76LZTi9Yu7Q45TAykQxl6g3sznc+H8pHWm5okUyByyJgVFSEmxO76aQNUNUfcSmKQLJwbHWh3bho2R-AAWzgsHQMCovkoPAAbv0LgLkTbbsVMmkNOo7HjM4pPeYqHN1UTTGpKSqQ14w1gWRGTRAeLBjs0zjHYr346I1oSqK6S9VTE8mIpr98AbLHkTCcoHA51XjweWV7td6c6EgOFuEtHs41RE8EDkJgHkmDV7UsRRbGUb5TDyR5rDVJCJjyTRlx2Kh-zAM4gLac1QNja4IOSKxxE0KhJTQ+072UYtpW+dNz3+f4YOxD4HHwqEiJIiBTVgLhMFoA9BT7BMECyaQFCsUEcnnJZJk0b4KXJAEll9HIiUEvVhMA0T6wiJtqFbMAOy7RFD3A20bEUKhTGBV1r1dRYnBQgxTzxBilA-YEpCYf5tUaX9CJOYjTPwLcdxi-du0ooV+xKdZHmeSk3k0D58gfJNvVJKUqlsPFpSMv8ktM-UwHQMg6AAI3q4I0GI41uWko9qMQe0HjqHIKTqBCYMK6pxXUEtJiLKVlCq6K91q1B6salr0GCWhMC3E0yI6bpejsq0qNtDKHhvHLFjyz5Cspc8ZyeQtaJzOQFoSkzSLNIJusc9LMm9NR8nyedvImB81SmDNlIpKQZEqn8CPemqgOjFKHJOv6nWfCY30qUkcwfCY0lTSowsJSQ3zwhGoSRpbPpMn6MbkmZirc6xnDVQsFnB0oAWcCkshmPEy3pTAiAgOBhF1XBjrSuS8m+dQBrkAt1WgwlZSpyKCP2PpZdkyCiQeAl3IJeQWJWPyfmTJMVFqUECRghaq06-Xj2SX0pjfGZXiQkw5hJJ5ZF0i9M3fBaPogN3eoHXyigysUwpxCY7zyTWI+RiA6oa5rWuj071QfJwxWxW9LGgosFAzums5WnP1ralbkFdsCmcg4wZEKjRAvyd9lMpeHtaEzPs7W1qaDAbbI3z-t1WTTQnXed8woUL4rfWO6k7JJhoNdMm3u3SOZ7ks6speXL8rX+O0O9VXaLVIbKjcNwgA */
     id: 'channel',
     context: ({input}) => ({
+      id: input.id || `${input.name}-${uuid()}`,
       buffer: [],
       connectionId: `cnx-${uuid()}`,
       connectTo: input.connectTo,
       domain: input.domain ?? DOMAIN,
       heartbeat: input.heartbeat ?? false,
-      id: input.id,
+      name: input.name,
       origin: input.origin,
       requests: [],
       target: input.target,
     }),
     on: {
-      'source.set': {
-        actions: 'set source',
+      'target.set': {
+        actions: 'set target',
       },
       'request.success': {
         actions: 'remove request',
@@ -296,7 +302,7 @@ export const createChannelMachine = <
         on: {
           connect: {
             target: 'handshaking',
-            guard: 'has source',
+            guard: 'has target',
           },
           post: {
             actions: 'buffer message',
@@ -383,6 +389,11 @@ export const createChannelMachine = <
                 },
               },
               sending: {
+                on: {
+                  'request.failed': {
+                    target: '#disconnected',
+                  },
+                },
                 invoke: {
                   src: 'sendBackAtInterval',
                   id: 'sendHeartbeat',
@@ -398,6 +409,7 @@ export const createChannelMachine = <
         },
       },
       disconnected: {
+        id: 'disconnected',
         entry: 'send disconnect',
         on: {
           request: {
@@ -405,6 +417,10 @@ export const createChannelMachine = <
           },
           post: {
             actions: 'buffer message',
+          },
+          connect: {
+            target: 'handshaking',
+            guard: 'has target',
           },
         },
       },
@@ -422,8 +438,9 @@ export const createChannel = <R extends Message, S extends Message>(
 ): Channel<R, S> => {
   const machine = createChannelMachine<R, S>()
 
+  const id = input.id || `${input.name}-${uuid()}`
   const actor = createActor(machine, {
-    input,
+    input: {...input, id},
   })
 
   const on = <T extends R['type'], U extends Extract<R, {type: T}>>(
@@ -468,8 +485,8 @@ export const createChannel = <R extends Message, S extends Message>(
     return unsubscribe
   }
 
-  const setSource = (source: MessageEventSource) => {
-    actor.send({type: 'source.set', source})
+  const setTarget = (target: MessageEventSource) => {
+    actor.send({type: 'target.set', target})
   }
 
   const post = (data: WithoutResponse<S>) => {
@@ -489,12 +506,17 @@ export const createChannel = <R extends Message, S extends Message>(
     actor,
     connect,
     disconnect,
+    id,
+    name: input.name,
     machine,
     on,
     onStatus,
     post,
-    setSource,
+    setTarget,
     start,
     stop,
+    get target() {
+      return actor.getSnapshot().context.target
+    },
   }
 }

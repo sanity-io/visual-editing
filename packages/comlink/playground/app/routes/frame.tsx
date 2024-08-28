@@ -16,7 +16,7 @@ export default function Frame() {
 
   useEffect(() => {
     const node = createNode<ControllerMessage, NodeMessage>({
-      id: 'iframe',
+      name: 'iframe',
       connectTo: 'window',
     })
 
@@ -35,10 +35,6 @@ export default function Frame() {
     })
 
     node.onStatus(setStatus)
-
-    node.on('controller', (event) => {
-      console.log('controller', event)
-    })
 
     return node.start()
   }, [])
@@ -59,7 +55,7 @@ export default function Frame() {
     <div className="h-screen">
       <Card title="iFrame" status={status}>
         <MessageStack messages={received.length ? received : buffered} />
-        <MessageControls prefix="iframe" status={status} onSend={onSend} />
+        <MessageControls onSend={onSend} />
       </Card>
     </div>
   )
