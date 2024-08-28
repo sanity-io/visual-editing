@@ -1,11 +1,8 @@
 export {createOverlayController} from './controller'
-export {
-  type DocumentStoreState,
-  useOptimisticStateSelector,
-  useOptimisticStateStore,
-} from './ui/optimistic-state/optimisticState'
 export type {
   DisableVisualEditing,
+  DragEndEvent,
+  DragInsertPosition,
   ElementFocusedState,
   ElementState,
   HistoryAdapter,
@@ -19,6 +16,10 @@ export type {
   OverlayMsgActivate,
   OverlayMsgBlur,
   OverlayMsgDeactivate,
+  OverlayMsgDragEnd,
+  OverlayMsgDragStart,
+  OverlayMsgDragUpdateCursorPosition,
+  OverlayMsgDragUpdateInsertPosition,
   OverlayMsgElement,
   OverlayMsgElementActivate,
   OverlayMsgElementClick,
@@ -30,8 +31,6 @@ export type {
   OverlayMsgElementUnregister,
   OverlayMsgElementUpdate,
   OverlayMsgElementUpdateRect,
-  OverlayMsgUpdateDragCursorPosition,
-  OverlayMsgUpdateDragInsertPosition,
   OverlayOptions,
   OverlayRect,
   SanityNode,
@@ -40,6 +39,11 @@ export type {
   VisualEditingOverlayComponent,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
+export {
+  type DocumentStoreState,
+  useOptimisticStateSelector,
+  useOptimisticStateStore,
+} from './ui/optimistic-state/optimisticState'
 export {
   type CreateDataAttribute,
   createDataAttribute,

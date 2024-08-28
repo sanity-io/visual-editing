@@ -17,10 +17,10 @@ export function Page(props: {data: WrappedValue<PageData>}) {
   const sections = useOptimisticStateSelector(
     {id: `drafts.${data?._id}`, path: 'sections'},
     data.sections || [],
-    (sections, optimisticSections: WrappedValue<PageSection>[]) =>
-      optimisticSections?.map(
-        (section) => sections?.find((s) => s._key === section._key) || section,
-      ) || sections,
+    (sections = [], optimisticSections: WrappedValue<PageSection>[] = []) =>
+      optimisticSections
+        .filter(Boolean)
+        .map((section) => sections.find((s) => s._key === section._key) || section) || sections,
   )
 
   return (

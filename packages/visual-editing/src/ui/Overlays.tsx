@@ -27,9 +27,12 @@ import {
 import {styled} from 'styled-components'
 
 import type {HistoryAdapter, OverlayEventHandler, VisualEditingOptions} from '../types'
+import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
 import {OptimisticStateProvider} from './optimistic-state/OptimisticStateProvider'
+import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
+import {OverlayDragPreview} from './OverlayDragPreview'
 import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
@@ -91,17 +94,18 @@ export const Overlays: FunctionComponent<{
 
   const [status, setStatus] = useState<ChannelStatus>()
 
-  const [{contextMenu, elements, wasMaybeCollapsed, perspective}, dispatch] = useReducer(
-    overlayStateReducer,
-    {
-      contextMenu: null,
-      elements: [],
-      focusPath: '',
-      perspective: 'published',
-      wasMaybeCollapsed: false,
-    },
-  )
-
+  const [
+    {contextMenu, elements, wasMaybeCollapsed, isDragging, dragInsertPosition, perspective},
+    dispatch,
+  ] = useReducer(overlayStateReducer, {
+    contextMenu: null,
+    elements: [],
+    focusPath: '',
+    wasMaybeCollapsed: false,
+    isDragging: false,
+    dragInsertPosition: null,
+    perspective: 'published',
+  })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -208,6 +212,23 @@ export const Overlays: FunctionComponent<{
     }
   }, [uniqueElements, perspective, reportDocuments])
 
+  const updateDragPreviewCustomProps = (
+    rootElement: HTMLElement | null,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+  ) => {
+    if (!rootElement) return
+
+    rootElement.style.setProperty('--drag-preview-x', `${x}px`)
+    rootElement.style.setProperty('--drag-preview-y', `${y - window.scrollY}px`)
+    rootElement.style.setProperty('--drag-preview-w', `${w / 4}px`)
+    rootElement.style.setProperty('--drag-preview-h', `${h / 4}px`)
+  }
+
+  const {dispatchDragEndEvent} = useDragEndEvents()
+
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
       if (message.type === 'element/click') {
@@ -217,10 +238,24 @@ export const Overlays: FunctionComponent<{
         channel.post('toggle', {enabled: true})
       } else if (message.type === 'overlay/deactivate') {
         channel.post('toggle', {enabled: false})
+      } else if (message.type === 'overlay/dragEnd') {
+        const {insertPosition, target} = message
+        dispatchDragEndEvent({insertPosition, target})
+      } else if (message.type === 'overlay/dragUpdateCursorPosition') {
+        updateDragPreviewCustomProps(
+          rootElement,
+          message.x,
+          message.y,
+          message.targetRect.w,
+          message.targetRect.h,
+        )
+
+        return
       }
+
       dispatch(message)
     },
-    [channel],
+    [channel, rootElement],
   )
 
   const controller = useController(rootElement, overlayEventHandler, !!channel.inFrame)
@@ -348,23 +383,28 @@ export const Overlays: FunctionComponent<{
                 >
                   {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                   <Elements>
-                    {elementsToRender.map(({focused, hovered, id, rect, sanity}) => {
-                      return (
-                        <ElementOverlay
-                          key={id}
-                          // @todo Config provider?
-                          components={components}
-                          dispatch={overlayEventHandler}
-                          focused={focused}
-                          hovered={hovered}
-                          id={id}
-                          rect={rect}
-                          node={sanity}
-                          showActions={!channel.inFrame}
-                          wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                        />
-                      )
-                    })}
+                    {!isDragging &&
+                      elementsToRender.map(({focused, hovered, id, rect, sanity}) => {
+                        return (
+                          <ElementOverlay
+                            key={id}
+                            // @todo Config provider?
+                            components={components}
+                            dispatch={overlayEventHandler}
+                            focused={focused}
+                            hovered={hovered}
+                            id={id}
+                            rect={rect}
+                            node={sanity}
+                            showActions={!channel.inFrame}
+                            wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                          />
+                        )
+                      })}
+                    {isDragging && <OverlayDragPreview />}
+                    {isDragging && (
+                      <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                    )}
                   </Elements>
                 </Root>
               </OptimisticStateProvider>
