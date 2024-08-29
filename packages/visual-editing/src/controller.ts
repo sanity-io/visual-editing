@@ -149,13 +149,17 @@ export function createOverlayController({
 
         if (!targetSanityData || !isSanityNode(targetSanityData)) return
 
+        const closestDragGroup = element.closest('[data-sanity-drag-group]')
+
         const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
           const elData = elementsMap.get(el)
 
           if (
             elData &&
             isSanityNode(elData.sanity) &&
-            sanityNodesExistInSameArray(targetSanityData, elData.sanity)
+            sanityNodesExistInSameArray(targetSanityData, elData.sanity) &&
+            closestDragGroup &&
+            closestDragGroup.contains(el)
           ) {
             acc.push(elData)
           }

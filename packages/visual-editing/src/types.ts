@@ -150,7 +150,9 @@ export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
 }
 
 /** @public */
-export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'>
+export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & {
+  insertPosition: DragInsertPosition
+}
 
 /**
  * Controller dispatched messages

@@ -18,6 +18,7 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
         border: '1px solid light-dark(#ffffff, #383d51)',
         colorScheme: 'light dark',
         padding: '16px',
+        borderRadius: '8px',
       }}
     >
       <div style={{position: 'relative', width: '100%', height: '100%'}}>

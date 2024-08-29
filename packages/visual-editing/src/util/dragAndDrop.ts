@@ -1,9 +1,9 @@
 import type {
+  DragInsertPosition,
   DragInsertPositionRects,
   ElementNode,
   OverlayElement,
   OverlayEventHandler,
-  OverlayMsgDragUpdateInsertPosition,
   OverlayRect,
   Point2D,
   Ray2D,
@@ -221,52 +221,42 @@ function findRectSanityData(rect: OverlayRect, overlayGroup: OverlayElement[]) {
     ?.sanity as SanityNode
 }
 
-function resolveInsertMsg(
+function resolveInsertPosition(
   overlayGroup: OverlayElement[],
   insertPosition: DragInsertPositionRects,
   flow: string,
-): OverlayMsgDragUpdateInsertPosition {
-  if (Object.values(insertPosition).every((v) => v === null))
-    return {
-      type: 'overlay/dragUpdateInsertPosition',
-      insertPosition: null,
-    }
+): DragInsertPosition {
+  if (Object.values(insertPosition).every((v) => v === null)) return null
 
   if (flow === 'horizontal') {
     return {
-      type: 'overlay/dragUpdateInsertPosition',
-      insertPosition: {
-        left: insertPosition.left
-          ? {
-              rect: insertPosition.left,
-              sanity: findRectSanityData(insertPosition.left, overlayGroup),
-            }
-          : null,
-        right: insertPosition.right
-          ? {
-              rect: insertPosition.right,
-              sanity: findRectSanityData(insertPosition.right, overlayGroup),
-            }
-          : null,
-      },
+      left: insertPosition.left
+        ? {
+            rect: insertPosition.left,
+            sanity: findRectSanityData(insertPosition.left, overlayGroup),
+          }
+        : null,
+      right: insertPosition.right
+        ? {
+            rect: insertPosition.right,
+            sanity: findRectSanityData(insertPosition.right, overlayGroup),
+          }
+        : null,
     }
   } else {
     return {
-      type: 'overlay/dragUpdateInsertPosition',
-      insertPosition: {
-        top: insertPosition.top
-          ? {
-              rect: insertPosition.top,
-              sanity: findRectSanityData(insertPosition.top, overlayGroup),
-            }
-          : null,
-        bottom: insertPosition.bottom
-          ? {
-              rect: insertPosition.bottom,
-              sanity: findRectSanityData(insertPosition.bottom, overlayGroup),
-            }
-          : null,
-      },
+      top: insertPosition.top
+        ? {
+            rect: insertPosition.top,
+            sanity: findRectSanityData(insertPosition.top, overlayGroup),
+          }
+        : null,
+      bottom: insertPosition.bottom
+        ? {
+            rect: insertPosition.bottom,
+            sanity: findRectSanityData(insertPosition.bottom, overlayGroup),
+          }
+        : null,
     }
   }
 }
@@ -287,7 +277,7 @@ function buildPreviewSkeleton(e: MouseEvent, element: ElementNode) {
 
   const childRects = children.map((child: Element) => {
     // offset to account for stroke in rendered rects
-    const rect = offsetRect(getRect(child), 1)
+    const rect = offsetRect(getRect(child), 2)
 
     return {
       x: rect.x - bounds.x,
@@ -307,7 +297,7 @@ function buildPreviewSkeleton(e: MouseEvent, element: ElementNode) {
   }
 }
 
-const minDragDelta = 8
+const minDragDelta = 4
 
 export function handleOverlayDrag(
   mouseEvent: MouseEvent,
@@ -351,13 +341,19 @@ export function handleOverlayDrag(
     if (JSON.stringify(insertPosition) !== JSON.stringify(newInsertPosition)) {
       insertPosition = newInsertPosition
 
-      handler(resolveInsertMsg(overlayGroup, insertPosition, flow))
+      handler({
+        type: 'overlay/dragUpdateInsertPosition',
+        insertPosition: resolveInsertPosition(overlayGroup, insertPosition, flow),
+      })
     }
   }
 
   const handleMouseUp = (): void => {
     handler({
       type: 'overlay/dragEnd',
+      insertPosition: insertPosition
+        ? resolveInsertPosition(overlayGroup, insertPosition, flow)
+        : null,
     })
 
     window.removeEventListener('mousemove', handleMouseMove)
