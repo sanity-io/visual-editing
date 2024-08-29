@@ -56,6 +56,21 @@ export type DragInsertPosition = {
   right?: {rect: OverlayRect; sanity: SanityNode} | null
 } | null
 
+/** @public */
+export type DragSkeleton = {
+  w: number
+  h: number
+  offsetX: number
+  offsetY: number
+  childRects: {
+    x: number
+    y: number
+    w: number
+    h: number
+    tagName: string
+  }[]
+}
+
 /**
  * Base controller dispatched message
  * @typeParam T - Type of message
@@ -127,11 +142,12 @@ export type OverlayMsgDragUpdateInsertPosition = Msg<'overlay/dragUpdateInsertPo
 export type OverlayMsgDragUpdateCursorPosition = Msg<'overlay/dragUpdateCursorPosition'> & {
   x: number
   y: number
-  targetRect: OverlayRect
 }
 
 /** @public */
-export type OverlayMsgDragStart = Msg<'overlay/dragStart'>
+export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
+  skeleton: DragSkeleton
+}
 
 /** @public */
 export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'>

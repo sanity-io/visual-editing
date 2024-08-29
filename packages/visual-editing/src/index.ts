@@ -2,6 +2,7 @@ export {createOverlayController} from './controller'
 export type {
   DisableVisualEditing,
   DragInsertPosition,
+  DragSkeleton,
   ElementFocusedState,
   ElementState,
   HistoryAdapter,

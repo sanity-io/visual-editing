@@ -1,7 +1,7 @@
 import type {PresentationMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 
-import type {DragInsertPosition, ElementState, OverlayMsg} from '../types'
+import type {DragInsertPosition, DragSkeleton, ElementState, OverlayMsg} from '../types'
 import {elementsReducer} from './elementsReducer'
 
 export interface OverlayState {
@@ -11,6 +11,7 @@ export interface OverlayState {
   perspective: ClientPerspective
   isDragging: boolean
   dragInsertPosition: DragInsertPosition
+  dragSkeleton: DragSkeleton | null
 }
 
 export function overlayStateReducer(
@@ -22,6 +23,7 @@ export function overlayStateReducer(
   let perspective = state.perspective
   let isDragging = state.isDragging
   let dragInsertPosition = state.dragInsertPosition
+  let dragSkeleton = state.dragSkeleton
 
   if (message.type === 'presentation/focus') {
     const prevFocusPath = state.focusPath
@@ -43,7 +45,10 @@ export function overlayStateReducer(
 
   if (message.type === 'overlay/dragStart') {
     isDragging = true
-  } else if (message.type === 'overlay/dragEnd') {
+    dragSkeleton = message.skeleton
+  }
+
+  if (message.type === 'overlay/dragEnd') {
     isDragging = false
   }
 
@@ -51,6 +56,7 @@ export function overlayStateReducer(
     ...state,
     elements: elementsReducer(state.elements, message),
     dragInsertPosition,
+    dragSkeleton,
     isDragging,
     focusPath,
     perspective,

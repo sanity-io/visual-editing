@@ -67,15 +67,18 @@ export const Overlays: FunctionComponent<{
 
   const [status, setStatus] = useState<ChannelStatus>()
 
-  const [{elements, wasMaybeCollapsed, isDragging, dragInsertPosition, perspective}, dispatch] =
-    useReducer(overlayStateReducer, {
-      elements: [],
-      focusPath: '',
-      wasMaybeCollapsed: false,
-      isDragging: false,
-      dragInsertPosition: null,
-      perspective: 'published',
-    })
+  const [
+    {elements, wasMaybeCollapsed, isDragging, dragInsertPosition, dragSkeleton, perspective},
+    dispatch,
+  ] = useReducer(overlayStateReducer, {
+    elements: [],
+    focusPath: '',
+    wasMaybeCollapsed: false,
+    isDragging: false,
+    dragInsertPosition: null,
+    dragSkeleton: null,
+    perspective: 'published',
+  })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
@@ -156,19 +159,11 @@ export const Overlays: FunctionComponent<{
     }
   }, [elements, perspective, reportDocuments])
 
-  const updateDragPreviewCustomProps = (
-    rootElement: HTMLElement | null,
-    x: number,
-    y: number,
-    w: number,
-    h: number,
-  ) => {
+  const updateDragPreviewCustomProps = (rootElement: HTMLElement | null, x: number, y: number) => {
     if (!rootElement) return
 
     rootElement.style.setProperty('--drag-preview-x', `${x}px`)
     rootElement.style.setProperty('--drag-preview-y', `${y - window.scrollY}px`)
-    rootElement.style.setProperty('--drag-preview-w', `${w / 4}px`)
-    rootElement.style.setProperty('--drag-preview-h', `${h / 4}px`)
   }
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
@@ -180,16 +175,12 @@ export const Overlays: FunctionComponent<{
         channel.send('overlay/toggle', {enabled: true})
       } else if (message.type === 'overlay/deactivate') {
         channel.send('overlay/toggle', {enabled: false})
+      } else if (message.type === 'overlay/dragStart') {
+        document.body.style.cursor = 'ns-resize'
       } else if (message.type === 'overlay/dragEnd') {
-        // emit custom event
+        document.body.style.cursor = 'auto'
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
-        updateDragPreviewCustomProps(
-          rootElement,
-          message.x,
-          message.y,
-          message.targetRect.w,
-          message.targetRect.h,
-        )
+        updateDragPreviewCustomProps(rootElement, message.x, message.y)
 
         return
       }
@@ -324,7 +315,7 @@ export const Overlays: FunctionComponent<{
             )
           })}
 
-        {isDragging && <OverlayDragPreview />}
+        {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
         {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
       </Root>
     </ThemeProvider>

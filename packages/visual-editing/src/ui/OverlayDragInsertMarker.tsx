@@ -54,7 +54,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
       width = Math.min(bottom.rect.w, top.rect.w)
     } else if (bottom && !top) {
       x = bottom.rect.x
-      y = bottom.rect.y - 4 - 4
+      y = bottom.rect.y - 4
       width = bottom.rect.w
       height = 4
     } else if (top && !bottom) {
@@ -72,7 +72,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
         transform: `translate(${x}px, ${y}px)`,
         width,
         height,
-        background: '#596ffc',
+        background: 'color-mix(in srgb, #556bfc 75%, transparent)',
         pointerEvents: 'none',
       }}
     ></div>

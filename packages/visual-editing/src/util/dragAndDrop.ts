@@ -1,5 +1,6 @@
 import type {
   DragInsertPositionRects,
+  ElementNode,
   OverlayElement,
   OverlayEventHandler,
   OverlayMsgDragUpdateInsertPosition,
@@ -141,13 +142,17 @@ function findClosestIntersection(ray: Ray2D, targets: OverlayRect[]) {
   }
 
   // Offset rects to ensure raycasting works when siblings touch
-  if (targets.some((t) => pointInBounds(rayOrigin, offsetRect(t, 8)))) return null
+  if (targets.some((t) => pointInBounds(rayOrigin, offsetRect(t, Math.min(t.w, t.h) / 10))))
+    return null
 
   let closestIntersection
   let closestRect
 
   for (const target of targets) {
-    const intersections = rayRectIntersections(ray, offsetRect(target, 8))
+    const intersections = rayRectIntersections(
+      ray,
+      offsetRect(target, Math.min(target.w, target.h) / 10),
+    )
 
     if (intersections) {
       const firstIntersection = intersections[0]
@@ -273,14 +278,43 @@ function calcMousePos(e: MouseEvent) {
   }
 }
 
+function buildPreviewSkeleton(e: MouseEvent, element: ElementNode) {
+  const bounds = getRect(element)
+  const children = [
+    ...element.querySelectorAll(':where(h1, h2, h3, h4, p, a, img, span):not(:has(*))'),
+  ]
+  const mousePos = calcMousePos(e)
+
+  const childRects = children.map((child: Element) => {
+    // offset to account for stroke in rendered rects
+    const rect = offsetRect(getRect(child), 1)
+
+    return {
+      x: rect.x - bounds.x,
+      y: rect.y - bounds.y,
+      w: rect.w,
+      h: rect.h,
+      tagName: child.tagName,
+    }
+  })
+
+  return {
+    offsetX: bounds.x - mousePos.x,
+    offsetY: bounds.y - mousePos.y,
+    w: bounds.w,
+    h: bounds.h,
+    childRects,
+  }
+}
+
 const minDragDelta = 8
 
 export function handleOverlayDrag(
   mouseEvent: MouseEvent,
+  element: ElementNode,
   overlayGroup: OverlayElement[],
   handler: OverlayEventHandler,
 ): void {
-  const targetRect = getRect(mouseEvent.currentTarget as Element)
   const rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
   const flow = calcTargetFlow(rects)
 
@@ -296,8 +330,11 @@ export function handleOverlayDrag(
     if (Math.abs(pointDist(mousePos, initialMousePos)) < minDragDelta) return
 
     if (!dragSequenceStarted) {
+      const skeleton = buildPreviewSkeleton(e, element)
+
       handler({
         type: 'overlay/dragStart',
+        skeleton,
       })
 
       dragSequenceStarted = true
@@ -307,7 +344,6 @@ export function handleOverlayDrag(
       type: 'overlay/dragUpdateCursorPosition',
       x: mousePos.x,
       y: mousePos.y,
-      targetRect: targetRect,
     })
 
     const newInsertPosition = calcInsertPosition(mousePos, rects, flow)
