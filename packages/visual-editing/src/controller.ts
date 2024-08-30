@@ -145,21 +145,23 @@ export function createOverlayController({
 
         if (event.currentTarget !== hoverStack.at(-1)) return
 
+        const targetIsDraggable = element.getAttribute('data-sanity-draggable')
+
+        if (!targetIsDraggable) return
+
         const targetSanityData = elementsMap.get(element)?.sanity
 
         if (!targetSanityData || !isSanityNode(targetSanityData)) return
 
-        const closestDragGroup = element.closest('[data-sanity-drag-group]')
-
         const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
           const elData = elementsMap.get(el)
+          const elIsDraggable = el.getAttribute('data-sanity-draggable')
 
           if (
             elData &&
+            elIsDraggable &&
             isSanityNode(elData.sanity) &&
-            sanityNodesExistInSameArray(targetSanityData, elData.sanity) &&
-            closestDragGroup &&
-            closestDragGroup.contains(el)
+            sanityNodesExistInSameArray(targetSanityData, elData.sanity)
           ) {
             acc.push(elData)
           }

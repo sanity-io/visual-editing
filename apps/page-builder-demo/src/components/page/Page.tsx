@@ -19,7 +19,6 @@ export function Page(props: {data: WrappedValue<PageData>}) {
         type: data._type,
         path: 'sections',
       })}
-      data-sanity-drag-group="sections"
     >
       {isArray(data.sections) &&
         data.sections.map((section) => {

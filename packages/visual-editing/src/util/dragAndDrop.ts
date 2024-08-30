@@ -271,7 +271,7 @@ function calcMousePos(e: MouseEvent) {
 function buildPreviewSkeleton(e: MouseEvent, element: ElementNode) {
   const bounds = getRect(element)
   const children = [
-    ...element.querySelectorAll(':where(h1, h2, h3, h4, p, a, img, span):not(:has(*))'),
+    ...element.querySelectorAll(':where(h1, h2, h3, h4, p, a, img, span, button):not(:has(*))'),
   ]
   const mousePos = calcMousePos(e)
 

@@ -3,6 +3,7 @@ import type {FunctionComponent} from 'react'
 import type {DragSkeleton} from '../types'
 
 export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = ({skeleton}) => {
+  if (skeleton.w < 48 || skeleton.h < 48) return ''
   return (
     <div
       style={{
@@ -10,15 +11,13 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
         background: 'light-dark(#f6f6f8, #13141b)',
         pointerEvents: 'none',
         transformOrigin: `${skeleton.offsetX}px ${skeleton.offsetY}px`,
-        transform: `translate(calc(var(--drag-preview-x)), calc(var(--drag-preview-y))) scale(0.5)`,
+        transform: `translate(calc(var(--drag-preview-x)), calc(var(--drag-preview-y)))`,
         width: `${skeleton.w}px`,
         height: `${skeleton.h}px`,
         zIndex: 1,
         backdropFilter: 'blur(8px)',
         border: '1px solid light-dark(#ffffff, #383d51)',
         colorScheme: 'light dark',
-        padding: '16px',
-        borderRadius: '8px',
       }}
     >
       <div style={{position: 'relative', width: '100%', height: '100%'}}>

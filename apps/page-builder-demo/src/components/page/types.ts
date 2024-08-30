@@ -47,6 +47,7 @@ export interface FeatureHighlightSectionData {
     media?: SanityImageValue
   }
   style?: SectionStyleData
+  ctas: Array<{title: string; href: string; _key: string}>
 }
 
 export interface PageSectionData {

@@ -22,24 +22,29 @@ export function FeaturedProducts(props: {
       })}
       className="overflow-hidden"
       variant={section.style?.variant?.value as any}
+      data-sanity-draggable
     >
       <div className="flex w-full flex-nowrap gap-2 overflow-auto p-4 sm:p-5 md:p-6">
         <h1 className="w-96 flex-none p-5 text-2xl font-bold">
           <sanity.span>{section.headline}</sanity.span>
         </h1>
 
-        {section.products?.map?.((product) => (
-          <Link
-            className="block w-96 flex-none border border-white p-5 hover:border-gray-100 dark:border-black dark:hover:border-gray-800"
-            href={`/product/${product.slug?.current?.value}`}
-            key={product._key}
-          >
-            <h2>
-              <sanity.span>{product.title}</sanity.span>
-            </h2>
-            <div>{product.media?.asset && <Image alt="" value={unwrapData(product.media)} />}</div>
-          </Link>
-        ))}
+        <div>
+          {section.products?.map?.((product) => (
+            <Link
+              className="block w-96 flex-none border border-white p-5 hover:border-gray-100 dark:border-black dark:hover:border-gray-800"
+              href={`/product/${product.slug?.current?.value}`}
+              key={product._key}
+            >
+              <h2>
+                <sanity.span>{product.title}</sanity.span>
+              </h2>
+              <div>
+                {product.media?.asset && <Image alt="" value={unwrapData(product.media)} />}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </PageSection>
   )

@@ -22,6 +22,7 @@ export function FeatureHighlight(props: {
       })}
       className="p-4 sm:p-5 md:p-6"
       variant={section.style?.variant?.value as any}
+      data-sanity-draggable
     >
       <div className="-m-4 sm:-m-5 md:-m-6">
         {section.image?.asset && (
@@ -44,6 +45,14 @@ export function FeatureHighlight(props: {
             <sanity.span>{section.description}</sanity.span>
           </p>
         )}
+        <div>
+          {section.ctas &&
+            section.ctas.map((cta, i) => (
+              <sanity.button key={i} data-sanity-draggable>
+                {cta.title}
+              </sanity.button>
+            ))}
+        </div>
       </div>
 
       {section.product && (

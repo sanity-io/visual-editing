@@ -3,7 +3,7 @@ import type {FunctionComponent} from 'react'
 import type {DragInsertPosition} from '../types'
 
 const markerThickness = 2
-const markerGap = 4
+const markerGap = 0
 
 function lerp(v0: number, v1: number, t: number) {
   return v0 * (1 - t) + v1 * t
@@ -75,7 +75,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
         transform: `translate(${x}px, ${y}px)`,
         width,
         height,
-        background: 'color-mix(in srgb, #556bfc 75%, transparent)',
+        background: 'color-mix(in srgb, #556bfc 95%, transparent)',
         pointerEvents: 'none',
       }}
     ></div>
