@@ -1,0 +1,110 @@
+{
+  "name": "@sanity/comlink",
+  "version": "0.0.1",
+  "keywords": [
+    "sanity.io",
+    "postmessage"
+  ],
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/comlink#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/visual-editing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
+    "directory": "packages/comlink"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "pkg build --strict --check --clean",
+    "dev": "pkg build --strict",
+    "lint": "eslint .",
+    "prepack": "turbo run build",
+    "test": "vitest --pass-with-no-tests --typecheck"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort",
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "no-console": "error",
+      "no-warning-comments": [
+        "warn",
+        {
+          "location": "start",
+          "terms": [
+            "todo",
+            "@todo",
+            "fixme"
+          ]
+        }
+      ],
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/member-delimiter-style": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "prettier/prettier": "warn",
+      "simple-import-sort/exports": "warn",
+      "simple-import-sort/imports": "warn"
+    },
+    "root": true
+  },
+  "dependencies": {
+    "rxjs": "^7.8.1",
+    "uuid": "^10.0.0",
+    "xstate": "^5.17.4"
+  },
+  "devDependencies": {
+    "@repo/package.config": "workspace:*",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "typescript": "5.4.5",
+    "vitest": "^2.0.5"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
