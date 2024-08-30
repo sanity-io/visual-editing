@@ -177,7 +177,7 @@ export function findSanityNodes(
   return elements
 }
 
-export function getSanityNodeArrayPath(path: string): string {
+export function getSanityNodeClosestArrayPath(path: string): string {
   const lastDotIndex = path.lastIndexOf('.')
   const lastPathItem = path.substring(lastDotIndex, path.length)
 
@@ -198,5 +198,8 @@ export function sanityNodesExistInSameArray(
   sanityNode1: SanityNode,
   sanityNode2: SanityNode,
 ): boolean {
-  return getSanityNodeArrayPath(sanityNode1.path) === getSanityNodeArrayPath(sanityNode2.path)
+  return (
+    getSanityNodeClosestArrayPath(sanityNode1.path) ===
+    getSanityNodeClosestArrayPath(sanityNode2.path)
+  )
 }
