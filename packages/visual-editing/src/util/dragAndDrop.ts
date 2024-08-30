@@ -325,6 +325,7 @@ export function handleOverlayDrag(
       handler({
         type: 'overlay/dragStart',
         skeleton,
+        flow,
       })
 
       dragSequenceStarted = true

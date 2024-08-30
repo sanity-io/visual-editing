@@ -147,6 +147,7 @@ export type OverlayMsgDragUpdateCursorPosition = Msg<'overlay/dragUpdateCursorPo
 /** @public */
 export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
   skeleton: DragSkeleton
+  flow: 'horizontal' | 'vertical'
 }
 
 /** @public */

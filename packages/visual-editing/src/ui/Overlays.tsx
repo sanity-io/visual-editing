@@ -176,7 +176,11 @@ export const Overlays: FunctionComponent<{
       } else if (message.type === 'overlay/deactivate') {
         channel.send('overlay/toggle', {enabled: false})
       } else if (message.type === 'overlay/dragStart') {
-        document.body.style.cursor = 'ns-resize'
+        if (message.flow === 'vertical') {
+          document.body.style.cursor = 'ns-resize'
+        } else {
+          document.body.style.cursor = 'ew-resize'
+        }
       } else if (message.type === 'overlay/dragEnd') {
         document.body.style.cursor = 'auto'
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
