@@ -45,10 +45,14 @@ export function FeatureHighlight(props: {
             <sanity.span>{section.description}</sanity.span>
           </p>
         )}
-        <div>
+        <div className="flex gap-3">
           {section.ctas &&
             section.ctas.map((cta, i) => (
-              <sanity.button key={i} data-sanity-draggable>
+              <sanity.button
+                className="mt-5 border border-current p-3"
+                key={i}
+                data-sanity-draggable
+              >
                 {cta.title}
               </sanity.button>
             ))}

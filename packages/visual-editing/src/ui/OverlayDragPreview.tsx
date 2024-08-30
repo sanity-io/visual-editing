@@ -1,6 +1,69 @@
 import type {FunctionComponent} from 'react'
+import {styled} from 'styled-components'
 
 import type {DragSkeleton} from '../types'
+
+const Root = styled.div<{
+  $width: number
+  $height: number
+  $offsetX: number
+  $offsetY: number
+  $scaleFactor: number
+}>`
+  --drag-preview-bg: #f6f6f8;
+  --drag-preview-border: #ffffff;
+  --drag-preview-opacity: 0.875;
+  --drag-preview-skeleton-fill: #e3e4e8;
+  --drag-preview-skeleton-stroke: #ffffff;
+  --drag-preview-handle-fill: #727892;
+
+  @media (prefers-color-scheme: dark) {
+    --drag-preview-bg: #13141b;
+    --drag-preview-border: #383d51;
+    --drag-preview-skeleton-fill: #1b1d27;
+    --drag-preview-skeleton-stroke: #383d51;
+    --drag-preview-handle-fill: #515870;
+  }
+
+  position: fixed;
+  background: var(--drag-preview-bg);
+  pointer-events: none;
+  transform-origin: 0 0;
+  transform: ${({$offsetX, $offsetY, $scaleFactor}) =>
+    `translate(calc(var(--drag-preview-x) + ${$offsetX}px), calc(var(--drag-preview-y) + ${$offsetY}px)) scale(${$scaleFactor})`};
+  width: ${({$width}) => `${$width}px`};
+  height: ${({$height}) => `${$height}px`};
+  z-index: 9999999;
+  border: 1px solid var(--drag-preview-border);
+  opacity: var(--drag-preview-opacity);
+
+  .drag-preview-content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    container-type: inline-size;
+  }
+
+  .drag-preview-skeleton {
+    position: absolute;
+    inset: 0;
+
+    rect {
+      fill: var(--drag-preview-skeleton-fill);
+      stroke: var(--drag-preview-skeleton-stroke);
+      opacity: var(--drag-preview-opacity);
+      stroke-width: 1;
+    }
+  }
+
+  .drag-preview-handle {
+    position: absolute;
+    top: 4cqmin;
+    left: 4cqmin;
+    width: 6cqmin;
+    fill: var(--drag-preview-handle-fill);
+  }
+`
 
 export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = ({skeleton}) => {
   const minSkeletonWidth = 100
@@ -16,56 +79,27 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
   const offsetY = skeleton.offsetY * scaleFactor
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        background: 'light-dark(#f6f6f8, #13141b)',
-        pointerEvents: 'none',
-        transformOrigin: `0 0`,
-        transform: `translate(calc(var(--drag-preview-x) + ${offsetX}px), calc(var(--drag-preview-y) + ${offsetY}px)) scale(${scaleFactor})`,
-        width: `${skeleton.w}px`,
-        height: `${skeleton.h}px`,
-        zIndex: 1,
-        backdropFilter: 'blur(8px)',
-        border: '1px solid light-dark(#ffffff, #383d51)',
-        colorScheme: 'light dark',
-      }}
+    <Root
+      $width={skeleton.w}
+      $height={skeleton.h}
+      $offsetX={offsetX}
+      $offsetY={offsetY}
+      $scaleFactor={scaleFactor}
     >
-      <div
-        style={{position: 'relative', width: '100%', height: '100%', containerType: 'inline-size'}}
-      >
+      <div className="drag-preview-content-wrapper">
         {showSkeleton && (
           <>
-            <svg style={{position: 'absolute'}} viewBox={`0 0 ${skeleton.w} ${skeleton.h}`}>
+            <svg className="drag-preview-skeleton" viewBox={`0 0 ${skeleton.w} ${skeleton.h}`}>
               {skeleton.childRects.map((r, i) => (
-                <rect
-                  key={i}
-                  x={r.x}
-                  y={r.y}
-                  width={r.w}
-                  height={r.h}
-                  fill="light-dark(#e3e4e8, #1b1d27)"
-                  stroke="light-dark(#ffffff, #383d51)"
-                  strokeWidth="1"
-                ></rect>
+                <rect key={i} x={r.x} y={r.y} width={r.w} height={r.h}></rect>
               ))}
             </svg>
-            <svg
-              style={{position: 'absolute', top: '4cqmin', left: '4cqmin', width: '6cqmin'}}
-              viewBox="0 0 25 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M9.5 8C10.3284 8 11 7.32843 11 6.5C11 5.67157 10.3284 5 9.5 5C8.67157 5 8 5.67157 8 6.5C8 7.32843 8.67157 8 9.5 8ZM9.5 14C10.3284 14 11 13.3284 11 12.5C11 11.6716 10.3284 11 9.5 11C8.67157 11 8 11.6716 8 12.5C8 13.3284 8.67157 14 9.5 14ZM11 18.5C11 19.3284 10.3284 20 9.5 20C8.67157 20 8 19.3284 8 18.5C8 17.6716 8.67157 17 9.5 17C10.3284 17 11 17.6716 11 18.5ZM15.5 8C16.3284 8 17 7.32843 17 6.5C17 5.67157 16.3284 5 15.5 5C14.6716 5 14 5.67157 14 6.5C14 7.32843 14.6716 8 15.5 8ZM17 12.5C17 13.3284 16.3284 14 15.5 14C14.6716 14 14 13.3284 14 12.5C14 11.6716 14.6716 11 15.5 11C16.3284 11 17 11.6716 17 12.5ZM15.5 20C16.3284 20 17 19.3284 17 18.5C17 17.6716 16.3284 17 15.5 17C14.6716 17 14 17.6716 14 18.5C14 19.3284 14.6716 20 15.5 20Z"
-                fill="light-dark(#727892, #515870)"
-              />
+            <svg className="drag-preview-handle" viewBox="0 0 25 25">
+              <path d="M9.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM9.5 14a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM11 18.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM17 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15.5 20a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
             </svg>
           </>
         )}
       </div>
-    </div>
+    </Root>
   )
 }
