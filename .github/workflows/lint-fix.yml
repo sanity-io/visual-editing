@@ -25,7 +25,7 @@ jobs:
           node-version: lts/*
       - run: pnpm install --ignore-scripts
       - run: git restore pnpm-lock.yaml
-      - run: pnpm lint:fix
+      - run: pnpm build && pnpm lint:fix
       - uses: actions/create-github-app-token@v1
         id: generate-token
         with:
