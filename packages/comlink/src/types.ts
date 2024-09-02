@@ -39,14 +39,14 @@ export type WithoutResponse<T extends Message> = Omit<T, 'response'>
  * @public
  */
 export interface ListenInput {
-  domain: string
-  from: string
-  to: string
-  type: string | string[]
-  matches: boolean
   count?: number
+  domain: string
+  exclude: string[]
+  from: string
+  include: string[]
   responseType: string
   target: MessageEventSource | undefined
+  to: string
 }
 
 /**

@@ -269,7 +269,10 @@ export const createNodeMachine = <
         invoke: {
           src: 'listen',
           id: 'listenForHandshakeSyn',
-          input: listenInputFromContext(MSG_HANDSHAKE_SYN, {count: 1}),
+          input: listenInputFromContext({
+            include: MSG_HANDSHAKE_SYN,
+            count: 1,
+          }),
           onDone: {
             target: 'handshaking',
             guard: 'hasSource',
@@ -290,13 +293,17 @@ export const createNodeMachine = <
           {
             src: 'listen',
             id: 'listenForHandshakeAck',
-            input: listenInputFromContext(MSG_HANDSHAKE_ACK, {count: 1}),
+            input: listenInputFromContext({
+              include: MSG_HANDSHAKE_ACK,
+              count: 1,
+            }),
             onDone: 'connected',
           },
           {
             src: 'listen',
             id: 'listenForDisconnect',
-            input: listenInputFromContext([MSG_DISCONNECT], {
+            input: listenInputFromContext({
+              include: [MSG_DISCONNECT],
               count: 1,
               responseType: 'disconnect',
             }),
@@ -320,17 +327,23 @@ export const createNodeMachine = <
           {
             src: 'listen',
             id: 'listenForMessages',
-            input: listenInputFromContext([MSG_RESPONSE, MSG_HEARTBEAT], {matches: false}),
+            input: listenInputFromContext({
+              exclude: [MSG_RESPONSE, MSG_HEARTBEAT],
+            }),
           },
           {
             src: 'listen',
             id: 'listenForHeartbeats',
-            input: listenInputFromContext([MSG_HEARTBEAT], {responseType: 'heartbeat.received'}),
+            input: listenInputFromContext({
+              include: [MSG_HEARTBEAT],
+              responseType: 'heartbeat.received',
+            }),
           },
           {
             src: 'listen',
             id: 'listenForDisconnect',
-            input: listenInputFromContext([MSG_DISCONNECT], {
+            input: listenInputFromContext({
+              include: [MSG_DISCONNECT],
               count: 1,
               responseType: 'disconnect',
             }),

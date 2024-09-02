@@ -323,7 +323,8 @@ export const createChannelMachine = <
           {
             src: 'listen',
             input: (input) =>
-              listenInputFromContext(MSG_HANDSHAKE_SYN_ACK, {
+              listenInputFromContext({
+                include: MSG_HANDSHAKE_SYN_ACK,
                 count: 1,
               })(input),
             /* Below would maybe be more readable than transitioning to
@@ -358,7 +359,9 @@ export const createChannelMachine = <
         entry: 'flush buffer',
         invoke: {
           src: 'listen',
-          input: listenInputFromContext([MSG_RESPONSE, MSG_HEARTBEAT], {matches: false}),
+          input: listenInputFromContext({
+            exclude: [MSG_RESPONSE, MSG_HEARTBEAT],
+          }),
         },
         on: {
           'post': {
