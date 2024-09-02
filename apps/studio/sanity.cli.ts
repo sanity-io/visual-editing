@@ -5,6 +5,11 @@ export default defineCliConfig({
   vite: (config) => {
     return {
       ...config,
+      define: {
+        ...config.define,
+        // Speed up styled-components in dev mode: https://github.com/sanity-io/sanity/pull/7440
+        'process.env.SC_DISABLE_SPEEDY': JSON.stringify('false'),
+      },
       resolve: {
         ...config.resolve,
         alias: {
