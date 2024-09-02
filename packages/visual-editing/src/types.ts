@@ -41,11 +41,34 @@ export interface Point2D {
 }
 
 /** @internal */
-export interface DragInsertPosition {
+export interface DragInsertPositionRects {
   top?: OverlayRect | null
   left?: OverlayRect | null
   bottom?: OverlayRect | null
   right?: OverlayRect | null
+}
+
+/** @public */
+export type DragInsertPosition = {
+  top?: {rect: OverlayRect; sanity: SanityNode} | null
+  left?: {rect: OverlayRect; sanity: SanityNode} | null
+  bottom?: {rect: OverlayRect; sanity: SanityNode} | null
+  right?: {rect: OverlayRect; sanity: SanityNode} | null
+} | null
+
+/** @public */
+export type DragSkeleton = {
+  w: number
+  h: number
+  offsetX: number
+  offsetY: number
+  childRects: {
+    x: number
+    y: number
+    w: number
+    h: number
+    tagName: string
+  }[]
 }
 
 /**
@@ -111,19 +134,25 @@ export type OverlayMsgElementUpdateRect = OverlayMsgElement<'updateRect'> & {
 }
 
 /** @public */
-export type OverlayMsgUpdateDragInsertPosition = Msg<'overlay/updateDragInsertPosition'> & {
-  insertPosition: {
-    top?: {rect: OverlayRect; sanity: SanityNode} | null
-    left?: {rect: OverlayRect; sanity: SanityNode} | null
-    bottom?: {rect: OverlayRect; sanity: SanityNode} | null
-    right?: {rect: OverlayRect; sanity: SanityNode} | null
-  } | null
+export type OverlayMsgDragUpdateInsertPosition = Msg<'overlay/dragUpdateInsertPosition'> & {
+  insertPosition: DragInsertPosition | null
 }
 
 /** @public */
-export type OverlayMsgUpdateDragCursorPosition = Msg<'overlay/updateDragCursorPosition'> & {
+export type OverlayMsgDragUpdateCursorPosition = Msg<'overlay/dragUpdateCursorPosition'> & {
   x: number
   y: number
+}
+
+/** @public */
+export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
+  skeleton: DragSkeleton
+  flow: 'horizontal' | 'vertical'
+}
+
+/** @public */
+export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & {
+  insertPosition: DragInsertPosition
 }
 
 /**
@@ -143,8 +172,10 @@ export type OverlayMsg =
   | OverlayMsgElementUnregister
   | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
-  | OverlayMsgUpdateDragInsertPosition
-  | OverlayMsgUpdateDragCursorPosition
+  | OverlayMsgDragStart
+  | OverlayMsgDragEnd
+  | OverlayMsgDragUpdateInsertPosition
+  | OverlayMsgDragUpdateCursorPosition
 
 /**
  * Callback function used for handling dispatched controller messages

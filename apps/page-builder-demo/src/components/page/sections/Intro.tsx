@@ -20,6 +20,7 @@ export function Intro(props: {
       })}
       className="p-4 sm:p-5 md:p-6"
       variant={section.style?.variant?.value as any}
+      data-sanity-draggable
     >
       {section.headline ? (
         <h1 className="text-2xl font-extrabold sm:text-3xl md:text-4xl">

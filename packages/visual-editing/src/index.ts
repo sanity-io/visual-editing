@@ -1,6 +1,8 @@
 export {createOverlayController} from './controller'
 export type {
   DisableVisualEditing,
+  DragInsertPosition,
+  DragSkeleton,
   ElementFocusedState,
   ElementState,
   HistoryAdapter,
@@ -14,6 +16,10 @@ export type {
   OverlayMsgActivate,
   OverlayMsgBlur,
   OverlayMsgDeactivate,
+  OverlayMsgDragEnd,
+  OverlayMsgDragStart,
+  OverlayMsgDragUpdateCursorPosition,
+  OverlayMsgDragUpdateInsertPosition,
   OverlayMsgElement,
   OverlayMsgElementActivate,
   OverlayMsgElementClick,
@@ -24,8 +30,6 @@ export type {
   OverlayMsgElementUnregister,
   OverlayMsgElementUpdate,
   OverlayMsgElementUpdateRect,
-  OverlayMsgUpdateDragCursorPosition,
-  OverlayMsgUpdateDragInsertPosition,
   OverlayOptions,
   OverlayRect,
   SanityNode,

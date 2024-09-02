@@ -19,6 +19,7 @@ export function Section(props: {
         type: page._type,
         path: `sections[_key=="${section._key}"]`,
       })}
+      data-sanity-draggable
     >
       {section.headline ? (
         <h1 className="text-3xl font-extrabold sm:text-5xl md:text-7xl">

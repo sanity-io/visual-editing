@@ -20,6 +20,7 @@ export function Hero(props: {
       })}
       className="px-4 py-6 text-center sm:px-5 sm:py-7 md:px-7 md:py-9"
       variant={section.style?.variant?.value as any}
+      data-sanity-draggable
     >
       {section.headline ? (
         <h1 className="text-3xl font-extrabold sm:text-5xl md:text-7xl">
