@@ -10,7 +10,7 @@ import {
   setup,
 } from 'xstate'
 
-import {listenActor, listenInputFromContext} from './common'
+import {createListenLogic, listenInputFromContext} from './common'
 import {
   DOMAIN,
   MSG_DISCONNECT,
@@ -43,9 +43,14 @@ export interface NodeInput {
 /**
  * @public
  */
-export type NodeActor<R extends Message, U extends Message> = ActorRefFrom<
-  ReturnType<typeof createNodeMachine<R, U>>
+export type NodeActorLogic<R extends Message, S extends Message> = ReturnType<
+  typeof createNodeMachine<R, S>
 >
+
+/**
+ * @public
+ */
+export type NodeActor<R extends Message, S extends Message> = ActorRefFrom<NodeActorLogic<R, S>>
 
 /**
  * @public
@@ -55,7 +60,7 @@ export type Node<R extends Message, S extends Message> = {
   fetch: <const T extends S['type'], U extends WithoutResponse<S>>(
     data: U,
   ) => S extends U ? (S['type'] extends T ? S['response'] : never) : never
-  machine: ReturnType<typeof createNodeMachine<R, S>>
+  machine: NodeActorLogic<R, S>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => U['response'],
@@ -104,7 +109,7 @@ export const createNodeMachine = <
     },
     actors: {
       requestMachine: createRequestMachine<S>(),
-      listen: listenActor,
+      listen: createListenLogic(),
     },
     actions: {
       'buffer message': enqueueActions(({enqueue}) => {
@@ -375,9 +380,10 @@ export const createNodeMachine = <
 /**
  * @public
  */
-export const createNode = <R extends Message, S extends Message>(input: NodeInput): Node<R, S> => {
-  const machine = createNodeMachine<R, S>()
-
+export const createNode = <R extends Message, S extends Message>(
+  input: NodeInput,
+  machine: NodeActorLogic<R, S> = createNodeMachine<R, S>(),
+): Node<R, S> => {
   const actor = createActor(machine, {
     input,
   })

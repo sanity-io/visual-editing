@@ -11,7 +11,7 @@ import {
   setup,
 } from 'xstate'
 
-import {listenActor, listenInputFromContext} from './common'
+import {createListenLogic, listenInputFromContext} from './common'
 import {
   DOMAIN,
   HANDSHAKE_INTERVAL,
@@ -141,7 +141,7 @@ export const createChannelMachine = <
     },
     actors: {
       requestMachine: createRequestMachine<S>(),
-      listen: listenActor,
+      listen: createListenLogic(),
       sendBackAtInterval,
     },
     actions: {

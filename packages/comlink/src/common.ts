@@ -70,16 +70,21 @@ export const messageEvents$ = defer(() =>
   fromEvent<MessageEvent<ProtocolMessage>>(window, 'message'),
 )
 
-export const listenActor = fromEventObservable(({input}: {input: ListenInput}) => {
-  return messageEvents$.pipe(
-    filter(listenFilter(input)),
-    map(eventToMessage(input.responseType)),
-    input.count
-      ? pipe(
-          bufferCount(input.count),
-          concatMap((arr) => arr),
-          take(input.count),
-        )
-      : pipe(),
-  )
-})
+export const createListenLogic = (
+  compatMap?: (event: MessageEvent<ProtocolMessage>) => MessageEvent<ProtocolMessage>,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+) =>
+  fromEventObservable(({input}: {input: ListenInput}) => {
+    return messageEvents$.pipe(
+      compatMap ? map(compatMap) : pipe(),
+      filter(listenFilter(input)),
+      map(eventToMessage(input.responseType)),
+      input.count
+        ? pipe(
+            bufferCount(input.count),
+            concatMap((arr) => arr),
+            take(input.count),
+          )
+        : pipe(),
+    )
+  })
