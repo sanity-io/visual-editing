@@ -130,7 +130,7 @@ export const createRequestMachine = <
         resolvable: input.resolvable,
         response: null,
         responseTo: input.responseTo,
-        sources: 'size' in input.sources ? input.sources : new Set([input.sources]),
+        sources: input.sources instanceof Set ? input.sources : new Set([input.sources]),
         to: input.to,
         type: input.type,
       }
