@@ -1,3 +1,6 @@
+> [!WARNING]
+> Drag and Drop is an experimental feature. This documentation serves as a rough guide, and it's contents are subject to change.
+
 # Sanity Presentation Drag and Drop Pseudo-docs
 
 To create an draggable group of UI elements:
