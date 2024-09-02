@@ -102,7 +102,7 @@ export type OverlayMsgElementContextMenu =
         x: number
         y: number
       }
-      sanity: SanityNode | SanityStegaNode
+      sanity: SanityNode
     })
 
 /** @public */

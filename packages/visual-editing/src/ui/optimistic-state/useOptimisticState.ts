@@ -7,17 +7,18 @@ import {getDraftId} from '../../util/documents'
 import {useOptimisticStateStore} from './optimisticState'
 import {OptimisticStateContext} from './OptimisticStateContext'
 
+export type OptimisticStateMutate = (
+  operation: Operation,
+  options: {
+    commit?: boolean
+    id?: string
+    path?: string | string[]
+    type?: string
+  },
+) => void
 interface OptimisticState<T = unknown> {
   commit: () => void
-  mutate: (
-    operation: Operation,
-    options: {
-      commit?: boolean
-      id?: string
-      path?: string | string[]
-      type?: string
-    },
-  ) => void
+  mutate: OptimisticStateMutate
   value: T | undefined
 }
 
@@ -45,18 +46,10 @@ export function useOptimisticState<T>(sanity: SanityNode): OptimisticState<T> {
         path = sanity.path,
       } = options
       const _path = Array.isArray(path) ? path : [path]
-      try {
-        const mutations = [
-          createIfNotExists({_id: id, _type: type}),
-          patch(id, at(_path, operation)),
-        ]
-        datastore.mutate(mutations)
-        if (commit) {
-          datastore.submit()
-        }
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn('Mutation failed', e)
+      const mutations = [createIfNotExists({_id: id, _type: type}), patch(id, at(_path, operation))]
+      datastore.mutate(mutations)
+      if (commit) {
+        datastore.submit()
       }
     },
     [datastore, draftId, sanity.path, sanity.type],

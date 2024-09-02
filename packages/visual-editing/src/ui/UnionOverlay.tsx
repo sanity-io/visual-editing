@@ -1,13 +1,13 @@
 import type {SanityNode, SchemaNode, SchemaUnionNode} from '@repo/visual-editing-helpers'
 import {AddIcon} from '@sanity/icons'
-import {insert} from '@sanity/mutate'
 import type {SchemaType} from '@sanity/types'
 import {Button, Flex} from '@sanity/ui'
 import {type FunctionComponent, type MouseEvent, useCallback, useRef, useState} from 'react'
 import styled, {type CSSObject} from 'styled-components'
 
+import {getArrayInsertMutations} from '../util/mutations'
 import {InsertMenu} from './InsertMenu'
-import {useOptimisticState} from './optimistic-state/useOptimisticState'
+import {useOptimisticMutate} from './optimistic-state/useOptimisticMutate'
 
 const AddButton = styled(Button)<{$position?: 'top' | 'bottom'}>((props: {
   $position?: 'top' | 'bottom'
@@ -43,7 +43,7 @@ const HoverArea: FunctionComponent<{
   node: SchemaUnionNode
   onAddUnion?: (position: 'top' | 'bottom', name: string) => void
   onBubbledEvent: (e: MouseEvent) => void
-  position?: 'top' | 'bottom'
+  position: 'top' | 'bottom'
 }> = (props) => {
   const {onBubbledEvent, node, onAddUnion, position} = props
   const [showButton, setShowButton] = useState(false)
@@ -75,7 +75,6 @@ const HoverArea: FunctionComponent<{
   const onSelect = useCallback(
     (schemaType: SchemaType) => {
       setMenuVisible(false)
-      // @ts-expect-error -- TODO map typings
       onAddUnion?.(position, schemaType.name)
     },
     [onAddUnion, position],
@@ -126,23 +125,16 @@ export const UnionOverlay: FunctionComponent<{
 }> = (props) => {
   const {node, onBubbledEvent, sanity} = props
 
-  const {mutate} = useOptimisticState(sanity)
+  const mutate = useOptimisticMutate()
 
   const onAddUnion = useCallback(
     (position: 'top' | 'bottom', name: string) => {
-      if ('path' in sanity) {
-        const result = sanity.path.match(/^(.+)\[_key=="(.+)"]$/)
-        if (!result) return
-        const [, path, _key] = result
-        if (_key && path) {
-          const patch = insert(
-            [{_type: name, _key: Math.random().toString(36).slice(2, 5)}],
-            position === 'top' ? 'before' : 'after',
-            {_key},
-          )
-          mutate(patch, {path, commit: true})
-        }
-      }
+      const mutations = getArrayInsertMutations(
+        sanity,
+        name,
+        position === 'top' ? 'before' : 'after',
+      )
+      mutate(mutations, {commit: true})
     },
     [mutate, sanity],
   )

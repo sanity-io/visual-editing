@@ -143,6 +143,7 @@ export function createOverlayController({
         }
       },
       contextmenu(event) {
+        if (!('path' in sanity)) return
         const target = event.target as ElementNode | null
         if (element === getHoveredElement() && element.contains(target)) {
           if (preventDefault) {

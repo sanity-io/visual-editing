@@ -170,6 +170,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   const onBubbledEvent = useCallback(
     (event: MouseEvent) => {
       if (event.type === 'contextmenu') {
+        if (!('path' in node)) return
         dispatch({
           type: 'element/contextmenu',
           id,

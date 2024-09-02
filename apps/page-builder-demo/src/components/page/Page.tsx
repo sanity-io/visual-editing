@@ -18,9 +18,9 @@ export function Page(props: {data: WrappedValue<PageData>}) {
     {id: `drafts.${data?._id}`, path: 'sections'},
     data.sections || [],
     (sections, optimisticSections: WrappedValue<PageSection>[]) =>
-      optimisticSections?.map(
-        (section) => sections?.find((s) => s._key === section._key) || section,
-      ) || sections,
+      optimisticSections
+        ?.filter(Boolean)
+        .map((section) => sections?.find((s) => s._key === section._key) || section) || sections,
   )
 
   return (

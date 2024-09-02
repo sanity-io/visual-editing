@@ -1,4 +1,3 @@
-import type {SanityNode, SanityStegaNode} from '@repo/visual-editing-helpers'
 import {
   Box,
   Flex,
@@ -11,43 +10,19 @@ import {
   Stack,
   Text,
 } from '@sanity/ui'
-import {type ComponentType, type FunctionComponent, type ReactElement, useMemo} from 'react'
+import {type FunctionComponent, useMemo} from 'react'
 
-import {getNodeIcon} from '../util/getNodeIcon'
-import {getContextMenuItems, getContextMenuParentItems} from './contextMenuItems'
-import {PopoverPortal} from './PopoverPortal'
-import {getField, getSchemaType} from './schema/schema'
-import {useSchema} from './schema/useSchema'
-
-interface ContextMenuProps {
-  node: SanityNode | SanityStegaNode
-  onDismiss: () => void
-  position: {
-    x: number
-    y: number
-  }
-}
+import {getDraftId} from '../../util/documents'
+import {getNodeIcon} from '../../util/getNodeIcon'
+import {useOptimisticStateStore} from '../optimistic-state/optimisticState'
+import {useOptimisticMutate} from '../optimistic-state/useOptimisticMutate'
+import {PopoverPortal} from '../PopoverPortal'
+import {getField, getSchemaType} from '../schema/schema'
+import {useSchema} from '../schema/useSchema'
+import {getContextMenuItems} from './contextMenuItems'
+import type {ContextMenuNode, ContextMenuProps} from './types'
 
 const POPOVER_MARGINS: PopoverMargins = [-4, 4, -4, 4]
-
-export interface ContextMenuActionNode {
-  type: 'action'
-  icon?: ReactElement | ComponentType
-  label: string
-  hotkeys?: string[]
-}
-export interface ContextMenuDividerNode {
-  type: 'divider'
-}
-
-export interface ContextMenuGroupNode {
-  type: 'group'
-  icon?: ReactElement | ComponentType
-  label: string
-  items: ContextMenuNode[]
-}
-
-export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | ContextMenuGroupNode
 
 function ContextMenuItem(props: {node: ContextMenuNode}) {
   const {node} = props
@@ -65,6 +40,8 @@ function ContextMenuItem(props: {node: ContextMenuNode}) {
         padding={2}
         space={2}
         text={node.label}
+        disabled={!node.action}
+        onClick={node.action}
       />
     )
   }
@@ -102,6 +79,8 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
 
   const {schema, resolvedTypes} = useSchema()
 
+  const mutate = useOptimisticMutate()
+
   const schemaType = getSchemaType(node, schema)
   const {field, parent} = getField(node, schemaType, resolvedTypes)
 
@@ -113,9 +92,12 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     return getNodeIcon(field)
   }, [field])
 
+  const documentMap = useOptimisticStateStore((state) => state.documents)
+
   const items = useMemo(() => {
-    return [...getContextMenuItems(field), ...getContextMenuParentItems(parent)]
-  }, [field, parent])
+    const doc = documentMap.get(getDraftId(node.id))
+    return getContextMenuItems(node, field, parent, doc, mutate)
+  }, [documentMap, field, mutate, node, parent])
 
   const contextMenuReferenceElement = useMemo(() => {
     return {

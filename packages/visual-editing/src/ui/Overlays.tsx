@@ -27,7 +27,7 @@ import {
 import {styled} from 'styled-components'
 
 import type {HistoryAdapter, OverlayEventHandler, VisualEditingOptions} from '../types'
-import {ContextMenu} from './ContextMenu'
+import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
 import {OptimisticStateProvider} from './optimistic-state/OptimisticStateProvider'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'

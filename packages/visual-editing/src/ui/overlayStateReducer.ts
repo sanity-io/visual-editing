@@ -1,4 +1,4 @@
-import type {PresentationMsg, SanityNode, SanityStegaNode} from '@repo/visual-editing-helpers'
+import type {PresentationMsg, SanityNode} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 
 import type {DragInsertPosition, DragSkeleton, ElementState, OverlayMsg} from '../types'
@@ -6,7 +6,7 @@ import {elementsReducer} from './elementsReducer'
 
 export interface OverlayState {
   contextMenu: {
-    node: SanityNode | SanityStegaNode
+    node: SanityNode
     position: {
       x: number
       y: number
