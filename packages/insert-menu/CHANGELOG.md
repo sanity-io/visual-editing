@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.9](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.8...insert-menu-v1.0.9) (2024-09-02)
+
+
+### Bug Fixes
+
+* **deps:** Update sanity monorepo to ^3.56.0 ([#1766](https://github.com/sanity-io/visual-editing/issues/1766)) ([5e40015](https://github.com/sanity-io/visual-editing/commit/5e40015d03c9d309116f73d8ceda10623b5052ee))
+
 ## [1.0.8](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.7...insert-menu-v1.0.8) (2024-08-08)
 
 

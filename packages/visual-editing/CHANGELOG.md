@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.9...visual-editing-v2.2.0) (2024-09-02)
+
+
+### Features
+
+* **drag-and-drop:** v0 UI ([#1763](https://github.com/sanity-io/visual-editing/issues/1763)) ([a074489](https://github.com/sanity-io/visual-editing/commit/a074489c4ff2bcea30cb05fda750881a1f424399))
+
 ## [2.1.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.8...visual-editing-v2.1.9) (2024-08-12)
 
 
