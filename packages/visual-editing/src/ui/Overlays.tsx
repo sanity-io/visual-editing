@@ -94,17 +94,25 @@ export const Overlays: FunctionComponent<{
   const [status, setStatus] = useState<ChannelStatus>()
 
   const [
-    {contextMenu, elements, wasMaybeCollapsed, isDragging, dragInsertPosition, dragSkeleton, perspective},
+    {
+      contextMenu,
+      dragInsertPosition,
+      dragSkeleton,
+      elements,
+      isDragging,
+      perspective,
+      wasMaybeCollapsed,
+    },
     dispatch,
   ] = useReducer(overlayStateReducer, {
     contextMenu: null,
-    elements: [],
-    focusPath: '',
-    wasMaybeCollapsed: false,
-    isDragging: false,
     dragInsertPosition: null,
     dragSkeleton: null,
+    elements: [],
+    focusPath: '',
+    isDragging: false,
     perspective: 'published',
+    wasMaybeCollapsed: false,
   })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -371,27 +379,31 @@ export const Overlays: FunctionComponent<{
                   $zIndex={zIndex}
                 >
                   {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
-                  {!isDragging && <Elements>
-                    {elementsToRender.map(({focused, hovered, id, rect, sanity}) => {
-                      return (
-                        <ElementOverlay
-                          key={id}
-                          // @todo Config provider?
-                          components={components}
-                          dispatch={overlayEventHandler}
-                          focused={focused}
-                          hovered={hovered}
-                          id={id}
-                          rect={rect}
-                          node={sanity}
-                          showActions={!channel.inFrame}
-                          wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                        />
-                      )
-                    })}
-                  </Elements>}
+                  {!isDragging && (
+                    <Elements>
+                      {elementsToRender.map(({focused, hovered, id, rect, sanity}) => {
+                        return (
+                          <ElementOverlay
+                            key={id}
+                            // @todo Config provider?
+                            components={components}
+                            dispatch={overlayEventHandler}
+                            focused={focused}
+                            hovered={hovered}
+                            id={id}
+                            rect={rect}
+                            node={sanity}
+                            showActions={!channel.inFrame}
+                            wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                          />
+                        )
+                      })}
+                    </Elements>
+                  )}
                   {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-                  {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
+                  {isDragging && (
+                    <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                  )}
                 </Root>
               </OptimisticStateProvider>
             </PreviewSnapshotsProvider>

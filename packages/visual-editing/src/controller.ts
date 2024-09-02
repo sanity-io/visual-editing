@@ -8,9 +8,9 @@ import type {
   OverlayOptions,
   ResolvedElement,
 } from './types'
-import {findSanityNodes, isSanityNode, sanityNodesExistInSameArray} from './util/findSanityNodes'
 import {handleOverlayDrag} from './util/dragAndDrop'
 import {findOverlayElement, isElementNode} from './util/elements'
+import {findSanityNodes, isSanityNode, sanityNodesExistInSameArray} from './util/findSanityNodes'
 import {getRect} from './util/getRect'
 
 /**
