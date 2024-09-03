@@ -1,4 +1,4 @@
-import type {ChannelStatus} from '@repo/channels'
+import type {Status} from '@sanity/comlink'
 import {
   CheckmarkIcon,
   ChevronDownIcon,
@@ -77,12 +77,12 @@ const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
 export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'visualEditing'> {
   dispatch: DispatchPresentationAction
   initialUrl: URL
-  loadersConnection: ChannelStatus
+  loadersConnection: Status
   navigatorEnabled: boolean
   onPathChange: (nextPath: string) => void
   onRefresh: (fallback: () => void) => void
   openPopup: (url: string) => void
-  overlaysConnection: ChannelStatus
+  overlaysConnection: Status
   perspective: PresentationPerspective
   previewUrl?: string
   setPerspective: (perspective: 'previewDrafts' | 'published') => void

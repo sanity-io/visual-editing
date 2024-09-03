@@ -33,14 +33,13 @@ export default function Index() {
   > | null>(null)
 
   useEffect(() => {
-    const controller = createController()
+    const controller = createController({origin: '*'})
     setController(controller)
 
     const connection = controller.createConnection<NodeMessage, ControllerMessage>({
       connectTo: 'iframe',
       heartbeat: true,
       name: 'window',
-      origin: '*',
     })
 
     setConnection(connection)
