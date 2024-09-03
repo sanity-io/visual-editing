@@ -29,7 +29,7 @@ import type {
   RequestData,
   WithoutResponse,
 } from './types'
-import type {HeartbeatMessage, Message, ProtocolMessage} from './types'
+import type {HeartbeatMessage, Message, ProtocolMessage, Status} from './types'
 
 /**
  * @public
@@ -87,6 +87,14 @@ export const createNodeMachine = <
         connectionId: string | null
         connectTo: string
         domain: string
+        // The handshake buffer is a workaround to maintain backwards
+        // compatibility with the Sanity channels package, which may incorrectly
+        // send buffered messages _before_ it completes the handshake (i.e.
+        // sends an ack message). It should be removed in the next major.
+        handshakeBuffer: Array<{
+          type: 'message.received'
+          message: MessageEvent<ProtocolMessage<R>>
+        }>
         name: string
         origin: string | null
         requests: Array<RequestActorRef<S>>
@@ -112,6 +120,12 @@ export const createNodeMachine = <
       listen: createListenLogic(),
     },
     actions: {
+      'buffer incoming message': assign({
+        handshakeBuffer: ({event, context}) => {
+          assertEvent(event, 'message.received')
+          return [...context.handshakeBuffer, event]
+        },
+      }),
       'buffer message': enqueueActions(({enqueue}) => {
         enqueue.assign({
           buffer: ({event, context}) => {
@@ -195,6 +209,12 @@ export const createNodeMachine = <
           buffer: [],
         })
       }),
+      'flush handshake buffer': enqueueActions(({context, enqueue}) => {
+        context.handshakeBuffer.forEach((event) => enqueue.raise(event))
+        enqueue.assign({
+          handshakeBuffer: [],
+        })
+      }),
       'post': raise(({event}) => {
         assertEvent(event, 'post')
         return {
@@ -254,6 +274,7 @@ export const createNodeMachine = <
       connectionId: null,
       connectTo: input.connectTo,
       domain: input.domain ?? DOMAIN,
+      handshakeBuffer: [],
       name: input.name,
       origin: null,
       requests: [],
@@ -307,26 +328,36 @@ export const createNodeMachine = <
             src: 'listen',
             id: 'listenForDisconnect',
             input: listenInputFromContext({
-              include: [MSG_DISCONNECT],
+              include: MSG_DISCONNECT,
               count: 1,
               responseType: 'disconnect',
             }),
           },
+          {
+            src: 'listen',
+            id: 'listenForMessages',
+            input: listenInputFromContext({
+              exclude: [MSG_DISCONNECT, MSG_HANDSHAKE_ACK, MSG_HEARTBEAT, MSG_RESPONSE],
+            }),
+          },
         ],
         on: {
-          request: {
+          'request': {
             actions: 'create request',
           },
-          post: {
+          'post': {
             actions: 'buffer message',
           },
-          disconnect: {
+          'message.received': {
+            actions: 'buffer incoming message',
+          },
+          'disconnect': {
             target: 'idle',
           },
         },
       },
       connected: {
-        entry: 'flush buffer',
+        entry: ['flush handshake buffer', 'flush buffer'],
         invoke: [
           {
             src: 'listen',
@@ -339,7 +370,7 @@ export const createNodeMachine = <
             src: 'listen',
             id: 'listenForHeartbeats',
             input: listenInputFromContext({
-              include: [MSG_HEARTBEAT],
+              include: MSG_HEARTBEAT,
               responseType: 'heartbeat.received',
             }),
           },
@@ -347,7 +378,7 @@ export const createNodeMachine = <
             src: 'listen',
             id: 'listenForDisconnect',
             input: listenInputFromContext({
-              include: [MSG_DISCONNECT],
+              include: MSG_DISCONNECT,
               count: 1,
               responseType: 'disconnect',
             }),
