@@ -1,17 +1,13 @@
 export {
   type Channel,
   type ChannelActor,
+  type ChannelActorLogic,
   type ChannelInput,
   createChannel,
   createChannelMachine,
 } from './channel'
 export {createListenLogic} from './common'
-export {
-  convertEventToNewFormat,
-  convertMessageToLegacyFormat,
-  sendMessageInLegacyFormat,
-} from './compatibility'
-export {MSG_HEARTBEAT, MSG_RESPONSE} from './constants'
+export * from './constants'
 export {
   type ConnectionInput,
   type ConnectionInstance,

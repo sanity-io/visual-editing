@@ -36,6 +36,12 @@ import type {Message, MessageData, ProtocolMessage} from './types'
 /**
  * @public
  */
+export type ChannelActorLogic<R extends Message, S extends Message> = ReturnType<
+  typeof createChannelMachine<R, S>
+>
+/**
+ * @public
+ */
 export type ChannelActor<R extends Message, S extends Message> = ActorRefFrom<
   ReturnType<typeof createChannelMachine<R, S>>
 >
@@ -439,9 +445,8 @@ export const createChannelMachine = <
  */
 export const createChannel = <R extends Message, S extends Message>(
   input: ChannelInput,
+  machine: ChannelActorLogic<R, S> = createChannelMachine<R, S>(),
 ): Channel<R, S> => {
-  const machine = createChannelMachine<R, S>()
-
   const id = input.id || `${input.name}-${uuid()}`
   const actor = createActor(machine, {
     input: {...input, id},
