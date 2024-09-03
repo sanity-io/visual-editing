@@ -13,7 +13,7 @@ import {
   type RequestMachineContext,
 } from '@sanity/comlink'
 
-export const convertEventToNewFormat = (
+const convertEventToNewFormat = (
   event: MessageEvent<ProtocolMessage>,
 ): MessageEvent<ProtocolMessage> => {
   const {data} = event
@@ -55,7 +55,7 @@ export const convertEventToNewFormat = (
   return event
 }
 
-export const convertMessageToLegacyFormat = (message: ProtocolMessage): ProtocolMessage => {
+const convertMessageToLegacyFormat = (message: ProtocolMessage): ProtocolMessage => {
   if (message.domain === DOMAIN) {
     message.domain = 'sanity/channels'
   }
@@ -92,7 +92,7 @@ export const convertMessageToLegacyFormat = (message: ProtocolMessage): Protocol
   return message
 }
 
-export const sendMessageInLegacyFormat = <S extends Message>(
+const sendMessageInLegacyFormat = <S extends Message>(
   {context}: {context: RequestMachineContext<S>},
   params: {message: ProtocolMessage},
 ): void => {
@@ -104,6 +104,18 @@ export const sendMessageInLegacyFormat = <S extends Message>(
     source.postMessage(message, {targetOrigin: origin})
   })
 }
+
+// @todo Why is this necessary?
+export {
+  type ListenInput,
+  type Message,
+  type MessageData,
+  type MessageType,
+  MSG_RESPONSE,
+  type ProtocolMessage,
+  type RequestMachineContext,
+  type ResponseMessage,
+} from '@sanity/comlink'
 
 export const createCompatibilityActors = <
   T extends Message,
