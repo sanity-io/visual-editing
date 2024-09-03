@@ -65,7 +65,7 @@ export type Node<R extends Message, S extends Message> = {
     type: T,
     handler: (event: U['data']) => U['response'],
   ) => () => void
-  onStatus: (handler: (status: string) => void) => () => void
+  onStatus: (handler: (status: Status) => void) => () => void
   post: (data: WithoutResponse<S>) => void
   start: () => () => void
   stop: () => void
@@ -220,7 +220,6 @@ export const createNodeMachine = <
           data: {
             type: MSG_RESPONSE,
             responseTo: event.message.data.id,
-            // @todo Do nodes need to support responses?
             data: undefined,
           },
         }
@@ -402,13 +401,14 @@ export const createNode = <R extends Message, S extends Message>(
     return unsubscribe
   }
 
-  const onStatus = (handler: (status: string) => void) => {
+  const onStatus = (handler: (status: Status) => void) => {
     const snapshot = actor.getSnapshot()
-    let currentStatus: string | undefined =
+    let currentStatus: Status =
       typeof snapshot.value === 'string' ? snapshot.value : Object.keys(snapshot.value)[0]
 
     const {unsubscribe} = actor.subscribe((state) => {
-      const status = typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
+      const status: Status =
+        typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
       if (currentStatus !== status) {
         currentStatus = status
         handler(status)

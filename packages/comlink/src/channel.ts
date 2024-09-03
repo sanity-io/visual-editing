@@ -28,6 +28,7 @@ import type {
   BufferFlushedEmitEvent,
   MessageEmitEvent,
   RequestData,
+  Status,
   WithoutResponse,
 } from './types'
 import type {Message, MessageData, ProtocolMessage} from './types'
@@ -53,7 +54,7 @@ export type Channel<R extends Message, S extends Message> = {
     type: T,
     handler: (event: U['data']) => U['response'],
   ) => () => void
-  onStatus: (handler: (status: string) => void) => () => void
+  onStatus: (handler: (status: Status) => void) => () => void
   post: (data: WithoutResponse<S>) => void
   setTarget: (target: MessageEventSource) => void
   start: () => () => void
@@ -471,15 +472,16 @@ export const createChannel = <R extends Message, S extends Message>(
     actor.send({type: 'disconnect'})
   }
 
-  const onStatus = (handler: (status: string) => void) => {
+  const onStatus = (handler: (status: Status) => void) => {
     const currentSnapshot = actor.getSnapshot()
-    let currentStatus: string | undefined =
+    let currentStatus: Status =
       typeof currentSnapshot.value === 'string'
         ? currentSnapshot.value
         : Object.keys(currentSnapshot.value)[0]
 
     const {unsubscribe} = actor.subscribe((state) => {
-      const status = typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
+      const status: Status =
+        typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
       if (currentStatus !== status) {
         currentStatus = status
         handler(status)

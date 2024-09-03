@@ -41,5 +41,7 @@ export type {
   ProtocolMessage,
   RequestData,
   ResponseMessage,
+  Status,
+  StatusEvent,
   WithoutResponse,
 } from './types'

@@ -3,6 +3,16 @@ import type {MSG_HEARTBEAT, MSG_RESPONSE} from './constants'
 /**
  * @public
  */
+export type Status = string // @todo strongly type these
+
+/**
+ * @public
+ */
+export type StatusEvent = {channel: string; status: Status}
+
+/**
+ * @public
+ */
 export type MessageType = string
 
 /**

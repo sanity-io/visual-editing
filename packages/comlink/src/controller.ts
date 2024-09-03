@@ -17,7 +17,7 @@ export interface ConnectionInstance<R extends Message, S extends Message> {
     type: T,
     handler: (event: U) => void,
   ) => void
-  onStatus: (handler: (event: {channel: string; status: string}) => void) => void
+  onStatus: (handler: (event: StatusEvent) => void) => void
   post: (data: WithoutResponse<S>) => void
   start: () => () => void
   stop: () => void
@@ -47,7 +47,7 @@ interface Connection<
     unsubscribers: Array<() => void>
   }>
   statusSubscribers: Set<{
-    handler: (event: {channel: string; status: string}) => void
+    handler: (event: StatusEvent) => void
     unsubscribers: Array<() => void>
   }>
   subscribers: Set<{
@@ -67,7 +67,7 @@ export const createController = (): Controller => {
   const connections = new Set<Connection>()
 
   const addTarget = (target: MessageEventSource) => {
-    // If the target has already been added, return just return a noop cleanup
+    // If the target has already been added, return just a noop cleanup
     if (targets.has(target)) {
       return noop
     }
@@ -225,7 +225,7 @@ export const createController = (): Controller => {
       }
     }
 
-    const onStatus = (handler: (event: {channel: string; status: string}) => void) => {
+    const onStatus = (handler: (event: StatusEvent) => void) => {
       const unsubscribers: Array<() => void> = []
       channels.forEach((channel) => {
         unsubscribers.push(channel.onStatus((status) => handler({channel: channel.id, status})))
