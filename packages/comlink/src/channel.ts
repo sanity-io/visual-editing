@@ -58,7 +58,7 @@ export type Channel<R extends Message, S extends Message> = {
   machine: ReturnType<typeof createChannelMachine<R, S>>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
-    handler: (event: U['data']) => U['response'],
+    handler: (event: U['data']) => Promise<U['response']> | U['response'],
   ) => () => void
   onStatus: (handler: (status: Status) => void) => () => void
   post: (data: WithoutResponse<S>) => void
@@ -454,13 +454,13 @@ export const createChannel = <R extends Message, S extends Message>(
 
   const on = <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
-    handler: (event: U['data']) => U['response'],
+    handler: (event: U['data']) => Promise<U['response']> | U['response'],
   ) => {
     const {unsubscribe} = actor.on(
       // @ts-expect-error @todo `type` typing
       type,
-      (event: {type: T; message: ProtocolMessage<U>}) => {
-        const response = handler(event.message.data)
+      async (event: {type: T; message: ProtocolMessage<U>}) => {
+        const response = await handler(event.message.data)
         if (response) {
           actor.send({type: 'response', respondTo: event.message.id, data: response})
         }
