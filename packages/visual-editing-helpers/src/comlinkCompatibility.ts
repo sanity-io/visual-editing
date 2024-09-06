@@ -18,7 +18,14 @@ const convertEventToNewFormat = (
 ): MessageEvent<ProtocolMessage> => {
   const {data} = event
 
-  if (data && 'domain' in data && 'type' in data && 'from' in data && 'to' in data) {
+  if (
+    data &&
+    typeof data === 'object' &&
+    'domain' in data &&
+    'type' in data &&
+    'from' in data &&
+    'to' in data
+  ) {
     if (data.domain === 'sanity/channels') {
       data.domain = DOMAIN
     }

@@ -57,7 +57,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       connectTo: 'presentation',
     },
     createNodeMachine<LoaderControllerMsg, LoaderNodeMsg>().provide({
-      actors: createCompatibilityActors(),
+      actors: createCompatibilityActors<LoaderNodeMsg>(),
     }),
   )
 

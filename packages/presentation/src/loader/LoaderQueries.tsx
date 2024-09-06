@@ -94,7 +94,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
           heartbeat: true,
         },
         createChannelMachine<LoaderNodeMsg, LoaderControllerMsg>().provide({
-          actors: createCompatibilityActors(),
+          actors: createCompatibilityActors<LoaderControllerMsg>(),
         }),
       )
       setComlink(comlink)

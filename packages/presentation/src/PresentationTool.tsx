@@ -213,7 +213,7 @@ export default function PresentationTool(props: {
         connectTo: 'visual-editing',
       },
       createChannelMachine<VisualEditingNodeMsg, VisualEditingControllerMsg>().provide({
-        actors: createCompatibilityActors(),
+        actors: createCompatibilityActors<VisualEditingControllerMsg>(),
       }),
     )
 

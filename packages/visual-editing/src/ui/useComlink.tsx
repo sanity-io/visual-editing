@@ -20,7 +20,7 @@ export function useComlink(): Node<VisualEditingControllerMsg, VisualEditingNode
         connectTo: 'presentation',
       },
       createNodeMachine<VisualEditingControllerMsg, VisualEditingNodeMsg>().provide({
-        actors: createCompatibilityActors(),
+        actors: createCompatibilityActors<VisualEditingNodeMsg>(),
       }),
     )
 
