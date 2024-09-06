@@ -159,25 +159,6 @@ export type VisualEditingNodeMsg =
     }
 
 /**
- * @deprecated use VisualEditingMsg instead
- */
-export type OverlayNodeMsg =
-  | {
-      type: 'overlay/focus'
-      data: SanityNode | SanityStegaNode
-    }
-  | {
-      type: 'overlay/navigate'
-      data: HistoryUpdate
-    }
-  | {
-      type: 'overlay/toggle'
-      data: {
-        enabled: boolean
-      }
-    }
-
-/**
  * @public
  */
 export type LoaderControllerMsg =
@@ -252,9 +233,3 @@ export type PreviewKitNodeMsg = {
     documents: ContentSourceMapDocuments
   }
 }
-
-/**
- * Known Channel connection IDs
- * @public
- */
-export type VisualEditingConnectionIds = 'presentation' | 'loaders' | 'overlays' | 'preview-kit'
