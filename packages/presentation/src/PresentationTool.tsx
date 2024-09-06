@@ -178,7 +178,7 @@ export default function PresentationTool(props: {
 
     if (!target) return
 
-    const controller = createController({origin: targetOrigin})
+    const controller = createController({targetOrigin})
     controller.addTarget(target)
     setController(controller)
 

@@ -96,9 +96,9 @@ export const createNodeMachine = <
           message: MessageEvent<ProtocolMessage<R>>
         }>
         name: string
-        origin: string | null
         requests: Array<RequestActorRef<S>>
         target: MessageEventSource | undefined
+        targetOrigin: string | null
       }
       emitted:
         | BufferAddedEmitEvent<V>
@@ -155,10 +155,10 @@ export const createNodeMachine = <
                 domain: context.domain!,
                 expectResponse: request.expectResponse,
                 from: context.name,
-                origin: context.origin!,
                 resolvable: request.resolvable,
                 responseTo: request.responseTo,
                 sources: context.target!,
+                targetOrigin: context.targetOrigin!,
                 to: context.connectTo,
                 type: request.type,
               },
@@ -257,7 +257,7 @@ export const createNodeMachine = <
           assertEvent(event, 'message.received')
           return event.message.source || undefined
         },
-        origin: ({event}) => {
+        targetOrigin: ({event}) => {
           assertEvent(event, 'message.received')
           return event.message.origin
         },
@@ -276,9 +276,9 @@ export const createNodeMachine = <
       domain: input.domain ?? DOMAIN,
       handshakeBuffer: [],
       name: input.name,
-      origin: null,
       requests: [],
       target: undefined,
+      targetOrigin: null,
     }),
     on: {
       'request.success': {

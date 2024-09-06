@@ -77,8 +77,8 @@ export interface ChannelInput {
   heartbeat?: boolean
   name: string
   id?: string
-  origin: string
   target?: MessageEventSource
+  targetOrigin: string
 }
 
 const sendBackAtInterval = fromCallback<
@@ -119,9 +119,9 @@ export const createChannelMachine = <
         heartbeat: boolean
         id: string
         name: string
-        origin: string
         requests: Array<RequestActorRef<S>>
         target: MessageEventSource | undefined
+        targetOrigin: string
       }
       emitted:
         | BufferAddedEmitEvent<V>
@@ -181,9 +181,9 @@ export const createChannelMachine = <
                 domain: context.domain,
                 expectResponse: request.expectResponse,
                 from: context.name,
-                origin: context.origin,
                 responseTo: request.responseTo,
                 sources: context.target!,
+                targetOrigin: context.targetOrigin,
                 to: context.connectTo,
                 type: request.type,
               },
@@ -278,7 +278,7 @@ export const createChannelMachine = <
       'should send heartbeats': ({context}) => context.heartbeat,
     },
   }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QGMAWBDAdpsAbAxLAPYCuATsmAHSxgAuA2gAwC6ioADkbAJZ09FM7EAA9EAdnFMqAJgCs4gBwA2RTMVqAzNoA0IAJ6IZTaQE4mymQBYrc7TYCM4qwF8XetFhwEyYAI4kcHQ0JMiUsLDMbEggXLz8gsJiCM6msppMVuYyznKKTnqGCA4WVLaaDhmmTpma+W4eGNh4+L4BQVQAZug8uJBRwnF8AkIxyeJycmXiOUxODlbKGVaFiA4yDSCezbhUPBB9+MiCOMiMrIPcw4lja3MyVMpWFnLWS6Z1DqspJVTiDio6qZ5DIKqZNttvHsDmB8HFztFOFcEqNQMlFBU-gpFCYZDJTFZFM5vsomGlxMpJnMbMZ6u4tk0oU0ILAMABrHiYKCEfSYAYxIYopJrDLiKiaOQOZTSuTS0lPb6yh4UyaKOSLSUS1z0yF4KjM1noDlc1r+QKwBGXeIjYXFTTWcVWOpWBwfJ1S76LZTi9Yu7Q45TAykQxl6g3sznc+H8pHWm5okUyByyJgVFSEmxO76aQNUNUfcSmKQLJwbHWh3bho2R-AAWzgsHQMCovkoPAAbv0LgLkTbbsVMmkNOo7HjM4pPeYqHN1UTTGpKSqQ14w1gWRGTRAeLBjs0zjHYr346I1oSqK6S9VTE8mIpr98AbLHkTCcoHA51XjweWV7td6c6EgOFuEtHs41RE8EDkJgHkmDV7UsRRbGUb5TDyR5rDVJCJjyTRlx2Kh-zAM4gLac1QNja4IOSKxxE0KhJTQ+072UYtpW+dNz3+f4YOxD4HHwqEiJIiBTVgLhMFoA9BT7BMECyaQFCsUEcnnJZJk0b4KXJAEll9HIiUEvVhMA0T6wiJtqFbMAOy7RFD3A20bEUKhTGBV1r1dRYnBQgxTzxBilA-YEpCYf5tUaX9CJOYjTPwLcdxi-du0ooV+xKdZHmeSk3k0D58gfJNvVJKUqlsPFpSMv8ktM-UwHQMg6AAI3q4I0GI41uWko9qMQe0HjqHIKTqBCYMK6pxXUEtJiLKVlCq6K91q1B6salr0GCWhMC3E0yI6bpejsq0qNtDKHhvHLFjyz5Cspc8ZyeQtaJzOQFoSkzSLNIJusc9LMm9NR8nyedvImB81SmDNlIpKQZEqn8CPemqgOjFKHJOv6nWfCY30qUkcwfCY0lTSowsJSQ3zwhGoSRpbPpMn6MbkmZirc6xnDVQsFnB0oAWcCkshmPEy3pTAiAgOBhF1XBjrSuS8m+dQBrkAt1WgwlZSpyKCP2PpZdkyCiQeAl3IJeQWJWPyfmTJMVFqUECRghaq06-Xj2SX0pjfGZXiQkw5hJJ5ZF0i9M3fBaPogN3eoHXyigysUwpxCY7zyTWI+RiA6oa5rWuj071QfJwxWxW9LGgosFAzums5WnP1ralbkFdsCmcg4wZEKjRAvyd9lMpeHtaEzPs7W1qaDAbbI3z-t1WTTQnXed8woUL4rfWO6k7JJhoNdMm3u3SOZ7ks6speXL8rX+O0O9VXaLVIbKjcNwgA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGMAWBDAdpsAbAxAC7oBOMhAdLGIQNoAMAuoqAA4D2sAloV+5ixAAPRAHZRAJgoAWABz0ArHICMy2QGZZCgJwAaEAE9EE+tIrb6ANgkLl46fTuj1AXxf60WHARJgAjgCucJSwAcjIcLAMzEggHNy8-IIiCKLS2hQS6qb2yurisrL6RgjK9LIyCuqq0g7WstZuHhjYePi+gcEUAGboXLiQ0YLxPHwCsSmiCgoykpayDtqS6trqxYjKEk0gnq24FFwQA-jI-DjIdEzDnKNJExuOZpZ12eq29OrSCuupypYUojUaTKCnm5Wk2123gORzA+HilxibBuiXGoBSGnUAIU4gU9FWamUtR+lmUM1EllBEkslMUEnpkJa0JaEFgGAA1lxMFB8LADJghrERqjkhtshk3mTtNo5OpqpYfqCKhTptoqpY1WUtu4dky8BQWWz0Jzue1-EFYIjrgkxqLSupqRRPpoPqJtLI0hIioZENJJE7NnJ8ZYHVk1YyvPrDRyuTyEYLkTa7uixVlMh81KGFhS1j6EPkZlpVjTphr8mkI3sDVhWTHTQBbSLoGAUXwRLgAN0GVyFKNt91KimUFEKXvKC2s9R+6X+jipnzJeSqEJ1UKjNaNJp5EC4sFOrQuCbifeTwg2cgoym0RPxDtqkj0eaB9Ao8zSolMEivZVcq71+33c5CEgeFOCtXskzRM8EDxKRpmkSw3QJbQsmpH5tHmV8JHSbJpDsakV2aSMALOMALhAjoLXAxNbiglI-SxWw1Vw0QNDw0Qfg9KQ7EJSxHHxApK2hQCyOAiAzVgDhMGoI9hX7FMEHSF8cWkelpHURCbBsb481xAEgT9BQJCmWQsiE-URPI8TG1gWBmzAVsyLATtuyRY9ILtWoKmlL82Kqd0tAVJ91LMHFZDKIkVlkNVZHMkiDzE-Adz3UjDx7GiRQHCKnheD53k+HSSkDDIwpBVTqQwuKKEssSDTAUhCAAI3qyg0DIrd8Fkk86MQUMnVM+RynoegTDJH48hGp0vR-FDRqqKqasgOqGua9AQjATAd1NSiul6fpXOtWi7Wy19cslD4vnG7IX3oVjVDUVYEJQqrksW8SdstLqPKy0wKgG1RhtMWogqKhoMjkWp6XxUyFBe3c3tAz70vco6fq+V8PTkGUFzdQqNnELEM2yClrwwzQ4ZShKQJqr7UYU98AS0W9pT4z5pHG0yXwMkNNTyGk3B1TB2AgOBBDXXBDsyhSFG9EovQqN5i1JeRcKqw4Bkl+ToMx8x0j+EaqQ9XMSkBURMgMkEwQWKro2NWNNdPFJAzN0lJGM4slDxhBEJfXyplBd03wW1KxIdnrBxBh4JAyW75C8rJpmDqmIGWkgmpasPjqUcaHooMLHA0uU1UkJOgKW1B6rT1bWor5At0zgcTAkK7hrz1irB0D8cW0UvRPLyv07WqgNq2qAG+l9SnXUz0UOXD5xuMs3Y4+DVJBX7UiKrV6Q8gcfoJO54rFefLLqfJYX1WKYNLxL4NO1NwgA */
     id: 'channel',
     context: ({input}) => ({
       id: input.id || `${input.name}-${uuid()}`,
@@ -288,9 +288,9 @@ export const createChannelMachine = <
       domain: input.domain ?? DOMAIN,
       heartbeat: input.heartbeat ?? false,
       name: input.name,
-      origin: input.origin,
       requests: [],
       target: input.target,
+      targetOrigin: input.targetOrigin,
     }),
     on: {
       'target.set': {

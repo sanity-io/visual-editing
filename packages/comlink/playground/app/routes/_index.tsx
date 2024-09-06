@@ -33,7 +33,7 @@ export default function Index() {
   > | null>(null)
 
   useEffect(() => {
-    const controller = createController({origin: '*'})
+    const controller = createController({targetOrigin: '*'})
     setController(controller)
 
     const connection = controller.createConnection<NodeMessage, ControllerMessage>({

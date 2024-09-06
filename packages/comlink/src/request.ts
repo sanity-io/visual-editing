@@ -15,11 +15,11 @@ export interface RequestMachineContext<S extends Message> {
   expectResponse: boolean
   from: string
   id: string
-  origin: string
   resolvable: PromiseWithResolvers<S['response']> | undefined
   response: S['response'] | null
   responseTo: string | undefined
   sources: Set<MessageEventSource>
+  targetOrigin: string
   to: string
   type: MessageType
 }
@@ -57,10 +57,10 @@ export const createRequestMachine = <
         domain: string
         expectResponse?: boolean
         from: string
-        origin: string
         responseTo?: string
         resolvable?: PromiseWithResolvers<S['response']>
         sources: Set<MessageEventSource> | MessageEventSource
+        targetOrigin: string
         to: string
         type: S['type']
       }
@@ -82,11 +82,11 @@ export const createRequestMachine = <
     },
     actions: {
       'send message': ({context}, params: {message: ProtocolMessage}) => {
-        const {sources, origin} = context
+        const {sources, targetOrigin} = context
         const {message} = params
 
         sources.forEach((source) => {
-          source.postMessage(message, {targetOrigin: origin})
+          source.postMessage(message, {targetOrigin})
         })
       },
       'on success': sendParent(({context, self}) => {
@@ -117,7 +117,7 @@ export const createRequestMachine = <
       responseTimeout: RESPONSE_TIMEOUT,
     },
   }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiAD1gBd0GwT0AzFgJ2QNwdzoKAFVyowAewCuDItTRY8hUuSoBtAAwBdRKAAOE2P1wT8ukLUQBGAEwBWEnY3ONAZlc2XATjtWANCAAntYaAGwkLs5ergAsAOxeMVahcQC+qQEKOATEJLBg+BAEUNSaOkggBkYCpuaWCL4aJFYaVnZxABwd7lYxbnEBwQj2TfGhdilJYXE2cTHpmRjZynkFRfglalbl+obGtRX1jc2t7V09fa4DQYheNiQxXk9eHXFxbl7JVgsgWUq56AA7uhjBtqOJYLB0DAyuYqvszIdEF0rA84qFQo87LM4lY8YNEDY8RFIi1bFYvM40hlfkt-qQgSCBGD6EwWGxOGAeFw4AZ8PlROJpLJ5HScgzgaCoLCKvCaojQPUUWiMVicXj-DcEK4NHEHnZXOTQhSbKENDFQukafgJBA4OY-uK4Xt5XVEABaUIEhCekmRf0uamLRTisiUMDO6omBUWRAxGzeloOf1zcZ2C2vH6Olb5QrFSMIt3DLx6ryhV6hGwl3xWDwxb0dVGPZ7vDHvGKGrNilaMqUF11IhC4vVuWsUg2m5IJrU2ewkWfjUJXWI2eN2OxdkMrdggqgQfvRostN4kT5TaK9WwY702Rskd6G1yY3VXGIbmnZ3KwKSYTBweCyi6h6DsepaXhoF5JKaXpaneTguDYrgdI8dbUukQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiAD1gBd0GwT0AzFgJ2QNwdzoKAFVyowAewCuDItTRY8hUuSoBtAAwBdRKAAOE2P1wT8ukLUQBGAEwBWEgBYAnK+eOAzB7sB2DzY8rABoQAE9rDQc3V0cNTw8fAA4NHwBfVJCFHAJiElgwfAgCKGpNHSQQAyMBU3NLBDsrDxI7DTaAjQA2OOcNDxDwhHsNJx9Ou0TOq2cJxP9HdMyMbOU8gqL8ErUrcv1DY1qK+sbm1vaPLp6+gcRnGydo9wDGycWQLKVc9AB3dGNN6jiWCwdAwMrmKoHMxHRCJRKOEiJHwuZKBZwXKzBMKIGyYkhtAkXOweTqOHw2RJvD45Ug-P4CAH0JgsNicMA8LhwAz4fKicTSWTyZafWm-f5QcEVSE1aGgepwhFIlF9aYYrGDC4+JzEppjGzOUkeGbpDIgfASCBwczU5QQ-YyuqIAC0nRuCBd+IJXu9KSpwppZEoYDt1RMsosiEcNjdVjiJEeGisiSTHkcVgWpptuXyhWKIahjqGzi1BqRJINnVcdkcbuTLS9VYC8ISfsUAbp4vzDphCHJIyjBvJNlxNmRNexQ3sJGH43GPj8jWJrZWuXYfyoEC7YcLsbrgRsjkcvkmdgNbopVhIPhVfnsh8ClMz-tWsCkmEwcHgUvt257u8v+6Hse4xnhOdZnImVidPqCRNB4JqpEAA */
     context: ({input}) => {
       return {
         connectionId: input.connectionId,
@@ -126,11 +126,11 @@ export const createRequestMachine = <
         expectResponse: input.expectResponse ?? false,
         from: input.from,
         id: `msg-${uuid()}`,
-        origin: input.origin,
         resolvable: input.resolvable,
         response: null,
         responseTo: input.responseTo,
         sources: input.sources instanceof Set ? input.sources : new Set([input.sources]),
+        targetOrigin: input.targetOrigin,
         to: input.to,
         type: input.type,
       }

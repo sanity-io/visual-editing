@@ -103,12 +103,12 @@ const sendMessageInLegacyFormat = <S extends Message>(
   {context}: {context: RequestMachineContext<S>},
   params: {message: ProtocolMessage},
 ): void => {
-  const {sources, origin} = context
+  const {sources, targetOrigin} = context
 
   const message = convertMessageToLegacyFormat(params.message)
 
   sources.forEach((source) => {
-    source.postMessage(message, {targetOrigin: origin})
+    source.postMessage(message, {targetOrigin})
   })
 }
 

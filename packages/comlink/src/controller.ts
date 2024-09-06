@@ -5,15 +5,9 @@ import {
   createChannel,
   createChannelMachine,
 } from './channel'
-import {
-  type InternalEmitEvent,
-  type Message,
-  type Status,
-  type StatusEvent,
-  type WithoutResponse,
-} from './types'
+import {type InternalEmitEvent, type Message, type StatusEvent, type WithoutResponse} from './types'
 
-export type ConnectionInput = Omit<ChannelInput, 'target' | 'origin'>
+export type ConnectionInput = Omit<ChannelInput, 'target' | 'targetOrigin'>
 
 export interface ConnectionInstance<R extends Message, S extends Message> {
   connect: () => () => void
@@ -76,8 +70,8 @@ const noop = () => {}
 /**
  * @public
  */
-export const createController = (input: {origin: string}): Controller => {
-  const {origin} = input
+export const createController = (input: {targetOrigin: string}): Controller => {
+  const {targetOrigin} = input
   const targets = new Set<MessageEventSource>()
   const connections = new Set<Connection>()
 
@@ -123,8 +117,8 @@ export const createController = (input: {origin: string}): Controller => {
       const channel = createChannel(
         {
           ...connection.input,
-          origin,
           target,
+          targetOrigin,
         },
         connection.machine,
       )
@@ -193,8 +187,8 @@ export const createController = (input: {origin: string}): Controller => {
         const channel = createChannel<R, S>(
           {
             ...input,
-            origin,
             target,
+            targetOrigin,
           },
           machine,
         )
@@ -204,7 +198,7 @@ export const createController = (input: {origin: string}): Controller => {
       })
     } else {
       // If targets have not been added yet, create a channel without a target
-      const channel = createChannel<R, S>({...input, origin}, machine)
+      const channel = createChannel<R, S>({...input, targetOrigin}, machine)
       channels.add(channel)
     }
 
