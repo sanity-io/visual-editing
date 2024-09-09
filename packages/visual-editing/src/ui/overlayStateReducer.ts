@@ -1,4 +1,4 @@
-import type {PresentationMsg} from '@repo/visual-editing-helpers'
+import type {VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 
 import type {DragInsertPosition, DragSkeleton, ElementState, OverlayMsg} from '../types'
@@ -16,7 +16,7 @@ export interface OverlayState {
 
 export function overlayStateReducer(
   state: OverlayState,
-  message: OverlayMsg | PresentationMsg,
+  message: OverlayMsg | VisualEditingControllerMsg,
 ): OverlayState {
   let focusPath = state.focusPath
   let wasMaybeCollapsed = false

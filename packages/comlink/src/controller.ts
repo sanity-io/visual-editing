@@ -1,7 +1,13 @@
-import {type Channel, type ChannelInput, createChannel} from './channel'
-import {type InternalEmitEvent, type Message, type WithoutResponse} from './types'
+import {
+  type Channel,
+  type ChannelActorLogic,
+  type ChannelInput,
+  createChannel,
+  createChannelMachine,
+} from './channel'
+import {type InternalEmitEvent, type Message, type StatusEvent, type WithoutResponse} from './types'
 
-export type ConnectionInput = Omit<ChannelInput, 'target'>
+export type ConnectionInput = Omit<ChannelInput, 'target' | 'targetOrigin'>
 
 export interface ConnectionInstance<R extends Message, S extends Message> {
   connect: () => () => void
@@ -17,7 +23,7 @@ export interface ConnectionInstance<R extends Message, S extends Message> {
     type: T,
     handler: (event: U) => void,
   ) => void
-  onStatus: (handler: (event: {channel: string; status: string}) => void) => void
+  onStatus: (handler: (event: StatusEvent) => void) => void
   post: (data: WithoutResponse<S>) => void
   start: () => () => void
   stop: () => void
@@ -30,6 +36,7 @@ export interface Controller {
   addTarget: (target: MessageEventSource) => () => void
   createConnection: <R extends Message, S extends Message>(
     input: ConnectionInput,
+    machine?: ChannelActorLogic<R, S>,
   ) => ConnectionInstance<R, S>
   destroy: () => void
 }
@@ -46,8 +53,9 @@ interface Connection<
     handler: (event: Extract<InternalEmitEvent<R, S>, {type: T}>) => void
     unsubscribers: Array<() => void>
   }>
+  machine: ChannelActorLogic<R, S>
   statusSubscribers: Set<{
-    handler: (event: {channel: string; status: string}) => void
+    handler: (event: StatusEvent) => void
     unsubscribers: Array<() => void>
   }>
   subscribers: Set<{
@@ -62,12 +70,13 @@ const noop = () => {}
 /**
  * @public
  */
-export const createController = (): Controller => {
+export const createController = (input: {targetOrigin: string}): Controller => {
+  const {targetOrigin} = input
   const targets = new Set<MessageEventSource>()
   const connections = new Set<Connection>()
 
   const addTarget = (target: MessageEventSource) => {
-    // If the target has already been added, return just return a noop cleanup
+    // If the target has already been added, return just a noop cleanup
     if (targets.has(target)) {
       return noop
     }
@@ -105,10 +114,14 @@ export const createController = (): Controller => {
     // If we already have targets and connections, we need to create new
     // channels for each source with all the associated subscribers.
     connections.forEach((connection) => {
-      const channel = createChannel({
-        ...connection.input,
-        target,
-      })
+      const channel = createChannel(
+        {
+          ...connection.input,
+          target,
+          targetOrigin,
+        },
+        connection.machine,
+      )
 
       targetChannels.add(channel)
       connection.channels.add(channel)
@@ -151,12 +164,14 @@ export const createController = (): Controller => {
   }
 
   const createConnection = <R extends Message, S extends Message>(
-    input: ChannelInput,
+    input: ConnectionInput,
+    machine: ChannelActorLogic<R, S> = createChannelMachine<R, S>(),
   ): ConnectionInstance<R, S> => {
     const connection: Connection<R, S> = {
-      input,
       channels: new Set(),
+      input,
       internalEventSubscribers: new Set(),
+      machine,
       statusSubscribers: new Set(),
       subscribers: new Set(),
     }
@@ -169,15 +184,21 @@ export const createController = (): Controller => {
     if (targets.size) {
       // If targets have already been added, create a channel for each target
       targets.forEach((target) => {
-        const channel = createChannel<R, S>({
-          ...input,
-          target,
-        })
+        const channel = createChannel<R, S>(
+          {
+            ...input,
+            target,
+            targetOrigin,
+          },
+          machine,
+        )
         channels.add(channel)
+        channel.start()
+        channel.connect()
       })
     } else {
       // If targets have not been added yet, create a channel without a target
-      const channel = createChannel<R, S>(input)
+      const channel = createChannel<R, S>({...input, targetOrigin}, machine)
       channels.add(channel)
     }
 
@@ -225,7 +246,7 @@ export const createController = (): Controller => {
       }
     }
 
-    const onStatus = (handler: (event: {channel: string; status: string}) => void) => {
+    const onStatus = (handler: (event: StatusEvent) => void) => {
       const unsubscribers: Array<() => void> = []
       channels.forEach((channel) => {
         unsubscribers.push(channel.onStatus((status) => handler({channel: channel.id, status})))

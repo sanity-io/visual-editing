@@ -1,5 +1,5 @@
-import type {ChannelsController, ChannelStatus} from '@repo/channels'
-import type {PresentationMsg, VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
+import type {VisualEditingControllerMsg, VisualEditingNodeMsg} from '@repo/visual-editing-helpers'
+import type {ConnectionInstance, Status} from '@sanity/comlink'
 import {memo, startTransition, useEffect, useMemo, useState} from 'react'
 import {type SanityDocument} from 'sanity'
 
@@ -8,13 +8,13 @@ import {getPublishedId, useEditState} from '../internals'
 export interface PostMessageRefreshMutationsProps {
   id: string
   type: string
-  channel: ChannelsController<VisualEditingConnectionIds, PresentationMsg>
-  previewKitConnection: ChannelStatus
-  loadersConnection: ChannelStatus
+  comlink: ConnectionInstance<VisualEditingNodeMsg, VisualEditingControllerMsg>
+  previewKitConnection: Status
+  loadersConnection: Status
 }
 
 function PostMessageRefreshMutations(props: PostMessageRefreshMutationsProps): React.ReactNode {
-  const {channel, type, previewKitConnection, loadersConnection} = props
+  const {comlink, type, previewKitConnection, loadersConnection} = props
   const id = useMemo(() => getPublishedId(props.id), [props.id])
   const {draft, published, ready} = useEditState(id, type, 'low')
   const livePreviewEnabled =
@@ -24,7 +24,7 @@ function PostMessageRefreshMutations(props: PostMessageRefreshMutationsProps): R
     return (
       <PostMessageRefreshMutationsInner
         key={id}
-        channel={channel}
+        comlink={comlink}
         draft={draft}
         livePreviewEnabled={livePreviewEnabled}
         published={published}
@@ -36,13 +36,13 @@ function PostMessageRefreshMutations(props: PostMessageRefreshMutationsProps): R
 }
 
 interface PostMessageRefreshMutationsInnerProps
-  extends Pick<PostMessageRefreshMutationsProps, 'channel'> {
+  extends Pick<PostMessageRefreshMutationsProps, 'comlink'> {
   livePreviewEnabled: boolean
   draft: SanityDocument | null
   published: SanityDocument | null
 }
 function PostMessageRefreshMutationsInner(props: PostMessageRefreshMutationsInnerProps) {
-  const {channel, draft, published, livePreviewEnabled} = props
+  const {comlink, draft, published, livePreviewEnabled} = props
   const [prevDraft, setPrevDraft] = useState(draft)
   const [prevPublished, setPrevPublished] = useState(published)
 
@@ -50,24 +50,30 @@ function PostMessageRefreshMutationsInner(props: PostMessageRefreshMutationsInne
     if (prevDraft?._rev !== draft?._rev) {
       startTransition(() => setPrevDraft(draft))
       if (draft) {
-        channel?.send('overlays', 'presentation/refresh', {
-          source: 'mutation',
-          livePreviewEnabled,
-          document: parseDocument(draft),
+        comlink?.post({
+          type: 'presentation/refresh',
+          data: {
+            source: 'mutation',
+            livePreviewEnabled,
+            document: parseDocument(draft),
+          },
         })
       }
     }
     if (prevPublished?._rev !== published?._rev) {
       startTransition(() => setPrevPublished(published))
       if (published) {
-        channel?.send('overlays', 'presentation/refresh', {
-          source: 'mutation',
-          livePreviewEnabled,
-          document: parseDocument(published),
+        comlink?.post({
+          type: 'presentation/refresh',
+          data: {
+            source: 'mutation',
+            livePreviewEnabled,
+            document: parseDocument(published),
+          },
         })
       }
     }
-  }, [channel, draft, livePreviewEnabled, prevDraft?._rev, prevPublished?._rev, published])
+  }, [comlink, draft, livePreviewEnabled, prevDraft?._rev, prevPublished?._rev, published])
 
   return null
 }
