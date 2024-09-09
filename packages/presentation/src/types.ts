@@ -1,4 +1,11 @@
+import type {
+  LoaderControllerMsg,
+  LoaderNodeMsg,
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg,
+} from '@repo/visual-editing-helpers'
 import type {ClientPerspective, QueryParams} from '@sanity/client'
+import type {ConnectionInstance} from '@sanity/comlink'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,
@@ -6,7 +13,6 @@ import type {
 import type {ComponentType} from 'react'
 import type {Observable} from 'rxjs'
 import type {SanityClient} from 'sanity'
-
 import type {DocumentStore} from './internals'
 
 export type {PreviewUrlResolver, PreviewUrlResolverOptions}
@@ -82,6 +88,7 @@ export type DocumentLocationResolvers = Record<
  */
 export type DocumentLocationResolverObject<K extends string = string> = {
   select: Record<K, string>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolve: (value: Record<K, any> | null) => DocumentLocationsState | null | undefined | void
 }
 
@@ -132,6 +139,9 @@ export type DocumentResolver =
       >
     }
 
+/**
+ * @public
+ */
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
   icon?: ComponentType
@@ -145,7 +155,7 @@ export interface PresentationPluginOptions {
     mainDocuments?: DocumentResolver[]
     locations?: DocumentLocationResolvers | DocumentLocationResolver
   }
-  previewUrl: PreviewUrlOption
+  previewUrl?: PreviewUrlOption
   components?: {
     unstable_navigator?: NavigatorOptions
   }
@@ -261,3 +271,15 @@ export interface MainDocumentState {
   path: string
   document: MainDocument | undefined
 }
+
+/**
+ * @internal
+ */
+export type VisualEditingConnection = ConnectionInstance<
+  VisualEditingNodeMsg,
+  VisualEditingControllerMsg
+>
+/**
+ * @internal
+ */
+export type LoaderConnection = ConnectionInstance<LoaderNodeMsg, LoaderControllerMsg>

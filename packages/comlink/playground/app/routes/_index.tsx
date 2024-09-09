@@ -1,18 +1,18 @@
-import {v4 as uuid} from 'uuid'
 import type {MetaFunction} from '@remix-run/node'
-import {useCallback, useEffect, useMemo, useState} from 'react'
 import {
   createController,
-  type Controller,
   type ConnectionInstance,
+  type Controller,
   type ProtocolMessage,
   type WithoutResponse,
 } from '@sanity/comlink'
-import {Card} from '../components/Card'
+import {useCallback, useEffect, useMemo, useState} from 'react'
+import {v4 as uuid} from 'uuid'
 import {Button} from '../components/Button'
-import {MessageStack} from '../components/MessageStack'
-import {MessageControls} from '../components/MessageControls'
+import {Card} from '../components/Card'
 import {Frame} from '../components/Frame'
+import {MessageControls} from '../components/MessageControls'
+import {MessageStack} from '../components/MessageStack'
 import {type ControllerMessage, type NodeMessage} from '../types'
 
 export const meta: MetaFunction = () => {
@@ -33,14 +33,13 @@ export default function Index() {
   > | null>(null)
 
   useEffect(() => {
-    const controller = createController()
+    const controller = createController({targetOrigin: '*'})
     setController(controller)
 
     const connection = controller.createConnection<NodeMessage, ControllerMessage>({
       connectTo: 'iframe',
       heartbeat: true,
       name: 'window',
-      origin: '*',
     })
 
     setConnection(connection)

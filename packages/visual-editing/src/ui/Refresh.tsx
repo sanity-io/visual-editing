@@ -1,57 +1,57 @@
-import {type FunctionComponent, useEffect, useRef} from 'react'
-
-import type {VisualEditingChannel, VisualEditingOptions} from '../types'
+import {useEffect, useRef, type FunctionComponent} from 'react'
+import type {VisualEditingNode, VisualEditingOptions} from '../types'
 
 /**
  * @internal
  */
 export const Refresh: FunctionComponent<
   {
-    channel: VisualEditingChannel
+    comlink: VisualEditingNode
   } & Required<Pick<VisualEditingOptions, 'refresh'>>
 > = (props) => {
-  const {channel, refresh} = props
+  const {comlink, refresh} = props
 
   const manualRefreshRef = useRef(0)
   const mutationRefreshRef = useRef(0)
+
   useEffect(
     () =>
-      channel.subscribe((type, data) => {
-        if (type === 'presentation/refresh' && data.source === 'manual') {
+      comlink.on('presentation/refresh', (data) => {
+        if (data.source === 'manual') {
           clearTimeout(manualRefreshRef.current)
           const promise = refresh(data)
           if (promise === false) return
-          channel.send('visual-editing/refreshing', data)
+          comlink.post({type: 'visual-editing/refreshing', data})
           let timedOut = false
           manualRefreshRef.current = window.setTimeout(() => {
-            channel.send('visual-editing/refreshed', data)
+            comlink.post({type: 'visual-editing/refreshed', data})
             timedOut = true
           }, 3000)
           promise?.finally?.(() => {
             if (timedOut) return
             clearTimeout(manualRefreshRef.current)
-            channel.send('visual-editing/refreshed', data)
+            comlink.post({type: 'visual-editing/refreshed', data})
           })
-        } else if (type === 'presentation/refresh' && data.source === 'mutation') {
+        } else if (data.source === 'mutation') {
           clearTimeout(mutationRefreshRef.current)
           const promise = refresh(data)
           if (promise === false) return
-          channel.send('visual-editing/refreshing', data)
+          comlink.post({type: 'visual-editing/refreshing', data})
           // Send an additional refresh to account for Content Lake eventual consistency
           mutationRefreshRef.current = window.setTimeout(() => {
             const promise = refresh(data)
             if (promise === false) return
-            channel.send('visual-editing/refreshing', data)
+            comlink.post({type: 'visual-editing/refreshing', data})
             promise?.finally?.(() => {
-              channel.send('visual-editing/refreshed', data)
-            }) || channel.send('visual-editing/refreshed', data)
+              comlink.post({type: 'visual-editing/refreshed', data})
+            }) || comlink.post({type: 'visual-editing/refreshed', data})
           }, 1000)
           promise?.finally?.(() => {
-            channel.send('visual-editing/refreshed', data)
-          }) || channel.send('visual-editing/refreshed', data)
+            comlink.post({type: 'visual-editing/refreshed', data})
+          }) || comlink.post({type: 'visual-editing/refreshed', data})
         }
       }),
-    [channel, refresh],
+    [comlink, refresh],
   )
 
   return null

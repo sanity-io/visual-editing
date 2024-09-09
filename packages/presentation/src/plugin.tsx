@@ -1,7 +1,6 @@
 import type {SanityDocument} from '@sanity/client'
 import {lazy, Suspense} from 'react'
-import {definePlugin, type InputProps, isDocumentSchemaType} from 'sanity'
-
+import {definePlugin, isDocumentSchemaType, type InputProps} from 'sanity'
 import {DEFAULT_TOOL_ICON, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
 import {PresentationDocumentHeader} from './document/PresentationDocumentHeader'
 import {PresentationDocumentProvider} from './document/PresentationDocumentProvider'
@@ -9,6 +8,7 @@ import {openInStructure} from './fieldActions/openInStructure'
 import {getIntentState} from './getIntentState'
 import {presentationUsEnglishLocaleBundle} from './i18n'
 import {getPublishedId} from './internals'
+import {PresentationSpinner} from './PresentationSpinner'
 import {router} from './router'
 import type {
   DocumentLocationResolverObject,
@@ -17,7 +17,7 @@ import type {
   PresentationPluginOptions,
 } from './types'
 
-const PresentationTool = lazy(() => import('./PresentationTool'))
+const PresentationTool = lazy(() => import('./PresentationToolGrantsCheck'))
 const BroadcastDisplayedDocument = lazy(() => import('./loader/BroadcastDisplayedDocument'))
 
 /**
@@ -66,7 +66,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
               schemaType={props.schemaType}
             />
           )}
-          {props.renderDefault(props)}
+          <Suspense fallback={<PresentationSpinner />}>{props.renderDefault(props)}</Suspense>
           <Suspense key="broadcast-displayed-document">
             <BroadcastDisplayedDocument key={documentId} value={value} />
           </Suspense>

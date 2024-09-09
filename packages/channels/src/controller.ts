@@ -1,5 +1,4 @@
 import {v4 as uuid} from 'uuid'
-
 import {HANDSHAKE_INTERVAL, HEARTBEAT_INTERVAL, RESPONSE_TIMEOUT} from './constants'
 import {isHandshakeMessage, isLegacyHandshakeMessage} from './helpers'
 import type {
@@ -142,8 +141,8 @@ function createChannelsControllerInternal<
     if (isHandshakeMessage(data.type)) {
       const channel = channels.find((channel) => channel.config.id === data.from)
       if (channel && data.type === 'handshake/syn-ack') {
-        setChannelStatus(channel, 'connected')
         sendHandshake(channel, 'handshake/ack', {id: channel.id})
+        setChannelStatus(channel, 'connected')
       }
     }
   }

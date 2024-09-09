@@ -1,6 +1,6 @@
 {
   "name": "@sanity/insert-menu",
-  "version": "1.0.9",
+  "version": "1.0.10-canary.37",
   "description": "",
   "keywords": [],
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/insert-menu#readme",
@@ -35,7 +35,7 @@
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
     "dev:workshop": "workshop dev",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "ts:check": "tsc --noEmit"
   },
@@ -46,23 +46,23 @@
     "lodash.startcase": "^4.4.0"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "^6.11.1",
-    "@sanity/types": "^3.57.2",
+    "@sanity/pkg-utils": "^6.11.3",
+    "@sanity/types": "^3.60.0",
     "@sanity/ui-workshop": "^2.0.16",
     "@types/lodash.startcase": "^4.4.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-import": "^2.30.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "lint-staged": "^15.2.5",
+    "lint-staged": "^15.2.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-is": "^18.3.1",
-    "typescript": "5.6.2"
+    "typescript": "5.6.3"
   },
   "peerDependencies": {
-    "@sanity/types": "^3.57.2",
+    "@sanity/types": "^3.60.0",
     "react": "^18.3 || >=19.0.0-rc",
     "react-dom": "^18.3 || >=19.0.0-rc",
     "react-is": "^18.3 || >=19.0.0-rc"

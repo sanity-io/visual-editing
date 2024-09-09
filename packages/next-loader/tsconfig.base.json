@@ -1,0 +1,18 @@
+{
+  "extends": "@sanity/pkg-utils/tsconfig/strictest.json",
+  "compilerOptions": {
+    "paths": {
+      "@sanity/next-loader/client-components/live": ["./src/client-components/live/index.ts"],
+      "@sanity/next-loader/client-components/live-stream": [
+        "./src/client-components/live-stream/index.ts"
+      ],
+      "@sanity/next-loader/hooks": ["./src/hooks/index.ts"],
+      "@sanity/next-loader/server-actions": ["./src/server-actions/index.ts"],
+      "@sanity/next-loader": ["./src/index"]
+    },
+    "rootDir": ".",
+    "outDir": "dist",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  }
+}

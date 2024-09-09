@@ -1,0 +1,36 @@
+{
+  "name": "@repo/sanity-extracted-schema",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The extracted schema from @repo/sanity-schema used for TypeGen",
+  "exports": {
+    "./cross-dataset-references.json": "./cross-dataset-references.json",
+    "./live-demo.json": "./live-demo.json",
+    "./page-builder-demo.json": "./page-builder-demo.json",
+    "./shoes.json": "./shoes.json"
+  },
+  "scripts": {
+    "build": "sanity schema extract --workspace cross-dataset-references --path ./cross-dataset-references.json && sanity schema extract --workspace live-demo --path ./live-demo.json && sanity schema extract --workspace page-builder-demo --path ./page-builder-demo.json && sanity schema extract --workspace shoes --path ./shoes.json",
+    "lint": "eslint --cache ."
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "prettier": "@repo/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "@repo/env": "workspace:*",
+    "@repo/sanity-schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "eslint": "^8.57.1",
+    "sanity": "3.60.0",
+    "styled-components": "^6.1.13",
+    "typescript": "5.6.3"
+  }
+}

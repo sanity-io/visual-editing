@@ -1,7 +1,7 @@
 <script lang="ts">
+  import {afterNavigate, goto, invalidateAll} from '$app/navigation'
   import {onMount} from 'svelte'
   import {enableVisualEditing, type HistoryAdapterNavigate} from '../dist/index.js'
-  import {afterNavigate, goto, invalidateAll} from '$app/navigation'
   import type {VisualEditingProps} from './types'
 
   export let zIndex: VisualEditingProps['zIndex'] = undefined

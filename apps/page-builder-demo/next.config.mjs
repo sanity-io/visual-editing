@@ -7,16 +7,6 @@ const nextConfig = {
       displayName: true,
     },
   },
-  experimental: {
-    taint: true,
-  },
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
-
-  transpilePackages: ['apps-common'],
 }
 
 export default withBundleAnalyzer({

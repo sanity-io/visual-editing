@@ -1,7 +1,6 @@
 import type {ClientPerspective} from '@sanity/client'
 import isEqual from 'fast-deep-equal'
-import {type MutableRefObject, useCallback, useMemo, useRef, useState} from 'react'
-
+import {useCallback, useMemo, useRef, useState, type MutableRefObject} from 'react'
 import type {FrameState, PresentationPerspective} from './types'
 
 export type DocumentOnPage = {

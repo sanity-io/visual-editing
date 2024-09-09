@@ -3,8 +3,8 @@
  * component in a way that is easy to lazy load for the `enableVisualEditing` function.
  */
 
+import {StrictMode} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
-
 import {OVERLAY_ID} from '../constants'
 import type {VisualEditingOptions} from '../types'
 import {VisualEditing} from './VisualEditing'
@@ -28,7 +28,8 @@ export function renderVisualEditing(
         root = null
       }
       if (node) {
-        document.body.removeChild(node)
+        node.parentNode!.removeChild(node)
+
         node = null
       }
     }, 1000)
@@ -41,12 +42,18 @@ export function renderVisualEditing(
     // eslint-disable-next-line no-warning-comments
     // @TODO after the element is `sanity-visual-editing` instead of `div`, stop setting this ID
     node.id = OVERLAY_ID
-    document.body.appendChild(node)
+
+    // render sanity-visual-editing after closing </body> tag
+    document.body.parentNode!.insertBefore(node, document.body.nextSibling)
   }
 
   if (!root) {
     root = createRoot(node)
   }
 
-  root.render(<VisualEditing history={history} refresh={refresh} zIndex={zIndex} />)
+  root.render(
+    <StrictMode>
+      <VisualEditing history={history} refresh={refresh} zIndex={zIndex} />
+    </StrictMode>,
+  )
 }
