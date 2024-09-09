@@ -1,0 +1,14 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "outputs": [
+        "cross-dataset-references.json",
+        "live-demo.json",
+        "page-builder-demo.json",
+        "shoes.json"
+      ]
+    }
+  }
+}

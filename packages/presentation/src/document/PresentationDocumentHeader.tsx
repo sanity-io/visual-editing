@@ -1,8 +1,7 @@
 import {rem, Stack} from '@sanity/ui'
-import {type ReactNode, useContext} from 'react'
+import {useContext, type ReactNode} from 'react'
 import {type ObjectSchemaType} from 'sanity'
 import {styled} from 'styled-components'
-
 import {type PublishedId} from '../internals'
 import type {PresentationPluginOptions} from '../types'
 import {useDocumentLocations} from '../useDocumentLocations'

@@ -1,14 +1,15 @@
+import {loadQuery} from '@/components/sanity.ssr'
+import {shoe} from '@/queries'
+import type {ShoeResult} from '@/types'
+import {formatCurrency} from '@/utils'
 import {PortableText} from '@portabletext/react'
-import {shoe, type ShoeParams, type ShoeResult} from 'apps-common/queries'
-import {formatCurrency} from 'apps-common/utils'
-import type {GetStaticProps, GetStaticPaths, InferGetStaticPropsType} from 'next'
+import {ClientPerspective, ContentSourceMap} from '@sanity/client'
+import {useQuery} from '@sanity/react-loader'
+import type {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
-import {ClientPerspective, ContentSourceMap} from '@sanity/client'
 import type {SharedProps} from '../../_app'
-import {loadQuery} from '@/components/sanity.ssr'
-import {useQuery} from '@sanity/react-loader'
+import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
 
 interface Props extends SharedProps {
   params: {slug: string}
@@ -25,7 +26,7 @@ export const getStaticProps = (async (context) => {
     shoe,
     {
       slug,
-    } satisfies ShoeParams,
+    },
     {perspective},
   )
   return {props: {draftMode, params: {slug}, initial}, revalidate: 1}
@@ -50,7 +51,7 @@ export default function ShoePage(props: InferGetStaticPropsType<typeof getStatic
     error,
     loading,
     encodeDataAttribute,
-  } = useQuery<ShoeResult>(shoe, params satisfies ShoeParams, {initial})
+  } = useQuery<ShoeResult>(shoe, params, {initial})
 
   if (error) {
     throw error
@@ -159,30 +160,42 @@ export default function ShoePage(props: InferGetStaticPropsType<typeof getStatic
                 {product.price ? formatCurrency(product.price) : 'FREE'}
               </p>
 
-              {product.brand?.name && (
-                <div>
-                  <h2 className="text-sm font-medium text-gray-900">Brand</h2>
-                  <div className="flex items-center gap-x-2">
-                    <Image
-                      className="h-10 w-10 rounded-full bg-gray-50"
-                      src={
-                        product.brand?.logo?.asset
-                          ? urlForCrossDatasetReference(product.brand.logo)
-                              .width(48)
-                              .height(48)
-                              .url()
-                          : `https://source.unsplash.com/featured/48x48?${encodeURIComponent(
-                              product.brand.name,
-                            )}`
-                      }
-                      width={24}
-                      height={24}
-                      alt={product.brand?.logo?.alt || ''}
-                    />
-                    <span className="text-lg font-bold">{product.brand.name}</span>
+              {
+                // @ts-expect-error - cross dataset reference typegen not working yet
+                product.brand?.name && (
+                  <div>
+                    <h2 className="text-sm font-medium text-gray-900">Brand</h2>
+                    <div className="flex items-center gap-x-2">
+                      <Image
+                        className="h-10 w-10 rounded-full bg-gray-50"
+                        src={
+                          // @ts-expect-error - cross dataset reference typegen not working yet
+                          product.brand?.logo?.asset
+                            ? // @ts-expect-error - cross dataset reference typegen not working yet
+                              urlForCrossDatasetReference(product.brand.logo)
+                                .width(48)
+                                .height(48)
+                                .url()
+                            : `https://source.unsplash.com/featured/48x48?${encodeURIComponent(
+                                // @ts-expect-error - cross dataset reference typegen not working yet
+                                product.brand.name,
+                              )}`
+                        }
+                        width={24}
+                        height={24}
+                        // @ts-expect-error - cross dataset reference typegen not working yet
+                        alt={product.brand?.logo?.alt || ''}
+                      />
+                      <span className="text-lg font-bold">
+                        {
+                          // @ts-expect-error - cross dataset reference typegen not working yet
+                          product.brand.name
+                        }
+                      </span>
+                    </div>
                   </div>
-                </div>
-              )}
+                )
+              }
 
               <form className="mt-3">
                 <button

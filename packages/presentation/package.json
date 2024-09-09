@@ -1,6 +1,6 @@
 {
   "name": "@sanity/presentation",
-  "version": "1.16.5",
+  "version": "1.16.6-canary.33",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/presentation#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -34,71 +34,22 @@
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "test": "vitest --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": "@sanity/prettier-config",
+  "prettier": "@repo/prettier-config",
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "react",
-      "react-hooks",
-      "simple-import-sort",
-      "prettier"
-    ],
     "extends": [
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:react/jsx-runtime",
-      "eslint:recommended",
-      "plugin:prettier/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
+      "@repo/eslint-config"
     ],
-    "rules": {
-      "no-console": "error",
-      "no-warning-comments": [
-        "warn",
-        {
-          "location": "start",
-          "terms": [
-            "todo",
-            "@todo",
-            "fixme"
-          ]
-        }
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/member-delimiter-style": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
-      "prettier/prettier": "warn",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react/prop-types": "off",
-      "simple-import-sort/exports": "warn",
-      "simple-import-sort/imports": "warn"
-    },
     "root": true
   },
   "dependencies": {
+    "@sanity/comlink": "workspace:*",
     "@sanity/icons": "^3.4.0",
-    "@sanity/preview-url-secret": "workspace:^",
+    "@sanity/preview-url-secret": "workspace:*",
     "@sanity/ui": "^2.8.9",
     "@sanity/uuid": "3.0.2",
     "@types/lodash.isequal": "^4.5.8",
@@ -108,27 +59,31 @@
     "lodash.isequal": "^4.5.0",
     "mendoza": "3.0.7",
     "mnemonist": "0.39.8",
-    "path-to-regexp": "^6.2.2",
+    "path-to-regexp": "^6.3.0",
+    "qrcode.react": "4.0.1",
     "rxjs": "^7.8.1",
-    "suspend-react": "0.1.3"
+    "suspend-react": "0.1.3",
+    "use-effect-event": "^1.0.2"
   },
   "devDependencies": {
-    "@repo/channels": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/visual-editing-helpers": "workspace:*",
-    "@sanity/client": "^6.21.3",
-    "@sanity/pkg-utils": "6.11.1",
+    "@sanity/client": "^6.22.1",
+    "@sanity/pkg-utils": "6.11.2",
     "@types/lodash.get": "^4.4.9",
-    "happy-dom": "^15.7.3",
+    "eslint": "^8.57.1",
+    "happy-dom": "^15.7.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sanity": "^3.57.2",
+    "sanity": "^3.60.0",
     "styled-components": "6.1.13",
-    "typescript": "5.6.2",
-    "vitest": "^2.0.5"
+    "typescript": "5.6.3",
+    "vitest": "^2.1.2"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.21.3"
+    "@sanity/client": "^6.22.1"
   },
   "engines": {
     "node": ">=16.14"

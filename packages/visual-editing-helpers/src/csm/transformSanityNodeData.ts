@@ -11,7 +11,6 @@ import {
   string,
   unknown,
 } from 'valibot'
-
 import {pathToUrlString} from '../pathToUrlString'
 import type {SanityNode, SanityStegaNode} from '../types'
 import {urlStringToPath} from '../urlStringToPath'

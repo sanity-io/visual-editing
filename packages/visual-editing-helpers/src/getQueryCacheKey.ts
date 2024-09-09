@@ -1,5 +1,4 @@
 import type {QueryParams} from '@sanity/client'
-
 import type {QueryCacheKey} from './types'
 
 /**

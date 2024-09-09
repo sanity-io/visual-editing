@@ -1,5 +1,4 @@
 import type {SanityClient} from '@sanity/client'
-
 import type {HistoryRefresh, VisualEditingOptions} from '../dist'
 
 /** @public */

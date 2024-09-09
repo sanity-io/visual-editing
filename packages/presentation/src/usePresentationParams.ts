@@ -1,5 +1,4 @@
 import {useContext} from 'react'
-
 import {PresentationParamsContext} from './PresentationParamsContext'
 import type {PresentationParams} from './types'
 

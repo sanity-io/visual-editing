@@ -1,4 +1,21 @@
-import type {MSG_HEARTBEAT, MSG_RESPONSE} from './constants'
+import {
+  MSG_DISCONNECT,
+  MSG_HANDSHAKE_ACK,
+  MSG_HANDSHAKE_SYN,
+  MSG_HANDSHAKE_SYN_ACK,
+  MSG_HEARTBEAT,
+  type MSG_RESPONSE,
+} from './constants'
+
+/**
+ * @public
+ */
+export type Status = string // @todo strongly type these
+
+/**
+ * @public
+ */
+export type StatusEvent = {channel: string; status: Status}
 
 /**
  * @public
@@ -28,6 +45,7 @@ export interface RequestData<S extends Message> {
   responseTo?: string
   type: MessageType
   resolvable?: PromiseWithResolvers<S['response']>
+  signal?: AbortSignal
 }
 
 /**
@@ -39,14 +57,14 @@ export type WithoutResponse<T extends Message> = Omit<T, 'response'>
  * @public
  */
 export interface ListenInput {
-  domain: string
-  from: string
-  to: string
-  type: string | string[]
-  matches: boolean
   count?: number
+  domain: string
+  exclude: string[]
+  from: string
+  include: string[]
   responseType: string
   target: MessageEventSource | undefined
+  to: string
 }
 
 /**
@@ -117,3 +135,30 @@ export interface HeartbeatMessage {
   type: typeof MSG_HEARTBEAT
   data: undefined
 }
+
+/**
+ * @internal
+ */
+export interface DisconnectMessage {
+  type: typeof MSG_DISCONNECT
+  data: undefined
+}
+
+/**
+ * @internal
+ */
+export type HandshakeMessageType =
+  | typeof MSG_HANDSHAKE_ACK
+  | typeof MSG_HANDSHAKE_SYN
+  | typeof MSG_HANDSHAKE_SYN_ACK
+
+/**
+ * @internal
+ */
+export type InternalMessageType =
+  | typeof MSG_DISCONNECT
+  | typeof MSG_HANDSHAKE_ACK
+  | typeof MSG_HANDSHAKE_SYN
+  | typeof MSG_HANDSHAKE_SYN_ACK
+  | typeof MSG_HEARTBEAT
+  | typeof MSG_RESPONSE

@@ -1,10 +1,10 @@
 import type {MessageType} from './types'
 
 /** @internal */
-export const DOMAIN = 'sanity/channels'
+export const DOMAIN = 'sanity/comlink'
 
 /** @internal */
-export const RESPONSE_TIMEOUT = 1000
+export const RESPONSE_TIMEOUT = 10000
 
 /** @internal */
 export const HEARTBEAT_INTERVAL = 1000
@@ -15,24 +15,24 @@ export const HANDSHAKE_INTERVAL = 500
 /**
  * @public
  */
-export const MSG_RESPONSE = 'channel/response'
+export const MSG_RESPONSE = 'comlink/response'
 
 /**
  * @public
  */
-export const MSG_HEARTBEAT = 'channel/heartbeat'
+export const MSG_HEARTBEAT = 'comlink/heartbeat'
 
 /** @internal */
-export const MSG_DISCONNECT = 'channel/disconnect'
+export const MSG_DISCONNECT = 'comlink/disconnect'
 
 /** @internal */
-export const MSG_HANDSHAKE_SYN = 'channel/handshake/syn'
+export const MSG_HANDSHAKE_SYN = 'comlink/handshake/syn'
 
 /** @internal */
-export const MSG_HANDSHAKE_SYN_ACK = 'channel/handshake/syn-ack'
+export const MSG_HANDSHAKE_SYN_ACK = 'comlink/handshake/syn-ack'
 
 /** @internal */
-export const MSG_HANDSHAKE_ACK = 'channel/handshake/ack'
+export const MSG_HANDSHAKE_ACK = 'comlink/handshake/ack'
 
 /** @internal */
 export const HANDSHAKE_MSG_TYPES = [
