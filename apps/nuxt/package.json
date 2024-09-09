@@ -8,20 +8,22 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview"
   },
+  "prettier": "@repo/prettier-config",
   "dependencies": {
-    "@nuxtjs/sanity": "^1.12.1",
+    "@nuxtjs/sanity": "^1.12.2",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@repo/channels": "workspace:*",
-    "@sanity/client": "^6.21.3",
+    "@repo/env": "workspace:*",
+    "@repo/studio-url": "workspace:*",
+    "@sanity/client": "^6.22.1",
     "@sanity/presentation": "workspace:*",
     "@sanity/preview-url-secret": "workspace:*",
     "@sanity/visual-editing": "workspace:*",
-    "apps-common": "workspace:*",
-    "rxjs": "^7.8.1",
-    "sanity": "^3.57.2"
+    "sanity": "^3.60.0"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^1.4.2",
-    "nuxt": "^3.13.1"
+    "@nuxt/devtools": "^1.6.0",
+    "@repo/prettier-config": "workspace:*",
+    "nuxt": "^3.13.2"
   }
 }

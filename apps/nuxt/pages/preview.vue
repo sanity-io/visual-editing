@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import {type DisableVisualEditing, enableVisualEditing} from '@sanity/visual-editing'
+import {enableVisualEditing, type DisableVisualEditing} from '@sanity/visual-editing'
 
 let disable: DisableVisualEditing
 onMounted(() => {

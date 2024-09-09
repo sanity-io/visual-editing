@@ -1,7 +1,6 @@
-import {CheckmarkCircleIcon, CloseCircleIcon, LockIcon} from '@sanity/icons'
+import {ApiIcon, CheckmarkCircleIcon, CloseCircleIcon, LockIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
-
-import {schemaType, SECRET_TTL} from '../constants'
+import {schemaIdSingleton, schemaType, SECRET_TTL} from '../constants'
 
 export const debugUrlSecretsType = defineType({
   type: 'document',
@@ -14,6 +13,7 @@ export const debugUrlSecretsType = defineType({
       type: 'string',
       name: 'secret',
       title: 'Secret',
+      hidden: ({document}) => document?._id === schemaIdSingleton,
     },
     {
       type: 'string',
@@ -33,11 +33,19 @@ export const debugUrlSecretsType = defineType({
   ],
   preview: {
     select: {
+      _id: '_id',
       source: 'source',
       studioUrl: 'studioUrl',
       updatedAt: '_updatedAt',
     },
     prepare(data) {
+      if (data?._id === schemaIdSingleton) {
+        return {
+          title: '@sanity/preview-url-secret is setup correctly',
+          subtitle: 'Never expires',
+          media: ApiIcon,
+        }
+      }
       const url = data.studioUrl ? new URL(data.studioUrl, location.origin) : undefined
       const updatedAt = new Date(data.updatedAt).getTime()
       const expiresAt = new Date(updatedAt + 1000 * SECRET_TTL)

@@ -3,6 +3,7 @@
   "extends": ["//"],
   "tasks": {
     "build": {
+      "dependsOn": ["@sanity/core-loader#build", "^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
       "env": ["NUXT_ENV_VERCEL_ENV"]
     },

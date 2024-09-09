@@ -1,13 +1,12 @@
 import {
-  type ContentSourceMap,
-  type ContentSourceMapParsedPath,
   getPublishedId,
   jsonPathToStudioPath,
   resolvedKeyedSourcePath,
   resolveMapping,
   studioPath,
+  type ContentSourceMap,
+  type ContentSourceMapParsedPath,
 } from '@sanity/client/csm'
-
 import type {SanityNode} from '../types'
 import type {SanityNodeContext} from './wrap/types'
 

@@ -1,6 +1,6 @@
+import {Card, usePrefersDark, useTheme_v2} from '@sanity/ui'
 import type {FunctionComponent} from 'react'
 import {styled} from 'styled-components'
-
 import type {DragSkeleton} from '../types'
 
 const Root = styled.div<{
@@ -10,31 +10,21 @@ const Root = styled.div<{
   $offsetY: number
   $scaleFactor: number
 }>`
-  --drag-preview-bg: #f6f6f8;
-  --drag-preview-border: #ffffff;
-  --drag-preview-opacity: 0.875;
-  --drag-preview-skeleton-fill: #e3e4e8;
+  --drag-preview-opacity: 0.98;
   --drag-preview-skeleton-stroke: #ffffff;
-  --drag-preview-handle-fill: #727892;
 
   @media (prefers-color-scheme: dark) {
-    --drag-preview-bg: #13141b;
-    --drag-preview-border: #383d51;
-    --drag-preview-skeleton-fill: #1b1d27;
     --drag-preview-skeleton-stroke: #383d51;
-    --drag-preview-handle-fill: #515870;
   }
 
   position: fixed;
-  background: var(--drag-preview-bg);
+  display: grid;
   pointer-events: none;
-  transform-origin: 0 0;
-  transform: ${({$offsetX, $offsetY, $scaleFactor}) =>
-    `translate(calc(var(--drag-preview-x) + ${$offsetX}px), calc(var(--drag-preview-y) + ${$offsetY}px)) scale(${$scaleFactor})`};
+  transform: ${({$scaleFactor, $width, $height}) =>
+    `translate(calc(var(--drag-preview-x) - ${$width / 2}px), calc(var(--drag-preview-y) - ${$height / 2}px)) scale(${$scaleFactor})`};
   width: ${({$width}) => `${$width}px`};
   height: ${({$height}) => `${$height}px`};
   z-index: 9999999;
-  border: 1px solid var(--drag-preview-border);
   opacity: var(--drag-preview-opacity);
 
   .drag-preview-content-wrapper {
@@ -44,15 +34,18 @@ const Root = styled.div<{
     container-type: inline-size;
   }
 
+  [data-ui='card'] {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
   .drag-preview-skeleton {
     position: absolute;
     inset: 0;
 
     rect {
-      fill: var(--drag-preview-skeleton-fill);
       stroke: var(--drag-preview-skeleton-stroke);
-      opacity: var(--drag-preview-opacity);
-      stroke-width: 1;
     }
   }
 
@@ -78,6 +71,9 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
   const offsetX = skeleton.offsetX * scaleFactor
   const offsetY = skeleton.offsetY * scaleFactor
 
+  const prefersDark = usePrefersDark()
+  const theme = useTheme_v2()
+
   return (
     <Root
       $width={skeleton.w}
@@ -86,20 +82,32 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
       $offsetY={offsetY}
       $scaleFactor={scaleFactor}
     >
-      <div className="drag-preview-content-wrapper">
-        {showSkeleton && (
-          <>
-            <svg className="drag-preview-skeleton" viewBox={`0 0 ${skeleton.w} ${skeleton.h}`}>
-              {skeleton.childRects.map((r, i) => (
-                <rect key={i} x={r.x} y={r.y} width={r.w} height={r.h}></rect>
-              ))}
-            </svg>
-            <svg className="drag-preview-handle" viewBox="0 0 25 25">
-              <path d="M9.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM9.5 14a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM11 18.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM17 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15.5 20a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-            </svg>
-          </>
-        )}
-      </div>
+      <Card
+        radius={4}
+        shadow={4}
+        overflow="hidden"
+        tone="transparent"
+        scheme={prefersDark ? 'dark' : 'light'}
+      >
+        <div className="drag-preview-content-wrapper">
+          {showSkeleton && (
+            <>
+              <svg className="drag-preview-skeleton" viewBox={`0 0 ${skeleton.w} ${skeleton.h}`}>
+                {skeleton.childRects.map((r, i) => (
+                  <rect
+                    key={i}
+                    x={r.x}
+                    y={r.y}
+                    width={r.w}
+                    height={r.h}
+                    fill={theme.color.skeleton.from}
+                  ></rect>
+                ))}
+              </svg>
+            </>
+          )}
+        </div>
+      </Card>
     </Root>
   )
 }

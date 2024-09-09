@@ -15,7 +15,7 @@ export type PreviewUrlSecretSchemaType = `sanity.previewUrlSecret`
  * A subset type that's compatible with most SanityClient typings,
  * this makes it easier to use this package in libraries that may use `import type { SanityClient } from 'sanity'`
  * as well as those that use `import type { SanityClient } from '@sanity/client'`
- * @internal
+ * @public
  */
 export type SanityClientLike = {
   config(): {token?: string}

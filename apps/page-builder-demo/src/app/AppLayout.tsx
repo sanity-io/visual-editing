@@ -1,10 +1,11 @@
+'use client'
+
+import type {LayoutQueryResult} from '@/sanity.types'
 import {CloseIcon, MenuIcon} from '@sanity/icons'
-import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
 import clsx from 'clsx'
-import {ReactNode, useState} from 'react'
-import {SiteSettingsData} from './types'
-import {usePathname} from 'next/navigation'
 import Link from 'next/link'
+import {usePathname} from 'next/navigation'
+import {useState} from 'react'
 
 const links = [
   // {
@@ -21,84 +22,80 @@ const links = [
   // },
 ]
 
-export function AppLayout(props: {
-  children?: ReactNode
-  data: {siteSettings: WrappedValue<SiteSettingsData> | null}
-}) {
+export function AppLayout(props: {children: React.ReactNode; data: LayoutQueryResult}) {
   const {children, data} = props
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="mx-auto flex w-full max-w-4xl justify-between gap-2 p-4">
-        <Link
-          className="text-md block flex-none rounded p-3 font-bold leading-none hover:bg-gray-50 sm:ml-0 dark:hover:bg-gray-950"
-          href="/"
-        >
-          <sanity.span>{data?.siteSettings?.title}</sanity.span>
-        </Link>
-
-        <button
-          className="text-md inline-block flex-none rounded p-3 leading-none hover:bg-gray-50 sm:hidden dark:hover:bg-gray-950"
-          onClick={() => setMenuOpen(true)}
-          type="button"
-        >
-          <MenuIcon className="icon" />
-        </button>
-
-        <div className="hidden flex-1 gap-2 sm:flex">
-          {links.map((link, idx) => (
-            <Link
-              className={clsx(
-                'text-md rounded p-3 leading-none hover:bg-gray-50 dark:hover:bg-gray-950',
-                link.href === pathname
-                  ? 'bg-gray-50 text-black dark:bg-gray-950 dark:text-white'
-                  : 'text-gray-600 active:text-black dark:text-gray-400 dark:active:text-white',
-              )}
-              href={link.href}
-              key={idx}
-            >
-              {link.title}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <div className="absolute inset-0 bg-white dark:bg-black" hidden={!menuOpen}>
-        <div className="flex justify-between p-4">
-          <Link
-            className="text-md block p-3 font-bold leading-none"
-            href="/"
-            onClick={() => {
-              setMenuOpen(false)
-            }}
-          >
-            <sanity.span>{data?.siteSettings?.title}</sanity.span>
+      <div className="relative z-40 p-4 transition-all duration-500 hover:bg-white hover:bg-opacity-50 sm:px-5 md:px-6">
+        <div className="-mx-3 flex items-center justify-between gap-2">
+          <Link className="text-md flex-none p-3 text-xl font-extrabold leading-none" href="/">
+            {data?.title}
           </Link>
 
           <button
-            className="text-md rounded p-3 leading-none hover:bg-gray-50 dark:hover:bg-gray-950"
-            onClick={() => setMenuOpen(false)}
+            className="text-md flex-none p-3 leading-none hover:bg-gray-50 sm:hidden dark:hover:bg-gray-950"
+            onClick={() => setMenuOpen(true)}
             type="button"
           >
-            <CloseIcon className="icon" />
+            <MenuIcon className="icon" />
           </button>
-        </div>
 
-        <div className="flex-1 gap-1">
-          {links.map((link, idx) => (
+          <div className="hidden flex-1 gap-2 sm:flex">
+            {links.map((link, idx) => (
+              <Link
+                className={clsx(
+                  'text-md rounded p-3 font-medium leading-none hover:opacity-100',
+                  link.href === pathname ? 'opacity-100' : 'opacity-50',
+                )}
+                href={link.href}
+                key={idx}
+              >
+                {link.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute inset-0 z-50 bg-white dark:bg-black" hidden={!menuOpen}>
+        <div className="-mx-3">
+          <div className="flex justify-between p-4">
             <Link
-              className="text-md block p-5 leading-none text-gray-600 dark:text-gray-400"
-              href={link.href}
-              key={idx}
+              className="block p-3 text-xl font-extrabold leading-none"
+              href="/"
               onClick={() => {
                 setMenuOpen(false)
               }}
             >
-              {link.title}
+              {data?.title}
             </Link>
-          ))}
+
+            <button
+              className="text-md rounded p-3 leading-none hover:bg-gray-50 dark:hover:bg-gray-950"
+              onClick={() => setMenuOpen(false)}
+              type="button"
+            >
+              <CloseIcon className="icon" />
+            </button>
+          </div>
+
+          <div className="flex-1 gap-1">
+            {links.map((link, idx) => (
+              <Link
+                className="text-md block p-5 leading-none text-gray-600 dark:text-gray-400"
+                href={link.href}
+                key={idx}
+                onClick={() => {
+                  setMenuOpen(false)
+                }}
+              >
+                {link.title}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -107,7 +104,7 @@ export function AppLayout(props: {
       </div>
 
       <div className="p-5 text-xs text-gray-600 dark:text-gray-400" hidden={menuOpen}>
-        <sanity.span>{data?.siteSettings?.copyrightText}</sanity.span>
+        {data?.copyrightText}
       </div>
     </div>
   )

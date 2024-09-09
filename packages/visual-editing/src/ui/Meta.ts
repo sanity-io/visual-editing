@@ -1,18 +1,20 @@
-import {type FunctionComponent, useEffect} from 'react'
-
-import type {VisualEditingChannel} from '../types'
+import {useEffect, type FunctionComponent} from 'react'
+import type {VisualEditingNode} from '../types'
 
 /**
  * @internal
  */
 export const Meta: FunctionComponent<{
-  channel?: VisualEditingChannel
+  comlink: VisualEditingNode
 }> = (props) => {
-  const {channel} = props
+  const {comlink} = props
 
   useEffect(() => {
     const sendMeta = () => {
-      channel?.send('visual-editing/meta', {title: document.title})
+      comlink.post({
+        type: 'visual-editing/meta',
+        data: {title: document.title},
+      })
     }
 
     const observer = new MutationObserver(([mutation]) => {
@@ -30,7 +32,7 @@ export const Meta: FunctionComponent<{
     sendMeta()
 
     return () => observer.disconnect()
-  }, [channel])
+  }, [comlink])
 
   return null
 }

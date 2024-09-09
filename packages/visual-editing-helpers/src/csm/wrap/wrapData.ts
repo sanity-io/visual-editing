@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
-  type ContentSourceMap,
-  type ContentSourceMapParsedPath,
   jsonPathToStudioPath,
   studioPath,
+  type ContentSourceMap,
+  type ContentSourceMapParsedPath,
 } from '@sanity/client/csm'
-
 import {resolveSanityNode} from '../resolveSanityNode'
 import {SANITY_KEYS} from './constants'
 import {isArray, isRecord} from './helpers'
