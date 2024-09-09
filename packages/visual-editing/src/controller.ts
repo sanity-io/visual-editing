@@ -9,7 +9,12 @@ import type {
   ResolvedElement,
 } from './types'
 import {handleOverlayDrag} from './util/dragAndDrop'
-import {findSanityNodes, isSanityNode, sanityNodesExistInSameArray} from './util/findSanityNodes'
+import {
+  findSanityNodes,
+  isSanityArrayPath,
+  isSanityNode,
+  sanityNodesExistInSameArray,
+} from './util/findSanityNodes'
 import {getRect} from './util/getRect'
 
 const isElementNode = (target: EventTarget | null): target is ElementNode => {
@@ -145,21 +150,24 @@ export function createOverlayController({
 
         if (event.currentTarget !== hoverStack.at(-1)) return
 
-        const targetIsDraggable = element.getAttribute('data-sanity-draggable')
-
-        if (!targetIsDraggable) return
+        if (element.getAttribute('data-sanity-disable-drag')) return
 
         const targetSanityData = elementsMap.get(element)?.sanity
 
-        if (!targetSanityData || !isSanityNode(targetSanityData)) return
+        if (
+          !targetSanityData ||
+          !isSanityNode(targetSanityData) ||
+          !isSanityArrayPath(targetSanityData.path)
+        )
+          return
 
         const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
           const elData = elementsMap.get(el)
-          const elIsDraggable = el.getAttribute('data-sanity-draggable')
+          const elDragDisabled = el.getAttribute('data-sanity-disable-drag')
 
           if (
             elData &&
-            elIsDraggable &&
+            !elDragDisabled &&
             isSanityNode(elData.sanity) &&
             sanityNodesExistInSameArray(targetSanityData, elData.sanity)
           ) {
