@@ -1,16 +1,19 @@
-import {type ChannelsController, type ChannelStatus, createChannelsController} from '@repo/channels'
 import {
-  getQueryCacheKey,
+  createCompatibilityActors,
   isAltKey,
   isHotkey,
-  type LoaderMsg,
-  type OverlayMsg,
-  type PresentationMsg,
-  type PreviewKitMsg,
-  type VisualEditingConnectionIds,
-  type VisualEditingMsg,
+  type PreviewKitNodeMsg,
+  type VisualEditingControllerMsg,
+  type VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
 import {studioPath} from '@sanity/client/csm'
+import {
+  type ConnectionInstance,
+  type Controller,
+  createChannelMachine,
+  createController,
+  type Message,
+} from '@sanity/comlink'
 import {BoundaryElementProvider, Flex} from '@sanity/ui'
 import {
   lazy,
@@ -27,12 +30,7 @@ import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} fro
 import {type RouterContextValue, useRouter} from 'sanity/router'
 import {styled} from 'styled-components'
 
-import {
-  COMMENTS_INSPECTOR_NAME,
-  DEFAULT_TOOL_NAME,
-  EDIT_INTENT_MODE,
-  MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
-} from './constants'
+import {COMMENTS_INSPECTOR_NAME, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
 import {type CommentIntentGetter, useUnique, useWorkspace} from './internals'
 import {debounce} from './lib/debounce'
 import {Panel} from './panels/Panel'
@@ -53,8 +51,6 @@ import {
 import {RevisionSwitcher} from './RevisionSwitcher'
 import type {
   FrameState,
-  LiveQueriesState,
-  LiveQueriesStateValue,
   PresentationNavigate,
   PresentationPerspective,
   PresentationPluginOptions,
@@ -66,6 +62,7 @@ import {useDocumentsOnPage} from './useDocumentsOnPage'
 import {useMainDocument} from './useMainDocument'
 import {useParams} from './useParams'
 import {usePreviewUrl} from './usePreviewUrl'
+import {useStatus} from './useStatus'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
@@ -107,10 +104,11 @@ export default function PresentationTool(props: {
 
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  const [channel, setChannel] =
-    useState<ChannelsController<VisualEditingConnectionIds, PresentationMsg | LoaderMsg>>()
-
-  const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
+  const [controller, setController] = useState<Controller>()
+  const [visualEditingComlink, setVisualEditingComlink] = useState<ConnectionInstance<
+    VisualEditingNodeMsg,
+    VisualEditingControllerMsg
+  > | null>(null)
 
   const frameStateRef = useRef<FrameState>({
     title: undefined,
@@ -157,9 +155,12 @@ export default function PresentationTool(props: {
     resolvers: props.tool.options?.resolve?.mainDocuments,
   })
 
-  const [overlaysConnection, setOverlaysConnection] = useState<ChannelStatus>('connecting')
-  const [loadersConnection, setLoadersConnection] = useState<ChannelStatus>('connecting')
-  const [previewKitConnection, setPreviewKitConnection] = useState<ChannelStatus>('connecting')
+  // const [overlaysConnection, setOverlaysConnection] = useState<Status>('connecting')
+  const [overlaysConnection, setOverlaysConnection] = useStatus()
+  // const [loadersConnection, setLoadersConnection] = useState<Status>('connecting')
+  const [loadersConnection, setLoadersConnection] = useStatus()
+  // const [previewKitConnection, setPreviewKitConnection] = useState<Status>('connecting')
+  const [previewKitConnection, setPreviewKitConnection] = useStatus()
 
   const [popups] = useState<Set<Window>>(() => new Set())
   const handleOpenPopup = useCallback(
@@ -173,170 +174,141 @@ export default function PresentationTool(props: {
   )
 
   useEffect(() => {
-    if (popups.size && channel) {
-      // loop popups and call channel.addSource
-      for (const source of popups) {
-        if (source && 'closed' in source && !source.closed) {
-          channel.addSource(source)
-        }
-      }
-    }
-  }, [channel, popups, popups.size])
-
-  useEffect(() => {
     const target = iframeRef.current?.contentWindow
 
     if (!target) return
 
-    const nextChannel = createChannelsController<
-      VisualEditingConnectionIds,
-      PresentationMsg | LoaderMsg,
-      LoaderMsg | OverlayMsg | VisualEditingMsg | PreviewKitMsg
-    >({
-      id: 'presentation',
-      target,
-      targetOrigin,
-      connectTo: [
-        {
-          id: 'overlays',
-          heartbeat: true,
-          onStatusUpdate: setOverlaysConnection,
-          onEvent(type, data) {
-            if ((type === 'visual-editing/focus' || type === 'overlay/focus') && 'id' in data) {
-              navigate({
-                type: data.type,
-                id: data.id,
-                path: data.path,
-              })
-            } else if (type === 'visual-editing/navigate' || type === 'overlay/navigate') {
-              const {title, url} = data
-              if (frameStateRef.current.url !== url) {
-                navigate({}, {preview: url})
-              }
-              frameStateRef.current = {title, url}
-            } else if (type === 'visual-editing/meta') {
-              frameStateRef.current.title = data.title
-            } else if (type === 'visual-editing/toggle' || type === 'overlay/toggle') {
-              dispatch({
-                type: ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE,
-                enabled: data.enabled,
-              })
-            } else if (type === 'visual-editing/documents') {
-              setDocumentsOnPage(
-                'visual-editing',
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                data.perspective as unknown as any,
-                data.documents,
-              )
-            } else if (type === 'visual-editing/refreshing' && data.source === 'manual') {
-              clearTimeout(refreshRef.current)
-            } else if (type === 'visual-editing/refreshing' && data.source === 'mutation') {
-              dispatch({type: ACTION_IFRAME_REFRESH})
-            } else if (type === 'visual-editing/refreshed') {
-              dispatch({type: ACTION_IFRAME_LOADED})
-            }
-          },
-        },
-        {
-          id: 'loaders',
-          heartbeat: true,
-          onStatusUpdate: setLoadersConnection,
-          onEvent(type, data) {
-            if (
-              type === 'loader/documents' &&
-              data.projectId === projectId &&
-              data.dataset === dataset
-            ) {
-              setDocumentsOnPage(
-                'loaders',
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                data.perspective as unknown as any,
-                data.documents,
-              )
-            } else if (
-              type === 'loader/query-listen' &&
-              data.projectId === projectId &&
-              data.dataset === dataset
-            ) {
-              if (
-                typeof data.heartbeat === 'number' &&
-                data.heartbeat < MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL
-              ) {
-                throw new Error(
-                  `Loader query listen heartbeat interval must be at least ${MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL}ms`,
-                )
-              }
-              setLiveQueries((prev) => ({
-                ...prev,
-                [getQueryCacheKey(data.query, data.params)]: {
-                  perspective: data.perspective,
-                  query: data.query,
-                  params: data.params,
-                  receivedAt: Date.now(),
-                  heartbeat: data.heartbeat ?? false,
-                } satisfies LiveQueriesStateValue,
-              }))
-            }
-          },
-        },
-        {
-          id: 'preview-kit',
-          heartbeat: true,
-          onStatusUpdate: setPreviewKitConnection,
-          onEvent(type, data) {
-            if (
-              type === 'preview-kit/documents' &&
-              data.projectId === projectId &&
-              data.dataset === dataset
-            ) {
-              setDocumentsOnPage(
-                'preview-kit',
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                data.perspective as unknown as any,
-                data.documents,
-              )
-            }
-          },
-        },
-      ],
-    })
-    setChannel(nextChannel)
+    const controller = createController({targetOrigin})
+    controller.addTarget(target)
+    setController(controller)
 
     return () => {
-      nextChannel.destroy()
-      setChannel(undefined)
+      controller.destroy()
+      setController(undefined)
     }
-  }, [dataset, projectId, setDocumentsOnPage, navigate, targetOrigin])
+  }, [targetOrigin])
 
   useEffect(() => {
-    const interval = setInterval(
-      () =>
-        setLiveQueries((liveQueries) => {
-          if (Object.keys(liveQueries).length < 1) {
-            return liveQueries
-          }
+    const unsubs: Array<() => void> = []
+    if (popups.size && controller) {
+      // loop popups and add targets
+      for (const source of popups) {
+        if (source && 'closed' in source && !source.closed) {
+          unsubs.push(controller.addTarget(source))
+        }
+      }
+    }
+    return () => {
+      unsubs.forEach((unsub) => unsub())
+    }
+  }, [controller, popups, popups.size])
 
-          const now = Date.now()
-          const hasAnyExpired = Object.values(liveQueries).some(
-            (liveQuery) =>
-              liveQuery.heartbeat !== false && now > liveQuery.receivedAt + liveQuery.heartbeat,
-          )
-          if (!hasAnyExpired) {
-            return liveQueries
-          }
-          const next = {} as LiveQueriesState
-          for (const [key, value] of Object.entries(liveQueries)) {
-            if (value.heartbeat !== false && now > value.receivedAt + value.heartbeat) {
-              continue
-            }
-            next[key] = value
-          }
-          return next
-        }),
-      MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
+  useEffect(() => {
+    if (!controller) return
+
+    const comlink = controller.createConnection<VisualEditingNodeMsg, VisualEditingControllerMsg>(
+      {
+        name: 'presentation',
+        heartbeat: true,
+        connectTo: 'visual-editing',
+      },
+      createChannelMachine<VisualEditingNodeMsg, VisualEditingControllerMsg>().provide({
+        actors: createCompatibilityActors<VisualEditingControllerMsg>(),
+      }),
     )
-    return () => clearInterval(interval)
-  }, [])
+
+    comlink.on('visual-editing/focus', (data) => {
+      if (!('id' in data)) return
+      navigate({
+        type: data.type,
+        id: data.id,
+        path: data.path,
+      })
+    })
+
+    comlink.on('visual-editing/navigate', (data) => {
+      const {title, url} = data
+      if (frameStateRef.current.url !== url) {
+        navigate({}, {preview: url})
+      }
+      frameStateRef.current = {title, url}
+    })
+
+    comlink.on('visual-editing/meta', (data) => {
+      frameStateRef.current.title = data.title
+    })
+
+    comlink.on('visual-editing/toggle', (data) => {
+      dispatch({
+        type: ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE,
+        enabled: data.enabled,
+      })
+    })
+
+    comlink.on('visual-editing/documents', (data) => {
+      setDocumentsOnPage(
+        'visual-editing',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data.perspective as unknown as any,
+        data.documents,
+      )
+    })
+
+    comlink.on('visual-editing/refreshing', (data) => {
+      if (data.source === 'manual') {
+        clearTimeout(refreshRef.current)
+      } else if (data.source === 'mutation') {
+        dispatch({type: ACTION_IFRAME_REFRESH})
+      }
+    })
+
+    comlink.on('visual-editing/refreshed', () => {
+      dispatch({type: ACTION_IFRAME_LOADED})
+    })
+
+    comlink.onStatus(setOverlaysConnection)
+
+    const stop = comlink.start()
+    setVisualEditingComlink(comlink)
+
+    return () => {
+      stop()
+      setVisualEditingComlink(null)
+    }
+  }, [controller, navigate, setDocumentsOnPage, setOverlaysConnection, targetOrigin])
+
+  useEffect(() => {
+    if (!controller) return
+    const comlink = controller.createConnection<PreviewKitNodeMsg, Message>(
+      {
+        name: 'presentation',
+        connectTo: 'preview-kit',
+        heartbeat: true,
+      },
+      createChannelMachine<PreviewKitNodeMsg, Message>().provide({
+        actors: createCompatibilityActors(),
+      }),
+    )
+
+    comlink.onStatus(setPreviewKitConnection)
+
+    comlink.on('preview-kit/documents', (data) => {
+      if (data.projectId === projectId && data.dataset === dataset) {
+        setDocumentsOnPage(
+          'preview-kit',
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          data.perspective as unknown as any,
+          data.documents,
+        )
+      }
+    })
+
+    const stop = comlink.start()
+
+    return () => {
+      stop()
+    }
+  }, [controller, dataset, projectId, setDocumentsOnPage, setPreviewKitConnection, targetOrigin])
 
   const handleFocusPath = useCallback(
     (nextPath: Path) => {
@@ -366,22 +338,23 @@ export default function PresentationTool(props: {
 
   // Dispatch a perspective message when the perspective changes
   useEffect(() => {
-    channel?.send('overlays', 'presentation/perspective', {
-      perspective: perspective,
+    visualEditingComlink?.post({
+      type: 'presentation/perspective',
+      data: {perspective},
     })
-  }, [channel, perspective])
+  }, [perspective, visualEditingComlink])
 
   // Dispatch a focus or blur message when the id or path change
   useEffect(() => {
     if (params.id && params.path) {
-      channel?.send('overlays', 'presentation/focus', {
-        id: params.id,
-        path: params.path,
+      visualEditingComlink?.post({
+        type: 'presentation/focus',
+        data: {id: params.id, path: params.path},
       })
     } else {
-      channel?.send('overlays', 'presentation/blur', undefined)
+      visualEditingComlink?.post({type: 'presentation/blur', data: undefined})
     }
-  }, [channel, params.id, params.path])
+  }, [params.id, params.path, visualEditingComlink])
 
   // Dispatch a navigation message when the preview param changes
   useEffect(() => {
@@ -394,17 +367,20 @@ export default function PresentationTool(props: {
       if (overlaysConnection !== 'connected' && iframeRef.current) {
         iframeRef.current.src = `${targetOrigin}${params.preview}`
       } else {
-        channel?.send('overlays', 'presentation/navigate', {
-          url: params.preview,
-          type: 'replace',
+        visualEditingComlink?.post({
+          type: 'presentation/navigate',
+          data: {
+            url: params.preview,
+            type: 'replace',
+          },
         })
       }
     }
-  }, [channel, overlaysConnection, targetOrigin, params.preview])
+  }, [overlaysConnection, targetOrigin, params.preview, visualEditingComlink])
 
   const toggleOverlay = useCallback(
-    () => channel?.send('overlays', 'presentation/toggleOverlay', undefined),
-    [channel],
+    () => visualEditingComlink?.post({type: 'presentation/toggleOverlay', data: undefined}),
+    [visualEditingComlink],
   )
 
   const [displayedDocument, setDisplayedDocument] = useState<
@@ -453,19 +429,22 @@ export default function PresentationTool(props: {
   const handleRefresh = useCallback(
     (fallback: () => void) => {
       dispatch({type: ACTION_IFRAME_REFRESH})
-      if (channel) {
+      if (visualEditingComlink) {
         // We only wait 300ms for the iframe to ack the refresh request before running the fallback logic
         refreshRef.current = window.setTimeout(fallback, 300)
-        channel.send('overlays', 'presentation/refresh', {
-          source: 'manual',
-          livePreviewEnabled:
-            previewKitConnection === 'connected' || loadersConnection === 'connected',
+        visualEditingComlink.post({
+          type: 'presentation/refresh',
+          data: {
+            source: 'manual',
+            livePreviewEnabled:
+              previewKitConnection === 'connected' || loadersConnection === 'connected',
+          },
         })
         return
       }
       fallback()
     },
-    [channel, loadersConnection, previewKitConnection],
+    [loadersConnection, previewKitConnection, visualEditingComlink],
   )
 
   const workspace = useWorkspace()
@@ -576,21 +555,22 @@ export default function PresentationTool(props: {
           </PresentationParamsProvider>
         </PresentationNavigateProvider>
       </PresentationProvider>
-      {channel && (
+      {controller && (
         <Suspense>
           <LoaderQueries
-            channel={channel}
-            liveQueries={liveQueries}
+            controller={controller}
             perspective={perspective}
             liveDocument={displayedDocument}
+            onDocumentsOnPage={setDocumentsOnPage}
+            onLoadersConnection={setLoadersConnection}
             documentsOnPage={documentsOnPage}
           />
         </Suspense>
       )}
-      {channel && params.id && params.type && (
+      {visualEditingComlink && params.id && params.type && (
         <Suspense>
           <PostMessageRefreshMutations
-            channel={channel}
+            comlink={visualEditingComlink}
             id={params.id}
             type={params.type}
             loadersConnection={loadersConnection}

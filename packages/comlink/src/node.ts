@@ -8,9 +8,10 @@ import {
   enqueueActions,
   raise,
   setup,
+  stopChild,
 } from 'xstate'
 
-import {listenActor, listenInputFromContext} from './common'
+import {createListenLogic, listenInputFromContext} from './common'
 import {
   DOMAIN,
   MSG_DISCONNECT,
@@ -29,7 +30,7 @@ import type {
   RequestData,
   WithoutResponse,
 } from './types'
-import type {HeartbeatMessage, Message, ProtocolMessage} from './types'
+import type {HeartbeatMessage, Message, ProtocolMessage, Status} from './types'
 
 /**
  * @public
@@ -43,9 +44,14 @@ export interface NodeInput {
 /**
  * @public
  */
-export type NodeActor<R extends Message, U extends Message> = ActorRefFrom<
-  ReturnType<typeof createNodeMachine<R, U>>
+export type NodeActorLogic<R extends Message, S extends Message> = ReturnType<
+  typeof createNodeMachine<R, S>
 >
+
+/**
+ * @public
+ */
+export type NodeActor<R extends Message, S extends Message> = ActorRefFrom<NodeActorLogic<R, S>>
 
 /**
  * @public
@@ -55,12 +61,12 @@ export type Node<R extends Message, S extends Message> = {
   fetch: <const T extends S['type'], U extends WithoutResponse<S>>(
     data: U,
   ) => S extends U ? (S['type'] extends T ? S['response'] : never) : never
-  machine: ReturnType<typeof createNodeMachine<R, S>>
+  machine: NodeActorLogic<R, S>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => U['response'],
   ) => () => void
-  onStatus: (handler: (status: string) => void) => () => void
+  onStatus: (handler: (status: Status) => void) => () => void
   post: (data: WithoutResponse<S>) => void
   start: () => () => void
   stop: () => void
@@ -82,10 +88,18 @@ export const createNodeMachine = <
         connectionId: string | null
         connectTo: string
         domain: string
+        // The handshake buffer is a workaround to maintain backwards
+        // compatibility with the Sanity channels package, which may incorrectly
+        // send buffered messages _before_ it completes the handshake (i.e.
+        // sends an ack message). It should be removed in the next major.
+        handshakeBuffer: Array<{
+          type: 'message.received'
+          message: MessageEvent<ProtocolMessage<R>>
+        }>
         name: string
-        origin: string | null
         requests: Array<RequestActorRef<S>>
         target: MessageEventSource | undefined
+        targetOrigin: string | null
       }
       emitted:
         | BufferAddedEmitEvent<V>
@@ -104,9 +118,15 @@ export const createNodeMachine = <
     },
     actors: {
       requestMachine: createRequestMachine<S>(),
-      listen: listenActor,
+      listen: createListenLogic(),
     },
     actions: {
+      'buffer incoming message': assign({
+        handshakeBuffer: ({event, context}) => {
+          assertEvent(event, 'message.received')
+          return [...context.handshakeBuffer, event]
+        },
+      }),
       'buffer message': enqueueActions(({enqueue}) => {
         enqueue.assign({
           buffer: ({event, context}) => {
@@ -136,10 +156,10 @@ export const createNodeMachine = <
                 domain: context.domain!,
                 expectResponse: request.expectResponse,
                 from: context.name,
-                origin: context.origin!,
                 resolvable: request.resolvable,
                 responseTo: request.responseTo,
                 sources: context.target!,
+                targetOrigin: context.targetOrigin!,
                 to: context.connectTo,
                 type: request.type,
               },
@@ -190,6 +210,12 @@ export const createNodeMachine = <
           buffer: [],
         })
       }),
+      'flush handshake buffer': enqueueActions(({context, enqueue}) => {
+        context.handshakeBuffer.forEach((event) => enqueue.raise(event))
+        enqueue.assign({
+          handshakeBuffer: [],
+        })
+      }),
       'post': raise(({event}) => {
         assertEvent(event, 'post')
         return {
@@ -202,11 +228,10 @@ export const createNodeMachine = <
           },
         }
       }),
-      'remove request': assign({
-        requests: ({context, event}) => {
-          assertEvent(event, ['request.success', 'request.failed'])
-          return context.requests.filter((request) => request.id !== event.requestId)
-        },
+      'remove request': enqueueActions(({context, enqueue, event}) => {
+        assertEvent(event, ['request.success', 'request.failed'])
+        stopChild(event.requestId)
+        enqueue.assign({requests: context.requests.filter(({id}) => id !== event.requestId)})
       }),
       'send response': raise(({event}) => {
         assertEvent(event, ['message.received', 'heartbeat.received'])
@@ -215,7 +240,6 @@ export const createNodeMachine = <
           data: {
             type: MSG_RESPONSE,
             responseTo: event.message.data.id,
-            // @todo Do nodes need to support responses?
             data: undefined,
           },
         }
@@ -233,7 +257,7 @@ export const createNodeMachine = <
           assertEvent(event, 'message.received')
           return event.message.source || undefined
         },
-        origin: ({event}) => {
+        targetOrigin: ({event}) => {
           assertEvent(event, 'message.received')
           return event.message.origin
         },
@@ -250,10 +274,11 @@ export const createNodeMachine = <
       connectionId: null,
       connectTo: input.connectTo,
       domain: input.domain ?? DOMAIN,
+      handshakeBuffer: [],
       name: input.name,
-      origin: null,
       requests: [],
       target: undefined,
+      targetOrigin: null,
     }),
     on: {
       'request.success': {
@@ -269,7 +294,10 @@ export const createNodeMachine = <
         invoke: {
           src: 'listen',
           id: 'listenForHandshakeSyn',
-          input: listenInputFromContext(MSG_HANDSHAKE_SYN, {count: 1}),
+          input: listenInputFromContext({
+            include: MSG_HANDSHAKE_SYN,
+            count: 1,
+          }),
           onDone: {
             target: 'handshaking',
             guard: 'hasSource',
@@ -290,47 +318,67 @@ export const createNodeMachine = <
           {
             src: 'listen',
             id: 'listenForHandshakeAck',
-            input: listenInputFromContext(MSG_HANDSHAKE_ACK, {count: 1}),
+            input: listenInputFromContext({
+              include: MSG_HANDSHAKE_ACK,
+              count: 1,
+            }),
             onDone: 'connected',
           },
           {
             src: 'listen',
             id: 'listenForDisconnect',
-            input: listenInputFromContext([MSG_DISCONNECT], {
+            input: listenInputFromContext({
+              include: MSG_DISCONNECT,
               count: 1,
               responseType: 'disconnect',
             }),
           },
+          {
+            src: 'listen',
+            id: 'listenForMessages',
+            input: listenInputFromContext({
+              exclude: [MSG_DISCONNECT, MSG_HANDSHAKE_ACK, MSG_HEARTBEAT, MSG_RESPONSE],
+            }),
+          },
         ],
         on: {
-          request: {
+          'request': {
             actions: 'create request',
           },
-          post: {
+          'post': {
             actions: 'buffer message',
           },
-          disconnect: {
+          'message.received': {
+            actions: 'buffer incoming message',
+          },
+          'disconnect': {
             target: 'idle',
           },
         },
       },
       connected: {
-        entry: 'flush buffer',
+        entry: ['flush handshake buffer', 'flush buffer'],
         invoke: [
           {
             src: 'listen',
             id: 'listenForMessages',
-            input: listenInputFromContext([MSG_RESPONSE, MSG_HEARTBEAT], {matches: false}),
+            input: listenInputFromContext({
+              exclude: [MSG_RESPONSE, MSG_HEARTBEAT],
+            }),
           },
           {
             src: 'listen',
             id: 'listenForHeartbeats',
-            input: listenInputFromContext([MSG_HEARTBEAT], {responseType: 'heartbeat.received'}),
+            input: listenInputFromContext({
+              include: MSG_HEARTBEAT,
+              responseType: 'heartbeat.received',
+            }),
           },
           {
             src: 'listen',
             id: 'listenForDisconnect',
-            input: listenInputFromContext([MSG_DISCONNECT], {
+            input: listenInputFromContext({
+              include: MSG_DISCONNECT,
               count: 1,
               responseType: 'disconnect',
             }),
@@ -362,9 +410,10 @@ export const createNodeMachine = <
 /**
  * @public
  */
-export const createNode = <R extends Message, S extends Message>(input: NodeInput): Node<R, S> => {
-  const machine = createNodeMachine<R, S>()
-
+export const createNode = <R extends Message, S extends Message>(
+  input: NodeInput,
+  machine: NodeActorLogic<R, S> = createNodeMachine<R, S>(),
+): Node<R, S> => {
   const actor = createActor(machine, {
     input,
   })
@@ -383,13 +432,14 @@ export const createNode = <R extends Message, S extends Message>(input: NodeInpu
     return unsubscribe
   }
 
-  const onStatus = (handler: (status: string) => void) => {
+  const onStatus = (handler: (status: Status) => void) => {
     const snapshot = actor.getSnapshot()
-    let currentStatus: string | undefined =
+    let currentStatus: Status =
       typeof snapshot.value === 'string' ? snapshot.value : Object.keys(snapshot.value)[0]
 
     const {unsubscribe} = actor.subscribe((state) => {
-      const status = typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
+      const status: Status =
+        typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
       if (currentStatus !== status) {
         currentStatus = status
         handler(status)

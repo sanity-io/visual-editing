@@ -1,4 +1,4 @@
-import type {PresentationMsg} from '@repo/visual-editing-helpers'
+import type {VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 
 import type {ElementState, OverlayMsg} from '../types'
 
@@ -8,7 +8,7 @@ import type {ElementState, OverlayMsg} from '../types'
  */
 export const elementsReducer = (
   elements: ElementState[],
-  message: OverlayMsg | PresentationMsg,
+  message: OverlayMsg | VisualEditingControllerMsg,
 ): ElementState[] => {
   const {type} = message
   switch (type) {

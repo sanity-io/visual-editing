@@ -142,8 +142,8 @@ function createChannelsControllerInternal<
     if (isHandshakeMessage(data.type)) {
       const channel = channels.find((channel) => channel.config.id === data.from)
       if (channel && data.type === 'handshake/syn-ack') {
-        setChannelStatus(channel, 'connected')
         sendHandshake(channel, 'handshake/ack', {id: channel.id})
+        setChannelStatus(channel, 'connected')
       }
     }
   }
