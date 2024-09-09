@@ -1,11 +1,35 @@
 import {pathToUrlString} from '@repo/visual-editing-helpers'
 import {createEditUrl, studioPath} from '@sanity/client/csm'
+import {DocumentIcon, DragHandleIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
-import {memo, useCallback, useEffect, useMemo, useRef, useSyncExternalStore} from 'react'
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useSyncExternalStore,
+  type CSSProperties,
+  type FunctionComponent,
+} from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
-
 import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
+import {getDraftId} from '../util/documents'
+import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
+import {getSchemaType} from './schema/schema'
+import {useSchema} from './schema/useSchema'
+
+export interface ElementOverlayProps {
+  focused: ElementFocusedState
+  hovered: boolean
+  rect: OverlayRect
+  node: SanityNode | SanityStegaNode
+  showActions: boolean
+  wasMaybeCollapsed: boolean
+  draggable: boolean
+  isDragging: boolean
+}
 
 const Root = styled(Card)`
   background-color: var(--overlay-bg);
@@ -70,7 +94,28 @@ const ActionOpen = styled(Card)`
   border-radius: 3px;
 
   & [data-ui='Text'] {
-    color: var(--card-bg-color);
+    color: #fff;
+    white-space: nowrap;
+  }
+`
+
+const Tab = styled(Flex)`
+  bottom: 100%;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+`
+
+const Labels = styled(Flex)`
+  display: flex;
+  align-items: center;
+  background-color: var(--card-focus-ring-color);
+  right: 0;
+  border-radius: 3px;
+  & [data-ui='Text'],
+  & [data-sanity-icon] {
+    color: #fff;
     white-space: nowrap;
   }
 `
@@ -88,22 +133,80 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-export const ElementOverlay = memo(function ElementOverlay(props: {
-  focused: ElementFocusedState
-  hovered: boolean
-  rect: OverlayRect
-  showActions: boolean
-  sanity: SanityNode | SanityStegaNode
-  wasMaybeCollapsed: boolean
-}) {
-  const {focused, hovered, rect, showActions, sanity, wasMaybeCollapsed} = props
+const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
+  const {node, showActions, draggable} = props
+
+  const {schema} = useSchema()
+  const schemaType = getSchemaType(node, schema)
+
+  const href = 'path' in node ? createIntentLink(node) : node.href
+
+  const previewSnapshots = usePreviewSnapshots()
+
+  const title = useMemo(() => {
+    if (!('path' in node)) return undefined
+    const id = getDraftId(node.id)
+    return previewSnapshots.find((snapshot) => snapshot._id === id)?.title
+  }, [node, previewSnapshots])
+
+  const Icon = useMemo(() => {
+    if (schemaType?.icon) return <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
+    return <DocumentIcon />
+  }, [schemaType?.icon])
+
+  return (
+    <>
+      {showActions ? (
+        <Actions gap={1} paddingBottom={1} data-sanity-overlay-element>
+          <Link href={href} />
+        </Actions>
+      ) : null}
+
+      {title && (
+        <Tab gap={1} paddingBottom={1}>
+          <Labels gap={2} padding={2}>
+            {draggable && (
+              <Box marginRight={1}>
+                <Text className="drag-handle" size={0}>
+                  <DragHandleIcon />
+                </Text>
+              </Box>
+            )}
+            <Text size={0}>{Icon}</Text>
+            <Text size={1} weight="medium">
+              {title}
+            </Text>
+          </Labels>
+        </Tab>
+      )}
+    </>
+  )
+}
+
+export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
+  const {focused, hovered, rect, wasMaybeCollapsed, isDragging} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
   const scrolledIntoViewRef = useRef(false)
 
+  const style = useMemo<CSSProperties>(
+    () => ({
+      width: `${rect.w}px`,
+      height: `${rect.h}px`,
+      transform: `translate(${rect.x}px, ${rect.y}px)`,
+    }),
+    [rect],
+  )
+
   useEffect(() => {
-    if (!scrolledIntoViewRef.current && !wasMaybeCollapsed && focused === true && ref.current) {
+    if (
+      !scrolledIntoViewRef.current &&
+      !wasMaybeCollapsed &&
+      focused === true &&
+      ref.current &&
+      !isDragging
+    ) {
       const target = ref.current
       scrollIntoView(ref.current, {
         // Workaround issue with scroll-into-view-if-needed struggling with iframes
@@ -126,18 +229,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     }
 
     scrolledIntoViewRef.current = focused === true
-  }, [focused, wasMaybeCollapsed])
-
-  const style = useMemo(
-    () => ({
-      width: `${rect.w}px`,
-      height: `${rect.h}px`,
-      transform: `translate(${rect.x}px, ${rect.y}px)`,
-    }),
-    [rect],
-  )
-
-  const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
+  }, [focused, wasMaybeCollapsed, isDragging])
 
   return (
     <Root
@@ -146,11 +238,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
       ref={ref}
       style={style}
     >
-      {showActions && hovered ? (
-        <Actions gap={1} paddingBottom={1}>
-          <Link href={href} />
-        </Actions>
-      ) : null}
+      {hovered && <ElementOverlayInner {...props} />}
     </Root>
   )
 })

@@ -1,5 +1,5 @@
-import {client} from './sanity.client'
 import * as serverOnly from '@sanity/react-loader'
+import {client} from './sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN
 

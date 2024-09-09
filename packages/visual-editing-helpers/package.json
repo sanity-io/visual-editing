@@ -48,80 +48,35 @@
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": "@sanity/prettier-config",
+  "prettier": "@repo/prettier-config",
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "react",
-      "react-hooks",
-      "simple-import-sort",
-      "prettier"
-    ],
     "extends": [
-      "eslint:recommended",
-      "plugin:prettier/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
+      "@repo/eslint-config"
     ],
-    "rules": {
-      "no-console": "error",
-      "no-warning-comments": [
-        "warn",
-        {
-          "location": "start",
-          "terms": [
-            "todo",
-            "@todo",
-            "fixme"
-          ]
-        }
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/member-delimiter-style": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "prettier/prettier": "warn",
-      "simple-import-sort/exports": "warn",
-      "simple-import-sort/imports": "warn"
-    },
     "root": true
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
-    "@sanity/client": "^6.21.3",
-    "@sanity/util": "^3.57.2",
-    "@types/react": "^18.3.5",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "@repo/prettier-config": "workspace:*",
+    "@sanity/client": "^6.22.1",
+    "@sanity/comlink": "workspace:*",
+    "@sanity/util": "^3.61.0",
+    "@types/react": "^18.3.11",
+    "eslint": "^8.57.1",
     "react": "^18.3.1",
-    "sanity": "^3.57.2",
-    "typescript": "5.6.2",
+    "sanity": "^3.61.0",
+    "typescript": "5.6.3",
     "valibot": "0.31.1",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.3"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.21.3",
+    "@sanity/client": "^6.22.1",
     "react": "^18.2.0",
     "valibot": "0.31.1"
   },

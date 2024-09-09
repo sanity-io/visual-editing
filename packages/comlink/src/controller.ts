@@ -1,23 +1,33 @@
-import {type Channel, type ChannelInput, createChannel} from './channel'
-import {type InternalEmitEvent, type Message, type WithoutResponse} from './types'
+import {
+  createChannel,
+  createChannelMachine,
+  type Channel,
+  type ChannelActorLogic,
+  type ChannelInput,
+} from './channel'
+import {type InternalEmitEvent, type Message, type StatusEvent, type WithoutResponse} from './types'
 
-export type ConnectionInput = Omit<ChannelInput, 'target'>
+/**
+ * @public
+ */
+export type ConnectionInput = Omit<ChannelInput, 'target' | 'targetOrigin'>
 
+/**
+ * @public
+ */
 export interface ConnectionInstance<R extends Message, S extends Message> {
-  connect: () => () => void
-  disconnect: () => void
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
-    handler: (event: U['data']) => U['response'],
-  ) => void
+    handler: (event: U['data']) => Promise<U['response']> | U['response'],
+  ) => () => void
   onInternalEvent: <
     T extends InternalEmitEvent<R, S>['type'],
     U extends Extract<InternalEmitEvent<R, S>, {type: T}>,
   >(
     type: T,
     handler: (event: U) => void,
-  ) => void
-  onStatus: (handler: (event: {channel: string; status: string}) => void) => void
+  ) => () => void
+  onStatus: (handler: (event: StatusEvent) => void) => void
   post: (data: WithoutResponse<S>) => void
   start: () => () => void
   stop: () => void
@@ -30,6 +40,7 @@ export interface Controller {
   addTarget: (target: MessageEventSource) => () => void
   createConnection: <R extends Message, S extends Message>(
     input: ConnectionInput,
+    machine?: ChannelActorLogic<R, S>,
   ) => ConnectionInstance<R, S>
   destroy: () => void
 }
@@ -46,13 +57,14 @@ interface Connection<
     handler: (event: Extract<InternalEmitEvent<R, S>, {type: T}>) => void
     unsubscribers: Array<() => void>
   }>
+  machine: ChannelActorLogic<R, S>
   statusSubscribers: Set<{
-    handler: (event: {channel: string; status: string}) => void
+    handler: (event: StatusEvent) => void
     unsubscribers: Array<() => void>
   }>
   subscribers: Set<{
     type: R['type']
-    handler: (event: R['data']) => R['response']
+    handler: (event: R['data']) => Promise<R['response']> | R['response']
     unsubscribers: Array<() => void>
   }>
 }
@@ -62,12 +74,13 @@ const noop = () => {}
 /**
  * @public
  */
-export const createController = (): Controller => {
+export const createController = (input: {targetOrigin: string}): Controller => {
+  const {targetOrigin} = input
   const targets = new Set<MessageEventSource>()
   const connections = new Set<Connection>()
 
   const addTarget = (target: MessageEventSource) => {
-    // If the target has already been added, return just return a noop cleanup
+    // If the target has already been added, return just a noop cleanup
     if (targets.has(target)) {
       return noop
     }
@@ -105,10 +118,14 @@ export const createController = (): Controller => {
     // If we already have targets and connections, we need to create new
     // channels for each source with all the associated subscribers.
     connections.forEach((connection) => {
-      const channel = createChannel({
-        ...connection.input,
-        target,
-      })
+      const channel = createChannel(
+        {
+          ...connection.input,
+          target,
+          targetOrigin,
+        },
+        connection.machine,
+      )
 
       targetChannels.add(channel)
       connection.channels.add(channel)
@@ -151,12 +168,14 @@ export const createController = (): Controller => {
   }
 
   const createConnection = <R extends Message, S extends Message>(
-    input: ChannelInput,
+    input: ConnectionInput,
+    machine: ChannelActorLogic<R, S> = createChannelMachine<R, S>(),
   ): ConnectionInstance<R, S> => {
     const connection: Connection<R, S> = {
-      input,
       channels: new Set(),
+      input,
       internalEventSubscribers: new Set(),
+      machine,
       statusSubscribers: new Set(),
       subscribers: new Set(),
     }
@@ -169,28 +188,29 @@ export const createController = (): Controller => {
     if (targets.size) {
       // If targets have already been added, create a channel for each target
       targets.forEach((target) => {
-        const channel = createChannel<R, S>({
-          ...input,
-          target,
-        })
+        const channel = createChannel<R, S>(
+          {
+            ...input,
+            target,
+            targetOrigin,
+          },
+          machine,
+        )
         channels.add(channel)
       })
     } else {
       // If targets have not been added yet, create a channel without a target
-      const channel = createChannel<R, S>(input)
+      const channel = createChannel<R, S>({...input, targetOrigin}, machine)
       channels.add(channel)
     }
 
-    const post = (data: WithoutResponse<S>) => {
+    const post: ConnectionInstance<R, S>['post'] = (data) => {
       channels.forEach((channel) => {
         channel.post(data)
       })
     }
 
-    const on = <T extends R['type'], U extends Extract<R, {type: T}>>(
-      type: T,
-      handler: (event: U['data']) => U['response'],
-    ) => {
+    const on: ConnectionInstance<R, S>['on'] = (type, handler) => {
       const unsubscribers: Array<() => void> = []
       channels.forEach((channel) => {
         unsubscribers.push(channel.on(type, handler))
@@ -225,7 +245,7 @@ export const createController = (): Controller => {
       }
     }
 
-    const onStatus = (handler: (event: {channel: string; status: string}) => void) => {
+    const onStatus = (handler: (event: StatusEvent) => void) => {
       const unsubscribers: Array<() => void> = []
       channels.forEach((channel) => {
         unsubscribers.push(channel.onStatus((status) => handler({channel: channel.id, status})))
@@ -240,6 +260,7 @@ export const createController = (): Controller => {
 
     const stop = () => {
       channels.forEach((channel) => {
+        channel.disconnect()
         channel.stop()
       })
     }
@@ -247,31 +268,16 @@ export const createController = (): Controller => {
     const start = () => {
       channels.forEach((channel) => {
         channel.start()
+        channel.connect()
       })
 
       return stop
     }
 
-    const disconnect = () => {
-      channels.forEach((channel) => {
-        channel.disconnect()
-      })
-    }
-
-    const connect = () => {
-      channels.forEach((channel) => {
-        channel.connect()
-      })
-
-      return disconnect
-    }
-
     return {
-      connect,
-      disconnect,
       on,
-      onStatus,
       onInternalEvent,
+      onStatus,
       post,
       start,
       stop,

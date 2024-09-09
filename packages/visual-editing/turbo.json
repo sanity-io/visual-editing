@@ -2,6 +2,9 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
+    "build": {
+      "env": ["NODE_ENV"]
+    },
     "build-storybook": {
       "dependsOn": ["build"],
       "outputs": ["storybook-static/**"]

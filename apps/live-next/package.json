@@ -1,0 +1,49 @@
+{
+  "name": "live-next",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "prebuild": "npm run typegen",
+    "build": "next build",
+    "debug": "NEXT_PRIVATE_DEBUG_CACHE=1 next build --profile && NEXT_PRIVATE_DEBUG_CACHE=1 next start -p 3009",
+    "predev": "npm run typegen",
+    "dev": "next dev -p 3009 --turbo",
+    "lint": "next lint",
+    "start": "next start",
+    "typegen": "sanity typegen generate"
+  },
+  "prettier": "@repo/prettier-config",
+  "dependencies": {
+    "@repo/env": "workspace:*",
+    "@repo/sanity-extracted-schema": "workspace:*",
+    "@repo/studio-url": "workspace:*",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/next-loader": "workspace:*",
+    "@sanity/preview-url-secret": "workspace:*",
+    "@sanity/visual-editing": "workspace:*",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^20.14.13",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vercel/speed-insights": "^1.0.12",
+    "autoprefixer": "^10.4.20",
+    "babel-plugin-react-compiler": "0.0.0-experimental-fa06e2c-20241014",
+    "date-fns": "^4.1.0",
+    "framer-motion": "12.0.0-alpha.1",
+    "next": "15.0.0-canary.195",
+    "next-sanity": "9.7.0-canary.10",
+    "postcss": "^8.4.47",
+    "react": "19.0.0-rc-fb9a90fa48-20240614",
+    "react-dom": "19.0.0-rc-fb9a90fa48-20240614",
+    "server-only": "^0.0.1",
+    "tailwindcss": "^3.4.14",
+    "typescript": "5.6.3"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "15.0.0-canary.195",
+    "@repo/prettier-config": "workspace:*",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "15.0.0-canary.195",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-fa06e2c-20241014"
+  }
+}

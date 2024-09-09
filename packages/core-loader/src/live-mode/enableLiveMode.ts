@@ -1,19 +1,18 @@
-import {createChannelsNode} from '@repo/channels'
-import type {
-  LoaderMsg,
-  LoaderPayloads,
-  VisualEditingConnectionIds,
+import {
+  createCompatibilityActors,
+  type LoaderControllerMsg,
+  type LoaderNodeMsg,
 } from '@repo/visual-editing-helpers'
 import {
+  SanityClient,
   type ClientPerspective,
   type ContentSourceMap,
   type ContentSourceMapDocuments,
   type QueryParams,
-  SanityClient,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
+import {createNode, createNodeMachine} from '@sanity/comlink'
 import {atom, type MapStore} from 'nanostores'
-
 import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 
 /** @internal */
@@ -51,12 +50,17 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const channel = createChannelsNode<VisualEditingConnectionIds, LoaderMsg, LoaderMsg>({
-    id: 'loaders',
-    connectTo: 'presentation',
-  })
+  const comlink = createNode<LoaderControllerMsg, LoaderNodeMsg>(
+    {
+      name: 'loaders',
+      connectTo: 'presentation',
+    },
+    createNodeMachine<LoaderControllerMsg, LoaderNodeMsg>().provide({
+      actors: createCompatibilityActors<LoaderNodeMsg>(),
+    }),
+  )
 
-  channel.onStatusUpdate((status) => {
+  comlink.onStatus((status) => {
     if (status === 'connected') {
       $connected.set(true)
     } else if (status === 'disconnected') {
@@ -64,18 +68,18 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   })
 
-  channel.subscribe((type, data) => {
-    if (type === 'loader/perspective' && data.projectId === projectId && data.dataset === dataset) {
+  comlink.on('loader/perspective', (data) => {
+    if (data.projectId === projectId && data.dataset === dataset) {
       if (data.perspective !== 'published' && data.perspective !== 'previewDrafts') {
         throw new Error(`Unsupported perspective: ${JSON.stringify(data.perspective)}`)
       }
       $perspective.set(data.perspective)
       updateLiveQueries()
-    } else if (
-      type === 'loader/query-change' &&
-      data.projectId === projectId &&
-      data.dataset === dataset
-    ) {
+    }
+  })
+
+  comlink.on('loader/query-change', (data) => {
+    if (data.projectId === projectId && data.dataset === dataset) {
       const {perspective, query, params} = data
       if (
         data.result !== undefined &&
@@ -167,11 +171,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const liveQueries = new Set<{
     query: string
     params: QueryParams
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $fetch: MapStore<QueryStoreState<any, any>>
   }>()
   const addLiveQuery = (
     query: string,
     params: QueryParams,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $fetch: MapStore<QueryStoreState<any, any>>,
   ) => {
     const liveQuery = {query, params, $fetch}
@@ -185,19 +191,22 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   }
   const emitQueryListen = (skipSetLoading?: boolean) => {
-    if (!channel) {
-      throw new Error('No channel')
+    if (!comlink) {
+      throw new Error('No connection')
     }
     const perspective = $perspective.get()
     for (const {query, params, $fetch} of liveQueries) {
-      channel.send('loader/query-listen', {
-        projectId: projectId!,
-        dataset: dataset!,
-        perspective,
-        query,
-        params,
-        heartbeat: LISTEN_HEARTBEAT_INTERVAL,
-      } satisfies LoaderPayloads['query-listen'])
+      comlink.post({
+        type: 'loader/query-listen',
+        data: {
+          projectId: projectId!,
+          dataset: dataset!,
+          perspective,
+          query,
+          params,
+          heartbeat: LISTEN_HEARTBEAT_INTERVAL,
+        },
+      })
       if (!skipSetLoading && $connected.value === true) {
         $fetch.setKey('loading', true)
       }
@@ -222,17 +231,22 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
       }
     }
-    channel?.send('loader/documents', {
-      projectId: projectId!,
-      dataset: dataset!,
-      perspective,
-      documents: documentsOnPage,
+    comlink.post({
+      type: 'loader/documents',
+      data: {
+        projectId: projectId!,
+        dataset: dataset!,
+        perspective,
+        documents: documentsOnPage,
+      },
     })
   }
+
+  const stop = comlink.start()
 
   return () => {
     unsetFetcher?.()
     unlistenConnection()
-    channel.destroy()
+    stop()
   }
 }

@@ -7,7 +7,7 @@
  */
 
 import isEqual from 'fast-deep-equal'
-import {createContext, type PropsWithChildren, useCallback, useContext, useEffect} from 'react'
+import {createContext, useCallback, useContext, useEffect, type PropsWithChildren} from 'react'
 import {type SanityDocument} from 'sanity'
 
 /** @internal */

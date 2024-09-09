@@ -2,8 +2,7 @@ import type {ResponseQueryOptions} from '@sanity/client'
 import {match, type Path} from 'path-to-regexp'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {useClient} from 'sanity'
-import {type RouterState, useRouter} from 'sanity/router'
-
+import {useRouter, type RouterState} from 'sanity/router'
 import {API_VERSION} from './constants'
 import type {
   DocumentResolver,

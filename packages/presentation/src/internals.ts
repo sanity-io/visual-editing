@@ -26,6 +26,7 @@ export {
   type SanityDocument,
   Translate,
   useActiveWorkspace,
+  useClient,
   useDocumentPreviewStore,
   useDocumentStore,
   useEditState,

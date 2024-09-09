@@ -1,6 +1,6 @@
-import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
-import withBundleAnalyzer from '@next/bundle-analyzer'
 import {createRequire} from 'node:module'
+import withBundleAnalyzer from '@next/bundle-analyzer'
+import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
 
 const require = createRequire(import.meta.url)
 
@@ -18,15 +18,11 @@ const nextConfig = {
     },
   },
 
-  transpilePackages: ['apps-common'],
-
   images: {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
   },
 
-  experimental: {
-    taint: true,
-  },
+  transpilePackages: ['@repo/env'],
 
   async headers() {
     return [
