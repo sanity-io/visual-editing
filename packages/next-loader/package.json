@@ -1,0 +1,120 @@
+{
+  "name": "@sanity/next-loader",
+  "version": "0.0.1-canary.33",
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/next-loader#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/visual-editing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
+    "directory": "packages/next-loader"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./hooks": {
+      "source": "./src/hooks/index.ts",
+      "import": "./dist/hooks.js",
+      "require": "./dist/hooks.cjs",
+      "default": "./dist/hooks.js"
+    },
+    "./client-components/live": {
+      "source": "./src/client-components/live/index.ts",
+      "import": "./dist/client-components/live.js",
+      "require": "./dist/client-components/live.cjs",
+      "default": "./dist/client-components/live.js"
+    },
+    "./client-components/live-stream": {
+      "source": "./src/client-components/live-stream/index.ts",
+      "import": "./dist/client-components/live-stream.js",
+      "require": "./dist/client-components/live-stream.cjs",
+      "default": "./dist/client-components/live-stream.js"
+    },
+    "./server-actions": {
+      "source": "./src/server-actions/index.ts",
+      "import": "./dist/server-actions.js",
+      "require": "./dist/server-actions.cjs",
+      "default": "./dist/server-actions.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "client-components/live": [
+        "./dist/client-components/live.d.ts"
+      ],
+      "client-components/live-stream": [
+        "./dist/client-components/live-stream.d.ts"
+      ],
+      "hooks": [
+        "./dist/hooks.d.ts"
+      ],
+      "server-action": [
+        "./dist/server-action/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "pkg build --strict --check --clean",
+    "dev": "pkg build --strict",
+    "lint": "eslint --cache .",
+    "prepack": "turbo run build",
+    "test": "vitest --pass-with-no-tests --typecheck"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "prettier": "@repo/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "@sanity/comlink": "workspace:*",
+    "@sanity/preview-url-secret": "workspace:*",
+    "use-effect-event": "^1.0.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/package.config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/visual-editing-helpers": "workspace:*",
+    "@sanity/client": "^6.22.1",
+    "@sanity/pkg-utils": "6.11.3",
+    "@types/react": "^18.3.11",
+    "eslint": "^8.57.1",
+    "fast-deep-equal": "3.1.3",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "typescript": "5.6.3",
+    "vitest": "^2.1.3"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^6.22.1",
+    "next": "^14.1 || ^15.0.0-0",
+    "react": "^18.3 || ^19.0.0-0"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

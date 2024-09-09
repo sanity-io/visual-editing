@@ -1,5 +1,5 @@
-import {FunctionComponent, useEffect, useRef} from 'react'
 import {type Controller} from '@sanity/comlink'
+import {FunctionComponent, useEffect, useRef} from 'react'
 
 export const Frame: FunctionComponent<{
   controller: Controller

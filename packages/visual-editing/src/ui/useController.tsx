@@ -1,5 +1,4 @@
-import {type MutableRefObject, useEffect, useRef} from 'react'
-
+import {useEffect, useRef, type MutableRefObject} from 'react'
 import {createOverlayController} from '../controller'
 import type {OverlayController, OverlayEventHandler} from '../types'
 

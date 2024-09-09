@@ -95,6 +95,16 @@ export default {
   'share-url.clipboard.status_unsupported': 'Clipboard not supported',
   /** The share URL menu item text for copying a link */
   'share-url.menu-item.copy.text': 'Copy link',
+  /** The share URL menu item text for configuring a public share link */
+  'share-url.menu-item.share.text': 'Share link',
   /** The share URL menu item text for opening a preview window */
   'share-url.menu-item.open.text': 'Open preview',
+  /** The dialog header for the share url dialog */
+  'share-url.dialog.header': 'Configure share link',
+  /** Action in the share url dialog that creates a URL that can be used to preview the current pathname */
+  'share-url.dialog.action.enable-sharing': 'Enable sharing to those who have the link',
+  /** Disables sharing access to those who have the link */
+  'share-url.dialog.action.disable-sharing': 'Disable sharing',
+  /** Error toast that notifies that URL Preview Secrets can't be generated as the user lacks ACL grants */
+  'preview-url-secret.missing-grants': "URL Preview Secrets can't be generated",
 }

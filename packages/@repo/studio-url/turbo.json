@@ -1,0 +1,10 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": ["NODE_ENV", "VERCEL_ENV", "VERCEL_BRANCH_URL"],
+      "outputs": ["dist/**"]
+    }
+  }
+}

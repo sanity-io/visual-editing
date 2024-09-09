@@ -1,5 +1,4 @@
 import {lazy, Suspense} from 'react'
-
 import type {VisualEditingProps} from './VisualEditingComponent'
 
 const VisualEditingComponent = lazy(() => import('./VisualEditingComponent'))

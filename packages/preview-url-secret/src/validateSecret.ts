@@ -1,7 +1,9 @@
 import {fetchSecretQuery, tag} from './constants'
 import type {FetchSecretQueryParams, FetchSecretQueryResponse, SanityClientLike} from './types'
 
-/** @internal */
+export type {SanityClientLike}
+
+/** @public */
 export async function validateSecret(
   client: SanityClientLike,
   secret: string,

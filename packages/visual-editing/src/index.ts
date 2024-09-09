@@ -1,6 +1,7 @@
 export {createOverlayController} from './controller'
 export type {
   DisableVisualEditing,
+  DragEndEvent,
   DragInsertPosition,
   DragSkeleton,
   ElementFocusedState,
@@ -17,12 +18,17 @@ export type {
   OverlayMsgBlur,
   OverlayMsgDeactivate,
   OverlayMsgDragEnd,
+  OverlayMsgDragEndMinimapTransition,
   OverlayMsgDragStart,
+  OverlayMsgDragStartMinimapTransition,
+  OverlayMsgDragToggleMinimapPrompt,
   OverlayMsgDragUpdateCursorPosition,
   OverlayMsgDragUpdateInsertPosition,
+  OverlayMsgDragUpdateSkeleton,
   OverlayMsgElement,
   OverlayMsgElementActivate,
   OverlayMsgElementClick,
+  OverlayMsgElementContextMenu,
   OverlayMsgElementDeactivate,
   OverlayMsgElementMouseEnter,
   OverlayMsgElementMouseLeave,
@@ -37,6 +43,16 @@ export type {
   VisualEditingOptions,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
+export type {DatasetMutatorMachineInput} from './ui/optimistic-state/machines/datasetMutatorMachine'
+export {
+  type DocumentGet,
+  type DocumentMutate,
+  type OptimisticReducer,
+  type OptimisticReducerAction,
+  useDocument,
+  useDocuments,
+  useOptimistic,
+} from './ui/optimistic-state'
 export {
   type CreateDataAttribute,
   createDataAttribute,

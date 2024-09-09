@@ -1,7 +1,8 @@
-import {ShoesListResult, shoesList} from 'apps-common/queries'
+import {shoesList} from '@/queries'
+import type {ShoesListResult} from '@/types'
+import {draftMode} from 'next/headers'
 import ShoesPageClient from './page.client'
 import {loadQuery} from './sanity.ssr'
-import {draftMode} from 'next/headers'
 
 export default async function ShoesPage() {
   const initial = await loadQuery<ShoesListResult>(

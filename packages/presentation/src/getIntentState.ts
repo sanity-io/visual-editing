@@ -1,6 +1,5 @@
 import {uuid} from '@sanity/uuid'
 import {type RouterState, type SearchParam} from 'sanity/router'
-
 import {encodeJsonParams, getPublishedId} from './internals'
 import type {PresentationSearchParams, PresentationStateParams} from './types'
 

@@ -1,8 +1,8 @@
+'use client'
+
 import './Slideshow.css'
-
+import type {SanityArrayValue, SanityImageValue} from '@/sanity/types'
 import {useState} from 'react'
-
-import {SanityArrayValue, SanityImageValue} from '@/sanity'
 import {Image} from '../image'
 
 export function Slideshow(props: {images: SanityArrayValue<SanityImageValue>[]}) {

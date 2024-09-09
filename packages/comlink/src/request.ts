@@ -1,9 +1,25 @@
-import {filter, fromEvent, take} from 'rxjs'
+import {EMPTY, filter, fromEvent, map, take, takeUntil, type Observable} from 'rxjs'
 import {v4 as uuid} from 'uuid'
-import {type ActorRefFrom, assign, fromEventObservable, sendParent, setup} from 'xstate'
-
+import {
+  assign,
+  fromEventObservable,
+  sendTo,
+  setup,
+  type ActorRefFrom,
+  type AnyActorRef,
+} from 'xstate'
 import {MSG_RESPONSE, RESPONSE_TIMEOUT} from './constants'
 import type {Message, MessageData, MessageType, ProtocolMessage, ResponseMessage} from './types'
+
+const throwOnEvent =
+  <T>(message?: string) =>
+  (source: Observable<T>) =>
+    source.pipe(
+      take(1),
+      map(() => {
+        throw new Error(message)
+      }),
+    )
 
 /**
  * @public
@@ -15,11 +31,13 @@ export interface RequestMachineContext<S extends Message> {
   expectResponse: boolean
   from: string
   id: string
-  origin: string
+  parentRef: AnyActorRef
   resolvable: PromiseWithResolvers<S['response']> | undefined
   response: S['response'] | null
   responseTo: string | undefined
+  signal: AbortSignal | undefined
   sources: Set<MessageEventSource>
+  targetOrigin: string
   to: string
   type: MessageType
 }
@@ -40,74 +58,114 @@ export const createRequestMachine = <
 >() => {
   return setup({
     types: {} as {
+      children: {
+        'listen for response': 'listen'
+      }
       context: RequestMachineContext<S>
       // @todo Should response types be specified?
-      events: {type: 'message'; data: ProtocolMessage<ResponseMessage>}
+      events: {type: 'message'; data: ProtocolMessage<ResponseMessage>} | {type: 'abort'}
       emitted:
+        | {type: 'request.failed'; requestId: string}
+        | {type: 'request.aborted'; requestId: string}
         | {
             type: 'request.success'
             requestId: string
             response: MessageData | null
             responseTo: string | undefined
           }
-        | {type: 'request.failed'; requestId: string}
       input: {
         connectionId: string
         data?: S['data']
         domain: string
         expectResponse?: boolean
         from: string
-        origin: string
-        responseTo?: string
+        parentRef: AnyActorRef
         resolvable?: PromiseWithResolvers<S['response']>
+        responseTo?: string
+        signal?: AbortSignal
         sources: Set<MessageEventSource> | MessageEventSource
+        targetOrigin: string
         to: string
         type: S['type']
+      }
+      output: {
+        requestId: string
+        response: S['response'] | null
+        responseTo: string | undefined
       }
     },
     actors: {
       listen: fromEventObservable(
-        ({input}: {input: {requestId: string; sources: Set<MessageEventSource>}}) =>
-          fromEvent<MessageEvent<ProtocolMessage<ResponseMessage>>>(window, 'message').pipe(
-            filter(
-              (event) =>
-                event.data.type === MSG_RESPONSE &&
-                event.data.responseTo === input.requestId &&
-                !!event.source &&
-                input.sources.has(event.source),
-            ),
+        ({
+          input,
+        }: {
+          input: {
+            requestId: string
+            sources: Set<MessageEventSource>
+            signal?: AbortSignal
+          }
+        }) => {
+          const abortSignal$ = input.signal
+            ? fromEvent(input.signal, 'abort').pipe(
+                throwOnEvent(`Request ${input.requestId} aborted`),
+              )
+            : EMPTY
+
+          const messageFilter = (event: MessageEvent<ProtocolMessage<ResponseMessage>>) =>
+            event.data?.type === MSG_RESPONSE &&
+            event.data?.responseTo === input.requestId &&
+            !!event.source &&
+            input.sources.has(event.source)
+
+          return fromEvent<MessageEvent<ProtocolMessage<ResponseMessage>>>(window, 'message').pipe(
+            filter(messageFilter),
             take(input.sources.size),
-          ),
+            takeUntil(abortSignal$),
+          )
+        },
       ),
     },
     actions: {
       'send message': ({context}, params: {message: ProtocolMessage}) => {
-        const {sources, origin} = context
+        const {sources, targetOrigin} = context
         const {message} = params
 
         sources.forEach((source) => {
-          source.postMessage(message, {targetOrigin: origin})
+          source.postMessage(message, {targetOrigin})
         })
       },
-      'on success': sendParent(({context, self}) => {
-        if (context.response) {
-          context.resolvable?.resolve(context.response)
-        }
-        return {
-          type: 'request.success',
-          requestId: self.id,
-          response: context.response,
-          responseTo: context.responseTo,
-        }
-      }),
-      'on fail': sendParent(({context, self}) => {
-        // eslint-disable-next-line no-console
-        console.warn(
-          `Received no response to message '${context.type}' on client '${context.from}' (ID: '${context.id}').`,
-        )
-        context.resolvable?.reject(new Error('No response received'))
-        return {type: 'request.failed', requestId: self.id}
-      }),
+      'on success': sendTo(
+        ({context}) => context.parentRef,
+        ({context, self}) => {
+          if (context.response) {
+            context.resolvable?.resolve(context.response)
+          }
+          return {
+            type: 'request.success',
+            requestId: self.id,
+            response: context.response,
+            responseTo: context.responseTo,
+          }
+        },
+      ),
+      'on fail': sendTo(
+        ({context}) => context.parentRef,
+        ({context, self}) => {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `Received no response to message '${context.type}' on client '${context.from}' (ID: '${context.id}').`,
+          )
+          context.resolvable?.reject(new Error('No response received'))
+          return {type: 'request.failed', requestId: self.id}
+        },
+      ),
+      'on abort': sendTo(
+        ({context}) => context.parentRef,
+        ({context, self}) => {
+          context.resolvable?.reject(new Error('Request aborted'))
+          return {type: 'request.aborted', requestId: self.id}
+        },
+      ),
     },
     guards: {
       expectsResponse: ({context}) => context.expectResponse,
@@ -117,7 +175,7 @@ export const createRequestMachine = <
       responseTimeout: RESPONSE_TIMEOUT,
     },
   }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiAD1gBd0GwT0AzFgJ2QNwdzoKAFVyowAewCuDItTRY8hUuSoBtAAwBdRKAAOE2P1wT8ukLUQBGAEwBWEnY3ONAZlc2XATjtWANCAAntYaAGwkLs5ergAsAOxeMVahcQC+qQEKOATEJLBg+BAEUNSaOkggBkYCpuaWCL4aJFYaVnZxABwd7lYxbnEBwQj2TfGhdilJYXE2cTHpmRjZynkFRfglalbl+obGtRX1jc2t7V09fa4DQYheNiQxXk9eHXFxbl7JVgsgWUq56AA7uhjBtqOJYLB0DAyuYqvszIdEF0rA84qFQo87LM4lY8YNEDY8RFIi1bFYvM40hlfkt-qQgSCBGD6EwWGxOGAeFw4AZ8PlROJpLJ5HScgzgaCoLCKvCaojQPUUWiMVicXj-DcEK4NHEHnZXOTQhSbKENDFQukafgJBA4OY-uK4Xt5XVEABaUIEhCekmRf0uamLRTisiUMDO6omBUWRAxGzeloOf1zcZ2C2vH6Olb5QrFSMIt3DLx6ryhV6hGwl3xWDwxb0dVGPZ7vDHvGKGrNilaMqUF11IhC4vVuWsUg2m5IJrU2ewkWfjUJXWI2eN2OxdkMrdggqgQfvRostN4kT5TaK9WwY702Rskd6G1yY3VXGIbmnZ3KwKSYTBweCyi6h6DsepaXhoF5JKaXpaneTguDYrgdI8dbUukQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiAD1gBd0GwT0AzFgJ2QNwdzoKAFVyowAewCuDItTRY8hUuSoBtAAwBdRKAAOE2P1wT8ukLUQBGAEwBWEgBYAnK+eOAzB7sB2DzY8rABoQAE9rDQc3V0cNTw8fAA4NHwBfVJCFHAJiElgwfAgCKGpNHSQQAyMBU3NLBDsrDxI7DTaAjQA2OOcNDxDwhHsNJx9Ou0TOq2cJxP9HdMyMbOU8gqL8ErUrcv1DY1qK+sbm1vaPLp6+gcRnGydo9wDGycWQLKVc9AB3dGNN6jiWCwdAwMrmKoHMxHRCJRKOEiJHwuZKBZwXKzBMKIGyYkhtAkXOweTqOHw2RJvD45Ug-P4CAH0JgsNicMA8LhwAz4fKicTSWTyZafWm-f5QcEVSE1aGgepwhFIlF9aYYrGDC4+JzEppjGzOUkeGbpDIgfASCBwczU5QQ-YyuqIAC0nRuCBd+IJXu9KSpwppZEoYDt1RMsosiEcNjdVjiJEeGisiSTHkcVgWpptuXyhWKIahjqGzi1BqRJINnVcdkcbuTLS9VYC8ISfsUAbp4vzDphCHJIyjBvJNlxNmRNexQ3sJGH43GPj8jWJrZWuXYfyoEC7YcLsbrgRsjkcvkmdgNbopVhIPhVfnsh8ClMz-tWsCkmEwcHgUvt257u8v+6Hse4xnhOdZnImVidPqCRNB4JqpEAA */
     context: ({input}) => {
       return {
         connectionId: input.connectionId,
@@ -126,20 +184,29 @@ export const createRequestMachine = <
         expectResponse: input.expectResponse ?? false,
         from: input.from,
         id: `msg-${uuid()}`,
-        origin: input.origin,
+        parentRef: input.parentRef,
         resolvable: input.resolvable,
         response: null,
         responseTo: input.responseTo,
-        sources: 'size' in input.sources ? input.sources : new Set([input.sources]),
+        signal: input.signal,
+        sources: input.sources instanceof Set ? input.sources : new Set([input.sources]),
+        targetOrigin: input.targetOrigin,
         to: input.to,
         type: input.type,
       }
     },
     initial: 'idle',
+    on: {
+      abort: '.aborted',
+    },
     states: {
       idle: {
         after: {
-          initialTimeout: 'sending',
+          initialTimeout: [
+            {
+              target: 'sending',
+            },
+          ],
         },
       },
       sending: {
@@ -170,11 +237,14 @@ export const createRequestMachine = <
       },
       awaiting: {
         invoke: {
+          id: 'listen for response',
           src: 'listen',
           input: ({context}) => ({
             requestId: context.id,
             sources: context.sources,
+            signal: context.signal,
           }),
+          onError: 'aborted',
         },
         after: {
           responseTimeout: 'failed',
@@ -196,6 +266,10 @@ export const createRequestMachine = <
       success: {
         type: 'final',
         entry: 'on success',
+      },
+      aborted: {
+        type: 'final',
+        entry: 'on abort',
       },
     },
     output: ({context, self}) => {

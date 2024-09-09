@@ -1,14 +1,13 @@
 import {
-  type ReactElement,
-  type ReactNode,
   useCallback,
   useContext,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
+  type ReactElement,
+  type ReactNode,
 } from 'react'
-
 import type {PresentationPluginOptions} from '../types'
 import {PresentationDocumentContext} from './PresentationDocumentContext'
 import type {PresentationDocumentContextValue} from './types'
