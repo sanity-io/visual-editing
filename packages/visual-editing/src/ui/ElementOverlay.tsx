@@ -1,11 +1,25 @@
 import {pathToUrlString} from '@repo/visual-editing-helpers'
 import {createEditUrl, studioPath} from '@sanity/client/csm'
+import {DocumentIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
-import {memo, useEffect, useMemo, useRef} from 'react'
+import {type CSSProperties, type FunctionComponent, memo, useEffect, useMemo, useRef} from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
 
 import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
+import {getDraftId} from '../util/documents'
+import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
+import {getSchemaType} from './schema/schema'
+import {useSchema} from './schema/useSchema'
+
+export interface ElementOverlayProps {
+  focused: ElementFocusedState
+  hovered: boolean
+  rect: OverlayRect
+  node: SanityNode | SanityStegaNode
+  showActions: boolean
+  wasMaybeCollapsed: boolean
+}
 
 const Root = styled(Card)`
   background-color: var(--overlay-bg);
@@ -75,6 +89,25 @@ const ActionOpen = styled(Card)`
   }
 `
 
+const Tab = styled(Flex)`
+  bottom: 100%;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+`
+
+const Labels = styled(Flex)`
+  background-color: var(--card-focus-ring-color);
+  right: 0;
+  border-radius: 3px;
+  & [data-ui='Text'],
+  & [data-sanity-icon] {
+    color: var(--card-bg-color);
+    white-space: nowrap;
+  }
+`
+
 function createIntentLink(node: SanityNode) {
   const {id, type, path, baseUrl, tool, workspace} = node
 
@@ -88,19 +121,78 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-export const ElementOverlay = memo(function ElementOverlay(props: {
-  focused: ElementFocusedState
-  hovered: boolean
-  rect: OverlayRect
-  showActions: boolean
-  sanity: SanityNode | SanityStegaNode
-  wasMaybeCollapsed: boolean
-}) {
-  const {focused, hovered, rect, showActions, sanity, wasMaybeCollapsed} = props
+const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
+  const {node, showActions} = props
+
+  const {schema} = useSchema()
+  const schemaType = getSchemaType(node, schema)
+
+  const href = 'path' in node ? createIntentLink(node) : node.href
+
+  const previewSnapshots = usePreviewSnapshots()
+
+  const title = useMemo(() => {
+    if (!('path' in node)) return undefined
+    const id = getDraftId(node.id)
+    return previewSnapshots.find((snapshot) => snapshot._id === id)?.title
+  }, [node, previewSnapshots])
+
+  const Icon = useMemo(() => {
+    if (schemaType?.icon) return <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
+    return <DocumentIcon />
+  }, [schemaType?.icon])
+
+  return (
+    <>
+      {showActions ? (
+        <Actions gap={1} paddingBottom={1}>
+          <Box
+            as="a"
+            href={href}
+            target="_blank"
+            rel="noopener"
+            // @ts-expect-error -- TODO update typings in @sanity/ui
+            referrerPolicy="no-referrer-when-downgrade"
+            data-sanity-overlay-element
+          >
+            <ActionOpen padding={2}>
+              <Text size={1} weight="medium">
+                Open in Studio
+              </Text>
+            </ActionOpen>
+          </Box>
+        </Actions>
+      ) : null}
+
+      {title && (
+        <Tab gap={1} paddingBottom={1}>
+          <Labels gap={2} padding={2}>
+            <Text size={1}>{Icon}</Text>
+            <Text size={1} weight="medium">
+              {title}
+            </Text>
+          </Labels>
+        </Tab>
+      )}
+    </>
+  )
+}
+
+export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
+  const {focused, hovered, rect, wasMaybeCollapsed} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
   const scrolledIntoViewRef = useRef(false)
+
+  const style = useMemo<CSSProperties>(
+    () => ({
+      width: `${rect.w}px`,
+      height: `${rect.h}px`,
+      transform: `translate(${rect.x}px, ${rect.y}px)`,
+    }),
+    [rect],
+  )
 
   useEffect(() => {
     if (!scrolledIntoViewRef.current && !wasMaybeCollapsed && focused === true && ref.current) {
@@ -128,17 +220,6 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     scrolledIntoViewRef.current = focused === true
   }, [focused, wasMaybeCollapsed])
 
-  const style = useMemo(
-    () => ({
-      width: `${rect.w}px`,
-      height: `${rect.h}px`,
-      transform: `translate(${rect.x}px, ${rect.y}px)`,
-    }),
-    [rect],
-  )
-
-  const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
-
   return (
     <Root
       data-focused={focused ? '' : undefined}
@@ -146,24 +227,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
       ref={ref}
       style={style}
     >
-      {showActions && hovered ? (
-        <Actions gap={1} paddingBottom={1}>
-          <Box
-            as="a"
-            href={href}
-            target="_blank"
-            rel="noopener"
-            // @ts-expect-error -- TODO update typings in @sanity/ui
-            referrerPolicy="no-referrer-when-downgrade"
-          >
-            <ActionOpen padding={2}>
-              <Text size={1} weight="medium">
-                Open in Studio
-              </Text>
-            </ActionOpen>
-          </Box>
-        </Actions>
-      ) : null}
+      {hovered && <ElementOverlayInner {...props} />}
     </Root>
   )
 })
