@@ -1,18 +1,27 @@
 export {
   type Channel,
   type ChannelActor,
+  type ChannelActorLogic,
   type ChannelInput,
   createChannel,
   createChannelMachine,
 } from './channel'
-export {MSG_HEARTBEAT, MSG_RESPONSE} from './constants'
+export {createListenLogic} from './common'
+export * from './constants'
 export {
   type ConnectionInput,
   type ConnectionInstance,
   type Controller,
   createController,
 } from './controller'
-export {createNode, createNodeMachine, type Node, type NodeActor, type NodeInput} from './node'
+export {
+  createNode,
+  createNodeMachine,
+  type Node,
+  type NodeActor,
+  type NodeActorLogic,
+  type NodeInput,
+} from './node'
 export {createRequestMachine, type RequestActorRef, type RequestMachineContext} from './request'
 export type {
   BufferAddedEmitEvent,
@@ -28,5 +37,7 @@ export type {
   ProtocolMessage,
   RequestData,
   ResponseMessage,
+  Status,
+  StatusEvent,
   WithoutResponse,
 } from './types'

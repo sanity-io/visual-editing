@@ -1,7 +1,7 @@
-import type {ChannelStatus} from '@repo/channels'
 import {isAltKey, isHotkey, type SanityNode} from '@repo/visual-editing-helpers'
 import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
+import type {Status} from '@sanity/comlink'
 import {isHTMLAnchorElement, isHTMLElement, studioTheme, ThemeProvider} from '@sanity/ui'
 import {
   type FunctionComponent,
@@ -14,7 +14,7 @@ import {
 } from 'react'
 import {styled} from 'styled-components'
 
-import type {HistoryAdapter, OverlayEventHandler, VisualEditingChannel} from '../types'
+import type {HistoryAdapter, OverlayEventHandler, VisualEditingComlink} from '../types'
 import {ElementOverlay} from './ElementOverlay'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
@@ -59,13 +59,14 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
  * @internal
  */
 export const Overlays: FunctionComponent<{
-  channel: VisualEditingChannel
+  comlink: VisualEditingComlink
   history?: HistoryAdapter
+  inFrame: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {channel, history, zIndex} = props
+  const {comlink, inFrame, history, zIndex} = props
 
-  const [status, setStatus] = useState<ChannelStatus>()
+  const [status, setStatus] = useState<Status>()
 
   const [
     {elements, wasMaybeCollapsed, isDragging, dragInsertPosition, dragSkeleton, perspective},
@@ -83,26 +84,29 @@ export const Overlays: FunctionComponent<{
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
   useEffect(() => {
-    const unsubscribeFromStatus = channel.onStatusUpdate(setStatus)
-    const unsubscribeFromEvents = channel.subscribe((type, data) => {
-      if (type === 'presentation/focus' && data.path?.length) {
-        dispatch({type, data})
-      } else if (type === 'presentation/blur') {
-        dispatch({type, data})
-      } else if (type === 'presentation/perspective') {
-        dispatch({type, data})
-      } else if (type === 'presentation/navigate') {
+    const unsubs = [
+      comlink.on('presentation/focus', (data) => {
+        dispatch({type: 'presentation/focus', data})
+      }),
+      comlink.on('presentation/blur', (data) => {
+        dispatch({type: 'presentation/blur', data})
+      }),
+      comlink.on('presentation/perspective', (data) => {
+        dispatch({type: 'presentation/perspective', data})
+      }),
+      comlink.on('presentation/navigate', (data) => {
         history?.update(data)
-      } else if (type === 'presentation/toggleOverlay') {
+      }),
+      comlink.on('presentation/toggleOverlay', () => {
         setOverlayEnabled((enabled) => !enabled)
-      }
-    })
+      }),
+      comlink.onStatus((status) => {
+        setStatus(status as Status)
+      }),
+    ]
 
-    return () => {
-      unsubscribeFromEvents()
-      unsubscribeFromStatus()
-    }
-  }, [channel, history])
+    return () => unsubs.forEach((unsub) => unsub())
+  }, [comlink, history])
 
   const lastReported = useRef<
     | {
@@ -114,12 +118,15 @@ export const Overlays: FunctionComponent<{
 
   const reportDocuments = useCallback(
     (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
-      channel?.send('visual-editing/documents', {
-        documents,
-        perspective,
+      comlink.post({
+        type: 'visual-editing/documents',
+        data: {
+          documents,
+          perspective,
+        },
       })
     },
-    [channel],
+    [comlink],
   )
 
   useEffect(() => {
@@ -170,11 +177,11 @@ export const Overlays: FunctionComponent<{
     (message) => {
       if (message.type === 'element/click') {
         const {sanity} = message
-        channel.send('overlay/focus', sanity)
+        comlink.post({type: 'overlay/focus', data: sanity})
       } else if (message.type === 'overlay/activate') {
-        channel.send('overlay/toggle', {enabled: true})
+        comlink.post({type: 'overlay/toggle', data: {enabled: true}})
       } else if (message.type === 'overlay/deactivate') {
-        channel.send('overlay/toggle', {enabled: false})
+        comlink.post({type: 'overlay/toggle', data: {enabled: false}})
       } else if (message.type === 'overlay/dragStart') {
         if (message.flow === 'vertical') {
           document.body.style.cursor = 'ns-resize'
@@ -191,10 +198,10 @@ export const Overlays: FunctionComponent<{
 
       dispatch(message)
     },
-    [channel, rootElement],
+    [comlink, rootElement],
   )
 
-  const controller = useController(rootElement, overlayEventHandler, !!channel.inFrame)
+  const controller = useController(rootElement, overlayEventHandler, !!inFrame)
 
   useEffect(() => {
     if (overlayEnabled) {
@@ -202,7 +209,7 @@ export const Overlays: FunctionComponent<{
     } else {
       controller.current?.deactivate()
     }
-  }, [channel, controller, overlayEnabled])
+  }, [controller, overlayEnabled])
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -257,11 +264,11 @@ export const Overlays: FunctionComponent<{
     if (history) {
       return history.subscribe((update) => {
         update.title = update.title || document.title
-        channel.send('overlay/navigate', update)
+        comlink.post({type: 'overlay/navigate', data: update})
       })
     }
     return
-  }, [channel, history])
+  }, [comlink, history])
 
   const [overlaysFlash, setOverlaysFlash] = useState(false)
   const [fadingOut, setFadingOut] = useState(false)
@@ -290,11 +297,11 @@ export const Overlays: FunctionComponent<{
   }, [overlayEnabled])
 
   const elementsToRender = useMemo(() => {
-    if (!channel || (channel.inFrame && status !== 'connected')) {
+    if (!comlink || (inFrame && status !== 'connected')) {
       return []
     }
     return elements.filter((e) => e.activated || e.focused)
-  }, [channel, elements, status])
+  }, [comlink, elements, inFrame, status])
 
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
@@ -312,7 +319,7 @@ export const Overlays: FunctionComponent<{
                 rect={rect}
                 focused={focused}
                 hovered={hovered}
-                showActions={!channel.inFrame}
+                showActions={!inFrame}
                 sanity={sanity}
                 wasMaybeCollapsed={focused && wasMaybeCollapsed}
               />
