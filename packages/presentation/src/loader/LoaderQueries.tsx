@@ -8,9 +8,9 @@ import {useQueryParams, useRevalidate} from '@repo/visual-editing-helpers/hooks'
 import type {ClientConfig, ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
 import {applySourceDocuments, getPublishedId} from '@sanity/client/csm'
 import {
-  createChannelMachine,
   type ConnectionInstance,
   type Controller,
+  createChannelMachine,
   type StatusEvent,
 } from '@sanity/comlink'
 import {applyPatch} from 'mendoza'
@@ -138,7 +138,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
       return comlink.start()
     }
     return
-  }, [controller, dataset, documentsOnPage, onDocumentsOnPage, onLoadersConnection, projectId])
+  }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
 
   const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
   const studioClient = useClient({apiVersion: '2023-10-16'})
