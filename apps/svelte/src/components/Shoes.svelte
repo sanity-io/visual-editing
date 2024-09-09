@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type {ShoesListResult} from 'apps-common/queries'
-  import {formatCurrency} from 'apps-common/utils'
   import {page} from '$app/stores'
+  import type {ShoesListResult} from '$lib/queries'
   import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
+  import {formatCurrency} from '$lib/utils'
 
   export let loading: boolean = false
   export let products: ShoesListResult

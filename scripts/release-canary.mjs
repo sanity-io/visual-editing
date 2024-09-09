@@ -1,5 +1,4 @@
 #!/usr/bin/env zx
-
 import 'zx/globals'
 
 const {packages} = await fs.readJson('./release-please-config.json')
@@ -23,7 +22,7 @@ for (const workspace of workspaces) {
   }
 }
 
-await $`pnpm build --filter=!./apps/* --output-logs=errors-only`.pipe(process.stdout)
+await $`pnpm build --output-logs=errors-only`.pipe(process.stdout)
 
 // If provenance isn't enabled, assume we're running locally and need to confirm before publishing
 if (process.env.NPM_CONFIG_PROVENANCE !== 'true') {

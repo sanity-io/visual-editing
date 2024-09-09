@@ -1,9 +1,27 @@
+import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from '@sanity/client'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
+import {vercelStegaSplit} from '@vercel/stega'
 
-const {projectId, dataset, tool, workspace} = workspaces['nuxt']
-const studioUrl = `${baseUrl}/${workspace}`
+export function formatCurrency(_value: number | string): string {
+  let value = typeof _value === 'string' ? undefined : _value
+  let encoded = ''
+  if (typeof _value === 'string') {
+    const split = vercelStegaSplit(_value)
+    value = parseInt(split.cleaned, 10)
+    encoded = split.encoded
+  }
+  const formatter = new Intl.NumberFormat('en', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  })
+  return `${formatter.format(value!)}${encoded}`
+}
+
+const {projectId, dataset} = workspaces['nuxt']
 
 export function getClient() {
   return createClient({
@@ -13,7 +31,17 @@ export function getClient() {
     apiVersion,
     // stega: {
     //   enabled: true,
-    //   studioUrl,
+    //   studioUrl: (sourceDocument) => {
+    //     if (
+    //       sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
+    //       sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
+    //     ) {
+    //       const {workspace, tool} = workspaces['cross-dataset-references']
+    //       return {baseUrl, workspace, tool}
+    //     }
+    //     const {workspace, tool} = workspaces['nuxt']
+    //     return {baseUrl, workspace, tool}
+    //   },
     // },
   })
 }

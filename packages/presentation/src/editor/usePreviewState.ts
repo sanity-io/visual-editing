@@ -1,11 +1,10 @@
 import {type SchemaType} from '@sanity/types'
 import {useEffect, useState} from 'react'
-
 import {
   getPreviewStateObservable,
+  useDocumentPreviewStore,
   type PreviewValue,
   type SanityDocument,
-  useDocumentPreviewStore,
 } from '../internals'
 
 interface PreviewState {

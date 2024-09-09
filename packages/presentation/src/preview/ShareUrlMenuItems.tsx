@@ -7,7 +7,6 @@ import {
 import {MenuItem, useToast} from '@sanity/ui'
 import {useCallback, useState} from 'react'
 import {useClient, useCurrentUser, useTranslation} from 'sanity'
-
 import {API_VERSION} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'
 import type {PreviewFrameProps} from './PreviewFrame'

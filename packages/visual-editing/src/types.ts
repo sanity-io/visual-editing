@@ -1,13 +1,13 @@
-import type {ChannelsNode} from '@repo/channels'
 import type {
   HistoryRefresh,
   HistoryUpdate,
-  OverlayMsg as OverlayChannelsMsg,
-  PresentationMsg,
   SanityNode,
   SanityStegaNode,
-  VisualEditingMsg,
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
+import type {Node} from '@sanity/comlink'
+import type {ComponentType, ReactElement} from 'react'
 
 export type {
   HistoryRefresh,
@@ -57,6 +57,12 @@ export type DragInsertPosition = {
 } | null
 
 /** @public */
+export interface DragEndEvent {
+  insertPosition: DragInsertPosition
+  target: SanityNode
+}
+
+/** @public */
 export type DragSkeleton = {
   w: number
   h: number
@@ -69,6 +75,7 @@ export type DragSkeleton = {
     h: number
     tagName: string
   }[]
+  maxWidth: number
 }
 
 /**
@@ -98,6 +105,23 @@ export type OverlayMsgActivate = Msg<'overlay/activate'>
 export type OverlayMsgDeactivate = Msg<'overlay/deactivate'>
 
 /** @public */
+export type OverlayMsgSetCursor = Msg<'overlay/setCursor'> & {
+  element: ElementNode
+  cursor: string
+}
+
+/** @public */
+export type OverlayMsgElementContextMenu =
+  | OverlayMsgElement<'contextmenu'>
+  | (OverlayMsgElement<'contextmenu'> & {
+      position: {
+        x: number
+        y: number
+      }
+      sanity: SanityNode
+    })
+
+/** @public */
 export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
 
 /** @public */
@@ -117,6 +141,7 @@ export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>
 export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
+  dragDisabled: boolean
 }
 
 /** @public */
@@ -146,25 +171,55 @@ export type OverlayMsgDragUpdateCursorPosition = Msg<'overlay/dragUpdateCursorPo
 
 /** @public */
 export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
-  skeleton: DragSkeleton
   flow: 'horizontal' | 'vertical'
 }
 
 /** @public */
-export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & {
-  insertPosition: DragInsertPosition
+export type OverlayMsgDragToggleMinimapPrompt = Msg<'overlay/dragToggleMinimapPrompt'> & {
+  display: boolean
 }
+
+/** @public */
+export type OverlayMsgDragUpdateSkeleton = Msg<'overlay/dragUpdateSkeleton'> & {
+  skeleton: DragSkeleton
+}
+
+/** @public */
+export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & DragEndEvent
+
+/** @public */
+export type OverlayMsgDragUpdateGroupRect = Msg<'overlay/dragUpdateGroupRect'> & {
+  groupRect: OverlayRect | null
+}
+
+/** @public */
+
+export type OverlayMsgDragStartMinimapTransition = Msg<'overlay/dragStartMinimapTransition'>
+
+/** @public */
+
+export type OverlayMsgDragEndMinimapTransition = Msg<'overlay/dragEndMinimapTransition'>
 
 /**
  * Controller dispatched messages
  * @public
  */
 export type OverlayMsg =
-  | OverlayMsgBlur
   | OverlayMsgActivate
+  | OverlayMsgBlur
   | OverlayMsgDeactivate
+  | OverlayMsgDragEnd
+  | OverlayMsgDragEndMinimapTransition
+  | OverlayMsgDragStart
+  | OverlayMsgDragStartMinimapTransition
+  | OverlayMsgDragToggleMinimapPrompt
+  | OverlayMsgDragUpdateCursorPosition
+  | OverlayMsgDragUpdateGroupRect
+  | OverlayMsgDragUpdateInsertPosition
+  | OverlayMsgDragUpdateSkeleton
   | OverlayMsgElementActivate
   | OverlayMsgElementClick
+  | OverlayMsgElementContextMenu
   | OverlayMsgElementDeactivate
   | OverlayMsgElementMouseEnter
   | OverlayMsgElementMouseLeave
@@ -172,10 +227,7 @@ export type OverlayMsg =
   | OverlayMsgElementUnregister
   | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
-  | OverlayMsgDragStart
-  | OverlayMsgDragEnd
-  | OverlayMsgDragUpdateInsertPosition
-  | OverlayMsgDragUpdateCursorPosition
+  | OverlayMsgSetCursor
 
 /**
  * Callback function used for handling dispatched controller messages
@@ -220,6 +272,7 @@ export interface ElementState {
   hovered: boolean
   rect: OverlayRect
   sanity: SanityNode | SanityStegaNode
+  dragDisabled: boolean
 }
 
 /**
@@ -276,30 +329,18 @@ export interface OverlayElement {
  * @internal
  */
 export interface EventHandlers {
-  click: (event: Event) => void
-  mousedown: (event: Event) => void
-  mouseenter: (event: Event) => void
-  mouseleave: (event: Event) => void
-  mousemove: (event: Event) => void
+  click: (event: MouseEvent) => void
+  contextmenu: (event: MouseEvent) => void
+  mousedown: (event: MouseEvent) => void
+  mouseenter: (event: MouseEvent) => void
+  mouseleave: (event: MouseEvent) => void
+  mousemove: (event: MouseEvent) => void
 }
 
 /**
  * @internal
  */
-export type VisualEditingChannelSends = OverlayChannelsMsg | VisualEditingMsg
-
-/**
- * @internal
- */
-export type VisualEditingChannelReceives = PresentationMsg
-
-/**
- * @internal
- */
-export type VisualEditingChannel = ChannelsNode<
-  VisualEditingChannelSends,
-  VisualEditingChannelReceives
->
+export type VisualEditingNode = Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
 
 /**
  * Cleanup function used when e.g. unmounting
@@ -324,3 +365,45 @@ export interface VisualEditingOptions {
    */
   zIndex?: string | number
 }
+
+export interface ContextMenuProps {
+  node: SanityNode
+  onDismiss: () => void
+  position: {
+    x: number
+    y: number
+  }
+}
+
+/**
+ * @internal
+ */
+export interface ContextMenuActionNode {
+  type: 'action'
+  icon?: ReactElement | ComponentType
+  label: string
+  hotkeys?: string[]
+  action?: () => void
+}
+
+/**
+ * @internal
+ */
+export interface ContextMenuDividerNode {
+  type: 'divider'
+}
+
+/**
+ * @internal
+ */
+export interface ContextMenuGroupNode {
+  type: 'group'
+  icon?: ReactElement | ComponentType
+  label: string
+  items: ContextMenuNode[]
+}
+
+/**
+ * @internal
+ */
+export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | ContextMenuGroupNode

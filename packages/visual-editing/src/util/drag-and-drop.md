@@ -73,10 +73,10 @@ For example:
 }
 ```
 
-You can disable drag and drop on any element using the `data-sanity-disable-drag` data attribute:
+You can disable drag and drop on any element using the `data-sanity-drag-disable` data attribute:
 
 ```js
-<button data-sanity-disable-drag></button>
+<button data-sanity-drag-disable></button>
 ```
 
 _This data attribute can be added to every item in an array, or to specific items._

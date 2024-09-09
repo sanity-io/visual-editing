@@ -1,24 +1,45 @@
-import type {ChannelStatus} from '@repo/channels'
-import {isAltKey, isHotkey, type SanityNode} from '@repo/visual-editing-helpers'
+import {
+  isAltKey,
+  isHotkey,
+  type SanityNode,
+  type VisualEditingControllerMsg,
+} from '@repo/visual-editing-helpers'
 import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
-import {isHTMLAnchorElement, isHTMLElement, studioTheme, ThemeProvider} from '@sanity/ui'
+import type {Status} from '@sanity/comlink'
 import {
-  type FunctionComponent,
+  isHTMLAnchorElement,
+  isHTMLElement,
+  LayerProvider,
+  PortalProvider,
+  studioTheme,
+  ThemeProvider,
+  usePrefersDark,
+} from '@sanity/ui'
+import {
   useCallback,
   useEffect,
   useMemo,
   useReducer,
   useRef,
   useState,
+  type FunctionComponent,
 } from 'react'
 import {styled} from 'styled-components'
-
-import type {HistoryAdapter, OverlayEventHandler, VisualEditingChannel} from '../types'
+import type {HistoryAdapter, OverlayEventHandler, OverlayMsg, VisualEditingNode} from '../types'
+import {getDraftId} from '../util/documents'
+import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
+import {useDragEndEvents} from '../util/useDragEvents'
+import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
+import {useOptimisticActor} from './optimistic-state/useOptimisticActor'
+import {OverlayDragGroupRect} from './OverlayDragGroupRect'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
+import {OverlayMinimapPrompt} from './OverlayMinimapPrompt'
 import {overlayStateReducer} from './overlayStateReducer'
+import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
+import {SchemaProvider} from './schema/SchemaProvider'
 import {useController} from './useController'
 
 const Root = styled.div<{
@@ -55,54 +76,158 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
   return true
 }
 
+const DocumentReporter: FunctionComponent<{
+  documentIds: string[]
+}> = (props) => {
+  const {documentIds} = props
+  const [uniqueIds, setUniqueIds] = useState<string[]>([])
+
+  useEffect(() => {
+    setUniqueIds((prev) => {
+      const next = Array.from(new Set(documentIds.map(getDraftId)))
+      return prev.length === next.length &&
+        prev.reduce((acc, prevId) => acc.filter((id) => id !== prevId), next)?.length === 0
+        ? prev
+        : next
+    })
+  }, [documentIds])
+
+  const actor = useOptimisticActor()
+
+  useEffect(() => {
+    for (const id of uniqueIds) {
+      actor.send({type: 'observe', documentId: getDraftId(id)})
+    }
+    return () => {
+      for (const id of uniqueIds) {
+        actor.send({type: 'unobserve', documentId: getDraftId(id)})
+      }
+    }
+  }, [actor, uniqueIds])
+
+  return null
+}
+
+const OverlaysController: FunctionComponent<{
+  comlink?: VisualEditingNode
+  dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void
+  inFrame: boolean
+  onDrag: (x: number, y: number) => void
+  overlayEnabled: boolean
+  rootElement: HTMLElement | null
+}> = (props) => {
+  const {comlink, dispatch, inFrame, onDrag, overlayEnabled, rootElement} = props
+  const {dispatchDragEndEvent} = useDragEndEvents()
+
+  const overlayEventHandler: OverlayEventHandler = useCallback(
+    (message) => {
+      if (message.type === 'element/click') {
+        const {sanity} = message
+        comlink?.post({type: 'visual-editing/focus', data: sanity})
+      } else if (message.type === 'overlay/activate') {
+        comlink?.post({type: 'visual-editing/toggle', data: {enabled: true}})
+      } else if (message.type === 'overlay/deactivate') {
+        comlink?.post({type: 'visual-editing/toggle', data: {enabled: false}})
+      } else if (message.type === 'overlay/dragEnd') {
+        const {insertPosition, target} = message
+        dispatchDragEndEvent({insertPosition, target})
+      } else if (message.type === 'overlay/dragUpdateCursorPosition') {
+        onDrag(message.x, message.y)
+
+        return
+      } else if (message.type === 'overlay/setCursor') {
+        const {element, cursor} = message
+
+        element.style.cursor = cursor
+      }
+
+      dispatch(message)
+    },
+    [comlink, dispatch, dispatchDragEndEvent, onDrag],
+  )
+
+  const controller = useController(rootElement, overlayEventHandler, !!inFrame)
+
+  useEffect(() => {
+    if (overlayEnabled) {
+      controller.current?.activate()
+    } else {
+      controller.current?.deactivate()
+    }
+  }, [controller, overlayEnabled])
+
+  return null
+}
+
 /**
  * @internal
  */
 export const Overlays: FunctionComponent<{
-  channel: VisualEditingChannel
+  comlink?: VisualEditingNode
   history?: HistoryAdapter
+  inFrame: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {channel, history, zIndex} = props
+  const {comlink, inFrame, history, zIndex} = props
 
-  const [status, setStatus] = useState<ChannelStatus>()
+  const [status, setStatus] = useState<Status>()
+
+  const prefersDark = usePrefersDark()
 
   const [
-    {elements, wasMaybeCollapsed, isDragging, dragInsertPosition, dragSkeleton, perspective},
+    {
+      contextMenu,
+      dragInsertPosition,
+      dragShowMinimapPrompt,
+      dragSkeleton,
+      elements,
+      isDragging,
+      perspective,
+      wasMaybeCollapsed,
+      dragMinimapTransition,
+      dragGroupRect,
+    },
     dispatch,
   ] = useReducer(overlayStateReducer, {
+    contextMenu: null,
+    dragInsertPosition: null,
+    dragShowMinimapPrompt: false,
+    dragSkeleton: null,
     elements: [],
     focusPath: '',
-    wasMaybeCollapsed: false,
     isDragging: false,
-    dragInsertPosition: null,
-    dragSkeleton: null,
     perspective: 'published',
+    wasMaybeCollapsed: false,
+    dragMinimapTransition: false,
+    dragGroupRect: null,
   })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
   useEffect(() => {
-    const unsubscribeFromStatus = channel.onStatusUpdate(setStatus)
-    const unsubscribeFromEvents = channel.subscribe((type, data) => {
-      if (type === 'presentation/focus' && data.path?.length) {
-        dispatch({type, data})
-      } else if (type === 'presentation/blur') {
-        dispatch({type, data})
-      } else if (type === 'presentation/perspective') {
-        dispatch({type, data})
-      } else if (type === 'presentation/navigate') {
+    const unsubs = [
+      comlink?.on('presentation/focus', (data) => {
+        dispatch({type: 'presentation/focus', data})
+      }),
+      comlink?.on('presentation/blur', (data) => {
+        dispatch({type: 'presentation/blur', data})
+      }),
+      comlink?.on('presentation/perspective', (data) => {
+        dispatch({type: 'presentation/perspective', data})
+      }),
+      comlink?.on('presentation/navigate', (data) => {
         history?.update(data)
-      } else if (type === 'presentation/toggleOverlay') {
+      }),
+      comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
-      }
-    })
+      }),
+      comlink?.onStatus((status) => {
+        setStatus(status as Status)
+      }),
+    ].filter(Boolean)
 
-    return () => {
-      unsubscribeFromEvents()
-      unsubscribeFromStatus()
-    }
-  }, [channel, history])
+    return () => unsubs.forEach((unsub) => unsub!())
+  }, [comlink, history])
 
   const lastReported = useRef<
     | {
@@ -114,12 +239,15 @@ export const Overlays: FunctionComponent<{
 
   const reportDocuments = useCallback(
     (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
-      channel?.send('visual-editing/documents', {
-        documents,
-        perspective,
+      comlink?.post({
+        type: 'visual-editing/documents',
+        data: {
+          documents,
+          perspective,
+        },
       })
     },
-    [channel],
+    [comlink],
   )
 
   useEffect(() => {
@@ -159,50 +287,15 @@ export const Overlays: FunctionComponent<{
     }
   }, [elements, perspective, reportDocuments])
 
-  const updateDragPreviewCustomProps = (rootElement: HTMLElement | null, x: number, y: number) => {
-    if (!rootElement) return
+  const updateDragPreviewCustomProps = useCallback(
+    (x: number, y: number) => {
+      if (!rootElement) return
 
-    rootElement.style.setProperty('--drag-preview-x', `${x}px`)
-    rootElement.style.setProperty('--drag-preview-y', `${y - window.scrollY}px`)
-  }
-
-  const overlayEventHandler: OverlayEventHandler = useCallback(
-    (message) => {
-      if (message.type === 'element/click') {
-        const {sanity} = message
-        channel.send('overlay/focus', sanity)
-      } else if (message.type === 'overlay/activate') {
-        channel.send('overlay/toggle', {enabled: true})
-      } else if (message.type === 'overlay/deactivate') {
-        channel.send('overlay/toggle', {enabled: false})
-      } else if (message.type === 'overlay/dragStart') {
-        if (message.flow === 'vertical') {
-          document.body.style.cursor = 'ns-resize'
-        } else {
-          document.body.style.cursor = 'ew-resize'
-        }
-      } else if (message.type === 'overlay/dragEnd') {
-        document.body.style.cursor = 'auto'
-      } else if (message.type === 'overlay/dragUpdateCursorPosition') {
-        updateDragPreviewCustomProps(rootElement, message.x, message.y)
-
-        return
-      }
-
-      dispatch(message)
+      rootElement.style.setProperty('--drag-preview-x', `${x}px`)
+      rootElement.style.setProperty('--drag-preview-y', `${y - window.scrollY}px`)
     },
-    [channel, rootElement],
+    [rootElement],
   )
-
-  const controller = useController(rootElement, overlayEventHandler, !!channel.inFrame)
-
-  useEffect(() => {
-    if (overlayEnabled) {
-      controller.current?.activate()
-    } else {
-      controller.current?.deactivate()
-    }
-  }, [channel, controller, overlayEnabled])
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -257,11 +350,11 @@ export const Overlays: FunctionComponent<{
     if (history) {
       return history.subscribe((update) => {
         update.title = update.title || document.title
-        channel.send('overlay/navigate', update)
+        comlink?.post({type: 'visual-editing/navigate', data: update})
       })
     }
     return
-  }, [channel, history])
+  }, [comlink, history])
 
   const [overlaysFlash, setOverlaysFlash] = useState(false)
   const [fadingOut, setFadingOut] = useState(false)
@@ -290,38 +383,84 @@ export const Overlays: FunctionComponent<{
   }, [overlayEnabled])
 
   const elementsToRender = useMemo(() => {
-    if (!channel || (channel.inFrame && status !== 'connected')) {
+    if (inFrame && status !== 'connected') {
       return []
     }
     return elements.filter((e) => e.activated || e.focused)
-  }, [channel, elements, status])
+  }, [elements, inFrame, status])
+
+  const documentIds = useMemo(() => {
+    return elements.flatMap((element) => ('id' in element.sanity ? [element.sanity.id] : []))
+  }, [elements])
+
+  const closeContextMenu = useCallback(() => {
+    dispatch({type: 'overlay/blur'})
+  }, [])
 
   return (
-    <ThemeProvider theme={studioTheme} tone="transparent">
-      <Root
-        data-fading-out={fadingOut ? '' : undefined}
-        data-overlays={overlaysFlash ? '' : undefined}
-        ref={setRootElement}
-        $zIndex={zIndex}
-      >
-        {!isDragging &&
-          elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
-            return (
-              <ElementOverlay
-                key={id}
-                rect={rect}
-                focused={focused}
-                hovered={hovered}
-                showActions={!channel.inFrame}
-                sanity={sanity}
-                wasMaybeCollapsed={focused && wasMaybeCollapsed}
-              />
-            )
-          })}
+    <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
+      <LayerProvider>
+        <PortalProvider element={rootElement}>
+          <SchemaProvider comlink={comlink} elements={elements}>
+            <PreviewSnapshotsProvider comlink={comlink}>
+              {/* <OptimisticStateProvider comlink={comlink} documentIds={documentIds}> */}
+              <Root
+                data-fading-out={fadingOut ? '' : undefined}
+                data-overlays={overlaysFlash ? '' : undefined}
+                ref={setRootElement}
+                $zIndex={zIndex}
+              >
+                <DocumentReporter documentIds={documentIds} />
+                <OverlaysController
+                  comlink={comlink}
+                  dispatch={dispatch}
+                  inFrame={inFrame}
+                  onDrag={updateDragPreviewCustomProps}
+                  overlayEnabled={overlayEnabled}
+                  rootElement={rootElement}
+                />
+                {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
+                {!isDragging &&
+                  elementsToRender.map(({id, focused, hovered, rect, sanity, dragDisabled}) => {
+                    const draggable =
+                      !dragDisabled &&
+                      elements.some((e) =>
+                        'id' in e.sanity && 'id' in sanity
+                          ? sanityNodesExistInSameArray(e.sanity, sanity) &&
+                            e.sanity.path !== sanity.path
+                          : false,
+                      )
 
-        {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-        {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
-      </Root>
+                    return (
+                      <ElementOverlay
+                        key={id}
+                        focused={focused}
+                        hovered={hovered}
+                        node={sanity}
+                        rect={rect}
+                        showActions={!inFrame}
+                        draggable={draggable}
+                        isDragging={isDragging || dragMinimapTransition}
+                        wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                      />
+                    )
+                  })}
+
+                {isDragging && !dragMinimapTransition && (
+                  <>
+                    {dragInsertPosition && (
+                      <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                    )}
+                    {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
+                    {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
+                  </>
+                )}
+                {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+              </Root>
+            </PreviewSnapshotsProvider>
+          </SchemaProvider>
+        </PortalProvider>
+      </LayerProvider>
     </ThemeProvider>
   )
 }

@@ -1,8 +1,8 @@
 import {
-  type FunctionComponent,
-  type MouseEvent as ReactMouseEvent,
   useCallback,
   useRef,
+  type FunctionComponent,
+  type MouseEvent as ReactMouseEvent,
 } from 'react'
 import {styled} from 'styled-components'
 

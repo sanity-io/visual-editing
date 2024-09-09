@@ -1,18 +1,17 @@
 import {ResetIcon} from '@sanity/icons'
 import {TextInput, type TextInputClearButtonProps} from '@sanity/ui'
 import {
-  type ChangeEvent,
-  type FunctionComponent,
-  type KeyboardEvent,
-  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
+  type ChangeEvent,
+  type FunctionComponent,
+  type KeyboardEvent,
+  type ReactNode,
 } from 'react'
 import {useTranslation} from 'sanity'
-
 import {presentationLocaleNamespace} from '../i18n'
 import {useActiveWorkspace} from '../internals'
 

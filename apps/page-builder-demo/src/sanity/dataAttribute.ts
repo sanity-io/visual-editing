@@ -1,13 +1,21 @@
-import {SanityNode, encodeSanityNodeData} from '@sanity/react-loader/jsx'
-import {studioUrl, workspaces} from 'apps-common/env'
+import {workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
+import {createDataAttribute} from 'next-sanity'
 
-const workspace = workspaces['page-builder-demo']
+const {projectId, dataset, workspace, tool} = workspaces['page-builder-demo']
 
-export function dataAttribute(node: Omit<SanityNode, 'baseUrl' | 'dataset' | 'projectId'>) {
-  return encodeSanityNodeData({
-    baseUrl: `${studioUrl}/${workspace.workspace}`,
-    projectId: workspaces['page-builder-demo'].projectId,
-    dataset: workspaces['page-builder-demo'].dataset,
+export function dataAttribute(
+  node: Omit<
+    Parameters<typeof createDataAttribute>[0],
+    'baseUrl' | 'workspace' | 'tool' | 'projectId' | 'dataset'
+  >,
+) {
+  return createDataAttribute({
+    baseUrl,
+    workspace,
+    tool,
+    projectId,
+    dataset,
     ...node,
   })
 }

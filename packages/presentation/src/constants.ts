@@ -10,7 +10,7 @@ export const COMMENTS_INSPECTOR_NAME = 'sanity/structure/comments'
 export const EDIT_INTENT_MODE = 'presentation'
 
 // How long we wait until an iframe is loaded until we consider it to be slow and possibly failed
-export const MAX_TIME_TO_OVERLAYS_CONNECTION = 3000 // ms
+export const MAX_TIME_TO_OVERLAYS_CONNECTION = 3_000 // ms
 
 // The API version to use when using `@sanity/client`
 export const API_VERSION = '2023-10-16'
@@ -23,3 +23,14 @@ export const LIVE_QUERY_CACHE_BATCH_SIZE = 100
 
 // Total cache size for documents that are live queried
 export const LIVE_QUERY_CACHE_SIZE = 2048
+
+declare global {
+  const PRESENTATION_ENABLE_QRCODE: unknown
+}
+
+// Feature flag that disables the new QRCode Preview URL menu
+export const QRCODE_ENABLED =
+  typeof PRESENTATION_ENABLE_QRCODE === 'string'
+    ? PRESENTATION_ENABLE_QRCODE === 'true'
+    : // @ts-expect-error: env vars are not typed
+      process.env.SANITY_STUDIO_PRESENTATION_ENABLE_QRCODE === 'true'

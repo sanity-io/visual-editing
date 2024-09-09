@@ -1,5 +1,4 @@
 import {useContext} from 'react'
-
 import {PresentationContext, type PresentationContextValue} from './PresentationContext'
 
 export function usePresentationTool(): PresentationContextValue {
