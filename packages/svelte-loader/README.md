@@ -146,7 +146,7 @@ We can now import `isPreviewing` (a [readonly Svelte store](https://svelte.dev/d
 ```svelte
 <!-- src/components/DisplayPreview.svelte -->
 <script lang="ts">
-import { isPreviewing } from '@sanity/svelte-loader'
+  import {isPreviewing} from '@sanity/svelte-loader'
 </script>
 
 {#if $isPreviewing}
@@ -199,18 +199,18 @@ Next, create the page component. We use `useQuery` on the client, passing the in
 ```svelte
 <!-- src/routes/[slug]/+page.svelte -->
 <script lang="ts">
-  import type { PageData } from './$types'
-  import { useQuery } from '@sanity/svelte-loader'
-  import { pageQuery, type PageResult } from '$lib/queries'
+  import {useQuery} from '@sanity/svelte-loader'
+  import {pageQuery, type PageResult} from '$lib/queries'
+  import type {PageData} from './$types'
 
   export let data: PageData
-  const { initial, params } = data;
+  const {initial, params} = data
 
-  const query = useQuery<PageResult>(pageQuery, params, { initial })
+  const query = useQuery<PageResult>(pageQuery, params, {initial})
 
   const studioUrl = 'https://my.sanity.studio'
 
-  $: ({ data: page, loading, encodeDataAttribute } = $query)
+  $: ({data: page, loading, encodeDataAttribute} = $query)
 </script>
 
 {#if loading}
@@ -229,22 +229,24 @@ Finally, we enable both live mode and overlays in the root layout component.
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
-  import { onMount } from 'svelte'
-  import { enableVisualEditing } from '@sanity/visual-editing'
-  import { useLiveMode } from '@sanity/svelte-loader'
-  import { client } from '$lib/sanity'
-  import { PUBLIC_SANITY_STUDIO_URL } from '$env/static/public'
+  import {useLiveMode} from '@sanity/svelte-loader'
+  import {enableVisualEditing} from '@sanity/visual-editing'
+  import {PUBLIC_SANITY_STUDIO_URL} from '$env/static/public'
+  import {client} from '$lib/sanity'
+  import {onMount} from 'svelte'
 
   onMount(() => enableVisualEditing())
 
-  onMount(() => useLiveMode({
-    // If `stega.studioUrl` was not provided to the client instance in `sanity.ts`, a studioUrl should be provided here
-    studioUrl: PUBLIC_SANITY_STUDIO_URL
-    // ...or alternatively provide the stega client directly
-    // client: client.withConfig({
-    //   stega: true
-    // })
-  }))
+  onMount(() =>
+    useLiveMode({
+      // If `stega.studioUrl` was not provided to the client instance in `sanity.ts`, a studioUrl should be provided here
+      studioUrl: PUBLIC_SANITY_STUDIO_URL,
+      // ...or alternatively provide the stega client directly
+      // client: client.withConfig({
+      //   stega: true
+      // })
+    }),
+  )
 </script>
 
 <div class="app">

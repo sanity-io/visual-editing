@@ -1,13 +1,12 @@
-import {Suspense} from 'react'
-import dynamic from 'next/dynamic'
 import {revalidateTag, unstable_cache} from 'next/cache'
-
+import dynamic from 'next/dynamic'
+import {Suspense} from 'react'
 import '../../tailwind.css'
-import {draftMode} from 'next/headers'
 import {Metadata} from 'next'
+import {draftMode} from 'next/headers'
+import {Timesince} from '../Timesince'
 
 const LiveVisualEditing = dynamic(() => import('./VisualEditing'))
-import {Timesince} from '../Timesince'
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   return (

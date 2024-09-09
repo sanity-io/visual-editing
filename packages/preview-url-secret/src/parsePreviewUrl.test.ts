@@ -1,5 +1,4 @@
 import {expect, test} from 'vitest'
-
 import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
 import {parsePreviewUrl} from './parsePreviewUrl'
 

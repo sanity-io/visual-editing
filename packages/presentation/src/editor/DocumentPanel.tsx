@@ -1,6 +1,5 @@
 import {type ReactElement} from 'react'
 import {type Path} from 'sanity'
-
 import {StructureToolProvider} from '../internals'
 import type {PresentationSearchParams, StructureDocumentPaneParams} from '../types'
 import {DocumentPane} from './DocumentPane'

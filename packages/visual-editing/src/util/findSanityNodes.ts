@@ -1,8 +1,13 @@
 import {decodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
-
 import {OVERLAY_ID} from '../constants'
-import type {ElementNode, ResolvedElement, SanityNode, SanityStegaNode} from '../types'
-import {findNonInlineElement} from './findNonInlineElement'
+import type {
+  ElementNode,
+  OverlayElement,
+  ResolvedElement,
+  SanityNode,
+  SanityStegaNode,
+} from '../types'
+import {findNonInlineElement} from './elements'
 import {testAndDecodeStega} from './stega'
 
 const isElementNode = (node: ChildNode): node is ElementNode => node.nodeType === Node.ELEMENT_NODE
@@ -201,4 +206,35 @@ export function sanityNodesExistInSameArray(
   if (!isSanityArrayPath(sanityNode1.path) || !isSanityArrayPath(sanityNode2.path)) return false
 
   return getSanityNodeArrayPath(sanityNode1.path) === getSanityNodeArrayPath(sanityNode2.path)
+}
+
+export function resolveDragAndDropGroup(
+  element: ElementNode,
+  sanity: SanityNode | SanityStegaNode,
+  elementSet: Set<ElementNode>,
+  elementsMap: WeakMap<ElementNode, OverlayElement>,
+): null | OverlayElement[] {
+  if (element.getAttribute('data-sanity-drag-disable')) return null
+
+  if (!sanity || !isSanityNode(sanity) || !isSanityArrayPath(sanity.path)) return null
+
+  const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
+    const elData = elementsMap.get(el)
+    const elDragDisabled = el.getAttribute('data-sanity-drag-disable')
+
+    if (
+      elData &&
+      !elDragDisabled &&
+      isSanityNode(elData.sanity) &&
+      sanityNodesExistInSameArray(sanity, elData.sanity)
+    ) {
+      acc.push(elData)
+    }
+
+    return acc
+  }, [])
+
+  if (group.length <= 1) return null
+
+  return group
 }

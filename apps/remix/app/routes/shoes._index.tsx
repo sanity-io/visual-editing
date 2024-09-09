@@ -1,10 +1,10 @@
 import {Link, useLoaderData} from '@remix-run/react'
-import {formatCurrency} from 'apps-common/utils'
-import {shoesList, type ShoesListResult} from 'apps-common/queries'
-import {json} from '@vercel/remix'
 import {useQuery} from '@sanity/react-loader'
-import {loadQuery} from '~/sanity.loader.server'
+import {json} from '@vercel/remix'
+import {shoesList, type ShoesListResult} from '~/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/sanity'
+import {loadQuery} from '~/sanity.loader.server'
+import {formatCurrency} from '~/utils'
 
 export const loader = async () => {
   return json({initial: await loadQuery<ShoesListResult>(shoesList)})

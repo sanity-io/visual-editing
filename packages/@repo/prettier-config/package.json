@@ -1,0 +1,37 @@
+{
+  "name": "@repo/prettier-config",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.3.1",
+    "@sanity/prettier-config": "1.0.3",
+    "prettier": "3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-svelte": "3.2.7",
+    "prettier-plugin-tailwindcss": "0.6.8"
+  },
+  "peerDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "$@ianvs/prettier-plugin-sort-imports",
+    "prettier": "$prettier",
+    "prettier-plugin-astro": "$prettier-plugin-astro",
+    "prettier-plugin-svelte": "$prettier-plugin-svelte",
+    "prettier-plugin-tailwindcss": "$prettier-plugin-tailwindcss"
+  },
+  "peerDependenciesMeta": {
+    "@ianvs/prettier-plugin-sort-imports": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    },
+    "prettier-plugin-astro": {
+      "optional": true
+    },
+    "prettier-plugin-svelte": {
+      "optional": true
+    },
+    "prettier-plugin-tailwindcss": {
+      "optional": true
+    }
+  }
+}

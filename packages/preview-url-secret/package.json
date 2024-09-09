@@ -1,6 +1,6 @@
 {
   "name": "@sanity/preview-url-secret",
-  "version": "1.6.21",
+  "version": "1.6.22-canary.37",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/preview-url-secret#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -20,6 +20,12 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
+    },
+    "./constants": {
+      "source": "./src/_exports/constants.ts",
+      "import": "./dist/constants.js",
+      "require": "./dist/constants.cjs",
+      "default": "./dist/constants.js"
     },
     "./create-secret": {
       "source": "./src/_exports/create-secret.ts",
@@ -45,6 +51,12 @@
       "require": "./dist/sanity-plugin-debug-secrets.cjs",
       "default": "./dist/sanity-plugin-debug-secrets.js"
     },
+    "./validate-secret": {
+      "source": "./src/_exports/validate-secret.ts",
+      "import": "./dist/validate-secret.js",
+      "require": "./dist/validate-secret.cjs",
+      "default": "./dist/validate-secret.js"
+    },
     "./without-secret-search-params": {
       "source": "./src/_exports/without-secret-search-params.ts",
       "import": "./dist/without-secret-search-params.js",
@@ -58,6 +70,9 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
+      "constants": [
+        "./dist/constants.d.ts"
+      ],
       "create-secret": [
         "./dist/create-secret.d.ts"
       ],
@@ -69,6 +84,9 @@
       ],
       "sanity-plugin-debug-secrets": [
         "./dist/sanity-plugin-debug-secrets.d.ts"
+      ],
+      "validate-secret": [
+        "./dist/validate-secret.d.ts"
       ],
       "without-secret-search-params": [
         "./dist/without-secret-search-params.d.ts"
@@ -85,53 +103,16 @@
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": "@sanity/prettier-config",
+  "prettier": "@repo/prettier-config",
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "simple-import-sort",
-      "prettier"
-    ],
     "extends": [
-      "eslint:recommended",
-      "plugin:prettier/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
+      "@repo/eslint-config"
     ],
-    "rules": {
-      "no-console": "error",
-      "no-warning-comments": [
-        "warn",
-        {
-          "location": "start",
-          "terms": [
-            "todo",
-            "@todo",
-            "fixme"
-          ]
-        }
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/member-delimiter-style": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
-      "prettier/prettier": "warn",
-      "simple-import-sort/exports": "warn",
-      "simple-import-sort/imports": "warn"
-    },
     "root": true
   },
   "dependencies": {
@@ -139,22 +120,19 @@
   },
   "devDependencies": {
     "@repo/channels": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
-    "@sanity/client": "^6.21.3",
+    "@repo/prettier-config": "workspace:*",
+    "@sanity/client": "^6.22.1",
     "@sanity/icons": "^3.4.0",
-    "@sanity/pkg-utils": "6.11.1",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "sanity": "^3.57.2",
-    "typescript": "5.6.2",
-    "vitest": "^2.0.5"
+    "@sanity/pkg-utils": "6.11.3",
+    "eslint": "^8.57.1",
+    "sanity": "^3.60.0",
+    "typescript": "5.6.3",
+    "vitest": "^2.1.3"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.21.3"
+    "@sanity/client": "^6.22.1"
   },
   "engines": {
     "node": ">=18"

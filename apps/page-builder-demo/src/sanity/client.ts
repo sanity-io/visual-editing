@@ -1,18 +1,16 @@
+import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from '@sanity/client'
-import {workspaces, apiVersion, studioUrl} from 'apps-common/env'
 
-const {projectId, dataset, workspace} = workspaces['page-builder-demo']
+const {projectId, dataset, workspace, tool} = workspaces['page-builder-demo']
 
-export function getClient() {
-  return createClient({
-    projectId,
-    dataset,
-    useCdn: false,
-    apiVersion,
-    perspective: 'previewDrafts',
-    stega: {
-      enabled: true,
-      studioUrl: () => ({baseUrl: studioUrl, workspace}),
-    },
-  })
-}
+export const client = createClient({
+  projectId,
+  dataset,
+  useCdn: true,
+  apiVersion,
+  perspective: 'published',
+  stega: {
+    studioUrl: () => ({baseUrl, workspace, tool}),
+  },
+})
