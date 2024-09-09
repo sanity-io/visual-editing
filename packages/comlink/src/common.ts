@@ -5,8 +5,20 @@ import type {ListenInput, ProtocolMessage} from './types'
 
 export const listenInputFromContext =
   (
-    type: string | string[] = [],
-    options: {matches?: boolean; count?: number; responseType?: string} = {},
+    config: (
+      | {
+          include: string | string[]
+          exclude?: string | string[]
+        }
+      | {
+          include?: string | string[]
+          exclude: string | string[]
+        }
+    ) & {
+      matches?: boolean
+      count?: number
+      responseType?: string
+    },
   ) =>
   <
     T extends {
@@ -20,16 +32,16 @@ export const listenInputFromContext =
   }: {
     context: T
   }): ListenInput => {
-    const {count, matches = true, responseType = 'message.received'} = options
+    const {count, include, exclude, responseType = 'message.received'} = config
     return {
       count,
       domain: context.domain,
       from: context.connectTo,
-      matches,
+      include: include ? (Array.isArray(include) ? include : [include]) : [],
+      exclude: exclude ? (Array.isArray(exclude) ? exclude : [exclude]) : [],
       responseType,
       target: context.target,
       to: context.name,
-      type,
     }
   }
 
@@ -37,9 +49,9 @@ export const listenFilter =
   (input: ListenInput) =>
   (event: MessageEvent<ProtocolMessage>): boolean => {
     const {data} = event
-    const types = Array.isArray(input.type) ? input.type : [input.type]
     return (
-      (input.matches ? types.includes(data.type) : !types.includes(data.type)) &&
+      (input.include.length ? input.include.includes(data.type) : true) &&
+      (input.exclude.length ? !input.exclude.includes(data.type) : true) &&
       data.domain === input.domain &&
       data.from === input.from &&
       data.to === input.to &&
@@ -58,16 +70,21 @@ export const messageEvents$ = defer(() =>
   fromEvent<MessageEvent<ProtocolMessage>>(window, 'message'),
 )
 
-export const listenActor = fromEventObservable(({input}: {input: ListenInput}) => {
-  return messageEvents$.pipe(
-    filter(listenFilter(input)),
-    map(eventToMessage(input.responseType)),
-    input.count
-      ? pipe(
-          bufferCount(input.count),
-          concatMap((arr) => arr),
-          take(input.count),
-        )
-      : pipe(),
-  )
-})
+export const createListenLogic = (
+  compatMap?: (event: MessageEvent<ProtocolMessage>) => MessageEvent<ProtocolMessage>,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+) =>
+  fromEventObservable(({input}: {input: ListenInput}) => {
+    return messageEvents$.pipe(
+      compatMap ? map(compatMap) : pipe(),
+      filter(listenFilter(input)),
+      map(eventToMessage(input.responseType)),
+      input.count
+        ? pipe(
+            bufferCount(input.count),
+            concatMap((arr) => arr),
+            take(input.count),
+          )
+        : pipe(),
+    )
+  })

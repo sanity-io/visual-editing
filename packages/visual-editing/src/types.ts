@@ -1,13 +1,12 @@
-import type {ChannelsNode} from '@repo/channels'
 import type {
   HistoryRefresh,
   HistoryUpdate,
-  OverlayMsg as OverlayChannelsMsg,
-  PresentationMsg,
   SanityNode,
   SanityStegaNode,
-  VisualEditingMsg,
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
+import type {Node} from '@sanity/comlink'
 
 export type {
   HistoryRefresh,
@@ -283,23 +282,20 @@ export interface EventHandlers {
   mousemove: (event: Event) => void
 }
 
-/**
- * @internal
- */
-export type VisualEditingChannelSends = OverlayChannelsMsg | VisualEditingMsg
+// /**
+//  * @internal
+//  */
+// export type VisualEditingChannelSends = OverlayChannelsMsg | VisualEditingMsg
+
+// /**
+//  * @internal
+//  */
+// export type VisualEditingChannelReceives = PresentationMsg
 
 /**
  * @internal
  */
-export type VisualEditingChannelReceives = PresentationMsg
-
-/**
- * @internal
- */
-export type VisualEditingChannel = ChannelsNode<
-  VisualEditingChannelSends,
-  VisualEditingChannelReceives
->
+export type VisualEditingComlink = Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
 
 /**
  * Cleanup function used when e.g. unmounting
