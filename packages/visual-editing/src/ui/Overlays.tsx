@@ -320,11 +320,11 @@ export const Overlays: FunctionComponent<{
                 return (
                   <ElementOverlay
                     key={id}
-                    rect={rect}
                     focused={focused}
                     hovered={hovered}
+                    node={sanity}
+                    rect={rect}
                     showActions={!inFrame}
-                    sanity={sanity}
                     wasMaybeCollapsed={focused && wasMaybeCollapsed}
                   />
                 )
