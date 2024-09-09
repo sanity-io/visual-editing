@@ -83,7 +83,7 @@ const convertMessageToLegacyFormat = (message: ProtocolMessage): ProtocolMessage
     message.type = 'handshake/ack'
   } else if (message.type === MSG_RESPONSE) {
     message.type = 'channel/response'
-    message.data = {responseTo: message.responseTo}
+    message.data = {responseTo: message.responseTo, ...message.data}
   } else if (message.type === MSG_HEARTBEAT) {
     message.type = 'channel/heartbeat'
   } else if (message.type === MSG_DISCONNECT) {

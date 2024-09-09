@@ -6,6 +6,7 @@ import type {
 } from '@sanity/client'
 
 import type {SanityNode, SanityStegaNode} from './overlays'
+import type {ResolvedSchemaTypeMap, SchemaType, UnresolvedPath} from './schema'
 
 /**
  * @internal
@@ -101,6 +102,12 @@ export type VisualEditingControllerMsg =
         perspective: ClientPerspective
       }
     }
+  | {
+      type: 'presentation/schema'
+      data: {
+        schema: SchemaType[]
+      }
+    }
 
 /**
  * @public
@@ -156,6 +163,15 @@ export type VisualEditingNodeMsg =
   | {
       type: 'visual-editing/refreshed'
       data: HistoryRefresh
+    }
+  | {
+      type: 'visual-editing/schemaUnionTypes'
+      data: {
+        paths: UnresolvedPath[]
+      }
+      response: {
+        types: ResolvedSchemaTypeMap
+      }
     }
 
 /**

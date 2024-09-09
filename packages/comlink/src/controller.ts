@@ -14,7 +14,7 @@ export interface ConnectionInstance<R extends Message, S extends Message> {
   disconnect: () => void
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
-    handler: (event: U['data']) => U['response'],
+    handler: (event: U['data']) => Promise<U['response']> | U['response'],
   ) => void
   onInternalEvent: <
     T extends InternalEmitEvent<R, S>['type'],
@@ -60,7 +60,7 @@ interface Connection<
   }>
   subscribers: Set<{
     type: R['type']
-    handler: (event: R['data']) => R['response']
+    handler: (event: R['data']) => Promise<R['response']> | R['response']
     unsubscribers: Array<() => void>
   }>
 }
@@ -202,16 +202,13 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       channels.add(channel)
     }
 
-    const post = (data: WithoutResponse<S>) => {
+    const post: ConnectionInstance<R, S>['post'] = (data) => {
       channels.forEach((channel) => {
         channel.post(data)
       })
     }
 
-    const on = <T extends R['type'], U extends Extract<R, {type: T}>>(
-      type: T,
-      handler: (event: U['data']) => U['response'],
-    ) => {
+    const on: ConnectionInstance<R, S>['on'] = (type, handler) => {
       const unsubscribers: Array<() => void> = []
       channels.forEach((channel) => {
         unsubscribers.push(channel.on(type, handler))

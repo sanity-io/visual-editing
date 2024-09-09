@@ -66,6 +66,8 @@ import {useStatus} from './useStatus'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
+const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
+const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -576,6 +578,16 @@ export default function PresentationTool(props: {
             loadersConnection={loadersConnection}
             previewKitConnection={previewKitConnection}
           />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessageSchema comlink={visualEditingComlink} perspective={perspective} />
+        </Suspense>
+      )}
+      {visualEditingComlink && documentsOnPage.length && (
+        <Suspense>
+          <PostMessagePreviewSnapshots comlink={visualEditingComlink} refs={documentsOnPage} />
         </Suspense>
       )}
       {params.id && params.type && (
