@@ -19,8 +19,9 @@ import {ElementOverlay} from './ElementOverlay'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
 import {overlayStateReducer} from './overlayStateReducer'
-import {useController} from './useController'
+import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
+import {useController} from './useController'
 
 const Root = styled.div<{
   $zIndex?: string | number
@@ -307,30 +308,32 @@ export const Overlays: FunctionComponent<{
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
       <SchemaProvider comlink={comlink} elements={elements}>
-        <Root
-          data-fading-out={fadingOut ? '' : undefined}
-          data-overlays={overlaysFlash ? '' : undefined}
-          ref={setRootElement}
-          $zIndex={zIndex}
-        >
-          {!isDragging &&
-            elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
-              return (
-                <ElementOverlay
-                  key={id}
-                  rect={rect}
-                  focused={focused}
-                  hovered={hovered}
-                  showActions={!inFrame}
-                  sanity={sanity}
-                  wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                />
-              )
-            })}
+        <PreviewSnapshotsProvider comlink={comlink}>
+          <Root
+            data-fading-out={fadingOut ? '' : undefined}
+            data-overlays={overlaysFlash ? '' : undefined}
+            ref={setRootElement}
+            $zIndex={zIndex}
+          >
+            {!isDragging &&
+              elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+                return (
+                  <ElementOverlay
+                    key={id}
+                    rect={rect}
+                    focused={focused}
+                    hovered={hovered}
+                    showActions={!inFrame}
+                    sanity={sanity}
+                    wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                  />
+                )
+              })}
 
-          {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-          {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
-        </Root>
+            {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+            {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
+          </Root>
+        </PreviewSnapshotsProvider>
       </SchemaProvider>
     </ThemeProvider>
   )
