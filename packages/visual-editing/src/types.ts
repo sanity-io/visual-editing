@@ -282,20 +282,10 @@ export interface EventHandlers {
   mousemove: (event: Event) => void
 }
 
-// /**
-//  * @internal
-//  */
-// export type VisualEditingChannelSends = OverlayChannelsMsg | VisualEditingMsg
-
-// /**
-//  * @internal
-//  */
-// export type VisualEditingChannelReceives = PresentationMsg
-
 /**
  * @internal
  */
-export type VisualEditingComlink = Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
+export type VisualEditingNode = Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
 
 /**
  * Cleanup function used when e.g. unmounting

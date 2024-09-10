@@ -1,9 +1,8 @@
-import type {VisualEditingControllerMsg, VisualEditingNodeMsg} from '@repo/visual-editing-helpers'
-import type {ConnectionInstance} from '@sanity/comlink'
 import {type FC, memo, useEffect, useMemo} from 'react'
 import {combineLatest, debounceTime, Subject, switchMap} from 'rxjs'
 
 import {type PreviewValue, useDocumentPreviewStore, useSchema} from '../internals'
+import type {VisualEditingConnection} from '../types'
 
 type Ref = {
   _id: string
@@ -11,7 +10,7 @@ type Ref = {
 }
 
 export interface PostMessagePreviewsProps {
-  comlink: ConnectionInstance<VisualEditingNodeMsg, VisualEditingControllerMsg>
+  comlink: VisualEditingConnection
   refs: Ref[]
 }
 
@@ -36,7 +35,7 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
   useEffect(() => {
     const sub = previews$.subscribe((snapshots) => {
       comlink.post({
-        type: 'presentation/previewSnapshots',
+        type: 'presentation/preview-snapshots',
         data: {
           snapshots: snapshots
             .filter((s) => s.snapshot)

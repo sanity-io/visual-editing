@@ -7,8 +7,14 @@ import {
 } from './channel'
 import {type InternalEmitEvent, type Message, type StatusEvent, type WithoutResponse} from './types'
 
+/**
+ * @public
+ */
 export type ConnectionInput = Omit<ChannelInput, 'target' | 'targetOrigin'>
 
+/**
+ * @public
+ */
 export interface ConnectionInstance<R extends Message, S extends Message> {
   connect: () => () => void
   disconnect: () => void

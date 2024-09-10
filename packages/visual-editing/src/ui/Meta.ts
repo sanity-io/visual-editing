@@ -1,12 +1,12 @@
 import {type FunctionComponent, useEffect} from 'react'
 
-import type {VisualEditingComlink} from '../types'
+import type {VisualEditingNode} from '../types'
 
 /**
  * @internal
  */
 export const Meta: FunctionComponent<{
-  comlink: VisualEditingComlink
+  comlink: VisualEditingNode
 }> = (props) => {
   const {comlink} = props
 

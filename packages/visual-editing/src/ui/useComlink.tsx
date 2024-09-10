@@ -3,15 +3,17 @@ import {
   type VisualEditingControllerMsg,
   type VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
-import {createNode, createNodeMachine, type Node} from '@sanity/comlink'
+import {createNode, createNodeMachine} from '@sanity/comlink'
 import {useEffect, useState} from 'react'
+
+import type {VisualEditingNode} from '../types'
 
 /**
  * Hook for maintaining a channel between overlays and the presentation tool
  * @internal
  */
-export function useComlink(): Node<VisualEditingControllerMsg, VisualEditingNodeMsg> | undefined {
-  const [node, setNode] = useState<Node<VisualEditingControllerMsg, VisualEditingNodeMsg>>()
+export function useComlink(): VisualEditingNode | undefined {
+  const [node, setNode] = useState<VisualEditingNode>()
 
   useEffect(() => {
     const instance = createNode<VisualEditingControllerMsg, VisualEditingNodeMsg>(

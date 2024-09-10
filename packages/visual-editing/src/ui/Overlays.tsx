@@ -14,7 +14,7 @@ import {
 } from 'react'
 import {styled} from 'styled-components'
 
-import type {HistoryAdapter, OverlayEventHandler, VisualEditingComlink} from '../types'
+import type {HistoryAdapter, OverlayEventHandler, VisualEditingNode} from '../types'
 import {ElementOverlay} from './ElementOverlay'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
@@ -61,7 +61,7 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
  * @internal
  */
 export const Overlays: FunctionComponent<{
-  comlink: VisualEditingComlink
+  comlink: VisualEditingNode
   history?: HistoryAdapter
   inFrame: boolean
   zIndex?: string | number
@@ -99,7 +99,7 @@ export const Overlays: FunctionComponent<{
       comlink.on('presentation/navigate', (data) => {
         history?.update(data)
       }),
-      comlink.on('presentation/toggleOverlay', () => {
+      comlink.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
       }),
       comlink.onStatus((status) => {

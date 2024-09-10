@@ -1,13 +1,13 @@
 import {type FunctionComponent, useEffect, useRef} from 'react'
 
-import type {VisualEditingComlink, VisualEditingOptions} from '../types'
+import type {VisualEditingNode, VisualEditingOptions} from '../types'
 
 /**
  * @internal
  */
 export const Refresh: FunctionComponent<
   {
-    comlink: VisualEditingComlink
+    comlink: VisualEditingNode
   } & Required<Pick<VisualEditingOptions, 'refresh'>>
 > = (props) => {
   const {comlink, refresh} = props
