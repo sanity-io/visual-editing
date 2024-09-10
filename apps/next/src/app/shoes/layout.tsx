@@ -9,10 +9,6 @@ import {Metadata} from 'next'
 const LiveVisualEditing = dynamic(() => import('./VisualEditing'))
 import {Timesince} from '../Timesince'
 
-export const metadata = {
-  referrer: 'no-referrer-when-downgrade',
-} satisfies Metadata
-
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">

@@ -28,11 +28,6 @@ export function definePreviewUrl<SanityClientType>(
         if (restoredUrl.origin === productionUrl.origin) {
           preview = `${restoredUrl.pathname}${restoredUrl.search}`
         }
-      } else if (context.referrer) {
-        const referrerUrl = new URL(context.referrer)
-        if (referrerUrl.origin === productionUrl.origin) {
-          preview = `${referrerUrl.pathname}${referrerUrl.search}`
-        }
       }
     } catch {
       // ignore

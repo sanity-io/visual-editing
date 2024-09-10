@@ -33,11 +33,6 @@ export function usePreviewUrl(
           if (restoredUrl.origin === resolvedUrl.origin) {
             resultUrl = restoredUrl
           }
-        } else if (document.referrer) {
-          const referrerUrl = new URL(document.referrer)
-          if (referrerUrl.origin === resolvedUrl.origin) {
-            resultUrl = referrerUrl
-          }
         }
       } catch {
         // ignore
@@ -57,7 +52,6 @@ export function usePreviewUrl(
       client,
       previewUrlSecret: previewUrlSecret!,
       previewSearchParam,
-      referrer: typeof document === 'undefined' ? null : document.referrer,
       studioBasePath: basePath,
     })
     return new URL(resolvedUrl, location.origin)

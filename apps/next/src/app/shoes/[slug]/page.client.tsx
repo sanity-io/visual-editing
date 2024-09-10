@@ -66,10 +66,9 @@ export default function ShoePage(props: Props) {
           </li>
           <li>
             <a
-              href="https://visual-editing-studio.sanity.dev/next/app-router"
+              href={`https://visual-editing-studio.sanity.dev/next/app-router?${new URLSearchParams({preview: `/shoes/${params.slug}`})}`}
               target="_blank"
-              rel="noopener"
-              referrerPolicy="no-referrer-when-downgrade"
+              rel="noopener noreferrer"
             >
               Edit this page
             </a>
