@@ -35,6 +35,8 @@ export function getIntentState(
   }
 
   if (intent === 'edit' && id) {
+    _searchParams['preview'] =
+      _searchParams['preview'] || new URLSearchParams(window.location.search).get('preview') || '/'
     return {
       type: type || '*',
       id: getPublishedId(id),
