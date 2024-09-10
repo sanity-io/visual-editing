@@ -1,6 +1,7 @@
 export {createOverlayController} from './controller'
 export type {
   DisableVisualEditing,
+  DragEndEvent,
   DragInsertPosition,
   DragSkeleton,
   ElementFocusedState,
