@@ -8,16 +8,15 @@ import {useQueryParams, useRevalidate} from '@repo/visual-editing-helpers/hooks'
 import type {ClientConfig, ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
 import {applySourceDocuments, getPublishedId} from '@sanity/client/csm'
 import {
+  createChannelMachine,
   type ConnectionInstance,
   type Controller,
-  createChannelMachine,
   type StatusEvent,
 } from '@sanity/comlink'
 import {applyPatch} from 'mendoza'
 import LRUCache from 'mnemonist/lru-cache-with-delete'
 import {memo, useEffect, useMemo, useState} from 'react'
-import {type SanityClient, type SanityDocument, useClient, useDataset, useProjectId} from 'sanity'
-
+import {useClient, useDataset, useProjectId, type SanityClient, type SanityDocument} from 'sanity'
 import {
   LIVE_QUERY_CACHE_BATCH_SIZE,
   LIVE_QUERY_CACHE_SIZE,

@@ -1,6 +1,5 @@
 import type {SanityNode, VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
-
 import type {DragInsertPosition, DragSkeleton, ElementState, OverlayMsg} from '../types'
 import {elementsReducer} from './elementsReducer'
 

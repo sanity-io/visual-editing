@@ -1,7 +1,7 @@
 import {SITE_SETTINGS_QUERY} from '@/app/queries'
-import {ProjectPreview} from './ProjectPreview'
-import type {ProjectPageData} from './ProjectPage'
 import {loadQuery} from '@/sanity'
+import type {ProjectPageData} from './ProjectPage'
+import {ProjectPreview} from './ProjectPreview'
 
 const PAGE_QUERY = `//groq
 {

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import {type ChannelsController, createChannelsController} from '@repo/channels'
+import {createChannelsController, type ChannelsController} from '@repo/channels'
 
 const log = ref<any[]>([])
 const channel = ref<ChannelsController | undefined>()

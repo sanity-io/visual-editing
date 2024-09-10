@@ -1,9 +1,8 @@
-import {json, type LinksFunction} from '@vercel/remix'
 import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
-import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
-
+import {json, type LinksFunction} from '@vercel/remix'
 import styles from '~/tailwind.css?url'
 import {formatTimeSince} from 'apps-common/utils'
+import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
 
 const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))
 

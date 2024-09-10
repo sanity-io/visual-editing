@@ -2,7 +2,6 @@ import type {SanityClient} from '@sanity/client'
 import {SanityEncoder, type Transaction} from '@sanity/mutate'
 import {documentMutatorMachine} from '@sanity/mutate/_unstable_machine'
 import {fromPromise} from 'xstate'
-
 import type {VisualEditingNode} from '../../types'
 import {getDraftId} from '../../util/documents'
 import {datasetMutatorMachine} from '../optimistic-state/machines/datasetMutatorMachine'

@@ -1,5 +1,4 @@
 import {defineArrayMember, defineField} from 'sanity'
-
 import {PageSectionInput} from './components/PageSectionInput'
 import {pageSectionType} from './pageSectionType'
 

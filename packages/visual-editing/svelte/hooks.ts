@@ -1,7 +1,6 @@
-import {validatePreviewUrl} from '@sanity/preview-url-secret'
-import {error, type Handle, redirect} from '@sveltejs/kit'
 import crypto from 'crypto'
-
+import {validatePreviewUrl} from '@sanity/preview-url-secret'
+import {error, redirect, type Handle} from '@sveltejs/kit'
 import type {HandlePreviewOptions} from './types'
 
 /**

@@ -1,5 +1,4 @@
 import {createContext, type CSSProperties} from 'react'
-
 import type {PanelElement, ResizerElement} from './types'
 
 export const PanelsContext = createContext<{

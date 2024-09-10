@@ -1,7 +1,7 @@
 <script lang="ts">
-  import {onMount} from 'svelte'
   import {useLiveMode} from '@sanity/svelte-loader'
   import {client} from '$lib/sanity'
+  import {onMount} from 'svelte'
 
   onMount(() => useLiveMode({client}))
 </script>

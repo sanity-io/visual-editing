@@ -1,13 +1,13 @@
+import type {ClientPerspective, ContentSourceMap} from '@sanity/client'
+import {useQuery} from '@sanity/react-loader'
 import {shoesList, type ShoesListResult} from 'apps-common/queries'
 import {formatCurrency} from 'apps-common/utils'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import type {SharedProps} from '../../_app'
 import {loadQuery} from '../../../components/sanity.ssr'
 import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
-import type {ClientPerspective, ContentSourceMap} from '@sanity/client'
-import type {SharedProps} from '../../_app'
-import {useQuery} from '@sanity/react-loader'
 
 interface Props extends SharedProps {
   initial: {data: ShoesListResult; sourceMap?: ContentSourceMap}

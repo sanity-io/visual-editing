@@ -1,5 +1,4 @@
 import {defineField, defineType} from 'sanity'
-
 import {pageSectionArrayMember} from './section'
 import {featuredProductsSectionType} from './sections/featuredProducts'
 import {featureHighlightSectionType} from './sections/featureHighlight'

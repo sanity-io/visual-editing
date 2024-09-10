@@ -1,10 +1,10 @@
 import {CloseIcon, MenuIcon} from '@sanity/icons'
 import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
 import clsx from 'clsx'
+import Link from 'next/link'
+import {usePathname} from 'next/navigation'
 import {ReactNode, useState} from 'react'
 import {SiteSettingsData} from './types'
-import {usePathname} from 'next/navigation'
-import Link from 'next/link'
 
 const links = [
   // {

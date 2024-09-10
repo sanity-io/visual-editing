@@ -1,6 +1,8 @@
+import {apiVersion, workspaces} from '@repo/env'
 import {createClient} from '@sanity/client'
-import {apiVersion, studioUrl, workspaces} from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
+import {studioUrl} from 'apps-common/env'
+
 const {projectId, dataset} = workspaces['svelte-basic']
 
 export const client = createClient({

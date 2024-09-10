@@ -2,11 +2,11 @@
 import {
   finalize,
   merge,
-  type MonoTypeOperatorFunction,
   Observable,
   share,
-  type ShareConfig,
   tap,
+  type MonoTypeOperatorFunction,
+  type ShareConfig,
 } from 'rxjs'
 
 export type ShareReplayLatestConfig<T> = ShareConfig<T> & {predicate: (value: T) => boolean}

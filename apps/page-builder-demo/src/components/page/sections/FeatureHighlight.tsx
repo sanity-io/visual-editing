@@ -1,10 +1,8 @@
-import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
-import {stegaClean} from '@sanity/client/stega'
-import {sanity} from '@sanity/react-loader/jsx'
-import Link from 'next/link'
-
 import {Image} from '@/components/image'
 import {dataAttribute} from '@/sanity'
+import {stegaClean} from '@sanity/client/stega'
+import {sanity, unwrapData, WrappedValue} from '@sanity/react-loader/jsx'
+import Link from 'next/link'
 import {PageSection} from '../PageSection'
 import {FeatureHighlightSectionData, PageData} from '../types'
 

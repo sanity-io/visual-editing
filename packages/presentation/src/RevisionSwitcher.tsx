@@ -1,5 +1,4 @@
 import {type FunctionComponent} from 'react'
-
 import {useEditState} from './internals'
 import type {PresentationNavigate} from './types'
 import {useEffectOnChange} from './util/useEffectOnChange'

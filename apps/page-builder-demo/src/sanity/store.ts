@@ -1,14 +1,14 @@
+import {workspaces} from '@repo/env'
 import {QueryParams} from '@sanity/client'
-import {SanityNodeContext, wrapData} from '@sanity/react-loader/jsx'
 import {
-  setServerClient,
   useQuery as _useQuery,
+  setServerClient,
   type UseQueryOptionsDefinedInitial,
 } from '@sanity/react-loader'
-import {studioUrl, workspaces} from 'apps-common/env'
-import {getClient} from './client'
+import {SanityNodeContext, wrapData} from '@sanity/react-loader/jsx'
+import {studioUrl} from 'apps-common/env'
 import {useMemo} from 'react'
-import * as React from 'react'
+import {getClient} from './client'
 
 export {loadQuery, useLiveMode} from '@sanity/react-loader'
 
@@ -20,14 +20,6 @@ const token = process.env.SANITY_API_READ_TOKEN
 
 if (typeof document === 'undefined') {
   setServerClient(client.withConfig({token}))
-
-  if (token) {
-    React.experimental_taintUniqueValue?.(
-      'Do not pass the sanity API read token to the client.',
-      process,
-      token,
-    )
-  }
 }
 
 const context: SanityNodeContext = {

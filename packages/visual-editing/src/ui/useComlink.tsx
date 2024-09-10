@@ -5,7 +5,6 @@ import {
 } from '@repo/visual-editing-helpers'
 import {createNode, createNodeMachine} from '@sanity/comlink'
 import {useEffect, useState} from 'react'
-
 import type {VisualEditingNode} from '../types'
 
 /**

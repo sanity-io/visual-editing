@@ -1,8 +1,9 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
-import {useQuery} from '@sanity/react-loader'
-import Link from 'next/link'
+import {apiVersion, workspaces} from '@repo/env'
 import {ClientConfig, createClient} from '@sanity/client'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
+import {useQuery} from '@sanity/react-loader'
+import {studioUrl as baseUrl} from 'apps-common/env'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import Link from 'next/link'
 
 const {projectId, dataset, workspace} = workspaces['next-pages-router']
 const studioUrl = `${baseUrl}/${workspace}`

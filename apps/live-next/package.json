@@ -1,0 +1,51 @@
+{
+  "name": "live-next",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "prebuild": "npm run typegen",
+    "build": "next build",
+    "debug": "NEXT_PRIVATE_DEBUG_CACHE=1 next build --profile && NEXT_PRIVATE_DEBUG_CACHE=1 next start",
+    "predev": "npm run typegen",
+    "dev": "next",
+    "lint": "next lint",
+    "presetup": "echo 'about to setup env variables, follow the guide here: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#using-the-sanity-cli'",
+    "setup": "npx sanity@latest init --env .env.local",
+    "postsetup": "echo 'create the read token by following the rest of the guide: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#creating-a-read-token'",
+    "start": "next start",
+    "typegen": "sanity schema extract && sanity typegen generate"
+  },
+  "dependencies": {
+    "@sanity/assist": "^3.0.6",
+    "@sanity/color-input": "4.0.0-canary.0",
+    "@sanity/icons": "^3.4.0",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/presentation": "workspace:*",
+    "@sanity/preview-url-secret": "^1.6.20",
+    "@sanity/vision": "^3.57.2",
+    "@sanity/visual-editing": "workspace:*",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^20.14.13",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vercel/speed-insights": "^1.0.12",
+    "autoprefixer": "^10.4.20",
+    "date-fns": "^3.6.0",
+    "next": "15.0.0-canary.157",
+    "next-sanity": "^9.4.7",
+    "postcss": "^8.4.45",
+    "react": "19.0.0-rc-f2df5694-20240916",
+    "react-dom": "19.0.0-rc-f2df5694-20240916",
+    "sanity": "^3.57.2",
+    "sanity-plugin-asset-source-unsplash": "^3.0.1",
+    "server-only": "^0.0.1",
+    "styled-components": "^6.1.12",
+    "tailwindcss": "^3.4.10",
+    "typescript": "5.6.2"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "15.0.0-canary.157",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "15.0.0-canary.157"
+  }
+}

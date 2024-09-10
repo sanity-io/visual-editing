@@ -78,9 +78,9 @@
 </template>
 
 <script setup lang="ts">
-import {formatCurrency} from 'apps-common/utils'
-import {shoesList, type ShoesListResult} from 'apps-common/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/utils'
+import {shoesList, type ShoesListResult} from 'apps-common/queries'
+import {formatCurrency} from 'apps-common/utils'
 
 const {data: products, pending} = await useSanityQuery<ShoesListResult>(shoesList)
 </script>

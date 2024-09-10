@@ -1,5 +1,4 @@
 import {memo, useCallback, useMemo} from 'react'
-
 import {Panel} from './panels/Panel'
 import {PanelResizer} from './panels/PanelResizer'
 import type {NavigatorOptions} from './types'

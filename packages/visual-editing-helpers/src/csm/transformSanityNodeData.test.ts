@@ -1,5 +1,4 @@
 import {expect, test} from 'vitest'
-
 import {decodeSanityString, encodeSanityNodeData} from './transformSanityNodeData'
 
 test('node data returns an encoded string', async () => {

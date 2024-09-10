@@ -1,8 +1,6 @@
-import {WrappedValue} from '@sanity/react-loader/jsx'
-import {sanity} from '@sanity/react-loader/jsx'
-
 import {AppLayout} from '@/app/AppLayout'
 import {SiteSettingsData} from '@/app/types'
+import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
 
 export interface ProjectData {
   _id: string

@@ -2,7 +2,6 @@ import type {UnresolvedPath} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import {useRootTheme} from '@sanity/ui'
 import {memo, useEffect, useMemo} from 'react'
-
 import {API_VERSION} from '../../constants'
 import {useClient, useWorkspace} from '../../internals'
 import type {VisualEditingConnection} from '../../types'

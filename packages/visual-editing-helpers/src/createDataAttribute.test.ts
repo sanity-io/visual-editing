@@ -1,5 +1,4 @@
 import {describe, expect, test} from 'vitest'
-
 import {createDataAttribute} from '../src/createDataAttribute'
 
 describe('createDataAttribute', () => {

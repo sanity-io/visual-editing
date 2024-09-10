@@ -1,24 +1,24 @@
-import {visionTool} from '@sanity/vision'
-import {defineConfig, definePlugin, defineType, defineField} from 'sanity'
-import {structureTool} from 'sanity/structure'
+import {workspaces} from '@repo/env'
+import {assist} from '@sanity/assist'
 import {
   presentationTool,
-  type PreviewUrlResolverOptions,
   type PreviewUrlOption,
+  type PreviewUrlResolverOptions,
 } from '@sanity/presentation'
-import {schema} from 'apps-common'
-import {workspaces} from 'apps-common/env'
-import {assist} from '@sanity/assist'
-import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
-import {locate} from './locate'
-import {StegaDebugger} from './presentation/DebugStega'
-import {CustomNavigator} from './presentation/CustomNavigator'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
-import {documentLocationResolvers, mainDocumentResolvers} from './presentation/resolvers'
+import {visionTool} from '@sanity/vision'
+import {schema} from 'apps-common'
+import {defineConfig, defineField, definePlugin, defineType} from 'sanity'
+import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {structureTool} from 'sanity/structure'
+import {locate} from './locate'
 import Building from './models/documents/Building'
 import Floor from './models/documents/Floor'
 import Space from './models/documents/Space'
 import SpaceType from './models/documents/SpaceType'
+import {CustomNavigator} from './presentation/CustomNavigator'
+import {StegaDebugger} from './presentation/DebugStega'
+import {documentLocationResolvers, mainDocumentResolvers} from './presentation/resolvers'
 
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
@@ -81,6 +81,8 @@ function definePreviewUrl(
 }
 
 const presentationWorkspaces = Object.entries({
+  'page-builder-demo':
+    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
   'remix': process.env.SANITY_STUDIO_REMIX_PREVIEW_URL || 'http://localhost:3000/shoes',
   'next': {
     'app-router':
@@ -100,8 +102,6 @@ const presentationWorkspaces = Object.entries({
       process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
     ).toString(),
   },
-  'page-builder-demo':
-    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
   'astro': process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL || 'http://localhost:3006/shoes',
 } as const).map(([name, previewUrl]) => {
   const {

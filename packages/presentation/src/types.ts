@@ -13,7 +13,6 @@ import type {
 import type {ComponentType} from 'react'
 import type {Observable} from 'rxjs'
 import type {SanityClient} from 'sanity'
-
 import type {DocumentStore} from './internals'
 
 export type {PreviewUrlResolver, PreviewUrlResolverOptions}
@@ -89,6 +88,7 @@ export type DocumentLocationResolvers = Record<
  */
 export type DocumentLocationResolverObject<K extends string = string> = {
   select: Record<K, string>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolve: (value: Record<K, any> | null) => DocumentLocationsState | null | undefined | void
 }
 

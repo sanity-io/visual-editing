@@ -1,6 +1,5 @@
 import {v4 as uuid} from 'uuid'
 import {
-  type ActorRefFrom,
   assertEvent,
   assign,
   createActor,
@@ -9,8 +8,8 @@ import {
   raise,
   setup,
   stopChild,
+  type ActorRefFrom,
 } from 'xstate'
-
 import {createListenLogic, listenInputFromContext} from './common'
 import {
   DOMAIN,
@@ -26,11 +25,14 @@ import type {
   BufferAddedEmitEvent,
   BufferFlushedEmitEvent,
   HeartbeatEmitEvent,
+  HeartbeatMessage,
+  Message,
   MessageEmitEvent,
+  ProtocolMessage,
   RequestData,
+  Status,
   WithoutResponse,
 } from './types'
-import type {HeartbeatMessage, Message, ProtocolMessage, Status} from './types'
 
 /**
  * @public

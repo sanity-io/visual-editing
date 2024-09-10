@@ -2,13 +2,12 @@
   "name": "visual-editing-monorepo",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter='./packages/*'",
+    "build": "turbo run build --filter='!./apps/*'",
     "build:astro": "turbo run build --filter=./apps/astro",
-    "dev": "turbo run build --filter='./packages/*' && turbo watch dev --filter='./packages/*' --filter=./apps/* --filter=!next-no-cache --filter=!next-server-only --filter=!next-with-i18n",
+    "dev": "turbo run build --filter='!./apps/*' && turbo watch dev --filter='./packages/*' --filter='./packages/@repo/*' --filter=./apps/* --filter=!next-with-i18n",
     "dev:astro": "turbo run build --filter=apps-astro^... --filter=apps-studio^... && turbo watch dev --filter=apps-astro... --filter=apps-studio...",
+    "dev:live-next": "turbo run build --filter=live-next^... --filter=apps-studio^... && turbo watch dev --filter=live-next... --filter=apps-studio...",
     "dev:next": "turbo run build --filter=apps-next^... --filter=apps-studio^... && turbo watch dev --filter=apps-next... --filter=apps-studio...",
-    "dev:next-no-cache": "turbo run build --filter=next-no-cache^... && turbo watch dev --filter=next-no-cache...",
-    "dev:next-server-only": "turbo run build --filter=next-server-only^... && turbo watch dev --filter=next-server-only...",
     "dev:next-with-i18n": "turbo run build --filter=next-with-i18n^... && turbo watch dev --filter=next-with-i18n...",
     "dev:nuxt": "turbo run build --filter=apps-nuxt^... --filter=apps-studio^... && turbo watch dev --filter=apps-nuxt... --filter=apps-studio...",
     "dev:page-builder-demo": "turbo run build --filter=page-builder-demo^... --filter=apps-studio^... && turbo watch dev --filter=page-builder-demo... --filter=apps-studio...",
@@ -29,6 +28,7 @@
       "pnpm format:staged"
     ]
   },
+  "prettier": "@repo/prettier-config",
   "dependencies": {
     "@sanity/client": "^6.21.3",
     "@sanity/types": "3.57.2",
@@ -38,15 +38,11 @@
     "sanity": "3.57.2"
   },
   "devDependencies": {
+    "@repo/prettier-config": "workspace:*",
     "@sanity/pkg-utils": "6.11.1",
-    "@sanity/prettier-config": "1.0.3",
     "framer-motion": "11.0.8",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
-    "prettier": "3.3.3",
-    "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-svelte": "3.2.6",
-    "prettier-plugin-tailwindcss": "0.6.6",
     "pretty-quick": "^4.0.0",
     "turbo": "2.1.1",
     "typescript": "5.6.2",

@@ -1,9 +1,8 @@
-import {draftMode} from 'next/headers'
-import {revalidatePath, revalidateTag, unstable_cache} from 'next/cache'
-import {VisualEditing} from 'next-sanity'
 import {VercelToolbar} from '@vercel/toolbar/next'
+import {VisualEditing} from 'next-sanity'
+import {revalidatePath, revalidateTag, unstable_cache} from 'next/cache'
+import {draftMode} from 'next/headers'
 import '../../tailwind.css'
-
 import {Timesince} from '../Timesince'
 
 export const metadata = {

@@ -1,5 +1,4 @@
 import {expect, test} from 'vitest'
-
 import * as fixtures from './__fixtures__/responses'
 import type {SanityNodeContext} from './types'
 import {wrapData} from './wrapData'
