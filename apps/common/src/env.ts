@@ -15,35 +15,32 @@ export const datasets = {
   'blog': 'blog',
 } as const
 
-function maybeGitBranchStudioUrl(url: string) {
-  if (typeof document === 'undefined') return url
-  const {hostname} = document.location
-
-  if (hostname.endsWith('.sanity.dev') && hostname.includes('-git-')) {
-    return `https://visual-editing-studio-git-${hostname.split('-git-')[1]}`
-  }
-  return url
-}
-let isStablePreviewBranch: boolean | undefined = false
+let vercelBranchUrl: string | undefined
 try {
-  isStablePreviewBranch =
-    process.env['VERCEL_BRANCH_URL']?.includes('-git-preview') ||
+  vercelBranchUrl =
+    process.env['VERCEL_BRANCH_URL'] ||
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore has to be exact for string replacement to work
-    process.env.NEXT_PUBLIC_VERCEL_URL?.includes('-git-preview')
+    process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
 } catch {
   //ignore
 }
 
-export const studioUrl = maybeGitBranchStudioUrl(
+const isLinearGitBranch = vercelBranchUrl?.includes('-git-crx-')
+  ? `https://visual-editing-studio-git-crx-${vercelBranchUrl.split('-git-crx-')[1]}`
+  : false
+const isStablePreviewBranch: boolean | undefined = vercelBranchUrl?.includes('-git-preview')
+
+export const studioUrl =
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore has to be exact for string replacement to work
   process.env.NODE_ENV !== 'production'
     ? 'http://localhost:3333'
-    : isStablePreviewBranch
-      ? 'https://visual-editing-studio-git-preview.sanity.dev'
-      : 'https://visual-editing-studio.sanity.dev',
-)
+    : isLinearGitBranch
+      ? isLinearGitBranch
+      : isStablePreviewBranch
+        ? 'https://visual-editing-studio-git-preview.sanity.dev'
+        : 'https://visual-editing-studio.sanity.dev'
 
 export const apiVersion = '2023-10-11'
 
