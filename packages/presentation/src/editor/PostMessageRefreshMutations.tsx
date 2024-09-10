@@ -1,14 +1,14 @@
-import type {VisualEditingControllerMsg, VisualEditingNodeMsg} from '@repo/visual-editing-helpers'
-import type {ConnectionInstance, Status} from '@sanity/comlink'
+import type {Status} from '@sanity/comlink'
 import {memo, startTransition, useEffect, useMemo, useState} from 'react'
 import {type SanityDocument} from 'sanity'
 
 import {getPublishedId, useEditState} from '../internals'
+import type {VisualEditingConnection} from '../types'
 
 export interface PostMessageRefreshMutationsProps {
   id: string
   type: string
-  comlink: ConnectionInstance<VisualEditingNodeMsg, VisualEditingControllerMsg>
+  comlink: VisualEditingConnection
   previewKitConnection: Status
   loadersConnection: Status
 }

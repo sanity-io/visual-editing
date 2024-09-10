@@ -1,6 +1,4 @@
-import type {VisualEditingControllerMsg, VisualEditingNodeMsg} from '@repo/visual-editing-helpers'
 import type {MutationEvent, ReconnectEvent, WelcomeEvent} from '@sanity/client'
-import type {Node} from '@sanity/comlink'
 import {SanityEncoder} from '@sanity/mutate'
 import {
   createContentLakeStore,
@@ -23,15 +21,13 @@ import {
 } from 'rxjs'
 
 import {LISTENER_RESET_DELAY} from '../../constants'
+import type {VisualEditingNode} from '../../types'
 import {getDraftId} from '../../util/documents'
 import {shareReplayLatest} from '../../util/shareReplayLatest.ts'
 import {OptimisticStateContext, type OptimisticStateContextValue} from './OptimisticStateContext'
 import {useOptimisticStateStore} from './useOptimisticStateStore'
 
-function getInitialSnapshot(
-  comlink: Node<VisualEditingControllerMsg, VisualEditingNodeMsg>,
-  documentId: string,
-) {
+function getInitialSnapshot(comlink: VisualEditingNode, documentId: string) {
   return from(
     comlink.fetch({
       type: 'visual-editing/fetch-snapshot',
@@ -42,7 +38,7 @@ function getInitialSnapshot(
 
 export const OptimisticStateProvider: FunctionComponent<
   PropsWithChildren<{
-    comlink: Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
+    comlink: VisualEditingNode
     documentIds: string[]
   }>
 > = function (props) {

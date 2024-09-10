@@ -23,7 +23,12 @@ import {
   LIVE_QUERY_CACHE_SIZE,
   MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
 } from '../constants'
-import type {LiveQueriesState, LiveQueriesStateValue, PresentationPerspective} from '../types'
+import type {
+  LiveQueriesState,
+  LiveQueriesStateValue,
+  LoaderConnection,
+  PresentationPerspective,
+} from '../types'
 import type {DocumentOnPage} from '../useDocumentsOnPage'
 
 export interface LoaderQueriesProps {
@@ -335,7 +340,7 @@ interface QuerySubscriptionProps
   perspective: ClientPerspective
   query: string
   params: QueryParams
-  comlink: ConnectionInstance<LoaderNodeMsg, LoaderControllerMsg> | undefined
+  comlink: LoaderConnection | undefined
 }
 function QuerySubscription(props: QuerySubscriptionProps) {
   const {

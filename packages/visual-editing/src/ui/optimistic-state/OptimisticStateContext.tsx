@@ -1,10 +1,10 @@
-import type {VisualEditingControllerMsg, VisualEditingNodeMsg} from '@repo/visual-editing-helpers'
-import type {Node} from '@sanity/comlink'
 import type {ContentLakeStore} from '@sanity/mutate/_unstable_store'
 import {createContext} from 'react'
 
+import type {VisualEditingNode} from '../../types'
+
 export interface OptimisticStateContextValue {
-  comlink: Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
+  comlink: VisualEditingNode
   datastore: ContentLakeStore
 }
 

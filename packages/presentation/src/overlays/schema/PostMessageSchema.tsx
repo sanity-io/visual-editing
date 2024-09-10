@@ -1,19 +1,15 @@
-import type {
-  UnresolvedPath,
-  VisualEditingControllerMsg,
-  VisualEditingNodeMsg,
-} from '@repo/visual-editing-helpers'
+import type {UnresolvedPath} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
-import type {ConnectionInstance} from '@sanity/comlink'
 import {useRootTheme} from '@sanity/ui'
 import {memo, useEffect, useMemo} from 'react'
 
 import {API_VERSION} from '../../constants'
 import {useClient, useWorkspace} from '../../internals'
+import type {VisualEditingConnection} from '../../types'
 import {extractSchema} from './extract'
 
 export interface PostMessageSchemaProps {
-  comlink: ConnectionInstance<VisualEditingNodeMsg, VisualEditingControllerMsg>
+  comlink: VisualEditingConnection
   perspective: ClientPerspective
 }
 
@@ -53,7 +49,7 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
 
   // Resolve union types from an array of unresolved paths
   useEffect(() => {
-    return comlink.on('visual-editing/schemaUnionTypes', async (data) => {
+    return comlink.on('visual-editing/schema-union-types', async (data) => {
       const documentPathArray = getDocumentPathArray(data.paths)
       const unionTypes = await Promise.all(
         documentPathArray.map(async ([id, paths]) => {

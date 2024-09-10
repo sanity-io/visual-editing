@@ -93,7 +93,7 @@ export type VisualEditingControllerMsg =
       data: HistoryUpdate
     }
   | {
-      type: 'presentation/toggleOverlay'
+      type: 'presentation/toggle-overlay'
       data: undefined
     }
   | {
@@ -113,7 +113,7 @@ export type VisualEditingControllerMsg =
       }
     }
   | {
-      type: 'presentation/previewSnapshots'
+      type: 'presentation/preview-snapshots'
       data: {
         snapshots: Array<PreviewValue & {_id: string}>
       }
@@ -181,7 +181,7 @@ export type VisualEditingNodeMsg =
       data: HistoryRefresh
     }
   | {
-      type: 'visual-editing/schemaUnionTypes'
+      type: 'visual-editing/schema-union-types'
       data: {
         paths: UnresolvedPath[]
       }
