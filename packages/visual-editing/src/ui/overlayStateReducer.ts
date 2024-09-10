@@ -1,10 +1,17 @@
-import type {VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
+import type {SanityNode, VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 
 import type {DragInsertPosition, DragSkeleton, ElementState, OverlayMsg} from '../types'
 import {elementsReducer} from './elementsReducer'
 
 export interface OverlayState {
+  contextMenu: {
+    node: SanityNode
+    position: {
+      x: number
+      y: number
+    }
+  } | null
   focusPath: string
   elements: ElementState[]
   wasMaybeCollapsed: boolean
@@ -18,14 +25,11 @@ export function overlayStateReducer(
   state: OverlayState,
   message: OverlayMsg | VisualEditingControllerMsg,
 ): OverlayState {
-  let focusPath = state.focusPath
+  const {type} = message
+  let {contextMenu, focusPath, perspective, isDragging, dragInsertPosition, dragSkeleton} = state
   let wasMaybeCollapsed = false
-  let perspective = state.perspective
-  let isDragging = state.isDragging
-  let dragInsertPosition = state.dragInsertPosition
-  let dragSkeleton = state.dragSkeleton
 
-  if (message.type === 'presentation/focus') {
+  if (type === 'presentation/focus') {
     const prevFocusPath = state.focusPath
 
     focusPath = message.data.path
@@ -35,25 +39,44 @@ export function overlayStateReducer(
     }
   }
 
-  if (message.type === 'presentation/perspective') {
+  if (type === 'presentation/perspective') {
     perspective = message.data.perspective
   }
 
-  if (message.type === 'overlay/dragUpdateInsertPosition') {
+  if (type === 'element/contextmenu') {
+    if ('sanity' in message) {
+      contextMenu = {node: message.sanity, position: message.position}
+    } else {
+      contextMenu = null
+    }
+  }
+
+  if (
+    type === 'element/click' ||
+    type === 'element/mouseleave' ||
+    type === 'overlay/blur' ||
+    type === 'presentation/blur' ||
+    type === 'presentation/focus'
+  ) {
+    contextMenu = null
+  }
+
+  if (type === 'overlay/dragUpdateInsertPosition') {
     dragInsertPosition = message.insertPosition
   }
 
-  if (message.type === 'overlay/dragStart') {
+  if (type === 'overlay/dragStart') {
     isDragging = true
     dragSkeleton = message.skeleton
   }
 
-  if (message.type === 'overlay/dragEnd') {
+  if (type === 'overlay/dragEnd') {
     isDragging = false
   }
 
   return {
     ...state,
+    contextMenu,
     elements: elementsReducer(state.elements, message),
     dragInsertPosition,
     dragSkeleton,
