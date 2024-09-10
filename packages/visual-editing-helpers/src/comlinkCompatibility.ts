@@ -22,7 +22,7 @@ import type {
   VisualEditingNodeMsg,
 } from './types'
 
-type NewDataType =
+type ComlinkMessageType =
   | InternalMessageType
   | (
       | LoaderControllerMsg
@@ -32,7 +32,7 @@ type NewDataType =
       | VisualEditingNodeMsg
     )['type']
 
-type LegacyDataType =
+type ChannelsMessageType =
   | 'handshake/syn'
   | 'handshake/syn-ack'
   | 'handshake/ack'
@@ -44,7 +44,7 @@ type LegacyDataType =
   | 'overlay/toggle'
   | 'presentation/toggleOverlay'
 
-const legacyToNewTypeMap: {[key in LegacyDataType]?: NewDataType} = {
+const channelsToComlinkMap: {[key in ChannelsMessageType]: ComlinkMessageType} = {
   'handshake/syn': MSG_HANDSHAKE_SYN,
   'handshake/syn-ack': MSG_HANDSHAKE_SYN_ACK,
   'handshake/ack': MSG_HANDSHAKE_ACK,
@@ -57,7 +57,7 @@ const legacyToNewTypeMap: {[key in LegacyDataType]?: NewDataType} = {
   'presentation/toggleOverlay': 'presentation/toggle-overlay',
 }
 
-const newToLegacyTypeMap: {[key in NewDataType]?: LegacyDataType} = {
+const comlinkToChannelsMap: {[key in ComlinkMessageType]?: ChannelsMessageType} = {
   [MSG_HANDSHAKE_SYN]: 'handshake/syn',
   [MSG_HANDSHAKE_SYN_ACK]: 'handshake/syn-ack',
   [MSG_HANDSHAKE_ACK]: 'handshake/ack',
@@ -70,7 +70,7 @@ const newToLegacyTypeMap: {[key in NewDataType]?: LegacyDataType} = {
   'presentation/toggle-overlay': 'presentation/toggleOverlay',
 }
 
-const convertEventToNewFormat = (
+const convertToComlinkEvent = (
   event: MessageEvent<ProtocolMessage>,
 ): MessageEvent<ProtocolMessage> => {
   const {data} = event
@@ -95,13 +95,13 @@ const convertEventToNewFormat = (
       data.from = 'visual-editing'
     }
 
-    data.type = legacyToNewTypeMap[data.type as LegacyDataType] ?? data.type
+    data.type = channelsToComlinkMap[data.type as ChannelsMessageType] ?? data.type
   }
 
   return event
 }
 
-const convertMessageToLegacyFormat = (message: ProtocolMessage): ProtocolMessage => {
+const convertToChannelsMessage = (message: ProtocolMessage): ProtocolMessage => {
   if (message.domain === DOMAIN) {
     message.domain = 'sanity/channels'
   }
@@ -114,18 +114,18 @@ const convertMessageToLegacyFormat = (message: ProtocolMessage): ProtocolMessage
     message.from = 'overlays'
   }
 
-  message.type = newToLegacyTypeMap[message.type as NewDataType] ?? message.type
+  message.type = comlinkToChannelsMap[message.type as ComlinkMessageType] ?? message.type
 
   return message
 }
 
-const sendMessageInLegacyFormat = <S extends Message>(
+const sendAsChannelsMessage = <S extends Message>(
   {context}: {context: RequestMachineContext<S>},
   params: {message: ProtocolMessage},
 ): void => {
   const {sources, targetOrigin} = context
 
-  const message = convertMessageToLegacyFormat(params.message)
+  const message = convertToChannelsMessage(params.message)
 
   sources.forEach((source) => {
     source.postMessage(message, {targetOrigin})
@@ -148,10 +148,10 @@ export const createCompatibilityActors = <
   T extends Message,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => ({
-  listen: createListenLogic(convertEventToNewFormat),
+  listen: createListenLogic(convertToComlinkEvent),
   requestMachine: createRequestMachine<T>().provide({
     actions: {
-      'send message': sendMessageInLegacyFormat,
+      'send message': sendAsChannelsMessage,
     },
   }),
 })
