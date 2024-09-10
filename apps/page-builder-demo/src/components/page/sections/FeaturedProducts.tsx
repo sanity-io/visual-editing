@@ -22,7 +22,6 @@ export function FeaturedProducts(props: {
       })}
       className="overflow-hidden"
       variant={section.style?.variant?.value as any}
-      data-sanity-draggable
     >
       <div className="flex w-full flex-nowrap gap-2 overflow-auto p-4 sm:p-5 md:p-6">
         <h1 className="w-96 flex-none p-5 text-2xl font-bold">

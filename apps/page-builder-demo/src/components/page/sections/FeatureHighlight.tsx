@@ -1,4 +1,5 @@
 import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
+import {stegaClean} from '@sanity/client/stega'
 import {sanity} from '@sanity/react-loader/jsx'
 import Link from 'next/link'
 
@@ -22,7 +23,6 @@ export function FeatureHighlight(props: {
       })}
       className="p-4 sm:p-5 md:p-6"
       variant={section.style?.variant?.value as any}
-      data-sanity-draggable
     >
       <div className="-m-4 sm:-m-5 md:-m-6">
         {section.image?.asset && (
@@ -48,13 +48,18 @@ export function FeatureHighlight(props: {
         <div className="flex gap-3">
           {section.ctas &&
             section.ctas.map((cta, i) => (
-              <sanity.button
+              <button
+                data-sanity={dataAttribute({
+                  id: data._id,
+                  type: data._type,
+                  path: `sections[_key=="${section._key}"].ctas[_key=="${cta._key}"]`,
+                })}
                 className="mt-5 border border-current p-3"
                 key={i}
-                data-sanity-draggable
+                style={{padding: '2rem'}}
               >
-                {cta.title}
-              </sanity.button>
+                {unwrapData(stegaClean(cta.title))}
+              </button>
             ))}
         </div>
       </div>
