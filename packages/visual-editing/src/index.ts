@@ -23,6 +23,7 @@ export type {
   OverlayMsgElement,
   OverlayMsgElementActivate,
   OverlayMsgElementClick,
+  OverlayMsgElementContextMenu,
   OverlayMsgElementDeactivate,
   OverlayMsgElementMouseEnter,
   OverlayMsgElementMouseLeave,

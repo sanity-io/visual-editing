@@ -2,7 +2,14 @@ import {isAltKey, isHotkey, type SanityNode} from '@repo/visual-editing-helpers'
 import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
 import type {Status} from '@sanity/comlink'
-import {isHTMLAnchorElement, isHTMLElement, studioTheme, ThemeProvider} from '@sanity/ui'
+import {
+  isHTMLAnchorElement,
+  isHTMLElement,
+  LayerProvider,
+  PortalProvider,
+  studioTheme,
+  ThemeProvider,
+} from '@sanity/ui'
 import {
   type FunctionComponent,
   useCallback,
@@ -15,7 +22,9 @@ import {
 import {styled} from 'styled-components'
 
 import type {HistoryAdapter, OverlayEventHandler, VisualEditingNode} from '../types'
+import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
+import {OptimisticStateProvider} from './optimistic-state/OptimisticStateProvider'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
 import {overlayStateReducer} from './overlayStateReducer'
@@ -71,16 +80,25 @@ export const Overlays: FunctionComponent<{
   const [status, setStatus] = useState<Status>()
 
   const [
-    {elements, wasMaybeCollapsed, isDragging, dragInsertPosition, dragSkeleton, perspective},
+    {
+      contextMenu,
+      dragInsertPosition,
+      dragSkeleton,
+      elements,
+      isDragging,
+      perspective,
+      wasMaybeCollapsed,
+    },
     dispatch,
   ] = useReducer(overlayStateReducer, {
-    elements: [],
-    focusPath: '',
-    wasMaybeCollapsed: false,
-    isDragging: false,
+    contextMenu: null,
     dragInsertPosition: null,
     dragSkeleton: null,
+    elements: [],
+    focusPath: '',
+    isDragging: false,
     perspective: 'published',
+    wasMaybeCollapsed: false,
   })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -179,11 +197,11 @@ export const Overlays: FunctionComponent<{
     (message) => {
       if (message.type === 'element/click') {
         const {sanity} = message
-        comlink.post({type: 'overlay/focus', data: sanity})
+        comlink.post({type: 'visual-editing/focus', data: sanity})
       } else if (message.type === 'overlay/activate') {
-        comlink.post({type: 'overlay/toggle', data: {enabled: true}})
+        comlink.post({type: 'visual-editing/toggle', data: {enabled: true}})
       } else if (message.type === 'overlay/deactivate') {
-        comlink.post({type: 'overlay/toggle', data: {enabled: false}})
+        comlink.post({type: 'visual-editing/toggle', data: {enabled: false}})
       } else if (message.type === 'overlay/dragStart') {
         if (message.flow === 'vertical') {
           document.body.style.cursor = 'ns-resize'
@@ -266,7 +284,7 @@ export const Overlays: FunctionComponent<{
     if (history) {
       return history.subscribe((update) => {
         update.title = update.title || document.title
-        comlink.post({type: 'overlay/navigate', data: update})
+        comlink.post({type: 'visual-editing/navigate', data: update})
       })
     }
     return
@@ -305,36 +323,53 @@ export const Overlays: FunctionComponent<{
     return elements.filter((e) => e.activated || e.focused)
   }, [comlink, elements, inFrame, status])
 
+  const documentIds = useMemo(() => {
+    return elements.flatMap((element) => ('id' in element.sanity ? [element.sanity.id] : []))
+  }, [elements])
+
+  const closeContextMenu = useCallback(() => {
+    dispatch({type: 'overlay/blur'})
+  }, [])
+
   return (
     <ThemeProvider theme={studioTheme} tone="transparent">
-      <SchemaProvider comlink={comlink} elements={elements}>
-        <PreviewSnapshotsProvider comlink={comlink}>
-          <Root
-            data-fading-out={fadingOut ? '' : undefined}
-            data-overlays={overlaysFlash ? '' : undefined}
-            ref={setRootElement}
-            $zIndex={zIndex}
-          >
-            {!isDragging &&
-              elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
-                return (
-                  <ElementOverlay
-                    key={id}
-                    focused={focused}
-                    hovered={hovered}
-                    node={sanity}
-                    rect={rect}
-                    showActions={!inFrame}
-                    wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                  />
-                )
-              })}
+      <LayerProvider>
+        <PortalProvider element={rootElement}>
+          <SchemaProvider comlink={comlink} elements={elements}>
+            <PreviewSnapshotsProvider comlink={comlink}>
+              <OptimisticStateProvider comlink={comlink} documentIds={documentIds}>
+                <Root
+                  data-fading-out={fadingOut ? '' : undefined}
+                  data-overlays={overlaysFlash ? '' : undefined}
+                  ref={setRootElement}
+                  $zIndex={zIndex}
+                >
+                  {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
+                  {!isDragging &&
+                    elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+                      return (
+                        <ElementOverlay
+                          key={id}
+                          focused={focused}
+                          hovered={hovered}
+                          node={sanity}
+                          rect={rect}
+                          showActions={!inFrame}
+                          wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                        />
+                      )
+                    })}
 
-            {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-            {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
-          </Root>
-        </PreviewSnapshotsProvider>
-      </SchemaProvider>
+                  {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+                  {isDragging && (
+                    <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                  )}
+                </Root>
+              </OptimisticStateProvider>
+            </PreviewSnapshotsProvider>
+          </SchemaProvider>
+        </PortalProvider>
+      </LayerProvider>
     </ThemeProvider>
   )
 }
