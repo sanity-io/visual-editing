@@ -83,6 +83,13 @@ export const createNodeMachine = <
 >() => {
   const nodeMachine = setup({
     types: {} as {
+      children: {
+        'listen for disconnect': 'listen'
+        'listen for handshake ack': 'listen'
+        'listen for handshake syn': 'listen'
+        'listen for heartbeat': 'listen'
+        'listen for messages': 'listen'
+      }
       context: {
         buffer: Array<{data: V; resolvable?: PromiseWithResolvers<S['response']>}>
         connectionId: string | null
@@ -292,8 +299,8 @@ export const createNodeMachine = <
     states: {
       idle: {
         invoke: {
+          id: 'listen for handshake syn',
           src: 'listen',
-          id: 'listenForHandshakeSyn',
           input: listenInputFromContext({
             include: MSG_HANDSHAKE_SYN,
             count: 1,
@@ -316,8 +323,8 @@ export const createNodeMachine = <
         entry: 'send handshake syn ack',
         invoke: [
           {
+            id: 'listen for handshake ack',
             src: 'listen',
-            id: 'listenForHandshakeAck',
             input: listenInputFromContext({
               include: MSG_HANDSHAKE_ACK,
               count: 1,
@@ -325,8 +332,8 @@ export const createNodeMachine = <
             onDone: 'connected',
           },
           {
+            id: 'listen for disconnect',
             src: 'listen',
-            id: 'listenForDisconnect',
             input: listenInputFromContext({
               include: MSG_DISCONNECT,
               count: 1,
@@ -334,8 +341,8 @@ export const createNodeMachine = <
             }),
           },
           {
+            id: 'listen for messages',
             src: 'listen',
-            id: 'listenForMessages',
             input: listenInputFromContext({
               exclude: [MSG_DISCONNECT, MSG_HANDSHAKE_ACK, MSG_HEARTBEAT, MSG_RESPONSE],
             }),
@@ -360,23 +367,23 @@ export const createNodeMachine = <
         entry: ['flush handshake buffer', 'flush buffer'],
         invoke: [
           {
+            id: 'listen for messages',
             src: 'listen',
-            id: 'listenForMessages',
             input: listenInputFromContext({
               exclude: [MSG_RESPONSE, MSG_HEARTBEAT],
             }),
           },
           {
+            id: 'listen for heartbeat',
             src: 'listen',
-            id: 'listenForHeartbeats',
             input: listenInputFromContext({
               include: MSG_HEARTBEAT,
               responseType: 'heartbeat.received',
             }),
           },
           {
+            id: 'listen for disconnect',
             src: 'listen',
-            id: 'listenForDisconnect',
             input: listenInputFromContext({
               include: MSG_DISCONNECT,
               count: 1,
