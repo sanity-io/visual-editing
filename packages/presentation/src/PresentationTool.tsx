@@ -65,6 +65,7 @@ import {usePreviewUrl} from './usePreviewUrl'
 import {useStatus} from './useStatus'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
+const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
 const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
@@ -588,6 +589,11 @@ export default function PresentationTool(props: {
       {visualEditingComlink && documentsOnPage.length && (
         <Suspense>
           <PostMessagePreviewSnapshots comlink={visualEditingComlink} refs={documentsOnPage} />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessageDocuments comlink={visualEditingComlink} />
         </Suspense>
       )}
       {params.id && params.type && (
