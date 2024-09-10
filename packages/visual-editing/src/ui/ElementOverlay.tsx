@@ -1,7 +1,7 @@
 import {pathToUrlString} from '@repo/visual-editing-helpers'
 import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {Box, Card, Flex, Text} from '@sanity/ui'
-import {memo, useEffect, useMemo, useRef} from 'react'
+import {memo, useCallback, useEffect, useMemo, useRef, useSyncExternalStore} from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
 
@@ -148,22 +148,39 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     >
       {showActions && hovered ? (
         <Actions gap={1} paddingBottom={1}>
-          <Box
-            as="a"
-            href={href}
-            target="_blank"
-            rel="noopener"
-            // @ts-expect-error -- TODO update typings in @sanity/ui
-            referrerPolicy="no-referrer-when-downgrade"
-          >
-            <ActionOpen padding={2}>
-              <Text size={1} weight="medium">
-                Open in Studio
-              </Text>
-            </ActionOpen>
-          </Box>
+          <Link href={href} />
         </Actions>
       ) : null}
     </Root>
+  )
+})
+
+const Link = memo(function Link(props: {href: string}) {
+  const referer = useSyncExternalStore(
+    useCallback((onStoreChange) => {
+      const handlePopState = () => onStoreChange()
+      window.addEventListener('popstate', handlePopState)
+      return () => window.removeEventListener('popstate', handlePopState)
+    }, []),
+    () => window.location.href,
+  )
+  const href = useMemo(() => {
+    try {
+      const parsed = new URL(props.href)
+      parsed.searchParams.set('preview', referer)
+      return parsed.toString()
+    } catch {
+      return props.href
+    }
+  }, [props.href, referer])
+
+  return (
+    <Box as="a" href={href} target="_blank" rel="noopener noreferrer">
+      <ActionOpen padding={2}>
+        <Text size={1} weight="medium">
+          Open in Studio
+        </Text>
+      </ActionOpen>
+    </Box>
   )
 })
