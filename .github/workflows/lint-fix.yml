@@ -37,5 +37,6 @@ jobs:
           branch: actions/lint-fix
           commit-message: 'chore(lint): --fix 🤖 ✨'
           labels: 🤖 bot
+          sign-commits: true
           title: 'chore(lint): --fix 🤖 ✨'
           token: ${{ steps.generate-token.outputs.token }}
