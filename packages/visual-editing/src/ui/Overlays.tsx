@@ -1,4 +1,9 @@
-import {isAltKey, isHotkey, type SanityNode} from '@repo/visual-editing-helpers'
+import {
+  isAltKey,
+  isHotkey,
+  type SanityNode,
+  type VisualEditingControllerMsg,
+} from '@repo/visual-editing-helpers'
 import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
 import type {Status} from '@sanity/comlink'
@@ -21,7 +26,8 @@ import {
 } from 'react'
 import {styled} from 'styled-components'
 
-import type {HistoryAdapter, OverlayEventHandler, VisualEditingNode} from '../types'
+import type {HistoryAdapter, OverlayEventHandler, OverlayMsg, VisualEditingNode} from '../types'
+import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
 import {OptimisticStateProvider} from './optimistic-state/OptimisticStateProvider'
@@ -64,6 +70,60 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
   if (a.size !== b.size) return false
   for (const value of a) if (!b.has(value)) return false
   return true
+}
+
+const OverlaysController: FunctionComponent<{
+  comlink: VisualEditingNode
+  dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void
+  inFrame: boolean
+  onDrag: (x: number, y: number) => void
+  overlayEnabled: boolean
+  rootElement: HTMLElement | null
+}> = (props) => {
+  const {comlink, dispatch, inFrame, onDrag, overlayEnabled, rootElement} = props
+  const {dispatchDragEndEvent} = useDragEndEvents()
+
+  const overlayEventHandler: OverlayEventHandler = useCallback(
+    (message) => {
+      if (message.type === 'element/click') {
+        const {sanity} = message
+        comlink.post({type: 'visual-editing/focus', data: sanity})
+      } else if (message.type === 'overlay/activate') {
+        comlink.post({type: 'visual-editing/toggle', data: {enabled: true}})
+      } else if (message.type === 'overlay/deactivate') {
+        comlink.post({type: 'visual-editing/toggle', data: {enabled: false}})
+      } else if (message.type === 'overlay/dragStart') {
+        if (message.flow === 'vertical') {
+          document.body.style.cursor = 'ns-resize'
+        } else {
+          document.body.style.cursor = 'ew-resize'
+        }
+      } else if (message.type === 'overlay/dragEnd') {
+        document.body.style.cursor = 'auto'
+        const {insertPosition, target} = message
+        dispatchDragEndEvent({insertPosition, target})
+      } else if (message.type === 'overlay/dragUpdateCursorPosition') {
+        onDrag(message.x, message.y)
+
+        return
+      }
+
+      dispatch(message)
+    },
+    [comlink, dispatch, dispatchDragEndEvent, onDrag],
+  )
+
+  const controller = useController(rootElement, overlayEventHandler, !!inFrame)
+
+  useEffect(() => {
+    if (overlayEnabled) {
+      controller.current?.activate()
+    } else {
+      controller.current?.deactivate()
+    }
+  }, [controller, overlayEnabled])
+
+  return null
 }
 
 /**
@@ -186,50 +246,15 @@ export const Overlays: FunctionComponent<{
     }
   }, [elements, perspective, reportDocuments])
 
-  const updateDragPreviewCustomProps = (rootElement: HTMLElement | null, x: number, y: number) => {
-    if (!rootElement) return
+  const updateDragPreviewCustomProps = useCallback(
+    (x: number, y: number) => {
+      if (!rootElement) return
 
-    rootElement.style.setProperty('--drag-preview-x', `${x}px`)
-    rootElement.style.setProperty('--drag-preview-y', `${y - window.scrollY}px`)
-  }
-
-  const overlayEventHandler: OverlayEventHandler = useCallback(
-    (message) => {
-      if (message.type === 'element/click') {
-        const {sanity} = message
-        comlink.post({type: 'visual-editing/focus', data: sanity})
-      } else if (message.type === 'overlay/activate') {
-        comlink.post({type: 'visual-editing/toggle', data: {enabled: true}})
-      } else if (message.type === 'overlay/deactivate') {
-        comlink.post({type: 'visual-editing/toggle', data: {enabled: false}})
-      } else if (message.type === 'overlay/dragStart') {
-        if (message.flow === 'vertical') {
-          document.body.style.cursor = 'ns-resize'
-        } else {
-          document.body.style.cursor = 'ew-resize'
-        }
-      } else if (message.type === 'overlay/dragEnd') {
-        document.body.style.cursor = 'auto'
-      } else if (message.type === 'overlay/dragUpdateCursorPosition') {
-        updateDragPreviewCustomProps(rootElement, message.x, message.y)
-
-        return
-      }
-
-      dispatch(message)
+      rootElement.style.setProperty('--drag-preview-x', `${x}px`)
+      rootElement.style.setProperty('--drag-preview-y', `${y - window.scrollY}px`)
     },
-    [comlink, rootElement],
+    [rootElement],
   )
-
-  const controller = useController(rootElement, overlayEventHandler, !!inFrame)
-
-  useEffect(() => {
-    if (overlayEnabled) {
-      controller.current?.activate()
-    } else {
-      controller.current?.deactivate()
-    }
-  }, [controller, overlayEnabled])
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -344,6 +369,14 @@ export const Overlays: FunctionComponent<{
                   ref={setRootElement}
                   $zIndex={zIndex}
                 >
+                  <OverlaysController
+                    comlink={comlink}
+                    dispatch={dispatch}
+                    inFrame={inFrame}
+                    onDrag={updateDragPreviewCustomProps}
+                    overlayEnabled={overlayEnabled}
+                    rootElement={rootElement}
+                  />
                   {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                   {!isDragging &&
                     elementsToRender.map(({id, focused, hovered, rect, sanity}) => {

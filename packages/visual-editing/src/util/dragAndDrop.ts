@@ -304,6 +304,7 @@ export function handleOverlayDrag(
   element: ElementNode,
   overlayGroup: OverlayElement[],
   handler: OverlayEventHandler,
+  target: SanityNode,
 ): void {
   const rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
   const flow = calcTargetFlow(rects)
@@ -352,6 +353,7 @@ export function handleOverlayDrag(
   const handleMouseUp = (): void => {
     handler({
       type: 'overlay/dragEnd',
+      target,
       insertPosition: insertPosition
         ? resolveInsertPosition(overlayGroup, insertPosition, flow)
         : null,

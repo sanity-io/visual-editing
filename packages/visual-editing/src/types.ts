@@ -57,6 +57,12 @@ export type DragInsertPosition = {
 } | null
 
 /** @public */
+export interface DragEndEvent {
+  insertPosition: DragInsertPosition
+  target: SanityNode
+}
+
+/** @public */
 export type DragSkeleton = {
   w: number
   h: number
@@ -162,9 +168,7 @@ export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
 }
 
 /** @public */
-export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & {
-  insertPosition: DragInsertPosition
-}
+export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & DragEndEvent
 
 /**
  * Controller dispatched messages
