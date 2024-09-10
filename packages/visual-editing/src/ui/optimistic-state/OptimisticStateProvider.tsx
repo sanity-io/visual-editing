@@ -1,4 +1,9 @@
-import type {MutationEvent, ReconnectEvent, WelcomeEvent} from '@sanity/client'
+import type {
+  ListenEvent,
+  MutationEvent as ClientMutationEvent,
+  ReconnectEvent,
+  WelcomeEvent,
+} from '@sanity/client'
 import {SanityEncoder} from '@sanity/mutate'
 import {
   createContentLakeStore,
@@ -56,9 +61,8 @@ export const OptimisticStateProvider: FunctionComponent<
     })
   }, [documentIds])
 
-  const [incomingEvents$] = useState(
-    () => new Subject<WelcomeEvent | MutationEvent | ReconnectEvent>(),
-  )
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [incomingEvents$] = useState(() => new Subject<ListenEvent<Record<string, any>>>())
 
   const events$ = useMemo(() => {
     return incomingEvents$.pipe(
@@ -74,7 +78,9 @@ export const OptimisticStateProvider: FunctionComponent<
     return createContentLakeStore({
       observe: (documentId) => {
         return events$.pipe(
-          filter((event) => (event.type === 'mutation' ? event.documentId === documentId : true)),
+          filter((event): event is WelcomeEvent | ClientMutationEvent | ReconnectEvent =>
+            event.type === 'mutation' ? event.documentId === documentId : true,
+          ),
           concatMap((event) => {
             if (event.type === 'reconnect') {
               return observableOf(RECONNECT_EVENT)
@@ -93,7 +99,10 @@ export const OptimisticStateProvider: FunctionComponent<
             return observableOf({
               type: 'mutation' as const,
               transactionId: event.transactionId,
-              effects: event.effects!.apply,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              effects: event.effects as {apply: any[]},
+              previousRev: event.previousRev!,
+              resultRev: event.resultRev!,
               mutations: event.mutations as SanityMutation[],
             })
           }),
