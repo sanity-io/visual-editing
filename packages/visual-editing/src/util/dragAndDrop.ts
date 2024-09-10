@@ -304,6 +304,7 @@ export function handleOverlayDrag(
   element: ElementNode,
   overlayGroup: OverlayElement[],
   handler: OverlayEventHandler,
+  target: SanityNode,
 ): void {
   // do not trigger drag sequence on anything other than "main" (0) click, ignore right click, etc
   if (mouseEvent.button !== 0) return
@@ -355,6 +356,7 @@ export function handleOverlayDrag(
   const handleMouseUp = (): void => {
     handler({
       type: 'overlay/dragEnd',
+      target,
       insertPosition: insertPosition
         ? resolveInsertPosition(overlayGroup, insertPosition, flow)
         : null,
