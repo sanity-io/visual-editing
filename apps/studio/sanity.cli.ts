@@ -20,6 +20,7 @@ export default defineCliConfig({
           'apps-common': require.resolve('../common/src'),
           '@sanity/presentation': require.resolve('../../packages/presentation/src'),
         },
+        dedupe: [...(config.resolve?.dedupe || []), 'sanity'],
       },
     }
   },
