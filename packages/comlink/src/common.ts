@@ -70,6 +70,9 @@ export const messageEvents$ = defer(() =>
   fromEvent<MessageEvent<ProtocolMessage>>(window, 'message'),
 )
 
+/**
+ * @public
+ */
 export const createListenLogic = (
   compatMap?: (event: MessageEvent<ProtocolMessage>) => MessageEvent<ProtocolMessage>,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

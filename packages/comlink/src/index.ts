@@ -26,9 +26,12 @@ export {createRequestMachine, type RequestActorRef, type RequestMachineContext} 
 export type {
   BufferAddedEmitEvent,
   BufferFlushedEmitEvent,
+  DisconnectMessage,
+  HandshakeMessageType,
   HeartbeatEmitEvent,
   HeartbeatMessage,
   InternalEmitEvent,
+  InternalMessageType,
   ListenInput,
   Message,
   MessageData,

@@ -1,14 +1,13 @@
-import type {VisualEditingControllerMsg, VisualEditingNodeMsg} from '@repo/visual-editing-helpers'
 import type {MutationEvent, ReconnectEvent, WelcomeEvent} from '@sanity/client'
-import type {ConnectionInstance} from '@sanity/comlink'
 import {type FunctionComponent, memo, useEffect, useMemo, useState} from 'react'
 import {filter} from 'rxjs'
 import {useClient} from 'sanity'
 
 import {API_VERSION} from '../constants'
+import type {VisualEditingConnection} from '../types'
 
 interface PostMessageDocumentsProps {
-  comlink: ConnectionInstance<VisualEditingNodeMsg, VisualEditingControllerMsg>
+  comlink: VisualEditingConnection
 }
 
 const PostMessageDocuments: FunctionComponent<PostMessageDocumentsProps> = (props) => {

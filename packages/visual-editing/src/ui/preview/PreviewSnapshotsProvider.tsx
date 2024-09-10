@@ -1,12 +1,11 @@
-import type {VisualEditingControllerMsg, VisualEditingNodeMsg} from '@repo/visual-editing-helpers'
-import type {Node} from '@sanity/comlink'
 import {type FunctionComponent, type PropsWithChildren, useEffect, useMemo, useState} from 'react'
 
+import type {VisualEditingNode} from '../../types'
 import {PreviewSnapshotsContext, type PreviewSnapshotsContextValue} from './PreviewSnapshotsContext'
 
 export const PreviewSnapshotsProvider: FunctionComponent<
   PropsWithChildren<{
-    comlink: Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
+    comlink: VisualEditingNode
   }>
 > = function (props) {
   const {comlink, children} = props
@@ -14,7 +13,7 @@ export const PreviewSnapshotsProvider: FunctionComponent<
   const [previewSnapshots, setPreviewSnapshots] = useState<PreviewSnapshotsContextValue>([])
 
   useEffect(() => {
-    return comlink.on('presentation/previewSnapshots', (data) => {
+    return comlink.on('presentation/preview-snapshots', (data) => {
       setPreviewSnapshots(data.snapshots)
     })
   }, [comlink])
