@@ -1,4 +1,11 @@
+import type {
+  LoaderControllerMsg,
+  LoaderNodeMsg,
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg,
+} from '@repo/visual-editing-helpers'
 import type {ClientPerspective, QueryParams} from '@sanity/client'
+import type {ConnectionInstance} from '@sanity/comlink'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,
@@ -132,6 +139,9 @@ export type DocumentResolver =
       >
     }
 
+/**
+ * @public
+ */
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
   icon?: ComponentType
@@ -261,3 +271,15 @@ export interface MainDocumentState {
   path: string
   document: MainDocument | undefined
 }
+
+/**
+ * @internal
+ */
+export type VisualEditingConnection = ConnectionInstance<
+  VisualEditingNodeMsg,
+  VisualEditingControllerMsg
+>
+/**
+ * @internal
+ */
+export type LoaderConnection = ConnectionInstance<LoaderNodeMsg, LoaderControllerMsg>

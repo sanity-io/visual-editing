@@ -8,7 +8,6 @@ import {
 } from '@repo/visual-editing-helpers'
 import {studioPath} from '@sanity/client/csm'
 import {
-  type ConnectionInstance,
   type Controller,
   createChannelMachine,
   createController,
@@ -57,6 +56,7 @@ import type {
   PresentationStateParams,
   PresentationViewport,
   StructureDocumentPaneParams,
+  VisualEditingConnection,
 } from './types'
 import {useDocumentsOnPage} from './useDocumentsOnPage'
 import {useMainDocument} from './useMainDocument'
@@ -108,10 +108,9 @@ export default function PresentationTool(props: {
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const [controller, setController] = useState<Controller>()
-  const [visualEditingComlink, setVisualEditingComlink] = useState<ConnectionInstance<
-    VisualEditingNodeMsg,
-    VisualEditingControllerMsg
-  > | null>(null)
+  const [visualEditingComlink, setVisualEditingComlink] = useState<VisualEditingConnection | null>(
+    null,
+  )
 
   const frameStateRef = useRef<FrameState>({
     title: undefined,
@@ -382,7 +381,7 @@ export default function PresentationTool(props: {
   }, [overlaysConnection, targetOrigin, params.preview, visualEditingComlink])
 
   const toggleOverlay = useCallback(
-    () => visualEditingComlink?.post({type: 'presentation/toggleOverlay', data: undefined}),
+    () => visualEditingComlink?.post({type: 'presentation/toggle-overlay', data: undefined}),
     [visualEditingComlink],
   )
 

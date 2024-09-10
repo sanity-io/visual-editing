@@ -1,11 +1,4 @@
-import type {
-  ResolvedSchemaTypeMap,
-  SchemaType,
-  UnresolvedPath,
-  VisualEditingControllerMsg,
-  VisualEditingNodeMsg,
-} from '@repo/visual-editing-helpers'
-import type {Node} from '@sanity/comlink'
+import type {ResolvedSchemaTypeMap, SchemaType, UnresolvedPath} from '@repo/visual-editing-helpers'
 import {
   type FunctionComponent,
   type PropsWithChildren,
@@ -16,7 +9,7 @@ import {
   useState,
 } from 'react'
 
-import type {ElementState} from '../../types'
+import type {ElementState, VisualEditingNode} from '../../types'
 import {SchemaContext, type SchemaContextValue} from './SchemaContext'
 
 function popUnkeyedPathSegments(path: string): string {
@@ -46,7 +39,7 @@ function getPathsWithUnresolvedTypes(elements: ElementState[]): {id: string; pat
 
 export const SchemaProvider: FunctionComponent<
   PropsWithChildren<{
-    comlink: Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
+    comlink: VisualEditingNode
     elements: ElementState[]
   }>
 > = function (props) {
@@ -70,7 +63,7 @@ export const SchemaProvider: FunctionComponent<
       if (!paths.length) return
       try {
         const response = await comlink.fetch({
-          type: 'visual-editing/schemaUnionTypes',
+          type: 'visual-editing/schema-union-types',
           data: {paths},
         })
         setResolvedTypes(response.types)

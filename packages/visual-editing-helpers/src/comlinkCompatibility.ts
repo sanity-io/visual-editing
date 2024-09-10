@@ -2,6 +2,7 @@ import {
   createListenLogic,
   createRequestMachine,
   DOMAIN,
+  type InternalMessageType,
   type Message,
   MSG_DISCONNECT,
   MSG_HANDSHAKE_ACK,
@@ -12,6 +13,62 @@ import {
   type ProtocolMessage,
   type RequestMachineContext,
 } from '@sanity/comlink'
+
+import type {
+  LoaderControllerMsg,
+  LoaderNodeMsg,
+  PreviewKitNodeMsg,
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg,
+} from './types'
+
+type NewDataType =
+  | InternalMessageType
+  | (
+      | LoaderControllerMsg
+      | LoaderNodeMsg
+      | PreviewKitNodeMsg
+      | VisualEditingControllerMsg
+      | VisualEditingNodeMsg
+    )['type']
+
+type LegacyDataType =
+  | 'handshake/syn'
+  | 'handshake/syn-ack'
+  | 'handshake/ack'
+  | 'channel/response'
+  | 'channel/heartbeat'
+  | 'channel/disconnect'
+  | 'overlay/focus'
+  | 'overlay/navigate'
+  | 'overlay/toggle'
+  | 'presentation/toggleOverlay'
+
+const legacyToNewTypeMap: {[key in LegacyDataType]?: NewDataType} = {
+  'handshake/syn': MSG_HANDSHAKE_SYN,
+  'handshake/syn-ack': MSG_HANDSHAKE_SYN_ACK,
+  'handshake/ack': MSG_HANDSHAKE_ACK,
+  'channel/response': MSG_RESPONSE,
+  'channel/heartbeat': MSG_HEARTBEAT,
+  'channel/disconnect': MSG_DISCONNECT,
+  'overlay/focus': 'visual-editing/focus',
+  'overlay/navigate': 'visual-editing/navigate',
+  'overlay/toggle': 'visual-editing/toggle',
+  'presentation/toggleOverlay': 'presentation/toggle-overlay',
+}
+
+const newToLegacyTypeMap: {[key in NewDataType]?: LegacyDataType} = {
+  [MSG_HANDSHAKE_SYN]: 'handshake/syn',
+  [MSG_HANDSHAKE_SYN_ACK]: 'handshake/syn-ack',
+  [MSG_HANDSHAKE_ACK]: 'handshake/ack',
+  [MSG_RESPONSE]: 'channel/response',
+  [MSG_HEARTBEAT]: 'channel/heartbeat',
+  [MSG_DISCONNECT]: 'channel/disconnect',
+  'visual-editing/focus': 'overlay/focus',
+  'visual-editing/navigate': 'overlay/navigate',
+  'visual-editing/toggle': 'overlay/toggle',
+  'presentation/toggle-overlay': 'presentation/toggleOverlay',
+}
 
 const convertEventToNewFormat = (
   event: MessageEvent<ProtocolMessage>,
@@ -38,25 +95,7 @@ const convertEventToNewFormat = (
       data.from = 'visual-editing'
     }
 
-    if (data.type === 'handshake/syn') {
-      data.type = MSG_HANDSHAKE_SYN
-    } else if (data.type === 'handshake/syn-ack') {
-      data.type = MSG_HANDSHAKE_SYN_ACK
-    } else if (data.type === 'handshake/ack') {
-      data.type = MSG_HANDSHAKE_ACK
-    } else if (data.type === 'channel/response') {
-      data.type = MSG_RESPONSE
-    } else if (data.type === 'channel/heartbeat') {
-      data.type = MSG_HEARTBEAT
-    } else if (data.type === 'channel/disconnect') {
-      data.type = MSG_DISCONNECT
-    } else if (data.type === 'overlay/focus') {
-      data.type = 'visual-editing/focus'
-    } else if (data.type === 'overlay/navigate') {
-      data.type = 'visual-editing/navigate'
-    } else if (data.type === 'overlay/toggle') {
-      data.type = 'visual-editing/toggle'
-    }
+    data.type = legacyToNewTypeMap[data.type as LegacyDataType] ?? data.type
   }
 
   return event
@@ -75,26 +114,7 @@ const convertMessageToLegacyFormat = (message: ProtocolMessage): ProtocolMessage
     message.from = 'overlays'
   }
 
-  if (message.type === MSG_HANDSHAKE_SYN) {
-    message.type = 'handshake/syn'
-  } else if (message.type === MSG_HANDSHAKE_SYN_ACK) {
-    message.type = 'handshake/syn-ack'
-  } else if (message.type === MSG_HANDSHAKE_ACK) {
-    message.type = 'handshake/ack'
-  } else if (message.type === MSG_RESPONSE) {
-    message.type = 'channel/response'
-    message.data = {responseTo: message.responseTo, ...message.data}
-  } else if (message.type === MSG_HEARTBEAT) {
-    message.type = 'channel/heartbeat'
-  } else if (message.type === MSG_DISCONNECT) {
-    message.type = 'channel/disconnect'
-  } else if (message.type === 'visual-editing/focus') {
-    message.type = 'overlay/focus'
-  } else if (message.type === 'visual-editing/navigate') {
-    message.type = 'overlay/navigate'
-  } else if (message.type === 'visual-editing/toggle') {
-    message.type = 'overlay/toggle'
-  }
+  message.type = newToLegacyTypeMap[message.type as NewDataType] ?? message.type
 
   return message
 }
