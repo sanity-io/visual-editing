@@ -112,6 +112,12 @@ export const createChannelMachine = <
 >() => {
   const channelMachine = setup({
     types: {} as {
+      children: {
+        'listen for handshake': 'listen'
+        'listen for messages': 'listen'
+        'send heartbeat': 'sendBackAtInterval'
+        'send syn': 'sendBackAtInterval'
+      }
       context: {
         buffer: Array<V>
         connectionId: string
@@ -319,8 +325,8 @@ export const createChannelMachine = <
       handshaking: {
         invoke: [
           {
+            id: 'send syn',
             src: 'sendBackAtInterval',
-            id: 'sendSyn',
             input: () => ({
               event: {type: 'syn'},
               interval: HANDSHAKE_INTERVAL,
@@ -328,6 +334,7 @@ export const createChannelMachine = <
             }),
           },
           {
+            id: 'listen for handshake',
             src: 'listen',
             input: (input) =>
               listenInputFromContext({
@@ -365,6 +372,7 @@ export const createChannelMachine = <
       connected: {
         entry: 'flush buffer',
         invoke: {
+          id: 'listen for messages',
           src: 'listen',
           input: listenInputFromContext({
             exclude: [MSG_RESPONSE, MSG_HEARTBEAT],
@@ -405,8 +413,8 @@ export const createChannelMachine = <
                   },
                 },
                 invoke: {
+                  id: 'send heartbeat',
                   src: 'sendBackAtInterval',
-                  id: 'sendHeartbeat',
                   input: () => ({
                     event: {type: 'post', data: {type: MSG_HEARTBEAT, data: undefined}},
                     interval: 2000,

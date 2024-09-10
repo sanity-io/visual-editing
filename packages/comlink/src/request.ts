@@ -40,6 +40,9 @@ export const createRequestMachine = <
 >() => {
   return setup({
     types: {} as {
+      children: {
+        'listen for response': 'listen'
+      }
       context: RequestMachineContext<S>
       // @todo Should response types be specified?
       events: {type: 'message'; data: ProtocolMessage<ResponseMessage>}
@@ -63,6 +66,11 @@ export const createRequestMachine = <
         targetOrigin: string
         to: string
         type: S['type']
+      }
+      output: {
+        requestId: string
+        response: S['response'] | null
+        responseTo: string | undefined
       }
     },
     actors: {
@@ -170,6 +178,7 @@ export const createRequestMachine = <
       },
       awaiting: {
         invoke: {
+          id: 'listen for response',
           src: 'listen',
           input: ({context}) => ({
             requestId: context.id,
