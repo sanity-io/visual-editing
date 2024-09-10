@@ -2,9 +2,12 @@ import type {
   ClientPerspective,
   ContentSourceMap,
   ContentSourceMapDocuments,
+  MutationEvent,
   QueryParams,
+  ReconnectEvent,
+  WelcomeEvent,
 } from '@sanity/client'
-import type {PreviewValue} from '@sanity/types'
+import type {PreviewValue, SanityDocument} from '@sanity/types'
 
 import type {SanityNode, SanityStegaNode} from './overlays'
 import type {ResolvedSchemaTypeMap, SchemaType, UnresolvedPath} from './schema'
@@ -115,6 +118,12 @@ export type VisualEditingControllerMsg =
         snapshots: Array<PreviewValue & {_id: string}>
       }
     }
+  | {
+      type: 'presentation/snapshot-event'
+      data: {
+        event: ReconnectEvent | WelcomeEvent | MutationEvent
+      }
+    }
 
 /**
  * @public
@@ -179,6 +188,31 @@ export type VisualEditingNodeMsg =
       response: {
         types: ResolvedSchemaTypeMap
       }
+    }
+  | {
+      type: 'visual-editing/observe-documents'
+      data: {
+        documentIds: string[]
+      }
+    }
+  | {
+      type: 'visual-editing/fetch-snapshot'
+      data: {
+        documentId: string
+      }
+      response: {
+        snapshot: SanityDocument | undefined
+      }
+    }
+  | {
+      type: 'visual-editing/mutate'
+      data: {
+        transactionId: string | undefined
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mutations: any[]
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      response: any
     }
 
 /**

@@ -60,7 +60,7 @@ export type Node<R extends Message, S extends Message> = {
   actor: NodeActor<R, S>
   fetch: <const T extends S['type'], U extends WithoutResponse<S>>(
     data: U,
-  ) => S extends U ? (S['type'] extends T ? S['response'] : never) : never
+  ) => S extends U ? (S['type'] extends T ? Promise<S['response']> : never) : never
   machine: NodeActorLogic<R, S>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
