@@ -305,6 +305,9 @@ export function handleOverlayDrag(
   overlayGroup: OverlayElement[],
   handler: OverlayEventHandler,
 ): void {
+  // do not trigger drag sequence on anything other than "main" (0) click, ignore right click, etc
+  if (mouseEvent.button !== 0) return
+
   const rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
   const flow = calcTargetFlow(rects)
 
