@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.1.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.9...visual-editing-v2.1.10) (2024-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.21.3 ([#1793](https://github.com/sanity-io/visual-editing/issues/1793)) ([1dc1b1b](https://github.com/sanity-io/visual-editing/commit/1dc1b1b9222e6a2f36d6b807415dc1a9b0a2426a))
+* send `preview` search param explicitly ([2d02d41](https://github.com/sanity-io/visual-editing/commit/2d02d41182d212325f05ea1d847d294eb62363f7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 1.6.21
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.21
+
 ## [2.1.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.8...visual-editing-v2.1.9) (2024-08-12)
 
 

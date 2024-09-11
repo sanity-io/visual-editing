@@ -38,6 +38,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.10.7](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.10.6...react-loader-v1.10.7) (2024-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.21.3 ([#1793](https://github.com/sanity-io/visual-editing/issues/1793)) ([1dc1b1b](https://github.com/sanity-io/visual-editing/commit/1dc1b1b9222e6a2f36d6b807415dc1a9b0a2426a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.6.23
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.21
+
 ## [1.10.6](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.10.5...react-loader-v1.10.6) (2024-08-12)
 
 
