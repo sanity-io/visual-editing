@@ -163,8 +163,17 @@ export type OverlayMsgDragUpdateCursorPosition = Msg<'overlay/dragUpdateCursorPo
 
 /** @public */
 export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
-  skeleton: DragSkeleton
   flow: 'horizontal' | 'vertical'
+}
+
+/** @public */
+export type OverlayMsgDragToggleMinimapPrompt = Msg<'overlay/dragToggleMinimapPrompt'> & {
+  display: boolean
+}
+
+/** @public */
+export type OverlayMsgDragUpdateSkeleton = Msg<'overlay/dragUpdateSkeleton'> & {
+  skeleton: DragSkeleton
 }
 
 /** @public */
@@ -180,8 +189,10 @@ export type OverlayMsg =
   | OverlayMsgDeactivate
   | OverlayMsgDragEnd
   | OverlayMsgDragStart
+  | OverlayMsgDragToggleMinimapPrompt
   | OverlayMsgDragUpdateCursorPosition
   | OverlayMsgDragUpdateInsertPosition
+  | OverlayMsgDragUpdateSkeleton
   | OverlayMsgElementActivate
   | OverlayMsgElementClick
   | OverlayMsgElementContextMenu

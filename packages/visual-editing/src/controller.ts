@@ -15,7 +15,7 @@ import {
   isSanityNode,
   sanityNodesExistInSameArray,
 } from './util/findSanityNodes'
-import {getRect} from './util/getRect'
+import {getRect} from './util/geometry'
 
 /**
  * Creates a controller which dispatches overlay related events
@@ -133,11 +133,13 @@ export function createOverlayController({
     const eventHandlers: EventHandlers = {
       click(event) {
         const target = event.target as ElementNode | null
+
         if (element === getHoveredElement() && element.contains(target)) {
           if (preventDefault) {
             event.preventDefault()
             event.stopPropagation()
           }
+
           const sanity = elementsMap.get(element)?.sanity
           if (sanity) {
             handler({
