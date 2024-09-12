@@ -31,7 +31,7 @@ const isElementNode = (target: EventTarget | null): target is ElementNode => {
 export function createOverlayController({
   handler,
   overlayElement,
-  preventDefault,
+  inFrame,
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
@@ -42,6 +42,8 @@ export function createOverlayController({
   const elementSet = new Set<ElementNode>()
   // Weakmap keyed by measureElement to find associated element
   const measureElements = new WeakMap<ElementNode, ElementNode>()
+
+  const preventDefault = inFrame
 
   let ro: ResizeObserver
   let io: IntersectionObserver | undefined
@@ -151,8 +153,6 @@ export function createOverlayController({
         if (event.currentTarget !== hoverStack.at(-1)) return
 
         if (element.getAttribute('data-sanity-disable-drag')) return
-
-        const inFrame = window.self !== window.top || window.opener
 
         // disable dnd in non-studio contexts
         if (!inFrame) return

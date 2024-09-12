@@ -10,7 +10,7 @@ import type {OverlayController, OverlayEventHandler} from '../types'
 export function useController(
   element: HTMLElement | null,
   handler: OverlayEventHandler,
-  preventDefault: boolean,
+  inFrame: boolean,
 ): MutableRefObject<OverlayController | undefined> {
   const overlayController = useRef<OverlayController | undefined>()
 
@@ -20,14 +20,14 @@ export function useController(
     overlayController.current = createOverlayController({
       handler,
       overlayElement: element,
-      preventDefault,
+      inFrame,
     })
 
     return () => {
       overlayController.current?.destroy()
       overlayController.current = undefined
     }
-  }, [element, handler, preventDefault])
+  }, [element, handler, inFrame])
 
   return overlayController
 }
