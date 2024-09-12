@@ -190,7 +190,7 @@ export type OverlayEventHandler = (message: OverlayMsg) => void
 export interface OverlayOptions {
   handler: OverlayEventHandler
   overlayElement: HTMLElement
-  preventDefault: boolean
+  inFrame: boolean
 }
 
 /**
