@@ -152,6 +152,11 @@ export function createOverlayController({
 
         if (element.getAttribute('data-sanity-disable-drag')) return
 
+        const inFrame = window.self !== window.top || window.opener
+
+        // disable dnd in non-studio contexts
+        if (!inFrame) return
+
         const targetSanityData = elementsMap.get(element)?.sanity
 
         if (
