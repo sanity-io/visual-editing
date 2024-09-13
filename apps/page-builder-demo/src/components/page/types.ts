@@ -62,11 +62,12 @@ export interface PageData {
   _type: 'page'
   _id: string
   title?: string
-  sections?: Array<
-    | HeroSectionData
-    | IntroSectionData
-    | FeaturedProductsSectionData
-    | FeatureHighlightSectionData
-    | PageSectionData
-  >
+  sections?: Array<PageSection>
 }
+
+export type PageSection =
+  | HeroSectionData
+  | IntroSectionData
+  | FeaturedProductsSectionData
+  | FeatureHighlightSectionData
+  | PageSectionData

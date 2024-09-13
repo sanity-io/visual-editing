@@ -1464,8 +1464,8 @@ importers:
   packages/visual-editing:
     dependencies:
       '@sanity/mutate':
-        specifier: ^0.10.0
-        version: 0.10.0(debug@4.3.7)
+        specifier: ^0.10.1-canary.1
+        version: 0.10.1-canary.1(xstate@5.18.1)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -1481,6 +1481,9 @@ importers:
       valibot:
         specifier: 0.31.1
         version: 0.31.1
+      xstate:
+        specifier: ^5.18.1
+        version: 5.18.1
       zustand:
         specifier: ^4.5.5
         version: 4.5.5(@types/react@18.3.5)(immer@10.1.1)(react@18.3.1)
@@ -4396,6 +4399,15 @@ packages:
   '@sanity/mutate@0.10.0':
     resolution: {integrity: sha512-kgBY8EZ/i+5KQkDlMizr/KQMwF/E2ExYWPsogFuDoGdQ3MhD+5jwP7X/WpttAZh8F8dupBzslgvv5f9DUeKx3Q==}
     engines: {node: '>=18'}
+
+  '@sanity/mutate@0.10.1-canary.1':
+    resolution: {integrity: sha512-8KW6a49DDD2CdY4LX3K/WeQDETuKDHIBFIsciWN0Q6sAdKWTJuFph+5RXkcSrXqK/F5YilrBdlaujfxSWegOdA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      xstate: ^5.18.0
+    peerDependenciesMeta:
+      xstate:
+        optional: true
 
   '@sanity/mutator@3.37.2':
     resolution: {integrity: sha512-F0MvseVtgPBaPxNZtSidF6BQeygviYThgmhRbjZ89AhlRhWiLODvLakdogFmwD1NEQ0tpKn+8m0pQIOHgt2C3w==}
@@ -16946,6 +16958,19 @@ snapshots:
       mendoza: 3.0.7
       nanoid: 5.0.7
       rxjs: 7.8.1
+    transitivePeerDependencies:
+      - debug
+
+  '@sanity/mutate@0.10.1-canary.1(xstate@5.18.1)':
+    dependencies:
+      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/diff-match-patch': 3.1.1
+      hotscript: 1.0.13
+      mendoza: 3.0.7
+      nanoid: 5.0.7
+      rxjs: 7.8.1
+    optionalDependencies:
+      xstate: 5.18.1
     transitivePeerDependencies:
       - debug
 

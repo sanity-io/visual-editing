@@ -1,4 +1,4 @@
-import {filter, fromEvent, take} from 'rxjs'
+import {filter, fromEvent, take, takeUntil, tap} from 'rxjs'
 import {v4 as uuid} from 'uuid'
 import {type ActorRefFrom, assign, fromEventObservable, sendParent, setup} from 'xstate'
 
@@ -18,6 +18,7 @@ export interface RequestMachineContext<S extends Message> {
   resolvable: PromiseWithResolvers<S['response']> | undefined
   response: S['response'] | null
   responseTo: string | undefined
+  signal: AbortSignal | undefined
   sources: Set<MessageEventSource>
   targetOrigin: string
   to: string
@@ -45,7 +46,7 @@ export const createRequestMachine = <
       }
       context: RequestMachineContext<S>
       // @todo Should response types be specified?
-      events: {type: 'message'; data: ProtocolMessage<ResponseMessage>}
+      events: {type: 'message'; data: ProtocolMessage<ResponseMessage>} | {type: 'abort'}
       emitted:
         | {
             type: 'request.success'
@@ -54,14 +55,16 @@ export const createRequestMachine = <
             responseTo: string | undefined
           }
         | {type: 'request.failed'; requestId: string}
+        | {type: 'request.aborted'; requestId: string}
       input: {
         connectionId: string
         data?: S['data']
         domain: string
         expectResponse?: boolean
         from: string
-        responseTo?: string
         resolvable?: PromiseWithResolvers<S['response']>
+        responseTo?: string
+        signal?: AbortSignal
         sources: Set<MessageEventSource> | MessageEventSource
         targetOrigin: string
         to: string
@@ -75,7 +78,15 @@ export const createRequestMachine = <
     },
     actors: {
       listen: fromEventObservable(
-        ({input}: {input: {requestId: string; sources: Set<MessageEventSource>}}) =>
+        ({
+          input,
+        }: {
+          input: {
+            requestId: string
+            sources: Set<MessageEventSource>
+            signal?: AbortSignal
+          }
+        }) =>
           fromEvent<MessageEvent<ProtocolMessage<ResponseMessage>>>(window, 'message').pipe(
             filter(
               (event) =>
@@ -85,6 +96,7 @@ export const createRequestMachine = <
                 input.sources.has(event.source),
             ),
             take(input.sources.size),
+            input.signal ? takeUntil(fromEvent(input.signal, 'abort')) : tap(),
           ),
       ),
     },
@@ -116,6 +128,11 @@ export const createRequestMachine = <
         context.resolvable?.reject(new Error('No response received'))
         return {type: 'request.failed', requestId: self.id}
       }),
+      'on abort': sendParent(({context, self}) => {
+        console.log('on abort...')
+        context.resolvable?.reject(new Error('Request aborted'))
+        return {type: 'request.aborted', requestId: self.id}
+      }),
     },
     guards: {
       expectsResponse: ({context}) => context.expectResponse,
@@ -137,6 +154,7 @@ export const createRequestMachine = <
         resolvable: input.resolvable,
         response: null,
         responseTo: input.responseTo,
+        signal: input.signal,
         sources: input.sources instanceof Set ? input.sources : new Set([input.sources]),
         targetOrigin: input.targetOrigin,
         to: input.to,
@@ -144,10 +162,17 @@ export const createRequestMachine = <
       }
     },
     initial: 'idle',
+    on: {
+      abort: '.aborted',
+    },
     states: {
       idle: {
         after: {
-          initialTimeout: 'sending',
+          initialTimeout: [
+            {
+              target: 'sending',
+            },
+          ],
         },
       },
       sending: {
@@ -183,6 +208,7 @@ export const createRequestMachine = <
           input: ({context}) => ({
             requestId: context.id,
             sources: context.sources,
+            signal: context.signal,
           }),
         },
         after: {
@@ -205,6 +231,10 @@ export const createRequestMachine = <
       success: {
         type: 'final',
         entry: 'on success',
+      },
+      aborted: {
+        type: 'final',
+        entry: 'on abort',
       },
     },
     output: ({context, self}) => {

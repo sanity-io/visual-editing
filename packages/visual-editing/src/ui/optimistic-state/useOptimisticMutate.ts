@@ -1,28 +1,42 @@
 import {type Mutation} from '@sanity/mutate'
-import {useCallback, useContext} from 'react'
+import {useCallback} from 'react'
 
-import {OptimisticStateContext} from './OptimisticStateContext'
+import {getDraftId} from '../../util/documents'
+import {isEmptyActor} from './context'
+import {useOptimisticActor} from './useOptimisticActor'
 
-export type OptimisticMutate = (mutations: Mutation[], options?: {commit?: boolean}) => void
+export type OptimisticMutate = (
+  documentId: string,
+  mutations: Mutation[],
+  options?: {commit?: boolean},
+) => void
 
 export function useOptimisticMutate(): OptimisticMutate {
-  const context = useContext(OptimisticStateContext)
-
-  if (context === null) {
-    throw new Error('useOptimisticMutate must be used within an OptimisticStateProvider')
-  }
-
-  const {datastore} = context
+  const actor = useOptimisticActor()
 
   const mutate = useCallback<OptimisticMutate>(
-    (mutations, options) => {
+    (documentId, mutations, options) => {
+      if (isEmptyActor(actor)) {
+        const inFrame = window.self !== window.top || window.opener
+        if (inFrame) {
+          // eslint-disable-next-line no-console
+          console.warn('useOptimisticMutate called with empty actor')
+        }
+        return
+      }
+
       const {commit = true} = options || {}
-      datastore.mutate(mutations)
+
+      const doc = actor.getSnapshot().context.documents[getDraftId(documentId)]
+      doc?.send({
+        type: 'mutate',
+        mutations: mutations,
+      })
       if (commit) {
-        datastore.submit()
+        doc?.send({type: 'submit'})
       }
     },
-    [datastore],
+    [actor],
   )
 
   return mutate

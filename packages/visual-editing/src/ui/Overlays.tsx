@@ -27,10 +27,11 @@ import {
 import {styled} from 'styled-components'
 
 import type {HistoryAdapter, OverlayEventHandler, OverlayMsg, VisualEditingNode} from '../types'
+import {getDraftId} from '../util/documents'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
-import {OptimisticStateProvider} from './optimistic-state/OptimisticStateProvider'
+import {useOptimisticActor} from './optimistic-state/useOptimisticActor'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
 import {overlayStateReducer} from './overlayStateReducer'
@@ -70,6 +71,38 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
   if (a.size !== b.size) return false
   for (const value of a) if (!b.has(value)) return false
   return true
+}
+
+const DocumentReporter: FunctionComponent<{
+  documentIds: string[]
+}> = (props) => {
+  const {documentIds} = props
+  const [uniqueIds, setUniqueIds] = useState<string[]>([])
+
+  useEffect(() => {
+    setUniqueIds((prev) => {
+      const next = Array.from(new Set(documentIds.map(getDraftId)))
+      return prev.length === next.length &&
+        prev.reduce((acc, prevId) => acc.filter((id) => id !== prevId), next)?.length === 0
+        ? prev
+        : next
+    })
+  }, [documentIds])
+
+  const actor = useOptimisticActor()
+
+  useEffect(() => {
+    for (const id of uniqueIds) {
+      actor.send({type: 'observe', documentId: getDraftId(id)})
+    }
+    return () => {
+      for (const id of uniqueIds) {
+        actor.send({type: 'unobserve', documentId: getDraftId(id)})
+      }
+    }
+  }, [actor, uniqueIds])
+
+  return null
 }
 
 const OverlaysController: FunctionComponent<{
@@ -362,43 +395,41 @@ export const Overlays: FunctionComponent<{
         <PortalProvider element={rootElement}>
           <SchemaProvider comlink={comlink} elements={elements}>
             <PreviewSnapshotsProvider comlink={comlink}>
-              <OptimisticStateProvider comlink={comlink} documentIds={documentIds}>
-                <Root
-                  data-fading-out={fadingOut ? '' : undefined}
-                  data-overlays={overlaysFlash ? '' : undefined}
-                  ref={setRootElement}
-                  $zIndex={zIndex}
-                >
-                  <OverlaysController
-                    comlink={comlink}
-                    dispatch={dispatch}
-                    inFrame={inFrame}
-                    onDrag={updateDragPreviewCustomProps}
-                    overlayEnabled={overlayEnabled}
-                    rootElement={rootElement}
-                  />
-                  {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
-                  {!isDragging &&
-                    elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
-                      return (
-                        <ElementOverlay
-                          key={id}
-                          focused={focused}
-                          hovered={hovered}
-                          node={sanity}
-                          rect={rect}
-                          showActions={!inFrame}
-                          wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                        />
-                      )
-                    })}
+              {/* <OptimisticStateProvider comlink={comlink} documentIds={documentIds}> */}
+              <Root
+                data-fading-out={fadingOut ? '' : undefined}
+                data-overlays={overlaysFlash ? '' : undefined}
+                ref={setRootElement}
+                $zIndex={zIndex}
+              >
+                <DocumentReporter documentIds={documentIds} />
+                <OverlaysController
+                  comlink={comlink}
+                  dispatch={dispatch}
+                  inFrame={inFrame}
+                  onDrag={updateDragPreviewCustomProps}
+                  overlayEnabled={overlayEnabled}
+                  rootElement={rootElement}
+                />
+                {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
+                {!isDragging &&
+                  elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+                    return (
+                      <ElementOverlay
+                        key={id}
+                        focused={focused}
+                        hovered={hovered}
+                        node={sanity}
+                        rect={rect}
+                        showActions={!inFrame}
+                        wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                      />
+                    )
+                  })}
 
-                  {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-                  {isDragging && (
-                    <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
-                  )}
-                </Root>
-              </OptimisticStateProvider>
+                {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+                {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
+              </Root>
             </PreviewSnapshotsProvider>
           </SchemaProvider>
         </PortalProvider>
