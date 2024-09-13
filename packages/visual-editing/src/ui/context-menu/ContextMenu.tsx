@@ -1,3 +1,4 @@
+import type {SanityDocument} from '@sanity/client'
 import {
   Box,
   Flex,
@@ -13,10 +14,9 @@ import {
 import {type FunctionComponent, useMemo} from 'react'
 
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
-import {getDraftId} from '../../util/documents'
 import {getNodeIcon} from '../../util/getNodeIcon'
+import {useOptimisticDocument} from '../optimistic-state/useOptimisticDocument'
 import {useOptimisticMutate} from '../optimistic-state/useOptimisticMutate'
-import {useOptimisticStateStore} from '../optimistic-state/useOptimisticStateStore'
 import {PopoverPortal} from '../PopoverPortal'
 import {getField, getSchemaType} from '../schema/schema'
 import {useSchema} from '../schema/useSchema'
@@ -79,8 +79,6 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
 
   const {schema, resolvedTypes} = useSchema()
 
-  const mutate = useOptimisticMutate()
-
   const schemaType = getSchemaType(node, schema)
   const {field, parent} = getField(node, schemaType, resolvedTypes)
 
@@ -92,12 +90,13 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     return getNodeIcon(field)
   }, [field])
 
-  const documentMap = useOptimisticStateStore((state) => state.documents)
+  const mutate = useOptimisticMutate()
+  const doc = useOptimisticDocument(node.id)
 
   const items = useMemo(() => {
-    const doc = documentMap.get(getDraftId(node.id))
+    if (!doc) return []
     return getContextMenuItems(node, field, parent, doc, mutate)
-  }, [documentMap, field, mutate, node, parent])
+  }, [doc, field, mutate, node, parent])
 
   const contextMenuReferenceElement = useMemo(() => {
     return {

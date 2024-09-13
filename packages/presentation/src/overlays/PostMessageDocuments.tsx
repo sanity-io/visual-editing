@@ -1,5 +1,5 @@
 import type {MutationEvent, ReconnectEvent, WelcomeEvent} from '@sanity/client'
-import {type FunctionComponent, memo, useEffect, useMemo, useState} from 'react'
+import {type FunctionComponent, memo, useEffect} from 'react'
 import {filter} from 'rxjs'
 import {useClient} from 'sanity'
 
@@ -14,13 +14,8 @@ const PostMessageDocuments: FunctionComponent<PostMessageDocumentsProps> = (prop
   const {comlink} = props
   const client = useClient({apiVersion: API_VERSION})
 
-  const [documentIds, setDocumentIds] = useState<string[]>([])
-  const shouldObserve = useMemo(() => documentIds.length > 0, [documentIds])
-
   useEffect(() => {
-    if (!shouldObserve) return
-
-    const subscriber = client
+    const listener = client
       .listen(
         '*[!(_id in path("_.**"))]',
         {},
@@ -39,19 +34,12 @@ const PostMessageDocuments: FunctionComponent<PostMessageDocumentsProps> = (prop
             event.type === 'welcome' || event.type === 'reconnect' || event.type === 'mutation',
         ),
       )
-      .subscribe((event) => {
-        comlink.post({type: 'presentation/snapshot-event', data: {event}})
-      })
 
-    return () => {
-      subscriber.unsubscribe()
-    }
-  }, [client, comlink, shouldObserve])
-
-  useEffect(() => {
-    return comlink.on('visual-editing/observe-documents', async (data) => {
-      setDocumentIds(data.documentIds)
+    const subscription = listener.subscribe((event) => {
+      comlink.post({type: 'presentation/snapshot-event', data: {event}})
     })
+
+    return () => subscription.unsubscribe()
   }, [client, comlink])
 
   useEffect(() => {

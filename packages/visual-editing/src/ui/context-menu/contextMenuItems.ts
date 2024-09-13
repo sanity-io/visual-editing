@@ -60,7 +60,7 @@ export function getContextMenuUnionItems(
       type: 'action',
       label: 'Remove',
       icon: RemoveIcon,
-      action: () => mutate(getArrayRemoveMutations(node, doc)),
+      action: () => mutate(node.id, getArrayRemoveMutations(node, doc)),
     })
 
     const moveItems: ContextMenuNode[] = []
@@ -74,7 +74,7 @@ export function getContextMenuUnionItems(
         type: 'action',
         label: 'To top',
         icon: PublishIcon,
-        action: () => mutate(moveFirstMutations),
+        action: () => mutate(node.id, moveFirstMutations),
       })
     }
     if (moveUpMutations) {
@@ -82,7 +82,7 @@ export function getContextMenuUnionItems(
         type: 'action',
         label: 'Up',
         icon: ArrowUpIcon,
-        action: () => mutate(moveUpMutations),
+        action: () => mutate(node.id, moveUpMutations),
       })
     }
 
@@ -91,7 +91,7 @@ export function getContextMenuUnionItems(
         type: 'action',
         label: 'Down',
         icon: ArrowDownIcon,
-        action: () => mutate(moveDownMutations),
+        action: () => mutate(node.id, moveDownMutations),
       })
     }
     if (moveLastMutations) {
@@ -99,7 +99,7 @@ export function getContextMenuUnionItems(
         type: 'action',
         label: 'To bottom',
         icon: UnpublishIcon,
-        action: () => mutate(moveLastMutations),
+        action: () => mutate(node.id, moveLastMutations),
       })
     }
     if (moveItems.length > 0) {
@@ -126,7 +126,7 @@ export function getContextMenuUnionItems(
         label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
         action: () => {
           const mutations = getArrayInsertMutations(node, t.name, 'before')
-          mutate(mutations, {commit: true})
+          mutate(node.id, mutations)
         },
       }
     }),
@@ -144,7 +144,7 @@ export function getContextMenuUnionItems(
         icon: getNodeIcon(t),
         action: () => {
           const mutations = getArrayInsertMutations(node, t.name, 'after')
-          mutate(mutations, {commit: true})
+          mutate(node.id, mutations)
         },
       }
     }),

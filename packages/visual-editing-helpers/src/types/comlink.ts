@@ -6,8 +6,9 @@ import type {
   QueryParams,
   ReconnectEvent,
   WelcomeEvent,
+  SanityDocument,
 } from '@sanity/client'
-import type {PreviewValue, SanityDocument} from '@sanity/types'
+import type {PreviewValue} from '@sanity/types'
 
 import type {SanityNode, SanityStegaNode} from './overlays'
 import type {ResolvedSchemaTypeMap, SchemaType, UnresolvedPath} from './schema'
@@ -201,7 +202,8 @@ export type VisualEditingNodeMsg =
         documentId: string
       }
       response: {
-        snapshot: SanityDocument | undefined
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        snapshot: SanityDocument<Record<string, any>> | undefined | void
       }
     }
   | {
@@ -213,6 +215,14 @@ export type VisualEditingNodeMsg =
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       response: any
+    }
+  | {
+      type: 'visual-editing/listen'
+      data: undefined
+    }
+  | {
+      type: 'visual-editing/unlisten'
+      data: undefined
     }
 
 /**

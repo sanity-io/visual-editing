@@ -1,27 +1,32 @@
 import {at, createIfNotExists, insert, patch, unset} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
-import {useCallback, useContext, useEffect} from 'react'
+import {useCallback, useEffect} from 'react'
 
 import type {DragEndEvent} from '../types'
-import {OptimisticStateContext} from '../ui/optimistic-state/OptimisticStateContext'
-import {useOptimisticStateStore} from '../ui/optimistic-state/useOptimisticStateStore'
+import {isEmptyActor} from '../ui/optimistic-state/context'
+import {useOptimisticActor} from '../ui/optimistic-state/useOptimisticActor'
 import {getDraftId} from './documents'
 import {getArrayItemKeyAndParentPath} from './mutations'
 
 export function useDragEndEvents(): {
   dispatchDragEndEvent: (event: DragEndEvent) => void
 } {
-  const {datastore} = useContext(OptimisticStateContext) || {}
-  const {documents} = useOptimisticStateStore()
+  const actor = useOptimisticActor()
 
   useEffect(() => {
-    if (!datastore) return
+    if (isEmptyActor(actor)) {
+      return
+    }
     const handler = (e: CustomEvent<DragEndEvent>) => {
       const {insertPosition, target} = e.detail
       if (insertPosition?.top) {
         const id = getDraftId(target.id)
-        const doc = documents.get(id)
-        const elementValue = get(doc, target.path)
+        const snapshotContext = actor.getSnapshot().context
+        const doc = snapshotContext.documents[id]
+        if (!doc) return
+        const documentSnapshot = doc.getSnapshot().context.local
+        if (!documentSnapshot) return
+        const elementValue = get(documentSnapshot, target.path)
         const {path: arrayPath, key: referenceItemKey} = getArrayItemKeyAndParentPath(
           insertPosition.top.sanity,
         )
@@ -31,8 +36,12 @@ export function useDragEndEvents(): {
             patch(id, at(target.path, unset())),
             patch(id, at(arrayPath, insert(elementValue, 'after', {_key: referenceItemKey}))),
           ]
-          datastore.mutate(mutations)
-          datastore.submit()
+
+          doc.send({
+            type: 'mutate',
+            mutations: mutations,
+          })
+          doc.send({type: 'submit'})
         }
       }
     }
@@ -40,7 +49,7 @@ export function useDragEndEvents(): {
     return () => {
       window.removeEventListener('sanity/dragEnd', handler as EventListener)
     }
-  }, [datastore, documents])
+  }, [actor])
 
   const dispatchDragEndEvent = useCallback((event: DragEndEvent) => {
     const customEvent = new CustomEvent<DragEndEvent>('sanity/dragEnd', {

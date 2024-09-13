@@ -21,14 +21,14 @@ export interface ConnectionInstance<R extends Message, S extends Message> {
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => Promise<U['response']> | U['response'],
-  ) => void
+  ) => () => void
   onInternalEvent: <
     T extends InternalEmitEvent<R, S>['type'],
     U extends Extract<InternalEmitEvent<R, S>, {type: T}>,
   >(
     type: T,
     handler: (event: U) => void,
-  ) => void
+  ) => () => void
   onStatus: (handler: (event: StatusEvent) => void) => void
   post: (data: WithoutResponse<S>) => void
   start: () => () => void
