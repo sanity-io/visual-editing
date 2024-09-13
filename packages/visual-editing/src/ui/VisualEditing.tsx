@@ -1,18 +1,52 @@
-import type {FunctionComponent} from 'react'
+import {
+  createCompatibilityActors,
+  type VisualEditingControllerMsg,
+  type VisualEditingNodeMsg,
+} from '@repo/visual-editing-helpers'
+import {createNode, createNodeMachine} from '@sanity/comlink'
+import {type FunctionComponent, useEffect, useState} from 'react'
+import {createActor} from 'xstate'
 
-import type {VisualEditingOptions} from '../types'
+import type {VisualEditingNode, VisualEditingOptions} from '../types'
+import {createDatasetMutator} from './comlink'
 import {Meta} from './Meta'
+import {createSharedListener} from './optimistic-state/machines/createSharedListener'
+import {setActor} from './optimistic-state/context'
 import {Overlays} from './Overlays'
 import {Refresh} from './Refresh'
-import {useComlink} from './useComlink'
 
 /**
  * @public
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
   const {history, refresh, zIndex} = props
-  const comlink = useComlink()
   const inFrame = window.self !== window.top || window.opener
+
+  const [comlink, setComlink] = useState<VisualEditingNode | null>(null)
+
+  useEffect(() => {
+    const comlink = createNode<VisualEditingControllerMsg, VisualEditingNodeMsg>(
+      {
+        name: 'visual-editing',
+        connectTo: 'presentation',
+      },
+      createNodeMachine<VisualEditingControllerMsg, VisualEditingNodeMsg>().provide({
+        actors: createCompatibilityActors<VisualEditingNodeMsg>(),
+      }),
+    )
+    setComlink(comlink)
+
+    const listener = createSharedListener(comlink)
+    const datasetMutator = createDatasetMutator(comlink)
+    const actor = createActor(datasetMutator, {
+      // @ts-expect-error @todo
+      input: {client: {withConfig: () => {}}, sharedListener: listener},
+    })
+    setActor(actor)
+
+    actor.start()
+    comlink.start()
+  }, [])
 
   return (
     comlink && (

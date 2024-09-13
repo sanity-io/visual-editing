@@ -1,5 +1,5 @@
 import {WrappedValue} from '@sanity/react-loader/jsx'
-import {isArray} from 'sanity'
+import {getDraftId, isArray} from 'sanity'
 
 import {dataAttribute} from '@/sanity'
 import {FeaturedProducts} from './sections/FeaturedProducts'
@@ -7,10 +7,21 @@ import {FeatureHighlight} from './sections/FeatureHighlight'
 import {Hero} from './sections/Hero'
 import {Intro} from './sections/Intro'
 import {Section} from './sections/Section'
-import {PageData} from './types'
+import {PageData, PageSection} from './types'
+import {useOptimistic} from '@sanity/visual-editing'
 
 export function Page(props: {data: WrappedValue<PageData>}) {
   const {data} = props
+
+  const sections = useOptimistic(data.sections, (state, action) => {
+    // @todo casting to draft id shouldn't be necessary
+    if (action.document._id === getDraftId(data._id)) {
+      return action.document.sections.map(({_key}: {_key: string}) =>
+        state?.find((section) => section._key === _key),
+      )
+    }
+    return state
+  })
 
   return (
     <main
@@ -20,8 +31,8 @@ export function Page(props: {data: WrappedValue<PageData>}) {
         path: 'sections',
       })}
     >
-      {isArray(data.sections) &&
-        data.sections.map((section) => {
+      {isArray(sections) &&
+        sections.map((section) => {
           if (section._type === 'hero') {
             return <Hero page={data} key={section._key} section={section} />
           }
