@@ -12,6 +12,8 @@ import {
 } from '@sanity/mutate/_unstable_machine'
 import {type ActorRefFrom, assertEvent, assign, emit, setup, stopChild} from 'xstate'
 
+import {getDraftId} from '../../../util/documents'
+
 export interface DatasetMutatorMachineInput extends Omit<DocumentMutatorMachineInput, 'id'> {
   client: SanityClient
   /** A shared listener can be provided, if not it'll be created using `client.listen()` */
@@ -44,20 +46,25 @@ export const datasetMutatorMachine = setup({
       assertEvent(event, 'mutation')
       return event
     }),
+    'emit rebased event': emit(({event}) => {
+      assertEvent(event, ['rebased.local', 'rebased.remote'])
+      return event
+    }),
     'add document actor': assign({
       documents: ({context, event, spawn}) => {
         assertEvent(event, 'observe')
+        const id = event.documentId
         // Adding the same documentId multiple times is a no-op
-        if (context.documents[event.documentId]) return context.documents
+        if (context.documents[id]) return context.documents
         return {
           ...context.documents,
-          [event.documentId]: spawn('documentMutatorMachine', {
+          [id]: spawn('documentMutatorMachine', {
             input: {
-              id: event.documentId,
+              id,
               client: context.client,
               sharedListener: context.sharedListener || createSharedListener(context.client),
             },
-            id: event.documentId,
+            id,
           }),
         }
       },
@@ -90,12 +97,13 @@ export const datasetMutatorMachine = setup({
   }),
 
   on: {
-    sync: {actions: ['emit sync event']},
-    mutation: {actions: ['emit mutation event']},
-    observe: {
+    'sync': {actions: ['emit sync event']},
+    'mutation': {actions: ['emit mutation event']},
+    'rebased.*': {actions: ['emit rebased event']},
+    'observe': {
       actions: ['add document actor'],
     },
-    unobserve: {
+    'unobserve': {
       actions: ['stop remote snapshot', 'remove remote snapshot from context'],
     },
   },

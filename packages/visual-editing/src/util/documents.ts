@@ -7,3 +7,7 @@ export function isDraftId(id: string): boolean {
 export function getDraftId(id: string): string {
   return isDraftId(id) ? id : DRAFTS_PREFIX + id
 }
+
+export function getPublishedId(id: string): string {
+  return isDraftId(id) ? id.slice(DRAFTS_PREFIX.length) : id
+}

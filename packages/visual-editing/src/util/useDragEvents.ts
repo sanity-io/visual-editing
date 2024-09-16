@@ -27,10 +27,11 @@ export function useDragEndEvents(): {
         const documentSnapshot = doc.getSnapshot().context.local
         if (!documentSnapshot) return
         const elementValue = get(documentSnapshot, target.path)
+        const {key: targetKey} = getArrayItemKeyAndParentPath(target.path)
         const {path: arrayPath, key: referenceItemKey} = getArrayItemKeyAndParentPath(
           insertPosition.top.sanity,
         )
-        if (referenceItemKey && arrayPath) {
+        if (referenceItemKey && referenceItemKey !== targetKey && arrayPath) {
           const mutations = [
             createIfNotExists({_id: id, _type: target.type!}),
             patch(id, at(target.path, unset())),
