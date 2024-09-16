@@ -1,4 +1,4 @@
-import type {SanityDocument} from '@sanity/client'
+import type {SanityDocumentBase} from '@sanity/mutate'
 import {type ActorRefFrom, createEmptyActor} from 'xstate'
 
 import {createDatasetMutator} from '../comlink'
@@ -6,8 +6,9 @@ import {createDatasetMutator} from '../comlink'
 export type MutatorActor = ActorRefFrom<ReturnType<typeof createDatasetMutator>>
 export type EmptyActor = typeof emptyActor
 export type OptimisticReducerAction = {
+  id: string
   type: 'appear' | 'mutate' | 'disappear'
-  document: SanityDocument
+  document: SanityDocumentBase
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OptimisticReducer<T = any> = (state: T, action: OptimisticReducerAction) => T

@@ -1,5 +1,7 @@
+import type {SanityDocumentBase} from '@sanity/mutate'
 import {useCallback, useEffect, useState} from 'react'
 
+import {getPublishedId} from '../../util/documents'
 import {isEmptyActor, type OptimisticReducer, type OptimisticReducerAction} from './context'
 import {useOptimisticActor} from './useOptimisticActor'
 
@@ -11,17 +13,24 @@ export function useOptimistic<T>(
 
   const actor = useOptimisticActor()
 
-  const setStateFromReducer = useCallback(
+  const setStateFromAction = useCallback(
     (action: OptimisticReducerAction) => {
       const reducers = Array.isArray(reducer) ? reducer : [reducer]
       setState((prevState) => {
         return reducers.reduce(
-          (acc, reducer) => reducer(acc, {type: action.type, document: action.document}),
+          (acc, reducer) =>
+            reducer(acc, {type: action.type, document: action.document, id: action.id}),
           prevState,
         )
       })
     },
     [reducer],
+  )
+
+  const setStateFromEvent = useCallback(
+    (event: {id: string; document: SanityDocumentBase}) =>
+      setStateFromAction({document: event.document, type: 'mutate', id: getPublishedId(event.id)}),
+    [setStateFromAction],
   )
 
   useEffect(() => {
@@ -35,13 +44,14 @@ export function useOptimistic<T>(
       return
     }
 
-    const subscription = actor.on('mutation', (event) => {
-      // @ts-expect-error @todo state machine will emit this
-      setStateFromReducer({document: event.document, type: 'mutate'})
-    })
+    const subscription = actor.on('rebased.local', setStateFromEvent)
 
     return () => subscription.unsubscribe()
-  }, [actor, setStateFromReducer])
+  }, [actor, setStateFromEvent])
+
+  useEffect(() => {
+    setState(passthrough)
+  }, [passthrough])
 
   return isEmptyActor(actor) ? passthrough : state
 }
