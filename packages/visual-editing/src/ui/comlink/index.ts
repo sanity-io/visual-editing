@@ -21,8 +21,6 @@ export const createDatasetMutator = (comlink: VisualEditingNode) => {
           signal,
         },
       )
-      // @todo: remove
-      console.log('[@sanity/visual-editing] New snapshot', snapshot?._id)
 
       return snapshot
     },
