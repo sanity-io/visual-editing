@@ -1,9 +1,7 @@
 import type {
-  DocumentSchema,
   SanityNode,
   SchemaArrayItem,
   SchemaNode,
-  SchemaObjectField,
   SchemaUnionNode,
   SchemaUnionOption,
 } from '@repo/visual-editing-helpers'
@@ -27,91 +25,153 @@ import {
   getArrayRemoveMutations,
 } from '../../util/mutations'
 import {type OptimisticMutate} from '../optimistic-state/useOptimisticMutate'
+import type {OverlayElementField, OverlayElementParent} from '../schema/schema'
 
-export function getContextMenuItems(
-  node: SanityNode,
-  // @todo Will be used for future types
-  field: SchemaArrayItem | SchemaObjectField | SchemaUnionOption | undefined,
-  parent:
-    | DocumentSchema
-    | SchemaNode
-    | SchemaArrayItem<SchemaNode>
-    | SchemaUnionOption<SchemaNode>
-    | undefined,
-  doc: SanityDocument | undefined,
-  mutate: OptimisticMutate,
-): ContextMenuNode[] {
+export function getContextMenuItems(context: {
+  node: SanityNode
+  doc: SanityDocument | undefined
+  mutate: OptimisticMutate
+  parent: OverlayElementParent
+  field: OverlayElementField
+}): ContextMenuNode[] {
+  const {node, field, parent, doc, mutate} = context
+  if (field?.type === 'arrayItem') {
+    return getContextMenuArrayItems({node, field, doc, mutate})
+  }
   if (parent?.type === 'union') {
-    return getContextMenuUnionItems(node, parent, doc, mutate)
+    return getContextMenuUnionItems({node, parent, doc, mutate})
   }
 
   return []
 }
 
-export function getContextMenuUnionItems(
-  node: SanityNode,
-  parent: SchemaUnionNode<SchemaNode>,
-  doc: SanityDocument | undefined,
-  mutate: OptimisticMutate,
-): ContextMenuNode[] {
-  const items: ContextMenuNode[] = []
-  if (doc) {
-    items.push({
-      type: 'action',
+function getRemoveItems(context: {
+  node: SanityNode
+  doc: SanityDocument | undefined
+  mutate: OptimisticMutate
+}) {
+  const {node, doc, mutate} = context
+  if (!doc) return []
+  return [
+    {
+      type: 'action' as const,
       label: 'Remove',
       icon: RemoveIcon,
       action: () => mutate(node.id, getArrayRemoveMutations(node, doc)),
+    },
+  ]
+}
+
+function getMoveItems(
+  context: {
+    node: SanityNode
+    doc: SanityDocument | undefined
+    mutate: OptimisticMutate
+  },
+  withDivider = true,
+) {
+  const {node, doc, mutate} = context
+  if (!doc) return []
+
+  const items: ContextMenuNode[] = []
+  const groupItems: ContextMenuNode[] = []
+  const moveUpMutations = getArrayMoveMutations(node, doc, 'previous')
+  const moveDownMutations = getArrayMoveMutations(node, doc, 'next')
+  const moveFirstMutations = getArrayMoveMutations(node, doc, 'first')
+  const moveLastMutations = getArrayMoveMutations(node, doc, 'last')
+
+  if (moveFirstMutations) {
+    groupItems.push({
+      type: 'action',
+      label: 'To top',
+      icon: PublishIcon,
+      action: () => mutate(node.id, moveFirstMutations),
     })
+  }
+  if (moveUpMutations) {
+    groupItems.push({
+      type: 'action',
+      label: 'Up',
+      icon: ArrowUpIcon,
+      action: () => mutate(node.id, moveUpMutations),
+    })
+  }
 
-    const moveItems: ContextMenuNode[] = []
-    const moveUpMutations = getArrayMoveMutations(node, doc, 'previous')
-    const moveDownMutations = getArrayMoveMutations(node, doc, 'next')
-    const moveFirstMutations = getArrayMoveMutations(node, doc, 'first')
-    const moveLastMutations = getArrayMoveMutations(node, doc, 'last')
+  if (moveDownMutations) {
+    groupItems.push({
+      type: 'action',
+      label: 'Down',
+      icon: ArrowDownIcon,
+      action: () => mutate(node.id, moveDownMutations),
+    })
+  }
+  if (moveLastMutations) {
+    groupItems.push({
+      type: 'action',
+      label: 'To bottom',
+      icon: UnpublishIcon,
+      action: () => mutate(node.id, moveLastMutations),
+    })
+  }
 
-    if (moveFirstMutations) {
-      moveItems.push({
-        type: 'action',
-        label: 'To top',
-        icon: PublishIcon,
-        action: () => mutate(node.id, moveFirstMutations),
-      })
-    }
-    if (moveUpMutations) {
-      moveItems.push({
-        type: 'action',
-        label: 'Up',
-        icon: ArrowUpIcon,
-        action: () => mutate(node.id, moveUpMutations),
-      })
-    }
-
-    if (moveDownMutations) {
-      moveItems.push({
-        type: 'action',
-        label: 'Down',
-        icon: ArrowDownIcon,
-        action: () => mutate(node.id, moveDownMutations),
-      })
-    }
-    if (moveLastMutations) {
-      moveItems.push({
-        type: 'action',
-        label: 'To bottom',
-        icon: UnpublishIcon,
-        action: () => mutate(node.id, moveLastMutations),
-      })
-    }
-    if (moveItems.length > 0) {
-      items.push({
-        type: 'group',
-        label: 'Move',
-        icon: SortIcon,
-        items: moveItems,
-      })
+  if (groupItems.length) {
+    items.push({
+      type: 'group',
+      label: 'Move',
+      icon: SortIcon,
+      items: groupItems,
+    })
+    if (withDivider) {
       items.push({type: 'divider'})
     }
   }
+
+  return items
+}
+
+function getContextMenuArrayItems(context: {
+  node: SanityNode
+  field: SchemaArrayItem
+  doc: SanityDocument | undefined
+  mutate: OptimisticMutate
+}): ContextMenuNode[] {
+  const {node, field, mutate} = context
+  const items: ContextMenuNode[] = []
+  items.push(...getRemoveItems(context))
+  items.push(...getMoveItems(context))
+
+  items.push({
+    type: 'action',
+    label: 'Insert before',
+    icon: InsertAboveIcon,
+    action: () => {
+      const mutations = getArrayInsertMutations(node, field.name, 'before')
+      mutate(node.id, mutations)
+    },
+  })
+  items.push({
+    type: 'action',
+    label: 'Insert after',
+    icon: InsertBelowIcon,
+    action: () => {
+      const mutations = getArrayInsertMutations(node, field.name, 'after')
+      mutate(node.id, mutations)
+    },
+  })
+
+  return items
+}
+
+function getContextMenuUnionItems(context: {
+  node: SanityNode
+  parent: SchemaUnionNode<SchemaNode>
+  doc: SanityDocument | undefined
+  mutate: OptimisticMutate
+}): ContextMenuNode[] {
+  const {node, parent, mutate} = context
+  const items: ContextMenuNode[] = []
+  items.push(...getRemoveItems(context))
+  items.push(...getMoveItems(context))
 
   items.push({
     type: 'group',
