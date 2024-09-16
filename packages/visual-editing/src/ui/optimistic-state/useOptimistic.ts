@@ -1,9 +1,10 @@
-import type {SanityDocumentBase} from '@sanity/mutate'
 import {useCallback, useEffect, useState} from 'react'
 
 import {getPublishedId} from '../../util/documents'
 import {isEmptyActor, type OptimisticReducer, type OptimisticReducerAction} from './context'
 import {useOptimisticActor} from './useOptimisticActor'
+import type {SanityDocument} from '@sanity/types'
+import type {SanityDocumentBase} from '@sanity/mutate'
 
 export function useOptimistic<T>(
   passthrough: T,
@@ -29,7 +30,12 @@ export function useOptimistic<T>(
 
   const setStateFromEvent = useCallback(
     (event: {id: string; document: SanityDocumentBase}) =>
-      setStateFromAction({document: event.document, type: 'mutate', id: getPublishedId(event.id)}),
+      setStateFromAction({
+        // @todo You shall not cast
+        document: event.document as SanityDocument,
+        type: 'mutate',
+        id: getPublishedId(event.id),
+      }),
     [setStateFromAction],
   )
 

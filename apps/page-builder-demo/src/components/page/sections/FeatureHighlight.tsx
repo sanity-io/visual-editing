@@ -55,7 +55,7 @@ export function FeatureHighlight(props: {
                   path: `sections[_key=="${section._key}"].ctas[_key=="${cta._key}"]`,
                 })}
                 className="mt-5 border border-current p-3"
-                key={i}
+                key={cta._key}
                 style={{padding: '2rem'}}
               >
                 {unwrapData(stegaClean(cta.title))}
