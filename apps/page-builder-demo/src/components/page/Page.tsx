@@ -14,11 +14,10 @@ export function Page(props: {data: WrappedValue<PageData>}) {
   const {data} = props
 
   const sections = useOptimistic(data.sections, (state, action) => {
-    // @todo casting to draft id shouldn't be necessary
-    if (action.document._id === getDraftId(data._id)) {
-      return action.document.sections.map(({_key}: {_key: string}) =>
-        state?.find((section) => section._key === _key),
-      )
+    if (action.id === data._id) {
+      return action.document.sections
+        .map((section: {_key: string} | undefined) => state?.find((s) => s._key === section?._key))
+        .filter(Boolean)
     }
     return state
   })
