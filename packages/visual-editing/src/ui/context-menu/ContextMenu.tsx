@@ -1,4 +1,3 @@
-import type {SanityDocument} from '@sanity/client'
 import {
   Box,
   Flex,
@@ -95,7 +94,7 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
 
   const items = useMemo(() => {
     if (!doc) return []
-    return getContextMenuItems(node, field, parent, doc, mutate)
+    return getContextMenuItems({node, field, parent, doc, mutate})
   }, [doc, field, mutate, node, parent])
 
   const contextMenuReferenceElement = useMemo(() => {
