@@ -21,9 +21,10 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
   const {history, refresh, zIndex} = props
   const inFrame = window.self !== window.top || window.opener
 
-  const [comlink, setComlink] = useState<VisualEditingNode | null>(null)
+  const [comlink, setComlink] = useState<VisualEditingNode | undefined>(undefined)
 
   useEffect(() => {
+    if (!inFrame) return
     const comlink = createNode<VisualEditingControllerMsg, VisualEditingNodeMsg>(
       {
         name: 'visual-editing',
@@ -45,15 +46,13 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
 
     actor.start()
     comlink.start()
-  }, [])
+  }, [inFrame])
 
   return (
-    comlink && (
-      <>
-        <Overlays comlink={comlink} inFrame={inFrame} history={history} zIndex={zIndex} />
-        <Meta comlink={comlink} />
-        {refresh && <Refresh comlink={comlink} refresh={refresh} />}
-      </>
-    )
+    <>
+      <Overlays comlink={comlink} inFrame={inFrame} history={history} zIndex={zIndex} />
+      {comlink && <Meta comlink={comlink} />}
+      {comlink && refresh && <Refresh comlink={comlink} refresh={refresh} />}
+    </>
   )
 }
