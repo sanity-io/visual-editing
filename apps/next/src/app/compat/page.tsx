@@ -1,7 +1,7 @@
-import {ShoesListResult, shoesList} from 'apps-common/queries'
-import ShoesPageClient from './page.client'
-import {client} from '../shoes/sanity.client'
+import {shoesList, ShoesListResult} from 'apps-common/queries'
 import {draftMode} from 'next/headers'
+import {client} from '../shoes/sanity.client'
+import ShoesPageClient from './page.client'
 
 const stegaClient = client.withConfig({
   stega: {enabled: true},

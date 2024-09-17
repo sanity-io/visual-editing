@@ -2,7 +2,6 @@ import type {ContentSourceMap} from '@sanity/client'
 import LRUCache from 'mnemonist/lru-cache-with-delete'
 import type {SanityDocument} from 'sanity'
 import {expect, test} from 'vitest'
-
 import {LIVE_QUERY_CACHE_SIZE} from '../constants'
 import {turboChargeResultIfSourceMap} from './LoaderQueries'
 

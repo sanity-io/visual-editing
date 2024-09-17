@@ -2,18 +2,17 @@ import {
   createListenLogic,
   createRequestMachine,
   DOMAIN,
-  type InternalMessageType,
-  type Message,
   MSG_DISCONNECT,
   MSG_HANDSHAKE_ACK,
   MSG_HANDSHAKE_SYN,
   MSG_HANDSHAKE_SYN_ACK,
   MSG_HEARTBEAT,
   MSG_RESPONSE,
+  type InternalMessageType,
+  type Message,
   type ProtocolMessage,
   type RequestMachineContext,
 } from '@sanity/comlink'
-
 import type {
   LoaderControllerMsg,
   LoaderNodeMsg,

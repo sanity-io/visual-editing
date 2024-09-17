@@ -1,5 +1,4 @@
-import {type FunctionComponent, useEffect} from 'react'
-
+import {useEffect, type FunctionComponent} from 'react'
 import type {VisualEditingNode} from '../types'
 
 /**

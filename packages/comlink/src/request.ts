@@ -1,14 +1,13 @@
 import {EMPTY, filter, fromEvent, map, Observable, take, takeUntil} from 'rxjs'
 import {v4 as uuid} from 'uuid'
 import {
-  type ActorRefFrom,
-  type AnyActorRef,
   assign,
   fromEventObservable,
   sendTo,
   setup,
+  type ActorRefFrom,
+  type AnyActorRef,
 } from 'xstate'
-
 import {MSG_RESPONSE, RESPONSE_TIMEOUT} from './constants'
 import type {Message, MessageData, MessageType, ProtocolMessage, ResponseMessage} from './types'
 

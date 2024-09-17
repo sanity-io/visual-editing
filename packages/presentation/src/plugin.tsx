@@ -1,7 +1,6 @@
 import type {SanityDocument} from '@sanity/client'
 import {lazy, Suspense} from 'react'
-import {definePlugin, type InputProps, isDocumentSchemaType} from 'sanity'
-
+import {definePlugin, isDocumentSchemaType, type InputProps} from 'sanity'
 import {DEFAULT_TOOL_ICON, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
 import {PresentationDocumentHeader} from './document/PresentationDocumentHeader'
 import {PresentationDocumentProvider} from './document/PresentationDocumentProvider'

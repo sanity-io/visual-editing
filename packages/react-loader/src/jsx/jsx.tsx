@@ -1,6 +1,5 @@
 import type {ForwardRefExoticComponent, HTMLProps, ReactElement, Ref, SVGProps} from 'react'
 import {forwardRef} from 'react'
-
 import {htmlElements} from './html'
 import type {SanityElementProps} from './SanityElement'
 import {SanityElement} from './SanityElement'
@@ -19,10 +18,12 @@ export type SanitySVGElements = Record<
 export type SanityElements = SanityHTMLElements & SanitySVGElements
 
 function isHTMLElement(name: string): name is keyof SanityHTMLElements {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return htmlElements.includes(name as any)
 }
 
 function isSVGElement(name: string): name is keyof SanitySVGElements {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return svgElements.includes(name as any)
 }
 
@@ -52,11 +53,13 @@ const sanity = new Proxy({} as SanityElements, {
         props: SanityElementProps & Omit<SVGProps<SVGElement>, 'children' | 'ref'>,
         ref: Ref<SVGElement>,
       ): ReactElement {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <SanityElement {...(props as any)} as={prop} ref={ref} />
       })
 
       SanityComponent.displayName = `sanity.${prop}`
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       target[prop] = SanityComponent as any
 
       return SanityComponent

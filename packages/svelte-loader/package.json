@@ -39,53 +39,11 @@
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": "@sanity/prettier-config",
+  "prettier": "@repo/prettier-config",
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "simple-import-sort",
-      "prettier"
-    ],
     "extends": [
-      "eslint:recommended",
-      "plugin:prettier/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
+      "@repo/eslint-config"
     ],
-    "rules": {
-      "no-console": "error",
-      "no-warning-comments": [
-        "warn",
-        {
-          "location": "start",
-          "terms": [
-            "todo",
-            "@todo",
-            "fixme"
-          ]
-        }
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/member-delimiter-style": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
-      "prettier/prettier": "warn",
-      "simple-import-sort/exports": "warn",
-      "simple-import-sort/imports": "warn"
-    },
     "root": true
   },
   "dependencies": {
@@ -94,7 +52,9 @@
   },
   "devDependencies": {
     "@repo/channels": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/visual-editing-helpers": "workspace:*",
     "@sanity/client": "^6.21.3",
     "@sanity/pkg-utils": "6.11.1",

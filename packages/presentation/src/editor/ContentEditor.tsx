@@ -1,18 +1,17 @@
 import {WarningOutlineIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
-import {type HTMLProps, type ReactElement, useCallback, useMemo} from 'react'
+import {useCallback, useMemo, type HTMLProps, type ReactElement} from 'react'
 import {StateLink} from 'sanity/router'
-
 import {presentationLocaleNamespace} from '../i18n'
 import {
   getPreviewValueWithFallback,
-  type Path,
   PreviewCard,
   SanityDefaultPreview,
-  type SanityDocument,
   Translate,
   useSchema,
   useTranslation,
+  type Path,
+  type SanityDocument,
 } from '../internals'
 import type {
   MainDocumentState,
@@ -112,6 +111,7 @@ export function ContentEditor(props: {
           {mainDocumentState.document ? (
             <PreviewCard
               __unstable_focusRing
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               as={MainDocumentLink as any}
               data-as="a"
               radius={2}

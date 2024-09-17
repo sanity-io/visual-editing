@@ -1,6 +1,6 @@
-import {schema} from 'apps-common'
 import {presentationTool} from '@sanity/presentation'
-import {type Config, defineConfig} from 'sanity'
+import {schema} from 'apps-common'
+import {defineConfig, type Config} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
 export default function getSanityConfig(config: Config) {

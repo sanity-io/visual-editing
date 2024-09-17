@@ -1,6 +1,5 @@
 import type {SanityDocument} from '@sanity/client'
 import {useSelector} from '@xstate/react'
-
 import {getDraftId} from '../../util/documents'
 import {type MutatorActor} from './context'
 import {useOptimisticActor} from './useOptimisticActor'

@@ -4,14 +4,13 @@ import {
   type VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
 import {createNode, createNodeMachine} from '@sanity/comlink'
-import {type FunctionComponent, useEffect, useState} from 'react'
+import {useEffect, useState, type FunctionComponent} from 'react'
 import {createActor} from 'xstate'
-
 import type {VisualEditingNode, VisualEditingOptions} from '../types'
 import {createDatasetMutator} from './comlink'
 import {Meta} from './Meta'
-import {createSharedListener} from './optimistic-state/machines/createSharedListener'
 import {setActor} from './optimistic-state/context'
+import {createSharedListener} from './optimistic-state/machines/createSharedListener'
 import {Overlays} from './Overlays'
 import {Refresh} from './Refresh'
 

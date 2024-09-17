@@ -1,7 +1,5 @@
-import {WrappedValue} from '@sanity/react-loader/jsx'
-import {sanity} from '@sanity/react-loader/jsx'
-
 import {dataAttribute} from '@/sanity'
+import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
 import {PageSection} from '../PageSection'
 import {HeroSectionData, PageData} from '../types'
 

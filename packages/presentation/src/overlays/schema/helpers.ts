@@ -6,8 +6,8 @@ import {
   type ObjectSchemaType,
   type ReferenceSchemaType,
   type Rule,
-  type Schema as SchemaDef,
   type SchemaType as SanitySchemaType,
+  type Schema as SchemaDef,
   type StringSchemaType,
 } from '@sanity/types'
 import {type SchemaType} from 'groq-js'

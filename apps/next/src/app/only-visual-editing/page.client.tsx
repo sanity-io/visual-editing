@@ -1,9 +1,9 @@
+import {ContentSourceMap} from '@sanity/client/csm'
 import {type ShoesListResult} from 'apps-common/queries'
 import {formatCurrency} from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import {urlFor, urlForCrossDatasetReference} from '../shoes/utils'
-import {ContentSourceMap} from '@sanity/client/csm'
 
 type Props = {
   data: ShoesListResult

@@ -1,4 +1,4 @@
-import {createEditUrl, type Path, studioPathToJsonPath} from '@sanity/client/csm'
+import {createEditUrl, studioPathToJsonPath, type Path} from '@sanity/client/csm'
 import {vercelStegaCombine} from '@vercel/stega'
 
 function encodeEditUrl(path: Path, value: string) {

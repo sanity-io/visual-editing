@@ -8,15 +8,14 @@ import {
 } from '@repo/visual-editing-helpers'
 import {studioPath} from '@sanity/client/csm'
 import {
-  type Controller,
   createChannelMachine,
   createController,
+  type Controller,
   type Message,
 } from '@sanity/comlink'
 import {BoundaryElementProvider, Flex} from '@sanity/ui'
 import {
   lazy,
-  type ReactElement,
   Suspense,
   useCallback,
   useEffect,
@@ -24,13 +23,13 @@ import {
   useReducer,
   useRef,
   useState,
+  type ReactElement,
 } from 'react'
-import {type Path, type SanityDocument, type Tool, useDataset, useProjectId} from 'sanity'
-import {type RouterContextValue, useRouter} from 'sanity/router'
+import {useDataset, useProjectId, type Path, type SanityDocument, type Tool} from 'sanity'
+import {useRouter, type RouterContextValue} from 'sanity/router'
 import {styled} from 'styled-components'
-
 import {COMMENTS_INSPECTOR_NAME, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
-import {type CommentIntentGetter, useUnique, useWorkspace} from './internals'
+import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
 import {Panel} from './panels/Panel'
 import {Panels} from './panels/Panels'

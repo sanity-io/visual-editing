@@ -1,6 +1,5 @@
-import {type MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject} from 'react'
 import type {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
-
 import {getPublishedId} from './internals'
 import {parseRouterState} from './lib/parse'
 import type {

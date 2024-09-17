@@ -1,14 +1,14 @@
 'use client'
 
+import {workspaces} from '@repo/env'
+import {ContentSourceMap, ContentSourceMapDocuments} from '@sanity/client/csm'
+import {useDocumentsInUse} from '@sanity/preview-kit-compat'
 import {type ShoesListResult} from 'apps-common/queries'
 import {formatCurrency} from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import {urlFor, urlForCrossDatasetReference} from '../shoes/utils'
-import {ContentSourceMap, ContentSourceMapDocuments} from '@sanity/client/csm'
-import {useDocumentsInUse} from '@sanity/preview-kit-compat'
 import {useMemo} from 'react'
-import {workspaces} from 'apps-common/env'
+import {urlFor, urlForCrossDatasetReference} from '../shoes/utils'
 
 const {projectId, dataset} = workspaces['next-app-router']
 

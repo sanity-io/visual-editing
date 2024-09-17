@@ -1,6 +1,5 @@
 import {ContentSourceMap} from '@sanity/client/csm'
 import {describe, expect, test} from 'vitest'
-
 import {defineEncodeDataAttribute} from '../src/encodeDataAttribute'
 
 const result = {

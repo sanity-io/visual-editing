@@ -1,8 +1,7 @@
 import type {MutationEvent, ReconnectEvent, WelcomeEvent} from '@sanity/client'
-import {type FunctionComponent, memo, useEffect} from 'react'
+import {memo, useEffect, type FunctionComponent} from 'react'
 import {filter} from 'rxjs'
 import {useClient} from 'sanity'
-
 import {API_VERSION} from '../constants'
 import type {VisualEditingConnection} from '../types'
 

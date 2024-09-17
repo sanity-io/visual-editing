@@ -1,8 +1,6 @@
 import './Slideshow.css'
-
-import {useState} from 'react'
-
 import {SanityArrayValue, SanityImageValue} from '@/sanity'
+import {useState} from 'react'
 import {Image} from '../image'
 
 export function Slideshow(props: {images: SanityArrayValue<SanityImageValue>[]}) {

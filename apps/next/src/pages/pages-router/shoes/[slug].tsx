@@ -1,14 +1,14 @@
+import {loadQuery} from '@/components/sanity.ssr'
 import {PortableText} from '@portabletext/react'
+import {ClientPerspective, ContentSourceMap} from '@sanity/client'
+import {useQuery} from '@sanity/react-loader'
 import {shoe, type ShoeParams, type ShoeResult} from 'apps-common/queries'
 import {formatCurrency} from 'apps-common/utils'
-import type {GetStaticProps, GetStaticPaths, InferGetStaticPropsType} from 'next'
+import type {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
-import {ClientPerspective, ContentSourceMap} from '@sanity/client'
 import type {SharedProps} from '../../_app'
-import {loadQuery} from '@/components/sanity.ssr'
-import {useQuery} from '@sanity/react-loader'
+import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
 
 interface Props extends SharedProps {
   params: {slug: string}

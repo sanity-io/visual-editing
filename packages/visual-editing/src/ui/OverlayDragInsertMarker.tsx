@@ -1,5 +1,4 @@
 import type {FunctionComponent} from 'react'
-
 import type {DragInsertPosition} from '../types'
 
 const markerThickness = 2

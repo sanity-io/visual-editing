@@ -14,7 +14,6 @@ import {withoutSecretSearchParams} from '@sanity/preview-url-secret/without-secr
 import {
   Box,
   Button,
-  type ButtonTone,
   Card,
   Code,
   Flex,
@@ -29,19 +28,19 @@ import {
   Tooltip,
   TooltipDelayGroupProvider,
   usePrefersReducedMotion,
+  type ButtonTone,
 } from '@sanity/ui'
 import {AnimatePresence, motion, MotionConfig} from 'framer-motion'
 import {
-  type ComponentType,
   createElement,
   forwardRef,
   useCallback,
   useEffect,
   useMemo,
   useState,
+  type ComponentType,
 } from 'react'
 import {Hotkeys, useTranslation} from 'sanity'
-
 import {ErrorCard} from '../components/ErrorCard'
 import {MAX_TIME_TO_OVERLAYS_CONNECTION} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'

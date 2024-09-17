@@ -1,8 +1,7 @@
-import {draftMode} from 'next/headers'
-import {unstable_cache} from 'next/cache'
 import {VisualEditing} from 'next-sanity'
+import {unstable_cache} from 'next/cache'
+import {draftMode} from 'next/headers'
 import '../../tailwind.css'
-
 import {Timesince} from '../Timesince'
 
 export const metadata = {

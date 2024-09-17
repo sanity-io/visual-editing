@@ -20,60 +20,11 @@
     "lint": "eslint .",
     "test": "tsc --noEmit"
   },
-  "prettier": "@sanity/prettier-config",
+  "prettier": "@repo/prettier-config",
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "react",
-      "react-hooks",
-      "simple-import-sort",
-      "prettier"
-    ],
     "extends": [
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:react/jsx-runtime",
-      "eslint:recommended",
-      "plugin:prettier/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
+      "@repo/eslint-config"
     ],
-    "rules": {
-      "no-console": "error",
-      "no-warning-comments": [
-        "warn",
-        {
-          "location": "start",
-          "terms": [
-            "todo",
-            "@todo",
-            "fixme"
-          ]
-        }
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/member-delimiter-style": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "prettier/prettier": "warn",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react/prop-types": "off",
-      "simple-import-sort/exports": "warn",
-      "simple-import-sort/imports": "warn"
-    },
     "root": true
   },
   "dependencies": {
@@ -83,6 +34,9 @@
     "@vercel/stega": "0.1.2"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "eslint": "^8.57.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rxjs": "^7.8.1",

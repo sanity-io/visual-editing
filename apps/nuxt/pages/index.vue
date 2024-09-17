@@ -94,6 +94,7 @@
 
 <script lang="ts" setup>
 import {vercelStegaCombine} from '@vercel/stega'
+
 const elementAdded = ref(false)
 const expandedDocument = ref(false)
 const animateDocument = ref(false)
