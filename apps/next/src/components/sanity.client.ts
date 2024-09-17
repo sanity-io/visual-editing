@@ -1,5 +1,6 @@
+import {apiVersion, workspaces} from '@repo/env'
 import {createClient} from '@sanity/client'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
+import {studioUrl as baseUrl} from 'apps-common/env'
 
 const {projectId, dataset, workspace} = workspaces['next-pages-router']
 const studioUrl = `${baseUrl}/${workspace}`

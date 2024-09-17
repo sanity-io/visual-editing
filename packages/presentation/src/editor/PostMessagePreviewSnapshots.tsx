@@ -1,7 +1,6 @@
-import {type FC, memo, useEffect, useMemo} from 'react'
+import {memo, useEffect, useMemo, type FC} from 'react'
 import {combineLatest, debounceTime, Subject, switchMap} from 'rxjs'
-
-import {type PreviewValue, useDocumentPreviewStore, useSchema} from '../internals'
+import {useDocumentPreviewStore, useSchema, type PreviewValue} from '../internals'
 import type {VisualEditingConnection} from '../types'
 
 type Ref = {

@@ -16,16 +16,15 @@ import {
   ThemeProvider,
 } from '@sanity/ui'
 import {
-  type FunctionComponent,
   useCallback,
   useEffect,
   useMemo,
   useReducer,
   useRef,
   useState,
+  type FunctionComponent,
 } from 'react'
 import {styled} from 'styled-components'
-
 import type {HistoryAdapter, OverlayEventHandler, OverlayMsg, VisualEditingNode} from '../types'
 import {getDraftId} from '../util/documents'
 import {useDragEndEvents} from '../util/useDragEvents'

@@ -1,6 +1,7 @@
 'use client'
 
 import {PortableText} from '@portabletext/react'
+import {LemonIcon} from '@sanity/icons'
 import {QueryResponseInitial, useQuery} from '@sanity/react-loader'
 import {shoe, type ShoeParams, type ShoeResult} from 'apps-common/queries'
 import {formatCurrency} from 'apps-common/utils'
@@ -8,7 +9,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {use} from 'react'
 import {urlFor, urlForCrossDatasetReference} from '../utils'
-import {LemonIcon} from '@sanity/icons'
 
 type Props = {
   params: {slug: string}

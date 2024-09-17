@@ -1,4 +1,4 @@
-import {ShoeParams, ShoeResult, shoe} from 'apps-common/queries'
+import {shoe, ShoeParams, ShoeResult} from 'apps-common/queries'
 import {draftMode} from 'next/headers'
 import {loadQuery} from '../sanity.ssr'
 import ShoePageClient from './page.client'

@@ -5,7 +5,6 @@
 
 import {StrictMode} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
-
 import {OVERLAY_ID} from '../constants'
 import type {VisualEditingOptions} from '../types'
 import {VisualEditing} from './VisualEditing'

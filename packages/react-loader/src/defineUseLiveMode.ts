@@ -2,7 +2,6 @@ import type {SanityClient} from '@sanity/client'
 import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
 import type {QueryStore} from '@sanity/core-loader'
 import {useEffect} from 'react'
-
 import type {UseLiveModeHook} from './types'
 
 export function defineUseLiveMode({

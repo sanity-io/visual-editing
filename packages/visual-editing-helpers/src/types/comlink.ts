@@ -9,7 +9,6 @@ import type {
   WelcomeEvent,
 } from '@sanity/client'
 import type {PreviewValue} from '@sanity/types'
-
 import type {SanityNode, SanityStegaNode} from './overlays'
 import type {ResolvedSchemaTypeMap, SchemaType, UnresolvedPath} from './schema'
 

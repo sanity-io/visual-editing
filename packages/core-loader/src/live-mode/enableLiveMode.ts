@@ -4,16 +4,15 @@ import {
   type LoaderNodeMsg,
 } from '@repo/visual-editing-helpers'
 import {
+  SanityClient,
   type ClientPerspective,
   type ContentSourceMap,
   type ContentSourceMapDocuments,
   type QueryParams,
-  SanityClient,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {createNode, createNodeMachine} from '@sanity/comlink'
 import {atom, type MapStore} from 'nanostores'
-
 import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 
 /** @internal */
@@ -172,11 +171,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const liveQueries = new Set<{
     query: string
     params: QueryParams
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $fetch: MapStore<QueryStoreState<any, any>>
   }>()
   const addLiveQuery = (
     query: string,
     params: QueryParams,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $fetch: MapStore<QueryStoreState<any, any>>,
   ) => {
     const liveQuery = {query, params, $fetch}

@@ -1,14 +1,13 @@
 import get from 'lodash.get'
 import {useEffect, useMemo, useState} from 'react'
 import {isObservable, map, Observable, of, switchMap} from 'rxjs'
-
 import {
-  type DocumentStore,
   isRecord,
   isReference,
+  useDocumentStore,
+  type DocumentStore,
   type Previewable,
   type SanityDocument,
-  useDocumentStore,
 } from './internals'
 import type {
   DocumentLocationResolver,
@@ -91,6 +90,7 @@ function observeDocument(
     if (tails.length === 0) {
       res[head] = isRecord(value) ? (value as Record<string, unknown>)[head] : undefined
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       res[head] = observeDocument((value as any)[head], tails, store)
     }
     return res

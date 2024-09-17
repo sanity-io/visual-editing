@@ -2,13 +2,12 @@ import {MasterDetailIcon} from '@sanity/icons'
 import {useContext, useMemo} from 'react'
 import {type Tool} from 'sanity'
 import {useRouter} from 'sanity/router'
-
 import {
   defineDocumentFieldAction,
-  type DocumentFieldActionItem,
   isRecord,
   pathToString,
   useWorkspace,
+  type DocumentFieldActionItem,
 } from '../internals'
 import {PresentationContext} from '../PresentationContext'
 

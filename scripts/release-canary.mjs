@@ -1,5 +1,4 @@
 #!/usr/bin/env zx
-
 import 'zx/globals'
 
 const {packages} = await fs.readJson('./release-please-config.json')

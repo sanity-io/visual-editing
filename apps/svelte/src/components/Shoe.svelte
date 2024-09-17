@@ -1,9 +1,9 @@
 <script lang="ts">
-  import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
   import {PortableText} from '@portabletext/svelte'
+  import {page} from '$app/stores'
+  import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
   import type {ShoeResult} from 'apps-common/queries'
   import {formatCurrency} from 'apps-common/utils'
-  import {page} from '$app/stores'
 
   export let product: ShoeResult
   export let slug: string

@@ -1,8 +1,7 @@
 <script lang="ts">
   import '../app.css'
+  import {isPreviewing, VisualEditing} from '@sanity/visual-editing/svelte'
   import {page} from '$app/stores'
-
-  import {VisualEditing, isPreviewing} from '@sanity/visual-editing/svelte'
 </script>
 
 <div class="app">

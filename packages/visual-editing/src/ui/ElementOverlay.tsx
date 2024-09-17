@@ -3,18 +3,17 @@ import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {DocumentIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
 import {
-  type CSSProperties,
-  type FunctionComponent,
   memo,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useSyncExternalStore,
+  type CSSProperties,
+  type FunctionComponent,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
-
 import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
 import {getDraftId} from '../util/documents'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'

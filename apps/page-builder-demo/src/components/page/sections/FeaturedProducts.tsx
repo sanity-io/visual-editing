@@ -1,11 +1,9 @@
-import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
-import {sanity} from '@sanity/react-loader/jsx'
-import Link from 'next/link'
-
 import {Image} from '@/components/image'
+import {dataAttribute} from '@/sanity'
+import {sanity, unwrapData, WrappedValue} from '@sanity/react-loader/jsx'
+import Link from 'next/link'
 import {PageSection} from '../PageSection'
 import {FeaturedProductsSectionData, PageData} from '../types'
-import {dataAttribute} from '@/sanity'
 
 export function FeaturedProducts(props: {
   page: WrappedValue<PageData>

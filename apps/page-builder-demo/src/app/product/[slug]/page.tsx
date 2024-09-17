@@ -1,7 +1,7 @@
 import {SITE_SETTINGS_QUERY} from '@/app/queries'
-import {ProductPreview} from './ProductPreview'
 import {loadQuery} from '@/sanity'
 import type {ProductPageData} from './ProductPage'
+import {ProductPreview} from './ProductPreview'
 
 const PAGE_QUERY = `//groq
 {

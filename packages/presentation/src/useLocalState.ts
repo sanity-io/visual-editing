@@ -1,4 +1,4 @@
-import {type Dispatch, type SetStateAction, useEffect, useState} from 'react'
+import {useEffect, useState, type Dispatch, type SetStateAction} from 'react'
 
 export function useLocalState<T>(key: string, defaultValue: T): [T, Dispatch<SetStateAction<T>>] {
   const [value, setValue] = useState<T>(() =>

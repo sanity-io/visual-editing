@@ -1,16 +1,15 @@
 import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
-import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
+import {useCallback, useEffect, useMemo, useState, type ErrorInfo, type ReactElement} from 'react'
 import {useTranslation} from 'sanity'
 import {styled} from 'styled-components'
-
 import {ErrorCard} from '../components/ErrorCard'
 import {presentationLocaleNamespace} from '../i18n'
 import {
-  DocumentListPane as StructureDocumentListPane,
   getPublishedId,
   PaneLayout,
-  type PaneNode,
+  DocumentListPane as StructureDocumentListPane,
   StructureToolProvider,
+  type PaneNode,
 } from '../internals'
 import type {
   MainDocumentState,

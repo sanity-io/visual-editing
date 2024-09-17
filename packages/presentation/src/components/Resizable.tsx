@@ -1,15 +1,14 @@
 import {Box, type BoxProps} from '@sanity/ui'
 import {
-  type FunctionComponent,
-  type HTMLProps,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
+  type FunctionComponent,
+  type HTMLProps,
 } from 'react'
 import {styled} from 'styled-components'
-
 import {useLocalState} from '../useLocalState'
 import {Resizer} from './Resizer'
 

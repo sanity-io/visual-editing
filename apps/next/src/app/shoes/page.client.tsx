@@ -1,12 +1,12 @@
 'use client'
 
+import {QueryResponseInitial, useQuery} from '@sanity/react-loader'
 import {shoesList, type ShoesListResult} from 'apps-common/queries'
 import {formatCurrency} from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import {urlFor, urlForCrossDatasetReference} from './utils'
 import {use} from 'react'
-import {QueryResponseInitial, useQuery} from '@sanity/react-loader'
+import {urlFor, urlForCrossDatasetReference} from './utils'
 
 type Props = {
   initial: QueryResponseInitial<ShoesListResult>

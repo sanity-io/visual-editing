@@ -1,7 +1,6 @@
 import type {Status} from '@sanity/comlink'
 import {memo, startTransition, useEffect, useMemo, useState} from 'react'
 import {type SanityDocument} from 'sanity'
-
 import {getPublishedId, useEditState} from '../internals'
 import type {VisualEditingConnection} from '../types'
 

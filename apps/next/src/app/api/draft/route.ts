@@ -1,7 +1,7 @@
+import {client} from '@/components/sanity.client'
+import {validatePreviewUrl} from '@sanity/preview-url-secret'
 import {draftMode} from 'next/headers'
 import {redirect} from 'next/navigation'
-import {validatePreviewUrl} from '@sanity/preview-url-secret'
-import {client} from '@/components/sanity.client'
 
 const clientWithToken = client.withConfig({
   token: process.env.SANITY_API_READ_TOKEN,

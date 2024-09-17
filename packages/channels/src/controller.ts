@@ -1,5 +1,4 @@
 import {v4 as uuid} from 'uuid'
-
 import {HANDSHAKE_INTERVAL, HEARTBEAT_INTERVAL, RESPONSE_TIMEOUT} from './constants'
 import {isHandshakeMessage, isLegacyHandshakeMessage} from './helpers'
 import type {

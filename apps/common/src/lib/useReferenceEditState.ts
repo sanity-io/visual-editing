@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import {EMPTY, switchMap} from 'rxjs'
-import {type EditStateFor, getPublishedId, useDocumentPreviewStore, useDocumentStore} from 'sanity'
+import {getPublishedId, useDocumentPreviewStore, useDocumentStore, type EditStateFor} from 'sanity'
 
 export function useReferenceEditState(documentId?: string): EditStateFor | undefined {
   const documentStore = useDocumentStore()

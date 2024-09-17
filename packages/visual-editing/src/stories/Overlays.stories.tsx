@@ -1,5 +1,4 @@
 import type {Meta, StoryObj} from '@storybook/react'
-
 import {Overlays} from '../ui/Overlays'
 import {useComlink} from '../ui/useComlink'
 import {MarketingPage as MarketingExample} from './examples/marketing/MarketingPage'

@@ -1,5 +1,6 @@
-import {SanityNode, encodeSanityNodeData} from '@sanity/react-loader/jsx'
-import {studioUrl, workspaces} from 'apps-common/env'
+import {workspaces} from '@repo/env'
+import {encodeSanityNodeData, SanityNode} from '@sanity/react-loader/jsx'
+import {studioUrl} from 'apps-common/env'
 
 const workspace = workspaces['page-builder-demo']
 

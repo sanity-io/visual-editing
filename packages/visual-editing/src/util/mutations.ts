@@ -1,8 +1,7 @@
 import type {SanityNode} from '@repo/visual-editing-helpers'
 import type {SanityDocument} from '@sanity/client'
-import {at, createIfNotExists, insert, type Mutation, patch, truncate} from '@sanity/mutate'
+import {at, createIfNotExists, insert, patch, truncate, type Mutation} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
-
 import {getDraftId} from './documents'
 
 export function getArrayItemKeyAndParentPath(pathOrNode: string | SanityNode): {

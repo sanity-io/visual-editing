@@ -1,6 +1,5 @@
 import {useCallback, useSyncExternalStore} from 'react'
-
-import {actor, type EmptyActor, emptyActor, listeners, type MutatorActor} from './context'
+import {actor, emptyActor, listeners, type EmptyActor, type MutatorActor} from './context'
 
 // export const listeners = new Set()
 

@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {projectId, datasets, studioUrl} from 'apps-common/env'
+import {datasets, projectId} from '@repo/env'
+import {studioUrl} from 'apps-common/env'
 
 export default defineNuxtConfig({
   build: {

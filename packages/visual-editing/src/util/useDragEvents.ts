@@ -1,7 +1,6 @@
 import {at, createIfNotExists, insert, patch, remove} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
 import {useCallback, useEffect} from 'react'
-
 import type {DragEndEvent, DragInsertPosition} from '../types'
 import {isEmptyActor} from '../ui/optimistic-state/context'
 import {useOptimisticActor} from '../ui/optimistic-state/useOptimisticActor'

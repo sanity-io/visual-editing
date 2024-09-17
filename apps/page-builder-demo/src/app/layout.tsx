@@ -1,6 +1,6 @@
 import './globals.css'
 import type {Metadata} from 'next'
-import {Suspense, lazy} from 'react'
+import {lazy, Suspense} from 'react'
 
 const VisualEditing = lazy(() => import('./VisualEditing'))
 

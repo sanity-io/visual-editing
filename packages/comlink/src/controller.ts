@@ -1,9 +1,9 @@
 import {
+  createChannel,
+  createChannelMachine,
   type Channel,
   type ChannelActorLogic,
   type ChannelInput,
-  createChannel,
-  createChannelMachine,
 } from './channel'
 import {type InternalEmitEvent, type Message, type StatusEvent, type WithoutResponse} from './types'
 

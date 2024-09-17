@@ -31,9 +31,6 @@ const config = {
       fullUrl: true,
     },
   },
-  experimental: {
-    taint: true,
-  },
 
   webpack(config) {
     config.resolve.alias = {
