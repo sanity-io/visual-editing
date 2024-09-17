@@ -16,9 +16,9 @@ export function Page(props: {data: WrappedValue<PageData>}) {
   const sections = useOptimistic<WrappedValue<PageSection>[] | undefined, SanityDocument<PageData>>(
     data.sections,
     (state, action) => {
-      if (action.id === data._id) {
+      if (action.id === data._id && action.document.sections) {
         return action.document.sections
-          ?.map(
+          .map(
             (section: {_key: string} | undefined) => state?.find((s) => s._key === section?._key)!,
           )
           .filter(Boolean)
