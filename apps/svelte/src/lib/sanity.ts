@@ -1,7 +1,7 @@
 import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
-import {studioUrl} from 'apps-common/env'
 
 const {projectId, dataset} = workspaces['svelte-basic']
 
@@ -12,7 +12,17 @@ export const client = createClient({
   apiVersion,
   stega: {
     enabled: true,
-    studioUrl,
+    studioUrl: (sourceDocument) => {
+      if (
+        sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
+        sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
+      ) {
+        const {workspace, tool} = workspaces['cross-dataset-references']
+        return {baseUrl, workspace, tool}
+      }
+      const {workspace, tool} = workspaces['svelte-loaders']
+      return {baseUrl, workspace, tool}
+    },
   },
 })
 

@@ -1,10 +1,9 @@
 import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
-import {studioUrl as baseUrl} from 'apps-common/env'
 
-const {projectId, dataset, tool, workspace} = workspaces['nuxt']
-const studioUrl = `${baseUrl}/${workspace}`
+const {projectId, dataset} = workspaces['nuxt']
 
 export function getClient() {
   return createClient({
@@ -14,7 +13,17 @@ export function getClient() {
     apiVersion,
     // stega: {
     //   enabled: true,
-    //   studioUrl,
+    //   studioUrl: (sourceDocument) => {
+    //     if (
+    //       sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
+    //       sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
+    //     ) {
+    //       const {workspace, tool} = workspaces['cross-dataset-references']
+    //       return {baseUrl, workspace, tool}
+    //     }
+    //     const {workspace, tool} = workspaces['nuxt']
+    //     return {baseUrl, workspace, tool}
+    //   },
     // },
   })
 }

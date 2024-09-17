@@ -1,7 +1,7 @@
 import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
-import {studioUrl as baseUrl} from 'apps-common/env'
 
 const {projectId, dataset} = workspaces['remix']
 
