@@ -4,7 +4,7 @@ import {
   type ReconnectEvent,
   type WelcomeEvent,
 } from '@sanity/client'
-import {filter, merge, Observable, type ObservedValueOf, shareReplay, Subject, tap} from 'rxjs'
+import {filter, merge, Observable, type ObservedValueOf, shareReplay, Subject} from 'rxjs'
 
 import type {VisualEditingNode} from '../../../types'
 
