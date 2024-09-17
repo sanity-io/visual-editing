@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "sanity typegen generate && next build",
     "dev": "next dev -p 3001",
     "lint": "next lint",
     "start": "next start"
@@ -13,6 +13,7 @@
     "@portabletext/react": "^3.1.0",
     "@repo/channels": "workspace:*",
     "@repo/env": "workspace:*",
+    "@repo/sanity-extracted-schema": "workspace:*",
     "@repo/studio-url": "workspace:*",
     "@sanity/client": "^6.21.3",
     "@sanity/image-url": "^1.0.2",
@@ -25,7 +26,6 @@
     "@types/react-dom": "^18.3.0",
     "@vercel/stega": "0.1.2",
     "@vercel/toolbar": "^0.1.20",
-    "apps-common": "workspace:*",
     "autoprefixer": "10.4.20",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.11",

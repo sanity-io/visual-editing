@@ -94,7 +94,7 @@
     "build:main": "pkg build --strict",
     "build:svelte": "svelte-kit sync && svelte-package -i ./svelte -o dist-svelte",
     "dev": "pnpm run build:main && pnpm run build:svelte",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "storybook": "storybook dev -p 6006",
     "test": "vitest --pass-with-no-tests --typecheck"

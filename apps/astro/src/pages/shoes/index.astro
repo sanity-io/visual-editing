@@ -1,9 +1,9 @@
 ---
-import {shoesList, type ShoesListResult} from 'apps-common/queries'
-import {formatCurrency} from 'apps-common/utils'
 import Layout from '../../layouts/layout.astro'
 import {loadQuery} from '../../load-query'
+import {shoesList, type ShoesListResult} from '../../queries'
 import {urlFor, urlForCrossDatasetReference} from '../../sanity'
+import {formatCurrency} from '../../utils'
 
 const {data: products} = await loadQuery<ShoesListResult>({query: shoesList})
 const _loading = false

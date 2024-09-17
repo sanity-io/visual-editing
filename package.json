@@ -21,7 +21,8 @@
     "preview": "turbo run preview",
     "release:canary": "zx scripts/release-canary.mjs",
     "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "turbo:fix": "turbo daemon clean"
   },
   "lint-staged": {
     "*": [
@@ -71,8 +72,7 @@
       "@sanity/visual-editing": "workspace:*",
       "framer-motion": "$framer-motion",
       "groq": "$groq",
-      "sanity": "$sanity",
-      "styled-components": "npm:@sanity/styled-components@6.1.13"
+      "sanity": "$sanity"
     }
   }
 }

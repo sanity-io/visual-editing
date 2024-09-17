@@ -148,9 +148,8 @@
 </template>
 
 <script setup lang="ts">
-import {urlFor, urlForCrossDatasetReference} from '~/utils'
-import {shoe, type ShoeResult} from 'apps-common/queries'
-import {formatCurrency} from 'apps-common/utils'
+import {shoe, type ShoeResult} from '~/queries'
+import {formatCurrency, urlFor, urlForCrossDatasetReference} from '~/utils'
 
 const route = useRoute()
 

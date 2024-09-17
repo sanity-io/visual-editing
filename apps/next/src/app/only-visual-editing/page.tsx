@@ -1,4 +1,4 @@
-import {shoesList, ShoesListResult} from 'apps-common/queries'
+import {shoesList} from '@/queries'
 import {draftMode} from 'next/headers'
 import {client} from '../shoes/sanity.client'
 import ShoesPageClient from './page.client'
@@ -11,7 +11,7 @@ const stegaClient = client.withConfig({
 })
 
 export default async function ShoesPage() {
-  const {result, resultSourceMap} = await stegaClient.fetch<ShoesListResult>(
+  const {result, resultSourceMap} = await stegaClient.fetch(
     shoesList,
     {},
     {
