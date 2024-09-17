@@ -128,8 +128,14 @@ export const createNodeMachine = <
             resolvable?: PromiseWithResolvers<S['response']>
             signal?: AbortSignal
           }
+        | {type: 'request.aborted'; requestId: string}
         | {type: 'request.failed'; requestId: string}
-        | {type: 'request.success'; requestId: string}
+        | {
+            type: 'request.success'
+            requestId: string
+            response: S['response'] | null
+            responseTo: string | undefined
+          }
         | {type: 'request'; data: RequestData<S> | RequestData<S>[]} // @todo align with 'post' type
       input: NodeInput
     },
@@ -167,7 +173,7 @@ export const createNodeMachine = <
         })
       }),
       'create request': assign({
-        requests: ({context, event, spawn}) => {
+        requests: ({context, event, self, spawn}) => {
           assertEvent(event, 'request')
           const arr = Array.isArray(event.data) ? event.data : [event.data]
           const requests = arr.map((request) => {
@@ -180,6 +186,7 @@ export const createNodeMachine = <
                 domain: context.domain!,
                 expectResponse: request.expectResponse,
                 from: context.name,
+                parentRef: self,
                 resolvable: request.resolvable,
                 responseTo: request.responseTo,
                 sources: context.target!,
@@ -256,7 +263,7 @@ export const createNodeMachine = <
         }
       }),
       'remove request': enqueueActions(({context, enqueue, event}) => {
-        assertEvent(event, ['request.success', 'request.failed'])
+        assertEvent(event, ['request.success', 'request.failed', 'request.aborted'])
         stopChild(event.requestId)
         enqueue.assign({requests: context.requests.filter(({id}) => id !== event.requestId)})
       }),
@@ -312,6 +319,9 @@ export const createNodeMachine = <
         actions: 'remove request',
       },
       'request.failed': {
+        actions: 'remove request',
+      },
+      'request.aborted': {
         actions: 'remove request',
       },
     },
