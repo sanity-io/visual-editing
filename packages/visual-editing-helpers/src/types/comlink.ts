@@ -5,8 +5,8 @@ import type {
   MutationEvent,
   QueryParams,
   ReconnectEvent,
-  WelcomeEvent,
   SanityDocument,
+  WelcomeEvent,
 } from '@sanity/client'
 import type {PreviewValue} from '@sanity/types'
 
