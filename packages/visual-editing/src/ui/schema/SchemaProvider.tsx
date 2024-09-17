@@ -38,7 +38,7 @@ function getPathsWithUnresolvedTypes(elements: ElementState[]): {id: string; pat
 
 export const SchemaProvider: FunctionComponent<
   PropsWithChildren<{
-    comlink: VisualEditingNode
+    comlink?: VisualEditingNode
     elements: ElementState[]
   }>
 > = function (props) {
@@ -49,7 +49,7 @@ export const SchemaProvider: FunctionComponent<
   const [schema, setSchema] = useState<SchemaType[] | null>(null)
 
   useEffect(() => {
-    return comlink.on('presentation/schema', (data) => {
+    return comlink?.on('presentation/schema', (data) => {
       setSchema(data.schema)
     })
   }, [comlink])
@@ -59,7 +59,7 @@ export const SchemaProvider: FunctionComponent<
   // correct schema types. One day CSM might include this data for us.
   const reportPaths = useCallback(
     async (paths: UnresolvedPath[]) => {
-      if (!paths.length) return
+      if (!paths.length || !comlink) return
       try {
         const response = await comlink.fetch({
           type: 'visual-editing/schema-union-types',

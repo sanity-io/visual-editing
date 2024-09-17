@@ -105,7 +105,7 @@ const DocumentReporter: FunctionComponent<{
 }
 
 const OverlaysController: FunctionComponent<{
-  comlink: VisualEditingNode
+  comlink?: VisualEditingNode
   dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void
   inFrame: boolean
   onDrag: (x: number, y: number) => void
@@ -119,11 +119,11 @@ const OverlaysController: FunctionComponent<{
     (message) => {
       if (message.type === 'element/click') {
         const {sanity} = message
-        comlink.post({type: 'visual-editing/focus', data: sanity})
+        comlink?.post({type: 'visual-editing/focus', data: sanity})
       } else if (message.type === 'overlay/activate') {
-        comlink.post({type: 'visual-editing/toggle', data: {enabled: true}})
+        comlink?.post({type: 'visual-editing/toggle', data: {enabled: true}})
       } else if (message.type === 'overlay/deactivate') {
-        comlink.post({type: 'visual-editing/toggle', data: {enabled: false}})
+        comlink?.post({type: 'visual-editing/toggle', data: {enabled: false}})
       } else if (message.type === 'overlay/dragStart') {
         if (message.flow === 'vertical') {
           document.body.style.cursor = 'ns-resize'
@@ -162,7 +162,7 @@ const OverlaysController: FunctionComponent<{
  * @internal
  */
 export const Overlays: FunctionComponent<{
-  comlink: VisualEditingNode
+  comlink?: VisualEditingNode
   history?: HistoryAdapter
   inFrame: boolean
   zIndex?: string | number
@@ -197,27 +197,27 @@ export const Overlays: FunctionComponent<{
 
   useEffect(() => {
     const unsubs = [
-      comlink.on('presentation/focus', (data) => {
+      comlink?.on('presentation/focus', (data) => {
         dispatch({type: 'presentation/focus', data})
       }),
-      comlink.on('presentation/blur', (data) => {
+      comlink?.on('presentation/blur', (data) => {
         dispatch({type: 'presentation/blur', data})
       }),
-      comlink.on('presentation/perspective', (data) => {
+      comlink?.on('presentation/perspective', (data) => {
         dispatch({type: 'presentation/perspective', data})
       }),
-      comlink.on('presentation/navigate', (data) => {
+      comlink?.on('presentation/navigate', (data) => {
         history?.update(data)
       }),
-      comlink.on('presentation/toggle-overlay', () => {
+      comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
       }),
-      comlink.onStatus((status) => {
+      comlink?.onStatus((status) => {
         setStatus(status as Status)
       }),
-    ]
+    ].filter(Boolean)
 
-    return () => unsubs.forEach((unsub) => unsub())
+    return () => unsubs.forEach((unsub) => unsub!())
   }, [comlink, history])
 
   const lastReported = useRef<
@@ -230,7 +230,7 @@ export const Overlays: FunctionComponent<{
 
   const reportDocuments = useCallback(
     (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
-      comlink.post({
+      comlink?.post({
         type: 'visual-editing/documents',
         data: {
           documents,
@@ -341,7 +341,7 @@ export const Overlays: FunctionComponent<{
     if (history) {
       return history.subscribe((update) => {
         update.title = update.title || document.title
-        comlink.post({type: 'visual-editing/navigate', data: update})
+        comlink?.post({type: 'visual-editing/navigate', data: update})
       })
     }
     return
@@ -374,11 +374,11 @@ export const Overlays: FunctionComponent<{
   }, [overlayEnabled])
 
   const elementsToRender = useMemo(() => {
-    if (!comlink || (inFrame && status !== 'connected')) {
+    if (inFrame && status !== 'connected') {
       return []
     }
     return elements.filter((e) => e.activated || e.focused)
-  }, [comlink, elements, inFrame, status])
+  }, [elements, inFrame, status])
 
   const documentIds = useMemo(() => {
     return elements.flatMap((element) => ('id' in element.sanity ? [element.sanity.id] : []))

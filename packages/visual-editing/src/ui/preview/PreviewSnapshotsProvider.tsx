@@ -4,7 +4,7 @@ import {PreviewSnapshotsContext, type PreviewSnapshotsContextValue} from './Prev
 
 export const PreviewSnapshotsProvider: FunctionComponent<
   PropsWithChildren<{
-    comlink: VisualEditingNode
+    comlink?: VisualEditingNode
   }>
 > = function (props) {
   const {comlink, children} = props
@@ -12,7 +12,7 @@ export const PreviewSnapshotsProvider: FunctionComponent<
   const [previewSnapshots, setPreviewSnapshots] = useState<PreviewSnapshotsContextValue>([])
 
   useEffect(() => {
-    return comlink.on('presentation/preview-snapshots', (data) => {
+    return comlink?.on('presentation/preview-snapshots', (data) => {
       setPreviewSnapshots(data.snapshots)
     })
   }, [comlink])
