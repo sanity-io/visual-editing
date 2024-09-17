@@ -20,6 +20,64 @@ import {CustomNavigator} from './presentation/CustomNavigator'
 import {StegaDebugger} from './presentation/DebugStega'
 import {documentLocationResolvers, mainDocumentResolvers} from './presentation/resolvers'
 
+function resolvePreviewUrl(
+  envUrl: string | undefined,
+  resolveBranchUrl: (endsWith: string) => string,
+  fallback: string,
+) {
+  if (envUrl) return envUrl
+  if (process.env.SANITY_STUDIO_VERCEL_ENV === 'preview') {
+    const branchUrl = process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
+    if (branchUrl) {
+      const [, endsWith] = branchUrl.split('-git-')
+      if (endsWith) return resolveBranchUrl(endsWith)
+    }
+  }
+  return fallback
+}
+const urls = {
+  'astro': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-astro-git-${endsWith}/shoes`,
+    'http://localhost:3006/shoes',
+  ),
+  'live-next': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL,
+    (endsWith) => `https://live-visual-editing-next-git-${endsWith}`,
+    'http://localhost:3006',
+  ),
+  'next-app-router': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-next-git-${endsWith}/shoes`,
+    'http://localhost:3001/shoes',
+  ),
+  'next-pages-router': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-next-git-${endsWith}/pages-router/shoes`,
+    'http://localhost:3001/pages-router/shoes',
+  ),
+  'nuxt': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_NUXT_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-nuxt-git-${endsWith}/shoes`,
+    'http://localhost:3003/shoes',
+  ),
+  'page-builder-demo': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-page-builder-demo-git-${endsWith}`,
+    'http://localhost:3005',
+  ),
+  'remix': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_REMIX_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-remix-git-${endsWith}/shoes`,
+    'http://localhost:3000/shoes',
+  ),
+  'svelte': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-svelte-git-${endsWith}`,
+    'http://localhost:3004',
+  ),
+}
+
 const sharedSettings = definePlugin({
   name: 'sharedSettings',
   plugins: [structureTool(), assist(), unsplashImageAsset(), debugSecrets()],
@@ -81,28 +139,18 @@ function definePreviewUrl(
 }
 
 const presentationWorkspaces = Object.entries({
-  'page-builder-demo':
-    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
-  'remix': process.env.SANITY_STUDIO_REMIX_PREVIEW_URL || 'http://localhost:3000/shoes',
+  'page-builder-demo': urls['page-builder-demo'],
+  'remix': urls.remix,
   'next': {
-    'app-router':
-      process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL || 'http://localhost:3001/shoes',
-    'pages-router':
-      process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/pages-router/shoes',
+    'app-router': urls['next-app-router'],
+    'pages-router': urls['next-pages-router'],
   },
-  'nuxt': process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
+  'nuxt': urls.nuxt,
   'svelte': {
-    'svelte-basic': new URL(
-      '/shoes',
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
-    ).toString(),
-    'svelte-loaders': new URL(
-      '/shoes-with-loaders',
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004',
-    ).toString(),
+    'svelte-basic': new URL('/shoes', urls.svelte).toString(),
+    'svelte-loaders': new URL('/shoes-with-loaders', urls.svelte).toString(),
   },
-  'astro': process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL || 'http://localhost:3006/shoes',
+  'astro': urls.astro,
 } as const).map(([name, previewUrl]) => {
   const {
     projectId,
@@ -276,8 +324,7 @@ const performanceTestWorkspace = defineConfig({
     presentationTool({
       previewUrl: {
         ...(definePreviewUrl(
-          process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-            'http://localhost:3001/pages-router/shoes',
+          urls['next-pages-router'],
           'next',
           'pages-router',
         ) as PreviewUrlResolverOptions),
