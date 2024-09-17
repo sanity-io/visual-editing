@@ -12,8 +12,6 @@ import {
 } from '@sanity/mutate/_unstable_machine'
 import {type ActorRefFrom, assertEvent, assign, emit, setup, stopChild} from 'xstate'
 
-import {getDraftId} from '../../../util/documents'
-
 export interface DatasetMutatorMachineInput extends Omit<DocumentMutatorMachineInput, 'id'> {
   client: SanityClient
   /** A shared listener can be provided, if not it'll be created using `client.listen()` */
