@@ -52,6 +52,7 @@ function ContextMenuItem(props: {node: ContextMenuNode}) {
         padding={2}
         popover={{
           arrow: false,
+          constrainSize: true,
           placement: 'right-start',
           preventOverflow: true,
           __unstable_margins: POPOVER_MARGINS,
