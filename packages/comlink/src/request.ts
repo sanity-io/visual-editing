@@ -1,9 +1,26 @@
-import {filter, fromEvent, take, takeUntil, tap} from 'rxjs'
+import {EMPTY, filter, fromEvent, map, Observable, take, takeUntil} from 'rxjs'
 import {v4 as uuid} from 'uuid'
-import {type ActorRefFrom, assign, fromEventObservable, sendParent, setup} from 'xstate'
+import {
+  type ActorRefFrom,
+  type AnyActorRef,
+  assign,
+  fromEventObservable,
+  sendTo,
+  setup,
+} from 'xstate'
 
 import {MSG_RESPONSE, RESPONSE_TIMEOUT} from './constants'
 import type {Message, MessageData, MessageType, ProtocolMessage, ResponseMessage} from './types'
+
+const throwOnEvent =
+  <T>(message?: string) =>
+  (source: Observable<T>) =>
+    source.pipe(
+      take(1),
+      map(() => {
+        throw new Error(message)
+      }),
+    )
 
 /**
  * @public
@@ -15,6 +32,7 @@ export interface RequestMachineContext<S extends Message> {
   expectResponse: boolean
   from: string
   id: string
+  parentRef: AnyActorRef
   resolvable: PromiseWithResolvers<S['response']> | undefined
   response: S['response'] | null
   responseTo: string | undefined
@@ -48,20 +66,21 @@ export const createRequestMachine = <
       // @todo Should response types be specified?
       events: {type: 'message'; data: ProtocolMessage<ResponseMessage>} | {type: 'abort'}
       emitted:
+        | {type: 'request.failed'; requestId: string}
+        | {type: 'request.aborted'; requestId: string}
         | {
             type: 'request.success'
             requestId: string
             response: MessageData | null
             responseTo: string | undefined
           }
-        | {type: 'request.failed'; requestId: string}
-        | {type: 'request.aborted'; requestId: string}
       input: {
         connectionId: string
         data?: S['data']
         domain: string
         expectResponse?: boolean
         from: string
+        parentRef: AnyActorRef
         resolvable?: PromiseWithResolvers<S['response']>
         responseTo?: string
         signal?: AbortSignal
@@ -86,18 +105,25 @@ export const createRequestMachine = <
             sources: Set<MessageEventSource>
             signal?: AbortSignal
           }
-        }) =>
-          fromEvent<MessageEvent<ProtocolMessage<ResponseMessage>>>(window, 'message').pipe(
-            filter(
-              (event) =>
-                event.data.type === MSG_RESPONSE &&
-                event.data.responseTo === input.requestId &&
-                !!event.source &&
-                input.sources.has(event.source),
-            ),
+        }) => {
+          const abortSignal$ = input.signal
+            ? fromEvent(input.signal, 'abort').pipe(
+                throwOnEvent(`Request ${input.requestId} aborted`),
+              )
+            : EMPTY
+
+          const messageFilter = (event: MessageEvent<ProtocolMessage<ResponseMessage>>) =>
+            event.data?.type === MSG_RESPONSE &&
+            event.data?.responseTo === input.requestId &&
+            !!event.source &&
+            input.sources.has(event.source)
+
+          return fromEvent<MessageEvent<ProtocolMessage<ResponseMessage>>>(window, 'message').pipe(
+            filter(messageFilter),
             take(input.sources.size),
-            input.signal ? takeUntil(fromEvent(input.signal, 'abort')) : tap(),
-          ),
+            takeUntil(abortSignal$),
+          )
+        },
       ),
     },
     actions: {
@@ -109,30 +135,38 @@ export const createRequestMachine = <
           source.postMessage(message, {targetOrigin})
         })
       },
-      'on success': sendParent(({context, self}) => {
-        if (context.response) {
-          context.resolvable?.resolve(context.response)
-        }
-        return {
-          type: 'request.success',
-          requestId: self.id,
-          response: context.response,
-          responseTo: context.responseTo,
-        }
-      }),
-      'on fail': sendParent(({context, self}) => {
-        // eslint-disable-next-line no-console
-        console.warn(
-          `Received no response to message '${context.type}' on client '${context.from}' (ID: '${context.id}').`,
-        )
-        context.resolvable?.reject(new Error('No response received'))
-        return {type: 'request.failed', requestId: self.id}
-      }),
-      'on abort': sendParent(({context, self}) => {
-        console.log('on abort...')
-        context.resolvable?.reject(new Error('Request aborted'))
-        return {type: 'request.aborted', requestId: self.id}
-      }),
+      'on success': sendTo(
+        ({context}) => context.parentRef,
+        ({context, self}) => {
+          if (context.response) {
+            context.resolvable?.resolve(context.response)
+          }
+          return {
+            type: 'request.success',
+            requestId: self.id,
+            response: context.response,
+            responseTo: context.responseTo,
+          }
+        },
+      ),
+      'on fail': sendTo(
+        ({context}) => context.parentRef,
+        ({context, self}) => {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `Received no response to message '${context.type}' on client '${context.from}' (ID: '${context.id}').`,
+          )
+          context.resolvable?.reject(new Error('No response received'))
+          return {type: 'request.failed', requestId: self.id}
+        },
+      ),
+      'on abort': sendTo(
+        ({context}) => context.parentRef,
+        ({context, self}) => {
+          context.resolvable?.reject(new Error('Request aborted'))
+          return {type: 'request.aborted', requestId: self.id}
+        },
+      ),
     },
     guards: {
       expectsResponse: ({context}) => context.expectResponse,
@@ -151,6 +185,7 @@ export const createRequestMachine = <
         expectResponse: input.expectResponse ?? false,
         from: input.from,
         id: `msg-${uuid()}`,
+        parentRef: input.parentRef,
         resolvable: input.resolvable,
         response: null,
         responseTo: input.responseTo,
@@ -210,6 +245,7 @@ export const createRequestMachine = <
             sources: context.sources,
             signal: context.signal,
           }),
+          onError: 'aborted',
         },
         after: {
           responseTimeout: 'failed',

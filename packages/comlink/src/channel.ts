@@ -141,11 +141,12 @@ export const createChannelMachine = <
         | {type: 'message.received'; message: MessageEvent<ProtocolMessage<R>>}
         | {type: 'post'; data: V}
         | {type: 'response'; respondTo: string; data: Pick<S, 'response'>}
+        | {type: 'request.aborted'; requestId: string}
         | {type: 'request.failed'; requestId: string}
         | {
             type: 'request.success'
             requestId: string
-            response: MessageData | null
+            response: S['response'] | null
             responseTo: string | undefined
           }
         | {type: 'request'; data: RequestData<S> | RequestData<S>[]}
@@ -175,7 +176,7 @@ export const createChannelMachine = <
         })
       }),
       'create request': assign({
-        requests: ({context, event, spawn}) => {
+        requests: ({context, event, self, spawn}) => {
           assertEvent(event, 'request')
           const arr = Array.isArray(event.data) ? event.data : [event.data]
           const requests = arr.map((request) => {
@@ -188,6 +189,7 @@ export const createChannelMachine = <
                 domain: context.domain,
                 expectResponse: request.expectResponse,
                 from: context.name,
+                parentRef: self,
                 responseTo: request.responseTo,
                 sources: context.target!,
                 targetOrigin: context.targetOrigin,
@@ -243,7 +245,7 @@ export const createChannelMachine = <
         }
       }),
       'remove request': enqueueActions(({context, enqueue, event}) => {
-        assertEvent(event, ['request.success', 'request.failed'])
+        assertEvent(event, ['request.success', 'request.failed', 'request.aborted'])
         stopChild(event.requestId)
         enqueue.assign({requests: context.requests.filter(({id}) => id !== event.requestId)})
       }),
