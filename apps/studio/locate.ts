@@ -1,8 +1,8 @@
+import {map, Observable} from 'rxjs'
 import type {
   DocumentLocationResolver,
   DocumentLocationsState,
 } from '../../packages/presentation/src'
-import {Observable, map} from 'rxjs'
 
 export const locate: DocumentLocationResolver = (params, context) => {
   const {documentStore} = context

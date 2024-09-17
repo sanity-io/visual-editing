@@ -1,6 +1,5 @@
 import {bufferCount, concatMap, defer, filter, fromEvent, map, pipe, take} from 'rxjs'
 import {fromEventObservable} from 'xstate'
-
 import type {ListenInput, ProtocolMessage} from './types'
 
 export const listenInputFromContext =

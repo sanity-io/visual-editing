@@ -1,6 +1,5 @@
 import {type Mutation} from '@sanity/mutate'
 import {useCallback} from 'react'
-
 import {getDraftId} from '../../util/documents'
 import {isEmptyActor} from './context'
 import {useOptimisticActor} from './useOptimisticActor'

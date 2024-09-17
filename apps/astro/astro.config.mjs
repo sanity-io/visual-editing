@@ -1,9 +1,11 @@
-import {defineConfig} from 'astro/config'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
-import sanity from '@sanity/astro'
 import react from '@astrojs/react'
 import tailwind from '@astrojs/tailwind'
 import vercel from '@astrojs/vercel/serverless'
+import {apiVersion, workspaces} from '@repo/env'
+import sanity from '@sanity/astro'
+import {studioUrl as baseUrl} from 'apps-common/env'
+import {defineConfig} from 'astro/config'
+
 const {projectId, dataset, workspace} = workspaces['astro']
 const studioUrl = `${baseUrl}/${workspace}`
 

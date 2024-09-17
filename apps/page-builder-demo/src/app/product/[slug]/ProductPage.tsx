@@ -1,11 +1,9 @@
-import {WrappedValue} from '@sanity/react-loader/jsx'
-import {sanity} from '@sanity/react-loader/jsx'
-
 import {AppLayout} from '@/app/AppLayout'
 import {SiteSettingsData} from '@/app/types'
-import {SanityArrayValue, SanityImageValue, dataAttribute} from '@/sanity'
 import {SimpleContent} from '@/components/page'
 import {Slideshow} from '@/components/slideshow'
+import {dataAttribute, SanityArrayValue, SanityImageValue} from '@/sanity'
+import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
 
 export interface ProductData {
   _id: string

@@ -1,7 +1,6 @@
 import type {SanityDocumentBase} from '@sanity/mutate'
 import type {SanityDocument} from '@sanity/types'
 import {useCallback, useEffect, useState} from 'react'
-
 import {getPublishedId} from '../../util/documents'
 import {isEmptyActor, type OptimisticReducer, type OptimisticReducerAction} from './context'
 import {useOptimisticActor} from './useOptimisticActor'

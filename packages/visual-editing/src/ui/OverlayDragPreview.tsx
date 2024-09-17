@@ -1,6 +1,5 @@
 import type {FunctionComponent} from 'react'
 import {styled} from 'styled-components'
-
 import type {DragSkeleton} from '../types'
 
 const Root = styled.div<{

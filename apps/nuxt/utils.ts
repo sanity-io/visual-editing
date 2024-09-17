@@ -1,6 +1,7 @@
+import {apiVersion, workspaces} from '@repo/env'
 import {createClient} from '@sanity/client'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
 import imageUrlBuilder from '@sanity/image-url'
+import {studioUrl as baseUrl} from 'apps-common/env'
 
 const {projectId, dataset, tool, workspace} = workspaces['nuxt']
 const studioUrl = `${baseUrl}/${workspace}`

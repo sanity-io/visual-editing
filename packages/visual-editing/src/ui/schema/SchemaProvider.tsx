@@ -1,14 +1,13 @@
 import type {ResolvedSchemaTypeMap, SchemaType, UnresolvedPath} from '@repo/visual-editing-helpers'
 import {
-  type FunctionComponent,
-  type PropsWithChildren,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
+  type FunctionComponent,
+  type PropsWithChildren,
 } from 'react'
-
 import type {ElementState, VisualEditingNode} from '../../types'
 import {SchemaContext, type SchemaContextValue} from './SchemaContext'
 

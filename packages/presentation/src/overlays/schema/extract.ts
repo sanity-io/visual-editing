@@ -27,7 +27,6 @@ import type {ThemeContextValue} from '@sanity/ui'
 import {createElement} from 'react'
 import {renderToString} from 'react-dom/server'
 import type {Workspace} from 'sanity'
-
 import {
   gatherFields,
   isArrayType,

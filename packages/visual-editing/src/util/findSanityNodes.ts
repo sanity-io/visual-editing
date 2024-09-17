@@ -1,5 +1,4 @@
 import {decodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
-
 import {OVERLAY_ID} from '../constants'
 import type {ElementNode, ResolvedElement, SanityNode, SanityStegaNode} from '../types'
 import {findNonInlineElement} from './elements'

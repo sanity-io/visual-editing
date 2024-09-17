@@ -7,16 +7,15 @@ import {
 } from '@sanity/icons'
 import {Box, Card, Flex, Spinner, Stack, Text} from '@sanity/ui'
 import {
-  type ComponentType,
   createElement,
-  type ReactNode,
   useCallback,
   useContext,
   useState,
+  type ComponentType,
+  type ReactNode,
 } from 'react'
-import {type ObjectSchemaType, useTranslation} from 'sanity'
+import {useTranslation, type ObjectSchemaType} from 'sanity'
 import {useIntentLink} from 'sanity/router'
-
 import {DEFAULT_TOOL_NAME, DEFAULT_TOOL_TITLE} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'
 import {PresentationContext} from '../PresentationContext'

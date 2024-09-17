@@ -1,5 +1,4 @@
 import {useContext} from 'react'
-
 import {PreviewSnapshotsContext, type PreviewSnapshotsContextValue} from './PreviewSnapshotsContext'
 
 export function usePreviewSnapshots(): PreviewSnapshotsContextValue {

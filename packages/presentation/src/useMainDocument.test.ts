@@ -1,5 +1,4 @@
 import {describe, expect, test} from 'vitest'
-
 import {getRouteContext} from './useMainDocument'
 
 describe('getRouteContext', () => {

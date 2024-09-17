@@ -1,15 +1,14 @@
-import {WrappedValue} from '@sanity/react-loader/jsx'
-import type {SanityDocument} from '@sanity/client'
-import {getDraftId, isArray} from 'sanity'
-
 import {dataAttribute} from '@/sanity'
+import type {SanityDocument} from '@sanity/client'
+import {WrappedValue} from '@sanity/react-loader/jsx'
+import {useOptimistic} from '@sanity/visual-editing'
+import {getDraftId, isArray} from 'sanity'
 import {FeaturedProducts} from './sections/FeaturedProducts'
 import {FeatureHighlight} from './sections/FeatureHighlight'
 import {Hero} from './sections/Hero'
 import {Intro} from './sections/Intro'
 import {Section} from './sections/Section'
 import {PageData, PageSection} from './types'
-import {useOptimistic} from '@sanity/visual-editing'
 
 export function Page(props: {data: WrappedValue<PageData>}) {
   const {data} = props

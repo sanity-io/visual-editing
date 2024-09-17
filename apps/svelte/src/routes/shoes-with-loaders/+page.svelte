@@ -1,7 +1,7 @@
 <script lang="ts">
   import {useQuery} from '@sanity/svelte-loader'
-  import type {PageData} from './$types'
   import Shoes from '../../components/Shoes.svelte'
+  import type {PageData} from './$types'
 
   export let data: PageData
   const query = useQuery(data)

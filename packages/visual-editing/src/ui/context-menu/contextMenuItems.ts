@@ -16,7 +16,6 @@ import {
   UnpublishIcon,
 } from '@sanity/icons'
 import type {SanityDocument} from '@sanity/types'
-
 import type {ContextMenuNode} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {

@@ -1,5 +1,4 @@
 import {useMemo} from 'react'
-
 import {debounce} from '../lib/debounce'
 import type {PanelElement} from './types'
 

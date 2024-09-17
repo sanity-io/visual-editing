@@ -1,5 +1,4 @@
 import type {VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
-
 import type {ElementState, OverlayMsg} from '../types'
 
 /**

@@ -1,5 +1,4 @@
 import type {FieldMember, ObjectFormNode} from 'sanity'
-
 import {isFieldMember} from './isFieldMember'
 
 /** @alpha */

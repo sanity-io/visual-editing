@@ -1,8 +1,7 @@
 import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
 import type {SanityStegaClient} from '@sanity/client/stega'
-import {type Cache, createCache} from 'async-cache-dedupe'
-import {atom, map, type MapStore, onMount, startTask} from 'nanostores'
-
+import {createCache, type Cache} from 'async-cache-dedupe'
+import {atom, map, onMount, startTask, type MapStore} from 'nanostores'
 import {runtime} from './env'
 import {defineEnableLiveMode} from './live-mode'
 import type {EnableLiveMode, Fetcher, QueryStoreState} from './types'

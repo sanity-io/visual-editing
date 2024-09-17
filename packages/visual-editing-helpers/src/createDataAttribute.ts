@@ -1,5 +1,4 @@
 import {studioPath, type StudioPathLike} from '@sanity/client/csm'
-
 import {encodeSanityNodeData} from './csm/transformSanityNodeData'
 import type {CreateDataAttribute, CreateDataAttributeProps, SanityNode} from './types'
 

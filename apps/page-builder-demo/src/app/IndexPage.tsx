@@ -1,7 +1,7 @@
+import {Page, PageData} from '@/components/page'
 import {WrappedValue} from '@sanity/react-loader/jsx'
 import {AppLayout} from './AppLayout'
 import {SiteSettingsData} from './types'
-import {Page, PageData} from '@/components/page'
 
 export interface IndexPageData {
   page: PageData | null

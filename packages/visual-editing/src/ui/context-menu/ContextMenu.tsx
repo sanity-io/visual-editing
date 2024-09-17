@@ -6,12 +6,11 @@ import {
   MenuGroup,
   MenuItem,
   Popover,
-  type PopoverMargins,
   Stack,
   Text,
+  type PopoverMargins,
 } from '@sanity/ui'
-import {type FunctionComponent, useMemo} from 'react'
-
+import {useMemo, type FunctionComponent} from 'react'
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {useOptimisticDocument} from '../optimistic-state/useOptimisticDocument'

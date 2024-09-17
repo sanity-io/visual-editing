@@ -1,17 +1,16 @@
 import {v4 as uuid} from 'uuid'
 import {
-  type ActorRefFrom,
   assertEvent,
   assign,
   createActor,
   enqueueActions,
-  type EventObject,
   fromCallback,
   raise,
   setup,
   stopChild,
+  type ActorRefFrom,
+  type EventObject,
 } from 'xstate'
-
 import {createListenLogic, listenInputFromContext} from './common'
 import {
   DOMAIN,
@@ -27,12 +26,13 @@ import {createRequestMachine, type RequestActorRef} from './request'
 import type {
   BufferAddedEmitEvent,
   BufferFlushedEmitEvent,
+  Message,
   MessageEmitEvent,
+  ProtocolMessage,
   RequestData,
   Status,
   WithoutResponse,
 } from './types'
-import type {Message, MessageData, ProtocolMessage} from './types'
 
 /**
  * @public

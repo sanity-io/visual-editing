@@ -1,9 +1,7 @@
-import {WrappedValue} from '@sanity/react-loader/jsx'
-import {sanity} from '@sanity/react-loader/jsx'
-
+import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
+import Link from 'next/link'
 import {AppLayout} from '../AppLayout'
 import {SiteSettingsData} from '../types'
-import Link from 'next/link'
 
 export interface ProjectsPageData {
   projects: {

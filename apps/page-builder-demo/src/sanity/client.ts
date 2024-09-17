@@ -1,5 +1,6 @@
+import {apiVersion, workspaces} from '@repo/env'
 import {createClient} from '@sanity/client'
-import {workspaces, apiVersion, studioUrl} from 'apps-common/env'
+import {studioUrl} from 'apps-common/env'
 
 const {projectId, dataset, workspace} = workspaces['page-builder-demo']
 

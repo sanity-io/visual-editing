@@ -10,7 +10,7 @@ import {
   type DocumentMutatorMachineInput,
   type DocumentMutatorMachineParentEvent,
 } from '@sanity/mutate/_unstable_machine'
-import {type ActorRefFrom, assertEvent, assign, emit, setup, stopChild} from 'xstate'
+import {assertEvent, assign, emit, setup, stopChild, type ActorRefFrom} from 'xstate'
 
 export interface DatasetMutatorMachineInput extends Omit<DocumentMutatorMachineInput, 'id'> {
   client: SanityClient

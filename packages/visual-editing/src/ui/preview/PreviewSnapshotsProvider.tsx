@@ -1,5 +1,4 @@
-import {type FunctionComponent, type PropsWithChildren, useEffect, useMemo, useState} from 'react'
-
+import {useEffect, useMemo, useState, type FunctionComponent, type PropsWithChildren} from 'react'
 import type {VisualEditingNode} from '../../types'
 import {PreviewSnapshotsContext, type PreviewSnapshotsContextValue} from './PreviewSnapshotsContext'
 

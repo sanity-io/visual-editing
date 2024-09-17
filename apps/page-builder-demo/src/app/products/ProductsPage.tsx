@@ -1,12 +1,10 @@
-import {WrappedValue, unwrapData} from '@sanity/react-loader/jsx'
-import {sanity} from '@sanity/react-loader/jsx'
-import Link from 'next/link'
-
-import {AppLayout} from '../AppLayout'
-import {SiteSettingsData} from '../types'
 import {Image} from '@/components/image'
 import {SimpleContent} from '@/components/page'
-import {SanityArrayValue, SanityImageValue, dataAttribute} from '@/sanity'
+import {dataAttribute, SanityArrayValue, SanityImageValue} from '@/sanity'
+import {sanity, unwrapData, WrappedValue} from '@sanity/react-loader/jsx'
+import Link from 'next/link'
+import {AppLayout} from '../AppLayout'
+import {SiteSettingsData} from '../types'
 
 export interface ProductsPageData {
   products: {

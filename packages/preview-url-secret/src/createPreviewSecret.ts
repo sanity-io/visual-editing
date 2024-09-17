@@ -1,6 +1,5 @@
 import type {SanityClient} from '@sanity/client'
 import {uuid} from '@sanity/uuid'
-
 import {
   apiVersion,
   deleteExpiredSecretsQuery,

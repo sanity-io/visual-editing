@@ -1,6 +1,4 @@
-import type {SanityDocument} from '@sanity/types'
-import {type ActorRefFrom, createEmptyActor} from 'xstate'
-
+import {createEmptyActor, type ActorRefFrom} from 'xstate'
 import {createDatasetMutator} from '../comlink'
 
 export type MutatorActor = ActorRefFrom<ReturnType<typeof createDatasetMutator>>

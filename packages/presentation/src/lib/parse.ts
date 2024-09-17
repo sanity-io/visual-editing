@@ -1,6 +1,5 @@
 import {urlStringToPath} from '@repo/visual-editing-helpers'
 import {studioPath} from '@sanity/client/csm'
-
 import type {PresentationStateParams} from '../types'
 
 export function parseId(rawId: string | undefined): string | undefined {

@@ -1,15 +1,14 @@
 /* eslint-disable no-console */
 
-import {forwardRef, type PropsWithChildren, type ReactElement, useCallback, useMemo} from 'react'
+import {forwardRef, useCallback, useMemo, type PropsWithChildren, type ReactElement} from 'react'
 import {StateLink, useRouter} from 'sanity/router'
-
 import {
-  type BackLinkProps,
   getPublishedId,
   PaneRouterContext,
+  useUnique,
+  type BackLinkProps,
   type PaneRouterContextValue,
   type ReferenceChildLinkProps,
-  useUnique,
 } from '../internals'
 import type {
   PresentationParams,
@@ -126,6 +125,7 @@ export function PresentationPaneRouterProvider(
       groupIndex: 0,
       siblingIndex: 0,
       payload: {},
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       params: structureParams as any,
       hasGroupSiblings: false,
       groupLength: 1,

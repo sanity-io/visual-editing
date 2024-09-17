@@ -1,17 +1,16 @@
 import {EditIcon, RevertIcon} from '@sanity/icons'
 import {Card, Code, Stack} from '@sanity/ui'
-import {type ReactElement, useCallback, useEffect, useMemo, useRef} from 'react'
+import {useCallback, useEffect, useMemo, useRef, type ReactElement} from 'react'
 import {
   defineDocumentFieldAction,
-  type DocumentFieldActionItem,
-  type FieldProps,
   FormFieldSet,
   ObjectInputMember,
-  type ObjectInputProps,
   set,
   unset,
+  type DocumentFieldActionItem,
+  type FieldProps,
+  type ObjectInputProps,
 } from 'sanity'
-
 import {findFieldMember} from '../../../lib/findField'
 import {isFieldMember} from '../../../lib/isFieldMember'
 import {useReferenceEditState} from '../../../lib/useReferenceEditState'

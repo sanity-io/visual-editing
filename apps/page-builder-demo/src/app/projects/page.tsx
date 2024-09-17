@@ -1,6 +1,6 @@
 import {loadQuery} from '@/sanity'
-import type {ProjectsPageData} from './ProjectsPage'
 import {SITE_SETTINGS_QUERY} from '../queries'
+import type {ProjectsPageData} from './ProjectsPage'
 import {ProjectsPreview} from './ProjectsPreview'
 
 const PAGE_QUERY = `//groq
