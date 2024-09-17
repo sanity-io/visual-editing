@@ -1,4 +1,5 @@
 import {WrappedValue} from '@sanity/react-loader/jsx'
+import type {SanityDocument} from '@sanity/client'
 import {getDraftId, isArray} from 'sanity'
 
 import {dataAttribute} from '@/sanity'
@@ -13,14 +14,19 @@ import {useOptimistic} from '@sanity/visual-editing'
 export function Page(props: {data: WrappedValue<PageData>}) {
   const {data} = props
 
-  const sections = useOptimistic(data.sections, (state, action) => {
-    if (action.id === data._id) {
-      return action.document.sections
-        .map((section: {_key: string} | undefined) => state?.find((s) => s._key === section?._key))
-        .filter(Boolean)
-    }
-    return state
-  })
+  const sections = useOptimistic<WrappedValue<PageSection>[] | undefined, SanityDocument<PageData>>(
+    data.sections,
+    (state, action) => {
+      if (action.id === data._id) {
+        return action.document.sections
+          ?.map(
+            (section: {_key: string} | undefined) => state?.find((s) => s._key === section?._key)!,
+          )
+          .filter(Boolean)
+      }
+      return state
+    },
+  )
 
   return (
     <main
