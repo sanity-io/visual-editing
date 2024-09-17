@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore has to be exact for string replacement to work
-const envUrl = process.env.VERCEL_BRANCH_URL || process.env.VERCEL_URL
+const envUrl = process.env.VERCEL_BRANCH_URL
 const isStablePreviewBranch = envUrl?.includes('-git-preview')
 const isStableCanaryBranch = envUrl?.includes('-git-canary')
 const isLinearBranch = envUrl?.includes('-git-crx-')
