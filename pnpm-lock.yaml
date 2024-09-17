@@ -83,13 +83,16 @@ importers:
         version: 3.6.2(@types/react-dom@18.3.0)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
       '@astrojs/tailwind':
         specifier: ^5.1.0
-        version: 5.1.0(astro@4.15.6(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(tailwindcss@3.4.11)
+        version: 5.1.0(astro@4.15.6(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(tailwindcss@3.4.12)
       '@astrojs/vercel':
         specifier: ^7.8.1
         version: 7.8.1(astro@4.15.6(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(encoding@0.1.13)(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/@repo/env
+      '@repo/studio-url':
+        specifier: workspace:*
+        version: link:../../packages/@repo/studio-url
       '@sanity/astro':
         specifier: ^3.1.6
         version: 3.1.6(@sanity/client@6.21.3)(@sanity/visual-editing@packages+visual-editing)(astro@4.15.6(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sanity@3.57.3(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0))
@@ -121,8 +124,8 @@ importers:
         specifier: 3.57.3
         version: 3.57.3(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0)
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -198,7 +201,7 @@ importers:
         version: link:../../packages/visual-editing
       '@tailwindcss/typography':
         specifier: ^0.5.15
-        version: 0.5.15(tailwindcss@3.4.11)
+        version: 0.5.15(tailwindcss@3.4.12)
       '@types/node':
         specifier: ^20.14.13
         version: 20.16.5
@@ -245,8 +248,8 @@ importers:
         specifier: npm:@sanity/styled-components@6.1.13
         version: '@sanity/styled-components@6.1.13(react-dom@19.0.0-rc-f2df5694-20240916(react@19.0.0-rc-f2df5694-20240916))(react@19.0.0-rc-f2df5694-20240916)'
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -264,8 +267,8 @@ importers:
   apps/next:
     dependencies:
       '@next/bundle-analyzer':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.11
+        version: 14.2.11
       '@portabletext/react':
         specifier: ^3.1.0
         version: 3.1.0(react@18.3.1)
@@ -275,6 +278,9 @@ importers:
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/@repo/env
+      '@repo/studio-url':
+        specifier: workspace:*
+        version: link:../../packages/@repo/studio-url
       '@sanity/client':
         specifier: ^6.21.3
         version: 6.21.3(debug@4.3.7)
@@ -307,7 +313,7 @@ importers:
         version: 0.1.2
       '@vercel/toolbar':
         specifier: ^0.1.20
-        version: 0.1.20(next@14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vite@5.4.6(@types/node@20.8.7)(terser@5.33.0))
+        version: 0.1.20(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vite@5.4.6(@types/node@20.8.7)(terser@5.33.0))
       apps-common:
         specifier: workspace:*
         version: link:../common
@@ -321,11 +327,11 @@ importers:
         specifier: 14.2.11
         version: 14.2.11(eslint@8.57.1)(typescript@5.6.2)
       next:
-        specifier: 14.2.9
-        version: 14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 14.2.11
+        version: 14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-sanity:
         specifier: 9.4.7
-        version: 9.4.7(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@sanity/types@3.57.3)(@sanity/ui@2.8.9(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(next@14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.3(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0))
+        version: 9.4.7(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@sanity/types@3.57.3)(@sanity/ui@2.8.9(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.3(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0))
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -342,8 +348,8 @@ importers:
         specifier: 0.1.3
         version: 0.1.3(react@18.3.1)
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -367,7 +373,7 @@ importers:
         version: 3.57.3(@babel/runtime@7.25.6)(@codemirror/lint@6.8.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
       '@tailwindcss/typography':
         specifier: 0.5.15
-        version: 0.5.15(tailwindcss@3.4.11)
+        version: 0.5.15(tailwindcss@3.4.12)
       '@tinloof/sanity-studio':
         specifier: 1.3.3
         version: 1.3.3(@sanity/mutator@3.57.3)(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react-fast-compare@3.2.2)(react-is@18.3.1)(react@18.3.1)(rxjs@7.8.1)(sanity@3.57.3(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0))(terser@5.33.0)
@@ -436,8 +442,8 @@ importers:
         specifier: 0.6.6
         version: 0.6.6(@ianvs/prettier-plugin-sort-imports@4.3.1(@vue/compiler-sfc@3.5.6)(prettier@3.3.3))(prettier-plugin-astro@0.14.1)(prettier-plugin-svelte@3.2.6(prettier@3.3.3)(svelte@4.2.19))(prettier@3.3.3)
       tailwindcss:
-        specifier: 3.4.11
-        version: 3.4.11
+        specifier: 3.4.12
+        version: 3.4.12
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -456,6 +462,9 @@ importers:
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/@repo/env
+      '@repo/studio-url':
+        specifier: workspace:*
+        version: link:../../packages/@repo/studio-url
       '@sanity/client':
         specifier: ^6.21.3
         version: 6.21.3(debug@4.3.7)
@@ -496,9 +505,12 @@ importers:
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/@repo/env
+      '@repo/studio-url':
+        specifier: workspace:*
+        version: link:../../packages/@repo/studio-url
       '@sanity/demo':
         specifier: ^2.0.0
-        version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.11)
+        version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.12)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -510,7 +522,7 @@ importers:
         version: link:../../packages/visual-editing
       '@tailwindcss/typography':
         specifier: ^0.5.15
-        version: 0.5.15(tailwindcss@3.4.11)
+        version: 0.5.15(tailwindcss@3.4.12)
       '@types/node':
         specifier: 20.8.7
         version: 20.8.7
@@ -563,8 +575,8 @@ importers:
         specifier: 0.1.3
         version: 0.1.3(react@18.3.1)
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -589,6 +601,9 @@ importers:
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/@repo/env
+      '@repo/studio-url':
+        specifier: workspace:*
+        version: link:../../packages/@repo/studio-url
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -639,8 +654,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -713,6 +728,9 @@ importers:
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/@repo/env
+      '@repo/studio-url':
+        specifier: workspace:*
+        version: link:../../packages/@repo/studio-url
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -772,8 +790,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2(picomatch@4.0.2)(svelte@4.2.19)(typescript@5.6.2)
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       tslib:
         specifier: ^2.7.0
         version: 2.7.0
@@ -843,6 +861,24 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: 0.6.6
         version: 0.6.6(@ianvs/prettier-plugin-sort-imports@4.3.1(@vue/compiler-sfc@3.5.6)(prettier@3.3.3))(prettier-plugin-astro@0.14.1)(prettier-plugin-svelte@3.2.6(prettier@3.3.3)(svelte@4.2.19))(prettier@3.3.3)
+
+  packages/@repo/studio-url:
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/package.config':
+        specifier: workspace:*
+        version: link:../package.config
+      '@repo/prettier-config':
+        specifier: workspace:*
+        version: link:../prettier-config
+      '@sanity/pkg-utils':
+        specifier: 6.11.2
+        version: 6.11.2(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.2)
+      typescript:
+        specifier: 5.6.2
+        version: 5.6.2
 
   packages/channels:
     dependencies:
@@ -961,8 +997,8 @@ importers:
         specifier: ^8.4.47
         version: 8.4.47
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -1397,7 +1433,7 @@ importers:
         version: link:../comlink
       '@sanity/demo':
         specifier: ^2.0.0
-        version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.11)
+        version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.12)
       '@sanity/pkg-utils':
         specifier: 6.11.2
         version: 6.11.2(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.2)
@@ -1436,7 +1472,7 @@ importers:
         version: 2.3.5(svelte@4.2.19)(typescript@5.6.2)
       '@tailwindcss/typography':
         specifier: ^0.5.15
-        version: 0.5.15(tailwindcss@3.4.11)
+        version: 0.5.15(tailwindcss@3.4.12)
       '@types/react':
         specifier: ^18.3.7
         version: 18.3.7
@@ -1477,8 +1513,8 @@ importers:
         specifier: ^4.2.19
         version: 4.2.19
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -3383,9 +3419,6 @@ packages:
 
   '@next/bundle-analyzer@14.2.11':
     resolution: {integrity: sha512-wFPjuXVlLkheng8BTG/K8UN8lRg93E5ZdE9gSmxpRP0XwC58w1B8wITXWeTD/Js4ObxyhxhiCrZzt2X+QJrrMw==}
-
-  '@next/bundle-analyzer@14.2.9':
-    resolution: {integrity: sha512-r+h5vdrx3+tZoMysJmDsfy3OXPqwuTTiQYytCPl5qfngHqeusV3im8Bjbmm4ZsOsIcqh/BQrChO8u7wFXavHKA==}
 
   '@next/bundle-analyzer@15.0.0-canary.157':
     resolution: {integrity: sha512-KZfH9d5WhLgRPKdEU2qFx/nDhG8fneEEcUYORSh14CutG8Sos+q6RRPy+gv/IjKWEeJIQU0Q5bb2SgVBK85VQg==}
@@ -12138,8 +12171,8 @@ packages:
     peerDependencies:
       tailwindcss: 1 || 2 || 2.0.1-compat || 3
 
-  tailwindcss@3.4.11:
-    resolution: {integrity: sha512-qhEuBcLemjSJk5ajccN9xJFtM/h0AVCPaA6C92jNP+M2J8kX+eMJHI7R2HFKUvvAsMpcfLILMCFYSeDwpMmlUg==}
+  tailwindcss@3.4.12:
+    resolution: {integrity: sha512-Htf/gHj2+soPb9UayUNci/Ja3d8pTmu9ONTfh4QY8r3MATTZOzmv6UYWF7ZwikEIC8okpfqmGqrmDehua8mF8w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -13568,13 +13601,13 @@ snapshots:
       - supports-color
       - vite
 
-  '@astrojs/tailwind@5.1.0(astro@4.15.6(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(tailwindcss@3.4.11)':
+  '@astrojs/tailwind@5.1.0(astro@4.15.6(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(tailwindcss@3.4.12)':
     dependencies:
       astro: 4.15.6(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2)
       autoprefixer: 10.4.20(postcss@8.4.47)
       postcss: 8.4.47
       postcss-load-config: 4.0.2(postcss@8.4.47)
-      tailwindcss: 3.4.11
+      tailwindcss: 3.4.12
     transitivePeerDependencies:
       - ts-node
 
@@ -15443,13 +15476,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@next/bundle-analyzer@14.2.9':
-    dependencies:
-      webpack-bundle-analyzer: 4.10.1
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
   '@next/bundle-analyzer@15.0.0-canary.157':
     dependencies:
       webpack-bundle-analyzer: 4.10.1
@@ -15935,8 +15961,8 @@ snapshots:
       pathe: 1.1.2
       postcss: 8.4.47
       postcss-nesting: 12.1.5(postcss@8.4.47)
-      tailwind-config-viewer: 2.0.4(tailwindcss@3.4.11)
-      tailwindcss: 3.4.11
+      tailwind-config-viewer: 2.0.4(tailwindcss@3.4.12)
+      tailwindcss: 3.4.12
       ufo: 1.5.4
       unctx: 2.3.1(webpack-sources@3.2.3)
     transitivePeerDependencies:
@@ -16763,10 +16789,10 @@ snapshots:
 
   '@sanity/color@3.0.6': {}
 
-  '@sanity/demo@2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.11)':
+  '@sanity/demo@2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.12)':
     dependencies:
       '@sanity/color': 3.0.6
-      tailwindcss: 3.4.11
+      tailwindcss: 3.4.12
 
   '@sanity/diff-match-patch@3.1.1': {}
 
@@ -17864,13 +17890,13 @@ snapshots:
       '@swc/counter': 0.1.3
       tslib: 2.7.0
 
-  '@tailwindcss/typography@0.5.15(tailwindcss@3.4.11)':
+  '@tailwindcss/typography@0.5.15(tailwindcss@3.4.12)':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.11
+      tailwindcss: 3.4.12
 
   '@tanstack/react-table@8.20.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -18827,7 +18853,7 @@ snapshots:
 
   '@vercel/stega@0.1.2': {}
 
-  '@vercel/toolbar@0.1.20(next@14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vite@5.4.6(@types/node@20.8.7)(terser@5.33.0))':
+  '@vercel/toolbar@0.1.20(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vite@5.4.6(@types/node@20.8.7)(terser@5.33.0))':
     dependencies:
       '@tinyhttp/app': 1.3.0
       chokidar: 3.6.0
@@ -18836,7 +18862,7 @@ snapshots:
       get-port: 5.1.1
       strip-ansi: 6.0.1
     optionalDependencies:
-      next: 14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next: 14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       vite: 5.4.6(@types/node@20.8.7)(terser@5.33.0)
 
@@ -24643,6 +24669,22 @@ snapshots:
 
   neotraverse@0.6.18: {}
 
+  next-sanity@9.4.7(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@sanity/types@3.57.3)(@sanity/ui@2.8.9(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.3(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0)):
+    dependencies:
+      '@portabletext/react': 3.1.0(react@18.3.1)
+      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/icons': 3.4.0(react@18.3.1)
+      '@sanity/preview-kit': 5.1.0(@sanity/client@6.21.3)(react@18.3.1)
+      '@sanity/types': 3.57.3(debug@4.3.7)
+      '@sanity/ui': 2.8.9(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
+      '@sanity/visual-editing': link:packages/visual-editing
+      groq: 3.57.3
+      history: 5.3.0
+      next: 14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      sanity: 3.57.3(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0)
+      styled-components: '@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)'
+
   next-sanity@9.4.7(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@sanity/types@3.57.3)(@sanity/ui@2.8.9(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(next@14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.3(@sanity/styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.33.0)):
     dependencies:
       '@portabletext/react': 3.1.0(react@18.3.1)
@@ -28468,7 +28510,7 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwind-config-viewer@2.0.4(tailwindcss@3.4.11):
+  tailwind-config-viewer@2.0.4(tailwindcss@3.4.12):
     dependencies:
       '@koa/router': 12.0.1
       commander: 6.2.1
@@ -28478,11 +28520,11 @@ snapshots:
       open: 7.4.2
       portfinder: 1.0.32
       replace-in-file: 6.3.5
-      tailwindcss: 3.4.11
+      tailwindcss: 3.4.12
     transitivePeerDependencies:
       - supports-color
 
-  tailwindcss@3.4.11:
+  tailwindcss@3.4.12:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2

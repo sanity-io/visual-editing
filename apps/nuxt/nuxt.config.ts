@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {datasets, projectId} from '@repo/env'
-import {studioUrl} from 'apps-common/env'
+import {datasets, projectId, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
+
+const studioUrl = `${baseUrl}/${workspaces['nuxt'].workspace}`
 
 export default defineNuxtConfig({
   build: {

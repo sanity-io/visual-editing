@@ -1,4 +1,5 @@
 import {workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {QueryParams} from '@sanity/client'
 import {
   useQuery as _useQuery,
@@ -6,13 +7,12 @@ import {
   type UseQueryOptionsDefinedInitial,
 } from '@sanity/react-loader'
 import {SanityNodeContext, wrapData} from '@sanity/react-loader/jsx'
-import {studioUrl} from 'apps-common/env'
 import {useMemo} from 'react'
 import {getClient} from './client'
 
 export {loadQuery, useLiveMode} from '@sanity/react-loader'
 
-const workspace = workspaces['page-builder-demo']
+const {workspace, tool} = workspaces['page-builder-demo']
 
 export const client = getClient()
 
@@ -23,7 +23,9 @@ if (typeof document === 'undefined') {
 }
 
 const context: SanityNodeContext = {
-  baseUrl: `${studioUrl}/${workspace.workspace}`,
+  baseUrl,
+  workspace,
+  tool,
 }
 
 const DEFAULT_PARAMS = {}
