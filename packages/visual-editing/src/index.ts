@@ -39,8 +39,8 @@ export type {
   VisualEditingOptions,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
-export type {DatasetMutatorMachineInput} from './ui/optimistic-state/machines/datasetMutatorMachine'
 export type {OptimisticReducer, OptimisticReducerAction} from './ui/optimistic-state/context'
+export type {DatasetMutatorMachineInput} from './ui/optimistic-state/machines/datasetMutatorMachine'
 export {useOptimistic} from './ui/optimistic-state/useOptimistic'
 export {
   type CreateDataAttribute,
