@@ -1,4 +1,4 @@
-import {at, createIfNotExists, insert, patch, unset} from '@sanity/mutate'
+import {at, createIfNotExists, insert, patch, remove} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
 import {useCallback, useEffect} from 'react'
 
@@ -34,7 +34,7 @@ export function useDragEndEvents(): {
         if (referenceItemKey && referenceItemKey !== targetKey && arrayPath) {
           const mutations = [
             createIfNotExists({_id: id, _type: target.type!}),
-            patch(id, at(target.path, unset())),
+            patch(id, at(arrayPath, remove({_key: targetKey}))),
             patch(id, at(arrayPath, insert(elementValue, 'after', {_key: referenceItemKey}))),
           ]
 
