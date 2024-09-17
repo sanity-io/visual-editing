@@ -41,11 +41,6 @@ export function useOptimistic<T, U = SanityDocument>(
   useEffect(() => {
     // If the actor hasn't been set yet, we don't need to subscribe to mutations
     if (isEmptyActor(actor)) {
-      const inFrame = window.self !== window.top || window.opener
-      if (inFrame) {
-        // eslint-disable-next-line no-console
-        console.warn('useOptimisticMutate called with empty actor')
-      }
       return
     }
 
@@ -58,5 +53,5 @@ export function useOptimistic<T, U = SanityDocument>(
     setState(passthrough)
   }, [passthrough])
 
-  return isEmptyActor(actor) ? passthrough : state
+  return state
 }
