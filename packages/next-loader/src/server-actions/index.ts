@@ -1,8 +1,8 @@
 'use server'
 
-import type {SyncTag} from '@sanity/client'
+import type {ClientPerspective, SyncTag} from '@sanity/client'
 import {revalidateTag} from 'next/cache.js'
-import {draftMode} from 'next/headers.js'
+import {cookies, draftMode} from 'next/headers.js'
 
 export async function disableDraftMode(): Promise<void> {
   'use server'
@@ -19,5 +19,19 @@ export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
     revalidateTag(tag)
     // eslint-disable-next-line no-console
     console.log(`Revalidated tag: ${tag}`)
+  }
+}
+
+export async function setPerspectiveCookie(perspective: string): Promise<void> {
+  if (!draftMode().isEnabled) {
+    throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
+  }
+  switch (perspective) {
+    case 'previewDrafts':
+    case 'published':
+      cookies().set('sanity-perspective', perspective satisfies ClientPerspective, {httpOnly: true})
+      return
+    default:
+      throw new Error(`Invalid perspective: ${perspective}`)
   }
 }

@@ -3,9 +3,12 @@ import {
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@repo/visual-editing-helpers'
+import type {ClientPerspective} from '@sanity/client'
 import {createNode, createNodeMachine} from '@sanity/comlink'
-import {useRouter} from 'next/navigation'
+import {setPerspectiveCookie} from '@sanity/next-loader/server-actions'
+import {useRouter} from 'next/navigation.js'
 import {useEffect, useState} from 'react'
+import {useEffectEvent} from 'use-effect-event'
 
 export default function PresentationComlink(props: {
   enableDraftMode: (secret: string) => Promise<boolean>
@@ -13,6 +16,13 @@ export default function PresentationComlink(props: {
 }): React.JSX.Element | null {
   const {enableDraftMode, draftModeEnabled} = props
   const router = useRouter()
+
+  const handlePerspectiveChange = useEffectEvent((perspective: ClientPerspective) => {
+    setPerspectiveCookie(perspective)
+      .then(() => router.refresh())
+      // eslint-disable-next-line no-console
+      .catch((reason) => console.error('Failed to set the preview perspective cookie', reason))
+  })
 
   const [status, setStatus] = useState('disconnected')
   useEffect(() => {
@@ -30,9 +40,15 @@ export default function PresentationComlink(props: {
       setStatus(status)
     })
 
+    comlink.on('loader/perspective', (data) => {
+      // eslint-disable-next-line no-console
+      console.log('loader/perspective', data)
+      handlePerspectiveChange(data.perspective)
+    })
+
     const stop = comlink.start()
     return () => stop()
-  }, [])
+  }, [handlePerspectiveChange])
 
   useEffect(() => {
     if (status === 'connected' && !draftModeEnabled) {
