@@ -16,7 +16,7 @@ export default function AlertBanner() {
     () => false,
   )
 
-  // if (!shouldShow) return null
+  if (!shouldShow) return null
 
   return (
     <div
