@@ -13,10 +13,19 @@ import {
   type Controller,
   type StatusEvent,
 } from '@sanity/comlink'
+import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {applyPatch} from 'mendoza'
 import LRUCache from 'mnemonist/lru-cache-with-delete'
 import {memo, useEffect, useMemo, useState} from 'react'
-import {useClient, useDataset, useProjectId, type SanityClient, type SanityDocument} from 'sanity'
+import {
+  useClient,
+  useCurrentUser,
+  useDataset,
+  useProjectId,
+  type SanityClient,
+  type SanityDocument,
+} from 'sanity'
+import {useEffectEvent} from 'use-effect-event'
 import {
   LIVE_QUERY_CACHE_BATCH_SIZE,
   LIVE_QUERY_CACHE_SIZE,
@@ -89,6 +98,22 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     return () => clearInterval(interval)
   }, [])
 
+  const currentUser = useCurrentUser()
+  const handleCreatePreviewUrlSecret = useEffectEvent(async () => {
+    try {
+      const {secret} = await createPreviewSecret(
+        client,
+        '@sanity/presentation',
+        typeof window === 'undefined' ? '' : location.href,
+        currentUser?.id,
+      )
+      return {secret}
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to generate preview URL secret', err)
+      return {secret: null}
+    }
+  })
   useEffect(() => {
     if (controller) {
       const comlink = controller.createConnection<LoaderNodeMsg, LoaderControllerMsg>(
@@ -139,10 +164,19 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
         }
       })
 
+      comlink.on('loader/fetch-preview-url-secret', handleCreatePreviewUrlSecret)
+
       return comlink.start()
     }
     return
-  }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
+  }, [
+    controller,
+    dataset,
+    handleCreatePreviewUrlSecret,
+    onDocumentsOnPage,
+    onLoadersConnection,
+    projectId,
+  ])
 
   const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
   const studioClient = useClient({apiVersion: '2023-10-16'})

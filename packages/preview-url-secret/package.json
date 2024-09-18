@@ -51,6 +51,12 @@
       "require": "./dist/sanity-plugin-debug-secrets.cjs",
       "default": "./dist/sanity-plugin-debug-secrets.js"
     },
+    "./validate-secret": {
+      "source": "./src/_exports/validate-secret.ts",
+      "import": "./dist/validate-secret.js",
+      "require": "./dist/validate-secret.cjs",
+      "default": "./dist/validate-secret.js"
+    },
     "./without-secret-search-params": {
       "source": "./src/_exports/without-secret-search-params.ts",
       "import": "./dist/without-secret-search-params.js",
@@ -78,6 +84,9 @@
       ],
       "sanity-plugin-debug-secrets": [
         "./dist/sanity-plugin-debug-secrets.d.ts"
+      ],
+      "validate-secret": [
+        "./dist/validate-secret.d.ts"
       ],
       "without-secret-search-params": [
         "./dist/without-secret-search-params.d.ts"

@@ -4,7 +4,7 @@ import {
   type LoaderNodeMsg,
 } from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
-import {createNode, createNodeMachine} from '@sanity/comlink'
+import {createNode, createNodeMachine, type Node} from '@sanity/comlink'
 import {setPerspectiveCookie} from '@sanity/next-loader/server-actions'
 import {useRouter} from 'next/navigation.js'
 import {useEffect, useState} from 'react'
@@ -17,11 +17,18 @@ export default function PresentationComlink(props: {
   const {enableDraftMode, draftModeEnabled} = props
   const router = useRouter()
 
+  const [presentationComlink, setPresentationComlink] = useState<Node<
+    LoaderControllerMsg,
+    LoaderNodeMsg
+  > | null>(null)
+
   const handlePerspectiveChange = useEffectEvent((perspective: ClientPerspective) => {
-    setPerspectiveCookie(perspective)
-      .then(() => router.refresh())
-      // eslint-disable-next-line no-console
-      .catch((reason) => console.error('Failed to set the preview perspective cookie', reason))
+    if (draftModeEnabled) {
+      setPerspectiveCookie(perspective)
+        .then(() => router.refresh())
+        // eslint-disable-next-line no-console
+        .catch((reason) => console.error('Failed to set the preview perspective cookie', reason))
+    }
   })
 
   const [status, setStatus] = useState('disconnected')
@@ -47,27 +54,35 @@ export default function PresentationComlink(props: {
     })
 
     const stop = comlink.start()
+    setPresentationComlink(comlink)
     return () => stop()
   }, [handlePerspectiveChange])
 
-  useEffect(() => {
-    if (status === 'connected' && !draftModeEnabled) {
-      let cancelled = false
-      enableDraftMode('secret')
-        .then((enabled) => {
+  const handleEnableDraftMode = useEffectEvent((signal: AbortSignal) => {
+    presentationComlink
+      ?.fetch({type: 'loader/fetch-preview-url-secret', data: undefined}, {signal})
+      .then(({secret}) =>
+        enableDraftMode(secret!).then((enabled) => {
           // eslint-disable-next-line no-console
           console.log('Draft mode enabled?', {enabled})
-          if (cancelled) return
+          if (signal.aborted) return
           router.refresh()
-        })
-        // eslint-disable-next-line no-console
-        .catch((reason) => console.error('Failed to enable draft mode', reason))
+        }),
+      )
+
+      // eslint-disable-next-line no-console
+      .catch((reason) => console.error('Failed to enable draft mode', reason))
+  })
+  useEffect(() => {
+    if (status === 'connected' && !draftModeEnabled) {
+      const controller = new AbortController()
+      handleEnableDraftMode(controller.signal)
       return () => {
-        cancelled = true
+        controller.abort()
       }
     }
     return undefined
-  }, [draftModeEnabled, enableDraftMode, router, status])
+  }, [draftModeEnabled, handleEnableDraftMode, status])
 
   return null
 }
