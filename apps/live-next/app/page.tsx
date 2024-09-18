@@ -1,6 +1,5 @@
 import type {HeroQueryResult} from '@/sanity.types'
-import * as demo from '@/sanity/lib/demo'
-import {sanityFetch} from '@/sanity/lib/fetch'
+import {sanityFetch} from '@/sanity/lib/live'
 import {heroQuery, settingsQuery} from '@/sanity/lib/queries'
 import Link from 'next/link'
 import {Suspense} from 'react'
@@ -8,23 +7,27 @@ import Avatar from './avatar'
 import CoverImage from './cover-image'
 import DateComponent from './date'
 import MoreStories from './more-stories'
-import Onboarding from './onboarding'
 import PortableText from './portable-text'
 
 function Intro(props: {title: string | null | undefined; description: any}) {
-  const title = props.title || demo.title
-  const description = props.description?.length ? props.description : demo.description
+  const {title, description} = props
+
+  if (!title && !description?.length) {
+    return null
+  }
+
   return (
     <section className="mb-16 mt-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
-      <h1 className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
-        {title || demo.title}
-      </h1>
-      <h2 className="mt-5 text-pretty text-center text-lg lg:pl-8 lg:text-left">
-        <PortableText
-          className="prose-lg"
-          value={description?.length ? description : demo.description}
-        />
-      </h2>
+      {title && (
+        <h1 className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+          {title}
+        </h1>
+      )}
+      {description.length > 0 && (
+        <h2 className="mt-5 text-pretty text-center text-lg lg:pl-8 lg:text-left">
+          <PortableText className="prose-lg" value={description} />
+        </h2>
+      )}
     </section>
   )
 }
@@ -66,7 +69,7 @@ function HeroPost({
 }
 
 export default async function Page() {
-  const [settings, heroPost] = await Promise.all([
+  const [{data: settings}, {data: heroPost}] = await Promise.all([
     sanityFetch({
       query: settingsQuery,
     }),
@@ -76,7 +79,7 @@ export default async function Page() {
   return (
     <div className="container mx-auto px-5">
       <Intro title={settings?.title} description={settings?.description} />
-      {heroPost ? (
+      {heroPost && (
         <HeroPost
           title={heroPost.title}
           slug={heroPost.slug}
@@ -85,8 +88,6 @@ export default async function Page() {
           date={heroPost.date}
           author={heroPost.author}
         />
-      ) : (
-        <Onboarding />
       )}
       {heroPost?._id && (
         <aside>

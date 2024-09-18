@@ -1,6 +1,7 @@
 import {apiVersion, workspaces} from '@repo/env'
 import {
   crossDatasetReferencesPlugin,
+  liveDemoPlugin,
   pageBuilderDemoPlugin,
   performanceTestPlugin,
   shoesPlugin,
@@ -50,7 +51,7 @@ const urls = {
   'live-next': resolvePreviewUrl(
     process.env.SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL,
     (endsWith) => `https://live-visual-editing-next-git-${endsWith}`,
-    'http://localhost:3006',
+    'http://localhost:3009',
   ),
   'next-app-router': resolvePreviewUrl(
     process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL,
@@ -145,6 +146,15 @@ export default defineConfig([
           maxWidth: 240,
           component: CustomNavigator,
         },
+      },
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['live-demo'], [
+    liveDemoPlugin({
+      previewUrl: {
+        origin: urls['live-next'],
+        previewMode: {enable: '/api/draft'},
       },
     }),
     debugPlugin(),

@@ -15,7 +15,7 @@ export const datasets = {
   'blog': 'blog',
 } as const
 
-export const apiVersion = '2023-10-11' as const
+export const apiVersion = '2024-09-18' as const
 
 export const workspaces = {
   'astro': {
@@ -70,6 +70,12 @@ export const workspaces = {
     projectId: projectId,
     dataset: datasets['page-builder-demo'],
     workspace: 'page-builder-demo',
+    tool: 'presentation',
+  },
+  'live-demo': {
+    projectId: projectId,
+    dataset: datasets.blog,
+    workspace: 'live-demo',
     tool: 'presentation',
   },
 } as const

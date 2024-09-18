@@ -1,5 +1,4 @@
-import * as demo from '@/sanity/lib/demo'
-import {sanityFetch} from '@/sanity/lib/fetch'
+import {sanityFetch} from '@/sanity/lib/live'
 import {postQuery, settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, ResolvingMetadata} from 'next'
@@ -20,18 +19,19 @@ type Props = {
 const postSlugs = defineQuery(`*[_type == "post" && defined(slug.current)]{"slug": slug.current}`)
 
 export async function generateStaticParams() {
-  return await sanityFetch({
+  const {data} = await sanityFetch({
     query: postSlugs,
     perspective: 'published',
     stega: false,
   })
+  return data
 }
 
 export async function generateMetadata(
   {params}: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const post = await sanityFetch({query: postQuery, params, stega: false})
+  const {data: post} = await sanityFetch({query: postQuery, params, stega: false})
   const previousImages = (await parent).openGraph?.images || []
   const ogImage = resolveOpenGraphImage(post?.coverImage)
 
@@ -46,7 +46,7 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({params}: Props) {
-  const [post, settings] = await Promise.all([
+  const [{data: post}, {data: settings}] = await Promise.all([
     sanityFetch({query: postQuery, params}),
     sanityFetch({query: settingsQuery}),
   ])
@@ -57,11 +57,13 @@ export default async function PostPage({params}: Props) {
 
   return (
     <div className="container mx-auto px-5">
-      <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <Link href="/" className="hover:underline">
-          {settings?.title || demo.title}
-        </Link>
-      </h2>
+      {settings?.title && (
+        <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+          <Link href="/" className="hover:underline">
+            {settings.title}
+          </Link>
+        </h2>
+      )}
       <article>
         <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
           {post.title}

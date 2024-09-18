@@ -1,5 +1,10 @@
 import {workspaces} from '@repo/env'
-import {crossDatasetReferencesPlugin, pageBuilderDemoPlugin, shoesPlugin} from '@repo/sanity-schema'
+import {
+  crossDatasetReferencesPlugin,
+  liveDemoPlugin,
+  pageBuilderDemoPlugin,
+  shoesPlugin,
+} from '@repo/sanity-schema'
 import {defineConfig} from 'sanity'
 
 export default defineConfig([
@@ -32,6 +37,17 @@ export default defineConfig([
     plugins: [
       // @ts-expect-error - TODO: Fix types
       crossDatasetReferencesPlugin(),
+    ],
+  },
+  {
+    ...workspaces['live-demo'],
+    name: 'live-demo',
+    basePath: `/live-demo`,
+    plugins: [
+      // @ts-expect-error - TODO: Fix types
+      liveDemoPlugin({
+        previewUrl: '/',
+      }),
     ],
   },
 ])
