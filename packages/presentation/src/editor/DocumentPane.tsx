@@ -1,5 +1,13 @@
-import {Card, Code, ErrorBoundary, Label, Stack} from '@sanity/ui'
-import {useCallback, useEffect, useMemo, useState, type ErrorInfo, type ReactElement} from 'react'
+import {Card, Code, ErrorBoundary, Flex, Label, Spinner, Stack} from '@sanity/ui'
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ErrorInfo,
+  type ReactElement,
+} from 'react'
 import {useTranslation, type Path} from 'sanity'
 import {styled} from 'styled-components'
 import {ErrorCard} from '../components/ErrorCard'
@@ -86,13 +94,27 @@ export function DocumentPane(props: {
           onStructureParams={onStructureParams}
           structureParams={structureParams}
         >
-          <StructureDocumentPane
-            paneKey="document"
-            index={1}
-            itemId="document"
-            pane={paneDocumentNode}
-            onFocusPath={onFocusPath}
-          />
+          <Suspense
+            fallback={
+              <Flex
+                align="center"
+                direction="column"
+                height="fill"
+                justify="center"
+                style={{width: '100%'}}
+              >
+                <Spinner />
+              </Flex>
+            }
+          >
+            <StructureDocumentPane
+              paneKey="document"
+              index={1}
+              itemId="document"
+              pane={paneDocumentNode}
+              onFocusPath={onFocusPath}
+            />
+          </Suspense>
         </PresentationPaneRouterProvider>
       </PaneLayout>
     </ErrorBoundary>
