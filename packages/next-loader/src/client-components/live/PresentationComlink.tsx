@@ -73,8 +73,9 @@ export default function PresentationComlink(props: {
       // eslint-disable-next-line no-console
       .catch((reason) => console.error('Failed to enable draft mode', reason))
   })
+  const connected = status === 'connected'
   useEffect(() => {
-    if (status === 'connected' && !draftModeEnabled) {
+    if (connected && !draftModeEnabled) {
       const controller = new AbortController()
       handleEnableDraftMode(controller.signal)
       return () => {
@@ -82,7 +83,7 @@ export default function PresentationComlink(props: {
       }
     }
     return undefined
-  }, [draftModeEnabled, handleEnableDraftMode, status])
+  }, [connected, draftModeEnabled, handleEnableDraftMode])
 
   return null
 }
