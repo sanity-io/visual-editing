@@ -84,7 +84,7 @@ export default async function PostPage({params}: Props) {
             </div>
           </div>
         </div>
-        {post.content?.length && (
+        {post.content?.length && post.content.length > 0 && (
           <PortableText className="mx-auto max-w-2xl" value={post.content as PortableTextBlock[]} />
         )}
       </article>

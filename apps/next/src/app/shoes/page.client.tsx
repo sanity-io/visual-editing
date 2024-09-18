@@ -25,7 +25,7 @@ export default function ShoesPageClient(props: Props) {
     throw error
   }
 
-  const loading = _loading && !!products?.length
+  const loading = _loading && products?.length === 0
 
   return (
     <div className="min-h-screen bg-white">
