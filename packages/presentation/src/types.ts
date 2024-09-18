@@ -155,7 +155,7 @@ export interface PresentationPluginOptions {
     mainDocuments?: DocumentResolver[]
     locations?: DocumentLocationResolvers | DocumentLocationResolver
   }
-  previewUrl: PreviewUrlOption
+  previewUrl?: PreviewUrlOption
   components?: {
     unstable_navigator?: NavigatorOptions
   }

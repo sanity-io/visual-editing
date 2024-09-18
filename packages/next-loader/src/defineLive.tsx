@@ -1,12 +1,14 @@
 /// <reference types="next" />
 
-import type {
-  ClientPerspective,
-  ClientReturn,
-  ContentSourceMap,
-  QueryParams,
-  SanityClient,
+import {
+  createClient,
+  type ClientPerspective,
+  type ClientReturn,
+  type ContentSourceMap,
+  type QueryParams,
+  type SanityClient,
 } from '@sanity/client'
+import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import dynamic from 'next/dynamic.js'
 import {cookies, draftMode} from 'next/headers.js'
 
@@ -152,6 +154,31 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
           // eslint-disable-next-line no-console
           console.log('Server Action wants to enable Draft Mode', {secret})
+
+          if (draftMode().isEnabled) {
+            // eslint-disable-next-line no-console
+            console.log('Draft Mode is already enabled')
+            return true
+          }
+
+          const {isValid} = await validateSecret(
+            createClient({
+              projectId,
+              dataset,
+              apiHost,
+              apiVersion,
+              useProjectHostname,
+              useCdn: false,
+              token: previewDraftsToken,
+            }),
+            secret,
+            false,
+          )
+          if (!isValid) {
+            // eslint-disable-next-line no-console
+            console.error('Invalid secret provided')
+            return false
+          }
 
           await draftMode().enable()
 

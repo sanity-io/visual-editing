@@ -282,6 +282,13 @@ export type LoaderNodeMsg =
         documents: ContentSourceMapDocuments
       }
     }
+  | {
+      type: 'loader/fetch-preview-url-secret'
+      data: undefined
+      response: {
+        secret: string | null
+      }
+    }
 
 /**
  * @public
