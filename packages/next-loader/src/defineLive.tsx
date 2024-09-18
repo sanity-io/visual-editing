@@ -8,7 +8,7 @@ import type {
   SanityClient,
 } from '@sanity/client'
 import dynamic from 'next/dynamic.js'
-import {draftMode} from 'next/headers.js'
+import {cookies, draftMode} from 'next/headers.js'
 
 const SanityLiveClientComponent = dynamic(
   () => import('@sanity/next-loader/client-components/live'),
@@ -97,18 +97,24 @@ export function defineLive(config: DefineSanityLiveOptions): {
   >({
     query,
     params = {},
-    perspective = draftMode().isEnabled ? 'previewDrafts' : 'published',
-    stega = perspective === 'previewDrafts',
+    stega = draftMode().isEnabled,
+    perspective: _perspective = draftMode().isEnabled
+      ? cookies().has('sanity-perspective')
+        ? cookies().get('sanity-perspective')?.value
+        : 'previewDrafts'
+      : 'published',
   }: {
     query: QueryString
     params?: QueryParams
-    perspective?: Omit<ClientPerspective, 'raw'>
     stega?: boolean
+    perspective?: Omit<ClientPerspective, 'raw'>
   }) {
+    const perspective = _perspective === 'previewDrafts' ? 'previewDrafts' : 'published'
+
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, params, {
       filterResponse: false,
-      perspective: perspective as ClientPerspective,
+      perspective,
       stega: false,
       returnQuery: false,
       next: {revalidate: 1, tags: ['sanity']},

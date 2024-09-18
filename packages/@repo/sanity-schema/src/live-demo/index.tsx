@@ -165,7 +165,6 @@ const postType = defineType({
 })
 
 const settingsType = defineType({
-  liveEdit: true,
   name: 'settings',
   title: 'Settings',
   type: 'document',
