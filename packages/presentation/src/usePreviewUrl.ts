@@ -11,6 +11,7 @@ export function usePreviewUrl(
   previewUrl: PreviewUrlOption,
   toolName: string,
   previewSearchParam: string | null,
+  canCreateUrlPreviewSecrets: boolean,
 ): URL {
   const client = useClient({apiVersion: API_VERSION})
   const workspace = useActiveWorkspace()
@@ -18,7 +19,8 @@ export function usePreviewUrl(
   const workspaceName = workspace?.activeWorkspace?.name || 'default'
   const deps = useSuspendCacheKeys(toolName, basePath, workspaceName, previewSearchParam)
   const previewUrlSecret = usePreviewUrlSecret(
-    typeof previewUrl === 'object' || typeof previewUrl === 'function',
+    (canCreateUrlPreviewSecrets && typeof previewUrl === 'object') ||
+      typeof previewUrl === 'function',
     deps,
   )
 

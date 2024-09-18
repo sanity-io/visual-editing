@@ -75,9 +75,11 @@ const Container = styled(Flex)`
 
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
+  canCreateUrlPreviewSecrets: boolean
 }): ReactElement {
-  const {previewUrl: _previewUrl, components} = props.tool.options ?? {}
-  const name = props.tool.name || DEFAULT_TOOL_NAME
+  const {canCreateUrlPreviewSecrets, tool} = props
+  const {previewUrl: _previewUrl, components} = tool.options ?? {}
+  const name = tool.name || DEFAULT_TOOL_NAME
   const {unstable_navigator} = components || {}
 
   const {navigate: routerNavigate, state: routerState} = useRouter() as RouterContextValue & {
@@ -89,10 +91,11 @@ export default function PresentationTool(props: {
     _previewUrl || '/',
     name,
     routerSearchParams['preview'] || null,
+    canCreateUrlPreviewSecrets,
   )
 
   const [devMode] = useState(() => {
-    const option = props.tool.options?.devMode
+    const option = tool.options?.devMode
 
     if (typeof option === 'function') return option()
     if (typeof option === 'boolean') return option
@@ -152,8 +155,8 @@ export default function PresentationTool(props: {
     navigate: _navigate,
     navigationHistory,
     path: params.preview,
-    previewUrl: props.tool.options?.previewUrl,
-    resolvers: props.tool.options?.resolve?.mainDocuments,
+    previewUrl: tool.options?.previewUrl,
+    resolvers: tool.options?.resolve?.mainDocuments,
   })
 
   // const [overlaysConnection, setOverlaysConnection] = useState<Status>('connecting')
