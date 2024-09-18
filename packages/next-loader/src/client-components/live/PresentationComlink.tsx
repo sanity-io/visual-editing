@@ -11,10 +11,12 @@ import {useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 
 export default function PresentationComlink(props: {
+  projectId: string
+  dataset: string
   enableDraftMode: (secret: string) => Promise<boolean>
   draftModeEnabled: boolean
 }): React.JSX.Element | null {
-  const {enableDraftMode, draftModeEnabled} = props
+  const {enableDraftMode, draftModeEnabled, projectId, dataset} = props
   const router = useRouter()
 
   const [presentationComlink, setPresentationComlink] = useState<Node<
@@ -58,26 +60,31 @@ export default function PresentationComlink(props: {
     return () => stop()
   }, [handlePerspectiveChange])
 
-  const handleEnableDraftMode = useEffectEvent((signal: AbortSignal) => {
-    presentationComlink
-      ?.fetch({type: 'loader/fetch-preview-url-secret', data: undefined}, {signal})
-      .then(({secret}) =>
-        enableDraftMode(secret!).then((enabled) => {
-          // eslint-disable-next-line no-console
-          console.log('Draft mode enabled?', {enabled})
-          if (signal.aborted) return
-          router.refresh()
-        }),
-      )
-
-      // eslint-disable-next-line no-console
-      .catch((reason) => console.error('Failed to enable draft mode', reason))
+  const handleEnableDraftMode = useEffectEvent(async (signal: AbortSignal) => {
+    if (signal.aborted) return
+    const {secret} = await (presentationComlink?.fetch(
+      {
+        type: 'loader/fetch-preview-url-secret' as const,
+        data: {projectId, dataset},
+      },
+      {signal},
+    ) || {secret: null})
+    if (signal.aborted) return
+    const enabled = await enableDraftMode(secret!)
+    // eslint-disable-next-line no-console
+    console.log('Draft mode enabled?', {enabled})
+    if (signal.aborted) return
+    router.refresh()
   })
   const connected = status === 'connected'
   useEffect(() => {
     if (connected && !draftModeEnabled) {
       const controller = new AbortController()
-      handleEnableDraftMode(controller.signal)
+      handleEnableDraftMode(controller.signal).catch((reason) => {
+        // eslint-disable-next-line no-console
+        console.error('Failed to enable draft mode', reason)
+        return handleEnableDraftMode(controller.signal)
+      })
       return () => {
         controller.abort()
       }
