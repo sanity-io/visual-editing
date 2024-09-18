@@ -284,7 +284,10 @@ export type LoaderNodeMsg =
     }
   | {
       type: 'loader/fetch-preview-url-secret'
-      data: undefined
+      data: {
+        projectId: string
+        dataset: string
+      }
       response: {
         secret: string | null
       }

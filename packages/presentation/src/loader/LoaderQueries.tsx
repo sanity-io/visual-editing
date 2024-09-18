@@ -98,22 +98,6 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     return () => clearInterval(interval)
   }, [])
 
-  const currentUser = useCurrentUser()
-  const handleCreatePreviewUrlSecret = useEffectEvent(async () => {
-    try {
-      const {secret} = await createPreviewSecret(
-        client,
-        '@sanity/presentation',
-        typeof window === 'undefined' ? '' : location.href,
-        currentUser?.id,
-      )
-      return {secret}
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to generate preview URL secret', err)
-      return {secret: null}
-    }
-  })
   useEffect(() => {
     if (controller) {
       const comlink = controller.createConnection<LoaderNodeMsg, LoaderControllerMsg>(
@@ -164,19 +148,36 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
         }
       })
 
-      comlink.on('loader/fetch-preview-url-secret', handleCreatePreviewUrlSecret)
-
       return comlink.start()
     }
     return
-  }, [
-    controller,
-    dataset,
-    handleCreatePreviewUrlSecret,
-    onDocumentsOnPage,
-    onLoadersConnection,
-    projectId,
-  ])
+  }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
+
+  const currentUser = useCurrentUser()
+  const handleCreatePreviewUrlSecret = useEffectEvent(
+    async ({projectId, dataset}: {projectId: string; dataset: string}) => {
+      try {
+        // eslint-disable-next-line no-console
+        console.log('Creating preview URL secret for ', {projectId, dataset})
+        const {secret} = await createPreviewSecret(
+          client,
+          '@sanity/presentation',
+          typeof window === 'undefined' ? '' : location.href,
+          currentUser?.id,
+        )
+        return {secret}
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to generate preview URL secret', err)
+        return {secret: null}
+      }
+    },
+  )
+  useEffect(() => {
+    return comlink?.on('loader/fetch-preview-url-secret', (data) =>
+      handleCreatePreviewUrlSecret(data),
+    )
+  }, [comlink, handleCreatePreviewUrlSecret])
 
   const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
   const studioClient = useClient({apiVersion: '2023-10-16'})
