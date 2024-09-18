@@ -152,10 +152,7 @@ export default defineConfig([
   ]),
   defineWorkspace(workspaces['live-demo'], [
     liveDemoPlugin({
-      previewUrl: {
-        origin: urls['live-next'],
-        previewMode: {enable: '/api/draft'},
-      },
+      previewUrl: urls['live-next'],
     }),
     debugPlugin(),
   ]),
