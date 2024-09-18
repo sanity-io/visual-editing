@@ -97,4 +97,6 @@ export default {
   'share-url.menu-item.copy.text': 'Copy link',
   /** The share URL menu item text for opening a preview window */
   'share-url.menu-item.open.text': 'Open preview',
+  /** Error toast that notifies that URL Preview Secrets can't be generated as the user lacks ACL grants */
+  'preview-url-secret.missing-grants': "URL Preview Secrets can't be generated",
 }

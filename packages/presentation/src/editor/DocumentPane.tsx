@@ -1,4 +1,4 @@
-import {Card, Code, ErrorBoundary, Flex, Label, Spinner, Stack} from '@sanity/ui'
+import {Card, Code, ErrorBoundary, Label, Stack} from '@sanity/ui'
 import {
   Suspense,
   useCallback,
@@ -18,6 +18,7 @@ import {
   DocumentPane as StructureDocumentPane,
   type DocumentPaneNode,
 } from '../internals'
+import {PresentationSpinner} from '../PresentationSpinner'
 import type {PresentationSearchParams, StructureDocumentPaneParams} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
@@ -94,19 +95,7 @@ export function DocumentPane(props: {
           onStructureParams={onStructureParams}
           structureParams={structureParams}
         >
-          <Suspense
-            fallback={
-              <Flex
-                align="center"
-                direction="column"
-                height="fill"
-                justify="center"
-                style={{width: '100%'}}
-              >
-                <Spinner />
-              </Flex>
-            }
-          >
+          <Suspense fallback={<PresentationSpinner />}>
             <StructureDocumentPane
               paneKey="document"
               index={1}

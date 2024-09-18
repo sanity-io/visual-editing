@@ -7,6 +7,9 @@ export const schemaType = 'sanity.previewUrlSecret' satisfies PreviewUrlSecretSc
 export const schemaIdPrefix = 'sanity-preview-url-secret' satisfies PreviewUrlSecretSchemaIdPrefix
 
 /** @internal */
+export const schemaIdSingleton = `drafts.${schemaIdPrefix}` as const
+
+/** @internal */
 export const apiVersion = '2023-11-09'
 
 /** @internal */
@@ -26,7 +29,7 @@ export const SECRET_TTL = 60 * 60
 
 /** @internal */
 export const fetchSecretQuery =
-  /* groq */ `*[_type == "${schemaType}" && secret == $secret && dateTime(_updatedAt) > dateTime(now()) - ${SECRET_TTL}][0]{
+  /* groq */ `*[_type == "${schemaType}" && _id in path("${schemaIdPrefix}.**") && secret == $secret && dateTime(_updatedAt) > dateTime(now()) - ${SECRET_TTL}][0]{
   _id,
   _updatedAt,
   secret,
@@ -35,7 +38,7 @@ export const fetchSecretQuery =
 
 /** @internal */
 export const deleteExpiredSecretsQuery =
-  /* groq */ `*[_type == "${schemaType}" && dateTime(_updatedAt) <= dateTime(now()) - ${SECRET_TTL}]` as const
+  /* groq */ `*[_type == "${schemaType}" && _id in path("${schemaIdPrefix}.**") && defined(secret) && dateTime(_updatedAt) <= dateTime(now()) - ${SECRET_TTL}]` as const
 
 /**
  * Used for tagging `client.fetch` queries
