@@ -23,7 +23,12 @@ export default defineCliConfig({
       optimizeDeps: {
         ...config.optimizeDeps,
         exclude: [...(config.optimizeDeps?.exclude || []), '@repo/sanity-schema'],
-        include: [...(config.optimizeDeps?.include || []), '@sanity/assist', '@sanity/mutator'],
+        include: [
+          ...(config.optimizeDeps?.include || []),
+          '@sanity/assist',
+          '@sanity/color-input',
+          '@sanity/mutator',
+        ],
       },
     }
   },
