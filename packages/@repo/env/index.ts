@@ -64,7 +64,7 @@ export const workspaces = {
     projectId: projectId,
     dataset: datasets['cross-dataset-references'],
     workspace: datasets['cross-dataset-references'],
-    tool: 'desk',
+    tool: 'structure',
   },
   'page-builder-demo': {
     projectId: projectId,
