@@ -1,6 +1,9 @@
 import {createClient, type InitializedClientConfig} from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
-import {useEffect, useMemo} from 'react'
+import dynamic from 'next/dynamic.js'
+import {useEffect, useMemo, useState} from 'react'
+
+const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 
 /**
  * @public
@@ -15,7 +18,10 @@ export interface SanityLiveProps
     | 'useProjectHostname'
     | 'token'
     | 'ignoreBrowserTokenWarning'
-  > {}
+  > {
+  enableDraftMode: (secret: string) => Promise<boolean>
+  draftModeEnabled: boolean
+}
 
 /**
  * @public
@@ -29,6 +35,8 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     useProjectHostname,
     ignoreBrowserTokenWarning,
     token,
+    enableDraftMode,
+    draftModeEnabled,
   } = props
   const client = useMemo(
     () =>
@@ -57,5 +65,21 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     return () => subscription.unsubscribe()
   }, [client])
 
-  return null
+  const [loadComlink, setLoadComlink] = useState(false)
+
+  useEffect(() => {
+    // @TODO detect if we are possibly in a presentation context
+    setLoadComlink(true)
+  }, [])
+
+  return (
+    <>
+      {loadComlink && (
+        <PresentationComlink
+          enableDraftMode={enableDraftMode}
+          draftModeEnabled={draftModeEnabled}
+        />
+      )}
+    </>
+  )
 }

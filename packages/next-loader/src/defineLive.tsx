@@ -140,6 +140,17 @@ export function defineLive(config: DefineSanityLiveOptions): {
         useProjectHostname={useProjectHostname}
         token={liveDraftsToken && draftMode().isEnabled ? liveDraftsToken : undefined}
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
+        draftModeEnabled={draftMode().isEnabled}
+        enableDraftMode={async (secret: string): Promise<boolean> => {
+          'use server'
+
+          // eslint-disable-next-line no-console
+          console.log('Server Action wants to enable Draft Mode', {secret})
+
+          await draftMode().enable()
+
+          return true
+        }}
       />
     )
   }
