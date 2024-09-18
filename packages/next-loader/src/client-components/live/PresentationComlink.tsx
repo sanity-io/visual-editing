@@ -32,7 +32,7 @@ export default function PresentationComlink(props: {
 
     const stop = comlink.start()
     return () => stop()
-  }, [enableDraftMode, router])
+  }, [])
 
   useEffect(() => {
     if (status === 'connected' && !draftModeEnabled) {
