@@ -1,10 +1,10 @@
 ---
-import {shoe, shoesList, type ShoeResult, type ShoesListResult} from 'apps-common/queries'
-import {formatCurrency} from 'apps-common/utils'
 import {PortableText} from 'astro-portabletext'
 import Layout from '../../layouts/layout.astro'
 import {loadQuery} from '../../load-query'
+import {shoe, shoesList, type ShoeResult, type ShoesListResult} from '../../queries'
 import {urlFor, urlForCrossDatasetReference} from '../../sanity'
+import {formatCurrency} from '../../utils'
 
 const {slug} = Astro.params
 

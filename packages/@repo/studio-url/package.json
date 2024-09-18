@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build"
   },
   "browserslist": "extends @sanity/browserslist-config",

@@ -12,8 +12,6 @@ const nextConfig = {
       fullUrl: true,
     },
   },
-
-  transpilePackages: ['apps-common'],
 }
 
 export default withBundleAnalyzer({

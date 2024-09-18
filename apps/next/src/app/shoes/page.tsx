@@ -1,4 +1,5 @@
-import {shoesList, ShoesListResult} from 'apps-common/queries'
+import {shoesList} from '@/queries'
+import type {ShoesListResult} from '@/types'
 import {draftMode} from 'next/headers'
 import ShoesPageClient from './page.client'
 import {loadQuery} from './sanity.ssr'

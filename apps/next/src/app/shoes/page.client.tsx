@@ -1,11 +1,11 @@
 'use client'
 
+import {shoesList} from '@/queries'
+import type {ShoesListResult} from '@/types'
+import {formatCurrency} from '@/utils'
 import {QueryResponseInitial, useQuery} from '@sanity/react-loader'
-import {shoesList, type ShoesListResult} from 'apps-common/queries'
-import {formatCurrency} from 'apps-common/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import {use} from 'react'
 import {urlFor, urlForCrossDatasetReference} from './utils'
 
 type Props = {
@@ -54,8 +54,8 @@ export default function ShoesPageClient(props: Props) {
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products?.map?.((product, i) => (
               <Link
-                key={product.slug.current}
-                href={`/shoes/${product.slug.current}`}
+                key={product.slug?.current}
+                href={`/shoes/${product.slug?.current}`}
                 className="group relative"
               >
                 <div
@@ -88,22 +88,32 @@ export default function ShoesPageClient(props: Props) {
                     <Image
                       className="h-6 w-6 rounded-full bg-gray-50"
                       src={
+                        // @ts-expect-error - cross dataset reference typegen not working yet
                         product.brand?.logo?.asset
-                          ? urlForCrossDatasetReference(product.brand.logo)
+                          ? // @ts-expect-error - cross dataset reference typegen not working yet
+                            urlForCrossDatasetReference(product.brand.logo)
                               .width(48)
                               .height(48)
                               .url()
                           : `https://source.unsplash.com/featured/48x48?${
+                              // @ts-expect-error - cross dataset reference typegen not working yet
                               product.brand.name
-                                ? encodeURIComponent(product.brand.name)
+                                ? // @ts-expect-error - cross dataset reference typegen not working yet
+                                  encodeURIComponent(product.brand.name)
                                 : `brand&r=${i}`
                             }`
                       }
                       width={24}
                       height={24}
+                      // @ts-expect-error - cross dataset reference typegen not working yet
                       alt={product.brand?.logo?.alt || ''}
                     />
-                    <span className="font-bold text-gray-600">{product.brand.name}</span>
+                    <span className="font-bold text-gray-600">
+                      {
+                        // @ts-expect-error - cross dataset reference typegen not working yet
+                        product.brand.name
+                      }
+                    </span>
                   </div>
                 )}
               </Link>

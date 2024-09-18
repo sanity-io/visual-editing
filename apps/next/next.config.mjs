@@ -18,11 +18,11 @@ const nextConfig = {
     },
   },
 
-  transpilePackages: ['apps-common'],
-
   images: {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
   },
+
+  transpilePackages: ['@repo/env'],
 
   async headers() {
     return [
