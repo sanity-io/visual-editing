@@ -5,12 +5,10 @@ import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import {toPlainText, VisualEditing, type PortableTextBlock} from 'next-sanity'
-import dynamic from 'next/dynamic'
 import {Inter} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
 import AlertBanner from './alert-banner'
-import Debug from './debug'
 import PortableText from './portable-text'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -90,7 +88,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         {draftMode().isEnabled && <VisualEditing />}
         <SanityLive ignoreBrowserTokenWarning />
         <SpeedInsights />
-        <Debug />
       </body>
     </html>
   )
