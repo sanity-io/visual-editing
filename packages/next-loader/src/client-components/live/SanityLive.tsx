@@ -1,7 +1,7 @@
 import {createClient, type InitializedClientConfig} from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
 import dynamic from 'next/dynamic.js'
-import {memo, useEffect, useMemo, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 
@@ -26,9 +26,7 @@ export interface SanityLiveProps
 /**
  * @public
  */
-export const SanityLive = memo(function SanityLiveComponent(
-  props: SanityLiveProps,
-): React.JSX.Element | null {
+export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
     projectId,
     dataset,
@@ -95,5 +93,5 @@ export const SanityLive = memo(function SanityLiveComponent(
       )}
     </>
   )
-})
-SanityLive.displayName = 'memo(SanityLive)'
+}
+SanityLive.displayName = 'SanityLive'
