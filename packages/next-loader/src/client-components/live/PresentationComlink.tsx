@@ -7,10 +7,10 @@ import type {ClientPerspective} from '@sanity/client'
 import {createNode, createNodeMachine, type Node} from '@sanity/comlink'
 import {setPerspectiveCookie} from '@sanity/next-loader/server-actions'
 import {useRouter} from 'next/navigation.js'
-import {useEffect, useState} from 'react'
+import {memo, useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 
-export default function PresentationComlink(props: {
+const PresentationComlink = memo(function PresentationComlink(props: {
   projectId: string
   dataset: string
   handleDraftModeAction: (secret: string) => Promise<void | string>
@@ -100,4 +100,7 @@ export default function PresentationComlink(props: {
   }, [connected, draftModeEnabled, handleEnableDraftMode])
 
   return null
-}
+})
+PresentationComlink.displayName = 'memo(PresentationComlink)'
+
+export default PresentationComlink

@@ -1,7 +1,7 @@
 import {createClient, type InitializedClientConfig} from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
 import dynamic from 'next/dynamic.js'
-import {useEffect, useMemo, useState} from 'react'
+import {memo, useEffect, useMemo, useState} from 'react'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 
@@ -26,7 +26,9 @@ export interface SanityLiveProps
 /**
  * @public
  */
-export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
+export const SanityLive = memo(function SanityLive(
+  props: SanityLiveProps,
+): React.JSX.Element | null {
   const {
     projectId,
     dataset,
@@ -54,7 +56,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   )
   useEffect(() => {
     // eslint-disable-next-line no-console
-    console.log(client)
+    console.log('SanityLive mounted', {client}, client.config())
     const subscription = client.live.events().subscribe((event) => {
       if (event.type === 'message') {
         // eslint-disable-next-line no-console
@@ -84,4 +86,5 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       )}
     </>
   )
-}
+})
+SanityLive.displayName = 'memo(SanityLive)'
