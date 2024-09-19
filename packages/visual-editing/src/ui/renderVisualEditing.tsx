@@ -27,7 +27,7 @@ export function renderVisualEditing(
         root.unmount()
         root = null
       }
-      if (node) {
+      if (node && node.parentNode === document.body) {
         document.body.removeChild(node)
         node = null
       }
