@@ -38,3 +38,7 @@ export async function setPerspectiveCookie(perspective: string): Promise<void> {
       throw new Error(`Invalid perspective: ${perspective}`)
   }
 }
+
+export async function handleDraftModeActionMissing(): Promise<void | string> {
+  return 'The <SanityLive /> component is missing the handleDraftModeAction prop'
+}
