@@ -3,6 +3,7 @@ import {sanityFetch} from '@/sanity/lib/live'
 import {heroQuery, settingsQuery} from '@/sanity/lib/queries'
 import Link from 'next/link'
 import {Suspense} from 'react'
+import {AnimatedH1} from './animated-h1'
 import Avatar from './avatar'
 import CoverImage from './cover-image'
 import DateComponent from './date'
@@ -19,9 +20,9 @@ function Intro(props: {title: string | null | undefined; description: any}) {
   return (
     <section className="mb-16 mt-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
       {title && (
-        <h1 className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+        <AnimatedH1 className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
           {title}
-        </h1>
+        </AnimatedH1>
       )}
       {description.length > 0 && (
         <h2 className="mt-5 text-pretty text-center text-lg lg:pl-8 lg:text-left">
@@ -70,9 +71,7 @@ function HeroPost({
 
 export default async function Page() {
   const [{data: settings}, {data: heroPost}] = await Promise.all([
-    sanityFetch({
-      query: settingsQuery,
-    }),
+    sanityFetch({query: settingsQuery}),
     sanityFetch({query: heroQuery}),
   ])
 
