@@ -25,7 +25,7 @@ function Intro(props: {title: string | null | undefined; description: any}) {
           text={title}
         />
       )}
-      {description.length > 0 && (
+      {description?.length > 0 && (
         <h2 className="mt-5 text-pretty text-center text-lg lg:pl-8 lg:text-left">
           <PortableText className="prose-lg" value={description} />
         </h2>
