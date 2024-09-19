@@ -53,8 +53,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     [apiHost, apiVersion, dataset, ignoreBrowserTokenWarning, projectId, token, useProjectHostname],
   )
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('SanityLive mounted', {client}, client.config())
     const subscription = client.live.events().subscribe((event) => {
       if (event.type === 'message') {
         // eslint-disable-next-line no-console
@@ -68,17 +66,30 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const [loadComlink, setLoadComlink] = useState(false)
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('SanityLive mounted')
-    return () => {
-      // eslint-disable-next-line no-console
-      console.log('SanityLive unmounted')
-    }
-  }, [])
-
-  useEffect(() => {
-    // @TODO detect if we are possibly in a presentation context
-    setLoadComlink(true)
+    if (window === parent && !opener) return
+    const controller = new AbortController()
+    window.addEventListener(
+      'message',
+      ({data}: MessageEvent<unknown>) => {
+        if (
+          data &&
+          typeof data === 'object' &&
+          'domain' in data &&
+          data.domain === 'sanity/channels' &&
+          'from' in data &&
+          data.from === 'presentation' &&
+          'to' in data &&
+          data.to === 'loaders' &&
+          'type' in data &&
+          data.type === 'handshake/syn'
+        ) {
+          setLoadComlink(true)
+          controller.abort()
+        }
+      },
+      {signal: controller.signal},
+    )
+    return () => controller.abort()
   }, [])
 
   return (
