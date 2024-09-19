@@ -26,7 +26,7 @@ export interface SanityLiveProps
 /**
  * @public
  */
-export const SanityLive = memo(function SanityLive(
+export const SanityLive = memo(function SanityLiveComponent(
   props: SanityLiveProps,
 ): React.JSX.Element | null {
   const {
@@ -68,6 +68,15 @@ export const SanityLive = memo(function SanityLive(
   }, [client])
 
   const [loadComlink, setLoadComlink] = useState(false)
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('SanityLive mounted')
+    return () => {
+      // eslint-disable-next-line no-console
+      console.log('SanityLive unmounted')
+    }
+  }, [])
 
   useEffect(() => {
     // @TODO detect if we are possibly in a presentation context

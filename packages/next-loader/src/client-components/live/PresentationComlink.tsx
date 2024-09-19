@@ -10,7 +10,7 @@ import {useRouter} from 'next/navigation.js'
 import {memo, useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 
-const PresentationComlink = memo(function PresentationComlink(props: {
+const PresentationComlink = memo(function PresentationComlinkComponent(props: {
   projectId: string
   dataset: string
   handleDraftModeAction: (secret: string) => Promise<void | string>
@@ -32,6 +32,15 @@ const PresentationComlink = memo(function PresentationComlink(props: {
         .catch((reason) => console.error('Failed to set the preview perspective cookie', reason))
     }
   })
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('PresentationComlink mounted')
+    return () => {
+      // eslint-disable-next-line no-console
+      console.log('PresentationComlink unmounted')
+    }
+  }, [])
 
   const [status, setStatus] = useState('disconnected')
   useEffect(() => {
@@ -57,7 +66,13 @@ const PresentationComlink = memo(function PresentationComlink(props: {
 
     const stop = comlink.start()
     setPresentationComlink(comlink)
-    return () => stop()
+    // eslint-disable-next-line no-console
+    console.log('setting comlink', comlink)
+    return () => {
+      // eslint-disable-next-line no-console
+      console.log('stopping comlink')
+      stop()
+    }
   }, [handlePerspectiveChange])
 
   const handleEnableDraftMode = useEffectEvent(async (signal: AbortSignal) => {

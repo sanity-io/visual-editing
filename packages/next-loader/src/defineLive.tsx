@@ -7,17 +7,12 @@ import {
   type QueryParams,
   type SanityClient,
 } from '@sanity/client'
+import SanityLiveClientComponent from '@sanity/next-loader/client-components/live'
 import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
 import {apiVersion} from '@sanity/preview-url-secret/constants'
 import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
-import dynamic from 'next/dynamic.js'
 import {cookies, draftMode} from 'next/headers.js'
 import {perspectiveCookieName} from './constants'
-
-const SanityLiveClientComponent = dynamic(
-  () => import('@sanity/next-loader/client-components/live'),
-  {ssr: false},
-)
 
 /**
  * @public
