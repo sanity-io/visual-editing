@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
   },
 
   experimental: {
+    reactCompiler: true,
     ppr: true,
   },
 } satisfies NextConfig
