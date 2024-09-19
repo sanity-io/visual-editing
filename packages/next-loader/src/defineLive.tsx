@@ -1,13 +1,14 @@
 /// <reference types="next" />
 
 import {
-  createClient,
   type ClientPerspective,
   type ClientReturn,
   type ContentSourceMap,
   type QueryParams,
   type SanityClient,
 } from '@sanity/client'
+import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
+import {apiVersion} from '@sanity/preview-url-secret/constants'
 import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import dynamic from 'next/dynamic.js'
 import {cookies, draftMode} from 'next/headers.js'
@@ -40,6 +41,10 @@ export interface DefinedSanityLiveProps {
    * Once you've checked that the `liveDraftsToken` is only Viewer rights or lower, you can set this to `true` to silence browser warnings about the token.
    */
   ignoreBrowserTokenWarning?: boolean
+  /**
+   * Required to enable draft mode in Presentation Tool. Requires `previewDraftsToken`. Returns a string if there were an error
+   */
+  handleDraftModeAction?: (secret: string) => Promise<void | string>
 }
 
 /**
@@ -65,9 +70,17 @@ export interface DefineSanityLiveOptions {
 /**
  * @public
  */
+export type VerifyPreviewSecretType = (
+  secret: string,
+) => Promise<{isValid: boolean; studioUrl: string | null}>
+
+/**
+ * @public
+ */
 export function defineLive(config: DefineSanityLiveOptions): {
   sanityFetch: DefinedSanityFetchType
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
+  verifyPreviewSecret: VerifyPreviewSecretType
 } {
   const {client: _client, previewDraftsToken, liveDraftsToken} = config
 
@@ -137,7 +150,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = function SanityLive(props) {
-    const {ignoreBrowserTokenWarning} = props
+    const {ignoreBrowserTokenWarning, handleDraftModeAction = handleDraftModeActionMissing} = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname} = client.config()
 
     return (
@@ -150,47 +163,40 @@ export function defineLive(config: DefineSanityLiveOptions): {
         token={liveDraftsToken && draftMode().isEnabled ? liveDraftsToken : undefined}
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
         draftModeEnabled={draftMode().isEnabled}
-        enableDraftMode={async (secret: string): Promise<boolean> => {
-          'use server'
-
-          // eslint-disable-next-line no-console
-          console.log('Server Action wants to enable Draft Mode', {secret})
-
-          if (draftMode().isEnabled) {
-            // eslint-disable-next-line no-console
-            console.log('Draft Mode is already enabled')
-            return true
-          }
-
-          const {isValid} = await validateSecret(
-            createClient({
-              projectId,
-              dataset,
-              apiHost,
-              apiVersion,
-              useProjectHostname,
-              useCdn: false,
-              token: previewDraftsToken,
-            }),
-            secret,
-            false,
-          )
-          if (!isValid) {
-            // eslint-disable-next-line no-console
-            console.error('Invalid secret provided')
-            return false
-          }
-
-          await draftMode().enable()
-
-          return true
-        }}
+        handleDraftModeAction={handleDraftModeAction}
       />
     )
   }
 
-  return {
-    sanityFetch,
-    SanityLive,
+  const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
+    if (!previewDraftsToken) {
+      throw new Error(
+        '`previewDraftsToken` is required to verify a preview secrets and initiate draft mode',
+      )
+    }
+
+    if (typeof secret !== 'string') {
+      throw new TypeError('`secret` must be a string')
+    }
+    if (!secret.trim()) {
+      throw new Error('`secret` must not be an empty string')
+    }
+
+    const client = _client.withConfig({
+      // Use the token that is setup to query draft documents, it should also have permission to query for secrets
+      token: previewDraftsToken,
+      // Userland might be using an API version that's too old to use perspectives
+      apiVersion,
+      // We can't use the CDN, the secret is typically validated right after it's created
+      useCdn: false,
+      // Don't waste time returning a source map, we don't need it
+      resultSourceMap: false,
+      // Stega is not needed
+      stega: false,
+    })
+    const {isValid, studioUrl} = await validateSecret(client, secret, false)
+    return {isValid, studioUrl}
   }
+
+  return {sanityFetch, SanityLive, verifyPreviewSecret}
 }

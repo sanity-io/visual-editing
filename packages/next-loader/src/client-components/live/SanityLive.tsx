@@ -19,7 +19,7 @@ export interface SanityLiveProps
     | 'token'
     | 'ignoreBrowserTokenWarning'
   > {
-  enableDraftMode: (secret: string) => Promise<boolean>
+  handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
 }
 
@@ -35,7 +35,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     useProjectHostname,
     ignoreBrowserTokenWarning,
     token,
-    enableDraftMode,
+    handleDraftModeAction,
     draftModeEnabled,
   } = props
   const client = useMemo(
@@ -78,7 +78,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         <PresentationComlink
           projectId={projectId!}
           dataset={dataset!}
-          enableDraftMode={enableDraftMode}
+          handleDraftModeAction={handleDraftModeAction}
           draftModeEnabled={draftModeEnabled}
         />
       )}

@@ -13,10 +13,10 @@ import {useEffectEvent} from 'use-effect-event'
 export default function PresentationComlink(props: {
   projectId: string
   dataset: string
-  enableDraftMode: (secret: string) => Promise<boolean>
+  handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
 }): React.JSX.Element | null {
-  const {enableDraftMode, draftModeEnabled, projectId, dataset} = props
+  const {handleDraftModeAction, draftModeEnabled, projectId, dataset} = props
   const router = useRouter()
 
   const [presentationComlink, setPresentationComlink] = useState<Node<
@@ -70,9 +70,16 @@ export default function PresentationComlink(props: {
       {signal},
     ) || {secret: null})
     if (signal.aborted) return
-    const enabled = await enableDraftMode(secret!)
+    const error = await handleDraftModeAction(secret!)
     // eslint-disable-next-line no-console
-    console.log('Draft mode enabled?', {enabled})
+    // @TODO call another server action here that can tell us if draft mode is actually enabled
+    if (error) {
+      // @TODO use sonnet or whatever to push a toast with the error
+      // eslint-disable-next-line no-console
+      console.error('Error enabling draft mode', error)
+      return
+    }
+    // console.log('Draft mode enabled?', {enabled})
     if (signal.aborted) return
     router.refresh()
   })

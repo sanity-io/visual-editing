@@ -5,10 +5,10 @@ import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import {toPlainText, VisualEditing, type PortableTextBlock} from 'next-sanity'
-import {revalidateTag} from 'next/cache'
 import {Inter} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
+import {handleDraftModeAction} from './actions'
 import AlertBanner from './alert-banner'
 import {Debug} from './debug'
 import PortableText from './portable-text'
@@ -88,7 +88,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           </Suspense>
         </section>
         {draftMode().isEnabled && <VisualEditing />}
-        <SanityLive ignoreBrowserTokenWarning />
+        <SanityLive ignoreBrowserTokenWarning handleDraftModeAction={handleDraftModeAction} />
         <SpeedInsights />
         <Debug />
       </body>
