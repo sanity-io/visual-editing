@@ -73,7 +73,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   return (
     <html
       lang="en"
-      className={`${inter.variable} bg-theme text-theme transition-colors`}
+      className={`${inter.variable} bg-theme text-theme duration-600 transition-colors`}
       style={{
         ['--theme-background' as string]: data?.theme?.background?.hex,
         ['--theme-text' as string]: data?.theme?.text?.hex,
