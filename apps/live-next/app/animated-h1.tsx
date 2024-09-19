@@ -11,21 +11,22 @@ interface CharacterData {
 
 export function AnimatedH1({children, className}: {children: string; className: string}) {
   const text = stegaClean(children)
-  const [characters, setCharacters] = useState<CharacterData[]>([])
+  const transformChars = (text: string) => {
+    const incs = new Map<string, number>()
+    return text.split('').map((char) => {
+      let n = incs.get(char) || 0
+      const key = `${char}-${n++}`
+      incs.set(char, n)
+      return {
+        char,
+        key,
+      } satisfies CharacterData
+    })
+  }
+  const [characters, setCharacters] = useState<CharacterData[]>(transformChars(text))
 
   useEffect(() => {
-    const incs = new Map<string, number>()
-    setCharacters(
-      text.split('').map((char) => {
-        let n = incs.get(char) || 0
-        const key = `${char}-${n++}`
-        incs.set(char, n)
-        return {
-          char,
-          key,
-        } satisfies CharacterData
-      }),
-    )
+    setCharacters(transformChars(text))
   }, [text])
 
   const containerVariants: Variants = {
