@@ -3,6 +3,7 @@
 import type {ClientPerspective, SyncTag} from '@sanity/client'
 import {revalidateTag} from 'next/cache.js'
 import {cookies, draftMode} from 'next/headers.js'
+import {perspectiveCookieName} from '../constants'
 
 export async function disableDraftMode(): Promise<void> {
   'use server'
@@ -29,7 +30,9 @@ export async function setPerspectiveCookie(perspective: string): Promise<void> {
   switch (perspective) {
     case 'previewDrafts':
     case 'published':
-      cookies().set('sanity-perspective', perspective satisfies ClientPerspective, {httpOnly: true})
+      cookies().set(perspectiveCookieName, perspective satisfies ClientPerspective, {
+        httpOnly: true,
+      })
       return
     default:
       throw new Error(`Invalid perspective: ${perspective}`)

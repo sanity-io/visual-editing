@@ -11,6 +11,7 @@ import {
 import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import dynamic from 'next/dynamic.js'
 import {cookies, draftMode} from 'next/headers.js'
+import {perspectiveCookieName} from './constants'
 
 const SanityLiveClientComponent = dynamic(
   () => import('@sanity/next-loader/client-components/live'),
@@ -101,8 +102,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
     params = {},
     stega = draftMode().isEnabled,
     perspective: _perspective = draftMode().isEnabled
-      ? cookies().has('sanity-perspective')
-        ? cookies().get('sanity-perspective')?.value
+      ? cookies().has(perspectiveCookieName)
+        ? cookies().get(perspectiveCookieName)?.value
         : 'previewDrafts'
       : 'published',
   }: {

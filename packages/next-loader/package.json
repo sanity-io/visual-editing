@@ -21,6 +21,12 @@
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
+    "./hooks": {
+      "source": "./src/hooks/index.ts",
+      "import": "./dist/hooks.js",
+      "require": "./dist/hooks.cjs",
+      "default": "./dist/hooks.js"
+    },
     "./client-components/live": {
       "source": "./src/client-components/live/index.ts",
       "import": "./dist/client-components/live.js",
@@ -42,6 +48,9 @@
     "*": {
       "client-components/live": [
         "./dist/client-components/live.d.ts"
+      ],
+      "hooks": [
+        "./dist/hooks.d.ts"
       ],
       "server-action": [
         "./dist/server-action/index.d.ts"
