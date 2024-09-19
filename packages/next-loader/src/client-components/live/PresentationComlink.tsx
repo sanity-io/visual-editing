@@ -33,15 +33,6 @@ function PresentationComlink(props: {
     }
   })
 
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('PresentationComlink mounted')
-    return () => {
-      // eslint-disable-next-line no-console
-      console.log('PresentationComlink unmounted')
-    }
-  }, [])
-
   const [status, setStatus] = useState('disconnected')
   useEffect(() => {
     const comlink = createNode<LoaderControllerMsg, LoaderNodeMsg>(
