@@ -13,6 +13,7 @@ import {apiVersion} from '@sanity/preview-url-secret/constants'
 import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import {cookies, draftMode} from 'next/headers.js'
 import {perspectiveCookieName} from './constants'
+import {sanitizePerspective} from './utils'
 
 /**
  * @public
@@ -111,7 +112,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     stega = draftMode().isEnabled,
     perspective: _perspective = draftMode().isEnabled
       ? cookies().has(perspectiveCookieName)
-        ? cookies().get(perspectiveCookieName)?.value
+        ? sanitizePerspective(cookies().get(perspectiveCookieName)?.value, 'previewDrafts')
         : 'previewDrafts'
       : 'published',
   }: {
@@ -159,6 +160,13 @@ export function defineLive(config: DefineSanityLiveOptions): {
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
         draftModeEnabled={draftMode().isEnabled}
         handleDraftModeAction={handleDraftModeAction}
+        draftModePerspective={
+          draftMode().isEnabled
+            ? cookies().has(perspectiveCookieName)
+              ? sanitizePerspective(cookies().get(perspectiveCookieName)?.value, 'previewDrafts')
+              : 'previewDrafts'
+            : 'published'
+        }
       />
     )
   }

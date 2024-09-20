@@ -4,6 +4,7 @@ import type {ClientPerspective, SyncTag} from '@sanity/client'
 import {revalidateTag} from 'next/cache.js'
 import {cookies, draftMode} from 'next/headers.js'
 import {perspectiveCookieName} from '../constants'
+import {sanitizePerspective} from '../utils'
 
 export async function disableDraftMode(): Promise<void> {
   'use server'
@@ -27,16 +28,14 @@ export async function setPerspectiveCookie(perspective: string): Promise<void> {
   if (!draftMode().isEnabled) {
     throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
   }
-  switch (perspective) {
-    case 'previewDrafts':
-    case 'published':
-      cookies().set(perspectiveCookieName, perspective satisfies ClientPerspective, {
-        httpOnly: true,
-      })
-      return
-    default:
-      throw new Error(`Invalid perspective: ${perspective}`)
+  const sanitizedPerspective = sanitizePerspective(perspective, 'previewDrafts')
+  if (perspective !== sanitizedPerspective) {
+    throw new Error(`Invalid perspective: ${perspective}`)
   }
+
+  cookies().set(perspectiveCookieName, perspective satisfies ClientPerspective, {
+    httpOnly: true,
+  })
 }
 
 export async function handleDraftModeActionMissing(): Promise<void | string> {
