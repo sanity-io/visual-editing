@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@sanity/client': ^6.21.3
+  '@sanity/client': 6.21.4-canary.0
   '@sanity/comlink': workspace:*
   '@sanity/core-loader': workspace:*
   '@sanity/presentation': workspace:*
@@ -25,8 +25,8 @@ importers:
   .:
     dependencies:
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/types':
         specifier: 3.57.4
         version: 3.57.4(debug@4.3.7)
@@ -90,10 +90,10 @@ importers:
         version: link:../../packages/@repo/studio-url
       '@sanity/astro':
         specifier: ^3.1.6
-        version: 3.1.6(@sanity/client@6.21.3)(@sanity/visual-editing@packages+visual-editing)(astro@4.15.8(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))
+        version: 3.1.6(@sanity/client@6.21.4-canary.0)(@sanity/visual-editing@packages+visual-editing)(astro@4.15.8(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -180,7 +180,7 @@ importers:
         version: 15.0.0-canary.159(@babel/core@7.25.2)(babel-plugin-react-compiler@0.0.0-experimental-6067d4e-20240919)(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
       next-sanity:
         specifier: ^9.5.0
-        version: 9.5.0(fzwj64npna5nqu7ugxvqn2l524)
+        version: 9.5.0(ce7xbqdictymnr5rucebel3qga)
       postcss:
         specifier: ^8.4.47
         version: 8.4.47
@@ -234,8 +234,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/@repo/studio-url
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -280,7 +280,7 @@ importers:
         version: 14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-sanity:
         specifier: 9.5.0
-        version: 9.5.0(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 9.5.0(@sanity/client@6.21.4-canary.0)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -312,8 +312,8 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6(@sanity/mutator@3.57.4)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
@@ -337,7 +337,7 @@ importers:
         version: 14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-sanity:
         specifier: ^9.5.0
-        version: 9.5.0(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 9.5.0(@sanity/client@6.21.4-canary.0)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -415,8 +415,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/@repo/studio-url
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/presentation':
         specifier: workspace:*
         version: link:../../packages/presentation
@@ -501,7 +501,7 @@ importers:
         version: 14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-sanity:
         specifier: 9.5.0
-        version: 9.5.0(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 9.5.0(@sanity/client@6.21.4-canary.0)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -673,8 +673,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/presentation':
         specifier: workspace:*
         version: link:../../packages/presentation
@@ -1029,8 +1029,8 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/comlink':
         specifier: workspace:*
         version: link:../comlink
@@ -1142,8 +1142,8 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.2
         version: 6.11.2(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.2)
@@ -1230,8 +1230,8 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.2
         version: 6.11.2(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.2)
@@ -1278,8 +1278,8 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/comlink':
         specifier: workspace:*
         version: link:../comlink
@@ -1321,8 +1321,8 @@ importers:
         specifier: workspace:*
         version: link:../@repo/prettier-config
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/icons':
         specifier: ^3.4.0
         version: 3.4.0(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -1364,8 +1364,8 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.2
         version: 6.11.2(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.2)
@@ -1413,8 +1413,8 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.2
         version: 6.11.2(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.2)
@@ -1480,8 +1480,8 @@ importers:
         specifier: workspace:*
         version: link:../visual-editing-helpers
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/color':
         specifier: ^3.0.6
         version: 3.0.6
@@ -1594,8 +1594,8 @@ importers:
         specifier: workspace:*
         version: link:../@repo/prettier-config
       '@sanity/client':
-        specifier: ^6.21.3
-        version: 6.21.3(debug@4.3.7)
+        specifier: 6.21.4-canary.0
+        version: 6.21.4-canary.0(debug@4.3.7)
       '@sanity/comlink':
         specifier: workspace:*
         version: link:../comlink
@@ -4277,7 +4277,7 @@ packages:
     resolution: {integrity: sha512-MmwUI1Nb+XeWvLzuuxas8cEvOIbnYma30cju3l/FMIv5XroavgEnW1ISISi99A/SAp4Z88AIRUY8r4krV7ypAw==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
-      '@sanity/client': ^6.21.3
+      '@sanity/client': 6.21.4-canary.0
       '@sanity/visual-editing': workspace:*
       astro: ^2.0.0 || ^3.0.0 || ^4.0.0
       react: ^18.2.0
@@ -4298,8 +4298,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@sanity/client@6.21.3':
-    resolution: {integrity: sha512-oE2+4kKRTZhFCc4IIsojkzKF0jIhsSYSRxkPZjScZ1k/EQ3Y2tEcQYiKwvvotzaXoaWsIL3RTpulE+R4iBYiBw==}
+  '@sanity/client@6.21.4-canary.0':
+    resolution: {integrity: sha512-4Ooc2gpTG4A76Jq0mp7oX5Yr0qr3pNEvLqHU5oS/UQhb426EtTGm2FcT7Ji6nlXyZ0wva6xGux+Y7XGqPL45lA==}
     engines: {node: '>=14.18'}
 
   '@sanity/codegen@3.57.4':
@@ -4451,7 +4451,7 @@ packages:
     resolution: {integrity: sha512-q5VdFlSzCpJT9lUCIAnjQ3/npBqebqn0vZvk2nbxQ4r97NcdkvEQ9/LmH194RNwBrtnDOVSv9nYfvn3eZCD7oQ==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^6.21.3
+      '@sanity/client': 6.21.4-canary.0
       react: ^18.0.0 || >=19.0.0-rc
     peerDependenciesMeta:
       react:
@@ -9798,7 +9798,7 @@ packages:
     resolution: {integrity: sha512-W1Uk3KxbaTdikO0xSZwPnYv7myy0FyozHaOd0fJyI1/N4L8ch+/mPYkWTjdKhPxfV3d6gfVgoMlrkaQui2Zrfw==}
     engines: {node: '>=18.18'}
     peerDependencies:
-      '@sanity/client': ^6.21.3
+      '@sanity/client': 6.21.4-canary.0
       '@sanity/icons': ^3.4.0
       '@sanity/types': 3.57.4
       '@sanity/ui': ^2.8.9
@@ -15917,7 +15917,7 @@ snapshots:
     dependencies:
       '@nuxt/kit': 3.13.2(magicast@0.3.5)(rollup@4.21.3)(webpack-sources@3.2.3)
       '@portabletext/types': 2.0.13
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/core-loader': link:packages/core-loader
       '@sanity/preview-url-secret': link:packages/preview-url-secret
       '@sanity/visual-editing': link:packages/visual-editing
@@ -16225,8 +16225,8 @@ snapshots:
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.6.2)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
       eslint-plugin-jest: 26.9.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2)
       eslint-plugin-jest-dom: 4.0.3(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.0(eslint@8.57.1)
@@ -16586,9 +16586,9 @@ snapshots:
       - react-dom
       - react-is
 
-  '@sanity/astro@3.1.6(@sanity/client@6.21.3)(@sanity/visual-editing@packages+visual-editing)(astro@4.15.8(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))':
+  '@sanity/astro@3.1.6(@sanity/client@6.21.4-canary.0)(@sanity/visual-editing@packages+visual-editing)(astro@4.15.8(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/visual-editing': link:packages/visual-editing
       astro: 4.15.8(@types/node@22.5.5)(rollup@4.21.3)(terser@5.33.0)(typescript@5.6.2)
       react: 18.3.1
@@ -16614,7 +16614,7 @@ snapshots:
   '@sanity/cli@3.57.4(react@18.3.1)':
     dependencies:
       '@babel/traverse': 7.25.6
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/codegen': 3.57.4
       '@sanity/telemetry': 0.7.9(react@18.3.1)
       '@sanity/util': 3.57.4(debug@4.3.7)
@@ -16638,7 +16638,7 @@ snapshots:
   '@sanity/cli@3.57.4(react@19.0.0-rc-fb9a90fa48-20240614)':
     dependencies:
       '@babel/traverse': 7.25.6
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/codegen': 3.57.4
       '@sanity/telemetry': 0.7.9(react@19.0.0-rc-fb9a90fa48-20240614)
       '@sanity/util': 3.57.4(debug@4.3.7)
@@ -16659,7 +16659,7 @@ snapshots:
       - react
       - supports-color
 
-  '@sanity/client@6.21.3(debug@4.3.7)':
+  '@sanity/client@6.21.4-canary.0(debug@4.3.7)':
     dependencies:
       '@sanity/eventsource': 5.0.2
       get-it: 8.6.5(debug@4.3.7)
@@ -16741,7 +16741,7 @@ snapshots:
 
   '@sanity/export@3.41.0':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/util': 3.57.4(debug@4.3.7)
       archiver: 7.0.1
       debug: 4.3.7
@@ -16884,7 +16884,7 @@ snapshots:
 
   '@sanity/migrate@3.57.4':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/mutate': 0.10.0(debug@4.3.7)
       '@sanity/types': 3.57.4(debug@4.3.7)
       '@sanity/util': 3.57.4(debug@4.3.7)
@@ -16898,7 +16898,7 @@ snapshots:
 
   '@sanity/mutate@0.10.0(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/diff-match-patch': 3.1.1
       hotscript: 1.0.13
       mendoza: 3.0.7
@@ -16909,7 +16909,7 @@ snapshots:
 
   '@sanity/mutate@0.10.1-canary.3(xstate@5.18.1)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/diff-match-patch': 3.1.1
       hotscript: 1.0.13
       mendoza: 3.0.7
@@ -16995,17 +16995,17 @@ snapshots:
       prettier: 3.3.3
       prettier-plugin-packagejson: 2.5.2(prettier@3.3.3)
 
-  '@sanity/preview-kit@5.1.1(@sanity/client@6.21.3)(react@18.3.1)':
+  '@sanity/preview-kit@5.1.1(@sanity/client@6.21.4-canary.0)(react@18.3.1)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/preview-kit-compat': link:packages/preview-kit-compat
       mendoza: 3.0.7
     optionalDependencies:
       react: 18.3.1
 
-  '@sanity/preview-kit@5.1.1(@sanity/client@6.21.3)(react@19.0.0-rc-fb9a90fa48-20240614)':
+  '@sanity/preview-kit@5.1.1(@sanity/client@6.21.4-canary.0)(react@19.0.0-rc-fb9a90fa48-20240614)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/preview-kit-compat': link:packages/preview-kit-compat
       mendoza: 3.0.7
     optionalDependencies:
@@ -17041,7 +17041,7 @@ snapshots:
 
   '@sanity/types@3.57.4(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@types/react': 18.3.7
     transitivePeerDependencies:
       - debug
@@ -17124,7 +17124,7 @@ snapshots:
 
   '@sanity/util@3.57.4(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/types': 3.57.4(debug@4.3.7)
       get-random-values-esm: 1.0.2
       moment: 2.30.1
@@ -20863,19 +20863,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.3.7
       enhanced-resolve: 5.17.1
       eslint: 8.57.1
-      eslint-module-utils: 2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1))(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
       is-glob: 4.0.3
     optionalDependencies:
-      eslint-plugin-import: 2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-plugin-import: 2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
@@ -20920,25 +20920,25 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-module-utils@2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.6.2)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-module-utils@2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.6.2)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -20970,7 +20970,7 @@ snapshots:
       eslint-utils: 2.1.0
       regexpp: 3.2.0
 
-  eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -20981,7 +20981,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.11.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.30.0)(eslint@8.57.1))(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -24326,12 +24326,12 @@ snapshots:
 
   neotraverse@0.6.18: {}
 
-  next-sanity@9.5.0(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  next-sanity@9.5.0(@sanity/client@6.21.4-canary.0)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@portabletext/react': 3.1.0(react@18.3.1)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/icons': 3.4.0(react@18.3.1)
-      '@sanity/preview-kit': 5.1.1(@sanity/client@6.21.3)(react@18.3.1)
+      '@sanity/preview-kit': 5.1.1(@sanity/client@6.21.4-canary.0)(react@18.3.1)
       '@sanity/types': 3.57.4(debug@4.3.7)
       '@sanity/ui': 2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@sanity/visual-editing': link:packages/visual-editing
@@ -24342,12 +24342,12 @@ snapshots:
       sanity: 3.57.4(@types/node@20.8.7)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0)
       styled-components: 6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  next-sanity@9.5.0(@sanity/client@6.21.3)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  next-sanity@9.5.0(@sanity/client@6.21.4-canary.0)(@sanity/icons@3.4.0(react@18.3.1))(@sanity/types@3.57.4)(@sanity/ui@2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.11(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(sanity@3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0))(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@portabletext/react': 3.1.0(react@18.3.1)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/icons': 3.4.0(react@18.3.1)
-      '@sanity/preview-kit': 5.1.1(@sanity/client@6.21.3)(react@18.3.1)
+      '@sanity/preview-kit': 5.1.1(@sanity/client@6.21.4-canary.0)(react@18.3.1)
       '@sanity/types': 3.57.4(debug@4.3.7)
       '@sanity/ui': 2.8.9(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@sanity/visual-editing': link:packages/visual-editing
@@ -24358,12 +24358,12 @@ snapshots:
       sanity: 3.57.4(@types/node@22.5.5)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.33.0)
       styled-components: 6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  next-sanity@9.5.0(fzwj64npna5nqu7ugxvqn2l524):
+  next-sanity@9.5.0(ce7xbqdictymnr5rucebel3qga):
     dependencies:
       '@portabletext/react': 3.1.0(react@19.0.0-rc-fb9a90fa48-20240614)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/icons': 3.4.0(react@19.0.0-rc-fb9a90fa48-20240614)
-      '@sanity/preview-kit': 5.1.1(@sanity/client@6.21.3)(react@19.0.0-rc-fb9a90fa48-20240614)
+      '@sanity/preview-kit': 5.1.1(@sanity/client@6.21.4-canary.0)(react@19.0.0-rc-fb9a90fa48-20240614)
       '@sanity/types': 3.57.4(debug@4.3.7)
       '@sanity/ui': 2.8.9(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react-is@18.3.1)(react@19.0.0-rc-fb9a90fa48-20240614)(styled-components@6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614))
       '@sanity/visual-editing': link:packages/visual-editing
@@ -26584,7 +26584,7 @@ snapshots:
       '@sanity/bifur-client': 0.4.1
       '@sanity/block-tools': 3.57.4(debug@4.3.7)
       '@sanity/cli': 3.57.4(react@19.0.0-rc-fb9a90fa48-20240614)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.57.4
       '@sanity/diff-match-patch': 3.1.1
@@ -26720,7 +26720,7 @@ snapshots:
       '@sanity/bifur-client': 0.4.1
       '@sanity/block-tools': 3.57.4(debug@4.3.7)
       '@sanity/cli': 3.57.4(react@18.3.1)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.57.4
       '@sanity/diff-match-patch': 3.1.1
@@ -26856,7 +26856,7 @@ snapshots:
       '@sanity/bifur-client': 0.4.1
       '@sanity/block-tools': 3.57.4(debug@4.3.7)
       '@sanity/cli': 3.57.4(react@18.3.1)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.57.4
       '@sanity/diff-match-patch': 3.1.1
@@ -26992,7 +26992,7 @@ snapshots:
       '@sanity/bifur-client': 0.4.1
       '@sanity/block-tools': 3.57.4(debug@4.3.7)
       '@sanity/cli': 3.57.4(react@18.3.1)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.57.4
       '@sanity/diff-match-patch': 3.1.1
@@ -27128,7 +27128,7 @@ snapshots:
       '@sanity/bifur-client': 0.4.1
       '@sanity/block-tools': 3.57.4(debug@4.3.7)
       '@sanity/cli': 3.57.4(react@19.0.0-rc-fb9a90fa48-20240614)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.21.4-canary.0(debug@4.3.7)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.57.4
       '@sanity/diff-match-patch': 3.1.1
