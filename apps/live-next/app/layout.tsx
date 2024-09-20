@@ -11,6 +11,7 @@ import {Suspense} from 'react'
 import {handleDraftModeAction} from './actions'
 import AlertBanner from './alert-banner'
 import {Debug} from './debug'
+import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -81,7 +82,12 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     >
       <body>
         <section className="min-h-screen">
-          {draftMode().isEnabled && <AlertBanner />}
+          {draftMode().isEnabled && (
+            <>
+              <AlertBanner />
+              <DraftModeStatus />
+            </>
+          )}
           <main>{children}</main>
           <Suspense>
             <Footer />
