@@ -156,7 +156,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
         apiHost={apiHost}
         apiVersion={apiVersion}
         useProjectHostname={useProjectHostname}
-        token={liveDraftsToken && draftMode().isEnabled ? liveDraftsToken : undefined}
+        token={
+          typeof liveDraftsToken === 'string' && draftMode().isEnabled ? liveDraftsToken : undefined
+        }
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
         draftModeEnabled={draftMode().isEnabled}
         handleDraftModeAction={handleDraftModeAction}
