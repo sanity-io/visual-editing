@@ -42,6 +42,18 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     draftModePerspective,
   } = props
 
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.info(
+      'Sanity is live with',
+      token
+        ? 'automatic revalidation for draft content changes as well as published content'
+        : draftModeEnabled
+          ? 'automatic revalidation for only published content. Provide a `liveDraftsToken` to `defineLive` to support draft content outside of Presentation Tool.'
+          : 'automatic revalidation of published content',
+    )
+  }, [draftModeEnabled, token])
+
   /**
    * 1. Handle Live Events and call revalidateTag when needed
    */
@@ -61,9 +73,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   )
   useEffect(() => {
     const subscription = client.live
-      .events
-      // {includeDrafts: draftModeEnabled}
-      ()
+      .events(token ? {includeDrafts: true} : undefined)
       .subscribe((event) => {
         if (event.type === 'message') {
           // eslint-disable-next-line no-console
@@ -72,7 +82,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         }
       })
     return () => subscription.unsubscribe()
-  }, [client])
+  }, [client, token])
 
   /**
    * 2. Notify what perspective we're in, when in Draft Mode

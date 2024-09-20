@@ -1,12 +1,7 @@
 'use client'
 
-import {stegaClean} from '@sanity/client/stega'
 import {AnimatePresence, motion, Variants} from 'framer-motion'
-
-interface CharacterData {
-  char: string
-  key: string
-}
+import {stegaClean} from 'next-sanity'
 
 const containerVariants: Variants = {
   hidden: {},
