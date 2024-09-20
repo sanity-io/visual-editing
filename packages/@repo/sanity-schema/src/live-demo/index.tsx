@@ -26,7 +26,6 @@ const homeLocation = {
 } satisfies DocumentLocation
 
 const authorType = defineType({
-  liveEdit: true,
   name: 'author',
   title: 'Author',
   icon: UserIcon,
@@ -70,7 +69,6 @@ const authorType = defineType({
 })
 
 const postType = defineType({
-  liveEdit: true,
   name: 'post',
   title: 'Post',
   icon: DocumentTextIcon,

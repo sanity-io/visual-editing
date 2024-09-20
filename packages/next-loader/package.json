@@ -33,6 +33,12 @@
       "require": "./dist/client-components/live.cjs",
       "default": "./dist/client-components/live.js"
     },
+    "./client-components/live-stream": {
+      "source": "./src/client-components/live-stream/index.ts",
+      "import": "./dist/client-components/live-stream.js",
+      "require": "./dist/client-components/live-stream.cjs",
+      "default": "./dist/client-components/live-stream.js"
+    },
     "./server-actions": {
       "source": "./src/server-actions/index.ts",
       "import": "./dist/server-actions.js",
@@ -48,6 +54,9 @@
     "*": {
       "client-components/live": [
         "./dist/client-components/live.d.ts"
+      ],
+      "client-components/live-stream": [
+        "./dist/client-components/live-stream.d.ts"
       ],
       "hooks": [
         "./dist/hooks.d.ts"

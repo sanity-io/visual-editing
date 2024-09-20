@@ -11,9 +11,17 @@ import SanityLiveClientComponent from '@sanity/next-loader/client-components/liv
 import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
 import {apiVersion} from '@sanity/preview-url-secret/constants'
 import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
+import dynamic from 'next/dynamic.js'
 import {cookies, draftMode} from 'next/headers.js'
 import {perspectiveCookieName} from './constants'
 import {sanitizePerspective} from './utils'
+
+const SanityLiveStreamClientComponent = dynamic(
+  () => import('@sanity/next-loader/client-components/live-stream'),
+  {
+    ssr: false,
+  },
+)
 
 /**
  * @public
@@ -28,6 +36,21 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
   sourceMap: ContentSourceMap | null
   tags: string[]
 }>
+
+/**
+ * @public
+ */
+export type DefinedSanityLiveStreamType = <const QueryString extends string>(props: {
+  query: QueryString
+  params?: QueryParams
+  perspective?: Omit<ClientPerspective, 'raw'>
+  stega?: boolean
+  children: (result: {
+    data: ClientReturn<QueryString>
+    sourceMap: ContentSourceMap | null
+    tags: string[]
+  }) => Promise<React.ReactNode>
+}) => Promise<React.ReactNode>
 
 /**
  * @public
@@ -76,6 +99,7 @@ export type VerifyPreviewSecretType = (
 export function defineLive(config: DefineSanityLiveOptions): {
   sanityFetch: DefinedSanityFetchType
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
+  SanityLiveStream: DefinedSanityLiveStreamType
   verifyPreviewSecret: VerifyPreviewSecretType
 } {
   const {client: _client, previewDraftsToken, liveDraftsToken} = config
@@ -173,6 +197,30 @@ export function defineLive(config: DefineSanityLiveOptions): {
     )
   }
 
+  const SanityLiveStream: DefinedSanityLiveStreamType = async function SanityLiveStream(props) {
+    const {query, params, perspective, stega, children} = props
+    const {data, sourceMap, tags} = await sanityFetch({query, params, perspective, stega})
+
+    if (draftMode().isEnabled) {
+      const {projectId, dataset} = client.config()
+      return (
+        <SanityLiveStreamClientComponent
+          projectId={projectId}
+          dataset={dataset}
+          query={query}
+          params={params}
+          perspective={perspective}
+          stega={stega}
+          initial={await children({data, sourceMap, tags})}
+          // eslint-disable-next-line react/no-children-prop, @typescript-eslint/no-explicit-any
+          children={children as unknown as any}
+        />
+      )
+    }
+
+    return children({data, sourceMap, tags})
+  }
+
   const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
     if (!previewDraftsToken) {
       throw new Error(
@@ -203,5 +251,5 @@ export function defineLive(config: DefineSanityLiveOptions): {
     return {isValid, studioUrl}
   }
 
-  return {sanityFetch, SanityLive, verifyPreviewSecret}
+  return {sanityFetch, SanityLive, SanityLiveStream, verifyPreviewSecret}
 }

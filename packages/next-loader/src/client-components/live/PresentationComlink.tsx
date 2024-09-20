@@ -9,6 +9,7 @@ import {setPerspectiveCookie} from '@sanity/next-loader/server-actions'
 import {useRouter} from 'next/navigation.js'
 import {useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
+import {setComlink} from '../../hooks/context'
 
 function PresentationComlink(props: {
   projectId: string
@@ -57,6 +58,7 @@ function PresentationComlink(props: {
 
     const stop = comlink.start()
     setPresentationComlink(comlink)
+    setComlink(comlink)
     // eslint-disable-next-line no-console
     console.log('setting comlink', comlink)
     return () => {
