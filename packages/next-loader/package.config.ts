@@ -4,6 +4,7 @@ import {defineConfig} from '@sanity/pkg-utils'
 
 const MODULE_PATHS_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED = [
   path.join('src', 'client-components', 'live', 'index.ts'),
+  path.join('src', 'client-components', 'live-stream', 'index.ts'),
   path.join('src', 'hooks', 'index.ts'),
 ]
 

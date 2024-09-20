@@ -1,4 +1,6 @@
+import {type LoaderControllerMsg, type LoaderNodeMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
+import {type Node} from '@sanity/comlink'
 
 /**
  * The Sanity Client perspective used when fetching data in Draft Mode, in the `sanityFetch` calls
@@ -42,5 +44,18 @@ export function setEnvironment(nextEnvironment: DraftEnvironment): void {
   environment = nextEnvironment
   for (const onEnvironmentChange of environmentListeners) {
     onEnvironmentChange()
+  }
+}
+
+/** @internal */
+export const comlinkListeners = new Set<() => void>()
+/** @internal */
+export let comlink: Node<LoaderControllerMsg, LoaderNodeMsg> | null = null
+/** @internal */
+export function setComlink(nextComlink: Node<LoaderControllerMsg, LoaderNodeMsg> | null): void {
+  if (comlink === nextComlink) return
+  comlink = nextComlink
+  for (const onComlinkChange of comlinkListeners) {
+    onComlinkChange()
   }
 }
