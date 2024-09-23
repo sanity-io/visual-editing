@@ -1,4 +1,4 @@
-import {Page} from '@/components/page'
+import {Page, type PageData} from '@/components/page'
 import {sanityFetch, SanityLiveStream} from '@/sanity/live'
 import {defineQuery} from 'next-sanity'
 import {notFound} from 'next/navigation'
@@ -42,5 +42,7 @@ export default async function IndexPage() {
   if (!data) {
     notFound()
   }
-  return <Page data={data} />
+
+  // @TODO fix typegen vs manual types issues
+  return <Page data={data as unknown as PageData} />
 }

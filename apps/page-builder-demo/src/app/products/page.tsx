@@ -17,7 +17,7 @@ const productsPageQuery = defineQuery(`
 `)
 
 export default async function ProductsPage() {
-  // @TODO find out why typegen is unable to handle product types
+  // @TODO fix typegen vs manual types issues
   const {data} = (await sanityFetch({query: productsPageQuery})) as unknown as {
     data: {
       _id: string
