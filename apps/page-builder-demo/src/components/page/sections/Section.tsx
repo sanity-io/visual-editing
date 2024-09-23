@@ -1,12 +1,8 @@
-import {dataAttribute} from '@/sanity'
-import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
+import {dataAttribute} from '@/sanity/dataAttribute'
 import {PageSection} from '../PageSection'
 import {PageData, PageSectionData} from '../types'
 
-export function Section(props: {
-  page: WrappedValue<PageData>
-  section: WrappedValue<PageSectionData>
-}) {
+export function Section(props: {page: PageData; section: PageSectionData}) {
   const {page, section} = props
 
   return (
@@ -16,11 +12,11 @@ export function Section(props: {
         id: page._id,
         type: page._type,
         path: `sections[_key=="${section._key}"]`,
-      })}
+      }).toString()}
     >
       {section.headline ? (
-        <h1 className="text-3xl font-extrabold sm:text-5xl md:text-7xl">
-          <sanity.span style={{outline: 'none'}}>{section.headline}</sanity.span>
+        <h1 className="text-3xl font-extrabold outline-none sm:text-5xl md:text-7xl">
+          {section.headline}
         </h1>
       ) : (
         <h1 className="text-3xl font-extrabold text-gray-200 sm:text-5xl md:text-7xl dark:text-gray-800">
@@ -29,7 +25,7 @@ export function Section(props: {
               id: page._id,
               type: page._type,
               path: `sections[_key=="${section._key}"].headline`,
-            })}
+            }).toString()}
           >
             Headline
           </span>
@@ -38,7 +34,7 @@ export function Section(props: {
 
       {section.tagline ? (
         <p className="mt-3 font-serif text-xl text-gray-600 sm:mt-4 dark:text-gray-400">
-          <sanity.span>{section.tagline}</sanity.span>
+          {section.tagline}
         </p>
       ) : (
         <p className="mt-3 font-serif text-xl text-gray-200 sm:mt-4 dark:text-gray-800">
@@ -47,7 +43,7 @@ export function Section(props: {
               id: page._id,
               type: page._type,
               path: `sections[_key=="${section._key}"].tagline`,
-            })}
+            }).toString()}
           >
             Tagline
           </span>
@@ -55,9 +51,7 @@ export function Section(props: {
       )}
 
       {section.subline ? (
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-          <sanity.span>{section.subline}</sanity.span>
-        </p>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{section.subline}</p>
       ) : (
         <p className="mt-2 text-sm text-gray-200 dark:text-gray-800">
           <span
@@ -65,7 +59,7 @@ export function Section(props: {
               id: page._id,
               type: page._type,
               path: `sections[_key=="${section._key}"].subline`,
-            })}
+            }).toString()}
           >
             Subline
           </span>

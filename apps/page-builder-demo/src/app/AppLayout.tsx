@@ -1,10 +1,11 @@
+'use client'
+
+import type {LayoutQueryResult} from '@/sanity.types'
 import {CloseIcon, MenuIcon} from '@sanity/icons'
-import {sanity, WrappedValue} from '@sanity/react-loader/jsx'
 import clsx from 'clsx'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
-import {ReactNode, useState} from 'react'
-import {SiteSettingsData} from './types'
+import {useState} from 'react'
 
 const links = [
   // {
@@ -21,10 +22,7 @@ const links = [
   // },
 ]
 
-export function AppLayout(props: {
-  children?: ReactNode
-  data: {siteSettings: WrappedValue<SiteSettingsData> | null}
-}) {
+export function AppLayout(props: {children: React.ReactNode; data: LayoutQueryResult}) {
   const {children, data} = props
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -36,7 +34,7 @@ export function AppLayout(props: {
           className="text-md block flex-none rounded p-3 font-bold leading-none hover:bg-gray-50 sm:ml-0 dark:hover:bg-gray-950"
           href="/"
         >
-          <sanity.span>{data?.siteSettings?.title}</sanity.span>
+          {data?.title}
         </Link>
 
         <button
@@ -74,7 +72,7 @@ export function AppLayout(props: {
               setMenuOpen(false)
             }}
           >
-            <sanity.span>{data?.siteSettings?.title}</sanity.span>
+            {data?.title}
           </Link>
 
           <button
@@ -107,7 +105,7 @@ export function AppLayout(props: {
       </div>
 
       <div className="p-5 text-xs text-gray-600 dark:text-gray-400" hidden={menuOpen}>
-        <sanity.span>{data?.siteSettings?.copyrightText}</sanity.span>
+        {data?.copyrightText}
       </div>
     </div>
   )
