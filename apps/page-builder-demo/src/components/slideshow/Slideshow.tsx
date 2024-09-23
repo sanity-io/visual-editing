@@ -1,5 +1,7 @@
+'use client'
+
 import './Slideshow.css'
-import {SanityArrayValue, SanityImageValue} from '@/sanity'
+import type {SanityArrayValue, SanityImageValue} from '@/sanity/types'
 import {useState} from 'react'
 import {Image} from '../image'
 

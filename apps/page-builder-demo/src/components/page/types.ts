@@ -1,4 +1,4 @@
-import {SanityArrayValue, SanityImageValue} from '@/sanity'
+import type {SanityArrayValue, SanityImageValue} from '@/sanity/types'
 
 export interface SectionStyleData {
   variant?: 'default' | 'inverted'

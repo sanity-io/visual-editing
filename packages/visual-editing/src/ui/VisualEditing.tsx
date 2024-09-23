@@ -56,3 +56,4 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
     </>
   )
 }
+VisualEditing.displayName = 'VisualEditing'

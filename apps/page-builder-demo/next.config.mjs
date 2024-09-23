@@ -7,11 +7,6 @@ const nextConfig = {
       displayName: true,
     },
   },
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
 }
 
 export default withBundleAnalyzer({
