@@ -37,12 +37,18 @@ const frontPageQuery = defineQuery(`
 `)
 
 export default async function IndexPage() {
-  const {data} = await sanityFetch({query: frontPageQuery})
+  return (
+    <SanityLiveStream query={frontPageQuery}>
+      {async ({data}) => {
+        'use server'
 
-  if (!data) {
-    notFound()
-  }
+        if (!data) {
+          notFound()
+        }
 
-  // @TODO fix typegen vs manual types issues
-  return <Page data={data as unknown as PageData} />
+        // @TODO fix typegen vs manual types issues
+        return <Page data={data as unknown as PageData} />
+      }}
+    </SanityLiveStream>
+  )
 }

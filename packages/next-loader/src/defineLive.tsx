@@ -49,8 +49,10 @@ export type DefinedSanityLiveStreamType = <const QueryString extends string>(pro
     data: ClientReturn<QueryString>
     sourceMap: ContentSourceMap | null
     tags: string[]
-  }) => Promise<React.ReactNode>
-}) => Promise<React.ReactNode>
+  }) => Promise<Awaited<React.ReactNode>>
+  // @TODO follow up on this after React 19: https://github.com/vercel/next.js/discussions/67365#discussioncomment-9935377
+  // }) => Promise<Awaited<React.ReactNode>>
+}) => React.ReactNode
 
 /**
  * @public
@@ -198,7 +200,17 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const SanityLiveStream: DefinedSanityLiveStreamType = async function SanityLiveStream(props) {
-    const {query, params, perspective, stega, children} = props
+    const {
+      query,
+      params,
+      perspective = draftMode().isEnabled
+        ? cookies().has(perspectiveCookieName)
+          ? sanitizePerspective(cookies().get(perspectiveCookieName)?.value, 'previewDrafts')
+          : 'previewDrafts'
+        : 'published',
+      stega = draftMode().isEnabled,
+      children,
+    } = props
     const {data, sourceMap, tags} = await sanityFetch({query, params, perspective, stega})
 
     if (draftMode().isEnabled) {
@@ -218,7 +230,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       )
     }
 
-    return children({data, sourceMap, tags})
+    return <>{children({data, sourceMap, tags})}</>
   }
 
   const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
