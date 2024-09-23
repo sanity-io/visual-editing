@@ -71,88 +71,219 @@ export type Geopoint = {
   alt?: number
 }
 
-export type Post = {
+export type Section = {
+  _type: 'section'
+  symbol?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'page.section'
+  }
+  headline?: string
+  tagline?: string
+  subline?: string
+}
+
+export type FeatureHighlight = {
+  _type: 'featureHighlight'
+  headline?: string
+  description?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  ctas?: Array<{
+    title?: string
+    href?: string
+    _type: 'cta'
+    _key: string
+  }>
+  product?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'product'
+  }
+  style?: SectionStyle
+}
+
+export type FeaturedProducts = {
+  _type: 'featuredProducts'
+  headline?: string
+  products?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'product'
+  }>
+  style?: SectionStyle
+}
+
+export type Intro = {
+  _type: 'intro'
+  headline?: string
+  intro?: string
+  style?: SectionStyle
+}
+
+export type Hero = {
+  _type: 'hero'
+  headline?: string
+  tagline?: string
+  subline?: string
+  style?: SectionStyle
+}
+
+export type SiteSettings = {
   _id: string
-  _type: 'post'
+  _type: 'siteSettings'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  description?: string
+  frontPage?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'page'
+  }
+  copyrightText?: string
+}
+
+export type Project = {
+  _id: string
+  _type: 'project'
   _createdAt: string
   _updatedAt: string
   _rev: string
   title?: string
   slug?: Slug
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-  excerpt?: string
-  coverImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-  date?: string
-  author?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'author'
-  }
 }
 
-export type Author = {
+export type Page = {
   _id: string
-  _type: 'author'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name?: string
-  picture?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-}
-
-export type Slug = {
-  _type: 'slug'
-  current?: string
-  source?: string
-}
-
-export type Settings = {
-  _id: string
-  _type: 'settings'
+  _type: 'page'
   _createdAt: string
   _updatedAt: string
   _rev: string
   title?: string
+  slug?: Slug
+  sections?: Array<
+    | {
+        headline?: string
+        tagline?: string
+        subline?: string
+        style?: SectionStyle
+        _type: 'hero'
+        _key: string
+      }
+    | {
+        headline?: string
+        intro?: string
+        style?: SectionStyle
+        _type: 'intro'
+        _key: string
+      }
+    | {
+        headline?: string
+        products?: Array<{
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          _key: string
+          [internalGroqTypeReferenceTo]?: 'product'
+        }>
+        style?: SectionStyle
+        _type: 'featuredProducts'
+        _key: string
+      }
+    | {
+        headline?: string
+        description?: string
+        image?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        }
+        ctas?: Array<{
+          title?: string
+          href?: string
+          _type: 'cta'
+          _key: string
+        }>
+        product?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'product'
+        }
+        style?: SectionStyle
+        _type: 'featureHighlight'
+        _key: string
+      }
+    | {
+        symbol?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'page.section'
+        }
+        headline?: string
+        tagline?: string
+        subline?: string
+        _type: 'section'
+        _key: string
+      }
+  >
+}
+
+export type PageSection = {
+  _id: string
+  _type: 'page.section'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  headline?: string
+  tagline?: string
+  subline?: string
+}
+
+export type Product = {
+  _id: string
+  _type: 'product'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  media?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
   description?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -160,28 +291,6 @@ export type Settings = {
       _type: 'span'
       _key: string
     }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-  theme?: {
-    background?: Color
-    text?: Color
-  }
-  footer?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
     style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
     listItem?: 'bullet' | 'number'
     markDefs?: Array<{
@@ -193,19 +302,55 @@ export type Settings = {
     _type: 'block'
     _key: string
   }>
-  ogImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    metadataBase?: string
-    _type: 'image'
+  brandReference?: unknown
+  details?: {
+    materials?: string
+    collectionNotes?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    performance?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    ledLifespan?: string
+    certifications?: Array<string>
   }
+  variants?: Array<{
+    title?: string
+    price?: string
+    sku?: string
+    _type: 'variant'
+    _key: string
+  }>
 }
 
 export type SanityImageCrop = {
@@ -265,172 +410,15 @@ export type SanityImageMetadata = {
   isOpaque?: boolean
 }
 
-export type SanityAssistInstructionTask = {
-  _type: 'sanity.assist.instructionTask'
-  path?: string
-  instructionKey?: string
-  started?: string
-  updated?: string
-  info?: string
+export type SectionStyle = {
+  _type: 'sectionStyle'
+  variant?: 'default' | 'inverted'
 }
 
-export type SanityAssistTaskStatus = {
-  _type: 'sanity.assist.task.status'
-  tasks?: Array<
-    {
-      _key: string
-    } & SanityAssistInstructionTask
-  >
-}
-
-export type SanityAssistSchemaTypeAnnotations = {
-  _type: 'sanity.assist.schemaType.annotations'
-  title?: string
-  fields?: Array<
-    {
-      _key: string
-    } & SanityAssistSchemaTypeField
-  >
-}
-
-export type SanityAssistOutputType = {
-  _type: 'sanity.assist.output.type'
-  type?: string
-}
-
-export type SanityAssistOutputField = {
-  _type: 'sanity.assist.output.field'
-  path?: string
-}
-
-export type SanityAssistInstructionContext = {
-  _type: 'sanity.assist.instruction.context'
-  reference?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'assist.instruction.context'
-  }
-}
-
-export type AssistInstructionContext = {
-  _id: string
-  _type: 'assist.instruction.context'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  context?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: null
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-}
-
-export type SanityAssistInstructionUserInput = {
-  _type: 'sanity.assist.instruction.userInput'
-  message?: string
-  description?: string
-}
-
-export type SanityAssistInstructionPrompt = Array<{
-  children?: Array<
-    | {
-        marks?: Array<string>
-        text?: string
-        _type: 'span'
-        _key: string
-      }
-    | ({
-        _key: string
-      } & SanityAssistInstructionFieldRef)
-    | ({
-        _key: string
-      } & SanityAssistInstructionContext)
-    | ({
-        _key: string
-      } & SanityAssistInstructionUserInput)
-  >
-  style?: 'normal'
-  listItem?: never
-  markDefs?: null
-  level?: number
-  _type: 'block'
-  _key: string
-}>
-
-export type SanityAssistInstructionFieldRef = {
-  _type: 'sanity.assist.instruction.fieldRef'
-  path?: string
-}
-
-export type SanityAssistInstruction = {
-  _type: 'sanity.assist.instruction'
-  prompt?: SanityAssistInstructionPrompt
-  icon?: string
-  title?: string
-  userId?: string
-  createdById?: string
-  output?: Array<
-    | ({
-        _key: string
-      } & SanityAssistOutputField)
-    | ({
-        _key: string
-      } & SanityAssistOutputType)
-  >
-}
-
-export type SanityAssistSchemaTypeField = {
-  _type: 'sanity.assist.schemaType.field'
-  path?: string
-  instructions?: Array<
-    {
-      _key: string
-    } & SanityAssistInstruction
-  >
-}
-
-export type Color = {
-  _type: 'color'
-  hex?: string
-  alpha?: number
-  hsl?: HslaColor
-  hsv?: HsvaColor
-  rgb?: RgbaColor
-}
-
-export type RgbaColor = {
-  _type: 'rgbaColor'
-  r?: number
-  g?: number
-  b?: number
-  a?: number
-}
-
-export type HsvaColor = {
-  _type: 'hsvaColor'
-  h?: number
-  s?: number
-  v?: number
-  a?: number
-}
-
-export type HslaColor = {
-  _type: 'hslaColor'
-  h?: number
-  s?: number
-  l?: number
-  a?: number
+export type Slug = {
+  _type: 'slug'
+  current?: string
+  source?: string
 }
 
 export type AllSanitySchemaTypes =
@@ -439,31 +427,23 @@ export type AllSanitySchemaTypes =
   | SanityImageDimensions
   | SanityFileAsset
   | Geopoint
-  | Post
-  | Author
-  | Slug
-  | Settings
+  | Section
+  | FeatureHighlight
+  | FeaturedProducts
+  | Intro
+  | Hero
+  | SiteSettings
+  | Project
+  | Page
+  | PageSection
+  | Product
   | SanityImageCrop
   | SanityImageHotspot
   | SanityImageAsset
   | SanityAssetSourceData
   | SanityImageMetadata
-  | SanityAssistInstructionTask
-  | SanityAssistTaskStatus
-  | SanityAssistSchemaTypeAnnotations
-  | SanityAssistOutputType
-  | SanityAssistOutputField
-  | SanityAssistInstructionContext
-  | AssistInstructionContext
-  | SanityAssistInstructionUserInput
-  | SanityAssistInstructionPrompt
-  | SanityAssistInstructionFieldRef
-  | SanityAssistInstruction
-  | SanityAssistSchemaTypeField
-  | Color
-  | RgbaColor
-  | HsvaColor
-  | HslaColor
+  | SectionStyle
+  | Slug
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/app/layout.tsx
 // Variable: layoutQuery
@@ -488,8 +468,8 @@ export type LayoutQueryResult =
           _type: 'span'
           _key: string
         }>
-        style?: 'normal'
-        listItem?: never
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+        listItem?: 'bullet' | 'number'
         markDefs?: Array<{
           href?: string
           _type: 'link'
@@ -506,66 +486,310 @@ export type LayoutQueryResult =
       description: string | null
       copyrightText: null
     }
+  | {
+      title: string | null
+      description: string | null
+      copyrightText: string | null
+    }
   | null
 
 // Source: ./src/app/page.tsx
 // Variable: frontPageQuery
 // Query: *[_id == "siteSettings"][0]{    frontPage->{      _type,      _id,      title,      sections[]{        ...,        symbol->{_type},        'headline': coalesce(headline, symbol->headline),        'tagline': coalesce(tagline, symbol->tagline),        'subline': coalesce(subline, symbol->subline),        product->{          _type,          _id,          title,          slug,          "media": media[0]        },        products[]->{          '_key': _id,          _type,          _id,          title,          slug,          "media": media[0]        }      },      style    }  }.frontPage
-export type FrontPageQueryResult = null
-
-// Source: ./src/app/queries.ts
-// Variable: SITE_SETTINGS_QUERY
-// Query: *[_id == "siteSettings"][0]{  title,  copyrightText}
-export type SITE_SETTINGS_QUERYResult =
-  | {
-      title: null
-      copyrightText: null
-    }
-  | {
-      title: string | null
-      copyrightText: null
-    }
-  | null
-// Variable: INDEX_PAGE_QUERY
-// Query: *[_id == "siteSettings"][0]{  frontPage->{    _type,    _id,    title,    sections[]{      ...,      symbol->{_type},      'headline': coalesce(headline, symbol->headline),      'tagline': coalesce(tagline, symbol->tagline),      'subline': coalesce(subline, symbol->subline),      product->{        _type,        _id,        title,        slug,        "media": media[0]      },      products[]->{        '_key': _id,        _type,        _id,        title,        slug,        "media": media[0]      }    },    style  }}.frontPage
-export type INDEX_PAGE_QUERYResult = null
-// Variable: pageQuery
-// Query: *[_type == "page" && _id == $id][0]{  _type,  _id,  title,  sections[]{    ...,    symbol->{_type},    'headline': coalesce(headline, symbol->headline),    'tagline': coalesce(tagline, symbol->tagline),    'subline': coalesce(subline, symbol->subline),    product->{      _type,      _id,      title,      slug,      "media": media[0]    },    products[]->{      '_key': _id,      _type,      _id,      title,      slug,      "media": media[0]    }  },  style}
-export type PageQueryResult = null
+export type FrontPageQueryResult = null | {
+  _type: 'page'
+  _id: string
+  title: string | null
+  sections: Array<
+    | {
+        headline: string | null
+        products: Array<{
+          _key: string
+          _type: 'product'
+          _id: string
+          title: string | null
+          slug: Slug | null
+          media: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          } | null
+        }> | null
+        style?: SectionStyle
+        _type: 'featuredProducts'
+        _key: string
+        symbol: null
+        tagline: null
+        subline: null
+        product: null
+      }
+    | {
+        headline: string | null
+        description?: string
+        image?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        }
+        ctas?: Array<{
+          title?: string
+          href?: string
+          _type: 'cta'
+          _key: string
+        }>
+        product: {
+          _type: 'product'
+          _id: string
+          title: string | null
+          slug: Slug | null
+          media: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          } | null
+        } | null
+        style?: SectionStyle
+        _type: 'featureHighlight'
+        _key: string
+        symbol: null
+        tagline: null
+        subline: null
+        products: null
+      }
+    | {
+        headline: string | null
+        tagline: string | null
+        subline: string | null
+        style?: SectionStyle
+        _type: 'hero'
+        _key: string
+        symbol: null
+        product: null
+        products: null
+      }
+    | {
+        headline: string | null
+        intro?: string
+        style?: SectionStyle
+        _type: 'intro'
+        _key: string
+        symbol: null
+        tagline: null
+        subline: null
+        product: null
+        products: null
+      }
+    | {
+        symbol: {
+          _type: 'page.section'
+        } | null
+        headline: string | null
+        tagline: string | null
+        subline: string | null
+        _type: 'section'
+        _key: string
+        product: null
+        products: null
+      }
+  > | null
+  style: null
+}
 
 // Source: ./src/app/projects/page.tsx
 // Variable: projectsPageQuery
 // Query: *[_type == "project" && defined(slug.current)]
-export type ProjectsPageQueryResult = Array<never>
+export type ProjectsPageQueryResult = Array<{
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+}>
 
 // Source: ./src/app/products/page.tsx
 // Variable: productsPageQuery
 // Query: *[_type == "product" && defined(slug.current)]{    _id,    title,    description,    slug,    "media": media[0]  }
-export type ProductsPageQueryResult = Array<never>
+export type ProductsPageQueryResult = Array<{
+  _id: string
+  title: string | null
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  slug: Slug | null
+  media: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  } | null
+}>
 
 // Source: ./src/app/product/[slug]/page.tsx
 // Variable: productSlugsQuery
 // Query: *[_type == "product" && defined(slug.current)]{"slug": slug.current}
-export type ProductSlugsQueryResult = Array<never>
+export type ProductSlugsQueryResult = Array<{
+  slug: string | null
+}>
 // Variable: productPageQuery
 // Query: *[_type == "product" && slug.current == $slug][0]
-export type ProductPageQueryResult = null
+export type ProductPageQueryResult = {
+  _id: string
+  _type: 'product'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  media?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  brandReference?: unknown
+  details?: {
+    materials?: string
+    collectionNotes?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    performance?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    ledLifespan?: string
+    certifications?: Array<string>
+  }
+  variants?: Array<{
+    title?: string
+    price?: string
+    sku?: string
+    _type: 'variant'
+    _key: string
+  }>
+} | null
 
 // Source: ./src/app/project/[slug]/page.tsx
 // Variable: projectSlugsQuery
 // Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
-export type ProjectSlugsQueryResult = Array<never>
+export type ProjectSlugsQueryResult = Array<{
+  slug: string | null
+}>
 // Variable: projectPageQuery
 // Query: *[_type == "project" && slug.current == $slug][0]
-export type ProjectPageQueryResult = null
+export type ProjectPageQueryResult = {
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+} | null
 
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_id == "siteSettings"][0]{\n  title,\n  description,\n  copyrightText\n}': LayoutQueryResult
     "\n  *[_id == \"siteSettings\"][0]{\n    frontPage->{\n      _type,\n      _id,\n      title,\n      sections[]{\n        ...,\n        symbol->{_type},\n        'headline': coalesce(headline, symbol->headline),\n        'tagline': coalesce(tagline, symbol->tagline),\n        'subline': coalesce(subline, symbol->subline),\n        product->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        },\n        products[]->{\n          '_key': _id,\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        }\n      },\n      style\n    }\n  }.frontPage\n": FrontPageQueryResult
-    '\n*[_id == "siteSettings"][0]{\n  title,\n  copyrightText\n}\n': SITE_SETTINGS_QUERYResult
-    "\n*[_id == \"siteSettings\"][0]{\n  frontPage->{\n    _type,\n    _id,\n    title,\n    sections[]{\n      ...,\n      symbol->{_type},\n      'headline': coalesce(headline, symbol->headline),\n      'tagline': coalesce(tagline, symbol->tagline),\n      'subline': coalesce(subline, symbol->subline),\n      product->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      },\n      products[]->{\n        '_key': _id,\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      }\n    },\n    style\n  }\n}.frontPage\n": INDEX_PAGE_QUERYResult
-    "\n*[_type == \"page\" && _id == $id][0]{\n  _type,\n  _id,\n  title,\n  sections[]{\n    ...,\n    symbol->{_type},\n    'headline': coalesce(headline, symbol->headline),\n    'tagline': coalesce(tagline, symbol->tagline),\n    'subline': coalesce(subline, symbol->subline),\n    product->{\n      _type,\n      _id,\n      title,\n      slug,\n      \"media\": media[0]\n    },\n    products[]->{\n      '_key': _id,\n      _type,\n      _id,\n      title,\n      slug,\n      \"media\": media[0]\n    }\n  },\n  style\n}\n": PageQueryResult
     '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
     '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
