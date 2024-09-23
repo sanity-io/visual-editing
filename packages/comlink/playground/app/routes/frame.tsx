@@ -1,5 +1,6 @@
 import {createNode, type Node, type ProtocolMessage, type WithoutResponse} from '@sanity/comlink'
 import {useCallback, useEffect, useState} from 'react'
+import {Button} from '../components/Button'
 import {Card} from '../components/Card'
 import {MessageControls} from '../components/MessageControls'
 import {MessageStack} from '../components/MessageStack'
@@ -14,7 +15,11 @@ export default function Frame() {
 
   const [node, setNode] = useState<Node<ControllerMessage, NodeMessage> | null>(null)
 
+  const [started, setStarted] = useState(true)
+
   useEffect(() => {
+    if (!started) return
+
     const node = createNode<ControllerMessage, NodeMessage>({
       name: 'iframe',
       connectTo: 'window',
@@ -37,6 +42,10 @@ export default function Frame() {
     node.onStatus(setStatus)
 
     return node.start()
+  }, [started])
+
+  const toggleActor = useCallback(() => {
+    setStarted((started) => !started)
   }, [])
 
   const onSend = useCallback(
@@ -53,9 +62,11 @@ export default function Frame() {
 
   return (
     <div className="h-screen">
-      <Card title="iFrame" status={status}>
+      <Card title="iFrame" status={started ? status : 'stopped'}>
         <MessageStack messages={received.length ? received : buffered} />
-        <MessageControls onSend={onSend} />
+        <MessageControls onSend={onSend}>
+          <Button onClick={toggleActor}>{started ? 'Force Stop' : 'Restart'} </Button>
+        </MessageControls>
       </Card>
     </div>
   )

@@ -360,6 +360,10 @@ export const createNodeMachine = <
             input: listenInputFromContext({
               include: MSG_HANDSHAKE_ACK,
               count: 1,
+              // Override the default `message.received` responseType to prevent
+              // buffering the ack message. We transition to the connected state
+              // using onDone instead of listening to this event using `on`
+              responseType: 'handshake.complete',
             }),
             onDone: 'connected',
           },

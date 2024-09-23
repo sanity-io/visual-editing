@@ -1,4 +1,4 @@
-import {EMPTY, filter, fromEvent, map, Observable, take, takeUntil} from 'rxjs'
+import {EMPTY, filter, fromEvent, map, take, takeUntil, type Observable} from 'rxjs'
 import {v4 as uuid} from 'uuid'
 import {
   assign,

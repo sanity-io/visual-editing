@@ -325,6 +325,7 @@ export const createChannelMachine = <
         },
       },
       handshaking: {
+        id: 'handshaking',
         invoke: [
           {
             id: 'send syn',
@@ -411,7 +412,7 @@ export const createChannelMachine = <
               sending: {
                 on: {
                   'request.failed': {
-                    target: '#disconnected',
+                    target: '#handshaking',
                   },
                 },
                 invoke: {
