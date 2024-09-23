@@ -5,7 +5,7 @@ import Link from 'next/link'
 const projectsPageQuery = defineQuery(`*[_type == "project" && defined(slug.current)]`)
 
 export default async function ProjectsPage() {
-  // @TODO find out why typegen is unable to handle project types
+  // @TODO fix typegen vs manual types issues
   const {data} = (await sanityFetch({query: projectsPageQuery})) as unknown as {
     data: {
       _id: string
