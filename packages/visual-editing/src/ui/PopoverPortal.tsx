@@ -38,7 +38,7 @@ export const PopoverPortal: FunctionComponent<{
 
   return (
     <Portal>
-      <PortalContainer data-sanity-overlay-element="noclick">
+      <PortalContainer data-sanity-overlay-element>
         <PortalBackground onClickCapture={onDismiss} />
         {children}
       </PortalContainer>

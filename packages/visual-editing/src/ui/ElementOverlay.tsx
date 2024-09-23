@@ -153,7 +153,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   return (
     <>
       {showActions ? (
-        <Actions gap={1} paddingBottom={1}>
+        <Actions gap={1} paddingBottom={1} data-sanity-overlay-element>
           <Link href={href} />
         </Actions>
       ) : null}
@@ -246,7 +246,7 @@ const Link = memo(function Link(props: {href: string}) {
   }, [props.href, referer])
 
   return (
-    <Box as="a" href={href} target="_blank" rel="noopener noreferrer" data-sanity-overlay-element>
+    <Box as="a" href={href} target="_blank" rel="noopener noreferrer">
       <ActionOpen padding={2}>
         <Text size={1} weight="medium">
           Open in Studio

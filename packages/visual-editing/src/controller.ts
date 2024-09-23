@@ -431,11 +431,14 @@ export function createOverlayController({
   function handleBlur(event: MouseEvent) {
     const element = findOverlayElement(event.target)
 
-    if (element && element.dataset['sanityOverlayElement'] !== 'noclick') {
-      event.preventDefault()
-      event.stopPropagation()
+    if (element) {
+      if (element.dataset['sanityOverlayElement'] === 'capture') {
+        event.preventDefault()
+        event.stopPropagation()
+      }
       return
     }
+
     hoverStack = []
     handler({
       type: 'overlay/blur',
