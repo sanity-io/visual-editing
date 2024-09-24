@@ -274,7 +274,7 @@ let minimapScaleApplied = false
 let mousePosInverseTransform = {x: 0, y: 0}
 let mousePos = {x: 0, y: 0}
 
-let prescaleHeight = document.documentElement.scrollHeight
+let prescaleHeight = typeof document === 'undefined' ? 0 : document.documentElement.scrollHeight
 
 export function handleOverlayDrag(
   mouseEvent: MouseEvent,
