@@ -286,6 +286,7 @@ export function handleOverlayDrag(
   // do not trigger drag sequence on anything other than "main" (0) click, ignore right click, etc
   if (mouseEvent.button !== 0) return
 
+  // ensure keyboard events fire within frame context
   window.focus()
 
   let rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
