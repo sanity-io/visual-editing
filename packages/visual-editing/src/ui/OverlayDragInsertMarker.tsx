@@ -10,10 +10,6 @@ const Root = styled.div<{$x: number; $y: number; $width: number; $height: number
   background: color-mix(in srgb, #556bfc 95%, transparent);
   pointer-events: none;
   transform: ${({$x, $y}) => `translate(${$x}px, ${$y}px)`};
-
-  .disable-overlays & {
-    opacity: 0;
-  }
 `
 
 const markerThickness = 2

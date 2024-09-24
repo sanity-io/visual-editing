@@ -72,10 +72,6 @@ const Root = styled(Card)`
   :link {
     text-decoration: none;
   }
-
-  .disable-overlays & {
-    display: none;
-  }
 `
 
 const Actions = styled(Flex)`
