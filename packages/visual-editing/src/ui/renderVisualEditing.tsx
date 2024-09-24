@@ -27,8 +27,9 @@ export function renderVisualEditing(
         root.unmount()
         root = null
       }
-      if (node && node.parentNode === document.body) {
-        document.body.removeChild(node)
+      if (node) {
+        node.parentNode!.removeChild(node)
+
         node = null
       }
     }, 1000)
@@ -41,7 +42,9 @@ export function renderVisualEditing(
     // eslint-disable-next-line no-warning-comments
     // @TODO after the element is `sanity-visual-editing` instead of `div`, stop setting this ID
     node.id = OVERLAY_ID
-    document.body.appendChild(node)
+
+    // render sanity-visual-editing after closing </body> tag
+    document.body.parentNode!.insertBefore(node, document.body.nextSibling)
   }
 
   if (!root) {

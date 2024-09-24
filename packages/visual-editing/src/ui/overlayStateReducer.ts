@@ -18,6 +18,7 @@ export interface OverlayState {
   isDragging: boolean
   dragInsertPosition: DragInsertPosition
   dragSkeleton: DragSkeleton | null
+  dragShowMinimapPrompt: boolean
 }
 
 export function overlayStateReducer(
@@ -25,7 +26,7 @@ export function overlayStateReducer(
   message: OverlayMsg | VisualEditingControllerMsg,
 ): OverlayState {
   const {type} = message
-  let {contextMenu, focusPath, perspective, isDragging, dragInsertPosition, dragSkeleton} = state
+  let {contextMenu, focusPath, perspective, isDragging, dragInsertPosition, dragShowMinimapPrompt, dragSkeleton} = state
   let wasMaybeCollapsed = false
 
   if (type === 'presentation/focus') {
@@ -66,11 +67,18 @@ export function overlayStateReducer(
 
   if (type === 'overlay/dragStart') {
     isDragging = true
+  }
+
+  if (message.type === 'overlay/dragUpdateSkeleton') {
     dragSkeleton = message.skeleton
   }
 
   if (type === 'overlay/dragEnd') {
     isDragging = false
+  }
+
+  if (message.type === 'overlay/dragToggleMinimapPrompt') {
+    dragShowMinimapPrompt = message.display
   }
 
   return {
@@ -83,5 +91,6 @@ export function overlayStateReducer(
     focusPath,
     perspective,
     wasMaybeCollapsed,
+    dragShowMinimapPrompt,
   }
 }
