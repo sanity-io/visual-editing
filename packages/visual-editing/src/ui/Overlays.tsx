@@ -33,6 +33,7 @@ import {ElementOverlay} from './ElementOverlay'
 import {useOptimisticActor} from './optimistic-state/useOptimisticActor'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
+import {OverlayMinimapPrompt} from './OverlayMinimapPrompt'
 import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
@@ -175,6 +176,7 @@ export const Overlays: FunctionComponent<{
     {
       contextMenu,
       dragInsertPosition,
+      dragShowMinimapPrompt,
       dragSkeleton,
       elements,
       isDragging,
@@ -185,6 +187,7 @@ export const Overlays: FunctionComponent<{
   ] = useReducer(overlayStateReducer, {
     contextMenu: null,
     dragInsertPosition: null,
+    dragShowMinimapPrompt: false,
     dragSkeleton: null,
     elements: [],
     focusPath: '',
@@ -426,8 +429,13 @@ export const Overlays: FunctionComponent<{
                     )
                   })}
 
-                {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-                {isDragging && <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />}
+                {isDragging && (
+                  <>
+                    <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                    {dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+                    {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
+                  </>
+                )}
               </Root>
             </PreviewSnapshotsProvider>
           </SchemaProvider>
