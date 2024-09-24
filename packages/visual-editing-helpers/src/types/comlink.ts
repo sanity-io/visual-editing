@@ -6,6 +6,7 @@ import type {
   QueryParams,
   ReconnectEvent,
   SanityDocument,
+  SyncTag,
   WelcomeEvent,
 } from '@sanity/client'
 import type {PreviewValue} from '@sanity/types'
@@ -247,6 +248,7 @@ export type LoaderControllerMsg =
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         result: any
         resultSourceMap?: ContentSourceMap
+        tags?: SyncTag[]
       }
     }
 

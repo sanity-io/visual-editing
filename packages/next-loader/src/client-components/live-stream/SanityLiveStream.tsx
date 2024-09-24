@@ -6,6 +6,7 @@ import {
   type QueryParams,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
+import isEqual from 'fast-deep-equal'
 import {useCallback, useEffect, useState, useSyncExternalStore} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {comlinkListeners, comlink as comlinkSnapshot} from '../../hooks/context'
@@ -62,17 +63,31 @@ export function SanityLiveStream(props: SanityLiveStreamProps): React.JSX.Elemen
   })
   const handleQueryChange = useEffectEvent(
     (event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data']) => {
-      if (event.projectId === projectId && event.dataset === dataset) {
-        const {result, resultSourceMap} = event
+      if (
+        isEqual(
+          {
+            projectId,
+            dataset,
+            query,
+            params,
+          },
+          {
+            projectId: event.projectId,
+            dataset: event.dataset,
+            query: event.query,
+            params: event.params,
+          },
+        )
+      ) {
+        const {result, resultSourceMap, tags} = event
         const data = stega
           ? stegaEncodeSourceMap(result, resultSourceMap, {enabled: true, studioUrl: '/'})
           : result
-        // @TODO pass tags
         props
           .children({
             data,
             sourceMap: resultSourceMap!,
-            tags: [],
+            tags: tags || [],
           })
           .then(setChildren)
       }
