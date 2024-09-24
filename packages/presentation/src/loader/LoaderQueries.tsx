@@ -5,7 +5,13 @@ import {
   type LoaderNodeMsg,
 } from '@repo/visual-editing-helpers'
 import {useQueryParams, useRevalidate} from '@repo/visual-editing-helpers/hooks'
-import type {ClientConfig, ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
+import type {
+  ClientConfig,
+  ClientPerspective,
+  ContentSourceMap,
+  QueryParams,
+  SyncTag,
+} from '@sanity/client'
 import {applySourceDocuments, getPublishedId} from '@sanity/client/csm'
 import {
   createChannelMachine,
@@ -403,6 +409,7 @@ function QuerySubscription(props: QuerySubscriptionProps) {
   })
   const result = data?.result
   const resultSourceMap = data?.resultSourceMap
+  const tags = data?.tags
 
   useEffect(() => {
     if (resultSourceMap) {
@@ -416,10 +423,11 @@ function QuerySubscription(props: QuerySubscriptionProps) {
           params,
           result,
           resultSourceMap,
+          tags,
         },
       })
     }
-  }, [comlink, dataset, params, perspective, projectId, query, result, resultSourceMap])
+  }, [comlink, dataset, params, perspective, projectId, query, result, resultSourceMap, tags])
 
   return null
 }
@@ -446,6 +454,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
   const [snapshot, setSnapshot] = useState<{
     result: unknown
     resultSourceMap?: ContentSourceMap
+    tags?: SyncTag[]
   } | null>(null)
   const {projectId, dataset} = useMemo(() => {
     const {projectId, dataset} = client.config()
@@ -470,7 +479,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
     async function effect() {
       const {signal} = controller
       fetching = true
-      const {result, resultSourceMap} = await client.fetch(query, params, {
+      const {result, resultSourceMap, syncTags} = await client.fetch(query, params, {
         tag: 'presentation-loader',
         signal,
         perspective,
@@ -479,7 +488,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
       fetching = false
 
       if (!signal.aborted) {
-        setSnapshot({result, resultSourceMap})
+        setSnapshot({result, resultSourceMap, tags: syncTags})
 
         fulfilled = true
       }
