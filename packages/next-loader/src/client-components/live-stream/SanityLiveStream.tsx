@@ -34,7 +34,7 @@ const LISTEN_HEARTBEAT_INTERVAL = 1000
  * @public
  */
 export function SanityLiveStream(props: SanityLiveStreamProps): React.JSX.Element | null {
-  const {query, dataset, params, perspective, projectId, stega} = props
+  const {query, dataset, params = {}, perspective, projectId, stega} = props
 
   const subscribe = useCallback((listener: () => void) => {
     comlinkListeners.add(listener)
