@@ -1,7 +1,7 @@
 import type {FunctionComponent} from 'react'
-import type {DragInsertPosition} from '../types'
-
 import {styled} from 'styled-components'
+
+import type {DragInsertPosition} from '../types'
 
 const Root = styled.div<{$x: number; $y: number; $width: number; $height: number}>`
   position: absolute;
