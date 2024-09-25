@@ -59,11 +59,12 @@ export type DefinedSanityLiveStreamType = <const QueryString extends string>(pro
  */
 export interface DefinedSanityLiveProps {
   /**
-   * Once you've checked that the `liveDraftsToken` is only Viewer rights or lower, you can set this to `true` to silence browser warnings about the token.
+   * Once you've checked that the `browserToken` is only Viewer rights or lower, you can set this to `true` to silence browser warnings about the token.
+   * TODO: this warning should only be necessary when `serverToken` and `browserToken` are the same value
    */
   ignoreBrowserTokenWarning?: boolean
   /**
-   * Required to enable draft mode in Presentation Tool. Requires `previewDraftsToken`. Returns a string if there were an error
+   * Required to enable draft mode in Presentation Tool. Requires `serverToken`. Returns a string if there were an error
    */
   handleDraftModeAction?: (secret: string) => Promise<void | string>
 }
@@ -80,12 +81,12 @@ export interface DefineSanityLiveOptions {
    * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes as well as `sanity-preview-url-secret.` prefixes.
    * This token is not shared with the browser.
    */
-  previewDraftsToken?: string
+  serverToken?: string
   /**
    * Optional. This token is shared with the browser, and should only have access to query published documents.
    * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
    */
-  liveDraftsToken?: string
+  browserToken?: string
 }
 
 /**
@@ -104,23 +105,23 @@ export function defineLive(config: DefineSanityLiveOptions): {
   SanityLiveStream: DefinedSanityLiveStreamType
   verifyPreviewSecret: VerifyPreviewSecretType
 } {
-  const {client: _client, previewDraftsToken, liveDraftsToken} = config
+  const {client: _client, serverToken, browserToken} = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
   }
 
-  if (!previewDraftsToken) {
+  if (!serverToken) {
     // eslint-disable-next-line no-console
     console.warn(
-      'No `previewDraftsToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events',
+      'No `serverToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events',
     )
   }
 
-  if (!liveDraftsToken) {
+  if (!browserToken) {
     // eslint-disable-next-line no-console
     console.warn(
-      'No `liveDraftsToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `liveDraftsToken`. It is shared with the browser so it should only have Viewer rights or lower',
+      'No `browserToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `browserToken`. It is shared with the browser so it should only have Viewer rights or lower',
     )
   }
 
@@ -164,8 +165,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       filterResponse: false,
       perspective: perspective as ClientPerspective,
       stega,
-      token:
-        perspective === 'previewDrafts' && previewDraftsToken ? previewDraftsToken : originalToken,
+      token: perspective === 'previewDrafts' && serverToken ? serverToken : originalToken,
       next: {revalidate: false, tags},
     })
     return {data: result, sourceMap: resultSourceMap || null, tags}
@@ -182,9 +182,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         apiHost={apiHost}
         apiVersion={apiVersion}
         useProjectHostname={useProjectHostname}
-        token={
-          typeof liveDraftsToken === 'string' && draftMode().isEnabled ? liveDraftsToken : undefined
-        }
+        token={typeof browserToken === 'string' && draftMode().isEnabled ? browserToken : undefined}
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
         draftModeEnabled={draftMode().isEnabled}
         handleDraftModeAction={handleDraftModeAction}
@@ -234,9 +232,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
-    if (!previewDraftsToken) {
+    if (!serverToken) {
       throw new Error(
-        '`previewDraftsToken` is required to verify a preview secrets and initiate draft mode',
+        '`serverToken` is required to verify a preview secrets and initiate draft mode',
       )
     }
 
@@ -249,7 +247,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
     const client = _client.withConfig({
       // Use the token that is setup to query draft documents, it should also have permission to query for secrets
-      token: previewDraftsToken,
+      token: serverToken,
       // Userland might be using an API version that's too old to use perspectives
       apiVersion,
       // We can't use the CDN, the secret is typically validated right after it's created

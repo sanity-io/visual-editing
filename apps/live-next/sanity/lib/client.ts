@@ -2,7 +2,6 @@ import {apiVersion, dataset, projectId} from '@/sanity/lib/api'
 import {workspaces} from '@repo/env'
 import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from 'next-sanity'
-import {token} from './token'
 
 export const client = createClient({
   projectId,
@@ -10,7 +9,8 @@ export const client = createClient({
   apiVersion,
   useCdn: true,
   perspective: 'published',
-  token,
+  // A token is needed since we're using a private dataset
+  token: process.env.SANITY_API_READ_TOKEN,
   stega: {
     studioUrl: (sourceDocument) => {
       if (
