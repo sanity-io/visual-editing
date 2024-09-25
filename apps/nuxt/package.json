@@ -8,6 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview"
   },
+  "prettier": "@repo/prettier-config",
   "dependencies": {
     "@nuxtjs/sanity": "^1.12.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.5.1",
+    "@repo/prettier-config": "workspace:*",
     "nuxt": "^3.13.2"
   }
 }
