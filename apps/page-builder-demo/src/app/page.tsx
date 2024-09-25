@@ -1,5 +1,5 @@
 import {Page, type PageData} from '@/components/page'
-import {sanityFetch, SanityLiveStream} from '@/sanity/live'
+import {sanityFetch} from '@/sanity/live'
 import {defineQuery} from 'next-sanity'
 import {notFound} from 'next/navigation'
 
@@ -40,25 +40,11 @@ const frontPageQuery = defineQuery(`
 `)
 
 export default async function IndexPage() {
-  // const {data} = await sanityFetch({query: frontPageQuery})
-  // if (!data) {
-  //   notFound()
-  // }
+  const {data} = await sanityFetch({query: frontPageQuery})
+  if (!data) {
+    notFound()
+  }
 
   // @TODO fix typegen vs manual types issues
-  // return <Page data={data as unknown as PageData} />
-  return (
-    <SanityLiveStream query={frontPageQuery}>
-      {async ({data}) => {
-        'use server'
-
-        if (!data) {
-          notFound()
-        }
-
-        // @TODO fix typegen vs manual types issues
-        return <Page data={data as unknown as PageData} />
-      }}
-    </SanityLiveStream>
-  )
+  return <Page data={data as unknown as PageData} />
 }
