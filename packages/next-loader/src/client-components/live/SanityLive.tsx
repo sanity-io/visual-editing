@@ -42,6 +42,12 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     draftModePerspective,
   } = props
 
+  const [error, setError] = useState<unknown>(null)
+  // Rethrow error to the nearest error boundary
+  if (error) {
+    throw error
+  }
+
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.info(
@@ -49,7 +55,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       token
         ? 'automatic revalidation for draft content changes as well as published content'
         : draftModeEnabled
-          ? 'automatic revalidation for only published content. Provide a `liveDraftsToken` to `defineLive` to support draft content outside of Presentation Tool.'
+          ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
           : 'automatic revalidation of published content',
     )
   }, [draftModeEnabled, token])
@@ -72,15 +78,16 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     [apiHost, apiVersion, dataset, ignoreBrowserTokenWarning, projectId, token, useProjectHostname],
   )
   useEffect(() => {
-    const subscription = client.live
-      .events(token ? {includeDrafts: true} : undefined)
-      .subscribe((event) => {
+    const subscription = client.live.events(token ? {includeDrafts: true} : undefined).subscribe({
+      next: (event) => {
         if (event.type === 'message') {
           // eslint-disable-next-line no-console
           console.log('live.events() changed', event.tags)
           revalidateSyncTags(event.tags)
         }
-      })
+      },
+      error: setError,
+    })
     return () => subscription.unsubscribe()
   }, [client, token])
 
