@@ -26,7 +26,15 @@ export function overlayStateReducer(
   message: OverlayMsg | VisualEditingControllerMsg,
 ): OverlayState {
   const {type} = message
-  let {contextMenu, focusPath, perspective, isDragging, dragInsertPosition, dragShowMinimapPrompt, dragSkeleton} = state
+  let {
+    contextMenu,
+    focusPath,
+    perspective,
+    isDragging,
+    dragInsertPosition,
+    dragShowMinimapPrompt,
+    dragSkeleton,
+  } = state
   let wasMaybeCollapsed = false
 
   if (type === 'presentation/focus') {

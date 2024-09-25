@@ -11,9 +11,11 @@
     "start": "next start",
     "typegen": "sanity typegen generate"
   },
+  "prettier": "@repo/prettier-config",
   "dependencies": {
     "@next/bundle-analyzer": "14.2.13",
     "@repo/env": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/sanity-extracted-schema": "workspace:*",
     "@repo/studio-url": "workspace:*",
     "@sanity/cli": "^3.58.0",
