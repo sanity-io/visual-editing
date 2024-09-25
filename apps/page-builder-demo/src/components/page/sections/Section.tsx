@@ -7,7 +7,7 @@ export function Section(props: {page: PageData; section: PageSectionData}) {
 
   return (
     <PageSection
-      className="px-4 py-6 text-center sm:px-5 sm:py-7 md:px-7 md:py-9"
+      className="px-4 py-6 text-center sm:px-5 sm:py-7 md:px-7 md:py-8"
       data-sanity={dataAttribute({
         id: page._id,
         type: page._type,

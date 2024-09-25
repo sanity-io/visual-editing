@@ -2,12 +2,12 @@ import './globals.css'
 import {sanityFetch, SanityLive} from '@/sanity/live'
 import type {Metadata} from 'next'
 import {defineQuery, VisualEditing} from 'next-sanity'
-import {IBM_Plex_Mono, Inter, PT_Serif} from 'next/font/google'
+import {IBM_Plex_Mono, Inter, Libre_Caslon_Text} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {handleDraftModeAction} from './actions'
 import {AppLayout} from './AppLayout'
 
-const serif = PT_Serif({
+const serif = Libre_Caslon_Text({
   variable: '--font-serif',
   style: ['normal', 'italic'],
   subsets: ['latin'],

@@ -12,42 +12,29 @@ export function Intro(props: {page: PageData; section: IntroSectionData}) {
         type: data._type,
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
-      className="p-4 sm:p-5 md:p-6"
       variant={section.style?.variant}
     >
-      {section.headline ? (
-        <h1 className="text-2xl font-extrabold sm:text-3xl md:text-4xl">{section.headline}</h1>
-      ) : (
-        <h1 className="text-2xl font-extrabold text-gray-200 sm:text-3xl md:text-4xl dark:text-gray-800">
-          <span
-            data-sanity={dataAttribute({
-              id: data._id,
-              type: data._type,
-              path: `sections[_key=="${section._key}"].headline`,
-            }).toString()}
-          >
-            Headline
-          </span>
-        </h1>
-      )}
+      <div className="flex w-full flex-col gap-4 p-4 pb-7 sm:px-5 md:flex-row md:px-6 md:pb-8">
+        {section.headline && (
+          <div className="w-full flex-shrink-0 md:max-w-44">
+            <div className="sticky top-4 border-t border-current pt-2">
+              <h1 className="text-sm font-bold">{section.headline}</h1>
+            </div>
+          </div>
+        )}
 
-      {section.intro ? (
-        <p className="mt-3 font-serif text-xl text-gray-600 sm:mt-4 dark:text-gray-400">
-          {section.intro}
-        </p>
-      ) : (
-        <p className="mt-3 font-serif text-xl text-gray-200 sm:mt-4 dark:text-gray-800">
-          <span
-            data-sanity={dataAttribute({
-              id: data._id,
-              type: data._type,
-              path: `sections[_key=="${section._key}"].intro`,
-            }).toString()}
+        {section.intro && (
+          <div
+            className={
+              section.headline
+                ? 'w-full min-w-0 flex-grow border-current md:border-t md:pt-2'
+                : 'w-full min-w-0 flex-grow border-t border-current pt-2'
+            }
           >
-            Intro
-          </span>
-        </p>
-      )}
+            <p className="max-w-3xl font-serif text-lg leading-snug md:text-3xl">{section.intro}</p>
+          </div>
+        )}
+      </div>
     </PageSection>
   )
 }
