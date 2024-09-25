@@ -93,7 +93,7 @@ export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'v
 }
 
 export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
-  function PreviewFrame(props, ref) {
+  function PreviewFrameComponent(props, ref) {
     const {
       dispatch,
       iframe,
@@ -168,7 +168,7 @@ export const PreviewFrame = forwardRef<HTMLIFrameElement, PreviewFrameProps>(
       if (overlaysConnection === 'connecting' || overlaysConnection === 'reconnecting') {
         const timeout = setTimeout(() => {
           setShowOverlaysConnectionState(true)
-        }, 1000)
+        }, 5_000)
         return () => clearTimeout(timeout)
       }
       return

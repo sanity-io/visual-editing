@@ -18,9 +18,7 @@ import {sanitizePerspective} from './utils'
 
 const SanityLiveStreamClientComponent = dynamic(
   () => import('@sanity/next-loader/client-components/live-stream'),
-  {
-    ssr: false,
-  },
+  {ssr: false},
 )
 
 /**
