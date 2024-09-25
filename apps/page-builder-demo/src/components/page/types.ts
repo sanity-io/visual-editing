@@ -9,6 +9,7 @@ export interface HeroSectionData {
   _type: 'hero'
   headline?: string
   tagline?: string
+  image?: SanityImageValue
   subline?: string
   style?: SectionStyleData
 }
@@ -25,6 +26,7 @@ export interface FeaturedProductsSectionData {
   _key: string
   _type: 'featuredProducts'
   headline?: string
+  description?: string
   products?: SanityArrayValue<{
     _type: 'product'
     slug?: {current?: string}

@@ -27,8 +27,11 @@ export function Page(props: {data: PageData}) {
     },
   )
 
+  const shouldOverlapHeader = ['featureHighlight', 'hero'].includes(sections?.[0]?._type || '')
+
   return (
     <main
+      className={shouldOverlapHeader ? '-mt-[84px]' : ''}
       data-sanity={dataAttribute({
         id: data._id,
         type: data._type,

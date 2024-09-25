@@ -272,6 +272,11 @@ const featuredProductsSectionType = defineArrayMember({
       title: 'Headline',
     }),
     defineField({
+      type: 'string',
+      name: 'description',
+      title: 'Description',
+    }),
+    defineField({
       type: 'array',
       name: 'products',
       title: 'Products',
@@ -321,6 +326,11 @@ const heroSectionType = defineArrayMember({
       type: 'string',
       name: 'subline',
       title: 'Subline',
+    }),
+    defineField({
+      type: 'image',
+      name: 'image',
+      title: 'Image',
     }),
     defineField({
       type: 'sectionStyle',
