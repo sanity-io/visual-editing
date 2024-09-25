@@ -307,11 +307,7 @@ export default function PresentationTool(props: {
       }
     })
 
-    const stop = comlink.start()
-
-    return () => {
-      stop()
-    }
+    return comlink.start()
   }, [controller, dataset, projectId, setDocumentsOnPage, setPreviewKitConnection, targetOrigin])
 
   const handleFocusPath = useCallback(
