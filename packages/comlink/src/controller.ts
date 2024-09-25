@@ -16,8 +16,6 @@ export type ConnectionInput = Omit<ChannelInput, 'target' | 'targetOrigin'>
  * @public
  */
 export interface ConnectionInstance<R extends Message, S extends Message> {
-  connect: () => () => void
-  disconnect: () => void
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => Promise<U['response']> | U['response'],
@@ -199,8 +197,6 @@ export const createController = (input: {targetOrigin: string}): Controller => {
           machine,
         )
         channels.add(channel)
-        channel.start()
-        channel.connect()
       })
     } else {
       // If targets have not been added yet, create a channel without a target
@@ -264,6 +260,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
 
     const stop = () => {
       channels.forEach((channel) => {
+        channel.disconnect()
         channel.stop()
       })
     }
@@ -271,31 +268,16 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     const start = () => {
       channels.forEach((channel) => {
         channel.start()
+        channel.connect()
       })
 
       return stop
     }
 
-    const disconnect = () => {
-      channels.forEach((channel) => {
-        channel.disconnect()
-      })
-    }
-
-    const connect = () => {
-      channels.forEach((channel) => {
-        channel.connect()
-      })
-
-      return disconnect
-    }
-
     return {
-      connect,
-      disconnect,
       on,
-      onStatus,
       onInternalEvent,
+      onStatus,
       post,
       start,
       stop,

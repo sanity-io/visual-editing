@@ -2,12 +2,19 @@ import type {Status, StatusEvent} from '@sanity/comlink'
 import {useCallback, useMemo, useState} from 'react'
 
 export function useStatus(): [string, (event: StatusEvent) => void] {
-  const [statusMap, setStatusMap] = useState(new Map<string, Status>())
+  const [statusMap, setStatusMap] = useState(
+    new Map<string, {status: Status; hasConnected: boolean}>(),
+  )
 
   const status = useMemo(() => {
     const values = Array.from(statusMap.values())
-    if (values.includes('connecting')) return 'connecting'
-    if (values.includes('connected')) return 'connected'
+    const handshaking = values.filter(({status}) => status === 'handshaking')
+    if (handshaking.length) {
+      return handshaking.some(({hasConnected}) => !hasConnected) ? 'connecting' : 'reconnecting'
+    }
+    if (values.find(({status}) => status === 'connected')) {
+      return 'connected'
+    }
     return 'idle'
   }, [statusMap])
 
@@ -17,7 +24,8 @@ export function useStatus(): [string, (event: StatusEvent) => void] {
       if (event.status === 'disconnected') {
         next.delete(event.channel)
       } else {
-        next.set(event.channel, event.status)
+        const hasConnected = next.get(event.channel)?.hasConnected || event.status === 'connected'
+        next.set(event.channel, {status: event.status, hasConnected})
       }
       return next
     })
