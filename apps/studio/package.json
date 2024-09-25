@@ -5,6 +5,7 @@
     "build": "sanity build --source-maps",
     "dev": "sanity dev"
   },
+  "prettier": "@repo/prettier-config",
   "dependencies": {
     "@repo/env": "workspace:*",
     "@repo/sanity-schema": "workspace:*",
@@ -20,6 +21,9 @@
     "sanity": "^3.58.0",
     "styled-components": "6.1.13",
     "typescript": "5.6.2"
+  },
+  "devDependencies": {
+    "@repo/prettier-config": "workspace:*"
   },
   "dependenciesMeta": {
     "@repo/sanity-schema": {
