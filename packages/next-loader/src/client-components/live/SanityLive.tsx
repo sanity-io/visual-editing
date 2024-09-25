@@ -77,6 +77,62 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }),
     [apiHost, apiVersion, dataset, ignoreBrowserTokenWarning, projectId, token, useProjectHostname],
   )
+
+  useEffect(() => {
+    // @TODO move this validation logic to `@sanity/client`
+    // and include CORS detection https://github.com/sanity-io/sanity/blob/9848f2069405e5d06f82a61a902f141e53099493/packages/sanity/src/core/store/_legacy/authStore/createAuthStore.ts#L92-L102
+    const path = client.getDataUrl('live/events')
+    const url = new URL(client.getUrl(path, false))
+    if (token) {
+      url.searchParams.set('includeDrafts', 'true')
+    }
+
+    const controller = new AbortController()
+    async function validateConnection(signal: AbortSignal) {
+      const response = await fetch(url, {
+        signal,
+        headers: token
+          ? {
+              authorization: `Bearer ${token}`,
+            }
+          : undefined,
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const reader = response.body?.getReader()
+      if (!reader) {
+        throw new Error('Failed to get stream reader')
+      }
+
+      try {
+        // Read the first chunk of data
+        const {done, value} = await reader.read()
+
+        // If we've received any data, or the stream isn't done, consider it valid
+        if (done || !value) {
+          throw new Error('Stream ended without data')
+        }
+      } finally {
+        // Cancel the reader and abort the fetch
+        reader.cancel()
+        controller.abort()
+      }
+    }
+    validateConnection(controller.signal).catch((error) => {
+      // Ignore AbortError, as it's expected when we cancel the fetch
+      if (error?.name !== 'AbortError') {
+        // eslint-disable-next-line no-console
+        console.error('Error validating EventSource URL:', error)
+        setError(
+          new Error(`Failed to connect to '${url}', is CORS configured correctly?`, {cause: error}),
+        )
+      }
+    })
+    return () => controller.abort()
+  }, [client, token])
+
   useEffect(() => {
     const subscription = client.live.events(token ? {includeDrafts: true} : undefined).subscribe({
       next: (event) => {
