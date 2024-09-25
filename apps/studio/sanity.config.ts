@@ -91,6 +91,13 @@ function definePreviewUrl(
   workspaceName: string,
   toolName: string,
 ): PreviewUrlOption {
+  if (workspaceName === 'page-builder-demo') {
+    const {origin, pathname} = new URL(previewUrl)
+    const previewMode = {
+      enable: '/api/draft',
+    } satisfies PreviewUrlResolverOptions['previewMode']
+    return {origin, preview: pathname, previewMode}
+  }
   if (workspaceName === 'next' && toolName === 'pages-router') {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
@@ -139,7 +146,11 @@ function defineWorkspace(
 export default defineConfig([
   defineWorkspace(workspaces['page-builder-demo'], [
     pageBuilderDemoPlugin({
-      previewUrl: urls['page-builder-demo'],
+      previewUrl: definePreviewUrl(
+        urls['page-builder-demo'],
+        workspaces['page-builder-demo'].workspace,
+        workspaces['page-builder-demo'].tool,
+      ),
       components: {
         unstable_navigator: {
           minWidth: 120,
