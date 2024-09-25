@@ -48,6 +48,10 @@ export const datasetMutatorMachine = setup({
       assertEvent(event, ['rebased.local', 'rebased.remote'])
       return event
     }),
+    'emit pristine event': emit(({event}) => {
+      assertEvent(event, ['pristine'])
+      return event
+    }),
     'add document actor': assign({
       documents: ({context, event, spawn}) => {
         assertEvent(event, 'observe')
@@ -98,6 +102,7 @@ export const datasetMutatorMachine = setup({
     'sync': {actions: ['emit sync event']},
     'mutation': {actions: ['emit mutation event']},
     'rebased.*': {actions: ['emit rebased event']},
+    'pristine': {actions: ['emit pristine event']},
     'observe': {
       actions: ['add document actor'],
     },

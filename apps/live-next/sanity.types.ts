@@ -465,6 +465,13 @@ export type AllSanitySchemaTypes =
   | HsvaColor
   | HslaColor
 export declare const internalGroqTypeReferenceTo: unique symbol
+// Source: ./app/posts/[slug]/page.tsx
+// Variable: postSlugs
+// Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current}
+export type PostSlugsResult = Array<{
+  slug: string | null
+}>
+
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0]
@@ -677,19 +684,12 @@ export type PostQueryResult = {
   } | null
 } | null
 
-// Source: ./app/posts/[slug]/page.tsx
-// Variable: postSlugs
-// Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current}
-export type PostSlugsResult = Array<{
-  slug: string | null
-}>
-
 declare module '@sanity/client' {
   interface SanityQueries {
+    '*[_type == "post" && defined(slug.current)]{"slug": slug.current}': PostSlugsResult
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{"name": coalesce(name, "Anonymous"), picture},\n\n  }\n': HeroQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{"name": coalesce(name, "Anonymous"), picture},\n\n  }\n': MoreStoriesQueryResult
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{"name": coalesce(name, "Anonymous"), picture},\n\n  }\n': PostQueryResult
-    '*[_type == "post" && defined(slug.current)]{"slug": slug.current}': PostSlugsResult
   }
 }
