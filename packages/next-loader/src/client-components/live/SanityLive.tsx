@@ -99,7 +99,16 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       })
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        if (response.status === 401 && token) {
+          throw new Error(`Failed to connect to '${url}', invalid browser token`, {
+            cause: response.statusText,
+          })
+        } else {
+          throw new Error(
+            `Failed to connect to '${url}': ${response.status}, is CORS configured correctly?`,
+            {cause: response.statusText},
+          )
+        }
       }
       const reader = response.body?.getReader()
       if (!reader) {
@@ -125,9 +134,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       if (error?.name !== 'AbortError') {
         // eslint-disable-next-line no-console
         console.error('Error validating EventSource URL:', error)
-        setError(
-          new Error(`Failed to connect to '${url}', is CORS configured correctly?`, {cause: error}),
-        )
+        setError(error)
       }
     })
     return () => controller.abort()
