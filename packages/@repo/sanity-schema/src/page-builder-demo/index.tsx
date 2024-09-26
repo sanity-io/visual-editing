@@ -539,6 +539,22 @@ export const pageBuilderDemoPlugin = definePlugin<
           },
         ]),
         locations: {
+          page: defineLocations({
+            select: {
+              title: 'title',
+              slug: 'slug.current',
+            },
+            resolve: (doc) => ({
+              locations: doc?.slug
+                ? [
+                    {
+                      title: doc?.title || 'Untitled',
+                      href: `/pages/${doc.slug}`,
+                    },
+                  ]
+                : undefined,
+            }),
+          }),
           product: defineLocations({
             select: {
               title: 'title',
