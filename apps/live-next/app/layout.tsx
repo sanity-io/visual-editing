@@ -82,7 +82,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     >
       <body>
         <section className="min-h-screen">
-          {draftMode().isEnabled && (
+          {(await draftMode()).isEnabled && (
             <>
               <AlertBanner />
               <DraftModeStatus />
@@ -93,7 +93,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <Footer />
           </Suspense>
         </section>
-        {draftMode().isEnabled && <VisualEditing />}
+        {(await draftMode()).isEnabled && <VisualEditing />}
         <SanityLive ignoreBrowserTokenWarning handleDraftModeAction={handleDraftModeAction} />
         <SpeedInsights />
         <Debug />

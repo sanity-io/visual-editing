@@ -104,10 +104,9 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
             cause: response.statusText,
           })
         } else {
-          throw new Error(
-            `Failed to connect to '${url}': ${response.status}, is CORS configured correctly?`,
-            {cause: response.statusText},
-          )
+          throw new Error(`Failed to connect to '${url}': ${response.status}`, {
+            cause: response.statusText,
+          })
         }
       }
       const reader = response.body?.getReader()

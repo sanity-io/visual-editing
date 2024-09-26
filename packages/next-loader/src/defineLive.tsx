@@ -134,24 +134,30 @@ export function defineLive(config: DefineSanityLiveOptions): {
   >({
     query,
     params = {},
-    stega = draftMode().isEnabled,
-    perspective: _perspective = draftMode().isEnabled
-      ? cookies().has(perspectiveCookieName)
-        ? sanitizePerspective(cookies().get(perspectiveCookieName)?.value, 'previewDrafts')
-        : 'previewDrafts'
-      : 'published',
+    stega: _stega,
+    perspective: _perspective,
   }: {
     query: QueryString
     params?: QueryParams
     stega?: boolean
     perspective?: Omit<ClientPerspective, 'raw'>
   }) {
-    const perspective = _perspective === 'previewDrafts' ? 'previewDrafts' : 'published'
+    const stega = _stega ?? (await draftMode()).isEnabled
+    const perspective =
+      _perspective ??
+      ((await draftMode()).isEnabled
+        ? (await cookies()).has(perspectiveCookieName)
+          ? sanitizePerspective(
+              (await cookies()).get(perspectiveCookieName)?.value,
+              'previewDrafts',
+            )
+          : 'previewDrafts'
+        : 'published')
 
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, params, {
       filterResponse: false,
-      perspective,
+      perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
       next: {revalidate: 1, tags: ['sanity']},
@@ -171,7 +177,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     return {data: result, sourceMap: resultSourceMap || null, tags}
   }
 
-  const SanityLive: React.ComponentType<DefinedSanityLiveProps> = function SanityLive(props) {
+  const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
     const {ignoreBrowserTokenWarning, handleDraftModeAction = handleDraftModeActionMissing} = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname} = client.config()
 
@@ -182,14 +188,21 @@ export function defineLive(config: DefineSanityLiveOptions): {
         apiHost={apiHost}
         apiVersion={apiVersion}
         useProjectHostname={useProjectHostname}
-        token={typeof browserToken === 'string' && draftMode().isEnabled ? browserToken : undefined}
+        token={
+          typeof browserToken === 'string' && (await draftMode()).isEnabled
+            ? browserToken
+            : undefined
+        }
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
-        draftModeEnabled={draftMode().isEnabled}
+        draftModeEnabled={(await draftMode()).isEnabled}
         handleDraftModeAction={handleDraftModeAction}
         draftModePerspective={
-          draftMode().isEnabled
-            ? cookies().has(perspectiveCookieName)
-              ? sanitizePerspective(cookies().get(perspectiveCookieName)?.value, 'previewDrafts')
+          (await draftMode()).isEnabled
+            ? (await cookies()).has(perspectiveCookieName)
+              ? sanitizePerspective(
+                  (await cookies()).get(perspectiveCookieName)?.value,
+                  'previewDrafts',
+                )
               : 'previewDrafts'
             : 'published'
         }
@@ -198,20 +211,26 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const SanityLiveStream: DefinedSanityLiveStreamType = async function SanityLiveStream(props) {
-    const {
+    const {query, params, perspective: _perspective, stega: _stega, children} = props
+    const {data, sourceMap, tags} = await sanityFetch({
       query,
       params,
-      perspective = draftMode().isEnabled
-        ? cookies().has(perspectiveCookieName)
-          ? sanitizePerspective(cookies().get(perspectiveCookieName)?.value, 'previewDrafts')
-          : 'previewDrafts'
-        : 'published',
-      stega = draftMode().isEnabled,
-      children,
-    } = props
-    const {data, sourceMap, tags} = await sanityFetch({query, params, perspective, stega})
+      perspective: _perspective,
+      stega: _stega,
+    })
 
-    if (draftMode().isEnabled) {
+    if ((await draftMode()).isEnabled) {
+      const stega = _stega ?? (await draftMode()).isEnabled
+      const perspective =
+        _perspective ??
+        ((await draftMode()).isEnabled
+          ? (await cookies()).has(perspectiveCookieName)
+            ? sanitizePerspective(
+                (await cookies()).get(perspectiveCookieName)?.value,
+                'previewDrafts',
+              )
+            : 'previewDrafts'
+          : 'published')
       const {projectId, dataset} = client.config()
       return (
         <SanityLiveStreamClientComponent

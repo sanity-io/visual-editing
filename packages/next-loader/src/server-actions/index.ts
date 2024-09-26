@@ -9,7 +9,7 @@ import {sanitizePerspective} from '../utils'
 export async function disableDraftMode(): Promise<void> {
   'use server'
   await Promise.allSettled([
-    draftMode().disable(),
+    (await draftMode()).disable(),
     // Simulate a delay to show the loading state
     new Promise((resolve) => setTimeout(resolve, 1000)),
   ])
@@ -18,14 +18,14 @@ export async function disableDraftMode(): Promise<void> {
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
-    revalidateTag(tag)
+    await revalidateTag(tag)
     // eslint-disable-next-line no-console
     console.log(`Revalidated tag: ${tag}`)
   }
 }
 
 export async function setPerspectiveCookie(perspective: string): Promise<void> {
-  if (!draftMode().isEnabled) {
+  if (!(await draftMode()).isEnabled) {
     throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
   }
   const sanitizedPerspective = sanitizePerspective(perspective, 'previewDrafts')
@@ -33,7 +33,7 @@ export async function setPerspectiveCookie(perspective: string): Promise<void> {
     throw new Error(`Invalid perspective: ${perspective}`)
   }
 
-  cookies().set(perspectiveCookieName, perspective satisfies ClientPerspective, {
+  ;(await cookies()).set(perspectiveCookieName, perspective satisfies ClientPerspective, {
     httpOnly: true,
   })
 }

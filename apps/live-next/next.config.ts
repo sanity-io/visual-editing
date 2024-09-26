@@ -12,15 +12,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
   },
 
-  typescript: {
-    // @TODO figure out why TSC fails in the Next.js process but works fine when running `tsc --noEmit`
-    ignoreBuildErrors: true,
-  },
-
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   experimental: {
     reactCompiler: true,
     ppr: true,
