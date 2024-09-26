@@ -1,4 +1,4 @@
-import {sanityFetch} from '@/sanity/lib/live'
+import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
 import {postQuery, settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, ResolvingMetadata} from 'next'
@@ -44,10 +44,11 @@ export async function generateMetadata(
 
 export default async function PostPage({params}: {params: Promise<{slug: string}>}) {
   const {slug} = await params
-  const [{data: post}, {data: settings}] = await Promise.all([
-    sanityFetch({query: postQuery, params: {slug}}),
-    sanityFetch({query: settingsQuery}),
-  ])
+  // const [{data: post}, {data: settings}] = await Promise.all([
+  //   sanityFetch({query: postQuery, params: {slug}}),
+  //   sanityFetch({query: settingsQuery}),
+  // ])
+  const {data: post} = await sanityFetch({query: postQuery, params: {slug}})
 
   if (!post?._id) {
     return notFound()
@@ -55,37 +56,62 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
 
   return (
     <div className="container mx-auto px-5">
-      {settings?.title && (
-        <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-          <Link href="/" className="hover:underline">
-            {settings.title}
-          </Link>
-        </h2>
-      )}
-      <article>
-        <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
-          {post.title}
-        </h1>
-        <div className="hidden md:mb-12 md:block">
-          {post.author && <Avatar name={post.author.name} picture={post.author.picture} />}
-        </div>
-        <div className="mb-8 sm:mx-0 md:mb-16">
-          <CoverImage image={post.coverImage} priority />
-        </div>
-        <div className="mx-auto max-w-2xl">
-          <div className="mb-6 block md:hidden">
-            {post.author && <Avatar name={post.author.name} picture={post.author.picture} />}
-          </div>
-          <div className="mb-6 text-lg">
-            <div className="mb-4 text-lg">
-              <DateComponent dateString={post.date} />
-            </div>
-          </div>
-        </div>
-        {post.content?.length && post.content.length > 0 && (
-          <PortableText className="mx-auto max-w-2xl" value={post.content as PortableTextBlock[]} />
-        )}
-      </article>
+      <SanityLiveStream query={settingsQuery}>
+        {async ({data: settings}) => {
+          'use server'
+          return (
+            <>
+              {settings?.title && (
+                <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+                  <Link href="/" className="hover:underline">
+                    {settings.title}
+                  </Link>
+                </h2>
+              )}
+            </>
+          )
+        }}
+      </SanityLiveStream>
+      <SanityLiveStream query={postQuery} params={{slug}}>
+        {async ({data: post}) => {
+          'use server'
+
+          if (!post?._id) {
+            return notFound()
+          }
+
+          return (
+            <article>
+              <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+                {post.title}
+              </h1>
+              <div className="hidden md:mb-12 md:block">
+                {post.author && <Avatar name={post.author.name} picture={post.author.picture} />}
+              </div>
+              <div className="mb-8 sm:mx-0 md:mb-16">
+                <CoverImage image={post.coverImage} priority />
+              </div>
+              <div className="mx-auto max-w-2xl">
+                <div className="mb-6 block md:hidden">
+                  {post.author && <Avatar name={post.author.name} picture={post.author.picture} />}
+                </div>
+                <div className="mb-6 text-lg">
+                  <div className="mb-4 text-lg">
+                    <DateComponent dateString={post.date} />
+                  </div>
+                </div>
+              </div>
+              {post.content?.length && post.content.length > 0 && (
+                <PortableText
+                  className="mx-auto max-w-2xl"
+                  value={post.content as PortableTextBlock[]}
+                />
+              )}
+            </article>
+          )
+        }}
+      </SanityLiveStream>
+
       <aside>
         <hr className="border-accent-2 mb-24 mt-28" />
         <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
