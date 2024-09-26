@@ -104,6 +104,10 @@ export function SanityLiveStream(props: SanityLiveStreamProps): React.JSX.Elemen
     }
   }, [comlink, handleQueryChange, handleQueryHeartbeat])
 
+  if (!comlink) {
+    return <>{props.initial}</>
+  }
+
   return <>{children}</>
 }
 SanityLiveStream.displayName = 'SanityLiveStream'
