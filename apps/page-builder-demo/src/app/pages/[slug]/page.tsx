@@ -37,6 +37,16 @@ const pageQuery = defineQuery(`
   }
 `)
 
+const pageSlugs = defineQuery(`*[_type == "page" && defined(slug.current)]{"slug": slug.current}`)
+export async function generateStaticParams() {
+  const {data} = await sanityFetch({
+    query: pageSlugs,
+    perspective: 'published',
+    stega: false,
+  })
+  return data
+}
+
 export default async function PagesPage({params}: {params: {slug: string}}) {
   const {data} = await sanityFetch({query: pageQuery, params})
   if (!data) {
