@@ -14,6 +14,7 @@ export const elementsReducer = (
     case 'element/register': {
       const elementExists = !!elements.find((e) => e.id === message.id)
       if (elementExists) return elements
+
       return [
         ...elements,
         {
@@ -23,6 +24,7 @@ export const elementsReducer = (
           hovered: false,
           rect: message.rect,
           sanity: message.sanity,
+          dragDisabled: message.dragDisabled,
         },
       ]
     }

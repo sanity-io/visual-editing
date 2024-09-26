@@ -1,6 +1,6 @@
 import {pathToUrlString} from '@repo/visual-editing-helpers'
 import {createEditUrl, studioPath} from '@sanity/client/csm'
-import {DocumentIcon} from '@sanity/icons'
+import {DocumentIcon, DragHandleIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
 import {
   memo,
@@ -27,6 +27,8 @@ export interface ElementOverlayProps {
   node: SanityNode | SanityStegaNode
   showActions: boolean
   wasMaybeCollapsed: boolean
+  draggable: boolean
+  isDragging: boolean
 }
 
 const Root = styled(Card)`
@@ -106,6 +108,8 @@ const Tab = styled(Flex)`
 `
 
 const Labels = styled(Flex)`
+  display: flex;
+  align-items: center;
   background-color: var(--card-focus-ring-color);
   right: 0;
   border-radius: 3px;
@@ -130,7 +134,7 @@ function createIntentLink(node: SanityNode) {
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {node, showActions} = props
+  const {node, showActions, draggable} = props
 
   const {schema} = useSchema()
   const schemaType = getSchemaType(node, schema)
@@ -160,8 +164,15 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
       {title && (
         <Tab gap={1} paddingBottom={1}>
-          <Labels gap={2} padding={2}>
-            <Text size={1}>{Icon}</Text>
+          <Labels gap={3} padding={3}>
+            {draggable && (
+              <Box marginRight={1}>
+                <Text className="drag-handle" size={0}>
+                  <DragHandleIcon />
+                </Text>
+              </Box>
+            )}
+            <Text size={0}>{Icon}</Text>
             <Text size={1} weight="medium">
               {title}
             </Text>
@@ -173,7 +184,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
-  const {focused, hovered, rect, wasMaybeCollapsed} = props
+  const {focused, hovered, rect, wasMaybeCollapsed, draggable, isDragging} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -189,7 +200,13 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   )
 
   useEffect(() => {
-    if (!scrolledIntoViewRef.current && !wasMaybeCollapsed && focused === true && ref.current) {
+    if (
+      !scrolledIntoViewRef.current &&
+      !wasMaybeCollapsed &&
+      focused === true &&
+      ref.current &&
+      !isDragging
+    ) {
       const target = ref.current
       scrollIntoView(ref.current, {
         // Workaround issue with scroll-into-view-if-needed struggling with iframes
@@ -215,14 +232,17 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   }, [focused, wasMaybeCollapsed])
 
   return (
-    <Root
-      data-focused={focused ? '' : undefined}
-      data-hovered={hovered ? '' : undefined}
-      ref={ref}
-      style={style}
-    >
-      {hovered && <ElementOverlayInner {...props} />}
-    </Root>
+    <>
+      <Root
+        data-focused={focused ? '' : undefined}
+        data-hovered={hovered ? '' : undefined}
+        ref={ref}
+        style={style}
+        data-draggable={draggable ? '' : undefined}
+      >
+        <Flex>{hovered && <ElementOverlayInner {...props} />}</Flex>
+      </Root>
+    </>
   )
 })
 

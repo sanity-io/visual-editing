@@ -217,16 +217,20 @@ async function applyMinimapWrapperTransform(
 }
 
 function calcMinimapTransformValues(rects: OverlayRect[]) {
-  const {height: groupHeight} = getRectGroupYExtent(rects)
+  let {height: groupHeight} = getRectGroupYExtent(rects)
+
+  const padding = 100 // px
+
+  groupHeight += padding * 2
 
   const scaleFactor = groupHeight > window.innerHeight ? window.innerHeight / groupHeight : 1
   const scaledRects = rects.map((r) => scaleRect(r, scaleFactor, {x: window.innerWidth / 2, y: 0}))
 
-  const {min: minYScaled} = getRectGroupYExtent(scaledRects)
+  let {min: minYScaled} = getRectGroupYExtent(scaledRects)
 
   return {
     scaleFactor,
-    minYScaled,
+    minYScaled: minYScaled - padding * scaleFactor,
   }
 }
 
@@ -247,6 +251,10 @@ async function resetMinimapWrapperTransform(
 
     const maxScroll = prescaleHeight - window.innerHeight
     const prevScrollY = scrollY
+
+    endYOrigin -= window.innerHeight / 2
+
+    if (endYOrigin < 0) endYOrigin = 0
 
     target.addEventListener(
       'transitionend',
@@ -307,7 +315,13 @@ export function handleOverlayDrag(
 
   if (!minimapScaleApplied) prescaleHeight = document.documentElement.scrollHeight
 
+  const rectsInterval = setInterval(() => {
+    rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
+  }, 150)
+
   const applyMinimap = (): void => {
+    if (scaleFactor >= 1) return
+
     const skeleton = buildPreviewSkeleton(mousePos, element, scaleFactor)
 
     handler({
@@ -322,15 +336,13 @@ export function handleOverlayDrag(
 
     minimapScaleApplied = true
 
-    applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled).then(() => {
-      rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
-    })
+    applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled)
   }
 
   const handleScroll = (e: WheelEvent) => {
     if (
       Math.abs(e.deltaY) >= 10 &&
-      scaleFactor !== 1 &&
+      scaleFactor >= 1 &&
       !minimapScaleApplied &&
       !minimapPromptShown
     ) {
@@ -412,12 +424,9 @@ export function handleOverlayDrag(
     }
 
     if (!minimapScaleApplied) {
-      window.removeEventListener('keyup', handleKeyup)
+      clearInterval(rectsInterval)
+      removeListeners()
     }
-
-    window.removeEventListener('mousemove', handleMouseMove)
-    window.removeEventListener('wheel', handleScroll)
-    window.removeEventListener('mouseup', handleMouseUp)
   }
 
   const handleKeyup = (e: KeyboardEvent) => {
@@ -431,19 +440,38 @@ export function handleOverlayDrag(
 
       resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight).then(
         () => {
-          rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
-
           minimapScaleApplied = false
         },
       )
 
       // cleanup keyup after drag sequence is complete
       if (!mousedown) {
-        window.removeEventListener('keyup', handleKeyup)
+        clearInterval(rectsInterval)
+        removeListeners()
       }
     }
   }
 
+  const handleBlur = () => {
+    resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight).then(
+      () => {
+        minimapScaleApplied = false
+      },
+    )
+
+    clearInterval(rectsInterval)
+    removeListeners()
+  }
+
+  const removeListeners = () => {
+    window.removeEventListener('blur', handleBlur)
+    window.removeEventListener('keyup', handleKeyup)
+    window.removeEventListener('mousemove', handleMouseMove)
+    window.removeEventListener('wheel', handleScroll)
+    window.removeEventListener('mouseup', handleMouseUp)
+  }
+
+  window.addEventListener('blur', handleBlur)
   window.addEventListener('keyup', handleKeyup)
   window.addEventListener('wheel', handleScroll)
   window.addEventListener('mousemove', handleMouseMove)
