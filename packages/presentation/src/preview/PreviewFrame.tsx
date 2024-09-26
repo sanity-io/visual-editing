@@ -57,6 +57,7 @@ import type {PresentationPerspective, PresentationViewport} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {IFrame} from './IFrame'
 import {PreviewLocationInput} from './PreviewLocationInput'
+import {ShareUrlDialog} from './ShareUrlDialog'
 import {ShareUrlMenuItems} from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
@@ -272,6 +273,10 @@ export const PreviewFrame = memo(
         viewport,
       ])
 
+      const [shareUrlDialogOpen, setShareUrlDialogOpen] = useState(false)
+      const handleShareUrlDialogOpen = useCallback(() => setShareUrlDialogOpen(true), [])
+      const handleShareUrlDialogClose = useCallback(() => setShareUrlDialogOpen(false), [])
+
       return (
         <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
           <TooltipDelayGroupProvider delay={1000}>
@@ -404,10 +409,10 @@ export const PreviewFrame = memo(
                           menu={
                             <Menu>
                               <ShareUrlMenuItems
-                                initialUrl={initialUrl}
                                 openPopup={openPopup}
                                 previewLocationOrigin={previewLocationOrigin}
                                 previewLocationRoute={previewLocationRoute}
+                                handleShareUrlDialogOpen={handleShareUrlDialogOpen}
                               />
                             </Menu>
                           }
@@ -422,6 +427,13 @@ export const PreviewFrame = memo(
                     }
                     value={previewLocationRoute}
                   />
+                  {shareUrlDialogOpen && (
+                    <ShareUrlDialog
+                      initialUrl={initialUrl}
+                      previewLocationRoute={previewLocationRoute}
+                      onClose={handleShareUrlDialogClose}
+                    />
+                  )}
                 </Box>
 
                 <Flex align="center" flex="none" gap={1} padding={1}>
