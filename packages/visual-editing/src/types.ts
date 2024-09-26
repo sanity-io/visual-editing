@@ -132,6 +132,7 @@ export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>
 
 /** @public */
 export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
+  element: ElementNode
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
 }
@@ -243,6 +244,7 @@ export type ElementFocusedState = 'clicked' | 'duplicate' | boolean
 export interface ElementState {
   id: string
   activated: boolean
+  element: ElementNode
   focused: ElementFocusedState
   hovered: boolean
   rect: OverlayRect

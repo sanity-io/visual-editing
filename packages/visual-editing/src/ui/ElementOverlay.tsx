@@ -3,6 +3,7 @@ import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {DocumentIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
 import {
+  lazy,
   memo,
   useCallback,
   useEffect,
@@ -14,13 +15,22 @@ import {
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
-import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
+import type {
+  ElementFocusedState,
+  ElementNode,
+  OverlayRect,
+  SanityNode,
+  SanityStegaNode,
+} from '../types'
 import {getDraftId} from '../util/documents'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
-import {getSchemaType} from './schema/schema'
+import {getField, getSchemaType} from './schema/schema'
 import {useSchema} from './schema/useSchema'
 
+const UnionOverlay = lazy(() => import('./UnionOverlay'))
+
 export interface ElementOverlayProps {
+  element: ElementNode
   focused: ElementFocusedState
   hovered: boolean
   rect: OverlayRect
@@ -130,10 +140,11 @@ function createIntentLink(node: SanityNode) {
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {node, showActions} = props
+  const {element, node, showActions} = props
 
-  const {schema} = useSchema()
+  const {schema, resolvedTypes} = useSchema()
   const schemaType = getSchemaType(node, schema)
+  const {parent} = getField(node, schemaType, resolvedTypes)
 
   const href = 'path' in node ? createIntentLink(node) : node.href
 
@@ -167,6 +178,10 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
             </Text>
           </Labels>
         </Tab>
+      )}
+
+      {'path' in node && parent?.type === 'union' && (
+        <UnionOverlay element={element} node={parent} sanity={node} />
       )}
     </>
   )

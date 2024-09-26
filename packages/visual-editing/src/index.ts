@@ -5,6 +5,7 @@ export type {
   DragInsertPosition,
   DragSkeleton,
   ElementFocusedState,
+  ElementNode,
   ElementState,
   HistoryAdapter,
   HistoryAdapterNavigate,

@@ -19,6 +19,7 @@ export const elementsReducer = (
         {
           id: message.id,
           activated: false,
+          element: message.element,
           focused: false,
           hovered: false,
           rect: message.rect,

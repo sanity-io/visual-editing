@@ -415,10 +415,11 @@ export const Overlays: FunctionComponent<{
                 />
                 {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                 {!isDragging &&
-                  elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+                  elementsToRender.map(({id, focused, hovered, rect, element, sanity}) => {
                     return (
                       <ElementOverlay
                         key={id}
+                        element={element}
                         focused={focused}
                         hovered={hovered}
                         node={sanity}
