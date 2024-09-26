@@ -12,10 +12,6 @@ import DateComponent from '../../date'
 import MoreStories from '../../more-stories'
 import PortableText from '../../portable-text'
 
-type Props = {
-  params: {slug: string}
-}
-
 const postSlugs = defineQuery(`*[_type == "post" && defined(slug.current)]{"slug": slug.current}`)
 
 export async function generateStaticParams() {
@@ -28,10 +24,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  {params}: Props,
+  {params}: {params: Promise<{slug: string}>},
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const {data: post} = await sanityFetch({query: postQuery, params, stega: false})
+  const {slug} = await params
+  const {data: post} = await sanityFetch({query: postQuery, params: {slug}, stega: false})
   const previousImages = (await parent).openGraph?.images || []
   const ogImage = resolveOpenGraphImage(post?.coverImage)
 
@@ -45,9 +42,10 @@ export async function generateMetadata(
   } satisfies Metadata
 }
 
-export default async function PostPage({params}: Props) {
+export default async function PostPage({params}: {params: Promise<{slug: string}>}) {
+  const {slug} = await params
   const [{data: post}, {data: settings}] = await Promise.all([
-    sanityFetch({query: postQuery, params}),
+    sanityFetch({query: postQuery, params: {slug}}),
     sanityFetch({query: settingsQuery}),
   ])
 
