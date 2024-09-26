@@ -54,7 +54,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         {draftMode().isEnabled && <AlertBanner />}
         <AppLayout data={data}>{children}</AppLayout>
         {draftMode().isEnabled && <VisualEditing />}
-        <SanityLive ignoreBrowserTokenWarning handleDraftModeAction={handleDraftModeAction} />
+        <SanityLive />
       </body>
     </html>
   )
