@@ -10,7 +10,6 @@ import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
 import {handleDraftModeAction} from './actions'
 import AlertBanner from './alert-banner'
-import {Debug} from './debug'
 import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
 
@@ -96,7 +95,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         {(await draftMode()).isEnabled && <VisualEditing />}
         <SanityLive ignoreBrowserTokenWarning handleDraftModeAction={handleDraftModeAction} />
         <SpeedInsights />
-        <Debug />
       </body>
     </html>
   )
