@@ -15,7 +15,7 @@ if (!browserToken) {
 export const {sanityFetch, SanityLive, SanityLiveStream, verifyPreviewSecret} = defineLive({
   client,
   serverToken,
-  browserToken,
+  // browserToken,
   // test invalid token
-  // browserToken: 'invalid',
+  browserToken: 'invalid',
 })
