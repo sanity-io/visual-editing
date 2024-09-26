@@ -4,7 +4,6 @@ import type {Metadata} from 'next'
 import {defineQuery, VisualEditing} from 'next-sanity'
 import {IBM_Plex_Mono, Inter, Libre_Caslon_Text} from 'next/font/google'
 import {draftMode} from 'next/headers'
-import {handleDraftModeAction} from './actions'
 import AlertBanner from './alert-banner'
 import {AppLayout} from './AppLayout'
 
