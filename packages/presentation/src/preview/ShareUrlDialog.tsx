@@ -97,20 +97,19 @@ export const ShareUrlDialog = memo(function ShareUrlDialogComponent(props: Share
       onClickOutside={handleClose}
       header={t('share-url.dialog.header')}
     >
-      <Box padding={4} paddingTop={0}>
+      <Box padding={3} paddingTop={0}>
         {url ? (
-          <Stack space={4}>
-            <Card>
+          <Stack space={3}>
+            <Card tone="transparent" radius={2} padding={1} style={{aspectRatio: '1 / 1'}}>
               <QRCodeSVG
                 value={url.toString()}
-                size={280}
-                level="H"
+                size={288}
                 bgColor="var(--card-bg-color)"
                 fgColor="var(--card-fg-color)"
                 imageSettings={{
                   src: qrCodeLogo,
-                  height: 34,
-                  width: 34,
+                  height: 36,
+                  width: 36,
                   excavate: true,
                 }}
               />
@@ -147,6 +146,7 @@ export const ShareUrlDialog = memo(function ShareUrlDialogComponent(props: Share
         ) : (
           <>
             <Button
+              width="fill"
               text={t('share-url.dialog.action.enable-sharing')}
               loading={enabling}
               onClick={handleEnableSharing}
