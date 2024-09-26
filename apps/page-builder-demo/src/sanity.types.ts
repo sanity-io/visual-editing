@@ -847,6 +847,11 @@ export type PageQueryResult = {
   > | null
   style: null
 } | null
+// Variable: pageSlugs
+// Query: *[_type == "page" && defined(slug.current)]{"slug": slug.current}
+export type PageSlugsResult = Array<{
+  slug: string | null
+}>
 
 // Source: ./src/app/product/[slug]/page.tsx
 // Variable: productSlugsQuery
@@ -971,6 +976,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
     '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    sections[]{\n      ...,\n      symbol->{_type},\n      'headline': coalesce(headline, symbol->headline),\n      'tagline': coalesce(tagline, symbol->tagline),\n      'subline': coalesce(subline, symbol->subline),\n      'image': coalesce(image, symbol->image),\n      product->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      },\n      products[]{\n        _key,\n        ...(@->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        })\n      }\n    },\n    style\n  }\n": PageQueryResult
+    '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
     '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
     '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
