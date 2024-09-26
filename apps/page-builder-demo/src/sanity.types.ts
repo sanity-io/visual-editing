@@ -709,22 +709,143 @@ export type ProjectsPageQueryResult = Array<{
   slug?: Slug
 }>
 
-// Source: ./src/app/project/[slug]/page.tsx
-// Variable: projectSlugsQuery
-// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
-export type ProjectSlugsQueryResult = Array<{
-  slug: string | null
-}>
-// Variable: projectPageQuery
-// Query: *[_type == "project" && slug.current == $slug][0]
-export type ProjectPageQueryResult = {
+// Source: ./src/app/pages/[slug]/page.tsx
+// Variable: pageQuery
+// Query: *[_type == "page" && slug.current == $slug][0]{    _type,    _id,    title,    sections[]{      ...,      symbol->{_type},      'headline': coalesce(headline, symbol->headline),      'tagline': coalesce(tagline, symbol->tagline),      'subline': coalesce(subline, symbol->subline),      'image': coalesce(image, symbol->image),      product->{        _type,        _id,        title,        slug,        "media": media[0]      },      products[]{        _key,        ...(@->{          _type,          _id,          title,          slug,          "media": media[0]        })      }    },    style  }
+export type PageQueryResult = {
+  _type: 'page'
   _id: string
-  _type: 'project'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
+  title: string | null
+  sections: Array<
+    | {
+        headline: string | null
+        description?: string
+        products: Array<{
+          _key: string
+          _type: 'product'
+          _id: string
+          title: string | null
+          slug: Slug | null
+          media: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          } | null
+        }> | null
+        style?: SectionStyle
+        _type: 'featuredProducts'
+        _key: string
+        symbol: null
+        tagline: null
+        subline: null
+        image: null
+        product: null
+      }
+    | {
+        headline: string | null
+        description?: string
+        image: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        } | null
+        ctas?: Array<{
+          title?: string
+          href?: string
+          _type: 'cta'
+          _key: string
+        }>
+        product: {
+          _type: 'product'
+          _id: string
+          title: string | null
+          slug: Slug | null
+          media: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          } | null
+        } | null
+        style?: SectionStyle
+        _type: 'featureHighlight'
+        _key: string
+        symbol: null
+        tagline: null
+        subline: null
+        products: null
+      }
+    | {
+        headline: string | null
+        tagline: string | null
+        subline: string | null
+        image: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        } | null
+        style?: SectionStyle
+        _type: 'hero'
+        _key: string
+        symbol: null
+        product: null
+        products: null
+      }
+    | {
+        headline: string | null
+        intro?: string
+        style?: SectionStyle
+        _type: 'intro'
+        _key: string
+        symbol: null
+        tagline: null
+        subline: null
+        image: null
+        product: null
+        products: null
+      }
+    | {
+        symbol: {
+          _type: 'page.section'
+        } | null
+        headline: string | null
+        tagline: string | null
+        subline: string | null
+        _type: 'section'
+        _key: string
+        image: null
+        product: null
+        products: null
+      }
+  > | null
+  style: null
 } | null
 
 // Source: ./src/app/product/[slug]/page.tsx
@@ -825,15 +946,34 @@ export type ProductPageQueryResult = {
   }>
 } | null
 
+// Source: ./src/app/project/[slug]/page.tsx
+// Variable: projectSlugsQuery
+// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
+export type ProjectSlugsQueryResult = Array<{
+  slug: string | null
+}>
+// Variable: projectPageQuery
+// Query: *[_type == "project" && slug.current == $slug][0]
+export type ProjectPageQueryResult = {
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+} | null
+
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_id == "siteSettings"][0]{\n  title,\n  description,\n  copyrightText\n}': LayoutQueryResult
     "\n  *[_id == \"siteSettings\"][0]{\n    frontPage->{\n      _type,\n      _id,\n      title,\n      sections[]{\n        ...,\n        symbol->{_type},\n        'headline': coalesce(headline, symbol->headline),\n        'tagline': coalesce(tagline, symbol->tagline),\n        'subline': coalesce(subline, symbol->subline),\n        'image': coalesce(image, symbol->image),\n        product->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        },\n        products[]{\n          _key,\n          ...(@->{\n            _type,\n            _id,\n            title,\n            slug,\n            \"media\": media[0]\n          })\n        }\n      },\n      style\n    }\n  }.frontPage\n": FrontPageQueryResult
     '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
     '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
-    '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
-    '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    sections[]{\n      ...,\n      symbol->{_type},\n      'headline': coalesce(headline, symbol->headline),\n      'tagline': coalesce(tagline, symbol->tagline),\n      'subline': coalesce(subline, symbol->subline),\n      'image': coalesce(image, symbol->image),\n      product->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      },\n      products[]{\n        _key,\n        ...(@->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        })\n      }\n    },\n    style\n  }\n": PageQueryResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
     '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
+    '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
+    '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
   }
 }
