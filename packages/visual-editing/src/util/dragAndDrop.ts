@@ -342,7 +342,7 @@ export function handleOverlayDrag(
   const handleScroll = (e: WheelEvent) => {
     if (
       Math.abs(e.deltaY) >= 10 &&
-      scaleFactor >= 1 &&
+      scaleFactor < 1 &&
       !minimapScaleApplied &&
       !minimapPromptShown
     ) {
@@ -431,6 +431,8 @@ export function handleOverlayDrag(
 
   const handleKeyup = (e: KeyboardEvent) => {
     if (e.key === 'Shift' && minimapScaleApplied) {
+      minimapScaleApplied = false
+
       const skeleton = buildPreviewSkeleton(mousePos, element, 1 / scaleFactor)
 
       handler({
@@ -438,11 +440,7 @@ export function handleOverlayDrag(
         skeleton,
       })
 
-      resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight).then(
-        () => {
-          minimapScaleApplied = false
-        },
-      )
+      resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight)
 
       // cleanup keyup after drag sequence is complete
       if (!mousedown) {
