@@ -232,16 +232,14 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   }, [focused, wasMaybeCollapsed, isDragging])
 
   return (
-    <>
-      <Root
-        data-focused={focused ? '' : undefined}
-        data-hovered={hovered ? '' : undefined}
-        ref={ref}
-        style={style}
-      >
-        {hovered && <ElementOverlayInner {...props} />}
-      </Root>
-    </>
+    <Root
+      data-focused={focused ? '' : undefined}
+      data-hovered={hovered ? '' : undefined}
+      ref={ref}
+      style={style}
+    >
+      {hovered && <ElementOverlayInner {...props} />}
+    </Root>
   )
 })
 
