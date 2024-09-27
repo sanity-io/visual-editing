@@ -229,7 +229,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     }
 
     scrolledIntoViewRef.current = focused === true
-  }, [focused, wasMaybeCollapsed])
+  }, [focused, wasMaybeCollapsed, isDragging])
 
   return (
     <>

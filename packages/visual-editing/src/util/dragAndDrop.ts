@@ -226,7 +226,7 @@ function calcMinimapTransformValues(rects: OverlayRect[]) {
   const scaleFactor = groupHeight > window.innerHeight ? window.innerHeight / groupHeight : 1
   const scaledRects = rects.map((r) => scaleRect(r, scaleFactor, {x: window.innerWidth / 2, y: 0}))
 
-  let {min: minYScaled} = getRectGroupYExtent(scaledRects)
+  const {min: minYScaled} = getRectGroupYExtent(scaledRects)
 
   return {
     scaleFactor,
