@@ -184,7 +184,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
-  const {focused, hovered, rect, wasMaybeCollapsed, draggable, isDragging} = props
+  const {focused, hovered, rect, wasMaybeCollapsed, isDragging} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -238,9 +238,8 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
         data-hovered={hovered ? '' : undefined}
         ref={ref}
         style={style}
-        data-draggable={draggable ? '' : undefined}
       >
-        <Flex>{hovered && <ElementOverlayInner {...props} />}</Flex>
+        {hovered && <ElementOverlayInner {...props} />}
       </Root>
     </>
   )
