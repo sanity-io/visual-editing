@@ -298,7 +298,7 @@ export function createOverlayController({
       id,
       rect: getRect(element),
       sanity,
-      dragDisabled: element.getAttribute('data-sanity-disable-drag') === 'false',
+      dragDisabled: element.getAttribute('data-sanity-disable-drag') === 'true',
     })
     activateElement(sanityNode)
   }
