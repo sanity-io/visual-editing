@@ -18,3 +18,4 @@ export type {
 } from './types'
 export * from './useEncodeDataAttribute'
 export * from '@sanity/core-loader/create-data-attribute'
+export {default as LiveMode} from './LiveMode.svelte'
