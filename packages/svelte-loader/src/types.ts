@@ -124,7 +124,7 @@ export type UseLiveMode = (
 /** @public */
 export type LoadQueryOptions = Pick<
   ResponseQueryOptions,
-  'perspective' | 'cache' | 'next' | 'useCdn' | 'tag' | 'headers'
+  'perspective' | 'cache' | 'next' | 'useCdn' | 'tag' | 'headers' | 'stega'
 >
 
 /** @public */
