@@ -164,7 +164,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
       {title && (
         <Tab gap={1} paddingBottom={1}>
-          <Labels gap={3} padding={3}>
+          <Labels gap={2} padding={2}>
             {draggable && (
               <Box marginRight={1}>
                 <Text className="drag-handle" size={0}>
