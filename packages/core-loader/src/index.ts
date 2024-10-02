@@ -104,12 +104,13 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           `You have to set the Sanity client with \`setServerClient\` before any data fetching is done`,
         )
       }
-      const {query, params = {}, perspective, useCdn} = JSON.parse(key)
+      const {query, params = {}, perspective, useCdn, stega} = JSON.parse(key)
       const {result, resultSourceMap} = await client.fetch(query, params, {
         tag,
         filterResponse: false,
         perspective,
         useCdn,
+        stega,
       })
       return {result, resultSourceMap}
     })
