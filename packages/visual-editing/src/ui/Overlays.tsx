@@ -27,6 +27,7 @@ import {
 import {styled} from 'styled-components'
 import type {HistoryAdapter, OverlayEventHandler, OverlayMsg, VisualEditingNode} from '../types'
 import {getDraftId} from '../util/documents'
+import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
@@ -415,7 +416,15 @@ export const Overlays: FunctionComponent<{
                 />
                 {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                 {!isDragging &&
-                  elementsToRender.map(({id, focused, hovered, rect, sanity}) => {
+                  elementsToRender.map(({id, focused, hovered, rect, sanity, dragDisabled}) => {
+                    const draggable =
+                      !dragDisabled &&
+                      elements.some((e) =>
+                        'id' in e.sanity && 'id' in sanity
+                          ? sanityNodesExistInSameArray(e.sanity, sanity)
+                          : false,
+                      )
+
                     return (
                       <ElementOverlay
                         key={id}
@@ -424,6 +433,8 @@ export const Overlays: FunctionComponent<{
                         node={sanity}
                         rect={rect}
                         showActions={!inFrame}
+                        draggable={draggable}
+                        isDragging={isDragging}
                         wasMaybeCollapsed={focused && wasMaybeCollapsed}
                       />
                     )

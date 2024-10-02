@@ -13,7 +13,7 @@ import {
   findSanityNodes,
   isSanityArrayPath,
   isSanityNode,
-  sanityNodesExistInSameArray,
+  resolveDragAndDropGroup,
 } from './util/findSanityNodes'
 import {getRect} from './util/geometry'
 
@@ -196,25 +196,11 @@ export function createOverlayController({
         )
           return
 
-        const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
-          const elData = elementsMap.get(el)
-          const elDragDisabled = el.getAttribute('data-sanity-disable-drag')
+        const dragGroup = resolveDragAndDropGroup(element, sanity, elementSet, elementsMap)
 
-          if (
-            elData &&
-            !elDragDisabled &&
-            isSanityNode(elData.sanity) &&
-            sanityNodesExistInSameArray(targetSanityData, elData.sanity)
-          ) {
-            acc.push(elData)
-          }
+        if (!dragGroup) return
 
-          return acc
-        }, [])
-
-        if (group.length <= 1) return
-
-        handleOverlayDrag(event as MouseEvent, element, group, handler, targetSanityData)
+        handleOverlayDrag(event as MouseEvent, element, dragGroup, handler, targetSanityData)
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)
@@ -312,6 +298,7 @@ export function createOverlayController({
       id,
       rect: getRect(element),
       sanity,
+      dragDisabled: element.getAttribute('data-sanity-disable-drag') === 'true',
     })
     activateElement(sanityNode)
   }

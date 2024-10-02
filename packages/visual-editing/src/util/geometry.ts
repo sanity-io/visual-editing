@@ -189,5 +189,9 @@ export function getRectGroupYExtent(rects: OverlayRect[]): {
   const minGroupY = Math.min(...rects.map((r) => r.y))
   const maxGroupY = Math.max(...rects.map((r) => r.y + r.h))
 
-  return {min: minGroupY, max: maxGroupY, height: maxGroupY - minGroupY}
+  return {
+    min: minGroupY,
+    max: maxGroupY,
+    height: maxGroupY - minGroupY,
+  }
 }
