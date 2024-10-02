@@ -5,10 +5,6 @@ import {studioUrl as baseUrl} from '@repo/studio-url'
 const studioUrl = `${baseUrl}/${workspaces['nuxt'].workspace}`
 
 export default defineNuxtConfig({
-  build: {
-    transpile: ['rxjs'],
-  },
-
   devtools: {enabled: false},
 
   imports: {
