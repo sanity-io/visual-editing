@@ -27,9 +27,8 @@ const Root = styled.div<{
   position: fixed;
   background: var(--drag-preview-bg);
   pointer-events: none;
-  transform-origin: 0 0;
-  transform: ${({$offsetX, $offsetY, $scaleFactor}) =>
-    `translate(calc(var(--drag-preview-x) + ${$offsetX}px), calc(var(--drag-preview-y) + ${$offsetY}px)) scale(${$scaleFactor})`};
+  transform: ${({$scaleFactor, $width, $height}) =>
+    `translate(calc(var(--drag-preview-x) - ${$width / 2}px), calc(var(--drag-preview-y) - ${$height / 2}px)) scale(${$scaleFactor})`};
   width: ${({$width}) => `${$width}px`};
   height: ${({$height}) => `${$height}px`};
   z-index: 9999999;

@@ -134,6 +134,7 @@ export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>
 export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
+  dragDisabled: boolean
 }
 
 /** @public */
@@ -247,6 +248,7 @@ export interface ElementState {
   hovered: boolean
   rect: OverlayRect
   sanity: SanityNode | SanityStegaNode
+  dragDisabled: boolean
 }
 
 /**
