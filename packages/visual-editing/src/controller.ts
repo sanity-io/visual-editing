@@ -198,6 +198,8 @@ export function createOverlayController({
 
         const dragGroup = resolveDragAndDropGroup(element, sanity, elementSet, elementsMap)
 
+        console.log(dragGroup)
+
         if (!dragGroup) return
 
         handleOverlayDrag(event as MouseEvent, element, dragGroup, handler, targetSanityData)

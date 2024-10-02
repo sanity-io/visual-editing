@@ -421,7 +421,8 @@ export const Overlays: FunctionComponent<{
                       !dragDisabled &&
                       elements.some((e) =>
                         'id' in e.sanity && 'id' in sanity
-                          ? sanityNodesExistInSameArray(e.sanity, sanity)
+                          ? sanityNodesExistInSameArray(e.sanity, sanity) &&
+                            e.sanity.path !== sanity.path
                           : false,
                       )
 
