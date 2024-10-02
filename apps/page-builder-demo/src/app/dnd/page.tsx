@@ -22,7 +22,7 @@ export default async function Page() {
   return (
     <div style={{padding: '2rem'}}>
       <h1>{data.title}</h1>
-      <div className="flex gap-4 p-6">
+      <div className="flex flex-wrap gap-4 p-6">
         {data.children.map((child) => (
           <div
             data-sanity={dataAttribute({

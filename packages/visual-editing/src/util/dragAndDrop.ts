@@ -408,13 +408,15 @@ export function handleOverlayDrag(
   const handleMouseUp = (): void => {
     mousedown = false
 
-    handler({
-      type: 'overlay/dragEnd',
-      target,
-      insertPosition: insertPosition
-        ? resolveInsertPosition(overlayGroup, insertPosition, flow)
-        : null,
-    })
+    setTimeout(() => {
+      handler({
+        type: 'overlay/dragEnd',
+        target,
+        insertPosition: insertPosition
+          ? resolveInsertPosition(overlayGroup, insertPosition, flow)
+          : null,
+      })
+    }, 50)
 
     if (minimapPromptShown) {
       handler({
