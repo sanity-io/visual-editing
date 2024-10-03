@@ -166,7 +166,7 @@ function buildPreviewSkeleton(mousePos: Point2D, element: ElementNode, scaleFact
 
   const childRects = children.map((child: Element) => {
     // offset to account for stroke in rendered rects
-    const rect = scaleRect(offsetRect(getRect(child), 2), scaleFactor, {
+    const rect = scaleRect(offsetRect(getRect(child), 0), scaleFactor, {
       x: bounds.x,
       y: bounds.y,
     })
@@ -408,15 +408,13 @@ export function handleOverlayDrag(
   const handleMouseUp = (): void => {
     mousedown = false
 
-    setTimeout(() => {
-      handler({
-        type: 'overlay/dragEnd',
-        target,
-        insertPosition: insertPosition
-          ? resolveInsertPosition(overlayGroup, insertPosition, flow)
-          : null,
-      })
-    }, 50)
+    handler({
+      type: 'overlay/dragEnd',
+      target,
+      insertPosition: insertPosition
+        ? resolveInsertPosition(overlayGroup, insertPosition, flow)
+        : null,
+    })
 
     if (minimapPromptShown) {
       handler({
@@ -458,6 +456,12 @@ export function handleOverlayDrag(
         minimapScaleApplied = false
       },
     )
+
+    handler({
+      type: 'overlay/dragEnd',
+      target,
+      insertPosition: null,
+    })
 
     clearInterval(rectsInterval)
     removeListeners()

@@ -6,12 +6,14 @@ const Root = styled.div<{$x: number; $y: number; $width: number; $height: number
   position: absolute;
   width: ${({$width}) => `${$width}px`};
   height: ${({$height}) => `${$height}px`};
-  background: color-mix(in srgb, #556bfc 95%, transparent);
+  background: #556bfc;
+  border: 2px solid white;
+  border-radius: 999px;
   pointer-events: none;
   transform: ${({$x, $y}) => `translate(${$x}px, ${$y}px)`};
 `
 
-const markerThickness = 2
+const markerThickness = 6
 const markerGap = 0
 
 function lerp(v0: number, v1: number, t: number) {
@@ -29,6 +31,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
   let y = 0
   let width = 0
   let height = 0
+  const offsetMultiplier = 0.0125
 
   if (flow === 'horizontal') {
     const {left, right} = dragInsertPosition
@@ -38,19 +41,27 @@ export const OverlayDragInsertMarker: FunctionComponent<{
     if (right && left) {
       const startX = left.rect.x + left.rect.w
       const endX = right.rect.x
+      const targetHeight = Math.min(right.rect.h, left.rect.h)
+      const offset = targetHeight * offsetMultiplier
 
       x = lerp(startX, endX, 0.5) - markerThickness / 2
-      y = left.rect.y
+      y = left.rect.y + offset
 
-      height = Math.min(right.rect.h, left.rect.h)
+      height = Math.min(right.rect.h, left.rect.h) - offset * 2
     } else if (right && !left) {
+      const targetHeight = right.rect.h
+      const offset = targetHeight * offsetMultiplier
+
       x = right.rect.x - markerThickness - markerGap
-      y = right.rect.y
-      height = right.rect.h
+      y = right.rect.y + offset
+      height = right.rect.h - offset * 2
     } else if (left && !right) {
+      const targetHeight = left.rect.h
+      const offset = targetHeight * offsetMultiplier
+
       x = left.rect.x + left.rect.w + markerGap
-      y = left.rect.y
-      height = left.rect.h
+      y = left.rect.y + offset
+      height = left.rect.h - offset * 2
     }
   } else {
     const {bottom, top} = dragInsertPosition
@@ -58,21 +69,29 @@ export const OverlayDragInsertMarker: FunctionComponent<{
     if (bottom && top) {
       const startY = top.rect.y + top.rect.h
       const endY = bottom.rect.y
+      const targetWidth = Math.min(bottom.rect.w, top.rect.w)
+      const offset = targetWidth * offsetMultiplier
 
       height = markerThickness
 
-      x = top.rect.x
+      x = top.rect.x + offset
       y = lerp(startY, endY, 0.5) - markerThickness / 2
-      width = Math.min(bottom.rect.w, top.rect.w)
+      width = Math.min(bottom.rect.w, top.rect.w) - offset * 2
     } else if (bottom && !top) {
-      x = bottom.rect.x
+      const targetWidth = bottom.rect.w
+      const offset = targetWidth * offsetMultiplier
+
+      x = bottom.rect.x + offset
       y = bottom.rect.y - markerGap
-      width = bottom.rect.w
+      width = bottom.rect.w - offset * 2
       height = markerThickness
     } else if (top && !bottom) {
-      x = top.rect.x
+      const targetWidth = top.rect.w
+      const offset = targetWidth * offsetMultiplier
+
+      x = top.rect.x + offset
       y = top.rect.y + top.rect.h + markerGap
-      width = top.rect.w
+      width = top.rect.w - offset * 2
       height = markerThickness
     }
   }

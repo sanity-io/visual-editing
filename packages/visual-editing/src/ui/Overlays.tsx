@@ -14,6 +14,7 @@ import {
   PortalProvider,
   studioTheme,
   ThemeProvider,
+  usePrefersDark,
 } from '@sanity/ui'
 import {
   useCallback,
@@ -172,6 +173,8 @@ export const Overlays: FunctionComponent<{
   const {comlink, inFrame, history, zIndex} = props
 
   const [status, setStatus] = useState<Status>()
+
+  const prefersDark = usePrefersDark()
 
   const [
     {
@@ -393,7 +396,7 @@ export const Overlays: FunctionComponent<{
   }, [])
 
   return (
-    <ThemeProvider theme={studioTheme} tone="transparent">
+    <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
       <LayerProvider>
         <PortalProvider element={rootElement}>
           <SchemaProvider comlink={comlink} elements={elements}>
