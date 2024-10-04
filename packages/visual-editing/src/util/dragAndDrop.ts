@@ -165,8 +165,7 @@ function buildPreviewSkeleton(mousePos: Point2D, element: ElementNode, scaleFact
   if (mousePos.y <= bounds.y) mousePos.y = bounds.y
 
   const childRects = children.map((child: Element) => {
-    // offset to account for stroke in rendered rects
-    const rect = scaleRect(offsetRect(getRect(child), 0), scaleFactor, {
+    const rect = scaleRect(getRect(child), scaleFactor, {
       x: bounds.x,
       y: bounds.y,
     })
