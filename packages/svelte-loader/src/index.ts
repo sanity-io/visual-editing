@@ -1,5 +1,6 @@
 export * from './createQueryStore'
 export * from './hooks'
+export {default as LiveMode} from './LiveMode.svelte'
 export * from './previewStore'
 export type {
   HandleOptions,
@@ -18,4 +19,3 @@ export type {
 } from './types'
 export * from './useEncodeDataAttribute'
 export * from '@sanity/core-loader/create-data-attribute'
-export {default as LiveMode} from './LiveMode.svelte'
