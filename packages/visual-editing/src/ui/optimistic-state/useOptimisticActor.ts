@@ -1,8 +1,6 @@
 import {useCallback, useSyncExternalStore} from 'react'
 import {actor, emptyActor, listeners, type EmptyActor, type MutatorActor} from './context'
 
-// export const listeners = new Set()
-
 export function useOptimisticActor(): MutatorActor | EmptyActor {
   const subscribe = useCallback((listener: () => void) => {
     listeners.add(listener)

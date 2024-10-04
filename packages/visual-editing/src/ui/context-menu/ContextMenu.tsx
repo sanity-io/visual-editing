@@ -13,8 +13,7 @@ import {
 import {useMemo, type FunctionComponent} from 'react'
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
-import {useOptimisticDocument} from '../optimistic-state/useOptimisticDocument'
-import {useOptimisticMutate} from '../optimistic-state/useOptimisticMutate'
+import {useDocuments} from '../optimistic-state/useDocuments'
 import {PopoverPortal} from '../PopoverPortal'
 import {getField, getSchemaType} from '../schema/schema'
 import {useSchema} from '../schema/useSchema'
@@ -77,6 +76,7 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
   } = props
 
   const {schema, resolvedTypes} = useSchema()
+  const {get, mutate} = useDocuments()
 
   const schemaType = getSchemaType(node, schema)
   const {field, parent} = getField(node, schemaType, resolvedTypes)
@@ -89,13 +89,11 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     return getNodeIcon(field)
   }, [field])
 
-  const mutate = useOptimisticMutate()
-  const doc = useOptimisticDocument(node.id)
-
   const items = useMemo(() => {
+    const doc = get(node.id)?.snapshot
     if (!doc) return []
     return getContextMenuItems({node, field, parent, doc, mutate})
-  }, [doc, field, mutate, node, parent])
+  }, [field, get, mutate, node, parent])
 
   const contextMenuReferenceElement = useMemo(() => {
     return {

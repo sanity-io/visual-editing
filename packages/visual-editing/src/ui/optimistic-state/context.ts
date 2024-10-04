@@ -3,13 +3,6 @@ import {createDatasetMutator} from '../comlink'
 
 export type MutatorActor = ActorRefFrom<ReturnType<typeof createDatasetMutator>>
 export type EmptyActor = typeof emptyActor
-export type OptimisticReducerAction<T> = {
-  id: string
-  type: 'appear' | 'mutate' | 'disappear'
-  document: T
-}
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type OptimisticReducer<T, U> = (state: T, action: OptimisticReducerAction<U>) => T
 
 export const emptyActor = createEmptyActor()
 

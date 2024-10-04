@@ -23,13 +23,13 @@ import {
   getArrayMoveMutations,
   getArrayRemoveMutations,
 } from '../../util/mutations'
-import {type OptimisticMutate} from '../optimistic-state/useOptimisticMutate'
+import type {DocumentMutate} from '../optimistic-state/useDocuments'
 import type {OverlayElementField, OverlayElementParent} from '../schema/schema'
 
 export function getContextMenuItems(context: {
   node: SanityNode
   doc: SanityDocument | undefined
-  mutate: OptimisticMutate
+  mutate: DocumentMutate
   parent: OverlayElementParent
   field: OverlayElementField
 }): ContextMenuNode[] {
@@ -47,7 +47,7 @@ export function getContextMenuItems(context: {
 function getRemoveItems(context: {
   node: SanityNode
   doc: SanityDocument | undefined
-  mutate: OptimisticMutate
+  mutate: DocumentMutate
 }) {
   const {node, doc, mutate} = context
   if (!doc) return []
@@ -65,7 +65,7 @@ function getMoveItems(
   context: {
     node: SanityNode
     doc: SanityDocument | undefined
-    mutate: OptimisticMutate
+    mutate: DocumentMutate
   },
   withDivider = true,
 ) {
@@ -132,7 +132,7 @@ function getContextMenuArrayItems(context: {
   node: SanityNode
   field: SchemaArrayItem
   doc: SanityDocument | undefined
-  mutate: OptimisticMutate
+  mutate: DocumentMutate
 }): ContextMenuNode[] {
   const {node, field, mutate} = context
   const items: ContextMenuNode[] = []
@@ -165,7 +165,7 @@ function getContextMenuUnionItems(context: {
   node: SanityNode
   parent: SchemaUnionNode<SchemaNode>
   doc: SanityDocument | undefined
-  mutate: OptimisticMutate
+  mutate: DocumentMutate
 }): ContextMenuNode[] {
   const {node, parent, mutate} = context
   const items: ContextMenuNode[] = []
