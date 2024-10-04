@@ -33,6 +33,8 @@ export function useDragEndEvents(): {
       return
     }
     const handler = (e: CustomEvent<DragEndEvent>) => {
+      if (e.defaultPrevented) return
+
       const {insertPosition, target} = e.detail
       const reference = getReferenceNodeAndInsertPosition(insertPosition)
       if (reference) {
@@ -75,6 +77,7 @@ export function useDragEndEvents(): {
 
   const dispatchDragEndEvent = useCallback((event: DragEndEvent) => {
     const customEvent = new CustomEvent<DragEndEvent>('sanity/dragEnd', {
+      cancelable: true,
       detail: event,
     })
     window.dispatchEvent(customEvent)

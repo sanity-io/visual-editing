@@ -211,7 +211,7 @@ async function applyMinimapWrapperTransform(
     setTimeout(() => {
       target.style.transformOrigin = '50% 0px'
       target.style.transition = 'transform 150ms ease'
-      target.style.transform = `translateY(${-minYScaled + scrollY}px) scale(${scaleFactor})`
+      target.style.transform = `translate3d(0px, ${-minYScaled + scrollY}px, 0px) scale(${scaleFactor})`
     }, 25)
   })
 }
@@ -238,6 +238,7 @@ async function resetMinimapWrapperTransform(
   endYOrigin: number,
   target: HTMLElement,
   prescaleHeight: number,
+  prevDocumentBgValue: string,
 ): Promise<void> {
   return new Promise((resolve) => {
     const computedStyle = window.getComputedStyle(target)
@@ -266,6 +267,8 @@ async function resetMinimapWrapperTransform(
           top: endYOrigin,
           behavior: 'instant',
         })
+
+        document.documentElement.style.background = prevDocumentBgValue
 
         resolve()
       },
@@ -298,7 +301,9 @@ export function handleOverlayDrag(
   window.focus()
 
   let rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
-  const flow = calcTargetFlow(rects)
+  const flow = (element.getAttribute('data-sanity-drag-flow') || calcTargetFlow(rects)) as
+    | 'horizontal'
+    | 'vertical'
 
   let insertPosition: DragInsertPositionRects | null = null
 
@@ -311,9 +316,15 @@ export function handleOverlayDrag(
   let sequenceStarted = false
   let minimapPromptShown = false
 
+  const disableMinimap = !!element.getAttribute('data-sanity-drag-minimap-disable')
+
   let mousedown = true
 
   if (!minimapScaleApplied) prescaleHeight = document.documentElement.scrollHeight
+
+  let prevDocumentBgValue = window
+    .getComputedStyle(document.documentElement)
+    .getPropertyValue('background')
 
   const rectsInterval = setInterval(() => {
     rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
@@ -334,6 +345,17 @@ export function handleOverlayDrag(
       display: false,
     })
 
+    const scheme =
+      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+
+    if (scheme === 'dark') {
+      document.documentElement.style.background = '#13141b'
+    } else {
+      document.documentElement.style.background = '#eeeef1'
+    }
+
     minimapScaleApplied = true
 
     applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled)
@@ -344,7 +366,9 @@ export function handleOverlayDrag(
       Math.abs(e.deltaY) >= 10 &&
       scaleFactor < 1 &&
       !minimapScaleApplied &&
-      !minimapPromptShown
+      !minimapPromptShown &&
+      !disableMinimap &&
+      mousedown
     ) {
       handler({
         type: 'overlay/dragToggleMinimapPrompt',
@@ -354,7 +378,7 @@ export function handleOverlayDrag(
       minimapPromptShown = true
     }
 
-    if (e.shiftKey && !minimapScaleApplied) {
+    if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
       applyMinimap()
     }
   }
@@ -389,7 +413,7 @@ export function handleOverlayDrag(
       y: mousePos.y,
     })
 
-    if (e.shiftKey && !minimapScaleApplied) {
+    if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
       applyMinimap()
     }
 
@@ -397,6 +421,8 @@ export function handleOverlayDrag(
 
     if (JSON.stringify(insertPosition) !== JSON.stringify(newInsertPosition)) {
       insertPosition = newInsertPosition
+
+      console.log(resolveInsertPosition(overlayGroup, insertPosition, flow))
 
       handler({
         type: 'overlay/dragUpdateInsertPosition',
@@ -440,7 +466,12 @@ export function handleOverlayDrag(
         skeleton,
       })
 
-      resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight)
+      resetMinimapWrapperTransform(
+        mousePosInverseTransform.y,
+        scaleTarget,
+        prescaleHeight,
+        prevDocumentBgValue,
+      )
 
       // cleanup keyup after drag sequence is complete
       if (!mousedown) {
@@ -451,11 +482,14 @@ export function handleOverlayDrag(
   }
 
   const handleBlur = () => {
-    resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight).then(
-      () => {
-        minimapScaleApplied = false
-      },
-    )
+    resetMinimapWrapperTransform(
+      mousePosInverseTransform.y,
+      scaleTarget,
+      prescaleHeight,
+      prevDocumentBgValue,
+    ).then(() => {
+      minimapScaleApplied = false
+    })
 
     handler({
       type: 'overlay/dragEnd',

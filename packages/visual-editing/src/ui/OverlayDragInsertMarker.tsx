@@ -14,7 +14,7 @@ const Root = styled.div<{$x: number; $y: number; $width: number; $height: number
 `
 
 const markerThickness = 6
-const markerGap = 0
+const markerGap = markerThickness / 2
 
 function lerp(v0: number, v1: number, t: number) {
   return v0 * (1 - t) + v1 * t
@@ -67,6 +67,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
     const {bottom, top} = dragInsertPosition
 
     if (bottom && top) {
+      const startX = Math.min(top.rect.x, bottom.rect.x)
       const startY = top.rect.y + top.rect.h
       const endY = bottom.rect.y
       const targetWidth = Math.min(bottom.rect.w, top.rect.w)
@@ -74,9 +75,9 @@ export const OverlayDragInsertMarker: FunctionComponent<{
 
       height = markerThickness
 
-      x = top.rect.x + offset
+      x = startX + offset
       y = lerp(startY, endY, 0.5) - markerThickness / 2
-      width = Math.min(bottom.rect.w, top.rect.w) - offset * 2
+      width = Math.max(bottom.rect.w, top.rect.w) - offset * 2
     } else if (bottom && !top) {
       const targetWidth = bottom.rect.w
       const offset = targetWidth * offsetMultiplier

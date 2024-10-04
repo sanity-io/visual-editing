@@ -605,7 +605,7 @@ export const pageBuilderDemoPlugin = definePlugin<
             filter: `_type == "page" && (*[_id == "siteSettings"][0].frontPage._ref == _id)`,
           },
           {
-            route: '/dnd',
+            route: '/dnd-sandbox',
             filter: `_type == "dndTestPage"`,
           },
         ]),
