@@ -14,7 +14,6 @@ const Root = styled.div<{$x: number; $y: number; $width: number; $height: number
 `
 
 const markerThickness = 6
-const markerGap = markerThickness / 2
 
 function lerp(v0: number, v1: number, t: number) {
   return v0 * (1 - t) + v1 * t
@@ -52,14 +51,14 @@ export const OverlayDragInsertMarker: FunctionComponent<{
       const targetHeight = right.rect.h
       const offset = targetHeight * offsetMultiplier
 
-      x = right.rect.x - markerThickness - markerGap
+      x = right.rect.x - markerThickness / 2
       y = right.rect.y + offset
       height = right.rect.h - offset * 2
     } else if (left && !right) {
       const targetHeight = left.rect.h
       const offset = targetHeight * offsetMultiplier
 
-      x = left.rect.x + left.rect.w + markerGap
+      x = left.rect.x + left.rect.w - markerThickness / 2
       y = left.rect.y + offset
       height = left.rect.h - offset * 2
     }
@@ -83,7 +82,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
       const offset = targetWidth * offsetMultiplier
 
       x = bottom.rect.x + offset
-      y = bottom.rect.y - markerGap
+      y = bottom.rect.y - markerThickness / 2
       width = bottom.rect.w - offset * 2
       height = markerThickness
     } else if (top && !bottom) {
@@ -91,7 +90,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
       const offset = targetWidth * offsetMultiplier
 
       x = top.rect.x + offset
-      y = top.rect.y + top.rect.h + markerGap
+      y = top.rect.y + top.rect.h - markerThickness / 2
       width = top.rect.w - offset * 2
       height = markerThickness
     }

@@ -186,6 +186,7 @@ export const Overlays: FunctionComponent<{
       isDragging,
       perspective,
       wasMaybeCollapsed,
+      dragMinimapTransition,
     },
     dispatch,
   ] = useReducer(overlayStateReducer, {
@@ -198,6 +199,7 @@ export const Overlays: FunctionComponent<{
     isDragging: false,
     perspective: 'published',
     wasMaybeCollapsed: false,
+    dragMinimapTransition: false,
   })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -419,6 +421,7 @@ export const Overlays: FunctionComponent<{
                 />
                 {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                 {!isDragging &&
+                  !dragMinimapTransition &&
                   elementsToRender.map(({id, focused, hovered, rect, sanity, dragDisabled}) => {
                     const draggable =
                       !dragDisabled &&
@@ -438,19 +441,19 @@ export const Overlays: FunctionComponent<{
                         rect={rect}
                         showActions={!inFrame}
                         draggable={draggable}
-                        isDragging={isDragging}
+                        isDragging={isDragging || dragMinimapTransition}
                         wasMaybeCollapsed={focused && wasMaybeCollapsed}
                       />
                     )
                   })}
 
-                {isDragging && (
+                {isDragging && !dragMinimapTransition && (
                   <>
                     <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
-                    {dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
                     {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
                   </>
                 )}
+                {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
               </Root>
             </PreviewSnapshotsProvider>
           </SchemaProvider>

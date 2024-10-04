@@ -12,7 +12,6 @@ import {
   findClosestIntersection,
   getRect,
   getRectGroupYExtent,
-  offsetRect,
   pointDist,
   rectEqual,
   scaleRect,
@@ -51,8 +50,8 @@ function calcInsertPosition(origin: Point2D, targets: OverlayRect[], flow: strin
     }
 
     return {
-      left: findClosestIntersection(rayLeft, targets),
-      right: findClosestIntersection(rayRight, targets),
+      left: findClosestIntersection(rayLeft, targets, flow),
+      right: findClosestIntersection(rayRight, targets, flow),
     }
   } else {
     const rayTop = {
@@ -70,8 +69,8 @@ function calcInsertPosition(origin: Point2D, targets: OverlayRect[], flow: strin
     }
 
     return {
-      top: findClosestIntersection(rayTop, targets),
-      bottom: findClosestIntersection(rayBottom, targets),
+      top: findClosestIntersection(rayTop, targets, flow),
+      bottom: findClosestIntersection(rayBottom, targets, flow),
     }
   }
 }
@@ -122,8 +121,11 @@ function resolveInsertPosition(
 }
 
 function calcMousePos(e: MouseEvent) {
+  const bodyBounds = document.body.getBoundingClientRect()
+
   return {
-    x: e.clientX,
+    // clamp x value to body bounds during minimap transitions
+    x: Math.max(bodyBounds.x, Math.min(e.clientX, bodyBounds.x + bodyBounds.width)),
     y: e.clientY + window.scrollY,
   }
 }
@@ -194,15 +196,27 @@ async function applyMinimapWrapperTransform(
   target: HTMLElement,
   scaleFactor: number,
   minYScaled: number,
+  handler: OverlayEventHandler,
+  rectUpdateFrequency: number,
 ): Promise<void> {
   return new Promise((resolve) => {
     target.addEventListener(
       'transitionend',
       () => {
+        setTimeout(() => {
+          handler({
+            type: 'overlay/dragEndMinimapTransition',
+          })
+        }, rectUpdateFrequency * 2)
+
         resolve()
       },
       {once: true},
     )
+
+    handler({
+      type: 'overlay/dragStartMinimapTransition',
+    })
 
     document.body.style.overflow = 'hidden'
 
@@ -237,7 +251,8 @@ async function resetMinimapWrapperTransform(
   endYOrigin: number,
   target: HTMLElement,
   prescaleHeight: number,
-  prevDocumentBgValue: string,
+  handler: OverlayEventHandler,
+  rectUpdateFrequency: number,
 ): Promise<void> {
   return new Promise((resolve) => {
     const computedStyle = window.getComputedStyle(target)
@@ -267,12 +282,20 @@ async function resetMinimapWrapperTransform(
           behavior: 'instant',
         })
 
-        document.documentElement.style.background = prevDocumentBgValue
+        setTimeout(() => {
+          handler({
+            type: 'overlay/dragEndMinimapTransition',
+          })
+        }, rectUpdateFrequency * 2)
 
         resolve()
       },
       {once: true},
     )
+
+    handler({
+      type: 'overlay/dragStartMinimapTransition',
+    })
 
     target.style.transform = `translateY(${Math.max(prevScrollY - endYOrigin, -maxScroll + prevScrollY)}px) scale(${1})`
     document.body.style.overflow = 'auto'
@@ -321,13 +344,11 @@ export function handleOverlayDrag(
 
   if (!minimapScaleApplied) prescaleHeight = document.documentElement.scrollHeight
 
-  let prevDocumentBgValue = window
-    .getComputedStyle(document.documentElement)
-    .getPropertyValue('background')
+  const rectUpdateFrequency = 150
 
   const rectsInterval = setInterval(() => {
     rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
-  }, 150)
+  }, rectUpdateFrequency)
 
   const applyMinimap = (): void => {
     if (scaleFactor >= 1) return
@@ -344,20 +365,13 @@ export function handleOverlayDrag(
       display: false,
     })
 
-    const scheme =
-      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-
-    if (scheme === 'dark') {
-      document.documentElement.style.background = '#13141b'
-    } else {
-      document.documentElement.style.background = '#eeeef1'
-    }
-
     minimapScaleApplied = true
 
-    applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled)
+    handler({
+      type: 'overlay/dragStartMinimapTransition',
+    })
+
+    applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled, handler, rectUpdateFrequency)
   }
 
   const handleScroll = (e: WheelEvent) => {
@@ -421,8 +435,6 @@ export function handleOverlayDrag(
     if (JSON.stringify(insertPosition) !== JSON.stringify(newInsertPosition)) {
       insertPosition = newInsertPosition
 
-      console.log(resolveInsertPosition(overlayGroup, insertPosition, flow))
-
       handler({
         type: 'overlay/dragUpdateInsertPosition',
         insertPosition: resolveInsertPosition(overlayGroup, insertPosition, flow),
@@ -469,7 +481,8 @@ export function handleOverlayDrag(
         mousePosInverseTransform.y,
         scaleTarget,
         prescaleHeight,
-        prevDocumentBgValue,
+        handler,
+        rectUpdateFrequency,
       )
 
       // cleanup keyup after drag sequence is complete
@@ -481,11 +494,16 @@ export function handleOverlayDrag(
   }
 
   const handleBlur = () => {
+    handler({
+      type: 'overlay/dragStartMinimapTransition',
+    })
+
     resetMinimapWrapperTransform(
       mousePosInverseTransform.y,
       scaleTarget,
       prescaleHeight,
-      prevDocumentBgValue,
+      handler,
+      rectUpdateFrequency,
     ).then(() => {
       minimapScaleApplied = false
     })
