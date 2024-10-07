@@ -180,6 +180,14 @@ export type OverlayMsgDragUpdateSkeleton = Msg<'overlay/dragUpdateSkeleton'> & {
 /** @public */
 export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & DragEndEvent
 
+/** @public */
+
+export type OverlayMsgDragStartMinimapTransition = Msg<'overlay/dragStartMinimapTransition'>
+
+/** @public */
+
+export type OverlayMsgDragEndMinimapTransition = Msg<'overlay/dragEndMinimapTransition'>
+
 /**
  * Controller dispatched messages
  * @public
@@ -189,7 +197,9 @@ export type OverlayMsg =
   | OverlayMsgBlur
   | OverlayMsgDeactivate
   | OverlayMsgDragEnd
+  | OverlayMsgDragEndMinimapTransition
   | OverlayMsgDragStart
+  | OverlayMsgDragStartMinimapTransition
   | OverlayMsgDragToggleMinimapPrompt
   | OverlayMsgDragUpdateCursorPosition
   | OverlayMsgDragUpdateInsertPosition

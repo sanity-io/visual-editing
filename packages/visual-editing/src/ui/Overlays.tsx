@@ -14,6 +14,7 @@ import {
   PortalProvider,
   studioTheme,
   ThemeProvider,
+  usePrefersDark,
 } from '@sanity/ui'
 import {
   useCallback,
@@ -173,6 +174,8 @@ export const Overlays: FunctionComponent<{
 
   const [status, setStatus] = useState<Status>()
 
+  const prefersDark = usePrefersDark()
+
   const [
     {
       contextMenu,
@@ -183,6 +186,7 @@ export const Overlays: FunctionComponent<{
       isDragging,
       perspective,
       wasMaybeCollapsed,
+      dragMinimapTransition,
     },
     dispatch,
   ] = useReducer(overlayStateReducer, {
@@ -195,6 +199,7 @@ export const Overlays: FunctionComponent<{
     isDragging: false,
     perspective: 'published',
     wasMaybeCollapsed: false,
+    dragMinimapTransition: false,
   })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -393,7 +398,7 @@ export const Overlays: FunctionComponent<{
   }, [])
 
   return (
-    <ThemeProvider theme={studioTheme} tone="transparent">
+    <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
       <LayerProvider>
         <PortalProvider element={rootElement}>
           <SchemaProvider comlink={comlink} elements={elements}>
@@ -421,7 +426,8 @@ export const Overlays: FunctionComponent<{
                       !dragDisabled &&
                       elements.some((e) =>
                         'id' in e.sanity && 'id' in sanity
-                          ? sanityNodesExistInSameArray(e.sanity, sanity)
+                          ? sanityNodesExistInSameArray(e.sanity, sanity) &&
+                            e.sanity.path !== sanity.path
                           : false,
                       )
 
@@ -434,19 +440,19 @@ export const Overlays: FunctionComponent<{
                         rect={rect}
                         showActions={!inFrame}
                         draggable={draggable}
-                        isDragging={isDragging}
+                        isDragging={isDragging || dragMinimapTransition}
                         wasMaybeCollapsed={focused && wasMaybeCollapsed}
                       />
                     )
                   })}
 
-                {isDragging && (
+                {isDragging && !dragMinimapTransition && (
                   <>
                     <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
-                    {dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
                     {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
                   </>
                 )}
+                {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
               </Root>
             </PreviewSnapshotsProvider>
           </SchemaProvider>

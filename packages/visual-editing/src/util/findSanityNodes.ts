@@ -214,13 +214,13 @@ export function resolveDragAndDropGroup(
   elementSet: Set<ElementNode>,
   elementsMap: WeakMap<ElementNode, OverlayElement>,
 ): null | OverlayElement[] {
-  if (element.getAttribute('data-sanity-disable-drag')) return null
+  if (element.getAttribute('data-sanity-drag-disable')) return null
 
   if (!sanity || !isSanityNode(sanity) || !isSanityArrayPath(sanity.path)) return null
 
   const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
     const elData = elementsMap.get(el)
-    const elDragDisabled = el.getAttribute('data-sanity-disable-drag')
+    const elDragDisabled = el.getAttribute('data-sanity-drag-disable')
 
     if (
       elData &&

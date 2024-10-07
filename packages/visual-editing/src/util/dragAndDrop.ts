@@ -12,7 +12,6 @@ import {
   findClosestIntersection,
   getRect,
   getRectGroupYExtent,
-  offsetRect,
   pointDist,
   rectEqual,
   scaleRect,
@@ -51,8 +50,8 @@ function calcInsertPosition(origin: Point2D, targets: OverlayRect[], flow: strin
     }
 
     return {
-      left: findClosestIntersection(rayLeft, targets),
-      right: findClosestIntersection(rayRight, targets),
+      left: findClosestIntersection(rayLeft, targets, flow),
+      right: findClosestIntersection(rayRight, targets, flow),
     }
   } else {
     const rayTop = {
@@ -70,8 +69,8 @@ function calcInsertPosition(origin: Point2D, targets: OverlayRect[], flow: strin
     }
 
     return {
-      top: findClosestIntersection(rayTop, targets),
-      bottom: findClosestIntersection(rayBottom, targets),
+      top: findClosestIntersection(rayTop, targets, flow),
+      bottom: findClosestIntersection(rayBottom, targets, flow),
     }
   }
 }
@@ -122,8 +121,10 @@ function resolveInsertPosition(
 }
 
 function calcMousePos(e: MouseEvent) {
+  const bodyBounds = document.body.getBoundingClientRect()
+
   return {
-    x: e.clientX,
+    x: Math.max(bodyBounds.x, Math.min(e.clientX, bodyBounds.x + bodyBounds.width)),
     y: e.clientY + window.scrollY,
   }
 }
@@ -166,7 +167,7 @@ function buildPreviewSkeleton(mousePos: Point2D, element: ElementNode, scaleFact
 
   const childRects = children.map((child: Element) => {
     // offset to account for stroke in rendered rects
-    const rect = scaleRect(offsetRect(getRect(child), 2), scaleFactor, {
+    const rect = scaleRect(getRect(child), scaleFactor, {
       x: bounds.x,
       y: bounds.y,
     })
@@ -195,15 +196,27 @@ async function applyMinimapWrapperTransform(
   target: HTMLElement,
   scaleFactor: number,
   minYScaled: number,
+  handler: OverlayEventHandler,
+  rectUpdateFrequency: number,
 ): Promise<void> {
   return new Promise((resolve) => {
     target.addEventListener(
       'transitionend',
       () => {
+        setTimeout(() => {
+          handler({
+            type: 'overlay/dragEndMinimapTransition',
+          })
+        }, rectUpdateFrequency * 2)
+
         resolve()
       },
       {once: true},
     )
+
+    handler({
+      type: 'overlay/dragStartMinimapTransition',
+    })
 
     document.body.style.overflow = 'hidden'
 
@@ -211,7 +224,7 @@ async function applyMinimapWrapperTransform(
     setTimeout(() => {
       target.style.transformOrigin = '50% 0px'
       target.style.transition = 'transform 150ms ease'
-      target.style.transform = `translateY(${-minYScaled + scrollY}px) scale(${scaleFactor})`
+      target.style.transform = `translate3d(0px, ${-minYScaled + scrollY}px, 0px) scale(${scaleFactor})`
     }, 25)
   })
 }
@@ -238,6 +251,8 @@ async function resetMinimapWrapperTransform(
   endYOrigin: number,
   target: HTMLElement,
   prescaleHeight: number,
+  handler: OverlayEventHandler,
+  rectUpdateFrequency: number,
 ): Promise<void> {
   return new Promise((resolve) => {
     const computedStyle = window.getComputedStyle(target)
@@ -267,10 +282,20 @@ async function resetMinimapWrapperTransform(
           behavior: 'instant',
         })
 
+        setTimeout(() => {
+          handler({
+            type: 'overlay/dragEndMinimapTransition',
+          })
+        }, rectUpdateFrequency * 2)
+
         resolve()
       },
       {once: true},
     )
+
+    handler({
+      type: 'overlay/dragStartMinimapTransition',
+    })
 
     target.style.transform = `translateY(${Math.max(prevScrollY - endYOrigin, -maxScroll + prevScrollY)}px) scale(${1})`
     document.body.style.overflow = 'auto'
@@ -297,8 +322,14 @@ export function handleOverlayDrag(
   // ensure keyboard events fire within frame context
   window.focus()
 
+  const rectUpdateFrequency = 150
   let rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
-  const flow = calcTargetFlow(rects)
+
+  const flow = (element.getAttribute('data-sanity-drag-flow') || calcTargetFlow(rects)) as
+    | 'horizontal'
+    | 'vertical'
+
+  const disableMinimap = !!element.getAttribute('data-sanity-drag-minimap-disable')
 
   let insertPosition: DragInsertPositionRects | null = null
 
@@ -317,7 +348,7 @@ export function handleOverlayDrag(
 
   const rectsInterval = setInterval(() => {
     rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
-  }, 150)
+  }, rectUpdateFrequency)
 
   const applyMinimap = (): void => {
     if (scaleFactor >= 1) return
@@ -336,7 +367,7 @@ export function handleOverlayDrag(
 
     minimapScaleApplied = true
 
-    applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled)
+    applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled, handler, rectUpdateFrequency)
   }
 
   const handleScroll = (e: WheelEvent) => {
@@ -344,7 +375,9 @@ export function handleOverlayDrag(
       Math.abs(e.deltaY) >= 10 &&
       scaleFactor < 1 &&
       !minimapScaleApplied &&
-      !minimapPromptShown
+      !minimapPromptShown &&
+      !disableMinimap &&
+      mousedown
     ) {
       handler({
         type: 'overlay/dragToggleMinimapPrompt',
@@ -354,7 +387,7 @@ export function handleOverlayDrag(
       minimapPromptShown = true
     }
 
-    if (e.shiftKey && !minimapScaleApplied) {
+    if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
       applyMinimap()
     }
   }
@@ -389,7 +422,7 @@ export function handleOverlayDrag(
       y: mousePos.y,
     })
 
-    if (e.shiftKey && !minimapScaleApplied) {
+    if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
       applyMinimap()
     }
 
@@ -440,7 +473,13 @@ export function handleOverlayDrag(
         skeleton,
       })
 
-      resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight)
+      resetMinimapWrapperTransform(
+        mousePosInverseTransform.y,
+        scaleTarget,
+        prescaleHeight,
+        handler,
+        rectUpdateFrequency,
+      )
 
       // cleanup keyup after drag sequence is complete
       if (!mousedown) {
@@ -451,11 +490,15 @@ export function handleOverlayDrag(
   }
 
   const handleBlur = () => {
-    resetMinimapWrapperTransform(mousePosInverseTransform.y, scaleTarget, prescaleHeight).then(
-      () => {
-        minimapScaleApplied = false
-      },
-    )
+    resetMinimapWrapperTransform(
+      mousePosInverseTransform.y,
+      scaleTarget,
+      prescaleHeight,
+      handler,
+      rectUpdateFrequency,
+    ).then(() => {
+      minimapScaleApplied = false
+    })
 
     clearInterval(rectsInterval)
     removeListeners()

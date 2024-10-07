@@ -13,12 +13,21 @@ export function getRect(element: Element): OverlayRect {
   return rect
 }
 
-export function offsetRect(rect: OverlayRect, px: number): OverlayRect {
-  return {
-    x: rect.x + px,
-    y: rect.y + px,
-    w: rect.w - 2 * px,
-    h: rect.h - 2 * px,
+export function offsetRect(rect: OverlayRect, px: number, axis: 'x' | 'y'): OverlayRect {
+  if (axis === 'x') {
+    return {
+      x: rect.x + px,
+      y: rect.y,
+      w: rect.w - 2 * px,
+      h: rect.h,
+    }
+  } else {
+    return {
+      x: rect.x,
+      y: rect.y + px,
+      w: rect.w,
+      h: rect.h - 2 * px,
+    }
   }
 }
 
@@ -120,25 +129,34 @@ export function pointInBounds(point: Point2D, bounds: OverlayRect): boolean {
   return withinX && withinY
 }
 
-export function findClosestIntersection(ray: Ray2D, targets: OverlayRect[]): OverlayRect | null {
+export function findClosestIntersection(
+  ray: Ray2D,
+  targets: OverlayRect[],
+  flow: string,
+): OverlayRect | null {
   const rayOrigin = {
     x: ray.x1,
     y: ray.y1,
   }
 
   // Offset rects to ensure raycasting works when siblings touch
-  if (targets.some((t) => pointInBounds(rayOrigin, offsetRect(t, Math.min(t.w, t.h) / 10))))
+  if (
+    targets.some((t) =>
+      pointInBounds(
+        rayOrigin,
+        offsetRect(t, Math.min(t.w, t.h) / 10, flow === 'horizontal' ? 'x' : 'y'),
+      ),
+    )
+  )
     return null
-
   let closestIntersection
   let closestRect
 
   for (const target of targets) {
     const intersections = rayRectIntersections(
       ray,
-      offsetRect(target, Math.min(target.w, target.h) / 10),
+      offsetRect(target, Math.min(target.w, target.h) / 10, flow === 'horizontal' ? 'x' : 'y'),
     )
-
     if (intersections) {
       const firstIntersection = intersections[0]
 

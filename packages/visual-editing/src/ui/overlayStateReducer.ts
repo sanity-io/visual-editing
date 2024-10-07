@@ -19,6 +19,7 @@ export interface OverlayState {
   dragInsertPosition: DragInsertPosition
   dragSkeleton: DragSkeleton | null
   dragShowMinimapPrompt: boolean
+  dragMinimapTransition: boolean
 }
 
 export function overlayStateReducer(
@@ -34,6 +35,7 @@ export function overlayStateReducer(
     dragInsertPosition,
     dragShowMinimapPrompt,
     dragSkeleton,
+    dragMinimapTransition,
   } = state
   let wasMaybeCollapsed = false
 
@@ -89,6 +91,14 @@ export function overlayStateReducer(
     dragShowMinimapPrompt = message.display
   }
 
+  if (type === 'overlay/dragStartMinimapTransition') {
+    dragMinimapTransition = true
+  }
+
+  if (type === 'overlay/dragEndMinimapTransition') {
+    dragMinimapTransition = false
+  }
+
   return {
     ...state,
     contextMenu,
@@ -100,5 +110,6 @@ export function overlayStateReducer(
     perspective,
     wasMaybeCollapsed,
     dragShowMinimapPrompt,
+    dragMinimapTransition,
   }
 }
