@@ -53,7 +53,6 @@ const Root = styled(Card)`
 `
 
 const Actions = styled(Flex)`
-  bottom: 100%;
   cursor: pointer;
   pointer-events: none;
   position: absolute;
@@ -137,6 +136,17 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     [rect],
   )
 
+  const actionStyle = useMemo(() => {
+    // If the element is close to the top of the screen, we want to show the actions below it
+    const isNearTop = rect.y < 20
+    return {
+      top: isNearTop ? '100%' : 0,
+      bottom: isNearTop ? 0 : '100%',
+      paddingTop: isNearTop ? 4 : 0,
+      paddingBottom: isNearTop ? 0 : 4,
+    }
+  }, [rect])
+
   const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
 
   return (
@@ -147,7 +157,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
       style={style}
     >
       {showActions && hovered ? (
-        <Actions gap={1} paddingBottom={1}>
+        <Actions gap={1} style={actionStyle}>
           <Link href={href} />
         </Actions>
       ) : null}
