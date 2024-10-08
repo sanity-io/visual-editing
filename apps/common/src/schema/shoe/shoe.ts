@@ -3,6 +3,13 @@ import {defineArrayMember, defineField, defineType} from 'sanity'
 export const shoeType = defineType({
   type: 'document',
   name: 'shoe',
+  groups: [
+    {
+      default: true,
+      name: 'details',
+      title: 'Details',
+    },
+  ],
   fields: [
     defineField({
       type: 'string',
@@ -11,6 +18,13 @@ export const shoeType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      group: 'details',
+      type: 'string',
+      name: 'subtitle',
+      title: 'Subtitle',
+    }),
+    defineField({
+      group: 'details',
       type: 'slug',
       name: 'slug',
       title: 'Slug',

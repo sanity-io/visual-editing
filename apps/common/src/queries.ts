@@ -2,6 +2,7 @@ import type {ImageAsset, ImageCrop, ImageHotspot, PortableTextTextBlock} from 's
 
 export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]{
   title,
+  subtitle,
   slug,
   "price": string(price),
   "media": media[0]{ alt, asset, crop, hotspot },
@@ -9,6 +10,7 @@ export const shoesList = /* groq */ `*[_type == "shoe" && defined(slug.current)]
 } | order(_updatedAt desc) `
 export type ShoesListResult = {
   title?: string | null
+  subtitle?: string | null
   slug: {current: string}
   price?: string | null
   media?: {
@@ -32,6 +34,7 @@ export type ShoesListResult = {
 
 export const shoe = /* groq */ `*[_type == "shoe" && slug.current == $slug]{
   title,
+  subtitle,
   slug,
   "price": string(price),
   "media": media[]{ alt, asset, crop, hotspot },
