@@ -182,7 +182,7 @@ export function createOverlayController({
 
         if (event.currentTarget !== hoverStack.at(-1)) return
 
-        if (element.getAttribute('data-sanity-disable-drag')) return
+        if (element.getAttribute('data-sanity-drag-disable')) return
 
         // disable dnd in non-studio contexts
         if (!inFrame) return
@@ -298,7 +298,7 @@ export function createOverlayController({
       id,
       rect: getRect(element),
       sanity,
-      dragDisabled: element.getAttribute('data-sanity-disable-drag') === 'true',
+      dragDisabled: !!element.getAttribute('data-sanity-drag-disable'),
     })
     activateElement(sanityNode)
   }

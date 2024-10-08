@@ -94,7 +94,7 @@ const ActionOpen = styled(Card)`
   border-radius: 3px;
 
   & [data-ui='Text'] {
-    color: var(--card-bg-color);
+    color: #fff;
     white-space: nowrap;
   }
 `
@@ -115,7 +115,7 @@ const Labels = styled(Flex)`
   border-radius: 3px;
   & [data-ui='Text'],
   & [data-sanity-icon] {
-    color: var(--card-bg-color);
+    color: #fff;
     white-space: nowrap;
   }
 `
