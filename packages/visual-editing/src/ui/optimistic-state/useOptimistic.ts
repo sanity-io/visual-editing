@@ -2,8 +2,16 @@ import type {SanityDocument} from '@sanity/types'
 import {startTransition, useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {getPublishedId} from '../../util/documents'
-import {isEmptyActor, type OptimisticReducer, type OptimisticReducerAction} from './context'
+import {isEmptyActor} from './context'
 import {useOptimisticActor} from './useOptimisticActor'
+
+export type OptimisticReducerAction<T> = {
+  id: string
+  type: 'appear' | 'mutate' | 'disappear'
+  document: T
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type OptimisticReducer<T, U> = (state: T, action: OptimisticReducerAction<U>) => T
 
 export function useOptimistic<T, U = SanityDocument>(
   passthrough: T,

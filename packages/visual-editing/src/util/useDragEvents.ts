@@ -1,10 +1,8 @@
 import {at, createIfNotExists, insert, patch, remove} from '@sanity/mutate'
-import {get} from '@sanity/util/paths'
+import {get as getFromPath} from '@sanity/util/paths'
 import {useCallback, useEffect} from 'react'
 import type {DragEndEvent, DragInsertPosition} from '../types'
-import {isEmptyActor} from '../ui/optimistic-state/context'
-import {useOptimisticActor} from '../ui/optimistic-state/useOptimisticActor'
-import {getDraftId} from './documents'
+import {useDocuments} from '../ui/optimistic-state/useDocuments'
 import {getArrayItemKeyAndParentPath} from './mutations'
 
 // Finds the node that the drag end event was relative to, and the relative
@@ -26,30 +24,25 @@ function getReferenceNodeAndInsertPosition(position: DragInsertPosition) {
 export function useDragEndEvents(): {
   dispatchDragEndEvent: (event: DragEndEvent) => void
 } {
-  const actor = useOptimisticActor()
+  const {get, mutate} = useDocuments()
 
   useEffect(() => {
-    if (isEmptyActor(actor)) {
-      return
-    }
     const handler = (e: CustomEvent<DragEndEvent>) => {
       if (e.defaultPrevented) return
 
       const {insertPosition, target} = e.detail
       const reference = getReferenceNodeAndInsertPosition(insertPosition)
       if (reference) {
-        const id = getDraftId(target.id)
-        const doc = actor.getSnapshot().context.documents[id]
-        const snapshot = doc?.getSnapshot().context.local
+        const {snapshot, id} = get(target.id)
         // We must have access to the document actor and snapshot in order to
         // perform the necessary mutations. If either of these are undefined,
         // something went wrong when resolving the currently in use documents
-        if (!doc || !snapshot) return
+        if (!snapshot) return
 
         const {node, position} = reference
         // Get the current value of the element we dragged, as we will need to
         // "clone" this into the new position
-        const elementValue = get(snapshot, target.path)
+        const elementValue = getFromPath(snapshot, target.path)
         // Get the key of the element that was dragged
         const {key: targetKey} = getArrayItemKeyAndParentPath(target)
         // Get the key of the reference element, and path to the parent array
@@ -64,8 +57,7 @@ export function useDragEndEvents(): {
             // Insert the cloned dragged item into its new position
             patch(id, at(arrayPath, insert(elementValue, position, {_key: referenceItemKey}))),
           ]
-          doc.send({type: 'mutate', mutations: mutations})
-          doc.send({type: 'submit'})
+          mutate(id, mutations)
         }
       }
     }
@@ -73,7 +65,7 @@ export function useDragEndEvents(): {
     return () => {
       window.removeEventListener('sanity/dragEnd', handler as EventListener)
     }
-  }, [actor])
+  }, [get, mutate])
 
   const dispatchDragEndEvent = useCallback((event: DragEndEvent) => {
     const customEvent = new CustomEvent<DragEndEvent>('sanity/dragEnd', {
