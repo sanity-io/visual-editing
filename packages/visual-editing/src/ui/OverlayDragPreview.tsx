@@ -79,6 +79,9 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
 
   const radius = theme.radius[~~map(skeleton.w, 0, 1920, 1, theme.radius.length - 2)]
 
+  const imageRects = skeleton.childRects.filter((r) => r.tagName === 'IMG')
+  const textRects = skeleton.childRects.filter((r) => r.tagName !== 'IMG')
+
   return (
     <Root
       $width={skeleton.w}
@@ -96,7 +99,8 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
       >
         <div className="drag-preview-content-wrapper">
           <svg className="drag-preview-skeleton" viewBox={`0 0 ${skeleton.w} ${skeleton.h}`}>
-            {skeleton.childRects.map((r, i) => (
+            {/* render image rects first to account for background images overlapping text */}
+            {[...imageRects, ...textRects].map((r, i) => (
               <rect
                 key={i}
                 x={r.x}
