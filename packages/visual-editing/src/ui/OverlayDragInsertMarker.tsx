@@ -1,17 +1,5 @@
 import type {FunctionComponent} from 'react'
-import {styled} from 'styled-components'
 import type {DragInsertPosition} from '../types'
-
-const Root = styled.div<{$x: number; $y: number; $width: number; $height: number}>`
-  position: absolute;
-  width: ${({$width}) => `${$width}px`};
-  height: ${({$height}) => `${$height}px`};
-  background: #556bfc;
-  border: 2px solid white;
-  border-radius: 999px;
-  pointer-events: none;
-  transform: ${({$x, $y}) => `translate(${$x}px, ${$y}px)`};
-`
 
 const markerThickness = 6
 
@@ -96,5 +84,17 @@ export const OverlayDragInsertMarker: FunctionComponent<{
     }
   }
 
-  return <Root $x={x} $y={y} $width={width} $height={height}></Root>
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        width: `${width}px`,
+        height: `${height}px`,
+        transform: `translate(${x}px, ${y}px)`,
+        background: '#556bfc',
+        border: '2px solid white',
+        borderRadius: '999px',
+      }}
+    ></div>
+  )
 }

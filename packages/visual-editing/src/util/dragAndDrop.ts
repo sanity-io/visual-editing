@@ -309,13 +309,19 @@ let mousePos = {x: 0, y: 0}
 
 let prescaleHeight = typeof document === 'undefined' ? 0 : document.documentElement.scrollHeight
 
-export function handleOverlayDrag(
-  mouseEvent: MouseEvent,
-  element: ElementNode,
-  overlayGroup: OverlayElement[],
-  handler: OverlayEventHandler,
-  target: SanityNode,
-): void {
+interface HandleOverlayDragOpts {
+  mouseEvent: MouseEvent
+  element: ElementNode
+  overlayGroup: OverlayElement[]
+  handler: OverlayEventHandler
+  target: SanityNode
+  onSequenceStart: () => void
+  onSequenceEnd: () => void
+}
+
+export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
+  const {mouseEvent, element, overlayGroup, handler, target, onSequenceStart, onSequenceEnd} = opts
+
   // do not trigger drag sequence on anything other than "main" (0) click, ignore right click, etc
   if (mouseEvent.button !== 0) return
 
@@ -414,6 +420,7 @@ export function handleOverlayDrag(
       })
 
       sequenceStarted = true
+      onSequenceStart()
     }
 
     handler({
@@ -459,6 +466,7 @@ export function handleOverlayDrag(
     if (!minimapScaleApplied) {
       clearInterval(rectsInterval)
       removeListeners()
+      onSequenceEnd()
     }
   }
 
@@ -485,6 +493,7 @@ export function handleOverlayDrag(
       if (!mousedown) {
         clearInterval(rectsInterval)
         removeListeners()
+        onSequenceEnd()
       }
     }
   }
@@ -502,6 +511,7 @@ export function handleOverlayDrag(
 
     clearInterval(rectsInterval)
     removeListeners()
+    onSequenceEnd()
   }
 
   const removeListeners = () => {

@@ -448,7 +448,9 @@ export const Overlays: FunctionComponent<{
 
                 {isDragging && !dragMinimapTransition && (
                   <>
-                    <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                    {dragInsertPosition && (
+                      <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                    )}
                     {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
                   </>
                 )}

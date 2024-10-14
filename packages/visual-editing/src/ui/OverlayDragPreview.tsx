@@ -58,6 +58,15 @@ const Root = styled.div<{
   }
 `
 
+function clamp(number: number, min: number, max: number): number {
+  return number < min ? min : number > max ? max : number
+}
+
+function map(number: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
+  const mapped: number = ((number - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin
+  return clamp(mapped, outMin, outMax)
+}
+
 export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = ({skeleton}) => {
   const minSkeletonWidth = 100
   const minSkeletonHeight = 100
@@ -74,6 +83,8 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
   const prefersDark = usePrefersDark()
   const theme = useTheme_v2()
 
+  const radius = theme.radius[~~map(skeleton.w, 0, 1920, 1, theme.radius.length - 2)]
+
   return (
     <Root
       $width={skeleton.w}
@@ -83,7 +94,7 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
       $scaleFactor={scaleFactor}
     >
       <Card
-        radius={4}
+        radius={radius}
         shadow={4}
         overflow="hidden"
         tone="transparent"
