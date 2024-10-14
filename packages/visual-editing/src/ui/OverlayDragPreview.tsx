@@ -68,9 +68,6 @@ function map(number: number, inMin: number, inMax: number, outMin: number, outMa
 }
 
 export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = ({skeleton}) => {
-  const minSkeletonWidth = 100
-  const minSkeletonHeight = 100
-
   const maxSkeletonWidth = window.innerWidth / 2
   const scaleFactor = skeleton.w > maxSkeletonWidth ? maxSkeletonWidth / skeleton.w : 1
 
