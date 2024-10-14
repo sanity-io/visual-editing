@@ -45,6 +45,8 @@ export function createOverlayController({
   let io: IntersectionObserver | undefined
   let mo: MutationObserver
 
+  let activeDragSequence = false
+
   // The `hoverStack` is used as a container for tracking which elements are hovered at any time.
   // The browser supports hovering multiple nested elements simultanously, but we only want to
   // highlight the "outer most" element.
@@ -141,7 +143,7 @@ export function createOverlayController({
           }
 
           const sanity = elementsMap.get(element)?.sanity
-          if (sanity) {
+          if (sanity && !activeDragSequence) {
             handler({
               type: 'element/click',
               id,
@@ -200,7 +202,22 @@ export function createOverlayController({
 
         if (!dragGroup) return
 
-        handleOverlayDrag(event as MouseEvent, element, dragGroup, handler, targetSanityData)
+        handleOverlayDrag({
+          element,
+          handler,
+          mouseEvent: event as MouseEvent,
+          overlayGroup: dragGroup,
+          target: targetSanityData,
+          onSequenceStart: () => {
+            activeDragSequence = true
+          },
+          onSequenceEnd: () => {
+            // delay drag sequence end to prevent click events from firing just after drag sequences
+            setTimeout(() => {
+              activeDragSequence = false
+            }, 250)
+          },
+        })
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)
