@@ -18,6 +18,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.23...core-loader-v1.7.0) (2024-10-14)
+
+
+### Features
+
+* add svelte loader `LiveMode`, improve stega handling ([#1873](https://github.com/sanity-io/visual-editing/issues/1873)) ([2c3bfbe](https://github.com/sanity-io/visual-editing/commit/2c3bfbec47af19b441869424a7513e0617337ee9))
+
 ## [1.6.23](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.22...core-loader-v1.6.23) (2024-09-11)
 
 
