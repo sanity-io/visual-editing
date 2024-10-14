@@ -74,9 +74,6 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
   const maxSkeletonWidth = window.innerWidth / 2
   const scaleFactor = skeleton.w > maxSkeletonWidth ? maxSkeletonWidth / skeleton.w : 1
 
-  const showSkeleton =
-    skeleton.w * scaleFactor >= minSkeletonWidth && skeleton.h * scaleFactor >= minSkeletonHeight
-
   const offsetX = skeleton.offsetX * scaleFactor
   const offsetY = skeleton.offsetY * scaleFactor
 
@@ -101,22 +98,18 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
         scheme={prefersDark ? 'dark' : 'light'}
       >
         <div className="drag-preview-content-wrapper">
-          {showSkeleton && (
-            <>
-              <svg className="drag-preview-skeleton" viewBox={`0 0 ${skeleton.w} ${skeleton.h}`}>
-                {skeleton.childRects.map((r, i) => (
-                  <rect
-                    key={i}
-                    x={r.x}
-                    y={r.y}
-                    width={r.w}
-                    height={r.h}
-                    fill={theme.color.skeleton.from}
-                  ></rect>
-                ))}
-              </svg>
-            </>
-          )}
+          <svg className="drag-preview-skeleton" viewBox={`0 0 ${skeleton.w} ${skeleton.h}`}>
+            {skeleton.childRects.map((r, i) => (
+              <rect
+                key={i}
+                x={r.x}
+                y={r.y}
+                width={r.w}
+                height={r.h}
+                fill={theme.color.skeleton.from}
+              ></rect>
+            ))}
+          </svg>
         </div>
       </Card>
     </Root>
