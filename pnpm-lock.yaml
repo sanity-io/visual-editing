@@ -1149,9 +1149,9 @@ importers:
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
-      server-only:
-        specifier: ^0.0.1
-        version: 0.0.1
+      rsc-env:
+        specifier: 0.0.2
+        version: 0.0.2
       use-effect-event:
         specifier: ^1.0.2
         version: 1.0.2(react@18.3.1)
@@ -11658,6 +11658,9 @@ packages:
 
   rrweb-cssom@0.7.1:
     resolution: {integrity: sha512-TrEMa7JGdVm0UThDJSx7ddw5nVm3UJS9o9CCIZ72B1vSyEZoziDqBYP3XIoi/12lKrJR8rE3jeFHMok2F/Mnsg==}
+
+  rsc-env@0.0.2:
+    resolution: {integrity: sha512-ixLbILtzlGEBl25ATa+jBwdKY6GgoN8XwFho+7ycVpCCJ9ijXlWQB0UnLGGU6aWtL+pTzlcaKI7W0xVQjnL5uA==}
 
   run-applescript@7.0.0:
     resolution: {integrity: sha512-9by4Ij99JUr/MCFBUkDKLWK3G9HVXmabKz9U5MlIAIuvuzkiOicRYs8XJLxX+xahD+mLiiCYDqF9dKAgtzKP1A==}
@@ -26674,6 +26677,8 @@ snapshots:
   rrweb-cssom@0.6.0: {}
 
   rrweb-cssom@0.7.1: {}
+
+  rsc-env@0.0.2: {}
 
   run-applescript@7.0.0: {}
 
