@@ -91,21 +91,11 @@ function definePreviewUrl(
   workspaceName: string,
   toolName: string,
 ): PreviewUrlOption {
-  if (workspaceName === 'page-builder-demo') {
-    const {origin, pathname} = new URL(previewUrl)
-    const previewMode = {
-      enable: '/api/draft-mode/enable',
-    } satisfies PreviewUrlResolverOptions['previewMode']
-    return {origin, preview: pathname, previewMode}
-  }
-  if (workspaceName === 'next' && toolName === 'pages-router') {
-    const {origin, pathname} = new URL(previewUrl)
-    const previewMode = {
-      enable: '/api/draft-mode/enable',
-    } satisfies PreviewUrlResolverOptions['previewMode']
-    return {origin, preview: pathname, previewMode}
-  }
-  if (workspaceName === 'next' && toolName === 'app-router') {
+  if (
+    workspaceName === 'live-demo' ||
+    workspaceName === 'page-builder-demo' ||
+    workspaceName === 'next'
+  ) {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
       enable: '/api/draft-mode/enable',
@@ -159,7 +149,11 @@ export default defineConfig([
   ]),
   defineWorkspace(workspaces['live-demo'], [
     liveDemoPlugin({
-      previewUrl: urls['live-next'],
+      previewUrl: definePreviewUrl(
+        urls['live-next'],
+        workspaces['live-demo'].workspace,
+        workspaces['live-demo'].tool,
+      ),
     }),
     debugPlugin(),
   ]),
