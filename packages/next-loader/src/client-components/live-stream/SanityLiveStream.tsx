@@ -7,9 +7,18 @@ import {
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import isEqual from 'fast-deep-equal'
-import {startTransition, use, useCallback, useEffect, useState, useSyncExternalStore} from 'react'
+import {startTransition, useCallback, useEffect, useState, useSyncExternalStore} from 'react'
+import * as React from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {comlinkListeners, comlink as comlinkSnapshot} from '../../hooks/context'
+
+const use: typeof React.use =
+  'use' in React
+    ? // @ts-expect-error this is fine
+      React['u' + 's' + 'e']
+    : () => {
+        throw new TypeError('SanityLiveStream requires a React version with React.use()')
+      }
 
 /**
  * @public
