@@ -13,7 +13,6 @@ import SanityLiveStreamClientComponent from '@sanity/next-loader/client-componen
 // import {apiVersion} from '@sanity/preview-url-secret/constants'
 // import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import {cookies, draftMode} from 'next/headers.js'
-import {rsc} from 'rsc-env'
 import {perspectiveCookieName} from './constants'
 import {sanitizePerspective} from './utils'
 
@@ -96,10 +95,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
   SanityLiveStream: DefinedSanityLiveStreamType
   // verifyPreviewSecret: VerifyPreviewSecretType
 } {
-  if (!rsc) {
-    throw new Error('defineLive can only be used in React Server Components')
-  }
-
   const {client: _client, serverToken, browserToken} = config
 
   if (!_client) {
