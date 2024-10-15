@@ -1,5 +1,6 @@
 /// <reference types="next" />
 
+import 'server-only'
 import {
   type ClientPerspective,
   type ClientReturn,

@@ -16,6 +16,9 @@ export default defineConfig({
   ...baseConfig,
   minify: false,
   rollup: {
+    treeshake: {
+      moduleSideEffects: (id, external) => (id === 'server-only' ? true : !external),
+    },
     output: {
       banner: (chunkInfo) => {
         if (
