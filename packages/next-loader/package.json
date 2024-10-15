@@ -16,10 +16,11 @@
   "type": "module",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.js"
+      "source": "./src/index.server-only.ts",
+      "react-server": "./dist/index.js",
+      "import": "./dist/index.server-only.js",
+      "require": "./dist/index.server-only.cjs",
+      "default": "./dist/index.server-only.js"
     },
     "./hooks": {
       "source": "./src/hooks/index.ts",
@@ -47,9 +48,9 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.server-only.cjs",
+  "module": "./dist/index.server-only.js",
+  "types": "./dist/index.server-only.d.ts",
   "typesVersions": {
     "*": {
       "client-components/live": [
@@ -88,7 +89,6 @@
   },
   "dependencies": {
     "@sanity/comlink": "workspace:*",
-    "@sanity/preview-url-secret": "workspace:*",
     "rsc-env": "0.0.2",
     "use-effect-event": "^1.0.2"
   },

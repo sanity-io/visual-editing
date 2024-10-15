@@ -8,7 +8,6 @@ import {toPlainText, VisualEditing, type PortableTextBlock} from 'next-sanity'
 import {Inter} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
-import {handleDraftModeAction} from './actions'
 import AlertBanner from './alert-banner'
 import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
@@ -93,7 +92,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           </Suspense>
         </section>
         {(await draftMode()).isEnabled && <VisualEditing />}
-        <SanityLive ignoreBrowserTokenWarning handleDraftModeAction={handleDraftModeAction} />
+        <SanityLive />
         <SpeedInsights />
       </body>
     </html>

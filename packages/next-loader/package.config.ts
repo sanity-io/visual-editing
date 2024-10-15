@@ -15,6 +15,12 @@ const MODULE_PATHS_WHICH_USE_SERVER_DIRECTIVE_SHOULD_BE_ADDED = [
 export default defineConfig({
   ...baseConfig,
   minify: false,
+  bundles: [
+    {
+      source: './src/index.ts',
+      import: './dist/index.js',
+    },
+  ],
   rollup: {
     output: {
       banner: (chunkInfo) => {

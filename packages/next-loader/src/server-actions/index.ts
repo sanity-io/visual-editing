@@ -26,7 +26,8 @@ export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
 
 export async function setPerspectiveCookie(perspective: string): Promise<void> {
   if (!(await draftMode()).isEnabled) {
-    throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
+    // throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
+    return
   }
   const sanitizedPerspective = sanitizePerspective(perspective, 'previewDrafts')
   if (perspective !== sanitizedPerspective) {
@@ -38,6 +39,6 @@ export async function setPerspectiveCookie(perspective: string): Promise<void> {
   })
 }
 
-export async function handleDraftModeActionMissing(): Promise<void | string> {
-  return 'The <SanityLive /> component is missing the handleDraftModeAction prop'
-}
+// export async function handleDraftModeActionMissing(): Promise<void | string> {
+//   return 'The <SanityLive /> component is missing the handleDraftModeAction prop'
+// }

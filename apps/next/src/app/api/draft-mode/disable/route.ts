@@ -4,5 +4,5 @@ import {NextRequest, NextResponse} from 'next/server'
 export function GET(request: NextRequest) {
   draftMode().disable()
   const url = new URL(request.nextUrl)
-  return NextResponse.redirect(new URL('/shoes', url.origin))
+  return NextResponse.redirect(new URL('/pages-router/shoes', url.origin))
 }

@@ -19,19 +19,19 @@ import {
   type Controller,
   type StatusEvent,
 } from '@sanity/comlink'
-import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
+// import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {applyPatch} from 'mendoza'
 import LRUCache from 'mnemonist/lru-cache-with-delete'
 import {memo, useEffect, useMemo, useState} from 'react'
 import {
   useClient,
-  useCurrentUser,
+  // useCurrentUser,
   useDataset,
   useProjectId,
   type SanityClient,
   type SanityDocument,
 } from 'sanity'
-import {useEffectEvent} from 'use-effect-event'
+// import {useEffectEvent} from 'use-effect-event'
 import {
   LIVE_QUERY_CACHE_BATCH_SIZE,
   LIVE_QUERY_CACHE_SIZE,
@@ -159,31 +159,31 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     return
   }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
 
-  const currentUser = useCurrentUser()
-  const handleCreatePreviewUrlSecret = useEffectEvent(
-    async ({projectId, dataset}: {projectId: string; dataset: string}) => {
-      try {
-        // eslint-disable-next-line no-console
-        console.log('Creating preview URL secret for ', {projectId, dataset})
-        const {secret} = await createPreviewSecret(
-          client,
-          '@sanity/presentation',
-          typeof window === 'undefined' ? '' : location.href,
-          currentUser?.id,
-        )
-        return {secret}
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to generate preview URL secret', err)
-        return {secret: null}
-      }
-    },
-  )
-  useEffect(() => {
-    return comlink?.on('loader/fetch-preview-url-secret', (data) =>
-      handleCreatePreviewUrlSecret(data),
-    )
-  }, [comlink, handleCreatePreviewUrlSecret])
+  // const currentUser = useCurrentUser()
+  // const handleCreatePreviewUrlSecret = useEffectEvent(
+  //   async ({projectId, dataset}: {projectId: string; dataset: string}) => {
+  //     try {
+  //       // eslint-disable-next-line no-console
+  //       console.log('Creating preview URL secret for ', {projectId, dataset})
+  //       const {secret} = await createPreviewSecret(
+  //         client,
+  //         '@sanity/presentation',
+  //         typeof window === 'undefined' ? '' : location.href,
+  //         currentUser?.id,
+  //       )
+  //       return {secret}
+  //     } catch (err) {
+  //       // eslint-disable-next-line no-console
+  //       console.error('Failed to generate preview URL secret', err)
+  //       return {secret: null}
+  //     }
+  //   },
+  // )
+  // useEffect(() => {
+  //   return comlink?.on('loader/fetch-preview-url-secret', (data) =>
+  //     handleCreatePreviewUrlSecret(data),
+  //   )
+  // }, [comlink, handleCreatePreviewUrlSecret])
 
   const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
   const studioClient = useClient({apiVersion: '2023-10-16'})

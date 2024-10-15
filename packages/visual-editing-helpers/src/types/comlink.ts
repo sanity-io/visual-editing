@@ -284,16 +284,16 @@ export type LoaderNodeMsg =
         documents: ContentSourceMapDocuments
       }
     }
-  | {
-      type: 'loader/fetch-preview-url-secret'
-      data: {
-        projectId: string
-        dataset: string
-      }
-      response: {
-        secret: string | null
-      }
-    }
+// | {
+//     type: 'loader/fetch-preview-url-secret'
+//     data: {
+//       projectId: string
+//       dataset: string
+//     }
+//     response: {
+//       secret: string | null
+//     }
+//   }
 
 /**
  * @public

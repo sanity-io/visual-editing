@@ -20,7 +20,7 @@ export interface SanityLiveProps
     | 'token'
     | 'ignoreBrowserTokenWarning'
   > {
-  handleDraftModeAction: (secret: string) => Promise<void | string>
+  // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
   draftModePerspective?: ClientPerspective
 }
@@ -37,7 +37,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     useProjectHostname,
     ignoreBrowserTokenWarning,
     token,
-    handleDraftModeAction,
+    // handleDraftModeAction,
     draftModeEnabled,
     draftModePerspective,
   } = props
@@ -214,9 +214,9 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     <>
       {loadComlink && (
         <PresentationComlink
-          projectId={projectId!}
-          dataset={dataset!}
-          handleDraftModeAction={handleDraftModeAction}
+          // projectId={projectId!}
+          // dataset={dataset!}
+          // handleDraftModeAction={handleDraftModeAction}
           draftModeEnabled={draftModeEnabled}
         />
       )}

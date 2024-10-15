@@ -94,25 +94,21 @@ function definePreviewUrl(
   if (workspaceName === 'page-builder-demo') {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
-      enable: '/api/draft',
+      enable: '/api/draft-mode/enable',
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }
   if (workspaceName === 'next' && toolName === 'pages-router') {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
-      enable: '/api/pages-draft',
-      check: '/api/pages-check-draft',
-      disable: '/api/pages-disable-draft',
+      enable: '/api/draft-mode/enable',
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }
   if (workspaceName === 'next' && toolName === 'app-router') {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
-      enable: '/api/draft',
-      check: '/api/check-draft',
-      disable: '/api/disable-draft',
+      enable: '/api/draft-mode/enable',
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }

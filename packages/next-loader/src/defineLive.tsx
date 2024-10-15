@@ -9,9 +9,9 @@ import {
 } from '@sanity/client'
 import SanityLiveClientComponent from '@sanity/next-loader/client-components/live'
 import SanityLiveStreamClientComponent from '@sanity/next-loader/client-components/live-stream'
-import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
-import {apiVersion} from '@sanity/preview-url-secret/constants'
-import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
+// import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
+// import {apiVersion} from '@sanity/preview-url-secret/constants'
+// import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import {cookies, draftMode} from 'next/headers.js'
 import {rsc} from 'rsc-env'
 import {perspectiveCookieName} from './constants'
@@ -60,7 +60,7 @@ export interface DefinedSanityLiveProps {
   /**
    * Required to enable draft mode in Presentation Tool. Requires `serverToken`. Returns a string if there were an error
    */
-  handleDraftModeAction?: (secret: string) => Promise<void | string>
+  // handleDraftModeAction?: (secret: string) => Promise<void | string>
 }
 
 /**
@@ -83,12 +83,9 @@ export interface DefineSanityLiveOptions {
   browserToken?: string
 }
 
-/**
- * @public
- */
-export type VerifyPreviewSecretType = (
-  secret: string,
-) => Promise<{isValid: boolean; studioUrl: string | null}>
+// export type VerifyPreviewSecretType = (
+//   secret: string,
+// ) => Promise<{isValid: boolean; studioUrl: string | null}>
 
 /**
  * @public
@@ -97,7 +94,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
   sanityFetch: DefinedSanityFetchType
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
   SanityLiveStream: DefinedSanityLiveStreamType
-  verifyPreviewSecret: VerifyPreviewSecretType
+  // verifyPreviewSecret: VerifyPreviewSecretType
 } {
   if (!rsc) {
     throw new Error('defineLive can only be used in React Server Components')
@@ -178,7 +175,10 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
-    const {ignoreBrowserTokenWarning, handleDraftModeAction = handleDraftModeActionMissing} = props
+    const {
+      ignoreBrowserTokenWarning,
+      // handleDraftModeAction = handleDraftModeActionMissing
+    } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname} = client.config()
 
     return (
@@ -195,7 +195,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         }
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
         draftModeEnabled={(await draftMode()).isEnabled}
-        handleDraftModeAction={handleDraftModeAction}
+        // handleDraftModeAction={handleDraftModeAction}
         draftModePerspective={
           (await draftMode()).isEnabled
             ? (await cookies()).has(perspectiveCookieName)
@@ -250,35 +250,40 @@ export function defineLive(config: DefineSanityLiveOptions): {
     return <>{children({data, sourceMap, tags})}</>
   }
 
-  const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
-    if (!serverToken) {
-      throw new Error(
-        '`serverToken` is required to verify a preview secrets and initiate draft mode',
-      )
-    }
+  // const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
+  //   if (!serverToken) {
+  //     throw new Error(
+  //       '`serverToken` is required to verify a preview secrets and initiate draft mode',
+  //     )
+  //   }
 
-    if (typeof secret !== 'string') {
-      throw new TypeError('`secret` must be a string')
-    }
-    if (!secret.trim()) {
-      throw new Error('`secret` must not be an empty string')
-    }
+  //   if (typeof secret !== 'string') {
+  //     throw new TypeError('`secret` must be a string')
+  //   }
+  //   if (!secret.trim()) {
+  //     throw new Error('`secret` must not be an empty string')
+  //   }
 
-    const client = _client.withConfig({
-      // Use the token that is setup to query draft documents, it should also have permission to query for secrets
-      token: serverToken,
-      // Userland might be using an API version that's too old to use perspectives
-      apiVersion,
-      // We can't use the CDN, the secret is typically validated right after it's created
-      useCdn: false,
-      // Don't waste time returning a source map, we don't need it
-      resultSourceMap: false,
-      // Stega is not needed
-      stega: false,
-    })
-    const {isValid, studioUrl} = await validateSecret(client, secret, false)
-    return {isValid, studioUrl}
+  //   const client = _client.withConfig({
+  //     // Use the token that is setup to query draft documents, it should also have permission to query for secrets
+  //     token: serverToken,
+  //     // Userland might be using an API version that's too old to use perspectives
+  //     apiVersion,
+  //     // We can't use the CDN, the secret is typically validated right after it's created
+  //     useCdn: false,
+  //     // Don't waste time returning a source map, we don't need it
+  //     resultSourceMap: false,
+  //     // Stega is not needed
+  //     stega: false,
+  //   })
+  //   const {isValid, studioUrl} = await validateSecret(client, secret, false)
+  //   return {isValid, studioUrl}
+  // }
+
+  return {
+    sanityFetch,
+    SanityLive,
+    SanityLiveStream,
+    // verifyPreviewSecret
   }
-
-  return {sanityFetch, SanityLive, SanityLiveStream, verifyPreviewSecret}
 }
