@@ -80,6 +80,16 @@ export interface DefineSanityLiveOptions {
    * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
    */
   browserToken?: string
+  /**
+   * Fetch options used by `sanityFetch`
+   */
+  fetchOptions?: {
+    /**
+     * Optional, enables time based revalidation.
+     * @defaultValue `false`
+     */
+    revalidate?: number | false
+  }
 }
 
 // export type VerifyPreviewSecretType = (
@@ -95,7 +105,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
   SanityLiveStream: DefinedSanityLiveStreamType
   // verifyPreviewSecret: VerifyPreviewSecretType
 } {
-  const {client: _client, serverToken, browserToken} = config
+  const {client: _client, serverToken, browserToken, fetchOptions} = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
@@ -152,7 +162,13 @@ export function defineLive(config: DefineSanityLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
-      next: {revalidate: 1, tags: ['sanity']},
+      next: {
+        revalidate: fetchOptions?.revalidate
+          ? Math.max(typeof fetchOptions.revalidate === 'number' ? fetchOptions.revalidate : 1, 1)
+          : 1,
+        tags: ['sanity'],
+      },
+      tag: 'sanity.fetch-sync-tags',
     })
 
     const tags = ['sanity', ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
@@ -162,7 +178,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega,
       token: perspective === 'previewDrafts' && serverToken ? serverToken : originalToken,
-      next: {revalidate: false, tags},
+      next: {revalidate: fetchOptions?.revalidate ?? false, tags},
       // this is a bit of a hack, but it works as a cache buster for now in case next.js gets "stuck" and doesn't pick up on new/changed/removed tags related to a query
       // lastLiveEventId: syncTags?.map((tag) => tag.replace('s1:', '')).join(''),
     })
