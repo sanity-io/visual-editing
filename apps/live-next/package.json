@@ -7,7 +7,7 @@
     "build": "next build",
     "debug": "NEXT_PRIVATE_DEBUG_CACHE=1 next build --profile && NEXT_PRIVATE_DEBUG_CACHE=1 next start",
     "predev": "npm run typegen",
-    "dev": "next dev -p 3009",
+    "dev": "next dev -p 3009 --turbo",
     "lint": "next lint",
     "start": "next start",
     "typegen": "sanity typegen generate"

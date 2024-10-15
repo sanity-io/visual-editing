@@ -52,6 +52,25 @@ export type DefinedSanityLiveStreamType = <const QueryString extends string>(pro
  */
 export interface DefinedSanityLiveProps {
   /**
+   * Automatic refresh of RSC when the component <SanityLive /> is mounted.
+   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
+   * @defaultValue `false`
+   */
+  refreshOnMount?: boolean
+  /**
+   * Automatically refresh when window gets focused
+   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
+   * @defaultValue `true`
+   */
+  refreshOnFocus?: boolean
+  /**
+   * Automatically refresh when the browser regains a network connection (via navigator.onLine)
+   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
+   * @defaultValue `true`
+   */
+  refreshOnReconnect?: boolean
+
+  /**
    * Once you've checked that the `browserToken` is only Viewer rights or lower, you can set this to `true` to silence browser warnings about the token.
    * TODO: this warning should only be necessary when `serverToken` and `browserToken` are the same value
    */
@@ -85,7 +104,7 @@ export interface DefineSanityLiveOptions {
    */
   fetchOptions?: {
     /**
-     * Optional, enables time based revalidation.
+     * Optional, enables time based revalidation in addition to the EventSource connection.
      * @defaultValue `false`
      */
     revalidate?: number | false
@@ -187,8 +206,11 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
     const {
-      ignoreBrowserTokenWarning,
+      ignoreBrowserTokenWarning = serverToken !== browserToken,
       // handleDraftModeAction = handleDraftModeActionMissing
+      refreshOnMount,
+      refreshOnFocus,
+      refreshOnReconnect,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname} = client.config()
 
@@ -217,6 +239,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
               : 'previewDrafts'
             : 'published'
         }
+        refreshOnMount={refreshOnMount}
+        refreshOnFocus={refreshOnFocus}
+        refreshOnReconnect={refreshOnReconnect}
       />
     )
   }

@@ -5,6 +5,9 @@ import {useEffect, useMemo, useState} from 'react'
 import {setEnvironment, setPerspective} from '../../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
+const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
+const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
+const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {ssr: false})
 
 /**
  * @public
@@ -23,6 +26,9 @@ export interface SanityLiveProps
   // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
   draftModePerspective?: ClientPerspective
+  refreshOnMount?: boolean
+  refreshOnFocus?: boolean
+  refreshOnReconnect?: boolean
 }
 
 /**
@@ -40,6 +46,9 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     // handleDraftModeAction,
     draftModeEnabled,
     draftModePerspective,
+    refreshOnMount = false,
+    refreshOnFocus = true,
+    refreshOnReconnect = true,
   } = props
 
   const [error, setError] = useState<unknown>(null)
@@ -49,15 +58,17 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.info(
-      'Sanity is live with',
-      token
-        ? 'automatic revalidation for draft content changes as well as published content'
-        : draftModeEnabled
-          ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
-          : 'automatic revalidation of published content',
-    )
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.info(
+        'Sanity is live with',
+        token
+          ? 'automatic revalidation for draft content changes as well as published content'
+          : draftModeEnabled
+            ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
+            : 'automatic revalidation of published content',
+      )
+    }
   }, [draftModeEnabled, token])
 
   /**
@@ -143,8 +154,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     const subscription = client.live.events(token ? {includeDrafts: true} : undefined).subscribe({
       next: (event) => {
         if (event.type === 'message') {
-          // eslint-disable-next-line no-console
-          console.log('live.events() changed', event.tags)
           revalidateSyncTags(event.tags)
         }
       },
@@ -220,6 +229,9 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
           draftModeEnabled={draftModeEnabled}
         />
       )}
+      {refreshOnMount && <RefreshOnMount />}
+      {refreshOnFocus && <RefreshOnFocus />}
+      {refreshOnReconnect && <RefreshOnReconnect />}
     </>
   )
 }

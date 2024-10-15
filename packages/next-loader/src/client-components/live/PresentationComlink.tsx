@@ -58,8 +58,6 @@ function PresentationComlink(props: {
     // })
 
     comlink.on('loader/perspective', (data) => {
-      // eslint-disable-next-line no-console
-      console.log('loader/perspective', data)
       handlePerspectiveChange(data.perspective)
     })
 
