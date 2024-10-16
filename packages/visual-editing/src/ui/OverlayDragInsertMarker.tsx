@@ -94,6 +94,7 @@ export const OverlayDragInsertMarker: FunctionComponent<{
         background: '#556bfc',
         border: '2px solid white',
         borderRadius: '999px',
+        zIndex: '999999',
       }}
     ></div>
   )

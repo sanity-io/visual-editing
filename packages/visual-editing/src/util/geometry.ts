@@ -199,6 +199,21 @@ export function scaleRect(
   }
 }
 
+export function getRectGroupXExtent(rects: OverlayRect[]): {
+  min: number
+  max: number
+  width: number
+} {
+  const minGroupX = Math.min(...rects.map((r) => r.x))
+  const maxGroupX = Math.max(...rects.map((r) => r.x + r.w))
+
+  return {
+    min: minGroupX,
+    max: maxGroupX,
+    width: maxGroupX - minGroupX,
+  }
+}
+
 export function getRectGroupYExtent(rects: OverlayRect[]): {
   min: number
   max: number

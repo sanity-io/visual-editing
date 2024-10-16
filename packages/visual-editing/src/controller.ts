@@ -126,6 +126,31 @@ export function createOverlayController({
     })
   }
 
+  function setOverlayCursor() {
+    const hoveredElement = getHoveredElement()
+
+    if (!hoveredElement) return
+
+    const targetSanityData = elementsMap.get(hoveredElement)?.sanity
+
+    if (!targetSanityData || !isSanityNode(targetSanityData)) return
+
+    const dragGroup = resolveDragAndDropGroup(
+      hoveredElement,
+      targetSanityData,
+      elementSet,
+      elementsMap,
+    )
+
+    const cursor = dragGroup ? 'move' : 'auto'
+
+    handler({
+      type: 'overlay/setCursor',
+      element: hoveredElement,
+      cursor,
+    })
+  }
+
   /**
    * Stores an element’s DOM node and decoded sanity data in state and sets up event handlers
    */
@@ -237,11 +262,14 @@ export function createOverlayController({
           return
         }
         hoverStack.push(element)
+
         handler({
           type: 'element/mouseenter',
           id,
           rect: getRect(element),
         })
+
+        setOverlayCursor()
       },
       mouseleave(e) {
         function leave() {
@@ -263,6 +291,8 @@ export function createOverlayController({
               })
             }
           }
+
+          setOverlayCursor()
         }
 
         /**

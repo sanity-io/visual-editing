@@ -11,6 +11,7 @@ import type {
 import {
   findClosestIntersection,
   getRect,
+  getRectGroupXExtent,
   getRectGroupYExtent,
   pointDist,
   rectEqual,
@@ -155,6 +156,7 @@ function calcMousePosInverseTransform(mousePos: Point2D) {
 
 function buildPreviewSkeleton(mousePos: Point2D, element: ElementNode, scaleFactor: number) {
   const bounds = getRect(element)
+
   const children = [
     ...element.querySelectorAll(':where(h1, h2, h3, h4, p, a, img, span, button):not(:has(*))'),
   ]
@@ -186,6 +188,7 @@ function buildPreviewSkeleton(mousePos: Point2D, element: ElementNode, scaleFact
     offsetY: (bounds.y - mousePos.y) * scaleFactor,
     w: bounds.w * scaleFactor,
     h: bounds.h * scaleFactor,
+    maxWidth: bounds.w * scaleFactor * 0.75,
     childRects,
   }
 }
@@ -245,6 +248,25 @@ function calcMinimapTransformValues(rects: OverlayRect[]) {
     scaleFactor,
     minYScaled: minYScaled - padding * scaleFactor,
   }
+}
+function calcGroupBoundsPreview(rects: OverlayRect[]) {
+  const groupBoundsX = getRectGroupXExtent(rects)
+  const groupBoundsY = getRectGroupYExtent(rects)
+
+  const offsetDist = 8
+
+  const canOffsetX = groupBoundsX.min > offsetDist
+  const canOffsetY = groupBoundsY.min > offsetDist
+  const canOffset = canOffsetX && canOffsetY
+
+  const groupRect = {
+    x: canOffset ? groupBoundsX.min - offsetDist : groupBoundsX.min,
+    y: canOffset ? groupBoundsY.min - offsetDist : groupBoundsY.min,
+    w: canOffset ? groupBoundsX.width + offsetDist * 2 : groupBoundsX.width,
+    h: canOffset ? groupBoundsY.height + offsetDist * 2 : groupBoundsY.height,
+  }
+
+  return groupRect
 }
 
 async function resetMinimapWrapperTransform(
@@ -373,7 +395,20 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
     minimapScaleApplied = true
 
-    applyMinimapWrapperTransform(scaleTarget, scaleFactor, minYScaled, handler, rectUpdateFrequency)
+    applyMinimapWrapperTransform(
+      scaleTarget,
+      scaleFactor,
+      minYScaled,
+      handler,
+      rectUpdateFrequency,
+    ).then(() => {
+      setTimeout(() => {
+        handler({
+          type: 'overlay/dragUpdateGroupRect',
+          groupRect: calcGroupBoundsPreview(rects),
+        })
+      }, rectUpdateFrequency * 2)
+    })
   }
 
   const handleScroll = (e: WheelEvent) => {
@@ -407,6 +442,8 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     if (Math.abs(pointDist(mousePos, initialMousePos)) < minDragDelta) return
 
     if (!sequenceStarted) {
+      const groupRect = calcGroupBoundsPreview(rects)
+
       const skeleton = buildPreviewSkeleton(mousePos, element, 1)
 
       handler({
@@ -417,6 +454,11 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       handler({
         type: 'overlay/dragUpdateSkeleton',
         skeleton,
+      })
+
+      handler({
+        type: 'overlay/dragUpdateGroupRect',
+        groupRect,
       })
 
       sequenceStarted = true
@@ -438,6 +480,8 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     if (JSON.stringify(insertPosition) !== JSON.stringify(newInsertPosition)) {
       insertPosition = newInsertPosition
 
+      console.log(resolveInsertPosition(overlayGroup, insertPosition, flow))
+
       handler({
         type: 'overlay/dragUpdateInsertPosition',
         insertPosition: resolveInsertPosition(overlayGroup, insertPosition, flow),
@@ -447,6 +491,8 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
   const handleMouseUp = (): void => {
     mousedown = false
+
+    console.log('handling mouseup')
 
     handler({
       type: 'overlay/dragEnd',
@@ -465,9 +511,13 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
     if (!minimapScaleApplied) {
       clearInterval(rectsInterval)
-      removeListeners()
       onSequenceEnd()
+
+      removeFrameListeners()
+      removeKeyListeners()
     }
+
+    removeMouseListeners()
   }
 
   const handleKeyup = (e: KeyboardEvent) => {
@@ -489,16 +539,30 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
         rectUpdateFrequency,
       )
 
+      handler({
+        type: 'overlay/dragUpdateGroupRect',
+        groupRect: null,
+      })
+
       // cleanup keyup after drag sequence is complete
       if (!mousedown) {
         clearInterval(rectsInterval)
-        removeListeners()
+
+        removeMouseListeners()
+        removeFrameListeners()
+        removeKeyListeners()
+
         onSequenceEnd()
       }
     }
   }
 
   const handleBlur = () => {
+    handler({
+      type: 'overlay/dragUpdateGroupRect',
+      groupRect: null,
+    })
+
     resetMinimapWrapperTransform(
       mousePosInverseTransform.y,
       scaleTarget,
@@ -510,16 +574,26 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     })
 
     clearInterval(rectsInterval)
-    removeListeners()
+
+    removeMouseListeners()
+    removeFrameListeners()
+    removeKeyListeners()
+
     onSequenceEnd()
   }
 
-  const removeListeners = () => {
-    window.removeEventListener('blur', handleBlur)
-    window.removeEventListener('keyup', handleKeyup)
+  const removeMouseListeners = () => {
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('wheel', handleScroll)
     window.removeEventListener('mouseup', handleMouseUp)
+  }
+
+  const removeKeyListeners = () => {
+    window.removeEventListener('keyup', handleKeyup)
+  }
+
+  const removeFrameListeners = () => {
+    window.removeEventListener('blur', handleBlur)
   }
 
   window.addEventListener('blur', handleBlur)

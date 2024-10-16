@@ -19,13 +19,14 @@ const Root = styled.div<{
 
   position: fixed;
   display: grid;
-  pointer-events: none;
+  pointer-events: all;
   transform: ${({$scaleFactor, $width, $height}) =>
     `translate(calc(var(--drag-preview-x) - ${$width / 2}px), calc(var(--drag-preview-y) - ${$height / 2}px)) scale(${$scaleFactor})`};
   width: ${({$width}) => `${$width}px`};
   height: ${({$height}) => `${$height}px`};
   z-index: 9999999;
   opacity: var(--drag-preview-opacity);
+  cursor: move;
 
   .drag-preview-content-wrapper {
     position: relative;
@@ -68,7 +69,7 @@ function map(number: number, inMin: number, inMax: number, outMin: number, outMa
 }
 
 export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = ({skeleton}) => {
-  const maxSkeletonWidth = window.innerWidth / 2
+  const maxSkeletonWidth = Math.min(skeleton.maxWidth, window.innerWidth / 2)
   const scaleFactor = skeleton.w > maxSkeletonWidth ? maxSkeletonWidth / skeleton.w : 1
 
   const offsetX = skeleton.offsetX * scaleFactor

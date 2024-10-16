@@ -33,6 +33,7 @@ import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
 import {useOptimisticActor} from './optimistic-state/useOptimisticActor'
+import {OverlayDragGroupRect} from './OverlayDragGroupRect'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
 import {OverlayMinimapPrompt} from './OverlayMinimapPrompt'
@@ -127,20 +128,17 @@ const OverlaysController: FunctionComponent<{
         comlink?.post({type: 'visual-editing/toggle', data: {enabled: true}})
       } else if (message.type === 'overlay/deactivate') {
         comlink?.post({type: 'visual-editing/toggle', data: {enabled: false}})
-      } else if (message.type === 'overlay/dragStart') {
-        if (message.flow === 'vertical') {
-          document.body.style.cursor = 'ns-resize'
-        } else {
-          document.body.style.cursor = 'ew-resize'
-        }
       } else if (message.type === 'overlay/dragEnd') {
-        document.body.style.cursor = 'auto'
         const {insertPosition, target} = message
         dispatchDragEndEvent({insertPosition, target})
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
 
         return
+      } else if (message.type === 'overlay/setCursor') {
+        const {element, cursor} = message
+
+        element.style.cursor = cursor
       }
 
       dispatch(message)
@@ -187,6 +185,7 @@ export const Overlays: FunctionComponent<{
       perspective,
       wasMaybeCollapsed,
       dragMinimapTransition,
+      dragGroupRect,
     },
     dispatch,
   ] = useReducer(overlayStateReducer, {
@@ -200,6 +199,7 @@ export const Overlays: FunctionComponent<{
     perspective: 'published',
     wasMaybeCollapsed: false,
     dragMinimapTransition: false,
+    dragGroupRect: null,
   })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
@@ -452,6 +452,7 @@ export const Overlays: FunctionComponent<{
                       <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
                     )}
                     {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
+                    {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
                   </>
                 )}
                 {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}

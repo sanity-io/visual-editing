@@ -75,6 +75,7 @@ export type DragSkeleton = {
     h: number
     tagName: string
   }[]
+  maxWidth: number
 }
 
 /**
@@ -102,6 +103,12 @@ export type OverlayMsgActivate = Msg<'overlay/activate'>
 
 /** @public */
 export type OverlayMsgDeactivate = Msg<'overlay/deactivate'>
+
+/** @public */
+export type OverlayMsgSetCursor = Msg<'overlay/setCursor'> & {
+  element: ElementNode
+  cursor: string
+}
 
 /** @public */
 export type OverlayMsgElementContextMenu =
@@ -181,6 +188,11 @@ export type OverlayMsgDragUpdateSkeleton = Msg<'overlay/dragUpdateSkeleton'> & {
 export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & DragEndEvent
 
 /** @public */
+export type OverlayMsgDragUpdateGroupRect = Msg<'overlay/dragUpdateGroupRect'> & {
+  groupRect: OverlayRect | null
+}
+
+/** @public */
 
 export type OverlayMsgDragStartMinimapTransition = Msg<'overlay/dragStartMinimapTransition'>
 
@@ -202,6 +214,7 @@ export type OverlayMsg =
   | OverlayMsgDragStartMinimapTransition
   | OverlayMsgDragToggleMinimapPrompt
   | OverlayMsgDragUpdateCursorPosition
+  | OverlayMsgDragUpdateGroupRect
   | OverlayMsgDragUpdateInsertPosition
   | OverlayMsgDragUpdateSkeleton
   | OverlayMsgElementActivate
@@ -214,6 +227,7 @@ export type OverlayMsg =
   | OverlayMsgElementUnregister
   | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
+  | OverlayMsgSetCursor
 
 /**
  * Callback function used for handling dispatched controller messages

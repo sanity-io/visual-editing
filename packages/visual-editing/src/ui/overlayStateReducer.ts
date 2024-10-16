@@ -1,6 +1,12 @@
 import type {SanityNode, VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
-import type {DragInsertPosition, DragSkeleton, ElementState, OverlayMsg} from '../types'
+import type {
+  DragInsertPosition,
+  DragSkeleton,
+  ElementState,
+  OverlayMsg,
+  OverlayRect,
+} from '../types'
 import {elementsReducer} from './elementsReducer'
 
 export interface OverlayState {
@@ -20,6 +26,7 @@ export interface OverlayState {
   dragSkeleton: DragSkeleton | null
   dragShowMinimapPrompt: boolean
   dragMinimapTransition: boolean
+  dragGroupRect: OverlayRect | null
 }
 
 export function overlayStateReducer(
@@ -36,6 +43,7 @@ export function overlayStateReducer(
     dragShowMinimapPrompt,
     dragSkeleton,
     dragMinimapTransition,
+    dragGroupRect,
   } = state
   let wasMaybeCollapsed = false
 
@@ -99,12 +107,17 @@ export function overlayStateReducer(
     dragMinimapTransition = false
   }
 
+  if (type === 'overlay/dragUpdateGroupRect') {
+    dragGroupRect = message.groupRect
+  }
+
   return {
     ...state,
     contextMenu,
     elements: elementsReducer(state.elements, message),
     dragInsertPosition,
     dragSkeleton,
+    dragGroupRect,
     isDragging,
     focusPath,
     perspective,
