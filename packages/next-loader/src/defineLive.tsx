@@ -182,9 +182,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       stega: false,
       returnQuery: false,
       next: {
-        revalidate: fetchOptions?.revalidate
-          ? Math.max(typeof fetchOptions.revalidate === 'number' ? fetchOptions.revalidate : 1, 1)
-          : 1,
+        revalidate: fetchOptions?.revalidate,
         tags: ['sanity'],
       },
       tag: 'sanity.fetch-sync-tags',
@@ -199,7 +197,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       token: perspective === 'previewDrafts' && serverToken ? serverToken : originalToken,
       next: {revalidate: fetchOptions?.revalidate ?? false, tags},
       // this is a bit of a hack, but it works as a cache buster for now in case next.js gets "stuck" and doesn't pick up on new/changed/removed tags related to a query
-      // lastLiveEventId: syncTags?.map((tag) => tag.replace('s1:', '')).join(''),
+      lastLiveEventId: syncTags?.map((tag) => tag.replace('s1:', '')).join(''),
     })
     return {data: result, sourceMap: resultSourceMap || null, tags}
   }
