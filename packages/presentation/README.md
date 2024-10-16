@@ -12,3 +12,4 @@ To learn more about the Presentation tool and how to configure it, refer to [thi
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/presentation?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/presentation?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/presentation
+
