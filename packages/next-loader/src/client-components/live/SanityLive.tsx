@@ -46,7 +46,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     // handleDraftModeAction,
     draftModeEnabled,
     draftModePerspective,
-    refreshOnMount = true,
+    refreshOnMount = false,
     refreshOnFocus = true,
     refreshOnReconnect = true,
   } = props
