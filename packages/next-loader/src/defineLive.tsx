@@ -54,7 +54,7 @@ export interface DefinedSanityLiveProps {
   /**
    * Automatic refresh of RSC when the component <SanityLive /> is mounted.
    * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `false`
+   * @defaultValue `true`
    */
   refreshOnMount?: boolean
   /**
