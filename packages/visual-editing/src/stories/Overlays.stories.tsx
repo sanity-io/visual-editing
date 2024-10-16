@@ -1,8 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react'
-import {useMemo} from 'react'
-
 import {Overlays} from '../ui/Overlays'
-import {useChannel} from '../ui/useChannel'
+import {useComlink} from '../ui/useComlink'
 import {MarketingPage as MarketingExample} from './examples/marketing/MarketingPage'
 import {MediaArticlePage as MediaArticleExample} from './examples/media/MediaArticlePage'
 import {MediaHomePage as MediaHomeExample} from './examples/media/MediaHomePage'
@@ -10,14 +8,12 @@ import {MediaHomePage as MediaHomeExample} from './examples/media/MediaHomePage'
 function Example(props: {example: React.ComponentType; inFrame: boolean; zIndex: number}) {
   const {example: Example, inFrame, zIndex} = props
 
-  // Overlays will detect as being in an iframe when used in Storybook, so we override it
-  const _channel = useChannel()
-  const channel = useMemo(() => (_channel ? {..._channel, inFrame} : _channel), [_channel, inFrame])
+  const comlink = useComlink()
 
   return (
     <>
       <Example />
-      {channel && <Overlays channel={channel} zIndex={zIndex} />}
+      {comlink && <Overlays comlink={comlink} inFrame={inFrame} zIndex={zIndex} />}
     </>
   )
 }

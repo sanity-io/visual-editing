@@ -2,7 +2,11 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
+    "build": {
+      "env": ["GITHUB_ACTIONS", "PRESENTATION_ENABLE_QRCODE"]
+    },
     "dev": {
+      "env": ["SANITY_STUDIO_PRESENTATION_ENABLE_QRCODE"],
       "persistent": false
     }
   }

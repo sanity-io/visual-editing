@@ -1,6 +1,6 @@
 import {FunctionComponent, PropsWithChildren} from 'react'
-import {MessageEntry} from './MessageEntry'
 import {RenderedMessage} from '../types'
+import {MessageEntry} from './MessageEntry'
 
 export const MessageStack: FunctionComponent<
   PropsWithChildren<{

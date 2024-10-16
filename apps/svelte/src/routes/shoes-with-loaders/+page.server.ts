@@ -1,4 +1,4 @@
-import {shoesList as query, type ShoesListResult} from 'apps-common/queries'
+import {shoesList as query, type ShoesListResult} from '$lib/queries'
 import type {PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async ({locals: {loadQuery}}) => ({

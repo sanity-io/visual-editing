@@ -1,6 +1,5 @@
-import {type FunctionComponent, type PropsWithChildren, useContext, useLayoutEffect} from 'react'
+import {useContext, useLayoutEffect, type FunctionComponent, type PropsWithChildren} from 'react'
 import {styled} from 'styled-components'
-
 import {PanelsContext} from './PanelsContext'
 
 interface PanelProps extends PropsWithChildren {

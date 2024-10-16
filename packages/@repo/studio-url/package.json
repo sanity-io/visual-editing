@@ -1,0 +1,43 @@
+{
+  "name": "@repo/studio-url",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Detects what the studio URL is, based on env variables. Running it in a separate build step simplifies app deployments.",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pkg build --strict --check --clean",
+    "lint": "eslint --cache .",
+    "prepack": "turbo run build"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "prettier": "@repo/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/package.config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@sanity/pkg-utils": "6.11.3",
+    "typescript": "5.6.3"
+  }
+}

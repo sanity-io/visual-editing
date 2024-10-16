@@ -1,4 +1,4 @@
-import {type DependencyList, useCallback, useEffect, useRef} from 'react'
+import {useCallback, useEffect, useRef, type DependencyList} from 'react'
 
 /**
  * Similar to `useEffect`, but only execute the callback on value change.

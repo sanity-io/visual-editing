@@ -18,6 +18,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      # Enable the new QRCode Preview URL menu on canary versions
+      PRESENTATION_ENABLE_QRCODE: true
     steps:
       - uses: actions/create-github-app-token@v1
         id: generate-token

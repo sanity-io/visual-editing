@@ -1,10 +1,6 @@
-import {type ChannelsNode, createChannelsNode} from '@repo/channels'
-import {
-  type PresentationMsg,
-  type PreviewKitMsg,
-  type VisualEditingConnectionIds,
-} from '@repo/visual-editing-helpers'
+import {type PreviewKitNodeMsg} from '@repo/visual-editing-helpers'
 import type {ContentSourceMapDocuments} from '@sanity/client/csm'
+import {createNode, type Message, type Node} from '@sanity/comlink'
 import {useEffect, useState} from 'react'
 
 /**
@@ -16,18 +12,19 @@ export function useDocumentsInUse(
   projectId: string,
   dataset: string,
 ): void {
-  const [channel, setChannel] = useState<ChannelsNode<PreviewKitMsg, PresentationMsg> | undefined>()
+  const [comlink, setComlink] = useState<Node<Message, PreviewKitNodeMsg> | null>(null)
+
   const [connected, setConnected] = useState(false)
   useEffect(() => {
     if (window.self === window.top && !window.opener) {
       return
     }
-    const channel = createChannelsNode<VisualEditingConnectionIds, PreviewKitMsg, PresentationMsg>({
-      id: 'preview-kit',
+    const comlink = createNode<Message, PreviewKitNodeMsg>({
+      name: 'preview-kit',
       connectTo: 'presentation',
     })
 
-    channel.onStatusUpdate((status) => {
+    comlink.onStatus((status) => {
       if (status === 'connected') {
         setConnected(true)
       } else if (status === 'disconnected') {
@@ -35,23 +32,27 @@ export function useDocumentsInUse(
       }
     })
 
-    const timeout = setTimeout(() => setChannel(channel), 0)
+    const timeout = setTimeout(() => setComlink(comlink), 0)
+    const stop = comlink.start()
     return () => {
+      stop()
+      setComlink(null)
       clearTimeout(timeout)
-      channel.destroy()
-      setChannel(undefined)
     }
   }, [dataset, projectId])
 
   const changedKeys = JSON.stringify(Array.from(documentsInUse.keys()))
   useEffect(() => {
-    if (changedKeys !== '[]' && channel && connected) {
-      channel.send('preview-kit/documents', {
-        projectId,
-        dataset,
-        perspective: 'previewDrafts',
-        documents: Array.from(documentsInUse.values()),
+    if (changedKeys !== '[]' && comlink && connected) {
+      comlink.post({
+        type: 'preview-kit/documents',
+        data: {
+          projectId,
+          dataset,
+          perspective: 'previewDrafts',
+          documents: Array.from(documentsInUse.values()),
+        },
       })
     }
-  }, [changedKeys, channel, connected, dataset, documentsInUse, projectId])
+  }, [changedKeys, comlink, connected, dataset, documentsInUse, projectId])
 }

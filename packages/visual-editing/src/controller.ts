@@ -1,5 +1,4 @@
 import {v4 as uuid} from 'uuid'
-
 import type {
   ElementNode,
   EventHandlers,
@@ -9,17 +8,14 @@ import type {
   ResolvedElement,
 } from './types'
 import {handleOverlayDrag} from './util/dragAndDrop'
+import {findOverlayElement, isElementNode} from './util/elements'
 import {
   findSanityNodes,
   isSanityArrayPath,
   isSanityNode,
-  sanityNodesExistInSameArray,
+  resolveDragAndDropGroup,
 } from './util/findSanityNodes'
-import {getRect} from './util/getRect'
-
-const isElementNode = (target: EventTarget | null): target is ElementNode => {
-  return target instanceof HTMLElement || target instanceof SVGElement
-}
+import {getRect} from './util/geometry'
 
 /**
  * Creates a controller which dispatches overlay related events
@@ -49,6 +45,8 @@ export function createOverlayController({
   let io: IntersectionObserver | undefined
   let mo: MutationObserver
 
+  let activeDragSequence = false
+
   // The `hoverStack` is used as a container for tracking which elements are hovered at any time.
   // The browser supports hovering multiple nested elements simultanously, but we only want to
   // highlight the "outer most" element.
@@ -63,33 +61,39 @@ export function createOverlayController({
   const getHoveredElement = () => hoverStack[hoverStack.length - 1] as ElementNode | undefined
 
   function addEventHandlers(el: ElementNode, handlers: EventHandlers) {
-    el.addEventListener('click', handlers.click, {
+    el.addEventListener('click', handlers.click as EventListener, {
+      capture: true,
+    })
+    el.addEventListener('contextmenu', handlers.contextmenu as EventListener, {
       capture: true,
     })
     // We listen for the initial mousemove event, in case the overlay is enabled whilst the cursor is already over an element
     // mouseenter and mouseleave listeners are attached within this handler
-    el.addEventListener('mousemove', handlers.mousemove, {
+    el.addEventListener('mousemove', handlers.mousemove as EventListener, {
       once: true,
       capture: true,
     })
     // Listen for mousedown in case we need to prevent default behavior
-    el.addEventListener('mousedown', handlers.mousedown, {
+    el.addEventListener('mousedown', handlers.mousedown as EventListener, {
       capture: true,
     })
   }
 
   function removeEventHandlers(el: ElementNode, handlers: EventHandlers) {
-    el.removeEventListener('click', handlers.click, {
+    el.removeEventListener('click', handlers.click as EventListener, {
       capture: true,
     })
-    el.removeEventListener('mousemove', handlers.mousemove, {
+    el.removeEventListener('contextmenu', handlers.contextmenu as EventListener, {
       capture: true,
     })
-    el.removeEventListener('mousedown', handlers.mousedown, {
+    el.removeEventListener('mousemove', handlers.mousemove as EventListener, {
       capture: true,
     })
-    el.removeEventListener('mouseenter', handlers.mouseenter)
-    el.removeEventListener('mouseleave', handlers.mouseleave)
+    el.removeEventListener('mousedown', handlers.mousedown as EventListener, {
+      capture: true,
+    })
+    el.removeEventListener('mouseenter', handlers.mouseenter as EventListener)
+    el.removeEventListener('mouseleave', handlers.mouseleave as EventListener)
   }
 
   /**
@@ -122,6 +126,31 @@ export function createOverlayController({
     })
   }
 
+  function setOverlayCursor() {
+    const hoveredElement = getHoveredElement()
+
+    if (!hoveredElement) return
+
+    const targetSanityData = elementsMap.get(hoveredElement)?.sanity
+
+    if (!targetSanityData || !isSanityNode(targetSanityData)) return
+
+    const dragGroup = resolveDragAndDropGroup(
+      hoveredElement,
+      targetSanityData,
+      elementSet,
+      elementsMap,
+    )
+
+    const cursor = dragGroup ? 'move' : 'auto'
+
+    handler({
+      type: 'overlay/setCursor',
+      element: hoveredElement,
+      cursor,
+    })
+  }
+
   /**
    * Stores an element’s DOM node and decoded sanity data in state and sets up event handlers
    */
@@ -131,13 +160,15 @@ export function createOverlayController({
     const eventHandlers: EventHandlers = {
       click(event) {
         const target = event.target as ElementNode | null
+
         if (element === getHoveredElement() && element.contains(target)) {
           if (preventDefault) {
             event.preventDefault()
             event.stopPropagation()
           }
+
           const sanity = elementsMap.get(element)?.sanity
-          if (sanity) {
+          if (sanity && !activeDragSequence) {
             handler({
               type: 'element/click',
               id,
@@ -146,13 +177,39 @@ export function createOverlayController({
           }
         }
       },
+      contextmenu(event) {
+        if (!('path' in sanity)) return
+
+        // This is a temporary check as the context menu only supports array
+        // items (for now). We split the path into segments, if a `_key` exists
+        // in last path segment, we assume it's an array item, and so return
+        // early if it is some other type.
+        if (!sanity.path.split('.').pop()?.includes('[_key==')) return
+
+        const target = event.target as ElementNode | null
+        if (element === getHoveredElement() && element.contains(target)) {
+          if (preventDefault) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          handler({
+            type: 'element/contextmenu',
+            id,
+            position: {
+              x: event.clientX,
+              y: event.clientY,
+            },
+            sanity,
+          })
+        }
+      },
       mousedown(event) {
         // prevent iframe from taking focus
         event.preventDefault()
 
         if (event.currentTarget !== hoverStack.at(-1)) return
 
-        if (element.getAttribute('data-sanity-disable-drag')) return
+        if (element.getAttribute('data-sanity-drag-disable')) return
 
         // disable dnd in non-studio contexts
         if (!inFrame) return
@@ -166,32 +223,33 @@ export function createOverlayController({
         )
           return
 
-        const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
-          const elData = elementsMap.get(el)
-          const elDragDisabled = el.getAttribute('data-sanity-disable-drag')
+        const dragGroup = resolveDragAndDropGroup(element, sanity, elementSet, elementsMap)
 
-          if (
-            elData &&
-            !elDragDisabled &&
-            isSanityNode(elData.sanity) &&
-            sanityNodesExistInSameArray(targetSanityData, elData.sanity)
-          ) {
-            acc.push(elData)
-          }
+        if (!dragGroup) return
 
-          return acc
-        }, [])
-
-        if (group.length <= 1) return
-
-        handleOverlayDrag(event as MouseEvent, element, group, handler)
+        handleOverlayDrag({
+          element,
+          handler,
+          mouseEvent: event as MouseEvent,
+          overlayGroup: dragGroup,
+          target: targetSanityData,
+          onSequenceStart: () => {
+            activeDragSequence = true
+          },
+          onSequenceEnd: () => {
+            // delay drag sequence end to prevent click events from firing just after drag sequences
+            setTimeout(() => {
+              activeDragSequence = false
+            }, 250)
+          },
+        })
       },
       mousemove(event) {
         eventHandlers.mouseenter(event)
         const el = event.currentTarget as ElementNode | null
         if (el) {
-          el.addEventListener('mouseenter', eventHandlers.mouseenter)
-          el.addEventListener('mouseleave', eventHandlers.mouseleave)
+          el.addEventListener('mouseenter', eventHandlers.mouseenter as EventListener)
+          el.addEventListener('mouseleave', eventHandlers.mouseleave as EventListener)
         }
       },
       mouseenter() {
@@ -204,11 +262,14 @@ export function createOverlayController({
           return
         }
         hoverStack.push(element)
+
         handler({
           type: 'element/mouseenter',
           id,
           rect: getRect(element),
         })
+
+        setOverlayCursor()
       },
       mouseleave(e) {
         function leave() {
@@ -230,23 +291,35 @@ export function createOverlayController({
               })
             }
           }
+
+          setOverlayCursor()
         }
 
         /**
          * If moving to an element within the overlay which handles pointer events, attach a new
          * event handler to that element and defer the original leave event
          */
-        const {relatedTarget} = e as MouseEvent
-        const isInteractiveOverlayElement =
-          isElementNode(relatedTarget) && overlayElement.contains(relatedTarget)
-
-        if (isInteractiveOverlayElement) {
-          const deferredLeave = () => {
-            leave()
-            relatedTarget.removeEventListener('mouseleave', deferredLeave)
+        function addDeferredLeave(el: ElementNode) {
+          const deferredLeave = (e: MouseEvent) => {
+            const {relatedTarget} = e
+            const deferredContainer = findOverlayElement(relatedTarget)
+            if (!deferredContainer) {
+              el.removeEventListener('mouseleave', deferredLeave as EventListener)
+              leave()
+            } else if (relatedTarget && isElementNode(relatedTarget)) {
+              el.removeEventListener('mouseleave', deferredLeave as EventListener)
+              addDeferredLeave(relatedTarget)
+            }
           }
-          relatedTarget.addEventListener('mouseleave', deferredLeave)
-          return
+          el.addEventListener('mouseleave', deferredLeave as EventListener)
+        }
+
+        const {relatedTarget} = e as MouseEvent
+        const container = findOverlayElement(relatedTarget)
+        const isInteractiveOverlayElement = overlayElement.contains(container)
+
+        if (isElementNode(container) && isInteractiveOverlayElement) {
+          return addDeferredLeave(container)
         }
 
         leave()
@@ -272,6 +345,7 @@ export function createOverlayController({
       id,
       rect: getRect(element),
       sanity,
+      dragDisabled: !!element.getAttribute('data-sanity-drag-disable'),
     })
     activateElement(sanityNode)
   }
@@ -390,7 +464,17 @@ export function createOverlayController({
     }
   }
 
-  function handleBlur() {
+  function handleBlur(event: MouseEvent) {
+    const element = findOverlayElement(event.target)
+
+    if (element) {
+      if (element.dataset['sanityOverlayElement'] === 'capture') {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      return
+    }
+
     hoverStack = []
     handler({
       type: 'overlay/blur',
@@ -400,6 +484,15 @@ export function createOverlayController({
   function handleWindowResize() {
     for (const element of elementSet) {
       updateRect(element)
+    }
+  }
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      hoverStack = []
+      handler({
+        type: 'overlay/blur',
+      })
     }
   }
 
@@ -446,6 +539,8 @@ export function createOverlayController({
 
   function destroy() {
     window.removeEventListener('click', handleBlur)
+    window.removeEventListener('contextmenu', handleBlur)
+    window.removeEventListener('keydown', handleKeydown)
     window.removeEventListener('resize', handleWindowResize)
     window.removeEventListener('scroll', handleWindowScroll)
     mo.disconnect()
@@ -464,6 +559,8 @@ export function createOverlayController({
 
   function create() {
     window.addEventListener('click', handleBlur)
+    window.addEventListener('contextmenu', handleBlur)
+    window.addEventListener('keydown', handleKeydown)
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('scroll', handleWindowScroll, {
       capture: true,
