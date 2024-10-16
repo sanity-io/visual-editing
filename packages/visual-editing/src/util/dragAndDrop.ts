@@ -480,8 +480,6 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     if (JSON.stringify(insertPosition) !== JSON.stringify(newInsertPosition)) {
       insertPosition = newInsertPosition
 
-      console.log(resolveInsertPosition(overlayGroup, insertPosition, flow))
-
       handler({
         type: 'overlay/dragUpdateInsertPosition',
         insertPosition: resolveInsertPosition(overlayGroup, insertPosition, flow),
@@ -491,8 +489,6 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
   const handleMouseUp = (): void => {
     mousedown = false
-
-    console.log('handling mouseup')
 
     handler({
       type: 'overlay/dragEnd',
