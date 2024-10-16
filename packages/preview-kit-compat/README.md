@@ -12,4 +12,3 @@
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/preview-kit-compat?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/preview-kit-compat?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/preview-kit-compat
-
