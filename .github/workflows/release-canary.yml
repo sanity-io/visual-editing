@@ -20,6 +20,8 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       # Enable the new QRCode Preview URL menu on canary versions
       PRESENTATION_ENABLE_QRCODE: true
+      # The Live Draft Content API is much faster than the legacy Listen API based approach for loader live mode
+      PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: true
     steps:
       - uses: actions/create-github-app-token@v1
         id: generate-token

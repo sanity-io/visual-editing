@@ -7,7 +7,7 @@ import {
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import isEqual from 'fast-deep-equal'
-import {startTransition, useCallback, useEffect, useState, useSyncExternalStore} from 'react'
+import {useCallback, useEffect, useState, useSyncExternalStore} from 'react'
 import * as React from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {comlinkListeners, comlink as comlinkSnapshot} from '../../hooks/context'
@@ -71,10 +71,7 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
     })
   })
   const handleQueryChange = useEffectEvent(
-    (
-      event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data'],
-      signal: AbortSignal,
-    ) => {
+    (event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data']) => {
       if (
         isEqual(
           {
@@ -114,38 +111,35 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
         //   ),
         // )
         // eslint-disable-next-line no-console
-        console.log('rendering with server action: render children start')
+        console.groupCollapsed('rendering with server action')
         ;(
           props.children({
             data,
             sourceMap: resultSourceMap!,
             tags: tags || [],
           }) as Promise<React.JSX.Element>
-        ).then(
-          (children) => {
-            if (signal.aborted) return
-            // eslint-disable-next-line no-console
-            console.log('rendering with server action: render children end, setting state')
-            startTransition(() => setChildren(children))
-          },
-          (reason: unknown) => {
-            if (signal.aborted) return
-            // eslint-disable-next-line no-console
-            console.error('rendering with server action: render children error', reason)
-          },
         )
+          .then(
+            (children) => {
+              // eslint-disable-next-line no-console
+              console.log('setChildren(children)')
+              // startTransition(() => setChildren(children))
+              setChildren(children)
+            },
+            (reason: unknown) => {
+              // eslint-disable-next-line no-console
+              console.error('rendering with server action: render children error', reason)
+            },
+          )
+          // eslint-disable-next-line no-console
+          .finally(() => console.groupEnd())
       }
     },
   )
   useEffect(() => {
     if (!comlink) return
 
-    let controller: AbortController | undefined
-    const unsubscribe = comlink.on('loader/query-change', (event) => {
-      controller?.abort()
-      controller = new AbortController()
-      handleQueryChange(event, controller.signal)
-    })
+    const unsubscribe = comlink.on('loader/query-change', handleQueryChange)
     const interval = setInterval(() => handleQueryHeartbeat(comlink), LISTEN_HEARTBEAT_INTERVAL)
     return () => {
       clearInterval(interval)

@@ -22,6 +22,7 @@ export interface SanityLiveProps
     | 'useProjectHostname'
     | 'token'
     | 'ignoreBrowserTokenWarning'
+    | 'requestTagPrefix'
   > {
   // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
@@ -29,6 +30,7 @@ export interface SanityLiveProps
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
+  tag: string
 }
 
 /**
@@ -43,12 +45,14 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     useProjectHostname,
     ignoreBrowserTokenWarning,
     token,
+    requestTagPrefix,
     // handleDraftModeAction,
     draftModeEnabled,
     draftModePerspective,
     refreshOnMount = false,
     refreshOnFocus = typeof window === 'undefined' ? true : window.self === window.top,
     refreshOnReconnect = true,
+    tag,
   } = props
 
   const [error, setError] = useState<unknown>(null)
@@ -85,8 +89,18 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         ignoreBrowserTokenWarning,
         token,
         useCdn: false,
+        requestTagPrefix,
       }),
-    [apiHost, apiVersion, dataset, ignoreBrowserTokenWarning, projectId, token, useProjectHostname],
+    [
+      apiHost,
+      apiVersion,
+      dataset,
+      ignoreBrowserTokenWarning,
+      projectId,
+      requestTagPrefix,
+      token,
+      useProjectHostname,
+    ],
   )
 
   useEffect(() => {
@@ -94,6 +108,10 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     // and include CORS detection https://github.com/sanity-io/sanity/blob/9848f2069405e5d06f82a61a902f141e53099493/packages/sanity/src/core/store/_legacy/authStore/createAuthStore.ts#L92-L102
     const path = client.getDataUrl('live/events')
     const url = new URL(client.getUrl(path, false))
+    const preflightTag = [requestTagPrefix, tag, 'cors-preflight'].filter(Boolean).join('.')
+    if (preflightTag) {
+      url.searchParams.set('tag', preflightTag)
+    }
     if (token) {
       url.searchParams.set('includeDrafts', 'true')
     }
@@ -148,19 +166,25 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }
     })
     return () => controller.abort()
-  }, [client, token])
+  }, [tag, client, requestTagPrefix, token])
 
   useEffect(() => {
-    const subscription = client.live.events(token ? {includeDrafts: true} : undefined).subscribe({
+    const subscription = client.live.events({includeDrafts: !!token, tag}).subscribe({
       next: (event) => {
         if (event.type === 'message') {
           revalidateSyncTags(event.tags)
+        } else if (event.type === 'reconnect') {
+          // eslint-disable-next-line no-console
+          console.log('TODO: handle reconnect')
+        } else if (event.type === 'restart') {
+          // eslint-disable-next-line no-console
+          console.log('TODO: handle restart')
         }
       },
       error: setError,
     })
     return () => subscription.unsubscribe()
-  }, [client, token])
+  }, [client, tag, token])
 
   /**
    * 2. Notify what perspective we're in, when in Draft Mode

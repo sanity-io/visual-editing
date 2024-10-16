@@ -7,5 +7,6 @@ export default defineConfig({
   external: ['@sanity/ui', 'react', 'react-dom', 'sanity', 'styled-components'],
   define: {
     PRESENTATION_ENABLE_QRCODE: process.env['PRESENTATION_ENABLE_QRCODE'],
+    PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: process.env['PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS'],
   },
 })

@@ -5,12 +5,13 @@ import {
   type LoaderNodeMsg,
 } from '@repo/visual-editing-helpers'
 import {useQueryParams, useRevalidate} from '@repo/visual-editing-helpers/hooks'
-import type {
-  ClientConfig,
-  ClientPerspective,
-  ContentSourceMap,
-  QueryParams,
-  SyncTag,
+import {
+  createClient,
+  type ClientPerspective,
+  type ContentSourceMap,
+  type LiveEventMessage,
+  type QueryParams,
+  type SyncTag,
 } from '@sanity/client'
 import {applySourceDocuments, getPublishedId} from '@sanity/client/csm'
 import {
@@ -19,9 +20,9 @@ import {
   type Controller,
   type StatusEvent,
 } from '@sanity/comlink'
-import {applyPatch} from 'mendoza'
-import LRUCache from 'mnemonist/lru-cache-with-delete'
-import {memo, useEffect, useMemo, useState} from 'react'
+import isEqual from 'fast-deep-equal'
+// import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
+import {memo, useDeferredValue, useEffect, useMemo, useState} from 'react'
 import {
   useClient,
   // useCurrentUser,
@@ -30,11 +31,9 @@ import {
   type SanityClient,
   type SanityDocument,
 } from 'sanity'
-import {
-  LIVE_QUERY_CACHE_BATCH_SIZE,
-  LIVE_QUERY_CACHE_SIZE,
-  MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
-} from '../constants'
+import {useEffectEvent} from 'use-effect-event'
+// import {useEffectEvent} from 'use-effect-event'
+import {MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL} from '../constants'
 import type {
   LiveQueriesState,
   LiveQueriesStateValue,
@@ -47,7 +46,6 @@ export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
   controller: Controller | undefined
   perspective: ClientPerspective
-  documentsOnPage: {_id: string; _type: string}[]
   onLoadersConnection: (event: StatusEvent) => void
   onDocumentsOnPage: (
     key: string,
@@ -58,10 +56,9 @@ export interface LoaderQueriesProps {
 
 export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
   const {
-    liveDocument,
+    liveDocument: _liveDocument,
     controller,
     perspective: activePerspective,
-    documentsOnPage,
     onLoadersConnection,
     onDocumentsOnPage,
   } = props
@@ -157,7 +154,34 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     return
   }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
 
-  const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
+  // const currentUser = useCurrentUser()
+  // const handleCreatePreviewUrlSecret = useEffectEvent(
+  //   async ({projectId, dataset}: {projectId: string; dataset: string}) => {
+  //     try {
+  //       // eslint-disable-next-line no-console
+  //       console.log('Creating preview URL secret for ', {projectId, dataset})
+  //       const {secret} = await createPreviewSecret(
+  //         client,
+  //         '@sanity/presentation',
+  //         typeof window === 'undefined' ? '' : location.href,
+  //         currentUser?.id,
+  //       )
+  //       return {secret}
+  //     } catch (err) {
+  //       // eslint-disable-next-line no-console
+  //       console.error('Failed to generate preview URL secret', err)
+  //       return {secret: null}
+  //     }
+  //   },
+  // )
+  // useEffect(() => {
+  //   return comlink?.on('loader/fetch-preview-url-secret', (data) =>
+  //     handleCreatePreviewUrlSecret(data),
+  //   )
+  // }, [comlink, handleCreatePreviewUrlSecret])
+
+  const [syncTagsInUse] = useState(() => new Set<SyncTag[]>())
+  const [lastLiveEventId, setLastLiveEventId] = useState<string | null>(null)
   const studioClient = useClient({apiVersion: '2023-10-16'})
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])
   const client = useMemo(
@@ -183,31 +207,49 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     }
   }, [comlink, clientConfig, activePerspective])
 
-  const turboIds = useMemo(() => {
-    const documentsActuallyInUse = documentsOnPage.map(({_id}) => _id)
-    const set = new Set(documentsActuallyInUse)
-    const ids = [...set]
-    const max = cache.capacity
-    if (ids.length >= max) {
-      ids.length = max
+  const handleSyncTags = useEffectEvent((event: LiveEventMessage) => {
+    const flattenedSyncTags = Array.from(syncTagsInUse).flat()
+    const hasMatchingTags = event.tags.some((tag) => flattenedSyncTags.includes(tag))
+    if (hasMatchingTags) {
+      setLastLiveEventId(event.id)
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('No matching tags found', event.tags, {flattenedSyncTags})
     }
-    return ids
-  }, [cache.capacity, documentsOnPage])
+  })
+  useEffect(() => {
+    const liveClient = createClient(client.config()).withConfig({
+      // Necessary for the live drafts to work
+      apiVersion: 'vX',
+    })
+    const subscription = liveClient.live
+      .events({includeDrafts: true, tag: 'presentation-loader'})
+      .subscribe({
+        next: (event) => {
+          if (event.type === 'message') {
+            handleSyncTags(event)
+          } else if (event.type === 'restart') {
+            setLastLiveEventId(event.id)
+          } else if (event.type === 'reconnect') {
+            setLastLiveEventId(null)
+          }
+        },
+        // eslint-disable-next-line no-console
+        error: (err) => console.error('Error validating EventSource URL:', err),
+      })
+    return () => subscription.unsubscribe()
+  }, [client, handleSyncTags])
 
-  const [documentsCacheLastUpdated, setDocumentsCacheLastUpdated] = useState(0)
+  /**
+   * Defer the liveDocument to avoid unnecessary rerenders on rapid edits
+   */
+  const liveDocument = useDeferredValue(_liveDocument)
 
   return (
     <>
-      <Turbo
-        cache={cache}
-        client={client}
-        turboIds={turboIds}
-        setDocumentsCacheLastUpdated={setDocumentsCacheLastUpdated}
-      />
       {Object.entries(liveQueries).map(([key, {query, params, perspective}]) => (
         <QuerySubscription
           key={`${key}${perspective}`}
-          cache={cache}
           projectId={clientConfig.projectId!}
           dataset={clientConfig.dataset!}
           perspective={perspective}
@@ -215,9 +257,9 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
           params={params}
           comlink={comlink}
           client={client}
-          refreshInterval={activePerspective ? 2000 : 0}
           liveDocument={liveDocument}
-          documentsCacheLastUpdated={documentsCacheLastUpdated}
+          lastLiveEventId={lastLiveEventId}
+          syncTagsInUse={syncTagsInUse}
         />
       ))}
     </>
@@ -229,162 +271,55 @@ interface SharedProps {
    * The Sanity client to use for fetching data and listening to mutations.
    */
   client: SanityClient
-  /**
-   * How frequently queries should be refetched in the background to refresh the parts of queries that can't be source mapped.
-   * Setting it to `0` will disable background refresh.
-   * @defaultValue 10000
-   */
-  refreshInterval?: number
-  /**
-   * The documents cache to use for turbo-charging queries.
-   */
-  cache: LRUCache<string, SanityDocument>
 }
-
-interface TurboProps extends Pick<SharedProps, 'client' | 'cache'> {
-  turboIds: string[]
-  setDocumentsCacheLastUpdated: (timestamp: number) => void
-}
-/**
- * A turbo-charged mutation observer that uses Content Source Maps to apply mendoza patches on your queries
- */
-const Turbo = memo(function Turbo(props: TurboProps) {
-  const {cache, client, turboIds, setDocumentsCacheLastUpdated} = props
-  // Figure out which documents are missing from the cache
-  const [batch, setBatch] = useState<string[][]>([])
-  useEffect(() => {
-    const batchSet = new Set(batch.flat())
-    const nextBatch = new Set<string>()
-    for (const turboId of turboIds) {
-      if (!batchSet.has(turboId) && !cache.has(turboId)) {
-        nextBatch.add(turboId)
-      }
-    }
-    const nextBatchSlice = [...nextBatch].slice(0, LIVE_QUERY_CACHE_BATCH_SIZE)
-    if (nextBatchSlice.length === 0) return
-    setBatch((prevBatch) => [...prevBatch.slice(-LIVE_QUERY_CACHE_BATCH_SIZE), nextBatchSlice])
-  }, [batch, cache, turboIds])
-
-  // Use the same listen instance and patch documents as they come in
-  useEffect(() => {
-    const subscription = client
-      .listen(
-        '*',
-        {},
-        {
-          events: ['mutation'],
-          effectFormat: 'mendoza',
-          includePreviousRevision: false,
-          includeResult: false,
-          tag: 'presentation-loader',
-        },
-      )
-      .subscribe((update) => {
-        if (update.type === 'mutation' && update.transition === 'disappear') {
-          if (cache.delete(update.documentId)) {
-            setDocumentsCacheLastUpdated(Date.now())
-          }
-        }
-
-        if (update.type !== 'mutation' || !update.effects?.apply?.length) return
-        // Schedule a reach state update with the ID of the document that were mutated
-        // This react handler will apply the document to related source map snapshots
-        const cachedDocument = cache.peek(update.documentId)
-        if (cachedDocument as SanityDocument) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const patchDoc = {...cachedDocument} as any
-          delete patchDoc._rev
-          const patchedDocument = applyPatch(patchDoc, update.effects.apply)
-          cache.set(update.documentId, patchedDocument)
-          setDocumentsCacheLastUpdated(Date.now())
-        }
-      })
-    return () => subscription.unsubscribe()
-  }, [cache, client, setDocumentsCacheLastUpdated])
-
-  return (
-    <>
-      {batch.map((ids) => (
-        <GetDocuments
-          key={JSON.stringify(ids)}
-          cache={cache}
-          client={client}
-          ids={ids}
-          setDocumentsCacheLastUpdated={setDocumentsCacheLastUpdated}
-        />
-      ))}
-    </>
-  )
-})
-
-interface GetDocumentsProps extends Pick<SharedProps, 'client' | 'cache'> {
-  ids: string[]
-  setDocumentsCacheLastUpdated: (timestamp: number) => void
-}
-const GetDocuments = memo(function GetDocuments(props: GetDocumentsProps) {
-  const {client, cache, ids, setDocumentsCacheLastUpdated} = props
-
-  useEffect(() => {
-    const missingIds = ids.filter((id) => !cache.has(id))
-    if (missingIds.length === 0) return
-    client.getDocuments(missingIds).then((documents) => {
-      for (const doc of documents) {
-        if (doc && doc?._id) {
-          cache.set(doc._id, doc)
-          setDocumentsCacheLastUpdated(Date.now())
-        }
-      }
-      // eslint-disable-next-line no-console
-    }, console.error)
-  }, [cache, client, ids, setDocumentsCacheLastUpdated])
-
-  return null
-})
-GetDocuments.displayName = 'GetDocuments'
 
 interface QuerySubscriptionProps
-  extends Pick<
-    UseQuerySubscriptionProps,
-    'client' | 'cache' | 'refreshInterval' | 'liveDocument' | 'documentsCacheLastUpdated'
-  > {
+  extends Pick<UseQuerySubscriptionProps, 'client' | 'liveDocument' | 'lastLiveEventId'> {
   projectId: string
   dataset: string
   perspective: ClientPerspective
   query: string
   params: QueryParams
   comlink: LoaderConnection | undefined
+  syncTagsInUse: Set<SyncTag[]>
 }
-function QuerySubscription(props: QuerySubscriptionProps) {
+function QuerySubscriptionComponent(props: QuerySubscriptionProps) {
   const {
-    cache,
     projectId,
     dataset,
     perspective,
     query,
     client,
-    refreshInterval,
     liveDocument,
     comlink,
-    documentsCacheLastUpdated,
+    lastLiveEventId,
+    syncTagsInUse,
   } = props
 
   const params = useQueryParams(props.params)
-  const data = useQuerySubscription({
-    cache,
+  const {
+    result,
+    resultSourceMap,
+    syncTags: tags,
+  } = useQuerySubscription({
     client,
     liveDocument,
     params,
     perspective,
     query,
-    refreshInterval,
-    documentsCacheLastUpdated,
-  })
-  const result = data?.result
-  const resultSourceMap = data?.resultSourceMap
-  const tags = data?.tags
+    lastLiveEventId,
+  }) || {}
 
-  useEffect(() => {
-    if (resultSourceMap) {
+  const handleQueryChange = useEffectEvent(
+    (
+      comlink: LoaderConnection | undefined,
+      perspective: ClientPerspective,
+      query: string,
+      params: QueryParams,
+      result: unknown,
+      resultSourceMap: ContentSourceMap | undefined,
+      tags: `s1:${string}`[] | undefined,
+    ) => {
       comlink?.post({
         type: 'loader/query-change',
         data: {
@@ -398,47 +333,64 @@ function QuerySubscription(props: QuerySubscriptionProps) {
           tags,
         },
       })
+    },
+  )
+  useEffect(() => {
+    if (resultSourceMap) {
+      handleQueryChange(comlink, perspective, query, params, result, resultSourceMap, tags)
     }
-  }, [comlink, dataset, params, perspective, projectId, query, result, resultSourceMap, tags])
+    if (Array.isArray(tags)) {
+      syncTagsInUse.add(tags)
+      return () => {
+        syncTagsInUse.delete(tags)
+      }
+    }
+
+    return
+  }, [
+    comlink,
+    handleQueryChange,
+    params,
+    perspective,
+    query,
+    result,
+    resultSourceMap,
+    syncTagsInUse,
+    tags,
+  ])
 
   return null
 }
+const QuerySubscription = memo(QuerySubscriptionComponent)
+QuerySubscription.displayName = 'Memo(QuerySubscription)'
 
-interface UseQuerySubscriptionProps
-  extends Required<Pick<SharedProps, 'client' | 'refreshInterval' | 'cache'>> {
+interface UseQuerySubscriptionProps extends Required<Pick<SharedProps, 'client'>> {
   liveDocument: Partial<SanityDocument> | null | undefined
   query: string
   params: QueryParams
   perspective: ClientPerspective
-  documentsCacheLastUpdated: number
+  lastLiveEventId: string | null
 }
 function useQuerySubscription(props: UseQuerySubscriptionProps) {
-  const {
-    cache,
-    liveDocument,
-    client,
-    refreshInterval,
-    query,
-    params,
-    perspective,
-    documentsCacheLastUpdated,
-  } = props
+  const {liveDocument, client, query, params, perspective, lastLiveEventId} = props
   const [snapshot, setSnapshot] = useState<{
     result: unknown
     resultSourceMap?: ContentSourceMap
-    tags?: SyncTag[]
+    syncTags?: SyncTag[]
+    lastLiveEventId: string | null
   } | null>(null)
-  const {projectId, dataset} = useMemo(() => {
-    const {projectId, dataset} = client.config()
-    return {projectId, dataset} as Required<Pick<ClientConfig, 'projectId' | 'dataset'>>
-  }, [client])
-
   // Make sure any async errors bubble up to the nearest error boundary
   const [error, setError] = useState<unknown>(null)
   if (error) throw error
 
-  const [revalidate, startRefresh] = useRevalidate({refreshInterval})
-  const shouldRefetch = revalidate === 'refresh' || revalidate === 'inflight'
+  const [revalidate, startRefresh] = useRevalidate({
+    // Refresh interval is set to zero as we're using the Live Draft Content API to revalidate queries
+    refreshInterval: 0,
+  })
+  const shouldRefetch =
+    revalidate === 'refresh' ||
+    revalidate === 'inflight' ||
+    lastLiveEventId !== snapshot?.lastLiveEventId
   useEffect(() => {
     if (!shouldRefetch) {
       return
@@ -452,16 +404,24 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
       const {signal} = controller
       fetching = true
       const {result, resultSourceMap, syncTags} = await client.fetch(query, params, {
+        lastLiveEventId,
         tag: 'presentation-loader',
         signal,
         perspective,
         filterResponse: false,
+        returnQuery: false,
       })
       fetching = false
 
       if (!signal.aborted) {
-        setSnapshot({result, resultSourceMap, tags: syncTags})
-
+        setSnapshot((prev) => ({
+          result: isEqual(prev?.result, result) ? prev?.result : result,
+          resultSourceMap: isEqual(prev?.resultSourceMap, resultSourceMap)
+            ? prev?.resultSourceMap
+            : resultSourceMap,
+          syncTags: isEqual(prev?.syncTags, syncTags) ? prev?.syncTags : syncTags,
+          lastLiveEventId,
+        }))
         fulfilled = true
       }
     }
@@ -479,38 +439,22 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
         controller.abort()
       }
     }
-  }, [
-    client,
-    dataset,
-    liveDocument,
-    params,
-    perspective,
-    projectId,
-    query,
-    shouldRefetch,
-    startRefresh,
-  ])
+  }, [client, lastLiveEventId, params, perspective, query, shouldRefetch, startRefresh])
 
+  const {result, resultSourceMap, syncTags} = snapshot ?? {}
   return useMemo(() => {
-    if (documentsCacheLastUpdated && snapshot?.resultSourceMap) {
+    if (liveDocument && resultSourceMap) {
       return {
-        result: turboChargeResultIfSourceMap(
-          cache,
-          liveDocument,
-          snapshot.result,
-          perspective,
-          snapshot.resultSourceMap,
-        ),
-        resultSourceMap: snapshot.resultSourceMap,
+        result: turboChargeResultIfSourceMap(liveDocument, result, perspective, resultSourceMap),
+        resultSourceMap,
+        syncTags,
       }
     }
-    return snapshot
-  }, [cache, documentsCacheLastUpdated, liveDocument, perspective, snapshot])
+    return {result, resultSourceMap, syncTags}
+  }, [liveDocument, perspective, result, resultSourceMap, syncTags])
 }
 
-let warnedAboutCrossDatasetReference = false
 export function turboChargeResultIfSourceMap<T = unknown>(
-  cache: SharedProps['cache'],
   liveDocument: Partial<SanityDocument> | null | undefined,
   result: T,
   perspective: ClientPerspective,
@@ -523,27 +467,16 @@ export function turboChargeResultIfSourceMap<T = unknown>(
     result,
     resultSourceMap,
     (sourceDocument) => {
-      if (sourceDocument._projectId) {
-        // @TODO Handle cross dataset references
-        if (!warnedAboutCrossDatasetReference) {
-          // eslint-disable-next-line no-console
-          console.warn(
-            'Cross dataset references are not supported yet, ignoring source document',
-            sourceDocument,
-          )
-          warnedAboutCrossDatasetReference = true
-        }
-        return undefined
-      }
       // If there's a displayed document, always prefer it
       if (
+        // If _projectId is set, it's a cross dataset reference and we should skip it
+        !sourceDocument._projectId &&
         liveDocument?._id &&
         getPublishedId(liveDocument._id) === getPublishedId(sourceDocument._id)
       ) {
         return liveDocument
       }
-      // Fallback to general documents cache
-      return cache.get(sourceDocument._id)
+      return undefined
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (changedValue: any, {previousValue}) => {

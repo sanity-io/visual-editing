@@ -35,6 +35,7 @@ export function useDocumentsOnPage(
     (key: string, perspective: ClientPerspective, sourceDocuments: DocumentOnPage[] = []) => {
       const documents = sourceDocuments.filter((sourceDocument) => {
         if ('_projectId' in sourceDocument && sourceDocument._projectId) {
+          // eslint-disable-next-line no-warning-comments
           // @TODO Handle cross dataset references
           if (!warnedAboutCrossDatasetReference) {
             // eslint-disable-next-line no-console
