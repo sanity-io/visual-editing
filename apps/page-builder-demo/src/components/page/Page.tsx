@@ -38,38 +38,42 @@ export function Page(props: {data: PageData}) {
         path: 'sections',
       }).toString()}
     >
-      {sections?.map((section) => {
-        if (section._type === 'hero') {
+      {sections?.map((section: PageSection | null) => {
+        if (section?._type === 'hero') {
           return <Hero page={data} key={section._key} section={section} />
         }
 
-        if (section._type === 'intro') {
+        if (section?._type === 'intro') {
           return <Intro page={data} key={section._key} section={section} />
         }
 
-        if (section._type === 'featuredProducts') {
+        if (section?._type === 'featuredProducts') {
           return <FeaturedProducts page={data} key={section._key} section={section} />
         }
 
-        if (section._type === 'featureHighlight') {
+        if (section?._type === 'featureHighlight') {
           return <FeatureHighlight page={data} key={section._key} section={section} />
         }
 
-        if (section._type === 'section') {
+        if (section?._type === 'section') {
           return <Section page={data} key={section._key} section={section} />
         }
 
         return (
           <div
-            data-sanity={dataAttribute({
-              id: data._id,
-              type: data._type,
-              path: `sections[_key=="${(section as any)._key}"]`,
-            }).toString()}
+            data-sanity={
+              section
+                ? dataAttribute({
+                    id: data._id,
+                    type: data._type,
+                    path: `sections[_key=="${(section as any)._key}"]`,
+                  }).toString()
+                : undefined
+            }
             className="bg-red-50 p-5 font-mono text-sm text-red-600 dark:bg-red-950 dark:text-red-400"
-            key={(section as any)._key}
+            key={(section as any)?._key}
           >
-            <div>Unknown section type: {(section as any)._type}</div>
+            <div>Unknown section type: {(section as any)?._type}</div>
             <pre>{JSON.stringify(section, null, 2)}</pre>
           </div>
         )
