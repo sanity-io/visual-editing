@@ -73,7 +73,7 @@ export function Page(props: {data: PageData}) {
             className="bg-red-50 p-5 font-mono text-sm text-red-600 dark:bg-red-950 dark:text-red-400"
             key={(section as any)?._key}
           >
-            <div>Unknown section type: {(section as any)._type}</div>
+            <div>Unknown section type: {(section as any)?._type}</div>
             <pre>{JSON.stringify(section, null, 2)}</pre>
           </div>
         )
