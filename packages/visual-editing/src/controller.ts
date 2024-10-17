@@ -127,6 +127,8 @@ export function createOverlayController({
   }
 
   function setOverlayCursor() {
+    if (!inFrame) return
+
     const hoveredElement = getHoveredElement()
 
     if (!hoveredElement) return
