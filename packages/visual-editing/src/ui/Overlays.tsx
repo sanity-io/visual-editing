@@ -178,6 +178,7 @@ export const Overlays: FunctionComponent<{
     {
       contextMenu,
       dragInsertPosition,
+      dragShowMinimap,
       dragShowMinimapPrompt,
       dragSkeleton,
       elements,
@@ -191,6 +192,7 @@ export const Overlays: FunctionComponent<{
   ] = useReducer(overlayStateReducer, {
     contextMenu: null,
     dragInsertPosition: null,
+    dragShowMinimap: false,
     dragShowMinimapPrompt: false,
     dragSkeleton: null,
     elements: [],
@@ -440,7 +442,9 @@ export const Overlays: FunctionComponent<{
                         rect={rect}
                         showActions={!inFrame}
                         draggable={draggable}
-                        isDragging={isDragging || dragMinimapTransition}
+                        enableScrollIntoView={
+                          !isDragging && !dragMinimapTransition && !dragShowMinimap
+                        }
                         wasMaybeCollapsed={focused && wasMaybeCollapsed}
                       />
                     )

@@ -28,7 +28,7 @@ export interface ElementOverlayProps {
   showActions: boolean
   wasMaybeCollapsed: boolean
   draggable: boolean
-  isDragging: boolean
+  enableScrollIntoView: boolean
 }
 
 const Root = styled(Card)`
@@ -184,7 +184,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
-  const {focused, hovered, rect, wasMaybeCollapsed, isDragging} = props
+  const {focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -205,7 +205,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
       !wasMaybeCollapsed &&
       focused === true &&
       ref.current &&
-      !isDragging
+      enableScrollIntoView
     ) {
       const target = ref.current
       scrollIntoView(ref.current, {
@@ -229,7 +229,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     }
 
     scrolledIntoViewRef.current = focused === true
-  }, [focused, wasMaybeCollapsed, isDragging])
+  }, [focused, wasMaybeCollapsed, enableScrollIntoView])
 
   return (
     <Root

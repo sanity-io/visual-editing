@@ -24,6 +24,7 @@ export interface OverlayState {
   isDragging: boolean
   dragInsertPosition: DragInsertPosition
   dragSkeleton: DragSkeleton | null
+  dragShowMinimap: boolean
   dragShowMinimapPrompt: boolean
   dragMinimapTransition: boolean
   dragGroupRect: OverlayRect | null
@@ -40,6 +41,7 @@ export function overlayStateReducer(
     perspective,
     isDragging,
     dragInsertPosition,
+    dragShowMinimap,
     dragShowMinimapPrompt,
     dragSkeleton,
     dragMinimapTransition,
@@ -111,6 +113,10 @@ export function overlayStateReducer(
     dragGroupRect = message.groupRect
   }
 
+  if (type === 'overlay/dragToggleMinimap') {
+    dragShowMinimap = message.display
+  }
+
   return {
     ...state,
     contextMenu,
@@ -122,6 +128,7 @@ export function overlayStateReducer(
     focusPath,
     perspective,
     wasMaybeCollapsed,
+    dragShowMinimap,
     dragShowMinimapPrompt,
     dragMinimapTransition,
   }
