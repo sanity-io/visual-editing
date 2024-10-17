@@ -138,8 +138,8 @@ const OverlaysController: FunctionComponent<{
       } else if (message.type === 'overlay/deactivate') {
         comlink?.post({type: 'visual-editing/toggle', data: {enabled: false}})
       } else if (message.type === 'overlay/dragEnd') {
-        const {insertPosition, target} = message
-        dispatchDragEndEvent({insertPosition, target})
+        const {insertPosition, target, dragGroup, flow, preventInsertDefault} = message
+        dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
 

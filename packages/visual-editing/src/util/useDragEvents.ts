@@ -28,9 +28,10 @@ export function useDragEndEvents(): {
 
   useEffect(() => {
     const handler = (e: CustomEvent<DragEndEvent>) => {
-      if (e.defaultPrevented) return
+      const {insertPosition, target, preventInsertDefault} = e.detail
 
-      const {insertPosition, target} = e.detail
+      if (preventInsertDefault) return
+
       const reference = getReferenceNodeAndInsertPosition(insertPosition)
       if (reference) {
         const doc = getDocument(target.id)
