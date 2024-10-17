@@ -15,101 +15,93 @@ import {
   SortIcon,
   UnpublishIcon,
 } from '@sanity/icons'
-import type {SanityDocument} from '@sanity/types'
-import type {ContextMenuNode} from '../../types'
+import type {ContextMenuNode, OverlayElementField, OverlayElementParent} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {
-  getArrayInsertMutations,
-  getArrayMoveMutations,
-  getArrayRemoveMutations,
+  getArrayInsertPatches,
+  getArrayMovePatches,
+  getArrayRemovePatches,
 } from '../../util/mutations'
-import type {DocumentMutate} from '../optimistic-state/useDocuments'
-import type {OverlayElementField, OverlayElementParent} from '../schema/schema'
+import type {OptimisticDocument} from '../optimistic-state/useDocuments'
 
 export function getContextMenuItems(context: {
-  node: SanityNode
-  doc: SanityDocument | undefined
-  mutate: DocumentMutate
-  parent: OverlayElementParent
+  doc: OptimisticDocument
   field: OverlayElementField
+  node: SanityNode
+  parent: OverlayElementParent
 }): ContextMenuNode[] {
-  const {node, field, parent, doc, mutate} = context
+  const {node, field, parent, doc} = context
   if (field?.type === 'arrayItem') {
-    return getContextMenuArrayItems({node, field, doc, mutate})
+    return getContextMenuArrayItems({node, field, doc})
   }
   if (parent?.type === 'union') {
-    return getContextMenuUnionItems({node, parent, doc, mutate})
+    return getContextMenuUnionItems({node, parent, doc})
   }
 
   return []
 }
 
-function getRemoveItems(context: {
-  node: SanityNode
-  doc: SanityDocument | undefined
-  mutate: DocumentMutate
-}) {
-  const {node, doc, mutate} = context
+function getRemoveItems(context: {doc: OptimisticDocument; node: SanityNode}) {
+  const {node, doc} = context
   if (!doc) return []
   return [
     {
       type: 'action' as const,
       label: 'Remove',
       icon: RemoveIcon,
-      action: () => mutate(node.id, getArrayRemoveMutations(node, doc)),
+      action: () => doc.patch(getArrayRemovePatches(node, doc)),
     },
   ]
 }
 
 function getMoveItems(
   context: {
+    doc: OptimisticDocument
     node: SanityNode
-    doc: SanityDocument | undefined
-    mutate: DocumentMutate
   },
   withDivider = true,
 ) {
-  const {node, doc, mutate} = context
+  const {node, doc} = context
   if (!doc) return []
 
   const items: ContextMenuNode[] = []
   const groupItems: ContextMenuNode[] = []
-  const moveUpMutations = getArrayMoveMutations(node, doc, 'previous')
-  const moveDownMutations = getArrayMoveMutations(node, doc, 'next')
-  const moveFirstMutations = getArrayMoveMutations(node, doc, 'first')
-  const moveLastMutations = getArrayMoveMutations(node, doc, 'last')
+  const moveUpPatches = getArrayMovePatches(node, doc, 'previous')
+  const moveDownPatches = getArrayMovePatches(node, doc, 'next')
+  const moveFirstPatches = getArrayMovePatches(node, doc, 'first')
+  const moveLastPatches = getArrayMovePatches(node, doc, 'last')
 
-  if (moveFirstMutations) {
+  if (moveFirstPatches.length) {
     groupItems.push({
       type: 'action',
       label: 'To top',
       icon: PublishIcon,
-      action: () => mutate(node.id, moveFirstMutations),
+      action: () => doc.patch(moveFirstPatches),
     })
   }
-  if (moveUpMutations) {
+  if (moveUpPatches.length) {
     groupItems.push({
       type: 'action',
       label: 'Up',
       icon: ArrowUpIcon,
-      action: () => mutate(node.id, moveUpMutations),
+      action: () => doc.patch(moveUpPatches),
     })
   }
 
-  if (moveDownMutations) {
+  if (moveDownPatches.length) {
     groupItems.push({
       type: 'action',
       label: 'Down',
       icon: ArrowDownIcon,
-      action: () => mutate(node.id, moveDownMutations),
+      action: () => doc.patch(moveDownPatches),
     })
   }
-  if (moveLastMutations) {
+  if (moveLastPatches.length) {
     groupItems.push({
       type: 'action',
       label: 'To bottom',
       icon: UnpublishIcon,
-      action: () => mutate(node.id, moveLastMutations),
+      action: () => doc.patch(moveLastPatches),
     })
   }
 
@@ -129,12 +121,11 @@ function getMoveItems(
 }
 
 function getContextMenuArrayItems(context: {
-  node: SanityNode
+  doc: OptimisticDocument
   field: SchemaArrayItem
-  doc: SanityDocument | undefined
-  mutate: DocumentMutate
+  node: SanityNode
 }): ContextMenuNode[] {
-  const {node, field, mutate} = context
+  const {node, field, doc} = context
   const items: ContextMenuNode[] = []
   items.push(...getRemoveItems(context))
   items.push(...getMoveItems(context))
@@ -143,31 +134,24 @@ function getContextMenuArrayItems(context: {
     type: 'action',
     label: 'Insert before',
     icon: InsertAboveIcon,
-    action: () => {
-      const mutations = getArrayInsertMutations(node, field.name, 'before')
-      mutate(node.id, mutations)
-    },
+    action: () => doc.patch(getArrayInsertPatches(node, doc, field.name, 'before')),
   })
   items.push({
     type: 'action',
     label: 'Insert after',
     icon: InsertBelowIcon,
-    action: () => {
-      const mutations = getArrayInsertMutations(node, field.name, 'after')
-      mutate(node.id, mutations)
-    },
+    action: () => doc.patch(getArrayInsertPatches(node, doc, field.name, 'after')),
   })
 
   return items
 }
 
 function getContextMenuUnionItems(context: {
+  doc: OptimisticDocument
   node: SanityNode
   parent: SchemaUnionNode<SchemaNode>
-  doc: SanityDocument | undefined
-  mutate: DocumentMutate
 }): ContextMenuNode[] {
-  const {node, parent, mutate} = context
+  const {doc, node, parent} = context
   const items: ContextMenuNode[] = []
   items.push(...getRemoveItems(context))
   items.push(...getMoveItems(context))
@@ -180,13 +164,10 @@ function getContextMenuUnionItems(context: {
       parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
     ).map((t) => {
       return {
-        type: 'action',
+        type: 'action' as const,
         icon: getNodeIcon(t),
         label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
-        action: () => {
-          const mutations = getArrayInsertMutations(node, t.name, 'before')
-          mutate(node.id, mutations)
-        },
+        action: () => doc.patch(getArrayInsertPatches(node, doc, t.name, 'before')),
       }
     }),
   })
@@ -198,12 +179,11 @@ function getContextMenuUnionItems(context: {
       parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
     ).map((t) => {
       return {
-        type: 'action',
+        type: 'action' as const,
         label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
         icon: getNodeIcon(t),
         action: () => {
-          const mutations = getArrayInsertMutations(node, t.name, 'after')
-          mutate(node.id, mutations)
+          doc.patch(getArrayInsertPatches(node, doc, t.name, 'after'))
         },
       }
     }),

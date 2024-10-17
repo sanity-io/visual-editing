@@ -76,7 +76,7 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
   } = props
 
   const {schema, resolvedTypes} = useSchema()
-  const {get, mutate} = useDocuments()
+  const {getDocument} = useDocuments()
 
   const schemaType = getSchemaType(node, schema)
   const {field, parent} = getField(node, schemaType, resolvedTypes)
@@ -90,10 +90,10 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
   }, [field])
 
   const items = useMemo(() => {
-    const doc = get(node.id)?.snapshot
+    const doc = getDocument(node.id)
     if (!doc) return []
-    return getContextMenuItems({node, field, parent, doc, mutate})
-  }, [field, get, mutate, node, parent])
+    return getContextMenuItems({node, field, parent, doc})
+  }, [field, node, parent, getDocument])
 
   const contextMenuReferenceElement = useMemo(() => {
     return {
