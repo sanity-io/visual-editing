@@ -585,7 +585,11 @@ export default function PresentationTool(props: {
       )}
       {visualEditingComlink && documentsOnPage.length > 0 && (
         <Suspense>
-          <PostMessagePreviewSnapshots comlink={visualEditingComlink} refs={documentsOnPage} />
+          <PostMessagePreviewSnapshots
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            refs={documentsOnPage}
+          />
         </Suspense>
       )}
       {visualEditingComlink && (
