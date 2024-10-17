@@ -1,4 +1,8 @@
-import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
+import {
+  urlSearchParamPreviewPathname,
+  urlSearchParamPreviewPerspective,
+  urlSearchParamPreviewSecret,
+} from './constants'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverContext,
@@ -46,6 +50,7 @@ export function definePreviewUrl<SanityClientType>(
       const enablePreviewModeRequestUrl = new URL(enablePreviewModeUrl)
       const {searchParams} = enablePreviewModeRequestUrl
       searchParams.set(urlSearchParamPreviewSecret, context.previewUrlSecret)
+      searchParams.set(urlSearchParamPreviewPerspective, context.studioPreviewPerspective)
       if (previewUrl.pathname !== enablePreviewModeRequestUrl.pathname) {
         searchParams.set(
           urlSearchParamPreviewPathname,

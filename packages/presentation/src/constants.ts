@@ -30,7 +30,8 @@ declare global {
 }
 
 // Feature flag that disables the new QRCode Preview URL menu
-export const QRCODE_ENABLED =
+// @TODO rename flag to SHARE_PREVIEW_ACCESS_ENABLED for the rest
+export const SHARE_PREVIEW_ACCESS =
   typeof PRESENTATION_ENABLE_QRCODE === 'string'
     ? PRESENTATION_ENABLE_QRCODE === 'true'
     : // @ts-expect-error: env vars are not typed

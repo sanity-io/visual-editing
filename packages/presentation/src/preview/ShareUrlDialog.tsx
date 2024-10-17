@@ -13,6 +13,7 @@ export interface ShareUrlDialogProps {
   onClose: () => void
   previewLocationRoute: string
   initialUrl: PreviewFrameProps['initialUrl']
+  perspective: string
 }
 
 // @TODO embed the logo instead of using the network
@@ -21,7 +22,7 @@ const qrCodeLogo = 'https://www.sanity.io/static/images/logo_rounded_square.png'
 // const qrCodeLogo = 'https://www.sanity.io/static/images/favicons/favicon-96x96.png'
 
 export const ShareUrlDialog = memo(function ShareUrlDialogComponent(props: ShareUrlDialogProps) {
-  const {onClose, initialUrl, previewLocationRoute} = props
+  const {onClose, initialUrl, previewLocationRoute, perspective} = props
   const {t} = useTranslation(presentationLocaleNamespace)
   const {push: pushToast} = useToast()
   const client = useClient({apiVersion: API_VERSION})
@@ -64,6 +65,7 @@ export const ShareUrlDialog = memo(function ShareUrlDialogComponent(props: Share
         initialUrl,
         previewUrlSecret.secret,
         previewLocationRoute,
+        perspective,
       )
       setUrl(newUrl)
     } catch (error) {
@@ -71,7 +73,7 @@ export const ShareUrlDialog = memo(function ShareUrlDialogComponent(props: Share
     } finally {
       setEnabling(false)
     }
-  }, [client, currentUser?.id, initialUrl, previewLocationRoute])
+  }, [client, currentUser?.id, initialUrl, perspective, previewLocationRoute])
 
   const handleCopyUrl = useCallback(() => {
     try {

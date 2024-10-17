@@ -10,6 +10,7 @@ import type {PreviewUrlOption} from './types'
 export function usePreviewUrl(
   previewUrl: PreviewUrlOption,
   toolName: string,
+  studioPreviewPerspective: 'published' | 'previewDrafts',
   previewSearchParam: string | null,
   canCreateUrlPreviewSecrets: boolean,
 ): URL {
@@ -52,6 +53,7 @@ export function usePreviewUrl(
     const resolvedUrl = await resolvePreviewUrl({
       client,
       previewUrlSecret: previewUrlSecret!,
+      studioPreviewPerspective,
       previewSearchParam,
       studioBasePath: basePath,
     })

@@ -10,10 +10,9 @@ import {
 import SanityLiveClientComponent from '@sanity/next-loader/client-components/live'
 import SanityLiveStreamClientComponent from '@sanity/next-loader/client-components/live-stream'
 // import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
-// import {apiVersion} from '@sanity/preview-url-secret/constants'
+import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 // import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import {cookies, draftMode} from 'next/headers.js'
-import {perspectiveCookieName} from './constants'
 import {sanitizePerspective} from './utils'
 
 /**

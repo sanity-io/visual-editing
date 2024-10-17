@@ -33,6 +33,7 @@ import {
   DEFAULT_TOOL_NAME,
   EDIT_INTENT_MODE,
   LIVE_DRAFT_EVENTS_ENABLED,
+  SHARE_PREVIEW_ACCESS,
 } from './constants'
 import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
@@ -84,7 +85,8 @@ export default function PresentationTool(props: {
   canCreateUrlPreviewSecrets: boolean
 }): ReactElement {
   const {canCreateUrlPreviewSecrets, tool} = props
-  const {previewUrl: _previewUrl, components} = tool.options ?? {}
+  const components = tool.options?.components
+  const _previewUrl = tool.options?.previewUrl
   const name = tool.name || DEFAULT_TOOL_NAME
   const {unstable_navigator} = components || {}
 
@@ -96,9 +98,21 @@ export default function PresentationTool(props: {
   const initialPreviewUrl = usePreviewUrl(
     _previewUrl || '/',
     name,
+    routerSearchParams['perspective'] === 'published' ? 'published' : 'previewDrafts',
     routerSearchParams['preview'] || null,
     canCreateUrlPreviewSecrets,
   )
+  const canSharePreviewAccess = useMemo<boolean>(() => {
+    if (
+      _previewUrl &&
+      typeof _previewUrl === 'object' &&
+      'previewMode' in _previewUrl &&
+      _previewUrl.previewMode
+    ) {
+      return _previewUrl.previewMode.shareAccess ?? SHARE_PREVIEW_ACCESS
+    }
+    return false
+  }, [_previewUrl])
 
   const [devMode] = useState(() => {
     const option = tool.options?.devMode
@@ -521,6 +535,7 @@ export default function PresentationTool(props: {
                   <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
                     <BoundaryElementProvider element={boundaryElement}>
                       <PreviewFrame
+                        canSharePreviewAccess={canSharePreviewAccess}
                         dispatch={dispatch}
                         iframe={state.iframe}
                         initialUrl={initialPreviewUrl}

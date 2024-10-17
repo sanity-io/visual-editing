@@ -19,6 +19,9 @@ export const urlSearchParamPreviewSecret = 'sanity-preview-secret'
 export const urlSearchParamPreviewPathname = 'sanity-preview-pathname'
 
 /** @internal */
+export const urlSearchParamPreviewPerspective = 'sanity-preview-perspective'
+
+/** @internal */
 export const isDev = process.env.NODE_ENV === 'development'
 
 /**
@@ -45,3 +48,6 @@ export const deleteExpiredSecretsQuery =
  * @internal
  */
 export const tag = 'sanity.preview-url-secret' as const
+
+/** @internal */
+export const perspectiveCookieName = 'sanity-preview-perspective'
