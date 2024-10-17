@@ -24,6 +24,7 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
   params?: QueryParams
   perspective?: Omit<ClientPerspective, 'raw'>
   stega?: boolean
+  tag?: string
 }) => Promise<{
   data: ClientReturn<QueryString>
   sourceMap: ContentSourceMap | null
@@ -38,6 +39,7 @@ export type DefinedSanityLiveStreamType = <const QueryString extends string>(pro
   params?: QueryParams
   perspective?: Omit<ClientPerspective, 'raw'>
   stega?: boolean
+  tag?: string
   children: (result: {
     data: ClientReturn<QueryString>
     sourceMap: ContentSourceMap | null
@@ -75,6 +77,12 @@ export interface DefinedSanityLiveProps {
    * TODO: this warning should only be necessary when `serverToken` and `browserToken` are the same value
    */
   ignoreBrowserTokenWarning?: boolean
+  /**
+   * Optional request tag for the listener. Use to identify the request in logs.
+   *
+   * @defaultValue `next-loader.live`
+   */
+  tag?: string
   /**
    * Required to enable draft mode in Presentation Tool. Requires `serverToken`. Returns a string if there were an error
    */
@@ -157,11 +165,13 @@ export function defineLive(config: DefineSanityLiveOptions): {
     params = {},
     stega: _stega,
     perspective: _perspective,
+    tag = 'next-loader.fetch',
   }: {
     query: QueryString
     params?: QueryParams
     stega?: boolean
     perspective?: Omit<ClientPerspective, 'raw'>
+    tag?: string
   }) {
     const stega = _stega ?? (await draftMode()).isEnabled
     const perspective =
@@ -185,7 +195,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         revalidate: fetchOptions?.revalidate,
         // tags: ['sanity'],
       },
-      tag: 'sanity.fetch-sync-tags',
+      tag: [tag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
     const tags = ['sanity', ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
@@ -204,6 +214,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       // lastLiveEventId: syncTags?.map((tag) => tag.replace('s1:', '')).join(''),
       // Hash the syncTags to create a consistent, short lastLiveEventId
       lastLiveEventId: syncTags ? await hashSyncTags(syncTags) : undefined,
+      tag,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags}
   }
@@ -225,8 +236,10 @@ export function defineLive(config: DefineSanityLiveOptions): {
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
+      tag = 'next-loader.live',
     } = props
-    const {projectId, dataset, apiHost, apiVersion, useProjectHostname} = client.config()
+    const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
+      client.config()
 
     return (
       <SanityLiveClientComponent
@@ -235,6 +248,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
         apiHost={apiHost}
         apiVersion={apiVersion}
         useProjectHostname={useProjectHostname}
+        requestTagPrefix={requestTagPrefix}
+        tag={tag}
         token={
           typeof browserToken === 'string' && (await draftMode()).isEnabled
             ? browserToken
@@ -261,12 +276,20 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const SanityLiveStream: DefinedSanityLiveStreamType = async function SanityLiveStream(props) {
-    const {query, params, perspective: _perspective, stega: _stega, children} = props
+    const {
+      query,
+      params,
+      perspective: _perspective,
+      stega: _stega,
+      children,
+      tag = 'next-loader.live-stream.fetch',
+    } = props
     const {data, sourceMap, tags} = await sanityFetch({
       query,
       params,
       perspective: _perspective,
       stega: _stega,
+      tag,
     })
 
     if ((await draftMode()).isEnabled) {
