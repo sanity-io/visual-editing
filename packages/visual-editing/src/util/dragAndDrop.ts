@@ -221,6 +221,11 @@ async function applyMinimapWrapperTransform(
       type: 'overlay/dragStartMinimapTransition',
     })
 
+    handler({
+      type: 'overlay/dragToggleMinimap',
+      display: true,
+    })
+
     document.body.style.overflow = 'hidden'
 
     // ensure overflow hidden has applied and scrolling stopped before applying transform, prevent minor y-position transform issues
@@ -255,8 +260,12 @@ function calcGroupBoundsPreview(rects: OverlayRect[]) {
 
   const offsetDist = 8
 
-  const canOffsetX = groupBoundsX.min > offsetDist
-  const canOffsetY = groupBoundsY.min > offsetDist
+  const canOffsetX =
+    groupBoundsX.min > offsetDist &&
+    groupBoundsX.min + groupBoundsX.width <= window.innerWidth - offsetDist
+  const canOffsetY =
+    groupBoundsY.min > offsetDist &&
+    groupBoundsY.min + groupBoundsY.height <= document.body.scrollHeight - offsetDist
   const canOffset = canOffsetX && canOffsetY
 
   const groupRect = {
@@ -307,6 +316,11 @@ async function resetMinimapWrapperTransform(
         setTimeout(() => {
           handler({
             type: 'overlay/dragEndMinimapTransition',
+          })
+
+          handler({
+            type: 'overlay/dragToggleMinimap',
+            display: false,
           })
         }, rectUpdateFrequency * 2)
 
@@ -391,6 +405,11 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     handler({
       type: 'overlay/dragToggleMinimapPrompt',
       display: false,
+    })
+
+    handler({
+      type: 'overlay/dragToggleMinimap',
+      display: true,
     })
 
     minimapScaleApplied = true

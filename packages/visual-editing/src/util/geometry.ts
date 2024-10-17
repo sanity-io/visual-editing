@@ -204,8 +204,8 @@ export function getRectGroupXExtent(rects: OverlayRect[]): {
   max: number
   width: number
 } {
-  const minGroupX = Math.min(...rects.map((r) => r.x))
-  const maxGroupX = Math.max(...rects.map((r) => r.x + r.w))
+  const minGroupX = Math.max(0, Math.min(...rects.map((r) => r.x)))
+  const maxGroupX = Math.min(document.body.offsetWidth, Math.max(...rects.map((r) => r.x + r.w)))
 
   return {
     min: minGroupX,
@@ -219,8 +219,8 @@ export function getRectGroupYExtent(rects: OverlayRect[]): {
   max: number
   height: number
 } {
-  const minGroupY = Math.min(...rects.map((r) => r.y))
-  const maxGroupY = Math.max(...rects.map((r) => r.y + r.h))
+  const minGroupY = Math.max(0, Math.min(...rects.map((r) => r.y)))
+  const maxGroupY = Math.min(document.body.scrollHeight, Math.max(...rects.map((r) => r.y + r.h)))
 
   return {
     min: minGroupY,

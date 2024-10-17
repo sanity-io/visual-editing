@@ -19,7 +19,6 @@ const Root = styled.div<{
 
   position: fixed;
   display: grid;
-  pointer-events: all;
   transform: ${({$scaleFactor, $width, $height}) =>
     `translate(calc(var(--drag-preview-x) - ${$width / 2}px), calc(var(--drag-preview-y) - ${$height / 2}px)) scale(${$scaleFactor})`};
   width: ${({$width}) => `${$width}px`};
