@@ -1,13 +1,15 @@
 import type {SanityDocument} from '@sanity/types'
 import {startTransition, useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
+import {getPublishedId} from '../../util/documents'
 import {isEmptyActor} from './context'
 import {useOptimisticActor} from './useOptimisticActor'
 
 export type OptimisticReducerAction<T> = {
-  id: string
-  type: 'appear' | 'mutate' | 'disappear'
   document: T
+  id: string
+  originalId: string
+  type: 'appear' | 'mutate' | 'disappear'
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OptimisticReducer<T, U> = (state: T, action: OptimisticReducerAction<U>) => T
@@ -34,7 +36,12 @@ export function useOptimistic<T, U = SanityDocument>(
       const reducers = Array.isArray(reducer) ? reducer : [reducer]
       return reducers.reduce(
         (acc, reducer) =>
-          reducer(acc, {type: action.type, document: action.document, id: action.id}),
+          reducer(acc, {
+            document: action.document,
+            id: getPublishedId(action.id),
+            originalId: action.id,
+            type: action.type,
+          }),
         prevState,
       )
     },
@@ -66,9 +73,10 @@ export function useOptimistic<T, U = SanityDocument>(
 
     const rebasedSub = actor.on('rebased.local', (_event) => {
       const event = {
-        id: _event.id,
         // @todo You shall not cast
         document: _event.document as U,
+        id: _event.id,
+        originalId: getPublishedId(_event.id),
         // @todo This should eventually be emitted by the state machine
         type: 'mutate' as const,
       }
