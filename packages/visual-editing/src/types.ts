@@ -180,6 +180,11 @@ export type OverlayMsgDragToggleMinimapPrompt = Msg<'overlay/dragToggleMinimapPr
 }
 
 /** @public */
+export type OverlayMsgDragToggleMinimap = Msg<'overlay/dragToggleMinimap'> & {
+  display: boolean
+}
+
+/** @public */
 export type OverlayMsgDragUpdateSkeleton = Msg<'overlay/dragUpdateSkeleton'> & {
   skeleton: DragSkeleton
 }
@@ -212,6 +217,7 @@ export type OverlayMsg =
   | OverlayMsgDragEndMinimapTransition
   | OverlayMsgDragStart
   | OverlayMsgDragStartMinimapTransition
+  | OverlayMsgDragToggleMinimap
   | OverlayMsgDragToggleMinimapPrompt
   | OverlayMsgDragUpdateCursorPosition
   | OverlayMsgDragUpdateGroupRect

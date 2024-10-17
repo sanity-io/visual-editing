@@ -22,6 +22,7 @@ export type {
   OverlayMsgDragEndMinimapTransition,
   OverlayMsgDragStart,
   OverlayMsgDragStartMinimapTransition,
+  OverlayMsgDragToggleMinimap,
   OverlayMsgDragToggleMinimapPrompt,
   OverlayMsgDragUpdateCursorPosition,
   OverlayMsgDragUpdateGroupRect,
