@@ -1,13 +1,18 @@
 import type {
+  DocumentSchema,
   HistoryRefresh,
   HistoryUpdate,
   SanityNode,
   SanityStegaNode,
+  SchemaArrayItem,
+  SchemaNode,
+  SchemaObjectField,
+  SchemaUnionOption,
   VisualEditingControllerMsg,
   VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
 import type {Node} from '@sanity/comlink'
-import type {ComponentType, ReactElement} from 'react'
+import type {ComponentType, FunctionComponent, PropsWithChildren, ReactElement} from 'react'
 
 export type {
   HistoryRefresh,
@@ -139,6 +144,7 @@ export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>
 
 /** @public */
 export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
+  element: ElementNode
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
   dragDisabled: boolean
@@ -274,6 +280,7 @@ export type ElementFocusedState = 'clicked' | 'duplicate' | boolean
 export interface ElementState {
   id: string
   activated: boolean
+  element: ElementNode
   focused: ElementFocusedState
   hovered: boolean
   rect: OverlayRect
@@ -357,7 +364,21 @@ export type DisableVisualEditing = () => void
 /**
  * @public
  */
+export type OverlayComponentResolver = (props: {
+  focused: boolean
+  node: SanityNode
+  type: string
+}) => OverlayComponent | OverlayComponent[] | undefined | void
+
+/**
+ * @public
+ */
 export interface VisualEditingOptions {
+  /**
+   * @alpha
+   * This API is unstable and could change at any time.
+   */
+  components?: OverlayComponentResolver
   /**
    * The history adapter is used for Sanity Presentation to navigate URLs in the preview frame.
    */
@@ -413,3 +434,26 @@ export interface ContextMenuGroupNode {
  * @internal
  */
 export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | ContextMenuGroupNode
+
+/**
+ * @public
+ */
+export type OverlayComponent = ComponentType<{
+  PointerEvents: FunctionComponent<PropsWithChildren>
+  element: ElementNode
+  parent: OverlayElementParent
+  node: SanityNode
+}>
+
+export type OverlayElementField =
+  | SchemaArrayItem
+  | SchemaObjectField
+  | SchemaUnionOption
+  | undefined
+
+export type OverlayElementParent =
+  | DocumentSchema
+  | SchemaNode
+  | SchemaArrayItem
+  | SchemaUnionOption
+  | undefined

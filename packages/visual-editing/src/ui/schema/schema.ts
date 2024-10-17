@@ -3,12 +3,9 @@ import type {
   ResolvedSchemaTypeMap,
   SanityNode,
   SanityStegaNode,
-  SchemaArrayItem,
-  SchemaNode,
-  SchemaObjectField,
   SchemaType,
-  SchemaUnionOption,
 } from '@repo/visual-editing-helpers'
+import type {OverlayElementField, OverlayElementParent} from '../../types'
 
 function isDocumentSchemaType(type: SchemaType): type is DocumentSchema {
   return type.type === 'document'
@@ -17,19 +14,6 @@ function isDocumentSchemaType(type: SchemaType): type is DocumentSchema {
 function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
   return 'path' in node
 }
-
-export type OverlayElementField =
-  | SchemaArrayItem
-  | SchemaObjectField
-  | SchemaUnionOption
-  | undefined
-
-export type OverlayElementParent =
-  | DocumentSchema
-  | SchemaNode
-  | SchemaArrayItem
-  | SchemaUnionOption
-  | undefined
 
 export function getSchemaType(
   node: SanityNode | SanityStegaNode,

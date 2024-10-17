@@ -3,7 +3,6 @@ import {SanityEncoder, type Transaction} from '@sanity/mutate'
 import {documentMutatorMachine} from '@sanity/mutate/_unstable_machine'
 import {fromPromise} from 'xstate'
 import type {VisualEditingNode} from '../../types'
-import {getDraftId} from '../../util/documents'
 import {datasetMutatorMachine} from '../optimistic-state/machines/datasetMutatorMachine'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -14,13 +13,12 @@ export const createDatasetMutator = (comlink: VisualEditingNode) => {
       const {snapshot} = await comlink.fetch(
         {
           type: 'visual-editing/fetch-snapshot',
-          data: {documentId: getDraftId(id)},
+          data: {documentId: id},
         },
         {
           signal,
         },
       )
-
       return snapshot
     },
   )

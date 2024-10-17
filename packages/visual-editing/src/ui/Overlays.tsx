@@ -26,8 +26,14 @@ import {
   type FunctionComponent,
 } from 'react'
 import {styled} from 'styled-components'
-import type {HistoryAdapter, OverlayEventHandler, OverlayMsg, VisualEditingNode} from '../types'
-import {getDraftId} from '../util/documents'
+import type {
+  HistoryAdapter,
+  OverlayComponentResolver,
+  OverlayEventHandler,
+  OverlayMsg,
+  VisualEditingNode,
+} from '../types'
+import {getDraftId, getPublishedId} from '../util/documents.ts'
 import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
@@ -78,13 +84,14 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
 
 const DocumentReporter: FunctionComponent<{
   documentIds: string[]
+  perspective: ClientPerspective
 }> = (props) => {
   const {documentIds} = props
   const [uniqueIds, setUniqueIds] = useState<string[]>([])
 
   useEffect(() => {
     setUniqueIds((prev) => {
-      const next = Array.from(new Set(documentIds.map(getDraftId)))
+      const next = Array.from(new Set(documentIds))
       return prev.length === next.length &&
         prev.reduce((acc, prevId) => acc.filter((id) => id !== prevId), next)?.length === 0
         ? prev
@@ -97,10 +104,12 @@ const DocumentReporter: FunctionComponent<{
   useEffect(() => {
     for (const id of uniqueIds) {
       actor.send({type: 'observe', documentId: getDraftId(id)})
+      actor.send({type: 'observe', documentId: getPublishedId(id)})
     }
     return () => {
       for (const id of uniqueIds) {
         actor.send({type: 'unobserve', documentId: getDraftId(id)})
+        actor.send({type: 'unobserve', documentId: getPublishedId(id)})
       }
     }
   }, [actor, uniqueIds])
@@ -164,11 +173,12 @@ const OverlaysController: FunctionComponent<{
  */
 export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
+  componentResolver?: OverlayComponentResolver
   history?: HistoryAdapter
   inFrame: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {comlink, inFrame, history, zIndex} = props
+  const {comlink, componentResolver, inFrame, history, zIndex} = props
 
   const [status, setStatus] = useState<Status>()
 
@@ -412,7 +422,7 @@ export const Overlays: FunctionComponent<{
                 ref={setRootElement}
                 $zIndex={zIndex}
               >
-                <DocumentReporter documentIds={documentIds} />
+                <DocumentReporter documentIds={documentIds} perspective={perspective} />
                 <OverlaysController
                   comlink={comlink}
                   dispatch={dispatch}
@@ -423,32 +433,34 @@ export const Overlays: FunctionComponent<{
                 />
                 {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                 {!isDragging &&
-                  elementsToRender.map(({id, focused, hovered, rect, sanity, dragDisabled}) => {
-                    const draggable =
-                      !dragDisabled &&
-                      elements.some((e) =>
-                        'id' in e.sanity && 'id' in sanity
-                          ? sanityNodesExistInSameArray(e.sanity, sanity) &&
-                            e.sanity.path !== sanity.path
-                          : false,
-                      )
+                  elementsToRender.map(
+                    ({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
+                      const draggable =
+                        !dragDisabled &&
+                        elements.some((e) =>
+                          'id' in e.sanity && 'id' in sanity
+                            ? sanityNodesExistInSameArray(e.sanity, sanity) &&
+                              e.sanity.path !== sanity.path
+                            : false,
+                        )
 
-                    return (
-                      <ElementOverlay
-                        key={id}
-                        focused={focused}
-                        hovered={hovered}
-                        node={sanity}
-                        rect={rect}
-                        showActions={!inFrame}
-                        draggable={draggable}
-                        enableScrollIntoView={
-                          !isDragging && !dragMinimapTransition && !dragShowMinimap
-                        }
-                        wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                      />
-                    )
-                  })}
+                      return (
+                        <ElementOverlay
+                          componentResolver={componentResolver}
+                          element={element}
+                          key={id}
+                          focused={focused}
+                          hovered={hovered}
+                          node={sanity}
+                          rect={rect}
+                          showActions={!inFrame}
+                          draggable={draggable}
+                          isDragging={isDragging || dragMinimapTransition}
+                          wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                        />
+                      )
+                    },
+                  )}
 
                 {isDragging && !dragMinimapTransition && (
                   <>

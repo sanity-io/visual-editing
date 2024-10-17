@@ -1,7 +1,6 @@
 import type {SanityDocument} from '@sanity/types'
 import {startTransition, useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
-import {getPublishedId} from '../../util/documents'
 import {isEmptyActor} from './context'
 import {useOptimisticActor} from './useOptimisticActor'
 
@@ -67,7 +66,7 @@ export function useOptimistic<T, U = SanityDocument>(
 
     const rebasedSub = actor.on('rebased.local', (_event) => {
       const event = {
-        id: getPublishedId(_event.id),
+        id: _event.id,
         // @todo You shall not cast
         document: _event.document as U,
         // @todo This should eventually be emitted by the state machine
