@@ -7,7 +7,7 @@ import {
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import isEqual from 'fast-deep-equal'
-import {startTransition, useCallback, useEffect, useState, useSyncExternalStore} from 'react'
+import {useCallback, useEffect, useState, useSyncExternalStore} from 'react'
 import * as React from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {comlinkListeners, comlink as comlinkSnapshot} from '../../hooks/context'
@@ -122,8 +122,9 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
           .then(
             (children) => {
               // eslint-disable-next-line no-console
-              console.log('startTransition(() => setChildren(children))')
-              startTransition(() => setChildren(children))
+              console.log('setChildren(children)')
+              // startTransition(() => setChildren(children))
+              setChildren(children)
             },
             (reason: unknown) => {
               // eslint-disable-next-line no-console
