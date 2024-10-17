@@ -222,19 +222,21 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
       // Necessary for the live drafts to work
       apiVersion: 'vX',
     })
-    const subscription = liveClient.live.events({includeDrafts: true}).subscribe({
-      next: (event) => {
-        if (event.type === 'message') {
-          handleSyncTags(event)
-        } else if (event.type === 'restart') {
-          setLastLiveEventId(event.id)
-        } else if (event.type === 'reconnect') {
-          setLastLiveEventId(null)
-        }
-      },
-      // eslint-disable-next-line no-console
-      error: (err) => console.error('Error validating EventSource URL:', err),
-    })
+    const subscription = liveClient.live
+      .events({includeDrafts: true, tag: 'presentation-loader'})
+      .subscribe({
+        next: (event) => {
+          if (event.type === 'message') {
+            handleSyncTags(event)
+          } else if (event.type === 'restart') {
+            setLastLiveEventId(event.id)
+          } else if (event.type === 'reconnect') {
+            setLastLiveEventId(null)
+          }
+        },
+        // eslint-disable-next-line no-console
+        error: (err) => console.error('Error validating EventSource URL:', err),
+      })
     return () => subscription.unsubscribe()
   }, [client, handleSyncTags])
 
@@ -407,6 +409,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
         signal,
         perspective,
         filterResponse: false,
+        returnQuery: false,
       })
       fetching = false
 
