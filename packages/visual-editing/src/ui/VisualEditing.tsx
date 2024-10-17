@@ -18,7 +18,7 @@ import {Refresh} from './Refresh'
  * @public
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
-  const {history, refresh, zIndex} = props
+  const {components, history, refresh, zIndex} = props
   const inFrame = window.self !== window.top || window.opener
 
   const [comlink, setComlink] = useState<VisualEditingNode | undefined>(undefined)
@@ -50,7 +50,13 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
 
   return (
     <>
-      <Overlays comlink={comlink} inFrame={inFrame} history={history} zIndex={zIndex} />
+      <Overlays
+        componentResolver={components}
+        comlink={comlink}
+        inFrame={inFrame}
+        history={history}
+        zIndex={zIndex}
+      />
       {comlink && <Meta comlink={comlink} />}
       {comlink && refresh && <Refresh comlink={comlink} refresh={refresh} />}
     </>

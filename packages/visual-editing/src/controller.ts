@@ -345,6 +345,7 @@ export function createOverlayController({
     handler({
       type: 'element/register',
       id,
+      element,
       rect: getRect(element),
       sanity,
       dragDisabled: !!element.getAttribute('data-sanity-drag-disable'),

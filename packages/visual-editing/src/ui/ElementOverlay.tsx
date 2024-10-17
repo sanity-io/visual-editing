@@ -11,23 +11,35 @@ import {
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
+  type PropsWithChildren,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
-import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
-import {getDraftId} from '../util/documents'
+import type {
+  ElementFocusedState,
+  ElementNode,
+  OverlayComponent,
+  OverlayComponentResolver,
+  OverlayElementParent,
+  OverlayRect,
+  SanityNode,
+  SanityStegaNode,
+} from '../types'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
-import {getSchemaType} from './schema/schema'
+import {getField, getSchemaType} from './schema/schema'
 import {useSchema} from './schema/useSchema'
 
 export interface ElementOverlayProps {
+  componentResolver?: OverlayComponentResolver
+  draggable: boolean
+  element: ElementNode
   focused: ElementFocusedState
   hovered: boolean
-  rect: OverlayRect
+  isDragging: boolean
   node: SanityNode | SanityStegaNode
+  rect: OverlayRect
   showActions: boolean
   wasMaybeCollapsed: boolean
-  draggable: boolean
   enableScrollIntoView: boolean
 }
 
@@ -133,11 +145,41 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {node, showActions, draggable} = props
+const PointerEvents: FunctionComponent<PropsWithChildren> = ({children}) => {
+  return (
+    <div style={{pointerEvents: 'all'}} data-sanity-overlay-element>
+      {children}
+    </div>
+  )
+}
 
-  const {schema} = useSchema()
+const ComponentWrapper: FunctionComponent<{
+  element: ElementNode
+  components: OverlayComponent[]
+  parent: OverlayElementParent
+  node: SanityNode
+}> = (props) => {
+  const {components, element, node, parent} = props
+
+  return components.map((Component, i) => {
+    return (
+      <Component
+        key={i}
+        element={element}
+        node={node}
+        parent={parent}
+        PointerEvents={PointerEvents}
+      />
+    )
+  })
+}
+
+const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
+  const {element, focused, componentResolver, node, showActions, draggable} = props
+
+  const {schema, resolvedTypes} = useSchema()
   const schemaType = getSchemaType(node, schema)
+  const {field, parent} = getField(node, schemaType, resolvedTypes)
 
   const href = 'path' in node ? createIntentLink(node) : node.href
 
@@ -145,14 +187,34 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
   const title = useMemo(() => {
     if (!('path' in node)) return undefined
-    const id = getDraftId(node.id)
-    return previewSnapshots.find((snapshot) => snapshot._id === id)?.title
+    return previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title
   }, [node, previewSnapshots])
 
   const Icon = useMemo(() => {
     if (schemaType?.icon) return <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
     return <DocumentIcon />
   }, [schemaType?.icon])
+
+  const customComponentsProps = useMemo(() => {
+    if (!('path' in node)) return undefined
+
+    const type = field?.value.type
+    if (!type) return undefined
+
+    const props = {focused: !!focused, node, type}
+    const resolved = componentResolver?.(props)
+    if (!resolved) return undefined
+
+    const components = Array.isArray(resolved) ? resolved : [resolved]
+    if (!components.length) return undefined
+
+    return {
+      components,
+      element,
+      node,
+      parent,
+    }
+  }, [componentResolver, element, field, focused, node, parent])
 
   return (
     <>
@@ -179,6 +241,8 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
           </Labels>
         </Tab>
       )}
+
+      {customComponentsProps && <ComponentWrapper {...customComponentsProps} />}
     </>
   )
 }
