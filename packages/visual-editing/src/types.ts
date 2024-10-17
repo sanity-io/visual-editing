@@ -60,6 +60,9 @@ export type DragInsertPosition = {
 export interface DragEndEvent {
   insertPosition: DragInsertPosition
   target: SanityNode
+  dragGroup: string | null
+  flow: string
+  preventInsertDefault: boolean
 }
 
 /** @public */
