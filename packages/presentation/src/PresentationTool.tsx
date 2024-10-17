@@ -28,7 +28,12 @@ import {
 import {useDataset, useProjectId, type Path, type SanityDocument, type Tool} from 'sanity'
 import {useRouter, type RouterContextValue} from 'sanity/router'
 import {styled} from 'styled-components'
-import {COMMENTS_INSPECTOR_NAME, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
+import {
+  COMMENTS_INSPECTOR_NAME,
+  DEFAULT_TOOL_NAME,
+  EDIT_INTENT_MODE,
+  LIVE_DRAFT_EVENTS_ENABLED,
+} from './constants'
 import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
 import {Panel} from './panels/Panel'
@@ -64,6 +69,7 @@ import {usePreviewUrl} from './usePreviewUrl'
 import {useStatus} from './useStatus'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
+const LiveQueries = lazy(() => import('./loader/LiveQueries'))
 const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
@@ -557,14 +563,24 @@ export default function PresentationTool(props: {
       </PresentationProvider>
       {controller && (
         <Suspense>
-          <LoaderQueries
-            controller={controller}
-            perspective={perspective}
-            liveDocument={displayedDocument}
-            onDocumentsOnPage={setDocumentsOnPage}
-            onLoadersConnection={setLoadersConnection}
-            documentsOnPage={documentsOnPage}
-          />
+          {LIVE_DRAFT_EVENTS_ENABLED ? (
+            <LiveQueries
+              controller={controller}
+              perspective={perspective}
+              liveDocument={displayedDocument}
+              onDocumentsOnPage={setDocumentsOnPage}
+              onLoadersConnection={setLoadersConnection}
+            />
+          ) : (
+            <LoaderQueries
+              controller={controller}
+              perspective={perspective}
+              liveDocument={displayedDocument}
+              onDocumentsOnPage={setDocumentsOnPage}
+              onLoadersConnection={setLoadersConnection}
+              documentsOnPage={documentsOnPage}
+            />
+          )}
         </Suspense>
       )}
       {visualEditingComlink && params.id && params.type && (

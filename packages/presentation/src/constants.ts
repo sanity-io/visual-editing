@@ -26,6 +26,7 @@ export const LIVE_QUERY_CACHE_SIZE = 2048
 
 declare global {
   const PRESENTATION_ENABLE_QRCODE: unknown
+  const PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: unknown
 }
 
 // Feature flag that disables the new QRCode Preview URL menu
@@ -34,3 +35,10 @@ export const QRCODE_ENABLED =
     ? PRESENTATION_ENABLE_QRCODE === 'true'
     : // @ts-expect-error: env vars are not typed
       process.env.SANITY_STUDIO_PRESENTATION_ENABLE_QRCODE === 'true'
+
+// Feature flag that uses the new Live Draft Content API instead of the Listen API + Mendoza events
+export const LIVE_DRAFT_EVENTS_ENABLED =
+  typeof PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS === 'string'
+    ? PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS === 'true'
+    : // @ts-expect-error: env vars are not typed
+      process.env.SANITY_STUDIO_PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS === 'true'
