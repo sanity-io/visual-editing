@@ -28,7 +28,13 @@ import {
 import {useDataset, useProjectId, type Path, type SanityDocument, type Tool} from 'sanity'
 import {useRouter, type RouterContextValue} from 'sanity/router'
 import {styled} from 'styled-components'
-import {COMMENTS_INSPECTOR_NAME, DEFAULT_TOOL_NAME, EDIT_INTENT_MODE} from './constants'
+import {
+  COMMENTS_INSPECTOR_NAME,
+  DEFAULT_TOOL_NAME,
+  EDIT_INTENT_MODE,
+  LIVE_DRAFT_EVENTS_ENABLED,
+  SHARE_PREVIEW_ACCESS,
+} from './constants'
 import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
 import {Panel} from './panels/Panel'
@@ -64,6 +70,7 @@ import {usePreviewUrl} from './usePreviewUrl'
 import {useStatus} from './useStatus'
 
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
+const LiveQueries = lazy(() => import('./loader/LiveQueries'))
 const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
@@ -76,9 +83,13 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
   canCreateUrlPreviewSecrets: boolean
+  canToggleSharePreviewAccess: boolean
+  canUseSharedPreviewAccess: boolean
 }): ReactElement {
-  const {canCreateUrlPreviewSecrets, tool} = props
-  const {previewUrl: _previewUrl, components} = tool.options ?? {}
+  const {canCreateUrlPreviewSecrets, canToggleSharePreviewAccess, canUseSharedPreviewAccess, tool} =
+    props
+  const components = tool.options?.components
+  const _previewUrl = tool.options?.previewUrl
   const name = tool.name || DEFAULT_TOOL_NAME
   const {unstable_navigator} = components || {}
 
@@ -90,9 +101,21 @@ export default function PresentationTool(props: {
   const initialPreviewUrl = usePreviewUrl(
     _previewUrl || '/',
     name,
+    routerSearchParams['perspective'] === 'published' ? 'published' : 'previewDrafts',
     routerSearchParams['preview'] || null,
     canCreateUrlPreviewSecrets,
   )
+  const canSharePreviewAccess = useMemo<boolean>(() => {
+    if (
+      _previewUrl &&
+      typeof _previewUrl === 'object' &&
+      'previewMode' in _previewUrl &&
+      _previewUrl.previewMode
+    ) {
+      return _previewUrl.previewMode.shareAccess ?? SHARE_PREVIEW_ACCESS
+    }
+    return false
+  }, [_previewUrl])
 
   const [devMode] = useState(() => {
     const option = tool.options?.devMode
@@ -515,6 +538,9 @@ export default function PresentationTool(props: {
                   <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
                     <BoundaryElementProvider element={boundaryElement}>
                       <PreviewFrame
+                        canSharePreviewAccess={canSharePreviewAccess}
+                        canToggleSharePreviewAccess={canToggleSharePreviewAccess}
+                        canUseSharedPreviewAccess={canUseSharedPreviewAccess}
                         dispatch={dispatch}
                         iframe={state.iframe}
                         initialUrl={initialPreviewUrl}
@@ -557,14 +583,24 @@ export default function PresentationTool(props: {
       </PresentationProvider>
       {controller && (
         <Suspense>
-          <LoaderQueries
-            controller={controller}
-            perspective={perspective}
-            liveDocument={displayedDocument}
-            onDocumentsOnPage={setDocumentsOnPage}
-            onLoadersConnection={setLoadersConnection}
-            documentsOnPage={documentsOnPage}
-          />
+          {LIVE_DRAFT_EVENTS_ENABLED ? (
+            <LiveQueries
+              controller={controller}
+              perspective={perspective}
+              liveDocument={displayedDocument}
+              onDocumentsOnPage={setDocumentsOnPage}
+              onLoadersConnection={setLoadersConnection}
+            />
+          ) : (
+            <LoaderQueries
+              controller={controller}
+              perspective={perspective}
+              liveDocument={displayedDocument}
+              onDocumentsOnPage={setDocumentsOnPage}
+              onLoadersConnection={setLoadersConnection}
+              documentsOnPage={documentsOnPage}
+            />
+          )}
         </Suspense>
       )}
       {visualEditingComlink && params.id && params.type && (

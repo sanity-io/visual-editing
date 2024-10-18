@@ -1,9 +1,9 @@
 'use server'
 
 import type {ClientPerspective, SyncTag} from '@sanity/client'
+import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {revalidateTag} from 'next/cache.js'
 import {cookies, draftMode} from 'next/headers.js'
-import {perspectiveCookieName} from '../constants'
 import {sanitizePerspective} from '../utils'
 
 export async function disableDraftMode(): Promise<void> {
@@ -36,6 +36,9 @@ export async function setPerspectiveCookie(perspective: string): Promise<void> {
 
   ;(await cookies()).set(perspectiveCookieName, perspective satisfies ClientPerspective, {
     httpOnly: true,
+    path: '/',
+    secure: true,
+    sameSite: 'none',
   })
 }
 

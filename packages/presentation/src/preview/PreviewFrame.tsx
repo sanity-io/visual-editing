@@ -45,7 +45,7 @@ import {
 } from 'react'
 import {Hotkeys, useTranslation} from 'sanity'
 import {ErrorCard} from '../components/ErrorCard'
-import {MAX_TIME_TO_OVERLAYS_CONNECTION, QRCODE_ENABLED} from '../constants'
+import {MAX_TIME_TO_OVERLAYS_CONNECTION, SHARE_PREVIEW_ACCESS} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'
 import {
   ACTION_IFRAME_LOADED,
@@ -56,10 +56,10 @@ import {
 import type {PresentationPerspective, PresentationViewport} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {IFrame} from './IFrame'
+import {OpenPreviewButton} from './OpenPreviewButton'
 import {PreviewLocationInput} from './PreviewLocationInput'
-import {ShareUrlDialog} from './ShareUrlDialog'
-import {ShareUrlMenuItems as ShareUrlMenuItemsWithoutQRCode} from './ShareUrlMenuItems'
-import {ShareUrlMenuItemsWithQRCode} from './ShareUrlMenuItemsWithQRCode'
+import {SharePreviewMenu} from './SharePreviewMenu'
+import {ShareUrlMenuItems} from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
 
@@ -79,6 +79,9 @@ const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
 }
 
 export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'visualEditing'> {
+  canSharePreviewAccess: boolean
+  canToggleSharePreviewAccess: boolean
+  canUseSharedPreviewAccess: boolean
   dispatch: DispatchPresentationAction
   initialUrl: URL
   loadersConnection: Status
@@ -101,6 +104,9 @@ export const PreviewFrame = memo(
   forwardRef<HTMLIFrameElement, PreviewFrameProps>(
     function PreviewFrameComponent(props, forwardedRef) {
       const {
+        canSharePreviewAccess,
+        canToggleSharePreviewAccess,
+        canUseSharedPreviewAccess,
         dispatch,
         iframe,
         initialUrl,
@@ -274,10 +280,6 @@ export const PreviewFrame = memo(
         viewport,
       ])
 
-      const [shareUrlDialogOpen, setShareUrlDialogOpen] = useState(false)
-      const handleShareUrlDialogOpen = useCallback(() => setShareUrlDialogOpen(true), [])
-      const handleShareUrlDialogClose = useCallback(() => setShareUrlDialogOpen(false), [])
-
       return (
         <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
           <TooltipDelayGroupProvider delay={1000}>
@@ -373,7 +375,7 @@ export const PreviewFrame = memo(
                                 : t('preview-frame.status', {context: iframe.status})}
                             </Text>
                           }
-                          fallbackPlacements={['bottom-start']}
+                          fallbackPlacements={['bottom-end']}
                           padding={2}
                           placement="bottom"
                           portal
@@ -396,56 +398,47 @@ export const PreviewFrame = memo(
                     origin={previewLocationOrigin}
                     suffix={
                       <Box padding={1}>
-                        <MenuButton
-                          button={
-                            <Button
-                              fontSize={1}
-                              iconRight={ShareIcon}
-                              mode="bleed"
-                              padding={2}
-                              space={2}
-                            />
-                          }
-                          id="location-menu"
-                          menu={
-                            <Menu>
-                              {QRCODE_ENABLED ? (
-                                <ShareUrlMenuItemsWithQRCode
-                                  openPopup={openPopup}
-                                  previewLocationOrigin={previewLocationOrigin}
-                                  previewLocationRoute={previewLocationRoute}
-                                  handleShareUrlDialogOpen={handleShareUrlDialogOpen}
-                                />
-                              ) : (
-                                <ShareUrlMenuItemsWithoutQRCode
+                        {SHARE_PREVIEW_ACCESS ? (
+                          <OpenPreviewButton
+                            openPopup={openPopup}
+                            previewLocationOrigin={previewLocationOrigin}
+                            previewLocationRoute={previewLocationRoute}
+                          />
+                        ) : (
+                          <MenuButton
+                            button={
+                              <Button
+                                fontSize={1}
+                                iconRight={ShareIcon}
+                                mode="bleed"
+                                padding={2}
+                                space={2}
+                              />
+                            }
+                            id="location-menu"
+                            menu={
+                              <Menu>
+                                <ShareUrlMenuItems
                                   initialUrl={initialUrl}
                                   openPopup={openPopup}
                                   previewLocationOrigin={previewLocationOrigin}
                                   previewLocationRoute={previewLocationRoute}
+                                  perspective={perspective}
                                 />
-                              )}
-                            </Menu>
-                          }
-                          popover={{
-                            animate: true,
-                            constrainSize: true,
-                            placement: 'bottom',
-                            portal: true,
-                          }}
-                        />
+                              </Menu>
+                            }
+                            popover={{
+                              animate: true,
+                              constrainSize: true,
+                              placement: 'bottom',
+                              portal: true,
+                            }}
+                          />
+                        )}
                       </Box>
                     }
                     value={previewLocationRoute}
                   />
-                  {QRCODE_ENABLED
-                    ? shareUrlDialogOpen && (
-                        <ShareUrlDialog
-                          initialUrl={initialUrl}
-                          previewLocationRoute={previewLocationRoute}
-                          onClose={handleShareUrlDialogClose}
-                        />
-                      )
-                    : null}
                 </Box>
 
                 <Flex align="center" flex="none" gap={1} padding={1}>
@@ -569,6 +562,18 @@ export const PreviewFrame = memo(
                     />
                   </Tooltip>
                 </Flex>
+
+                {canSharePreviewAccess && (
+                  <Flex align="center" flex="none" gap={1} paddingX={1}>
+                    <SharePreviewMenu
+                      canToggleSharePreviewAccess={canToggleSharePreviewAccess}
+                      canUseSharedPreviewAccess={canUseSharedPreviewAccess}
+                      previewLocationRoute={previewLocationRoute}
+                      initialUrl={initialUrl}
+                      perspective={perspective}
+                    />
+                  </Flex>
+                )}
               </Flex>
             </Card>
 

@@ -38,5 +38,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react/prop-types': 'off',
+    'simple-import-sort/imports': 'off',
+    'simple-import-sort/exports': 'off',
   },
 }

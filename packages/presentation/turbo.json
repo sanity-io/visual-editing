@@ -3,10 +3,17 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "env": ["GITHUB_ACTIONS", "PRESENTATION_ENABLE_QRCODE"]
+      "env": [
+        "GITHUB_ACTIONS",
+        "PRESENTATION_ENABLE_QRCODE",
+        "PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS"
+      ]
     },
     "dev": {
-      "env": ["SANITY_STUDIO_PRESENTATION_ENABLE_QRCODE"],
+      "env": [
+        "SANITY_STUDIO_PRESENTATION_ENABLE_QRCODE",
+        "SANITY_STUDIO_PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS"
+      ],
       "persistent": false
     }
   }

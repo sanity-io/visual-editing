@@ -13,12 +13,12 @@ import type {PreviewFrameProps} from './PreviewFrame'
 
 /** @internal */
 export function ShareUrlMenuItems(
-  props: Pick<PreviewFrameProps, 'initialUrl' | 'openPopup'> & {
+  props: Pick<PreviewFrameProps, 'initialUrl' | 'openPopup' | 'perspective'> & {
     previewLocationOrigin: string
     previewLocationRoute: string
   },
 ): React.ReactNode {
-  const {initialUrl, openPopup, previewLocationOrigin, previewLocationRoute} = props
+  const {initialUrl, openPopup, previewLocationOrigin, previewLocationRoute, perspective} = props
 
   const {t} = useTranslation(presentationLocaleNamespace)
 
@@ -36,6 +36,7 @@ export function ShareUrlMenuItems(
         initialUrl={initialUrl}
         previewLocationOrigin={previewLocationOrigin}
         previewLocationRoute={previewLocationRoute}
+        perspective={perspective}
       />
       <MenuItem
         icon={LaunchIcon}
@@ -52,12 +53,12 @@ export function ShareUrlMenuItems(
 }
 
 function CopyUrlMenuButton(
-  props: Pick<PreviewFrameProps, 'initialUrl'> & {
+  props: Pick<PreviewFrameProps, 'initialUrl' | 'perspective'> & {
     previewLocationOrigin: string
     previewLocationRoute: string
   },
 ) {
-  const {initialUrl, previewLocationOrigin, previewLocationRoute} = props
+  const {initialUrl, previewLocationOrigin, previewLocationRoute, perspective} = props
 
   const {t} = useTranslation(presentationLocaleNamespace)
   const {push: pushToast} = useToast()
@@ -116,6 +117,7 @@ function CopyUrlMenuButton(
               initialUrl,
               previewUrlSecret.secret,
               previewLocationRoute,
+              perspective,
             )
             return newUrl.toString()
           }

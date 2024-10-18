@@ -107,4 +107,8 @@ export default {
   'share-url.dialog.action.disable-sharing': 'Disable sharing',
   /** Error toast that notifies that URL Preview Secrets can't be generated as the user lacks ACL grants */
   'preview-url-secret.missing-grants': "URL Preview Secrets can't be generated",
+  /** The `aria-label` for the button that opens the share menu */
+  'preview-frame.share-button.aria-label': 'Share this preview',
+  /** The tooltip for the button that opens the share menu */
+  'preview-frame.share-button.tooltip': 'Share this preview',
 }

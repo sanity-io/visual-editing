@@ -2,14 +2,10 @@
 export type PreviewUrlSecretSchemaIdPrefix = `sanity-preview-url-secret`
 
 /** @internal */
-export type PreviewUrlSecretSchemaIdToolName = 'presentation' | 'desk' | 'production-url' | string
-
-/** @internal */
-export type PreviewUrlSecretSchemaIdType =
-  `${PreviewUrlSecretSchemaIdPrefix}.${PreviewUrlSecretSchemaIdToolName}`
-
-/** @internal */
 export type PreviewUrlSecretSchemaType = `sanity.previewUrlSecret`
+
+/** @internal */
+export type PreviewUrlSecretSchemaTypeSingleton = `sanity.previewUrlShareAccess`
 
 /**
  * A subset type that's compatible with most SanityClient typings,
@@ -82,6 +78,10 @@ export interface PreviewUrlResolverOptions {
      */
     enable: string
     /**
+     * @deprecated - `previewMode` is deprecated, use `draftMode.shareAccess` instead
+     */
+    shareAccess?: never
+    /**
      * @deprecated - use `previewMode.check` instead
      */
     check?: string
@@ -99,6 +99,14 @@ export interface PreviewUrlResolverOptions {
      * @example '/api/preview'
      */
     enable: string
+    /**
+     * Allow sharing access to a preview with others.
+     * This is enabled/disabled in the Presentation Tool. It's initially disabled, and can be enabled by someone who has access to creating draft documents in the Studio.
+     * Custom roles can limit access to `_id in path("drafts.**") && _type == "sanity.previewUrlSecret"`.
+     * This will create a secret that is valid until sharing is disabled. Turning sharing off and on again will create a new secret and can be used to remove access for folks that got the link in an email but should no longer have access.
+     * Share URLs to previews will append this secret and give access to anyone who is given the URL, they don't need to be logged into the Studio or to Vercel.
+     */
+    shareAccess?: boolean
     /**
      * The route that reports if Preview Mode is enabled or not, useful for debugging
      * @example '/api/check-preview'
@@ -128,6 +136,12 @@ export type FetchSecretQueryResponse = {
 } | null
 
 /** @internal */
+export type FetchPublicSecretQueryResponse = {
+  secret: string | null
+  studioUrl: string | null
+} | null
+
+/** @internal */
 export interface PreviewUrlResolverContext<SanityClientType> {
   client: SanityClientType
   /**
@@ -136,6 +150,12 @@ export interface PreviewUrlResolverContext<SanityClientType> {
    * https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
    */
   previewUrlSecret: string
+  /**
+   * The initial perspective the Studio was using when starting to load the preview.
+   * It can change over time and should also be handled with `postMessage` listeners.
+   * The value can be arbitrary and has to be validated to make sure it's a valid perspective.
+   */
+  studioPreviewPerspective: string
   /**
    * If the user navigated to a preview path already, this will be the path
    */

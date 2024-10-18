@@ -1,4 +1,9 @@
-import {schemaIdPrefix, schemaIdSingleton, schemaType} from '@sanity/preview-url-secret/constants'
+import {
+  schemaIdPrefix,
+  schemaIdSingleton,
+  schemaType,
+  schemaTypeSingleton,
+} from '@sanity/preview-url-secret/constants'
 import {useToast} from '@sanity/ui'
 import {uuid} from '@sanity/uuid'
 import {useEffect, useState, type ReactElement} from 'react'
@@ -17,27 +22,40 @@ export default function PresentationToolGrantsCheck(props: {
   const willGeneratePreviewUrlSecret =
     typeof previewUrl === 'object' || typeof previewUrl === 'function'
   const grantsStore = useGrantsStore()
-  const [draftPermission, setDraftPermission] = useState<PermissionCheckResult | null>(null)
+  const [previewAccessSharingCreatePermission, setCreateAccessSharingPermission] =
+    useState<PermissionCheckResult | null>(null)
+  const [previewAccessSharingUpdatePermission, setUpdateAccessSharingPermission] =
+    useState<PermissionCheckResult | null>(null)
+  const [previewAccessSharingReadPermission, setReadAccessSharingPermission] =
+    useState<PermissionCheckResult | null>(null)
   const [previewUrlSecretPermission, setPreviewUrlSecretPermission] =
     useState<PermissionCheckResult | null>(null)
 
   useEffect(() => {
     if (!willGeneratePreviewUrlSecret) return undefined
 
-    const draftPermissionSubscription = grantsStore
-      .checkDocumentPermission('create', {_id: schemaIdSingleton, _type: schemaType})
-      .subscribe(setDraftPermission)
+    const previewCreateAccessSharingPermissionSubscription = grantsStore
+      .checkDocumentPermission('create', {_id: schemaIdSingleton, _type: schemaTypeSingleton})
+      .subscribe(setCreateAccessSharingPermission)
+    const previewUpdateAccessSharingPermissionSubscription = grantsStore
+      .checkDocumentPermission('update', {_id: schemaIdSingleton, _type: schemaTypeSingleton})
+      .subscribe(setUpdateAccessSharingPermission)
+    const previewReadAccessSharingPermissionSubscription = grantsStore
+      .checkDocumentPermission('read', {_id: schemaIdSingleton, _type: schemaTypeSingleton})
+      .subscribe(setReadAccessSharingPermission)
     const previewUrlSecretPermissionSubscription = grantsStore
       .checkDocumentPermission('create', {_id: `${schemaIdPrefix}.${uuid()}`, _type: schemaType})
       .subscribe(setPreviewUrlSecretPermission)
 
     return () => {
-      draftPermissionSubscription.unsubscribe()
+      previewCreateAccessSharingPermissionSubscription.unsubscribe()
+      previewUpdateAccessSharingPermissionSubscription.unsubscribe()
+      previewReadAccessSharingPermissionSubscription.unsubscribe()
       previewUrlSecretPermissionSubscription.unsubscribe()
     }
   }, [grantsStore, willGeneratePreviewUrlSecret])
 
-  const canCreateUrlPreviewSecrets = draftPermission?.granted && previewUrlSecretPermission?.granted
+  const canCreateUrlPreviewSecrets = previewUrlSecretPermission?.granted
 
   useEffect(() => {
     if (!willGeneratePreviewUrlSecret || canCreateUrlPreviewSecrets !== false) return undefined
@@ -54,13 +72,27 @@ export default function PresentationToolGrantsCheck(props: {
 
   if (
     willGeneratePreviewUrlSecret &&
-    (!draftPermission ||
-      typeof draftPermission.granted === 'undefined' ||
+    (!previewAccessSharingCreatePermission ||
+      typeof previewAccessSharingCreatePermission.granted === 'undefined' ||
+      !previewAccessSharingUpdatePermission ||
+      typeof previewAccessSharingUpdatePermission.granted === 'undefined' ||
       !previewUrlSecretPermission ||
+      !previewAccessSharingReadPermission ||
+      typeof previewAccessSharingReadPermission.granted === 'undefined' ||
       typeof previewUrlSecretPermission.granted === 'undefined')
   ) {
     return <PresentationSpinner />
   }
 
-  return <PresentationTool {...props} canCreateUrlPreviewSecrets={canCreateUrlPreviewSecrets!} />
+  return (
+    <PresentationTool
+      {...props}
+      canCreateUrlPreviewSecrets={canCreateUrlPreviewSecrets === true}
+      canToggleSharePreviewAccess={
+        previewAccessSharingCreatePermission?.granted === true &&
+        previewAccessSharingUpdatePermission?.granted === true
+      }
+      canUseSharedPreviewAccess={previewAccessSharingReadPermission?.granted === true}
+    />
+  )
 }

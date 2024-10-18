@@ -26,7 +26,7 @@ beforeEach(() => {
 })
 
 function TestPrinter(props: {previewUrl: PreviewUrlOption; previewSearchParam?: string | null}) {
-  return `${usePreviewUrl(props.previewUrl, 'presentation', props.previewSearchParam || null)}`
+  return `${usePreviewUrl(props.previewUrl, 'presentation', 'previewDrafts', props.previewSearchParam || null, true)}`
 }
 
 describe('previewUrl handling', () => {
@@ -51,19 +51,21 @@ describe('previewUrl handling', () => {
       client: null as unknown as SanityClient,
       previewUrlSecret: 'abc123',
       previewSearchParam: null,
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"http://localhost:3000/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-pathname=%2F"`,
+      `"http://localhost:3000/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2F"`,
     )
     resolvedPreviewUrl = await resolvePreviewUrl({
       client: null as unknown as SanityClient,
       previewUrlSecret: 'dfg456',
       previewSearchParam: '/preview',
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"http://localhost:3000/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"http://localhost:3000/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
   })
 
@@ -77,19 +79,21 @@ describe('previewUrl handling', () => {
       client: null as unknown as SanityClient,
       previewUrlSecret: 'abc123',
       previewSearchParam: null,
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"http://localhost:3000/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"http://localhost:3000/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
     resolvedPreviewUrl = await resolvePreviewUrl({
       client: null as unknown as SanityClient,
       previewUrlSecret: 'dfg456',
       previewSearchParam: '/preview',
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"http://localhost:3000/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"http://localhost:3000/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
   })
 
@@ -103,19 +107,21 @@ describe('previewUrl handling', () => {
       client: null as unknown as SanityClient,
       previewUrlSecret: 'abc123',
       previewSearchParam: null,
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"https://my.vercel.app/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-pathname=%2F"`,
+      `"https://my.vercel.app/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2F"`,
     )
     resolvedPreviewUrl = await resolvePreviewUrl({
       client: null as unknown as SanityClient,
       previewUrlSecret: 'dfg456',
       previewSearchParam: '/preview',
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"https://my.vercel.app/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"https://my.vercel.app/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
   })
 
@@ -130,19 +136,21 @@ describe('previewUrl handling', () => {
       client: null as unknown as SanityClient,
       previewUrlSecret: 'abc123',
       previewSearchParam: null,
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"https://my.vercel.app/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"https://my.vercel.app/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
     resolvedPreviewUrl = await resolvePreviewUrl({
       client: null as unknown as SanityClient,
       previewUrlSecret: 'dfg456',
       previewSearchParam: '/preview',
+      studioPreviewPerspective: 'previewDraft',
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"https://my.vercel.app/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"https://my.vercel.app/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
   })
 
