@@ -1,3 +1,5 @@
+import type {ClientPerspective} from '@sanity/client'
+
 /** @internal */
 export type PreviewUrlSecretSchemaIdPrefix = `sanity-preview-url-secret`
 
@@ -18,7 +20,7 @@ export type SanityClientLike = {
   withConfig(config: {
     apiVersion?: string
     useCdn?: boolean
-    perspective?: 'published'
+    perspective?: ClientPerspective
     resultSourceMap?: boolean
   }): SanityClientLike
   fetch<

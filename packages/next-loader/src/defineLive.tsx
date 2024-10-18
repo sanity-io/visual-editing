@@ -97,7 +97,7 @@ export interface DefineSanityLiveOptions {
    */
   client: SanityClient
   /**
-   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes as well as `sanity-preview-url-secret.` prefixes.
+   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'previewDrafts'` to work.
    * This token is not shared with the browser.
    */
   serverToken?: string
