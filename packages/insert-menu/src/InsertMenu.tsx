@@ -7,18 +7,17 @@ import {
   Grid,
   Menu,
   MenuItem,
-  type MenuItemProps,
   Stack,
   Tab,
   TabList,
   Text,
   TextInput,
   Tooltip,
+  type MenuItemProps,
 } from '@sanity/ui'
 import startCase from 'lodash.startcase'
-import {type ChangeEvent, createElement, type CSSProperties,useReducer, useState} from 'react'
+import {createElement, useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
 import {isValidElementType} from 'react-is'
-
 import {getSchemaTypeIcon} from './getSchemaTypeIcon'
 import type {InsertMenuOptions} from './InsertMenuOptions'
 
