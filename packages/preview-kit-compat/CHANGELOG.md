@@ -36,6 +36,35 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.5.7...preview-kit-compat-v1.6.0) (2024-10-18)
+
+
+### Features
+
+* add preview access sharing ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* update qr code menu design ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use Live Draft Content API for loader live queries ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+
+
+### Bug Fixes
+
+* add cursor pointer to label group ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+* increase gap ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **next-loader:** add request tag support ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* remove copy-paste tooltip ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **SanityLiveStream:** remove transition to speed up sequence ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* tag live api ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use @sanity/comlink for postMessage events ([990a8e8](https://github.com/sanity-io/visual-editing/commit/990a8e884403348cc2b727fbed5338bbad68c9ce))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.22
+    * @sanity/comlink bumped to 1.0.0
+
 ## [1.5.7](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.5.6...preview-kit-compat-v1.5.7) (2024-09-11)
 
 

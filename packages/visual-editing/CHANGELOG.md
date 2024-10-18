@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.10...visual-editing-v2.2.0) (2024-10-18)
+
+
+### Features
+
+* add preview access sharing ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* update qr code menu design ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use Live Draft Content API for loader live queries ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **visual-editing:** add duplicate context menu action ([#1979](https://github.com/sanity-io/visual-editing/issues/1979)) ([fd6210c](https://github.com/sanity-io/visual-editing/commit/fd6210ca7658f8d0f03b8ff91a3e900eb4f24b10))
+* **visual-editing:** allow mounting custom overlay components ([#1949](https://github.com/sanity-io/visual-editing/issues/1949)) ([053ee6e](https://github.com/sanity-io/visual-editing/commit/053ee6e47a4308c8de9d385c98e3e90ad15f4237))
+
+
+### Bug Fixes
+
+* add cursor pointer to label group ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+* increase gap ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **next-loader:** add request tag support ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* remove copy-paste tooltip ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **SanityLiveStream:** remove transition to speed up sequence ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* tag live api ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use `@sanity/comlink` for postMessage events ([e69d16f](https://github.com/sanity-io/visual-editing/commit/e69d16fa07d4913684324155aa3fa0272efc81fd))
+* **visual-editing:** always report document paths if unresolved ([#1948](https://github.com/sanity-io/visual-editing/issues/1948)) ([a8b7c34](https://github.com/sanity-io/visual-editing/commit/a8b7c3422539701ee83301683ce47b08a2566797))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.0.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.22
+    * @sanity/comlink bumped to 1.0.0
+
 ## [2.1.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.9...visual-editing-v2.1.10) (2024-09-11)
 
 

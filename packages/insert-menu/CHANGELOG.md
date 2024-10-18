@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.9...insert-menu-v1.1.0) (2024-10-18)
+
+
+### Features
+
+* add preview access sharing ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* update qr code menu design ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use Live Draft Content API for loader live queries ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+
+
+### Bug Fixes
+
+* add cursor pointer to label group ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* increase gap ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **next-loader:** add request tag support ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* remove copy-paste tooltip ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **SanityLiveStream:** remove transition to speed up sequence ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* tag live api ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+
 ## [1.0.9](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.8...insert-menu-v1.0.9) (2024-09-11)
 
 

@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.21...preview-url-secret-v2.0.0) (2024-10-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **presentation:** lower minimum role from Editor to Contributor
+
+### Features
+
+* add `/constants` export for advanced usage ([db83869](https://github.com/sanity-io/visual-editing/commit/db838694e75bb686a82169f6a5b4f05f17019454))
+* add preview access sharing ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* lower permissions req to Collaborator ([#1984](https://github.com/sanity-io/visual-editing/issues/1984)) ([5e32bdc](https://github.com/sanity-io/visual-editing/commit/5e32bdc66e17296f55a737e6de9f90704b22bafa))
+* **presentation:** lower minimum role from Editor to Contributor ([b4fb0a8](https://github.com/sanity-io/visual-editing/commit/b4fb0a8b743c2cfbda2eb15cd1d699ed3a669568))
+* update qr code menu design ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use Live Draft Content API for loader live queries ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+
+
+### Bug Fixes
+
+* add cursor pointer to label group ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+* increase gap ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **next-loader:** add request tag support ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* remove copy-paste tooltip ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **SanityLiveStream:** remove transition to speed up sequence ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* tag live api ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+
 ## [1.6.21](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.20...preview-url-secret-v1.6.21) (2024-09-11)
 
 

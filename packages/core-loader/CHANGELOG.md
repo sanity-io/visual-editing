@@ -18,6 +18,36 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.23...core-loader-v1.7.0) (2024-10-18)
+
+
+### Features
+
+* add preview access sharing ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* add svelte loader `LiveMode`, improve stega handling ([#1873](https://github.com/sanity-io/visual-editing/issues/1873)) ([2c3bfbe](https://github.com/sanity-io/visual-editing/commit/2c3bfbec47af19b441869424a7513e0617337ee9))
+* update qr code menu design ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use Live Draft Content API for loader live queries ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+
+
+### Bug Fixes
+
+* add cursor pointer to label group ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+* increase gap ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **next-loader:** add request tag support ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* remove copy-paste tooltip ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* **SanityLiveStream:** remove transition to speed up sequence ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* tag live api ([20c3b06](https://github.com/sanity-io/visual-editing/commit/20c3b06065a316c554e6919e099f92871654e4b2))
+* use `@sanity/comlink` for `postMessage` events ([15940a3](https://github.com/sanity-io/visual-editing/commit/15940a3b20c2e39e33da20f760c5289a01046c3f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.22
+    * @sanity/comlink bumped to 1.0.0
+
 ## [1.6.23](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.22...core-loader-v1.6.23) (2024-09-11)
 
 
