@@ -280,11 +280,7 @@ export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
                         <StyledSanityMonogram />
                       </>
                     ) : (
-                      <Text
-                        muted
-                        size={1}
-                        style={{maxWidth: '100px', textWrap: 'pretty', opacity: 0.6}}
-                      >
+                      <Text muted size={1} style={{maxWidth: '100px', textWrap: 'pretty'}}>
                         QR code will appear here
                       </Text>
                     )}

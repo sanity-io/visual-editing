@@ -24,17 +24,12 @@ export const LIVE_QUERY_CACHE_BATCH_SIZE = 100
 // Total cache size for documents that are live queried
 export const LIVE_QUERY_CACHE_SIZE = 2048
 
+// Feature flag that disables the new QRCode Preview URL menu
+export const SHARE_PREVIEW_ACCESS = true
+
 declare global {
-  const PRESENTATION_ENABLE_QRCODE: unknown
   const PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: unknown
 }
-
-// Feature flag that disables the new QRCode Preview URL menu
-export const SHARE_PREVIEW_ACCESS =
-  typeof PRESENTATION_ENABLE_QRCODE === 'string'
-    ? PRESENTATION_ENABLE_QRCODE === 'true'
-    : // @ts-expect-error: env vars are not typed
-      process.env.SANITY_STUDIO_PRESENTATION_ENABLE_QRCODE === 'true'
 
 // Feature flag that uses the new Live Draft Content API instead of the Listen API + Mendoza events
 export const LIVE_DRAFT_EVENTS_ENABLED =
