@@ -33,7 +33,6 @@ import {
   DEFAULT_TOOL_NAME,
   EDIT_INTENT_MODE,
   LIVE_DRAFT_EVENTS_ENABLED,
-  SHARE_PREVIEW_ACCESS,
 } from './constants'
 import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
@@ -112,7 +111,7 @@ export default function PresentationTool(props: {
       'previewMode' in _previewUrl &&
       _previewUrl.previewMode
     ) {
-      return _previewUrl.previewMode.shareAccess ?? SHARE_PREVIEW_ACCESS
+      return _previewUrl.previewMode.shareAccess !== false
     }
     return false
   }, [_previewUrl])

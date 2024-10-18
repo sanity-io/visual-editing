@@ -24,9 +24,6 @@ export const LIVE_QUERY_CACHE_BATCH_SIZE = 100
 // Total cache size for documents that are live queried
 export const LIVE_QUERY_CACHE_SIZE = 2048
 
-// Feature flag that disables the new QRCode Preview URL menu
-export const SHARE_PREVIEW_ACCESS = true
-
 declare global {
   const PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: unknown
 }
