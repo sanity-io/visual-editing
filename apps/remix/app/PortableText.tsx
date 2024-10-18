@@ -7,7 +7,11 @@
  * https://portabletext.org/
  *
  */
-import {PortableText, type PortableTextBlock, type PortableTextComponents} from 'next-sanity'
+import {
+  PortableText,
+  type PortableTextBlock,
+  type PortableTextComponents,
+} from '@portabletext/react'
 import type {CSSProperties} from 'react'
 
 function getViewTransitionName(value: string | undefined) {
@@ -19,8 +23,6 @@ function style(value: string | undefined): CSSProperties {
     viewTransitionName: getViewTransitionName(value),
   }
 }
-
-const underlineStyle = {textDecoration: 'underline'}
 
 export default function CustomPortableText({
   className,
@@ -49,15 +51,6 @@ export default function CustomPortableText({
           {children}
         </h6>
       ),
-    },
-    marks: {
-      link: ({children, value}) => {
-        return (
-          <a href={value?.href} rel="noreferrer noopener">
-            {children}
-          </a>
-        )
-      },
     },
     list: {
       number: ({children, value}) => <ol style={style(value?._key)}>{children}</ol>,

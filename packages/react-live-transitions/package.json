@@ -1,0 +1,83 @@
+{
+  "name": "react-live-transitions",
+  "version": "0.0.1-canary.2",
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/react-live-transitions#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/visual-editing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
+    "directory": "packages/react-live-transitions"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "!src/**/stories/"
+  ],
+  "scripts": {
+    "build": "pkg build --strict --check --clean",
+    "build-storybook": "storybook build",
+    "dev": "pkg build --strict",
+    "lint": "eslint --cache .",
+    "prepack": "turbo run build",
+    "storybook": "storybook dev -p 6006",
+    "test": "vitest --pass-with-no-tests --typecheck"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "prettier": "@repo/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config",
+      "plugin:storybook/recommended"
+    ],
+    "root": true
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/package.config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@sanity/pkg-utils": "6.12.2",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-links": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "@storybook/test": "^8.4.7",
+    "@types/react": "^18",
+    "eslint": "^8.57.1",
+    "eslint-plugin-storybook": "^0.11.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-fast-compare": "^3.2.2",
+    "storybook": "^8.4.7",
+    "typescript": "5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "react": "^18.3 || ^19.0.0-0",
+    "react-dom": "^18.3 || ^19.0.0-0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

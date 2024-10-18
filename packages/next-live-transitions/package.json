@@ -1,0 +1,74 @@
+{
+  "name": "next-live-transitions",
+  "version": "0.0.1-canary.2",
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/next-live-transitions#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/visual-editing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
+    "directory": "packages/next-live-transitions"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "pkg build --strict --check --clean",
+    "dev": "pkg build --strict",
+    "lint": "eslint --cache .",
+    "prepack": "turbo run build",
+    "test": "vitest --pass-with-no-tests --typecheck"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "prettier": "@repo/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "react-live-transitions": "workspace:^"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/package.config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@sanity/pkg-utils": "6.12.2",
+    "@types/react": "^18",
+    "eslint": "^8.57.1",
+    "next": "^15.1.2",
+    "react": "^18.3.1",
+    "typescript": "5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "next": "^14.1 || ^15.0.0-0",
+    "react": "^18.3 || ^19.0.0-0"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

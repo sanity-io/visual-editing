@@ -1,8 +1,8 @@
 import type {HeroQueryResult} from '@/sanity.types'
-import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
-import {heroQuery, settingsQuery} from '@/sanity/lib/queries'
+import {sanityFetch} from '@/sanity/lib/live'
+import {heroQuery, moreStoriesQuery, settingsQuery} from '@/sanity/lib/queries'
+import {TransitionLayoutShift} from 'next-live-transitions'
 import Link from 'next/link'
-import {Suspense} from 'react'
 import {AnimatedH1} from './animated-h1'
 import Avatar from './avatar'
 import CoverImage from './cover-image'
@@ -35,6 +35,7 @@ function Intro(props: {title: string | null | undefined; description: any}) {
 }
 
 function HeroPost({
+  _id,
   title,
   slug,
   excerpt,
@@ -43,27 +44,34 @@ function HeroPost({
   author,
 }: Pick<
   Exclude<HeroQueryResult, null>,
-  'title' | 'coverImage' | 'date' | 'excerpt' | 'author' | 'slug'
+  '_id' | 'title' | 'coverImage' | 'date' | 'excerpt' | 'author' | 'slug'
 >) {
   return (
     <article>
-      <Link className="group mb-8 block md:mb-16" href={`/posts/${slug}`}>
+      <Link
+        className="group mb-8 block [view-transition-name:cover-image] md:mb-16"
+        href={`/posts/${slug}`}
+      >
         <CoverImage image={coverImage} priority />
       </Link>
       <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
         <div>
-          <h3 className="mb-4 text-pretty text-4xl leading-tight lg:text-6xl">
+          <h3 className="mb-4 text-pretty text-4xl leading-tight [view-transition-name:title] lg:text-6xl">
             <Link href={`/posts/${slug}`} className="hover:underline">
               {title}
             </Link>
           </h3>
-          <div className="mb-4 text-lg md:mb-0">
+          <div className="mb-4 text-lg [view-transition-name:date] md:mb-0">
             <DateComponent dateString={date} />
           </div>
         </div>
         <div>
-          {excerpt && <p className="mb-4 text-pretty text-lg leading-relaxed">{excerpt}</p>}
-          {author && <Avatar name={author.name} picture={author.picture} />}
+          <div className="[view-transition-name:excerpt]">
+            {excerpt && <p className="mb-4 text-pretty text-lg leading-relaxed">{excerpt}</p>}
+          </div>
+          <div className="[view-transition-name:author]">
+            {author && <Avatar name={author.name} picture={author.picture} />}
+          </div>
         </div>
       </div>
     </article>
@@ -71,49 +79,57 @@ function HeroPost({
 }
 
 export default async function Page() {
-  // const [{data: settings}, {data: heroPost}] = await Promise.all([
-  //   sanityFetch({query: settingsQuery}),
-  //   sanityFetch({query: heroQuery}),
-  // ])
-  const {data: heroPost} = await sanityFetch({query: heroQuery})
+  const [{data: settings}, {data: heroPost}] = await Promise.all([
+    sanityFetch({query: settingsQuery}),
+    sanityFetch({query: heroQuery}),
+  ])
+  const {data: moreStories} = await sanityFetch({
+    query: moreStoriesQuery,
+    params: {skip: heroPost?._id, limit: 100},
+  })
+  // const {data: heroPost} = await sanityFetch({query: heroQuery})
 
   return (
     <div className="container mx-auto px-5">
-      <SanityLiveStream query={settingsQuery}>
+      {/* <SanityLiveStream query={settingsQuery}>
         {async ({data: settings}) => {
           'use server'
           return <Intro title={settings?.title} description={settings?.description} />
         }}
-      </SanityLiveStream>
-      <SanityLiveStream query={heroQuery}>
+      </SanityLiveStream> */}
+      <Intro title={settings?.title} description={settings?.description} />
+      {/* <SanityLiveStream query={heroQuery}>
         {async ({data: heroPost}) => {
           'use server'
-          return (
-            <>
-              {heroPost && (
-                <HeroPost
-                  title={heroPost.title}
-                  slug={heroPost.slug}
-                  coverImage={heroPost.coverImage}
-                  excerpt={heroPost.excerpt}
-                  date={heroPost.date}
-                  author={heroPost.author}
-                />
-              )}
-            </>
-          )
-        }}
-      </SanityLiveStream>
-      {heroPost?._id && (
-        <aside>
-          <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-            More Stories
-          </h2>
-          <Suspense>
-            <MoreStories skip={heroPost._id} limit={100} />
-          </Suspense>
-        </aside>
-      )}
+          return (*/}
+      <TransitionLayoutShift>
+        <>
+          {heroPost && (
+            <HeroPost
+              _id={heroPost._id}
+              title={heroPost.title}
+              slug={heroPost.slug}
+              coverImage={heroPost.coverImage}
+              excerpt={heroPost.excerpt}
+              date={heroPost.date}
+              author={heroPost.author}
+            />
+          )}
+        </>
+
+        {/* )
+         }} */}
+        {/* </SanityLiveStream> */}
+        {heroPost?._id && (
+          <aside>
+            <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+              More Stories
+            </h2>
+            {/* <MoreStories skip={heroPost._id} limit={100} /> */}
+            <MoreStories data={moreStories} />
+          </aside>
+        )}
+      </TransitionLayoutShift>
     </div>
   )
 }
