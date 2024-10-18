@@ -1,5 +1,7 @@
 <script lang="ts">
   import {PortableText} from '@portabletext/svelte'
+  import {stegaClean} from '@sanity/client/stega'
+  import {createDataAttribute} from '@sanity/visual-editing'
   import {page} from '$app/stores'
   import type {ShoeResult} from '$lib/queries'
   import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
@@ -69,7 +71,14 @@
           <div class="relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto">
             {#each otherImages as image, i (image.asset?._ref || i + 1)}
               {#if image.asset?._ref}
-                <div class="shrink-0 snap-start">
+                <div
+                  data-sanity={createDataAttribute({
+                    id: product._id,
+                    type: 'shoe',
+                    path: `media[_key=="${image._key}"]`,
+                  }).toString()}
+                  class="shrink-0 snap-start"
+                >
                   <img
                     class="h-32 w-40 shrink-0 rounded bg-white shadow-xl lg:rounded-lg"
                     src={urlFor(image)
@@ -78,7 +87,7 @@
                       .url()}
                     width={1280 / 2}
                     height={720 / 2}
-                    alt={image.alt || ''}
+                    alt={stegaClean(image.alt) || ''}
                   />
                 </div>
               {/if}

@@ -371,7 +371,11 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     | 'horizontal'
     | 'vertical'
 
+  const dragGroup = element.getAttribute('data-sanity-drag-group')
+
   const disableMinimap = !!element.getAttribute('data-sanity-drag-minimap-disable')
+
+  const preventInsertDefault = !!element.getAttribute('data-sanity-drag-prevent-default')
 
   let insertPosition: DragInsertPositionRects | null = null
 
@@ -515,6 +519,9 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       insertPosition: insertPosition
         ? resolveInsertPosition(overlayGroup, insertPosition, flow)
         : null,
+      dragGroup,
+      flow,
+      preventInsertDefault,
     })
 
     if (minimapPromptShown) {

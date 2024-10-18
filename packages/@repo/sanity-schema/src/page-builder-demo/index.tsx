@@ -485,12 +485,76 @@ const pageType = defineType({
   ],
 })
 
+const dndTestItemChildL2 = defineArrayMember({
+  type: 'object',
+  name: 'dndTestItemChildL2',
+  fields: [
+    defineField({
+      type: 'string',
+      name: 'title',
+      title: 'Title',
+    }),
+  ],
+})
+const dndTestItemChildL1 = defineArrayMember({
+  type: 'object',
+  name: 'dndTestItemChildL1',
+  fields: [
+    defineField({
+      type: 'string',
+      name: 'title',
+      title: 'Title',
+    }),
+    defineField({
+      type: 'array',
+      name: 'children',
+      title: 'Children',
+      of: [dndTestItemChildL2],
+    }),
+  ],
+})
+const dndTestItemRoot = defineArrayMember({
+  type: 'object',
+  name: 'dndTestItem',
+  fields: [
+    defineField({
+      type: 'string',
+      name: 'title',
+      title: 'Title',
+    }),
+    defineField({
+      type: 'array',
+      name: 'children',
+      title: 'Children',
+      of: [dndTestItemChildL1],
+    }),
+  ],
+})
+const dndTestPageType = defineType({
+  type: 'document',
+  name: 'dndTestPage',
+  fields: [
+    defineField({
+      type: 'string',
+      name: 'title',
+      title: 'Title',
+    }),
+    defineField({
+      type: 'array',
+      name: 'children',
+      title: 'Children',
+      of: [dndTestItemRoot],
+    }),
+  ],
+})
+
 export const pageBuilderDemoPlugin = definePlugin<
   Partial<PresentationPluginOptions> & Pick<PresentationPluginOptions, 'previewUrl'>
 >((config) => ({
   name: '@repo/sanity-schema/page-builder-demo',
   schema: {
     types: [
+      dndTestPageType,
       pageType,
       pageSectionType,
       productType,
@@ -536,6 +600,10 @@ export const pageBuilderDemoPlugin = definePlugin<
           {
             route: '/',
             filter: `_type == "page" && (*[_id == "siteSettings"][0].frontPage._ref == _id)`,
+          },
+          {
+            route: '/dnd',
+            filter: `_type == "dndTestPage"`,
           },
         ]),
         locations: {
