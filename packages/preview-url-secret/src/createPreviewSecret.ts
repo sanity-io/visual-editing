@@ -4,7 +4,6 @@ import {
   apiVersion,
   deleteExpiredSecretsQuery,
   schemaIdPrefix,
-  schemaIdSingleton,
   schemaType,
   SECRET_TTL,
   tag,
@@ -27,18 +26,7 @@ export async function createPreviewSecret(
     const _id = `${schemaIdPrefix}.${id}`
     const newSecret = generateUrlSecret()
     const patch = client.patch(_id).set({secret: newSecret, source, studioUrl, userId})
-    await client
-      .transaction()
-      .createIfNotExists({
-        _id: schemaIdSingleton,
-        _type: schemaType,
-        source,
-        studioUrl,
-        userId,
-      })
-      .createOrReplace({_id, _type: schemaType})
-      .patch(patch)
-      .commit({tag})
+    await client.transaction().createOrReplace({_id, _type: schemaType}).patch(patch).commit({tag})
 
     return {secret: newSecret, expiresAt}
   } finally {

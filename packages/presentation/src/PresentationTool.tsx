@@ -83,8 +83,11 @@ const Container = styled(Flex)`
 export default function PresentationTool(props: {
   tool: Tool<PresentationPluginOptions>
   canCreateUrlPreviewSecrets: boolean
+  canToggleSharePreviewAccess: boolean
+  canUseSharedPreviewAccess: boolean
 }): ReactElement {
-  const {canCreateUrlPreviewSecrets, tool} = props
+  const {canCreateUrlPreviewSecrets, canToggleSharePreviewAccess, canUseSharedPreviewAccess, tool} =
+    props
   const components = tool.options?.components
   const _previewUrl = tool.options?.previewUrl
   const name = tool.name || DEFAULT_TOOL_NAME
@@ -536,6 +539,8 @@ export default function PresentationTool(props: {
                     <BoundaryElementProvider element={boundaryElement}>
                       <PreviewFrame
                         canSharePreviewAccess={canSharePreviewAccess}
+                        canToggleSharePreviewAccess={canToggleSharePreviewAccess}
+                        canUseSharedPreviewAccess={canUseSharedPreviewAccess}
                         dispatch={dispatch}
                         iframe={state.iframe}
                         initialUrl={initialPreviewUrl}

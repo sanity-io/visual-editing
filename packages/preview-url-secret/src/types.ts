@@ -11,6 +11,9 @@ export type PreviewUrlSecretSchemaIdType =
 /** @internal */
 export type PreviewUrlSecretSchemaType = `sanity.previewUrlSecret`
 
+/** @internal */
+export type PreviewUrlSecretSchemaTypeSingleton = `sanity.previewUrlShareAccess`
+
 /**
  * A subset type that's compatible with most SanityClient typings,
  * this makes it easier to use this package in libraries that may use `import type { SanityClient } from 'sanity'`
@@ -137,6 +140,12 @@ export interface FetchSecretQueryParams {
 export type FetchSecretQueryResponse = {
   _id: string
   _updatedAt: string | null
+  secret: string | null
+  studioUrl: string | null
+} | null
+
+/** @internal */
+export type FetchPublicSecretQueryResponse = {
   secret: string | null
   studioUrl: string | null
 } | null

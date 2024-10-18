@@ -79,7 +79,10 @@ const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
 }
 
 export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'visualEditing'> {
+  // @TODO rename to share preview access is enabled in the config
   canSharePreviewAccess: boolean
+  canToggleSharePreviewAccess: boolean
+  canUseSharedPreviewAccess: boolean
   dispatch: DispatchPresentationAction
   initialUrl: URL
   loadersConnection: Status
@@ -103,6 +106,8 @@ export const PreviewFrame = memo(
     function PreviewFrameComponent(props, forwardedRef) {
       const {
         canSharePreviewAccess,
+        canToggleSharePreviewAccess,
+        canUseSharedPreviewAccess,
         dispatch,
         iframe,
         initialUrl,
@@ -562,6 +567,8 @@ export const PreviewFrame = memo(
                 {canSharePreviewAccess && (
                   <Flex align="center" flex="none" gap={1} paddingX={1}>
                     <SharePreviewMenu
+                      canToggleSharePreviewAccess={canToggleSharePreviewAccess}
+                      canUseSharedPreviewAccess={canUseSharedPreviewAccess}
                       previewLocationRoute={previewLocationRoute}
                       initialUrl={initialUrl}
                       perspective={perspective}

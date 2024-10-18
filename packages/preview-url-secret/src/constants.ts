@@ -1,4 +1,8 @@
-import type {PreviewUrlSecretSchemaIdPrefix, PreviewUrlSecretSchemaType} from './types'
+import type {
+  PreviewUrlSecretSchemaIdPrefix,
+  PreviewUrlSecretSchemaType,
+  PreviewUrlSecretSchemaTypeSingleton,
+} from './types'
 
 /** @internal */
 export const schemaType = 'sanity.previewUrlSecret' satisfies PreviewUrlSecretSchemaType
@@ -7,7 +11,11 @@ export const schemaType = 'sanity.previewUrlSecret' satisfies PreviewUrlSecretSc
 export const schemaIdPrefix = 'sanity-preview-url-secret' satisfies PreviewUrlSecretSchemaIdPrefix
 
 /** @internal */
-export const schemaIdSingleton = `drafts.${schemaIdPrefix}` as const
+export const schemaIdSingleton = `${schemaIdPrefix}.share-access` as const
+
+/** @internal */
+export const schemaTypeSingleton =
+  'sanity.previewUrlShareAccess' satisfies PreviewUrlSecretSchemaTypeSingleton
 
 /** @internal */
 export const apiVersion = '2023-11-09'
@@ -32,16 +40,27 @@ export const SECRET_TTL = 60 * 60
 
 /** @internal */
 export const fetchSecretQuery =
-  /* groq */ `*[_type == "${schemaType}" && _id in path("${schemaIdPrefix}.**") && secret == $secret && dateTime(_updatedAt) > dateTime(now()) - ${SECRET_TTL}][0]{
-  _id,
-  _updatedAt,
+  /* groq */ `*[_type == "${schemaType}" && secret == $secret && dateTime(_updatedAt) > dateTime(now()) - ${SECRET_TTL}][0]{
+    _id,
+    _updatedAt,
+    secret,
+    studioUrl,
+  }` as const
+
+/** @internal */
+export const fetchSharedAccessQuery =
+  /* groq */ `*[_id == "${schemaIdSingleton}" && _type == "${schemaTypeSingleton}"][0].secret` as const
+
+/** @internal */
+export const fetchSharedAccessSecretQuery =
+  /* groq */ `*[_id == "${schemaIdSingleton}" && _type == "${schemaTypeSingleton}" && secret == $secret][0]{
   secret,
   studioUrl,
 }` as const
 
 /** @internal */
 export const deleteExpiredSecretsQuery =
-  /* groq */ `*[_type == "${schemaType}" && _id in path("${schemaIdPrefix}.**") && defined(secret) && dateTime(_updatedAt) <= dateTime(now()) - ${SECRET_TTL}]` as const
+  /* groq */ `*[_type == "${schemaType}" && dateTime(_updatedAt) <= dateTime(now()) - ${SECRET_TTL}]` as const
 
 /**
  * Used for tagging `client.fetch` queries

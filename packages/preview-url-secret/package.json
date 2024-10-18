@@ -51,6 +51,12 @@
       "require": "./dist/sanity-plugin-debug-secrets.cjs",
       "default": "./dist/sanity-plugin-debug-secrets.js"
     },
+    "./toggle-preview-access-sharing": {
+      "source": "./src/_exports/toggle-preview-access-sharing.ts",
+      "import": "./dist/toggle-preview-access-sharing.js",
+      "require": "./dist/toggle-preview-access-sharing.cjs",
+      "default": "./dist/toggle-preview-access-sharing.js"
+    },
     "./without-secret-search-params": {
       "source": "./src/_exports/without-secret-search-params.ts",
       "import": "./dist/without-secret-search-params.js",
@@ -78,6 +84,9 @@
       ],
       "sanity-plugin-debug-secrets": [
         "./dist/sanity-plugin-debug-secrets.d.ts"
+      ],
+      "toggle-preview-access-sharing": [
+        "./dist/toggle-preview-access-sharing.d.ts"
       ],
       "without-secret-search-params": [
         "./dist/without-secret-search-params.d.ts"
