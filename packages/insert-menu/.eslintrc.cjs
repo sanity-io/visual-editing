@@ -13,7 +13,7 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ['import', 'simple-import-sort'],
+  plugins: ['import'],
   rules: {
     'no-console': 'error',
     'no-shadow': 'error',
@@ -25,8 +25,6 @@ module.exports = {
       },
     ],
     'quote-props': ['warn', 'consistent-as-needed'],
-    'simple-import-sort/exports': 'warn',
-    'simple-import-sort/imports': 'warn',
     'strict': ['warn', 'global'],
   },
   overrides: [
@@ -41,11 +39,9 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
       ],
-      plugins: ['import', '@typescript-eslint', 'simple-import-sort'],
+      plugins: ['import', '@typescript-eslint'],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'error',
-        '@typescript-eslint/interface-name-prefix': 'off',
-        '@typescript-eslint/member-delimiter-style': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
       },
     },
