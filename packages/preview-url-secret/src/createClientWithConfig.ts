@@ -16,12 +16,11 @@ export function createClientWithConfig(client: SanityClientLike): SanityClientLi
   }
 
   return client.withConfig({
+    perspective: 'raw',
     // Userland might be using an API version that's too old to use perspectives
     apiVersion,
     // We can't use the CDN, the secret is typically validated right after it's created
     useCdn: false,
-    // The documents that hold secrets are never drafts
-    perspective: 'published',
     // Don't waste time returning a source map, we don't need it
     resultSourceMap: false,
     // @ts-expect-error - If stega is enabled, make sure it's disabled

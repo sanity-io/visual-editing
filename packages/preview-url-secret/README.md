@@ -33,6 +33,35 @@ export default defineConfig({
 })
 ```
 
+# Permissions model
+
+> [!NOTE]
+> v1 used to require Editor or above to create the secret.
+> v2 lowers the requirement to Collaborator.
+
+In order to create an URL Preview Secret, the user needs to have the rights to create draft documents in the schema.
+By default that means Contributor or above.
+For Enterprise customers with custom roles, it's possible to grant Viewer roles access to create preview secrets.
+
+## Granting access to Viewer roles and below
+
+In your proiect access settings:
+
+1. Create a new Content Resource.
+2. Title it "Preview URL Secrets for Presentation Tool".
+3. Set the filter to: `_type == "sanity.previewUrlSecret" && _id in path("drafts.**")`.
+4. Click "Create content resource".
+5. Create new role.
+6. Title it "Viewer with Presentation Tool access".
+7. Create the role.
+8. Edit the "Content permissions".
+9. For the "Preview URL Secrets for Presentation Tool" and set it to "+ Update and create". The "All documents", "Image assets" and "File assets" should be set to "Read".
+10. Save changes.
+
+To grant a user access to Presentation Tool you simply assign them the new "Viewer with Presentation Tool access" role, instead of "Viewer".
+
+# Usage
+
 ## Next.js App Router
 
 Create an API token with viewer rights, and put it in an environment variable named `SANITY_API_READ_TOKEN`, then create the following API handler:

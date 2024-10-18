@@ -1,5 +1,4 @@
 import {
-  schemaIdPrefix,
   schemaIdSingleton,
   schemaType,
   schemaTypeSingleton,
