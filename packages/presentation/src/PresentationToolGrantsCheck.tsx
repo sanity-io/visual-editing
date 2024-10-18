@@ -44,7 +44,7 @@ export default function PresentationToolGrantsCheck(props: {
       .checkDocumentPermission('read', {_id: schemaIdSingleton, _type: schemaTypeSingleton})
       .subscribe(setReadAccessSharingPermission)
     const previewUrlSecretPermissionSubscription = grantsStore
-      .checkDocumentPermission('create', {_id: `${schemaIdPrefix}.${uuid()}`, _type: schemaType})
+      .checkDocumentPermission('create', {_id: `drafts.${uuid()}`, _type: schemaType})
       .subscribe(setPreviewUrlSecretPermission)
 
     return () => {
