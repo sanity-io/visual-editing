@@ -9,6 +9,7 @@ import {
 import type {ObjectSchemaType} from '@sanity/types'
 import {Box, Card, LayerProvider} from '@sanity/ui'
 import {useAction, useSelect} from '@sanity/ui-workshop'
+
 import {InsertMenu, type InsertMenuProps} from '../InsertMenu'
 
 const labels = {
