@@ -23,13 +23,15 @@ import {
   Tooltip,
   useToast,
 } from '@sanity/ui'
-import {QRCodeSVG} from 'qrcode.react'
-import {memo, useCallback, useEffect, useMemo, useState} from 'react'
+import {AnimatePresence, motion} from 'framer-motion'
+import {lazy, memo, Suspense, useCallback, useEffect, useMemo, useState} from 'react'
 import {useClient, useCurrentUser, useTranslation} from 'sanity'
 import {styled} from 'styled-components'
 import {API_VERSION} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'
 import type {PreviewFrameProps} from './PreviewFrame'
+
+const QRCodeSVG = lazy(() => import('./QRCodeSVG'))
 
 export interface SharePreviewMenuProps {
   // @TODO: Who can toggle sharing, need higher rights
@@ -53,6 +55,10 @@ const StyledSanityMonogram = styled(SanityMonogram)`
   height: ${QrCodeLogoSize}px;
   width: ${QrCodeLogoSize}px;
 `
+
+const MotionSpinner = motion(Spinner)
+const MotionText = motion(Text)
+const MotionMonogram = motion(StyledSanityMonogram)
 
 export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
   props: SharePreviewMenuProps,
@@ -261,33 +267,44 @@ export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
                       justifyContent: 'center',
                     }}
                   >
-                    {busy ? (
-                      <Spinner muted />
-                    ) : url ? (
-                      <>
-                        <QRCodeSVG
-                          value={url.toString()}
-                          size={QrSize}
-                          bgColor="var(--card-bg-color)"
-                          fgColor="var(--card-fg-color)"
-                          imageSettings={{
-                            src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==',
-                            height: QrCodeLogoSize + QrCodeLogoPadding,
-                            width: QrCodeLogoSize + QrCodeLogoPadding,
-                            excavate: true,
-                          }}
+                    <AnimatePresence>
+                      {busy ? (
+                        <MotionSpinner
+                          muted
+                          initial={{opacity: 0}}
+                          animate={{opacity: 1}}
+                          exit={{opacity: 0}}
                         />
-                        <StyledSanityMonogram />
-                      </>
-                    ) : (
-                      <Text
-                        muted
-                        size={1}
-                        style={{maxWidth: '100px', textWrap: 'pretty', textAlign: 'center'}}
-                      >
-                        QR code will appear here
-                      </Text>
-                    )}
+                      ) : url ? (
+                        <>
+                          <Suspense fallback={<Spinner />}>
+                            <QRCodeSVG
+                              value={url.toString()}
+                              size={QrSize}
+                              fgColor="var(--card-fg-color)"
+                              imageSize={QrCodeLogoSize + QrCodeLogoPadding}
+                              imageExcavate
+                            />
+                            <MotionMonogram
+                              initial={{opacity: -0.5}}
+                              animate={{opacity: 1.5}}
+                              exit={{opacity: 0}}
+                            />
+                          </Suspense>
+                        </>
+                      ) : (
+                        <MotionText
+                          muted
+                          size={1}
+                          style={{maxWidth: '100px', textWrap: 'pretty', textAlign: 'center'}}
+                          initial={{opacity: 0}}
+                          animate={{opacity: 1}}
+                          exit={{opacity: 0}}
+                        >
+                          QR code will appear here
+                        </MotionText>
+                      )}
+                    </AnimatePresence>
                   </Card>
                   <Text muted size={1}>
                     Scan the QR Code to open the preview on your phone.
