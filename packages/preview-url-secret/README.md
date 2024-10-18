@@ -37,7 +37,7 @@ export default defineConfig({
 
 > [!NOTE]
 > v1 used to require Editor or above to create the secret.
-> v2 lowers the requirement to Collaborator.
+> v2 lowers the requirement to Contributor.
 
 In order to create an URL Preview Secret, the user needs to have the rights to create draft documents in the schema.
 By default that means Contributor or above.
