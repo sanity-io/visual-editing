@@ -63,3 +63,4 @@ export {
   type CreateDataAttributeProps,
   type WithRequired,
 } from '@repo/visual-editing-helpers'
+export {getArrayItemKeyAndParentPath} from './util/mutations'
