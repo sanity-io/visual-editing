@@ -1,3 +1,112 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @view-transition {
+  navigation: auto;
+} */
+
+@keyframes count-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes count-enter {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Put new transition name on each card to morph each */
+.card-1 {
+  view-transition-name: card-1;
+}
+
+.card-2 {
+  view-transition-name: card-2;
+}
+
+.card-3 {
+  view-transition-name: card-3;
+}
+
+.card-4 {
+  view-transition-name: card-4;
+}
+
+/* Etc. */
+
+.cards {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+  max-width: 1000px;
+}
+
+.card {
+  width: 100%;
+  aspect-ratio: 2/3;
+  display: block;
+  position: relative;
+  border-radius: 1rem;
+  max-width: 220px;
+}
+
+.card-1 {
+  background-color: tan;
+}
+
+.card-2 {
+  background-color: khaki;
+}
+
+.card-3 {
+  background-color: thistle;
+}
+
+.card-4 {
+  background-color: wheat;
+}
+
+.delete-btn {
+  position: absolute;
+  bottom: -0.75rem;
+  right: -0.75rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  border: 4px solid;
+  border-radius: 100%;
+  background: steelblue;
+  color: white;
+
+  & img {
+    filter: invert();
+  }
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}

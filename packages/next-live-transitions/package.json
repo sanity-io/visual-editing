@@ -1,16 +1,14 @@
 {
-  "name": "@sanity/insert-menu",
-  "version": "1.0.10-canary.81",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/insert-menu#readme",
+  "name": "next-live-transitions",
+  "version": "0.0.1-canary.1",
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/next-live-transitions#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
-    "directory": "packages/insert-menu"
+    "directory": "packages/next-live-transitions"
   },
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
@@ -19,6 +17,7 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
@@ -29,44 +28,47 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "dev:workshop": "workshop dev",
     "lint": "eslint --cache .",
     "prepack": "turbo run build",
-    "ts:check": "tsc --noEmit"
+    "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
+  "prettier": "@repo/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
+  },
   "dependencies": {
-    "@sanity/icons": "^3.4.0",
-    "@sanity/ui": "^2.8.9",
-    "lodash.startcase": "^4.4.0"
+    "react-live-transitions": "workspace:*"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "^6.11.4",
-    "@sanity/types": "^3.61.0",
-    "@sanity/ui-workshop": "^2.0.16",
-    "@types/lodash.startcase": "^4.4.9",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/package.config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@sanity/pkg-utils": "6.11.4",
+    "@types/react": "^18.3.11",
     "eslint": "^8.57.1",
-    "eslint-plugin-import": "^2.31.0",
-    "lint-staged": "^15.2.10",
+    "next": "^14.2.15",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-is": "^18.3.1",
-    "typescript": "5.6.3"
+    "typescript": "5.6.3",
+    "vitest": "^2.1.3"
   },
   "peerDependencies": {
-    "@sanity/types": "^3.61.0",
-    "react": "^18.3 || >=19.0.0-rc",
-    "react-dom": "^18.3 || >=19.0.0-rc",
-    "react-is": "^18.3 || >=19.0.0-rc"
+    "next": "^14.1 || ^15.0.0-0",
+    "react": "^18.3 || ^19.0.0-0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
