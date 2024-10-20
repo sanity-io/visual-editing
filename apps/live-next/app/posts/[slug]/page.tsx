@@ -1,10 +1,10 @@
 import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
-import {postQuery, settingsQuery} from '@/sanity/lib/queries'
+import {moreStoriesQuery, postQuery, settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, ResolvingMetadata} from 'next'
+import {TransitionLayoutShift} from 'next-live-transitions'
 import {defineQuery, type PortableTextBlock} from 'next-sanity'
 import Link from 'next/link'
-import {Suspense} from 'react'
 import Avatar from '../../avatar'
 import CoverImage from '../../cover-image'
 import DateComponent from '../../date'
@@ -48,6 +48,10 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
   //   sanityFetch({query: settingsQuery}),
   // ])
   const {data: post} = await sanityFetch({query: postQuery, params: {slug}})
+  const {data: moreStories} = await sanityFetch({
+    query: moreStoriesQuery,
+    params: {skip: post?._id, limit: 2},
+  })
 
   return (
     <div className="container mx-auto px-5">
@@ -83,35 +87,37 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
 
               return (
                 <article>
-                  <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
-                    {post.title}
-                  </h1>
-                  <div className="hidden md:mb-12 md:block">
-                    {post.author && (
-                      <Avatar name={post.author.name} picture={post.author.picture} />
-                    )}
-                  </div>
-                  <div className="mb-8 sm:mx-0 md:mb-16">
-                    <CoverImage image={post.coverImage} priority />
-                  </div>
-                  <div className="mx-auto max-w-2xl">
-                    <div className="mb-6 block md:hidden">
+                  <TransitionLayoutShift>
+                    <h1 className="mb-12 h-full w-fit text-balance text-6xl font-bold leading-tight tracking-tighter [view-transition-name:title] md:text-7xl md:leading-none lg:text-8xl">
+                      {post.title}
+                    </h1>
+                    <div className="hidden [view-transition-name:author] md:mb-12 md:block">
                       {post.author && (
                         <Avatar name={post.author.name} picture={post.author.picture} />
                       )}
                     </div>
-                    <div className="mb-6 text-lg">
-                      <div className="mb-4 text-lg">
-                        <DateComponent dateString={post.date} />
+                    <div className="mb-8 [view-transition-name:cover-image] sm:mx-0 md:mb-16">
+                      <CoverImage image={post.coverImage} priority />
+                    </div>
+                    <div className="mx-auto max-w-2xl">
+                      <div className="mb-6 block [view-transition-name:author] md:hidden">
+                        {post.author && (
+                          <Avatar name={post.author.name} picture={post.author.picture} />
+                        )}
+                      </div>
+                      <div className="mb-6 text-lg [view-transition-name:date]">
+                        <div className="mb-4 text-lg">
+                          <DateComponent dateString={post.date} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {post.content?.length && post.content.length > 0 && (
-                    <PortableText
-                      className="mx-auto max-w-2xl"
-                      value={post.content as PortableTextBlock[]}
-                    />
-                  )}
+                    {post.content?.length && post.content.length > 0 && (
+                      <PortableText
+                        className="mx-auto max-w-2xl [view-transition-name:content]"
+                        value={post.content as PortableTextBlock[]}
+                      />
+                    )}
+                  </TransitionLayoutShift>
                 </article>
               )
             }}
@@ -121,9 +127,7 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
             <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
               Recent Stories
             </h2>
-            <Suspense>
-              <MoreStories skip={post._id} limit={2} />
-            </Suspense>
+            <MoreStories data={moreStories} />
           </aside>
         </>
       ) : (
