@@ -1,1 +1,1 @@
-export * from 'react-live-transitions'
+export {TransitionLayoutShift} from 'react-live-transitions'
