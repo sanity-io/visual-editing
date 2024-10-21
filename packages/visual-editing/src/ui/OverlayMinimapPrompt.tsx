@@ -11,7 +11,7 @@ const Root = styled(Card)`
 
 export const OverlayMinimapPrompt: FunctionComponent = () => {
   return (
-    <Root padding={2} shadow={2} radius={2}>
+    <Root padding={2} shadow={2} radius={2} style={{zIndex: '999999'}}>
       <Flex align="center" gap={2}>
         <Hotkeys keys={['Shift']} />
         <Text size={1}>Zoom Out</Text>
