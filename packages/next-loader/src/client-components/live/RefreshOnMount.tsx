@@ -15,8 +15,6 @@ export default function RefreshOnMount(): null {
   useEffect(() => {
     if (!mounted) {
       mount()
-      // eslint-disable-next-line no-console
-      console.log('refreshing on mount')
       router.refresh()
     }
   }, [mounted, router])

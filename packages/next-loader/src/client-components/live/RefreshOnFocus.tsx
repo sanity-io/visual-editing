@@ -12,8 +12,6 @@ export default function RefreshOnFocus(): null {
     const callback = () => {
       const now = Date.now()
       if (now > nextFocusRevalidatedAt && document.visibilityState !== 'hidden') {
-        // eslint-disable-next-line no-console
-        console.log('refreshing on focus')
         router.refresh()
         nextFocusRevalidatedAt = now + focusThrottleInterval
       }

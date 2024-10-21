@@ -126,8 +126,19 @@ export interface DefineSanityLiveOptions {
  * @public
  */
 export function defineLive(config: DefineSanityLiveOptions): {
+  /**
+   * Use this function to fetch data from Sanity in your React Server Components.
+   * @public
+   */
   sanityFetch: DefinedSanityFetchType
+  /**
+   * Render this in your root layout.tsx to make your page revalidate on new content live, automatically.
+   * @public
+   */
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
+  /**
+   * @alpha experimental, it may change or even be removed at any time
+   */
   SanityLiveStream: DefinedSanityLiveStreamType
   // verifyPreviewSecret: VerifyPreviewSecretType
 } {
@@ -137,14 +148,14 @@ export function defineLive(config: DefineSanityLiveOptions): {
     throw new Error('`client` is required for `defineLive` to function')
   }
 
-  if (!serverToken) {
+  if (process.env.NODE_ENV !== 'production' && !serverToken) {
     // eslint-disable-next-line no-console
     console.warn(
       'No `serverToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events',
     )
   }
 
-  if (!browserToken) {
+  if (process.env.NODE_ENV !== 'production' && !browserToken) {
     // eslint-disable-next-line no-console
     console.warn(
       'No `browserToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `browserToken`. It is shared with the browser so it should only have Viewer rights or lower',
@@ -237,8 +248,21 @@ export function defineLive(config: DefineSanityLiveOptions): {
       refreshOnReconnect,
       tag = 'next-loader.live',
     } = props
-    const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
-      client.config()
+    const {
+      projectId,
+      dataset,
+      apiHost,
+      apiVersion: _apiVersion,
+      useProjectHostname,
+      requestTagPrefix,
+    } = client.config()
+    const {isEnabled: isDraftModeEnabled} = await draftMode()
+
+    let apiVersion = _apiVersion
+    // @TODO temporarily handle the Live Draft Content API only being available on vX
+    if (typeof browserToken === 'string' && isDraftModeEnabled) {
+      apiVersion = 'vX'
+    }
 
     return (
       <SanityLiveClientComponent
@@ -249,16 +273,12 @@ export function defineLive(config: DefineSanityLiveOptions): {
         useProjectHostname={useProjectHostname}
         requestTagPrefix={requestTagPrefix}
         tag={tag}
-        token={
-          typeof browserToken === 'string' && (await draftMode()).isEnabled
-            ? browserToken
-            : undefined
-        }
+        token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
         ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
-        draftModeEnabled={(await draftMode()).isEnabled}
+        draftModeEnabled={isDraftModeEnabled}
         // handleDraftModeAction={handleDraftModeAction}
         draftModePerspective={
-          (await draftMode()).isEnabled
+          isDraftModeEnabled
             ? (await cookies()).has(perspectiveCookieName)
               ? sanitizePerspective(
                   (await cookies()).get(perspectiveCookieName)?.value,

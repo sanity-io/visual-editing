@@ -39,8 +39,6 @@ function PresentationComlink(props: {
         setPerspectiveCookie(perspective)
           .then(() => {
             if (signal.aborted) return
-            // eslint-disable-next-line no-console
-            console.log('refresh on perspective change', perspective)
             router.refresh()
           })
           // eslint-disable-next-line no-console
