@@ -1,8 +1,4 @@
-import {
-  createCompatibilityActors,
-  type LoaderControllerMsg,
-  type LoaderNodeMsg,
-} from '@repo/visual-editing-helpers'
+import type {LoaderControllerMsg, LoaderNodeMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import {
   createNode,
@@ -54,9 +50,7 @@ function PresentationComlink(props: {
         name: 'loaders',
         connectTo: 'presentation',
       },
-      createNodeMachine<LoaderControllerMsg, LoaderNodeMsg>().provide({
-        actors: createCompatibilityActors<LoaderNodeMsg>(),
-      }),
+      createNodeMachine<LoaderControllerMsg, LoaderNodeMsg>(),
     )
 
     // comlink.onStatus((status) => {
