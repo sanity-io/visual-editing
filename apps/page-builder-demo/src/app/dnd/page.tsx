@@ -1,8 +1,7 @@
 import {DnDCustomBehaviour} from '@/components/page/DnDCustomBehaviour'
-import {dataAttribute} from '@/sanity/dataAttribute'
 import {sanityFetch} from '@/sanity/live'
 import {stegaClean} from '@sanity/client/stega'
-import {defineQuery} from 'next-sanity'
+import {createDataAttribute, defineQuery} from 'next-sanity'
 
 const dndPageQuery = defineQuery(`
   *[_type == "dndTestPage"]{
@@ -30,7 +29,7 @@ export default async function Page() {
           <div className="mt-4 flex flex-col gap-4">
             {data.children.map((child) => (
               <div
-                data-sanity={dataAttribute({
+                data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
                   path: `children[_key=="${child._key}"]`,
@@ -49,7 +48,7 @@ export default async function Page() {
           <div className="mt-4 flex flex-row gap-4">
             {data.children.map((child) => (
               <div
-                data-sanity={dataAttribute({
+                data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
                   path: `children[_key=="${child._key}"]`,
@@ -67,7 +66,7 @@ export default async function Page() {
           <h2>Nested (Flow Auto Calculated)</h2>
           {data.children.map((child) => (
             <div
-              data-sanity={dataAttribute({
+              data-sanity={createDataAttribute({
                 id: data._id,
                 type: 'dndTestPage',
                 path: `children[_key=="${child._key}"]`,
@@ -79,7 +78,7 @@ export default async function Page() {
               {child.children &&
                 child.children.map((child1: any) => (
                   <div
-                    data-sanity={dataAttribute({
+                    data-sanity={createDataAttribute({
                       id: data._id,
                       type: 'dndTestPage',
                       path: `children[_key=="${child._key}"].children[_key=="${child1._key}"]`,
@@ -91,7 +90,7 @@ export default async function Page() {
                       {child1.children &&
                         child1.children.map((child2: any) => (
                           <div
-                            data-sanity={dataAttribute({
+                            data-sanity={createDataAttribute({
                               id: data._id,
                               type: 'dndTestPage',
                               path: `children[_key=="${child._key}"].children[_key=="${child1._key}"].children[_key=="${child2._key}"]`,
@@ -113,7 +112,7 @@ export default async function Page() {
           <div className="mt-4 grid grid-cols-3 gap-4">
             {data.children.map((child, index) => (
               <div
-                data-sanity={dataAttribute({
+                data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
                   path: `children[_key=="${child._key}"]`,
@@ -139,7 +138,7 @@ export default async function Page() {
           <div className="mt-4 flex flex-col gap-4">
             {data.children.slice(0, 4).map((child, index) => (
               <div
-                data-sanity={dataAttribute({
+                data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
                   path: `children[_key=="${child._key}"]`,
@@ -164,7 +163,7 @@ export default async function Page() {
           <div className="mt-4 columns-3 gap-4">
             {data.children.map((child, index) => (
               <div
-                data-sanity={dataAttribute({
+                data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
                   path: `children[_key=="${child._key}"]`,
@@ -185,7 +184,7 @@ export default async function Page() {
           <div className="mt-4 flex flex-col-reverse gap-4">
             {data.children.map((child) => (
               <div
-                data-sanity={dataAttribute({
+                data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
                   path: `children[_key=="${child._key}"]`,
