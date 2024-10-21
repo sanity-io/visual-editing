@@ -49,19 +49,12 @@ export interface PreviewUrlValidateUrlResult {
    * If the URL is valid, and the studio URL is known and valid, then its origin will be here
    */
   studioOrigin?: string
-  /**
-   * The initial perspective the Studio was using when starting to load the preview.
-   * It can change over time and should also be handled with `postMessage` listeners.
-   * The value can be arbitrary and has to be validated to make sure it's a valid perspective.
-   */
-  studioPreviewPerspective?: string | null
 }
 
 /** @internal */
 export interface ParsedPreviewUrl {
   secret: string
   redirectTo?: string
-  studioPreviewPerspective: string | null
 }
 
 /** @public */
