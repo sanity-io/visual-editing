@@ -115,6 +115,10 @@ const convertToChannelsMessage = (message: ProtocolMessage): ProtocolMessage => 
 
   message.type = comlinkToChannelsMap[message.type as ComlinkMessageType] ?? message.type
 
+  if (message.type === 'channel/response' && message.responseTo && !message.data) {
+    message.data = {responseTo: message.responseTo}
+  }
+
   return message
 }
 

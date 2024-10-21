@@ -12,3 +12,4 @@ npm install @sanity/core-loader @sanity/client
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/core-loader?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/core-loader?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/core-loader
+
