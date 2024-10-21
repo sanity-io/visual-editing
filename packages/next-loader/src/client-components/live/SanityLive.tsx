@@ -1,7 +1,15 @@
-import {createClient, type ClientPerspective, type InitializedClientConfig} from '@sanity/client'
+import {
+  createClient,
+  type ClientPerspective,
+  type InitializedClientConfig,
+  type LiveEventMessage,
+  type LiveEventRestart,
+} from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
 import dynamic from 'next/dynamic'
+import {useRouter} from 'next/navigation.js'
 import {useEffect, useMemo, useRef, useState} from 'react'
+import {useEffectEvent} from 'use-effect-event'
 import {setEnvironment, setPerspective} from '../../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
@@ -103,6 +111,9 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     ],
   )
 
+  /**
+   * 2. Validate CORS before setting up the Event Source for the Server Sent Events
+   */
   useEffect(() => {
     // @TODO move this validation logic to `@sanity/client`
     // and include CORS detection https://github.com/sanity-io/sanity/blob/9848f2069405e5d06f82a61a902f141e53099493/packages/sanity/src/core/store/_legacy/authStore/createAuthStore.ts#L92-L102
@@ -168,26 +179,31 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     return () => controller.abort()
   }, [tag, client, requestTagPrefix, token])
 
+  /**
+   * 3. Handle Live Events and call revalidateTag or router.refresh when needed
+   */
+  const router = useRouter()
+  const handleLiveEvent = useEffectEvent((event: LiveEventMessage | LiveEventRestart) => {
+    if (event.type === 'message') {
+      revalidateSyncTags(event.tags)
+    } else if (event.type === 'restart') {
+      router.refresh()
+    }
+  })
   useEffect(() => {
     const subscription = client.live.events({includeDrafts: !!token, tag}).subscribe({
       next: (event) => {
-        if (event.type === 'message') {
-          revalidateSyncTags(event.tags)
-        } else if (event.type === 'reconnect') {
-          // eslint-disable-next-line no-console
-          console.log('TODO: handle reconnect')
-        } else if (event.type === 'restart') {
-          // eslint-disable-next-line no-console
-          console.log('TODO: handle restart')
+        if (event.type === 'message' || event.type === 'restart') {
+          handleLiveEvent(event)
         }
       },
       error: setError,
     })
     return () => subscription.unsubscribe()
-  }, [client, tag, token])
+  }, [client.live, handleLiveEvent, tag, token])
 
   /**
-   * 2. Notify what perspective we're in, when in Draft Mode
+   * 4. Notify what perspective we're in, when in Draft Mode
    */
   useEffect(() => {
     if (draftModeEnabled && draftModePerspective) {
@@ -199,7 +215,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const [loadComlink, setLoadComlink] = useState(false)
   /**
-   * 3. Notify what environment we're in, when in Draft Mode
+   * 5. Notify what environment we're in, when in Draft Mode
    */
   useEffect(() => {
     if (draftModeEnabled && loadComlink) {
@@ -212,7 +228,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   }, [draftModeEnabled, loadComlink, token])
 
   /**
-   * 4. If Presentation Tool is detected, load up the comlink and integrate with it
+   * 6. If Presentation Tool is detected, load up the comlink and integrate with it
    */
   useEffect(() => {
     if (window === parent && !opener) return
@@ -238,7 +254,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   }, [])
 
   /**
-   * 5. Warn if draft mode is being disabled
+   * 7. Warn if draft mode is being disabled
    * @TODO move logic into PresentationComlink, or maybe VisualEditing?
    */
   const draftModeEnabledWarnRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)

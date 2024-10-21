@@ -7,15 +7,7 @@ export default function RefreshOnReconnect(): null {
   useEffect(() => {
     const controller = new AbortController()
     const {signal} = controller
-    window.addEventListener(
-      'online',
-      () => {
-        // eslint-disable-next-line no-console
-        console.log('refreshing on reconnect')
-        router.refresh()
-      },
-      {passive: true, signal},
-    )
+    window.addEventListener('online', () => router.refresh(), {passive: true, signal})
     return () => controller.abort()
   }, [router])
 
