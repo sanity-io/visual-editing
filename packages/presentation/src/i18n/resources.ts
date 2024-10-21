@@ -93,23 +93,32 @@ export default {
   'share-url.clipboard.status_success': 'The URL is copied to the clipboard',
   /** The status of the clipboard operation when copying a URL */
   'share-url.clipboard.status_unsupported': 'Clipboard not supported',
-  /** The share URL menu item text for copying a link */
-  'share-url.menu-item.copy.text': 'Copy link',
-  /** The share URL menu item text for configuring a public share link */
-  'share-url.menu-item.share.text': 'Share link',
   /** The share URL menu item text for opening a preview window */
   'share-url.menu-item.open.text': 'Open preview',
-  /** The dialog header for the share url dialog */
-  'share-url.dialog.header': 'Configure share link',
-  /** Action in the share url dialog that creates a URL that can be used to preview the current pathname */
-  'share-url.dialog.action.enable-sharing': 'Enable sharing to those who have the link',
-  /** Disables sharing access to those who have the link */
-  'share-url.dialog.action.disable-sharing': 'Disable sharing',
   /** Error toast that notifies that URL Preview Secrets can't be generated as the user lacks ACL grants */
   'preview-url-secret.missing-grants':
     "You don't have permission to create URL Preview Secrets. This will likely cause the preview to fail loading.",
   /** The `aria-label` for the button that opens the share menu */
   'preview-frame.share-button.aria-label': 'Share this preview',
-  /** The tooltip for the button that opens the share menu */
-  'preview-frame.share-button.tooltip': 'Share this preview',
+  /** The <title> for the QR Code SVG that shows a link to the current preview */
+  'share-preview-menu.qr-code.title': 'A QR Code which encodes the URL: {{url}}',
+  /** Error message toast that shows the current user does not have permission to toggle sharing of the current preview */
+  'share-preview-menu.error_toggle-sharing':
+    "You don't have permission to toggle sharing of this preview",
+  /** The text shown on the sharing toggle tooltip when sharing is enabled */
+  'share-preview-menu.toggle-button.tooltip_disable': 'Disable sharing',
+  /** The text shown on the sharing toggle tooltip when sharing is disabled */
+  'share-preview-menu.toggle-button.tooltip_enable': 'Enable sharing',
+  /** The first line of the label that renders next to the sharing toggle, it renders on two rows */
+  'share-preview-menu.toggle-button.label_first-line': 'Share this preview',
+  /** The second line of the label that renders next to the sharing toggle, it renders on two rows */
+  'share-preview-menu.toggle-button.label_second-line': 'with anyone who has the link',
+  /** Placeholder message for the QR Code SVG when sharing is yet to be enabled */
+  'share-preview-menu.qr-code.placeholder': 'QR code will appear here',
+  /** The text show below the QR Code SVG, with instructions on how to use it */
+  'share-preview-menu.qr-code.instructions': 'Scan the QR Code to open the preview on your phone.',
+  /** Menu item in the share preview menu that allows copying the current preview URL, if sharing is enabled */
+  'share-preview-menu.copy-url.text': 'Copy preview link',
+  /** Fallback message shown when the current user is not permitted to share previews */
+  'share-preview-menu.error_missing-grants': "You don't have permission to share previews. ",
 }

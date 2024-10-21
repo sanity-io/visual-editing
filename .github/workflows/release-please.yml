@@ -24,8 +24,6 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      # Disable the new QRCode feature on production builds
-      PRESENTATION_ENABLE_QRCODE: false
       # The Live Draft Content API is only available on vX atm
       PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: false
     steps:
