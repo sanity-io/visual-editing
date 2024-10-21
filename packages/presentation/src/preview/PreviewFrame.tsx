@@ -8,7 +8,6 @@ import {
   PanelLeftIcon,
   PublishIcon,
   RefreshIcon,
-  ShareIcon,
 } from '@sanity/icons'
 import {withoutSecretSearchParams} from '@sanity/preview-url-secret/without-secret-search-params'
 import {
@@ -45,7 +44,7 @@ import {
 } from 'react'
 import {Hotkeys, useTranslation} from 'sanity'
 import {ErrorCard} from '../components/ErrorCard'
-import {MAX_TIME_TO_OVERLAYS_CONNECTION, SHARE_PREVIEW_ACCESS} from '../constants'
+import {MAX_TIME_TO_OVERLAYS_CONNECTION} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'
 import {
   ACTION_IFRAME_LOADED,
@@ -59,7 +58,6 @@ import {IFrame} from './IFrame'
 import {OpenPreviewButton} from './OpenPreviewButton'
 import {PreviewLocationInput} from './PreviewLocationInput'
 import {SharePreviewMenu} from './SharePreviewMenu'
-import {ShareUrlMenuItems} from './ShareUrlMenuItems'
 
 const MotionFlex = motion(Flex)
 
@@ -398,43 +396,11 @@ export const PreviewFrame = memo(
                     origin={previewLocationOrigin}
                     suffix={
                       <Box padding={1}>
-                        {SHARE_PREVIEW_ACCESS ? (
-                          <OpenPreviewButton
-                            openPopup={openPopup}
-                            previewLocationOrigin={previewLocationOrigin}
-                            previewLocationRoute={previewLocationRoute}
-                          />
-                        ) : (
-                          <MenuButton
-                            button={
-                              <Button
-                                fontSize={1}
-                                iconRight={ShareIcon}
-                                mode="bleed"
-                                padding={2}
-                                space={2}
-                              />
-                            }
-                            id="location-menu"
-                            menu={
-                              <Menu>
-                                <ShareUrlMenuItems
-                                  initialUrl={initialUrl}
-                                  openPopup={openPopup}
-                                  previewLocationOrigin={previewLocationOrigin}
-                                  previewLocationRoute={previewLocationRoute}
-                                  perspective={perspective}
-                                />
-                              </Menu>
-                            }
-                            popover={{
-                              animate: true,
-                              constrainSize: true,
-                              placement: 'bottom',
-                              portal: true,
-                            }}
-                          />
-                        )}
+                        <OpenPreviewButton
+                          openPopup={openPopup}
+                          previewLocationOrigin={previewLocationOrigin}
+                          previewLocationRoute={previewLocationRoute}
+                        />
                       </Box>
                     }
                     value={previewLocationRoute}

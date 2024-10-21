@@ -23,18 +23,18 @@ import {
   Tooltip,
   useToast,
 } from '@sanity/ui'
-import {QRCodeSVG} from 'qrcode.react'
-import {memo, useCallback, useEffect, useMemo, useState} from 'react'
+import {AnimatePresence, motion} from 'framer-motion'
+import {lazy, memo, Suspense, useCallback, useEffect, useMemo, useState} from 'react'
 import {useClient, useCurrentUser, useTranslation} from 'sanity'
 import {styled} from 'styled-components'
 import {API_VERSION} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'
 import type {PreviewFrameProps} from './PreviewFrame'
 
+const QRCodeSVG = lazy(() => import('./QRCodeSVG'))
+
 export interface SharePreviewMenuProps {
-  // @TODO: Who can toggle sharing, need higher rights
   canToggleSharePreviewAccess: boolean
-  // @TODO: Who can use a shared preview access, if already enabled. If no rights, show a message instructing an admin to enable it.
   canUseSharedPreviewAccess: boolean
   previewLocationRoute: string
   initialUrl: PreviewFrameProps['initialUrl']
@@ -53,6 +53,10 @@ const StyledSanityMonogram = styled(SanityMonogram)`
   height: ${QrCodeLogoSize}px;
   width: ${QrCodeLogoSize}px;
 `
+
+const MotionSpinner = motion(Spinner)
+const MotionText = motion(Text)
+const MotionMonogram = motion(StyledSanityMonogram)
 
 export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
   props: SharePreviewMenuProps,
@@ -84,22 +88,13 @@ export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
     throw error
   }
 
-  // const handleClose = useCallback(() => {
-  //   if (busy) {
-  //     // eslint-disable-next-line no-console
-  //     console.warn('Show a toast here instead, and delay closing the dialog')
-  //   } else {
-  //     onClose()
-  //   }
-  // }, [busy, onClose])
-
   const handleUnableToToggle = useCallback(() => {
     pushToast({
       closable: true,
       status: 'warning',
-      title: `You don't have permissions to toggle sharing of this preview`,
+      title: t('share-preview-menu.error_toggle-sharing', {context: 'toggle-sharing'}),
     })
-  }, [pushToast])
+  }, [pushToast, t])
 
   const handleDisableSharing = useCallback(async () => {
     try {
@@ -221,7 +216,13 @@ export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
                 >
                   <Tooltip
                     animate
-                    content={<Text size={1}>{url ? 'Disable sharing' : 'Enable sharing'}</Text>}
+                    content={
+                      <Text size={1}>
+                        {t('share-preview-menu.toggle-button.tooltip', {
+                          context: url ? 'disable' : 'enable',
+                        })}
+                      </Text>
+                    }
                     fallbackPlacements={['bottom-start']}
                     padding={1}
                     placement="bottom"
@@ -241,11 +242,11 @@ export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
                     />
                   </Tooltip>
                   <Text size={1} weight="medium">
-                    Share this preview
+                    {t('share-preview-menu.toggle-button.label', {context: 'first-line'})}
                   </Text>
                   <span />
                   <Text muted size={1}>
-                    with anyone who has the link
+                    {t('share-preview-menu.toggle-button.label', {context: 'second-line'})}
                   </Text>
                 </Grid>
               </label>
@@ -261,53 +262,64 @@ export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
                       justifyContent: 'center',
                     }}
                   >
-                    {busy ? (
-                      <Spinner muted />
-                    ) : url ? (
-                      <>
-                        <QRCodeSVG
-                          value={url.toString()}
-                          size={QrSize}
-                          bgColor="var(--card-bg-color)"
-                          fgColor="var(--card-fg-color)"
-                          imageSettings={{
-                            src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==',
-                            height: QrCodeLogoSize + QrCodeLogoPadding,
-                            width: QrCodeLogoSize + QrCodeLogoPadding,
-                            excavate: true,
-                          }}
+                    <AnimatePresence>
+                      {busy ? (
+                        <MotionSpinner
+                          muted
+                          initial={{opacity: 0}}
+                          animate={{opacity: 1}}
+                          exit={{opacity: 0}}
                         />
-                        <StyledSanityMonogram />
-                      </>
-                    ) : (
-                      <Text
-                        muted
-                        size={1}
-                        style={{maxWidth: '100px', textWrap: 'pretty', opacity: 0.6}}
-                      >
-                        QR code will appear here
-                      </Text>
-                    )}
+                      ) : url ? (
+                        <>
+                          <Suspense fallback={<Spinner />}>
+                            <QRCodeSVG
+                              title={t('share-preview-menu.qr-code.title', {url: url.toString()})}
+                              value={url.toString()}
+                              size={QrSize}
+                              color="var(--card-fg-color)"
+                              logoSize={QrCodeLogoSize + QrCodeLogoPadding}
+                            />
+                            <MotionMonogram
+                              initial={{opacity: -0.5}}
+                              animate={{opacity: 1.5}}
+                              exit={{opacity: 0}}
+                            />
+                          </Suspense>
+                        </>
+                      ) : (
+                        <MotionText
+                          muted
+                          size={1}
+                          style={{maxWidth: '100px', textWrap: 'pretty', textAlign: 'center'}}
+                          initial={{opacity: 0}}
+                          animate={{opacity: 1}}
+                          exit={{opacity: 0}}
+                        >
+                          {t('share-preview-menu.qr-code.placeholder')}
+                        </MotionText>
+                      )}
+                    </AnimatePresence>
                   </Card>
                   <Text muted size={1}>
-                    Scan the QR Code to open the preview on your phone.
+                    {t('share-preview-menu.qr-code.instructions')}
                   </Text>
                 </Stack>
               </Box>
               <MenuDivider />
               <MenuItem
-                disabled={!url}
+                disabled={!url || disabling}
                 icon={CopyIcon}
                 onClick={handleCopyUrl}
                 fontSize={1}
                 padding={3}
-                text={'Copy preview link'}
+                text={t('share-preview-menu.copy-url.text')}
               />
             </>
           ) : (
             <Card padding={2} tone="caution" radius={3}>
               <Text style={{textWrap: 'pretty'}}>
-                You don&apos;t have permission to share previews.
+                {t('share-preview-menu.error', {context: 'missing-grants'})}
               </Text>
             </Card>
           )}
