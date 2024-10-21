@@ -18,6 +18,27 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.23...core-loader-v1.7.0) (2024-10-21)
+
+
+### Features
+
+* add svelte loader `LiveMode`, improve stega handling ([#1873](https://github.com/sanity-io/visual-editing/issues/1873)) ([2c3bfbe](https://github.com/sanity-io/visual-editing/commit/2c3bfbec47af19b441869424a7513e0617337ee9))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+* use `@sanity/comlink` for `postMessage` events ([15940a3](https://github.com/sanity-io/visual-editing/commit/15940a3b20c2e39e33da20f760c5289a01046c3f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.22
+    * @sanity/comlink bumped to 1.0.0
+
 ## [1.6.23](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.22...core-loader-v1.6.23) (2024-09-11)
 
 

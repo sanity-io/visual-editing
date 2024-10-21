@@ -12,6 +12,31 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.17.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.5...presentation-v1.17.0) (2024-10-21)
+
+
+### Features
+
+* add preview link sharing with QR code ([#1994](https://github.com/sanity-io/visual-editing/issues/1994)) ([3f62247](https://github.com/sanity-io/visual-editing/commit/3f6224753acf96f2f4f04388ee09cf64d0807360))
+* lower minimum role from Editor to Contributor for creating Preview URL Secrets necessary to start Draft Mode ([5e32bdc](https://github.com/sanity-io/visual-editing/commit/5e32bdc66e17296f55a737e6de9f90704b22bafa))
+
+
+### Bug Fixes
+
+* check permissions before attempting to create preview url secret ([4092fb3](https://github.com/sanity-io/visual-editing/commit/4092fb35fb3913fc2f63c315c70f7e3459e51f8a))
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+* **presentation:** observe correct preview snapshot perspectives ([#1947](https://github.com/sanity-io/visual-editing/issues/1947)) ([f5ebe90](https://github.com/sanity-io/visual-editing/commit/f5ebe9080ad85ab25daf74500758bec28a4479d8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.0.0
+    * @sanity/preview-url-secret bumped to 2.0.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.22
+
 ## [1.16.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.4...presentation-v1.16.5) (2024-09-11)
 
 
