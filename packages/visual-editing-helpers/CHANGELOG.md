@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.24](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.23...visual-editing-helpers-v0.6.24) (2024-10-21)
+
+
+### Bug Fixes
+
+* stop inlining rxjs and `@sanity/comlink` ([#2012](https://github.com/sanity-io/visual-editing/issues/2012)) ([8df6708](https://github.com/sanity-io/visual-editing/commit/8df670861f40a762684f936fb968e3fbde4f63ba))
+
 ## [0.6.23](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.22...visual-editing-helpers-v0.6.23) (2024-10-21)
 
 
