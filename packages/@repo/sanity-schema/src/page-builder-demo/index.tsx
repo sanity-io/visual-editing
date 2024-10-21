@@ -30,7 +30,9 @@ const productType = defineType({
     defineField({
       type: 'array',
       name: 'media',
-      title: 'Media',
+      // @ts-expect-error this is actually allowed at runtime
+      title: <>Media</>,
+      // title: 'Media',
       of: [
         {
           type: 'image',
