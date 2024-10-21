@@ -36,6 +36,7 @@ export default async function Page() {
                 }).toString()}
                 data-sanity-drag-group="vertical-flow-auto-calculated"
                 className="border border-solid border-white p-3"
+                key={child._key}
               >
                 <p>{child.title}</p>
               </div>
@@ -55,6 +56,7 @@ export default async function Page() {
                 }).toString()}
                 data-sanity-drag-group="horizontal-flow-auto-calculated"
                 className="border border-solid border-white p-3"
+                key={child._key}
               >
                 <p>{stegaClean(child.title)}</p>
               </div>
@@ -73,6 +75,7 @@ export default async function Page() {
               }).toString()}
               data-sanity-drag-group="nested-flow-auto-calculated"
               className="mt-4 border border-solid border-white p-3"
+              key={child._key}
             >
               {stegaClean(child.title)}
               {child.children &&
@@ -84,6 +87,7 @@ export default async function Page() {
                       path: `children[_key=="${child._key}"].children[_key=="${child1._key}"]`,
                     }).toString()}
                     className="mt-4 border border-solid border-white p-3"
+                    key={child._key}
                   >
                     {stegaClean(child1.title)}
                     <div className="flew-row flex gap-3">
@@ -96,6 +100,7 @@ export default async function Page() {
                               path: `children[_key=="${child._key}"].children[_key=="${child1._key}"].children[_key=="${child2._key}"]`,
                             }).toString()}
                             className="mt-4 border border-solid border-white p-3"
+                            key={child._key}
                           >
                             {stegaClean(child2.title)}
                           </div>
@@ -120,6 +125,7 @@ export default async function Page() {
                 data-sanity-drag-group="complex-previews"
                 className="border border-solid border-white p-3"
                 style={{gridColumn: index === 0 || index === 5 ? 'span 2' : 'span 1'}}
+                key={child._key}
               >
                 <h3>{stegaClean(child.title)}</h3>
                 <img src="https://placehold.co/600x400" alt="" className="mb-4 mt-4" />
@@ -145,6 +151,7 @@ export default async function Page() {
                 }).toString()}
                 data-sanity-drag-group="large-vertical-sections"
                 className="border border-solid border-white p-3"
+                key={child._key}
               >
                 <h3>{stegaClean(child.title)}</h3>
                 <img src="https://placehold.co/600x400" alt="" className="mb-4 mt-4" />
@@ -172,6 +179,7 @@ export default async function Page() {
                 data-sanity-drag-flow="vertical"
                 className="mt-3 break-inside-avoid border border-solid border-white p-3"
                 style={{height: `${100 + index * 100}px`}}
+                key={child._key}
               >
                 <h3>{stegaClean(child.title)}</h3>
               </div>
@@ -192,6 +200,7 @@ export default async function Page() {
                 data-sanity-drag-prevent-default
                 data-sanity-drag-group="prevent-default"
                 className="border border-solid border-white p-3"
+                key={child._key}
               >
                 <p>{stegaClean(child.title)}</p>
               </div>
