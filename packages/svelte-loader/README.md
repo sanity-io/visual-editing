@@ -257,4 +257,3 @@ Finally, we enable both live mode and overlays in the root layout component.
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/svelte-loader?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/svelte-loader?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/svelte-loader
-
