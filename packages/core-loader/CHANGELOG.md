@@ -18,6 +18,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.7.2](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.1...core-loader-v1.7.2) (2024-10-21)
+
+
+### Bug Fixes
+
+* stop inlining rxjs and `@sanity/comlink` ([#2012](https://github.com/sanity-io/visual-editing/issues/2012)) ([8df6708](https://github.com/sanity-io/visual-editing/commit/8df670861f40a762684f936fb968e3fbde4f63ba))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.24
+
 ## [1.7.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.0...core-loader-v1.7.1) (2024-10-21)
 
 
