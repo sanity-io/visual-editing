@@ -4,7 +4,7 @@ import {
   type ReconnectEvent,
   type WelcomeEvent,
 } from '@sanity/client'
-import {filter, merge, Observable, shareReplay, Subject, type ObservedValueOf} from 'rxjs'
+import {filter, merge, shareReplay, Subject, type Observable, type ObservedValueOf} from 'rxjs'
 import type {VisualEditingNode} from '../../../types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
