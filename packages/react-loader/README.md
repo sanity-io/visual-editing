@@ -223,4 +223,3 @@ export default function ProductTemplate(props: Props) {
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/react-loader?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/react-loader?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/react-loader
-
