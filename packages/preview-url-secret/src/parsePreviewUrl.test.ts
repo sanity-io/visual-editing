@@ -1,9 +1,5 @@
 import {expect, test} from 'vitest'
-import {
-  urlSearchParamPreviewPathname,
-  urlSearchParamPreviewPerspective,
-  urlSearchParamPreviewSecret,
-} from './constants'
+import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
 import {parsePreviewUrl} from './parsePreviewUrl'
 
 test('handles absolute URLs', () => {
@@ -13,7 +9,6 @@ test('handles absolute URLs', () => {
   expect(parsePreviewUrl(unsafe.toString())).toEqual({
     redirectTo: '/preview?foo=bar',
     secret: 'abc123',
-    studioPreviewPerspective: null,
   })
 })
 
@@ -21,11 +16,9 @@ test('handles relative URLs', () => {
   const unsafe = new URL('/api/draft', 'http://localhost')
   unsafe.searchParams.set(urlSearchParamPreviewSecret, 'abc123')
   unsafe.searchParams.set(urlSearchParamPreviewPathname, '/preview?foo=bar')
-  unsafe.searchParams.set(urlSearchParamPreviewPerspective, 'published')
   expect(parsePreviewUrl(`${unsafe.pathname}${unsafe.search}`)).toEqual({
     redirectTo: '/preview?foo=bar',
     secret: 'abc123',
-    studioPreviewPerspective: 'published',
   })
 })
 
@@ -36,7 +29,6 @@ test('includes hash', () => {
   expect(parsePreviewUrl(unsafe.toString())).toEqual({
     redirectTo: '/preview?foo=bar#heading1',
     secret: 'abc123',
-    studioPreviewPerspective: null,
   })
 })
 
@@ -50,6 +42,5 @@ test('strips origin from redirect', () => {
   expect(parsePreviewUrl(unsafe.toString())).toEqual({
     redirectTo: '/preview?foo=bar',
     secret: 'abc123',
-    studioPreviewPerspective: null,
   })
 })
