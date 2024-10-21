@@ -34,9 +34,12 @@ export async function generateStaticParams() {
 
 const productPageQuery = defineQuery(`*[_type == "product" && slug.current == $slug][0]`)
 
-export default async function ProductPage({params}: {params: {slug: string}}) {
+export default async function ProductPage({params}: {params: Promise<{slug: string}>}) {
   // @TODO fix typegen vs manual types issues
-  const {data} = (await sanityFetch({query: productPageQuery, params})) as unknown as {
+  const {data} = (await sanityFetch({
+    query: productPageQuery,
+    params: await params,
+  })) as unknown as {
     data: ProductData | null
   }
 

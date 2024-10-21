@@ -5,15 +5,15 @@ import {loadQuery} from '../sanity.ssr'
 import ShoePageClient from './page.client'
 
 type Props = {
-  params: {slug: string}
+  params: Promise<{slug: string}>
 }
 
 export default async function ShoePage(props: Props) {
-  const {params} = props
+  const params = await props.params
   const initial = loadQuery<ShoeResult>(shoe, params, {
-    perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+    perspective: (await draftMode()).isEnabled ? 'previewDrafts' : 'published',
     next: {
-      revalidate: draftMode().isEnabled ? 0 : false,
+      revalidate: (await draftMode()).isEnabled ? 0 : false,
       tags: [`shoe:${params.slug}`],
     },
   })

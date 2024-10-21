@@ -9,8 +9,8 @@ export default async function ShoesPage() {
     shoesList,
     {},
     {
-      perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
-      next: {revalidate: draftMode().isEnabled ? 0 : false, tags: ['shoe']},
+      perspective: (await draftMode()).isEnabled ? 'previewDrafts' : 'published',
+      next: {revalidate: (await draftMode()).isEnabled ? 0 : false, tags: ['shoe']},
     },
   )
   return <ShoesPageClient initial={initial} />
