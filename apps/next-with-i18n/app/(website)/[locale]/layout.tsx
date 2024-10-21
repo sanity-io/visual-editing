@@ -18,21 +18,22 @@ const sans = Inter({
 })
 
 export default async function RootLayout({
-  params: { locale },
+  params,
   children,
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
   children: React.ReactNode
 }) {
+  const { locale } = await params
   return (
     <html lang={locale} className={sans.variable}>
       <body>
         {children}
-        {draftMode().isEnabled && (
+        {(await draftMode()).isEnabled && (
           <VisualEditing
             refresh={async (payload) => {
               'use server'
-              if (!draftMode().isEnabled) {
+              if (!(await draftMode()).isEnabled) {
                 console.debug(
                   'Skipped manual refresh because draft mode is not enabled',
                 )

@@ -16,8 +16,8 @@ export default async function ShoesPage() {
     {},
     {
       filterResponse: false,
-      perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
-      useCdn: draftMode().isEnabled ? false : true,
+      perspective: (await draftMode()).isEnabled ? 'previewDrafts' : 'published',
+      useCdn: (await draftMode()).isEnabled ? false : true,
       cache: 'no-store',
     },
   )

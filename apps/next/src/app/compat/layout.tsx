@@ -14,10 +14,10 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     <html lang="en">
       <body>
         {children}
-        {draftMode().isEnabled && <VisualEditing />}
+        {(await draftMode()).isEnabled && <VisualEditing />}
         <a className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100">
           app-router:{' '}
-          {draftMode().isEnabled
+          {(await draftMode()).isEnabled
             ? 'draftMode'
             : process.env.NEXT_PUBLIC_VERCEL_ENV || 'development'}
           {', '}

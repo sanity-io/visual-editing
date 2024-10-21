@@ -50,9 +50,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   return (
     <html lang="en" className={`${mono.variable} ${sans.variable} ${serif.variable}`}>
       <body className="bg-white text-black dark:bg-black dark:text-white">
-        {draftMode().isEnabled && <AlertBanner />}
+        {(await draftMode()).isEnabled && <AlertBanner />}
         <AppLayout data={data}>{children}</AppLayout>
-        {draftMode().isEnabled && <VisualEditing />}
+        {(await draftMode()).isEnabled && <VisualEditing />}
         <SanityLive />
       </body>
     </html>
