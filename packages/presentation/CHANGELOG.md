@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.17.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.17.0...presentation-v1.17.1) (2024-10-21)
+
+
+### Bug Fixes
+
+* **schema-extract:** handle `title` sometimes being a React node ([#2002](https://github.com/sanity-io/visual-editing/issues/2002)) ([3dad7aa](https://github.com/sanity-io/visual-editing/commit/3dad7aa72d196b2d90e5847ee7550fab3d618c16))
+
 ## [1.17.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.16.5...presentation-v1.17.0) (2024-10-21)
 
 
