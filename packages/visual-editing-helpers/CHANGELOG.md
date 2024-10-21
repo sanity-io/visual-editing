@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.23](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.22...visual-editing-helpers-v0.6.23) (2024-10-21)
+
+
+### Bug Fixes
+
+* **comlink:** handle heartbeat compatibility correctly ([#2006](https://github.com/sanity-io/visual-editing/issues/2006)) ([65af1e1](https://github.com/sanity-io/visual-editing/commit/65af1e17aa329d5f5282152d4b77bca8750a539f))
+
 ## [0.6.22](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.21...visual-editing-helpers-v0.6.22) (2024-10-21)
 
 

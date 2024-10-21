@@ -18,6 +18,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.7.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.0...core-loader-v1.7.1) (2024-10-21)
+
+
+### Bug Fixes
+
+* **comlink:** handle heartbeat compatibility correctly ([#2006](https://github.com/sanity-io/visual-editing/issues/2006)) ([65af1e1](https://github.com/sanity-io/visual-editing/commit/65af1e17aa329d5f5282152d4b77bca8750a539f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.23
+
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.23...core-loader-v1.7.0) (2024-10-21)
 
 
