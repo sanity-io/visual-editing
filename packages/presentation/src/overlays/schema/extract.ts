@@ -250,7 +250,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
       return {
         type: 'document',
         name: schemaType.name,
-        title: schemaType.title,
+        title: typeof schemaType.title === 'string' ? schemaType.title : undefined,
         icon: extractIcon(schemaType),
         fields: {
           ...documentDefaultFields(schemaType.name),
@@ -287,7 +287,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
 
     return {
       name: schemaType.name,
-      title: schemaType.title,
+      title: typeof schemaType.title === 'string' ? schemaType.title : undefined,
       type: 'type',
       value,
     }
@@ -307,7 +307,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
       fields[field.name] = {
         type: 'objectField',
         name: field.name,
-        title: field.type.title,
+        title: typeof field.type.title === 'string' ? field.type.title : undefined,
         value,
         optional: isFieldRequired(field) === false,
       }
@@ -423,7 +423,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
         type: 'unionOption',
         icon: extractIcon(item),
         name: item.name,
-        title: item.title,
+        title: typeof item.title === 'string' ? item.title : undefined,
         value: field,
       } satisfies SchemaUnionOption
       if (field.type === 'inline') {
@@ -464,7 +464,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
       of: {
         type: 'arrayItem',
         name,
-        title,
+        title: typeof title === 'string' ? title : undefined,
         value,
       },
     }
