@@ -189,7 +189,7 @@ export default async function Page() {
         {/* Custom behaviour (reverse flex flow) */}
         <section className="mt-6">
           <h2>Custom behaviour</h2>
-          <div className="mt-4 flex flex-col-reverse gap-4">
+          <div className="mt-4 flex flex-col gap-4">
             {data.children.map((child) => (
               <div
                 data-sanity={createDataAttribute({
