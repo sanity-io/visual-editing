@@ -1,7 +1,6 @@
 import {defineConfig} from '@sanity/pkg-utils'
 
 export default defineConfig({
-  minify: !!process.env.GITHUB_ACTIONS,
   extract: {
     bundledPackages: ['@repo/visual-editing-helpers'],
     rules: {

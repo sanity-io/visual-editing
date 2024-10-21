@@ -4,12 +4,10 @@
   "globalDependencies": [".npmrc", ".prettierrc.cjs", "**/.env.*local"],
   "tasks": {
     "build": {
-      "env": ["GITHUB_ACTIONS"],
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
       "dependsOn": ["@sanity/insert-menu#build", "^build"]
     },
     "test": {
-      "env": ["GITHUB_ACTIONS"],
       "dependsOn": ["^build"],
       "cache": false
     },
