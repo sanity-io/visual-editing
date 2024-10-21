@@ -28,6 +28,30 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [1.12.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.11.37...svelte-loader-v1.12.0) (2024-10-21)
+
+
+### Features
+
+* add svelte loader `LiveMode`, improve stega handling ([#1873](https://github.com/sanity-io/visual-editing/issues/1873)) ([2c3bfbe](https://github.com/sanity-io/visual-editing/commit/2c3bfbec47af19b441869424a7513e0617337ee9))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+* **svelte-loader:** add svelte export condition ([#1881](https://github.com/sanity-io/visual-editing/issues/1881)) ([ff13da8](https://github.com/sanity-io/visual-editing/commit/ff13da87e8de759d1c189b3ade4be26f3871858c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.7.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.22
+    * @sanity/preview-url-secret bumped to 2.0.0
+    * @sanity/visual-editing bumped to 2.2.0
+
 ## [1.11.37](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.11.36...svelte-loader-v1.11.37) (2024-09-11)
 
 
