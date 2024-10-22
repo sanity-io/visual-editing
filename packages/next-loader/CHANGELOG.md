@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.4...next-loader-v1.0.5) (2024-10-22)
+
+
+### Bug Fixes
+
+* always notify subscribers ([#2030](https://github.com/sanity-io/visual-editing/issues/2030)) ([274397f](https://github.com/sanity-io/visual-editing/commit/274397f0a935ea005104a5ffe72a4d04167105a3))
+* remove unnecessary warning ([#2028](https://github.com/sanity-io/visual-editing/issues/2028)) ([b5d707c](https://github.com/sanity-io/visual-editing/commit/b5d707c435e9d7b47b63265ba9671583b99a9b7f))
+
 ## [1.0.4](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.3...next-loader-v1.0.4) (2024-10-22)
 
 
