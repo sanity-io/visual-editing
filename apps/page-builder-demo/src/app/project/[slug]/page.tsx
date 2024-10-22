@@ -29,7 +29,7 @@ export default async function ProjectPage({params}: {params: Promise<{slug: stri
   // @TODO fix typegen vs manual types issues
   const {data} = (await sanityFetch({
     query: projectPageQuery,
-    params: await params,
+    params,
   })) as unknown as {
     data: ProjectData | null
   }
