@@ -48,7 +48,7 @@ export async function generateStaticParams() {
 }
 
 export default async function PagesPage({params}: {params: Promise<{slug: string}>}) {
-  const {data} = await sanityFetch({query: pageQuery, params: await params})
+  const {data} = await sanityFetch({query: pageQuery, params})
   if (!data) {
     notFound()
   }
