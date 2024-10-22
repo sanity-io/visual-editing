@@ -218,15 +218,21 @@ export function resolveDragAndDropGroup(
 
   if (!sanity || !isSanityNode(sanity) || !isSanityArrayPath(sanity.path)) return null
 
+  const targetDragGroup = element.getAttribute('data-sanity-drag-group')
+
   const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
     const elData = elementsMap.get(el)
     const elDragDisabled = el.getAttribute('data-sanity-drag-disable')
+    const elDragGroup = el.getAttribute('data-sanity-drag-group')
+
+    const sharedDragGroup = targetDragGroup !== null ? targetDragGroup === elDragGroup : true
 
     if (
       elData &&
       !elDragDisabled &&
       isSanityNode(elData.sanity) &&
-      sanityNodesExistInSameArray(sanity, elData.sanity)
+      sanityNodesExistInSameArray(sanity, elData.sanity) &&
+      sharedDragGroup
     ) {
       acc.push(elData)
     }

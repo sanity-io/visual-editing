@@ -1,15 +1,11 @@
-import {at, insert, remove} from '@sanity/mutate'
-import {get as getFromPath} from '@sanity/util/paths'
-import {useCallback, useEffect} from 'react'
-import type {DragEndEvent, DragInsertPosition} from '../types'
-import {useDocuments} from '../ui/optimistic-state/useDocuments'
-import {getArrayItemKeyAndParentPath} from './mutations'
+'use client'
 
-// Finds the node that the drag end event was relative to, and the relative
-// position the new element should be inserted in. If the reference node was
-// "top" or "left", we insert "after". If it was "bottom" or "right", we insert
-// "before".
-function getReferenceNodeAndInsertPosition(position: DragInsertPosition) {
+import {at, createIfNotExists, insert, patch, remove} from '@sanity/mutate'
+import {get as getFromPath} from '@sanity/util/paths'
+import {getArrayItemKeyAndParentPath, useDocuments} from '@sanity/visual-editing'
+import {useEffect} from 'react'
+
+function getReferenceNodeAndInsertPosition(position: any) {
   if (position) {
     const {top, right, bottom, left} = position
     if (left || top) {
@@ -21,16 +17,14 @@ function getReferenceNodeAndInsertPosition(position: DragInsertPosition) {
   return undefined
 }
 
-export function useDragEndEvents(): {
-  dispatchDragEndEvent: (event: DragEndEvent) => void
-} {
+export function DnDCustomBehaviour() {
   const {getDocument} = useDocuments()
 
   useEffect(() => {
-    const handler = (e: CustomEvent<DragEndEvent>) => {
-      const {insertPosition, target, preventInsertDefault} = e.detail
+    const handler = (e: CustomEvent) => {
+      const {insertPosition, target, dragGroup} = e.detail
 
-      if (preventInsertDefault) return
+      if (dragGroup !== 'prevent-default') return
 
       const reference = getReferenceNodeAndInsertPosition(insertPosition)
       if (reference) {
@@ -60,19 +54,13 @@ export function useDragEndEvents(): {
         }
       }
     }
+
     window.addEventListener('sanity/dragEnd', handler as EventListener)
+
     return () => {
       window.removeEventListener('sanity/dragEnd', handler as EventListener)
     }
   }, [getDocument])
 
-  const dispatchDragEndEvent = useCallback((event: DragEndEvent) => {
-    const customEvent = new CustomEvent<DragEndEvent>('sanity/dragEnd', {
-      detail: event,
-      cancelable: true,
-    })
-    window.dispatchEvent(customEvent)
-  }, [])
-
-  return {dispatchDragEndEvent}
+  return <></>
 }
