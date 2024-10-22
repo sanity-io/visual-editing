@@ -93,7 +93,6 @@ function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, acto
 function createDocumentCommit<T extends Record<string, any>>(id: string, actor: MutatorActor) {
   return (): void => {
     const {draftDoc} = getDocumentsAndSnapshot<T>(id, actor)
-    console.log('send submit!')
     draftDoc.send({type: 'submit'})
   }
 }
