@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.2.2...visual-editing-v2.3.0) (2024-10-22)
+
+
+### Features
+
+* **visual-editing:** add OptimisticDocument commit method ([#2023](https://github.com/sanity-io/visual-editing/issues/2023)) ([270c67d](https://github.com/sanity-io/visual-editing/commit/270c67d71a7359256a71f97307cf092a5a490d0d))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/mutate to v0.10.1-canary.5 ([a093dc8](https://github.com/sanity-io/visual-editing/commit/a093dc8c8fe16d54d33ca32d5c278859648ee9ef))
+* **visual-editing:** resolve inline schema types when getting fields ([#2026](https://github.com/sanity-io/visual-editing/issues/2026)) ([6827561](https://github.com/sanity-io/visual-editing/commit/6827561d7e1e4e3fe5d3c12c0847093df74f0de0))
+
 ## [2.2.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.2.1...visual-editing-v2.2.2) (2024-10-21)
 
 
