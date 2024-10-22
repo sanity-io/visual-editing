@@ -29,7 +29,6 @@ export interface SanityLiveProps
     | 'apiVersion'
     | 'useProjectHostname'
     | 'token'
-    | 'ignoreBrowserTokenWarning'
     | 'requestTagPrefix'
   > {
   // handleDraftModeAction: (secret: string) => Promise<void | string>
@@ -51,7 +50,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     apiHost,
     apiVersion,
     useProjectHostname,
-    ignoreBrowserTokenWarning,
     token,
     requestTagPrefix,
     // handleDraftModeAction,
@@ -94,21 +92,12 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         apiHost,
         apiVersion,
         useProjectHostname,
-        ignoreBrowserTokenWarning,
+        ignoreBrowserTokenWarning: true,
         token,
         useCdn: false,
         requestTagPrefix,
       }),
-    [
-      apiHost,
-      apiVersion,
-      dataset,
-      ignoreBrowserTokenWarning,
-      projectId,
-      requestTagPrefix,
-      token,
-      useProjectHostname,
-    ],
+    [apiHost, apiVersion, dataset, projectId, requestTagPrefix, token, useProjectHostname],
   )
 
   /**
