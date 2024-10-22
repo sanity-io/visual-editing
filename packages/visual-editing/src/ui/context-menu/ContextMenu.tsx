@@ -15,7 +15,6 @@ import type {ContextMenuNode, ContextMenuProps} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {useDocuments} from '../optimistic-state/useDocuments'
 import {PopoverPortal} from '../PopoverPortal'
-import {getField, getSchemaType} from '../schema/schema'
 import {useSchema} from '../schema/useSchema'
 import {getContextMenuItems} from './contextMenuItems'
 
@@ -75,11 +74,10 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     position: {x, y},
   } = props
 
-  const {schema, resolvedTypes} = useSchema()
+  const {getField} = useSchema()
   const {getDocument} = useDocuments()
 
-  const schemaType = getSchemaType(node, schema)
-  const {field, parent} = getField(node, schemaType, resolvedTypes)
+  const {field, parent} = getField(node)
 
   const title = useMemo(() => {
     return field?.title || field?.name || 'Unknown type'

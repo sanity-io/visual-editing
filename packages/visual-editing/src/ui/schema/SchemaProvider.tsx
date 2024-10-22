@@ -1,4 +1,12 @@
-import type {ResolvedSchemaTypeMap, SchemaType, UnresolvedPath} from '@repo/visual-editing-helpers'
+import type {
+  DocumentSchema,
+  ResolvedSchemaTypeMap,
+  SanityNode,
+  SanityStegaNode,
+  SchemaType,
+  TypeSchema,
+  UnresolvedPath,
+} from '@repo/visual-editing-helpers'
 import {
   useCallback,
   useEffect,
@@ -8,8 +16,25 @@ import {
   type FunctionComponent,
   type PropsWithChildren,
 } from 'react'
-import type {ElementState, VisualEditingNode} from '../../types'
+import type {
+  ElementState,
+  OverlayElementField,
+  OverlayElementParent,
+  VisualEditingNode,
+} from '../../types'
 import {SchemaContext, type SchemaContextValue} from './SchemaContext'
+
+function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
+  return 'path' in node
+}
+
+function isDocumentSchemaType(type: SchemaType): type is DocumentSchema {
+  return type.type === 'document'
+}
+
+function isTypeSchemaType(type: SchemaType): type is TypeSchema {
+  return type.type === 'type'
+}
 
 function popUnkeyedPathSegments(path: string): string {
   return path
@@ -93,12 +118,118 @@ export const SchemaProvider: FunctionComponent<
     return () => controller.abort()
   }, [elements, reportPaths])
 
+  const getType = useCallback(
+    <T extends 'document' | 'type' = 'document'>(
+      node: SanityNode | SanityStegaNode | string,
+      type: T = 'document' as T,
+    ): T extends 'document' ? DocumentSchema | undefined : TypeSchema | undefined => {
+      if (
+        !schema ||
+        (typeof node !== 'string' && (!isSanityNode(node) || !Array.isArray(schema)))
+      ) {
+        return undefined
+      }
+      const name = typeof node === 'string' ? node : node.type
+      const filter = type === 'document' ? isDocumentSchemaType : isTypeSchemaType
+      return schema
+        .filter(filter)
+        .find((schemaType) => schemaType.name === name) as T extends 'document'
+        ? DocumentSchema | undefined
+        : TypeSchema | undefined
+    },
+    [schema],
+  )
+
+  const getField = useCallback(
+    (
+      node: SanityNode | SanityStegaNode,
+    ): {
+      field: OverlayElementField
+      parent: OverlayElementParent
+    } => {
+      if (!isSanityNode(node)) {
+        return {
+          field: undefined,
+          parent: undefined,
+        }
+      }
+
+      const schemaType = getType(node)
+
+      if (!schemaType) {
+        return {
+          field: undefined,
+          parent: undefined,
+        }
+      }
+
+      function fieldFromPath(
+        schemaType: OverlayElementParent,
+        path: string[],
+        parent: OverlayElementParent,
+        prevPathPart?: string,
+      ): {
+        field: OverlayElementField
+        parent: OverlayElementParent
+      } {
+        if (!schemaType) {
+          return {field: undefined, parent: undefined}
+        }
+
+        const [next, ...rest] = path
+
+        if ('fields' in schemaType) {
+          const objectField = schemaType.fields[next]
+          if (!rest.length) {
+            return {field: objectField, parent}
+          }
+          return fieldFromPath(objectField.value, rest, schemaType, next)
+        } else if (schemaType.type === 'array') {
+          return fieldFromPath(schemaType.of, path, schemaType)
+        } else if (schemaType.type === 'arrayItem') {
+          if (!rest.length) return {field: schemaType, parent}
+          return fieldFromPath(schemaType.value, rest, schemaType)
+        } else if (schemaType.type === 'union') {
+          const name = next.startsWith('[_key==')
+            ? resolvedTypes
+                ?.get((node as SanityNode).id)
+                ?.get([prevPathPart, next].filter(Boolean).join(''))
+            : next
+          return fieldFromPath(
+            schemaType.of.find((item) => (item.type === 'unionOption' ? item.name === name : item)),
+            rest,
+            schemaType,
+          )
+        } else if (schemaType.type === 'unionOption') {
+          if (!next) return {field: schemaType, parent}
+          return fieldFromPath(schemaType.value, path, schemaType)
+        } else if (schemaType.type === 'inline') {
+          const type = getType(schemaType.name, 'type')
+          return fieldFromPath((type as TypeSchema).value, path, schemaType)
+        }
+        throw new Error(`No field could be resolved at path: "${path.join('.')}"`)
+      }
+
+      const nodePath = node.path.split('.').flatMap((part) => {
+        if (part.includes('[')) {
+          return part.split(/(\[.+\])/, 2)
+        }
+        return [part]
+      })
+
+      return fieldFromPath(schemaType, nodePath, undefined)
+    },
+    [getType, resolvedTypes],
+  )
+
   const context = useMemo<SchemaContextValue>(
     () => ({
+      getField,
+      getType,
       resolvedTypes,
       schema: schema || [],
     }),
-    [resolvedTypes, schema],
+    [getField, getType, resolvedTypes, schema],
   )
   return <SchemaContext.Provider value={context}>{children}</SchemaContext.Provider>
 }
