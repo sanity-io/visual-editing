@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.3...next-loader-v1.0.4) (2024-10-22)
+
+
+### Bug Fixes
+
+* resolve params promises ([#2027](https://github.com/sanity-io/visual-editing/issues/2027)) ([bf6e404](https://github.com/sanity-io/visual-editing/commit/bf6e40472337f011dc955fb034f6446da0b3e9e6))
+
 ## [1.0.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.2...next-loader-v1.0.3) (2024-10-22)
 
 
