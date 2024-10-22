@@ -12,7 +12,13 @@ import type {
   VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
 import type {Node} from '@sanity/comlink'
-import type {ComponentType, FunctionComponent, PropsWithChildren, ReactElement} from 'react'
+import type {
+  ComponentType,
+  FunctionComponent,
+  HTMLAttributes,
+  PropsWithChildren,
+  ReactElement,
+} from 'react'
 
 export type {
   HistoryRefresh,
@@ -442,7 +448,7 @@ export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | C
  * @public
  */
 export type OverlayComponent = ComponentType<{
-  PointerEvents: FunctionComponent<PropsWithChildren>
+  PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
   element: ElementNode
   parent: OverlayElementParent
   node: SanityNode
