@@ -72,11 +72,6 @@ export interface DefinedSanityLiveProps {
   refreshOnReconnect?: boolean
 
   /**
-   * Once you've checked that the `browserToken` is only Viewer rights or lower, you can set this to `true` to silence browser warnings about the token.
-   * TODO: this warning should only be necessary when `serverToken` and `browserToken` are the same value
-   */
-  ignoreBrowserTokenWarning?: boolean
-  /**
    * Optional request tag for the listener. Use to identify the request in logs.
    *
    * @defaultValue `next-loader.live`
@@ -241,7 +236,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
     const {
-      ignoreBrowserTokenWarning = serverToken !== browserToken,
       // handleDraftModeAction = handleDraftModeActionMissing
       refreshOnMount,
       refreshOnFocus,
@@ -274,7 +268,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
         requestTagPrefix={requestTagPrefix}
         tag={tag}
         token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
-        ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
         draftModeEnabled={isDraftModeEnabled}
         // handleDraftModeAction={handleDraftModeAction}
         draftModePerspective={
