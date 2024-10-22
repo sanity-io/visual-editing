@@ -33,6 +33,7 @@ export type DocumentsGet = <T extends Record<string, any>>(
 
 export type OptimisticDocument<T extends Record<string, any> = Record<string, any>> = {
   id: string
+  commit: () => void
   get: {
     (): SanityDocument<T> | undefined
     <P extends Path<T, keyof T>>(path: P): PathValue<T, P> | undefined
@@ -87,6 +88,14 @@ function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, acto
   }
 
   return {draftId, publishedId, draftDoc, publishedDoc, snapshot}
+}
+
+function createDocumentCommit<T extends Record<string, any>>(id: string, actor: MutatorActor) {
+  return (): void => {
+    const {draftDoc} = getDocumentsAndSnapshot<T>(id, actor)
+    console.log('send submit!')
+    draftDoc.send({type: 'submit'})
+  }
 }
 
 function createDocumentGet<T extends Record<string, any>>(id: string, actor: MutatorActor) {
@@ -155,6 +164,7 @@ export function useDocuments(): {
   const getDocument: DocumentsGet = <T extends Record<string, any>>(documentId: string) => {
     return {
       id: documentId,
+      commit: createDocumentCommit(documentId, actor),
       get: createDocumentGet(documentId, actor),
       patch: createDocumentPatch<T>(documentId, actor),
     }

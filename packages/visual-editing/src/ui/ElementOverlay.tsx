@@ -11,6 +11,7 @@ import {
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
+  type HTMLAttributes,
   type PropsWithChildren,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -145,9 +146,13 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-const PointerEvents: FunctionComponent<PropsWithChildren> = ({children}) => {
+const PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({
+  children,
+  style,
+  ...rest
+}) => {
   return (
-    <div style={{pointerEvents: 'all'}} data-sanity-overlay-element>
+    <div style={{...style, pointerEvents: 'all'}} data-sanity-overlay-element {...rest}>
       {children}
     </div>
   )
