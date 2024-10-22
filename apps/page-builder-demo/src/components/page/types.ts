@@ -20,6 +20,10 @@ export interface IntroSectionData {
   headline?: string
   intro?: string
   style?: SectionStyleData
+  rotations?: {
+    pitch: number
+    yaw: number
+  }
 }
 
 export interface FeaturedProductsSectionData {

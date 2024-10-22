@@ -373,6 +373,23 @@ const introSectionType = defineArrayMember({
       name: 'style',
       title: 'Style',
     }),
+    defineField({
+      type: 'object',
+      name: 'rotations',
+      title: 'Rotations',
+      fields: [
+        defineField({
+          type: 'number',
+          name: 'pitch',
+          title: 'Pitch',
+        }),
+        defineField({
+          type: 'number',
+          name: 'yaw',
+          title: 'Yaw',
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {
