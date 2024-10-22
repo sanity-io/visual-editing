@@ -1,7 +1,7 @@
 import {animated, useSpring} from '@react-spring/three'
 import {Html, PerspectiveCamera, Stage, useGLTF} from '@react-three/drei'
 import {Canvas, type Euler} from '@react-three/fiber'
-import React, {FunctionComponent, Suspense, useMemo, useRef, useState} from 'react'
+import React, {FunctionComponent, Suspense, useMemo, useRef} from 'react'
 import * as THREE from 'three'
 
 function Object({
@@ -56,29 +56,27 @@ export const ProductModel: FunctionComponent<{
     return [0, 1, 5.2]
   }, [])
 
-  const {scale: intensity} = useSpring({scale: Math.PI * 1})
-
   return (
     <Canvas shadows>
       <color attach="background" args={['#f1f1f1']} />
       <fog color="#161616" attach="fog" near={8} far={30} />
-      <animated.spotLight
+      <spotLight
         castShadow
         position={[10, 10, 10]}
         angle={0.25}
         penumbra={1}
         decay={0.1}
-        intensity={intensity}
+        intensity={10}
       />
-      <animated.spotLight
+      <spotLight
         castShadow
         position={[-10, 10, 10]}
         angle={0.25}
         penumbra={1}
         decay={0.1}
-        intensity={intensity}
+        intensity={10}
       />
-      <animated.pointLight castShadow position={[-10, -10, -10]} decay={0} intensity={intensity} />
+      <pointLight castShadow position={[-10, -10, -10]} decay={0} intensity={10} />
 
       <Suspense fallback={<Html center>Loading...</Html>}>
         <Stage
