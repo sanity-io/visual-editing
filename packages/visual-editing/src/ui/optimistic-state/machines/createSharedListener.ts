@@ -1,18 +1,5 @@
-import {
-  type ListenEvent,
-  type MutationEvent,
-  type ReconnectEvent,
-  type WelcomeEvent,
-} from '@sanity/client'
-import {
-  filter,
-  merge,
-  Observable,
-  ReplaySubject,
-  shareReplay,
-  Subject,
-  type ObservedValueOf,
-} from 'rxjs'
+import {type ListenEvent} from '@sanity/client'
+import {merge, Observable, ReplaySubject, Subject, type ObservedValueOf} from 'rxjs'
 import type {VisualEditingNode} from '../../../types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
