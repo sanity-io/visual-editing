@@ -28,6 +28,7 @@ export function createOverlayController({
   handler,
   overlayElement,
   inFrame,
+  optimisticActorReady,
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
@@ -127,7 +128,7 @@ export function createOverlayController({
   }
 
   function setOverlayCursor() {
-    if (!inFrame) return
+    if (!inFrame || !optimisticActorReady) return
 
     const hoveredElement = getHoveredElement()
 
@@ -180,7 +181,7 @@ export function createOverlayController({
         }
       },
       contextmenu(event) {
-        if (!('path' in sanity)) return
+        if (!('path' in sanity) || !inFrame || !optimisticActorReady) return
 
         // This is a temporary check as the context menu only supports array
         // items (for now). We split the path into segments, if a `_key` exists
@@ -214,7 +215,7 @@ export function createOverlayController({
         if (element.getAttribute('data-sanity-drag-disable')) return
 
         // disable dnd in non-studio contexts
-        if (!inFrame) return
+        if (!inFrame || !optimisticActorReady) return
 
         const targetSanityData = elementsMap.get(element)?.sanity
 

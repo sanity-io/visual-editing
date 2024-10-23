@@ -73,11 +73,30 @@ export const SchemaProvider: FunctionComponent<
 
   const [schema, setSchema] = useState<SchemaType[] | null>(null)
 
+  const fetchSchema = useCallback(
+    async (signal: AbortSignal) => {
+      if (!comlink) return
+      try {
+        const response = await comlink.fetch(
+          {
+            type: 'visual-editing/schema',
+            data: undefined,
+          },
+          {signal},
+        )
+        setSchema(response.schema)
+      } catch (e) {
+        // Fail silently as the app may be communicating with a version of
+        // Presentation that does not support this feature
+      }
+    },
+    [comlink],
+  )
   useEffect(() => {
-    return comlink?.on('presentation/schema', (data) => {
-      setSchema(data.schema)
-    })
-  }, [comlink])
+    const controller = new AbortController()
+    fetchSchema(controller.signal)
+    return () => controller.abort()
+  }, [fetchSchema])
 
   // We report a list of paths that reference array items using a _key. We need
   // to resolve the types of each of these items so we can map them to the
@@ -180,6 +199,9 @@ export const SchemaProvider: FunctionComponent<
 
         if ('fields' in schemaType) {
           const objectField = schemaType.fields[next]
+          if (!objectField && 'rest' in schemaType) {
+            return fieldFromPath(schemaType.rest, path, schemaType)
+          }
           if (!rest.length) {
             return {field: objectField, parent}
           }
@@ -207,7 +229,9 @@ export const SchemaProvider: FunctionComponent<
           const type = getType(schemaType.name, 'type')
           return fieldFromPath((type as TypeSchema).value, path, schemaType)
         }
-        throw new Error(`No field could be resolved at path: "${path.join('.')}"`)
+        // eslint-disable-next-line no-console
+        console.warn(`No field could be resolved at path: "${path.join('.')}"`)
+        return {field: undefined, parent: undefined}
       }
 
       const nodePath = node.path.split('.').flatMap((part) => {

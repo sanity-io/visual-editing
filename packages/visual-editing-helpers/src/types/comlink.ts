@@ -107,6 +107,10 @@ export type VisualEditingControllerMsg =
         perspective: ClientPerspective
       }
     }
+  /**
+   * @deprecated switch to explict schema fetching (using
+   * 'visual-editing/schema') at next major
+   */
   | {
       type: 'presentation/schema'
       data: {
@@ -182,6 +186,13 @@ export type VisualEditingNodeMsg =
       data: HistoryRefresh
     }
   | {
+      type: 'visual-editing/schema'
+      data: undefined
+      response: {
+        schema: SchemaType[]
+      }
+    }
+  | {
       type: 'visual-editing/schema-union-types'
       data: {
         paths: UnresolvedPath[]
@@ -217,12 +228,25 @@ export type VisualEditingNodeMsg =
       response: any
     }
   | {
-      type: 'visual-editing/listen'
+      type: 'visual-editing/snapshot-welcome'
       data: undefined
+      response: {
+        event: WelcomeEvent
+      }
     }
   | {
-      type: 'visual-editing/unlisten'
+      type: 'visual-editing/fetch-perspective'
       data: undefined
+      response: {
+        perspective: ClientPerspective
+      }
+    }
+  | {
+      type: 'visual-editing/features'
+      data: undefined
+      response: {
+        features: Record<string, boolean>
+      }
     }
 
 /**

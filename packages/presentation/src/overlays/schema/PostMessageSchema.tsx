@@ -1,7 +1,7 @@
 import type {UnresolvedPath} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import {useRootTheme} from '@sanity/ui'
-import {memo, useEffect, useMemo} from 'react'
+import {memo, useEffect} from 'react'
 import {API_VERSION} from '../../constants'
 import {useClient, useWorkspace} from '../../internals'
 import type {VisualEditingConnection} from '../../types'
@@ -37,12 +37,18 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
 
   const workspace = useWorkspace()
   const theme = useRootTheme()
-  const schema = useMemo(() => extractSchema(workspace, theme), [workspace, theme])
 
   // Send a representation of the schema to the visual editing context
   useEffect(() => {
+    const schema = extractSchema(workspace, theme)
+    /**
+     * @deprecated switch to explict schema fetching (using
+     * 'visual-editing/schema') at next major
+     */
     comlink.post({type: 'presentation/schema', data: {schema}})
-  }, [comlink, schema])
+
+    return comlink.on('visual-editing/schema', () => ({schema}))
+  }, [comlink, theme, workspace])
 
   const client = useClient({apiVersion: API_VERSION})
 

@@ -8,6 +8,7 @@ import {useEffect, useState, type FunctionComponent} from 'react'
 import {createActor} from 'xstate'
 import type {VisualEditingNode, VisualEditingOptions} from '../types'
 import {createDatasetMutator} from './comlink'
+import {History} from './History'
 import {Meta} from './Meta'
 import {setActor} from './optimistic-state/context'
 import {createSharedListener} from './optimistic-state/machines/createSharedListener'
@@ -42,23 +43,42 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
       // @ts-expect-error @todo
       input: {client: {withConfig: () => {}}, sharedListener: listener},
     })
-    setActor(actor)
+
+    // Fetch features to determine if optimistic updates are supported
+    const abortController = new AbortController()
+    comlink
+      .fetch({type: 'visual-editing/features', data: undefined}, {signal: abortController.signal})
+      .then((data) => {
+        if (data.features['optimistic']) {
+          setActor(actor)
+        }
+      })
 
     actor.start()
     comlink.start()
+
+    return () => {
+      abortController.abort()
+      actor.stop()
+      comlink.stop()
+    }
   }, [inFrame])
 
   return (
     <>
       <Overlays
-        componentResolver={components}
         comlink={comlink}
+        componentResolver={components}
         inFrame={inFrame}
-        history={history}
         zIndex={zIndex}
       />
-      {comlink && <Meta comlink={comlink} />}
-      {comlink && refresh && <Refresh comlink={comlink} refresh={refresh} />}
+      {comlink && (
+        <>
+          <History comlink={comlink} history={history} />
+          <Meta comlink={comlink} />
+          {refresh && <Refresh comlink={comlink} refresh={refresh} />}
+        </>
+      )}
     </>
   )
 }
