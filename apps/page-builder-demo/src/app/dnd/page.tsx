@@ -39,7 +39,8 @@ export default async function Page() {
                 key={child._key}
               >
                 <p>{child.title}</p>
-                {child.childrenStrings && child.childrenStrings.map((s: any) => <p>{s}</p>)}
+                {child.childrenStrings &&
+                  child.childrenStrings.map((s: string, i: number) => <p key={i}>{s}</p>)}
               </a>
             ))}
           </div>
@@ -48,7 +49,7 @@ export default async function Page() {
         <section className="mt-6">
           <h2>Horizontal (Flow Auto Calculated)</h2>
           <div className="mt-4 flex flex-row gap-4">
-            {data.children.map((child) => (
+            {data.children.map((child, i) => (
               <div
                 data-sanity={createDataAttribute({
                   id: data._id,
