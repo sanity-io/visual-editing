@@ -87,7 +87,7 @@ export default async function Page() {
                       path: `children[_key=="${child._key}"].children[_key=="${child1._key}"]`,
                     }).toString()}
                     className="mt-4 border border-solid border-white p-3"
-                    key={child._key}
+                    key={child1._key}
                   >
                     {stegaClean(child1.title)}
                     <div className="flew-row flex gap-3">
@@ -100,7 +100,7 @@ export default async function Page() {
                               path: `children[_key=="${child._key}"].children[_key=="${child1._key}"].children[_key=="${child2._key}"]`,
                             }).toString()}
                             className="mt-4 border border-solid border-white p-3"
-                            key={child._key}
+                            key={child2._key}
                           >
                             {stegaClean(child2.title)}
                           </div>
