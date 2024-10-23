@@ -72,6 +72,7 @@ const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
 const LiveQueries = lazy(() => import('./loader/LiveQueries'))
 const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
+const PostMessagePerspective = lazy(() => import('./PostMessagePerspective'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
 const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
 
@@ -358,14 +359,6 @@ export default function PresentationTool(props: {
     [navigate],
   )
 
-  // Dispatch a perspective message when the perspective changes
-  useEffect(() => {
-    visualEditingComlink?.post({
-      type: 'presentation/perspective',
-      data: {perspective},
-    })
-  }, [perspective, visualEditingComlink])
-
   // Dispatch a focus or blur message when the id or path change
   useEffect(() => {
     if (params.id && params.path) {
@@ -630,6 +623,11 @@ export default function PresentationTool(props: {
       {visualEditingComlink && (
         <Suspense>
           <PostMessageDocuments comlink={visualEditingComlink} />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
         </Suspense>
       )}
       {params.id && params.type && (

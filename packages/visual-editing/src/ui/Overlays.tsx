@@ -41,6 +41,7 @@ import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
 import {useController} from './useController'
+import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
 
 const Root = styled.div<{
@@ -211,9 +212,6 @@ export const Overlays: FunctionComponent<{
       comlink?.on('presentation/blur', (data) => {
         dispatch({type: 'presentation/blur', data})
       }),
-      comlink?.on('presentation/perspective', (data) => {
-        dispatch({type: 'presentation/perspective', data})
-      }),
       comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
       }),
@@ -224,6 +222,8 @@ export const Overlays: FunctionComponent<{
 
     return () => unsubs.forEach((unsub) => unsub!())
   }, [comlink])
+
+  usePerspectiveSync(comlink, dispatch)
 
   useReportDocuments(comlink, elements, perspective)
 

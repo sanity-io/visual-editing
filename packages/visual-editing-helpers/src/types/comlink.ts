@@ -232,8 +232,11 @@ export type VisualEditingNodeMsg =
       data: undefined
     }
   | {
-      type: 'visual-editing/unlisten'
+      type: 'visual-editing/fetch-perspective'
       data: undefined
+      response: {
+        perspective: ClientPerspective
+      }
     }
 
 /**
