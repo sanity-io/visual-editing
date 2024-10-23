@@ -530,6 +530,12 @@ const dndTestItemRoot = defineArrayMember({
       title: 'Children',
       of: [dndTestItemChildL1],
     }),
+    defineField({
+      type: 'array',
+      name: 'childrenStrings',
+      title: 'Children Strings',
+      of: [{type: 'string'}],
+    }),
   ],
 })
 const dndTestPageType = defineType({

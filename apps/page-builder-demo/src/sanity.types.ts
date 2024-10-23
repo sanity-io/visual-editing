@@ -464,6 +464,7 @@ export type DndTestPage = {
       _type: 'dndTestItemChildL1'
       _key: string
     }>
+    childrenStrings?: Array<string>
     _type: 'dndTestItem'
     _key: string
   }>
@@ -699,6 +700,7 @@ export type DndPageQueryResult = {
       _type: 'dndTestItemChildL1'
       _key: string
     }>
+    childrenStrings?: Array<string>
     _type: 'dndTestItem'
     _key: string
   }> | null

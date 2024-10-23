@@ -26,20 +26,21 @@ export default async function Page() {
         {/* Vertical */}
         <section className="mt-6">
           <h2>Vertical (Flow Auto Calculated)</h2>
-          <div className="mt-4 flex flex-col gap-4">
+          <div>
             {data.children.map((child) => (
-              <div
+              <a
                 data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
                   path: `children[_key=="${child._key}"]`,
                 }).toString()}
                 data-sanity-drag-group="vertical-flow-auto-calculated"
-                className="border border-solid border-white p-3"
+                className="block border border-solid border-white p-3"
                 key={child._key}
               >
                 <p>{child.title}</p>
-              </div>
+                {child.childrenStrings && child.childrenStrings.map((s: any) => <p>{s}</p>)}
+              </a>
             ))}
           </div>
         </section>
@@ -87,7 +88,7 @@ export default async function Page() {
                       path: `children[_key=="${child._key}"].children[_key=="${child1._key}"]`,
                     }).toString()}
                     className="mt-4 border border-solid border-white p-3"
-                    key={child._key}
+                    key={child1._key}
                   >
                     {stegaClean(child1.title)}
                     <div className="flew-row flex gap-3">
@@ -100,7 +101,7 @@ export default async function Page() {
                               path: `children[_key=="${child._key}"].children[_key=="${child1._key}"].children[_key=="${child2._key}"]`,
                             }).toString()}
                             className="mt-4 border border-solid border-white p-3"
-                            key={child._key}
+                            key={child2._key}
                           >
                             {stegaClean(child2.title)}
                           </div>
