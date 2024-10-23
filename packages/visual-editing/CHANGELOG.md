@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.0...visual-editing-v2.3.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* resolve issues with newly added canary features ([#2036](https://github.com/sanity-io/visual-editing/issues/2036)) ([7b6507b](https://github.com/sanity-io/visual-editing/commit/7b6507b35c48e5307e7a2e70536d4336e18327b6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.25
+
 ## [2.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.2.2...visual-editing-v2.3.0) (2024-10-22)
 
 

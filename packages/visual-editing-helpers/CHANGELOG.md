@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.25](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.24...visual-editing-helpers-v0.6.25) (2024-10-23)
+
+
+### Bug Fixes
+
+* resolve issues with newly added canary features ([#2036](https://github.com/sanity-io/visual-editing/issues/2036)) ([7b6507b](https://github.com/sanity-io/visual-editing/commit/7b6507b35c48e5307e7a2e70536d4336e18327b6))
+
 ## [0.6.24](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.23...visual-editing-helpers-v0.6.24) (2024-10-21)
 
 
