@@ -204,7 +204,7 @@ export default function PresentationTool(props: {
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
 
-    if (!target) return
+    if (!target || state.iframe.status === 'loading') return
 
     const controller = createController({targetOrigin})
     controller.addTarget(target)
@@ -214,7 +214,7 @@ export default function PresentationTool(props: {
       controller.destroy()
       setController(undefined)
     }
-  }, [targetOrigin])
+  }, [targetOrigin, state.iframe.status])
 
   useEffect(() => {
     const unsubs: Array<() => void> = []
