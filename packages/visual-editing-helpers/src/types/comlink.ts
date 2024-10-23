@@ -228,8 +228,11 @@ export type VisualEditingNodeMsg =
       response: any
     }
   | {
-      type: 'visual-editing/listen'
+      type: 'visual-editing/snapshot-welcome'
       data: undefined
+      response: {
+        event: WelcomeEvent
+      }
     }
   | {
       type: 'visual-editing/fetch-perspective'

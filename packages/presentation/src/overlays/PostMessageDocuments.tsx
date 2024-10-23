@@ -1,6 +1,6 @@
 import type {MutationEvent, ReconnectEvent, WelcomeEvent} from '@sanity/client'
 import {memo, useEffect, type FunctionComponent} from 'react'
-import {filter} from 'rxjs'
+import {filter, first, merge, shareReplay} from 'rxjs'
 import {useClient} from 'sanity'
 import {API_VERSION} from '../constants'
 import type {VisualEditingConnection} from '../types'
@@ -34,11 +34,45 @@ const PostMessageDocuments: FunctionComponent<PostMessageDocumentsProps> = (prop
         ),
       )
 
-    const subscription = listener.subscribe((event) => {
+    const welcome = listener.pipe(
+      filter((event): event is WelcomeEvent => event.type === 'welcome'),
+      shareReplay({bufferSize: 1, refCount: false}),
+    )
+
+    // When new contexts initialize, they need to explicitly request the welcome
+    // event, as we can't rely on emitting it into the void
+    const unsubscribe = comlink.on('visual-editing/snapshot-welcome', async () => {
+      const event = await new Promise<WelcomeEvent>((resolve) => {
+        welcome.pipe(first()).subscribe((event) => {
+          resolve(event)
+        })
+      })
+      return {event}
+    })
+
+    const reconnect = listener.pipe(
+      filter((event): event is ReconnectEvent => event.type === 'reconnect'),
+    )
+
+    const mutations = listener.pipe(
+      filter((event): event is MutationEvent => event.type === 'mutation'),
+    )
+
+    const events = merge(
+      /**
+       * @deprecated remove 'welcome' here and switch to explict welcome message fetching at next major
+       */
+      welcome,
+      mutations,
+      reconnect,
+    ).subscribe((event) => {
       comlink.post({type: 'presentation/snapshot-event', data: {event}})
     })
 
-    return () => subscription.unsubscribe()
+    return () => {
+      unsubscribe()
+      events.unsubscribe()
+    }
   }, [client, comlink])
 
   useEffect(() => {
