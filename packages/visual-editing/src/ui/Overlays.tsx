@@ -162,11 +162,10 @@ const OverlaysController: FunctionComponent<{
 export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
   componentResolver?: OverlayComponentResolver
-  history?: HistoryAdapter
   inFrame: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {comlink, componentResolver, inFrame, history, zIndex} = props
+  const {comlink, componentResolver, inFrame, zIndex} = props
 
   const [status, setStatus] = useState<Status>()
 
@@ -215,9 +214,6 @@ export const Overlays: FunctionComponent<{
       comlink?.on('presentation/perspective', (data) => {
         dispatch({type: 'presentation/perspective', data})
       }),
-      comlink?.on('presentation/navigate', (data) => {
-        history?.update(data)
-      }),
       comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
       }),
@@ -227,7 +223,7 @@ export const Overlays: FunctionComponent<{
     ].filter(Boolean)
 
     return () => unsubs.forEach((unsub) => unsub!())
-  }, [comlink, history])
+  }, [comlink])
 
   useReportDocuments(comlink, elements, perspective)
 
@@ -289,16 +285,6 @@ export const Overlays: FunctionComponent<{
       window.removeEventListener('keyup', handleKeyUp)
     }
   }, [setOverlayEnabled])
-
-  useEffect(() => {
-    if (history) {
-      return history.subscribe((update) => {
-        update.title = update.title || document.title
-        comlink?.post({type: 'visual-editing/navigate', data: update})
-      })
-    }
-    return
-  }, [comlink, history])
 
   const [overlaysFlash, setOverlaysFlash] = useState(false)
   const [fadingOut, setFadingOut] = useState(false)

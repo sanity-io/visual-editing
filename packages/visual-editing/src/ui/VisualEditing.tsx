@@ -8,6 +8,7 @@ import {useEffect, useState, type FunctionComponent} from 'react'
 import {createActor} from 'xstate'
 import type {VisualEditingNode, VisualEditingOptions} from '../types'
 import {createDatasetMutator} from './comlink'
+import {History} from './History'
 import {Meta} from './Meta'
 import {setActor} from './optimistic-state/context'
 import {createSharedListener} from './optimistic-state/machines/createSharedListener'
@@ -54,9 +55,9 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
         componentResolver={components}
         comlink={comlink}
         inFrame={inFrame}
-        history={history}
         zIndex={zIndex}
       />
+      {comlink && <History comlink={comlink} history={history} />}
       {comlink && <Meta comlink={comlink} />}
       {comlink && refresh && <Refresh comlink={comlink} refresh={refresh} />}
     </>
