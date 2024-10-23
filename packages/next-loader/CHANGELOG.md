@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.5...next-loader-v1.0.6) (2024-10-23)
+
+
+### Bug Fixes
+
+* `createCompatibilityActors` are needed ([#2017](https://github.com/sanity-io/visual-editing/issues/2017)) ([#2032](https://github.com/sanity-io/visual-editing/issues/2032)) ([934d297](https://github.com/sanity-io/visual-editing/commit/934d297b641aa74e9d85ddc5d9b9b046ab3f12cc))
+
 ## [1.0.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.4...next-loader-v1.0.5) (2024-10-22)
 
 

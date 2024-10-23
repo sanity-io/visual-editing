@@ -36,6 +36,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.5.11](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.5.10...preview-kit-compat-v1.5.11) (2024-10-23)
+
+
+### Bug Fixes
+
+* **preview-kit-compat:** add comlink compatibility actors ([#2034](https://github.com/sanity-io/visual-editing/issues/2034)) ([396289c](https://github.com/sanity-io/visual-editing/commit/396289cdfca67bdf254ae8ff0411f9a94b086d7f))
+
 ## [1.5.10](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.5.9...preview-kit-compat-v1.5.10) (2024-10-21)
 
 
