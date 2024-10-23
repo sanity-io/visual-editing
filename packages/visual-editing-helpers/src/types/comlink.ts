@@ -107,6 +107,10 @@ export type VisualEditingControllerMsg =
         perspective: ClientPerspective
       }
     }
+  /**
+   * @deprecated switch to explict schema fetching (using
+   * 'visual-editing/schema') at next major
+   */
   | {
       type: 'presentation/schema'
       data: {
@@ -180,6 +184,13 @@ export type VisualEditingNodeMsg =
   | {
       type: 'visual-editing/refreshed'
       data: HistoryRefresh
+    }
+  | {
+      type: 'visual-editing/schema'
+      data: undefined
+      response: {
+        schema: SchemaType[]
+      }
     }
   | {
       type: 'visual-editing/schema-union-types'

@@ -73,11 +73,30 @@ export const SchemaProvider: FunctionComponent<
 
   const [schema, setSchema] = useState<SchemaType[] | null>(null)
 
+  const fetchSchema = useCallback(
+    async (signal: AbortSignal) => {
+      if (!comlink) return
+      try {
+        const response = await comlink.fetch(
+          {
+            type: 'visual-editing/schema',
+            data: undefined,
+          },
+          {signal},
+        )
+        setSchema(response.schema)
+      } catch (e) {
+        // Fail silently as the app may be communicating with a version of
+        // Presentation that does not support this feature
+      }
+    },
+    [comlink],
+  )
   useEffect(() => {
-    return comlink?.on('presentation/schema', (data) => {
-      setSchema(data.schema)
-    })
-  }, [comlink])
+    const controller = new AbortController()
+    fetchSchema(controller.signal)
+    return () => controller.abort()
+  }, [fetchSchema])
 
   // We report a list of paths that reference array items using a _key. We need
   // to resolve the types of each of these items so we can map them to the
