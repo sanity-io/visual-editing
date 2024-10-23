@@ -199,6 +199,9 @@ export const SchemaProvider: FunctionComponent<
 
         if ('fields' in schemaType) {
           const objectField = schemaType.fields[next]
+          if (!objectField && 'rest' in schemaType) {
+            return fieldFromPath(schemaType.rest, path, schemaType)
+          }
           if (!rest.length) {
             return {field: objectField, parent}
           }
@@ -226,7 +229,9 @@ export const SchemaProvider: FunctionComponent<
           const type = getType(schemaType.name, 'type')
           return fieldFromPath((type as TypeSchema).value, path, schemaType)
         }
-        throw new Error(`No field could be resolved at path: "${path.join('.')}"`)
+        // eslint-disable-next-line no-console
+        console.warn(`No field could be resolved at path: "${path.join('.')}"`)
+        return {field: undefined, parent: undefined}
       }
 
       const nodePath = node.path.split('.').flatMap((part) => {
