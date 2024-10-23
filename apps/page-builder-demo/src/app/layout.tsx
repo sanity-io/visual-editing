@@ -48,8 +48,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {data} = await sanityFetch({query: layoutQuery})
   return (
-    <html lang="en" className={`${mono.variable} ${sans.variable} ${serif.variable}`}>
-      <body className="bg-white text-black dark:bg-black dark:text-white">
+    <html
+      lang="en"
+      className={`${mono.variable} ${sans.variable} ${serif.variable} h-auto overflow-x-auto`}
+    >
+      <body className="h-auto bg-white text-black dark:bg-black dark:text-white">
         {(await draftMode()).isEnabled && <AlertBanner />}
         <AppLayout data={data}>{children}</AppLayout>
         {(await draftMode()).isEnabled && <VisualEditing />}
