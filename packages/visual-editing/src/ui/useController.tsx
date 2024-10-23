@@ -1,6 +1,7 @@
 import {useEffect, useRef, type MutableRefObject} from 'react'
 import {createOverlayController} from '../controller'
 import type {OverlayController, OverlayEventHandler} from '../types'
+import {useOptimisticActorReady} from './optimistic-state/useOptimisticActor'
 
 /**
  * Hook for using an overlay controller
@@ -13,6 +14,8 @@ export function useController(
 ): MutableRefObject<OverlayController | undefined> {
   const overlayController = useRef<OverlayController | undefined>()
 
+  const optimisticActorReady = useOptimisticActorReady()
+
   useEffect(() => {
     if (!element) return undefined
 
@@ -20,13 +23,14 @@ export function useController(
       handler,
       overlayElement: element,
       inFrame,
+      optimisticActorReady,
     })
 
     return () => {
       overlayController.current?.destroy()
       overlayController.current = undefined
     }
-  }, [element, handler, inFrame])
+  }, [element, handler, inFrame, optimisticActorReady])
 
   return overlayController
 }

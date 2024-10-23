@@ -238,6 +238,13 @@ export type VisualEditingNodeMsg =
         perspective: ClientPerspective
       }
     }
+  | {
+      type: 'visual-editing/features'
+      data: undefined
+      response: {
+        features: Record<string, boolean>
+      }
+    }
 
 /**
  * @public

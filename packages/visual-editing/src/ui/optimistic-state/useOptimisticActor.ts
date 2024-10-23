@@ -1,5 +1,12 @@
-import {useCallback, useSyncExternalStore} from 'react'
-import {actor, emptyActor, listeners, type EmptyActor, type MutatorActor} from './context'
+import {useCallback, useMemo, useSyncExternalStore} from 'react'
+import {
+  actor,
+  emptyActor,
+  isEmptyActor,
+  listeners,
+  type EmptyActor,
+  type MutatorActor,
+} from './context'
 
 export function useOptimisticActor(): MutatorActor | EmptyActor {
   const subscribe = useCallback((listener: () => void) => {
@@ -14,4 +21,9 @@ export function useOptimisticActor(): MutatorActor | EmptyActor {
   )
 
   return actorRef
+}
+
+export function useOptimisticActorReady(): boolean {
+  const actor = useOptimisticActor()
+  return useMemo(() => !isEmptyActor(actor), [actor])
 }

@@ -43,10 +43,25 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
       // @ts-expect-error @todo
       input: {client: {withConfig: () => {}}, sharedListener: listener},
     })
-    setActor(actor)
+
+    // Fetch features to determine if optimistic updates are supported
+    const abortController = new AbortController()
+    comlink
+      .fetch({type: 'visual-editing/features', data: undefined}, {signal: abortController.signal})
+      .then((data) => {
+        if (data.features['optimistic']) {
+          setActor(actor)
+        }
+      })
 
     actor.start()
     comlink.start()
+
+    return () => {
+      abortController.abort()
+      actor.stop()
+      comlink.stop()
+    }
   }, [inFrame])
 
   return (

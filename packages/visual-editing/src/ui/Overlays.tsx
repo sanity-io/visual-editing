@@ -32,7 +32,7 @@ import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
-import {useOptimisticActor} from './optimistic-state/useOptimisticActor'
+import {useOptimisticActor, useOptimisticActorReady} from './optimistic-state/useOptimisticActor'
 import {OverlayDragGroupRect} from './OverlayDragGroupRect'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
@@ -166,7 +166,7 @@ export const Overlays: FunctionComponent<{
   inFrame: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {comlink, componentResolver, inFrame, zIndex} = props
+  const {comlink, componentResolver: _componentResolver, inFrame, zIndex} = props
 
   const [status, setStatus] = useState<Status>()
 
@@ -327,6 +327,12 @@ export const Overlays: FunctionComponent<{
     dispatch({type: 'overlay/blur'})
   }, [])
 
+  const optimisticActorReady = useOptimisticActorReady()
+
+  const componentResolver = useMemo(() => {
+    return optimisticActorReady ? _componentResolver : undefined
+  }, [_componentResolver, optimisticActorReady])
+
   return (
     <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
       <LayerProvider>
@@ -356,6 +362,7 @@ export const Overlays: FunctionComponent<{
                       const draggable =
                         !dragDisabled &&
                         !!element.getAttribute('data-sanity') &&
+                        optimisticActorReady &&
                         elements.some((e) =>
                           'id' in e.sanity && 'id' in sanity
                             ? sanityNodesExistInSameArray(e.sanity, sanity) &&
