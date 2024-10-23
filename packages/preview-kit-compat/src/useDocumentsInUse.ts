@@ -1,6 +1,6 @@
-import {type PreviewKitNodeMsg} from '@repo/visual-editing-helpers'
+import {createCompatibilityActors, type PreviewKitNodeMsg} from '@repo/visual-editing-helpers'
 import type {ContentSourceMapDocuments} from '@sanity/client/csm'
-import {createNode, type Message, type Node} from '@sanity/comlink'
+import {createNode, createNodeMachine, type Message, type Node} from '@sanity/comlink'
 import {useEffect, useState} from 'react'
 
 /**
@@ -19,10 +19,15 @@ export function useDocumentsInUse(
     if (window.self === window.top && !window.opener) {
       return
     }
-    const comlink = createNode<Message, PreviewKitNodeMsg>({
-      name: 'preview-kit',
-      connectTo: 'presentation',
-    })
+    const comlink = createNode<Message, PreviewKitNodeMsg>(
+      {
+        name: 'preview-kit',
+        connectTo: 'presentation',
+      },
+      createNodeMachine<Message, PreviewKitNodeMsg>().provide({
+        actors: createCompatibilityActors<PreviewKitNodeMsg>(),
+      }),
+    )
 
     comlink.onStatus((status) => {
       if (status === 'connected') {
