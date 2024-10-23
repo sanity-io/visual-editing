@@ -190,16 +190,13 @@ export default function PresentationTool(props: {
   // const [previewKitConnection, setPreviewKitConnection] = useState<Status>('connecting')
   const [previewKitConnection, setPreviewKitConnection] = useStatus()
 
-  const [popups] = useState<Set<Window>>(() => new Set())
-  const handleOpenPopup = useCallback(
-    (url: string) => {
-      const source = window.open(url, '_blank')
-      if (source) {
-        popups.add(source)
-      }
-    },
-    [popups],
-  )
+  const [popups, setPopups] = useState<Set<Window>>(() => new Set())
+  const handleOpenPopup = useCallback((url: string) => {
+    const source = window.open(url, '_blank')
+    if (source) {
+      setPopups((prev) => new Set(prev).add(source))
+    }
+  }, [])
 
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
@@ -229,7 +226,7 @@ export default function PresentationTool(props: {
     return () => {
       unsubs.forEach((unsub) => unsub())
     }
-  }, [controller, popups, popups.size])
+  }, [controller, popups])
 
   useEffect(() => {
     if (!controller) return
