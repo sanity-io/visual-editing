@@ -226,7 +226,12 @@ async function applyMinimapWrapperTransform(
       display: true,
     })
 
+    let prev = scrollY
+
     document.body.style.overflow = 'hidden'
+    document.body.style.height = '100%'
+    document.documentElement.style.overflow = 'initial'
+    document.documentElement.style.height = '100%'
 
     // ensure overflow hidden has applied and scrolling stopped before applying transform, prevent minor y-position transform issues
     setTimeout(() => {
@@ -335,6 +340,8 @@ async function resetMinimapWrapperTransform(
 
     target.style.transform = `translateY(${Math.max(prevScrollY - endYOrigin, -maxScroll + prevScrollY)}px) scale(${1})`
     document.body.style.overflow = 'auto'
+    document.body.style.height = 'auto'
+    document.documentElement.style.height = 'auto'
   })
 }
 
