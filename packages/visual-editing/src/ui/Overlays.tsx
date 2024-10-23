@@ -21,13 +21,12 @@ import {
 } from 'react'
 import {styled} from 'styled-components'
 import type {
-  HistoryAdapter,
   OverlayComponentResolver,
   OverlayEventHandler,
   OverlayMsg,
   VisualEditingNode,
 } from '../types'
-import {getDraftId, getPublishedId} from '../util/documents.ts'
+import {getDraftId, getPublishedId} from '../util/documents'
 import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
@@ -144,7 +143,7 @@ const OverlaysController: FunctionComponent<{
     [comlink, dispatch, dispatchDragEndEvent, onDrag],
   )
 
-  const controller = useController(rootElement, overlayEventHandler, !!inFrame)
+  const controller = useController(rootElement, overlayEventHandler, inFrame)
 
   useEffect(() => {
     if (overlayEnabled) {
@@ -339,7 +338,6 @@ export const Overlays: FunctionComponent<{
         <PortalProvider element={rootElement}>
           <SchemaProvider comlink={comlink} elements={elements}>
             <PreviewSnapshotsProvider comlink={comlink}>
-              {/* <OptimisticStateProvider comlink={comlink} documentIds={documentIds}> */}
               <Root
                 data-fading-out={fadingOut ? '' : undefined}
                 data-overlays={overlaysFlash ? '' : undefined}
