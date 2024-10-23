@@ -437,6 +437,7 @@ export const Overlays: FunctionComponent<{
                     ({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
                       const draggable =
                         !dragDisabled &&
+                        !!element.getAttribute('data-sanity') &&
                         elements.some((e) =>
                           'id' in e.sanity && 'id' in sanity
                             ? sanityNodesExistInSameArray(e.sanity, sanity) &&
