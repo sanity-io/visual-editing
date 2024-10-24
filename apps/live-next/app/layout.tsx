@@ -80,12 +80,8 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     >
       <body>
         <section className="min-h-screen">
-          {(await draftMode()).isEnabled && (
-            <>
-              <AlertBanner />
-              <DraftModeStatus />
-            </>
-          )}
+          {(await draftMode()).isEnabled && <AlertBanner />}
+          <DraftModeStatus />
           <main>{children}</main>
           <Suspense>
             <Footer />
