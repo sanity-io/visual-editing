@@ -45,7 +45,10 @@ export interface RequestData<S extends Message> {
   responseTo?: string
   type: MessageType
   resolvable?: PromiseWithResolvers<S['response']>
-  signal?: AbortSignal
+  options?: {
+    signal?: AbortSignal
+    suppressWarnings?: boolean
+  }
 }
 
 /**

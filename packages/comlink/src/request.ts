@@ -36,6 +36,7 @@ export interface RequestMachineContext<S extends Message> {
   response: S['response'] | null
   responseTo: string | undefined
   signal: AbortSignal | undefined
+  suppressWarnings: boolean | undefined
   sources: Set<MessageEventSource>
   targetOrigin: string
   to: string
@@ -84,6 +85,7 @@ export const createRequestMachine = <
         responseTo?: string
         signal?: AbortSignal
         sources: Set<MessageEventSource> | MessageEventSource
+        suppressWarnings?: boolean
         targetOrigin: string
         to: string
         type: S['type']
@@ -151,10 +153,12 @@ export const createRequestMachine = <
       'on fail': sendTo(
         ({context}) => context.parentRef,
         ({context, self}) => {
-          // eslint-disable-next-line no-console
-          console.warn(
-            `Received no response to message '${context.type}' on client '${context.from}' (ID: '${context.id}').`,
-          )
+          if (!context.suppressWarnings) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[@sanity/comlink] Received no response to message '${context.type}' on client '${context.from}' (ID: '${context.id}').`,
+            )
+          }
           context.resolvable?.reject(new Error('No response received'))
           return {type: 'request.failed', requestId: self.id}
         },
@@ -190,6 +194,7 @@ export const createRequestMachine = <
         responseTo: input.responseTo,
         signal: input.signal,
         sources: input.sources instanceof Set ? input.sources : new Set([input.sources]),
+        suppressWarnings: input.suppressWarnings,
         targetOrigin: input.targetOrigin,
         to: input.to,
         type: input.type,
