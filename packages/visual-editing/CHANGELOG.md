@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.4.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.2...visual-editing-v2.4.0) (2024-10-24)
+
+
+### Features
+
+* **visual-editing:** add package version mismatch warning ([#2040](https://github.com/sanity-io/visual-editing/issues/2040)) ([c112de4](https://github.com/sanity-io/visual-editing/commit/c112de453fc476e666480e5fea7b1b3ae50b6843))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.26
+
 ## [2.3.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.1...visual-editing-v2.3.2) (2024-10-24)
 
 
