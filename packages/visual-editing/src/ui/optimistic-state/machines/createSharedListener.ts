@@ -15,9 +15,15 @@ export function createSharedListener(comlink: VisualEditingNode): Observable<Sha
   const incomingConnection$ = new ReplaySubject<SharedListenEvent>(1)
   const incomingMutations$ = new Subject<SharedListenEvent>()
 
-  comlink.fetch({type: 'visual-editing/snapshot-welcome', data: undefined}).then((data) => {
-    incomingConnection$.next(data.event)
-  })
+  comlink
+    .fetch({type: 'visual-editing/snapshot-welcome', data: undefined}, {suppressWarnings: true})
+    .then((data) => {
+      incomingConnection$.next(data.event)
+    })
+    .catch(() => {
+      // Fail silently as the app may be communicating with a version of
+      // Presentation that does not support this feature
+    })
 
   comlink.on('presentation/snapshot-event', (data) => {
     // Welcome events are still emitted by Presentation for backwards

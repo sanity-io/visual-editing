@@ -45,24 +45,29 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
     })
 
     // Fetch features to determine if optimistic updates are supported
-    const abortController = new AbortController()
+    const controller = new AbortController()
     comlink
-      .fetch({type: 'visual-editing/features', data: undefined}, {signal: abortController.signal})
+      .fetch(
+        {type: 'visual-editing/features', data: undefined},
+        {signal: controller.signal, suppressWarnings: true},
+      )
       .then((data) => {
         if (data.features['optimistic']) {
           setActor(actor)
         }
       })
       .catch(() => {
-        // Fail silently as the app may be communicating with a version of
-        // Presentation that does not support this feature
+        // eslint-disable-next-line no-console
+        console.warn(
+          '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',
+        )
       })
 
     actor.start()
     comlink.start()
 
     return () => {
-      abortController.abort()
+      controller.abort()
       actor.stop()
       comlink.stop()
     }

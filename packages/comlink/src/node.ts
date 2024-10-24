@@ -62,7 +62,7 @@ export type Node<R extends Message, S extends Message> = {
   actor: NodeActor<R, S>
   fetch: <const T extends S['type'], U extends WithoutResponse<S>>(
     data: U,
-    options?: {signal?: AbortSignal},
+    options?: {signal?: AbortSignal; suppressWarnings?: boolean},
   ) => S extends U ? (S['type'] extends T ? Promise<S['response']> : never) : never
   machine: NodeActorLogic<R, S>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
@@ -97,7 +97,10 @@ export const createNodeMachine = <
         buffer: Array<{
           data: V
           resolvable?: PromiseWithResolvers<S['response']>
-          signal?: AbortSignal
+          options?: {
+            signal?: AbortSignal
+            suppressWarnings?: boolean
+          }
         }>
         connectionId: string | null
         connectTo: string
@@ -128,7 +131,10 @@ export const createNodeMachine = <
             type: 'post'
             data: V
             resolvable?: PromiseWithResolvers<S['response']>
-            signal?: AbortSignal
+            options?: {
+              signal?: AbortSignal
+              suppressWarning?: boolean
+            }
           }
         | {type: 'request.aborted'; requestId: string}
         | {type: 'request.failed'; requestId: string}
@@ -161,7 +167,7 @@ export const createNodeMachine = <
               {
                 data: event.data,
                 resolvable: event.resolvable,
-                signal: event.signal,
+                options: event.options,
               },
             ]
           },
@@ -191,11 +197,12 @@ export const createNodeMachine = <
                 parentRef: self,
                 resolvable: request.resolvable,
                 responseTo: request.responseTo,
+                signal: request.options?.signal,
                 sources: context.target!,
+                suppressWarnings: request.options?.suppressWarnings,
                 targetOrigin: context.targetOrigin!,
                 to: context.connectTo,
                 type: request.type,
-                signal: request.signal,
               },
             })
           })
@@ -227,12 +234,12 @@ export const createNodeMachine = <
       'flush buffer': enqueueActions(({enqueue}) => {
         enqueue.raise(({context}) => ({
           type: 'request',
-          data: context.buffer.map(({data, resolvable, signal}) => ({
+          data: context.buffer.map(({data, resolvable, options}) => ({
             data: data.data,
             type: data.type,
             expectResponse: resolvable ? true : false,
             resolvable,
-            signal,
+            options,
           })),
         }))
         enqueue.emit(({context}) => {
@@ -260,7 +267,7 @@ export const createNodeMachine = <
             expectResponse: event.resolvable ? true : false,
             type: event.data.type,
             resolvable: event.resolvable,
-            signal: event.signal,
+            options: event.options,
           },
         }
       }),
@@ -495,13 +502,16 @@ export const createNode = <R extends Message, S extends Message>(
     actor.send({type: 'post', data})
   }
 
-  const fetch = (data: WithoutResponse<S>, options?: {signal?: AbortSignal}) => {
+  const fetch = (
+    data: WithoutResponse<S>,
+    options?: {signal?: AbortSignal; suppressWarnings?: boolean},
+  ) => {
     const resolvable = Promise.withResolvers<S['response']>()
     actor.send({
       type: 'post',
       data,
       resolvable,
-      signal: options?.signal,
+      options,
     })
     return resolvable.promise as never
   }
