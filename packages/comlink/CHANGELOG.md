@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.0...comlink-v1.1.1) (2024-10-24)
+
+
+### Bug Fixes
+
+* **deps:** Update linters ([9755f5c](https://github.com/sanity-io/visual-editing/commit/9755f5c2fe6704929a5c113e50de7c8b7acaeeee))
+
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/comlink-v1.0.0...comlink-v1.1.0) (2024-10-24)
 
 
