@@ -82,7 +82,7 @@ export const SchemaProvider: FunctionComponent<
             type: 'visual-editing/schema',
             data: undefined,
           },
-          {signal},
+          {signal, suppressWarnings: true},
         )
         setSchema(response.schema)
       } catch (e) {
@@ -110,7 +110,7 @@ export const SchemaProvider: FunctionComponent<
             type: 'visual-editing/schema-union-types',
             data: {paths},
           },
-          {signal},
+          {signal, suppressWarnings: true},
         )
         setResolvedTypes(response.types)
         reportedPathsRef.current = paths
