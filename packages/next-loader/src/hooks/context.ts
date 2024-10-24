@@ -32,6 +32,7 @@ export type DraftEnvironment =
   | 'presentation-iframe'
   | 'presentation-window'
   | 'live'
+  | 'static'
   | 'unknown'
 
 /** @internal */

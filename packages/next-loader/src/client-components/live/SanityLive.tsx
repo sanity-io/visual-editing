@@ -40,6 +40,12 @@ export interface SanityLiveProps
   tag: string
 }
 
+// @TODO these should be reusable utils in visual-editing-helpers
+
+const isMaybePreviewIframe = () => window !== window.parent
+const isMaybePreviewWindow = () => !!window.opener
+const isMaybePresentation = () => isMaybePreviewIframe() || isMaybePreviewWindow()
+
 /**
  * @public
  */
@@ -207,21 +213,35 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
    * 5. Notify what environment we're in, when in Draft Mode
    */
   useEffect(() => {
-    if (draftModeEnabled && loadComlink) {
-      setEnvironment(opener ? 'presentation-window' : 'presentation-iframe')
-    } else if (draftModeEnabled && token) {
+    // If we might be in Presentation Tool, then skip detecting here as it's handled later
+    if (isMaybePresentation()) return
+
+    // If we're definitely not in Presentation Tool, then we can set the environment as stand-alone live preview
+    // if we have both a browser token, and draft mode is enabled
+    if (draftModeEnabled && token) {
       setEnvironment('live')
-    } else {
-      setEnvironment('unknown')
+      return
     }
-  }, [draftModeEnabled, loadComlink, token])
+    // If we're in draft mode, but don't have a browser token, then we're in static mode
+    // which means that published content is still live, but draft changes likely need manual refresh
+    if (draftModeEnabled) {
+      setEnvironment('static')
+      return
+    }
+
+    // Fallback to `unknown` otherwise, as we simply don't know how it's setup
+    setEnvironment('unknown')
+    return
+  }, [draftModeEnabled, token])
 
   /**
    * 6. If Presentation Tool is detected, load up the comlink and integrate with it
    */
   useEffect(() => {
-    if (window === parent && !opener) return
+    if (!isMaybePresentation()) return
     const controller = new AbortController()
+    // Wait for a while to see if Presentation Tool is detected, before assuming the env to be stand-alone live preview
+    const timeout = setTimeout(() => setEnvironment('live'), 3_000)
     window.addEventListener(
       'message',
       ({data}: MessageEvent<unknown>) => {
@@ -233,13 +253,18 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
           'from' in data &&
           data.from === 'presentation'
         ) {
+          clearTimeout(timeout)
+          setEnvironment(isMaybePreviewWindow() ? 'presentation-window' : 'presentation-iframe')
           setLoadComlink(true)
           controller.abort()
         }
       },
       {signal: controller.signal},
     )
-    return () => controller.abort()
+    return () => {
+      clearTimeout(timeout)
+      controller.abort()
+    }
   }, [])
 
   /**
