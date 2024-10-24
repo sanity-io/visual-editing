@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.8...next-loader-v1.1.0) (2024-10-24)
+
+
+### Features
+
+* add `useIsLivePreview` & `useIsPresentationTool` hooks ([#2050](https://github.com/sanity-io/visual-editing/issues/2050)) ([6aeecd4](https://github.com/sanity-io/visual-editing/commit/6aeecd4996715ec035bee09214d81bd1b8d3c7d5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.1
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.27
+
 ## [1.0.8](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.7...next-loader-v1.0.8) (2024-10-24)
 
 
