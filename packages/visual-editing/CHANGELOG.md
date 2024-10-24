@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.1...visual-editing-v2.3.2) (2024-10-24)
+
+
+### Bug Fixes
+
+* **visual-editing:** add silent catch to features request ([#2038](https://github.com/sanity-io/visual-editing/issues/2038)) ([a20b0fd](https://github.com/sanity-io/visual-editing/commit/a20b0fdea30a7ca909bde3185d78ae7772a5710f))
+
 ## [2.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.0...visual-editing-v2.3.1) (2024-10-23)
 
 
