@@ -19,9 +19,10 @@ export function Page(props: {data: PageData}) {
       if (action.id === data._id && action.document.sections) {
         return action.document.sections
           .map(
-            (section: {_key: string} | undefined) => state?.find((s) => s._key === section?._key)!,
+            (section: {_key: string} | undefined) =>
+              state?.find((s) => s._key === section?._key) || section,
           )
-          .filter(Boolean)
+          .filter(Boolean) as PageSection[]
       }
       return state
     },
