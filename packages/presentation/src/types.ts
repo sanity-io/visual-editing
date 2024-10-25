@@ -147,6 +147,10 @@ export interface PresentationPluginOptions {
   icon?: ComponentType
   name?: string
   title?: string
+  /** Number of milliseconds before preview component will time out
+   * @default 5000
+   */
+  timeout?: number
   /**
    * @deprecated use `resolve.locations` instead
    */

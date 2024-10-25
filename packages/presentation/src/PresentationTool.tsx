@@ -546,6 +546,7 @@ export default function PresentationTool(props: {
                         setPerspective={setPerspective}
                         setViewport={setViewport}
                         targetOrigin={targetOrigin}
+                        connectionTimeout={tool.options.timeout}
                         toggleNavigator={toggleNavigator}
                         toggleOverlay={toggleOverlay}
                         viewport={viewport}

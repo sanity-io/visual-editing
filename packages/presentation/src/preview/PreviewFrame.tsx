@@ -93,6 +93,7 @@ export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'v
   setPerspective: (perspective: 'previewDrafts' | 'published') => void
   setViewport: (mode: 'desktop' | 'mobile') => void
   targetOrigin: string
+  connectionTimeout?: number
   toggleNavigator?: () => void
   toggleOverlay: () => void
   viewport: PresentationViewport
@@ -119,6 +120,7 @@ export const PreviewFrame = memo(
         setPerspective,
         setViewport,
         targetOrigin,
+        connectionTimeout = 5_000,
         toggleNavigator,
         toggleOverlay,
         viewport,
@@ -185,7 +187,7 @@ export const PreviewFrame = memo(
         if (overlaysConnection === 'connecting' || overlaysConnection === 'reconnecting') {
           const timeout = setTimeout(() => {
             setShowOverlaysConnectionState(true)
-          }, 5_000)
+          }, connectionTimeout)
           return () => clearTimeout(timeout)
         }
         return
