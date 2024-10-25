@@ -40,7 +40,7 @@ export function useDragEndEvents(): {
         // resolving the currently in use documents
         const {node, position} = reference
         // Get the key of the element that was dragged
-        const {key: targetKey} = getArrayItemKeyAndParentPath(target)
+        const {key: targetKey, hasExplicitKey} = getArrayItemKeyAndParentPath(target)
         // Get the key of the reference element, and path to the parent array
         const {path: arrayPath, key: referenceItemKey} = getArrayItemKeyAndParentPath(node)
         // Don't patch if the keys match, as this means the item was only
@@ -50,12 +50,31 @@ export function useDragEndEvents(): {
             // Get the current value of the element we dragged, as we will need
             // to clone this into the new position
             const elementValue = getFromPath(snapshot, target.path)
-            return [
-              // Remove the original dragged item
-              at(arrayPath, remove({_key: targetKey})),
-              // Insert the cloned dragged item into its new position
-              at(arrayPath, insert(elementValue, position, {_key: referenceItemKey})),
-            ]
+
+            if (hasExplicitKey) {
+              return [
+                // Remove the original dragged item
+                at(arrayPath, remove({_key: targetKey})),
+                // Insert the cloned dragged item into its new position
+                at(arrayPath, insert(elementValue, position, {_key: referenceItemKey})),
+              ]
+            } else {
+              // handle reordering for primitives
+              return [
+                // Remove the original dragged item
+                at(arrayPath, remove(~~targetKey)),
+                // Insert the cloned dragged item into its new position
+                at(
+                  arrayPath,
+                  insert(
+                    elementValue,
+                    position,
+                    // if target key is < reference, each item in the array's index will be one less due to the previous removal
+                    referenceItemKey > targetKey ? ~~referenceItemKey - 1 : ~~referenceItemKey,
+                  ),
+                ),
+              ]
+            }
           })
         }
       }
