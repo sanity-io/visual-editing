@@ -77,7 +77,7 @@ function calcInsertPosition(origin: Point2D, targets: OverlayRect[], flow: strin
 }
 
 function findRectSanityData(rect: OverlayRect, overlayGroup: OverlayElement[]) {
-  return overlayGroup.find((e) => rectEqual(getRect(e.elements.measureElement), rect))
+  return overlayGroup.find((e) => rectEqual(getRect(e.elements.element), rect))
     ?.sanity as SanityNode
 }
 
@@ -388,7 +388,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
   window.focus()
 
   const rectUpdateFrequency = 150
-  let rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
+  let rects = overlayGroup.map((e) => getRect(e.elements.element))
 
   const flow = (element.getAttribute('data-sanity-drag-flow') || calcTargetFlow(rects)) as
     | 'horizontal'
@@ -429,7 +429,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
   }
 
   const rectsInterval = setInterval(() => {
-    rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
+    rects = overlayGroup.map((e) => getRect(e.elements.element))
   }, rectUpdateFrequency)
 
   const applyMinimap = (): void => {

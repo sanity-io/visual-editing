@@ -100,6 +100,7 @@ export function findSanityNodes(
       return
     }
 
+    // resize observer does not fire for non-replaced inline elements https://drafts.csswg.org/resize-observer/#intro
     const measureElement = findNonInlineElement(element)
     if (!measureElement) {
       return
