@@ -1,8 +1,8 @@
 import type {Path} from './types'
 
-const RE_SEGMENT_WITH_INDEX = /^([A-Za-z]+):([0-9]+)$/
-const RE_SEGMENT_WITH_TUPLE = /^([A-Za-z]+):([0-9]+),([0-9]+)$/
-const RE_SEGMENT_WITH_KEY = /^([A-Za-z]+):([a-z0-9]+)$/
+const RE_SEGMENT_WITH_INDEX = /^([\w-]+):(0|[1-9][0-9]*)$/
+const RE_SEGMENT_WITH_TUPLE = /^([\w-]+):([0-9]+),([0-9]+)$/
+const RE_SEGMENT_WITH_KEY = /^([\w-]+):([\w-]+)$/
 
 /** @internal */
 export function urlStringToPath(str: string): Path {
