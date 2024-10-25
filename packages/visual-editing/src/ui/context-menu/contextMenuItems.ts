@@ -281,7 +281,7 @@ function getContextMenuUnionItems(context: {
         type: 'action' as const,
         label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
         icon: getNodeIcon(t),
-        action: () => getArrayInsertAction(node, doc, t.name, 'after'),
+        action: getArrayInsertAction(node, doc, t.name, 'after'),
       }
     }),
   })
