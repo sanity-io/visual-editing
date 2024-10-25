@@ -28,7 +28,7 @@ export default async function Page() {
           <h2>Vertical (Flow Auto Calculated)</h2>
           <div className="mt-4 flex flex-col gap-4">
             {data.children.map((child) => (
-              <div
+              <a
                 data-sanity={createDataAttribute({
                   id: data._id,
                   type: 'dndTestPage',
@@ -39,7 +39,7 @@ export default async function Page() {
                 key={child._key}
               >
                 <p>{child.title}</p>
-              </div>
+              </a>
             ))}
           </div>
         </section>
@@ -204,6 +204,25 @@ export default async function Page() {
               >
                 <p>{stegaClean(child.title)}</p>
               </div>
+            ))}
+          </div>
+        </section>
+        {/* Inline */}
+        <section className="mt-6">
+          <h2>Vertical (Flow Auto Calculated)</h2>
+          <div className="mt-4">
+            {data.children.map((child) => (
+              <a
+                data-sanity={createDataAttribute({
+                  id: data._id,
+                  type: 'dndTestPage',
+                  path: `children[_key=="${child._key}"]`,
+                }).toString()}
+                data-sanity-drag-group="inline"
+                key={child._key}
+              >
+                {stegaClean(child.title)}
+              </a>
             ))}
           </div>
         </section>
