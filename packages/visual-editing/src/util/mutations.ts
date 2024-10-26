@@ -1,9 +1,4 @@
 import type {SanityNode} from '@repo/visual-editing-helpers'
-import {v4 as uuid} from 'uuid'
-
-export function generateKey(): string {
-  return uuid()
-}
 
 export function getArrayItemKeyAndParentPath(pathOrNode: string | SanityNode): {
   path: string

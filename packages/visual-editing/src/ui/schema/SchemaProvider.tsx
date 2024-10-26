@@ -181,12 +181,11 @@ export const SchemaProvider: FunctionComponent<
           parent: undefined,
         }
       }
-
       function fieldFromPath(
         schemaType: OverlayElementParent,
         path: string[],
         parent: OverlayElementParent,
-        prevPathPart?: string,
+        prevPath: string[] = [],
       ): {
         field: OverlayElementField
         parent: OverlayElementParent
@@ -200,38 +199,44 @@ export const SchemaProvider: FunctionComponent<
         if ('fields' in schemaType) {
           const objectField = schemaType.fields[next]
           if (!objectField && 'rest' in schemaType) {
-            return fieldFromPath(schemaType.rest, path, schemaType)
+            return fieldFromPath(schemaType.rest, path, schemaType, prevPath)
           }
           if (!rest.length) {
             return {field: objectField, parent}
           }
-          return fieldFromPath(objectField.value, rest, schemaType, next)
+          if (!objectField) {
+            throw new Error(
+              `[@sanity/visual-editing] No field could be resolved at path: "${[...prevPath, ...path].join('.')}"`,
+            )
+          }
+          return fieldFromPath(objectField.value, rest, schemaType, [...prevPath, next])
         } else if (schemaType.type === 'array') {
-          return fieldFromPath(schemaType.of, path, schemaType)
+          return fieldFromPath(schemaType.of, path, schemaType, prevPath)
         } else if (schemaType.type === 'arrayItem') {
           if (!rest.length) return {field: schemaType, parent}
-          return fieldFromPath(schemaType.value, rest, schemaType)
+          return fieldFromPath(schemaType.value, rest, schemaType, [...prevPath, next])
         } else if (schemaType.type === 'union') {
           const name = next.startsWith('[_key==')
             ? resolvedTypes
                 ?.get((node as SanityNode).id)
-                ?.get([prevPathPart, next].filter(Boolean).join(''))
+                ?.get([prevPath.join('.'), next].filter(Boolean).join(''))
             : next
           return fieldFromPath(
             schemaType.of.find((item) => (item.type === 'unionOption' ? item.name === name : item)),
             rest,
             schemaType,
+            [...prevPath, next],
           )
         } else if (schemaType.type === 'unionOption') {
           if (!next) return {field: schemaType, parent}
-          return fieldFromPath(schemaType.value, path, schemaType)
+          return fieldFromPath(schemaType.value, path, schemaType, prevPath)
         } else if (schemaType.type === 'inline') {
           const type = getType(schemaType.name, 'type')
-          return fieldFromPath((type as TypeSchema).value, path, schemaType)
+          return fieldFromPath((type as TypeSchema).value, path, schemaType, prevPath)
         }
-        // eslint-disable-next-line no-console
-        console.warn(`No field could be resolved at path: "${path.join('.')}"`)
-        return {field: undefined, parent: undefined}
+        throw new Error(
+          `[@sanity/visual-editing] No field could be resolved at path: "${[...prevPath, ...path].join('.')}"`,
+        )
       }
 
       const nodePath = node.path.split('.').flatMap((part) => {
@@ -241,7 +246,13 @@ export const SchemaProvider: FunctionComponent<
         return [part]
       })
 
-      return fieldFromPath(schemaType, nodePath, undefined)
+      try {
+        return fieldFromPath(schemaType, nodePath, undefined)
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        if (e instanceof Error) console.warn(e.message)
+        return {field: undefined, parent: undefined}
+      }
     },
     [getType, resolvedTypes],
   )
