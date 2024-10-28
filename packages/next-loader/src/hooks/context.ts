@@ -32,6 +32,7 @@ export type DraftEnvironment =
   | 'presentation-iframe'
   | 'presentation-window'
   | 'live'
+  | 'static'
   | 'unknown'
 
 /** @internal */
@@ -40,7 +41,6 @@ export const environmentListeners = new Set<() => void>()
 export let environment: DraftEnvironment = 'checking'
 /** @internal */
 export function setEnvironment(nextEnvironment: DraftEnvironment): void {
-  if (environment === nextEnvironment) return
   environment = nextEnvironment
   for (const onEnvironmentChange of environmentListeners) {
     onEnvironmentChange()
@@ -53,7 +53,6 @@ export const comlinkListeners = new Set<() => void>()
 export let comlink: Node<LoaderControllerMsg, LoaderNodeMsg> | null = null
 /** @internal */
 export function setComlink(nextComlink: Node<LoaderControllerMsg, LoaderNodeMsg> | null): void {
-  if (comlink === nextComlink) return
   comlink = nextComlink
   for (const onComlinkChange of comlinkListeners) {
     onComlinkChange()

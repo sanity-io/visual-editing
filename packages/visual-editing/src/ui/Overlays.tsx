@@ -1,11 +1,5 @@
-import {
-  isAltKey,
-  isHotkey,
-  type SanityNode,
-  type VisualEditingControllerMsg,
-} from '@repo/visual-editing-helpers'
-import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
-import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
+import {isAltKey, isHotkey, type VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
+import type {ClientPerspective} from '@sanity/client'
 import type {Status} from '@sanity/comlink'
 import {
   isHTMLAnchorElement,
@@ -27,18 +21,17 @@ import {
 } from 'react'
 import {styled} from 'styled-components'
 import type {
-  HistoryAdapter,
   OverlayComponentResolver,
   OverlayEventHandler,
   OverlayMsg,
   VisualEditingNode,
 } from '../types'
-import {getDraftId, getPublishedId} from '../util/documents.ts'
+import {getDraftId, getPublishedId} from '../util/documents'
 import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
-import {useOptimisticActor} from './optimistic-state/useOptimisticActor'
+import {useOptimisticActor, useOptimisticActorReady} from './optimistic-state/useOptimisticActor'
 import {OverlayDragGroupRect} from './OverlayDragGroupRect'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'
@@ -47,6 +40,8 @@ import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
 import {useController} from './useController'
+import {usePerspectiveSync} from './usePerspectiveSync'
+import {useReportDocuments} from './useReportDocuments'
 
 const Root = styled.div<{
   $zIndex?: string | number
@@ -73,13 +68,6 @@ function raf2(fn: () => void) {
     if (r0 !== undefined) cancelAnimationFrame(r0)
     if (r1 !== undefined) cancelAnimationFrame(r1)
   }
-}
-
-function isEqualSets(a: Set<string>, b: Set<string>) {
-  if (a === b) return true
-  if (a.size !== b.size) return false
-  for (const value of a) if (!b.has(value)) return false
-  return true
 }
 
 const DocumentReporter: FunctionComponent<{
@@ -138,8 +126,8 @@ const OverlaysController: FunctionComponent<{
       } else if (message.type === 'overlay/deactivate') {
         comlink?.post({type: 'visual-editing/toggle', data: {enabled: false}})
       } else if (message.type === 'overlay/dragEnd') {
-        const {insertPosition, target} = message
-        dispatchDragEndEvent({insertPosition, target})
+        const {insertPosition, target, dragGroup, flow, preventInsertDefault} = message
+        dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
 
@@ -155,7 +143,7 @@ const OverlaysController: FunctionComponent<{
     [comlink, dispatch, dispatchDragEndEvent, onDrag],
   )
 
-  const controller = useController(rootElement, overlayEventHandler, !!inFrame)
+  const controller = useController(rootElement, overlayEventHandler, inFrame)
 
   useEffect(() => {
     if (overlayEnabled) {
@@ -174,11 +162,10 @@ const OverlaysController: FunctionComponent<{
 export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
   componentResolver?: OverlayComponentResolver
-  history?: HistoryAdapter
   inFrame: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {comlink, componentResolver, inFrame, history, zIndex} = props
+  const {comlink, componentResolver: _componentResolver, inFrame, zIndex} = props
 
   const [status, setStatus] = useState<Status>()
 
@@ -224,12 +211,6 @@ export const Overlays: FunctionComponent<{
       comlink?.on('presentation/blur', (data) => {
         dispatch({type: 'presentation/blur', data})
       }),
-      comlink?.on('presentation/perspective', (data) => {
-        dispatch({type: 'presentation/perspective', data})
-      }),
-      comlink?.on('presentation/navigate', (data) => {
-        history?.update(data)
-      }),
       comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
       }),
@@ -239,65 +220,11 @@ export const Overlays: FunctionComponent<{
     ].filter(Boolean)
 
     return () => unsubs.forEach((unsub) => unsub!())
-  }, [comlink, history])
+  }, [comlink])
 
-  const lastReported = useRef<
-    | {
-        nodeIds: Set<string>
-        perspective: ClientPerspective
-      }
-    | undefined
-  >(undefined)
+  usePerspectiveSync(comlink, dispatch)
 
-  const reportDocuments = useCallback(
-    (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
-      comlink?.post({
-        type: 'visual-editing/documents',
-        data: {
-          documents,
-          perspective,
-        },
-      })
-    },
-    [comlink],
-  )
-
-  useEffect(() => {
-    // Report only nodes of type `SanityNode`. Untransformed `SanityStegaNode`
-    // nodes without an `id`, are not reported as they will not contain the
-    // necessary document data.
-    const nodes = elements
-      .map((e) => {
-        const {sanity} = e
-        if (!('id' in sanity)) return null
-        return {
-          ...sanity,
-          id: 'isDraft' in sanity ? `${DRAFTS_PREFIX}${sanity.id}` : sanity.id,
-        }
-      })
-      .filter((s) => !!s) as SanityNode[]
-
-    const nodeIds = new Set<string>(nodes.map((e) => e.id))
-    // Report if:
-    // - Documents not yet reported
-    // - Document IDs changed
-    // - Perspective changed
-    if (
-      !lastReported.current ||
-      !isEqualSets(nodeIds, lastReported.current.nodeIds) ||
-      perspective !== lastReported.current.perspective
-    ) {
-      const documentsOnPage: ContentSourceMapDocuments = Array.from(nodeIds).map((_id) => {
-        const node = nodes.find((node) => node.id === _id)!
-        const {type, projectId: _projectId, dataset: _dataset} = node
-        return _projectId && _dataset
-          ? {_id, _type: type!, _projectId, _dataset}
-          : {_id, _type: type!}
-      })
-      lastReported.current = {nodeIds, perspective}
-      reportDocuments(documentsOnPage, perspective)
-    }
-  }, [elements, perspective, reportDocuments])
+  useReportDocuments(comlink, elements, perspective)
 
   const updateDragPreviewCustomProps = useCallback(
     (x: number, y: number) => {
@@ -358,16 +285,6 @@ export const Overlays: FunctionComponent<{
     }
   }, [setOverlayEnabled])
 
-  useEffect(() => {
-    if (history) {
-      return history.subscribe((update) => {
-        update.title = update.title || document.title
-        comlink?.post({type: 'visual-editing/navigate', data: update})
-      })
-    }
-    return
-  }, [comlink, history])
-
   const [overlaysFlash, setOverlaysFlash] = useState(false)
   const [fadingOut, setFadingOut] = useState(false)
   const fadeOutTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
@@ -409,13 +326,18 @@ export const Overlays: FunctionComponent<{
     dispatch({type: 'overlay/blur'})
   }, [])
 
+  const optimisticActorReady = useOptimisticActorReady()
+
+  const componentResolver = useMemo(() => {
+    return optimisticActorReady ? _componentResolver : undefined
+  }, [_componentResolver, optimisticActorReady])
+
   return (
     <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
       <LayerProvider>
         <PortalProvider element={rootElement}>
           <SchemaProvider comlink={comlink} elements={elements}>
             <PreviewSnapshotsProvider comlink={comlink}>
-              {/* <OptimisticStateProvider comlink={comlink} documentIds={documentIds}> */}
               <Root
                 data-fading-out={fadingOut ? '' : undefined}
                 data-overlays={overlaysFlash ? '' : undefined}
@@ -437,6 +359,8 @@ export const Overlays: FunctionComponent<{
                     ({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
                       const draggable =
                         !dragDisabled &&
+                        !!element.getAttribute('data-sanity') &&
+                        optimisticActorReady &&
                         elements.some((e) =>
                           'id' in e.sanity && 'id' in sanity
                             ? sanityNodesExistInSameArray(e.sanity, sanity) &&

@@ -1,5 +1,70 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.8...next-loader-v1.1.0) (2024-10-24)
+
+
+### Features
+
+* add `useIsLivePreview` & `useIsPresentationTool` hooks ([#2050](https://github.com/sanity-io/visual-editing/issues/2050)) ([6aeecd4](https://github.com/sanity-io/visual-editing/commit/6aeecd4996715ec035bee09214d81bd1b8d3c7d5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.1
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.27
+
+## [1.0.8](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.7...next-loader-v1.0.8) (2024-10-24)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.26
+
+## [1.0.7](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.6...next-loader-v1.0.7) (2024-10-23)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.25
+
+## [1.0.6](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.5...next-loader-v1.0.6) (2024-10-23)
+
+
+### Bug Fixes
+
+* `createCompatibilityActors` are needed ([#2017](https://github.com/sanity-io/visual-editing/issues/2017)) ([#2032](https://github.com/sanity-io/visual-editing/issues/2032)) ([934d297](https://github.com/sanity-io/visual-editing/commit/934d297b641aa74e9d85ddc5d9b9b046ab3f12cc))
+
+## [1.0.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.4...next-loader-v1.0.5) (2024-10-22)
+
+
+### Bug Fixes
+
+* always notify subscribers ([#2030](https://github.com/sanity-io/visual-editing/issues/2030)) ([274397f](https://github.com/sanity-io/visual-editing/commit/274397f0a935ea005104a5ffe72a4d04167105a3))
+* remove unnecessary warning ([#2028](https://github.com/sanity-io/visual-editing/issues/2028)) ([b5d707c](https://github.com/sanity-io/visual-editing/commit/b5d707c435e9d7b47b63265ba9671583b99a9b7f))
+
+## [1.0.4](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.3...next-loader-v1.0.4) (2024-10-22)
+
+
+### Bug Fixes
+
+* resolve params promises ([#2027](https://github.com/sanity-io/visual-editing/issues/2027)) ([bf6e404](https://github.com/sanity-io/visual-editing/commit/bf6e40472337f011dc955fb034f6446da0b3e9e6))
+
+## [1.0.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.2...next-loader-v1.0.3) (2024-10-22)
+
+
+### Bug Fixes
+
+* `createCompatibilityActors` not needed ([#2017](https://github.com/sanity-io/visual-editing/issues/2017)) ([0bdfcc4](https://github.com/sanity-io/visual-editing/commit/0bdfcc44551ce407e979fe46f82b303214449b56))
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.1...next-loader-v1.0.2) (2024-10-21)
 
 

@@ -11,6 +11,7 @@ import {
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
+  type HTMLAttributes,
   type PropsWithChildren,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -26,7 +27,6 @@ import type {
   SanityStegaNode,
 } from '../types'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
-import {getField, getSchemaType} from './schema/schema'
 import {useSchema} from './schema/useSchema'
 
 export interface ElementOverlayProps {
@@ -145,9 +145,13 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-const PointerEvents: FunctionComponent<PropsWithChildren> = ({children}) => {
+const PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({
+  children,
+  style,
+  ...rest
+}) => {
   return (
-    <div style={{pointerEvents: 'all'}} data-sanity-overlay-element>
+    <div style={{...style, pointerEvents: 'all'}} data-sanity-overlay-element {...rest}>
       {children}
     </div>
   )
@@ -177,9 +181,9 @@ const ComponentWrapper: FunctionComponent<{
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   const {element, focused, componentResolver, node, showActions, draggable} = props
 
-  const {schema, resolvedTypes} = useSchema()
-  const schemaType = getSchemaType(node, schema)
-  const {field, parent} = getField(node, schemaType, resolvedTypes)
+  const {getField, getType} = useSchema()
+  const schemaType = getType(node)
+  const {field, parent} = getField(node)
 
   const href = 'path' in node ? createIntentLink(node) : node.href
 

@@ -26,8 +26,7 @@ export async function generateMetadata(
   {params}: {params: Promise<{slug: string}>},
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const {slug} = await params
-  const {data: post} = await sanityFetch({query: postQuery, params: {slug}, stega: false})
+  const {data: post} = await sanityFetch({query: postQuery, params, stega: false})
   const previousImages = (await parent).openGraph?.images || []
   const ogImage = resolveOpenGraphImage(post?.coverImage)
 
@@ -42,12 +41,11 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({params}: {params: Promise<{slug: string}>}) {
-  const {slug} = await params
   // const [{data: post}, {data: settings}] = await Promise.all([
   //   sanityFetch({query: postQuery, params: {slug}}),
   //   sanityFetch({query: settingsQuery}),
   // ])
-  const {data: post} = await sanityFetch({query: postQuery, params: {slug}})
+  const {data: post} = await sanityFetch({query: postQuery, params})
 
   return (
     <div className="container mx-auto px-5">
@@ -69,14 +67,14 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
       </SanityLiveStream>
       {post?._id ? (
         <>
-          <SanityLiveStream query={postQuery} params={{slug}}>
+          <SanityLiveStream query={postQuery} params={params}>
             {async ({data: post}) => {
               'use server'
 
               if (!post?._id) {
                 return (
                   <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
-                    404 - Post not found with slug: {slug}
+                    404 - Post not found with slug: {(await params).slug}
                   </h1>
                 )
               }
@@ -128,7 +126,7 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
         </>
       ) : (
         <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
-          404 - Post not found with slug: {slug}
+          404 - Post not found with slug: {(await params).slug}
         </h1>
       )}
     </div>

@@ -133,6 +133,10 @@ export type Intro = {
   headline?: string
   intro?: string
   style?: SectionStyle
+  rotations?: {
+    pitch?: number
+    yaw?: number
+  }
 }
 
 export type Hero = {
@@ -213,6 +217,10 @@ export type Page = {
         headline?: string
         intro?: string
         style?: SectionStyle
+        rotations?: {
+          pitch?: number
+          yaw?: number
+        }
         _type: 'intro'
         _key: string
       }
@@ -445,6 +453,31 @@ export type Slug = {
   source?: string
 }
 
+export type DndTestPage = {
+  _id: string
+  _type: 'dndTestPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  children?: Array<{
+    title?: string
+    childrenStrings?: Array<string>
+    children?: Array<{
+      title?: string
+      children?: Array<{
+        title?: string
+        _type: 'dndTestItemChildL2'
+        _key: string
+      }>
+      _type: 'dndTestItemChildL1'
+      _key: string
+    }>
+    _type: 'dndTestItem'
+    _key: string
+  }>
+}
+
 export type AllSanitySchemaTypes =
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -468,6 +501,7 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageMetadata
   | Slug
+  | DndTestPage
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/app/layout.tsx
 // Variable: layoutQuery
@@ -630,6 +664,10 @@ export type FrontPageQueryResult = null | {
         headline: string | null
         intro?: string
         style?: SectionStyle
+        rotations?: {
+          pitch?: number
+          yaw?: number
+        }
         _type: 'intro'
         _key: string
         symbol: null
@@ -655,6 +693,43 @@ export type FrontPageQueryResult = null | {
   > | null
   style: null
 }
+
+// Source: ./src/app/dnd/page.tsx
+// Variable: dndPageQuery
+// Query: *[_type == "dndTestPage"]{    _id,    title,    children  }[0]
+export type DndPageQueryResult = {
+  _id: string
+  title: string | null
+  children: Array<{
+    title?: string
+    childrenStrings?: Array<string>
+    children?: Array<{
+      title?: string
+      children?: Array<{
+        title?: string
+        _type: 'dndTestItemChildL2'
+        _key: string
+      }>
+      _type: 'dndTestItemChildL1'
+      _key: string
+    }>
+    _type: 'dndTestItem'
+    _key: string
+  }> | null
+} | null
+
+// Source: ./src/app/projects/page.tsx
+// Variable: projectsPageQuery
+// Query: *[_type == "project" && defined(slug.current)]
+export type ProjectsPageQueryResult = Array<{
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+}>
 
 // Source: ./src/app/products/page.tsx
 // Variable: productsPageQuery
@@ -696,10 +771,15 @@ export type ProductsPageQueryResult = Array<{
   } | null
 }>
 
-// Source: ./src/app/projects/page.tsx
-// Variable: projectsPageQuery
-// Query: *[_type == "project" && defined(slug.current)]
-export type ProjectsPageQueryResult = Array<{
+// Source: ./src/app/project/[slug]/page.tsx
+// Variable: projectSlugsQuery
+// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
+export type ProjectSlugsQueryResult = Array<{
+  slug: string | null
+}>
+// Variable: projectPageQuery
+// Query: *[_type == "project" && slug.current == $slug][0]
+export type ProjectPageQueryResult = {
   _id: string
   _type: 'project'
   _createdAt: string
@@ -707,7 +787,7 @@ export type ProjectsPageQueryResult = Array<{
   _rev: string
   title?: string
   slug?: Slug
-}>
+} | null
 
 // Source: ./src/app/pages/[slug]/page.tsx
 // Variable: pageQuery
@@ -822,6 +902,10 @@ export type PageQueryResult = {
         headline: string | null
         intro?: string
         style?: SectionStyle
+        rotations?: {
+          pitch?: number
+          yaw?: number
+        }
         _type: 'intro'
         _key: string
         symbol: null
@@ -951,35 +1035,18 @@ export type ProductPageQueryResult = {
   }>
 } | null
 
-// Source: ./src/app/project/[slug]/page.tsx
-// Variable: projectSlugsQuery
-// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
-export type ProjectSlugsQueryResult = Array<{
-  slug: string | null
-}>
-// Variable: projectPageQuery
-// Query: *[_type == "project" && slug.current == $slug][0]
-export type ProjectPageQueryResult = {
-  _id: string
-  _type: 'project'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-} | null
-
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_id == "siteSettings"][0]{\n  title,\n  description,\n  copyrightText\n}': LayoutQueryResult
     "\n  *[_id == \"siteSettings\"][0]{\n    frontPage->{\n      _type,\n      _id,\n      title,\n      sections[]{\n        ...,\n        symbol->{_type},\n        'headline': coalesce(headline, symbol->headline),\n        'tagline': coalesce(tagline, symbol->tagline),\n        'subline': coalesce(subline, symbol->subline),\n        'image': coalesce(image, symbol->image),\n        product->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        },\n        products[]{\n          _key,\n          ...(@->{\n            _type,\n            _id,\n            title,\n            slug,\n            \"media\": media[0]\n          })\n        }\n      },\n      style\n    }\n  }.frontPage\n": FrontPageQueryResult
-    '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
+    '\n  *[_type == "dndTestPage"]{\n    _id,\n    title,\n    children\n  }[0]\n': DndPageQueryResult
     '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
+    '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
+    '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
+    '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    sections[]{\n      ...,\n      symbol->{_type},\n      'headline': coalesce(headline, symbol->headline),\n      'tagline': coalesce(tagline, symbol->tagline),\n      'subline': coalesce(subline, symbol->subline),\n      'image': coalesce(image, symbol->image),\n      product->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      },\n      products[]{\n        _key,\n        ...(@->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        })\n      }\n    },\n    style\n  }\n": PageQueryResult
     '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
     '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
-    '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
-    '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
   }
 }

@@ -20,7 +20,7 @@ import {sanitizePerspective} from './utils'
  */
 export type DefinedSanityFetchType = <const QueryString extends string>(options: {
   query: QueryString
-  params?: QueryParams
+  params?: QueryParams | Promise<QueryParams>
   perspective?: Omit<ClientPerspective, 'raw'>
   stega?: boolean
   tag?: string
@@ -35,7 +35,7 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
  */
 export type DefinedSanityLiveStreamType = <const QueryString extends string>(props: {
   query: QueryString
-  params?: QueryParams
+  params?: QueryParams | Promise<QueryParams>
   perspective?: Omit<ClientPerspective, 'raw'>
   stega?: boolean
   tag?: string
@@ -71,11 +71,6 @@ export interface DefinedSanityLiveProps {
    */
   refreshOnReconnect?: boolean
 
-  /**
-   * Once you've checked that the `browserToken` is only Viewer rights or lower, you can set this to `true` to silence browser warnings about the token.
-   * TODO: this warning should only be necessary when `serverToken` and `browserToken` are the same value
-   */
-  ignoreBrowserTokenWarning?: boolean
   /**
    * Optional request tag for the listener. Use to identify the request in logs.
    *
@@ -178,7 +173,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     tag = 'next-loader.fetch',
   }: {
     query: QueryString
-    params?: QueryParams
+    params?: QueryParams | Promise<QueryParams>
     stega?: boolean
     perspective?: Omit<ClientPerspective, 'raw'>
     tag?: string
@@ -196,7 +191,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         : 'published')
 
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
-    const {syncTags} = await client.fetch(query, params, {
+    const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective: perspective as ClientPerspective,
       stega: false,
@@ -210,7 +205,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
     const tags = ['sanity', ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
 
-    const {result, resultSourceMap} = await client.fetch(query, params, {
+    const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective: perspective as ClientPerspective,
       stega,
@@ -241,7 +236,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
     const {
-      ignoreBrowserTokenWarning = serverToken !== browserToken,
       // handleDraftModeAction = handleDraftModeActionMissing
       refreshOnMount,
       refreshOnFocus,
@@ -274,7 +268,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
         requestTagPrefix={requestTagPrefix}
         tag={tag}
         token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
-        ignoreBrowserTokenWarning={ignoreBrowserTokenWarning}
         draftModeEnabled={isDraftModeEnabled}
         // handleDraftModeAction={handleDraftModeAction}
         draftModePerspective={
@@ -329,7 +322,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
           projectId={projectId}
           dataset={dataset}
           query={query}
-          params={params}
+          params={await params}
           perspective={perspective}
           stega={stega}
           initial={children({data, sourceMap, tags})}

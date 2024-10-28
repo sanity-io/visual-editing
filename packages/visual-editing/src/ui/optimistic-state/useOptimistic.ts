@@ -112,10 +112,6 @@ export function useOptimistic<T, U = SanityDocument>(
       // If we don't have a lastEvent when we are pristine, it's a fatal error
       throw new Error('No last event found when syncing passthrough')
     }
-    if (!lastPassthrough) {
-      // If we don't have a lastPassthrough, it's a fatal error
-      throw new Error('No last passthrough found when syncing passthrough')
-    }
     if (lastPassthrough === passthrough) {
       // If the passthrough hasn't changed, then we don't need to rerun the reducers
       return undefined

@@ -1,5 +1,66 @@
 # Changelog
 
+## [2.4.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.0...visual-editing-v2.4.1) (2024-10-24)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.1
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.27
+
+## [2.4.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.2...visual-editing-v2.4.0) (2024-10-24)
+
+
+### Features
+
+* **visual-editing:** add package version mismatch warning ([#2040](https://github.com/sanity-io/visual-editing/issues/2040)) ([c112de4](https://github.com/sanity-io/visual-editing/commit/c112de453fc476e666480e5fea7b1b3ae50b6843))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.26
+
+## [2.3.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.1...visual-editing-v2.3.2) (2024-10-24)
+
+
+### Bug Fixes
+
+* **visual-editing:** add silent catch to features request ([#2038](https://github.com/sanity-io/visual-editing/issues/2038)) ([a20b0fd](https://github.com/sanity-io/visual-editing/commit/a20b0fdea30a7ca909bde3185d78ae7772a5710f))
+
+## [2.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.0...visual-editing-v2.3.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* resolve issues with newly added canary features ([#2036](https://github.com/sanity-io/visual-editing/issues/2036)) ([7b6507b](https://github.com/sanity-io/visual-editing/commit/7b6507b35c48e5307e7a2e70536d4336e18327b6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.25
+
+## [2.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.2.2...visual-editing-v2.3.0) (2024-10-22)
+
+
+### Features
+
+* **visual-editing:** add OptimisticDocument commit method ([#2023](https://github.com/sanity-io/visual-editing/issues/2023)) ([270c67d](https://github.com/sanity-io/visual-editing/commit/270c67d71a7359256a71f97307cf092a5a490d0d))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/mutate to v0.10.1-canary.5 ([a093dc8](https://github.com/sanity-io/visual-editing/commit/a093dc8c8fe16d54d33ca32d5c278859648ee9ef))
+* **visual-editing:** resolve inline schema types when getting fields ([#2026](https://github.com/sanity-io/visual-editing/issues/2026)) ([6827561](https://github.com/sanity-io/visual-editing/commit/6827561d7e1e4e3fe5d3c12c0847093df74f0de0))
+
 ## [2.2.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.2.1...visual-editing-v2.2.2) (2024-10-21)
 
 

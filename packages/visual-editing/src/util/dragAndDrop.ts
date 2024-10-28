@@ -77,7 +77,7 @@ function calcInsertPosition(origin: Point2D, targets: OverlayRect[], flow: strin
 }
 
 function findRectSanityData(rect: OverlayRect, overlayGroup: OverlayElement[]) {
-  return overlayGroup.find((e) => rectEqual(getRect(e.elements.measureElement), rect))
+  return overlayGroup.find((e) => rectEqual(getRect(e.elements.element), rect))
     ?.sanity as SanityNode
 }
 
@@ -227,6 +227,9 @@ async function applyMinimapWrapperTransform(
     })
 
     document.body.style.overflow = 'hidden'
+    document.body.style.height = '100%'
+    document.documentElement.style.overflow = 'initial'
+    document.documentElement.style.height = '100%'
 
     // ensure overflow hidden has applied and scrolling stopped before applying transform, prevent minor y-position transform issues
     setTimeout(() => {
@@ -284,6 +287,7 @@ async function resetMinimapWrapperTransform(
   prescaleHeight: number,
   handler: OverlayEventHandler,
   rectUpdateFrequency: number,
+  previousRootStyleValues: PreviousRootStyleValues | null,
 ): Promise<void> {
   return new Promise((resolve) => {
     const computedStyle = window.getComputedStyle(target)
@@ -334,16 +338,26 @@ async function resetMinimapWrapperTransform(
     })
 
     target.style.transform = `translateY(${Math.max(prevScrollY - endYOrigin, -maxScroll + prevScrollY)}px) scale(${1})`
-    document.body.style.overflow = 'auto'
+
+    if (!previousRootStyleValues) return
+
+    document.body.style.overflow = previousRootStyleValues.body.overflow
+    document.body.style.height = previousRootStyleValues.body.height
+    document.documentElement.style.overflow = previousRootStyleValues.documentElement.overflow
+    document.documentElement.style.height = previousRootStyleValues.documentElement.height
   })
 }
 
-let minimapScaleApplied = false
-
-let mousePosInverseTransform = {x: 0, y: 0}
-let mousePos = {x: 0, y: 0}
-
-let prescaleHeight = typeof document === 'undefined' ? 0 : document.documentElement.scrollHeight
+interface PreviousRootStyleValues {
+  body: {
+    overflow: string
+    height: string
+  }
+  documentElement: {
+    overflow: string
+    height: string
+  }
+}
 
 interface HandleOverlayDragOpts {
   mouseEvent: MouseEvent
@@ -355,6 +369,15 @@ interface HandleOverlayDragOpts {
   onSequenceEnd: () => void
 }
 
+let minimapScaleApplied = false
+
+let mousePosInverseTransform = {x: 0, y: 0}
+let mousePos = {x: 0, y: 0}
+
+let prescaleHeight = typeof document === 'undefined' ? 0 : document.documentElement.scrollHeight
+
+let previousRootStyleValues: PreviousRootStyleValues | null = null
+
 export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
   const {mouseEvent, element, overlayGroup, handler, target, onSequenceStart, onSequenceEnd} = opts
 
@@ -365,13 +388,17 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
   window.focus()
 
   const rectUpdateFrequency = 150
-  let rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
+  let rects = overlayGroup.map((e) => getRect(e.elements.element))
 
   const flow = (element.getAttribute('data-sanity-drag-flow') || calcTargetFlow(rects)) as
     | 'horizontal'
     | 'vertical'
 
+  const dragGroup = element.getAttribute('data-sanity-drag-group')
+
   const disableMinimap = !!element.getAttribute('data-sanity-drag-minimap-disable')
+
+  const preventInsertDefault = !!element.getAttribute('data-sanity-drag-prevent-default')
 
   let insertPosition: DragInsertPositionRects | null = null
 
@@ -386,10 +413,23 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
   let mousedown = true
 
-  if (!minimapScaleApplied) prescaleHeight = document.documentElement.scrollHeight
+  if (!minimapScaleApplied) {
+    previousRootStyleValues = {
+      body: {
+        overflow: window.getComputedStyle(document.body).overflow,
+        height: window.getComputedStyle(document.body).height,
+      },
+      documentElement: {
+        overflow: window.getComputedStyle(document.documentElement).overflow,
+        height: window.getComputedStyle(document.documentElement).height,
+      },
+    }
+
+    prescaleHeight = document.documentElement.scrollHeight
+  }
 
   const rectsInterval = setInterval(() => {
-    rects = overlayGroup.map((e) => getRect(e.elements.measureElement))
+    rects = overlayGroup.map((e) => getRect(e.elements.element))
   }, rectUpdateFrequency)
 
   const applyMinimap = (): void => {
@@ -515,6 +555,9 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       insertPosition: insertPosition
         ? resolveInsertPosition(overlayGroup, insertPosition, flow)
         : null,
+      dragGroup,
+      flow,
+      preventInsertDefault,
     })
 
     if (minimapPromptShown) {
@@ -552,6 +595,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
         prescaleHeight,
         handler,
         rectUpdateFrequency,
+        previousRootStyleValues,
       )
 
       handler({
@@ -584,6 +628,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       prescaleHeight,
       handler,
       rectUpdateFrequency,
+      previousRootStyleValues,
     ).then(() => {
       minimapScaleApplied = false
     })

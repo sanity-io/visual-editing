@@ -1,0 +1,33 @@
+import type {VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
+import {useEffect} from 'react'
+import type {OverlayMsg, VisualEditingNode} from '../types'
+
+export function usePerspectiveSync(
+  comlink: VisualEditingNode | undefined,
+  dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void,
+): void {
+  useEffect(() => {
+    const controller = new AbortController()
+    comlink
+      ?.fetch(
+        {type: 'visual-editing/fetch-perspective', data: undefined},
+        {signal: controller.signal, suppressWarnings: true},
+      )
+      .then((data) => {
+        dispatch({type: 'presentation/perspective', data})
+      })
+      .catch(() => {
+        // Fail silently as the app may be communicating with a version of
+        // Presentation that does not support this feature
+      })
+
+    const unsub = comlink?.on('presentation/perspective', (data) => {
+      dispatch({type: 'presentation/perspective', data})
+    })
+
+    return () => {
+      unsub?.()
+      controller.abort()
+    }
+  }, [comlink, dispatch])
+}

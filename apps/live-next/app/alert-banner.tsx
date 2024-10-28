@@ -1,20 +1,15 @@
 'use client'
 
+import {useIsPresentationTool} from '@sanity/next-loader/hooks'
 import {useRouter} from 'next/navigation'
-import {useSyncExternalStore, useTransition} from 'react'
+import {useTransition} from 'react'
 import {disableDraftMode} from './actions'
-
-const emptySubscribe = () => () => {}
 
 export default function AlertBanner() {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
 
-  const shouldShow = useSyncExternalStore(
-    emptySubscribe,
-    () => window.top === window,
-    () => false,
-  )
+  const shouldShow = useIsPresentationTool() === false
 
   if (!shouldShow) return null
 

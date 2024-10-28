@@ -12,7 +12,13 @@ import type {
   VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
 import type {Node} from '@sanity/comlink'
-import type {ComponentType, FunctionComponent, PropsWithChildren, ReactElement} from 'react'
+import type {
+  ComponentType,
+  FunctionComponent,
+  HTMLAttributes,
+  PropsWithChildren,
+  ReactElement,
+} from 'react'
 
 export type {
   HistoryRefresh,
@@ -65,6 +71,9 @@ export type DragInsertPosition = {
 export interface DragEndEvent {
   insertPosition: DragInsertPosition
   target: SanityNode
+  dragGroup: string | null
+  flow: string
+  preventInsertDefault: boolean
 }
 
 /** @public */
@@ -255,6 +264,7 @@ export interface OverlayOptions {
   handler: OverlayEventHandler
   overlayElement: HTMLElement
   inFrame: boolean
+  optimisticActorReady: boolean
 }
 
 /**
@@ -439,7 +449,7 @@ export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | C
  * @public
  */
 export type OverlayComponent = ComponentType<{
-  PointerEvents: FunctionComponent<PropsWithChildren>
+  PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
   element: ElementNode
   parent: OverlayElementParent
   node: SanityNode

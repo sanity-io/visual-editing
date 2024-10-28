@@ -10,7 +10,6 @@ export default defineConfig({
     'process.env.NODE_ENV': 'production',
   },
   rollup: {
-    ...baseConfig.rollup,
     treeshake: {
       preset: 'smallest',
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],

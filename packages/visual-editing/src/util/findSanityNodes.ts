@@ -100,6 +100,7 @@ export function findSanityNodes(
       return
     }
 
+    // resize observer does not fire for non-replaced inline elements https://drafts.csswg.org/resize-observer/#intro
     const measureElement = findNonInlineElement(element)
     if (!measureElement) {
       return
@@ -214,19 +215,29 @@ export function resolveDragAndDropGroup(
   elementSet: Set<ElementNode>,
   elementsMap: WeakMap<ElementNode, OverlayElement>,
 ): null | OverlayElement[] {
+  if (!element.getAttribute('data-sanity')) return null
+
   if (element.getAttribute('data-sanity-drag-disable')) return null
 
   if (!sanity || !isSanityNode(sanity) || !isSanityArrayPath(sanity.path)) return null
 
+  const targetDragGroup = element.getAttribute('data-sanity-drag-group')
+
   const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
     const elData = elementsMap.get(el)
     const elDragDisabled = el.getAttribute('data-sanity-drag-disable')
+    const elDragGroup = el.getAttribute('data-sanity-drag-group')
+    const elHasSanityAttribution = el.getAttribute('data-sanity') !== null
+
+    const sharedDragGroup = targetDragGroup !== null ? targetDragGroup === elDragGroup : true
 
     if (
       elData &&
       !elDragDisabled &&
       isSanityNode(elData.sanity) &&
-      sanityNodesExistInSameArray(sanity, elData.sanity)
+      sanityNodesExistInSameArray(sanity, elData.sanity) &&
+      sharedDragGroup &&
+      elHasSanityAttribution
     ) {
       acc.push(elData)
     }

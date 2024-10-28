@@ -7,7 +7,7 @@
     "build": "next build",
     "debug": "NEXT_PRIVATE_DEBUG_CACHE=1 next build --profile && NEXT_PRIVATE_DEBUG_CACHE=1 next start -p 3009",
     "predev": "npm run typegen",
-    "dev": "next dev -p 3009 --turbo",
+    "dev": "next dev -p 3009",
     "lint": "next lint",
     "start": "next start",
     "typegen": "sanity typegen generate"
@@ -25,12 +25,12 @@
     "@types/node": "^20.14.13",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
-    "@vercel/speed-insights": "^1.0.12",
+    "@vercel/speed-insights": "^1.0.13",
     "autoprefixer": "^10.4.20",
     "babel-plugin-react-compiler": "0.0.0-experimental-fa06e2c-20241016",
     "date-fns": "^4.1.0",
     "framer-motion": "12.0.0-alpha.1",
-    "next": "15.0.0-canary.202",
+    "next": "15.0.1-canary.1",
     "next-sanity": "9.7.0-canary.23",
     "postcss": "^8.4.47",
     "react": "19.0.0-rc-fb9a90fa48-20240614",
@@ -40,10 +40,10 @@
     "typescript": "5.6.3"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "15.0.0-canary.202",
+    "@next/bundle-analyzer": "15.0.1-canary.1",
     "@repo/prettier-config": "workspace:*",
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.0.0-canary.202",
+    "eslint-config-next": "15.0.1-canary.1",
     "eslint-plugin-react-compiler": "0.0.0-experimental-fa06e2c-20241016"
   }
 }

@@ -38,7 +38,7 @@ export default async function ProductPage({params}: {params: Promise<{slug: stri
   // @TODO fix typegen vs manual types issues
   const {data} = (await sanityFetch({
     query: productPageQuery,
-    params: await params,
+    params,
   })) as unknown as {
     data: ProductData | null
   }

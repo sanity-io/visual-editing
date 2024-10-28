@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.6.27](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.26...visual-editing-helpers-v0.6.27) (2024-10-24)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.1.1
+  * peerDependencies
+    * @sanity/comlink bumped to 1.1.1
+
+## [0.6.26](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.25...visual-editing-helpers-v0.6.26) (2024-10-24)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.1.0
+  * peerDependencies
+    * @sanity/comlink bumped to 1.1.0
+
+## [0.6.25](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.24...visual-editing-helpers-v0.6.25) (2024-10-23)
+
+
+### Bug Fixes
+
+* resolve issues with newly added canary features ([#2036](https://github.com/sanity-io/visual-editing/issues/2036)) ([7b6507b](https://github.com/sanity-io/visual-editing/commit/7b6507b35c48e5307e7a2e70536d4336e18327b6))
+
 ## [0.6.24](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.23...visual-editing-helpers-v0.6.24) (2024-10-21)
 
 

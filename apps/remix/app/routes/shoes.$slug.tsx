@@ -1,6 +1,8 @@
 import {PortableText} from '@portabletext/react'
 import {Link, useLoaderData} from '@remix-run/react'
+import {stegaClean} from '@sanity/client/stega'
 import {useQuery} from '@sanity/react-loader'
+import {createDataAttribute} from '@sanity/visual-editing'
 import {json, type LoaderFunction} from '@vercel/remix'
 import {shoe, shoesList, type ShoeParams, type ShoeResult, type ShoesListResult} from '~/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/sanity'
@@ -104,7 +106,15 @@ export default function ShoePage() {
                   const i = _i + 1
 
                   return (
-                    <div key={(image.asset._ref as string) || i} className="shrink-0 snap-start">
+                    <div
+                      data-sanity={createDataAttribute({
+                        id: product._id,
+                        type: 'shoe',
+                        path: `media[_key=="${image._key}"]`,
+                      }).toString()}
+                      key={(image.asset._ref as string) || i}
+                      className="shrink-0 snap-start"
+                    >
                       <img
                         className="h-32 w-40 shrink-0 rounded bg-white shadow-xl lg:rounded-lg"
                         src={urlFor(image)
@@ -113,7 +123,7 @@ export default function ShoePage() {
                           .url()}
                         width={1280 / 2}
                         height={720 / 2}
-                        alt={image.alt || ''}
+                        alt={stegaClean(image.alt) || ''}
                       />
                     </div>
                   )

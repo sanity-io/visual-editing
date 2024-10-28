@@ -20,7 +20,8 @@ import {at, insert, truncate, type NodePatchList} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
 import type {ContextMenuNode, OverlayElementField, OverlayElementParent} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
-import {generateKey, getArrayItemKeyAndParentPath} from '../../util/mutations'
+import {getArrayItemKeyAndParentPath} from '../../util/mutations'
+import {randomKey} from '../../util/randomKey'
 import type {OptimisticDocument} from '../optimistic-state/useDocuments'
 
 export function getArrayRemoveAction(node: SanityNode, doc: OptimisticDocument): () => void {
@@ -44,7 +45,7 @@ function getArrayInsertAction(
   return () =>
     doc.patch(() => {
       const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)
-      const insertKey = generateKey()
+      const insertKey = randomKey()
       const referenceItem = {_key: itemKey}
       return [
         at(arrayPath, insert([{_type: insertType, _key: insertKey}], position, referenceItem)),
@@ -101,7 +102,7 @@ function getDuplicateAction(node: SanityNode, doc: OptimisticDocument): () => vo
       const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)
 
       const item = get(snapshot, node.path) as object
-      const duplicate = {...item, _key: generateKey()}
+      const duplicate = {...item, _key: randomKey()}
 
       return [at(arrayPath, insert(duplicate, 'after', {_key: itemKey}))]
     })
@@ -280,7 +281,7 @@ function getContextMenuUnionItems(context: {
         type: 'action' as const,
         label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
         icon: getNodeIcon(t),
-        action: () => getArrayInsertAction(node, doc, t.name, 'after'),
+        action: getArrayInsertAction(node, doc, t.name, 'after'),
       }
     }),
   })

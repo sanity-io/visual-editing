@@ -71,7 +71,9 @@ import {useStatus} from './useStatus'
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
 const LiveQueries = lazy(() => import('./loader/LiveQueries'))
 const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'))
+const PostMessageFeatures = lazy(() => import('./features/PostMessageFeatures'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
+const PostMessagePerspective = lazy(() => import('./PostMessagePerspective'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
 const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
 
@@ -188,21 +190,18 @@ export default function PresentationTool(props: {
   // const [previewKitConnection, setPreviewKitConnection] = useState<Status>('connecting')
   const [previewKitConnection, setPreviewKitConnection] = useStatus()
 
-  const [popups] = useState<Set<Window>>(() => new Set())
-  const handleOpenPopup = useCallback(
-    (url: string) => {
-      const source = window.open(url, '_blank')
-      if (source) {
-        popups.add(source)
-      }
-    },
-    [popups],
-  )
+  const [popups, setPopups] = useState<Set<Window>>(() => new Set())
+  const handleOpenPopup = useCallback((url: string) => {
+    const source = window.open(url, '_blank')
+    if (source) {
+      setPopups((prev) => new Set(prev).add(source))
+    }
+  }, [])
 
   useEffect(() => {
     const target = iframeRef.current?.contentWindow
 
-    if (!target) return
+    if (!target || state.iframe.status === 'loading') return
 
     const controller = createController({targetOrigin})
     controller.addTarget(target)
@@ -212,7 +211,7 @@ export default function PresentationTool(props: {
       controller.destroy()
       setController(undefined)
     }
-  }, [targetOrigin])
+  }, [targetOrigin, state.iframe.status])
 
   useEffect(() => {
     const unsubs: Array<() => void> = []
@@ -227,7 +226,7 @@ export default function PresentationTool(props: {
     return () => {
       unsubs.forEach((unsub) => unsub())
     }
-  }, [controller, popups, popups.size])
+  }, [controller, popups])
 
   useEffect(() => {
     if (!controller) return
@@ -357,14 +356,6 @@ export default function PresentationTool(props: {
     },
     [navigate],
   )
-
-  // Dispatch a perspective message when the perspective changes
-  useEffect(() => {
-    visualEditingComlink?.post({
-      type: 'presentation/perspective',
-      data: {perspective},
-    })
-  }, [perspective, visualEditingComlink])
 
   // Dispatch a focus or blur message when the id or path change
   useEffect(() => {
@@ -630,6 +621,16 @@ export default function PresentationTool(props: {
       {visualEditingComlink && (
         <Suspense>
           <PostMessageDocuments comlink={visualEditingComlink} />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessageFeatures comlink={visualEditingComlink} />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
         </Suspense>
       )}
       {params.id && params.type && (
