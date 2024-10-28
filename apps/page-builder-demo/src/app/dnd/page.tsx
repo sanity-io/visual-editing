@@ -39,6 +39,21 @@ export default async function Page() {
                 key={child._key}
               >
                 <p>{child.title}</p>
+                <div>
+                  {child.childrenStrings &&
+                    child.childrenStrings.map((s: string, i: number) => (
+                      <span
+                        data-sanity={createDataAttribute({
+                          id: data._id,
+                          type: 'dndTestPage',
+                          path: `children[_key=="${child._key}"].childrenStrings[${i}]`,
+                        }).toString()}
+                        key={i}
+                      >
+                        {s}
+                      </span>
+                    ))}
+                </div>
               </a>
             ))}
           </div>
@@ -209,7 +224,7 @@ export default async function Page() {
         </section>
         {/* Inline */}
         <section className="mt-6">
-          <h2>Vertical (Flow Auto Calculated)</h2>
+          <h2>Inline</h2>
           <div className="mt-4">
             {data.children.map((child) => (
               <a

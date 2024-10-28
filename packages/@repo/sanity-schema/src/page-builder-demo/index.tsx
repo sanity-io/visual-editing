@@ -543,6 +543,12 @@ const dndTestItemRoot = defineArrayMember({
     }),
     defineField({
       type: 'array',
+      name: 'childrenStrings',
+      title: 'Children Strings',
+      of: [{type: 'string'}],
+    }),
+    defineField({
+      type: 'array',
       name: 'children',
       title: 'Children',
       of: [dndTestItemChildL1],
