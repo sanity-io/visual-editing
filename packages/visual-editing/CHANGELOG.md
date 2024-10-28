@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.4.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.1...visual-editing-v2.4.2) (2024-10-28)
+
+
+### Bug Fixes
+
+* **visual-editing:** correct insert after action, add dismiss ([#2057](https://github.com/sanity-io/visual-editing/issues/2057)) ([af5a881](https://github.com/sanity-io/visual-editing/commit/af5a8817aa3953e08919869882d526b6c6da1485))
+* **visual-editing:** nested union schema field resolution ([#2056](https://github.com/sanity-io/visual-editing/issues/2056)) ([1d20494](https://github.com/sanity-io/visual-editing/commit/1d2049402b50a121c5652e2cc7ced7a513863502))
+* **visual-editing:** remove useOptimistic nullable check ([#2058](https://github.com/sanity-io/visual-editing/issues/2058)) ([eb62091](https://github.com/sanity-io/visual-editing/commit/eb620915ee905d52fde68c245451756b4bb3b970))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.28
+
 ## [2.4.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.0...visual-editing-v2.4.1) (2024-10-24)
 
 
