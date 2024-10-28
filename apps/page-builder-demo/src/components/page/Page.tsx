@@ -39,6 +39,25 @@ export function Page(props: {data: PageData}) {
         path: 'sections',
       }).toString()}
     >
+      <div className="my-64">
+        {data.group_pageSections?.list_pageComponents?.map((component) => {
+          const content = component.group_campaignHeroFallbackContent || component.group_accordion
+          return content ? (
+            <div
+              key={component._key}
+              data-sanity={dataAttribute({
+                id: data._id,
+                type: data._type,
+                path: `group_pageSections.list_pageComponents[_key=="${(component as any)._key}"]`,
+              }).toString()}
+            >
+              {component._key}
+            </div>
+          ) : (
+            'Nope'
+          )
+        })}
+      </div>
       {sections?.map((section: PageSection | null) => {
         if (section?._type === 'hero') {
           return <Hero page={data} key={section._key} section={section} />

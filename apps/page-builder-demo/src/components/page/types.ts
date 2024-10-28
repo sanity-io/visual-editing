@@ -69,6 +69,18 @@ export interface PageData {
   _id: string
   title?: string
   sections?: Array<PageSection>
+  group_pageSections?: {
+    list_pageComponents?: Array<{
+      _key: string
+      _type: 'component'
+      group_campaignHeroFallbackContent?: {
+        field_title: string
+      }
+      group_accordion?: {
+        field_title: string
+      }
+    }>
+  }
 }
 
 export type PageSection =

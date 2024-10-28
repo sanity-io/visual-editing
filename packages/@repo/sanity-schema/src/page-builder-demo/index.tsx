@@ -483,6 +483,10 @@ const pageType = defineType({
       title: 'Title',
     }),
     defineField({
+      type: 'group_pageSections',
+      name: 'group_pageSections',
+    }),
+    defineField({
       type: 'slug',
       name: 'slug',
       title: 'Slug',
@@ -573,6 +577,107 @@ const dndTestPageType = defineType({
   ],
 })
 
+const fallbackContentType = defineType({
+  type: 'object',
+  name: 'group_campaignHeroFallbackContent',
+  fields: [
+    defineField({
+      type: 'string',
+      name: 'field_title',
+      title: 'Title',
+      description: 'The main heading of this piece of content.',
+    }),
+  ],
+})
+
+const accordionType = defineType({
+  type: 'object',
+  name: 'group_accordion',
+  fields: [
+    defineField({
+      type: 'string',
+      name: 'field_title',
+      title: 'Title',
+      description: 'The main heading of this piece of content.',
+    }),
+  ],
+})
+
+const accordionComponentType = defineType({
+  type: 'object',
+  name: 'component_accordion',
+  fields: [
+    defineField({
+      type: 'group_accordion',
+      name: 'group_accordion',
+    }),
+  ],
+})
+
+const heroComponentType = defineType({
+  type: 'object',
+  name: 'component_latestCampaignHero',
+  fields: [
+    defineField({
+      type: 'group_campaignHeroFallbackContent',
+      name: 'group_campaignHeroFallbackContent',
+    }),
+  ],
+})
+
+const pageSectionsType = defineType({
+  type: 'object',
+  name: 'group_pageSections',
+  fields: [
+    defineField({
+      type: 'array',
+      name: 'list_pageComponents',
+      title: 'Page Blocks',
+      description: 'Blocks that make up the body of the page.',
+      of: [
+        defineField({
+          type: 'object',
+          name: 'component_latestCampaignHero',
+          title: 'Hero',
+          description:
+            "A prominent section on the homepage that showcases Sanetti's core mission and values.",
+          fields: [
+            defineField({
+              type: 'group_campaignHeroFallbackContent',
+              name: 'group_campaignHeroFallbackContent',
+            }),
+          ],
+        }),
+        defineField({
+          type: 'object',
+          name: 'component_accordion',
+          title: 'Accordion',
+          description:
+            'A component that allows content to be expanded and collapsed, providing a streamlined view of content.',
+          fields: [
+            defineField({
+              type: 'group_accordion',
+              name: 'group_accordion',
+            }),
+          ],
+        }),
+      ],
+    }),
+  ],
+})
+
+const landingPagesType = defineType({
+  type: 'document',
+  name: 'sanettiIo_landingPages',
+  title: 'Landing Pages',
+  fields: [
+    defineField({
+      type: 'group_pageSections',
+      name: 'group_pageSections',
+    }),
+  ],
+})
+
 export const pageBuilderDemoPlugin = definePlugin<
   Partial<PresentationPluginOptions> & Pick<PresentationPluginOptions, 'previewUrl'>
 >((config) => ({
@@ -591,6 +696,12 @@ export const pageBuilderDemoPlugin = definePlugin<
       featureHighlightSectionType,
       sectionStyleType,
       pageSectionArrayMember,
+      fallbackContentType,
+      accordionType,
+      accordionComponentType,
+      heroComponentType,
+      pageSectionsType,
+      landingPagesType,
     ],
     templates: [
       {

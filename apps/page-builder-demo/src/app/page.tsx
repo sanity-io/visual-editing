@@ -9,6 +9,7 @@ const frontPageQuery = defineQuery(`
       _type,
       _id,
       title,
+      group_pageSections,
       sections[]{
         ...,
         symbol->{_type},
