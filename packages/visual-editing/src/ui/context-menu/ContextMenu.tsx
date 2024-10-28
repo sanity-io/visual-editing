@@ -10,7 +10,7 @@ import {
   Text,
   type PopoverMargins,
 } from '@sanity/ui'
-import {useMemo, type FunctionComponent} from 'react'
+import {useCallback, useMemo, type FunctionComponent} from 'react'
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {useDocuments} from '../optimistic-state/useDocuments'
@@ -20,8 +20,15 @@ import {getContextMenuItems} from './contextMenuItems'
 
 const POPOVER_MARGINS: PopoverMargins = [-4, 4, -4, 4]
 
-function ContextMenuItem(props: {node: ContextMenuNode}) {
-  const {node} = props
+function ContextMenuItem(props: {node: ContextMenuNode; onDismiss?: () => void}) {
+  const {node, onDismiss} = props
+
+  const onClick = useCallback(() => {
+    if (node.type === 'action') {
+      node.action?.()
+      onDismiss?.()
+    }
+  }, [node, onDismiss])
 
   if (node.type === 'divider') {
     return <MenuDivider />
@@ -37,7 +44,7 @@ function ContextMenuItem(props: {node: ContextMenuNode}) {
         space={2}
         text={node.label}
         disabled={!node.action}
-        onClick={node.action}
+        onClick={onClick}
       />
     )
   }
@@ -132,7 +139,7 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
             <MenuDivider />
 
             {items.map((item, i) => (
-              <ContextMenuItem key={i} node={item} />
+              <ContextMenuItem key={i} node={item} onDismiss={onDismiss} />
             ))}
           </Menu>
         }
