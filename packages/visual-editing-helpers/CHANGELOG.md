@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.28](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.27...visual-editing-helpers-v0.6.28) (2024-10-28)
+
+
+### Bug Fixes
+
+* **visual-editing:** nested union schema field resolution ([#2056](https://github.com/sanity-io/visual-editing/issues/2056)) ([1d20494](https://github.com/sanity-io/visual-editing/commit/1d2049402b50a121c5652e2cc7ced7a513863502))
+
 ## [0.6.27](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.26...visual-editing-helpers-v0.6.27) (2024-10-24)
 
 
