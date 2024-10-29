@@ -247,7 +247,7 @@ export type PresentationNavigate = (
   forceReplace?: boolean,
 ) => void
 
-export type PresentationPerspective = Extract<'published' | 'previewDrafts', ClientPerspective>
+export type PresentationPerspective = Exclude<ClientPerspective, 'raw'>
 
 export type PresentationViewport = 'desktop' | 'mobile'
 

@@ -1,4 +1,4 @@
-import {assist} from '@sanity/assist'
+// import {assist} from '@sanity/assist'
 import {defineField, definePlugin, defineType} from 'sanity'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {structureTool} from 'sanity/structure'
@@ -25,6 +25,7 @@ const brandType = defineType(
         title: 'Logo',
         options: {
           hotspot: true,
+          // @ts-expect-error - this is fine
           aiAssist: {
             imageDescriptionField: 'alt',
             imageInstructionField: 'imagePrompt',
@@ -51,5 +52,9 @@ const brandType = defineType(
 export const crossDatasetReferencesPlugin = definePlugin({
   name: '@repo/sanity-schema/cross-dataset-references',
   schema: {types: [brandType]},
-  plugins: [assist(), unsplashImageAsset(), structureTool()],
+  plugins: [
+    // assist() , Assist is not supported yet in releases.
+    unsplashImageAsset(),
+    structureTool(),
+  ],
 })

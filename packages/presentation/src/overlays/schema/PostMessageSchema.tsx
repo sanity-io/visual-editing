@@ -3,7 +3,7 @@ import type {ClientPerspective} from '@sanity/client'
 import {useRootTheme} from '@sanity/ui'
 import {memo, useEffect} from 'react'
 import {API_VERSION} from '../../constants'
-import {useClient, useWorkspace} from '../../internals'
+import {getPublishedId, useClient, useWorkspace} from '../../internals'
 import type {VisualEditingConnection} from '../../types'
 import {extractSchema} from './extract'
 
@@ -34,7 +34,6 @@ function getDocumentPathArray(paths: UnresolvedPath[]) {
  */
 function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
   const {comlink, perspective} = props
-
   const workspace = useWorkspace()
   const theme = useRootTheme()
 
@@ -61,7 +60,14 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
           const arr = Array.from(paths)
           const projection = arr.map((path, i) => `"${i}": ${path}[0]._type`).join(',')
           const query = `*[_id == $id][0]{${projection}}`
-          const result = await client.fetch(query, {id}, {perspective, tag: 'presentation-schema'})
+          const result = await client.fetch(
+            query,
+            {id: getPublishedId(id)},
+            {
+              tag: 'presentation-schema',
+              perspective,
+            },
+          )
           const mapped = arr.map((path, i) => ({path: path, type: result[i]}))
           return {id, paths: mapped}
         }),

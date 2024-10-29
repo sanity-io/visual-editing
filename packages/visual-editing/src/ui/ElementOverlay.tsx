@@ -46,7 +46,6 @@ export interface ElementOverlayProps {
   element: ElementNode
   focused: ElementFocusedState
   hovered: boolean
-  isDragging: boolean
   node: SanityNode | SanityStegaNode
   rect: OverlayRect
   showActions: boolean
@@ -156,7 +155,12 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
+const ElementOverlayInner: FunctionComponent<
+  Omit<
+    ElementOverlayProps,
+    'enableScrollIntoView' | 'hovered' | 'rect' | 'releases' | 'versions' | 'wasMaybeCollapsed'
+  >
+> = (props) => {
   const {element, focused, componentResolver, node, showActions, draggable} = props
 
   const {getField, getType} = useSchema()
@@ -234,7 +238,18 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
-  const {focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
+  const {
+    element,
+    focused,
+    hovered,
+    rect,
+    wasMaybeCollapsed,
+    enableScrollIntoView,
+    draggable,
+    node,
+    showActions,
+    componentResolver,
+  } = props
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -282,14 +297,25 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   }, [focused, wasMaybeCollapsed, enableScrollIntoView])
 
   return (
-    <Root
-      data-focused={focused ? '' : undefined}
-      data-hovered={hovered ? '' : undefined}
-      ref={ref}
-      style={style}
-    >
-      {hovered && <ElementOverlayInner {...props} />}
-    </Root>
+    <>
+      <Root
+        data-focused={focused ? '' : undefined}
+        data-hovered={hovered ? '' : undefined}
+        ref={ref}
+        style={style}
+      >
+        {hovered && (
+          <ElementOverlayInner
+            draggable={draggable}
+            element={element}
+            focused={focused}
+            node={node}
+            showActions={showActions}
+            componentResolver={componentResolver}
+          />
+        )}
+      </Root>
+    </>
   )
 })
 

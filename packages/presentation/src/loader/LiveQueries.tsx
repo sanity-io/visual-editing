@@ -182,7 +182,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
 
   const [syncTagsInUse] = useState(() => new Set<SyncTag[]>())
   const [lastLiveEventId, setLastLiveEventId] = useState<string | null>(null)
-  const studioClient = useClient({apiVersion: '2023-10-16'})
+  const studioClient = useClient({apiVersion: 'vX'})
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])
   const client = useMemo(
     () =>
@@ -480,6 +480,10 @@ export function turboChargeResultIfSourceMap<T = unknown>(
       }
       return changedValue
     },
-    perspective,
+    // TODO: Update applySourceDocuments to support releases.
+    Array.isArray(perspective) &&
+      perspective.some((part) => typeof part === 'string' && part.startsWith('r') && part !== 'raw')
+      ? 'previewDrafts'
+      : (perspective as ClientPerspective),
   )
 }
