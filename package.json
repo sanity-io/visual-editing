@@ -33,11 +33,11 @@
   },
   "prettier": "@repo/prettier-config",
   "dependencies": {
-    "@sanity/types": "3.65.1",
-    "@sanity/util": "3.65.1",
-    "@sanity/vision": "3.65.1",
-    "groq": "3.65.1",
-    "sanity": "3.65.1"
+    "@sanity/types": "3.59.2-corel.293",
+    "@sanity/util": "3.59.2-corel.293",
+    "@sanity/vision": "3.59.2-corel.293",
+    "groq": "3.59.2-corel.293",
+    "sanity": "3.59.2-corel.293"
   },
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",
@@ -62,6 +62,7 @@
     "overrides": {
       "@sanity/comlink": "workspace:*",
       "@sanity/core-loader": "workspace:*",
+      "@sanity/icons": "file:registry/sanity-icons-3.4.0.tgz",
       "@sanity/next-loader": "workspace:*",
       "@sanity/presentation": "workspace:*",
       "@sanity/preview-kit-compat": "workspace:*",
@@ -69,6 +70,7 @@
       "@sanity/react-loader": "workspace:*",
       "@sanity/svelte-loader": "workspace:*",
       "@sanity/types": "$@sanity/types",
+      "@sanity/ui": "file:registry/sanity-ui-2.8.9.tgz",
       "@sanity/util": "$@sanity/util",
       "@sanity/vision": "$@sanity/vision",
       "@sanity/visual-editing": "workspace:*",
