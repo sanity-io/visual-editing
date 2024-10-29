@@ -1,10 +1,20 @@
 import {defineCliConfig} from '@sanity/cli'
+import viteReact from '@vitejs/plugin-react'
+
+const ReactCompilerConfig = {
+  target: '18',
+}
 
 export default defineCliConfig({
   reactStrictMode: true,
   vite: (config) => {
+    const [, ...plugins] = config.plugins || []
     return {
       ...config,
+      plugins: [
+        viteReact({babel: {plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]}}),
+        ...plugins,
+      ],
       resolve: {
         ...config.resolve,
         alias: {

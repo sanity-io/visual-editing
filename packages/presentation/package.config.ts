@@ -7,4 +7,7 @@ export default defineConfig({
   define: {
     PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: process.env['PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS'],
   },
+  babel: {reactCompiler: true},
+  // @ts-expect-error - add `target` to `pkg-utils` types
+  reactCompilerOptions: {target: '18'},
 })

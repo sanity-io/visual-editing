@@ -45,7 +45,7 @@ importers:
         version: link:packages/@repo/prettier-config
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       husky:
         specifier: ^9.1.6
         version: 9.1.6
@@ -661,9 +661,18 @@ importers:
       '@vercel/stega':
         specifier: 0.1.2
         version: 0.1.2
+      '@vitejs/plugin-react':
+        specifier: ^4.3.3
+        version: 4.3.3(vite@5.4.10(@types/node@22.5.5)(terser@5.33.0))
+      babel-plugin-react-compiler:
+        specifier: beta
+        version: 19.0.0-beta-6fc168f-20241025
       react:
         specifier: ^18.3.1
         version: 18.3.1
+      react-compiler-runtime:
+        specifier: 19.0.0-beta-6fc168f-20241025
+        version: 19.0.0-beta-6fc168f-20241025(react@18.3.1)
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
@@ -789,6 +798,9 @@ importers:
       eslint-plugin-react:
         specifier: ^7.37.2
         version: 7.37.2(eslint@8.57.1)
+      eslint-plugin-react-compiler:
+        specifier: beta
+        version: 19.0.0-beta-6fc168f-20241025(eslint@8.57.1)
       eslint-plugin-react-hooks:
         specifier: ^5.0.0
         version: 5.0.0(eslint@8.57.1)
@@ -913,7 +925,7 @@ importers:
         version: link:../prettier-config
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       typescript:
         specifier: 5.6.3
         version: 5.6.3
@@ -1048,7 +1060,7 @@ importers:
         version: 6.22.2(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.18.0
         version: 7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
@@ -1088,7 +1100,7 @@ importers:
     devDependencies:
       '@sanity/pkg-utils':
         specifier: ^6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@sanity/types':
         specifier: 3.62.2
         version: 3.62.2(debug@4.3.7)
@@ -1152,7 +1164,7 @@ importers:
         version: 6.22.2(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -1222,6 +1234,9 @@ importers:
       path-to-regexp:
         specifier: ^6.3.0
         version: 6.3.0
+      react-compiler-runtime:
+        specifier: 19.0.0-beta-6fc168f-20241025
+        version: 19.0.0-beta-6fc168f-20241025(react@18.3.1)
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -1249,10 +1264,13 @@ importers:
         version: 6.22.2(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@types/lodash.get':
         specifier: ^4.4.9
         version: 4.4.9
+      babel-plugin-react-compiler:
+        specifier: beta
+        version: 19.0.0-beta-6fc168f-20241025
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1301,7 +1319,7 @@ importers:
         version: 6.22.2(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@types/react':
         specifier: ^18.3.12
         version: 18.3.12
@@ -1341,7 +1359,7 @@ importers:
         version: 3.4.0(react@19.0.0-rc-fb9a90fa48-20240614)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1378,7 +1396,7 @@ importers:
         version: 6.22.2(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@types/react':
         specifier: ^18.3.12
         version: 18.3.12
@@ -1424,7 +1442,7 @@ importers:
         version: 6.22.2(debug@4.3.7)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -1512,7 +1530,7 @@ importers:
         version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.14)
       '@sanity/pkg-utils':
         specifier: 6.11.6
-        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)
+        version: 6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)
       '@sanity/ui':
         specifier: 2.8.10
         version: 2.8.10(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -2245,14 +2263,14 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-transform-react-jsx-self@7.24.6':
-    resolution: {integrity: sha512-FfZfHXtQ5jYPQsCRyLpOv2GeLIIJhs8aydpNh39vRDjhD411XcfWDni5i7OjP/Rs8GAtTn7sWFFELJSHqkIxYg==}
+  '@babel/plugin-transform-react-jsx-self@7.25.9':
+    resolution: {integrity: sha512-y8quW6p0WHkEhmErnfe58r7x0A70uKphQm8Sp8cV7tjNQwK56sNVK0M73LK3WuYmsuyrftut4xAkjjgU0twaMg==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-transform-react-jsx-source@7.24.6':
-    resolution: {integrity: sha512-BQTBCXmFRreU3oTUXcGKuPOfXAGb1liNY4AvvFKsOBAJ89RKcTsIrSsnMYkj59fNa66OFKnSa4AJZfy5Y4B9WA==}
+  '@babel/plugin-transform-react-jsx-source@7.25.9':
+    resolution: {integrity: sha512-+iqjT8xmXhhYv4/uiYd8FNQsraMFZIfxVSqxxVSZP0WbbSAWvBXAul0m/zu+7Vv4O/3WtApy9pmaTMiumEZgfg==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -5683,8 +5701,8 @@ packages:
       vite:
         optional: true
 
-  '@vitejs/plugin-react@4.3.1':
-    resolution: {integrity: sha512-m/V2syj5CuVnaxcUJOQRel/Wr31FFXRFlnOoq1TVtkCxsY5veGMTEmpWHndrhB2U8ScHtCQB1e+4hWYExQc6Lg==}
+  '@vitejs/plugin-react@4.3.3':
+    resolution: {integrity: sha512-NooDe9GpHGqNns1i8XDERg0Vsg5SSYRhRxxyTGogUdkdNt47jal+fbuYi+Yfq6pzRCKXyoPcWisfxE6RIM3GKA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
@@ -6239,6 +6257,9 @@ packages:
 
   babel-plugin-react-compiler@0.0.0-experimental-fa06e2c-20241016:
     resolution: {integrity: sha512-ASXNEtiyWcSnt38qTuu5972o+XYcz5pdkfvtLnhG1fglaQg9pFmfhC5274EH1QXxOFhgDOSd/foZ+H2o/a1noA==}
+
+  babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025:
+    resolution: {integrity: sha512-wFVeXhF0hkiRe4bEM0jzeTFMlMbcKNTwhXcFvqUIVB6WXf+3vdwOWGWnw7jwvDb2mzvsIZOFt/96itOFt1rwjw==}
 
   babel-runtime@6.26.0:
     resolution: {integrity: sha512-ITKNuq2wKlW1fJg9sSW52eepoYgZBggvOAHC0u/CYu/qxQ9EVzThCgR69BnSXLHjy2f7SY5zaQ4yt7H9ZVxY2g==}
@@ -7598,6 +7619,12 @@ packages:
 
   eslint-plugin-react-compiler@0.0.0-experimental-fa06e2c-20241016:
     resolution: {integrity: sha512-uQY1PmX7OqMqqAy4FG0fs2U9V9aF8dDN2RWP4WYc/u3ia9RKni2nZ9pnKzoSfT6w3wPggzH1nv9gmZAjDIzteQ==}
+    engines: {node: ^14.17.0 || ^16.0.0 || >= 18.0.0}
+    peerDependencies:
+      eslint: '>=7'
+
+  eslint-plugin-react-compiler@19.0.0-beta-6fc168f-20241025:
+    resolution: {integrity: sha512-mHn5tYt9dT4GiXHF5muiz6p+4Lirgi0Oc87N2KrbB/ciSkT+VZ8iJA+6bbS4//ljYzYbxBbPMHWS/dZWhQrbpQ==}
     engines: {node: ^14.17.0 || ^16.0.0 || >= 18.0.0}
     peerDependencies:
       eslint: '>=7'
@@ -11352,6 +11379,11 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
+  react-compiler-runtime@19.0.0-beta-6fc168f-20241025:
+    resolution: {integrity: sha512-XY5p6GUVaz8P0c/B/2ebqz/xdp0YOtidtOSuiYyQB05fMws0Qys+zubDH7IKQBEtw4AKoCzrJ6ReeTtFLOKniw==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+
   react-composer@5.0.3:
     resolution: {integrity: sha512-1uWd07EME6XZvMfapwZmc7NgCZqDemcvicRi3wMJzXsQLvZ3L7fTHVyPy1bZdnWXM4iPjYuNE+uJ41MLKeTtnA==}
     peerDependencies:
@@ -14015,7 +14047,7 @@ snapshots:
     dependencies:
       '@types/react': 18.3.12
       '@types/react-dom': 18.3.1
-      '@vitejs/plugin-react': 4.3.1(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
+      '@vitejs/plugin-react': 4.3.3(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       ultrahtml: 1.5.3
@@ -14692,12 +14724,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/plugin-transform-react-jsx-self@7.24.6(@babel/core@7.26.0)':
+  '@babel/plugin-transform-react-jsx-self@7.25.9(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/helper-plugin-utils': 7.25.9
 
-  '@babel/plugin-transform-react-jsx-source@7.24.6(@babel/core@7.26.0)':
+  '@babel/plugin-transform-react-jsx-source@7.25.9(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/helper-plugin-utils': 7.25.9
@@ -17512,7 +17544,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/pkg-utils@6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(typescript@5.6.3)':
+  '@sanity/pkg-utils@6.11.6(@types/babel__core@7.20.5)(@types/node@22.5.5)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(typescript@5.6.3)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/preset-typescript': 7.26.0(@babel/core@7.26.0)
@@ -17556,6 +17588,8 @@ snapshots:
       uuid: 10.0.0
       zod: 3.23.8
       zod-validation-error: 3.4.0(zod@3.23.8)
+    optionalDependencies:
+      babel-plugin-react-compiler: 19.0.0-beta-6fc168f-20241025
     transitivePeerDependencies:
       - '@types/babel__core'
       - '@types/node'
@@ -17622,7 +17656,7 @@ snapshots:
     dependencies:
       '@sanity/icons': 3.4.0(react@18.3.1)
       '@sanity/ui': 2.8.10(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@vitejs/plugin-react': 4.3.1(vite@5.4.10(@types/node@22.5.5)(terser@5.33.0))
+      '@vitejs/plugin-react': 4.3.3(vite@5.4.10(@types/node@22.5.5)(terser@5.33.0))
       axe-core: 4.10.0
       cac: 6.7.14
       chokidar: 3.6.0
@@ -19206,44 +19240,44 @@ snapshots:
       react: 18.3.1
       vite: 5.4.10(@types/node@20.8.7)(terser@5.33.0)
 
-  '@vitejs/plugin-react@4.3.1(vite@4.5.3(@types/node@20.16.5)(terser@5.33.0))':
+  '@vitejs/plugin-react@4.3.3(vite@4.5.3(@types/node@20.16.5)(terser@5.33.0))':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.26.0)
-      '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
       vite: 4.5.3(@types/node@20.16.5)(terser@5.33.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.3.1(vite@4.5.3(@types/node@20.8.7)(terser@5.33.0))':
+  '@vitejs/plugin-react@4.3.3(vite@4.5.3(@types/node@20.8.7)(terser@5.33.0))':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.26.0)
-      '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
       vite: 4.5.3(@types/node@20.8.7)(terser@5.33.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.3.1(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))':
+  '@vitejs/plugin-react@4.3.3(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.26.0)
-      '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
       vite: 4.5.3(@types/node@22.5.5)(terser@5.33.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.3.1(vite@5.4.10(@types/node@22.5.5)(terser@5.33.0))':
+  '@vitejs/plugin-react@4.3.3(vite@5.4.10(@types/node@22.5.5)(terser@5.33.0))':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.26.0)
-      '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.0)
+      '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
       vite: 5.4.10(@types/node@22.5.5)(terser@5.33.0)
@@ -20006,6 +20040,10 @@ snapshots:
       pretty-format: 24.9.0
       zod: 3.23.8
       zod-validation-error: 2.1.0(zod@3.23.8)
+
+  babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025:
+    dependencies:
+      '@babel/types': 7.26.0
 
   babel-runtime@6.26.0:
     dependencies:
@@ -21740,6 +21778,18 @@ snapshots:
       eslint-config-prettier: 9.1.0(eslint@8.57.1)
 
   eslint-plugin-react-compiler@0.0.0-experimental-fa06e2c-20241016(eslint@8.57.1):
+    dependencies:
+      '@babel/core': 7.26.0
+      '@babel/parser': 7.26.1
+      '@babel/plugin-proposal-private-methods': 7.18.6(@babel/core@7.26.0)
+      eslint: 8.57.1
+      hermes-parser: 0.20.1
+      zod: 3.23.8
+      zod-validation-error: 3.4.0(zod@3.23.8)
+    transitivePeerDependencies:
+      - supports-color
+
+  eslint-plugin-react-compiler@19.0.0-beta-6fc168f-20241025(eslint@8.57.1):
     dependencies:
       '@babel/core': 7.26.0
       '@babel/parser': 7.26.1
@@ -26486,6 +26536,10 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  react-compiler-runtime@19.0.0-beta-6fc168f-20241025(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   react-composer@5.0.3(react@18.3.1):
     dependencies:
       prop-types: 15.8.1
@@ -27288,7 +27342,7 @@ snapshots:
       '@types/speakingurl': 13.0.6
       '@types/tar-stream': 3.1.3
       '@types/use-sync-external-store': 0.0.6
-      '@vitejs/plugin-react': 4.3.1(vite@4.5.3(@types/node@20.16.5)(terser@5.33.0))
+      '@vitejs/plugin-react': 4.3.3(vite@4.5.3(@types/node@20.16.5)(terser@5.33.0))
       archiver: 7.0.1
       arrify: 1.0.1
       async-mutex: 0.4.1
@@ -27424,7 +27478,7 @@ snapshots:
       '@types/speakingurl': 13.0.6
       '@types/tar-stream': 3.1.3
       '@types/use-sync-external-store': 0.0.6
-      '@vitejs/plugin-react': 4.3.1(vite@4.5.3(@types/node@20.8.7)(terser@5.33.0))
+      '@vitejs/plugin-react': 4.3.3(vite@4.5.3(@types/node@20.8.7)(terser@5.33.0))
       archiver: 7.0.1
       arrify: 1.0.1
       async-mutex: 0.4.1
@@ -27560,7 +27614,7 @@ snapshots:
       '@types/speakingurl': 13.0.6
       '@types/tar-stream': 3.1.3
       '@types/use-sync-external-store': 0.0.6
-      '@vitejs/plugin-react': 4.3.1(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
+      '@vitejs/plugin-react': 4.3.3(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
       archiver: 7.0.1
       arrify: 1.0.1
       async-mutex: 0.4.1
@@ -27696,7 +27750,7 @@ snapshots:
       '@types/speakingurl': 13.0.6
       '@types/tar-stream': 3.1.3
       '@types/use-sync-external-store': 0.0.6
-      '@vitejs/plugin-react': 4.3.1(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
+      '@vitejs/plugin-react': 4.3.3(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
       archiver: 7.0.1
       arrify: 1.0.1
       async-mutex: 0.4.1
@@ -27832,7 +27886,7 @@ snapshots:
       '@types/speakingurl': 13.0.6
       '@types/tar-stream': 3.1.3
       '@types/use-sync-external-store': 0.0.6
-      '@vitejs/plugin-react': 4.3.1(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
+      '@vitejs/plugin-react': 4.3.3(vite@4.5.3(@types/node@22.5.5)(terser@5.33.0))
       archiver: 7.0.1
       arrify: 1.0.1
       async-mutex: 0.4.1
