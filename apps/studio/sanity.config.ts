@@ -131,6 +131,10 @@ function defineWorkspace(
     projectId,
     dataset,
     plugins,
+    scheduledPublishing: {
+      // Content Releases already handle scheduling
+      enabled: false,
+    },
   })
 }
 
