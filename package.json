@@ -15,6 +15,7 @@
     "dev:svelte": "turbo run build --filter=apps-svelte^... --filter=apps-studio^... && turbo watch dev --filter=apps-svelte... --filter=apps-studio...",
     "format": "prettier --cache --write .",
     "format:staged": "pretty-quick --staged",
+    "knip": "knip",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
     "prepare": "husky",
@@ -40,7 +41,9 @@
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",
     "@sanity/pkg-utils": "6.11.6",
+    "@types/node": "^22.8.4",
     "husky": "^9.1.6",
+    "knip": "^5.34.3",
     "lint-staged": "^15.2.10",
     "pretty-quick": "^4.0.0",
     "turbo": "2.1.3",
