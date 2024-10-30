@@ -1,7 +1,10 @@
 'use client'
 
-import {OverlayComponent, OverlayComponentResolver} from '@sanity/visual-editing'
-import {UnionInsertMenuOverlay} from '@sanity/visual-editing/overlay-components'
+import {OverlayComponentResolver} from '@sanity/visual-editing'
+import {
+  defineOverlayComponent,
+  UnionInsertMenuOverlay,
+} from '@sanity/visual-editing/overlay-components'
 import {ExcitingTitleControl} from './ExcitingTitleControl'
 import {ProductModelRotationControl} from './ProductModelRotationControl'
 
@@ -13,11 +16,13 @@ export const components: OverlayComponentResolver = (props) => {
   }
 
   if (type === 'object' && node.path.endsWith('rotations')) {
-    return ProductModelRotationControl
+    return defineOverlayComponent(ProductModelRotationControl)
   }
 
   if (parent?.type === 'union') {
-    return UnionInsertMenuOverlay as OverlayComponent
+    return defineOverlayComponent(UnionInsertMenuOverlay, {
+      direction: 'vertical',
+    })
   }
 
   return undefined

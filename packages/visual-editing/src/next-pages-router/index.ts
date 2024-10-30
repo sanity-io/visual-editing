@@ -5,6 +5,7 @@ export type {
   HistoryRefresh,
   HistoryUpdate,
   OverlayComponent,
+  OverlayComponentProps,
   OverlayComponentResolver,
   OverlayElementParent,
   SanityNode,

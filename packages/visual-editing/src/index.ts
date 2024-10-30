@@ -13,6 +13,7 @@ export type {
   HistoryUpdate,
   Msg,
   OverlayComponent,
+  OverlayComponentProps,
   OverlayComponentResolver,
   OverlayController,
   OverlayElementParent,

@@ -380,7 +380,13 @@ export type OverlayComponentResolver = (context: {
   node: SanityNode
   parent: OverlayElementParent
   type: string
-}) => OverlayComponent | OverlayComponent[] | undefined | void
+}) =>
+  | OverlayComponent
+  | OverlayComponent[]
+  | {component: OverlayComponent; props?: Record<string, unknown>}
+  | Array<{component: OverlayComponent; props?: Record<string, unknown>}>
+  | undefined
+  | void
 
 /**
  * @public
@@ -450,13 +456,20 @@ export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | C
 /**
  * @public
  */
-export type OverlayComponent<T extends OverlayElementParent = OverlayElementParent> =
-  ComponentType<{
-    PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
-    element: ElementNode
-    parent: T
-    node: SanityNode
-  }>
+export interface OverlayComponentProps<P extends OverlayElementParent = OverlayElementParent> {
+  PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
+  element: ElementNode
+  parent: P
+  node: SanityNode
+}
+
+/**
+ * @public
+ */
+export type OverlayComponent<
+  T extends Record<string, unknown> = Record<string, unknown>,
+  P extends OverlayElementParent = OverlayElementParent,
+> = ComponentType<OverlayComponentProps<P> & T>
 
 export type OverlayElementField =
   | SchemaArrayItem

@@ -1,5 +1,11 @@
-export {UnionInsertMenuOverlay} from './UnionInsertMenuOverlay'
-export type {ElementNode, OverlayComponent, OverlayElementParent} from '../types'
+export {UnionInsertMenuOverlay} from './components/UnionInsertMenuOverlay'
+export {defineOverlayComponent} from './defineOverlayComponent'
+export type {
+  ElementNode,
+  OverlayComponent,
+  OverlayComponentProps,
+  OverlayElementParent,
+} from '../types'
 export type {
   DocumentSchema,
   SanityNode,
