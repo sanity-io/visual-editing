@@ -493,6 +493,11 @@ const pageType = defineType({
       type: 'array',
       name: 'sections',
       title: 'Sections',
+      options: {
+        insertMenu: {
+          views: [{name: 'list'}, {name: 'grid'}],
+        },
+      },
       of: [
         heroSectionType,
         introSectionType,
