@@ -133,6 +133,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     },
   )
   useEffect(() => {
+    // @ts-expect-error -- Why this client says tag not supported?
     const subscription = client.live.events({includeDrafts: !!token, tag}).subscribe({
       next: (event) => {
         if (event.type === 'message' || event.type === 'restart' || event.type === 'welcome') {
