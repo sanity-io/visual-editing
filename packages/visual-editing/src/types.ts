@@ -7,6 +7,7 @@ import type {
   SchemaArrayItem,
   SchemaNode,
   SchemaObjectField,
+  SchemaUnionNode,
   SchemaUnionOption,
   VisualEditingControllerMsg,
   VisualEditingNodeMsg,
@@ -374,9 +375,10 @@ export type DisableVisualEditing = () => void
 /**
  * @public
  */
-export type OverlayComponentResolver = (props: {
+export type OverlayComponentResolver = (context: {
   focused: boolean
   node: SanityNode
+  parent: OverlayElementParent
   type: string
 }) => OverlayComponent | OverlayComponent[] | undefined | void
 
@@ -448,12 +450,13 @@ export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | C
 /**
  * @public
  */
-export type OverlayComponent = ComponentType<{
-  PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
-  element: ElementNode
-  parent: OverlayElementParent
-  node: SanityNode
-}>
+export type OverlayComponent<T extends OverlayElementParent = OverlayElementParent> =
+  ComponentType<{
+    PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
+    element: ElementNode
+    parent: T
+    node: SanityNode
+  }>
 
 export type OverlayElementField =
   | SchemaArrayItem
@@ -466,4 +469,5 @@ export type OverlayElementParent =
   | SchemaNode
   | SchemaArrayItem
   | SchemaUnionOption
+  | SchemaUnionNode
   | undefined

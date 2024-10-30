@@ -205,8 +205,8 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     const type = field?.value.type
     if (!type) return undefined
 
-    const props = {focused: !!focused, node, type}
-    const resolved = componentResolver?.(props)
+    const context = {focused: !!focused, node, parent, type}
+    const resolved = componentResolver?.(context)
     if (!resolved) return undefined
 
     const components = Array.isArray(resolved) ? resolved : [resolved]
