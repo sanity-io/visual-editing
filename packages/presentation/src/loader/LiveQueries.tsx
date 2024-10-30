@@ -223,16 +223,13 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
       apiVersion: 'vX',
     })
     const subscription = liveClient.live
-      // @ts-expect-error -- Why this client says tag not supported?
       .events({includeDrafts: true, tag: 'presentation-loader'})
       .subscribe({
         next: (event) => {
           if (event.type === 'message') {
             handleSyncTags(event)
           } else if (event.type === 'restart') {
-            // @ts-expect-error - Property 'id' does not exist on type 'LiveEventRestart'.
             setLastLiveEventId(event.id)
-            // @ts-expect-error -- Property 'type' does not exist on type 'never'.
           } else if (event.type === 'reconnect') {
             setLastLiveEventId(null)
           }
