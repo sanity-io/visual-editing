@@ -80,6 +80,8 @@ const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'
 const PostMessageFeatures = lazy(() => import('./features/PostMessageFeatures'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 const PostMessagePerspective = lazy(() => import('./PostMessagePerspective'))
+const PostMessageReleases = lazy(() => import('./PostMessageReleases'))
+const PostMessageDocumentVersions = lazy(() => import('./PostMessageDocumentVersions'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
 const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
 
@@ -289,6 +291,7 @@ export default function PresentationTool(props: {
     })
 
     comlink.on('visual-editing/documents', (data) => {
+      // update useDocumentsOnPage
       setDocumentsOnPage(
         'visual-editing',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -630,6 +633,24 @@ export default function PresentationTool(props: {
       {visualEditingComlink && (
         <Suspense>
           <PostMessageFeatures comlink={visualEditingComlink} />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessageReleases
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
+          />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessageDocumentVersions
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
+          />
         </Suspense>
       )}
       {visualEditingComlink && (

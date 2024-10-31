@@ -61,6 +61,7 @@ export default function ShoesPageClient(props: Props) {
                 <div
                   data-sanity={encodeDataAttribute([i, 'media', 'asset'])}
                   className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg bg-gray-200"
+                  data-sanity-release-preview="true"
                 >
                   <Image
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
@@ -72,6 +73,7 @@ export default function ShoesPageClient(props: Props) {
                     width={720}
                     height={720}
                     alt={product.media?.alt || ''}
+                    data-sanity-release-preview="true"
                   />
                 </div>
                 <h2

@@ -24,6 +24,7 @@ import type {
   OverlayComponentResolver,
   OverlayEventHandler,
   OverlayMsg,
+  SanityNode,
   VisualEditingNode,
 } from '../types'
 import {getDraftId, getPublishedId} from '../util/documents'
@@ -203,6 +204,9 @@ export const Overlays: FunctionComponent<{
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
+  const [releases, setReleases] = useState([])
+  const [versions, setVersions] = useState([])
+
   useEffect(() => {
     const unsubs = [
       comlink?.on('presentation/focus', (data) => {
@@ -213,6 +217,9 @@ export const Overlays: FunctionComponent<{
       }),
       comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
+      }),
+      comlink?.on('presentation/releases', (data) => {
+        setReleases(data.releases)
       }),
       comlink?.onStatus((status) => {
         setStatus(status as Status)
@@ -332,6 +339,32 @@ export const Overlays: FunctionComponent<{
     return optimisticActorReady ? _componentResolver : undefined
   }, [_componentResolver, optimisticActorReady])
 
+  const fetchDocuments = useCallback(
+    async (signal: AbortSignal) => {
+      if (!comlink) return
+      try {
+        const res = await comlink?.fetch({
+          type: 'visual-editing/document-versions',
+          data: {
+            elements: [...new Set(documentIds)],
+          },
+        })
+
+        setVersions(res.versions)
+      } catch (e) {
+        // Fail silently as the app may be communicating with a version of
+        // Presentation that does not support this feature
+      }
+    },
+    [comlink, documentIds],
+  )
+
+  useEffect(() => {
+    const controller = new AbortController()
+    fetchDocuments(controller.signal)
+    return () => controller.abort()
+  }, [fetchDocuments])
+
   return (
     <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
       <LayerProvider>
@@ -384,6 +417,14 @@ export const Overlays: FunctionComponent<{
                           draggable={draggable}
                           isDragging={isDragging || dragMinimapTransition}
                           wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                          releases={releases}
+                          versions={
+                            versions &&
+                            versions.length > 0 &&
+                            (versions as any[]).find(
+                              (v: any) => v._id === (sanity as SanityNode).id,
+                            )?.versions
+                          }
                         />
                       )
                     },
