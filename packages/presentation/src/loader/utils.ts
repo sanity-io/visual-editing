@@ -21,7 +21,7 @@ export function getBundlePerspective(
   bundlesPerspectives: string[],
 ): string[] {
   if (perspective === 'published') return ['published']
-  if (perspective === 'previewDrafts') return ['draft']
+  if (perspective === 'previewDrafts') return ['drafts']
   if (perspective.startsWith('bundle.')) return bundlesPerspectives
   throw new Error(`Invalid perspective: ${perspective}`)
 }
