@@ -20,6 +20,7 @@
     "prepare": "husky",
     "preview": "turbo run preview",
     "release:canary": "zx scripts/release-canary.mjs",
+    "release:corel": "zx scripts/release-corel.mjs",
     "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
     "test": "turbo run test",
     "turbo:fix": "turbo daemon clean"
