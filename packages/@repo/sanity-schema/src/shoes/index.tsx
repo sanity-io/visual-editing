@@ -1,5 +1,4 @@
 import {apiVersion, workspaces} from '@repo/env'
-import {assist} from '@sanity/assist'
 import {
   defineDocuments,
   defineLocations,
@@ -127,7 +126,7 @@ export const shoesPlugin = definePlugin<
   name: '@repo/sanity-schema/shoes',
   schema: {types: [shoeType]},
   plugins: [
-    assist(),
+    // assist(), Assist is not supported yet in releases.
     unsplashImageAsset(),
     presentationTool({
       resolve: {

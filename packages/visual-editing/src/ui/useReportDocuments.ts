@@ -17,18 +17,18 @@ function isEqualSets(a: Set<string>, b: Set<string>) {
 export function useReportDocuments(
   comlink: VisualEditingNode | undefined,
   elements: ElementState[],
-  perspective: ClientPerspective,
+  perspective: ClientPerspective | `bundle.${string}`,
 ): void {
   const lastReported = useRef<
     | {
         nodeIds: Set<string>
-        perspective: ClientPerspective
+        perspective: ClientPerspective | `bundle.${string}`
       }
     | undefined
   >(undefined)
 
   const reportDocuments = useCallback(
-    (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
+    (documents: ContentSourceMapDocuments, perspective: ClientPerspective | `bundle.${string}`) => {
       comlink?.post({
         type: 'visual-editing/documents',
         data: {

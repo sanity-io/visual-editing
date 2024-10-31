@@ -61,7 +61,7 @@ export default function ShoesPage(props: InferGetStaticPropsType<typeof getStati
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products?.map?.((product, i) => (
               <Link
-                key={product.slug?.current}
+                key={product._originalId || product._id || product.slug?.current}
                 href={`/pages-router/shoes/${product.slug?.current}`}
                 className="group relative"
               >

@@ -1,6 +1,6 @@
 import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
 import {useCallback, useEffect, useMemo, useState, type ErrorInfo, type ReactElement} from 'react'
-import {useTranslation} from 'sanity'
+import {isVersionId, useTranslation} from 'sanity'
 import {styled} from 'styled-components'
 import {ErrorCard} from '../components/ErrorCard'
 import {presentationLocaleNamespace} from '../i18n'
@@ -49,7 +49,7 @@ export function DocumentListPane(props: {
     () =>
       refs
         .filter((r) => getPublishedId(r._id) !== mainDocumentState?.document?._id)
-        .map((r) => r._id),
+        .map((r) => (isVersionId(r._id) ? getPublishedId(r._id) : r._id)),
     [mainDocumentState, refs],
   )
 
