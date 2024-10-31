@@ -11,7 +11,7 @@ export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
   error?: QueryResponseError
   data?: QueryResponseResult
   sourceMap?: ContentSourceMap
-  perspective?: ClientPerspective
+  perspective?: ClientPerspective | `bundle.${string}`
 }
 
 /**

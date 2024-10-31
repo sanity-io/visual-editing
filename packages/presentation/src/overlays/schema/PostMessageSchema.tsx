@@ -4,12 +4,14 @@ import {useRootTheme} from '@sanity/ui'
 import {memo, useEffect} from 'react'
 import {API_VERSION} from '../../constants'
 import {useClient, useWorkspace} from '../../internals'
+import {getBundlePerspective} from '../../loader/utils'
 import type {VisualEditingConnection} from '../../types'
 import {extractSchema} from './extract'
 
 export interface PostMessageSchemaProps {
   comlink: VisualEditingConnection
-  perspective: ClientPerspective
+  perspective: ClientPerspective | `bundle.${string}`
+  bundlesPerspective: string[]
 }
 
 function getDocumentPathArray(paths: UnresolvedPath[]) {
@@ -33,8 +35,7 @@ function getDocumentPathArray(paths: UnresolvedPath[]) {
  * over postMessage so it can be used to enrich the Visual Editing experience
  */
 function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
-  const {comlink, perspective} = props
-
+  const {comlink, perspective, bundlesPerspective} = props
   const workspace = useWorkspace()
   const theme = useRootTheme()
 
@@ -61,7 +62,15 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
           const arr = Array.from(paths)
           const projection = arr.map((path, i) => `"${i}": ${path}[0]._type`).join(',')
           const query = `*[_id == $id][0]{${projection}}`
-          const result = await client.fetch(query, {id}, {perspective, tag: 'presentation-schema'})
+          const result = await client.fetch(
+            query,
+            {id},
+            {
+              tag: 'presentation-schema',
+              perspective: undefined,
+              bundlePerspective: getBundlePerspective(perspective, bundlesPerspective),
+            },
+          )
           const mapped = arr.map((path, i) => ({path: path, type: result[i]}))
           return {id, paths: mapped}
         }),
@@ -73,7 +82,7 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
       })
       return {types: newState}
     })
-  }, [comlink, client, perspective])
+  }, [comlink, client, perspective, bundlesPerspective])
 
   return null
 }

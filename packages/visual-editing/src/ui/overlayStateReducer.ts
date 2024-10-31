@@ -20,7 +20,7 @@ export interface OverlayState {
   focusPath: string
   elements: ElementState[]
   wasMaybeCollapsed: boolean
-  perspective: ClientPerspective
+  perspective: ClientPerspective | `bundle.${string}`
   isDragging: boolean
   dragInsertPosition: DragInsertPosition
   dragSkeleton: DragSkeleton | null

@@ -25,7 +25,14 @@ import {
   useState,
   type ReactElement,
 } from 'react'
-import {useDataset, useProjectId, type Path, type SanityDocument, type Tool} from 'sanity'
+import {
+  useDataset,
+  usePerspective,
+  useProjectId,
+  type Path,
+  type SanityDocument,
+  type Tool,
+} from 'sanity'
 import {useRouter, type RouterContextValue} from 'sanity/router'
 import {styled} from 'styled-components'
 import {
@@ -51,11 +58,9 @@ import {
   presentationReducer,
   presentationReducerInit,
 } from './reducers/presentationReducer'
-import {RevisionSwitcher} from './RevisionSwitcher'
 import type {
   FrameState,
   PresentationNavigate,
-  PresentationPerspective,
   PresentationPluginOptions,
   PresentationStateParams,
   PresentationViewport,
@@ -161,11 +166,19 @@ export default function PresentationTool(props: {
   const navigate = useMemo(() => debounce<PresentationNavigate>(_navigate, 50), [_navigate])
 
   const [state, dispatch] = useReducer(presentationReducer, {}, presentationReducerInit)
-
-  const perspective = useMemo(
-    () => (params.perspective ? 'published' : 'previewDrafts'),
-    [params.perspective],
-  )
+  const {
+    bundlesPerspective,
+    perspective: globalPerspective = 'previewDrafts',
+    excludedPerspectives,
+  } = usePerspective()
+  const perspective = globalPerspective.startsWith('bundle.')
+    ? /**
+       * Hacky fix. Response values are cached, and when adding new excluded perspectives the cache is not invalidated.
+       * By this, we are making the key aware of the excluded perspectives, so it will invalidate the cache.
+       * Should be ideally fixed in the cache key directly, not here.
+       */
+      ([globalPerspective, ...excludedPerspectives].join(',') as `bundle.${string}`)
+    : globalPerspective
 
   const viewport = useMemo(() => (params.viewport ? 'mobile' : 'desktop'), [params.viewport])
 
@@ -494,16 +507,6 @@ export default function PresentationTool(props: {
     [navigate],
   )
 
-  const setPerspective = useCallback(
-    (next: PresentationPerspective) => {
-      // Omit the perspective URL search param if the next perspective state is
-      // the default: 'previewDrafts'
-      const perspective = next === 'previewDrafts' ? undefined : next
-      navigate({}, {perspective})
-    },
-    [navigate],
-  )
-
   return (
     <>
       <PresentationProvider
@@ -543,7 +546,6 @@ export default function PresentationTool(props: {
                         previewUrl={params.preview}
                         perspective={perspective}
                         ref={iframeRef}
-                        setPerspective={setPerspective}
                         setViewport={setViewport}
                         targetOrigin={targetOrigin}
                         toggleNavigator={toggleNavigator}
@@ -577,6 +579,7 @@ export default function PresentationTool(props: {
             <LiveQueries
               controller={controller}
               perspective={perspective}
+              bundlesPerspective={bundlesPerspective}
               liveDocument={displayedDocument}
               onDocumentsOnPage={setDocumentsOnPage}
               onLoadersConnection={setLoadersConnection}
@@ -585,6 +588,7 @@ export default function PresentationTool(props: {
             <LoaderQueries
               controller={controller}
               perspective={perspective}
+              bundlesPerspective={bundlesPerspective}
               liveDocument={displayedDocument}
               onDocumentsOnPage={setDocumentsOnPage}
               onLoadersConnection={setLoadersConnection}
@@ -606,7 +610,11 @@ export default function PresentationTool(props: {
       )}
       {visualEditingComlink && (
         <Suspense>
-          <PostMessageSchema comlink={visualEditingComlink} perspective={perspective} />
+          <PostMessageSchema
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
+          />
         </Suspense>
       )}
       {visualEditingComlink && documentsOnPage.length > 0 && (
@@ -614,6 +622,7 @@ export default function PresentationTool(props: {
           <PostMessagePreviewSnapshots
             comlink={visualEditingComlink}
             perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
             refs={documentsOnPage}
           />
         </Suspense>
@@ -630,17 +639,12 @@ export default function PresentationTool(props: {
       )}
       {visualEditingComlink && (
         <Suspense>
-          <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
+          <PostMessagePerspective
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
+          />
         </Suspense>
-      )}
-      {params.id && params.type && (
-        <RevisionSwitcher
-          documentId={params.id}
-          documentRevision={params.rev}
-          documentType={params.type}
-          navigate={navigate}
-          perspective={perspective}
-        />
       )}
     </>
   )

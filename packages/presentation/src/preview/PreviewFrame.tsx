@@ -1,14 +1,5 @@
 import type {Status} from '@sanity/comlink'
-import {
-  CheckmarkIcon,
-  ChevronDownIcon,
-  DesktopIcon,
-  EditIcon,
-  MobileDeviceIcon,
-  PanelLeftIcon,
-  PublishIcon,
-  RefreshIcon,
-} from '@sanity/icons'
+import {DesktopIcon, MobileDeviceIcon, PanelLeftIcon, RefreshIcon} from '@sanity/icons'
 import {withoutSecretSearchParams} from '@sanity/preview-url-secret/without-secret-search-params'
 import {
   Box,
@@ -17,9 +8,6 @@ import {
   Code,
   Flex,
   Label,
-  Menu,
-  MenuButton,
-  MenuItem,
   Spinner,
   Stack,
   Switch,
@@ -27,11 +15,9 @@ import {
   Tooltip,
   TooltipDelayGroupProvider,
   usePrefersReducedMotion,
-  type ButtonTone,
 } from '@sanity/ui'
 import {AnimatePresence, motion, MotionConfig} from 'framer-motion'
 import {
-  createElement,
   forwardRef,
   memo,
   useCallback,
@@ -40,7 +26,6 @@ import {
   useMemo,
   useRef,
   useState,
-  type ComponentType,
 } from 'react'
 import {Hotkeys, useTranslation} from 'sanity'
 import {ErrorCard} from '../components/ErrorCard'
@@ -61,21 +46,6 @@ import {SharePreviewMenu} from './SharePreviewMenu'
 
 const MotionFlex = motion(Flex)
 
-const PERSPECTIVE_TITLE_KEY: Record<PresentationPerspective, string> = {
-  previewDrafts: 'preview-frame.perspective.previewDrafts.title',
-  published: 'preview-frame.perspective.published.title',
-}
-
-const PERSPECTIVE_TONES: Record<PresentationPerspective, ButtonTone> = {
-  previewDrafts: 'caution',
-  published: 'positive',
-}
-
-const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
-  previewDrafts: EditIcon,
-  published: PublishIcon,
-}
-
 export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'visualEditing'> {
   canSharePreviewAccess: boolean
   canToggleSharePreviewAccess: boolean
@@ -90,7 +60,6 @@ export interface PreviewFrameProps extends Pick<PresentationState, 'iframe' | 'v
   overlaysConnection: Status
   perspective: PresentationPerspective
   previewUrl?: string
-  setPerspective: (perspective: 'previewDrafts' | 'published') => void
   setViewport: (mode: 'desktop' | 'mobile') => void
   targetOrigin: string
   toggleNavigator?: () => void
@@ -116,7 +85,6 @@ export const PreviewFrame = memo(
         overlaysConnection,
         perspective,
         previewUrl,
-        setPerspective,
         setViewport,
         targetOrigin,
         toggleNavigator,
@@ -406,102 +374,6 @@ export const PreviewFrame = memo(
                     value={previewLocationRoute}
                   />
                 </Box>
-
-                <Flex align="center" flex="none" gap={1} padding={1}>
-                  <MenuButton
-                    button={
-                      <Button
-                        fontSize={1}
-                        iconRight={ChevronDownIcon}
-                        mode="bleed"
-                        padding={2}
-                        space={2}
-                        text={t(
-                          PERSPECTIVE_TITLE_KEY[
-                            loadersConnection === 'connected' ? perspective : 'previewDrafts'
-                          ],
-                        )}
-                        loading={loadersConnection === 'reconnecting' && iframe.status !== 'loaded'}
-                        disabled={loadersConnection !== 'connected'}
-                      />
-                    }
-                    id="perspective-menu"
-                    menu={
-                      <Menu style={{maxWidth: 240}}>
-                        <MenuItem
-                          fontSize={1}
-                          onClick={() => setPerspective('previewDrafts')}
-                          padding={3}
-                          pressed={perspective === 'previewDrafts'}
-                          tone={PERSPECTIVE_TONES.previewDrafts}
-                        >
-                          <Flex align="flex-start" gap={3}>
-                            <Box flex="none">
-                              <Text size={1}>{createElement(PERSPECTIVE_ICONS.previewDrafts)}</Text>
-                            </Box>
-                            <Stack flex={1} space={2}>
-                              <Text size={1} weight="medium">
-                                {t(PERSPECTIVE_TITLE_KEY['previewDrafts'])}
-                              </Text>
-                              <Text muted size={1}>
-                                {t('preview-frame.perspective.previewDrafts.text')}
-                              </Text>
-                            </Stack>
-                            <Box flex="none">
-                              <Text
-                                muted
-                                size={1}
-                                style={{
-                                  opacity: perspective === 'previewDrafts' ? 1 : 0,
-                                }}
-                              >
-                                <CheckmarkIcon />
-                              </Text>
-                            </Box>
-                          </Flex>
-                        </MenuItem>
-                        <MenuItem
-                          fontSize={1}
-                          onClick={() => setPerspective('published')}
-                          padding={3}
-                          pressed={perspective === 'published'}
-                          tone={PERSPECTIVE_TONES.published}
-                        >
-                          <Flex align="flex-start" gap={3}>
-                            <Box flex="none">
-                              <Text size={1}>{createElement(PERSPECTIVE_ICONS.published)}</Text>
-                            </Box>
-                            <Stack flex={1} space={2}>
-                              <Text size={1} weight="medium">
-                                {t(PERSPECTIVE_TITLE_KEY['published'])}
-                              </Text>
-                              <Text muted size={1}>
-                                {t('preview-frame.perspective.published.text')}
-                              </Text>
-                            </Stack>
-                            <Box flex="none">
-                              <Text
-                                muted
-                                size={1}
-                                style={{
-                                  opacity: perspective === 'published' ? 1 : 0,
-                                }}
-                              >
-                                <CheckmarkIcon />
-                              </Text>
-                            </Box>
-                          </Flex>
-                        </MenuItem>
-                      </Menu>
-                    }
-                    popover={{
-                      animate: true,
-                      constrainSize: true,
-                      placement: 'bottom',
-                      portal: true,
-                    }}
-                  />
-                </Flex>
 
                 <Flex align="center" flex="none" gap={1}>
                   <Tooltip

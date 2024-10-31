@@ -14,3 +14,14 @@ export function getQueryCacheKey(
 ): QueryCacheKey {
   return `${perspective}-${query}-${JSON.stringify(params)}`
 }
+
+// This is a small hack, perspective=published is returning incorrect results, using it through bundlePerspective works fine.
+export function getBundlePerspective(
+  perspective: ClientPerspective | `bundle.${string}`,
+  bundlesPerspectives: string[],
+): string[] {
+  if (perspective === 'published') return ['published']
+  if (perspective === 'previewDrafts') return ['draft']
+  if (perspective.startsWith('bundle.')) return bundlesPerspectives
+  throw new Error(`Invalid perspective: ${perspective}`)
+}
