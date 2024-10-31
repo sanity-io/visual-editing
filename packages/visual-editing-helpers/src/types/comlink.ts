@@ -130,6 +130,10 @@ export type VisualEditingControllerMsg =
         event: ReconnectEvent | WelcomeEvent | MutationEvent
       }
     }
+  | {
+      type: 'presentation/releases'
+      data: any
+    }
 
 /**
  * @public

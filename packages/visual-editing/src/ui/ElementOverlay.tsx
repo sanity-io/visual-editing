@@ -191,6 +191,8 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
   const title = useMemo(() => {
     if (!('path' in node)) return undefined
+
+    console.log(previewSnapshots)
     return previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title
   }, [node, previewSnapshots])
 

@@ -12,6 +12,10 @@ type KeyedDocumentCache = Record<string, DocumentCache>
 
 let warnedAboutCrossDatasetReference = false
 
+/**
+ *
+ * gets all visible documents in studio pane, get all content releases
+ */
 export function useDocumentsOnPage(
   perspective: PresentationPerspective,
   frameStateRef: MutableRefObject<FrameState>,

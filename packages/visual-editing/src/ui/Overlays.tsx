@@ -214,6 +214,9 @@ export const Overlays: FunctionComponent<{
       comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
       }),
+      comlink?.on('presentation/releases', (data) => {
+        console.log('george, ', data)
+      }),
       comlink?.onStatus((status) => {
         setStatus(status as Status)
       }),

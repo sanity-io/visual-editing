@@ -39,7 +39,12 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
       switchMap((refs) => {
         return combineLatest(
           refs.map((ref) => {
-            const draftRef = {...ref, _id: getDraftId(ref._id)}
+            const draftRef = {
+              ...ref,
+              _id: ref._id.startsWith('versions.') ? ref._id : getDraftId(ref._id),
+            }
+
+            console.log(draftRef)
             const draft$ =
               perspective === 'previewDrafts'
                 ? documentPreviewStore
@@ -76,6 +81,8 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
             .filter((s) => s.snapshot)
             .map((s) => {
               const snapshot = s.snapshot as PreviewValue & {_id: string}
+              console.log(snapshot._id)
+
               return {...snapshot, _id: getPublishedId(snapshot._id)}
             }),
         },

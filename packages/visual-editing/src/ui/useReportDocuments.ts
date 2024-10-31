@@ -29,6 +29,7 @@ export function useReportDocuments(
 
   const reportDocuments = useCallback(
     (documents: ContentSourceMapDocuments, perspective: ClientPerspective | `bundle.${string}`) => {
+      // take data needed to render overlays, perspective, and send
       comlink?.post({
         type: 'visual-editing/documents',
         data: {
