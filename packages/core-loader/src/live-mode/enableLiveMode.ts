@@ -32,7 +32,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     )
   }
   const {projectId, dataset} = client.config()
-  const $perspective = atom<Exclude<ClientPerspective, 'raw'>>('previewDrafts')
+  const $perspective = atom<Exclude<ClientPerspective, 'raw'> | `bundle.${string}`>('previewDrafts')
   const $connected = atom(false)
 
   const cache = new Map<
@@ -40,7 +40,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     {
       projectId: string
       dataset: string
-      perspective: ClientPerspective
+      perspective: ClientPerspective | `bundle.${string}`
       query: string
       params: QueryParams
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

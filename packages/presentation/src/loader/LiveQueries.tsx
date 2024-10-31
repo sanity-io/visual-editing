@@ -41,11 +41,13 @@ import type {
   PresentationPerspective,
 } from '../types'
 import type {DocumentOnPage} from '../useDocumentsOnPage'
+import {getBundlePerspective} from './utils'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
   controller: Controller | undefined
-  perspective: ClientPerspective
+  perspective: ClientPerspective | `bundle.${string}`
+  bundlesPerspective: string[]
   onLoadersConnection: (event: StatusEvent) => void
   onDocumentsOnPage: (
     key: string,
@@ -60,6 +62,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     controller,
     perspective: activePerspective,
     onLoadersConnection,
+    bundlesPerspective,
     onDocumentsOnPage,
   } = props
 
@@ -182,7 +185,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
 
   const [syncTagsInUse] = useState(() => new Set<SyncTag[]>())
   const [lastLiveEventId, setLastLiveEventId] = useState<string | null>(null)
-  const studioClient = useClient({apiVersion: '2023-10-16'})
+  const studioClient = useClient({apiVersion: 'vX'})
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])
   const client = useMemo(
     () =>
@@ -249,6 +252,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
           key={`${key}${perspective}`}
           projectId={clientConfig.projectId!}
           dataset={clientConfig.dataset!}
+          bundlesPerspective={bundlesPerspective}
           perspective={perspective}
           query={query}
           params={params}
@@ -274,7 +278,8 @@ interface QuerySubscriptionProps
   extends Pick<UseQuerySubscriptionProps, 'client' | 'liveDocument' | 'lastLiveEventId'> {
   projectId: string
   dataset: string
-  perspective: ClientPerspective
+  bundlesPerspective: string[]
+  perspective: ClientPerspective | `bundle.${string}`
   query: string
   params: QueryParams
   comlink: LoaderConnection | undefined
@@ -284,6 +289,7 @@ function QuerySubscriptionComponent(props: QuerySubscriptionProps) {
   const {
     projectId,
     dataset,
+    bundlesPerspective,
     perspective,
     query,
     client,
@@ -302,6 +308,7 @@ function QuerySubscriptionComponent(props: QuerySubscriptionProps) {
     client,
     liveDocument,
     params,
+    bundlesPerspective,
     perspective,
     query,
     lastLiveEventId,
@@ -310,7 +317,7 @@ function QuerySubscriptionComponent(props: QuerySubscriptionProps) {
   const handleQueryChange = useEffectEvent(
     (
       comlink: LoaderConnection | undefined,
-      perspective: ClientPerspective,
+      perspective: ClientPerspective | `bundle.${string}`,
       query: string,
       params: QueryParams,
       result: unknown,
@@ -362,11 +369,13 @@ interface UseQuerySubscriptionProps extends Required<Pick<SharedProps, 'client'>
   liveDocument: Partial<SanityDocument> | null | undefined
   query: string
   params: QueryParams
-  perspective: ClientPerspective
+  bundlesPerspective: string[]
+  perspective: ClientPerspective | `bundle.${string}`
   lastLiveEventId: string | null
 }
 function useQuerySubscription(props: UseQuerySubscriptionProps) {
-  const {liveDocument, client, query, params, perspective, lastLiveEventId} = props
+  const {liveDocument, client, query, params, perspective, lastLiveEventId, bundlesPerspective} =
+    props
   const [snapshot, setSnapshot] = useState<{
     result: unknown
     resultSourceMap?: ContentSourceMap
@@ -401,7 +410,8 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
         lastLiveEventId,
         tag: 'presentation-loader',
         signal,
-        perspective,
+        perspective: undefined,
+        bundlePerspective: getBundlePerspective(perspective, bundlesPerspective),
         filterResponse: false,
         returnQuery: false,
       })
@@ -433,7 +443,16 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
         controller.abort()
       }
     }
-  }, [client, lastLiveEventId, params, perspective, query, shouldRefetch, startRefresh])
+  }, [
+    client,
+    lastLiveEventId,
+    params,
+    perspective,
+    query,
+    shouldRefetch,
+    startRefresh,
+    bundlesPerspective,
+  ])
 
   const {result, resultSourceMap, syncTags} = snapshot ?? {}
   return useMemo(() => {
@@ -451,7 +470,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
 export function turboChargeResultIfSourceMap<T = unknown>(
   liveDocument: Partial<SanityDocument> | null | undefined,
   result: T,
-  perspective: ClientPerspective,
+  perspective: ClientPerspective | `bundle.${string}`,
   resultSourceMap?: ContentSourceMap,
 ): T {
   if (perspective === 'raw') {
@@ -480,6 +499,7 @@ export function turboChargeResultIfSourceMap<T = unknown>(
       }
       return changedValue
     },
-    perspective,
+    // TODO: Update applySourceDocuments to support bundlePerspective.
+    perspective.startsWith('bundle.') ? 'previewDrafts' : (perspective as ClientPerspective),
   )
 }

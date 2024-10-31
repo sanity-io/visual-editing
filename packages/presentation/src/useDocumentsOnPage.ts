@@ -1,4 +1,3 @@
-import type {ClientPerspective} from '@sanity/client'
 import isEqual from 'fast-deep-equal'
 import {useCallback, useMemo, useRef, useState, type MutableRefObject} from 'react'
 import type {FrameState, PresentationPerspective} from './types'
@@ -21,7 +20,11 @@ export function useDocumentsOnPage(
   DocumentOnPage[],
   (key: string, perspective: PresentationPerspective, state: DocumentOnPage[]) => void,
 ] {
-  if (perspective !== 'published' && perspective !== 'previewDrafts') {
+  if (
+    perspective !== 'published' &&
+    perspective !== 'previewDrafts' &&
+    !perspective.startsWith('bundle.')
+  ) {
     throw new Error(`Invalid perspective: ${perspective}`)
   }
 
@@ -33,7 +36,7 @@ export function useDocumentsOnPage(
   const urlRef = useRef<string | undefined>('')
 
   const setDocumentsOnPage = useCallback(
-    (key: string, perspective: ClientPerspective, sourceDocuments: DocumentOnPage[] = []) => {
+    (key: string, perspective: PresentationPerspective, sourceDocuments: DocumentOnPage[] = []) => {
       const documents = sourceDocuments.filter((sourceDocument) => {
         if ('_projectId' in sourceDocument && sourceDocument._projectId) {
           // eslint-disable-next-line no-warning-comments

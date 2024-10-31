@@ -34,7 +34,7 @@ function PresentationComlink(props: {
   // > | null>(null)
 
   const handlePerspectiveChange = useEffectEvent(
-    (perspective: ClientPerspective, signal: AbortSignal) => {
+    (perspective: ClientPerspective | `bundle.${string}`, signal: AbortSignal) => {
       if (draftModeEnabled && perspective !== draftModePerspective) {
         setPerspectiveCookie(perspective)
           .then(() => {

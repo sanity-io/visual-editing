@@ -343,6 +343,8 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 // Variable: shoesList
 // Query: *[_type == "shoe" && defined(slug.current)]{  title,  slug,  "price": string(price),  "media": media[0]{ alt, asset, crop, hotspot },  "brand": brandReference->{name, slug, logo{ alt, asset, crop, hotspot }},} | order(_updatedAt desc)
 export type ShoesListResult = Array<{
+  _id: string
+  _originalId?: string
   title: string | null
   slug: Slug | null
   price: string | null
