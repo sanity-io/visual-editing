@@ -117,6 +117,7 @@ const Tab = styled(Flex)`
   pointer-events: none;
   position: absolute;
   left: 0;
+  user-select: none;
 `
 
 const Labels = styled(Flex)`

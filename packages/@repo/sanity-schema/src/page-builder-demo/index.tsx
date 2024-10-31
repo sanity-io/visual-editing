@@ -548,6 +548,21 @@ const dndTestItemRoot = defineArrayMember({
       of: [{type: 'string'}],
     }),
     defineField({
+      type: 'image',
+      name: 'image',
+      title: 'Image',
+    }),
+    defineField({
+      type: 'number',
+      name: 'imageMaxWidth',
+      title: 'Image Max Width',
+    }),
+    defineField({
+      type: 'number',
+      name: 'headingFontSize',
+      title: 'Heading Font Size',
+    }),
+    defineField({
       type: 'array',
       name: 'children',
       title: 'Children',
