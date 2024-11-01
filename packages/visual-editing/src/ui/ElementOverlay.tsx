@@ -41,6 +41,8 @@ export interface ElementOverlayProps {
   showActions: boolean
   wasMaybeCollapsed: boolean
   enableScrollIntoView: boolean
+  releases: any[]
+  versions: any[]
 }
 
 const Root = styled(Card)`
@@ -179,7 +181,8 @@ const ComponentWrapper: FunctionComponent<{
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {element, focused, componentResolver, node, showActions, draggable} = props
+  const {element, focused, componentResolver, node, showActions, draggable, releases, versions} =
+    props
 
   const {getField, getType} = useSchema()
   const schemaType = getType(node)
@@ -191,8 +194,6 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
   const title = useMemo(() => {
     if (!('path' in node)) return undefined
-
-    console.log(previewSnapshots)
     return previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title
   }, [node, previewSnapshots])
 
@@ -248,13 +249,22 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         </Tab>
       )}
 
+      <div style={{background: 'red'}}>
+        {versions && versions.map((v) => <p key={v._id}>{v._id}</p>)}
+      </div>
+
       {customComponentsProps && <ComponentWrapper {...customComponentsProps} />}
     </>
   )
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
-  const {focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
+  const {focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView, releases, versions} =
+    props
+
+  if (hovered) {
+    console.log(releases, versions)
+  }
 
   const ref = useRef<HTMLDivElement>(null)
 

@@ -9,8 +9,8 @@ export function getDraftId(id: string): string {
 }
 
 export function getPublishedId(id: string): string {
-  console.group(id)
-  console.log(isDraftId(id) ? id.slice(DRAFTS_PREFIX.length) : id)
-  console.groupEnd()
+  // console.group(id)
+  // console.log(isDraftId(id) ? id.slice(DRAFTS_PREFIX.length) : id)
+  // console.groupEnd()
   return isDraftId(id) ? id.slice(DRAFTS_PREFIX.length) : id
 }
