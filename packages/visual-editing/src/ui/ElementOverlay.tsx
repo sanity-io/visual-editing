@@ -8,6 +8,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
@@ -134,6 +135,21 @@ const Labels = styled(Flex)`
   }
 `
 
+const Releases = styled.div`
+  opacity: 0;
+  animation: o 300ms 500ms ease forwards;
+
+  @keyframes o {
+    from {
+      opacity: 0%;
+    }
+
+    to {
+      opacity: 100%;
+    }
+  }
+`
+
 function createIntentLink(node: SanityNode) {
   const {id, type, path, baseUrl, tool, workspace} = node
 
@@ -249,10 +265,6 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         </Tab>
       )}
 
-      <div style={{background: 'red'}}>
-        {versions && versions.map((v) => <p key={v._id}>{v._id}</p>)}
-      </div>
-
       {customComponentsProps && <ComponentWrapper {...customComponentsProps} />}
     </>
   )
@@ -262,9 +274,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   const {focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView, releases, versions} =
     props
 
-  if (hovered) {
-    console.log(releases, versions)
-  }
+  const [showRelease, setShowRelease] = useState(false)
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -311,15 +321,111 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     scrolledIntoViewRef.current = focused === true
   }, [focused, wasMaybeCollapsed, enableScrollIntoView])
 
+  function getTimeDifferenceInDays(targetDateStr: string): number {
+    const now = new Date()
+
+    const targetDate = new Date(targetDateStr)
+    const timeDifference = targetDate.getTime() - now.getTime()
+    // Convert milliseconds to days
+    return Math.round(timeDifference / (1000 * 60 * 60 * 24))
+  }
+
+  const releaseVersions = versions ? versions.filter((v) => v._id.startsWith('versions.')) : []
+  const overlayDocumentReleases = releaseVersions.map((v) => {
+    const releaseName = v._id.split('.').at(1)
+
+    return releases.find((r) => r.name === releaseName)
+  })
+
+  let nearestUpcomingRelease = null
+  let timeTilNextRelease = null
+
+  if (overlayDocumentReleases.length > 0) {
+    const asapReleases = overlayDocumentReleases.filter((r) => r.metadata.releaseType === 'asap')
+
+    const scheduledReleases = overlayDocumentReleases.filter(
+      (r) => r.metadata.releaseType === 'scheduled',
+    )
+
+    if (asapReleases.length > 0) {
+      const asapReleasesSorted = asapReleases.sort(
+        (a, b) => new Date(a._createdAt).getTime() - new Date(b._createdAt).getTime(),
+      )
+
+      nearestUpcomingRelease = asapReleasesSorted[0]
+    } else if (scheduledReleases.length > 0) {
+      const scheduledReleasesSorted = scheduledReleases.sort(
+        (a, b) =>
+          new Date(a.metadata.intendedPublishAt).getTime() -
+          new Date(b.metadata.intendedPublishAt).getTime(),
+      )
+
+      nearestUpcomingRelease = scheduledReleasesSorted[0]
+
+      timeTilNextRelease = getTimeDifferenceInDays(
+        nearestUpcomingRelease.metadata.intendedPublishAt,
+      )
+    }
+  }
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--release-x', e.clientX + 'px')
+      document.documentElement.style.setProperty('--release-y', e.clientY + 'px')
+    }
+    document.addEventListener('mousemove', handleMouseMove)
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [])
+
   return (
-    <Root
-      data-focused={focused ? '' : undefined}
-      data-hovered={hovered ? '' : undefined}
-      ref={ref}
-      style={style}
-    >
-      {hovered && <ElementOverlayInner {...props} />}
-    </Root>
+    <>
+      <Root
+        data-focused={focused ? '' : undefined}
+        data-hovered={hovered ? '' : undefined}
+        ref={ref}
+        style={style}
+      >
+        {hovered && <ElementOverlayInner {...props} />}
+      </Root>
+      {hovered && nearestUpcomingRelease && (
+        <Releases
+          style={{
+            top: '0px',
+            left: '0px',
+            position: 'fixed',
+            transform: `translate(calc(var(--release-x) + 8px), calc(var(--release-y) + 8px))`,
+            display: 'flex',
+            gap: '4px',
+            background: '#fff',
+            border: '1px solid #f1f1f1',
+            borderRadius: '999px',
+            padding: '0.125rem 0.375rem',
+          }}
+        >
+          <div className="flex items-center">
+            <div
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: {asap: '#f24f3e', scheduled: '#9b61f3'}[
+                  nearestUpcomingRelease.metadata.releaseType as string
+                ],
+                flexShrink: 0,
+                marginRight: '0.375rem',
+              }}
+            ></div>
+            <p className="text-xs leading-none">
+              Changes with <i className="font-semibold">{nearestUpcomingRelease.metadata.title}</i>{' '}
+              {timeTilNextRelease ? <span>in {timeTilNextRelease} days</span> : 'ASAP'}
+            </p>
+          </div>
+        </Releases>
+      )}
+    </>
   )
 })
 

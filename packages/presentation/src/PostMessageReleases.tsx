@@ -27,9 +27,8 @@ const PostMessageReleases: FC<PostMessageReleasesProps> = (props) => {
         data: {
           releases: releases.map((r: any) => ({
             ...r,
-            metadata: releasesMeta.find(
-              (rm: any) => getVersionFromId(rm._id) === getVersionFromId(r._id),
-            ).metadata,
+            metadata: releasesMeta.find((rm: any) => rm._id === `system-tmp-releases.${r.name}`)
+              .metadata,
             // documents: releaseAttachedDocuments.filter((d: any) => {
             //   const releaseVersion = r._id.split('_.releases.')[1]
             //   const documentVersion = getVersionFromId(d._id)
