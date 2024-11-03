@@ -80,6 +80,16 @@ export type HistoryRefresh =
 /**
  * @public
  */
+export type PreviewSnapshot = {
+  // Explicitly exclude media, as it's not serializable
+  [K in keyof Omit<PreviewValue, 'media'>]?: Omit<PreviewValue, 'media'>[K]
+} & {
+  _id: string
+}
+
+/**
+ * @public
+ */
 export type VisualEditingControllerMsg =
   | {
       type: 'presentation/focus'
@@ -120,7 +130,7 @@ export type VisualEditingControllerMsg =
   | {
       type: 'presentation/preview-snapshots'
       data: {
-        snapshots: Array<PreviewValue & {_id: string}>
+        snapshots: PreviewSnapshot[]
       }
     }
   | {

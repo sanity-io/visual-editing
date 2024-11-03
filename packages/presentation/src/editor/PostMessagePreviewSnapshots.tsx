@@ -1,8 +1,11 @@
+import type {PreviewSnapshot} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import {memo, useEffect, useMemo, type FC} from 'react'
 import {
   combineLatest,
   debounceTime,
+  filter,
+  map,
   merge,
   NEVER,
   share,
@@ -58,7 +61,21 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
               schema.get(publishedRef._type)!,
             )
 
-            return merge(published$.pipe(takeUntil(draft$)), draft$)
+            return merge(published$.pipe(takeUntil(draft$)), draft$).pipe(
+              filter((p) => !!p.snapshot),
+              map((p) => {
+                const snapshot = p.snapshot as PreviewValue & {
+                  _id: string
+                }
+                return {
+                  _id: getPublishedId(snapshot._id),
+                  title: snapshot.title,
+                  subtitle: snapshot.subtitle,
+                  description: snapshot.description,
+                  imageUrl: snapshot.imageUrl,
+                } as PreviewSnapshot
+              }),
+            )
           }),
         )
       }),
@@ -70,14 +87,7 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
     const sub = previews$.subscribe((snapshots) => {
       comlink.post({
         type: 'presentation/preview-snapshots',
-        data: {
-          snapshots: snapshots
-            .filter((s) => s.snapshot)
-            .map((s) => {
-              const snapshot = s.snapshot as PreviewValue & {_id: string}
-              return {...snapshot, _id: getPublishedId(snapshot._id)}
-            }),
-        },
+        data: {snapshots},
       })
     })
 

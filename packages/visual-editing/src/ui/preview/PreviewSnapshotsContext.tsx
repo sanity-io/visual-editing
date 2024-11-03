@@ -1,6 +1,6 @@
-import type {PreviewValue} from '@sanity/types'
+import type {PreviewSnapshot} from '@repo/visual-editing-helpers'
 import {createContext} from 'react'
 
-export type PreviewSnapshotsContextValue = Array<PreviewValue & {_id: string}>
+export type PreviewSnapshotsContextValue = PreviewSnapshot[]
 
 export const PreviewSnapshotsContext = createContext<PreviewSnapshotsContextValue | null>(null)
