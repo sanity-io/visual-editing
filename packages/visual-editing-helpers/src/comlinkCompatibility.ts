@@ -119,6 +119,14 @@ const convertToChannelsMessage = (message: ProtocolMessage): ProtocolMessage => 
     message.data = {responseTo: message.responseTo}
   }
 
+  if (
+    message.type === 'handshake/syn' ||
+    message.type === 'handshake/syn-ack' ||
+    message.type === 'handshake/ack'
+  ) {
+    message.data = {id: message.connectionId}
+  }
+
   return message
 }
 
