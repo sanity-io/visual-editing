@@ -1,5 +1,6 @@
 import type {UnresolvedPath} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
+import {getPublishedId} from '@sanity/client/csm'
 import {useRootTheme} from '@sanity/ui'
 import {memo, useEffect} from 'react'
 import {API_VERSION} from '../../constants'
@@ -64,7 +65,7 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
           const query = `*[_id == $id][0]{${projection}}`
           const result = await client.fetch(
             query,
-            {id},
+            {id: getPublishedId(id)},
             {
               tag: 'presentation-schema',
               perspective: undefined,
