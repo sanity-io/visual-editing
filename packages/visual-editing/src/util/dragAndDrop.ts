@@ -240,8 +240,8 @@ async function applyMinimapWrapperTransform(
   })
 }
 
-function calcMinimapTransformValues(rects: OverlayRect[]) {
-  let {height: groupHeight} = getRectGroupYExtent(rects)
+function calcMinimapTransformValues(rects: OverlayRect[], groupHeightOverride: number | null) {
+  let groupHeight = groupHeightOverride || getRectGroupYExtent(rects).height
 
   const padding = 100 // px
 
@@ -400,13 +400,22 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
   const preventInsertDefault = !!element.getAttribute('data-sanity-drag-prevent-default')
 
+  const documentHeightOverride = element.getAttribute('data-sanity-drag-document-height')
+  const groupHeightOverride = element.getAttribute('data-sanity-drag-group-height')
+  const scaleTargetOverride = element.getAttribute('data-sanity-drag-scale-target')
+
   let insertPosition: DragInsertPositionRects | null = null
 
   const initialMousePos = calcMousePos(mouseEvent)
 
-  const scaleTarget = document.body
+  const scaleTarget = scaleTargetOverride
+    ? (document.querySelector(scaleTargetOverride) as HTMLElement)
+    : document.body
 
-  const {minYScaled, scaleFactor} = calcMinimapTransformValues(rects)
+  const {minYScaled, scaleFactor} = calcMinimapTransformValues(
+    rects,
+    groupHeightOverride ? ~~groupHeightOverride : null,
+  )
 
   let sequenceStarted = false
   let minimapPromptShown = false
@@ -425,7 +434,9 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       },
     }
 
-    prescaleHeight = document.documentElement.scrollHeight
+    prescaleHeight = documentHeightOverride
+      ? ~~documentHeightOverride
+      : document.documentElement.scrollHeight
   }
 
   const rectsInterval = setInterval(() => {
@@ -488,6 +499,8 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     }
 
     if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
+      window.dispatchEvent(new CustomEvent('sanity/dragApplyMinimap'))
+
       applyMinimap()
     }
   }
@@ -531,7 +544,11 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     })
 
     if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
-      applyMinimap()
+      window.dispatchEvent(new CustomEvent('sanity/dragApplyMinimap'))
+
+      setTimeout(() => {
+        applyMinimap()
+      }, 50)
     }
 
     const newInsertPosition = calcInsertPosition(mousePos, rects, flow)
@@ -589,14 +606,18 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
         skeleton,
       })
 
-      resetMinimapWrapperTransform(
-        mousePosInverseTransform.y,
-        scaleTarget,
-        prescaleHeight,
-        handler,
-        rectUpdateFrequency,
-        previousRootStyleValues,
-      )
+      window.dispatchEvent(new CustomEvent('sanity/dragResetMinimap'))
+
+      setTimeout(() => {
+        resetMinimapWrapperTransform(
+          mousePosInverseTransform.y,
+          scaleTarget,
+          prescaleHeight,
+          handler,
+          rectUpdateFrequency,
+          previousRootStyleValues,
+        )
+      }, 50)
 
       handler({
         type: 'overlay/dragUpdateGroupRect',
@@ -622,16 +643,20 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       groupRect: null,
     })
 
-    resetMinimapWrapperTransform(
-      mousePosInverseTransform.y,
-      scaleTarget,
-      prescaleHeight,
-      handler,
-      rectUpdateFrequency,
-      previousRootStyleValues,
-    ).then(() => {
-      minimapScaleApplied = false
-    })
+    window.dispatchEvent(new CustomEvent('sanity/dragResetMinimap'))
+
+    setTimeout(() => {
+      resetMinimapWrapperTransform(
+        mousePosInverseTransform.y,
+        scaleTarget,
+        prescaleHeight,
+        handler,
+        rectUpdateFrequency,
+        previousRootStyleValues,
+      ).then(() => {
+        minimapScaleApplied = false
+      })
+    }, 50)
 
     clearInterval(rectsInterval)
 
