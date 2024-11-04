@@ -711,6 +711,6 @@ export const liveDemoPlugin = definePlugin<
     unsplashImageAsset(),
     // Sets up AI Assist with preset prompts
     // https://www.sanity.io/docs/ai-assist
-    assistWithPresets(),
+    // assistWithPresets() , Assist is not supported yet in releases.
   ],
 }))

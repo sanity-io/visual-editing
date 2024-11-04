@@ -34,9 +34,13 @@ function PresentationComlink(props: {
   // > | null>(null)
 
   const handlePerspectiveChange = useEffectEvent(
-    (perspective: ClientPerspective | `bundle.${string}`, signal: AbortSignal) => {
+    (
+      perspective: ClientPerspective | `bundle.${string}`,
+      bundlesPerspective: string[],
+      signal: AbortSignal,
+    ) => {
       if (draftModeEnabled && perspective !== draftModePerspective) {
-        setPerspectiveCookie(perspective)
+        setPerspectiveCookie(perspective, bundlesPerspective)
           .then(() => {
             if (signal.aborted) return
             router.refresh()
@@ -67,7 +71,7 @@ function PresentationComlink(props: {
     comlink.on('loader/perspective', (data) => {
       controller?.abort()
       controller = new AbortController()
-      handlePerspectiveChange(data.perspective, controller.signal)
+      handlePerspectiveChange(data.perspective, data.bundlePerspective, controller.signal)
     })
 
     const stop = comlink.start()

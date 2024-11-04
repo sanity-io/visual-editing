@@ -30,6 +30,9 @@ export const urlSearchParamPreviewPathname = 'sanity-preview-pathname'
 export const urlSearchParamPreviewPerspective = 'sanity-preview-perspective'
 
 /** @internal */
+export const urlSearchParamPreviewBundlePerspective = 'sanity-preview-bundle-perspective'
+
+/** @internal */
 export const isDev = process.env.NODE_ENV === 'development'
 
 /**
@@ -70,3 +73,6 @@ export const tag = 'sanity.preview-url-secret' as const
 
 /** @internal */
 export const perspectiveCookieName = 'sanity-preview-perspective'
+
+/** @internal */
+export const bundlePerspectiveCookieName = 'sanity-preview-bundle-perspective'

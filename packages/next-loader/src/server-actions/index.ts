@@ -1,7 +1,10 @@
 'use server'
 
-import type {ClientPerspective, SyncTag} from '@sanity/client'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import type {SyncTag} from '@sanity/client'
+import {
+  bundlePerspectiveCookieName,
+  perspectiveCookieName,
+} from '@sanity/preview-url-secret/constants'
 import {revalidateTag} from 'next/cache.js'
 import {cookies, draftMode} from 'next/headers.js'
 import {sanitizePerspective} from '../utils'
