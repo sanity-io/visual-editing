@@ -342,24 +342,16 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
 
   if (showReleasePreview) {
     const releaseVersions = versions ? versions.filter((v) => v._id.startsWith('versions.')) : []
-    const overlayDocumentReleases = releaseVersions.map((v) => {
-      const releaseName = v._id.split('.').at(1)
-
-      return releases.find((r) => r.name === releaseName)
+    const nearestRelease = releases.find((release) => {
+      return releaseVersions.some((version) => {
+        const releaseName = version._id.split('.').at(1)
+        return releaseName === release.name
+      })
     })
 
-    if (overlayDocumentReleases.length > 0) {
-      const asapReleases = overlayDocumentReleases.filter((r) => r.metadata.releaseType === 'asap')
-
-      const scheduledReleases = overlayDocumentReleases.filter(
-        (r) => r.metadata.releaseType === 'scheduled',
-      )
-
-      if (asapReleases.length > 0) {
-        nearestUpcomingRelease = asapReleases[0]
-      } else if (scheduledReleases.length > 0) {
-        nearestUpcomingRelease = scheduledReleases[0]
-
+    if (nearestRelease) {
+      nearestUpcomingRelease = nearestRelease
+      if (nearestRelease.metadata?.releaseType === 'scheduled') {
         timeTilNextRelease = getTimeDifferenceInDays(
           nearestUpcomingRelease.metadata.intendedPublishAt,
         )
