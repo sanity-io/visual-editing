@@ -35,6 +35,7 @@ import {
 } from 'sanity'
 import {useRouter, type RouterContextValue} from 'sanity/router'
 import {styled} from 'styled-components'
+import {useEffectEvent} from 'use-effect-event'
 import {
   COMMENTS_INSPECTOR_NAME,
   DEFAULT_TOOL_NAME,
@@ -241,6 +242,10 @@ export default function PresentationTool(props: {
     }
   }, [controller, popups])
 
+  const handleNavigate = useEffectEvent<typeof navigate>(
+    (nextState, nextSearchState, forceReplace) =>
+      navigate(nextState, nextSearchState, forceReplace),
+  )
   useEffect(() => {
     if (!controller) return
 
@@ -257,7 +262,7 @@ export default function PresentationTool(props: {
 
     comlink.on('visual-editing/focus', (data) => {
       if (!('id' in data)) return
-      navigate({
+      handleNavigate({
         type: data.type,
         id: data.id,
         path: data.path,
@@ -267,7 +272,7 @@ export default function PresentationTool(props: {
     comlink.on('visual-editing/navigate', (data) => {
       const {title, url} = data
       if (frameStateRef.current.url !== url) {
-        navigate({}, {preview: url})
+        handleNavigate({}, {preview: url})
       }
       frameStateRef.current = {title, url}
     })
@@ -308,12 +313,11 @@ export default function PresentationTool(props: {
 
     const stop = comlink.start()
     setVisualEditingComlink(comlink)
-
     return () => {
       stop()
       setVisualEditingComlink(null)
     }
-  }, [controller, navigate, setDocumentsOnPage, setOverlaysConnection, targetOrigin])
+  }, [controller, handleNavigate, setDocumentsOnPage, setOverlaysConnection, targetOrigin])
 
   useEffect(() => {
     if (!controller) return
@@ -440,15 +444,6 @@ export default function PresentationTool(props: {
 
   const [{navigatorEnabled, toggleNavigator}, PresentationNavigator] = usePresentationNavigator({
     unstable_navigator,
-  })
-
-  // Handle edge case where the `&rev=` parameter gets "stuck"
-  const idRef = useRef<string | undefined>(params.id)
-  useEffect(() => {
-    if (params.rev && idRef.current && params.id !== idRef.current) {
-      navigate({}, {rev: undefined})
-    }
-    idRef.current = params.id
   })
 
   const refreshRef = useRef<number>()
