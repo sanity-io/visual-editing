@@ -357,19 +357,9 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
       )
 
       if (asapReleases.length > 0) {
-        const asapReleasesSorted = asapReleases.sort(
-          (a, b) => new Date(a._createdAt).getTime() - new Date(b._createdAt).getTime(),
-        )
-
-        nearestUpcomingRelease = asapReleasesSorted[0]
+        nearestUpcomingRelease = asapReleases[0]
       } else if (scheduledReleases.length > 0) {
-        const scheduledReleasesSorted = scheduledReleases.sort(
-          (a, b) =>
-            new Date(a.metadata.intendedPublishAt).getTime() -
-            new Date(b.metadata.intendedPublishAt).getTime(),
-        )
-
-        nearestUpcomingRelease = scheduledReleasesSorted[0]
+        nearestUpcomingRelease = scheduledReleases[0]
 
         timeTilNextRelease = getTimeDifferenceInDays(
           nearestUpcomingRelease.metadata.intendedPublishAt,
