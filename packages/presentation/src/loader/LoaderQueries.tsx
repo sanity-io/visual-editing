@@ -461,7 +461,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
       const {signal} = controller
       fetching = true
       const {result, resultSourceMap, syncTags} = await client.fetch(query, params, {
-        tag: 'presentation-loader-queries',
+        tag: 'presentation-loader',
         signal,
         perspective: undefined,
         bundlePerspective: getBundlePerspective(perspective, bundlesPerspective),
