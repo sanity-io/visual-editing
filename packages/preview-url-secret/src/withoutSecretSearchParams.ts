@@ -1,4 +1,5 @@
 import {
+  urlSearchParamPreviewBundlePerspective,
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewPerspective,
   urlSearchParamPreviewSecret,
@@ -11,6 +12,7 @@ export function withoutSecretSearchParams(url: URL): URL {
   searchParams.delete(urlSearchParamPreviewPathname)
   searchParams.delete(urlSearchParamPreviewSecret)
   searchParams.delete(urlSearchParamPreviewPerspective)
+  searchParams.delete(urlSearchParamPreviewBundlePerspective)
   return newUrl
 }
 

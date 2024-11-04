@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation.js'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
-import {setEnvironment, setPerspective} from '../../hooks/context'
+import {setEnvironment, setPerspective, type DraftPerspective} from '../../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
@@ -33,7 +33,7 @@ export interface SanityLiveProps
   > {
   // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
-  draftModePerspective?: ClientPerspective
+  draftModePerspective?: string
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
@@ -202,7 +202,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
    */
   useEffect(() => {
     if (draftModeEnabled && draftModePerspective) {
-      setPerspective(draftModePerspective)
+      setPerspective(draftModePerspective as DraftPerspective)
     } else {
       setPerspective('unknown')
     }
@@ -291,7 +291,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
           // dataset={dataset!}
           // handleDraftModeAction={handleDraftModeAction}
           draftModeEnabled={draftModeEnabled}
-          draftModePerspective={draftModePerspective!}
+          draftModePerspective={draftModePerspective! as ClientPerspective}
         />
       )}
       {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
