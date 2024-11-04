@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.4.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.2...visual-editing-v2.4.3) (2024-11-04)
+
+
+### Bug Fixes
+
+* **presentation:** remove media from preview snapshot payload ([#2079](https://github.com/sanity-io/visual-editing/issues/2079)) ([f1d04b3](https://github.com/sanity-io/visual-editing/commit/f1d04b396abbba1879c1f1f0b605269e94f4400f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.29
+
 ## [2.4.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.1...visual-editing-v2.4.2) (2024-10-28)
 
 
