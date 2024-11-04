@@ -7,6 +7,7 @@ export type {
   OverlayComponent,
   OverlayComponentProps,
   OverlayComponentResolver,
+  OverlayComponentResolverContext,
   OverlayElementParent,
   SanityNode,
   VisualEditingOptions,

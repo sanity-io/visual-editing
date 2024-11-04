@@ -21,6 +21,7 @@ import type {
   ElementNode,
   OverlayComponent,
   OverlayComponentResolver,
+  OverlayComponentResolverContext,
   OverlayElementParent,
   OverlayRect,
   SanityNode,
@@ -206,7 +207,14 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     const type = field?.value.type
     if (!type) return undefined
 
-    const context = {focused: !!focused, node, parent, type}
+    const context = {
+      element,
+      focused: !!focused,
+      node,
+      parent,
+      type,
+    } satisfies OverlayComponentResolverContext
+
     const resolved = componentResolver?.(context)
     if (!resolved) return undefined
 

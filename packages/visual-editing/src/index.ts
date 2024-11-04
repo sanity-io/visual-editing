@@ -15,6 +15,7 @@ export type {
   OverlayComponent,
   OverlayComponentProps,
   OverlayComponentResolver,
+  OverlayComponentResolverContext,
   OverlayController,
   OverlayElementParent,
   OverlayEventHandler,

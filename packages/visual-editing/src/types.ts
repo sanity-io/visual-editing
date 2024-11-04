@@ -375,15 +375,25 @@ export type DisableVisualEditing = () => void
 /**
  * @public
  */
+export interface OverlayComponentResolverContext<
+  P extends OverlayElementParent = OverlayElementParent,
+> {
+  element: ElementNode
+  focused: boolean
+  node: SanityNode
+  parent: P
+  type: string
+}
+
+/**
+ * @public
+ */
 export type OverlayComponentResolver<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends OverlayComponent = OverlayComponent<Record<string, unknown>, any>,
-> = (context: {
-  focused: boolean
-  node: SanityNode
-  parent: OverlayElementParent
-  type: string
-}) =>
+> = (
+  context: OverlayComponentResolverContext,
+) =>
   | T
   | Array<T>
   | {component: T; props?: Record<string, unknown>}
