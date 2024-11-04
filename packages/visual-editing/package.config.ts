@@ -15,4 +15,7 @@ export default defineConfig({
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],
     },
   },
+  babel: {reactCompiler: true},
+  // @ts-expect-error - add `target` to `pkg-utils` types
+  reactCompilerOptions: {target: '18'},
 })
