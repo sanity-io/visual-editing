@@ -401,13 +401,16 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
   const preventInsertDefault = !!element.getAttribute('data-sanity-drag-prevent-default')
 
   const documentHeightOverride = element.getAttribute('data-sanity-drag-document-height')
-  const groupHeightOverride = element.getAttribute('data-sanity-drag-group-height')
+  const groupHeightOverride = element.getAttribute('data-unstable_sanity-drag-group-height')
+  const scaleTargetOverride = element.getAttribute('data-unstable_sanity-drag-scale-target')
 
   let insertPosition: DragInsertPositionRects | null = null
 
   const initialMousePos = calcMousePos(mouseEvent)
 
-  const scaleTarget = document.body
+  const scaleTarget = scaleTargetOverride
+    ? (document.querySelector(scaleTargetOverride) as HTMLElement)
+    : document.body
 
   const {minYScaled, scaleFactor} = calcMinimapTransformValues(
     rects,
@@ -496,7 +499,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     }
 
     if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
-      window.dispatchEvent(new CustomEvent('sanity/dragApplyMinimap'))
+      window.dispatchEvent(new CustomEvent('unstable_sanity/dragApplyMinimap'))
 
       applyMinimap()
     }
@@ -541,7 +544,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     })
 
     if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
-      window.dispatchEvent(new CustomEvent('sanity/dragApplyMinimap'))
+      window.dispatchEvent(new CustomEvent('unstable_sanity/dragApplyMinimap'))
 
       setTimeout(() => {
         applyMinimap()
@@ -603,7 +606,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
         skeleton,
       })
 
-      window.dispatchEvent(new CustomEvent('sanity/dragResetMinimap'))
+      window.dispatchEvent(new CustomEvent('unstable_sanity/dragResetMinimap'))
 
       setTimeout(() => {
         resetMinimapWrapperTransform(
@@ -640,7 +643,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       groupRect: null,
     })
 
-    window.dispatchEvent(new CustomEvent('sanity/dragResetMinimap'))
+    window.dispatchEvent(new CustomEvent('unstable_sanity/dragResetMinimap'))
 
     setTimeout(() => {
       resetMinimapWrapperTransform(
