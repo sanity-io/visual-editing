@@ -56,7 +56,9 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
           setActor(actor)
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(error)
         // eslint-disable-next-line no-console
         console.warn(
           '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',
