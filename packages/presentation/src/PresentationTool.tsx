@@ -177,7 +177,7 @@ export default function PresentationTool(props: {
        * By this, we are making the key aware of the excluded perspectives, so it will invalidate the cache.
        * Should be ideally fixed in the cache key directly, not here.
        */
-      ([globalPerspective, ...excludedPerspectives].join(',') as `bundle.${string}`)
+      ([globalPerspective, 'exc-', ...excludedPerspectives].join(',') as `bundle.${string}`)
     : globalPerspective
 
   const viewport = useMemo(() => (params.viewport ? 'mobile' : 'desktop'), [params.viewport])
