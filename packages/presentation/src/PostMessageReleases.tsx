@@ -25,7 +25,7 @@ const PostMessageReleases: FC<PostMessageReleasesProps> = (props) => {
     }
 
     run()
-  }, [comlink, perspective, bundlesPerspective])
+  }, [comlink, perspective, bundlesPerspective, releases.data])
 
   return null
 }
