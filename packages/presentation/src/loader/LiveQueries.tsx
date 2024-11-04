@@ -205,10 +205,11 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
           projectId: projectId!,
           dataset: dataset!,
           perspective: activePerspective,
+          bundlePerspective: bundlesPerspective,
         },
       })
     }
-  }, [comlink, clientConfig, activePerspective])
+  }, [comlink, clientConfig, activePerspective, bundlesPerspective])
 
   const handleSyncTags = useEffectEvent((event: LiveEventMessage) => {
     const flattenedSyncTags = Array.from(syncTagsInUse).flat()

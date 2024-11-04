@@ -260,7 +260,8 @@ export type LoaderControllerMsg =
       data: {
         projectId: string
         dataset: string
-        perspective: ClientPerspective | `bundle.${string}` | `bundle.${string}`
+        perspective: ClientPerspective | `bundle.${string}`
+        bundlePerspective: string[]
       }
     }
   | {

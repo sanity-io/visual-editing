@@ -10,10 +10,13 @@ import {
 import SanityLiveClientComponent from '@sanity/next-loader/client-components/live'
 import SanityLiveStreamClientComponent from '@sanity/next-loader/client-components/live-stream'
 // import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import {
+  bundlePerspectiveCookieName,
+  perspectiveCookieName,
+} from '@sanity/preview-url-secret/constants'
 // import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import {cookies, draftMode} from 'next/headers.js'
-import {sanitizePerspective} from './utils'
+import {getBundlePerspective, sanitizePerspective} from './utils'
 
 /**
  * @public
@@ -160,6 +163,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
   const client = _client.withConfig({
     allowReconfigure: false,
     useCdn: false,
+    // @TODO should not be necessary to set the perspective to undefined
+    perspective: undefined,
   })
   const {token: originalToken} = client.config()
 
@@ -178,10 +183,12 @@ export function defineLive(config: DefineSanityLiveOptions): {
     perspective?: Omit<ClientPerspective, 'raw'>
     tag?: string
   }) {
-    const stega = _stega ?? (await draftMode()).isEnabled
+    const {isEnabled: isDraftModeEnabled} =
+      _perspective !== 'published' ? await draftMode() : {isEnabled: false}
+    const stega = _stega ?? isDraftModeEnabled
     const perspective =
       _perspective ??
-      ((await draftMode()).isEnabled
+      (isDraftModeEnabled
         ? (await cookies()).has(perspectiveCookieName)
           ? sanitizePerspective(
               (await cookies()).get(perspectiveCookieName)?.value,
@@ -190,10 +197,28 @@ export function defineLive(config: DefineSanityLiveOptions): {
           : 'previewDrafts'
         : 'published')
 
+    // let rawBundlePerspective = getBundlePerspective('published', [])
+    let rawBundlePerspective: string[] = []
+    if (isDraftModeEnabled && (await cookies()).has(bundlePerspectiveCookieName)) {
+      try {
+        rawBundlePerspective = JSON.parse(
+          (await cookies()).get(bundlePerspectiveCookieName)?.value || '[]',
+        )
+      } catch {
+        // ignore
+      }
+    }
+    const bundlePerspective = getBundlePerspective(
+      perspective as ClientPerspective,
+      rawBundlePerspective,
+    )
+
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
-      perspective: perspective as ClientPerspective,
+      // perspective: perspective as ClientPerspective,
+      perspective: undefined,
+      bundlePerspective,
       stega: false,
       returnQuery: false,
       next: {
@@ -207,7 +232,10 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
-      perspective: perspective as ClientPerspective,
+      // perspective: perspective as ClientPerspective,
+      // perspective: perspective as ClientPerspective,
+      perspective: undefined,
+      bundlePerspective,
       stega,
       token: perspective === 'previewDrafts' && serverToken ? serverToken : originalToken,
       next: {
