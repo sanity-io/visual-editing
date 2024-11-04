@@ -400,7 +400,7 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
   const preventInsertDefault = !!element.getAttribute('data-sanity-drag-prevent-default')
 
-  const documentHeightOverride = element.getAttribute('data-sanity-drag-document-height')
+  const documentHeightOverride = element.getAttribute('data-unstable_sanity-drag-document-height')
   const groupHeightOverride = element.getAttribute('data-unstable_sanity-drag-group-height')
 
   let insertPosition: DragInsertPositionRects | null = null
