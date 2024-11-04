@@ -402,15 +402,12 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
   const documentHeightOverride = element.getAttribute('data-sanity-drag-document-height')
   const groupHeightOverride = element.getAttribute('data-unstable_sanity-drag-group-height')
-  const scaleTargetOverride = element.getAttribute('data-unstable_sanity-drag-scale-target')
 
   let insertPosition: DragInsertPositionRects | null = null
 
   const initialMousePos = calcMousePos(mouseEvent)
 
-  const scaleTarget = scaleTargetOverride
-    ? (document.querySelector(scaleTargetOverride) as HTMLElement)
-    : document.body
+  const scaleTarget = document.body
 
   const {minYScaled, scaleFactor} = calcMinimapTransformValues(
     rects,
