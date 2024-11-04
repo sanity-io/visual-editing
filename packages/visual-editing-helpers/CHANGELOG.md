@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.29](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.28...visual-editing-helpers-v0.6.29) (2024-11-04)
+
+
+### Bug Fixes
+
+* **presentation:** remove media from preview snapshot payload ([#2079](https://github.com/sanity-io/visual-editing/issues/2079)) ([f1d04b3](https://github.com/sanity-io/visual-editing/commit/f1d04b396abbba1879c1f1f0b605269e94f4400f))
+* **visual-editing-helpers:** include connection id in handshake payload for backwards compatibility ([#2078](https://github.com/sanity-io/visual-editing/issues/2078)) ([529fb5b](https://github.com/sanity-io/visual-editing/commit/529fb5bd3be2c298c2e394e16b7ea05eacab8486))
+
 ## [0.6.28](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.27...visual-editing-helpers-v0.6.28) (2024-10-28)
 
 

@@ -12,6 +12,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.17.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.17.7...presentation-v1.17.8) (2024-11-04)
+
+
+### Bug Fixes
+
+* **presentation:** remove media from preview snapshot payload ([#2079](https://github.com/sanity-io/visual-editing/issues/2079)) ([f1d04b3](https://github.com/sanity-io/visual-editing/commit/f1d04b396abbba1879c1f1f0b605269e94f4400f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.29
+
 ## [1.17.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.17.6...presentation-v1.17.7) (2024-10-28)
 
 
