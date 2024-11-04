@@ -498,7 +498,9 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
     if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
       window.dispatchEvent(new CustomEvent('unstable_sanity/dragApplyMinimap'))
 
-      applyMinimap()
+      setTimeout(() => {
+        applyMinimap()
+      }, 50)
     }
   }
 
