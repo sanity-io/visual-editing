@@ -2,7 +2,14 @@ import type {SchemaNode, SchemaUnionNode} from '@repo/visual-editing-helpers'
 import {AddIcon} from '@sanity/icons'
 import type {SchemaType} from '@sanity/types'
 import {Button, Flex} from '@sanity/ui'
-import {useCallback, useRef, useState, type FunctionComponent, type MouseEvent} from 'react'
+import {
+  useCallback,
+  useRef,
+  useState,
+  type FunctionComponent,
+  type HTMLProps,
+  type MouseEvent,
+} from 'react'
 import styled from 'styled-components'
 import type {ElementNode, OverlayComponent} from '../../types'
 import {useDocuments} from '../../ui/optimistic-state/useDocuments'
@@ -11,7 +18,6 @@ import {InsertMenu} from './InsertMenu'
 
 const AddButton = styled(Button)`
   position: relative;
-
   transform: var(--add-button-position);
 
   --add-button-position: translateY(0);
@@ -30,45 +36,29 @@ const AddButton = styled(Button)`
 `
 const HoverAreaRoot = styled(Flex)`
   pointer-events: all;
-  top: var(--hover-area-top);
-  right: var(--hover-area-right);
-  bottom: var(--hover-area-bottom);
-  left: var(--hover-area-left);
   height: var(--hover-area-height);
-  position: absolute;
   width: var(--hover-area-width);
 
-  --hover-area-top: auto;
-  --hover-area-right: auto;
-  --hover-area-bottom: auto;
-  --hover-area-left: auto;
   --hover-area-height: 100%;
   --hover-area-width: 100%;
-  &[data-position='top'] {
-    --hover-area-top: 0;
-    --hover-area-height: 40px;
-  }
-  &[data-position='right'] {
-    --hover-area-right: 0;
-    --hover-area-width: 40px;
-  }
+  &[data-position='top'],
   &[data-position='bottom'] {
-    --hover-area-bottom: 0;
-    --hover-area-height: 40px;
+    --hover-area-height: 48px;
   }
+  &[data-position='right'],
   &[data-position='left'] {
-    --hover-area-left: 0;
-    --hover-area-width: 40px;
+    --hover-area-width: 48px;
   }
 `
 
 const HoverArea: FunctionComponent<{
   element: ElementNode
+  hoverAreaExtent: HTMLProps<HTMLDivElement>['height' | 'width']
   node: SchemaUnionNode
-  onAddUnion: (position: 'top' | 'right' | 'bottom' | 'left', name: string) => void
+  onAddUnion: (insertPosition: 'before' | 'after', name: string) => void
   position: 'top' | 'right' | 'bottom' | 'left'
 }> = (props) => {
-  const {element, node, onAddUnion, position} = props
+  const {element, hoverAreaExtent, node, onAddUnion, position} = props
   const [showButton, setShowButton] = useState(false)
   const onEnter = useCallback(() => {
     setShowButton(true)
@@ -104,7 +94,8 @@ const HoverArea: FunctionComponent<{
   const onSelect = useCallback(
     (schemaType: SchemaType) => {
       setMenuVisible(false)
-      onAddUnion(position, schemaType.name)
+      const insertPosition = position === 'top' || position === 'left' ? 'before' : 'after'
+      onAddUnion(insertPosition, schemaType.name)
     },
     [onAddUnion, position],
   )
@@ -114,29 +105,29 @@ const HoverArea: FunctionComponent<{
 
   return (
     <HoverAreaRoot
+      align={align}
       data-position={position}
       data-sanity-overlay-element
-      align={align}
       justify={justify}
       onClick={bubbleEvent}
       onContextMenu={bubbleEvent}
       onMouseDown={bubbleEvent}
-      onMouseUp={bubbleEvent}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
+      onMouseUp={bubbleEvent}
       ref={ref}
+      style={{
+        [position === 'top' || position === 'bottom' ? 'height' : 'width']: hoverAreaExtent,
+      }}
     >
       {(showButton || menuVisible) && (
         <AddButton
           ref={setReferenceElement}
           icon={AddIcon}
           mode={'ghost'}
-          onClick={() => {
-            setMenuVisible((visible) => !visible)
-          }}
+          onClick={() => setMenuVisible((visible) => !visible)}
           radius={'full'}
           selected={menuVisible}
-          size={3}
         />
       )}
       {menuVisible && referenceElement && (
@@ -152,38 +143,49 @@ const HoverArea: FunctionComponent<{
 }
 
 export const UnionInsertMenuOverlay: OverlayComponent<
-  {direction: 'horizontal' | 'vertical'},
+  {
+    direction?: 'horizontal' | 'vertical'
+    hoverAreaExtent?: HTMLProps<HTMLDivElement>['height' | 'width']
+  },
   SchemaUnionNode<SchemaNode>
 > = (props) => {
-  const {element, direction, node, parent} = props
+  const {direction = 'vertical', element, hoverAreaExtent, node, parent} = props
 
   const {getDocument} = useDocuments()
 
   const onAddUnion = useCallback(
-    (position: 'top' | 'right' | 'bottom' | 'left', name: string) => {
+    (insertPosition: 'before' | 'after', name: string) => {
       const doc = getDocument(node.id)
-      const insertPosition = position === 'top' || position === 'left' ? 'before' : 'after'
       const patches = getArrayInsertPatches(node, name, insertPosition)
       doc.patch(patches)
     },
     [getDocument, node],
   )
 
+  if (!parent) return null
+
   return (
-    <>
+    <Flex
+      height="fill"
+      width="fill"
+      direction={direction === 'horizontal' ? 'row' : 'column'}
+      justify="space-between"
+    >
       <HoverArea
         element={element}
+        hoverAreaExtent={hoverAreaExtent}
         node={parent}
         onAddUnion={onAddUnion}
         position={direction === 'horizontal' ? 'left' : 'top'}
       />
       <HoverArea
         element={element}
+        hoverAreaExtent={hoverAreaExtent}
         node={parent}
         onAddUnion={onAddUnion}
         position={direction === 'horizontal' ? 'right' : 'bottom'}
       />
-    </>
+    </Flex>
   )
 }
 
