@@ -19,7 +19,6 @@ import type {
   HTMLAttributes,
   PropsWithChildren,
   ReactElement,
-  ReactNode,
 } from 'react'
 
 export type {
