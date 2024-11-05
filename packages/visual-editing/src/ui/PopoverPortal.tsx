@@ -12,10 +12,13 @@ const PortalContainer = styled.div`
   width: 100%;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:before {
     content: '';
     display: block;
-    height: 101%;
+    height: calc(100% + 1px);
     position: absolute;
     top: 0;
     width: 100%;
@@ -33,12 +36,13 @@ const PortalBackground = styled.div`
 export const PopoverPortal: FunctionComponent<{
   children: React.ReactNode
   onDismiss?: () => void
+  setBoundaryElement?: (element: HTMLDivElement) => void
 }> = (props) => {
-  const {children, onDismiss} = props
+  const {children, onDismiss, setBoundaryElement} = props
 
   return (
     <Portal>
-      <PortalContainer data-sanity-overlay-element>
+      <PortalContainer data-sanity-overlay-element ref={setBoundaryElement}>
         <PortalBackground onClickCapture={onDismiss} />
         {children}
       </PortalContainer>

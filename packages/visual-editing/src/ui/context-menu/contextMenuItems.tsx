@@ -3,7 +3,6 @@ import type {
   SchemaArrayItem,
   SchemaNode,
   SchemaUnionNode,
-  SchemaUnionOption,
 } from '@repo/visual-editing-helpers'
 import {
   ArrowDownIcon,
@@ -16,8 +15,11 @@ import {
   SortIcon,
   UnpublishIcon,
 } from '@sanity/icons'
+import type {SchemaType} from '@sanity/types'
+import {MenuGroup} from '@sanity/ui'
+import {type FunctionComponent} from 'react'
+import {InsertMenu} from '../../overlay-components/components/InsertMenu'
 import type {ContextMenuNode, OverlayElementField, OverlayElementParent} from '../../types'
-import {getNodeIcon} from '../../util/getNodeIcon'
 import {
   getArrayDuplicatePatches,
   getArrayInsertPatches,
@@ -182,6 +184,47 @@ function getContextMenuArrayItems(context: {
   return items
 }
 
+const InsertMenuWrapper: FunctionComponent<{
+  label: string
+  onSelect: (schemaType: SchemaType) => void
+  parent: SchemaUnionNode<SchemaNode>
+  width: number | undefined
+  boundaryElement: HTMLDivElement | null
+}> = (props) => {
+  const {label, parent, width, onSelect, boundaryElement} = props
+
+  return (
+    <MenuGroup
+      fontSize={1}
+      icon={InsertBelowIcon}
+      padding={2}
+      popover={{
+        arrow: false,
+        constrainSize: true,
+        floatingBoundary: boundaryElement,
+        padding: 0,
+        placement: 'right-start',
+        fallbackPlacements: [
+          'left-start',
+          'right',
+          'left',
+          'right-end',
+          'left-end',
+          'bottom',
+          'top',
+        ],
+        preventOverflow: true,
+        width,
+        __unstable_margins: [4, 4, 4, 4],
+      }}
+      space={2}
+      text={label}
+    >
+      <InsertMenu node={parent} onSelect={onSelect} />
+    </MenuGroup>
+  )
+}
+
 function getContextMenuUnionItems(context: {
   doc: OptimisticDocument
   node: SanityNode
@@ -193,35 +236,45 @@ function getContextMenuUnionItems(context: {
   items.push(...getRemoveItems(context))
   items.push(...getMoveItems(context))
 
+  const insertMenuOptions = parent.options?.insertMenu || {}
+  const width = insertMenuOptions.views?.some((view) => view.name === 'grid') ? 0 : undefined
+
   items.push({
-    type: 'group',
-    label: 'Insert before',
-    icon: InsertAboveIcon,
-    items: (
-      parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
-    ).map((t) => {
-      return {
-        type: 'action' as const,
-        icon: getNodeIcon(t),
-        label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
-        action: getArrayInsertAction(node, doc, t.name, 'before'),
+    type: 'custom',
+    component: ({boundaryElement}) => {
+      const onSelect = (schemaType: SchemaType) => {
+        const action = getArrayInsertAction(node, doc, schemaType.name, 'before')
+        action()
       }
-    }),
+      return (
+        <InsertMenuWrapper
+          label="Insert before"
+          onSelect={onSelect}
+          parent={parent}
+          width={width}
+          boundaryElement={boundaryElement}
+        />
+      )
+    },
   })
+
   items.push({
-    type: 'group',
-    label: 'Insert after',
-    icon: InsertBelowIcon,
-    items: (
-      parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
-    ).map((t) => {
-      return {
-        type: 'action' as const,
-        label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
-        icon: getNodeIcon(t),
-        action: getArrayInsertAction(node, doc, t.name, 'after'),
+    type: 'custom',
+    component: ({boundaryElement}) => {
+      const onSelect = (schemaType: SchemaType) => {
+        const action = getArrayInsertAction(node, doc, schemaType.name, 'after')
+        action()
       }
-    }),
+      return (
+        <InsertMenuWrapper
+          label="Insert after"
+          onSelect={onSelect}
+          parent={parent}
+          width={width}
+          boundaryElement={boundaryElement}
+        />
+      )
+    },
   })
 
   return items

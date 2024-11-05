@@ -10,7 +10,7 @@ import {
   Text,
   type PopoverMargins,
 } from '@sanity/ui'
-import {useCallback, useMemo, type FunctionComponent} from 'react'
+import {useCallback, useMemo, useState, type FunctionComponent} from 'react'
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {useDocuments} from '../optimistic-state/useDocuments'
@@ -20,8 +20,12 @@ import {getContextMenuItems} from './contextMenuItems'
 
 const POPOVER_MARGINS: PopoverMargins = [-4, 4, -4, 4]
 
-function ContextMenuItem(props: {node: ContextMenuNode; onDismiss?: () => void}) {
-  const {node, onDismiss} = props
+function ContextMenuItem(props: {
+  node: ContextMenuNode
+  onDismiss?: () => void
+  boundaryElement: HTMLDivElement | null
+}) {
+  const {node, onDismiss, boundaryElement} = props
 
   const onClick = useCallback(() => {
     if (node.type === 'action') {
@@ -55,10 +59,22 @@ function ContextMenuItem(props: {node: ContextMenuNode; onDismiss?: () => void})
         fontSize={1}
         icon={node.icon}
         padding={2}
+        // menu={{
+        //   padding: 0,
+        // }}
         popover={{
           arrow: false,
           constrainSize: true,
           placement: 'right-start',
+          fallbackPlacements: [
+            'left-start',
+            'right',
+            'left',
+            'right-end',
+            'left-end',
+            'bottom',
+            'top',
+          ],
           preventOverflow: true,
           __unstable_margins: POPOVER_MARGINS,
         }}
@@ -66,11 +82,22 @@ function ContextMenuItem(props: {node: ContextMenuNode; onDismiss?: () => void})
         text={node.label}
       >
         {node.items.map((item, itemIndex) => (
-          <ContextMenuItem key={itemIndex} node={item} />
+          <ContextMenuItem
+            key={itemIndex}
+            node={item}
+            onDismiss={onDismiss}
+            boundaryElement={boundaryElement}
+          />
         ))}
       </MenuGroup>
     )
   }
+
+  if (node.type === 'custom') {
+    const {component: Component} = node
+    return <Component boundaryElement={boundaryElement} />
+  }
+
   return null
 }
 
@@ -80,6 +107,8 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     onDismiss,
     position: {x, y},
   } = props
+
+  const [boundaryElement, setBoundaryElement] = useState<HTMLDivElement | null>(null)
 
   const {getField} = useSchema()
   const {getDocument} = useDocuments()
@@ -114,13 +143,12 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
   }, [x, y])
 
   return (
-    <PopoverPortal onDismiss={onDismiss}>
+    <PopoverPortal setBoundaryElement={setBoundaryElement} onDismiss={onDismiss}>
       <Popover
         __unstable_margins={POPOVER_MARGINS}
         arrow={false}
         open
         placement="right-start"
-        style={{pointerEvents: 'all'}}
         referenceElement={contextMenuReferenceElement}
         content={
           <Menu style={{minWidth: 120, maxWidth: 160}}>
@@ -139,7 +167,12 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
             <MenuDivider />
 
             {items.map((item, i) => (
-              <ContextMenuItem key={i} node={item} onDismiss={onDismiss} />
+              <ContextMenuItem
+                key={i}
+                node={item}
+                onDismiss={onDismiss}
+                boundaryElement={boundaryElement}
+              />
             ))}
           </Menu>
         }

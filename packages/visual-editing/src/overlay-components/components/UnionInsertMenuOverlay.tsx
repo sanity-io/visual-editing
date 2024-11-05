@@ -14,7 +14,7 @@ import styled from 'styled-components'
 import type {ElementNode, OverlayComponent} from '../../types'
 import {useDocuments} from '../../ui/optimistic-state/useDocuments'
 import {getArrayInsertPatches} from '../../util/mutations'
-import {InsertMenu} from './InsertMenu'
+import {InsertMenuPopover} from './InsertMenu'
 
 const AddButton = styled(Button)`
   position: relative;
@@ -131,7 +131,7 @@ const HoverArea: FunctionComponent<{
         />
       )}
       {menuVisible && referenceElement && (
-        <InsertMenu
+        <InsertMenuPopover
           node={node}
           onDismiss={dismissPortal}
           referenceElement={referenceElement}

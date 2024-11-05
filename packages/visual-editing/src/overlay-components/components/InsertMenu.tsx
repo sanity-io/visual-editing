@@ -18,13 +18,11 @@ const labels = {
 
 export interface InsertMenuProps {
   node: SchemaUnionNode
-  onDismiss: () => void
   onSelect: (schemaType: SchemaType) => void
-  referenceElement: HTMLElement
 }
 
 export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
-  const {node, onDismiss, onSelect, referenceElement} = props
+  const {node, onSelect} = props
 
   const insertMenuOptions = node.options?.insertMenu || {}
 
@@ -40,13 +38,7 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
     return view
   }) satisfies InsertMenuOptions['views']
 
-  // If the grid view is not enabled, the popover should fit the content. If it
-  // is enabled, the popover width needs to be 'forced' to some arbitrary amount
-  // to prevent the grid from collapsing to a single column. The '0' size allows
-  // for a two column layout
-  const width = insertMenuOptions.views?.some((view) => view.name === 'grid') ? 0 : undefined
-
-  const popoverContent = (
+  return (
     <SanityInsertMenu
       {...insertMenuOptions}
       labels={labels}
@@ -59,6 +51,27 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
       views={views}
     />
   )
+}
+
+export interface InsertMenuPopoverProps extends InsertMenuProps {
+  // node: SchemaUnionNode
+  onDismiss: () => void
+  // onSelect: (schemaType: SchemaType) => void
+  referenceElement?: HTMLElement | null
+}
+
+export const InsertMenuPopover: FunctionComponent<InsertMenuPopoverProps> = (props) => {
+  const {node, onDismiss, onSelect, referenceElement} = props
+
+  const popoverContent = <InsertMenu node={node} onSelect={onSelect} />
+
+  const insertMenuOptions = node.options?.insertMenu || {}
+
+  // If the grid view is not enabled, the popover should fit the content. If it
+  // is enabled, the popover width needs to be 'forced' to some arbitrary amount
+  // to prevent the grid from collapsing to a single column. The '0' size allows
+  // for a two column layout
+  const width = insertMenuOptions.views?.some((view) => view.name === 'grid') ? 0 : undefined
 
   return (
     <PopoverPortal onDismiss={onDismiss}>

@@ -19,6 +19,7 @@ import type {
   HTMLAttributes,
   PropsWithChildren,
   ReactElement,
+  ReactNode,
 } from 'react'
 
 export type {
@@ -464,7 +465,19 @@ export interface ContextMenuGroupNode {
 /**
  * @internal
  */
-export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | ContextMenuGroupNode
+export interface ContextMenuCustomNode {
+  type: 'custom'
+  component: ComponentType<{boundaryElement: HTMLDivElement | null}>
+}
+
+/**
+ * @internal
+ */
+export type ContextMenuNode =
+  | ContextMenuDividerNode
+  | ContextMenuActionNode
+  | ContextMenuGroupNode
+  | ContextMenuCustomNode
 
 /**
  * @public
