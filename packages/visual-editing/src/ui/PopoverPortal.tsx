@@ -1,5 +1,5 @@
 import {Portal} from '@sanity/ui'
-import {type FunctionComponent} from 'react'
+import {type FunctionComponent, type MouseEvent} from 'react'
 import {styled} from 'styled-components'
 
 const PortalContainer = styled.div`
@@ -40,9 +40,17 @@ export const PopoverPortal: FunctionComponent<{
 }> = (props) => {
   const {children, onDismiss, setBoundaryElement} = props
 
+  // Prevent the event from propagating to the window, so that the controller's
+  // `handleBlur` listener is not triggered. This is needed to prevent the
+  // context menu from being dismissed when some click causes parent elements to
+  // re-render, and the data-attribute method of preventing propagation fails.
+  const handleClick = (event: MouseEvent) => {
+    event.stopPropagation()
+  }
+
   return (
     <Portal>
-      <PortalContainer data-sanity-overlay-element ref={setBoundaryElement}>
+      <PortalContainer data-sanity-overlay-element ref={setBoundaryElement} onClick={handleClick}>
         <PortalBackground onClickCapture={onDismiss} />
         {children}
       </PortalContainer>
