@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.3...visual-editing-v2.4.4) (2024-11-05)
+
+
+### Bug Fixes
+
+* dnd custom attrs and events ([#2085](https://github.com/sanity-io/visual-editing/issues/2085)) ([3b3b347](https://github.com/sanity-io/visual-editing/commit/3b3b34716fbe1b5c175c5fffc6bb8a4b8bb0e253))
+
 ## [2.4.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.2...visual-editing-v2.4.3) (2024-11-04)
 
 
