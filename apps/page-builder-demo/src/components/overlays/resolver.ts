@@ -4,7 +4,7 @@ import {OverlayComponentResolver} from '@sanity/visual-editing'
 import {
   defineOverlayComponent,
   UnionInsertMenuOverlay,
-} from '@sanity/visual-editing/overlay-components'
+} from '@sanity/visual-editing/unstable_overlay-components'
 import {ExcitingTitleControl} from './ExcitingTitleControl'
 import {ProductModelRotationControl} from './ProductModelRotationControl'
 
