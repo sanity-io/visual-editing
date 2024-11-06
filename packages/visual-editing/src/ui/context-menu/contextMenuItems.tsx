@@ -3,6 +3,7 @@ import type {
   SchemaArrayItem,
   SchemaNode,
   SchemaUnionNode,
+  SchemaUnionOption,
 } from '@repo/visual-editing-helpers'
 import {
   ArrowDownIcon,
@@ -20,6 +21,7 @@ import {MenuGroup} from '@sanity/ui'
 import {type FunctionComponent} from 'react'
 import {InsertMenu} from '../../overlay-components/components/InsertMenu'
 import type {ContextMenuNode, OverlayElementField, OverlayElementParent} from '../../types'
+import {getNodeIcon} from '../../util/getNodeIcon'
 import {
   getArrayDuplicatePatches,
   getArrayInsertPatches,
@@ -236,46 +238,79 @@ function getContextMenuUnionItems(context: {
   items.push(...getRemoveItems(context))
   items.push(...getMoveItems(context))
 
-  const insertMenuOptions = parent.options?.insertMenu || {}
-  const width = insertMenuOptions.views?.some((view) => view.name === 'grid') ? 0 : undefined
+  if (parent.options?.insertMenu) {
+    const insertMenuOptions = parent.options.insertMenu || {}
+    const width = insertMenuOptions.views?.some((view) => view.name === 'grid') ? 0 : undefined
 
-  items.push({
-    type: 'custom',
-    component: ({boundaryElement}) => {
-      const onSelect = (schemaType: SchemaType) => {
-        const action = getArrayInsertAction(node, doc, schemaType.name, 'before')
-        action()
-      }
-      return (
-        <InsertMenuWrapper
-          label="Insert before"
-          onSelect={onSelect}
-          parent={parent}
-          width={width}
-          boundaryElement={boundaryElement}
-        />
-      )
-    },
-  })
+    items.push({
+      type: 'custom',
+      component: ({boundaryElement}) => {
+        const onSelect = (schemaType: SchemaType) => {
+          const action = getArrayInsertAction(node, doc, schemaType.name, 'before')
+          action()
+        }
+        return (
+          <InsertMenuWrapper
+            label="Insert before"
+            onSelect={onSelect}
+            parent={parent}
+            width={width}
+            boundaryElement={boundaryElement}
+          />
+        )
+      },
+    })
 
-  items.push({
-    type: 'custom',
-    component: ({boundaryElement}) => {
-      const onSelect = (schemaType: SchemaType) => {
-        const action = getArrayInsertAction(node, doc, schemaType.name, 'after')
-        action()
-      }
-      return (
-        <InsertMenuWrapper
-          label="Insert after"
-          onSelect={onSelect}
-          parent={parent}
-          width={width}
-          boundaryElement={boundaryElement}
-        />
-      )
-    },
-  })
+    items.push({
+      type: 'custom',
+      component: ({boundaryElement}) => {
+        const onSelect = (schemaType: SchemaType) => {
+          const action = getArrayInsertAction(node, doc, schemaType.name, 'after')
+          action()
+        }
+        return (
+          <InsertMenuWrapper
+            label="Insert after"
+            onSelect={onSelect}
+            parent={parent}
+            width={width}
+            boundaryElement={boundaryElement}
+          />
+        )
+      },
+    })
+  } else {
+    items.push({
+      type: 'group',
+      label: 'Insert before',
+      icon: InsertAboveIcon,
+      items: (
+        parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
+      ).map((t) => {
+        return {
+          type: 'action' as const,
+          icon: getNodeIcon(t),
+          label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
+          action: getArrayInsertAction(node, doc, t.name, 'before'),
+        }
+      }),
+    })
+    items.push({
+      type: 'group',
+      label: 'Insert after',
+      icon: InsertBelowIcon,
+      items: (
+        parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
+      ).map((t) => {
+        return {
+          type: 'action' as const,
+          label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
+          icon: getNodeIcon(t),
+          action: getArrayInsertAction(node, doc, t.name, 'after'),
+        }
+      }),
+    })
+  }
 
   return items
 }
