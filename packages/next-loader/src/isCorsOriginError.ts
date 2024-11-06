@@ -4,3 +4,5 @@ import {CorsOriginError} from '@sanity/client'
 export function isCorsOriginError(error: unknown): error is CorsOriginError {
   return error instanceof CorsOriginError
 }
+
+export type {CorsOriginError}
