@@ -1,5 +1,8 @@
 import path from 'node:path'
-import sanityPkg from 'sanity/package.json' assert { type: 'json' }
+
+const { default: sanityPkg } = await import('sanity/package.json', {
+  with: { type: 'json' },
+})
 
 function requireResolve(id) {
   return import.meta.resolve(id).replace('file://', '')
