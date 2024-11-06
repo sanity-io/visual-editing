@@ -2,6 +2,7 @@
 import type {SanityDocument} from '@sanity/client'
 import {createIfNotExists, patch, type Mutation, type NodePatchList} from '@sanity/mutate'
 import {get as getAtPath} from '@sanity/util/paths'
+import {useCallback} from 'react'
 import {getDraftId, getPublishedId} from '../../util/documents'
 import type {MutatorActor} from './context'
 import {isEmptyActor} from './context'
@@ -160,33 +161,39 @@ export function useDocuments(): {
 } {
   const actor = useOptimisticActor() as MutatorActor
 
-  const getDocument: DocumentsGet = <T extends Record<string, any>>(documentId: string) => {
-    return {
-      id: documentId,
-      commit: createDocumentCommit(documentId, actor),
-      get: createDocumentGet(documentId, actor),
-      patch: createDocumentPatch<T>(documentId, actor),
-    }
-  }
-
-  const mutateDocument: DocumentsMutate = (id, mutations, options) => {
-    const {draftDoc} = getDocumentsAndSnapshot(id, actor)
-    const {commit = true} = options || {}
-
-    draftDoc.send({
-      type: 'mutate',
-      mutations: mutations,
-    })
-
-    if (commit) {
-      if (typeof commit === 'object' && 'debounce' in commit) {
-        const debouncedCommit = debounce(() => draftDoc.send({type: 'submit'}), commit.debounce)
-        debouncedCommit()
-      } else {
-        draftDoc.send({type: 'submit'})
+  const getDocument: DocumentsGet = useCallback(
+    <T extends Record<string, any>>(documentId: string) => {
+      return {
+        id: documentId,
+        commit: createDocumentCommit(documentId, actor),
+        get: createDocumentGet(documentId, actor),
+        patch: createDocumentPatch<T>(documentId, actor),
       }
-    }
-  }
+    },
+    [actor],
+  )
+
+  const mutateDocument: DocumentsMutate = useCallback(
+    (id, mutations, options) => {
+      const {draftDoc} = getDocumentsAndSnapshot(id, actor)
+      const {commit = true} = options || {}
+
+      draftDoc.send({
+        type: 'mutate',
+        mutations: mutations,
+      })
+
+      if (commit) {
+        if (typeof commit === 'object' && 'debounce' in commit) {
+          const debouncedCommit = debounce(() => draftDoc.send({type: 'submit'}), commit.debounce)
+          debouncedCommit()
+        } else {
+          draftDoc.send({type: 'submit'})
+        }
+      }
+    },
+    [actor],
+  )
 
   return {getDocument, mutateDocument}
 }
