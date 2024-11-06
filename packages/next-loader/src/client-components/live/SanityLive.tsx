@@ -12,7 +12,7 @@ import {useRouter} from 'next/navigation.js'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {setEnvironment, setPerspective} from '../../hooks/context'
-import {isCorsOriginError} from './isCorsOriginError'
+import {isCorsOriginError} from '../../isCorsOriginError'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})

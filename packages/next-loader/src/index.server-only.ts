@@ -32,3 +32,5 @@ export type {
   DefinedSanityLiveProps,
   DefinedSanityLiveStreamType,
 }
+
+export * from './isCorsOriginError'
