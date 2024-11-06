@@ -4,6 +4,7 @@ import {
   type InitializedClientConfig,
   type LiveEventMessage,
   type LiveEventRestart,
+  type LiveEventWelcome,
 } from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
 import dynamic from 'next/dynamic'
@@ -11,6 +12,7 @@ import {useRouter} from 'next/navigation.js'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {setEnvironment, setPerspective} from '../../hooks/context'
+import {isCorsOriginError} from './isCorsOriginError'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
@@ -38,6 +40,11 @@ export interface SanityLiveProps
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
   tag: string
+  /**
+   * Handle errors from the Live Events subscription.
+   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
+   */
+  onError?: (error: unknown) => void
 }
 
 // @TODO these should be reusable utils in visual-editing-helpers
@@ -45,6 +52,20 @@ export interface SanityLiveProps
 const isMaybePreviewIframe = () => window !== window.parent
 const isMaybePreviewWindow = () => !!window.opener
 const isMaybePresentation = () => isMaybePreviewIframe() || isMaybePreviewWindow()
+
+const handleError = (error: unknown) => {
+  /* eslint-disable no-console */
+  if (isCorsOriginError(error)) {
+    console.warn(
+      `Sanity Live is unable to connect to the Sanity API as it's not in the list over allowed origins for your project.`,
+      error.addOriginUrl && `Add it here:`,
+      error.addOriginUrl?.toString(),
+    )
+  } else {
+    console.error(error)
+  }
+  /* eslint-enable no-console */
+}
 
 /**
  * @public
@@ -65,31 +86,9 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     refreshOnFocus = typeof window === 'undefined' ? true : window.self === window.top,
     refreshOnReconnect = true,
     tag,
+    onError = handleError,
   } = props
 
-  const [error, setError] = useState<unknown>(null)
-  // Rethrow error to the nearest error boundary
-  if (error) {
-    throw error
-  }
-
-  useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
-      console.info(
-        'Sanity is live with',
-        token
-          ? 'automatic revalidation for draft content changes as well as published content'
-          : draftModeEnabled
-            ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
-            : 'automatic revalidation of published content',
-      )
-    }
-  }, [draftModeEnabled, token])
-
-  /**
-   * 1. Handle Live Events and call revalidateTag when needed
-   */
   const client = useMemo(
     () =>
       createClient({
@@ -107,98 +106,45 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   )
 
   /**
-   * 2. Validate CORS before setting up the Event Source for the Server Sent Events
-   */
-  useEffect(() => {
-    // @TODO move this validation logic to `@sanity/client`
-    // and include CORS detection https://github.com/sanity-io/sanity/blob/9848f2069405e5d06f82a61a902f141e53099493/packages/sanity/src/core/store/_legacy/authStore/createAuthStore.ts#L92-L102
-    const path = client.getDataUrl('live/events')
-    const url = new URL(client.getUrl(path, false))
-    const preflightTag = [requestTagPrefix, tag, 'cors-preflight'].filter(Boolean).join('.')
-    if (preflightTag) {
-      url.searchParams.set('tag', preflightTag)
-    }
-    if (token) {
-      url.searchParams.set('includeDrafts', 'true')
-    }
-
-    const controller = new AbortController()
-    async function validateConnection(signal: AbortSignal) {
-      const response = await fetch(url, {
-        signal,
-        headers: token
-          ? {
-              authorization: `Bearer ${token}`,
-            }
-          : undefined,
-      })
-
-      if (!response.ok) {
-        if (response.status === 401 && token) {
-          throw new Error(`Failed to connect to '${url}', invalid browser token`, {
-            cause: response.statusText,
-          })
-        } else {
-          throw new Error(`Failed to connect to '${url}': ${response.status}`, {
-            cause: response.statusText,
-          })
-        }
-      }
-      const reader = response.body?.getReader()
-      if (!reader) {
-        throw new Error('Failed to get stream reader')
-      }
-
-      try {
-        // Read the first chunk of data
-        const {done, value} = await reader.read()
-
-        // If we've received any data, or the stream isn't done, consider it valid
-        if (done || !value) {
-          throw new Error('Stream ended without data')
-        }
-      } finally {
-        // Cancel the reader and abort the fetch
-        reader.cancel()
-        controller.abort()
-      }
-    }
-    validateConnection(controller.signal).catch((error) => {
-      // Ignore AbortError, as it's expected when we cancel the fetch
-      if (error?.name !== 'AbortError') {
-        // eslint-disable-next-line no-console
-        console.error('Error validating EventSource URL:', error)
-        setError(error)
-      }
-    })
-    return () => controller.abort()
-  }, [tag, client, requestTagPrefix, token])
-
-  /**
-   * 3. Handle Live Events and call revalidateTag or router.refresh when needed
+   * 1. Handle Live Events and call revalidateTag or router.refresh when needed
    */
   const router = useRouter()
-  const handleLiveEvent = useEffectEvent((event: LiveEventMessage | LiveEventRestart) => {
-    if (event.type === 'message') {
-      revalidateSyncTags(event.tags)
-    } else if (event.type === 'restart') {
-      router.refresh()
-    }
-  })
+  const handleLiveEvent = useEffectEvent(
+    (event: LiveEventMessage | LiveEventRestart | LiveEventWelcome) => {
+      if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
+        // eslint-disable-next-line no-console
+        console.info(
+          'Sanity is live with',
+          token
+            ? 'automatic revalidation for draft content changes as well as published content'
+            : draftModeEnabled
+              ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
+              : 'automatic revalidation of published content',
+        )
+      } else if (event.type === 'message') {
+        revalidateSyncTags(event.tags)
+      } else if (event.type === 'restart') {
+        router.refresh()
+      }
+    },
+  )
   useEffect(() => {
     const subscription = client.live.events({includeDrafts: !!token, tag}).subscribe({
       next: (event) => {
-        if (event.type === 'message' || event.type === 'restart') {
+        if (event.type === 'message' || event.type === 'restart' || event.type === 'welcome') {
           handleLiveEvent(event)
         }
       },
-      error: setError,
+      error: (err: unknown) => {
+        // console.error('What?', err)
+        onError(err)
+      },
     })
     return () => subscription.unsubscribe()
-  }, [client.live, handleLiveEvent, tag, token])
+  }, [client.live, handleLiveEvent, onError, tag, token])
 
   /**
-   * 4. Notify what perspective we're in, when in Draft Mode
+   * 2. Notify what perspective we're in, when in Draft Mode
    */
   useEffect(() => {
     if (draftModeEnabled && draftModePerspective) {
@@ -210,7 +156,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const [loadComlink, setLoadComlink] = useState(false)
   /**
-   * 5. Notify what environment we're in, when in Draft Mode
+   * 3. Notify what environment we're in, when in Draft Mode
    */
   useEffect(() => {
     // If we might be in Presentation Tool, then skip detecting here as it's handled later
@@ -235,7 +181,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   }, [draftModeEnabled, token])
 
   /**
-   * 6. If Presentation Tool is detected, load up the comlink and integrate with it
+   * 4. If Presentation Tool is detected, load up the comlink and integrate with it
    */
   useEffect(() => {
     if (!isMaybePresentation()) return
@@ -268,7 +214,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   }, [])
 
   /**
-   * 7. Warn if draft mode is being disabled
+   * 5. Warn if draft mode is being disabled
    * @TODO move logic into PresentationComlink, or maybe VisualEditing?
    */
   const draftModeEnabledWarnRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
