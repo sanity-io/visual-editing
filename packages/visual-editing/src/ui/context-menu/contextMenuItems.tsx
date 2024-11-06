@@ -16,23 +16,23 @@ import {
   SortIcon,
   UnpublishIcon,
 } from '@sanity/icons'
-import {at, insert, truncate, type NodePatchList} from '@sanity/mutate'
-import {get} from '@sanity/util/paths'
+import type {SchemaType} from '@sanity/types'
+import {MenuGroup} from '@sanity/ui'
+import {type FunctionComponent} from 'react'
+import {InsertMenu} from '../../overlay-components/components/InsertMenu'
 import type {ContextMenuNode, OverlayElementField, OverlayElementParent} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
-import {getArrayItemKeyAndParentPath} from '../../util/mutations'
-import {randomKey} from '../../util/randomKey'
+import {
+  getArrayDuplicatePatches,
+  getArrayInsertPatches,
+  getArrayMovePatches,
+  getArrayRemovePatches,
+} from '../../util/mutations'
 import type {OptimisticDocument} from '../optimistic-state/useDocuments'
 
 export function getArrayRemoveAction(node: SanityNode, doc: OptimisticDocument): () => void {
   if (!node.type) throw new Error('Node type is missing')
-  return () =>
-    doc.patch(({snapshot}) => {
-      const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)
-      const array = get(snapshot, arrayPath) as {_key: string}[]
-      const currentIndex = array.findIndex((item) => item._key === itemKey)
-      return [at(arrayPath, truncate(currentIndex, currentIndex + 1))]
-    })
+  return () => doc.patch(({snapshot}) => getArrayRemovePatches(node, snapshot))
 }
 
 function getArrayInsertAction(
@@ -42,70 +42,12 @@ function getArrayInsertAction(
   position: 'before' | 'after',
 ): () => void {
   if (!node.type) throw new Error('Node type is missing')
-  return () =>
-    doc.patch(() => {
-      const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)
-      const insertKey = randomKey()
-      const referenceItem = {_key: itemKey}
-      return [
-        at(arrayPath, insert([{_type: insertType, _key: insertKey}], position, referenceItem)),
-      ]
-    })
-}
-
-function getArrayMovePatches(
-  node: SanityNode,
-  doc: OptimisticDocument,
-  moveTo: 'previous' | 'next' | 'first' | 'last',
-): NodePatchList {
-  if (!node.type) throw new Error('Node type is missing')
-  const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore - Type instantiation is excessively deep and possibly infinite.
-  const array = doc.get(arrayPath) as {_key: string}[]
-  const item = doc.get(node.path)
-  const currentIndex = array.findIndex((item) => item._key === itemKey)
-
-  let nextIndex = -1
-  let position: 'before' | 'after' = 'before'
-
-  if (moveTo === 'first') {
-    if (currentIndex === 0) return []
-    nextIndex = 0
-    position = 'before'
-  } else if (moveTo === 'last') {
-    if (currentIndex === array.length - 1) return []
-    nextIndex = -1
-    position = 'after'
-  } else if (moveTo === 'next') {
-    if (currentIndex === array.length - 1) return []
-    nextIndex = currentIndex
-    position = 'after'
-  } else if (moveTo === 'previous') {
-    if (currentIndex === 0) return []
-    nextIndex = currentIndex - 1
-    position = 'before'
-  }
-
-  return [
-    at(arrayPath, truncate(currentIndex, currentIndex + 1)),
-    at(arrayPath, insert(item, position, nextIndex)),
-  ]
+  return () => doc.patch(() => getArrayInsertPatches(node, insertType, position))
 }
 
 function getDuplicateAction(node: SanityNode, doc: OptimisticDocument): () => void {
   if (!node.type) throw new Error('Node type is missing')
-
-  return () =>
-    doc.patch(({snapshot}) => {
-      const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)
-
-      const item = get(snapshot, node.path) as object
-      const duplicate = {...item, _key: randomKey()}
-
-      return [at(arrayPath, insert(duplicate, 'after', {_key: itemKey}))]
-    })
+  return () => doc.patch(({snapshot}) => getArrayDuplicatePatches(node, snapshot))
 }
 
 export function getContextMenuItems(context: {
@@ -244,6 +186,47 @@ function getContextMenuArrayItems(context: {
   return items
 }
 
+const InsertMenuWrapper: FunctionComponent<{
+  label: string
+  onSelect: (schemaType: SchemaType) => void
+  parent: SchemaUnionNode<SchemaNode>
+  width: number | undefined
+  boundaryElement: HTMLDivElement | null
+}> = (props) => {
+  const {label, parent, width, onSelect, boundaryElement} = props
+
+  return (
+    <MenuGroup
+      fontSize={1}
+      icon={InsertBelowIcon}
+      padding={2}
+      popover={{
+        arrow: false,
+        constrainSize: true,
+        floatingBoundary: boundaryElement,
+        padding: 0,
+        placement: 'right-start',
+        fallbackPlacements: [
+          'left-start',
+          'right',
+          'left',
+          'right-end',
+          'left-end',
+          'bottom',
+          'top',
+        ],
+        preventOverflow: true,
+        width,
+        __unstable_margins: [4, 4, 4, 4],
+      }}
+      space={2}
+      text={label}
+    >
+      <InsertMenu node={parent} onSelect={onSelect} />
+    </MenuGroup>
+  )
+}
+
 function getContextMenuUnionItems(context: {
   doc: OptimisticDocument
   node: SanityNode
@@ -255,36 +238,79 @@ function getContextMenuUnionItems(context: {
   items.push(...getRemoveItems(context))
   items.push(...getMoveItems(context))
 
-  items.push({
-    type: 'group',
-    label: 'Insert before',
-    icon: InsertAboveIcon,
-    items: (
-      parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
-    ).map((t) => {
-      return {
-        type: 'action' as const,
-        icon: getNodeIcon(t),
-        label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
-        action: getArrayInsertAction(node, doc, t.name, 'before'),
-      }
-    }),
-  })
-  items.push({
-    type: 'group',
-    label: 'Insert after',
-    icon: InsertBelowIcon,
-    items: (
-      parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
-    ).map((t) => {
-      return {
-        type: 'action' as const,
-        label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
-        icon: getNodeIcon(t),
-        action: getArrayInsertAction(node, doc, t.name, 'after'),
-      }
-    }),
-  })
+  if (parent.options?.insertMenu) {
+    const insertMenuOptions = parent.options.insertMenu || {}
+    const width = insertMenuOptions.views?.some((view) => view.name === 'grid') ? 0 : undefined
+
+    items.push({
+      type: 'custom',
+      component: ({boundaryElement}) => {
+        const onSelect = (schemaType: SchemaType) => {
+          const action = getArrayInsertAction(node, doc, schemaType.name, 'before')
+          action()
+        }
+        return (
+          <InsertMenuWrapper
+            label="Insert before"
+            onSelect={onSelect}
+            parent={parent}
+            width={width}
+            boundaryElement={boundaryElement}
+          />
+        )
+      },
+    })
+
+    items.push({
+      type: 'custom',
+      component: ({boundaryElement}) => {
+        const onSelect = (schemaType: SchemaType) => {
+          const action = getArrayInsertAction(node, doc, schemaType.name, 'after')
+          action()
+        }
+        return (
+          <InsertMenuWrapper
+            label="Insert after"
+            onSelect={onSelect}
+            parent={parent}
+            width={width}
+            boundaryElement={boundaryElement}
+          />
+        )
+      },
+    })
+  } else {
+    items.push({
+      type: 'group',
+      label: 'Insert before',
+      icon: InsertAboveIcon,
+      items: (
+        parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
+      ).map((t) => {
+        return {
+          type: 'action' as const,
+          icon: getNodeIcon(t),
+          label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
+          action: getArrayInsertAction(node, doc, t.name, 'before'),
+        }
+      }),
+    })
+    items.push({
+      type: 'group',
+      label: 'Insert after',
+      icon: InsertBelowIcon,
+      items: (
+        parent.of.filter((item) => item.type === 'unionOption') as SchemaUnionOption<SchemaNode>[]
+      ).map((t) => {
+        return {
+          type: 'action' as const,
+          label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
+          icon: getNodeIcon(t),
+          action: getArrayInsertAction(node, doc, t.name, 'after'),
+        }
+      }),
+    })
+  }
 
   return items
 }

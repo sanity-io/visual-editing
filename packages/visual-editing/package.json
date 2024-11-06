@@ -57,6 +57,12 @@
       "svelte": "./dist-svelte/index.js",
       "default": "./dist-svelte/index.js"
     },
+    "./unstable_overlay-components": {
+      "source": "./src/overlay-components/index.ts",
+      "import": "./dist/overlay-components/index.js",
+      "require": "./dist/overlay-components/index.cjs",
+      "default": "./dist/overlay-components/index.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",

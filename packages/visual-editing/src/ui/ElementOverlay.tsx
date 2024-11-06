@@ -21,6 +21,7 @@ import type {
   ElementNode,
   OverlayComponent,
   OverlayComponentResolver,
+  OverlayComponentResolverContext,
   OverlayElementParent,
   OverlayRect,
   SanityNode,
@@ -159,13 +160,13 @@ const PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivE
 
 const ComponentWrapper: FunctionComponent<{
   element: ElementNode
-  components: OverlayComponent[]
+  components: Array<{component: OverlayComponent; props?: Record<string, unknown>}>
   parent: OverlayElementParent
   node: SanityNode
 }> = (props) => {
   const {components, element, node, parent} = props
 
-  return components.map((Component, i) => {
+  return components.map(({component: Component, props}, i) => {
     return (
       <Component
         key={i}
@@ -173,6 +174,7 @@ const ComponentWrapper: FunctionComponent<{
         node={node}
         parent={parent}
         PointerEvents={PointerEvents}
+        {...props}
       />
     )
   })
@@ -205,11 +207,24 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     const type = field?.value.type
     if (!type) return undefined
 
-    const props = {focused: !!focused, node, type}
-    const resolved = componentResolver?.(props)
+    const context = {
+      element,
+      focused: !!focused,
+      node,
+      parent,
+      type,
+    } satisfies OverlayComponentResolverContext
+
+    const resolved = componentResolver?.(context)
     if (!resolved) return undefined
 
-    const components = Array.isArray(resolved) ? resolved : [resolved]
+    const components = (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
+      if ('component' in component) {
+        return component
+      }
+      return {component: component, props: {}}
+    })
+
     if (!components.length) return undefined
 
     return {

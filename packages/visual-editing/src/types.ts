@@ -7,6 +7,7 @@ import type {
   SchemaArrayItem,
   SchemaNode,
   SchemaObjectField,
+  SchemaUnionNode,
   SchemaUnionOption,
   VisualEditingControllerMsg,
   VisualEditingNodeMsg,
@@ -374,11 +375,31 @@ export type DisableVisualEditing = () => void
 /**
  * @public
  */
-export type OverlayComponentResolver = (props: {
+export interface OverlayComponentResolverContext<
+  P extends OverlayElementParent = OverlayElementParent,
+> {
+  element: ElementNode
   focused: boolean
   node: SanityNode
+  parent: P
   type: string
-}) => OverlayComponent | OverlayComponent[] | undefined | void
+}
+
+/**
+ * @public
+ */
+export type OverlayComponentResolver<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends OverlayComponent = OverlayComponent<Record<string, unknown>, any>,
+> = (
+  context: OverlayComponentResolverContext,
+) =>
+  | T
+  | Array<T>
+  | {component: T; props?: Record<string, unknown>}
+  | Array<{component: T; props?: Record<string, unknown>}>
+  | undefined
+  | void
 
 /**
  * @public
@@ -443,17 +464,37 @@ export interface ContextMenuGroupNode {
 /**
  * @internal
  */
-export type ContextMenuNode = ContextMenuDividerNode | ContextMenuActionNode | ContextMenuGroupNode
+export interface ContextMenuCustomNode {
+  type: 'custom'
+  component: ComponentType<{boundaryElement: HTMLDivElement | null}>
+}
+
+/**
+ * @internal
+ */
+export type ContextMenuNode =
+  | ContextMenuDividerNode
+  | ContextMenuActionNode
+  | ContextMenuGroupNode
+  | ContextMenuCustomNode
 
 /**
  * @public
  */
-export type OverlayComponent = ComponentType<{
+export interface OverlayComponentProps<P extends OverlayElementParent = OverlayElementParent> {
   PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
   element: ElementNode
-  parent: OverlayElementParent
+  parent: P
   node: SanityNode
-}>
+}
+
+/**
+ * @public
+ */
+export type OverlayComponent<
+  T extends Record<string, unknown> = Record<string, unknown>,
+  P extends OverlayElementParent = OverlayElementParent,
+> = ComponentType<OverlayComponentProps<P | undefined> & T>
 
 export type OverlayElementField =
   | SchemaArrayItem
@@ -466,4 +507,5 @@ export type OverlayElementParent =
   | SchemaNode
   | SchemaArrayItem
   | SchemaUnionOption
+  | SchemaUnionNode
   | undefined
