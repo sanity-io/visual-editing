@@ -68,7 +68,11 @@ const HoverArea: FunctionComponent<{
   }, [])
   const ref = useRef<HTMLDivElement | null>(null)
 
-  const bubbleEvent = useCallback(
+  // This function clones and dispatches MouseEvents so that they can be handled
+  // by the underlying element. This is useful because we want to handle hover
+  // events on the overlay element to display the add button, but let the
+  // underlying element handle click events, drag and drop, etc.
+  const relayEventToElement = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       if (event.target === ref.current) {
         const newEvent = new MouseEvent(event.type, {
@@ -82,7 +86,9 @@ const HoverArea: FunctionComponent<{
     [element],
   )
 
-  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null)
+  // The element that the popover containing the InsertMenu will be positioned
+  // relative to (in this case, the AddButton).
+  const [popoverReferenceElement, setPopoverReferenceElement] = useState<HTMLElement | null>(null)
 
   const [menuVisible, setMenuVisible] = useState(false)
 
@@ -109,12 +115,12 @@ const HoverArea: FunctionComponent<{
       data-position={position}
       data-sanity-overlay-element
       justify={justify}
-      onClick={bubbleEvent}
-      onContextMenu={bubbleEvent}
-      onMouseDown={bubbleEvent}
+      onClick={relayEventToElement}
+      onContextMenu={relayEventToElement}
+      onMouseDown={relayEventToElement}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      onMouseUp={bubbleEvent}
+      onMouseUp={relayEventToElement}
       ref={ref}
       style={{
         [position === 'top' || position === 'bottom' ? 'height' : 'width']: hoverAreaExtent,
@@ -122,7 +128,7 @@ const HoverArea: FunctionComponent<{
     >
       {(showButton || menuVisible) && (
         <AddButton
-          ref={setReferenceElement}
+          ref={setPopoverReferenceElement}
           icon={AddIcon}
           mode={'ghost'}
           onClick={() => setMenuVisible((visible) => !visible)}
@@ -130,11 +136,11 @@ const HoverArea: FunctionComponent<{
           selected={menuVisible}
         />
       )}
-      {menuVisible && referenceElement && (
+      {menuVisible && popoverReferenceElement && (
         <InsertMenuPopover
           node={node}
           onDismiss={dismissPortal}
-          referenceElement={referenceElement}
+          referenceElement={popoverReferenceElement}
           onSelect={onSelect}
         />
       )}

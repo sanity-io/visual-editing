@@ -59,6 +59,7 @@ function ContextMenuItem(props: {
         fontSize={1}
         icon={node.icon}
         padding={2}
+        // @todo when this PR lands https://github.com/sanity-io/ui/pull/1454
         // menu={{
         //   padding: 0,
         // }}
