@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.4...visual-editing-v2.5.0) (2024-11-06)
+
+
+### Features
+
+* **visual-editing:** allow passing props to overlay components ([#2071](https://github.com/sanity-io/visual-editing/issues/2071)) ([c139267](https://github.com/sanity-io/visual-editing/commit/c1392672e09b2532ce710e4e9d12fcb9d644f064))
+
+
+### Bug Fixes
+
+* **visual-editing:** memoize `useDocuments` functions ([#2090](https://github.com/sanity-io/visual-editing/issues/2090)) ([6fae7c2](https://github.com/sanity-io/visual-editing/commit/6fae7c2ed887b9d65985e01c230b1414db42390c))
+* **visual-editing:** prevent always activating elements on registration ([#2100](https://github.com/sanity-io/visual-editing/issues/2100)) ([018f43a](https://github.com/sanity-io/visual-editing/commit/018f43a92b1619a4686b326ad2238ab4ef918d5f))
+
 ## [2.4.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.3...visual-editing-v2.4.4) (2024-11-05)
 
 
