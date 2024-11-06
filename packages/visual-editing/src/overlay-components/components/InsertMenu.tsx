@@ -54,9 +54,7 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
 }
 
 export interface InsertMenuPopoverProps extends InsertMenuProps {
-  // node: SchemaUnionNode
   onDismiss: () => void
-  // onSelect: (schemaType: SchemaType) => void
   referenceElement?: HTMLElement | null
 }
 
