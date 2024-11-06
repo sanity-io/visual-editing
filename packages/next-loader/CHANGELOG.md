@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.2...next-loader-v1.1.3) (2024-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.3 ([0b78719](https://github.com/sanity-io/visual-editing/commit/0b7871937422d0d8dfe7851bd1603141f0c434c4))
+* let `@sanity/client` handle CORS validation ([d58c949](https://github.com/sanity-io/visual-editing/commit/d58c949566d3d468ddb469bb6fb6c87892fb784c))
+* report errors as a prop, instead of throwing during render ([3cf2e07](https://github.com/sanity-io/visual-editing/commit/3cf2e07c40c8dae5219232d9d6066845ac0bdd15)), closes [#2099](https://github.com/sanity-io/visual-editing/issues/2099)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.6.30
+    * @sanity/preview-url-secret bumped to 2.0.1
+
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.1...next-loader-v1.1.2) (2024-11-04)
 
 
