@@ -78,9 +78,10 @@ export interface DefinedSanityLiveProps {
    */
   tag?: string
   /**
-   * Required to enable draft mode in Presentation Tool. Requires `serverToken`. Returns a string if there were an error
+   * Handle errors from the Live Events subscription.
+   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
    */
-  // handleDraftModeAction?: (secret: string) => Promise<void | string>
+  onError?: (error: unknown) => void
 }
 
 /**
@@ -241,6 +242,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       refreshOnFocus,
       refreshOnReconnect,
       tag = 'next-loader.live',
+      onError,
     } = props
     const {
       projectId,
@@ -283,6 +285,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}
+        onError={onError}
       />
     )
   }
