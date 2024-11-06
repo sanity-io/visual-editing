@@ -718,19 +718,6 @@ export type DndPageQueryResult = {
   }> | null
 } | null
 
-// Source: ./src/app/projects/page.tsx
-// Variable: projectsPageQuery
-// Query: *[_type == "project" && defined(slug.current)]
-export type ProjectsPageQueryResult = Array<{
-  _id: string
-  _type: 'project'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-}>
-
 // Source: ./src/app/products/page.tsx
 // Variable: productsPageQuery
 // Query: *[_type == "product" && defined(slug.current)]{    _id,    title,    description,    slug,    "media": media[0]  }
@@ -771,15 +758,10 @@ export type ProductsPageQueryResult = Array<{
   } | null
 }>
 
-// Source: ./src/app/project/[slug]/page.tsx
-// Variable: projectSlugsQuery
-// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
-export type ProjectSlugsQueryResult = Array<{
-  slug: string | null
-}>
-// Variable: projectPageQuery
-// Query: *[_type == "project" && slug.current == $slug][0]
-export type ProjectPageQueryResult = {
+// Source: ./src/app/projects/page.tsx
+// Variable: projectsPageQuery
+// Query: *[_type == "project" && defined(slug.current)]
+export type ProjectsPageQueryResult = Array<{
   _id: string
   _type: 'project'
   _createdAt: string
@@ -787,7 +769,7 @@ export type ProjectPageQueryResult = {
   _rev: string
   title?: string
   slug?: Slug
-} | null
+}>
 
 // Source: ./src/app/pages/[slug]/page.tsx
 // Variable: pageQuery
@@ -1035,18 +1017,36 @@ export type ProductPageQueryResult = {
   }>
 } | null
 
+// Source: ./src/app/project/[slug]/page.tsx
+// Variable: projectSlugsQuery
+// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
+export type ProjectSlugsQueryResult = Array<{
+  slug: string | null
+}>
+// Variable: projectPageQuery
+// Query: *[_type == "project" && slug.current == $slug][0]
+export type ProjectPageQueryResult = {
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+} | null
+
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_id == "siteSettings"][0]{\n  title,\n  description,\n  copyrightText\n}': LayoutQueryResult
     "\n  *[_id == \"siteSettings\"][0]{\n    frontPage->{\n      _type,\n      _id,\n      title,\n      sections[]{\n        ...,\n        symbol->{_type},\n        'headline': coalesce(headline, symbol->headline),\n        'tagline': coalesce(tagline, symbol->tagline),\n        'subline': coalesce(subline, symbol->subline),\n        'image': coalesce(image, symbol->image),\n        product->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        },\n        products[]{\n          _key,\n          ...(@->{\n            _type,\n            _id,\n            title,\n            slug,\n            \"media\": media[0]\n          })\n        }\n      },\n      style\n    }\n  }.frontPage\n": FrontPageQueryResult
     '\n  *[_type == "dndTestPage"]{\n    _id,\n    title,\n    children\n  }[0]\n': DndPageQueryResult
-    '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
     '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
-    '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
-    '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
+    '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    sections[]{\n      ...,\n      symbol->{_type},\n      'headline': coalesce(headline, symbol->headline),\n      'tagline': coalesce(tagline, symbol->tagline),\n      'subline': coalesce(subline, symbol->subline),\n      'image': coalesce(image, symbol->image),\n      product->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      },\n      products[]{\n        _key,\n        ...(@->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        })\n      }\n    },\n    style\n  }\n": PageQueryResult
     '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
     '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
+    '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
+    '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
   }
 }

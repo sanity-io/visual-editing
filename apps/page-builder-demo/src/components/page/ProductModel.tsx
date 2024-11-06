@@ -59,7 +59,7 @@ export const ProductModel: FunctionComponent<{
   return (
     <Canvas shadows>
       <color attach="background" args={['#f1f1f1']} />
-      <fog color="#161616" attach="fog" near={8} far={30} />
+      <fog attach="fog" args={['#161616', 8, 30]} />
       <spotLight
         castShadow
         position={[10, 10, 10]}
