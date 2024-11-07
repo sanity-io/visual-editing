@@ -67,7 +67,8 @@ By default you need to be an Editor or above to enable or disable preview sharin
 If preview sharing is enabled, then you need to be Viewer or above to read the secret.
 
 When preview sharing is enabled, Presentation Tool will show a "Share" menu:
-<img width="688" alt="image" src="https://github.com/user-attachments/assets/186bdd20-cad3-44c7-948a-f23aabf7ef6a">
+
+![Example preview sharing QR code](https://github.com/user-attachments/assets/186bdd20-cad3-44c7-948a-f23aabf7ef6a)
 
 ### Control who has access to a shared preview
 
@@ -88,7 +89,8 @@ Enterprise customers can restrict this in the following way:
 11. Save changes.
 
 With everything setup correctly, users assigned to this role should see the following when attempting to use the "Share" menu:
-<img width="418" alt="image" src="https://github.com/user-attachments/assets/9e748f49-4f82-453c-bd83-cae6e86302f2">
+
+![An alert shows an improper permission warning](https://github.com/user-attachments/assets/9e748f49-4f82-453c-bd83-cae6e86302f2)
 
 If you're still able to see the QR code with the new role assigned, make sure you're not assigned to "Viewer" or other roles that may be granting access to "All documents: Read".
 
@@ -96,7 +98,8 @@ If you're still able to see the QR code with the new role assigned, make sure yo
 
 By default anyone who's Editor or above can toggle sharing.
 If anyone without permission attempts to toggle it they'll see a message like this:
-<img width="399" alt="image" src="https://github.com/user-attachments/assets/798c9c32-88ac-40ba-9111-2ef4e8fc9a2b">
+
+![An alert shows an improper toggle permission warning](https://github.com/user-attachments/assets/798c9c32-88ac-40ba-9111-2ef4e8fc9a2b)
 
 Enterprise customers can customize this in the following way:
 
