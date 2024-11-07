@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.0.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.1...preview-url-secret-v2.0.2) (2024-11-07)
+
+
+### Bug Fixes
+
+* **docs:** update img tags to markdown format ([cd9706d](https://github.com/sanity-io/visual-editing/commit/cd9706d7799326968fd3ae74c6dace712a116e4f))
+
 ## [2.0.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.0...preview-url-secret-v2.0.1) (2024-11-06)
 
 
