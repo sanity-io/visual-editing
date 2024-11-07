@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.5.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.5.1...visual-editing-v2.5.2) (2024-11-07)
+
+
+### Bug Fixes
+
+* resolve `node:crypto` error on Shopify Hydrogen ([26f48ef](https://github.com/sanity-io/visual-editing/commit/26f48ef3f303c594ba063cd04e616dd49d5b0411))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.0.2
+
 ## [2.5.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.5.0...visual-editing-v2.5.1) (2024-11-06)
 
 
