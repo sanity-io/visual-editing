@@ -64,6 +64,7 @@ export {
   useDocuments,
   useOptimistic,
 } from './ui/optimistic-state'
+export {useSharedState} from './ui/shared-state/useSharedState'
 export {
   type CreateDataAttribute,
   type CreateDataAttributeProps,

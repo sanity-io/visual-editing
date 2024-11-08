@@ -139,6 +139,13 @@ export type VisualEditingControllerMsg =
         event: ReconnectEvent | WelcomeEvent | MutationEvent
       }
     }
+  | {
+      type: 'presentation/shared-state'
+      data: {
+        key: string
+        value?: Serializable
+      }
+    }
 
 /**
  * @public
@@ -258,6 +265,13 @@ export type VisualEditingNodeMsg =
         features: Record<string, boolean>
       }
     }
+  | {
+      type: 'visual-editing/shared-state'
+      data: undefined
+      response: {
+        state: SerializableObject
+      }
+    }
 
 /**
  * @public
@@ -345,3 +359,20 @@ export type PreviewKitNodeMsg = {
     documents: ContentSourceMapDocuments
   }
 }
+
+/**
+ * @public
+ */
+export type SerializablePrimitive = string | number | boolean | null | undefined
+/**
+ * @public
+ */
+export type SerializableObject = {[key: string]: Serializable}
+/**
+ * @public
+ */
+export type SerializableArray = Serializable[]
+/**
+ * @public
+ */
+export type Serializable = SerializablePrimitive | SerializableObject | SerializableArray
