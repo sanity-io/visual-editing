@@ -16,6 +16,7 @@ import {
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {visionTool} from '@sanity/vision'
 import {defineConfig, definePlugin, type PluginOptions} from 'sanity'
+import {CustomHeader} from './presentation/CustomHeader'
 import {CustomNavigator} from './presentation/CustomNavigator'
 import {StegaDebugger} from './presentation/DebugStega'
 
@@ -138,6 +139,9 @@ export default defineConfig([
         workspaces['page-builder-demo'].tool,
       ),
       components: {
+        unstable_header: {
+          component: CustomHeader,
+        },
         unstable_navigator: {
           minWidth: 120,
           maxWidth: 240,

@@ -27,6 +27,7 @@ export {
   usePresentationNavigate,
 } from './usePresentationNavigate'
 export {usePresentationParams} from './usePresentationParams'
+export {useSharedState} from './overlays/useSharedState'
 export type {PreviewHeaderProps} from './preview/PreviewHeader'
 export type {PreviewProps} from './preview/Preview'
 export {
@@ -42,3 +43,9 @@ export {
   type PresentationState,
   type VisualEditingOverlaysToggleAction,
 } from './reducers/presentationReducer'
+export type {
+  Serializable,
+  SerializableArray,
+  SerializableObject,
+  SerializablePrimitive,
+} from '@repo/visual-editing-helpers'

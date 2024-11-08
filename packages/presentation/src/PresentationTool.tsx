@@ -36,6 +36,7 @@ import {
 } from './constants'
 import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
+import {SharedStateProvider} from './overlays/SharedStateProvider'
 import {Panel} from './panels/Panel'
 import {Panels} from './panels/Panels'
 import {PresentationContent} from './PresentationContent'
@@ -92,7 +93,7 @@ export default function PresentationTool(props: {
   const components = tool.options?.components
   const _previewUrl = tool.options?.previewUrl
   const name = tool.name || DEFAULT_TOOL_NAME
-  const {unstable_navigator} = components || {}
+  const {unstable_navigator, unstable_header} = components || {}
 
   const {navigate: routerNavigate, state: routerState} = useRouter() as RouterContextValue & {
     state: PresentationStateParams
@@ -516,58 +517,61 @@ export default function PresentationTool(props: {
       >
         <PresentationNavigateProvider navigate={navigate}>
           <PresentationParamsProvider params={params}>
-            <Container height="fill">
-              <Panels>
-                <PresentationNavigator />
-                <Panel
-                  id="preview"
-                  minWidth={325}
-                  defaultSize={navigatorEnabled ? 50 : 75}
-                  order={3}
-                >
-                  <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
-                    <BoundaryElementProvider element={boundaryElement}>
-                      <Preview
-                        canSharePreviewAccess={canSharePreviewAccess}
-                        canToggleSharePreviewAccess={canToggleSharePreviewAccess}
-                        canUseSharedPreviewAccess={canUseSharedPreviewAccess}
-                        dispatch={dispatch}
-                        iframe={state.iframe}
-                        initialUrl={initialPreviewUrl}
-                        loadersConnection={loadersConnection}
-                        navigatorEnabled={navigatorEnabled}
-                        onPathChange={handlePreviewPath}
-                        onRefresh={handleRefresh}
-                        openPopup={handleOpenPopup}
-                        overlaysConnection={overlaysConnection}
-                        previewUrl={params.preview}
-                        perspective={perspective}
-                        ref={iframeRef}
-                        setPerspective={setPerspective}
-                        setViewport={setViewport}
-                        targetOrigin={targetOrigin}
-                        toggleNavigator={toggleNavigator}
-                        toggleOverlay={toggleOverlay}
-                        viewport={viewport}
-                        visualEditing={state.visualEditing}
-                      />
-                    </BoundaryElementProvider>
-                  </Flex>
-                </Panel>
-                <PresentationContent
-                  documentId={params.id}
-                  documentsOnPage={documentsOnPage}
-                  documentType={params.type}
-                  getCommentIntent={getCommentIntent}
-                  mainDocumentState={mainDocumentState}
-                  onFocusPath={handleFocusPath}
-                  onStructureParams={handleStructureParams}
-                  searchParams={searchParams}
-                  setDisplayedDocument={setDisplayedDocument}
-                  structureParams={structureParams}
-                />
-              </Panels>
-            </Container>
+            <SharedStateProvider comlink={visualEditingComlink}>
+              <Container height="fill">
+                <Panels>
+                  <PresentationNavigator />
+                  <Panel
+                    id="preview"
+                    minWidth={325}
+                    defaultSize={navigatorEnabled ? 50 : 75}
+                    order={3}
+                  >
+                    <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
+                      <BoundaryElementProvider element={boundaryElement}>
+                        <Preview
+                          canSharePreviewAccess={canSharePreviewAccess}
+                          canToggleSharePreviewAccess={canToggleSharePreviewAccess}
+                          canUseSharedPreviewAccess={canUseSharedPreviewAccess}
+                          dispatch={dispatch}
+                          header={unstable_header}
+                          iframe={state.iframe}
+                          initialUrl={initialPreviewUrl}
+                          loadersConnection={loadersConnection}
+                          navigatorEnabled={navigatorEnabled}
+                          onPathChange={handlePreviewPath}
+                          onRefresh={handleRefresh}
+                          openPopup={handleOpenPopup}
+                          overlaysConnection={overlaysConnection}
+                          previewUrl={params.preview}
+                          perspective={perspective}
+                          ref={iframeRef}
+                          setPerspective={setPerspective}
+                          setViewport={setViewport}
+                          targetOrigin={targetOrigin}
+                          toggleNavigator={toggleNavigator}
+                          toggleOverlay={toggleOverlay}
+                          viewport={viewport}
+                          visualEditing={state.visualEditing}
+                        />
+                      </BoundaryElementProvider>
+                    </Flex>
+                  </Panel>
+                  <PresentationContent
+                    documentId={params.id}
+                    documentsOnPage={documentsOnPage}
+                    documentType={params.type}
+                    getCommentIntent={getCommentIntent}
+                    mainDocumentState={mainDocumentState}
+                    onFocusPath={handleFocusPath}
+                    onStructureParams={handleStructureParams}
+                    searchParams={searchParams}
+                    setDisplayedDocument={setDisplayedDocument}
+                    structureParams={structureParams}
+                  />
+                </Panels>
+              </Container>
+            </SharedStateProvider>
           </PresentationParamsProvider>
         </PresentationNavigateProvider>
       </PresentationProvider>
