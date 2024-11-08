@@ -10,7 +10,7 @@ import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,
 } from '@sanity/preview-url-secret/define-preview-url'
-import type {ComponentType, ReactNode} from 'react'
+import type {ComponentType} from 'react'
 import type {Observable} from 'rxjs'
 import type {SanityClient} from 'sanity'
 import type {DocumentStore} from './internals'
@@ -71,9 +71,7 @@ export interface NavigatorOptions {
 }
 
 export interface HeaderOptions {
-  component: ComponentType<
-    PreviewHeaderProps & {renderDefault: (props: PreviewHeaderProps) => ReactNode}
-  >
+  component: ComponentType<PreviewHeaderProps>
 }
 
 export type PreviewUrlOption = string | PreviewUrlResolver<SanityClient> | PreviewUrlResolverOptions

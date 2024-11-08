@@ -59,9 +59,12 @@ const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
 
 export interface PreviewHeaderProps extends PreviewProps {
   iframeRef: RefObject<HTMLIFrameElement>
+  renderDefault: (props: PreviewHeaderProps) => ReactNode
 }
 
-const PreviewHeaderDefault: FunctionComponent<PreviewHeaderProps> = (props) => {
+const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDefault'>> = (
+  props,
+) => {
   const {
     canSharePreviewAccess,
     canToggleSharePreviewAccess,
@@ -375,10 +378,10 @@ const PreviewHeaderDefault: FunctionComponent<PreviewHeaderProps> = (props) => {
   )
 }
 
-const PreviewHeader: FunctionComponent<PreviewHeaderProps & {options?: HeaderOptions}> = (
-  props,
-) => {
-  const renderDefault = useCallback((props: PreviewHeaderProps) => {
+const PreviewHeader: FunctionComponent<
+  Omit<PreviewHeaderProps, 'renderDefault'> & {options?: HeaderOptions}
+> = (props) => {
+  const renderDefault = useCallback((props: Omit<PreviewHeaderProps, 'renderDefault'>) => {
     return createElement(PreviewHeaderDefault, props)
   }, [])
 
@@ -397,7 +400,7 @@ const PreviewHeader: FunctionComponent<PreviewHeaderProps & {options?: HeaderOpt
 
 /** @internal */
 export function usePresentationPreviewHeader(
-  props: PreviewHeaderProps & {options?: HeaderOptions},
+  props: Omit<PreviewHeaderProps, 'renderDefault'> & {options?: HeaderOptions},
 ): () => ReactNode {
   const Component = useCallback(() => {
     return <PreviewHeader {...props} />

@@ -1,14 +1,10 @@
 import {CheckmarkIcon, CloseIcon, EllipsisVerticalIcon} from '@sanity/icons'
 import {useSharedState} from '@sanity/presentation'
+import type {PreviewHeaderProps} from '@sanity/presentation'
 import {Button, Menu, MenuButton, MenuItem} from '@sanity/ui'
-import {useState, type FunctionComponent, type ReactNode} from 'react'
-import type {PreviewHeaderProps} from '../../../packages/presentation/src/preview/PreviewHeader'
+import {useState, type FunctionComponent} from 'react'
 
-export const CustomHeader: FunctionComponent<
-  PreviewHeaderProps & {
-    renderDefault: (props: PreviewHeaderProps) => ReactNode
-  }
-> = (props) => {
+export const CustomHeader: FunctionComponent<PreviewHeaderProps> = (props) => {
   const [enabled, setEnabled] = useState(false)
 
   useSharedState('overlay-enabled', enabled)
