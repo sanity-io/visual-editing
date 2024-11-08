@@ -29,7 +29,7 @@ import {useClient, useCurrentUser, useTranslation} from 'sanity'
 import {styled} from 'styled-components'
 import {API_VERSION} from '../constants'
 import {presentationLocaleNamespace} from '../i18n'
-import type {PreviewFrameProps} from './PreviewFrame'
+import type {PreviewProps} from './Preview'
 
 const QRCodeSVG = lazy(() => import('./QRCodeSVG'))
 
@@ -37,7 +37,7 @@ export interface SharePreviewMenuProps {
   canToggleSharePreviewAccess: boolean
   canUseSharedPreviewAccess: boolean
   previewLocationRoute: string
-  initialUrl: PreviewFrameProps['initialUrl']
+  initialUrl: PreviewProps['initialUrl']
   perspective: string
 }
 

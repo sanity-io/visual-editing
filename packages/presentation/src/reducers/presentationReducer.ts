@@ -16,21 +16,21 @@ export const ACTION_IFRAME_REFRESH = 'ACTION_IFRAME_REFRESH'
 export const ACTION_IFRAME_RELOAD = 'ACTION_IFRAME_RELOAD'
 export const ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE = 'ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE'
 
-interface IframeLoadedAction {
+export interface IframeLoadedAction {
   type: typeof ACTION_IFRAME_LOADED
 }
-interface IframeRefreshAction {
+export interface IframeRefreshAction {
   type: typeof ACTION_IFRAME_REFRESH
 }
-interface IframeReloadAction {
+export interface IframeReloadAction {
   type: typeof ACTION_IFRAME_RELOAD
 }
-interface VisualEditingOverlaysToggleAction {
+export interface VisualEditingOverlaysToggleAction {
   type: typeof ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE
   enabled: boolean
 }
 
-type PresentationAction =
+export type PresentationAction =
   | IframeLoadedAction
   | IframeRefreshAction
   | IframeReloadAction

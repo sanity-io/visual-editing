@@ -3,11 +3,11 @@ import {Button, Text, Tooltip} from '@sanity/ui'
 import {useCallback} from 'react'
 import {useTranslation} from 'sanity'
 import {presentationLocaleNamespace} from '../i18n'
-import type {PreviewFrameProps} from './PreviewFrame'
+import type {PreviewProps} from './Preview'
 
 /** @internal */
 export function OpenPreviewButton(
-  props: Pick<PreviewFrameProps, 'openPopup'> & {
+  props: Pick<PreviewProps, 'openPopup'> & {
     previewLocationOrigin: string
     previewLocationRoute: string
   },
