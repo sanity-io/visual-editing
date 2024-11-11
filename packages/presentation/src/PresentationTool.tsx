@@ -111,6 +111,16 @@ export default function PresentationTool(props: {
     if (
       _previewUrl &&
       typeof _previewUrl === 'object' &&
+      'draftMode' in _previewUrl &&
+      _previewUrl.draftMode
+    ) {
+      // eslint-disable-next-line no-console
+      console.warn('previewUrl.draftMode is deprecated, use previewUrl.previewMode instead')
+      return _previewUrl.draftMode.shareAccess !== false
+    }
+    if (
+      _previewUrl &&
+      typeof _previewUrl === 'object' &&
       'previewMode' in _previewUrl &&
       _previewUrl.previewMode
     ) {
