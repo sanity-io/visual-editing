@@ -19,10 +19,8 @@ import {styled} from 'styled-components'
 import type {
   ElementFocusedState,
   ElementNode,
-  OverlayComponent,
   OverlayComponentResolver,
   OverlayComponentResolverContext,
-  OverlayElementParent,
   OverlayRect,
   SanityNode,
   SanityStegaNode,
@@ -158,28 +156,6 @@ const PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivE
   )
 }
 
-const ComponentWrapper: FunctionComponent<{
-  element: ElementNode
-  components: Array<{component: OverlayComponent; props?: Record<string, unknown>}>
-  parent: OverlayElementParent
-  node: SanityNode
-}> = (props) => {
-  const {components, element, node, parent} = props
-
-  return components.map(({component: Component, props}, i) => {
-    return (
-      <Component
-        key={i}
-        element={element}
-        node={node}
-        parent={parent}
-        PointerEvents={PointerEvents}
-        {...props}
-      />
-    )
-  })
-}
-
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   const {element, focused, componentResolver, node, showActions, draggable} = props
 
@@ -201,21 +177,25 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     return <DocumentIcon />
   }, [schemaType?.icon])
 
-  const customComponentsProps = useMemo(() => {
+  const componentContext = useMemo<OverlayComponentResolverContext | undefined>(() => {
     if (!('path' in node)) return undefined
+    if (!field || !schemaType) return undefined
+    const type = field.value.type
 
-    const type = field?.value.type
-    if (!type) return undefined
-
-    const context = {
+    return {
+      document: schemaType,
       element,
+      field,
       focused: !!focused,
       node,
       parent,
       type,
-    } satisfies OverlayComponentResolverContext
+    }
+  }, [schemaType, element, field, focused, node, parent])
 
-    const resolved = componentResolver?.(context)
+  const customComponents = useMemo(() => {
+    if (!componentContext) return undefined
+    const resolved = componentResolver?.(componentContext)
     if (!resolved) return undefined
 
     const components = (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
@@ -227,13 +207,8 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
     if (!components.length) return undefined
 
-    return {
-      components,
-      element,
-      node,
-      parent,
-    }
-  }, [componentResolver, element, field, focused, node, parent])
+    return components
+  }, [componentResolver, componentContext])
 
   return (
     <>
@@ -261,7 +236,12 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         </Tab>
       )}
 
-      {customComponentsProps && <ComponentWrapper {...customComponentsProps} />}
+      {customComponents &&
+        customComponents.map(({component: Component, props}, i) => {
+          return (
+            <Component key={i} PointerEvents={PointerEvents} {...componentContext!} {...props} />
+          )
+        })}
     </>
   )
 }

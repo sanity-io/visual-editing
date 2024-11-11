@@ -4,6 +4,8 @@ export type {
   ElementNode,
   OverlayComponent,
   OverlayComponentProps,
+  OverlayComponentResolverContext,
+  OverlayElementField,
   OverlayElementParent,
 } from '../types'
 export type {
