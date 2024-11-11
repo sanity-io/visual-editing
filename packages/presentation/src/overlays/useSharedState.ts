@@ -9,17 +9,11 @@ export const useSharedState = (key: string, value: Serializable): undefined => {
     throw new Error('Preview Snapshots context is missing')
   }
 
-  const {removeValue, setValue} = context
+  const {setValue} = context
 
   useEffect(() => {
     setValue(key, value)
   }, [key, value, setValue])
-
-  useEffect(() => {
-    return () => {
-      removeValue(key)
-    }
-  }, [key, removeValue])
 
   return undefined
 }
