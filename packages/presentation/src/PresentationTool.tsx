@@ -43,7 +43,7 @@ import {PresentationNavigateProvider} from './PresentationNavigateProvider'
 import {usePresentationNavigator} from './PresentationNavigator'
 import {PresentationParamsProvider} from './PresentationParamsProvider'
 import {PresentationProvider} from './PresentationProvider'
-import {PreviewFrame} from './preview/PreviewFrame'
+import {Preview} from './preview/Preview'
 import {
   ACTION_IFRAME_LOADED,
   ACTION_IFRAME_REFRESH,
@@ -527,7 +527,7 @@ export default function PresentationTool(props: {
                 >
                   <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
                     <BoundaryElementProvider element={boundaryElement}>
-                      <PreviewFrame
+                      <Preview
                         canSharePreviewAccess={canSharePreviewAccess}
                         canToggleSharePreviewAccess={canToggleSharePreviewAccess}
                         canUseSharedPreviewAccess={canUseSharedPreviewAccess}
