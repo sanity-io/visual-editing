@@ -57,7 +57,7 @@ const handleError = (error: unknown) => {
   /* eslint-disable no-console */
   if (isCorsOriginError(error)) {
     console.warn(
-      `Sanity Live is unable to connect to the Sanity API as it's not in the list over allowed origins for your project.`,
+      `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
       error.addOriginUrl && `Add it here:`,
       error.addOriginUrl?.toString(),
     )
