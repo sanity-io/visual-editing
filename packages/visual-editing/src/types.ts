@@ -395,9 +395,8 @@ export type OverlayComponentResolver<
   context: OverlayComponentResolverContext,
 ) =>
   | T
-  | Array<T>
   | {component: T; props?: Record<string, unknown>}
-  | Array<{component: T; props?: Record<string, unknown>}>
+  | Array<T | {component: T; props?: Record<string, unknown>}>
   | undefined
   | void
 
