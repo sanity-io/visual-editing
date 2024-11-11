@@ -39,6 +39,7 @@ import {OverlayMinimapPrompt} from './OverlayMinimapPrompt'
 import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
+import {SharedStateProvider} from './shared-state/SharedStateProvider.tsx'
 import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
@@ -338,68 +339,70 @@ export const Overlays: FunctionComponent<{
         <PortalProvider element={rootElement}>
           <SchemaProvider comlink={comlink} elements={elements}>
             <PreviewSnapshotsProvider comlink={comlink}>
-              <Root
-                data-fading-out={fadingOut ? '' : undefined}
-                data-overlays={overlaysFlash ? '' : undefined}
-                ref={setRootElement}
-                $zIndex={zIndex}
-              >
-                <DocumentReporter documentIds={documentIds} perspective={perspective} />
-                <OverlaysController
-                  comlink={comlink}
-                  dispatch={dispatch}
-                  inFrame={inFrame}
-                  onDrag={updateDragPreviewCustomProps}
-                  overlayEnabled={overlayEnabled}
-                  rootElement={rootElement}
-                />
-                {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
-                {!isDragging &&
-                  elementsToRender.map(
-                    ({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
-                      const draggable =
-                        !dragDisabled &&
-                        !!element.getAttribute('data-sanity') &&
-                        optimisticActorReady &&
-                        elements.some((e) =>
-                          'id' in e.sanity && 'id' in sanity
-                            ? sanityNodesExistInSameArray(e.sanity, sanity) &&
-                              e.sanity.path !== sanity.path
-                            : false,
+              <SharedStateProvider comlink={comlink}>
+                <Root
+                  data-fading-out={fadingOut ? '' : undefined}
+                  data-overlays={overlaysFlash ? '' : undefined}
+                  ref={setRootElement}
+                  $zIndex={zIndex}
+                >
+                  <DocumentReporter documentIds={documentIds} perspective={perspective} />
+                  <OverlaysController
+                    comlink={comlink}
+                    dispatch={dispatch}
+                    inFrame={inFrame}
+                    onDrag={updateDragPreviewCustomProps}
+                    overlayEnabled={overlayEnabled}
+                    rootElement={rootElement}
+                  />
+                  {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
+                  {!isDragging &&
+                    elementsToRender.map(
+                      ({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
+                        const draggable =
+                          !dragDisabled &&
+                          !!element.getAttribute('data-sanity') &&
+                          optimisticActorReady &&
+                          elements.some((e) =>
+                            'id' in e.sanity && 'id' in sanity
+                              ? sanityNodesExistInSameArray(e.sanity, sanity) &&
+                                e.sanity.path !== sanity.path
+                              : false,
+                          )
+
+                        return (
+                          <ElementOverlay
+                            componentResolver={componentResolver}
+                            element={element}
+                            enableScrollIntoView={
+                              !isDragging && !dragMinimapTransition && !dragShowMinimap
+                            }
+                            key={id}
+                            focused={focused}
+                            hovered={hovered}
+                            node={sanity}
+                            rect={rect}
+                            showActions={!inFrame}
+                            draggable={draggable}
+                            isDragging={isDragging || dragMinimapTransition}
+                            wasMaybeCollapsed={focused && wasMaybeCollapsed}
+                          />
                         )
-
-                      return (
-                        <ElementOverlay
-                          componentResolver={componentResolver}
-                          element={element}
-                          enableScrollIntoView={
-                            !isDragging && !dragMinimapTransition && !dragShowMinimap
-                          }
-                          key={id}
-                          focused={focused}
-                          hovered={hovered}
-                          node={sanity}
-                          rect={rect}
-                          showActions={!inFrame}
-                          draggable={draggable}
-                          isDragging={isDragging || dragMinimapTransition}
-                          wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                        />
-                      )
-                    },
-                  )}
-
-                {isDragging && !dragMinimapTransition && (
-                  <>
-                    {dragInsertPosition && (
-                      <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                      },
                     )}
-                    {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
-                    {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
-                  </>
-                )}
-                {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-              </Root>
+
+                  {isDragging && !dragMinimapTransition && (
+                    <>
+                      {dragInsertPosition && (
+                        <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                      )}
+                      {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
+                      {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
+                    </>
+                  )}
+                  {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+                </Root>
+              </SharedStateProvider>
             </PreviewSnapshotsProvider>
           </SchemaProvider>
         </PortalProvider>
