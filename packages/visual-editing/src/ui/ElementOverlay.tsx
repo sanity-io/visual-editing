@@ -3,6 +3,7 @@ import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {DocumentIcon, DragHandleIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
 import {
+  isValidElement,
   memo,
   useCallback,
   useEffect,
@@ -11,14 +12,15 @@ import {
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
-  type HTMLAttributes,
-  type PropsWithChildren,
+  type ReactElement,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
+import {PointerEvents} from '../overlay-components/components/PointerEvents'
 import type {
   ElementFocusedState,
   ElementNode,
+  OverlayComponent,
   OverlayComponentResolver,
   OverlayComponentResolverContext,
   OverlayRect,
@@ -27,6 +29,16 @@ import type {
 } from '../types'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
 import {useSchema} from './schema/useSchema'
+
+const isReactElementOverlayComponent = (
+  component:
+    | OverlayComponent
+    | {component: OverlayComponent; props?: Record<string, unknown>}
+    | Array<OverlayComponent | {component: OverlayComponent; props?: Record<string, unknown>}>
+    | ReactElement,
+): component is ReactElement => {
+  return isValidElement(component)
+}
 
 export interface ElementOverlayProps {
   componentResolver?: OverlayComponentResolver
@@ -144,18 +156,6 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-const PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({
-  children,
-  style,
-  ...rest
-}) => {
-  return (
-    <div style={{...style, pointerEvents: 'all'}} data-sanity-overlay-element {...rest}>
-      {children}
-    </div>
-  )
-}
-
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   const {element, focused, componentResolver, node, showActions, draggable} = props
 
@@ -198,16 +198,16 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     const resolved = componentResolver?.(componentContext)
     if (!resolved) return undefined
 
-    const components = (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
-      if ('component' in component) {
+    if (isReactElementOverlayComponent(resolved)) {
+      return resolved
+    }
+
+    return (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
+      if (typeof component === 'object' && 'component' in component) {
         return component
       }
-      return {component: component, props: {}}
+      return {component, props: {}}
     })
-
-    if (!components.length) return undefined
-
-    return components
   }, [componentResolver, componentContext])
 
   return (
@@ -236,12 +236,13 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         </Tab>
       )}
 
-      {customComponents &&
-        customComponents.map(({component: Component, props}, i) => {
-          return (
-            <Component key={i} PointerEvents={PointerEvents} {...componentContext!} {...props} />
-          )
-        })}
+      {Array.isArray(customComponents)
+        ? customComponents.map(({component: Component, props}, i) => {
+            return (
+              <Component key={i} PointerEvents={PointerEvents} {...componentContext!} {...props} />
+            )
+          })
+        : customComponents}
     </>
   )
 }

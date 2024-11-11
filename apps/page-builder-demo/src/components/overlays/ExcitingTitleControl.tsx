@@ -2,10 +2,14 @@
 
 import {at, set} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
-import {useDocuments, type OverlayComponent} from '@sanity/visual-editing'
+import {SanityNode, useDocuments, type OverlayComponent} from '@sanity/visual-editing'
+import {FunctionComponent, HTMLAttributes, PropsWithChildren} from 'react'
 
-export const ExcitingTitleControl: OverlayComponent = (props) => {
-  const {PointerEvents, node} = props
+export const ExcitingTitleControl: FunctionComponent<{
+  node: SanityNode
+  PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
+}> = (props) => {
+  const {node, PointerEvents} = props
 
   const {getDocument} = useDocuments()
   const doc = getDocument(node.id)

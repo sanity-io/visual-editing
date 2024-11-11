@@ -420,6 +420,7 @@ export type OverlayComponentResolver<
   | T
   | {component: T; props?: Record<string, unknown>}
   | Array<T | {component: T; props?: Record<string, unknown>}>
+  | ReactElement
   | undefined
   | void
 
