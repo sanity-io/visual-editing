@@ -17,6 +17,7 @@ export type {
   OverlayComponentResolver,
   OverlayComponentResolverContext,
   OverlayController,
+  OverlayElementField,
   OverlayElementParent,
   OverlayEventHandler,
   OverlayMsg,

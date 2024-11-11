@@ -1,8 +1,9 @@
 'use client'
 
-import {OverlayComponent, OverlayComponentResolver, useSharedState} from '@sanity/visual-editing'
+import {OverlayComponent, OverlayComponentResolver} from '@sanity/visual-editing'
 import {
   defineOverlayComponent,
+  PointerEvents,
   UnionInsertMenuOverlay,
 } from '@sanity/visual-editing/unstable_overlay-components'
 import {ExcitingTitleControl} from './ExcitingTitleControl'
@@ -21,7 +22,7 @@ export const components: OverlayComponentResolver = (props) => {
   > = [OverlayHighlight]
 
   if (type === 'string' && node.path === 'title') {
-    components.push(ExcitingTitleControl)
+    return <ExcitingTitleControl node={node} PointerEvents={PointerEvents} />
   }
 
   if (type === 'object' && node.path.endsWith('rotations')) {

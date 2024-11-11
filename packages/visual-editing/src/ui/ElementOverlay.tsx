@@ -3,6 +3,7 @@ import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {DocumentIcon, DragHandleIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
 import {
+  isValidElement,
   memo,
   useCallback,
   useEffect,
@@ -11,24 +12,33 @@ import {
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
-  type HTMLAttributes,
-  type PropsWithChildren,
+  type ReactElement,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
+import {PointerEvents} from '../overlay-components/components/PointerEvents'
 import type {
   ElementFocusedState,
   ElementNode,
   OverlayComponent,
   OverlayComponentResolver,
   OverlayComponentResolverContext,
-  OverlayElementParent,
   OverlayRect,
   SanityNode,
   SanityStegaNode,
 } from '../types'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
 import {useSchema} from './schema/useSchema'
+
+const isReactElementOverlayComponent = (
+  component:
+    | OverlayComponent
+    | {component: OverlayComponent; props?: Record<string, unknown>}
+    | Array<OverlayComponent | {component: OverlayComponent; props?: Record<string, unknown>}>
+    | ReactElement,
+): component is ReactElement => {
+  return isValidElement(component)
+}
 
 export interface ElementOverlayProps {
   componentResolver?: OverlayComponentResolver
@@ -146,40 +156,6 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-const PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({
-  children,
-  style,
-  ...rest
-}) => {
-  return (
-    <div style={{...style, pointerEvents: 'all'}} data-sanity-overlay-element {...rest}>
-      {children}
-    </div>
-  )
-}
-
-const ComponentWrapper: FunctionComponent<{
-  element: ElementNode
-  components: Array<{component: OverlayComponent; props?: Record<string, unknown>}>
-  parent: OverlayElementParent
-  node: SanityNode
-}> = (props) => {
-  const {components, element, node, parent} = props
-
-  return components.map(({component: Component, props}, i) => {
-    return (
-      <Component
-        key={i}
-        element={element}
-        node={node}
-        parent={parent}
-        PointerEvents={PointerEvents}
-        {...props}
-      />
-    )
-  })
-}
-
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   const {element, focused, componentResolver, node, showActions, draggable} = props
 
@@ -201,39 +177,38 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     return <DocumentIcon />
   }, [schemaType?.icon])
 
-  const customComponentsProps = useMemo(() => {
+  const componentContext = useMemo<OverlayComponentResolverContext | undefined>(() => {
     if (!('path' in node)) return undefined
+    if (!field || !schemaType) return undefined
+    const type = field.value.type
 
-    const type = field?.value.type
-    if (!type) return undefined
-
-    const context = {
+    return {
+      document: schemaType,
       element,
+      field,
       focused: !!focused,
       node,
       parent,
       type,
-    } satisfies OverlayComponentResolverContext
+    }
+  }, [schemaType, element, field, focused, node, parent])
 
-    const resolved = componentResolver?.(context)
+  const customComponents = useMemo(() => {
+    if (!componentContext) return undefined
+    const resolved = componentResolver?.(componentContext)
     if (!resolved) return undefined
 
-    const components = (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
-      if ('component' in component) {
+    if (isReactElementOverlayComponent(resolved)) {
+      return resolved
+    }
+
+    return (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
+      if (typeof component === 'object' && 'component' in component) {
         return component
       }
-      return {component: component, props: {}}
+      return {component, props: {}}
     })
-
-    if (!components.length) return undefined
-
-    return {
-      components,
-      element,
-      node,
-      parent,
-    }
-  }, [componentResolver, element, field, focused, node, parent])
+  }, [componentResolver, componentContext])
 
   return (
     <>
@@ -261,7 +236,13 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         </Tab>
       )}
 
-      {customComponentsProps && <ComponentWrapper {...customComponentsProps} />}
+      {Array.isArray(customComponents)
+        ? customComponents.map(({component: Component, props}, i) => {
+            return (
+              <Component key={i} PointerEvents={PointerEvents} {...componentContext!} {...props} />
+            )
+          })
+        : customComponents}
     </>
   )
 }

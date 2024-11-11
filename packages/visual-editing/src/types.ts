@@ -378,10 +378,33 @@ export type DisableVisualEditing = () => void
 export interface OverlayComponentResolverContext<
   P extends OverlayElementParent = OverlayElementParent,
 > {
+  /**
+   * The resolved field's document schema type
+   */
+  document: DocumentSchema
+  /**
+   * The element node that the overlay is attached to
+   */
   element: ElementNode
+  /**
+   * The resolved field schema type
+   */
+  field: OverlayElementField
+  /**
+   * Whether the overlay is focused or not
+   */
   focused: boolean
+  /**
+   * The Sanity node data that triggered the overlay
+   */
   node: SanityNode
+  /**
+   * The resolved field's parent schema type
+   */
   parent: P
+  /**
+   * A convience property, equal to `field.value.type`
+   */
   type: string
 }
 
@@ -397,6 +420,7 @@ export type OverlayComponentResolver<
   | T
   | {component: T; props?: Record<string, unknown>}
   | Array<T | {component: T; props?: Record<string, unknown>}>
+  | ReactElement
   | undefined
   | void
 
@@ -480,11 +504,9 @@ export type ContextMenuNode =
 /**
  * @public
  */
-export interface OverlayComponentProps<P extends OverlayElementParent = OverlayElementParent> {
+export interface OverlayComponentProps<P extends OverlayElementParent = OverlayElementParent>
+  extends OverlayComponentResolverContext<P> {
   PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
-  element: ElementNode
-  parent: P
-  node: SanityNode
 }
 
 /**
