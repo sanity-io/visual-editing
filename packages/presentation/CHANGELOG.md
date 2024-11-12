@@ -12,6 +12,30 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.18.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.17.10...presentation-v1.18.0) (2024-11-12)
+
+
+### Features
+
+* add shared state ([#2120](https://github.com/sanity-io/visual-editing/issues/2120)) ([1fb8143](https://github.com/sanity-io/visual-editing/commit/1fb814396cc6a867418b00e07751f493d202d58b))
+* **presentation:** allow passing custom header component ([#2118](https://github.com/sanity-io/visual-editing/issues/2118)) ([1aa419f](https://github.com/sanity-io/visual-editing/commit/1aa419f3e2a00b6acb26748ed33099f4a73730bf))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.4 ([#2132](https://github.com/sanity-io/visual-editing/issues/2132)) ([4f96d9a](https://github.com/sanity-io/visual-editing/commit/4f96d9a539094173caf1644a67f168492f3a35c4))
+* **presentation:** remove shared state value removal on unmount ([#2135](https://github.com/sanity-io/visual-editing/issues/2135)) ([b246aa0](https://github.com/sanity-io/visual-editing/commit/b246aa06e3629a89c2ae5899d43ebb2e5603f446))
+* support deprecated `draftMode` preview URL config ([#2137](https://github.com/sanity-io/visual-editing/issues/2137)) ([c98993e](https://github.com/sanity-io/visual-editing/commit/c98993eebb8104e31eb67a1f27353f2909114e9b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.0.3
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.0
+
 ## [1.17.10](https://github.com/sanity-io/visual-editing/compare/presentation-v1.17.9...presentation-v1.17.10) (2024-11-07)
 
 
