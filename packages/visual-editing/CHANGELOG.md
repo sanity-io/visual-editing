@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.7.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.6.0...visual-editing-v2.7.0) (2024-11-12)
+
+
+### Features
+
+* **visual-editing:** add `defineOverlayComponents` helper function ([#2124](https://github.com/sanity-io/visual-editing/issues/2124)) ([bfabaa4](https://github.com/sanity-io/visual-editing/commit/bfabaa43c8c2978a058109228dacb264f51e8b25))
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/mutate`, `xstate` & `@xstate/react` ([#2146](https://github.com/sanity-io/visual-editing/issues/2146)) ([6f4a765](https://github.com/sanity-io/visual-editing/commit/6f4a76566d681be294880105ece5cf0ece2547a0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.2
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.1
+
 ## [2.6.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.5.2...visual-editing-v2.6.0) (2024-11-12)
 
 
