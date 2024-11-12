@@ -936,8 +936,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
       xstate:
-        specifier: ^5.18.2
-        version: 5.18.2
+        specifier: ^5.19.0
+        version: 5.19.0
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -970,8 +970,8 @@ importers:
         specifier: workspace:*
         version: link:..
       '@xstate/react':
-        specifier: ^4.1.3
-        version: 4.1.3(@types/react@18.3.12)(react@18.3.1)(xstate@5.18.2)
+        specifier: ^5.0.0
+        version: 5.0.0(@types/react@18.3.12)(react@18.3.1)(xstate@5.19.0)
       isbot:
         specifier: ^5.1.17
         version: 5.1.17
@@ -1468,8 +1468,8 @@ importers:
         specifier: workspace:*
         version: link:../comlink
       '@sanity/mutate':
-        specifier: 0.11.0-canary.2
-        version: 0.11.0-canary.2(xstate@5.18.2)
+        specifier: 0.11.0-canary.3
+        version: 0.11.0-canary.3(xstate@5.19.0)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -1495,8 +1495,8 @@ importers:
         specifier: 0.31.1
         version: 0.31.1
       xstate:
-        specifier: ^5.18.2
-        version: 5.18.2
+        specifier: ^5.19.0
+        version: 5.19.0
     devDependencies:
       '@remix-run/react':
         specifier: ^2.14.0
@@ -4479,11 +4479,11 @@ packages:
     resolution: {integrity: sha512-yjRBoscacw4hl4c3UF/BhOCTUOjGDRP2u7biF/ALsgAOnMhUDlLA1OtDz3op7oyz4Yp30QydnlrtR3ha/Una5g==}
     engines: {node: '>=18'}
 
-  '@sanity/mutate@0.11.0-canary.2':
-    resolution: {integrity: sha512-LIBygOQV88WL0keDXRxO/PUITy7J8QSqgy0JWxcCmdccHk1sC4ptXoIHEPT66cy2Yf8BhZu6LhyJVYTnpnivqA==}
+  '@sanity/mutate@0.11.0-canary.3':
+    resolution: {integrity: sha512-zZQo3rsjsTZBlRi+D3S90MebvzWNtdRzb6A0s07gEO2PtCtc5LEUSyPCLvIZiv6e2YMjBmMmuref4IB8VixKnw==}
     engines: {node: '>=18'}
     peerDependencies:
-      xstate: ^5.18.2
+      xstate: ^5.19.0
     peerDependenciesMeta:
       xstate:
         optional: true
@@ -5636,6 +5636,15 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       xstate: ^5.18.2
+    peerDependenciesMeta:
+      xstate:
+        optional: true
+
+  '@xstate/react@5.0.0':
+    resolution: {integrity: sha512-MkYMpmqqCdK43wSl/V/jSpsvumzV4RSG2ZOUEAIrg/w36BJpyufMrsR0rz7POX5ICF5s3xzP9q7Hd5TyM5SSyQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-0
+      xstate: ^5.19.0
     peerDependenciesMeta:
       xstate:
         optional: true
@@ -13592,8 +13601,8 @@ packages:
   xregexp@2.0.0:
     resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
 
-  xstate@5.18.2:
-    resolution: {integrity: sha512-hab5VOe29D0agy8/7dH1lGw+7kilRQyXwpaChoMu4fe6rDP+nsHYhDYKfS2O4iXE7myA98TW6qMEudj/8NXEkA==}
+  xstate@5.19.0:
+    resolution: {integrity: sha512-Juh1MjeRaVWr1IRxXYvQMMRFMrei6vq6+AfP6Zk9D9YV0ZuvubN0aM6s2ITwUrq+uWtP1NTO8kOZmsM/IqeOiQ==}
 
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
@@ -16244,7 +16253,7 @@ snapshots:
       '@sanity/schema': 3.63.0(debug@4.3.7)
       '@sanity/types': 3.63.0(debug@4.3.7)
       '@sanity/util': 3.63.0(debug@4.3.7)
-      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@18.3.1)(xstate@5.18.2)
+      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@18.3.1)(xstate@5.19.0)
       debug: 4.3.7(supports-color@9.4.0)
       is-hotkey-esm: 1.0.0
       lodash: 4.17.21
@@ -16257,7 +16266,7 @@ snapshots:
       slate-react: 0.111.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-dom@0.111.0(slate@0.110.2))(slate@0.110.2)
       styled-components: 6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       use-effect-event: 1.0.2(react@18.3.1)
-      xstate: 5.18.2
+      xstate: 5.19.0
     transitivePeerDependencies:
       - '@types/react'
       - react-dom
@@ -16270,7 +16279,7 @@ snapshots:
       '@sanity/schema': 3.63.0(debug@4.3.7)
       '@sanity/types': 3.63.0(debug@4.3.7)
       '@sanity/util': 3.63.0(debug@4.3.7)
-      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@19.0.0-rc-ed15d500-20241110)(xstate@5.18.2)
+      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@19.0.0-rc-ed15d500-20241110)(xstate@5.19.0)
       debug: 4.3.7(supports-color@9.4.0)
       is-hotkey-esm: 1.0.0
       lodash: 4.17.21
@@ -16283,7 +16292,7 @@ snapshots:
       slate-react: 0.111.0(react-dom@19.0.0-rc-ed15d500-20241110(react@19.0.0-rc-ed15d500-20241110))(react@19.0.0-rc-ed15d500-20241110)(slate-dom@0.111.0(slate@0.110.2))(slate@0.110.2)
       styled-components: 6.1.13(react-dom@19.0.0-rc-ed15d500-20241110(react@19.0.0-rc-ed15d500-20241110))(react@19.0.0-rc-ed15d500-20241110)
       use-effect-event: 1.0.2(react@19.0.0-rc-ed15d500-20241110)
-      xstate: 5.18.2
+      xstate: 5.19.0
     transitivePeerDependencies:
       - '@types/react'
       - react-dom
@@ -16296,7 +16305,7 @@ snapshots:
       '@sanity/schema': 3.63.0(debug@4.3.7)
       '@sanity/types': 3.63.0(debug@4.3.7)
       '@sanity/util': 3.63.0(debug@4.3.7)
-      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@18.3.1)(xstate@5.18.2)
+      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@18.3.1)(xstate@5.19.0)
       debug: 4.3.7(supports-color@9.4.0)
       is-hotkey-esm: 1.0.0
       lodash: 4.17.21
@@ -16309,7 +16318,7 @@ snapshots:
       slate-react: 0.111.0(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@18.3.1))(react@18.3.1)(slate-dom@0.111.0(slate@0.110.2))(slate@0.110.2)
       styled-components: 6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@18.3.1))(react@18.3.1)
       use-effect-event: 1.0.2(react@18.3.1)
-      xstate: 5.18.2
+      xstate: 5.19.0
     transitivePeerDependencies:
       - '@types/react'
       - react-dom
@@ -16322,7 +16331,7 @@ snapshots:
       '@sanity/schema': 3.63.0(debug@4.3.7)
       '@sanity/types': 3.63.0(debug@4.3.7)
       '@sanity/util': 3.63.0(debug@4.3.7)
-      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@19.0.0-rc-fb9a90fa48-20240614)(xstate@5.18.2)
+      '@xstate/react': 4.1.3(@types/react@18.3.12)(react@19.0.0-rc-fb9a90fa48-20240614)(xstate@5.19.0)
       debug: 4.3.7(supports-color@9.4.0)
       is-hotkey-esm: 1.0.0
       lodash: 4.17.21
@@ -16335,7 +16344,7 @@ snapshots:
       slate-react: 0.111.0(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)(slate-dom@0.111.0(slate@0.110.2))(slate@0.110.2)
       styled-components: 6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
       use-effect-event: 1.0.2(react@19.0.0-rc-fb9a90fa48-20240614)
-      xstate: 5.18.2
+      xstate: 5.19.0
     transitivePeerDependencies:
       - '@types/react'
       - react-dom
@@ -16615,7 +16624,7 @@ snapshots:
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
       eslint-plugin-jest: 26.9.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
       eslint-plugin-jest-dom: 4.0.3(eslint@8.57.1)
@@ -17302,7 +17311,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@sanity/mutate@0.11.0-canary.2(xstate@5.18.2)':
+  '@sanity/mutate@0.11.0-canary.3(xstate@5.19.0)':
     dependencies:
       '@sanity/client': 6.22.4(debug@4.3.7)
       '@sanity/diff-match-patch': 3.1.1
@@ -17311,7 +17320,7 @@ snapshots:
       mendoza: 3.0.7
       rxjs: 7.8.1
     optionalDependencies:
-      xstate: 5.18.2
+      xstate: 5.19.0
     transitivePeerDependencies:
       - debug
 
@@ -19254,33 +19263,43 @@ snapshots:
 
   '@web3-storage/multipart-parser@1.0.0': {}
 
-  '@xstate/react@4.1.3(@types/react@18.3.12)(react@18.3.1)(xstate@5.18.2)':
+  '@xstate/react@4.1.3(@types/react@18.3.12)(react@18.3.1)(xstate@5.19.0)':
     dependencies:
       react: 18.3.1
       use-isomorphic-layout-effect: 1.1.2(@types/react@18.3.12)(react@18.3.1)
       use-sync-external-store: 1.2.2(react@18.3.1)
     optionalDependencies:
-      xstate: 5.18.2
+      xstate: 5.19.0
     transitivePeerDependencies:
       - '@types/react'
 
-  '@xstate/react@4.1.3(@types/react@18.3.12)(react@19.0.0-rc-ed15d500-20241110)(xstate@5.18.2)':
+  '@xstate/react@4.1.3(@types/react@18.3.12)(react@19.0.0-rc-ed15d500-20241110)(xstate@5.19.0)':
     dependencies:
       react: 19.0.0-rc-ed15d500-20241110
       use-isomorphic-layout-effect: 1.1.2(@types/react@18.3.12)(react@19.0.0-rc-ed15d500-20241110)
       use-sync-external-store: 1.2.2(react@19.0.0-rc-ed15d500-20241110)
     optionalDependencies:
-      xstate: 5.18.2
+      xstate: 5.19.0
     transitivePeerDependencies:
       - '@types/react'
 
-  '@xstate/react@4.1.3(@types/react@18.3.12)(react@19.0.0-rc-fb9a90fa48-20240614)(xstate@5.18.2)':
+  '@xstate/react@4.1.3(@types/react@18.3.12)(react@19.0.0-rc-fb9a90fa48-20240614)(xstate@5.19.0)':
     dependencies:
       react: 19.0.0-rc-fb9a90fa48-20240614
       use-isomorphic-layout-effect: 1.1.2(@types/react@18.3.12)(react@19.0.0-rc-fb9a90fa48-20240614)
       use-sync-external-store: 1.2.2(react@19.0.0-rc-fb9a90fa48-20240614)
     optionalDependencies:
-      xstate: 5.18.2
+      xstate: 5.19.0
+    transitivePeerDependencies:
+      - '@types/react'
+
+  '@xstate/react@5.0.0(@types/react@18.3.12)(react@18.3.1)(xstate@5.19.0)':
+    dependencies:
+      react: 18.3.1
+      use-isomorphic-layout-effect: 1.1.2(@types/react@18.3.12)(react@18.3.1)
+      use-sync-external-store: 1.2.2(react@18.3.1)
+    optionalDependencies:
+      xstate: 5.19.0
     transitivePeerDependencies:
       - '@types/react'
 
@@ -21280,13 +21299,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0)(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.3.7(supports-color@9.4.0)
       enhanced-resolve: 5.17.1
       eslint: 8.57.1
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
@@ -21318,25 +21337,25 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -21368,7 +21387,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -30008,7 +30027,7 @@ snapshots:
 
   xregexp@2.0.0: {}
 
-  xstate@5.18.2: {}
+  xstate@5.19.0: {}
 
   xtend@4.0.2: {}
 
