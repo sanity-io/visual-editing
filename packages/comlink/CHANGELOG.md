@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.1...comlink-v1.1.2) (2024-11-12)
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/mutate`, `xstate` & `@xstate/react` ([#2146](https://github.com/sanity-io/visual-editing/issues/2146)) ([6f4a765](https://github.com/sanity-io/visual-editing/commit/6f4a76566d681be294880105ece5cf0ece2547a0))
+
 ## [1.1.1](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.0...comlink-v1.1.1) (2024-10-24)
 
 
