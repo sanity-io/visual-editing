@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.30...visual-editing-helpers-v0.7.0) (2024-11-12)
+
+
+### Features
+
+* add shared state ([#2120](https://github.com/sanity-io/visual-editing/issues/2120)) ([1fb8143](https://github.com/sanity-io/visual-editing/commit/1fb814396cc6a867418b00e07751f493d202d58b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.4 ([#2132](https://github.com/sanity-io/visual-editing/issues/2132)) ([4f96d9a](https://github.com/sanity-io/visual-editing/commit/4f96d9a539094173caf1644a67f168492f3a35c4))
+
 ## [0.6.30](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.29...visual-editing-helpers-v0.6.30) (2024-11-06)
 
 

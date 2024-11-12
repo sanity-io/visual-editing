@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.6.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.5.2...visual-editing-v2.6.0) (2024-11-12)
+
+
+### Features
+
+* add shared state ([#2120](https://github.com/sanity-io/visual-editing/issues/2120)) ([1fb8143](https://github.com/sanity-io/visual-editing/commit/1fb814396cc6a867418b00e07751f493d202d58b))
+* **visual-editing:** add additional schema component resolver context ([#2123](https://github.com/sanity-io/visual-editing/issues/2123)) ([3bbab58](https://github.com/sanity-io/visual-editing/commit/3bbab580bcc405c4fcdef3e35fe4b9dd5c4374a9))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.4 ([#2132](https://github.com/sanity-io/visual-editing/issues/2132)) ([4f96d9a](https://github.com/sanity-io/visual-editing/commit/4f96d9a539094173caf1644a67f168492f3a35c4))
+* **visual-editing:** correct component resolver array return types ([#2117](https://github.com/sanity-io/visual-editing/issues/2117)) ([b60dc53](https://github.com/sanity-io/visual-editing/commit/b60dc53938cf1e208ec49151360d843eb1cc30d6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.0.3
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.0
+
 ## [2.5.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.5.1...visual-editing-v2.5.2) (2024-11-07)
 
 
