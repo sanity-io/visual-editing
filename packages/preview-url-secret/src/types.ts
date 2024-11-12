@@ -87,7 +87,7 @@ export interface PreviewUrlResolverOptions {
      */
     enable: string
     /**
-     * @deprecated - `previewMode` is deprecated, use `draftMode.shareAccess` instead
+     * @deprecated - use `previewMode.shareAccess` instead
      */
     shareAccess?: never
     /**
