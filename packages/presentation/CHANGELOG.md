@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.18.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.18.1...presentation-v1.18.2) (2024-11-13)
+
+
+### Bug Fixes
+
+* **presentation:** prevent controller reinit on iframe status change ([#2148](https://github.com/sanity-io/visual-editing/issues/2148)) ([d06ec9f](https://github.com/sanity-io/visual-editing/commit/d06ec9fbfc4c3541acd8125b2b89a71f0fff5d30))
+
 ## [1.18.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.18.0...presentation-v1.18.1) (2024-11-12)
 
 
