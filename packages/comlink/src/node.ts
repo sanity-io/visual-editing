@@ -5,7 +5,6 @@ import {
   createActor,
   emit,
   enqueueActions,
-  fromCallback,
   raise,
   setup,
   stopChild,
