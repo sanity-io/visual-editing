@@ -260,8 +260,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
 
     const stop = () => {
       channels.forEach((channel) => {
-        channel.disconnect()
-        channel.stop()
+        cleanupChannel(channel as unknown as Channel<Message, Message>)
       })
     }
 

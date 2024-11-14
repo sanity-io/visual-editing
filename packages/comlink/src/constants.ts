@@ -4,7 +4,10 @@ import type {MessageType} from './types'
 export const DOMAIN = 'sanity/comlink'
 
 /** @internal */
-export const RESPONSE_TIMEOUT = 10000
+export const RESPONSE_TIMEOUT_DEFAULT = 3_000
+
+/** @internal */
+export const FETCH_TIMEOUT_DEFAULT = 10_000
 
 /** @internal */
 export const HEARTBEAT_INTERVAL = 1000
