@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.2...comlink-v1.1.3) (2024-11-14)
+
+
+### Bug Fixes
+
+* **comlink:** improve reconnect handling ([dd7f166](https://github.com/sanity-io/visual-editing/commit/dd7f1663f9fc0f10d38c1df0b72b2116f9ab7d24))
+
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.1...comlink-v1.1.2) (2024-11-12)
 
 
