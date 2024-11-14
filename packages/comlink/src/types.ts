@@ -46,6 +46,7 @@ export interface RequestData<S extends Message> {
   type: MessageType
   resolvable?: PromiseWithResolvers<S['response']>
   options?: {
+    responseTimeout?: number
     signal?: AbortSignal
     suppressWarnings?: boolean
   }

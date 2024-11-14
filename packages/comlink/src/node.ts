@@ -5,6 +5,7 @@ import {
   createActor,
   emit,
   enqueueActions,
+  fromCallback,
   raise,
   setup,
   stopChild,
@@ -13,6 +14,7 @@ import {
 import {createListenLogic, listenInputFromContext} from './common'
 import {
   DOMAIN,
+  FETCH_TIMEOUT_DEFAULT,
   MSG_DISCONNECT,
   MSG_HANDSHAKE_ACK,
   MSG_HANDSHAKE_SYN,
@@ -127,13 +129,15 @@ export const createNodeMachine = <
       events:
         | {type: 'heartbeat.received'; message: MessageEvent<ProtocolMessage<HeartbeatMessage>>}
         | {type: 'message.received'; message: MessageEvent<ProtocolMessage<R>>}
+        | {type: 'handshake.syn'; message: MessageEvent<ProtocolMessage<R>>}
         | {
             type: 'post'
             data: V
             resolvable?: PromiseWithResolvers<S['response']>
             options?: {
+              responseTimeout?: number
               signal?: AbortSignal
-              suppressWarning?: boolean
+              suppressWarnings?: boolean
             }
           }
         | {type: 'request.aborted'; requestId: string}
@@ -196,6 +200,7 @@ export const createNodeMachine = <
                 from: context.name,
                 parentRef: self,
                 resolvable: request.resolvable,
+                responseTimeout: request.options?.responseTimeout,
                 responseTo: request.responseTo,
                 signal: request.options?.signal,
                 sources: context.target!,
@@ -293,15 +298,15 @@ export const createNodeMachine = <
       }),
       'set connection config': assign({
         connectionId: ({event}) => {
-          assertEvent(event, 'message.received')
+          assertEvent(event, 'handshake.syn')
           return event.message.data.connectionId
         },
         target: ({event}) => {
-          assertEvent(event, 'message.received')
+          assertEvent(event, 'handshake.syn')
           return event.message.source || undefined
         },
         targetOrigin: ({event}) => {
-          assertEvent(event, 'message.received')
+          assertEvent(event, 'handshake.syn')
           return event.message.origin
         },
       }),
@@ -323,6 +328,17 @@ export const createNodeMachine = <
       target: undefined,
       targetOrigin: null,
     }),
+    // Always listen for handshake syn messages. The channel could have
+    // disconnected without being able to notify the node, and so need to
+    // re-establish the connection.
+    invoke: {
+      id: 'listen for handshake syn',
+      src: 'listen',
+      input: listenInputFromContext({
+        include: MSG_HANDSHAKE_SYN,
+        responseType: 'handshake.syn',
+      }),
+    },
     on: {
       'request.success': {
         actions: 'remove request',
@@ -333,32 +349,22 @@ export const createNodeMachine = <
       'request.aborted': {
         actions: 'remove request',
       },
+      'handshake.syn': {
+        actions: 'set connection config',
+        target: '.handshaking',
+      },
     },
     initial: 'idle',
     states: {
       idle: {
-        invoke: {
-          id: 'listen for handshake syn',
-          src: 'listen',
-          input: listenInputFromContext({
-            include: MSG_HANDSHAKE_SYN,
-            count: 1,
-          }),
-          onDone: {
-            target: 'handshaking',
-            guard: 'hasSource',
-          },
-        },
         on: {
-          'message.received': {
-            actions: 'set connection config',
-          },
-          'post': {
+          post: {
             actions: 'buffer message',
           },
         },
       },
       handshaking: {
+        guard: 'hasSource',
         entry: 'send handshake syn ack',
         invoke: [
           {
@@ -387,7 +393,13 @@ export const createNodeMachine = <
             id: 'listen for messages',
             src: 'listen',
             input: listenInputFromContext({
-              exclude: [MSG_DISCONNECT, MSG_HANDSHAKE_ACK, MSG_HEARTBEAT, MSG_RESPONSE],
+              exclude: [
+                MSG_DISCONNECT,
+                MSG_HANDSHAKE_SYN,
+                MSG_HANDSHAKE_ACK,
+                MSG_HEARTBEAT,
+                MSG_RESPONSE,
+              ],
             }),
           },
         ],
@@ -413,7 +425,13 @@ export const createNodeMachine = <
             id: 'listen for messages',
             src: 'listen',
             input: listenInputFromContext({
-              exclude: [MSG_RESPONSE, MSG_HEARTBEAT],
+              exclude: [
+                MSG_DISCONNECT,
+                MSG_HANDSHAKE_SYN,
+                MSG_HANDSHAKE_ACK,
+                MSG_HEARTBEAT,
+                MSG_RESPONSE,
+              ],
             }),
           },
           {
@@ -504,14 +522,20 @@ export const createNode = <R extends Message, S extends Message>(
 
   const fetch = (
     data: WithoutResponse<S>,
-    options?: {signal?: AbortSignal; suppressWarnings?: boolean},
+    options?: {
+      responseTimeout?: number
+      signal?: AbortSignal
+      suppressWarnings?: boolean
+    },
   ) => {
+    const {responseTimeout = FETCH_TIMEOUT_DEFAULT, signal, suppressWarnings} = options || {}
+
     const resolvable = Promise.withResolvers<S['response']>()
     actor.send({
       type: 'post',
       data,
       resolvable,
-      options,
+      options: {responseTimeout, signal, suppressWarnings},
     })
     return resolvable.promise as never
   }

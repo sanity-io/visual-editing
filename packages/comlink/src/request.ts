@@ -8,7 +8,7 @@ import {
   type ActorRefFrom,
   type AnyActorRef,
 } from 'xstate'
-import {MSG_RESPONSE, RESPONSE_TIMEOUT} from './constants'
+import {MSG_RESPONSE, RESPONSE_TIMEOUT_DEFAULT} from './constants'
 import type {Message, MessageData, MessageType, ProtocolMessage, ResponseMessage} from './types'
 
 const throwOnEvent =
@@ -34,6 +34,7 @@ export interface RequestMachineContext<S extends Message> {
   parentRef: AnyActorRef
   resolvable: PromiseWithResolvers<S['response']> | undefined
   response: S['response'] | null
+  responseTimeout: number | undefined
   responseTo: string | undefined
   signal: AbortSignal | undefined
   suppressWarnings: boolean | undefined
@@ -82,6 +83,7 @@ export const createRequestMachine = <
         from: string
         parentRef: AnyActorRef
         resolvable?: PromiseWithResolvers<S['response']>
+        responseTimeout?: number
         responseTo?: string
         signal?: AbortSignal
         sources: Set<MessageEventSource> | MessageEventSource
@@ -176,7 +178,7 @@ export const createRequestMachine = <
     },
     delays: {
       initialTimeout: 0,
-      responseTimeout: RESPONSE_TIMEOUT,
+      responseTimeout: ({context}) => context.responseTimeout ?? RESPONSE_TIMEOUT_DEFAULT,
     },
   }).createMachine({
     /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiAD1gBd0GwT0AzFgJ2QNwdzoKAFVyowAewCuDItTRY8hUuSoBtAAwBdRKAAOE2P1wT8ukLUQBGAEwBWEgBYAnK+eOAzB7sB2DzY8rABoQAE9rDQc3V0cNTw8fAA4NHwBfVJCFHAJiElgwfAgCKGpNHSQQAyMBU3NLBDsrDxI7DTaAjQA2OOcNDxDwhHsNJx9Ou0TOq2cJxP9HdMyMbOU8gqL8ErUrcv1DY1qK+sbm1vaPLp6+gcRnGydo9wDGycWQLKVc9AB3dGNN6jiWCwdAwMrmKoHMxHRCJRKOEiJHwuZKBZwXKzBMKIGyYkhtAkXOweTqOHw2RJvD45Ug-P4CAH0JgsNicMA8LhwAz4fKicTSWTyZafWm-f5QcEVSE1aGgepwhFIlF9aYYrGDC4+JzEppjGzOUkeGbpDIgfASCBwczU5QQ-YyuqIAC0nRuCBd+IJXu9KSpwppZEoYDt1RMsosiEcNjdVjiJEeGisiSTHkcVgWpptuXyhWKIahjqGzi1BqRJINnVcdkcbuTLS9VYC8ISfsUAbp4vzDphCHJIyjBvJNlxNmRNexQ3sJGH43GPj8jWJrZWuXYfyoEC7YcLsbrgRsjkcvkmdgNbopVhIPhVfnsh8ClMz-tWsCkmEwcHgUvt257u8v+6Hse4xnhOdZnImVidPqCRNB4JqpEAA */
@@ -191,6 +193,7 @@ export const createRequestMachine = <
         parentRef: input.parentRef,
         resolvable: input.resolvable,
         response: null,
+        responseTimeout: input.responseTimeout,
         responseTo: input.responseTo,
         signal: input.signal,
         sources: input.sources instanceof Set ? input.sources : new Set([input.sources]),
