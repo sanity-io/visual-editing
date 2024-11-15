@@ -318,7 +318,10 @@ const Link = memo(function Link(props: {href: string}) {
   )
   const href = useMemo(() => {
     try {
-      const parsed = new URL(props.href, typeof location === 'undefined' ? undefined : location.origin)
+      const parsed = new URL(
+        props.href,
+        typeof location === 'undefined' ? undefined : location.origin,
+      )
       parsed.searchParams.set('preview', referer)
       return parsed.toString()
     } catch {
