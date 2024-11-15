@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.7.1...visual-editing-v2.7.2) (2024-11-15)
+
+
+### Bug Fixes
+
+* support relative studioUrl origins ([#2167](https://github.com/sanity-io/visual-editing/issues/2167)) ([9659706](https://github.com/sanity-io/visual-editing/commit/96597065f14a5412591c6e3f2736d67b4f7a4f32))
+
 ## [2.7.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.7.0...visual-editing-v2.7.1) (2024-11-14)
 
 
