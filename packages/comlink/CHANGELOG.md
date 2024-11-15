@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.2...comlink-v1.1.3) (2024-11-14)
+
+
+### Bug Fixes
+
+* **comlink:** ensure nodes always accept handshake synchronize events ([#2163](https://github.com/sanity-io/visual-editing/issues/2163)) ([5e31bec](https://github.com/sanity-io/visual-editing/commit/5e31bec67a9c77fe5db574d8760d90c8e1d0c46a))
+
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.1...comlink-v1.1.2) (2024-11-12)
 
 
