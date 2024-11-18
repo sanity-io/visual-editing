@@ -127,7 +127,17 @@ export function createOverlayController({
     })
   }
 
-  function setOverlayCursor() {
+  function setOverlayCursor(element: ElementNode, remove?: boolean) {
+    if (remove) {
+      handler({
+        type: 'overlay/setCursor',
+        element,
+        cursor: undefined,
+      })
+
+      return
+    }
+
     if (!inFrame || !optimisticActorReady) return
 
     const hoveredElement = getHoveredElement()
@@ -149,7 +159,7 @@ export function createOverlayController({
 
     handler({
       type: 'overlay/setCursor',
-      element: hoveredElement,
+      element,
       cursor,
     })
   }
@@ -272,7 +282,7 @@ export function createOverlayController({
           rect: getRect(element),
         })
 
-        setOverlayCursor()
+        setOverlayCursor(element)
       },
       mouseleave(e) {
         function leave() {
@@ -295,7 +305,7 @@ export function createOverlayController({
             }
           }
 
-          setOverlayCursor()
+          setOverlayCursor(element, true)
         }
 
         /**
