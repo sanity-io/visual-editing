@@ -6,11 +6,12 @@ import {
   MenuGroup,
   MenuItem,
   Popover,
+  Spinner,
   Stack,
   Text,
   type PopoverMargins,
 } from '@sanity/ui'
-import {useCallback, useMemo, useState, type FunctionComponent} from 'react'
+import {useCallback, useEffect, useMemo, useState, type FunctionComponent} from 'react'
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {useDocuments} from '../optimistic-state/useDocuments'
@@ -124,10 +125,16 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     return getNodeIcon(field)
   }, [field])
 
-  const items = useMemo(() => {
-    const doc = getDocument(node.id)
-    if (!doc) return []
-    return getContextMenuItems({node, field, parent, doc})
+  const [items, setItems] = useState<ContextMenuNode[] | undefined>(undefined)
+
+  useEffect(() => {
+    const fetchContextMenuItems = async () => {
+      const doc = getDocument(node.id)
+      if (!doc) return
+      const items = await getContextMenuItems({node, field, parent, doc})
+      setItems(items)
+    }
+    fetchContextMenuItems()
   }, [field, node, parent, getDocument])
 
   const contextMenuReferenceElement = useMemo(() => {
@@ -154,27 +161,28 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
         content={
           <Menu style={{minWidth: 120, maxWidth: 160}}>
             <Flex gap={2} padding={2}>
-              <Box flex="none">
-                <Text size={1}>{Icon}</Text>
-              </Box>
+              <Box flex="none">{items ? <Text size={1}>{Icon}</Text> : <Spinner size={1} />}</Box>
 
               <Stack flex={1} space={2}>
                 <Text size={1} weight="semibold">
-                  {title}
+                  {items ? title : 'Loading...'}
                 </Text>
               </Stack>
             </Flex>
 
-            <MenuDivider />
-
-            {items.map((item, i) => (
-              <ContextMenuItem
-                key={i}
-                node={item}
-                onDismiss={onDismiss}
-                boundaryElement={boundaryElement}
-              />
-            ))}
+            {items && (
+              <>
+                <MenuDivider />
+                {items.map((item, i) => (
+                  <ContextMenuItem
+                    key={i}
+                    node={item}
+                    onDismiss={onDismiss}
+                    boundaryElement={boundaryElement}
+                  />
+                ))}
+              </>
+            )}
           </Menu>
         }
       >

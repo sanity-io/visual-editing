@@ -58,6 +58,7 @@ export {
   type DocumentsGet,
   type DocumentsMutate,
   type OptimisticDocument,
+  type OptimisticDocumentPatches,
   type OptimisticReducer,
   type OptimisticReducerAction,
   type Path,

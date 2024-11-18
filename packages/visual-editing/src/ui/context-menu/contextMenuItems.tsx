@@ -32,7 +32,8 @@ import type {OptimisticDocument} from '../optimistic-state/useDocuments'
 
 export function getArrayRemoveAction(node: SanityNode, doc: OptimisticDocument): () => void {
   if (!node.type) throw new Error('Node type is missing')
-  return () => doc.patch(({snapshot}) => getArrayRemovePatches(node, snapshot))
+  return () =>
+    doc.patch(async ({getSnapshot}) => getArrayRemovePatches(node, (await getSnapshot())!))
 }
 
 function getArrayInsertAction(
@@ -47,7 +48,8 @@ function getArrayInsertAction(
 
 function getDuplicateAction(node: SanityNode, doc: OptimisticDocument): () => void {
   if (!node.type) throw new Error('Node type is missing')
-  return () => doc.patch(({snapshot}) => getArrayDuplicatePatches(node, snapshot))
+  return () =>
+    doc.patch(async ({getSnapshot}) => getArrayDuplicatePatches(node, (await getSnapshot())!))
 }
 
 export function getContextMenuItems(context: {
@@ -55,7 +57,7 @@ export function getContextMenuItems(context: {
   field: OverlayElementField
   node: SanityNode
   parent: OverlayElementParent
-}): ContextMenuNode[] {
+}): Promise<ContextMenuNode[]> {
   const {node, field, parent, doc} = context
   if (field?.type === 'arrayItem') {
     return getContextMenuArrayItems({node, field, doc})
@@ -64,7 +66,7 @@ export function getContextMenuItems(context: {
     return getContextMenuUnionItems({node, parent, doc})
   }
 
-  return []
+  return Promise.resolve([])
 }
 
 function getDuplicateItem(context: {doc: OptimisticDocument; node: SanityNode}) {
@@ -93,7 +95,7 @@ function getRemoveItems(context: {doc: OptimisticDocument; node: SanityNode}) {
   ]
 }
 
-function getMoveItems(
+async function getMoveItems(
   context: {
     doc: OptimisticDocument
     node: SanityNode
@@ -105,10 +107,13 @@ function getMoveItems(
 
   const items: ContextMenuNode[] = []
   const groupItems: ContextMenuNode[] = []
-  const moveUpPatches = getArrayMovePatches(node, doc, 'previous')
-  const moveDownPatches = getArrayMovePatches(node, doc, 'next')
-  const moveFirstPatches = getArrayMovePatches(node, doc, 'first')
-  const moveLastPatches = getArrayMovePatches(node, doc, 'last')
+
+  const [moveUpPatches, moveDownPatches, moveFirstPatches, moveLastPatches] = await Promise.all([
+    getArrayMovePatches(node, doc, 'previous'),
+    getArrayMovePatches(node, doc, 'next'),
+    getArrayMovePatches(node, doc, 'first'),
+    getArrayMovePatches(node, doc, 'last'),
+  ])
 
   if (moveFirstPatches.length) {
     groupItems.push({
@@ -126,7 +131,6 @@ function getMoveItems(
       action: () => doc.patch(moveUpPatches),
     })
   }
-
   if (moveDownPatches.length) {
     groupItems.push({
       type: 'action',
@@ -159,16 +163,16 @@ function getMoveItems(
   return items
 }
 
-function getContextMenuArrayItems(context: {
+async function getContextMenuArrayItems(context: {
   doc: OptimisticDocument
   field: SchemaArrayItem
   node: SanityNode
-}): ContextMenuNode[] {
+}): Promise<ContextMenuNode[]> {
   const {node, field, doc} = context
   const items: ContextMenuNode[] = []
   items.push(...getDuplicateItem(context))
   items.push(...getRemoveItems(context))
-  items.push(...getMoveItems(context))
+  items.push(...(await getMoveItems(context)))
 
   items.push({
     type: 'action',
@@ -227,16 +231,16 @@ const InsertMenuWrapper: FunctionComponent<{
   )
 }
 
-function getContextMenuUnionItems(context: {
+async function getContextMenuUnionItems(context: {
   doc: OptimisticDocument
   node: SanityNode
   parent: SchemaUnionNode<SchemaNode>
-}): ContextMenuNode[] {
+}): Promise<ContextMenuNode[]> {
   const {doc, node, parent} = context
   const items: ContextMenuNode[] = []
   items.push(...getDuplicateItem(context))
   items.push(...getRemoveItems(context))
-  items.push(...getMoveItems(context))
+  items.push(...(await getMoveItems(context)))
 
   if (parent.options?.insertMenu) {
     const insertMenuOptions = parent.options.insertMenu || {}

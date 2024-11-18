@@ -87,18 +87,17 @@ export function getArrayInsertPatches(
   return [at(arrayPath, insert([{_type: insertType, _key: insertKey}], position, referenceItem))]
 }
 
-export function getArrayMovePatches(
+export async function getArrayMovePatches(
   node: SanityNode,
   doc: OptimisticDocument,
   moveTo: 'previous' | 'next' | 'first' | 'last',
-): NodePatchList {
+): Promise<NodePatchList> {
   if (!node.type) throw new Error('Node type is missing')
   const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore - Type instantiation is excessively deep and possibly infinite.
-  const array = doc.get(arrayPath) as {_key: string}[]
-  const item = doc.get(node.path)
+  const snapshot = await doc.getSnapshot()
+  const array = get(snapshot, arrayPath) as {_key: string}[]
+  const item = get(snapshot, node.path)
   const currentIndex = array.findIndex((item) => item._key === itemKey)
 
   let nextIndex = -1

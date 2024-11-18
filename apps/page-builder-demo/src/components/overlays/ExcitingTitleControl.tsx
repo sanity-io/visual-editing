@@ -1,5 +1,3 @@
-'use client'
-
 import {at, set} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
 import {SanityNode, useDocuments, type OverlayComponent} from '@sanity/visual-editing'
@@ -15,8 +13,12 @@ export const ExcitingTitleControl: FunctionComponent<{
   const doc = getDocument(node.id)
 
   const onChange = () => {
-    doc.patch(({snapshot}) => {
-      const currentValue = get(snapshot, node.path)
+    doc.patch(async ({getSnapshot}) => {
+      const snapshot = await getSnapshot()
+      const currentValue = get<string>(snapshot, node.path)
+      if (currentValue?.endsWith('!')) {
+        return []
+      }
       const newValue = `${currentValue}!`
       return [at(node.path, set(newValue))]
     })

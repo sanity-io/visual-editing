@@ -11,8 +11,9 @@ export const CustomControlsComponent: OverlayComponent = (props) => {
       title: string
     }>(node.id)
 
-    doc.patch(({snapshot}) => {
-      const newValue = `${snapshot.title}!`
+    doc.patch(async ({getSnapshot}) => {
+      const snapshot = await getSnapshot()
+      const newValue = `${snapshot?.title}!`
       return [at(node.path, set(newValue))]
     })
   }
