@@ -1,12 +1,15 @@
 import type {SanityClient} from '@sanity/client'
 import {SanityEncoder, type Transaction} from '@sanity/mutate'
-import {documentMutatorMachine} from '@sanity/mutate/_unstable_machine'
-import {fromPromise} from 'xstate'
+import {
+  documentMutatorMachine,
+  type DocumentMutatorMachineParentEvent,
+} from '@sanity/mutate/_unstable_machine'
+import {enqueueActions, fromPromise} from 'xstate'
 import type {VisualEditingNode} from '../../types'
 import {datasetMutatorMachine} from '../optimistic-state/machines/datasetMutatorMachine'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const createDatasetMutator = (comlink: VisualEditingNode) => {
+export const createDocumentMutator = (comlink: VisualEditingNode) => {
   const fetchSnapshot = fromPromise(
     async ({input, signal}: {input: {id: string; client: SanityClient}; signal: AbortSignal}) => {
       const {id} = input
@@ -33,16 +36,34 @@ export const createDatasetMutator = (comlink: VisualEditingNode) => {
     },
   )
 
-  const datasetMutatorMachineWithComlink = datasetMutatorMachine.provide({
-    actors: {
-      documentMutatorMachine: documentMutatorMachine.provide({
-        actors: {
-          'fetch remote snapshot': fetchSnapshot,
-          'submit mutations as transactions': submitMutations,
-        },
+  return documentMutatorMachine.provide({
+    actions: {
+      'send sync event to parent': enqueueActions(({enqueue}) => {
+        // Original action provided by the `documentMutatorMachine`
+        enqueue.sendParent(
+          ({context}) =>
+            ({
+              type: 'sync',
+              id: context.id,
+              document: context.remote!,
+            }) satisfies DocumentMutatorMachineParentEvent,
+        )
+        // Additional action so that we can determine when the snapshot is ready
+        enqueue.emit(({context}) => ({type: 'ready', snapshot: context.local}))
       }),
     },
+    actors: {
+      'fetch remote snapshot': fetchSnapshot,
+      'submit mutations as transactions': submitMutations,
+    },
   })
+}
 
-  return datasetMutatorMachineWithComlink
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const createDatasetMutator = (comlink: VisualEditingNode) => {
+  return datasetMutatorMachine.provide({
+    actors: {
+      documentMutatorMachine: createDocumentMutator(comlink),
+    },
+  })
 }

@@ -3,6 +3,7 @@ export {
   type DocumentsGet,
   type DocumentsMutate,
   type OptimisticDocument,
+  type OptimisticDocumentPatches,
   type Path,
   type PathValue,
 } from './useDocuments'

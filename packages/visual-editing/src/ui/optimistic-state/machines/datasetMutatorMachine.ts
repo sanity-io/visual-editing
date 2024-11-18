@@ -11,6 +11,7 @@ import {
   type DocumentMutatorMachineParentEvent,
 } from '@sanity/mutate/_unstable_machine'
 import {assertEvent, assign, emit, setup, stopChild, type ActorRefFrom} from 'xstate'
+import type {createDocumentMutator} from '../../comlink'
 
 export interface DatasetMutatorMachineInput extends Omit<DocumentMutatorMachineInput, 'id'> {
   client: SanityClient
@@ -24,7 +25,7 @@ export const datasetMutatorMachine = setup({
       client: SanityClient
       /** A shared listener can be provided, if not it'll be created using `client.listen()` */
       sharedListener?: ReturnType<typeof createSharedListener>
-      documents: Record<string, ActorRefFrom<typeof documentMutatorMachine>>
+      documents: Record<string, ActorRefFrom<ReturnType<typeof createDocumentMutator>>>
     }
     events:
       | {type: 'observe'; documentId: string}

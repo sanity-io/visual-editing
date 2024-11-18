@@ -32,21 +32,43 @@ export type DocumentsGet = <T extends Record<string, any>>(
   documentId: string,
 ) => OptimisticDocument<T>
 
+export type OptimisticDocumentPatches<T extends Record<string, any> = Record<string, any>> =
+  | ((context: {
+      draftId: string
+      publishedId: string
+      /**
+       * @deprecated - use `getSnapshot` instead
+       */
+      snapshot: SanityDocument<T> | undefined
+      getSnapshot: () => Promise<SanityDocument<T> | null>
+    }) => Promise<NodePatchList> | NodePatchList)
+  | NodePatchList
+
 export type OptimisticDocument<T extends Record<string, any> = Record<string, any>> = {
+  /**
+   * The document ID
+   */
   id: string
+  /**
+   * Commits any locally applied mutations to the remote document
+   */
   commit: () => void
+  /**
+   * @deprecated - use `getSnapshot` instead
+   */
   get: {
     (): SanityDocument<T> | undefined
     <P extends Path<T, keyof T>>(path: P): PathValue<T, P> | undefined
   }
+  /**
+   * Returns a promise that resolves to the current document snapshot
+   */
+  getSnapshot: () => Promise<SanityDocument<T> | null>
+  /**
+   * Applies the given patches to the document
+   */
   patch: (
-    patches:
-      | ((context: {
-          draftId: string
-          publishedId: string
-          snapshot: SanityDocument<T>
-        }) => NodePatchList)
-      | NodePatchList,
+    patches: OptimisticDocumentPatches<T>,
     options?: {commit?: boolean | {debounce: number}},
   ) => void
 }
@@ -74,21 +96,55 @@ function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, acto
 
   const draftDoc = documents?.[draftId]
   const publishedDoc = documents?.[publishedId]
+  const doc = draftDoc || publishedDoc
 
-  if (!draftDoc) {
+  if (!doc) {
     throw new Error(`Document "${id}" not found`)
   }
 
-  // Get the snapshot from the draft document if it exists, otherwise fall
-  // back to the published document
-  const snapshot = (draftDoc?.getSnapshot().context?.local ||
-    publishedDoc?.getSnapshot().context?.local) as unknown as SanityDocument<T> | undefined
+  // Helper to get the snapshot from the draft document if it exists, otherwise
+  // fall back to the published document
+  const getDocumentSnapshot = () =>
+    (draftDoc.getSnapshot().context?.local || publishedDoc.getSnapshot().context?.local) as
+      | SanityDocument<T>
+      | null
+      | undefined
 
-  if (!snapshot) {
-    throw new Error(`Snapshot for document "${id}" not found`)
+  const snapshot = getDocumentSnapshot()
+  const snapshotPromise = new Promise<SanityDocument<T> | null>((resolve) => {
+    if (snapshot) {
+      resolve(snapshot)
+    } else {
+      const subscriber = doc.on('ready', (event) => {
+        // Assert type here as the original document mutator machine doesn't
+        // emit a 'ready' event. We provide a custom action to emit it in this
+        // package's internal `createDatasetMutator` function. <3 xstate.
+        const {snapshot} = event as unknown as {snapshot: SanityDocument<T> | null | undefined}
+        resolve(snapshot || null)
+        subscriber.unsubscribe()
+      })
+    }
+  })
+
+  const getSnapshot = () => snapshotPromise
+
+  return {
+    draftDoc,
+    draftId,
+    getSnapshot,
+    publishedDoc,
+    publishedId,
+    /**
+     * @deprecated - use `getSnapshot` instead
+     */
+    get snapshot() {
+      // Maintain original error throwing behaviour, to avoid breaking changes
+      if (!snapshot) {
+        throw new Error(`Snapshot for document "${id}" not found`)
+      }
+      return snapshot
+    },
   }
-
-  return {draftId, publishedId, draftDoc, publishedDoc, snapshot}
 }
 
 function createDocumentCommit<T extends Record<string, any>>(id: string, actor: MutatorActor) {
@@ -98,6 +154,9 @@ function createDocumentCommit<T extends Record<string, any>>(id: string, actor: 
   }
 }
 
+/**
+ * @deprecated - superseded by `createDocumentGetSnapshot`
+ */
 function createDocumentGet<T extends Record<string, any>>(id: string, actor: MutatorActor) {
   return <P extends Path<T, keyof T>>(
     path?: P,
@@ -110,35 +169,53 @@ function createDocumentGet<T extends Record<string, any>>(id: string, actor: Mut
   }
 }
 
+function createDocumentGetSnapshot<T extends Record<string, any>>(
+  id: string,
+  actor: MutatorActor,
+): () => Promise<SanityDocument<T> | null> {
+  const {getSnapshot} = getDocumentsAndSnapshot<T>(id, actor)
+  return getSnapshot
+}
+
 function createDocumentPatch<T extends Record<string, any>>(id: string, actor: MutatorActor) {
-  return (
-    patches:
-      | ((context: {
-          draftId: string
-          publishedId: string
-          snapshot: SanityDocument<T>
-        }) => NodePatchList)
-      | NodePatchList,
+  return async (
+    patches: OptimisticDocumentPatches<T>,
     options?: {commit?: boolean | {debounce: number}},
-  ): void => {
-    const {draftDoc, draftId, publishedId, snapshot} = getDocumentsAndSnapshot<T>(id, actor)
+  ): Promise<void> => {
+    // Destructure the function result in two steps as we need access to the
+    // `result.snapshot` property in the getter, but don't want to execute the
+    // getter prematurely as it may throw
+    const result = getDocumentsAndSnapshot<T>(id, actor)
+    const {draftDoc, draftId, getSnapshot, publishedId} = result
 
     const {commit = true} = options || {}
 
     const context = {
       draftId,
       publishedId,
-      snapshot,
+      /**
+       * @deprecated - use `getSnapshot` instead
+       */
+      get snapshot() {
+        return result.snapshot
+      },
+      getSnapshot,
     }
 
-    const resolvedPatches = typeof patches === 'function' ? patches(context) : patches
+    const resolvedPatches = await (typeof patches === 'function' ? patches(context) : patches)
+
+    const _snapshot = await getSnapshot()
+
+    if (!_snapshot) {
+      throw new Error(`Snapshot for document "${id}" not found`)
+    }
 
     draftDoc.send({
       type: 'mutate',
       mutations: [
         // Attempt to create the draft document, it might not exist if the
         // snapshot was from the published document
-        createIfNotExists({...snapshot, _id: draftId}),
+        createIfNotExists({..._snapshot, _id: draftId}),
         // Patch the draft document with the resolved patches
         patch(draftId, resolvedPatches),
       ],
@@ -166,7 +243,10 @@ export function useDocuments(): {
       return {
         id: documentId,
         commit: createDocumentCommit(documentId, actor),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - Type instantiation is excessively deep and possibly infinite.
         get: createDocumentGet(documentId, actor),
+        getSnapshot: createDocumentGetSnapshot<T>(documentId, actor),
         patch: createDocumentPatch<T>(documentId, actor),
       }
     },

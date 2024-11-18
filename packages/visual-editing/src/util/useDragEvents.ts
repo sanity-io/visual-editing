@@ -46,7 +46,8 @@ export function useDragEndEvents(): {
         // Don't patch if the keys match, as this means the item was only
         // dragged to its existing position, i.e. not moved
         if (arrayPath && referenceItemKey && referenceItemKey !== targetKey) {
-          doc.patch(({snapshot}) => {
+          doc.patch(async ({getSnapshot}) => {
+            const snapshot = await getSnapshot()
             // Get the current value of the element we dragged, as we will need
             // to clone this into the new position
             const elementValue = getFromPath(snapshot, target.path)
