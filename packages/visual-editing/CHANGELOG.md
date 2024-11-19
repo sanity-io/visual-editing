@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.8.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.7.2...visual-editing-v2.8.0) (2024-11-19)
+
+
+### Features
+
+* **visual-editing:** add async getSnapshot to optimistic documents ([#2180](https://github.com/sanity-io/visual-editing/issues/2180)) ([c602969](https://github.com/sanity-io/visual-editing/commit/c602969fff14f2d2dd71d1d43216d3366f429910))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.5 ([#2185](https://github.com/sanity-io/visual-editing/issues/2185)) ([da0aa32](https://github.com/sanity-io/visual-editing/commit/da0aa328063f1711687f8459ca00fd95a0b69ccb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.0.4
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.3
+
 ## [2.7.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.7.1...visual-editing-v2.7.2) (2024-11-15)
 
 

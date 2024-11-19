@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.8](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.7...next-loader-v1.1.8) (2024-11-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.5 ([#2185](https://github.com/sanity-io/visual-editing/issues/2185)) ([da0aa32](https://github.com/sanity-io/visual-editing/commit/da0aa328063f1711687f8459ca00fd95a0b69ccb))
+* use the CDN when fetching sync tags ([4acf6c4](https://github.com/sanity-io/visual-editing/commit/4acf6c4e448ba893c854439432734246994e2b9a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.3
+    * @sanity/preview-url-secret bumped to 2.0.4
+
 ## [1.1.7](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.6...next-loader-v1.1.7) (2024-11-14)
 
 
