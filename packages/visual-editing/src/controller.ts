@@ -171,7 +171,7 @@ export function createOverlayController({
     }
   }
 
-  function removeOverlayCursor(element: ElementNode) {
+  function restoreOverlayCursor(element: ElementNode) {
     // Restore any previously stored cursor (if it exists)
     const previousCursor = cursorMap.get(element)
 
@@ -323,7 +323,7 @@ export function createOverlayController({
             }
           }
 
-          removeOverlayCursor(element)
+          restoreOverlayCursor(element)
         }
 
         /**
