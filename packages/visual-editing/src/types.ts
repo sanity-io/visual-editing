@@ -122,7 +122,7 @@ export type OverlayMsgDeactivate = Msg<'overlay/deactivate'>
 /** @public */
 export type OverlayMsgSetCursor = Msg<'overlay/setCursor'> & {
   element: ElementNode
-  cursor: string
+  cursor: string | undefined
 }
 
 /** @public */

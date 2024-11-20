@@ -136,7 +136,11 @@ const OverlaysController: FunctionComponent<{
       } else if (message.type === 'overlay/setCursor') {
         const {element, cursor} = message
 
-        element.style.cursor = cursor
+        if (cursor) {
+          element.style.cursor = cursor
+        } else {
+          element.style.removeProperty('cursor')
+        }
       }
 
       dispatch(message)
