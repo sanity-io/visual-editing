@@ -20,6 +20,7 @@ export default async function Page() {
   }
   return (
     <>
+      {/*  */}
       <DnDCustomBehaviour />
       <div className="p-6">
         <h1>{data.title}</h1>
