@@ -14,6 +14,7 @@ export function Hero(props: {page: PageData; section: HeroSectionData}) {
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
       className="relative flex items-center justify-center px-4 py-6 sm:px-5 sm:py-7 md:px-7 md:py-9"
+      style={{cursor: 'crosshair'}} // Useful for testing overlay cursor overrides
       variant={section.style?.variant}
     >
       <div className="relative z-10 p-5 text-center backdrop-blur-xl">

@@ -39,6 +39,8 @@ export function createOverlayController({
   const elementSet = new Set<ElementNode>()
   // Weakmap keyed by measureElement to find associated element
   const measureElements = new WeakMap<ElementNode, ElementNode>()
+  // Weakmap for storing user set cursor styles per element
+  const cursorMap = new WeakMap<ElementNode, string | undefined>()
 
   const preventDefault = inFrame
 
@@ -127,40 +129,56 @@ export function createOverlayController({
     })
   }
 
-  function setOverlayCursor(element: ElementNode, remove?: boolean) {
-    if (remove) {
+  function setOverlayCursor(element: ElementNode) {
+    // Don't set the cursor if mutations are unavailable
+    if (!inFrame || !optimisticActorReady) return
+
+    let cursor = undefined
+    // Loop through the hover stack in reverse order to find the element closest
+    // to the top of the stack that has a drag group. Note that this loop finds
+    // the cursor type to set (if any), not the element to set the cursor for.
+    for (const el of hoverStack.toReversed()) {
+      // If the element doesn't have relevant sanity data, continue
+      const targetSanityData = elementsMap.get(el)?.sanity
+      if (!targetSanityData || !isSanityNode(targetSanityData)) continue
+
+      // Resolve the drag group for the currently looped over stack element
+      const dragGroup = resolveDragAndDropGroup(el, targetSanityData, elementSet, elementsMap)
+
+      if (dragGroup) {
+        // If the element in the stack is the currently hovered element, set the
+        // cursor to 'move'. Otherwise the element is a child ancestor, so set
+        // it to 'auto' to override the parent's move cursor
+        const isHoveredElement = element === el
+        cursor = isHoveredElement ? 'move' : 'auto'
+        // Exit early if a cursor type has been found
+        break
+      }
+    }
+
+    if (cursor) {
+      // Store any existing cursor so it can be restored later
+      const existingCursor = element.style.cursor
+      if (existingCursor) {
+        cursorMap.set(element, existingCursor)
+      }
+
       handler({
         type: 'overlay/setCursor',
         element,
-        cursor: undefined,
+        cursor,
       })
-
-      return
     }
+  }
 
-    if (!inFrame || !optimisticActorReady) return
-
-    const hoveredElement = getHoveredElement()
-
-    if (!hoveredElement) return
-
-    const targetSanityData = elementsMap.get(hoveredElement)?.sanity
-
-    if (!targetSanityData || !isSanityNode(targetSanityData)) return
-
-    const dragGroup = resolveDragAndDropGroup(
-      hoveredElement,
-      targetSanityData,
-      elementSet,
-      elementsMap,
-    )
-
-    const cursor = dragGroup ? 'move' : 'auto'
+  function removeOverlayCursor(element: ElementNode) {
+    // Restore any previously stored cursor (if it exists)
+    const previousCursor = cursorMap.get(element)
 
     handler({
       type: 'overlay/setCursor',
       element,
-      cursor,
+      cursor: previousCursor,
     })
   }
 
@@ -305,7 +323,7 @@ export function createOverlayController({
             }
           }
 
-          setOverlayCursor(element, true)
+          removeOverlayCursor(element)
         }
 
         /**
