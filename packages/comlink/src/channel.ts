@@ -50,7 +50,7 @@ export type ChannelActor<R extends Message, S extends Message> = ActorRefFrom<
 /**
  * @public
  */
-export type Channel<R extends Message, S extends Message> = {
+export type Channel<R extends Message = Message, S extends Message = Message> = {
   actor: ChannelActor<R, S>
   connect: () => void
   disconnect: () => void
@@ -540,4 +540,14 @@ export const createChannel = <R extends Message, S extends Message>(
       return actor.getSnapshot().context.target
     },
   }
+}
+
+// Helper function to cleanup a channel
+export const cleanupChannel: (channel: Channel<Message, Message>) => void = (channel) => {
+  channel.disconnect()
+  // Necessary to allow disconnect messages to be sent before the channel
+  // actor is stopped
+  setTimeout(() => {
+    channel.stop()
+  }, 0)
 }

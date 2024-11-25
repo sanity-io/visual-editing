@@ -1,4 +1,5 @@
 import {
+  cleanupChannel,
   createChannel,
   createChannelMachine,
   type Channel,
@@ -146,7 +147,8 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     })
 
     // We perform a more 'aggressive' cleanup here as we do not need to maintain
-    // these 'duplicate' channels: disconnect, stop, and delete
+    // these 'duplicate' channels: disconnect, stop, and remove the channel from
+    // all connections
     return () => {
       targets.delete(target)
       targetChannels.forEach((channel) => {
@@ -156,15 +158,6 @@ export const createController = (input: {targetOrigin: string}): Controller => {
         })
       })
     }
-  }
-
-  const cleanupChannel: (channel: Channel<Message, Message>) => void = (channel) => {
-    channel.disconnect()
-    // Necessary to allow disconnect messages to be sent before the channel
-    // actor is stopped
-    setTimeout(() => {
-      channel.stop()
-    }, 0)
   }
 
   const createConnection = <R extends Message, S extends Message>(
@@ -180,8 +173,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       subscribers: new Set(),
     }
 
-    // @ts-expect-error @todo @help
-    connections.add(connection)
+    connections.add(connection as unknown as Connection)
 
     const {channels, internalEventSubscribers, statusSubscribers, subscribers} = connection
 
@@ -258,10 +250,14 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       }
     }
 
+    // Stop a connection, cleanup all channels and remove the connection itself
+    // from the controller
+    // @todo Remove casting
     const stop = () => {
-      channels.forEach((channel) => {
-        cleanupChannel(channel as unknown as Channel<Message, Message>)
-      })
+      const channels = connection.channels as unknown as Set<Channel>
+      channels.forEach(cleanupChannel)
+      channels.clear()
+      connections.delete(connection as unknown as Connection)
     }
 
     const start = () => {
@@ -283,13 +279,14 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     }
   }
 
+  // Destroy the controller, cleanup all channels in all connections
   const destroy = () => {
     connections.forEach(({channels}) => {
-      channels.forEach((channel) => {
-        cleanupChannel(channel)
-        channels.delete(channel)
-      })
+      channels.forEach(cleanupChannel)
+      channels.clear()
     })
+    connections.clear()
+    targets.clear()
   }
 
   return {
