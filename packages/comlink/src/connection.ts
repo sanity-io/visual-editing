@@ -37,32 +37,32 @@ import type {
 /**
  * @public
  */
-export type ConnectionActorLogic<R extends Message, S extends Message> = ReturnType<
-  typeof createConnectionMachine<R, S>
+export type ConnectionActorLogic<S extends Message, R extends Message> = ReturnType<
+  typeof createConnectionMachine<S, R>
 >
 /**
  * @public
  */
-export type ConnectionActor<R extends Message, S extends Message> = ActorRefFrom<
-  ReturnType<typeof createConnectionMachine<R, S>>
+export type ConnectionActor<S extends Message, R extends Message> = ActorRefFrom<
+  ReturnType<typeof createConnectionMachine<S, R>>
 >
 
 /**
  * @public
  */
-export type Connection<R extends Message = Message, S extends Message = Message> = {
-  actor: ConnectionActor<R, S>
+export type Connection<S extends Message = Message, R extends Message = Message> = {
+  actor: ConnectionActor<S, R>
   connect: () => void
   disconnect: () => void
   id: string
   name: string
-  machine: ReturnType<typeof createConnectionMachine<R, S>>
+  machine: ReturnType<typeof createConnectionMachine<S, R>>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => Promise<U['response']> | U['response'],
   ) => () => void
   onStatus: (handler: (status: Status) => void) => () => void
-  post: (data: WithoutResponse<S>) => void
+  post: <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data?: U['data']) => void
   setTarget: (target: MessageEventSource) => void
   start: () => () => void
   stop: () => void
@@ -105,8 +105,8 @@ const sendBackAtInterval = fromCallback<
  * @public
  */
 export const createConnectionMachine = <
-  R extends Message, // Receives
   S extends Message, // Sends
+  R extends Message, // Receives
   V extends WithoutResponse<S> = WithoutResponse<S>,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => {
@@ -454,10 +454,10 @@ export const createConnectionMachine = <
 /**
  * @public
  */
-export const createConnection = <R extends Message, S extends Message>(
+export const createConnection = <S extends Message, R extends Message>(
   input: ConnectionInput,
-  machine: ConnectionActorLogic<R, S> = createConnectionMachine<R, S>(),
-): Connection<R, S> => {
+  machine: ConnectionActorLogic<S, R> = createConnectionMachine<S, R>(),
+): Connection<S, R> => {
   const id = input.id || `${input.name}-${uuid()}`
   const actor = createActor(machine, {
     input: {...input, id},
@@ -510,8 +510,9 @@ export const createConnection = <R extends Message, S extends Message>(
     actor.send({type: 'target.set', target})
   }
 
-  const post = (data: WithoutResponse<S>) => {
-    actor.send({type: 'post', data})
+  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data: U['data']) => {
+    const _data = {type, data} as WithoutResponse<U>
+    actor.send({type: 'post', data: _data})
   }
 
   const stop = () => {

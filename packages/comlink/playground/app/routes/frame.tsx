@@ -13,14 +13,14 @@ export default function Frame() {
   >([])
   const [buffered, setBuffered] = useState<Array<WithoutResponse<NodeMessage>>>([])
 
-  const [node, setNode] = useState<Node<ControllerMessage, NodeMessage> | null>(null)
+  const [node, setNode] = useState<Node<NodeMessage, ControllerMessage> | null>(null)
 
   const [started, setStarted] = useState(true)
 
   useEffect(() => {
     if (!started) return
 
-    const node = createNode<ControllerMessage, NodeMessage>({
+    const node = createNode<NodeMessage, ControllerMessage>({
       name: 'iframe',
       connectTo: 'window',
     })
@@ -51,10 +51,7 @@ export default function Frame() {
   const onSend = useCallback(
     async (message: string) => {
       if (!node) return
-      const response = await node.fetch({
-        type: 'node',
-        data: {message},
-      })
+      const response = await node.fetch('node', {message})
       console.log('response!', response)
     },
     [node],
