@@ -66,6 +66,7 @@ import type {
 import {useDocumentsOnPage} from './useDocumentsOnPage'
 import {useMainDocument} from './useMainDocument'
 import {useParams} from './useParams'
+import {usePopups} from './usePopups'
 import {usePreviewUrl} from './usePreviewUrl'
 import {useStatus} from './useStatus'
 
@@ -194,20 +195,11 @@ export default function PresentationTool(props: {
     resolvers: tool.options?.resolve?.mainDocuments,
   })
 
-  // const [overlaysConnection, setOverlaysConnection] = useState<Status>('connecting')
   const [overlaysConnection, setOverlaysConnection] = useStatus()
-  // const [loadersConnection, setLoadersConnection] = useState<Status>('connecting')
   const [loadersConnection, setLoadersConnection] = useStatus()
-  // const [previewKitConnection, setPreviewKitConnection] = useState<Status>('connecting')
   const [previewKitConnection, setPreviewKitConnection] = useStatus()
 
-  const [popups, setPopups] = useState<Set<Window>>(() => new Set())
-  const handleOpenPopup = useCallback((url: string) => {
-    const source = window.open(url, '_blank')
-    if (source) {
-      setPopups((prev) => new Set(prev).add(source))
-    }
-  }, [])
+  const {open: handleOpenPopup} = usePopups(controller)
 
   const isLoading = state.iframe.status === 'loading'
 
@@ -225,21 +217,6 @@ export default function PresentationTool(props: {
       setController(undefined)
     }
   }, [targetOrigin, isLoading])
-
-  useEffect(() => {
-    const unsubs: Array<() => void> = []
-    if (popups.size && controller) {
-      // loop popups and add targets
-      for (const source of popups) {
-        if (source && 'closed' in source && !source.closed) {
-          unsubs.push(controller.addTarget(source))
-        }
-      }
-    }
-    return () => {
-      unsubs.forEach((unsub) => unsub())
-    }
-  }, [controller, popups])
 
   useEffect(() => {
     if (!controller) return
