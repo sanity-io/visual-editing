@@ -8,7 +8,7 @@ import {enableVisualEditing} from '../ui/enableVisualEditing'
  */
 export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'> {
   /**
-   * @deprecated The histoy adapter is already implemented
+   * @deprecated The history adapter is already implemented
    */
   history?: never
 }
