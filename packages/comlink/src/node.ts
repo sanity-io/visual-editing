@@ -47,31 +47,32 @@ export interface NodeInput {
 /**
  * @public
  */
-export type NodeActorLogic<R extends Message, S extends Message> = ReturnType<
-  typeof createNodeMachine<R, S>
+export type NodeActorLogic<S extends Message, R extends Message> = ReturnType<
+  typeof createNodeMachine<S, R>
 >
 
 /**
  * @public
  */
-export type NodeActor<R extends Message, S extends Message> = ActorRefFrom<NodeActorLogic<R, S>>
+export type NodeActor<S extends Message, R extends Message> = ActorRefFrom<NodeActorLogic<S, R>>
 
 /**
  * @public
  */
-export type Node<R extends Message, S extends Message> = {
-  actor: NodeActor<R, S>
-  fetch: <const T extends S['type'], U extends WithoutResponse<S>>(
-    data: U,
+export type Node<S extends Message, R extends Message> = {
+  actor: NodeActor<S, R>
+  fetch: <T extends S['type'], U extends Extract<S, {type: T}>>(
+    type: T,
+    data?: U['data'],
     options?: {signal?: AbortSignal; suppressWarnings?: boolean},
   ) => S extends U ? (S['type'] extends T ? Promise<S['response']> : never) : never
-  machine: NodeActorLogic<R, S>
+  machine: NodeActorLogic<S, R>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => U['response'],
   ) => () => void
   onStatus: (handler: (status: Status) => void) => () => void
-  post: (data: WithoutResponse<S>) => void
+  post: <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data?: U['data']) => void
   start: () => () => void
   stop: () => void
 }
@@ -80,8 +81,8 @@ export type Node<R extends Message, S extends Message> = {
  * @public
  */
 export const createNodeMachine = <
-  R extends Message, // Receives
   S extends Message, // Sends
+  R extends Message, // Receives
   V extends WithoutResponse<S> = WithoutResponse<S>,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => {
@@ -477,10 +478,10 @@ export const createNodeMachine = <
 /**
  * @public
  */
-export const createNode = <R extends Message, S extends Message>(
+export const createNode = <S extends Message, R extends Message>(
   input: NodeInput,
-  machine: NodeActorLogic<R, S> = createNodeMachine<R, S>(),
-): Node<R, S> => {
+  machine: NodeActorLogic<S, R> = createNodeMachine<S, R>(),
+): Node<S, R> => {
   const actor = createActor(machine, {
     input,
   })
@@ -515,12 +516,14 @@ export const createNode = <R extends Message, S extends Message>(
     return unsubscribe
   }
 
-  const post = (data: WithoutResponse<S>) => {
-    actor.send({type: 'post', data})
+  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data: U['data']) => {
+    const _data = {type, data} as WithoutResponse<U>
+    actor.send({type: 'post', data: _data})
   }
 
-  const fetch = (
-    data: WithoutResponse<S>,
+  const fetch = <T extends S['type'], U extends Extract<S, {type: T}>>(
+    type: T,
+    data: U['data'],
     options?: {
       responseTimeout?: number
       signal?: AbortSignal
@@ -530,9 +533,11 @@ export const createNode = <R extends Message, S extends Message>(
     const {responseTimeout = FETCH_TIMEOUT_DEFAULT, signal, suppressWarnings} = options || {}
 
     const resolvable = Promise.withResolvers<S['response']>()
+    const _data = {type, data} as WithoutResponse<U>
+
     actor.send({
       type: 'post',
-      data,
+      data: _data,
       resolvable,
       options: {responseTimeout, signal, suppressWarnings},
     })

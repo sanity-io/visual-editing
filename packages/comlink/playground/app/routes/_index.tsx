@@ -27,7 +27,7 @@ export default function Index() {
   const [frames, setFrames] = useState<string[]>([])
 
   const [controller, setController] = useState<Controller | null>(null)
-  const [channel, setChannel] = useState<ChannelInstance<NodeMessage, ControllerMessage> | null>(
+  const [channel, setChannel] = useState<ChannelInstance<ControllerMessage, NodeMessage> | null>(
     null,
   )
 
@@ -35,7 +35,7 @@ export default function Index() {
     const controller = createController({targetOrigin: '*'})
     setController(controller)
 
-    const channel = controller.createChannel<NodeMessage, ControllerMessage>({
+    const channel = controller.createChannel<ControllerMessage, NodeMessage>({
       connectTo: 'iframe',
       heartbeat: true,
       name: 'window',
@@ -82,7 +82,7 @@ export default function Index() {
 
   const onSend = useCallback(
     (message: string) => {
-      channel?.post({type: 'controller', data: {message}})
+      channel?.post('controller', {message})
     },
     [channel],
   )

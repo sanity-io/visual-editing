@@ -105,7 +105,7 @@ export interface MessageEmitEvent<T extends Message> {
 /**
  * @public
  */
-export type InternalEmitEvent<R extends Message, S extends Message> =
+export type InternalEmitEvent<S extends Message, R extends Message> =
   | BufferAddedEmitEvent<S>
   | BufferFlushedEmitEvent<R>
   | MessageEmitEvent<R>
