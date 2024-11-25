@@ -89,8 +89,8 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     if (!targets.size || !channels.size) {
       targets.add(target)
 
-      // If there are existing connections, set the target on all existing
-      // channels, and trigger a connection event
+      // If there are existing channels, set the target on all existing
+      // connections, and trigger a connection event
       channels.forEach((channel) => {
         channel.connections.forEach((connection) => {
           connection.setTarget(target)
@@ -98,7 +98,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
         })
       })
       // We perform a 'soft' cleanup here: disconnect only as we want to
-      // maintain at least one live channel per connection
+      // maintain at least one live connection per channel
       return () => {
         targets.delete(target)
         channels.forEach((channel) => {
@@ -116,8 +116,8 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     // Maintain a list of connections to cleanup
     const targetConnections = new Set<Connection<Message, Message>>()
 
-    // If we already have targets and connections, we need to create new
-    // channels for each source with all the associated subscribers.
+    // If we already have targets and channels, we need to create new
+    // connections for each source with all the associated subscribers.
     channels.forEach((channel) => {
       const connection = createConnection(
         {
@@ -149,8 +149,8 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     })
 
     // We perform a more 'aggressive' cleanup here as we do not need to maintain
-    // these 'duplicate' channels: disconnect, stop, and remove the channel from
-    // all connections
+    // these 'duplicate' connections: disconnect, stop, and remove the connections from
+    // all channels
     return () => {
       targets.delete(target)
       targetConnections.forEach((connection) => {
@@ -193,7 +193,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
         connections.add(connection)
       })
     } else {
-      // If targets have not been added yet, create a channel without a target
+      // If targets have not been added yet, create a connection without a target
       const connection = createConnection<S, R>({...input, targetOrigin}, machine)
       connections.add(connection)
     }
@@ -254,7 +254,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       }
     }
 
-    // Stop a connection, cleanup all channels and remove the connection itself
+    // Stop a connection, cleanup all connections and remove the connection itself
     // from the controller
     // @todo Remove casting
     const stop = () => {
@@ -283,7 +283,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     }
   }
 
-  // Destroy the controller, cleanup all channels in all connections
+  // Destroy the controller, cleanup all connections in all channels
   const destroy = () => {
     channels.forEach(({connections}) => {
       connections.forEach(cleanupConnection)
