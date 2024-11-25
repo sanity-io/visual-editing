@@ -103,7 +103,7 @@ export const createNodeMachine = <
             suppressWarnings?: boolean
           }
         }>
-        connectionId: string | null
+        channelId: string | null
         connectTo: string
         domain: string
         // The handshake buffer is a workaround to maintain backwards
@@ -192,7 +192,7 @@ export const createNodeMachine = <
             return spawn('requestMachine', {
               id,
               input: {
-                connectionId: context.connectionId!,
+                channelId: context.channelId!,
                 data: request.data,
                 domain: context.domain!,
                 expectResponse: request.expectResponse,
@@ -296,9 +296,9 @@ export const createNodeMachine = <
         data: {type: MSG_HANDSHAKE_SYN_ACK},
       }),
       'set connection config': assign({
-        connectionId: ({event}) => {
+        channelId: ({event}) => {
           assertEvent(event, 'handshake.syn')
-          return event.message.data.connectionId
+          return event.message.data.channelId
         },
         target: ({event}) => {
           assertEvent(event, 'handshake.syn')
@@ -318,7 +318,7 @@ export const createNodeMachine = <
     id: 'node',
     context: ({input}) => ({
       buffer: [],
-      connectionId: null,
+      channelId: null,
       connectTo: input.connectTo,
       domain: input.domain ?? DOMAIN,
       handshakeBuffer: [],

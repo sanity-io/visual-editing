@@ -15,7 +15,7 @@ export type Status = string // @todo strongly type these
 /**
  * @public
  */
-export type StatusEvent = {channel: string; status: Status}
+export type StatusEvent = {connection: string; status: Status}
 
 /**
  * @public
@@ -115,7 +115,7 @@ export type InternalEmitEvent<R extends Message, S extends Message> =
  */
 export type ProtocolMessage<T extends Message = Message> = {
   id: string
-  connectionId: string
+  channelId: string
   data?: T['data']
   domain: string
   from: string

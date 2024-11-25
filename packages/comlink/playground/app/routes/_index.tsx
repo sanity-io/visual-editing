@@ -1,7 +1,7 @@
 import type {MetaFunction} from '@remix-run/node'
 import {
   createController,
-  type ConnectionInstance,
+  type ChannelInstance,
   type Controller,
   type ProtocolMessage,
   type WithoutResponse,
@@ -27,54 +27,53 @@ export default function Index() {
   const [frames, setFrames] = useState<string[]>([])
 
   const [controller, setController] = useState<Controller | null>(null)
-  const [connection, setConnection] = useState<ConnectionInstance<
-    NodeMessage,
-    ControllerMessage
-  > | null>(null)
+  const [channel, setChannel] = useState<ChannelInstance<NodeMessage, ControllerMessage> | null>(
+    null,
+  )
 
   useEffect(() => {
     const controller = createController({targetOrigin: '*'})
     setController(controller)
 
-    const connection = controller.createConnection<NodeMessage, ControllerMessage>({
+    const channel = controller.createChannel<NodeMessage, ControllerMessage>({
       connectTo: 'iframe',
       heartbeat: true,
       name: 'window',
     })
 
-    setConnection(connection)
+    setChannel(channel)
 
-    connection.onInternalEvent('_message', (event) => {
+    channel.onInternalEvent('_message', (event) => {
       console.log('_message', event)
       setReceived((prev) => [event.message, ...prev])
     })
 
-    connection.onInternalEvent('_buffer.added', (event) => {
+    channel.onInternalEvent('_buffer.added', (event) => {
       console.log('_buffer.added', event)
       setBuffer((prev) => [event.message, ...prev])
     })
 
-    connection.onInternalEvent('_buffer.flushed', () => {
+    channel.onInternalEvent('_buffer.flushed', () => {
       setBuffer([])
     })
 
-    connection.onStatus((event) => {
+    channel.onStatus((event) => {
       setStatusMap((prev) => {
         const next = new Map(prev)
         if (event.status === 'disconnected') {
-          next.delete(event.channel)
+          next.delete(event.connection)
         } else {
-          next.set(event.channel, event.status)
+          next.set(event.connection, event.status)
         }
         return next
       })
     })
 
-    connection.on('node', () => {
+    channel.on('node', () => {
       return {message: 'world'}
     })
 
-    connection.start()
+    channel.start()
 
     return () => {
       controller.destroy()
@@ -83,9 +82,9 @@ export default function Index() {
 
   const onSend = useCallback(
     (message: string) => {
-      connection?.post({type: 'controller', data: {message}})
+      channel?.post({type: 'controller', data: {message}})
     },
-    [connection],
+    [channel],
   )
 
   const [tab, setTab] = useState<'buffer' | 'received'>('received')

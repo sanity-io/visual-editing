@@ -1,22 +1,22 @@
 import {
-  cleanupChannel,
-  createChannel,
-  createChannelMachine,
-  type Channel,
-  type ChannelActorLogic,
-  type ChannelInput,
-} from './channel'
+  cleanupConnection,
+  createConnection,
+  createConnectionMachine,
+  type Connection,
+  type ConnectionActorLogic,
+  type ConnectionInput,
+} from './connection'
 import {type InternalEmitEvent, type Message, type StatusEvent, type WithoutResponse} from './types'
 
 /**
  * @public
  */
-export type ConnectionInput = Omit<ChannelInput, 'target' | 'targetOrigin'>
+export type ChannelInput = Omit<ConnectionInput, 'target' | 'targetOrigin'>
 
 /**
  * @public
  */
-export interface ConnectionInstance<R extends Message, S extends Message> {
+export interface ChannelInstance<R extends Message, S extends Message> {
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => Promise<U['response']> | U['response'],
@@ -39,26 +39,26 @@ export interface ConnectionInstance<R extends Message, S extends Message> {
  */
 export interface Controller {
   addTarget: (target: MessageEventSource) => () => void
-  createConnection: <R extends Message, S extends Message>(
-    input: ConnectionInput,
-    machine?: ChannelActorLogic<R, S>,
-  ) => ConnectionInstance<R, S>
+  createChannel: <R extends Message, S extends Message>(
+    input: ChannelInput,
+    machine?: ConnectionActorLogic<R, S>,
+  ) => ChannelInstance<R, S>
   destroy: () => void
 }
 
-interface Connection<
+interface Channel<
   R extends Message = Message,
   S extends Message = Message,
   T extends InternalEmitEvent<R, S>['type'] = InternalEmitEvent<R, S>['type'],
 > {
-  input: ConnectionInput
-  channels: Set<Channel<R, S>>
+  input: ChannelInput
+  connections: Set<Connection<R, S>>
   internalEventSubscribers: Set<{
     type: T
     handler: (event: Extract<InternalEmitEvent<R, S>, {type: T}>) => void
     unsubscribers: Array<() => void>
   }>
-  machine: ChannelActorLogic<R, S>
+  machine: ConnectionActorLogic<R, S>
   statusSubscribers: Set<{
     handler: (event: StatusEvent) => void
     unsubscribers: Array<() => void>
@@ -78,7 +78,7 @@ const noop = () => {}
 export const createController = (input: {targetOrigin: string}): Controller => {
   const {targetOrigin} = input
   const targets = new Set<MessageEventSource>()
-  const connections = new Set<Connection>()
+  const channels = new Set<Channel>()
 
   const addTarget = (target: MessageEventSource) => {
     // If the target has already been added, return just a noop cleanup
@@ -86,25 +86,25 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       return noop
     }
 
-    if (!targets.size || !connections.size) {
+    if (!targets.size || !channels.size) {
       targets.add(target)
 
       // If there are existing connections, set the target on all existing
       // channels, and trigger a connection event
-      connections.forEach((connection) => {
-        connection.channels.forEach((channel) => {
-          channel.setTarget(target)
-          channel.connect()
+      channels.forEach((channel) => {
+        channel.connections.forEach((connection) => {
+          connection.setTarget(target)
+          connection.connect()
         })
       })
       // We perform a 'soft' cleanup here: disconnect only as we want to
       // maintain at least one live channel per connection
       return () => {
         targets.delete(target)
-        connections.forEach((connection) => {
-          connection.channels.forEach((channel) => {
-            if (channel.target === target) {
-              channel.disconnect()
+        channels.forEach((channel) => {
+          channel.connections.forEach((connection) => {
+            if (connection.target === target) {
+              connection.disconnect()
             }
           })
         })
@@ -113,37 +113,39 @@ export const createController = (input: {targetOrigin: string}): Controller => {
 
     targets.add(target)
 
-    // Maintain a list of channels to cleanup
-    const targetChannels = new Set<Channel<Message, Message>>()
+    // Maintain a list of connections to cleanup
+    const targetConnections = new Set<Connection<Message, Message>>()
 
     // If we already have targets and connections, we need to create new
     // channels for each source with all the associated subscribers.
-    connections.forEach((connection) => {
-      const channel = createChannel(
+    channels.forEach((channel) => {
+      const connection = createConnection(
         {
-          ...connection.input,
+          ...channel.input,
           target,
           targetOrigin,
         },
-        connection.machine,
+        channel.machine,
       )
 
-      targetChannels.add(channel)
-      connection.channels.add(channel)
+      targetConnections.add(connection)
+      channel.connections.add(connection)
 
-      connection.subscribers.forEach(({type, handler, unsubscribers}) => {
-        unsubscribers.push(channel.on(type, handler))
+      channel.subscribers.forEach(({type, handler, unsubscribers}) => {
+        unsubscribers.push(connection.on(type, handler))
       })
-      connection.internalEventSubscribers.forEach(({type, handler, unsubscribers}) => {
+      channel.internalEventSubscribers.forEach(({type, handler, unsubscribers}) => {
         // @ts-expect-error @todo
-        unsubscribers.push(channel.actor.on(type, handler).unsubscribe)
+        unsubscribers.push(connection.actor.on(type, handler).unsubscribe)
       })
-      connection.statusSubscribers.forEach(({handler, unsubscribers}) => {
-        unsubscribers.push(channel.onStatus((status) => handler({channel: channel.id, status})))
+      channel.statusSubscribers.forEach(({handler, unsubscribers}) => {
+        unsubscribers.push(
+          connection.onStatus((status) => handler({connection: connection.id, status})),
+        )
       })
 
-      channel.start()
-      channel.connect()
+      connection.start()
+      connection.connect()
     })
 
     // We perform a more 'aggressive' cleanup here as we do not need to maintain
@@ -151,21 +153,21 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     // all connections
     return () => {
       targets.delete(target)
-      targetChannels.forEach((channel) => {
-        cleanupChannel(channel)
-        connections.forEach((connection) => {
-          connection.channels.delete(channel)
+      targetConnections.forEach((connection) => {
+        cleanupConnection(connection)
+        channels.forEach((channel) => {
+          channel.connections.delete(connection)
         })
       })
     }
   }
 
-  const createConnection = <R extends Message, S extends Message>(
-    input: ConnectionInput,
-    machine: ChannelActorLogic<R, S> = createChannelMachine<R, S>(),
-  ): ConnectionInstance<R, S> => {
-    const connection: Connection<R, S> = {
-      channels: new Set(),
+  const createChannel = <R extends Message, S extends Message>(
+    input: ChannelInput,
+    machine: ConnectionActorLogic<R, S> = createConnectionMachine<R, S>(),
+  ): ChannelInstance<R, S> => {
+    const channel: Channel<R, S> = {
+      connections: new Set(),
       input,
       internalEventSubscribers: new Set(),
       machine,
@@ -173,14 +175,14 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       subscribers: new Set(),
     }
 
-    connections.add(connection as unknown as Connection)
+    channels.add(channel as unknown as Channel)
 
-    const {channels, internalEventSubscribers, statusSubscribers, subscribers} = connection
+    const {connections, internalEventSubscribers, statusSubscribers, subscribers} = channel
 
     if (targets.size) {
-      // If targets have already been added, create a channel for each target
+      // If targets have already been added, create a connection for each target
       targets.forEach((target) => {
-        const channel = createChannel<R, S>(
+        const connection = createConnection<R, S>(
           {
             ...input,
             target,
@@ -188,24 +190,24 @@ export const createController = (input: {targetOrigin: string}): Controller => {
           },
           machine,
         )
-        channels.add(channel)
+        connections.add(connection)
       })
     } else {
       // If targets have not been added yet, create a channel without a target
-      const channel = createChannel<R, S>({...input, targetOrigin}, machine)
-      channels.add(channel)
+      const connection = createConnection<R, S>({...input, targetOrigin}, machine)
+      connections.add(connection)
     }
 
-    const post: ConnectionInstance<R, S>['post'] = (data) => {
-      channels.forEach((channel) => {
-        channel.post(data)
+    const post: ChannelInstance<R, S>['post'] = (data) => {
+      connections.forEach((connection) => {
+        connection.post(data)
       })
     }
 
-    const on: ConnectionInstance<R, S>['on'] = (type, handler) => {
+    const on: ChannelInstance<R, S>['on'] = (type, handler) => {
       const unsubscribers: Array<() => void> = []
-      channels.forEach((channel) => {
-        unsubscribers.push(channel.on(type, handler))
+      connections.forEach((connection) => {
+        unsubscribers.push(connection.on(type, handler))
       })
       const subscriber = {type, handler, unsubscribers}
       subscribers.add(subscriber)
@@ -223,9 +225,9 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       handler: (event: U) => void,
     ) => {
       const unsubscribers: Array<() => void> = []
-      channels.forEach((channel) => {
+      connections.forEach((connection) => {
         // @ts-expect-error @todo @help
-        unsubscribers.push(channel.actor.on(type, handler).unsubscribe)
+        unsubscribers.push(connection.actor.on(type, handler).unsubscribe)
       })
       const subscriber = {type, handler, unsubscribers}
       // @ts-expect-error @todo @help
@@ -239,8 +241,10 @@ export const createController = (input: {targetOrigin: string}): Controller => {
 
     const onStatus = (handler: (event: StatusEvent) => void) => {
       const unsubscribers: Array<() => void> = []
-      channels.forEach((channel) => {
-        unsubscribers.push(channel.onStatus((status) => handler({channel: channel.id, status})))
+      connections.forEach((connection) => {
+        unsubscribers.push(
+          connection.onStatus((status) => handler({connection: connection.id, status})),
+        )
       })
       const subscriber = {handler, unsubscribers}
       statusSubscribers.add(subscriber)
@@ -254,16 +258,16 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     // from the controller
     // @todo Remove casting
     const stop = () => {
-      const channels = connection.channels as unknown as Set<Channel>
-      channels.forEach(cleanupChannel)
-      channels.clear()
-      connections.delete(connection as unknown as Connection)
+      const connections = channel.connections as unknown as Set<Connection>
+      connections.forEach(cleanupConnection)
+      connections.clear()
+      channels.delete(channel as unknown as Channel)
     }
 
     const start = () => {
-      channels.forEach((channel) => {
-        channel.start()
-        channel.connect()
+      connections.forEach((connection) => {
+        connection.start()
+        connection.connect()
       })
 
       return stop
@@ -281,17 +285,17 @@ export const createController = (input: {targetOrigin: string}): Controller => {
 
   // Destroy the controller, cleanup all channels in all connections
   const destroy = () => {
-    connections.forEach(({channels}) => {
-      channels.forEach(cleanupChannel)
-      channels.clear()
+    channels.forEach(({connections}) => {
+      connections.forEach(cleanupConnection)
+      connections.clear()
     })
-    connections.clear()
+    channels.clear()
     targets.clear()
   }
 
   return {
     addTarget,
-    createConnection,
+    createChannel,
     destroy,
   }
 }

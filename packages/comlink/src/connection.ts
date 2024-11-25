@@ -37,26 +37,26 @@ import type {
 /**
  * @public
  */
-export type ChannelActorLogic<R extends Message, S extends Message> = ReturnType<
-  typeof createChannelMachine<R, S>
+export type ConnectionActorLogic<R extends Message, S extends Message> = ReturnType<
+  typeof createConnectionMachine<R, S>
 >
 /**
  * @public
  */
-export type ChannelActor<R extends Message, S extends Message> = ActorRefFrom<
-  ReturnType<typeof createChannelMachine<R, S>>
+export type ConnectionActor<R extends Message, S extends Message> = ActorRefFrom<
+  ReturnType<typeof createConnectionMachine<R, S>>
 >
 
 /**
  * @public
  */
-export type Channel<R extends Message = Message, S extends Message = Message> = {
-  actor: ChannelActor<R, S>
+export type Connection<R extends Message = Message, S extends Message = Message> = {
+  actor: ConnectionActor<R, S>
   connect: () => void
   disconnect: () => void
   id: string
   name: string
-  machine: ReturnType<typeof createChannelMachine<R, S>>
+  machine: ReturnType<typeof createConnectionMachine<R, S>>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
     type: T,
     handler: (event: U['data']) => Promise<U['response']> | U['response'],
@@ -72,7 +72,7 @@ export type Channel<R extends Message = Message, S extends Message = Message> = 
 /**
  * @public
  */
-export interface ChannelInput {
+export interface ConnectionInput {
   connectTo: string
   domain?: string
   heartbeat?: boolean
@@ -104,13 +104,13 @@ const sendBackAtInterval = fromCallback<
 /**
  * @public
  */
-export const createChannelMachine = <
+export const createConnectionMachine = <
   R extends Message, // Receives
   S extends Message, // Sends
   V extends WithoutResponse<S> = WithoutResponse<S>,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => {
-  const channelMachine = setup({
+  const connectionMachine = setup({
     types: {} as {
       children: {
         'listen for handshake': 'listen'
@@ -120,7 +120,7 @@ export const createChannelMachine = <
       }
       context: {
         buffer: Array<V>
-        connectionId: string
+        channelId: string
         connectTo: string
         domain: string
         heartbeat: boolean
@@ -152,7 +152,7 @@ export const createChannelMachine = <
         | {type: 'request'; data: RequestData<S> | RequestData<S>[]}
         | {type: 'syn'}
         | {type: 'target.set'; target: MessageEventSource}
-      input: ChannelInput
+      input: ConnectionInput
     },
     actors: {
       requestMachine: createRequestMachine<S>(),
@@ -184,7 +184,7 @@ export const createChannelMachine = <
             return spawn('requestMachine', {
               id,
               input: {
-                connectionId: context.connectionId,
+                channelId: context.channelId,
                 data: request.data,
                 domain: context.domain,
                 expectResponse: request.expectResponse,
@@ -287,11 +287,11 @@ export const createChannelMachine = <
     },
   }).createMachine({
     /** @xstate-layout N4IgpgJg5mDOIC5QGMAWBDAdpsAbAxAC7oBOMhAdLGIQNoAMAuoqAA4D2sAloV+5ixAAPRAHZRAJgoAWABz0ArHICMy2QGZZCgJwAaEAE9EE+tIrb6ANgkLl46fTuj1AXxf60WHARJgAjgCucJSwAcjIcLAMzEggHNy8-IIiCKLS2hQS6qb2yurisrL6RgjK9LIyCuqq0g7WstZuHhjYePi+gcEUAGboXLiQ0YLxPHwCsSmiCgoykpayDtqS6trqxYjKEk0gnq24FFwQA-jI-DjIdEzDnKNJExuOZpZ12eq29OrSCuupypYUojUaTKCnm5Wk2123gORzA+HilxibBuiXGoBSGnUAIU4gU9FWamUtR+lmUM1EllBEkslMUEnpkJa0JaEFgGAA1lxMFB8LADJghrERqjkhtshk3mTtNo5OpqpYfqCKhTptoqpY1WUtu4dky8BQWWz0Jzue1-EFYIjrgkxqLSupqRRPpoPqJtLI0hIioZENJJE7NnJ8ZYHVk1YyvPrDRyuTyEYLkTa7uixVlMh81KGFhS1j6EPkZlpVjTphr8mkI3sDVhWTHTQBbSLoGAUXwRLgAN0GVyFKNt91KimUFEKXvKC2s9R+6X+jipnzJeSqEJ1UKjNaNJp5EC4sFOrQuCbifeTwg2cgoym0RPxDtqkj0eaB9Ao8zSolMEivZVcq71+33c5CEgeFOCtXskzRM8EDxKRpmkSw3QJbQsmpH5tHmV8JHSbJpDsakV2aSMALOMALhAjoLXAxNbiglI-SxWw1Vw0QNDw0Qfg9KQ7EJSxHHxApK2hQCyOAiAzVgDhMGoI9hX7FMEHSF8cWkelpHURCbBsb481xAEgT9BQJCmWQsiE-URPI8TG1gWBmzAVsyLATtuyRY9ILtWoKmlL82Kqd0tAVJ91LMHFZDKIkVlkNVZHMkiDzE-Adz3UjDx7GiRQHCKnheD53k+HSSkDDIwpBVTqQwuKKEssSDTAUhCAAI3qyg0DIrd8Fkk86MQUMnVM+RynoegTDJH48hGp0vR-FDRqqKqasgOqGua9AQjATAd1NSiul6fpXOtWi7Wy19cslD4vnG7IX3oVjVDUVYEJQqrksW8SdstLqPKy0wKgG1RhtMWogqKhoMjkWp6XxUyFBe3c3tAz70vco6fq+V8PTkGUFzdQqNnELEM2yClrwwzQ4ZShKQJqr7UYU98AS0W9pT4z5pHG0yXwMkNNTyGk3B1TB2AgOBBDXXBDsyhSFG9EovQqN5i1JeRcKqw4Bkl+ToMx8x0j+EaqQ9XMSkBURMgMkEwQWKro2NWNNdPFJAzN0lJGM4slDxhBEJfXyplBd03wW1KxIdnrBxBh4JAyW75C8rJpmDqmIGWkgmpasPjqUcaHooMLHA0uU1UkJOgKW1B6rT1bWor5At0zgcTAkK7hrz1irB0D8cW0UvRPLyv07WqgNq2qAG+l9SnXUz0UOXD5xuMs3Y4+DVJBX7UiKrV6Q8gcfoJO54rFefLLqfJYX1WKYNLxL4NO1NwgA */
-    id: 'channel',
+    id: 'connection',
     context: ({input}) => ({
       id: input.id || `${input.name}-${uuid()}`,
       buffer: [],
-      connectionId: `cnx-${uuid()}`,
+      channelId: `chn-${uuid()}`,
       connectTo: input.connectTo,
       domain: input.domain ?? DOMAIN,
       heartbeat: input.heartbeat ?? false,
@@ -448,16 +448,16 @@ export const createChannelMachine = <
     },
   })
 
-  return channelMachine
+  return connectionMachine
 }
 
 /**
  * @public
  */
-export const createChannel = <R extends Message, S extends Message>(
-  input: ChannelInput,
-  machine: ChannelActorLogic<R, S> = createChannelMachine<R, S>(),
-): Channel<R, S> => {
+export const createConnection = <R extends Message, S extends Message>(
+  input: ConnectionInput,
+  machine: ConnectionActorLogic<R, S> = createConnectionMachine<R, S>(),
+): Connection<R, S> => {
   const id = input.id || `${input.name}-${uuid()}`
   const actor = createActor(machine, {
     input: {...input, id},
@@ -542,12 +542,14 @@ export const createChannel = <R extends Message, S extends Message>(
   }
 }
 
-// Helper function to cleanup a channel
-export const cleanupChannel: (channel: Channel<Message, Message>) => void = (channel) => {
-  channel.disconnect()
-  // Necessary to allow disconnect messages to be sent before the channel
+// Helper function to cleanup a connection
+export const cleanupConnection: (connection: Connection<Message, Message>) => void = (
+  connection,
+) => {
+  connection.disconnect()
+  // Necessary to allow disconnect messages to be sent before the connection
   // actor is stopped
   setTimeout(() => {
-    channel.stop()
+    connection.stop()
   }, 0)
 }

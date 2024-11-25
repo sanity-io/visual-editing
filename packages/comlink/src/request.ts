@@ -25,7 +25,7 @@ const throwOnEvent =
  * @public
  */
 export interface RequestMachineContext<S extends Message> {
-  connectionId: string
+  channelId: string
   data: MessageData | undefined
   domain: string
   expectResponse: boolean
@@ -76,7 +76,7 @@ export const createRequestMachine = <
             responseTo: string | undefined
           }
       input: {
-        connectionId: string
+        channelId: string
         data?: S['data']
         domain: string
         expectResponse?: boolean
@@ -184,7 +184,7 @@ export const createRequestMachine = <
     /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOlwgBswBiAD1gBd0GwT0AzFgJ2QNwdzoKAFVyowAewCuDItTRY8hUuSoBtAAwBdRKAAOE2P1wT8ukLUQBGAEwBWEgBYAnK+eOAzB7sB2DzY8rABoQAE9rDQc3V0cNTw8fAA4NHwBfVJCFHAJiElgwfAgCKGpNHSQQAyMBU3NLBDsrDxI7DTaAjQA2OOcNDxDwhHsNJx9Ou0TOq2cJxP9HdMyMbOU8gqL8ErUrcv1DY1qK+sbm1vaPLp6+gcRnGydo9wDGycWQLKVc9AB3dGNN6jiWCwdAwMrmKoHMxHRCJRKOEiJHwuZKBZwXKzBMKIGyYkhtAkXOweTqOHw2RJvD45Ug-P4CAH0JgsNicMA8LhwAz4fKicTSWTyZafWm-f5QcEVSE1aGgepwhFIlF9aYYrGDC4+JzEppjGzOUkeGbpDIgfASCBwczU5QQ-YyuqIAC0nRuCBd+IJXu9KSpwppZEoYDt1RMsosiEcNjdVjiJEeGisiSTHkcVgWpptuXyhWKIahjqGzi1BqRJINnVcdkcbuTLS9VYC8ISfsUAbp4vzDphCHJIyjBvJNlxNmRNexQ3sJGH43GPj8jWJrZWuXYfyoEC7YcLsbrgRsjkcvkmdgNbopVhIPhVfnsh8ClMz-tWsCkmEwcHgUvt257u8v+6Hse4xnhOdZnImVidPqCRNB4JqpEAA */
     context: ({input}) => {
       return {
-        connectionId: input.connectionId,
+        channelId: input.channelId,
         data: input.data,
         domain: input.domain,
         expectResponse: input.expectResponse ?? false,
@@ -221,9 +221,9 @@ export const createRequestMachine = <
         entry: {
           type: 'send message',
           params: ({context}) => {
-            const {connectionId, data, domain, from, id, responseTo, to, type} = context
+            const {channelId, data, domain, from, id, responseTo, to, type} = context
             const message = {
-              connectionId,
+              channelId,
               data,
               domain,
               from,
