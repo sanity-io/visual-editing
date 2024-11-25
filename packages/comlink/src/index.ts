@@ -1,16 +1,16 @@
 export {
-  type Channel,
-  type ChannelActor,
-  type ChannelActorLogic,
-  type ChannelInput,
-  createChannel,
-  createChannelMachine,
-} from './channel'
+  type Connection,
+  type ConnectionActor,
+  type ConnectionActorLogic,
+  type ConnectionInput,
+  createConnection,
+  createConnectionMachine,
+} from './connection'
 export {createListenLogic} from './common'
 export * from './constants'
 export {
-  type ConnectionInput,
-  type ConnectionInstance,
+  type ChannelInput,
+  type ChannelInstance,
   type Controller,
   createController,
 } from './controller'
