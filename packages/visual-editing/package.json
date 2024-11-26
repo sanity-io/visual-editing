@@ -46,6 +46,12 @@
       "require": "./dist/react/index.cjs",
       "default": "./dist/react/index.js"
     },
+    "./react-router": {
+      "source": "./src/react-router/index.ts",
+      "import": "./dist/react-router/index.js",
+      "require": "./dist/react-router/index.cjs",
+      "default": "./dist/react-router/index.js"
+    },
     "./remix": {
       "source": "./src/remix/index.ts",
       "import": "./dist/remix/index.js",
@@ -78,6 +84,9 @@
       ],
       "react": [
         "./dist/react/index.d.ts"
+      ],
+      "react-router": [
+        "./dist/react-router/index.d.ts"
       ],
       "remix": [
         "./dist/remix/index.d.ts"
@@ -156,6 +165,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-is": "^18.3.1",
+    "react-router": "^7.0.0",
     "rimraf": "^5.0.5",
     "storybook": "^8.4.4",
     "styled-components": "6.1.13",
@@ -172,6 +182,7 @@
     "next": ">= 13 || >=14.3.0-canary.0 <14.3.0 || >=15.0.0-rc",
     "react": "^18.3 || >=19.0.0-rc",
     "react-dom": "^18.3 || >=19.0.0-rc",
+    "react-router": ">= 7",
     "svelte": ">= 4"
   },
   "peerDependenciesMeta": {
@@ -185,6 +196,9 @@
       "optional": true
     },
     "next": {
+      "optional": true
+    },
+    "react-router": {
       "optional": true
     },
     "svelte": {

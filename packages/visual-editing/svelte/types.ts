@@ -4,7 +4,7 @@ import type {HistoryRefresh, VisualEditingOptions} from '../dist'
 /** @public */
 export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history' | 'refresh'> {
   /**
-   * @deprecated The histoy adapter is already implemented
+   * @deprecated The history adapter is already implemented
    */
   history?: never
   refresh?: (
