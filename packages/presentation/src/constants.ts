@@ -24,6 +24,9 @@ export const LIVE_QUERY_CACHE_BATCH_SIZE = 100
 // Total cache size for documents that are live queried
 export const LIVE_QUERY_CACHE_SIZE = 2048
 
+// The interval at which we check if existing popups have been closed
+export const POPUP_CHECK_INTERVAL = 1000 // ms
+
 declare global {
   const PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: unknown
 }
