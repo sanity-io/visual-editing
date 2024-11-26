@@ -16,7 +16,7 @@ npm install @sanity/comlink
 
 ### Setup
 
-First, define the types of messages you will send and receive. The `data` and `response` values must be a serialiazable objects, or `undefined`.
+First, define the types of messages you will send and receive. The `data` and `response` values must be a serializable object, or `undefined`.
 
 Define messages the Controller will send.
 
@@ -72,7 +72,7 @@ const iframe = document.querySelector('iframe#my-iframe')
 controller.addTarget(iframe)
 ```
 
-Create a Connection definition, provide a name and the name of the Node it should interface with.
+Define a Connection by specifying its name and the name of the Node it will interface with. Optionally enable heartbeat monitoring to allow automatic recovery on unexpected disconnects.
 
 ```ts
 const connection = controller.createConnection<NodeMessage, ControllerMessage>({
