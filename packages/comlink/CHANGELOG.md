@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.3...comlink-v1.1.4) (2024-11-26)
+
+
+### Bug Fixes
+
+* prevent disconnect on window context close ([#2194](https://github.com/sanity-io/visual-editing/issues/2194)) ([c6f2d08](https://github.com/sanity-io/visual-editing/commit/c6f2d08595553d4df3f7e2f6169075cb7fd45cfe))
+
 ## [1.1.3](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.2...comlink-v1.1.3) (2024-11-14)
 
 
