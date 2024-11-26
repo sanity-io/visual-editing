@@ -7,4 +7,6 @@ export default defineConfig({
   define: {
     PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: process.env['PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS'],
   },
+  babel: {reactCompiler: true},
+  reactCompilerOptions: {target: '18'},
 })
