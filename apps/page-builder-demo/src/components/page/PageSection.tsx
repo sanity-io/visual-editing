@@ -3,7 +3,7 @@ import {HTMLProps} from 'react'
 
 const variants: Record<'default' | 'inverted', string> = {
   default: 'bg-white text-black dark:bg-black dark:text-white',
-  inverted: 'bg-magenta-100 text-black dark:bg-magenta-800 dark:text-white',
+  inverted: 'bg-[#364c35] text-white dark:bg-[#b5cbb4] dark:text-black',
 }
 
 export function PageSection(props: {variant?: 'default' | 'inverted'} & HTMLProps<HTMLDivElement>) {

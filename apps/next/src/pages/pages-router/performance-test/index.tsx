@@ -1,11 +1,11 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
-import {useQuery} from '@sanity/react-loader'
-import Link from 'next/link'
+import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {ClientConfig, createClient} from '@sanity/client'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
+import {useQuery} from '@sanity/react-loader'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import Link from 'next/link'
 
-const {projectId, dataset, workspace} = workspaces['next-pages-router']
-const studioUrl = `${baseUrl}/${workspace}`
+const {projectId, dataset} = workspaces['next-pages-router']
 
 const sanityToken = process.env.SANITY_API_READ_TOKEN
 
@@ -15,10 +15,16 @@ function createSanityClient(config: ClientConfig) {
     dataset,
     apiVersion,
     stega: {
-      studioUrl: ({_dataset}) =>
-        _dataset === workspaces['cross-dataset-references'].dataset
-          ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
-          : studioUrl,
+      studioUrl: (sourceDocument) => {
+        if (
+          sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
+          sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
+        ) {
+          const {workspace, tool} = workspaces['cross-dataset-references']
+          return {baseUrl, workspace, tool}
+        }
+        return {baseUrl, workspace: 'performance-test'}
+      },
     },
     ...config,
   })

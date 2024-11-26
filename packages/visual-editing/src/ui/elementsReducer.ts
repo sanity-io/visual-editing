@@ -1,5 +1,4 @@
-import type {PresentationMsg} from '@repo/visual-editing-helpers'
-
+import type {VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ElementState, OverlayMsg} from '../types'
 
 /**
@@ -8,22 +7,25 @@ import type {ElementState, OverlayMsg} from '../types'
  */
 export const elementsReducer = (
   elements: ElementState[],
-  message: OverlayMsg | PresentationMsg,
+  message: OverlayMsg | VisualEditingControllerMsg,
 ): ElementState[] => {
   const {type} = message
   switch (type) {
     case 'element/register': {
       const elementExists = !!elements.find((e) => e.id === message.id)
       if (elementExists) return elements
+
       return [
         ...elements,
         {
           id: message.id,
           activated: false,
+          element: message.element,
           focused: false,
           hovered: false,
           rect: message.rect,
           sanity: message.sanity,
+          dragDisabled: message.dragDisabled,
         },
       ]
     }
@@ -34,6 +36,14 @@ export const elementsReducer = (
         }
         return e
       })
+    case 'element/update': {
+      return elements.map((e) => {
+        if (e.id === message.id) {
+          return {...e, sanity: message.sanity, rect: message.rect}
+        }
+        return e
+      })
+    }
     case 'element/unregister':
       return elements.filter((e) => e.id !== message.id)
     case 'element/deactivate':

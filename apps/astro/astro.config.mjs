@@ -1,10 +1,12 @@
-import {defineConfig} from 'astro/config'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
-import sanity from '@sanity/astro'
+import react from '@astrojs/react'
 import tailwind from '@astrojs/tailwind'
 import vercel from '@astrojs/vercel/serverless'
-const {projectId, dataset, workspace} = workspaces['astro']
-const studioUrl = `${baseUrl}/${workspace}`
+import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
+import sanity from '@sanity/astro'
+import {defineConfig} from 'astro/config'
+
+const {projectId, dataset} = workspaces['astro']
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,11 +17,21 @@ export default defineConfig({
       dataset,
       useCdn: true,
       apiVersion,
-      studioUrl: ({_dataset}) =>
-        _dataset === workspaces['cross-dataset-references'].dataset
-          ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
-          : studioUrl,
+      stega: {
+        studioUrl: (sourceDocument) => {
+          if (
+            sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
+            sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
+          ) {
+            const {workspace, tool} = workspaces['cross-dataset-references']
+            return {baseUrl, workspace, tool}
+          }
+          const {workspace, tool} = workspaces['astro']
+          return {baseUrl, workspace, tool}
+        },
+      },
     }),
+    react(),
     tailwind(),
   ],
   adapter: vercel(),

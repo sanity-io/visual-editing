@@ -1,5 +1,6 @@
 export * from './createQueryStore'
 export * from './hooks'
+export {default as LiveMode} from './LiveMode.svelte'
 export * from './previewStore'
 export type {
   HandleOptions,

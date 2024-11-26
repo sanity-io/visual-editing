@@ -1,8 +1,8 @@
+import {apiVersion, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from '@sanity/client'
-import {workspaces, studioUrl as baseUrl, apiVersion} from 'apps-common/env'
 
-const {projectId, dataset, workspace} = workspaces['next-app-router']
-const studioUrl = `${baseUrl}/${workspace}`
+const {projectId, dataset} = workspaces['next-app-router']
 
 export const client = createClient({
   projectId,
@@ -10,9 +10,16 @@ export const client = createClient({
   useCdn: false,
   apiVersion,
   stega: {
-    studioUrl: ({_dataset}) =>
-      _dataset === workspaces['cross-dataset-references'].dataset
-        ? `${baseUrl}/${workspaces['cross-dataset-references'].workspace}`
-        : studioUrl,
+    studioUrl: (sourceDocument) => {
+      if (
+        sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
+        sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
+      ) {
+        const {workspace, tool} = workspaces['cross-dataset-references']
+        return {baseUrl, workspace, tool}
+      }
+      const {workspace, tool} = workspaces['next-app-router']
+      return {baseUrl, workspace, tool}
+    },
   },
 })

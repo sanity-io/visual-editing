@@ -1,4 +1,3 @@
----
 name: Fix linting issues
 
 on:
@@ -19,24 +18,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           cache: pnpm
           node-version: lts/*
       - run: pnpm install --ignore-scripts
       - run: git restore pnpm-lock.yaml
-      - run: pnpm lint:fix
+      - run: pnpm build && pnpm lint:fix
       - uses: actions/create-github-app-token@v1
         id: generate-token
         with:
           app-id: ${{ secrets.ECOSPARK_APP_ID }}
           private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
-      - uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e # v6
+      - uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7
         with:
           body: I ran `pnpm lint:fix` 🧑‍💻
           branch: actions/lint-fix
           commit-message: 'chore(lint): --fix 🤖 ✨'
           labels: 🤖 bot
+          sign-commits: true
           title: 'chore(lint): --fix 🤖 ✨'
           token: ${{ steps.generate-token.outputs.token }}

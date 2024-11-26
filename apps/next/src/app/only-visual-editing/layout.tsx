@@ -1,9 +1,8 @@
-import {draftMode} from 'next/headers'
-import {revalidatePath, revalidateTag, unstable_cache} from 'next/cache'
-import {VisualEditing} from 'next-sanity'
 import {VercelToolbar} from '@vercel/toolbar/next'
+import {VisualEditing} from 'next-sanity'
+import {revalidatePath, revalidateTag, unstable_cache} from 'next/cache'
+import {draftMode} from 'next/headers'
 import '../../tailwind.css'
-
 import {Timesince} from '../Timesince'
 
 export const metadata = {
@@ -17,11 +16,11 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body>
         {children}
         <VercelToolbar />
-        {draftMode().isEnabled && (
+        {(await draftMode()).isEnabled && (
           <VisualEditing
             refresh={async (payload) => {
               'use server'
-              if (!draftMode().isEnabled) {
+              if (!(await draftMode()).isEnabled) {
                 console.error('Draft Mode is not enabled, ignoring refresh')
                 return
               }
@@ -41,13 +40,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             }}
           />
         )}
-        <a
-          href={draftMode().isEnabled ? '/api/disable-draft' : undefined}
-          title={draftMode().isEnabled ? 'Click to disable Draft Mode' : undefined}
-          className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100"
-        >
+        <a className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100">
           app-router:{' '}
-          {draftMode().isEnabled
+          {(await draftMode()).isEnabled
             ? 'draftMode'
             : process.env.NEXT_PUBLIC_VERCEL_ENV || 'development'}
           {', '}

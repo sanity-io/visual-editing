@@ -1,15 +1,15 @@
 ---
-import {sanityClient} from 'sanity:client'
 import {PortableText} from 'astro-portabletext'
-import {shoe, shoesList, type ShoeResult, type ShoesListResult} from 'apps-common/queries'
-import Layout from '../../../layouts/layout.astro'
+import Layout from '../../layouts/layout.astro'
+import {loadQuery} from '../../load-query'
+import {shoe, shoesList, type ShoeResult, type ShoesListResult} from '../../queries'
 import {urlFor, urlForCrossDatasetReference} from '../../sanity'
-import {formatCurrency} from 'apps-common/utils'
+import {formatCurrency} from '../../utils'
 
 const {slug} = Astro.params
 
-const products = await sanityClient.fetch<ShoesListResult>(`${shoesList}[0..3]`)
-const product = await sanityClient.fetch<ShoeResult>(shoe, {slug})
+const {data: products} = await loadQuery<ShoesListResult>({query: `${shoesList}[0..3]`})
+const {data: product} = await loadQuery<ShoeResult>({query: shoe, params: slug ? {slug} : {}})
 const loadingShoe = false
 const loadingShoes = false
 const [coverImage, ...otherImages] = product.media ?? []

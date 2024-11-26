@@ -1,4 +1,3 @@
----
 name: Sync main to preview
 
 on:
@@ -23,7 +22,7 @@ jobs:
         with:
           app-id: ${{ secrets.ECOSPARK_APP_ID }}
           private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
-      - uses: connor-baer/action-sync-branch@main
+      - uses: connor-baer/action-sync-branch@0298935825bb8194982d322e7730b783a2ed9cd2 # v1.1.0
         with:
           branch: preview
           token: ${{ steps.generate-token.outputs.token }}

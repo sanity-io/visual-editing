@@ -2,7 +2,6 @@ import type {QueryParams} from '@sanity/client'
 import type {QueryStore, QueryStoreState} from '@sanity/core-loader'
 import isEqual from 'fast-deep-equal'
 import {useEffect, useMemo, useState, useSyncExternalStore} from 'react'
-
 import {defineStudioUrlStore} from './defineStudioUrlStore'
 import type {UseQueryOptions, WithEncodeDataAttribute} from './types'
 import {useEncodeDataAttribute} from './useEncodeDataAttribute'

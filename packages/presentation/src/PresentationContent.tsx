@@ -5,21 +5,27 @@ import {
   type SetStateAction,
 } from 'react'
 import type {Path, SanityDocument} from 'sanity'
-import {type CommentIntentGetter, CommentsIntentProvider} from 'sanity/structure'
-
 import {ContentEditor} from './editor/ContentEditor'
+import {CommentsIntentProvider, type CommentIntentGetter} from './internals'
 import {DisplayedDocumentBroadcasterProvider} from './loader/DisplayedDocumentBroadcaster'
 import {Panel} from './panels/Panel'
 import {PanelResizer} from './panels/PanelResizer'
-import type {MainDocumentState, PresentationParams, StructureDocumentPaneParams} from './types'
+import type {
+  MainDocumentState,
+  PresentationParams,
+  PresentationSearchParams,
+  StructureDocumentPaneParams,
+} from './types'
 
 export interface PresentationContentProps {
-  mainDocumentState: MainDocumentState | undefined
-  params: PresentationParams
+  documentId: PresentationParams['id']
   documentsOnPage: {_id: string; _type: string}[]
+  documentType: PresentationParams['type']
   getCommentIntent: CommentIntentGetter
+  mainDocumentState: MainDocumentState | undefined
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
+  searchParams: PresentationSearchParams
   setDisplayedDocument: Dispatch<SetStateAction<Partial<SanityDocument> | null | undefined>>
   structureParams: StructureDocumentPaneParams
 }
@@ -51,30 +57,32 @@ const PresentationContentWrapper: FunctionComponent<
 
 export const PresentationContent: FunctionComponent<PresentationContentProps> = (props) => {
   const {
+    documentId,
     documentsOnPage,
+    documentType,
     getCommentIntent,
     mainDocumentState,
     onFocusPath,
     onStructureParams,
-    params,
+    searchParams,
     setDisplayedDocument,
     structureParams,
   } = props
 
   return (
     <PresentationContentWrapper
-      documentId={params.id}
+      documentId={documentId}
       getCommentIntent={getCommentIntent}
       setDisplayedDocument={setDisplayedDocument}
     >
       <ContentEditor
-        documentId={params.id}
-        documentType={params.type}
+        documentId={documentId}
+        documentType={documentType}
         mainDocumentState={mainDocumentState}
         onFocusPath={onFocusPath}
         onStructureParams={onStructureParams}
-        previewUrl={params.preview}
         refs={documentsOnPage}
+        searchParams={searchParams}
         structureParams={structureParams}
       />
     </PresentationContentWrapper>

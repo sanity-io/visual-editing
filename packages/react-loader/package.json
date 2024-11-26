@@ -1,6 +1,6 @@
 {
   "name": "@sanity/react-loader",
-  "version": "1.9.17",
+  "version": "1.10.21",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/react-loader#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -66,91 +66,39 @@
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
-    "dev": "pkg watch --strict",
-    "lint": "eslint .",
-    "prepublishOnly": "pnpm build",
+    "dev": "pkg build --strict",
+    "lint": "eslint --cache .",
+    "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": "@sanity/prettier-config",
+  "prettier": "@repo/prettier-config",
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "simple-import-sort",
-      "prettier"
-    ],
     "extends": [
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:react/jsx-runtime",
-      "eslint:recommended",
-      "plugin:prettier/recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
+      "@repo/eslint-config"
     ],
-    "rules": {
-      "no-console": "error",
-      "no-warning-comments": [
-        "warn",
-        {
-          "location": "start",
-          "terms": [
-            "todo",
-            "@todo",
-            "fixme"
-          ]
-        }
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/member-delimiter-style": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
-      "prettier/prettier": "warn",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react/prop-types": "off",
-      "simple-import-sort/exports": "warn",
-      "simple-import-sort/imports": "warn"
-    },
     "root": true
   },
   "dependencies": {
-    "@sanity/core-loader": "1.6.12"
+    "@sanity/core-loader": "workspace:*"
   },
   "devDependencies": {
-    "@repo/channels": "0.4.0",
+    "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
-    "@repo/visual-editing-helpers": "0.6.10",
-    "@sanity/client": "^6.18.0",
-    "@sanity/pkg-utils": "6.8.13",
-    "@types/react": "^18.3.1",
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.8.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/visual-editing-helpers": "workspace:*",
+    "@sanity/client": "^6.22.5",
+    "@sanity/pkg-utils": "6.11.12",
+    "@types/react": "^18.3.12",
+    "eslint": "^8.57.1",
     "fast-deep-equal": "3.1.3",
     "react": "^18.3.1",
-    "typescript": "5.4.5",
-    "vitest": "^1.6.0"
+    "typescript": "5.6.3",
+    "vitest": "^2.1.5"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.18.0",
-    "react": "^18.2.0"
+    "@sanity/client": "^6.22.5",
+    "react": "^18.3 || >=19.0.0-rc"
   },
   "engines": {
     "node": ">=18"

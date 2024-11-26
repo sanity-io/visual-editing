@@ -9,13 +9,13 @@
     <div
       class="flex w-full flex-col items-center justify-start gap-4 font-mono text-sm lg:max-w-5xl lg:flex-row"
     >
-      <button class="button" type="button" @click.prevent="elementAdded = !elementAdded">
+      <button class="button" type="button" @click.prevent="(elementAdded = !elementAdded)">
         {{ elementAdded ? 'Remove' : 'Add' }} Dynamic Element
       </button>
-      <button class="button" type="button" @click.prevent="expandedDocument = !expandedDocument">
+      <button class="button" type="button" @click.prevent="(expandedDocument = !expandedDocument)">
         {{ expandedDocument ? 'Contract' : 'Expand' }} Document
       </button>
-      <button class="button" type="button" @click.prevent="animateDocument = !animateDocument">
+      <button class="button" type="button" @click.prevent="(animateDocument = !animateDocument)">
         {{ animateDocument ? 'Disable' : 'Enable' }} Animation
       </button>
     </div>
@@ -94,6 +94,7 @@
 
 <script lang="ts" setup>
 import {vercelStegaCombine} from '@vercel/stega'
+
 const elementAdded = ref(false)
 const expandedDocument = ref(false)
 const animateDocument = ref(false)

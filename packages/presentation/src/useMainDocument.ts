@@ -1,9 +1,8 @@
 import type {ResponseQueryOptions} from '@sanity/client'
 import {match, type Path} from 'path-to-regexp'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import {useClient, useDocumentStore} from 'sanity'
-import {useRouter} from 'sanity/router'
-
+import {useClient} from 'sanity'
+import {useRouter, type RouterState} from 'sanity/router'
 import {API_VERSION} from './constants'
 import type {
   DocumentResolver,
@@ -88,14 +87,13 @@ export function getRouteContext(route: Path, url: URL): DocumentResolverContext 
 
 export function useMainDocument(props: {
   navigate?: PresentationNavigate
+  navigationHistory: RouterState[]
   path?: string
   previewUrl?: PreviewUrlOption
   resolvers?: DocumentResolver[]
 }): MainDocumentState | undefined {
-  const {navigate, resolvers = [], path, previewUrl} = props
-
+  const {navigate, navigationHistory, path, previewUrl, resolvers = []} = props
   const {state: routerState} = useRouter()
-  const documentStore = useDocumentStore()
   const client = useClient({apiVersion: API_VERSION})
 
   const [mainDocumentState, setMainDocumentState] = useState<MainDocumentState | undefined>(
@@ -158,11 +156,20 @@ export function useMainDocument(props: {
                   document: doc,
                   path: url.pathname,
                 })
-                navigate?.({
-                  id: doc?._id,
-                  type: doc?._type,
-                })
                 mainDocumentIdRef.current = doc?._id
+
+                // We only want to force a navigation to the main document if
+                // the path changed but the document ID did not. An explicit
+                // document navigation should take precedence over displaying
+                // the main document. We determine if an explicit document
+                // navigation has occured by comparing the IDs of the last two
+                // resultant navigation states.
+                if (navigationHistory.at(-1)?.['id'] === navigationHistory.at(-2)?.['id']) {
+                  navigate?.({
+                    id: doc?._id,
+                    type: doc?._type,
+                  })
+                }
               }
             })
             .catch((e) => {
@@ -178,7 +185,7 @@ export function useMainDocument(props: {
     }
     clearState()
     return undefined
-  }, [client, clearState, documentStore, navigate, resolvers, url])
+  }, [client, clearState, navigate, navigationHistory, resolvers, url])
 
   return mainDocumentState
 }

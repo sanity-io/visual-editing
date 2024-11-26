@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
-  import {
-    enableVisualEditing,
-    type HistoryAdapterNavigate,
-  } from '../dist/index.js'
-  import { afterNavigate, goto, invalidateAll } from '$app/navigation'
-  import type { VisualEditingProps } from './types'
+  import {afterNavigate, goto, invalidateAll} from '$app/navigation'
+  import {onMount} from 'svelte'
+  import {enableVisualEditing, type HistoryAdapterNavigate} from '../dist/index.js'
+  import type {VisualEditingProps} from './types'
 
   export let zIndex: VisualEditingProps['zIndex'] = undefined
   /**
@@ -47,7 +44,7 @@
         update: (update) => {
           if (update.type === 'push' || update.type === 'replace') {
             navigatingFromUpdate = true
-            goto(update.url, { replaceState: update.type === 'replace' })
+            goto(update.url, {replaceState: update.type === 'replace'})
           } else if (update.type === 'pop') {
             history.back()
           }
@@ -56,10 +53,10 @@
     }),
   )
 
-  afterNavigate(async ({ to, complete }) => {
+  afterNavigate(async ({to, complete}) => {
     if (navigate && to && !navigatingFromUpdate) {
       await complete
-      navigate({ type: 'push', url: to.url.pathname + to.url.search })
+      navigate({type: 'push', url: to.url.pathname + to.url.search})
     }
     navigatingFromUpdate = false
   })

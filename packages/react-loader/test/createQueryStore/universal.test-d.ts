@@ -1,6 +1,5 @@
 import {createClient} from '@sanity/client'
 import {describe, expectTypeOf, test} from 'vitest'
-
 import {createQueryStore} from '../../src/createQueryStore/universal'
 
 describe('useQuery', () => {

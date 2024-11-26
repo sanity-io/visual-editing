@@ -1,9 +1,9 @@
-import {shoe, type ShoeResult} from 'apps-common/queries'
+import {shoe, type ShoeResult} from '$lib/queries'
 import type {PageServerLoad} from './$types'
 
-export const load: PageServerLoad = async ({locals: {client}, params: {slug}}) => {
+export const load: PageServerLoad = async ({locals: {client, preview}, params: {slug}}) => {
   const params = {slug}
-  const product = await client.fetch<ShoeResult>(shoe, params)
+  const product = await client.fetch<ShoeResult>(shoe, params, {stega: preview ? true : false})
 
   return {product, params}
 }

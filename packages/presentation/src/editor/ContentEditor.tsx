@@ -1,13 +1,26 @@
 import {WarningOutlineIcon} from '@sanity/icons'
-import {Badge, Box, Card, Flex, Text} from '@sanity/ui'
-import {type HTMLProps, type ReactElement, useCallback} from 'react'
-import {type Path, Preview, Translate, useSchema, useTranslation} from 'sanity'
+import {Box, Card, Flex, Text} from '@sanity/ui'
+import {useCallback, useMemo, type HTMLProps, type ReactElement} from 'react'
 import {StateLink} from 'sanity/router'
-
 import {presentationLocaleNamespace} from '../i18n'
-import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
+import {
+  getPreviewValueWithFallback,
+  PreviewCard,
+  SanityDefaultPreview,
+  Translate,
+  useSchema,
+  useTranslation,
+  type Path,
+  type SanityDocument,
+} from '../internals'
+import type {
+  MainDocumentState,
+  PresentationSearchParams,
+  StructureDocumentPaneParams,
+} from '../types'
 import {DocumentListPane} from './DocumentListPane'
 import {DocumentPanel} from './DocumentPanel'
+import usePreviewState from './usePreviewState'
 
 export function ContentEditor(props: {
   documentId?: string
@@ -15,9 +28,9 @@ export function ContentEditor(props: {
   mainDocumentState?: MainDocumentState
   onFocusPath: (path: Path) => void
   onStructureParams: (params: StructureDocumentPaneParams) => void
-  previewUrl?: string
   refs: {_id: string; _type: string}[]
   structureParams: StructureDocumentPaneParams
+  searchParams: PresentationSearchParams
 }): ReactElement {
   const {
     documentId,
@@ -25,8 +38,8 @@ export function ContentEditor(props: {
     mainDocumentState,
     onFocusPath,
     onStructureParams,
-    previewUrl,
     refs,
+    searchParams,
     structureParams,
   } = props
 
@@ -41,13 +54,42 @@ export function ContentEditor(props: {
           state={{
             id: mainDocumentState!.document!._id,
             type: mainDocumentState!.document!._type,
-            _searchParams: Object.entries({preview: previewUrl}),
+            _searchParams: Object.entries(searchParams),
           }}
         />
       )
     },
-    [mainDocumentState, previewUrl],
+    [mainDocumentState, searchParams],
   )
+
+  const schemaType = useMemo(
+    () => schema.get(mainDocumentState?.document?._type || 'shoe')!,
+    [mainDocumentState, schema],
+  )
+
+  const previewState = usePreviewState(mainDocumentState?.document?._id || '', schemaType)
+
+  const preview = useMemo(() => {
+    if (!mainDocumentState?.document) return null
+
+    return (
+      <SanityDefaultPreview
+        {...getPreviewValueWithFallback({
+          value: mainDocumentState!.document! as SanityDocument,
+          published: previewState.published,
+          draft: previewState.draft,
+        })}
+        schemaType={schemaType}
+        status={
+          <Card padding={1} radius={2} shadow={1}>
+            <Text muted size={0} weight="medium">
+              {t('main-document.label')}
+            </Text>
+          </Card>
+        }
+      />
+    )
+  }, [mainDocumentState, schemaType, t, previewState])
 
   if (documentId && documentType) {
     return (
@@ -56,7 +98,7 @@ export function ContentEditor(props: {
         documentType={documentType}
         onFocusPath={onFocusPath}
         onStructureParams={onStructureParams}
-        previewUrl={previewUrl}
+        searchParams={searchParams}
         structureParams={structureParams}
       />
     )
@@ -67,13 +109,17 @@ export function ContentEditor(props: {
       {mainDocumentState && (
         <Card padding={3} tone={mainDocumentState.document ? 'inherit' : 'caution'}>
           {mainDocumentState.document ? (
-            <Card as={MainDocumentLink} data-as="a" padding={0} radius={2}>
-              <Preview
-                schemaType={schema.get(mainDocumentState.document._type)!}
-                status={<Badge>{t('main-document.label')}</Badge>}
-                value={mainDocumentState.document}
-              />
-            </Card>
+            <PreviewCard
+              __unstable_focusRing
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              as={MainDocumentLink as any}
+              data-as="a"
+              radius={2}
+              sizing="border"
+              tone="inherit"
+            >
+              {preview}
+            </PreviewCard>
           ) : (
             <Card padding={2} radius={2} tone="inherit">
               <Flex gap={3}>
@@ -101,7 +147,7 @@ export function ContentEditor(props: {
       <DocumentListPane
         mainDocumentState={mainDocumentState}
         onStructureParams={onStructureParams}
-        previewUrl={previewUrl}
+        searchParams={searchParams}
         refs={refs}
       />
     </Flex>

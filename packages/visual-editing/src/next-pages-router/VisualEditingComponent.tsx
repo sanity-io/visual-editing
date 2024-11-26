@@ -1,6 +1,5 @@
 import {useRouter} from 'next/router.js'
 import {useEffect, useRef, useState} from 'react'
-
 import type {HistoryAdapterNavigate, VisualEditingOptions} from '../types'
 import {enableVisualEditing} from '../ui/enableVisualEditing'
 
@@ -9,13 +8,13 @@ import {enableVisualEditing} from '../ui/enableVisualEditing'
  */
 export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'> {
   /**
-   * @deprecated The histoy adapter is already implemented
+   * @deprecated The history adapter is already implemented
    */
   history?: never
 }
 
 export default function VisualEditingComponent(props: VisualEditingProps): null {
-  const {refresh, zIndex} = props
+  const {components, refresh, zIndex} = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -26,6 +25,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
   }, [router])
   useEffect(() => {
     const disable = enableVisualEditing({
+      components,
       zIndex,
       refresh,
       history: {
@@ -48,7 +48,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [refresh, zIndex])
+  }, [components, refresh, zIndex])
 
   const {asPath, basePath, locale, isReady} = useRouter()
   useEffect(() => {

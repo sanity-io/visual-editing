@@ -1,5 +1,213 @@
 # Changelog
 
+## [0.7.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.3...visual-editing-helpers-v0.7.4) (2024-11-26)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.1.4
+  * peerDependencies
+    * @sanity/comlink bumped to 1.1.4
+
+## [0.7.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.2...visual-editing-helpers-v0.7.3) (2024-11-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.5 ([#2185](https://github.com/sanity-io/visual-editing/issues/2185)) ([da0aa32](https://github.com/sanity-io/visual-editing/commit/da0aa328063f1711687f8459ca00fd95a0b69ccb))
+
+## [0.7.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.1...visual-editing-helpers-v0.7.2) (2024-11-14)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.1.3
+  * peerDependencies
+    * @sanity/comlink bumped to 1.1.3
+
+## [0.7.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.0...visual-editing-helpers-v0.7.1) (2024-11-12)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.1.2
+  * peerDependencies
+    * @sanity/comlink bumped to 1.1.2
+
+## [0.7.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.30...visual-editing-helpers-v0.7.0) (2024-11-12)
+
+
+### Features
+
+* add shared state ([#2120](https://github.com/sanity-io/visual-editing/issues/2120)) ([1fb8143](https://github.com/sanity-io/visual-editing/commit/1fb814396cc6a867418b00e07751f493d202d58b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.4 ([#2132](https://github.com/sanity-io/visual-editing/issues/2132)) ([4f96d9a](https://github.com/sanity-io/visual-editing/commit/4f96d9a539094173caf1644a67f168492f3a35c4))
+
+## [0.6.30](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.29...visual-editing-helpers-v0.6.30) (2024-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.3 ([0b78719](https://github.com/sanity-io/visual-editing/commit/0b7871937422d0d8dfe7851bd1603141f0c434c4))
+
+## [0.6.29](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.28...visual-editing-helpers-v0.6.29) (2024-11-04)
+
+
+### Bug Fixes
+
+* **presentation:** remove media from preview snapshot payload ([#2079](https://github.com/sanity-io/visual-editing/issues/2079)) ([f1d04b3](https://github.com/sanity-io/visual-editing/commit/f1d04b396abbba1879c1f1f0b605269e94f4400f))
+* **visual-editing-helpers:** include connection id in handshake payload for backwards compatibility ([#2078](https://github.com/sanity-io/visual-editing/issues/2078)) ([529fb5b](https://github.com/sanity-io/visual-editing/commit/529fb5bd3be2c298c2e394e16b7ea05eacab8486))
+
+## [0.6.28](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.27...visual-editing-helpers-v0.6.28) (2024-10-28)
+
+
+### Bug Fixes
+
+* **visual-editing:** nested union schema field resolution ([#2056](https://github.com/sanity-io/visual-editing/issues/2056)) ([1d20494](https://github.com/sanity-io/visual-editing/commit/1d2049402b50a121c5652e2cc7ced7a513863502))
+
+## [0.6.27](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.26...visual-editing-helpers-v0.6.27) (2024-10-24)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.1.1
+  * peerDependencies
+    * @sanity/comlink bumped to 1.1.1
+
+## [0.6.26](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.25...visual-editing-helpers-v0.6.26) (2024-10-24)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.1.0
+  * peerDependencies
+    * @sanity/comlink bumped to 1.1.0
+
+## [0.6.25](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.24...visual-editing-helpers-v0.6.25) (2024-10-23)
+
+
+### Bug Fixes
+
+* resolve issues with newly added canary features ([#2036](https://github.com/sanity-io/visual-editing/issues/2036)) ([7b6507b](https://github.com/sanity-io/visual-editing/commit/7b6507b35c48e5307e7a2e70536d4336e18327b6))
+
+## [0.6.24](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.23...visual-editing-helpers-v0.6.24) (2024-10-21)
+
+
+### Bug Fixes
+
+* stop inlining rxjs and `@sanity/comlink` ([#2012](https://github.com/sanity-io/visual-editing/issues/2012)) ([8df6708](https://github.com/sanity-io/visual-editing/commit/8df670861f40a762684f936fb968e3fbde4f63ba))
+
+## [0.6.23](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.22...visual-editing-helpers-v0.6.23) (2024-10-21)
+
+
+### Bug Fixes
+
+* **comlink:** handle heartbeat compatibility correctly ([#2006](https://github.com/sanity-io/visual-editing/issues/2006)) ([65af1e1](https://github.com/sanity-io/visual-editing/commit/65af1e17aa329d5f5282152d4b77bca8750a539f))
+
+## [0.6.22](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.21...visual-editing-helpers-v0.6.22) (2024-10-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 1.0.0
+
+## [0.6.21](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.20...visual-editing-helpers-v0.6.21) (2024-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.21.3 ([#1793](https://github.com/sanity-io/visual-editing/issues/1793)) ([1dc1b1b](https://github.com/sanity-io/visual-editing/commit/1dc1b1b9222e6a2f36d6b807415dc1a9b0a2426a))
+
+## [0.6.20](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.19...visual-editing-helpers-v0.6.20) (2024-08-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.21.2 ([#1749](https://github.com/sanity-io/visual-editing/issues/1749)) ([b9efdd2](https://github.com/sanity-io/visual-editing/commit/b9efdd2a672fdef518bc22a29a25992c938ba1ef))
+
+## [0.6.19](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.18...visual-editing-helpers-v0.6.19) (2024-08-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.21.1 ([#1704](https://github.com/sanity-io/visual-editing/issues/1704)) ([32f1ef8](https://github.com/sanity-io/visual-editing/commit/32f1ef8582134a130d6325320274a981217ee2e8))
+
+## [0.6.18](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.17...visual-editing-helpers-v0.6.18) (2024-07-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.20.1 ([#1680](https://github.com/sanity-io/visual-editing/issues/1680)) ([bb89688](https://github.com/sanity-io/visual-editing/commit/bb8968816838a60a32242ce803a3ef804f2f885e))
+
+## [0.6.17](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.16...visual-editing-helpers-v0.6.17) (2024-06-13)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency valibot to v0.31.1 ([#1645](https://github.com/sanity-io/visual-editing/issues/1645)) ([0cc3a62](https://github.com/sanity-io/visual-editing/commit/0cc3a62023b8746ba297fc70b690e36d9cf21aa4))
+
+## [0.6.16](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.15...visual-editing-helpers-v0.6.16) (2024-06-07)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency valibot to v0.31.0 ([#1636](https://github.com/sanity-io/visual-editing/issues/1636)) ([b4228b8](https://github.com/sanity-io/visual-editing/commit/b4228b851cc0bf0aef083bfbc3ae8c8ce2593000))
+
+## [0.6.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.14...visual-editing-helpers-v0.6.15) (2024-05-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.19.1 ([#1602](https://github.com/sanity-io/visual-editing/issues/1602)) ([ebaa50c](https://github.com/sanity-io/visual-editing/commit/ebaa50ca0bf6f6324819a9b3ceb85eb1326d7d72))
+
+## [0.6.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.13...visual-editing-helpers-v0.6.14) (2024-05-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.19.0 ([#1575](https://github.com/sanity-io/visual-editing/issues/1575)) ([f0094a1](https://github.com/sanity-io/visual-editing/commit/f0094a1ee716f856cc424f82bc68ca2b99881575))
+
+## [0.6.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.12...visual-editing-helpers-v0.6.13) (2024-05-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.18.3 ([#1563](https://github.com/sanity-io/visual-editing/issues/1563)) ([609a3b1](https://github.com/sanity-io/visual-editing/commit/609a3b1ad00b0809ba1f926328cee4d082668bf1))
+
+## [0.6.12](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.11...visual-editing-helpers-v0.6.12) (2024-05-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.18.2 ([#1519](https://github.com/sanity-io/visual-editing/issues/1519)) ([78c387e](https://github.com/sanity-io/visual-editing/commit/78c387eba9c29c9a6f6e7d6b392a04a9cd5724ab))
+
+## [0.6.11](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.10...visual-editing-helpers-v0.6.11) (2024-05-13)
+
+
+### Bug Fixes
+
+* improve createDataAttribute types ([#1458](https://github.com/sanity-io/visual-editing/issues/1458)) ([e51189f](https://github.com/sanity-io/visual-editing/commit/e51189fa301e97bcd892d73df5070c153146e867))
+
 ## [0.6.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.6.9...visual-editing-helpers-v0.6.10) (2024-05-05)
 
 

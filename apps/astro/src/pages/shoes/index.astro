@@ -1,11 +1,11 @@
 ---
-import {sanityClient} from 'sanity:client'
-import {shoesList, type ShoesListResult} from 'apps-common/queries'
+import Layout from '../../layouts/layout.astro'
+import {loadQuery} from '../../load-query'
+import {shoesList, type ShoesListResult} from '../../queries'
 import {urlFor, urlForCrossDatasetReference} from '../../sanity'
-import {formatCurrency} from 'apps-common/utils'
-import Layout from '../../../layouts/layout.astro'
+import {formatCurrency} from '../../utils'
 
-const products = await sanityClient.fetch<ShoesListResult>(shoesList)
+const {data: products} = await loadQuery<ShoesListResult>({query: shoesList})
 const _loading = false
 // Only consider it to be loading if there are no products
 const loading = _loading && !products.length

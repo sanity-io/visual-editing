@@ -1,32 +1,162 @@
-import type {ChannelsController} from '@repo/channels'
-import type {LoaderMsg, VisualEditingConnectionIds} from '@repo/visual-editing-helpers'
+import {
+  createCompatibilityActors,
+  getQueryCacheKey,
+  type LoaderControllerMsg,
+  type LoaderNodeMsg,
+} from '@repo/visual-editing-helpers'
 import {useQueryParams, useRevalidate} from '@repo/visual-editing-helpers/hooks'
-import type {ClientConfig, ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
+import type {
+  ClientConfig,
+  ClientPerspective,
+  ContentSourceMap,
+  QueryParams,
+  SyncTag,
+} from '@sanity/client'
 import {applySourceDocuments, getPublishedId} from '@sanity/client/csm'
+import {
+  createChannelMachine,
+  type ConnectionInstance,
+  type Controller,
+  type StatusEvent,
+} from '@sanity/comlink'
 import {applyPatch} from 'mendoza'
 import LRUCache from 'mnemonist/lru-cache-with-delete'
 import {memo, useEffect, useMemo, useState} from 'react'
-import {type SanityClient, type SanityDocument, useClient} from 'sanity'
-
-import {LIVE_QUERY_CACHE_BATCH_SIZE, LIVE_QUERY_CACHE_SIZE} from '../constants'
-import type {LiveQueriesState} from '../types'
+import {
+  useClient,
+  // useCurrentUser,
+  useDataset,
+  useProjectId,
+  type SanityClient,
+  type SanityDocument,
+} from 'sanity'
+import {
+  LIVE_QUERY_CACHE_BATCH_SIZE,
+  LIVE_QUERY_CACHE_SIZE,
+  MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
+} from '../constants'
+import type {
+  LiveQueriesState,
+  LiveQueriesStateValue,
+  LoaderConnection,
+  PresentationPerspective,
+} from '../types'
+import type {DocumentOnPage} from '../useDocumentsOnPage'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
-  channel: ChannelsController<VisualEditingConnectionIds, LoaderMsg> | undefined
+  controller: Controller | undefined
   perspective: ClientPerspective
-  liveQueries: LiveQueriesState
   documentsOnPage: {_id: string; _type: string}[]
+  onLoadersConnection: (event: StatusEvent) => void
+  onDocumentsOnPage: (
+    key: string,
+    perspective: PresentationPerspective,
+    state: DocumentOnPage[],
+  ) => void
 }
 
 export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
   const {
     liveDocument,
-    channel,
+    controller,
     perspective: activePerspective,
-    liveQueries,
     documentsOnPage,
+    onLoadersConnection,
+    onDocumentsOnPage,
   } = props
+
+  const [comlink, setComlink] = useState<ConnectionInstance<LoaderNodeMsg, LoaderControllerMsg>>()
+  const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
+
+  const projectId = useProjectId()
+  const dataset = useDataset()
+
+  useEffect(() => {
+    const interval = setInterval(
+      () =>
+        setLiveQueries((liveQueries) => {
+          if (Object.keys(liveQueries).length < 1) {
+            return liveQueries
+          }
+
+          const now = Date.now()
+          const hasAnyExpired = Object.values(liveQueries).some(
+            (liveQuery) =>
+              liveQuery.heartbeat !== false && now > liveQuery.receivedAt + liveQuery.heartbeat,
+          )
+          if (!hasAnyExpired) {
+            return liveQueries
+          }
+          const next = {} as LiveQueriesState
+          for (const [key, value] of Object.entries(liveQueries)) {
+            if (value.heartbeat !== false && now > value.receivedAt + value.heartbeat) {
+              continue
+            }
+            next[key] = value
+          }
+          return next
+        }),
+      MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL,
+    )
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    if (controller) {
+      const comlink = controller.createConnection<LoaderNodeMsg, LoaderControllerMsg>(
+        {
+          name: 'presentation',
+          connectTo: 'loaders',
+          heartbeat: true,
+        },
+        createChannelMachine<LoaderNodeMsg, LoaderControllerMsg>().provide({
+          actors: createCompatibilityActors<LoaderControllerMsg>(),
+        }),
+      )
+      setComlink(comlink)
+
+      comlink.onStatus(onLoadersConnection)
+
+      comlink.on('loader/documents', (data) => {
+        if (data.projectId === projectId && data.dataset === dataset) {
+          onDocumentsOnPage(
+            'loaders',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            data.perspective as unknown as any,
+            data.documents,
+          )
+        }
+      })
+
+      comlink.on('loader/query-listen', (data) => {
+        if (data.projectId === projectId && data.dataset === dataset) {
+          if (
+            typeof data.heartbeat === 'number' &&
+            data.heartbeat < MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL
+          ) {
+            throw new Error(
+              `Loader query listen heartbeat interval must be at least ${MIN_LOADER_QUERY_LISTEN_HEARTBEAT_INTERVAL}ms`,
+            )
+          }
+          setLiveQueries((prev) => ({
+            ...prev,
+            [getQueryCacheKey(data.query, data.params)]: {
+              perspective: data.perspective,
+              query: data.query,
+              params: data.params,
+              receivedAt: Date.now(),
+              heartbeat: data.heartbeat ?? false,
+            } satisfies LiveQueriesStateValue,
+          }))
+        }
+      })
+
+      return comlink.start()
+    }
+    return
+  }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
+
   const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
   const studioClient = useClient({apiVersion: '2023-10-16'})
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])
@@ -38,17 +168,20 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     [studioClient],
   )
   useEffect(() => {
-    if (channel) {
+    if (comlink) {
       const {projectId, dataset} = clientConfig
       // @todo - Can this be migrated/deprecated in favour of emitting
       // `presentation/perspective` at a higher level?
-      channel.send('loaders', 'loader/perspective', {
-        projectId: projectId!,
-        dataset: dataset!,
-        perspective: activePerspective,
+      comlink.post({
+        type: 'loader/perspective',
+        data: {
+          projectId: projectId!,
+          dataset: dataset!,
+          perspective: activePerspective,
+        },
       })
     }
-  }, [channel, clientConfig, activePerspective])
+  }, [comlink, clientConfig, activePerspective])
 
   const turboIds = useMemo(() => {
     const documentsActuallyInUse = documentsOnPage.map(({_id}) => _id)
@@ -80,7 +213,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
           perspective={perspective}
           query={query}
           params={params}
-          channel={channel}
+          comlink={comlink}
           client={client}
           refreshInterval={activePerspective ? 2000 : 0}
           liveDocument={liveDocument}
@@ -219,7 +352,7 @@ interface QuerySubscriptionProps
   perspective: ClientPerspective
   query: string
   params: QueryParams
-  channel: ChannelsController<VisualEditingConnectionIds, LoaderMsg> | undefined
+  comlink: LoaderConnection | undefined
 }
 function QuerySubscription(props: QuerySubscriptionProps) {
   const {
@@ -231,7 +364,7 @@ function QuerySubscription(props: QuerySubscriptionProps) {
     client,
     refreshInterval,
     liveDocument,
-    channel,
+    comlink,
     documentsCacheLastUpdated,
   } = props
 
@@ -248,20 +381,25 @@ function QuerySubscription(props: QuerySubscriptionProps) {
   })
   const result = data?.result
   const resultSourceMap = data?.resultSourceMap
+  const tags = data?.tags
 
   useEffect(() => {
     if (resultSourceMap) {
-      channel!.send('loaders', 'loader/query-change', {
-        projectId,
-        dataset,
-        perspective,
-        query,
-        params,
-        result,
-        resultSourceMap,
+      comlink?.post({
+        type: 'loader/query-change',
+        data: {
+          projectId,
+          dataset,
+          perspective,
+          query,
+          params,
+          result,
+          resultSourceMap,
+          tags,
+        },
       })
     }
-  }, [channel, dataset, params, perspective, projectId, query, result, resultSourceMap])
+  }, [comlink, dataset, params, perspective, projectId, query, result, resultSourceMap, tags])
 
   return null
 }
@@ -288,6 +426,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
   const [snapshot, setSnapshot] = useState<{
     result: unknown
     resultSourceMap?: ContentSourceMap
+    tags?: SyncTag[]
   } | null>(null)
   const {projectId, dataset} = useMemo(() => {
     const {projectId, dataset} = client.config()
@@ -312,7 +451,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
     async function effect() {
       const {signal} = controller
       fetching = true
-      const {result, resultSourceMap} = await client.fetch(query, params, {
+      const {result, resultSourceMap, syncTags} = await client.fetch(query, params, {
         tag: 'presentation-loader',
         signal,
         perspective,
@@ -321,7 +460,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
       fetching = false
 
       if (!signal.aborted) {
-        setSnapshot({result, resultSourceMap})
+        setSnapshot({result, resultSourceMap, tags: syncTags})
 
         fulfilled = true
       }

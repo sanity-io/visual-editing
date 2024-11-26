@@ -2,21 +2,11 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    taint: true,
-  },
-  logging: {
-    fetches: {
-      fullUrl: true,
+  compiler: {
+    styledComponents: {
+      displayName: true,
     },
   },
-
-  transpilePackages: [
-    '@sanity/visual-editing',
-    'apps-common',
-    '@repo/channels',
-    '@repo/visual-editing-helpers',
-  ],
 }
 
 export default withBundleAnalyzer({

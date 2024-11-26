@@ -1,28 +1,32 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {projectId, datasets, studioUrl} from 'apps-common/env'
+import {apiVersion, datasets, projectId, workspaces} from '@repo/env'
+import {studioUrl as baseUrl} from '@repo/studio-url'
+
+const studioUrl = `${baseUrl}/${workspaces['nuxt'].workspace}`
 
 export default defineNuxtConfig({
-  build: {
-    transpile: ['rxjs'],
-  },
   devtools: {enabled: false},
+
   imports: {
     transform: {
       exclude: [/\bpackages\/.+\b/],
     },
   },
+
   modules: ['@nuxtjs/tailwindcss', '@nuxtjs/sanity'],
+
   sanity: {
     globalHelper: true,
     projectId,
     dataset: datasets.development,
-    apiVersion: '2021-03-25',
+    apiVersion,
     visualEditing: {
       token: process.env.NUXT_SANITY_API_READ_TOKEN,
       studioUrl,
       stega: true,
     },
   },
+
   runtimeConfig: {
     public: {
       vercel: {
@@ -30,4 +34,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2024-08-07',
 })

@@ -1,11 +1,16 @@
-import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
-import withBundleAnalyzer from '@next/bundle-analyzer'
 import {createRequire} from 'node:module'
+import withBundleAnalyzer from '@next/bundle-analyzer'
+import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
 
 const require = createRequire(import.meta.url)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    styledComponents: {
+      displayName: true,
+    },
+  },
   reactStrictMode: true,
   logging: {
     fetches: {
@@ -13,21 +18,11 @@ const nextConfig = {
     },
   },
 
-  transpilePackages: [
-    '@sanity/visual-editing',
-    '@sanity/preview-kit-compat',
-    '@repo/channels',
-    '@repo/visual-editing-helpers',
-    'apps-common',
-  ],
-
   images: {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
   },
 
-  experimental: {
-    taint: true,
-  },
+  transpilePackages: ['@repo/env'],
 
   async headers() {
     return [
@@ -36,24 +31,12 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: `frame-ancestors 'self' https://*.sanity.build http://localhost:3333`,
+            value: `frame-ancestors 'self' https://*.sanity.build https://*.sanity.dev http://localhost:3333`,
           },
         ],
       },
     ]
   },
-
-  /*
-  webpack(config) {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@sanity/visual-editing': require.resolve(
-        '../../packages/visual-editing/src/index.ts',
-      ),
-    }
-    return config
-  },
-  // */
 }
 
 export default withVercelToolbar()(

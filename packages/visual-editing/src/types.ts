@@ -1,13 +1,25 @@
-import type {ChannelsNode} from '@repo/channels'
 import type {
+  DocumentSchema,
   HistoryRefresh,
   HistoryUpdate,
-  OverlayMsg as OverlayChannelsMsg,
-  PresentationMsg,
   SanityNode,
   SanityStegaNode,
-  VisualEditingMsg,
+  SchemaArrayItem,
+  SchemaNode,
+  SchemaObjectField,
+  SchemaUnionNode,
+  SchemaUnionOption,
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
+import type {Node} from '@sanity/comlink'
+import type {
+  ComponentType,
+  FunctionComponent,
+  HTMLAttributes,
+  PropsWithChildren,
+  ReactElement,
+} from 'react'
 
 export type {
   HistoryRefresh,
@@ -26,6 +38,61 @@ export interface OverlayRect {
   h: number
 }
 
+/** @internal */
+export interface Ray2D {
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+}
+
+/** @internal */
+export interface Point2D {
+  x: number
+  y: number
+}
+
+/** @internal */
+export interface DragInsertPositionRects {
+  top?: OverlayRect | null
+  left?: OverlayRect | null
+  bottom?: OverlayRect | null
+  right?: OverlayRect | null
+}
+
+/** @public */
+export type DragInsertPosition = {
+  top?: {rect: OverlayRect; sanity: SanityNode} | null
+  left?: {rect: OverlayRect; sanity: SanityNode} | null
+  bottom?: {rect: OverlayRect; sanity: SanityNode} | null
+  right?: {rect: OverlayRect; sanity: SanityNode} | null
+} | null
+
+/** @public */
+export interface DragEndEvent {
+  insertPosition: DragInsertPosition
+  target: SanityNode
+  dragGroup: string | null
+  flow: string
+  preventInsertDefault: boolean
+}
+
+/** @public */
+export type DragSkeleton = {
+  w: number
+  h: number
+  offsetX: number
+  offsetY: number
+  childRects: {
+    x: number
+    y: number
+    w: number
+    h: number
+    tagName: string
+  }[]
+  maxWidth: number
+}
+
 /**
  * Base controller dispatched message
  * @typeParam T - Type of message
@@ -41,10 +108,7 @@ export interface OverlayMsgElement<T extends string> extends Msg<`element/${T}`>
 }
 
 /** @public */
-export type OverlayMsgElementActivate = OverlayMsgElement<'activate'> & {
-  sanity: SanityNode | SanityStegaNode
-  rect: OverlayRect
-}
+export type OverlayMsgElementActivate = OverlayMsgElement<'activate'>
 
 /** @public */
 export type OverlayMsgBlur = Msg<'overlay/blur'>
@@ -54,6 +118,23 @@ export type OverlayMsgActivate = Msg<'overlay/activate'>
 
 /** @public */
 export type OverlayMsgDeactivate = Msg<'overlay/deactivate'>
+
+/** @public */
+export type OverlayMsgSetCursor = Msg<'overlay/setCursor'> & {
+  element: ElementNode
+  cursor: string | undefined
+}
+
+/** @public */
+export type OverlayMsgElementContextMenu =
+  | OverlayMsgElement<'contextmenu'>
+  | (OverlayMsgElement<'contextmenu'> & {
+      position: {
+        x: number
+        y: number
+      }
+      sanity: SanityNode
+    })
 
 /** @public */
 export type OverlayMsgElementDeactivate = OverlayMsgElement<'deactivate'>
@@ -73,6 +154,14 @@ export type OverlayMsgElementMouseLeave = OverlayMsgElement<'mouseleave'>
 
 /** @public */
 export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
+  element: ElementNode
+  sanity: SanityNode | SanityStegaNode
+  rect: OverlayRect
+  dragDisabled: boolean
+}
+
+/** @public */
+export type OverlayMsgElementUpdate = OverlayMsgElement<'update'> & {
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
 }
@@ -85,22 +174,82 @@ export type OverlayMsgElementUpdateRect = OverlayMsgElement<'updateRect'> & {
   rect: OverlayRect
 }
 
+/** @public */
+export type OverlayMsgDragUpdateInsertPosition = Msg<'overlay/dragUpdateInsertPosition'> & {
+  insertPosition: DragInsertPosition | null
+}
+
+/** @public */
+export type OverlayMsgDragUpdateCursorPosition = Msg<'overlay/dragUpdateCursorPosition'> & {
+  x: number
+  y: number
+}
+
+/** @public */
+export type OverlayMsgDragStart = Msg<'overlay/dragStart'> & {
+  flow: 'horizontal' | 'vertical'
+}
+
+/** @public */
+export type OverlayMsgDragToggleMinimapPrompt = Msg<'overlay/dragToggleMinimapPrompt'> & {
+  display: boolean
+}
+
+/** @public */
+export type OverlayMsgDragToggleMinimap = Msg<'overlay/dragToggleMinimap'> & {
+  display: boolean
+}
+
+/** @public */
+export type OverlayMsgDragUpdateSkeleton = Msg<'overlay/dragUpdateSkeleton'> & {
+  skeleton: DragSkeleton
+}
+
+/** @public */
+export type OverlayMsgDragEnd = Msg<'overlay/dragEnd'> & DragEndEvent
+
+/** @public */
+export type OverlayMsgDragUpdateGroupRect = Msg<'overlay/dragUpdateGroupRect'> & {
+  groupRect: OverlayRect | null
+}
+
+/** @public */
+
+export type OverlayMsgDragStartMinimapTransition = Msg<'overlay/dragStartMinimapTransition'>
+
+/** @public */
+
+export type OverlayMsgDragEndMinimapTransition = Msg<'overlay/dragEndMinimapTransition'>
+
 /**
  * Controller dispatched messages
  * @public
  */
 export type OverlayMsg =
-  | OverlayMsgBlur
   | OverlayMsgActivate
+  | OverlayMsgBlur
   | OverlayMsgDeactivate
+  | OverlayMsgDragEnd
+  | OverlayMsgDragEndMinimapTransition
+  | OverlayMsgDragStart
+  | OverlayMsgDragStartMinimapTransition
+  | OverlayMsgDragToggleMinimap
+  | OverlayMsgDragToggleMinimapPrompt
+  | OverlayMsgDragUpdateCursorPosition
+  | OverlayMsgDragUpdateGroupRect
+  | OverlayMsgDragUpdateInsertPosition
+  | OverlayMsgDragUpdateSkeleton
   | OverlayMsgElementActivate
   | OverlayMsgElementClick
+  | OverlayMsgElementContextMenu
   | OverlayMsgElementDeactivate
   | OverlayMsgElementMouseEnter
   | OverlayMsgElementMouseLeave
   | OverlayMsgElementRegister
   | OverlayMsgElementUnregister
+  | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
+  | OverlayMsgSetCursor
 
 /**
  * Callback function used for handling dispatched controller messages
@@ -115,7 +264,8 @@ export type OverlayEventHandler = (message: OverlayMsg) => void
 export interface OverlayOptions {
   handler: OverlayEventHandler
   overlayElement: HTMLElement
-  preventDefault: boolean
+  inFrame: boolean
+  optimisticActorReady: boolean
 }
 
 /**
@@ -141,10 +291,12 @@ export type ElementFocusedState = 'clicked' | 'duplicate' | boolean
 export interface ElementState {
   id: string
   activated: boolean
+  element: ElementNode
   focused: ElementFocusedState
   hovered: boolean
   rect: OverlayRect
   sanity: SanityNode | SanityStegaNode
+  dragDisabled: boolean
 }
 
 /**
@@ -201,30 +353,18 @@ export interface OverlayElement {
  * @internal
  */
 export interface EventHandlers {
-  click: (event: Event) => void
-  mousedown: (event: Event) => void
-  mouseenter: (event: Event) => void
-  mouseleave: (event: Event) => void
-  mousemove: (event: Event) => void
+  click: (event: MouseEvent) => void
+  contextmenu: (event: MouseEvent) => void
+  mousedown: (event: MouseEvent) => void
+  mouseenter: (event: MouseEvent) => void
+  mouseleave: (event: MouseEvent) => void
+  mousemove: (event: MouseEvent) => void
 }
 
 /**
  * @internal
  */
-export type VisualEditingChannelSends = OverlayChannelsMsg | VisualEditingMsg
-
-/**
- * @internal
- */
-export type VisualEditingChannelReceives = PresentationMsg
-
-/**
- * @internal
- */
-export type VisualEditingChannel = ChannelsNode<
-  VisualEditingChannelSends,
-  VisualEditingChannelReceives
->
+export type VisualEditingNode = Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
 
 /**
  * Cleanup function used when e.g. unmounting
@@ -235,7 +375,64 @@ export type DisableVisualEditing = () => void
 /**
  * @public
  */
+export interface OverlayComponentResolverContext<
+  P extends OverlayElementParent = OverlayElementParent,
+> {
+  /**
+   * The resolved field's document schema type
+   */
+  document: DocumentSchema
+  /**
+   * The element node that the overlay is attached to
+   */
+  element: ElementNode
+  /**
+   * The resolved field schema type
+   */
+  field: OverlayElementField
+  /**
+   * Whether the overlay is focused or not
+   */
+  focused: boolean
+  /**
+   * The Sanity node data that triggered the overlay
+   */
+  node: SanityNode
+  /**
+   * The resolved field's parent schema type
+   */
+  parent: P
+  /**
+   * A convience property, equal to `field.value.type`
+   */
+  type: string
+}
+
+/**
+ * @public
+ */
+export type OverlayComponentResolver<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends OverlayComponent = OverlayComponent<Record<string, unknown>, any>,
+> = (
+  context: OverlayComponentResolverContext,
+) =>
+  | T
+  | {component: T; props?: Record<string, unknown>}
+  | Array<T | {component: T; props?: Record<string, unknown>}>
+  | ReactElement
+  | undefined
+  | void
+
+/**
+ * @public
+ */
 export interface VisualEditingOptions {
+  /**
+   * @alpha
+   * This API is unstable and could change at any time.
+   */
+  components?: OverlayComponentResolver
   /**
    * The history adapter is used for Sanity Presentation to navigate URLs in the preview frame.
    */
@@ -249,3 +446,87 @@ export interface VisualEditingOptions {
    */
   zIndex?: string | number
 }
+
+export interface ContextMenuProps {
+  node: SanityNode
+  onDismiss: () => void
+  position: {
+    x: number
+    y: number
+  }
+}
+
+/**
+ * @internal
+ */
+export interface ContextMenuActionNode {
+  type: 'action'
+  icon?: ReactElement | ComponentType
+  label: string
+  hotkeys?: string[]
+  action?: () => void
+}
+
+/**
+ * @internal
+ */
+export interface ContextMenuDividerNode {
+  type: 'divider'
+}
+
+/**
+ * @internal
+ */
+export interface ContextMenuGroupNode {
+  type: 'group'
+  icon?: ReactElement | ComponentType
+  label: string
+  items: ContextMenuNode[]
+}
+
+/**
+ * @internal
+ */
+export interface ContextMenuCustomNode {
+  type: 'custom'
+  component: ComponentType<{boundaryElement: HTMLDivElement | null}>
+}
+
+/**
+ * @internal
+ */
+export type ContextMenuNode =
+  | ContextMenuDividerNode
+  | ContextMenuActionNode
+  | ContextMenuGroupNode
+  | ContextMenuCustomNode
+
+/**
+ * @public
+ */
+export interface OverlayComponentProps<P extends OverlayElementParent = OverlayElementParent>
+  extends OverlayComponentResolverContext<P> {
+  PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
+}
+
+/**
+ * @public
+ */
+export type OverlayComponent<
+  T extends Record<string, unknown> = Record<string, unknown>,
+  P extends OverlayElementParent = OverlayElementParent,
+> = ComponentType<OverlayComponentProps<P | undefined> & T>
+
+export type OverlayElementField =
+  | SchemaArrayItem
+  | SchemaObjectField
+  | SchemaUnionOption
+  | undefined
+
+export type OverlayElementParent =
+  | DocumentSchema
+  | SchemaNode
+  | SchemaArrayItem
+  | SchemaUnionOption
+  | SchemaUnionNode
+  | undefined

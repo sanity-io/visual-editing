@@ -3,7 +3,6 @@ import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
-
 import {defineStudioUrlStore} from '../defineStudioUrlStore'
 import {defineUseLiveMode} from '../defineUseLiveMode'
 import {defineUseQuery} from '../defineUseQuery'
@@ -38,6 +37,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: QueryParams = {},
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
+    const {headers, tag} = options
     const stega = options.stega ?? unstable__serverClient.instance?.config().stega.enabled ?? false
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
@@ -59,18 +59,16 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         )
       }
       
-      const { result, resultSourceMap } =
-        await unstable__serverClient.instance!.fetch<QueryResponseResult>(
-          query,
-          params,
-          {
-            filterResponse: false,
-            resultSourceMap: 'withKeyArraySelector',
-            perspective,
-            useCdn: false,
-            stega
-          },
-        )
+      const {result, resultSourceMap} =
+        await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
+          filterResponse: false,
+          resultSourceMap: 'withKeyArraySelector',
+          stega,
+          perspective,
+          useCdn: false,
+          headers,
+          tag,
+        })
       // @ts-expect-error - update typings
       return resultSourceMap
         ? {data: result, sourceMap: resultSourceMap, perspective}

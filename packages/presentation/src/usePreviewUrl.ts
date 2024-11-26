@@ -1,16 +1,18 @@
 import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
 import {startTransition, useEffect, useMemo, useRef, useState} from 'react'
-import {type SanityClient, useActiveWorkspace, useClient, useCurrentUser} from 'sanity'
+import {useClient, useCurrentUser, type SanityClient} from 'sanity'
 import {suspend} from 'suspend-react'
-
 import {API_VERSION} from './constants'
+import {useActiveWorkspace} from './internals'
 import type {PreviewUrlOption} from './types'
 
 export function usePreviewUrl(
   previewUrl: PreviewUrlOption,
   toolName: string,
+  studioPreviewPerspective: 'published' | 'previewDrafts',
   previewSearchParam: string | null,
+  canCreateUrlPreviewSecrets: boolean,
 ): URL {
   const client = useClient({apiVersion: API_VERSION})
   const workspace = useActiveWorkspace()
@@ -18,7 +20,8 @@ export function usePreviewUrl(
   const workspaceName = workspace?.activeWorkspace?.name || 'default'
   const deps = useSuspendCacheKeys(toolName, basePath, workspaceName, previewSearchParam)
   const previewUrlSecret = usePreviewUrlSecret(
-    typeof previewUrl === 'object' || typeof previewUrl === 'function',
+    (canCreateUrlPreviewSecrets && typeof previewUrl === 'object') ||
+      typeof previewUrl === 'function',
     deps,
   )
 
@@ -31,11 +34,6 @@ export function usePreviewUrl(
           const restoredUrl = new URL(previewSearchParam, resolvedUrl)
           if (restoredUrl.origin === resolvedUrl.origin) {
             resultUrl = restoredUrl
-          }
-        } else if (document.referrer) {
-          const referrerUrl = new URL(document.referrer)
-          if (referrerUrl.origin === resolvedUrl.origin) {
-            resultUrl = referrerUrl
           }
         }
       } catch {
@@ -55,8 +53,8 @@ export function usePreviewUrl(
     const resolvedUrl = await resolvePreviewUrl({
       client,
       previewUrlSecret: previewUrlSecret!,
+      studioPreviewPerspective,
       previewSearchParam,
-      referrer: typeof document === 'undefined' ? null : document.referrer,
       studioBasePath: basePath,
     })
     return new URL(resolvedUrl, location.origin)

@@ -1,88 +1,105 @@
-import {visionTool} from '@sanity/vision'
-import {defineConfig, definePlugin, defineType, defineField} from 'sanity'
-import {structureTool} from 'sanity/structure'
+import {apiVersion, workspaces} from '@repo/env'
 import {
+  crossDatasetReferencesPlugin,
+  liveDemoPlugin,
+  pageBuilderDemoPlugin,
+  performanceTestPlugin,
+  shoesPlugin,
+} from '@repo/sanity-schema'
+import {
+  defineDocuments,
+  defineLocations,
   presentationTool,
-  type PreviewUrlResolverOptions,
   type PreviewUrlOption,
+  type PreviewUrlResolverOptions,
 } from '@sanity/presentation'
-import {schema} from 'apps-common'
-import {workspaces} from 'apps-common/env'
-import {assist} from '@sanity/assist'
-import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
-import {locate} from './locate'
-import {StegaDebugger} from './presentation/DebugStega'
-import {CustomNavigator} from './presentation/CustomNavigator'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
-import {documentLocationResolvers, mainDocumentResolvers} from './presentation/resolvers'
-import Building from './models/documents/Building'
-import Floor from './models/documents/Floor'
-import Space from './models/documents/Space'
-import SpaceType from './models/documents/SpaceType'
+import {visionTool} from '@sanity/vision'
+import {defineConfig, definePlugin, type PluginOptions} from 'sanity'
+import {CustomHeader} from './presentation/CustomHeader'
+import {CustomNavigator} from './presentation/CustomNavigator'
+import {StegaDebugger} from './presentation/DebugStega'
 
-const sharedSettings = definePlugin({
-  name: 'sharedSettings',
-  plugins: [structureTool(), assist(), unsplashImageAsset(), debugSecrets()],
-  schema: {
-    ...schema,
-    templates: [
-      {
-        id: 'page-basic',
-        title: 'Basic page',
-        schemaType: 'page',
-        parameters: [{name: 'title', title: 'Page Title', type: 'string'}],
-        value: (params: any) => {
-          return {
-            title: params.title,
-            slug: {
-              current: 'basic-slug',
-            },
-          }
-        },
-      },
-    ],
-  },
+const debugPlugin = definePlugin({
+  name: '@repo/vision',
+  // @ts-expect-error - fix later
+  plugins: [visionTool({defaultApiVersion: apiVersion}), debugSecrets()],
+  form:
+    process.env.SANITY_STUDIO_STEGA_DEBUG === 'true' ? {components: {input: StegaDebugger}} : {},
 })
 
-// If we're on a preview deployment we'll want the iframe URLs to point to the same preview deployment
-function maybeGitBranchUrl(url: string) {
-  if (
-    !url.includes('.sanity.build') ||
-    process.env.SANITY_STUDIO_VERCEL_ENV !== 'preview' ||
-    !process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
-  ) {
-    return url
+function resolvePreviewUrl(
+  envUrl: string | undefined,
+  resolveBranchUrl: (endsWith: string) => string,
+  fallback: string,
+) {
+  if (envUrl) return envUrl
+  if (process.env.SANITY_STUDIO_VERCEL_ENV === 'preview') {
+    const branchUrl = process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
+    if (branchUrl) {
+      const [, endsWith] = branchUrl.split('-git-')
+      if (endsWith) return resolveBranchUrl(endsWith)
+    }
   }
-  const branchUrl = process.env.SANITY_STUDIO_VERCEL_BRANCH_URL.replace(
-    'visual-editing-studio-git-',
-    '',
-  )
-  const previewUrl = url.replace('.sanity.build', `-git-${branchUrl}`)
-  return previewUrl
+  return fallback
+}
+const urls = {
+  'astro': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-astro-git-${endsWith}/shoes`,
+    'http://localhost:3006/shoes',
+  ),
+  'live-next': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL,
+    (endsWith) => `https://live-visual-editing-next-git-${endsWith}`,
+    'http://localhost:3009',
+  ),
+  'next-app-router': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-next-git-${endsWith}/shoes`,
+    'http://localhost:3001/shoes',
+  ),
+  'next-pages-router': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-next-git-${endsWith}/pages-router/shoes`,
+    'http://localhost:3001/pages-router/shoes',
+  ),
+  'nuxt': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_NUXT_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-nuxt-git-${endsWith}/shoes`,
+    'http://localhost:3003/shoes',
+  ),
+  'page-builder-demo': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-page-builder-demo-git-${endsWith}`,
+    'http://localhost:3005',
+  ),
+  'remix': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_REMIX_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-remix-git-${endsWith}/shoes`,
+    'http://localhost:3000/shoes',
+  ),
+  'svelte': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-svelte-git-${endsWith}`,
+    'http://localhost:3004',
+  ),
 }
 
 // Some apps have a Preview Mode, some don't
 function definePreviewUrl(
-  _previewUrl: string,
+  previewUrl: string,
   workspaceName: string,
   toolName: string,
 ): PreviewUrlOption {
-  const previewUrl = maybeGitBranchUrl(_previewUrl)
-  if (workspaceName === 'next' && toolName === 'pages-router') {
+  if (
+    workspaceName === 'live-demo' ||
+    workspaceName === 'page-builder-demo' ||
+    workspaceName === 'next'
+  ) {
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
-      enable: '/api/pages-draft',
-      check: '/api/pages-check-draft',
-      disable: '/api/pages-disable-draft',
-    } satisfies PreviewUrlResolverOptions['previewMode']
-    return {origin, preview: pathname, previewMode}
-  }
-  if (workspaceName === 'next' && toolName === 'app-router') {
-    const {origin, pathname} = new URL(previewUrl)
-    const previewMode = {
-      enable: '/api/draft',
-      check: '/api/check-draft',
-      disable: '/api/disable-draft',
+      enable: '/api/draft-mode/enable',
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }
@@ -98,215 +115,184 @@ function definePreviewUrl(
   return previewUrl
 }
 
-const presentationWorkspaces = Object.entries({
-  'remix': process.env.SANITY_STUDIO_REMIX_PREVIEW_URL || 'http://localhost:3000/shoes',
-  'next': {
-    'app-router':
-      process.env.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL || 'http://localhost:3001/shoes',
-    'pages-router':
-      process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-      'http://localhost:3001/pages-router/shoes',
-  },
-  'nuxt': process.env.SANITY_STUDIO_NUXT_PREVIEW_URL || 'http://localhost:3003/shoes',
-  'svelte': {
-    'svelte-basic': process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes',
-    'svelte-loaders':
-      process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL || 'http://localhost:3004/shoes-with-loaders',
-  },
-  'page-builder-demo':
-    process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL || 'http://localhost:3005/',
-  'astro': process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL || 'http://localhost:3006/shoes',
-} as const).map(([name, previewUrl]) => {
-  const {
-    projectId,
-    dataset,
-    tool: toolName,
-    workspace: workspaceName,
-  } = Object.values(workspaces).find((workspace) => workspace.workspace === name)!
-
-  if (typeof previewUrl === 'string') {
-    return defineConfig({
-      name: workspaceName,
-      basePath: `/${workspaceName}`,
-      projectId,
-      dataset,
-      plugins: [
-        presentationTool({
-          name: toolName,
-          previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
-          resolve: {
-            mainDocuments: mainDocumentResolvers,
-            locations: documentLocationResolvers,
-          },
-          locate,
-          components:
-            name === 'page-builder-demo'
-              ? {
-                  unstable_navigator: {
-                    minWidth: 120,
-                    maxWidth: 240,
-                    component: CustomNavigator,
-                  },
-                }
-              : {},
-        }),
-        sharedSettings(),
-        visionTool(),
-      ],
-    })
-  }
+function defineWorkspace(
+  config: {projectId: string; dataset: string; workspace: string; tool: string},
+  plugins: PluginOptions[],
+) {
+  const {projectId, dataset, workspace} = config
 
   return defineConfig({
-    name: workspaceName,
-    basePath: `/${workspaceName}`,
+    name: workspace,
+    basePath: `/${workspace}`,
     projectId,
     dataset,
-    form:
-      process.env.SANITY_STUDIO_STEGA_DEBUG === 'true' ? {components: {input: StegaDebugger}} : {},
-    plugins: [
-      ...Object.entries(previewUrl).map(([name, previewUrl]) => {
-        const {tool: toolName} = Object.values(workspaces).find(
-          (workspace) => workspace.tool === name,
-        )!
-        return presentationTool({
-          name: toolName,
-          previewUrl: definePreviewUrl(previewUrl, workspaceName, toolName),
-          // @TODO fix the locator for the pages-router
-          resolve:
-            toolName === 'pages-router'
-              ? undefined
-              : {
-                  mainDocuments: mainDocumentResolvers,
-                  locations: documentLocationResolvers,
-                },
-          locate: toolName === 'pages-router' ? undefined : locate,
-          unstable_showUnsafeShareUrl: toolName === 'app-router',
-        })
-      }),
-      sharedSettings(),
-      visionTool(),
-    ],
+    plugins,
   })
-})
+}
 
-const crossDatasetReferencesWorkspace = defineConfig({
-  name: workspaces['cross-dataset-references'].workspace,
-  basePath: `/${workspaces['cross-dataset-references'].workspace}`,
-  projectId: workspaces['cross-dataset-references'].projectId,
-  dataset: workspaces['cross-dataset-references'].dataset,
-  plugins: [structureTool(), visionTool(), assist(), unsplashImageAsset()],
-  document: {
-    unstable_comments: {
-      enabled: true,
-    },
-  },
-  schema: {
-    types: [
-      defineType({
-        type: 'document',
-        name: 'brand',
-        // @ts-expect-error - @TODO find out why TS is mad
-        fields: [
-          defineField({
-            type: 'string',
-            name: 'name',
-            title: 'Name',
-          }),
-          defineField({
-            type: 'slug',
-            name: 'slug',
-            title: 'Slug',
-            options: {source: 'name'},
-          }),
-          defineField({
-            type: 'image',
-            name: 'logo',
-            title: 'Logo',
-            options: {
-              hotspot: true,
-              // @ts-expect-error - find out how to get typings
-              aiAssist: {
-                imageDescriptionField: 'alt',
-                imagePromptField: 'imagePromptField',
-              },
+export default defineConfig([
+  defineWorkspace(workspaces['page-builder-demo'], [
+    pageBuilderDemoPlugin({
+      previewUrl: definePreviewUrl(
+        urls['page-builder-demo'],
+        workspaces['page-builder-demo'].workspace,
+        workspaces['page-builder-demo'].tool,
+      ),
+      components: {
+        unstable_header: {
+          component: CustomHeader,
+        },
+        unstable_navigator: {
+          minWidth: 120,
+          maxWidth: 240,
+          component: CustomNavigator,
+        },
+      },
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['live-demo'], [
+    liveDemoPlugin({
+      previewUrl: definePreviewUrl(
+        urls['live-next'],
+        workspaces['live-demo'].workspace,
+        workspaces['live-demo'].tool,
+      ),
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['remix'], [
+    shoesPlugin({
+      previewUrl: urls.remix,
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['next-app-router'], [
+    shoesPlugin({
+      name: workspaces['next-app-router'].tool,
+      previewUrl: definePreviewUrl(
+        urls['next-app-router'],
+        workspaces['next-app-router'].workspace,
+        workspaces['next-app-router'].tool,
+      ),
+    }),
+    presentationTool({
+      name: workspaces['next-pages-router'].tool,
+      previewUrl: definePreviewUrl(
+        urls['next-pages-router'],
+        workspaces['next-pages-router'].workspace,
+        workspaces['next-pages-router'].tool,
+      ),
+      resolve: {
+        mainDocuments: defineDocuments([
+          {
+            route: '/pages-router/shoes/:slug',
+            filter: `_type == "shoe" && slug.current == $slug`,
+          },
+        ]),
+        locations: {
+          shoe: defineLocations({
+            select: {
+              title: 'title',
+              slug: 'slug.current',
             },
-            fields: [
-              defineField({
-                name: 'alt',
-                type: 'string',
-                title: 'Alt text',
-              }),
-              defineField({
-                type: 'text',
-                name: 'imagePrompt',
-                title: 'Image prompt',
-                rows: 2,
-              }),
-            ],
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || 'Untitled',
+                  href: `/pages-router/shoes/${doc?.slug}`,
+                },
+                {
+                  title: 'Shoes',
+                  href: '/pages-router/shoes',
+                },
+              ],
+            }),
           }),
-        ],
-      }),
-      defineType({
-        type: 'document',
-        name: 'book',
-        // @ts-expect-error - @TODO find out why TS is mad
-        fields: [
-          defineField({
-            type: 'string',
-            name: 'title',
-            title: 'Title',
+        },
+      },
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['nuxt'], [
+    shoesPlugin({
+      previewUrl: definePreviewUrl(
+        urls['nuxt'],
+        workspaces['nuxt'].workspace,
+        workspaces['nuxt'].tool,
+      ),
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['svelte-basic'], [
+    shoesPlugin({
+      name: workspaces['svelte-basic'].tool,
+      previewUrl: definePreviewUrl(
+        new URL('/shoes', urls.svelte).toString(),
+        workspaces['svelte-basic'].workspace,
+        workspaces['svelte-basic'].tool,
+      ),
+    }),
+    presentationTool({
+      name: workspaces['svelte-loaders'].tool,
+      previewUrl: definePreviewUrl(
+        new URL('/shoes-with-loaders', urls.svelte).toString(),
+        workspaces['svelte-loaders'].workspace,
+        workspaces['svelte-loaders'].tool,
+      ),
+      resolve: {
+        mainDocuments: defineDocuments([
+          {
+            route: '/shoes-with-loaders/shoes/:slug',
+            filter: `_type == "shoe" && slug.current == $slug`,
+          },
+        ]),
+        locations: {
+          shoe: defineLocations({
+            select: {
+              title: 'title',
+              slug: 'slug.current',
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || 'Untitled',
+                  href: `/shoes-with-loaders/shoes/${doc?.slug}`,
+                },
+                {
+                  title: 'Shoes',
+                  href: '/shoes-with-loaders/shoes',
+                },
+              ],
+            }),
           }),
-          defineField({
-            type: 'reference',
-            name: 'author',
-            title: 'Author',
-            to: [{type: 'author'}],
-          }),
-        ],
-      }),
-      defineType({
-        type: 'document',
-        name: 'author',
-        // @ts-expect-error - @TODO find out why TS is mad
-        fields: [
-          defineField({
-            type: 'string',
-            name: 'name',
-            title: 'Name',
-          }),
-        ],
-      }),
-    ],
-  },
-})
-
-const performanceTestWorkspace = defineConfig({
-  name: 'performance-test',
-  basePath: `/performance-test`,
-  projectId: workspaces['next-pages-router'].projectId,
-  dataset: workspaces['next-pages-router'].dataset,
-  plugins: [
+        },
+      },
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['astro'], [
+    shoesPlugin({
+      previewUrl: urls.astro,
+    }),
+    debugPlugin(),
+  ]),
+  defineWorkspace(workspaces['cross-dataset-references'], [
+    crossDatasetReferencesPlugin(),
+    debugPlugin(),
+  ]),
+  defineWorkspace({...workspaces['next-pages-router'], workspace: 'performance-test'}, [
+    performanceTestPlugin(),
     presentationTool({
       previewUrl: {
         ...(definePreviewUrl(
-          process.env.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL ||
-            'http://localhost:3001/pages-router/shoes',
+          urls['next-pages-router'],
           'next',
           'pages-router',
         ) as PreviewUrlResolverOptions),
         preview: '/pages-router/performance-test',
       },
     }),
-    structureTool(),
-    visionTool(),
-  ],
-  schema: {
-    types: [Building, Floor, Space, SpaceType],
-  },
-})
-
-export default [
-  ...presentationWorkspaces,
-  crossDatasetReferencesWorkspace,
-  performanceTestWorkspace,
-]
+    debugPlugin(),
+  ]),
+])

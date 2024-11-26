@@ -1,74 +1,79 @@
 {
+  "name": "visual-editing-monorepo",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter='./packages/*'",
+    "build": "turbo run build --filter='!./apps/*'",
     "build:astro": "turbo run build --filter=./apps/astro",
-    "dev": "turbo run dev --filter=./apps/* --filter=!./apps/next-server-only --filter=!./apps/next-no-cache",
-    "dev:astro": "turbo run dev --filter=./apps/astro --filter=./apps/studio",
-    "dev:next": "turbo run dev --filter=./apps/next --filter=./apps/studio",
-    "dev:nuxt": "turbo run dev --filter=./apps/nuxt --filter=./apps/studio",
-    "dev:page-builder-demo": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
-    "dev:svelte": "turbo run dev --filter=./apps/svelte --filter=./apps/studio",
+    "dev": "turbo run build --filter='!./apps/*' && turbo watch dev --filter='./packages/*' --filter='./packages/@repo/*' --filter=./apps/* --filter=!next-with-i18n",
+    "dev:astro": "turbo run build --filter=apps-astro^... --filter=apps-studio^... && turbo watch dev --filter=apps-astro... --filter=apps-studio...",
+    "dev:live-next": "turbo run build --filter=live-next^... --filter=apps-studio^... && turbo watch dev --filter=live-next... --filter=apps-studio...",
+    "dev:next": "turbo run build --filter=apps-next^... --filter=apps-studio^... && turbo watch dev --filter=apps-next... --filter=apps-studio...",
+    "dev:next-with-i18n": "turbo run build --filter=next-with-i18n^... && turbo watch dev --filter=next-with-i18n...",
+    "dev:nuxt": "turbo run build --filter=apps-nuxt^... --filter=apps-studio^... && turbo watch dev --filter=apps-nuxt... --filter=apps-studio...",
+    "dev:page-builder-demo": "turbo run build --filter=page-builder-demo^... --filter=apps-studio^... && turbo watch dev --filter=page-builder-demo... --filter=apps-studio...",
+    "dev:remix": "turbo run build --filter=apps-remix^... --filter=apps-studio^... && turbo watch dev --filter=apps-remix... --filter=apps-studio...",
+    "dev:svelte": "turbo run build --filter=apps-svelte^... --filter=apps-studio^... && turbo watch dev --filter=apps-svelte... --filter=apps-studio...",
     "format": "prettier --cache --write .",
+    "format:staged": "pretty-quick --staged",
+    "knip": "knip",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
-    "next-no-cache:dev": "turbo run dev --filter=./apps/next-no-cache",
-    "next-server-only:dev": "turbo run dev --filter=./apps/next-server-only",
-    "page-builder-demo:dev": "turbo run dev --filter=./apps/page-builder-demo --filter=./apps/studio",
+    "prepare": "husky",
     "preview": "turbo run preview",
+    "release:canary": "zx scripts/release-canary.mjs",
+    "release:corel": "zx scripts/release-corel.mjs",
+    "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
     "test": "turbo run test",
-    "watch": "turbo run watch"
+    "turbo:fix": "turbo daemon clean"
   },
+  "lint-staged": {
+    "*": [
+      "pnpm format:staged"
+    ]
+  },
+  "prettier": "@repo/prettier-config",
   "dependencies": {
-    "@sanity/block-tools": "3.41.0",
-    "@sanity/cli": "3.41.0",
-    "@sanity/client": "^6.18.0",
-    "@sanity/diff": "3.41.0",
-    "@sanity/mutator": "3.41.0",
-    "@sanity/portable-text-editor": "3.41.0",
-    "@sanity/schema": "3.41.0",
-    "@sanity/types": "3.41.0",
-    "@sanity/util": "3.41.0",
-    "@sanity/vision": "3.41.0",
-    "create-sanity": "3.41.0",
-    "groq": "3.41.0",
-    "sanity": "3.41.0",
-    "styled-components": "6.1.10"
+    "@sanity/types": "3.64.2",
+    "@sanity/util": "3.64.2",
+    "@sanity/vision": "3.64.2",
+    "groq": "3.64.2",
+    "sanity": "3.64.2"
   },
   "devDependencies": {
-    "@sanity/pkg-utils": "6.8.13",
-    "@sanity/prettier-config": "1.0.2",
-    "prettier": "3.2.5",
-    "prettier-plugin-astro": "^0.13.0",
-    "prettier-plugin-svelte": "3.2.3",
-    "prettier-plugin-tailwindcss": "0.5.14",
-    "turbo": "1.13.3",
-    "typescript": "5.4.5"
+    "@repo/prettier-config": "workspace:*",
+    "@sanity/pkg-utils": "6.11.12",
+    "@types/node": "^22.8.4",
+    "husky": "^9.1.6",
+    "knip": "^5.37.1",
+    "lint-staged": "^15.2.10",
+    "pretty-quick": "^4.0.0",
+    "turbo": "2.3.0",
+    "typescript": "5.6.3",
+    "zx": "8.1.6"
   },
-  "packageManager": "pnpm@8.15.8",
+  "packageManager": "pnpm@9.13.2",
   "pnpm": {
+    "peerDependencyRules": {
+      "allowAny": [
+        "react",
+        "react-dom"
+      ]
+    },
     "overrides": {
-      "@sanity/block-tools": "$@sanity/block-tools",
-      "@sanity/cli": "$@sanity/cli",
-      "@sanity/client": "$@sanity/client",
+      "@sanity/comlink": "workspace:*",
       "@sanity/core-loader": "workspace:*",
-      "@sanity/diff": "$@sanity/diff",
-      "@sanity/mutator": "$@sanity/mutator",
-      "@sanity/portable-text-editor": "$@sanity/portable-text-editor",
+      "@sanity/next-loader": "workspace:*",
       "@sanity/presentation": "workspace:*",
       "@sanity/preview-kit-compat": "workspace:*",
       "@sanity/preview-url-secret": "workspace:*",
       "@sanity/react-loader": "workspace:*",
-      "@sanity/schema": "$@sanity/schema",
       "@sanity/svelte-loader": "workspace:*",
       "@sanity/types": "$@sanity/types",
       "@sanity/util": "$@sanity/util",
       "@sanity/vision": "$@sanity/vision",
       "@sanity/visual-editing": "workspace:*",
-      "create-sanity": "$create-sanity",
       "groq": "$groq",
-      "sanity": "$sanity",
-      "styled-components": "$styled-components"
+      "sanity": "$sanity"
     }
   }
 }

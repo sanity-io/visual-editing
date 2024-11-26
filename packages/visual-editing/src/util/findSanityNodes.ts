@@ -1,8 +1,13 @@
 import {decodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
-
 import {OVERLAY_ID} from '../constants'
-import type {ElementNode, ResolvedElement, SanityNode, SanityStegaNode} from '../types'
-import {findNonInlineElement} from './findNonInlineElement'
+import type {
+  ElementNode,
+  OverlayElement,
+  ResolvedElement,
+  SanityNode,
+  SanityStegaNode,
+} from '../types'
+import {findNonInlineElement} from './elements'
 import {testAndDecodeStega} from './stega'
 
 const isElementNode = (node: ChildNode): node is ElementNode => node.nodeType === Node.ELEMENT_NODE
@@ -14,7 +19,7 @@ const isTimeElement = (el: ElementNode): el is HTMLTimeElement => el.tagName ===
 const isSvgRootElement = (el: ElementNode): el is SVGSVGElement =>
   el.tagName.toUpperCase() === 'SVG'
 
-function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
+export function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {
   return 'path' in node
 }
 
@@ -95,6 +100,7 @@ export function findSanityNodes(
       return
     }
 
+    // resize observer does not fire for non-replaced inline elements https://drafts.csswg.org/resize-observer/#intro
     const measureElement = findNonInlineElement(element)
     if (!measureElement) {
       return
@@ -175,4 +181,71 @@ export function findSanityNodes(
     }
   }
   return elements
+}
+
+export function isSanityArrayPath(path: string): boolean {
+  const lastDotIndex = path.lastIndexOf('.')
+  const lastPathItem = path.substring(lastDotIndex, path.length)
+
+  return lastPathItem.includes('[')
+}
+
+export function getSanityNodeArrayPath(path: string): string | null {
+  if (!isSanityArrayPath(path)) return null
+
+  const split = path.split('.')
+
+  split[split.length - 1] = split[split.length - 1].replace(/\[.*?\]/g, '[]')
+
+  return split.join('.')
+}
+
+export function sanityNodesExistInSameArray(
+  sanityNode1: SanityNode,
+  sanityNode2: SanityNode,
+): boolean {
+  if (!isSanityArrayPath(sanityNode1.path) || !isSanityArrayPath(sanityNode2.path)) return false
+
+  return getSanityNodeArrayPath(sanityNode1.path) === getSanityNodeArrayPath(sanityNode2.path)
+}
+
+export function resolveDragAndDropGroup(
+  element: ElementNode,
+  sanity: SanityNode | SanityStegaNode,
+  elementSet: Set<ElementNode>,
+  elementsMap: WeakMap<ElementNode, OverlayElement>,
+): null | OverlayElement[] {
+  if (!element.getAttribute('data-sanity')) return null
+
+  if (element.getAttribute('data-sanity-drag-disable')) return null
+
+  if (!sanity || !isSanityNode(sanity) || !isSanityArrayPath(sanity.path)) return null
+
+  const targetDragGroup = element.getAttribute('data-sanity-drag-group')
+
+  const group = [...elementSet].reduce<OverlayElement[]>((acc, el) => {
+    const elData = elementsMap.get(el)
+    const elDragDisabled = el.getAttribute('data-sanity-drag-disable')
+    const elDragGroup = el.getAttribute('data-sanity-drag-group')
+    const elHasSanityAttribution = el.getAttribute('data-sanity') !== null
+
+    const sharedDragGroup = targetDragGroup !== null ? targetDragGroup === elDragGroup : true
+
+    if (
+      elData &&
+      !elDragDisabled &&
+      isSanityNode(elData.sanity) &&
+      sanityNodesExistInSameArray(sanity, elData.sanity) &&
+      sharedDragGroup &&
+      elHasSanityAttribution
+    ) {
+      acc.push(elData)
+    }
+
+    return acc
+  }, [])
+
+  if (group.length <= 1) return null
+
+  return group
 }

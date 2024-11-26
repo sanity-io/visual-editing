@@ -5,22 +5,29 @@
     "build": "sanity build --source-maps",
     "dev": "sanity dev"
   },
+  "prettier": "@repo/prettier-config",
   "dependencies": {
-    "@sanity/assist": "^3.0.4",
+    "@repo/env": "workspace:*",
+    "@repo/sanity-schema": "workspace:*",
     "@sanity/presentation": "workspace:*",
     "@sanity/preview-url-secret": "workspace:*",
-    "@sanity/ui": "2.1.6",
-    "@sanity/vision": "^3.41.0",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.0",
+    "@sanity/ui": "2.8.25",
+    "@sanity/vision": "^3.64.3",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@vercel/stega": "0.1.2",
-    "apps-common": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "rxjs": "^7.8.1",
-    "sanity": "^3.41.0",
-    "sanity-plugin-asset-source-unsplash": "^3.0.1",
-    "styled-components": "6.1.10",
-    "typescript": "5.4.5"
+    "sanity": "^3.64.3",
+    "styled-components": "6.1.13",
+    "typescript": "5.6.3"
+  },
+  "devDependencies": {
+    "@repo/prettier-config": "workspace:*"
+  },
+  "dependenciesMeta": {
+    "@repo/sanity-schema": {
+      "injected": true
+    }
   }
 }

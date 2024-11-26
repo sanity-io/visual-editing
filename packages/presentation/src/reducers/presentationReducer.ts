@@ -1,4 +1,3 @@
-import type {ClientPerspective} from '@sanity/client'
 import type {Dispatch, Reducer} from 'react'
 import {boolean, fallback, object, parse, picklist} from 'valibot'
 
@@ -7,14 +6,6 @@ export interface PresentationState {
   iframe: {
     status: 'loading' | 'loaded' | 'refreshing' | 'reloading'
   }
-  /**
-   * The selected perspective that all previews should use
-   */
-  perspective: Extract<'published' | 'previewDrafts', ClientPerspective>
-  /**
-   * The viewport size of the preview iframe is currently hardcoded, using this enum to determine the size
-   */
-  viewport: 'desktop' | 'mobile'
   visualEditing: {
     overlaysEnabled: boolean
   }
@@ -23,38 +14,26 @@ export interface PresentationState {
 export const ACTION_IFRAME_LOADED = 'ACTION_IFRAME_LOADED'
 export const ACTION_IFRAME_REFRESH = 'ACTION_IFRAME_REFRESH'
 export const ACTION_IFRAME_RELOAD = 'ACTION_IFRAME_RELOAD'
-export const ACTION_PERSPECTIVE = 'ACTION_PERSPECTIVE'
-export const ACTION_VIEWPORT = 'ACTION_VIEWPORT'
 export const ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE = 'ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE'
 
-interface IframeLoadedAction {
+export interface IframeLoadedAction {
   type: typeof ACTION_IFRAME_LOADED
 }
-interface IframeRefreshAction {
+export interface IframeRefreshAction {
   type: typeof ACTION_IFRAME_REFRESH
 }
-interface IframeReloadAction {
+export interface IframeReloadAction {
   type: typeof ACTION_IFRAME_RELOAD
 }
-interface PerspectiveAction {
-  type: typeof ACTION_PERSPECTIVE
-  perspective: PresentationState['perspective']
-}
-interface ViewportAction {
-  type: typeof ACTION_VIEWPORT
-  viewport: PresentationState['viewport']
-}
-interface VisualEditingOverlaysToggleAction {
+export interface VisualEditingOverlaysToggleAction {
   type: typeof ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE
   enabled: boolean
 }
 
-type PresentationAction =
+export type PresentationAction =
   | IframeLoadedAction
   | IframeRefreshAction
   | IframeReloadAction
-  | PerspectiveAction
-  | ViewportAction
   | VisualEditingOverlaysToggleAction
 
 export const presentationReducer: Reducer<
@@ -92,16 +71,6 @@ export const presentationReducer: Reducer<
               status: 'reloading',
             },
           }
-    case ACTION_PERSPECTIVE:
-      return {
-        ...state,
-        perspective: parse(perspectiveSchema, action.perspective),
-      }
-    case ACTION_VIEWPORT:
-      return {
-        ...state,
-        viewport: parse(viewportSchema, action.viewport),
-      }
     case ACTION_VISUAL_EDITING_OVERLAYS_TOGGLE:
       return toggleVisualEditingOverlays(state, action)
     default:
@@ -126,21 +95,12 @@ const toggleVisualEditingOverlays: Reducer<
 const mainDocumentSchema = fallback(boolean(), false)
 
 const iframeStatusSchema = picklist(['loading', 'loaded', 'refreshing', 'reloading'])
-const perspectiveSchema = fallback(
-  picklist(['published', 'previewDrafts'] satisfies PresentationState['perspective'][]),
-  'previewDrafts',
-)
-const viewportSchema = fallback(
-  picklist(['desktop', 'mobile'] satisfies PresentationState['viewport'][]),
-  'desktop',
-)
+
 const initStateSchema = object({
   mainDocument: mainDocumentSchema,
   iframe: object({
     status: iframeStatusSchema,
   }),
-  perspective: perspectiveSchema,
-  viewport: viewportSchema,
   visualEditing: object({overlaysEnabled: boolean()}),
 })
 
@@ -149,20 +109,13 @@ const INITIAL_PRESENTATION_STATE = {
   iframe: {
     status: 'loading',
   },
-  perspective: 'previewDrafts',
-  viewport: 'desktop',
   visualEditing: {
     overlaysEnabled: false,
   },
 } as const satisfies PresentationState
+
 export function presentationReducerInit(
-  state: Readonly<
-    Partial<{
-      mainDocument: boolean
-      perspective: string
-      viewport: string
-    }>
-  >,
+  state: Readonly<Partial<PresentationState>>,
 ): Readonly<PresentationState> {
   return parse(initStateSchema, {...INITIAL_PRESENTATION_STATE, ...state})
 }

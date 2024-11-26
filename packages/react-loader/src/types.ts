@@ -107,7 +107,10 @@ export interface QueryStore {
   loadQuery: <QueryResponseResult>(
     query: string,
     params?: QueryParams,
-    options?: Pick<ResponseQueryOptions, 'perspective' | 'cache' | 'next' | 'useCdn' | 'stega'>,
+    options?: Pick<
+      ResponseQueryOptions,
+      'perspective' | 'cache' | 'next' | 'useCdn' | 'stega' | 'tag' | 'headers'
+    >,
   ) => Promise<QueryResponseInitial<QueryResponseResult>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {

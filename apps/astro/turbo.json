@@ -1,8 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
-  "pipeline": {
+  "tasks": {
     "build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
+      "env": ["SANITY_API_READ_TOKEN", "SANITY_VISUAL_EDITING_ENABLED"],
       "outputs": [".vercel/**", "dist/**"]
     }
   }
