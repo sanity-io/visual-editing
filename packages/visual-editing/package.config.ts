@@ -15,4 +15,6 @@ export default defineConfig({
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],
     },
   },
+  babel: {reactCompiler: true},
+  reactCompilerOptions: {target: '18'},
 })
