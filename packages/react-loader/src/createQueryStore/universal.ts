@@ -1,4 +1,4 @@
-import type {QueryParams} from '@sanity/client'
+import type {QueryParams, StegaConfig} from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
@@ -37,8 +37,13 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: QueryParams = {},
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
-    const stega = options.stega ?? unstable__serverClient.instance?.config().stega.enabled ?? false
     const {headers, tag} = options
+    let stega: StegaConfig = {enabled: false}
+    if (options.stega) {
+      stega = options.stega === true ? {enabled: true} : options.stega
+    } else if (unstable__serverClient.instance?.config().stega) {
+      stega = unstable__serverClient.instance?.config().stega
+    }
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
 
@@ -58,12 +63,13 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
         )
       }
+
       const {result, resultSourceMap} =
         await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
           filterResponse: false,
           resultSourceMap: 'withKeyArraySelector',
-          perspective,
           stega,
+          perspective,
           useCdn: false,
           headers,
           tag,
@@ -75,7 +81,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     }
 
     const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
-      JSON.stringify({query, params, perspective, stega}),
+      JSON.stringify({query, params, perspective, options: {stega}}),
     )
     // @ts-expect-error - update typings
     return resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
