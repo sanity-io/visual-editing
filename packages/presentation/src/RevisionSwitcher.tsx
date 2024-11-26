@@ -24,20 +24,16 @@ export const RevisionSwitcher: FunctionComponent<RevisionSwitcherProps> = functi
 
   const editState = useEditState(documentId, documentType)
 
-  useEffectOnChange(
-    perspective,
-    (value) => {
-      let rev: string | undefined = undefined
-      if (value === 'published' && editState.published) {
-        const {_updatedAt, _rev} = editState.published
-        rev = `${_updatedAt}/${_rev}`
-      }
-      if (documentRevision !== rev) {
-        navigate({}, {rev}, true)
-      }
-    },
-    [editState, navigate, documentRevision],
-  )
+  useEffectOnChange(perspective, (value) => {
+    let rev: string | undefined = undefined
+    if (value === 'published' && editState.published) {
+      const {_updatedAt, _rev} = editState.published
+      rev = `${_updatedAt}/${_rev}`
+    }
+    if (documentRevision !== rev) {
+      navigate({}, {rev}, true)
+    }
+  })
 
   return null
 }

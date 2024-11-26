@@ -3,11 +3,11 @@ import {
   useContext,
   useLayoutEffect,
   useMemo,
-  useRef,
   useState,
   type ReactElement,
   type ReactNode,
 } from 'react'
+import {useEffectEvent} from 'use-effect-event'
 import type {PresentationPluginOptions} from '../types'
 import {PresentationDocumentContext} from './PresentationDocumentContext'
 import type {PresentationDocumentContextValue} from './types'
@@ -38,9 +38,6 @@ export function PresentationDocumentProvider(props: {
     [parentRegister],
   )
 
-  const registerRef = useRef(register)
-  registerRef.current = register
-
   const context: PresentationDocumentContextValue = useMemo(
     () => ({
       options: parent?.options || optionsArray,
@@ -49,7 +46,10 @@ export function PresentationDocumentProvider(props: {
     [optionsArray, parent, register],
   )
 
-  useLayoutEffect(() => registerRef.current(options), [options])
+  const registerEffectEvent = useEffectEvent((options: PresentationPluginOptions) =>
+    register(options),
+  )
+  useLayoutEffect(() => registerEffectEvent(options), [registerEffectEvent, options])
 
   return (
     <PresentationDocumentContext.Provider value={context}>

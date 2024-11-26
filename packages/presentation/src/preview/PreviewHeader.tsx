@@ -101,7 +101,7 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
     return targetOrigin === location.origin ? '' : targetOrigin
   }, [targetOrigin])
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = () => {
     onRefresh(() => {
       if (!iframeRef.current) {
         return
@@ -110,9 +110,9 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
       // Funky way to reload an iframe without CORS issues
       // eslint-disable-next-line no-self-assign
       // ref.current.src = ref.current.src
-      iframeRef.current.src = `${targetOrigin}${previewUrl || '/'}`
+      Object.assign(iframeRef.current, {src: `${targetOrigin}${previewUrl || '/'}`})
     })
-  }, [dispatch, onRefresh, previewUrl, targetOrigin, iframeRef])
+  }
 
   const previewLocationRoute = useMemo(() => {
     const previewURL = new URL(previewUrl || '/', targetOrigin)
