@@ -1,14 +1,13 @@
 import {
-  type FunctionComponent,
-  type MouseEvent as ReactMouseEvent,
   useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
   useRef,
+  type FunctionComponent,
+  type MouseEvent as ReactMouseEvent,
 } from 'react'
 import {styled} from 'styled-components'
-
 import {PanelsContext} from './PanelsContext'
 import {usePanelId} from './usePanelId'
 
@@ -107,12 +106,38 @@ export const PanelResizer: FunctionComponent<{
   useEffect(() => {
     if (!isDragging || disabled) return
 
+    // Set styles to prevent text selection and force an ew-resize cursor whilst
+    // dragging. Return a reset callback so we can revert to any values that
+    // might have been present before dragging started.
+    function setDocumentStyles() {
+      const bodyStyle = document.body.style
+      const documentStyle = document.documentElement.style
+
+      const {cursor} = documentStyle
+      const {userSelect} = bodyStyle
+
+      documentStyle.cursor = 'ew-resize'
+      bodyStyle.userSelect = 'none'
+
+      return () => {
+        if (cursor) documentStyle.cursor = cursor
+        else documentStyle.removeProperty('cursor')
+
+        if (userSelect) bodyStyle.userSelect = userSelect
+        else bodyStyle.removeProperty('user-select')
+      }
+    }
+
+    const resetDocumentStyles = setDocumentStyles()
     window.addEventListener('mousemove', onDrag)
     window.addEventListener('mouseup', onDragStop)
+    window.addEventListener('contextmenu', onDragStop)
 
     return () => {
+      resetDocumentStyles()
       window.removeEventListener('mousemove', onDrag)
       window.removeEventListener('mouseup', onDragStop)
+      window.removeEventListener('contextmenu', onDragStop)
     }
   }, [disabled, isDragging, onDrag, onDragStop])
 

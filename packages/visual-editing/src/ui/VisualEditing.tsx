@@ -1,25 +1,94 @@
-import type {FunctionComponent} from 'react'
-
-import type {VisualEditingOptions} from '../types'
+import {
+  createCompatibilityActors,
+  type VisualEditingControllerMsg,
+  type VisualEditingNodeMsg,
+} from '@repo/visual-editing-helpers'
+import {createNode, createNodeMachine} from '@sanity/comlink'
+import {useEffect, useState, type FunctionComponent} from 'react'
+import {createActor} from 'xstate'
+import type {VisualEditingNode, VisualEditingOptions} from '../types'
+import {createDatasetMutator} from './comlink'
+import {History} from './History'
 import {Meta} from './Meta'
+import {setActor} from './optimistic-state/context'
+import {createSharedListener} from './optimistic-state/machines/createSharedListener'
 import {Overlays} from './Overlays'
 import {Refresh} from './Refresh'
-import {useChannel} from './useChannel'
 
 /**
- * @internal
+ * @public
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
-  const {history, refresh, zIndex} = props
-  const channel = useChannel()
+  const {components, history, refresh, zIndex} = props
+  const inFrame = window.self !== window.top || window.opener
+
+  const [comlink, setComlink] = useState<VisualEditingNode | undefined>(undefined)
+
+  useEffect(() => {
+    if (!inFrame) return
+    const comlink = createNode<VisualEditingControllerMsg, VisualEditingNodeMsg>(
+      {
+        name: 'visual-editing',
+        connectTo: 'presentation',
+      },
+      createNodeMachine<VisualEditingControllerMsg, VisualEditingNodeMsg>().provide({
+        actors: createCompatibilityActors<VisualEditingNodeMsg>(),
+      }),
+    )
+    setComlink(comlink)
+
+    const listener = createSharedListener(comlink)
+    const datasetMutator = createDatasetMutator(comlink)
+    const actor = createActor(datasetMutator, {
+      // @ts-expect-error @todo
+      input: {client: {withConfig: () => {}}, sharedListener: listener},
+    })
+
+    // Fetch features to determine if optimistic updates are supported
+    const controller = new AbortController()
+    comlink
+      .fetch(
+        {type: 'visual-editing/features', data: undefined},
+        {signal: controller.signal, suppressWarnings: true},
+      )
+      .then((data) => {
+        if (data.features['optimistic']) {
+          setActor(actor)
+        }
+      })
+      .catch(() => {
+        // eslint-disable-next-line no-console
+        console.warn(
+          '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',
+        )
+      })
+
+    actor.start()
+    comlink.start()
+
+    return () => {
+      controller.abort()
+      actor.stop()
+      comlink.stop()
+    }
+  }, [inFrame])
 
   return (
-    channel && (
-      <>
-        <Overlays channel={channel} history={history} zIndex={zIndex} />
-        <Meta channel={channel} />
-        {refresh && <Refresh channel={channel} refresh={refresh} />}
-      </>
-    )
+    <>
+      <Overlays
+        comlink={comlink}
+        componentResolver={components}
+        inFrame={inFrame}
+        zIndex={zIndex}
+      />
+      {comlink && (
+        <>
+          <History comlink={comlink} history={history} />
+          <Meta comlink={comlink} />
+          {refresh && <Refresh comlink={comlink} refresh={refresh} />}
+        </>
+      )}
+    </>
   )
 }
+VisualEditing.displayName = 'VisualEditing'

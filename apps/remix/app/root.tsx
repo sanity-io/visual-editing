@@ -1,17 +1,7 @@
+import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
 import {json, type LinksFunction} from '@vercel/remix'
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from '@remix-run/react'
-import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
-
 import styles from '~/tailwind.css?url'
-import {formatTimeSince} from 'apps-common/utils'
+import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
 
 const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))
 
@@ -44,7 +34,6 @@ export default function App() {
         </Suspense>
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
         <span className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100">
           {data.vercelEnv}
           {', '}
@@ -72,4 +61,22 @@ function Timesince(props: {since: string}) {
   }, [])
   if (!mounted) return 'now'
   return <span className="tabular-nums">{formatTimeSince(from, now)}</span>
+}
+
+const rtf = new Intl.RelativeTimeFormat('en', {style: 'short'})
+export function formatTimeSince(from: Date, to: Date): string {
+  const seconds = Math.floor((from.getTime() - to.getTime()) / 1000)
+  if (seconds > -60) {
+    return rtf.format(Math.min(seconds, -1), 'second')
+  }
+  const minutes = Math.ceil(seconds / 60)
+  if (minutes > -60) {
+    return rtf.format(minutes, 'minute')
+  }
+  const hours = Math.ceil(minutes / 60)
+  if (hours > -24) {
+    return rtf.format(hours, 'hour')
+  }
+  const days = Math.ceil(hours / 24)
+  return rtf.format(days, 'day')
 }

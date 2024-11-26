@@ -3,7 +3,6 @@ import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
-
 import type {QueryStore as BaseQueryStore, QueryStore} from '../types'
 
 export type * from '../types'
@@ -25,7 +24,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     sourceMap: ContentSourceMap | undefined
     perspective?: ClientPerspective
   }> => {
-    const {cache, next, stega} = _options
+    const {cache, next, stega, headers, tag} = _options
     const perspective =
       _options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
     const useCdn = _options.useCdn || unstable__serverClient.instance!.config().useCdn
@@ -38,12 +37,15 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
 
     const {result, resultSourceMap} =
       await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
-        cache: cache ?? next ? undefined : ('no-store' as any),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        cache: (cache ?? next) ? undefined : ('no-store' as any),
         filterResponse: false,
         next,
         perspective,
         useCdn: perspective === 'previewDrafts' ? false : useCdn,
         stega,
+        headers,
+        tag,
       })
     const payload = resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
     if (perspective === 'previewDrafts') {

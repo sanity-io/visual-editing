@@ -1,18 +1,19 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
-  "bump-minor-pre-major": true,
-  "always-link-local": true,
   "plugins": ["node-workspace"],
   "packages": {
-    "packages/channels": {},
+    "packages/comlink": {},
     "packages/core-loader": {},
-    "packages/overlays": {},
+    "packages/insert-menu": {},
+    "packages/next-loader": {},
     "packages/presentation": {},
     "packages/preview-kit-compat": {},
     "packages/preview-url-secret": {},
     "packages/react-loader": {},
     "packages/svelte-loader": {},
     "packages/visual-editing": {},
-    "packages/visual-editing-helpers": {}
+    "packages/visual-editing-helpers": {
+      "bump-minor-pre-major": true
+    }
   }
 }

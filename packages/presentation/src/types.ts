@@ -1,11 +1,20 @@
+import type {
+  LoaderControllerMsg,
+  LoaderNodeMsg,
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg,
+} from '@repo/visual-editing-helpers'
 import type {ClientPerspective, QueryParams} from '@sanity/client'
+import type {ConnectionInstance} from '@sanity/comlink'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,
 } from '@sanity/preview-url-secret/define-preview-url'
 import type {ComponentType} from 'react'
 import type {Observable} from 'rxjs'
-import type {DocumentStore, SanityClient} from 'sanity'
+import type {SanityClient} from 'sanity'
+import type {DocumentStore} from './internals'
+import type {PreviewHeaderProps} from './preview/PreviewHeader'
 
 export type {PreviewUrlResolver, PreviewUrlResolverOptions}
 
@@ -61,6 +70,10 @@ export interface NavigatorOptions {
   component: ComponentType
 }
 
+export interface HeaderOptions {
+  component: ComponentType<PreviewHeaderProps>
+}
+
 export type PreviewUrlOption = string | PreviewUrlResolver<SanityClient> | PreviewUrlResolverOptions
 
 /**
@@ -80,6 +93,7 @@ export type DocumentLocationResolvers = Record<
  */
 export type DocumentLocationResolverObject<K extends string = string> = {
   select: Record<K, string>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolve: (value: Record<K, any> | null) => DocumentLocationsState | null | undefined | void
 }
 
@@ -130,6 +144,9 @@ export type DocumentResolver =
       >
     }
 
+/**
+ * @public
+ */
 export interface PresentationPluginOptions {
   devMode?: boolean | (() => boolean)
   icon?: ComponentType
@@ -143,8 +160,9 @@ export interface PresentationPluginOptions {
     mainDocuments?: DocumentResolver[]
     locations?: DocumentLocationResolvers | DocumentLocationResolver
   }
-  previewUrl: PreviewUrlOption
+  previewUrl?: PreviewUrlOption
   components?: {
+    unstable_header?: HeaderOptions
     unstable_navigator?: NavigatorOptions
   }
   /**
@@ -153,17 +171,36 @@ export interface PresentationPluginOptions {
   unstable_showUnsafeShareUrl?: boolean
 }
 
+/**
+ * Presentation specific state that is stored in the pathname section of the URL
+ * @internal
+ */
 export interface PresentationStateParams {
   type?: string
   id?: string
   path?: string
 }
 
+/**
+ * Presentation specific URL search parameters, they should persist when
+ * navigating between the document pane and document list pane
+ * @internal
+ */
+export interface PresentationSearchParams {
+  preview?: string
+  perspective?: string
+  viewport?: string
+}
+
+/**
+ * Document Pane specific URL search parameters, they should not persist when
+ * navigating between the document pane and document list pane
+ * @internal
+ */
 export interface StructureDocumentPaneParams {
   inspect?: string
   path?: string
   rev?: string
-  prefersLatestPublished?: string
   since?: string
   template?: string
   templateParams?: string
@@ -177,24 +214,30 @@ export interface StructureDocumentPaneParams {
   comment?: string
 }
 
-export interface PresentationParams extends PresentationStateParams, StructureDocumentPaneParams {
-  id?: string
-  preview?: string
-  perspective?: string
-  viewport?: string
-}
+/**
+ * All possible URL search parameters used by the Presentation tool
+ * @internal
+ */
+export interface CombinedSearchParams
+  extends StructureDocumentPaneParams,
+    PresentationSearchParams {}
 
-export interface PresentationSearchParams extends StructureDocumentPaneParams {
-  preview?: string
-  perspective?: string
-  viewport?: string
-}
+/**
+ * All possible parameters that can be used to describe the state of the
+ * Presentation tool, stored in the pathname and as search parameters of the URL
+ * @internal
+ */
+export interface PresentationParams extends PresentationStateParams, CombinedSearchParams {}
 
 export type PresentationNavigate = (
   nextState: PresentationStateParams,
-  nextSearchState?: PresentationSearchParams,
+  nextSearchState?: CombinedSearchParams,
   forceReplace?: boolean,
 ) => void
+
+export type PresentationPerspective = Extract<'published' | 'previewDrafts', ClientPerspective>
+
+export type PresentationViewport = 'desktop' | 'mobile'
 
 /** @internal */
 export type LiveQueriesState = Record<string, LiveQueriesStateValue>
@@ -234,3 +277,15 @@ export interface MainDocumentState {
   path: string
   document: MainDocument | undefined
 }
+
+/**
+ * @internal
+ */
+export type VisualEditingConnection = ConnectionInstance<
+  VisualEditingNodeMsg,
+  VisualEditingControllerMsg
+>
+/**
+ * @internal
+ */
+export type LoaderConnection = ConnectionInstance<LoaderNodeMsg, LoaderControllerMsg>

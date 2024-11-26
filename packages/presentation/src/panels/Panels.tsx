@@ -2,18 +2,17 @@
 // https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels
 
 import {
-  type CSSProperties,
-  type FunctionComponent,
-  type PropsWithChildren,
   useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
+  type FunctionComponent,
+  type PropsWithChildren,
 } from 'react'
 import {styled} from 'styled-components'
-
 import {PanelsContext} from './PanelsContext'
 import type {ElementMap, InitialDragState, PanelElement, PanelsState, ResizerElement} from './types'
 import {usePanelsStorage} from './usePanelsStorage'

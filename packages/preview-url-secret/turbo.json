@@ -1,0 +1,12 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": ["NODE_ENV"]
+    },
+    "dev": {
+      "persistent": false
+    }
+  }
+}

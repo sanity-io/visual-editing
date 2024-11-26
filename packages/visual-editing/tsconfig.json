@@ -1,5 +1,8 @@
 {
   "extends": ["./.svelte-kit/tsconfig.json", "./tsconfig.base"],
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["dist", "dist-svelte", "node_modules"]
+  "exclude": ["dist", "dist-svelte", "node_modules"],
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
 }

@@ -1,8 +1,13 @@
 import {uuid} from '@sanity/uuid'
-import {getPublishedId} from 'sanity'
-import {encodeJsonParams, type SearchParam} from 'sanity/router'
+import {type RouterState, type SearchParam} from 'sanity/router'
+import {encodeJsonParams, getPublishedId} from './internals'
+import type {PresentationSearchParams, PresentationStateParams} from './types'
 
-import type {PresentationStateParams} from './types'
+const preservedSearchParamKeys: Array<keyof PresentationSearchParams> = [
+  'preview',
+  'perspective',
+  'viewport',
+]
 
 /**
  * @internal
@@ -10,7 +15,7 @@ import type {PresentationStateParams} from './types'
 export function getIntentState(
   intent: string,
   params: Record<string, string>,
-  _routerState: undefined,
+  routerState: RouterState | undefined,
   payload: unknown,
 ):
   | (PresentationStateParams & {_searchParams: SearchParam[]})
@@ -18,27 +23,39 @@ export function getIntentState(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {id, mode, path, presentation, type, ...searchParams} = params
 
+  const preservedSearchParams = (routerState?._searchParams || [])
+    // @todo Casting https://github.com/microsoft/TypeScript/issues/14520
+    .filter(([key]) => preservedSearchParamKeys.includes(key as keyof PresentationSearchParams))
+    .reduce((acc, [key, value]) => ({...acc, [key]: value}), {} as Record<string, string>)
+
+  const _searchParams = {
+    ...preservedSearchParams,
+    ...searchParams,
+  }
+
   if (intent === 'edit' && id) {
+    _searchParams['preview'] =
+      _searchParams['preview'] || new URLSearchParams(window.location.search).get('preview') || '/'
     return {
       type: type || '*',
       id: getPublishedId(id),
       path,
-      _searchParams: Object.entries(searchParams),
+      _searchParams: Object.entries(_searchParams),
     }
   }
 
   if (intent === 'create') {
-    searchParams['preview'] =
-      searchParams['preview'] || new URLSearchParams(window.location.search).get('preview') || '/'
+    _searchParams['preview'] =
+      _searchParams['preview'] || new URLSearchParams(window.location.search).get('preview') || '/'
 
     if (payload && typeof payload === 'object') {
-      searchParams['templateParams'] = encodeJsonParams(payload as Record<string, unknown>)
+      _searchParams['templateParams'] = encodeJsonParams(payload as Record<string, unknown>)
     }
 
     return {
       type: type || '*',
       id: id || uuid(),
-      _searchParams: Object.entries(searchParams),
+      _searchParams: Object.entries(_searchParams),
     }
   }
   return {intent, params, payload}

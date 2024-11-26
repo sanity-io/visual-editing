@@ -1,19 +1,39 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dotEnv": [".env", ".env.local"],
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
       "env": [
-        "SANITY_STUDIO_VERCEL_ENV",
-        "SANITY_STUDIO_VERCEL_BRANCH_URL",
-        "SANITY_STUDIO_REMIX_PREVIEW_URL",
+        "SANITY_STUDIO_ASTRO_PREVIEW_URL",
+        "SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL",
         "SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL",
         "SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL",
         "SANITY_STUDIO_NUXT_PREVIEW_URL",
-        "SANITY_STUDIO_SVELTE_PREVIEW_URL"
+        "SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL",
+        "SANITY_STUDIO_REMIX_PREVIEW_URL",
+        "SANITY_STUDIO_STEGA_DEBUG",
+        "SANITY_STUDIO_SVELTE_PREVIEW_URL",
+        "SANITY_STUDIO_VERCEL_BRANCH_URL",
+        "SANITY_STUDIO_VERCEL_ENV",
+        "SANITY_STUDIO_PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS"
       ],
       "outputs": [".sanity/**", "dist/**"]
+    },
+    "dev": {
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
+      "env": [
+        "SANITY_STUDIO_ASTRO_PREVIEW_URL",
+        "SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL",
+        "SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL",
+        "SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL",
+        "SANITY_STUDIO_NUXT_PREVIEW_URL",
+        "SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL",
+        "SANITY_STUDIO_REMIX_PREVIEW_URL",
+        "SANITY_STUDIO_STEGA_DEBUG",
+        "SANITY_STUDIO_SVELTE_PREVIEW_URL",
+        "SANITY_STUDIO_PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS"
+      ]
     }
   }
 }

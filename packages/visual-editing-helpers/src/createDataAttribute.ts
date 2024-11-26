@@ -1,12 +1,15 @@
 import {studioPath, type StudioPathLike} from '@sanity/client/csm'
-
 import {encodeSanityNodeData} from './csm/transformSanityNodeData'
 import type {CreateDataAttribute, CreateDataAttributeProps, SanityNode} from './types'
 
 /**
+ * A helper function for creating `data-sanity` attributes by explicitly providing metadata.
+ * @returns An object with methods for incrementally adding and scoping metadata, and for generating a data attribute string.
  * @public
  */
-export function createDataAttribute(props: CreateDataAttributeProps): CreateDataAttribute {
+export function createDataAttribute<T extends CreateDataAttributeProps>(
+  props: T,
+): CreateDataAttribute<T> {
   // Internal function for normalizing a path
   function normalizePath(path?: StudioPathLike) {
     if (!path) return []
@@ -33,7 +36,7 @@ export function createDataAttribute(props: CreateDataAttributeProps): CreateData
   }
 
   // The returned function call, calls the internal `toString` function with an optional concatenated path
-  const DataAttribute: CreateDataAttribute = function (path?: StudioPathLike) {
+  const DataAttribute = (path?: StudioPathLike): string => {
     return toString({
       ...props,
       path: [...normalizePath(props.path), ...normalizePath(path)],
@@ -45,19 +48,19 @@ export function createDataAttribute(props: CreateDataAttributeProps): CreateData
     return toString(props)
   }
 
-  DataAttribute.combine = function (attrs: CreateDataAttributeProps) {
-    return createDataAttribute({
+  DataAttribute.combine = function <U extends CreateDataAttributeProps>(attrs: U) {
+    return createDataAttribute<T & U>({
       ...props,
       ...attrs,
     })
   }
 
   DataAttribute.scope = function (path: StudioPathLike) {
-    return createDataAttribute({
+    return createDataAttribute<T & {path: StudioPathLike}>({
       ...props,
       path: [...normalizePath(props.path), ...normalizePath(path)],
     })
   }
 
-  return DataAttribute
+  return DataAttribute as CreateDataAttribute<T>
 }

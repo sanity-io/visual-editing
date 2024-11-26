@@ -4,10 +4,7 @@
     "sanity.config.ts",
     "tailwind.config.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "../../packages/csm/src",
-    "../../packages/core-loader/src",
-    "../../packages/react-loader/src"
+    "**/*.tsx"
   ],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -24,18 +21,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"],
-      "apps-common": ["../common/src"],
-      "apps-common/*": ["../common/src/*"],
-      "@sanity/core-loader": ["../../packages/core-loader/src"],
-      "@sanity/react-loader": ["../../packages/react-loader/src"],
-      "@sanity/react-loader/jsx": ["../../packages/react-loader/src/jsx"],
-      "@repo/visual-editing-helpers": [
-        "../../packages/visual-editing-helpers/src"
-      ],
-      "@repo/visual-editing-helpers/csm": [
-        "../../packages/visual-editing-helpers/src/csm"
-      ]
+      "~/*": ["./app/*"]
     },
 
     // Remix takes care of building everything in `remix build`.

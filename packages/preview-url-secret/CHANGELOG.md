@@ -6,6 +6,118 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.0.4](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.3...preview-url-secret-v2.0.4) (2024-11-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.5 ([#2185](https://github.com/sanity-io/visual-editing/issues/2185)) ([da0aa32](https://github.com/sanity-io/visual-editing/commit/da0aa328063f1711687f8459ca00fd95a0b69ccb))
+
+## [2.0.3](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.2...preview-url-secret-v2.0.3) (2024-11-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.4 ([#2132](https://github.com/sanity-io/visual-editing/issues/2132)) ([4f96d9a](https://github.com/sanity-io/visual-editing/commit/4f96d9a539094173caf1644a67f168492f3a35c4))
+
+## [2.0.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.1...preview-url-secret-v2.0.2) (2024-11-07)
+
+
+### Bug Fixes
+
+* **docs:** update img tags to markdown format ([cd9706d](https://github.com/sanity-io/visual-editing/commit/cd9706d7799326968fd3ae74c6dace712a116e4f))
+
+## [2.0.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.0...preview-url-secret-v2.0.1) (2024-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.3 ([0b78719](https://github.com/sanity-io/visual-editing/commit/0b7871937422d0d8dfe7851bd1603141f0c434c4))
+
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.21...preview-url-secret-v2.0.0) (2024-10-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **presentation:** lower minimum role from Editor to Contributor
+
+### Features
+
+* add `/constants` export for advanced usage ([db83869](https://github.com/sanity-io/visual-editing/commit/db838694e75bb686a82169f6a5b4f05f17019454))
+* add preview link sharing with QR code ([#1994](https://github.com/sanity-io/visual-editing/issues/1994)) ([3f62247](https://github.com/sanity-io/visual-editing/commit/3f6224753acf96f2f4f04388ee09cf64d0807360))
+* lower minimum role from Editor to Contributor for creating Preview URL Secrets necessary to start Draft Mode ([5e32bdc](https://github.com/sanity-io/visual-editing/commit/5e32bdc66e17296f55a737e6de9f90704b22bafa))
+* **presentation:** lower minimum role from Editor to Contributor ([b4fb0a8](https://github.com/sanity-io/visual-editing/commit/b4fb0a8b743c2cfbda2eb15cd1d699ed3a669568))
+* **validatePreviewUrl:** add studioPreviewPerspective ([#1995](https://github.com/sanity-io/visual-editing/issues/1995)) ([317d15c](https://github.com/sanity-io/visual-editing/commit/317d15c0c691c8ad3377c57b96fd18573c42cc6f))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.2 ([8617331](https://github.com/sanity-io/visual-editing/commit/86173315ffc6704c26d5f2d6e5fe6fed1838ad0d))
+
+## [1.6.21](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.20...preview-url-secret-v1.6.21) (2024-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.21.3 ([#1793](https://github.com/sanity-io/visual-editing/issues/1793)) ([1dc1b1b](https://github.com/sanity-io/visual-editing/commit/1dc1b1b9222e6a2f36d6b807415dc1a9b0a2426a))
+* remove document.referrer inference ([173f519](https://github.com/sanity-io/visual-editing/commit/173f519bcc7c85eec135c04d69bfa3ed1c171651))
+
+## [1.6.20](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.19...preview-url-secret-v1.6.20) (2024-08-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.21.2 ([#1749](https://github.com/sanity-io/visual-editing/issues/1749)) ([b9efdd2](https://github.com/sanity-io/visual-editing/commit/b9efdd2a672fdef518bc22a29a25992c938ba1ef))
+
+## [1.6.19](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.18...preview-url-secret-v1.6.19) (2024-08-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.21.1 ([#1704](https://github.com/sanity-io/visual-editing/issues/1704)) ([32f1ef8](https://github.com/sanity-io/visual-editing/commit/32f1ef8582134a130d6325320274a981217ee2e8))
+
+## [1.6.18](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.17...preview-url-secret-v1.6.18) (2024-07-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.20.1 ([#1680](https://github.com/sanity-io/visual-editing/issues/1680)) ([bb89688](https://github.com/sanity-io/visual-editing/commit/bb8968816838a60a32242ce803a3ef804f2f885e))
+
+## [1.6.17](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.16...preview-url-secret-v1.6.17) (2024-05-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.19.1 ([#1602](https://github.com/sanity-io/visual-editing/issues/1602)) ([ebaa50c](https://github.com/sanity-io/visual-editing/commit/ebaa50ca0bf6f6324819a9b3ceb85eb1326d7d72))
+
+## [1.6.16](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.15...preview-url-secret-v1.6.16) (2024-05-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/icons to v3 ([#1588](https://github.com/sanity-io/visual-editing/issues/1588)) ([dd087e4](https://github.com/sanity-io/visual-editing/commit/dd087e4aac114eaaeb79ad52beae0ff36624dd64))
+
+## [1.6.15](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.14...preview-url-secret-v1.6.15) (2024-05-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.19.0 ([#1575](https://github.com/sanity-io/visual-editing/issues/1575)) ([f0094a1](https://github.com/sanity-io/visual-editing/commit/f0094a1ee716f856cc424f82bc68ca2b99881575))
+
+## [1.6.14](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.13...preview-url-secret-v1.6.14) (2024-05-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.18.3 ([#1563](https://github.com/sanity-io/visual-editing/issues/1563)) ([609a3b1](https://github.com/sanity-io/visual-editing/commit/609a3b1ad00b0809ba1f926328cee4d082668bf1))
+
+## [1.6.13](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.12...preview-url-secret-v1.6.13) (2024-05-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v6.18.2 ([#1519](https://github.com/sanity-io/visual-editing/issues/1519)) ([78c387e](https://github.com/sanity-io/visual-editing/commit/78c387eba9c29c9a6f6e7d6b392a04a9cd5724ab))
+
 ## [1.6.12](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v1.6.11...preview-url-secret-v1.6.12) (2024-05-05)
 
 

@@ -2,7 +2,6 @@ import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
-
 import {defineStudioUrlStore} from './defineStudioUrlStore'
 import {defineUseLiveMode} from './defineUseLiveMode'
 import {defineUseQuery} from './defineUseQuery'
@@ -36,17 +35,19 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: Parameters<LoadQuery>[1] = {},
     options: Parameters<LoadQuery>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
+    const {headers, tag} = options
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
+    const stega = options.stega ?? unstable__serverClient.instance?.config().stega ?? false
 
     if (typeof document !== 'undefined') {
       throw new Error(
-        'Cannot use `loadQuery` in a browser environment, you should use it inside a loader, getStaticProps, getServerSideProps, getInitialProps, or in a React Server Component.',
+        'Cannot use `loadQuery` in a browser environment, you should use it inside a load function.',
       )
     }
     if (perspective !== 'published' && !unstable__serverClient.instance) {
       throw new Error(
-        `You cannot use other perspectives than "published" unless you set "ssr: true" and call "setServerClient" first.`,
+        `You cannot use other perspectives than "published" unless call "setServerClient" first.`,
       )
     }
     if (perspective === 'previewDrafts') {
@@ -61,6 +62,9 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           resultSourceMap: 'withKeyArraySelector',
           perspective,
           useCdn: false,
+          headers,
+          tag,
+          stega,
         })
       return {data: result, sourceMap: resultSourceMap, perspective}
     }
@@ -68,7 +72,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     const useCdn = options.useCdn || unstable__serverClient.instance!.config().useCdn
 
     const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
-      JSON.stringify({query, params, perspective, useCdn}),
+      JSON.stringify({query, params, perspective, useCdn, stega}),
     )
 
     // @ts-expect-error - update typings

@@ -1,28 +1,26 @@
+import type {ClientPerspective} from '@sanity/client'
+
 /** @internal */
 export type PreviewUrlSecretSchemaIdPrefix = `sanity-preview-url-secret`
 
 /** @internal */
-export type PreviewUrlSecretSchemaIdToolName = 'presentation' | 'desk' | 'production-url' | string
-
-/** @internal */
-export type PreviewUrlSecretSchemaIdType =
-  `${PreviewUrlSecretSchemaIdPrefix}.${PreviewUrlSecretSchemaIdToolName}`
-
-/** @internal */
 export type PreviewUrlSecretSchemaType = `sanity.previewUrlSecret`
+
+/** @internal */
+export type PreviewUrlSecretSchemaTypeSingleton = `sanity.previewUrlShareAccess`
 
 /**
  * A subset type that's compatible with most SanityClient typings,
  * this makes it easier to use this package in libraries that may use `import type { SanityClient } from 'sanity'`
  * as well as those that use `import type { SanityClient } from '@sanity/client'`
- * @internal
+ * @public
  */
 export type SanityClientLike = {
   config(): {token?: string}
   withConfig(config: {
     apiVersion?: string
     useCdn?: boolean
-    perspective?: 'published'
+    perspective?: ClientPerspective
     resultSourceMap?: boolean
   }): SanityClientLike
   fetch<
@@ -51,12 +49,19 @@ export interface PreviewUrlValidateUrlResult {
    * If the URL is valid, and the studio URL is known and valid, then its origin will be here
    */
   studioOrigin?: string
+  /**
+   * The initial perspective the Studio was using when starting to load the preview.
+   * It can change over time and should also be handled with `postMessage` listeners.
+   * The value can be arbitrary and has to be validated to make sure it's a valid perspective.
+   */
+  studioPreviewPerspective?: string | null
 }
 
 /** @internal */
 export interface ParsedPreviewUrl {
   secret: string
   redirectTo?: string
+  studioPreviewPerspective: string | null
 }
 
 /** @public */
@@ -82,6 +87,10 @@ export interface PreviewUrlResolverOptions {
      */
     enable: string
     /**
+     * @deprecated - use `previewMode.shareAccess` instead
+     */
+    shareAccess?: never
+    /**
      * @deprecated - use `previewMode.check` instead
      */
     check?: string
@@ -99,6 +108,14 @@ export interface PreviewUrlResolverOptions {
      * @example '/api/preview'
      */
     enable: string
+    /**
+     * Allow sharing access to a preview with others.
+     * This is enabled/disabled in the Presentation Tool. It's initially disabled, and can be enabled by someone who has access to creating draft documents in the Studio.
+     * Custom roles can limit access to `_id in path("drafts.**") && _type == "sanity.previewUrlSecret"`.
+     * This will create a secret that is valid until sharing is disabled. Turning sharing off and on again will create a new secret and can be used to remove access for folks that got the link in an email but should no longer have access.
+     * Share URLs to previews will append this secret and give access to anyone who is given the URL, they don't need to be logged into the Studio or to Vercel.
+     */
+    shareAccess?: boolean
     /**
      * The route that reports if Preview Mode is enabled or not, useful for debugging
      * @example '/api/check-preview'
@@ -128,6 +145,12 @@ export type FetchSecretQueryResponse = {
 } | null
 
 /** @internal */
+export type FetchPublicSecretQueryResponse = {
+  secret: string | null
+  studioUrl: string | null
+} | null
+
+/** @internal */
 export interface PreviewUrlResolverContext<SanityClientType> {
   client: SanityClientType
   /**
@@ -137,13 +160,15 @@ export interface PreviewUrlResolverContext<SanityClientType> {
    */
   previewUrlSecret: string
   /**
+   * The initial perspective the Studio was using when starting to load the preview.
+   * It can change over time and should also be handled with `postMessage` listeners.
+   * The value can be arbitrary and has to be validated to make sure it's a valid perspective.
+   */
+  studioPreviewPerspective: string
+  /**
    * If the user navigated to a preview path already, this will be the path
    */
   previewSearchParam?: string | null
-  /**
-   * If there's a referrer, this will be the URL and might be used as fallback if previewSearchParam is not set
-   */
-  referrer?: string | null
   /**
    * If the Studio is embedded on the same origin it's necessary to know the base path of the Studio router to avoid infinite iframe embed recursion scenarios
    */

@@ -10,7 +10,7 @@ This package is used with the [Presentation](https://www.sanity.io/docs/presenta
 ## Getting started
 
 ```sh
-npm install @sanity/visual-editing
+npm install @sanity/visual-editing react react-dom
 ```
 
 ## Table of contents
@@ -89,8 +89,8 @@ npm i next-sanity
 In your root `layout.tsx`, assuming you're using [Draft Mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) to toggle when to enable Visual Editing, add the `VisualEditing` component:
 
 ```tsx
-import {draftMode} from 'next/headers'
 import {VisualEditing} from 'next-sanity'
+import {draftMode} from 'next/headers'
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -140,15 +140,7 @@ For Remix apps you should use `VisualEditing` from `@sanity/visual-editing/remix
 
 ```tsx
 import {json} from '@remix-run/node'
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from '@remix-run/react'
+import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
 import {VisualEditing} from '@sanity/visual-editing/remix'
 
 export const loader = () => {
@@ -181,7 +173,6 @@ export default function App() {
         )}
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   )
@@ -285,9 +276,9 @@ The implementation makes use of [Server Actions][server-actions], here's the def
 
 ```tsx
 // app/layout.tsx
-import {revalidateTag, revalidatePath} from 'next/cache'
-import {draftMode} from 'next/headers'
 import {VisualEditing} from 'next-sanity'
+import {revalidatePath, revalidateTag} from 'next/cache'
+import {draftMode} from 'next/headers'
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -371,8 +362,8 @@ Remix doesn't have [Server Actions][server-actions] yet, under the hood the [`us
 
 ```tsx
 // app/root.tsx
-import {VisualEditing} from '@sanity/visual-editing/remix'
 import {useRevalidator} from '@remix-run/react'
+import {VisualEditing} from '@sanity/visual-editing/remix'
 
 export default function App() {
   const {ENV} = useLoaderData<typeof loader>()

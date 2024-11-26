@@ -62,6 +62,13 @@
             class="shrink-0 snap-start"
           >
             <img
+              :data-sanity="
+                createDataAttribute({
+                  id: product._id,
+                  type: 'shoe',
+                  path: `media[_key=='${image._key}']`,
+                }).toString()
+              "
               class="h-32 w-40 shrink-0 rounded bg-white shadow-xl lg:rounded-lg"
               :src="
                 urlFor(image)
@@ -71,7 +78,7 @@
               "
               :width="1280 / 2"
               :height="720 / 2"
-              :alt="image.alt || ''"
+              :alt="stegaClean(image.alt) || ''"
             />
           </div>
         </div>
@@ -148,9 +155,10 @@
 </template>
 
 <script setup lang="ts">
-import {formatCurrency} from 'apps-common/utils'
-import {shoe, type ShoeResult} from 'apps-common/queries'
-import {urlFor, urlForCrossDatasetReference} from '~/utils'
+import {stegaClean} from '@sanity/client/stega'
+import {createDataAttribute} from '@sanity/visual-editing'
+import {shoe, type ShoeResult} from '~/queries'
+import {formatCurrency, urlFor, urlForCrossDatasetReference} from '~/utils'
 
 const route = useRoute()
 

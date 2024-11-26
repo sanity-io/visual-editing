@@ -1,20 +1,12 @@
-import {experimental_taintUniqueValue} from 'react'
-
-import {client} from './sanity.client'
-import {setServerClient, loadQuery as _loadQuery} from '@sanity/react-loader'
+import {loadQuery as _loadQuery, setServerClient} from '@sanity/react-loader'
 import {draftMode} from 'next/headers'
+import {client} from './sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN
 
 if (!token) {
   throw new Error('Missing SANITY_API_READ_TOKEN')
 }
-
-experimental_taintUniqueValue(
-  'Do not pass the sanity API read token to the client.',
-  process,
-  token,
-)
 
 setServerClient(
   client.withConfig({
@@ -23,9 +15,10 @@ setServerClient(
 )
 
 // Automatically handle draft mode
-export const loadQuery = ((query, params = {}, options = {}) => {
-  const isDraftMode = draftMode().isEnabled
-  const perspective = options.perspective || draftMode().isEnabled ? 'previewDrafts' : 'published'
+export const loadQuery = (async (query, params = {}, options = {}) => {
+  const isDraftMode = (await draftMode()).isEnabled
+  const perspective =
+    options.perspective || (await draftMode()).isEnabled ? 'previewDrafts' : 'published'
   return _loadQuery(query, params, {
     ...options,
     perspective,

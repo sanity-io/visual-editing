@@ -1,17 +1,21 @@
 import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
-import {type ErrorInfo, type ReactElement, useCallback, useEffect, useMemo, useState} from 'react'
-import {getPublishedId, useTranslation} from 'sanity'
-import {
-  DocumentListPane as StructureDocumentListPane,
-  PaneLayout,
-  type PaneNode,
-  StructureToolProvider,
-} from 'sanity/structure'
+import {useCallback, useEffect, useMemo, useState, type ErrorInfo, type ReactElement} from 'react'
+import {useTranslation} from 'sanity'
 import {styled} from 'styled-components'
-
 import {ErrorCard} from '../components/ErrorCard'
 import {presentationLocaleNamespace} from '../i18n'
-import type {MainDocumentState, StructureDocumentPaneParams} from '../types'
+import {
+  getPublishedId,
+  PaneLayout,
+  DocumentListPane as StructureDocumentListPane,
+  StructureToolProvider,
+  type PaneNode,
+} from '../internals'
+import type {
+  MainDocumentState,
+  PresentationSearchParams,
+  StructureDocumentPaneParams,
+} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {PresentationPaneRouterProvider} from './PresentationPaneRouterProvider'
 
@@ -33,10 +37,10 @@ const WrappedCode = styled(Code)`
 export function DocumentListPane(props: {
   mainDocumentState?: MainDocumentState
   onStructureParams: (params: StructureDocumentPaneParams) => void
-  previewUrl?: string
+  searchParams: PresentationSearchParams
   refs: {_id: string; _type: string}[]
 }): ReactElement {
-  const {mainDocumentState, onStructureParams, previewUrl, refs} = props
+  const {mainDocumentState, onStructureParams, searchParams, refs} = props
 
   const {t} = useTranslation(presentationLocaleNamespace)
   const {devMode} = usePresentationTool()
@@ -100,8 +104,8 @@ export function DocumentListPane(props: {
         <StructureToolProvider>
           <PresentationPaneRouterProvider
             onStructureParams={onStructureParams}
-            params={structureParams}
-            previewUrl={previewUrl}
+            structureParams={structureParams}
+            searchParams={searchParams}
             refs={refs}
           >
             <Root direction="column" flex={1}>

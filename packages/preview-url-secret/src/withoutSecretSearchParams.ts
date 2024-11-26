@@ -1,10 +1,16 @@
-import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
+import {
+  urlSearchParamPreviewPathname,
+  urlSearchParamPreviewPerspective,
+  urlSearchParamPreviewSecret,
+} from './constants'
 
 /** @alpha */
 export function withoutSecretSearchParams(url: URL): URL {
   const newUrl = new URL(url)
-  newUrl.searchParams.delete(urlSearchParamPreviewPathname)
-  newUrl.searchParams.delete(urlSearchParamPreviewSecret)
+  const {searchParams} = newUrl
+  searchParams.delete(urlSearchParamPreviewPathname)
+  searchParams.delete(urlSearchParamPreviewSecret)
+  searchParams.delete(urlSearchParamPreviewPerspective)
   return newUrl
 }
 
@@ -14,9 +20,16 @@ export function hasSecretSearchParams(url: URL): boolean {
 }
 
 /** @alpha */
-export function setSecretSearchParams(url: URL, secret: string, redirectTo: string): URL {
+export function setSecretSearchParams(
+  url: URL,
+  secret: string,
+  redirectTo: string,
+  perspective: string,
+): URL {
   const newUrl = new URL(url)
-  newUrl.searchParams.set(urlSearchParamPreviewSecret, secret)
-  newUrl.searchParams.set(urlSearchParamPreviewPathname, redirectTo)
+  const {searchParams} = newUrl
+  searchParams.set(urlSearchParamPreviewSecret, secret)
+  searchParams.set(urlSearchParamPreviewPathname, redirectTo)
+  searchParams.set(urlSearchParamPreviewPerspective, perspective)
   return newUrl
 }

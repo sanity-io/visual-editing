@@ -1,11 +1,4 @@
-import type {Root} from 'react-dom/client'
-
-import {OVERLAY_ID} from '../constants'
 import type {DisableVisualEditing, VisualEditingOptions} from '../types'
-
-let node: HTMLElement | null = null
-let root: Root | null = null
-let cleanup: number | null = null
 
 /**
  * Enables Visual Editing overlay in a page with sourcemap encoding.
@@ -14,45 +7,26 @@ let cleanup: number | null = null
  * @public
  */
 export function enableVisualEditing(options: VisualEditingOptions = {}): DisableVisualEditing {
-  if (cleanup) clearTimeout(cleanup)
   const controller = new AbortController()
+  // Lazy load everything, react, the app, all of it
+  import('./renderVisualEditing').then(({renderVisualEditing}) => {
+    const {signal} = controller
+    /**
+     * Due to lazy loading it's possible for the following to happen, and is a consequence of dynamic ESM imports not being cancellable natively:
+     * 1. Userland calls `const disableVisualEditing = enableVisualEditing()` and the dynamic ESM import is started.
+     * 2. The dynamic import uses the network, and it takes a while to load.
+     * 3. The user navigates to a different page in the app that doesn't need Visual Editing, for example a login page.
+     * 4. Since the app is no longer in a state where Visual Editing is needed, the user calls `disableVisualEditing()`.
+     * 5. The dynamic import eventually resolves and this function is called.
+     * When this happens we want to skip calling `renderVisualEditing` since we know it's no longer needed.
+     */
+    if (signal.aborted) return
 
-  // Lazy load everything needed to render the app
-  Promise.all([import('react-dom/client'), import('./VisualEditing')]).then(
-    ([reactClient, {VisualEditing}]) => {
-      if (controller.signal.aborted) return
-
-      if (!node) {
-        node = document.createElement('div')
-        node.id = OVERLAY_ID
-        document.body.appendChild(node)
-      }
-
-      if (!root) {
-        const {createRoot} = 'default' in reactClient ? reactClient.default : reactClient
-        root = createRoot(node)
-      }
-
-      root.render(
-        <>
-          <VisualEditing {...options} />
-        </>,
-      )
-    },
-  )
+    // Hand off to the render function with the signal, which will be subscribed to for detecting when to cancel the rendering if needed and unmount the app.
+    renderVisualEditing(signal, options)
+  })
 
   return () => {
     controller.abort()
-    // Handle React StrictMode, delay cleanup for a second in case it's a rerender
-    cleanup = window.setTimeout(() => {
-      if (root) {
-        root.unmount()
-        root = null
-      }
-      if (node) {
-        document.body.removeChild(node)
-        node = null
-      }
-    }, 1000)
   }
 }

@@ -1,5 +1,4 @@
 import {describe, expect, test} from 'vitest'
-
 import {createDataAttribute} from '../src/createDataAttribute'
 
 describe('createDataAttribute', () => {
@@ -12,17 +11,25 @@ describe('createDataAttribute', () => {
 
   test('throws if id is omitted', () => {
     const scopedWithoutId = createDataAttribute({type})
+    // @ts-expect-error expected throw
     expect(() => scopedWithoutId(path)).toThrowError('required')
   })
 
   test('throws if type is omitted', () => {
     const scopedWithoutType = createDataAttribute({id})
+    // @ts-expect-error expected throw
     expect(() => scopedWithoutType(path)).toThrowError('required')
   })
 
   test('throws if path is omitted', () => {
     const scoped = createDataAttribute({id, type})
+    // @ts-expect-error expected throw
     expect(() => scoped()).toThrowError('required')
+  })
+
+  test('throws if `.toString` is used without a path', () => {
+    const scopedWithPath = createDataAttribute({id, type})
+    expect(() => scopedWithPath.toString()).toThrowError('required')
   })
 
   test('resolves using function call', () => {

@@ -1,6 +1,5 @@
 import {useLocation, useNavigate, useRevalidator} from '@remix-run/react'
 import {useEffect, useRef, useState} from 'react'
-
 import {type HistoryAdapterNavigate, type HistoryRefresh, type VisualEditingOptions} from '../types'
 import {enableVisualEditing} from '../ui/enableVisualEditing'
 
@@ -9,7 +8,7 @@ import {enableVisualEditing} from '../ui/enableVisualEditing'
  */
 export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history' | 'refresh'> {
   /**
-   * @deprecated The histoy adapter is already implemented
+   * @deprecated The history adapter is already implemented
    */
   history?: never
   /**
@@ -23,7 +22,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditingComponent(props: VisualEditingProps): null {
-  const {refresh, zIndex} = props
+  const {components, refresh, zIndex} = props
 
   const navigateRemix = useNavigate()
   const navigateRemixRef = useRef(navigateRemix)
@@ -46,6 +45,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
   }, [revalidatorLoading, revalidator.state, revalidatorPromise])
   useEffect(() => {
     const disable = enableVisualEditing({
+      components,
       zIndex,
       refresh: (payload) => {
         function refreshDefault() {
@@ -76,7 +76,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [refresh, revalidator, zIndex])
+  }, [components, refresh, revalidator, zIndex])
 
   const location = useLocation()
   useEffect(() => {

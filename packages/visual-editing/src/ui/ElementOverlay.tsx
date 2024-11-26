@@ -1,11 +1,58 @@
 import {pathToUrlString} from '@repo/visual-editing-helpers'
 import {createEditUrl, studioPath} from '@sanity/client/csm'
+import {DocumentIcon, DragHandleIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
-import {memo, useEffect, useMemo, useRef} from 'react'
+import {
+  isValidElement,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useSyncExternalStore,
+  type CSSProperties,
+  type FunctionComponent,
+  type ReactElement,
+} from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
+import {PointerEvents} from '../overlay-components/components/PointerEvents'
+import type {
+  ElementFocusedState,
+  ElementNode,
+  OverlayComponent,
+  OverlayComponentResolver,
+  OverlayComponentResolverContext,
+  OverlayRect,
+  SanityNode,
+  SanityStegaNode,
+} from '../types'
+import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
+import {useSchema} from './schema/useSchema'
 
-import type {ElementFocusedState, OverlayRect, SanityNode, SanityStegaNode} from '../types'
+const isReactElementOverlayComponent = (
+  component:
+    | OverlayComponent
+    | {component: OverlayComponent; props?: Record<string, unknown>}
+    | Array<OverlayComponent | {component: OverlayComponent; props?: Record<string, unknown>}>
+    | ReactElement,
+): component is ReactElement => {
+  return isValidElement(component)
+}
+
+export interface ElementOverlayProps {
+  componentResolver?: OverlayComponentResolver
+  draggable: boolean
+  element: ElementNode
+  focused: ElementFocusedState
+  hovered: boolean
+  isDragging: boolean
+  node: SanityNode | SanityStegaNode
+  rect: OverlayRect
+  showActions: boolean
+  wasMaybeCollapsed: boolean
+  enableScrollIntoView: boolean
+}
 
 const Root = styled(Card)`
   background-color: var(--overlay-bg);
@@ -70,7 +117,28 @@ const ActionOpen = styled(Card)`
   border-radius: 3px;
 
   & [data-ui='Text'] {
-    color: var(--card-bg-color);
+    color: #fff;
+    white-space: nowrap;
+  }
+`
+
+const Tab = styled(Flex)`
+  bottom: 100%;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+`
+
+const Labels = styled(Flex)`
+  display: flex;
+  align-items: center;
+  background-color: var(--card-focus-ring-color);
+  right: 0;
+  border-radius: 3px;
+  & [data-ui='Text'],
+  & [data-sanity-icon] {
+    color: #fff;
     white-space: nowrap;
   }
 `
@@ -88,22 +156,121 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-export const ElementOverlay = memo(function ElementOverlay(props: {
-  focused: ElementFocusedState
-  hovered: boolean
-  rect: OverlayRect
-  showActions: boolean
-  sanity: SanityNode | SanityStegaNode
-  wasMaybeCollapsed: boolean
-}) {
-  const {focused, hovered, rect, showActions, sanity, wasMaybeCollapsed} = props
+const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
+  const {element, focused, componentResolver, node, showActions, draggable} = props
+
+  const {getField, getType} = useSchema()
+  const schemaType = getType(node)
+  const {field, parent} = getField(node)
+
+  const href = 'path' in node ? createIntentLink(node) : node.href
+
+  const previewSnapshots = usePreviewSnapshots()
+
+  const title = useMemo(() => {
+    if (!('path' in node)) return undefined
+    return previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title
+  }, [node, previewSnapshots])
+
+  const Icon = useMemo(() => {
+    if (schemaType?.icon) return <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
+    return <DocumentIcon />
+  }, [schemaType?.icon])
+
+  const componentContext = useMemo<OverlayComponentResolverContext | undefined>(() => {
+    if (!('path' in node)) return undefined
+    if (!field || !schemaType) return undefined
+    const type = field.value.type
+
+    return {
+      document: schemaType,
+      element,
+      field,
+      focused: !!focused,
+      node,
+      parent,
+      type,
+    }
+  }, [schemaType, element, field, focused, node, parent])
+
+  const customComponents = useMemo(() => {
+    if (!componentContext) return undefined
+    const resolved = componentResolver?.(componentContext)
+    if (!resolved) return undefined
+
+    if (isReactElementOverlayComponent(resolved)) {
+      return resolved
+    }
+
+    return (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
+      if (typeof component === 'object' && 'component' in component) {
+        return component
+      }
+      return {component, props: {}}
+    })
+  }, [componentResolver, componentContext])
+
+  return (
+    <>
+      {showActions ? (
+        <Actions gap={1} paddingBottom={1} data-sanity-overlay-element>
+          <Link href={href} />
+        </Actions>
+      ) : null}
+
+      {title && (
+        <Tab gap={1} paddingBottom={1}>
+          <Labels gap={2} padding={2}>
+            {draggable && (
+              <Box marginRight={1}>
+                <Text className="drag-handle" size={0}>
+                  <DragHandleIcon />
+                </Text>
+              </Box>
+            )}
+            <Text size={0}>{Icon}</Text>
+            <Text size={1} weight="medium">
+              {title}
+            </Text>
+          </Labels>
+        </Tab>
+      )}
+
+      {Array.isArray(customComponents)
+        ? customComponents.map(({component: Component, props}, i) => {
+            return (
+              <Component key={i} PointerEvents={PointerEvents} {...componentContext!} {...props} />
+            )
+          })
+        : customComponents}
+    </>
+  )
+}
+
+export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
+  const {focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
   const scrolledIntoViewRef = useRef(false)
 
+  const style = useMemo<CSSProperties>(
+    () => ({
+      width: `${rect.w}px`,
+      height: `${rect.h}px`,
+      transform: `translate(${rect.x}px, ${rect.y}px)`,
+    }),
+    [rect],
+  )
+
   useEffect(() => {
-    if (!scrolledIntoViewRef.current && !wasMaybeCollapsed && focused === true && ref.current) {
+    if (
+      !scrolledIntoViewRef.current &&
+      !wasMaybeCollapsed &&
+      focused === true &&
+      ref.current &&
+      enableScrollIntoView
+    ) {
       const target = ref.current
       scrollIntoView(ref.current, {
         // Workaround issue with scroll-into-view-if-needed struggling with iframes
@@ -126,18 +293,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
     }
 
     scrolledIntoViewRef.current = focused === true
-  }, [focused, wasMaybeCollapsed])
-
-  const style = useMemo(
-    () => ({
-      width: `${rect.w}px`,
-      height: `${rect.h}px`,
-      transform: `translate(${rect.x}px, ${rect.y}px)`,
-    }),
-    [rect],
-  )
-
-  const href = 'path' in sanity ? createIntentLink(sanity) : sanity.href
+  }, [focused, wasMaybeCollapsed, enableScrollIntoView])
 
   return (
     <Root
@@ -146,24 +302,40 @@ export const ElementOverlay = memo(function ElementOverlay(props: {
       ref={ref}
       style={style}
     >
-      {showActions && hovered ? (
-        <Actions gap={1} paddingBottom={1}>
-          <Box
-            as="a"
-            href={href}
-            target="_blank"
-            rel="noopener"
-            // @ts-expect-error -- TODO update typings in @sanity/ui
-            referrerPolicy="no-referrer-when-downgrade"
-          >
-            <ActionOpen padding={2}>
-              <Text size={1} weight="medium">
-                Open in Studio
-              </Text>
-            </ActionOpen>
-          </Box>
-        </Actions>
-      ) : null}
+      {hovered && <ElementOverlayInner {...props} />}
     </Root>
+  )
+})
+
+const Link = memo(function Link(props: {href: string}) {
+  const referer = useSyncExternalStore(
+    useCallback((onStoreChange) => {
+      const handlePopState = () => onStoreChange()
+      window.addEventListener('popstate', handlePopState)
+      return () => window.removeEventListener('popstate', handlePopState)
+    }, []),
+    () => window.location.href,
+  )
+  const href = useMemo(() => {
+    try {
+      const parsed = new URL(
+        props.href,
+        typeof location === 'undefined' ? undefined : location.origin,
+      )
+      parsed.searchParams.set('preview', referer)
+      return parsed.toString()
+    } catch {
+      return props.href
+    }
+  }, [props.href, referer])
+
+  return (
+    <Box as="a" href={href} target="_blank" rel="noopener noreferrer">
+      <ActionOpen padding={2}>
+        <Text size={1} weight="medium">
+          Open in Studio
+        </Text>
+      </ActionOpen>
+    </Box>
   )
 })

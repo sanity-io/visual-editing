@@ -1,9 +1,9 @@
-import {type MutableRefObject, useCallback, useEffect, useMemo, useRef} from 'react'
-import {getPublishedId} from 'sanity'
+import {useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject} from 'react'
 import type {RouterContextValue, RouterState, SearchParam} from 'sanity/router'
-
+import {getPublishedId} from './internals'
 import {parseRouterState} from './lib/parse'
 import type {
+  CombinedSearchParams,
   FrameState,
   PresentationNavigate,
   PresentationParams,
@@ -36,7 +36,9 @@ export function useParams({
   frameStateRef: MutableRefObject<FrameState>
 }): {
   navigate: PresentationNavigate
+  navigationHistory: RouterState[]
   params: PresentationParams
+  searchParams: PresentationSearchParams
   structureParams: StructureDocumentPaneParams
 } {
   const params = useMemo<PresentationParams>(() => {
@@ -52,7 +54,6 @@ export function useParams({
       viewport: routerSearchParams['viewport'],
       inspect: routerSearchParams['inspect'],
       rev: routerSearchParams['rev'],
-      prefersLatestPublished: routerSearchParams['prefersLatestPublished'],
       since: routerSearchParams['since'],
       template: routerSearchParams['template'],
       templateParams: routerSearchParams['templateParams'],
@@ -70,7 +71,6 @@ export function useParams({
       inspect: params.inspect,
       path: params.path,
       rev: params.rev,
-      prefersLatestPublished: params.prefersLatestPublished,
       since: params.since,
       template: params.template,
       templateParams: params.templateParams,
@@ -88,7 +88,6 @@ export function useParams({
     params.instruction,
     params.path,
     params.pathKey,
-    params.prefersLatestPublished,
     params.rev,
     params.since,
     params.template,
@@ -96,11 +95,22 @@ export function useParams({
     params.view,
   ])
 
+  const searchParams = useMemo<PresentationSearchParams>(() => {
+    const pruned = pruneObject({
+      perspective: params.perspective,
+      preview: params.preview,
+      viewport: params.viewport,
+    })
+    return pruned
+  }, [params.perspective, params.preview, params.viewport])
+
   const routerStateRef = useRef(routerState)
 
   useEffect(() => {
     routerStateRef.current = routerState
   }, [routerState])
+
+  const [navigationHistory, setNavigationHistory] = useState<RouterState[]>([routerState])
 
   const navigate = useCallback<PresentationNavigate>(
     (nextState, nextSearchState = {}, forceReplace) => {
@@ -112,8 +122,8 @@ export function useParams({
 
       // Convert array of search params to an object
       const routerSearchState = (routerSearchParams || []).reduce(
-        (acc, [key, value]) => ((acc[key as keyof PresentationSearchParams] = value), acc),
-        {} as PresentationSearchParams,
+        (acc, [key, value]) => ((acc[key as keyof CombinedSearchParams] = value), acc),
+        {} as CombinedSearchParams,
       )
 
       // Merge routerState and incoming state
@@ -141,14 +151,17 @@ export function useParams({
 
       const replace = forceReplace ?? searchState.preview === frameStateRef.current.url
 
+      setNavigationHistory((prev) => [...prev, state])
       routerNavigate(state, {replace})
     },
     [routerNavigate, frameStateRef],
   )
 
   return {
-    structureParams,
     navigate,
+    navigationHistory,
     params,
+    searchParams,
+    structureParams,
   }
 }

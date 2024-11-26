@@ -1,4 +1,8 @@
-import {urlSearchParamPreviewPathname, urlSearchParamPreviewSecret} from './constants'
+import {
+  urlSearchParamPreviewPathname,
+  urlSearchParamPreviewPerspective,
+  urlSearchParamPreviewSecret,
+} from './constants'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverContext,
@@ -28,11 +32,6 @@ export function definePreviewUrl<SanityClientType>(
         if (restoredUrl.origin === productionUrl.origin) {
           preview = `${restoredUrl.pathname}${restoredUrl.search}`
         }
-      } else if (context.referrer) {
-        const referrerUrl = new URL(context.referrer)
-        if (referrerUrl.origin === productionUrl.origin) {
-          preview = `${referrerUrl.pathname}${referrerUrl.search}`
-        }
       }
     } catch {
       // ignore
@@ -51,6 +50,7 @@ export function definePreviewUrl<SanityClientType>(
       const enablePreviewModeRequestUrl = new URL(enablePreviewModeUrl)
       const {searchParams} = enablePreviewModeRequestUrl
       searchParams.set(urlSearchParamPreviewSecret, context.previewUrlSecret)
+      searchParams.set(urlSearchParamPreviewPerspective, context.studioPreviewPerspective)
       if (previewUrl.pathname !== enablePreviewModeRequestUrl.pathname) {
         searchParams.set(
           urlSearchParamPreviewPathname,

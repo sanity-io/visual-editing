@@ -1,10 +1,12 @@
 import type {SanityClient} from '@sanity/client'
-
-import type {HistoryRefresh, VisualEditingOptions} from '../src/types'
+import type {HistoryRefresh, VisualEditingOptions} from '../dist'
 
 /** @public */
-export interface VisualEditingProps {
-  zIndex?: VisualEditingOptions['zIndex']
+export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history' | 'refresh'> {
+  /**
+   * @deprecated The history adapter is already implemented
+   */
+  history?: never
   refresh?: (
     payload: HistoryRefresh,
     refreshDefault: () => false | Promise<void>,
