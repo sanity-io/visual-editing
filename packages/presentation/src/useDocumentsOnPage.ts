@@ -2,6 +2,7 @@ import type {ClientPerspective} from '@sanity/client'
 import isEqual from 'fast-deep-equal'
 import {useCallback, useMemo, useRef, useState, type MutableRefObject} from 'react'
 import type {FrameState, PresentationPerspective} from './types'
+import {defineWarnOnce} from './util/warnOnce'
 
 export type DocumentOnPage = {
   _id: string
@@ -11,7 +12,7 @@ export type DocumentOnPage = {
 type DocumentCache = Record<string, DocumentOnPage>
 type KeyedDocumentCache = Record<string, DocumentCache>
 
-let warnedAboutCrossDatasetReference = false
+const warnOnceAboutCrossDatasetReference = defineWarnOnce()
 
 export function useDocumentsOnPage(
   perspective: PresentationPerspective,
@@ -37,14 +38,11 @@ export function useDocumentsOnPage(
         if ('_projectId' in sourceDocument && sourceDocument._projectId) {
           // eslint-disable-next-line no-warning-comments
           // @TODO Handle cross dataset references
-          if (!warnedAboutCrossDatasetReference) {
-            // eslint-disable-next-line no-console
-            console.warn(
-              'Cross dataset references are not supported yet, ignoring source document',
-              sourceDocument,
-            )
-            warnedAboutCrossDatasetReference = true
-          }
+
+          warnOnceAboutCrossDatasetReference(
+            'Cross dataset references are not supported yet, ignoring source document',
+            sourceDocument,
+          )
           return false
         }
         return sourceDocument

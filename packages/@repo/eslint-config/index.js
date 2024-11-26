@@ -13,7 +13,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'react-compiler'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -37,6 +37,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'off',
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
+    'react-compiler/react-compiler': 'error',
     'react/prop-types': 'off',
   },
 }

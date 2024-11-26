@@ -52,8 +52,8 @@ export function ContentEditor(props: {
         <StateLink
           {...props}
           state={{
-            id: mainDocumentState!.document!._id,
-            type: mainDocumentState!.document!._type,
+            id: mainDocumentState?.document?._id,
+            type: mainDocumentState?.document?._type,
             _searchParams: Object.entries(searchParams),
           }}
         />
