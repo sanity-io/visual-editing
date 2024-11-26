@@ -12,6 +12,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.18.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.18.4...presentation-v1.18.5) (2024-11-26)
+
+
+### Bug Fixes
+
+* prevent disconnect on window context close ([#2194](https://github.com/sanity-io/visual-editing/issues/2194)) ([c6f2d08](https://github.com/sanity-io/visual-editing/commit/c6f2d08595553d4df3f7e2f6169075cb7fd45cfe))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.4
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.4
+
 ## [1.18.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.18.3...presentation-v1.18.4) (2024-11-19)
 
 

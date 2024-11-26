@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.8.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.8.0...visual-editing-v2.8.1) (2024-11-26)
+
+
+### Bug Fixes
+
+* **visual-editing:** unset overlay applied cursor on mouseleave ([#2181](https://github.com/sanity-io/visual-editing/issues/2181)) ([2d39ab7](https://github.com/sanity-io/visual-editing/commit/2d39ab750b17bbae1520b93061be73282f146123))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 1.1.4
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.4
+
 ## [2.8.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.7.2...visual-editing-v2.8.0) (2024-11-19)
 
 
