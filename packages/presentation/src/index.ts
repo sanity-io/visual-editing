@@ -10,6 +10,7 @@ export type {
   DocumentResolver,
   DocumentResolverContext,
   HeaderOptions,
+  InspectorTab,
   NavigatorOptions,
   PresentationParams,
   PresentationPerspective,
