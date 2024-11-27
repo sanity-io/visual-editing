@@ -83,7 +83,11 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     draftModeEnabled,
     draftModePerspective,
     refreshOnMount = false,
-    refreshOnFocus = typeof window === 'undefined' ? true : window.self === window.top,
+    refreshOnFocus = draftModeEnabled
+      ? false
+      : typeof window === 'undefined'
+        ? true
+        : window.self === window.top,
     refreshOnReconnect = true,
     tag,
     onError = handleError,
