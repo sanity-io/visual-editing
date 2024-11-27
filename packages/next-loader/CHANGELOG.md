@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.10](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.9...next-loader-v1.1.10) (2024-11-27)
+
+
+### Bug Fixes
+
+* revert use the CDN when fetching sync tags ([a56bd0f](https://github.com/sanity-io/visual-editing/commit/a56bd0f77a13b0fdbbf9082cb0b2828ddffc8a95))
+* **SanityLive:** make `refreshOnFocus` false when in draft mode ([9a49389](https://github.com/sanity-io/visual-editing/commit/9a493899b4cc87b2ec63cacaae5f59246ca1e42e))
+
 ## [1.1.9](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.8...next-loader-v1.1.9) (2024-11-26)
 
 
