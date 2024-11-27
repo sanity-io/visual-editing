@@ -1,4 +1,4 @@
-import type {QueryParams, StegaConfig} from '@sanity/client'
+import type {QueryParams} from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
@@ -38,12 +38,12 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     options: Parameters<QueryStore['loadQuery']>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
     const {headers, tag} = options
-const stega =
-  typeof options.stega === 'boolean'
-    ? options.stega
-    : (options.stega?.enabled ??
-      unstable__serverClient.instance?.config().stega?.enabled ??
-      false)
+    const stega =
+      typeof options.stega === 'boolean'
+        ? options.stega
+        : (options.stega?.enabled ??
+          unstable__serverClient.instance?.config().stega?.enabled ??
+          false)
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
 
