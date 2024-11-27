@@ -38,6 +38,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.10.22](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.10.21...react-loader-v1.10.22) (2024-11-27)
+
+
+### Bug Fixes
+
+* use stega options in loadQuery ([#1208](https://github.com/sanity-io/visual-editing/issues/1208)) ([14dae2c](https://github.com/sanity-io/visual-editing/commit/14dae2ce8ccd16c67e36a58c6ddb6af48b1b50de))
+
 ## [1.10.21](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.10.20...react-loader-v1.10.21) (2024-11-26)
 
 

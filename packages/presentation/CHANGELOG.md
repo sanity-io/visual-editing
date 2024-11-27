@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.0...presentation-v1.19.1) (2024-11-27)
+
+
+### Bug Fixes
+
+* **presentation:** fix issue where you couldn't open the review tab in the history of a document ([#2215](https://github.com/sanity-io/visual-editing/issues/2215)) ([91d85c2](https://github.com/sanity-io/visual-editing/commit/91d85c24bfe704f75eefa657091b2593a30a91c9))
+
 ## [1.19.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.18.5...presentation-v1.19.0) (2024-11-27)
 
 
