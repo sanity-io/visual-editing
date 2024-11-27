@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.18.5...presentation-v1.19.0) (2024-11-27)
+
+
+### Features
+
+* add React Compiler ([3bb0f7b](https://github.com/sanity-io/visual-editing/commit/3bb0f7bcbea0ece0f7f28802b3e5338a9bacbed5))
+
 ## [1.18.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.18.4...presentation-v1.18.5) (2024-11-26)
 
 
