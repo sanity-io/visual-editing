@@ -201,7 +201,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         revalidate: fetchOptions?.revalidate,
         // tags: ['sanity'],
       },
-      useCdn: true,
+      useCdn: false,
       tag: [tag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
