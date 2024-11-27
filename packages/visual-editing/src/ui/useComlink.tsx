@@ -15,12 +15,12 @@ export function useComlink(): VisualEditingNode | undefined {
   const [node, setNode] = useState<VisualEditingNode>()
 
   useEffect(() => {
-    const instance = createNode<VisualEditingControllerMsg, VisualEditingNodeMsg>(
+    const instance = createNode<VisualEditingNodeMsg, VisualEditingControllerMsg>(
       {
         name: 'visual-editing',
         connectTo: 'presentation',
       },
-      createNodeMachine<VisualEditingControllerMsg, VisualEditingNodeMsg>().provide({
+      createNodeMachine<VisualEditingNodeMsg, VisualEditingControllerMsg>().provide({
         actors: createCompatibilityActors<VisualEditingNodeMsg>(),
       }),
     )

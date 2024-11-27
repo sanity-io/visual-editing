@@ -66,7 +66,7 @@ const PostMessageDocuments: FunctionComponent<PostMessageDocumentsProps> = (prop
       mutations,
       reconnect,
     ).subscribe((event) => {
-      comlink.post({type: 'presentation/snapshot-event', data: {event}})
+      comlink.post('presentation/snapshot-event', {event})
     })
 
     return () => {

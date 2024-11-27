@@ -14,8 +14,8 @@ import type {
 } from '@sanity/client'
 import {applySourceDocuments, getPublishedId} from '@sanity/client/csm'
 import {
-  createChannelMachine,
-  type ConnectionInstance,
+  createConnectionMachine,
+  type ChannelInstance,
   type Controller,
   type StatusEvent,
 } from '@sanity/comlink'
@@ -66,7 +66,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
     onDocumentsOnPage,
   } = props
 
-  const [comlink, setComlink] = useState<ConnectionInstance<LoaderNodeMsg, LoaderControllerMsg>>()
+  const [comlink, setComlink] = useState<ChannelInstance<LoaderControllerMsg, LoaderNodeMsg>>()
   const [liveQueries, setLiveQueries] = useState<LiveQueriesState>({})
 
   const projectId = useProjectId()
@@ -104,13 +104,13 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
 
   useEffect(() => {
     if (controller) {
-      const comlink = controller.createConnection<LoaderNodeMsg, LoaderControllerMsg>(
+      const comlink = controller.createChannel<LoaderControllerMsg, LoaderNodeMsg>(
         {
           name: 'presentation',
           connectTo: 'loaders',
           heartbeat: true,
         },
-        createChannelMachine<LoaderNodeMsg, LoaderControllerMsg>().provide({
+        createConnectionMachine<LoaderControllerMsg, LoaderNodeMsg>().provide({
           actors: createCompatibilityActors<LoaderControllerMsg>(),
         }),
       )
@@ -172,13 +172,10 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
       const {projectId, dataset} = clientConfig
       // @todo - Can this be migrated/deprecated in favour of emitting
       // `presentation/perspective` at a higher level?
-      comlink.post({
-        type: 'loader/perspective',
-        data: {
-          projectId: projectId!,
-          dataset: dataset!,
-          perspective: activePerspective,
-        },
+      comlink.post('loader/perspective', {
+        projectId: projectId!,
+        dataset: dataset!,
+        perspective: activePerspective,
       })
     }
   }, [comlink, clientConfig, activePerspective])
@@ -385,18 +382,15 @@ function QuerySubscription(props: QuerySubscriptionProps) {
 
   useEffect(() => {
     if (resultSourceMap) {
-      comlink?.post({
-        type: 'loader/query-change',
-        data: {
-          projectId,
-          dataset,
-          perspective,
-          query,
-          params,
-          result,
-          resultSourceMap,
-          tags,
-        },
+      comlink?.post('loader/query-change', {
+        projectId,
+        dataset,
+        perspective,
+        query,
+        params,
+        result,
+        resultSourceMap,
+        tags,
       })
     }
   }, [comlink, dataset, params, perspective, projectId, query, result, resultSourceMap, tags])

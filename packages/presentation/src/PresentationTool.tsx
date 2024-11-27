@@ -8,7 +8,7 @@ import {
 } from '@repo/visual-editing-helpers'
 import {studioPath} from '@sanity/client/csm'
 import {
-  createChannelMachine,
+  createConnectionMachine,
   createController,
   type Controller,
   type Message,
@@ -221,13 +221,13 @@ export default function PresentationTool(props: {
   useEffect(() => {
     if (!controller) return
 
-    const comlink = controller.createConnection<VisualEditingNodeMsg, VisualEditingControllerMsg>(
+    const comlink = controller.createChannel<VisualEditingControllerMsg, VisualEditingNodeMsg>(
       {
         name: 'presentation',
         heartbeat: true,
         connectTo: 'visual-editing',
       },
-      createChannelMachine<VisualEditingNodeMsg, VisualEditingControllerMsg>().provide({
+      createConnectionMachine<VisualEditingControllerMsg, VisualEditingNodeMsg>().provide({
         actors: createCompatibilityActors<VisualEditingControllerMsg>(),
       }),
     )
@@ -294,13 +294,13 @@ export default function PresentationTool(props: {
 
   useEffect(() => {
     if (!controller) return
-    const comlink = controller.createConnection<PreviewKitNodeMsg, Message>(
+    const comlink = controller.createChannel<Message, PreviewKitNodeMsg>(
       {
         name: 'presentation',
         connectTo: 'preview-kit',
         heartbeat: true,
       },
-      createChannelMachine<PreviewKitNodeMsg, Message>().provide({
+      createConnectionMachine<Message, PreviewKitNodeMsg>().provide({
         actors: createCompatibilityActors(),
       }),
     )
@@ -350,12 +350,9 @@ export default function PresentationTool(props: {
   // Dispatch a focus or blur message when the id or path change
   useEffect(() => {
     if (params.id && params.path) {
-      visualEditingComlink?.post({
-        type: 'presentation/focus',
-        data: {id: params.id, path: params.path},
-      })
+      visualEditingComlink?.post('presentation/focus', {id: params.id, path: params.path})
     } else {
-      visualEditingComlink?.post({type: 'presentation/blur', data: undefined})
+      visualEditingComlink?.post('presentation/blur')
     }
   }, [params.id, params.path, visualEditingComlink])
 
@@ -370,19 +367,16 @@ export default function PresentationTool(props: {
       if (overlaysConnection !== 'connected' && iframeRef.current) {
         iframeRef.current.src = `${targetOrigin}${params.preview}`
       } else {
-        visualEditingComlink?.post({
-          type: 'presentation/navigate',
-          data: {
-            url: params.preview,
-            type: 'replace',
-          },
+        visualEditingComlink?.post('presentation/navigate', {
+          url: params.preview,
+          type: 'replace',
         })
       }
     }
   }, [overlaysConnection, targetOrigin, params.preview, visualEditingComlink])
 
   const toggleOverlay = useCallback(
-    () => visualEditingComlink?.post({type: 'presentation/toggle-overlay', data: undefined}),
+    () => visualEditingComlink?.post('presentation/toggle-overlay'),
     [visualEditingComlink],
   )
 
@@ -435,13 +429,10 @@ export default function PresentationTool(props: {
       if (visualEditingComlink) {
         // We only wait 300ms for the iframe to ack the refresh request before running the fallback logic
         refreshRef.current = window.setTimeout(fallback, 300)
-        visualEditingComlink.post({
-          type: 'presentation/refresh',
-          data: {
-            source: 'manual',
-            livePreviewEnabled:
-              previewKitConnection === 'connected' || loadersConnection === 'connected',
-          },
+        visualEditingComlink.post('presentation/refresh', {
+          source: 'manual',
+          livePreviewEnabled:
+            previewKitConnection === 'connected' || loadersConnection === 'connected',
         })
         return
       }

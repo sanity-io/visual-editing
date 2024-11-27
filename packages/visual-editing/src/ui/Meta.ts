@@ -11,10 +11,7 @@ export const Meta: FunctionComponent<{
 
   useEffect(() => {
     const sendMeta = () => {
-      comlink.post({
-        type: 'visual-editing/meta',
-        data: {title: document.title},
-      })
+      comlink.post('visual-editing/meta', {title: document.title})
     }
 
     const observer = new MutationObserver(([mutation]) => {

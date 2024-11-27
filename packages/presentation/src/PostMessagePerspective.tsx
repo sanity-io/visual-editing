@@ -19,10 +19,7 @@ const PostMessagePerspective: FC<PostMessagePerspectiveProps> = (props) => {
 
   // Dispatch a perspective message when the perspective changes
   useEffect(() => {
-    comlink.post({
-      type: 'presentation/perspective',
-      data: {perspective},
-    })
+    comlink.post('presentation/perspective', {perspective})
   }, [comlink, perspective])
 
   return null

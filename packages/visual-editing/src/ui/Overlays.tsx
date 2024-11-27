@@ -121,11 +121,11 @@ const OverlaysController: FunctionComponent<{
     (message) => {
       if (message.type === 'element/click') {
         const {sanity} = message
-        comlink?.post({type: 'visual-editing/focus', data: sanity})
+        comlink?.post('visual-editing/focus', sanity)
       } else if (message.type === 'overlay/activate') {
-        comlink?.post({type: 'visual-editing/toggle', data: {enabled: true}})
+        comlink?.post('visual-editing/toggle', {enabled: true})
       } else if (message.type === 'overlay/deactivate') {
-        comlink?.post({type: 'visual-editing/toggle', data: {enabled: false}})
+        comlink?.post('visual-editing/toggle', {enabled: false})
       } else if (message.type === 'overlay/dragEnd') {
         const {insertPosition, target, dragGroup, flow, preventInsertDefault} = message
         dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})

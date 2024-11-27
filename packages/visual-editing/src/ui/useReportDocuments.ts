@@ -29,12 +29,9 @@ export function useReportDocuments(
 
   const reportDocuments = useCallback(
     (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
-      comlink?.post({
-        type: 'visual-editing/documents',
-        data: {
-          documents,
-          perspective,
-        },
+      comlink?.post('visual-editing/documents', {
+        documents,
+        perspective,
       })
     },
     [comlink],

@@ -50,9 +50,9 @@ export function setEnvironment(nextEnvironment: DraftEnvironment): void {
 /** @internal */
 export const comlinkListeners = new Set<() => void>()
 /** @internal */
-export let comlink: Node<LoaderControllerMsg, LoaderNodeMsg> | null = null
+export let comlink: Node<LoaderNodeMsg, LoaderControllerMsg> | null = null
 /** @internal */
-export function setComlink(nextComlink: Node<LoaderControllerMsg, LoaderNodeMsg> | null): void {
+export function setComlink(nextComlink: Node<LoaderNodeMsg, LoaderControllerMsg> | null): void {
   comlink = nextComlink
   for (const onComlinkChange of comlinkListeners) {
     onComlinkChange()

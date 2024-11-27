@@ -14,10 +14,8 @@ export const createDocumentMutator = (comlink: VisualEditingNode) => {
     async ({input, signal}: {input: {id: string; client: SanityClient}; signal: AbortSignal}) => {
       const {id} = input
       const {snapshot} = await comlink.fetch(
-        {
-          type: 'visual-editing/fetch-snapshot',
-          data: {documentId: id},
-        },
+        'visual-editing/fetch-snapshot',
+        {documentId: id},
         {
           signal,
         },
@@ -31,7 +29,7 @@ export const createDocumentMutator = (comlink: VisualEditingNode) => {
       const {transactions} = input
       for (const transaction of transactions) {
         const data = SanityEncoder.encodeTransaction(transaction)
-        return comlink.post({type: 'visual-editing/mutate', data})
+        return comlink.post('visual-editing/mutate', data)
       }
     },
   )

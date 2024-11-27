@@ -364,7 +364,7 @@ export interface EventHandlers {
 /**
  * @internal
  */
-export type VisualEditingNode = Node<VisualEditingControllerMsg, VisualEditingNodeMsg>
+export type VisualEditingNode = Node<VisualEditingNodeMsg, VisualEditingControllerMsg>
 
 /**
  * Cleanup function used when e.g. unmounting

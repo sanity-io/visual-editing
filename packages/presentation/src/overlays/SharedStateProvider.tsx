@@ -28,14 +28,14 @@ export const SharedStateProvider: FunctionComponent<
   const setValue = useCallback(
     (key: string, value: Serializable) => {
       sharedState.current[key] = value
-      comlink?.post({type: 'presentation/shared-state', data: {key, value}})
+      comlink?.post('presentation/shared-state', {key, value})
     },
     [comlink],
   )
 
   const removeValue = useCallback(
     (key: string) => {
-      comlink?.post({type: 'presentation/shared-state', data: {key}})
+      comlink?.post('presentation/shared-state', {key})
       delete sharedState.current[key]
     },
     [comlink],

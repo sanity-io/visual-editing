@@ -58,16 +58,13 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
   const [children, setChildren] = useState<React.ReactNode | undefined>(undefined)
 
   const handleQueryHeartbeat = useEffectEvent((comlink: NonNullable<typeof comlinkSnapshot>) => {
-    comlink.post({
-      type: 'loader/query-listen',
-      data: {
-        projectId: projectId!,
-        dataset: dataset!,
-        perspective: perspective! as ClientPerspective,
-        query,
-        params: params!,
-        heartbeat: LISTEN_HEARTBEAT_INTERVAL,
-      },
+    comlink.post('loader/query-listen', {
+      projectId: projectId!,
+      dataset: dataset!,
+      perspective: perspective! as ClientPerspective,
+      query,
+      params: params!,
+      heartbeat: LISTEN_HEARTBEAT_INTERVAL,
     })
   })
   const handleQueryChange = useEffectEvent(
