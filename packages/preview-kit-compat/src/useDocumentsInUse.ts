@@ -12,19 +12,19 @@ export function useDocumentsInUse(
   projectId: string,
   dataset: string,
 ): void {
-  const [comlink, setComlink] = useState<Node<Message, PreviewKitNodeMsg> | null>(null)
+  const [comlink, setComlink] = useState<Node<PreviewKitNodeMsg, Message> | null>(null)
 
   const [connected, setConnected] = useState(false)
   useEffect(() => {
     if (window.self === window.top && !window.opener) {
       return
     }
-    const comlink = createNode<Message, PreviewKitNodeMsg>(
+    const comlink = createNode<PreviewKitNodeMsg, Message>(
       {
         name: 'preview-kit',
         connectTo: 'presentation',
       },
-      createNodeMachine<Message, PreviewKitNodeMsg>().provide({
+      createNodeMachine<PreviewKitNodeMsg, Message>().provide({
         actors: createCompatibilityActors<PreviewKitNodeMsg>(),
       }),
     )
@@ -49,14 +49,11 @@ export function useDocumentsInUse(
   const changedKeys = JSON.stringify(Array.from(documentsInUse.keys()))
   useEffect(() => {
     if (changedKeys !== '[]' && comlink && connected) {
-      comlink.post({
-        type: 'preview-kit/documents',
-        data: {
-          projectId,
-          dataset,
-          perspective: 'previewDrafts',
-          documents: Array.from(documentsInUse.values()),
-        },
+      comlink.post('preview-kit/documents', {
+        projectId,
+        dataset,
+        perspective: 'previewDrafts',
+        documents: Array.from(documentsInUse.values()),
       })
     }
   }, [changedKeys, comlink, connected, dataset, documentsInUse, projectId])

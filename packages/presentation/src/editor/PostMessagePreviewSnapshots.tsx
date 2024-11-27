@@ -85,10 +85,7 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
 
   useEffect(() => {
     const sub = previews$.subscribe((snapshots) => {
-      comlink.post({
-        type: 'presentation/preview-snapshots',
-        data: {snapshots},
-      })
+      comlink.post('presentation/preview-snapshots', {snapshots})
     })
 
     return () => {

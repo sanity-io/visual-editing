@@ -16,7 +16,7 @@ export function createSharedListener(comlink: VisualEditingNode): Observable<Sha
   const incomingMutations$ = new Subject<SharedListenEvent>()
 
   comlink
-    .fetch({type: 'visual-editing/snapshot-welcome', data: undefined}, {suppressWarnings: true})
+    .fetch('visual-editing/snapshot-welcome', undefined, {suppressWarnings: true})
     .then((data) => {
       incomingConnection$.next(data.event)
     })

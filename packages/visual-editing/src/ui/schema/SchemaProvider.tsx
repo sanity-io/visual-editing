@@ -77,13 +77,10 @@ export const SchemaProvider: FunctionComponent<
     async (signal: AbortSignal) => {
       if (!comlink) return
       try {
-        const response = await comlink.fetch(
-          {
-            type: 'visual-editing/schema',
-            data: undefined,
-          },
-          {signal, suppressWarnings: true},
-        )
+        const response = await comlink.fetch('visual-editing/schema', undefined, {
+          signal,
+          suppressWarnings: true,
+        })
         setSchema(response.schema)
       } catch (e) {
         // Fail silently as the app may be communicating with a version of
@@ -106,10 +103,8 @@ export const SchemaProvider: FunctionComponent<
       if (!paths.length || !comlink) return
       try {
         const response = await comlink.fetch(
-          {
-            type: 'visual-editing/schema-union-types',
-            data: {paths},
-          },
+          'visual-editing/schema-union-types',
+          {paths},
           {signal, suppressWarnings: true},
         )
         setResolvedTypes(response.types)

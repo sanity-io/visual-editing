@@ -20,7 +20,7 @@ export const History: FunctionComponent<{
     if (history) {
       return history.subscribe((update) => {
         update.title = update.title || document.title
-        comlink?.post({type: 'visual-editing/navigate', data: update})
+        comlink?.post('visual-editing/navigate', update)
       })
     }
     return

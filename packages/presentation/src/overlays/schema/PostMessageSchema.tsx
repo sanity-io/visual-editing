@@ -45,7 +45,7 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
      * @deprecated switch to explict schema fetching (using
      * 'visual-editing/schema') at next major
      */
-    comlink.post({type: 'presentation/schema', data: {schema}})
+    comlink.post('presentation/schema', {schema})
 
     return comlink.on('visual-editing/schema', () => ({schema}))
   }, [comlink, theme, workspace])

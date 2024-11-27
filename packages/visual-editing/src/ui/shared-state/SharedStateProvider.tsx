@@ -44,10 +44,9 @@ export const SharedStateProvider: FunctionComponent<
   useEffect(() => {
     const fetch = async () => {
       try {
-        const value = await comlink?.fetch(
-          {type: 'visual-editing/shared-state', data: undefined},
-          {suppressWarnings: true},
-        )
+        const value = await comlink?.fetch('visual-editing/shared-state', undefined, {
+          suppressWarnings: true,
+        })
         if (value) {
           store.setState(() => value.state)
         }

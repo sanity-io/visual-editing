@@ -49,12 +49,12 @@ function PresentationComlink(props: {
 
   // const [status, setStatus] = useState('disconnected')
   useEffect(() => {
-    const comlink = createNode<LoaderControllerMsg, LoaderNodeMsg>(
+    const comlink = createNode<LoaderNodeMsg, LoaderControllerMsg>(
       {
         name: 'loaders',
         connectTo: 'presentation',
       },
-      createNodeMachine<LoaderControllerMsg, LoaderNodeMsg>().provide({
+      createNodeMachine<LoaderNodeMsg, LoaderControllerMsg>().provide({
         actors: createCompatibilityActors<LoaderNodeMsg>(),
       }),
     )

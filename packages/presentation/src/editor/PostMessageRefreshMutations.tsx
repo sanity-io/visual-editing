@@ -49,26 +49,20 @@ function PostMessageRefreshMutationsInner(props: PostMessageRefreshMutationsInne
     if (prevDraft?._rev !== draft?._rev) {
       startTransition(() => setPrevDraft(draft))
       if (draft) {
-        comlink?.post({
-          type: 'presentation/refresh',
-          data: {
-            source: 'mutation',
-            livePreviewEnabled,
-            document: parseDocument(draft),
-          },
+        comlink?.post('presentation/refresh', {
+          source: 'mutation',
+          livePreviewEnabled,
+          document: parseDocument(draft),
         })
       }
     }
     if (prevPublished?._rev !== published?._rev) {
       startTransition(() => setPrevPublished(published))
       if (published) {
-        comlink?.post({
-          type: 'presentation/refresh',
-          data: {
-            source: 'mutation',
-            livePreviewEnabled,
-            document: parseDocument(published),
-          },
+        comlink?.post('presentation/refresh', {
+          source: 'mutation',
+          livePreviewEnabled,
+          document: parseDocument(published),
         })
       }
     }

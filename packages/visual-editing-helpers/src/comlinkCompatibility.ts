@@ -69,9 +69,9 @@ const comlinkToChannelsMap: {[key in ComlinkMessageType]?: ChannelsMessageType} 
   'presentation/toggle-overlay': 'presentation/toggleOverlay',
 }
 
-const convertToComlinkEvent = (
-  event: MessageEvent<ProtocolMessage>,
-): MessageEvent<ProtocolMessage> => {
+type ChannelMsg = Omit<ProtocolMessage, 'channelId'> & {connectionId: string}
+
+const convertToComlinkEvent = (event: MessageEvent): MessageEvent<ProtocolMessage> => {
   const {data} = event
 
   if (
@@ -94,13 +94,19 @@ const convertToComlinkEvent = (
       data.from = 'visual-editing'
     }
 
+    data.channelId = data.connectionId
+    delete data.connectionId
+
     data.type = channelsToComlinkMap[data.type as ChannelsMessageType] ?? data.type
   }
 
   return event
 }
 
-const convertToChannelsMessage = (message: ProtocolMessage): ProtocolMessage => {
+const convertToChannelsMessage = (comlinkMessage: ProtocolMessage): ChannelMsg => {
+  const {channelId, ...rest} = comlinkMessage
+  const message = {...rest, connectionId: channelId} as ChannelMsg
+
   if (message.domain === DOMAIN) {
     message.domain = 'sanity/channels'
   }

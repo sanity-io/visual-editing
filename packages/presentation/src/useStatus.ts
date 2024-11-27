@@ -44,11 +44,12 @@ export function useStatus(): [string, (event: StatusEvent) => void] {
       const next = new Map(prev)
       if (event.status === 'disconnected') {
         // Remove the channel from the map if a disconnect event is received
-        next.delete(event.channel)
+        next.delete(event.connection)
       } else {
         // Update the status and connection flag for the channel
-        const hasConnected = next.get(event.channel)?.hasConnected || event.status === 'connected'
-        next.set(event.channel, {status: event.status, hasConnected})
+        const hasConnected =
+          next.get(event.connection)?.hasConnected || event.status === 'connected'
+        next.set(event.connection, {status: event.status, hasConnected})
       }
       return next
     })

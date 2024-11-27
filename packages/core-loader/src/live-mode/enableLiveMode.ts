@@ -50,12 +50,12 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   >()
 
-  const comlink = createNode<LoaderControllerMsg, LoaderNodeMsg>(
+  const comlink = createNode<LoaderNodeMsg, LoaderControllerMsg>(
     {
       name: 'loaders',
       connectTo: 'presentation',
     },
-    createNodeMachine<LoaderControllerMsg, LoaderNodeMsg>().provide({
+    createNodeMachine<LoaderNodeMsg, LoaderControllerMsg>().provide({
       actors: createCompatibilityActors<LoaderNodeMsg>(),
     }),
   )
@@ -196,16 +196,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
     const perspective = $perspective.get()
     for (const {query, params, $fetch} of liveQueries) {
-      comlink.post({
-        type: 'loader/query-listen',
-        data: {
-          projectId: projectId!,
-          dataset: dataset!,
-          perspective,
-          query,
-          params,
-          heartbeat: LISTEN_HEARTBEAT_INTERVAL,
-        },
+      comlink.post('loader/query-listen', {
+        projectId: projectId!,
+        dataset: dataset!,
+        perspective,
+        query,
+        params,
+        heartbeat: LISTEN_HEARTBEAT_INTERVAL,
       })
       if (!skipSetLoading && $connected.value === true) {
         $fetch.setKey('loading', true)
@@ -231,14 +228,11 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
       }
     }
-    comlink.post({
-      type: 'loader/documents',
-      data: {
-        projectId: projectId!,
-        dataset: dataset!,
-        perspective,
-        documents: documentsOnPage,
-      },
+    comlink.post('loader/documents', {
+      projectId: projectId!,
+      dataset: dataset!,
+      perspective,
+      documents: documentsOnPage,
     })
   }
 

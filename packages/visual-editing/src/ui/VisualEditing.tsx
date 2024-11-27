@@ -26,12 +26,12 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
 
   useEffect(() => {
     if (!inFrame) return
-    const comlink = createNode<VisualEditingControllerMsg, VisualEditingNodeMsg>(
+    const comlink = createNode<VisualEditingNodeMsg, VisualEditingControllerMsg>(
       {
         name: 'visual-editing',
         connectTo: 'presentation',
       },
-      createNodeMachine<VisualEditingControllerMsg, VisualEditingNodeMsg>().provide({
+      createNodeMachine<VisualEditingNodeMsg, VisualEditingControllerMsg>().provide({
         actors: createCompatibilityActors<VisualEditingNodeMsg>(),
       }),
     )
@@ -47,10 +47,10 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
     // Fetch features to determine if optimistic updates are supported
     const controller = new AbortController()
     comlink
-      .fetch(
-        {type: 'visual-editing/features', data: undefined},
-        {signal: controller.signal, suppressWarnings: true},
-      )
+      .fetch('visual-editing/features', undefined, {
+        signal: controller.signal,
+        suppressWarnings: true,
+      })
       .then((data) => {
         if (data.features['optimistic']) {
           setActor(actor)

@@ -5,7 +5,7 @@ import type {
   VisualEditingNodeMsg,
 } from '@repo/visual-editing-helpers'
 import type {ClientPerspective, QueryParams} from '@sanity/client'
-import type {ConnectionInstance} from '@sanity/comlink'
+import type {ChannelInstance} from '@sanity/comlink'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,
@@ -293,11 +293,11 @@ export interface MainDocumentState {
 /**
  * @internal
  */
-export type VisualEditingConnection = ConnectionInstance<
-  VisualEditingNodeMsg,
-  VisualEditingControllerMsg
+export type VisualEditingConnection = ChannelInstance<
+  VisualEditingControllerMsg,
+  VisualEditingNodeMsg
 >
 /**
  * @internal
  */
-export type LoaderConnection = ConnectionInstance<LoaderNodeMsg, LoaderControllerMsg>
+export type LoaderConnection = ChannelInstance<LoaderControllerMsg, LoaderNodeMsg>
