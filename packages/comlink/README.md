@@ -10,7 +10,7 @@ npm install @sanity/comlink
 
 ## Usage
 
-`@sanity/comlink` provides a mechanism for sending messages between a parent and one or more child `Window` contexts. Define your connections, and `@sanity/comlink` will establish and maintain channels to new target contexts automatically.
+`@sanity/comlink` provides a mechanism for sending messages between a parent and one or more child `Window` contexts. Define Nodes and Channels and `@sanity/comlink` will establish and maintain connections to new target contexts automatically.
 
 ![Comlink Diagram](./comlink-lines.png)
 
@@ -18,10 +18,10 @@ npm install @sanity/comlink
 
 First, define the types of messages you will send and receive. The `data` and `response` values must be a serializable object, or `undefined`.
 
-Define messages the Controller will send.
+Define a message a Channel will send to a Node.
 
 ```ts
-type ControllerMessage = {
+type ChannelMessage = {
   type: 'focus'
   data: {
     selector: string
@@ -29,7 +29,7 @@ type ControllerMessage = {
 }
 ```
 
-Define messages the Node will send. Note that responses are only supported from Controllers, i.e. on Node message types.
+Define messages the Node will send to a Channel. Note that responses are only supported from Channels, i.e. on Node message types.
 
 ```ts
 interface GreetingMessage {
@@ -54,7 +54,7 @@ type NodeMessage = GreetingMessage | ItemFetchMessage
 
 ### Parent Context
 
-In the parent `Window` context, create a Controller. This will be used to create and manage connections to Nodes in other `Window` contexts. Provide a `targetOrigin` to ensure messages are only sent to and received from trusted origins.
+In the parent `Window` context, create a Controller. This is used to create and manage Channels, which connect to Nodes in other `Window` contexts. Provide a `targetOrigin` to ensure messages are only sent to and received from trusted origins.
 
 ```ts
 import {createController} from '@sanity/comlink'
@@ -72,10 +72,10 @@ const iframe = document.querySelector('iframe#my-iframe')
 controller.addTarget(iframe)
 ```
 
-Define a Connection by specifying its name and the name of the Node it will interface with. Optionally enable heartbeat monitoring to allow automatic recovery on unexpected disconnects.
+Define a Channel by specifying its name and the name of the Node it will interface with. Optionally enable heartbeat monitoring to allow automatic recovery on unexpected disconnects.
 
 ```ts
-const connection = controller.createConnection<NodeMessage, ControllerMessage>({
+const channel = controller.createChannel<ChannelMessage, NodeMessage>({
   name: 'parent',
   heartbeat: true,
   connectTo: 'child',
@@ -85,15 +85,15 @@ const connection = controller.createConnection<NodeMessage, ControllerMessage>({
 Listen for status changes.
 
 ```ts
-const unsubscribe = connection.onStatus((event) => {
-  console.log('Status of', event.channel, 'changed to', event.status)
+const unsubscribe = channel.onStatus((event) => {
+  console.log('Status of', event.connection, 'changed to', event.status)
 })
 ```
 
 Listen for messages...
 
 ```ts
-const unsubscribe = connection.on('greeting', (data) => {
+const unsubscribe = channel.on('greeting', (data) => {
   console.log(data.message)
 })
 ```
@@ -101,7 +101,7 @@ const unsubscribe = connection.on('greeting', (data) => {
 ...return responses...
 
 ```ts
-const unsubscribe = connection.on('fetch-item', (data) => {
+const unsubscribe = channel.on('fetch-item', (data) => {
   return items.find((item) => item.id === data.id)
 })
 ```
@@ -109,22 +109,17 @@ const unsubscribe = connection.on('fetch-item', (data) => {
 ...or send messages to all Nodes.
 
 ```ts
-connection.post({
-  type: 'focus',
-  data: {
-    selector: 'foo',
-  },
-})
+channel.post('focus', {selector: 'foo'})
 ```
 
 ### Child Context
 
-In the child `Window` context, create a Node. Provide a name and the name of the Connection it should interface with.
+In the child `Window` context, create a Node. Provide a name and the name of the Channel it should interface with.
 
 ```ts
 import {createNode} from '@sanity/comlink'
 
-const node = createNode<ControllerMessage, NodeMessage>({
+const node = createNode<NodeMessage, ChannelMessage>({
   name: 'child',
   connectTo: 'parent',
 })
@@ -141,13 +136,13 @@ const unsubscribe = node.onStatus((status) => {
 Send messages...
 
 ```ts
-node.post({type: 'greeting', data: {message: 'Hello, Comlink!'}})
+node.post('greeting', {message: 'Hello, Comlink!'})
 ```
 
 ...fetch data...
 
 ```ts
-const item = await node.fetch({type: 'fetch-item', data: {id: 'foo'}})
+const item = await node.fetch('fetch-item', {id: 'foo'})
 ```
 
 ...or listen for incoming messages.
@@ -162,27 +157,27 @@ const unsubscribe = node.on('focus', (data) => {
 
 ### Controllers
 
-Controllers are responsible for managing the lifecycle of channels to one or more Nodes. They handle the creation of Connections, adding and removing targets, and managing the overall communication flow.
+Controllers are responsible for managing the lifecycle of channels to one or more Nodes. They handle the creation of Channels, adding and removing targets, and managing the overall communication flow.
 
 Controllers ensure that messages are correctly routed to the appropriate Node and that responses are handled appropriately.
 
 Once the Controller is created, `Window` contexts (i.e. iframes and popups) can be added, and connections established to Nodes within those contexts.
 
-### Connections
+### Channels
 
-Connections are the underlying mechanism that facilitate communication between Controllers and Nodes. They are responsible for establishing and maintaining channels.
+Channels are the underlying mechanism that facilitate communication between Controllers and Nodes. They are responsible for establishing and maintaining connections.
 
-Connections also support heartbeat monitoring to detect and recover from connection failures.
+Channels also support heartbeat monitoring to detect and recover from connection failures.
 
 ### Nodes
 
-Nodes are created within child `Window` contexts (e.g., iframes or popups) and establish connections to Controllers in the parent `Window` context.
+Nodes are created within child `Window` contexts (e.g., iframes or popups) and establish connections to Channels in the parent `Window` context.
 
 Nodes provide a simple interface for posting messages, fetching data, and listening for incoming messages.
 
 ## Connection States
 
-Channels and nodes can be in the following states:
+Node and Channel connections can be in the following states:
 
 - `idle`: Initial state before connection
 - `handshaking`: Establishing connection
