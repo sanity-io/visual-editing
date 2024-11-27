@@ -197,7 +197,7 @@ export interface PresentationSearchParams {
  * navigating between the document pane and document list pane
  * @internal
  */
-export interface StructureDocumentPaneParams {
+export interface StructureDocumentPaneParams extends InspectorTab {
   inspect?: string
   path?: string
   rev?: string
@@ -215,19 +215,31 @@ export interface StructureDocumentPaneParams {
 }
 
 /**
+ * parameters for the changes inspector
+ * @internal
+ */
+export interface InspectorTab {
+  changesInspectorTab?: 'history' | 'review'
+}
+
+/**
  * All possible URL search parameters used by the Presentation tool
  * @internal
  */
 export interface CombinedSearchParams
   extends StructureDocumentPaneParams,
-    PresentationSearchParams {}
+    PresentationSearchParams,
+    InspectorTab {}
 
 /**
  * All possible parameters that can be used to describe the state of the
  * Presentation tool, stored in the pathname and as search parameters of the URL
  * @internal
  */
-export interface PresentationParams extends PresentationStateParams, CombinedSearchParams {}
+export interface PresentationParams
+  extends PresentationStateParams,
+    CombinedSearchParams,
+    InspectorTab {}
 
 export type PresentationNavigate = (
   nextState: PresentationStateParams,

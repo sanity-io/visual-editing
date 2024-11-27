@@ -63,6 +63,7 @@ export function useParams({
       instruction: routerSearchParams['instruction'],
       // comments
       comment: routerSearchParams['comment'],
+      changesInspectorTab: routerSearchParams['changesInspectorTab'] as 'history' | 'review',
     }
   }, [routerState, routerSearchParams, initialPreviewUrl])
 
@@ -80,9 +81,11 @@ export function useParams({
       instruction: params.instruction,
       // comments
       comment: params.comment,
+      changesInspectorTab: params.changesInspectorTab,
     })
     return pruned
   }, [
+    params.changesInspectorTab,
     params.comment,
     params.inspect,
     params.instruction,
@@ -121,10 +124,10 @@ export function useParams({
       const {_searchParams: routerSearchParams, ...routerState} = routerStateRef.current
 
       // Convert array of search params to an object
-      const routerSearchState = (routerSearchParams || []).reduce(
-        (acc, [key, value]) => ((acc[key as keyof CombinedSearchParams] = value), acc),
-        {} as CombinedSearchParams,
-      )
+      const routerSearchState = (routerSearchParams || []).reduce((acc, [key, value]) => {
+        acc[key as keyof CombinedSearchParams] = value as undefined | 'history' | 'review'
+        return acc
+      }, {} as CombinedSearchParams)
 
       // Merge routerState and incoming state
       const state: RouterState = pruneObject({
@@ -145,7 +148,7 @@ export function useParams({
       }
 
       state._searchParams = Object.entries(searchState).reduce(
-        (acc, [key, value]) => [...acc, [key, value]],
+        (acc, [key, value]) => [...acc, [key, value] as SearchParam],
         [] as SearchParam[],
       )
 
