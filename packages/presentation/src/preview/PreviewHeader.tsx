@@ -390,7 +390,7 @@ const PreviewHeader: FunctionComponent<
     : renderDefault(props)
 
   return (
-    <Card flex="none" padding={2} shadow={1} style={{position: 'relative'}}>
+    <Card flex="none" padding={2} borderBottom style={{position: 'relative'}}>
       <Flex align="center" style={{minHeight: 0}}>
         {header}
       </Flex>

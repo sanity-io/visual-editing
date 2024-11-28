@@ -21,7 +21,9 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from 'react'
+import {flushSync} from 'react-dom'
 import {useTranslation} from 'sanity'
 import {ErrorCard} from '../components/ErrorCard'
 import {MAX_TIME_TO_OVERLAYS_CONNECTION} from '../constants'
@@ -184,14 +186,46 @@ export const Preview = memo(
       )
     }, [continueAnyway, iframe.status, loading, overlaysConnection])
 
+    const canUseViewTransition = useSyncExternalStore(
+      useCallback(() => () => {}, []),
+      () => CSS.supports(`(view-transition-name: test)`),
+    )
     const iframeAnimations = useMemo(() => {
       return [
         preventIframeInteraction ? 'background' : 'active',
         loading ? 'reloading' : 'idle',
-        viewport,
+        // If CSS View Transitions are supported, then transition iframe viewport dimensions with that instead of Motion
+        canUseViewTransition ? '' : viewport,
         showOverlaysConnectionStatus && !continueAnyway ? 'timedOut' : '',
       ]
-    }, [continueAnyway, loading, preventIframeInteraction, showOverlaysConnectionStatus, viewport])
+    }, [
+      canUseViewTransition,
+      continueAnyway,
+      loading,
+      preventIframeInteraction,
+      showOverlaysConnectionStatus,
+      viewport,
+    ])
+
+    const [prevViewport, setPrevViewport] = useState(viewport)
+    const [iframeStyle, setIframeStyle] = useState(iframeVariants[viewport])
+    useEffect(() => {
+      if (canUseViewTransition && viewport !== prevViewport) {
+        const update = () => {
+          setPrevViewport(viewport)
+          setIframeStyle(iframeVariants[viewport])
+        }
+        if (
+          !prefersReducedMotion &&
+          'startViewTransition' in document &&
+          typeof document.startViewTransition === 'function'
+        ) {
+          document.startViewTransition(() => flushSync(() => update()))
+        } else {
+          update()
+        }
+      }
+    }, [canUseViewTransition, prefersReducedMotion, prevViewport, viewport])
 
     return (
       <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
@@ -215,6 +249,7 @@ export const Preview = memo(
                 {!somethingIsWrong &&
                 !loading &&
                 !refreshing &&
+                // viewport, // using CSS View Transitions instead of framer motion to drive this
                 showOverlaysConnectionStatus &&
                 !continueAnyway ? (
                   <MotionFlex
@@ -322,8 +357,6 @@ export const Preview = memo(
                       background: 'var(--card-bg-color)',
                       inset: '0',
                       position: 'absolute',
-                      borderTop: '1px solid transparent',
-                      boxShadow: '0 0 0 1px var(--card-border-color)',
                     }}
                   >
                     <ErrorCard
@@ -372,6 +405,7 @@ export const Preview = memo(
                 preventClick={preventIframeInteraction}
                 ref={ref}
                 src={initialUrl.toString()}
+                style={iframeStyle}
                 variants={iframeVariants}
               />
             </Flex>

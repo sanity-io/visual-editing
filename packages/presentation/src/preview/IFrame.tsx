@@ -1,16 +1,14 @@
 import {Box} from '@sanity/ui'
 import {motion, type VariantLabels, type Variants} from 'framer-motion'
-import {forwardRef, type ReactEventHandler} from 'react'
+import {forwardRef, useId, type ReactEventHandler} from 'react'
 import {styled} from 'styled-components'
 
 const IFrameElement = motion(styled.iframe`
   box-shadow: 0 0 0 1px var(--card-border-color);
-  border-top: 1px solid transparent;
-  border-bottom: 0;
-  border-right: 0;
-  border-left: 0;
+  border: 0;
   max-height: 100%;
   width: 100%;
+  view-transition-class: presentation-tool-iframe;
 `)
 
 const IFrameOverlay = styled(Box)`
@@ -26,14 +24,22 @@ interface IFrameProps {
   preventClick: boolean
   src: string
   variants: Variants
+  style: React.CSSProperties
 }
 
 export const IFrame = forwardRef<HTMLIFrameElement, IFrameProps>(function IFrame(props, ref) {
-  const {animate, initial, onLoad, preventClick, src, variants} = props
+  const {animate, initial, onLoad, preventClick, src, variants, style} = props
+  const id = useId()
 
   return (
     <>
       <IFrameElement
+        style={{
+          ...style,
+          // useId() guarantees that the ID will be unique, even if we add support for multiple iframe instances,
+          // while `view-transition-class: presentation-tool-iframe` provides userland a way to customize the transition with CSS if they wish
+          viewTransitionName: `presentation-tool-iframe-${id.replace(/[^a-zA-Z0-9-_]/g, '_')}`,
+        }}
         animate={animate}
         initial={initial}
         onLoad={onLoad}
