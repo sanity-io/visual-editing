@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.4...comlink-v2.0.0) (2024-11-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **comlink:** swap type arg order, align api signatures
+* **comlink:** swap channels and connection terminology
+
+### Features
+
+* **comlink:** swap channels and connection terminology ([60627b1](https://github.com/sanity-io/visual-editing/commit/60627b1c45d002805a575a659ff3738cd3fa6341))
+* **comlink:** swap type arg order, align api signatures ([d4e582d](https://github.com/sanity-io/visual-editing/commit/d4e582d1d44def999b40977b1fb5f921bf845dc9))
+
 ## [1.1.4](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.3...comlink-v1.1.4) (2024-11-26)
 
 
