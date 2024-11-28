@@ -95,11 +95,13 @@ export const SchemaProvider: FunctionComponent<
     return () => controller.abort()
   }, [fetchSchema])
 
-  // We report a list of paths that reference array items using a _key. We need
-  // to resolve the types of each of these items so we can map them to the
-  // correct schema types. One day CSM might include this data for us.
-  const reportPaths = useCallback(
-    async (paths: UnresolvedPath[], signal: AbortSignal) => {
+  const reportedPathsRef = useRef<UnresolvedPath[]>([])
+
+  useEffect(() => {
+    // We report a list of paths that reference array items using a _key. We need
+    // to resolve the types of each of these items so we can map them to the
+    // correct schema types. One day CSM might include this data for us.
+    const reportPaths = async (paths: UnresolvedPath[], signal: AbortSignal) => {
       if (!paths.length || !comlink) return
       try {
         const response = await comlink.fetch(
@@ -113,13 +115,8 @@ export const SchemaProvider: FunctionComponent<
         // Fail silently as the app may be communicating with a version of
         // Presentation that does not support this feature
       }
-    },
-    [comlink],
-  )
+    }
 
-  const reportedPathsRef = useRef<UnresolvedPath[]>([])
-
-  useEffect(() => {
     const controller = new AbortController()
     const paths = getPathsWithUnresolvedTypes(elements)
     if (
@@ -130,13 +127,14 @@ export const SchemaProvider: FunctionComponent<
       reportPaths(paths, controller.signal)
     }
     return () => controller.abort()
-  }, [elements, reportPaths])
+  }, [comlink, elements])
 
   const getType = useCallback(
     <T extends 'document' | 'type' = 'document'>(
       node: SanityNode | SanityStegaNode | string,
-      type: T = 'document' as T,
+      _type?: T,
     ): T extends 'document' ? DocumentSchema | undefined : TypeSchema | undefined => {
+      const type = _type || 'document'
       if (
         !schema ||
         (typeof node !== 'string' && (!isSanityNode(node) || !Array.isArray(schema)))

@@ -33,31 +33,29 @@ export const SharedStateProvider: FunctionComponent<
         store.setState((prev) => ({...prev, [data.key]: data.value}))
       } else {
         store.setState((prev) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const {[data.key]: _removed, ...rest} = prev
-          return rest
+          return Object.fromEntries(Object.entries(prev).filter(([key]) => key !== data.key))
         })
       }
     })
   }, [comlink])
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const value = await comlink?.fetch('visual-editing/shared-state', undefined, {
-          suppressWarnings: true,
-        })
-        if (value) {
-          store.setState(() => value.state)
-        }
-      } catch {
-        // eslint-disable-next-line no-console
-        console.warn(
-          '[@sanity/visual-editing]: Failed to fetch shared state. Check your version of `@sanity/presentation` is up-to-date',
-        )
+    async function fetch() {
+      const value = await comlink?.fetch('visual-editing/shared-state', undefined, {
+        suppressWarnings: true,
+      })
+      if (value) {
+        store.setState(() => value.state)
       }
     }
-    fetch()
+    fetch().catch((reason) => {
+      // eslint-disable-next-line no-console
+      console.debug(reason)
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[@sanity/visual-editing]: Failed to fetch shared state. Check your version of `@sanity/presentation` is up-to-date',
+      )
+    })
   }, [comlink])
 
   const value = useMemo(() => ({comlink, store}), [comlink])

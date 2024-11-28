@@ -316,13 +316,6 @@ export const Overlays: FunctionComponent<{
     return
   }, [overlayEnabled])
 
-  const elementsToRender = useMemo(() => {
-    if (inFrame && status !== 'connected') {
-      return []
-    }
-    return elements.filter((e) => e.activated || e.focused)
-  }, [elements, inFrame, status])
-
   const documentIds = useMemo(() => {
     return elements.flatMap((element) => ('id' in element.sanity ? [element.sanity.id] : []))
   }, [elements])
@@ -336,6 +329,53 @@ export const Overlays: FunctionComponent<{
   const componentResolver = useMemo(() => {
     return optimisticActorReady ? _componentResolver : undefined
   }, [_componentResolver, optimisticActorReady])
+
+  const elementsToRender = useMemo(() => {
+    if ((inFrame && status !== 'connected') || isDragging) {
+      return []
+    }
+
+    return elements
+      .filter((e) => e.activated || e.focused)
+      .map(({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
+        const draggable =
+          !dragDisabled &&
+          !!element.getAttribute('data-sanity') &&
+          optimisticActorReady &&
+          elements.some((e) =>
+            'id' in e.sanity && 'id' in sanity
+              ? sanityNodesExistInSameArray(e.sanity, sanity) && e.sanity.path !== sanity.path
+              : false,
+          )
+
+        return (
+          <ElementOverlay
+            componentResolver={componentResolver}
+            element={element}
+            enableScrollIntoView={!isDragging && !dragMinimapTransition && !dragShowMinimap}
+            key={id}
+            focused={focused}
+            hovered={hovered}
+            node={sanity}
+            rect={rect}
+            showActions={!inFrame}
+            draggable={draggable}
+            isDragging={isDragging || dragMinimapTransition}
+            wasMaybeCollapsed={focused && wasMaybeCollapsed}
+          />
+        )
+      })
+  }, [
+    componentResolver,
+    dragMinimapTransition,
+    dragShowMinimap,
+    elements,
+    inFrame,
+    isDragging,
+    optimisticActorReady,
+    status,
+    wasMaybeCollapsed,
+  ])
 
   return (
     <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
@@ -360,40 +400,7 @@ export const Overlays: FunctionComponent<{
                     rootElement={rootElement}
                   />
                   {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
-                  {!isDragging &&
-                    elementsToRender.map(
-                      ({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
-                        const draggable =
-                          !dragDisabled &&
-                          !!element.getAttribute('data-sanity') &&
-                          optimisticActorReady &&
-                          elements.some((e) =>
-                            'id' in e.sanity && 'id' in sanity
-                              ? sanityNodesExistInSameArray(e.sanity, sanity) &&
-                                e.sanity.path !== sanity.path
-                              : false,
-                          )
-
-                        return (
-                          <ElementOverlay
-                            componentResolver={componentResolver}
-                            element={element}
-                            enableScrollIntoView={
-                              !isDragging && !dragMinimapTransition && !dragShowMinimap
-                            }
-                            key={id}
-                            focused={focused}
-                            hovered={hovered}
-                            node={sanity}
-                            rect={rect}
-                            showActions={!inFrame}
-                            draggable={draggable}
-                            isDragging={isDragging || dragMinimapTransition}
-                            wasMaybeCollapsed={focused && wasMaybeCollapsed}
-                          />
-                        )
-                      },
-                    )}
+                  {elementsToRender}
 
                   {isDragging && !dragMinimapTransition && (
                     <>

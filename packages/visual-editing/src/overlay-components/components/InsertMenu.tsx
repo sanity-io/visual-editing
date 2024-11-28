@@ -26,7 +26,7 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
 
   const insertMenuOptions = node.options?.insertMenu || {}
 
-  const views = insertMenuOptions.views?.map((view) => {
+  const views: InsertMenuOptions['views'] = insertMenuOptions.views?.map((view) => {
     // Map the `previewImageUrls` that Presentation already resolved and
     // serialized back to a function so that InsertMenu can "resolve" them
     if (view.name === 'grid') {
@@ -36,7 +36,7 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
       }
     }
     return view
-  }) satisfies InsertMenuOptions['views']
+  })
 
   return (
     <SanityInsertMenu

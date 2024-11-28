@@ -172,11 +172,6 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     return previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title
   }, [node, previewSnapshots])
 
-  const Icon = useMemo(() => {
-    if (schemaType?.icon) return <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
-    return <DocumentIcon />
-  }, [schemaType?.icon])
-
   const componentContext = useMemo<OverlayComponentResolverContext | undefined>(() => {
     if (!('path' in node)) return undefined
     if (!field || !schemaType) return undefined
@@ -193,22 +188,13 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     }
   }, [schemaType, element, field, focused, node, parent])
 
-  const customComponents = useMemo(() => {
-    if (!componentContext) return undefined
-    const resolved = componentResolver?.(componentContext)
-    if (!resolved) return undefined
+  const customComponents = useCustomComponents(componentContext, componentResolver)
 
-    if (isReactElementOverlayComponent(resolved)) {
-      return resolved
-    }
-
-    return (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
-      if (typeof component === 'object' && 'component' in component) {
-        return component
-      }
-      return {component, props: {}}
-    })
-  }, [componentResolver, componentContext])
+  const icon = schemaType?.icon ? (
+    <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
+  ) : (
+    <DocumentIcon />
+  )
 
   return (
     <>
@@ -228,7 +214,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                 </Text>
               </Box>
             )}
-            <Text size={0}>{Icon}</Text>
+            <Text size={0}>{icon}</Text>
             <Text size={1} weight="medium">
               {title}
             </Text>
@@ -307,6 +293,28 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   )
 })
 
+function useCustomComponents(
+  componentContext: OverlayComponentResolverContext | undefined,
+  componentResolver: OverlayComponentResolver | undefined,
+) {
+  return useMemo(() => {
+    if (!componentContext) return undefined
+    const resolved = componentResolver?.(componentContext)
+    if (!resolved) return undefined
+
+    if (isReactElementOverlayComponent(resolved)) {
+      return resolved
+    }
+
+    return (Array.isArray(resolved) ? resolved : [resolved]).map((component) => {
+      if (typeof component === 'object' && 'component' in component) {
+        return component
+      }
+      return {component, props: {}}
+    })
+  }, [componentResolver, componentContext])
+}
+
 const Link = memo(function Link(props: {href: string}) {
   const referer = useSyncExternalStore(
     useCallback((onStoreChange) => {
@@ -316,18 +324,7 @@ const Link = memo(function Link(props: {href: string}) {
     }, []),
     () => window.location.href,
   )
-  const href = useMemo(() => {
-    try {
-      const parsed = new URL(
-        props.href,
-        typeof location === 'undefined' ? undefined : location.origin,
-      )
-      parsed.searchParams.set('preview', referer)
-      return parsed.toString()
-    } catch {
-      return props.href
-    }
-  }, [props.href, referer])
+  const href = useLinkHref(props.href, referer)
 
   return (
     <Box as="a" href={href} target="_blank" rel="noopener noreferrer">
@@ -339,3 +336,15 @@ const Link = memo(function Link(props: {href: string}) {
     </Box>
   )
 })
+
+function useLinkHref(href: string, referer: string) {
+  return useMemo(() => {
+    try {
+      const parsed = new URL(href, typeof location === 'undefined' ? undefined : location.origin)
+      parsed.searchParams.set('preview', referer)
+      return parsed.toString()
+    } catch {
+      return href
+    }
+  }, [href, referer])
+}

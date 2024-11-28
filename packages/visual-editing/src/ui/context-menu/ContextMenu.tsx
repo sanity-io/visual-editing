@@ -121,10 +121,6 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     return field?.title || field?.name || 'Unknown type'
   }, [field])
 
-  const Icon = useMemo(() => {
-    return getNodeIcon(field)
-  }, [field])
-
   const [items, setItems] = useState<ContextMenuNode[] | undefined>(undefined)
 
   useEffect(() => {
@@ -150,6 +146,10 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
     } as HTMLElement
   }, [x, y])
 
+  const icon = useMemo(() => {
+    return getNodeIcon(field)
+  }, [field])
+
   return (
     <PopoverPortal setBoundaryElement={setBoundaryElement} onDismiss={onDismiss}>
       <Popover
@@ -161,7 +161,7 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
         content={
           <Menu style={{minWidth: 120, maxWidth: 160}}>
             <Flex gap={2} padding={2}>
-              <Box flex="none">{items ? <Text size={1}>{Icon}</Text> : <Spinner size={1} />}</Box>
+              <Box flex="none">{items ? <Text size={1}>{icon}</Text> : <Spinner size={1} />}</Box>
 
               <Stack flex={1} space={2}>
                 <Text size={1} weight="semibold">

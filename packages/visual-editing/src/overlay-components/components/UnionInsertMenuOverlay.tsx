@@ -10,7 +10,7 @@ import {
   type HTMLProps,
   type MouseEvent,
 } from 'react'
-import styled from 'styled-components'
+import {styled} from 'styled-components'
 import type {ElementNode, OverlayComponent} from '../../types'
 import {useDocuments} from '../../ui/optimistic-state/useDocuments'
 import {getArrayInsertPatches} from '../../util/mutations'
@@ -108,6 +108,7 @@ const HoverArea: FunctionComponent<{
 
   const align = position === 'top' ? 'flex-start' : position === 'bottom' ? 'flex-end' : 'center'
   const justify = position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center'
+  const blockDirection = position === 'top' || position === 'bottom' ? 'height' : 'width'
 
   return (
     <HoverAreaRoot
@@ -123,7 +124,7 @@ const HoverArea: FunctionComponent<{
       onMouseUp={relayEventToElement}
       ref={ref}
       style={{
-        [position === 'top' || position === 'bottom' ? 'height' : 'width']: hoverAreaExtent,
+        [blockDirection]: hoverAreaExtent,
       }}
     >
       {(showButton || menuVisible) && (
