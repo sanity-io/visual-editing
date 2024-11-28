@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.1...visual-editing-v2.10.2) (2024-11-28)
+
+
+### Bug Fixes
+
+* fully support React Compiler ([823a894](https://github.com/sanity-io/visual-editing/commit/823a894a782014dd462775e6bd90e05675f7e3c3))
+
 ## [2.10.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.0...visual-editing-v2.10.1) (2024-11-28)
 
 
