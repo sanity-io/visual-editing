@@ -11,10 +11,11 @@ import type {VisualEditingNode} from '../types'
  * Hook for maintaining a channel between overlays and the presentation tool
  * @internal
  */
-export function useComlink(): VisualEditingNode | undefined {
+export function useComlink(active: boolean = true): VisualEditingNode | undefined {
   const [node, setNode] = useState<VisualEditingNode>()
 
   useEffect(() => {
+    if (!active) return
     const instance = createNode<VisualEditingNodeMsg, VisualEditingControllerMsg>(
       {
         name: 'visual-editing',
@@ -26,8 +27,13 @@ export function useComlink(): VisualEditingNode | undefined {
     )
 
     setNode(instance)
-    return instance.start()
-  }, [])
+    const stop = instance.start()
+
+    return () => {
+      stop()
+      setNode(undefined)
+    }
+  }, [active])
 
   return node
 }
