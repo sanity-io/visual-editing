@@ -30,8 +30,10 @@ import type {
   Message,
   MessageEmitEvent,
   ProtocolMessage,
+  ReceivedEmitEvent,
   RequestData,
   Status,
+  StatusEmitEvent,
   WithoutResponse,
 } from './types'
 
@@ -72,7 +74,10 @@ export type Node<S extends Message, R extends Message> = {
     type: T,
     handler: (event: U['data']) => U['response'],
   ) => () => void
-  onStatus: (handler: (status: Status) => void) => () => void
+  onStatus: (
+    handler: (status: Omit<Status, 'disconnected'>) => void,
+    filter?: Omit<Status, 'disconnected'>,
+  ) => () => void
   post: <T extends S['type'], U extends Extract<S, {type: T}>>(
     ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
   ) => void
@@ -128,7 +133,8 @@ export const createNodeMachine = <
         | BufferFlushedEmitEvent<V>
         | HeartbeatEmitEvent
         | MessageEmitEvent<R>
-        | (R extends R ? {type: R['type']; message: ProtocolMessage<R>} : never)
+        | ReceivedEmitEvent<R>
+        | (StatusEmitEvent & {status: Omit<Status, 'disconnected'>})
       events:
         | {type: 'heartbeat.received'; message: MessageEvent<ProtocolMessage<HeartbeatMessage>>}
         | {type: 'message.received'; message: MessageEvent<ProtocolMessage<R>>}
@@ -238,6 +244,12 @@ export const createNodeMachine = <
           }
           return emit
         })
+      }),
+      'emit status': emit((_, params: {status: Exclude<Status, 'disconnected'>}) => {
+        return {
+          type: '_status',
+          status: params.status,
+        } satisfies StatusEmitEvent & {status: Omit<Status, 'disconnected'>}
       }),
       'flush buffer': enqueueActions(({enqueue}) => {
         enqueue.raise(({context}) => ({
@@ -360,6 +372,7 @@ export const createNodeMachine = <
     initial: 'idle',
     states: {
       idle: {
+        entry: [{type: 'emit status', params: {status: 'idle'}}],
         on: {
           post: {
             actions: 'buffer message',
@@ -368,7 +381,7 @@ export const createNodeMachine = <
       },
       handshaking: {
         guard: 'hasSource',
-        entry: 'send handshake syn ack',
+        entry: ['send handshake syn ack', {type: 'emit status', params: {status: 'handshaking'}}],
         invoke: [
           {
             id: 'listen for handshake ack',
@@ -422,7 +435,11 @@ export const createNodeMachine = <
         },
       },
       connected: {
-        entry: ['flush handshake buffer', 'flush buffer'],
+        entry: [
+          'flush handshake buffer',
+          'flush buffer',
+          {type: 'emit status', params: {status: 'connected'}},
+        ],
         invoke: [
           {
             id: 'listen for messages',
@@ -494,7 +511,7 @@ export const createNode = <S extends Message, R extends Message>(
     handler: (event: U['data']) => U['response'],
   ) => {
     const {unsubscribe} = actor.on(
-      // @ts-expect-error @todo `type` typing
+      // @ts-expect-error @todo ReceivedEmitEvent causes this
       type,
       (event: {type: T; message: ProtocolMessage<U>}) => {
         handler(event.message.data)
@@ -503,19 +520,20 @@ export const createNode = <S extends Message, R extends Message>(
     return unsubscribe
   }
 
-  const onStatus = (handler: (status: Status) => void) => {
-    const snapshot = actor.getSnapshot()
-    let currentStatus: Status =
-      typeof snapshot.value === 'string' ? snapshot.value : Object.keys(snapshot.value)[0]
-
-    const {unsubscribe} = actor.subscribe((state) => {
-      const status: Status =
-        typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
-      if (currentStatus !== status) {
-        currentStatus = status
-        handler(status)
-      }
-    })
+  const onStatus = (
+    handler: (status: Omit<Status, 'disconnected'>) => void,
+    filter?: Omit<Status, 'disconnected'>,
+  ) => {
+    const {unsubscribe} = actor.on(
+      // @ts-expect-error @todo ReceivedEmitEvent causes this
+      '_status',
+      (event: StatusEmitEvent & {status: Omit<Status, 'disconnected'>}) => {
+        if (filter && event.status !== filter) {
+          return
+        }
+        handler(event.status)
+      },
+    )
     return unsubscribe
   }
 

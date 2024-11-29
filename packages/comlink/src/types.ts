@@ -10,7 +10,7 @@ import {
 /**
  * @public
  */
-export type Status = string // @todo strongly type these
+export type Status = 'idle' | 'handshaking' | 'connected' | 'disconnected'
 
 /**
  * @public
@@ -105,10 +105,23 @@ export interface MessageEmitEvent<T extends Message> {
 /**
  * @public
  */
+export interface StatusEmitEvent {
+  type: '_status'
+  status: Status
+}
+
+export type ReceivedEmitEvent<T extends Message> = T extends T
+  ? {type: T['type']; message: ProtocolMessage<T>}
+  : never
+
+/**
+ * @public
+ */
 export type InternalEmitEvent<S extends Message, R extends Message> =
   | BufferAddedEmitEvent<S>
   | BufferFlushedEmitEvent<R>
   | MessageEmitEvent<R>
+  | StatusEmitEvent
 
 /**
  * @public

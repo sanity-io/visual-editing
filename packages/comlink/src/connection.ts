@@ -3,6 +3,7 @@ import {
   assertEvent,
   assign,
   createActor,
+  emit,
   enqueueActions,
   fromCallback,
   raise,
@@ -29,8 +30,10 @@ import type {
   Message,
   MessageEmitEvent,
   ProtocolMessage,
+  ReceivedEmitEvent,
   RequestData,
   Status,
+  StatusEmitEvent,
   WithoutResponse,
 } from './types'
 
@@ -61,7 +64,7 @@ export type Connection<S extends Message = Message, R extends Message = Message>
     type: T,
     handler: (event: U['data']) => Promise<U['response']> | U['response'],
   ) => () => void
-  onStatus: (handler: (status: Status) => void) => () => void
+  onStatus: (handler: (status: Status) => void, filter?: Status) => () => void
   post: <T extends S['type'], U extends Extract<S, {type: T}>>(
     ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
   ) => void
@@ -136,7 +139,8 @@ export const createConnectionMachine = <
         | BufferAddedEmitEvent<V>
         | BufferFlushedEmitEvent<V>
         | MessageEmitEvent<R>
-        | (R extends R ? {type: R['type']; message: ProtocolMessage<R>} : never)
+        | ReceivedEmitEvent<R>
+        | StatusEmitEvent
       events:
         | {type: 'connect'}
         | {type: 'disconnect'}
@@ -219,6 +223,12 @@ export const createConnectionMachine = <
           }
           return emit
         })
+      }),
+      'emit status': emit((_, params: {status: Status}) => {
+        return {
+          type: '_status',
+          status: params.status,
+        } satisfies StatusEmitEvent
       }),
       'flush buffer': enqueueActions(({enqueue}) => {
         enqueue.raise(({context}) => ({
@@ -316,6 +326,7 @@ export const createConnectionMachine = <
     initial: 'idle',
     states: {
       idle: {
+        entry: [{type: 'emit status', params: {status: 'idle'}}],
         on: {
           connect: {
             target: 'handshaking',
@@ -328,6 +339,7 @@ export const createConnectionMachine = <
       },
       handshaking: {
         id: 'handshaking',
+        entry: [{type: 'emit status', params: {status: 'handshaking'}}],
         invoke: [
           {
             id: 'send syn',
@@ -375,7 +387,7 @@ export const createConnectionMachine = <
         exit: 'send handshake ack',
       },
       connected: {
-        entry: 'flush buffer',
+        entry: ['flush buffer', {type: 'emit status', params: {status: 'connected'}}],
         invoke: {
           id: 'listen for messages',
           src: 'listen',
@@ -433,7 +445,7 @@ export const createConnectionMachine = <
       },
       disconnected: {
         id: 'disconnected',
-        entry: 'send disconnect',
+        entry: ['send disconnect', {type: 'emit status', params: {status: 'disconnected'}}],
         on: {
           request: {
             actions: 'create request',
@@ -490,21 +502,17 @@ export const createConnection = <S extends Message, R extends Message>(
     actor.send({type: 'disconnect'})
   }
 
-  const onStatus = (handler: (status: Status) => void) => {
-    const currentSnapshot = actor.getSnapshot()
-    let currentStatus: Status =
-      typeof currentSnapshot.value === 'string'
-        ? currentSnapshot.value
-        : Object.keys(currentSnapshot.value)[0]
-
-    const {unsubscribe} = actor.subscribe((state) => {
-      const status: Status =
-        typeof state.value === 'string' ? state.value : Object.keys(state.value)[0]
-      if (currentStatus !== status) {
-        currentStatus = status
-        handler(status)
-      }
-    })
+  const onStatus = (handler: (status: Status) => void, filter?: Status) => {
+    const {unsubscribe} = actor.on(
+      // @ts-expect-error @todo ReceivedEmitEvent causes this
+      '_status',
+      (event: StatusEmitEvent & {status: Status}) => {
+        if (filter && event.status !== filter) {
+          return
+        }
+        handler(event.status)
+      },
+    )
     return unsubscribe
   }
 
