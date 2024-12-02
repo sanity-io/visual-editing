@@ -158,10 +158,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     )
   }
 
-  const client = _client.withConfig({
-    allowReconfigure: false,
-    useCdn: false,
-  })
+  const client = _client.withConfig({allowReconfigure: false, useCdn: false})
   const {token: originalToken} = client.config()
 
   const sanityFetch: DefinedSanityFetchType = async function sanityFetch<
@@ -190,6 +187,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
             )
           : 'previewDrafts'
         : 'published')
+    const useCdn = perspective === 'published'
 
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, await params, {
@@ -201,7 +199,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
         revalidate: fetchOptions?.revalidate,
         // tags: ['sanity'],
       },
-      useCdn: false,
+      useCdn,
+      cacheMode: useCdn ? 'noStale' : undefined,
       tag: [tag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
@@ -221,6 +220,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
       // lastLiveEventId: syncTags?.map((tag) => tag.replace('s1:', '')).join(''),
       // Hash the syncTags to create a consistent, short lastLiveEventId
       lastLiveEventId: syncTags ? await hashSyncTags(syncTags) : undefined,
+      useCdn,
+      cacheMode: useCdn ? 'noStale' : undefined,
       tag,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags}
