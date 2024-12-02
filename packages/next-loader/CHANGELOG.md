@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.12...next-loader-v1.2.0) (2024-12-02)
+
+
+### Features
+
+* **next-loader:** add option to disable `stega` in `defineLive` ([#2240](https://github.com/sanity-io/visual-editing/issues/2240)) ([013e867](https://github.com/sanity-io/visual-editing/commit/013e867a15a07a5f7ac46fed9e737afe1a647e4b))
+
+
+### Bug Fixes
+
+* use APICDN for published content ([d552f4b](https://github.com/sanity-io/visual-editing/commit/d552f4b9c8d5fd0089c02b6b7880cef903a24da8))
+
 ## [1.1.12](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.11...next-loader-v1.1.12) (2024-12-02)
 
 
