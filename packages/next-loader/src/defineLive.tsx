@@ -112,6 +112,11 @@ export interface DefineSanityLiveOptions {
      */
     revalidate?: number | false
   }
+  /**
+   * Optional. Include stega encoding when draft mode is enabled.
+   *  @defaultValue `true`
+   */
+  stega?: boolean
 }
 
 // export type VerifyPreviewSecretType = (
@@ -138,7 +143,13 @@ export function defineLive(config: DefineSanityLiveOptions): {
   SanityLiveStream: DefinedSanityLiveStreamType
   // verifyPreviewSecret: VerifyPreviewSecretType
 } {
-  const {client: _client, serverToken, browserToken, fetchOptions} = config
+  const {
+    client: _client,
+    serverToken,
+    browserToken,
+    fetchOptions,
+    stega: stegaEnabled = true,
+  } = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
@@ -163,6 +174,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     useCdn: false,
   })
   const {token: originalToken} = client.config()
+  const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
   const sanityFetch: DefinedSanityFetchType = async function sanityFetch<
     const QueryString extends string,
@@ -179,7 +191,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     perspective?: Omit<ClientPerspective, 'raw'>
     tag?: string
   }) {
-    const stega = _stega ?? (await draftMode()).isEnabled
+    const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
     const perspective =
       _perspective ??
       ((await draftMode()).isEnabled
@@ -307,19 +319,17 @@ export function defineLive(config: DefineSanityLiveOptions): {
       stega: _stega,
       tag,
     })
+    const {isEnabled: isDraftModeEnabled} = await draftMode()
 
-    if ((await draftMode()).isEnabled) {
-      const stega = _stega ?? (await draftMode()).isEnabled
+    if (isDraftModeEnabled) {
+      const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
       const perspective =
-        _perspective ??
-        ((await draftMode()).isEnabled
-          ? (await cookies()).has(perspectiveCookieName)
-            ? sanitizePerspective(
-                (await cookies()).get(perspectiveCookieName)?.value,
-                'previewDrafts',
-              )
-            : 'previewDrafts'
-          : 'published')
+        (_perspective ?? (await cookies()).has(perspectiveCookieName))
+          ? sanitizePerspective(
+              (await cookies()).get(perspectiveCookieName)?.value,
+              'previewDrafts',
+            )
+          : 'previewDrafts'
       const {projectId, dataset} = client.config()
       return (
         <SanityLiveStreamClientComponent
