@@ -80,6 +80,7 @@
     "root": true
   },
   "dependencies": {
+    "@sanity/client": "^6.24.1",
     "@sanity/core-loader": "workspace:*"
   },
   "devDependencies": {
@@ -87,7 +88,6 @@
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/visual-editing-helpers": "workspace:*",
-    "@sanity/client": "^6.24.1",
     "@sanity/pkg-utils": "6.11.14",
     "@types/react": "^18.3.12",
     "eslint": "^8.57.1",
@@ -97,7 +97,6 @@
     "vitest": "^2.1.8"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.24.1",
     "react": "^18.3 || >=19.0.0-rc"
   },
   "engines": {

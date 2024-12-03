@@ -68,6 +68,7 @@
     "root": true
   },
   "dependencies": {
+    "@sanity/client": "^6.24.1",
     "@sanity/comlink": "workspace:*"
   },
   "devDependencies": {
@@ -75,7 +76,6 @@
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/visual-editing-helpers": "workspace:*",
-    "@sanity/client": "^6.24.1",
     "@sanity/pkg-utils": "6.11.14",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
@@ -85,9 +85,6 @@
     "nanostores": "0.10.3",
     "typescript": "5.6.3",
     "vitest": "^2.1.8"
-  },
-  "peerDependencies": {
-    "@sanity/client": "^6.24.1"
   },
   "engines": {
     "node": ">=18"
