@@ -1,4 +1,5 @@
 import {apiVersion, workspaces} from '@repo/env'
+// import {assist} from '@sanity/assist'
 import {
   defineDocuments,
   defineLocations,
@@ -56,6 +57,7 @@ const shoeType = defineType({
           type: 'image',
           options: {
             hotspot: true,
+            // @ts-expect-error - this is fine
             aiAssist: {
               imageDescriptionField: 'alt',
               imageInstructionField: 'imagePrompt',
