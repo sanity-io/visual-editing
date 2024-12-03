@@ -4,12 +4,12 @@ import {
   type LoaderNodeMsg,
 } from '@repo/visual-editing-helpers'
 import {
-  SanityClient,
   validateApiPerspective,
   type ClientPerspective,
   type ContentSourceMap,
   type ContentSourceMapDocuments,
   type QueryParams,
+  type SanityClient,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {createNode, createNodeMachine} from '@sanity/comlink'
@@ -26,11 +26,9 @@ const LISTEN_HEARTBEAT_INTERVAL = 1000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const {client, setFetcher, onConnect, onDisconnect} = options
-  if (!client || !(client instanceof SanityClient)) {
+  if (!client) {
     throw new Error(
-      `Expected \`client\` to be an instance of SanityClient or SanityStegaClient: ${JSON.stringify(
-        client,
-      )}`,
+      `Expected \`client\` to be an instance of SanityClient: ${JSON.stringify(client)}`,
     )
   }
   const {projectId, dataset} = client.config()
