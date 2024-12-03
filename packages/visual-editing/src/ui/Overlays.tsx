@@ -73,7 +73,7 @@ function raf2(fn: () => void) {
 
 const DocumentReporter: FunctionComponent<{
   documentIds: string[]
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
 }> = (props) => {
   const {documentIds} = props
   const [uniqueIds, setUniqueIds] = useState<string[]>([])

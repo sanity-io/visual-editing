@@ -114,8 +114,7 @@ export type VisualEditingControllerMsg =
   | {
       type: 'presentation/perspective'
       data: {
-        perspective: ClientPerspective | `bundle.${string}`
-        bundlesPerspective: string[]
+        perspective: ClientPerspective
       }
     }
   /**
@@ -191,7 +190,7 @@ export type VisualEditingNodeMsg =
       data: {
         projectId?: string
         dataset?: string
-        perspective: ClientPerspective | `bundle.${string}`
+        perspective: ClientPerspective
         documents: ContentSourceMapDocuments
       }
     }
@@ -256,8 +255,7 @@ export type VisualEditingNodeMsg =
       type: 'visual-editing/fetch-perspective'
       data: undefined
       response: {
-        perspective: ClientPerspective | `bundle.${string}`
-        bundlesPerspective: string[]
+        perspective: ClientPerspective
       }
     }
   | {
@@ -284,7 +282,7 @@ export type LoaderControllerMsg =
       data: {
         projectId: string
         dataset: string
-        perspective: ClientPerspective | `bundle.${string}`
+        perspective: ClientPerspective
         bundlePerspective: string[]
       }
     }
@@ -293,7 +291,7 @@ export type LoaderControllerMsg =
       data: {
         projectId: string
         dataset: string
-        perspective: ClientPerspective | `bundle.${string}`
+        perspective: ClientPerspective
         query: string
         params: QueryParams
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -312,7 +310,7 @@ export type LoaderNodeMsg =
       data: {
         projectId: string
         dataset: string
-        perspective: ClientPerspective | `bundle.${string}`
+        perspective: ClientPerspective
         query: string
         params: QueryParams
         /**
@@ -331,7 +329,7 @@ export type LoaderNodeMsg =
       data: {
         projectId: string
         dataset: string
-        perspective: ClientPerspective | `bundle.${string}`
+        perspective: ClientPerspective
         documents: ContentSourceMapDocuments
       }
     }
@@ -358,7 +356,7 @@ export type PreviewKitNodeMsg = {
   data: {
     projectId: string
     dataset: string
-    perspective: ClientPerspective | `bundle.${string}`
+    perspective: ClientPerspective
     documents: ContentSourceMapDocuments
   }
 }

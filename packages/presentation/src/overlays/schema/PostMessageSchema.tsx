@@ -10,7 +10,7 @@ import {extractSchema} from './extract'
 
 export interface PostMessageSchemaProps {
   comlink: VisualEditingConnection
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   bundlesPerspective: string[]
 }
 
@@ -67,8 +67,7 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
             {id: getPublishedId(id)},
             {
               tag: 'presentation-schema',
-              perspective: undefined,
-              bundlePerspective: getBundlePerspective(perspective, bundlesPerspective),
+              perspective,
             },
           )
           const mapped = arr.map((path, i) => ({path: path, type: result[i]}))

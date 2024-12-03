@@ -35,7 +35,7 @@ import {
   EDIT_INTENT_MODE,
   LIVE_DRAFT_EVENTS_ENABLED,
 } from './constants'
-import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
+import {usePerspective, useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
 import {SharedStateProvider} from './overlays/SharedStateProvider'
 import {Panel} from './panels/Panel'
@@ -53,7 +53,6 @@ import {
   presentationReducer,
   presentationReducerInit,
 } from './reducers/presentationReducer'
-import {RevisionSwitcher} from './RevisionSwitcher'
 import type {
   FrameState,
   PresentationNavigate,
@@ -77,6 +76,8 @@ const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'
 const PostMessageFeatures = lazy(() => import('./features/PostMessageFeatures'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 const PostMessagePerspective = lazy(() => import('./PostMessagePerspective'))
+const PostMessageReleases = lazy(() => import('./PostMessageReleases'))
+const PostMessageDocumentVersions = lazy(() => import('./PostMessageDocumentVersions'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
 const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
 
@@ -174,11 +175,19 @@ export default function PresentationTool(props: {
   const navigate = useMemo(() => debounce<PresentationNavigate>(_navigate, 50), [_navigate])
 
   const [state, dispatch] = useReducer(presentationReducer, {}, presentationReducerInit)
-
-  const perspective = useMemo(
-    () => (params.perspective ? 'published' : 'previewDrafts'),
-    [params.perspective],
-  )
+  const {
+    bundlesPerspective,
+    perspective: globalPerspective = 'previewDrafts',
+    excludedPerspectives,
+  } = usePerspective()
+  const perspective = globalPerspective.startsWith('bundle.')
+    ? /**
+       * Hacky fix. Response values are cached, and when adding new excluded perspectives the cache is not invalidated.
+       * By this, we are making the key aware of the excluded perspectives, so it will invalidate the cache.
+       * Should be ideally fixed in the cache key directly, not here.
+       */
+      ([globalPerspective, 'exc-', ...excludedPerspectives] as `r${string}`[])
+    : (globalPerspective as PresentationPerspective)
 
   const viewport = useMemo(() => (params.viewport ? 'mobile' : 'desktop'), [params.viewport])
 
@@ -470,16 +479,6 @@ export default function PresentationTool(props: {
     [navigate],
   )
 
-  const setPerspective = useCallback(
-    (next: PresentationPerspective) => {
-      // Omit the perspective URL search param if the next perspective state is
-      // the default: 'previewDrafts'
-      const perspective = next === 'previewDrafts' ? undefined : next
-      navigate({}, {perspective})
-    },
-    [navigate],
-  )
-
   return (
     <>
       <PresentationProvider
@@ -609,17 +608,26 @@ export default function PresentationTool(props: {
       )}
       {visualEditingComlink && (
         <Suspense>
-          <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
+          <PostMessageReleases
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
+          />
         </Suspense>
       )}
-      {params.id && params.type && (
-        <RevisionSwitcher
-          documentId={params.id}
-          documentRevision={params.rev}
-          documentType={params.type}
-          navigate={navigate}
-          perspective={perspective}
-        />
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessageDocumentVersions
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
+          />
+        </Suspense>
+      )}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
+        </Suspense>
       )}
     </>
   )

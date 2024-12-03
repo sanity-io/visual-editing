@@ -247,9 +247,7 @@ export type PresentationNavigate = (
   forceReplace?: boolean,
 ) => void
 
-export type PresentationPerspective =
-  | Extract<'published' | 'previewDrafts', ClientPerspective>
-  | `bundle.${string}`
+export type PresentationPerspective = Exclude<ClientPerspective, 'raw'>
 
 export type PresentationViewport = 'desktop' | 'mobile'
 
@@ -260,7 +258,7 @@ export type LiveQueriesState = Record<string, LiveQueriesStateValue>
 export interface LiveQueriesStateValue {
   query: string
   params: QueryParams
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   receivedAt: number
   /**
    * If false it means the query can't safely be garbage collected,

@@ -13,6 +13,10 @@ type KeyedDocumentCache = Record<string, DocumentCache>
 
 const warnOnceAboutCrossDatasetReference = defineWarnOnce()
 
+/**
+ * @TODO should be refactored to an lru-cache that is keyed by the perspective, which could be an array (if it is, it should use consistent sorting),
+ *       and the url path (optionally the origin too), so that swapping between perspectives and urls is fast.
+ */
 export function useDocumentsOnPage(
   perspective: PresentationPerspective,
   frameStateRef: MutableRefObject<FrameState>,
@@ -20,12 +24,8 @@ export function useDocumentsOnPage(
   DocumentOnPage[],
   (key: string, perspective: PresentationPerspective, state: DocumentOnPage[]) => void,
 ] {
-  if (
-    perspective !== 'published' &&
-    perspective !== 'previewDrafts' &&
-    !perspective.startsWith('bundle.')
-  ) {
-    throw new Error(`Invalid perspective: ${perspective}`)
+  if (typeof perspective !== 'string' && !Array.isArray(perspective)) {
+    throw new Error(`Invalid perspective: ${JSON.stringify(perspective)}`)
   }
 
   const [published, setPublished] = useState<KeyedDocumentCache>({})

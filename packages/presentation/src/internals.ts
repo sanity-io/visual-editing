@@ -34,6 +34,7 @@ export {
   useTranslation,
   useUnique,
   useWorkspace,
+  usePerspective,
 } from 'sanity'
 export {decodeJsonParams, encodeJsonParams} from 'sanity/router'
 export {
