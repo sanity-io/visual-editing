@@ -140,6 +140,14 @@ export type VisualEditingControllerMsg =
       }
     }
   | {
+      type: 'presentation/releases'
+      data: {
+        perspective: ClientPerspective
+        bundlesPerspective: string[]
+        releases: unknown[]
+      }
+    }
+  | {
       type: 'presentation/shared-state'
       data: {
         key: string
@@ -272,6 +280,18 @@ export type VisualEditingNodeMsg =
         state: SerializableObject
       }
     }
+  | {
+      type: 'visual-editing/document-versions'
+      data: {elements: string[]}
+      response: {
+        perspective: ClientPerspective
+        bundlesPerspective: string[]
+        versions: {
+          _id: string
+          versions: {_id: string}[]
+        }[]
+      }
+    }
 
 /**
  * @public
@@ -283,7 +303,6 @@ export type LoaderControllerMsg =
         projectId: string
         dataset: string
         perspective: ClientPerspective
-        bundlePerspective: string[]
       }
     }
   | {

@@ -4,7 +4,6 @@ import {useRootTheme} from '@sanity/ui'
 import {memo, useEffect} from 'react'
 import {API_VERSION} from '../../constants'
 import {getPublishedId, useClient, useWorkspace} from '../../internals'
-import {getBundlePerspective} from '../../loader/utils'
 import type {VisualEditingConnection} from '../../types'
 import {extractSchema} from './extract'
 

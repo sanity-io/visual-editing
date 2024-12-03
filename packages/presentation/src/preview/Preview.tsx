@@ -56,7 +56,6 @@ export interface PreviewProps extends Pick<PresentationState, 'iframe' | 'visual
   overlaysConnection: Status
   perspective: PresentationPerspective
   previewUrl?: string
-  setPerspective: (perspective: 'previewDrafts' | 'published') => void
   setViewport: (mode: 'desktop' | 'mobile') => void
   targetOrigin: string
   toggleNavigator?: () => void

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {isAltKey, isHotkey, type VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import type {Status} from '@sanity/comlink'
@@ -208,6 +209,9 @@ export const Overlays: FunctionComponent<{
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
+  const [releases, setReleases] = useState<any[]>([])
+  const [versions, setVersions] = useState<any[]>([])
+
   useEffect(() => {
     const unsubs = [
       comlink?.on('presentation/focus', (data) => {
@@ -218,6 +222,9 @@ export const Overlays: FunctionComponent<{
       }),
       comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
+      }),
+      comlink?.on('presentation/releases', (data) => {
+        setReleases(data.releases as any[])
       }),
       comlink?.onStatus((status) => {
         setStatus(status as Status)
@@ -320,6 +327,24 @@ export const Overlays: FunctionComponent<{
     return elements.flatMap((element) => ('id' in element.sanity ? [element.sanity.id] : []))
   }, [elements])
 
+  useEffect(() => {
+    if (!comlink) return undefined
+
+    const controller = new AbortController()
+    async function fetchDocuments(signal: AbortSignal) {
+      const res = await comlink?.fetch('visual-editing/document-versions', {
+        elements: [...new Set(documentIds)],
+      })
+      if (signal.aborted || !res?.versions) return
+      setVersions(res.versions)
+    }
+    fetchDocuments(controller.signal).catch(() => {
+      // Fail silently as the app may be communicating with a version of
+      // Presentation that does not support this feature
+    })
+    return () => controller.abort()
+  }, [comlink, documentIds])
+
   const closeContextMenu = useCallback(() => {
     dispatch({type: 'overlay/blur'})
   }, [])
@@ -362,6 +387,8 @@ export const Overlays: FunctionComponent<{
             draggable={draggable}
             isDragging={isDragging || dragMinimapTransition}
             wasMaybeCollapsed={focused && wasMaybeCollapsed}
+            releases={releases}
+            versions={versions}
           />
         )
       })
@@ -373,7 +400,9 @@ export const Overlays: FunctionComponent<{
     inFrame,
     isDragging,
     optimisticActorReady,
+    releases,
     status,
+    versions,
     wasMaybeCollapsed,
   ])
 

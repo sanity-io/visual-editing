@@ -1,34 +1,10 @@
-import {
-  CheckmarkIcon,
-  ChevronDownIcon,
-  DesktopIcon,
-  EditIcon,
-  MobileDeviceIcon,
-  PanelLeftIcon,
-  PublishIcon,
-  RefreshIcon,
-} from '@sanity/icons'
+import {DesktopIcon, MobileDeviceIcon, PanelLeftIcon, RefreshIcon} from '@sanity/icons'
 import {withoutSecretSearchParams} from '@sanity/preview-url-secret/without-secret-search-params'
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  Hotkeys,
-  Menu,
-  MenuButton,
-  MenuItem,
-  Stack,
-  Switch,
-  Text,
-  Tooltip,
-  type ButtonTone,
-} from '@sanity/ui'
+import {Box, Button, Card, Flex, Hotkeys, Switch, Text, Tooltip} from '@sanity/ui'
 import {
   createElement,
   useCallback,
   useMemo,
-  type ComponentType,
   type FunctionComponent,
   type ReactNode,
   type RefObject,
@@ -36,26 +12,11 @@ import {
 import {useTranslation} from 'sanity'
 import {presentationLocaleNamespace} from '../i18n'
 import {ACTION_IFRAME_RELOAD} from '../reducers/presentationReducer'
-import type {HeaderOptions, PresentationPerspective} from '../types'
+import type {HeaderOptions} from '../types'
 import {OpenPreviewButton} from './OpenPreviewButton'
 import type {PreviewProps} from './Preview'
 import {PreviewLocationInput} from './PreviewLocationInput'
 import {SharePreviewMenu} from './SharePreviewMenu'
-
-const PERSPECTIVE_TITLE_KEY: Record<PresentationPerspective, string> = {
-  previewDrafts: 'preview-frame.perspective.previewDrafts.title',
-  published: 'preview-frame.perspective.published.title',
-}
-
-const PERSPECTIVE_TONES: Record<PresentationPerspective, ButtonTone> = {
-  previewDrafts: 'caution',
-  published: 'positive',
-}
-
-const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
-  previewDrafts: EditIcon,
-  published: PublishIcon,
-}
 
 export interface PreviewHeaderProps extends PreviewProps {
   iframeRef: RefObject<HTMLIFrameElement>
@@ -73,7 +34,6 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
     iframe,
     iframeRef,
     initialUrl,
-    loadersConnection,
     navigatorEnabled,
     onPathChange,
     onRefresh,
@@ -81,7 +41,6 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
     overlaysConnection,
     perspective,
     previewUrl,
-    setPerspective,
     setViewport,
     targetOrigin,
     toggleNavigator,
@@ -241,102 +200,6 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
         />
       </Box>
 
-      <Flex align="center" flex="none" gap={1} padding={1}>
-        <MenuButton
-          button={
-            <Button
-              fontSize={1}
-              iconRight={ChevronDownIcon}
-              mode="bleed"
-              padding={2}
-              space={2}
-              text={t(
-                PERSPECTIVE_TITLE_KEY[
-                  loadersConnection === 'connected' ? perspective : 'previewDrafts'
-                ],
-              )}
-              loading={loadersConnection === 'reconnecting' && iframe.status !== 'loaded'}
-              disabled={loadersConnection !== 'connected'}
-            />
-          }
-          id="perspective-menu"
-          menu={
-            <Menu style={{maxWidth: 240}}>
-              <MenuItem
-                fontSize={1}
-                onClick={() => setPerspective('previewDrafts')}
-                padding={3}
-                pressed={perspective === 'previewDrafts'}
-                tone={PERSPECTIVE_TONES.previewDrafts}
-              >
-                <Flex align="flex-start" gap={3}>
-                  <Box flex="none">
-                    <Text size={1}>{createElement(PERSPECTIVE_ICONS.previewDrafts)}</Text>
-                  </Box>
-                  <Stack flex={1} space={2}>
-                    <Text size={1} weight="medium">
-                      {t(PERSPECTIVE_TITLE_KEY['previewDrafts'])}
-                    </Text>
-                    <Text muted size={1}>
-                      {t('preview-frame.perspective.previewDrafts.text')}
-                    </Text>
-                  </Stack>
-                  <Box flex="none">
-                    <Text
-                      muted
-                      size={1}
-                      style={{
-                        opacity: perspective === 'previewDrafts' ? 1 : 0,
-                      }}
-                    >
-                      <CheckmarkIcon />
-                    </Text>
-                  </Box>
-                </Flex>
-              </MenuItem>
-              <MenuItem
-                fontSize={1}
-                onClick={() => setPerspective('published')}
-                padding={3}
-                pressed={perspective === 'published'}
-                tone={PERSPECTIVE_TONES.published}
-              >
-                <Flex align="flex-start" gap={3}>
-                  <Box flex="none">
-                    <Text size={1}>{createElement(PERSPECTIVE_ICONS.published)}</Text>
-                  </Box>
-                  <Stack flex={1} space={2}>
-                    <Text size={1} weight="medium">
-                      {t(PERSPECTIVE_TITLE_KEY['published'])}
-                    </Text>
-                    <Text muted size={1}>
-                      {t('preview-frame.perspective.published.text')}
-                    </Text>
-                  </Stack>
-                  <Box flex="none">
-                    <Text
-                      muted
-                      size={1}
-                      style={{
-                        opacity: perspective === 'published' ? 1 : 0,
-                      }}
-                    >
-                      <CheckmarkIcon />
-                    </Text>
-                  </Box>
-                </Flex>
-              </MenuItem>
-            </Menu>
-          }
-          popover={{
-            animate: true,
-            constrainSize: true,
-            placement: 'bottom',
-            portal: true,
-          }}
-        />
-      </Flex>
-
       <Flex align="center" flex="none" gap={1}>
         <Tooltip
           animate
@@ -370,6 +233,7 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
             canUseSharedPreviewAccess={canUseSharedPreviewAccess}
             previewLocationRoute={previewLocationRoute}
             initialUrl={initialUrl}
+            // @ts-expect-error - this is fine
             perspective={perspective}
           />
         </Flex>

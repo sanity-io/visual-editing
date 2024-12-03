@@ -42,12 +42,11 @@ import type {
   PresentationPerspective,
 } from '../types'
 import type {DocumentOnPage} from '../useDocumentsOnPage'
-import {getBundlePerspective} from './utils'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
   controller: Controller | undefined
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   bundlesPerspective: string[]
   documentsOnPage: {_id: string; _type: string}[]
   onLoadersConnection: (event: StatusEvent) => void
@@ -350,7 +349,7 @@ interface QuerySubscriptionProps
   > {
   projectId: string
   dataset: string
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   bundlesPerspective: string[]
   query: string
   params: QueryParams
@@ -411,7 +410,7 @@ interface UseQuerySubscriptionProps
   query: string
   params: QueryParams
   bundlesPerspective: string[]
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   documentsCacheLastUpdated: number
 }
 function useQuerySubscription(props: UseQuerySubscriptionProps) {
@@ -458,7 +457,6 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
         tag: 'presentation-loader',
         signal,
         perspective: undefined,
-        bundlePerspective: getBundlePerspective(perspective, bundlesPerspective),
         filterResponse: false,
       })
       fetching = false
@@ -518,7 +516,7 @@ export function turboChargeResultIfSourceMap<T = unknown>(
   cache: SharedProps['cache'],
   liveDocument: Partial<SanityDocument> | null | undefined,
   result: T,
-  perspective: ClientPerspective | `bundle.${string}`,
+  perspective: ClientPerspective,
   resultSourceMap?: ContentSourceMap,
 ): T {
   if (perspective === 'raw') {
@@ -559,6 +557,9 @@ export function turboChargeResultIfSourceMap<T = unknown>(
       return changedValue
     },
     // TODO: Update applySourceDocuments to support bundlePerspective.
-    perspective.startsWith('bundle.') ? 'previewDrafts' : (perspective as ClientPerspective),
+    Array.isArray(perspective) &&
+      perspective.some((part) => typeof part === 'string' && part.startsWith('r') && part !== 'raw')
+      ? 'previewDrafts'
+      : (perspective as ClientPerspective),
   )
 }

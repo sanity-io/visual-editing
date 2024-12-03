@@ -1,11 +1,11 @@
 import type {ClientPerspective} from '@sanity/client'
 import {memo, useEffect, type FC} from 'react'
-import {getVersionFromId, useClient} from 'sanity'
+import {useClient} from 'sanity'
 import type {VisualEditingConnection} from './types'
 
 export interface PostMessageDocumentVersionsProps {
   comlink: VisualEditingConnection
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   bundlesPerspective: string[]
 }
 
@@ -16,7 +16,7 @@ const PostMessageDocumentVersions: FC<PostMessageDocumentVersionsProps> = (props
 
   // Return the perspective when requested
   useEffect(() => {
-    return comlink.on('visual-editing/document-versions', async (data: any) => {
+    return comlink.on('visual-editing/document-versions', async (data) => {
       const res = await client.fetch(
         `
           *[_id in $ids] {
@@ -31,9 +31,11 @@ const PostMessageDocumentVersions: FC<PostMessageDocumentVersionsProps> = (props
 
       return {
         versions: res,
+        bundlesPerspective,
+        perspective,
       }
     })
-  }, [comlink, perspective, bundlesPerspective])
+  }, [bundlesPerspective, client, comlink, perspective])
 
   return null
 }

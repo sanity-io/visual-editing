@@ -41,12 +41,11 @@ import type {
   PresentationPerspective,
 } from '../types'
 import type {DocumentOnPage} from '../useDocumentsOnPage'
-import {getBundlePerspective} from './utils'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
   controller: Controller | undefined
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   bundlesPerspective: string[]
   onLoadersConnection: (event: StatusEvent) => void
   onDocumentsOnPage: (
@@ -279,7 +278,7 @@ interface QuerySubscriptionProps
   projectId: string
   dataset: string
   bundlesPerspective: string[]
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   query: string
   params: QueryParams
   comlink: LoaderConnection | undefined
@@ -317,7 +316,7 @@ function QuerySubscriptionComponent(props: QuerySubscriptionProps) {
   const handleQueryChange = useEffectEvent(
     (
       comlink: LoaderConnection | undefined,
-      perspective: ClientPerspective | `bundle.${string}`,
+      perspective: ClientPerspective,
       query: string,
       params: QueryParams,
       result: unknown,
@@ -370,7 +369,7 @@ interface UseQuerySubscriptionProps extends Required<Pick<SharedProps, 'client'>
   query: string
   params: QueryParams
   bundlesPerspective: string[]
-  perspective: ClientPerspective | `bundle.${string}`
+  perspective: ClientPerspective
   lastLiveEventId: string | null
 }
 function useQuerySubscription(props: UseQuerySubscriptionProps) {
@@ -411,7 +410,6 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
         tag: 'presentation-loader',
         signal,
         perspective: undefined,
-        bundlePerspective: getBundlePerspective(perspective, bundlesPerspective),
         filterResponse: false,
         returnQuery: false,
       })
@@ -470,7 +468,7 @@ function useQuerySubscription(props: UseQuerySubscriptionProps) {
 export function turboChargeResultIfSourceMap<T = unknown>(
   liveDocument: Partial<SanityDocument> | null | undefined,
   result: T,
-  perspective: ClientPerspective | `bundle.${string}`,
+  perspective: ClientPerspective,
   resultSourceMap?: ContentSourceMap,
 ): T {
   if (perspective === 'raw') {
@@ -500,6 +498,9 @@ export function turboChargeResultIfSourceMap<T = unknown>(
       return changedValue
     },
     // TODO: Update applySourceDocuments to support bundlePerspective.
-    perspective.startsWith('bundle.') ? 'previewDrafts' : (perspective as ClientPerspective),
+    Array.isArray(perspective) &&
+      perspective.some((part) => typeof part === 'string' && part.startsWith('r') && part !== 'raw')
+      ? 'previewDrafts'
+      : (perspective as ClientPerspective),
   )
 }

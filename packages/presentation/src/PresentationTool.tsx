@@ -520,7 +520,6 @@ export default function PresentationTool(props: {
                           previewUrl={params.preview}
                           perspective={perspective}
                           ref={iframeRef}
-                          setPerspective={setPerspective}
                           setViewport={setViewport}
                           targetOrigin={targetOrigin}
                           toggleNavigator={toggleNavigator}
@@ -558,6 +557,7 @@ export default function PresentationTool(props: {
               liveDocument={displayedDocument}
               onDocumentsOnPage={setDocumentsOnPage}
               onLoadersConnection={setLoadersConnection}
+              bundlesPerspective={bundlesPerspective}
             />
           ) : (
             <LoaderQueries
@@ -567,6 +567,7 @@ export default function PresentationTool(props: {
               onDocumentsOnPage={setDocumentsOnPage}
               onLoadersConnection={setLoadersConnection}
               documentsOnPage={documentsOnPage}
+              bundlesPerspective={bundlesPerspective}
             />
           )}
         </Suspense>
@@ -584,7 +585,11 @@ export default function PresentationTool(props: {
       )}
       {visualEditingComlink && (
         <Suspense>
-          <PostMessageSchema comlink={visualEditingComlink} perspective={perspective} />
+          <PostMessageSchema
+            comlink={visualEditingComlink}
+            perspective={perspective}
+            bundlesPerspective={bundlesPerspective}
+          />
         </Suspense>
       )}
       {visualEditingComlink && documentsOnPage.length > 0 && (
@@ -593,6 +598,7 @@ export default function PresentationTool(props: {
             comlink={visualEditingComlink}
             perspective={perspective}
             refs={documentsOnPage}
+            bundlesPerspective={bundlesPerspective}
           />
         </Suspense>
       )}
