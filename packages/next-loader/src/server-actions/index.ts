@@ -24,7 +24,7 @@ export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   }
 }
 
-export async function setPerspectiveCookie(perspective: string): Promise<void> {
+export async function setPerspectiveCookie(perspective: ClientPerspective): Promise<void> {
   if (!(await draftMode()).isEnabled) {
     // throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
     return
@@ -34,12 +34,16 @@ export async function setPerspectiveCookie(perspective: string): Promise<void> {
     throw new Error(`Invalid perspective: ${perspective}`)
   }
 
-  ;(await cookies()).set(perspectiveCookieName, perspective satisfies ClientPerspective, {
-    httpOnly: true,
-    path: '/',
-    secure: true,
-    sameSite: 'none',
-  })
+  ;(await cookies()).set(
+    perspectiveCookieName,
+    Array.isArray(sanitizedPerspective) ? sanitizedPerspective.join(',') : sanitizedPerspective,
+    {
+      httpOnly: true,
+      path: '/',
+      secure: true,
+      sameSite: 'none',
+    },
+  )
 }
 
 // export async function handleDraftModeActionMissing(): Promise<void | string> {

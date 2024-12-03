@@ -21,7 +21,7 @@ import {sanitizePerspective} from './utils'
 export type DefinedSanityFetchType = <const QueryString extends string>(options: {
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
-  perspective?: Omit<ClientPerspective, 'raw'>
+  perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
   tag?: string
 }) => Promise<{
@@ -36,7 +36,7 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
 export type DefinedSanityLiveStreamType = <const QueryString extends string>(props: {
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
-  perspective?: Omit<ClientPerspective, 'raw'>
+  perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
   tag?: string
   children: (result: {
@@ -185,7 +185,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     query: QueryString
     params?: QueryParams | Promise<QueryParams>
     stega?: boolean
-    perspective?: Omit<ClientPerspective, 'raw'>
+    perspective?: Exclude<ClientPerspective, 'raw'>
     tag?: string
   }) {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)

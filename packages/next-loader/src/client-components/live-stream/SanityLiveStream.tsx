@@ -27,7 +27,7 @@ export interface SanityLiveStreamProps
   extends Pick<InitializedClientConfig, 'projectId' | 'dataset'> {
   query: string
   params?: QueryParams
-  perspective?: Omit<ClientPerspective, 'raw'>
+  perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
   initial: Promise<React.ReactNode>
   children: (result: {
