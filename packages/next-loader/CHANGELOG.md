@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.0...next-loader-v1.2.1) (2024-12-03)
+
+
+### Bug Fixes
+
+* support upcoming client perspectives ([8e30e0c](https://github.com/sanity-io/visual-editing/commit/8e30e0c7eba7bd6b680737d83f7ef19653076892))
+
 ## [1.2.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.12...next-loader-v1.2.0) (2024-12-02)
 
 
