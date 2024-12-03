@@ -3,7 +3,7 @@ import type {ClientPerspective, QueryParams} from '@sanity/client'
 /**
  * @internal
  */
-export type QueryCacheKey = `${ClientPerspective}-${string}-${string}`
+export type QueryCacheKey = `${string}-${string}-${string}`
 /**
  * @internal
  */
