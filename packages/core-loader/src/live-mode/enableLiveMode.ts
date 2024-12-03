@@ -5,6 +5,7 @@ import {
 } from '@repo/visual-editing-helpers'
 import {
   SanityClient,
+  validateApiPerspective,
   type ClientPerspective,
   type ContentSourceMap,
   type ContentSourceMapDocuments,
@@ -70,10 +71,8 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
 
   comlink.on('loader/perspective', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
-      if (data.perspective !== 'published' && data.perspective !== 'previewDrafts') {
-        throw new Error(`Unsupported perspective: ${JSON.stringify(data.perspective)}`)
-      }
-      $perspective.set(data.perspective)
+      validateApiPerspective(data.perspective)
+      $perspective.set(data.perspective === 'raw' ? 'previewDrafts' : data.perspective)
       updateLiveQueries()
     }
   })
