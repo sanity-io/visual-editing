@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.1...next-loader-v1.2.2) (2024-12-03)
+
+
+### Bug Fixes
+
+* use direct dependency on `@sanity/client` ([43f8d13](https://github.com/sanity-io/visual-editing/commit/43f8d13051bba95f73c006a597b6a67ba4588e5a))
+
 ## [1.2.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.0...next-loader-v1.2.1) (2024-12-03)
 
 
