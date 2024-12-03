@@ -47,6 +47,7 @@
     "root": true
   },
   "dependencies": {
+    "@sanity/client": "^6.24.1",
     "@sanity/comlink": "workspace:*",
     "@sanity/icons": "^3.5.0",
     "@sanity/logos": "^2.1.13",
@@ -71,7 +72,6 @@
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/visual-editing-helpers": "workspace:*",
-    "@sanity/client": "^6.24.1",
     "@sanity/pkg-utils": "6.11.14",
     "@types/lodash.get": "^4.4.9",
     "babel-plugin-react-compiler": "19.0.0-beta-df7b47d-20241124",
@@ -83,9 +83,6 @@
     "styled-components": "6.1.13",
     "typescript": "5.6.3",
     "vitest": "^2.1.8"
-  },
-  "peerDependencies": {
-    "@sanity/client": "^6.24.1"
   },
   "engines": {
     "node": ">=16.14"
