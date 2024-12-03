@@ -175,19 +175,10 @@ export default function PresentationTool(props: {
   const navigate = useMemo(() => debounce<PresentationNavigate>(_navigate, 50), [_navigate])
 
   const [state, dispatch] = useReducer(presentationReducer, {}, presentationReducerInit)
-  const {
-    bundlesPerspective,
-    perspective: globalPerspective = 'previewDrafts',
-    excludedPerspectives,
-  } = usePerspective()
-  const perspective = globalPerspective.startsWith('bundle.')
-    ? /**
-       * Hacky fix. Response values are cached, and when adding new excluded perspectives the cache is not invalidated.
-       * By this, we are making the key aware of the excluded perspectives, so it will invalidate the cache.
-       * Should be ideally fixed in the cache key directly, not here.
-       */
-      ([globalPerspective, 'exc-', ...excludedPerspectives] as `r${string}`[])
-    : (globalPerspective as PresentationPerspective)
+  const {bundlesPerspective, perspective: globalPerspective = 'previewDrafts'} = usePerspective()
+  const perspective = (
+    globalPerspective.startsWith('bundle.') ? bundlesPerspective : globalPerspective
+  ) as PresentationPerspective
 
   const viewport = useMemo(() => (params.viewport ? 'mobile' : 'desktop'), [params.viewport])
 
