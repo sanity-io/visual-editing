@@ -40,7 +40,7 @@ import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
 import {SharedStateProvider} from './shared-state/SharedStateProvider.tsx'
-import {sendVisualEditingTelemetry} from './telemetry/sendVisualEditingTelemetry.ts'
+import {sendTelemetry} from './telemetry/sendTelemetry.ts'
 import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
@@ -133,7 +133,7 @@ const OverlaysController: FunctionComponent<{
         dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
 
         if (insertPosition) {
-          sendVisualEditingTelemetry('Drag Sequence Complete', null, comlink)
+          sendTelemetry('Visual Editing Drag Sequence Complete', null, comlink)
         }
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
