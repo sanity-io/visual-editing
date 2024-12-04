@@ -143,7 +143,6 @@ export type VisualEditingControllerMsg =
       type: 'presentation/releases'
       data: {
         perspective: ClientPerspective
-        bundlesPerspective: string[]
         releases: unknown[]
       }
     }
@@ -285,7 +284,6 @@ export type VisualEditingNodeMsg =
       data: {elements: string[]}
       response: {
         perspective: ClientPerspective
-        bundlesPerspective: string[]
         versions: {
           _id: string
           versions: {_id: string}[]

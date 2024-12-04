@@ -6,11 +6,10 @@ import type {VisualEditingConnection} from './types'
 export interface PostMessageDocumentVersionsProps {
   comlink: VisualEditingConnection
   perspective: ClientPerspective
-  bundlesPerspective: string[]
 }
 
 const PostMessageDocumentVersions: FC<PostMessageDocumentVersionsProps> = (props) => {
-  const {comlink, perspective, bundlesPerspective} = props
+  const {comlink, perspective} = props
 
   const client = useClient({apiVersion: 'vX'})
 
@@ -31,11 +30,10 @@ const PostMessageDocumentVersions: FC<PostMessageDocumentVersionsProps> = (props
 
       return {
         versions: res,
-        bundlesPerspective,
         perspective,
       }
     })
-  }, [bundlesPerspective, client, comlink, perspective])
+  }, [client, comlink, perspective])
 
   return null
 }

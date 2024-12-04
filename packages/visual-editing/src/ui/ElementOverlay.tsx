@@ -46,7 +46,6 @@ export interface ElementOverlayProps {
   element: ElementNode
   focused: ElementFocusedState
   hovered: boolean
-  isDragging: boolean
   node: SanityNode | SanityStegaNode
   rect: OverlayRect
   showActions: boolean
@@ -175,10 +174,13 @@ function createIntentLink(node: SanityNode) {
   })
 }
 
-const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {element, focused, componentResolver, node, showActions, draggable, releases, versions} =
-    props
+const ElementOverlayInner: FunctionComponent<
+  Omit<
+    ElementOverlayProps,
+    'enableScrollIntoView' | 'hovered' | 'rect' | 'releases' | 'versions' | 'wasMaybeCollapsed'
+  >
+> = (props) => {
+  const {element, focused, componentResolver, node, showActions, draggable} = props
 
   const {getField, getType} = useSchema()
   const schemaType = getType(node)
@@ -264,6 +266,10 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     enableScrollIntoView,
     releases,
     versions,
+    draggable,
+    node,
+    showActions,
+    componentResolver,
   } = props
 
   const ref = useRef<HTMLDivElement>(null)
@@ -366,7 +372,16 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
         ref={ref}
         style={style}
       >
-        {hovered && <ElementOverlayInner {...props} />}
+        {hovered && (
+          <ElementOverlayInner
+            draggable={draggable}
+            element={element}
+            focused={focused}
+            node={node}
+            showActions={showActions}
+            componentResolver={componentResolver}
+          />
+        )}
       </Root>
       {hovered && showReleasePreview && nearestUpcomingRelease && (
         <Releases

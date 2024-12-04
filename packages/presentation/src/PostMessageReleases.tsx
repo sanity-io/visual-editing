@@ -6,11 +6,10 @@ import type {VisualEditingConnection} from './types'
 export interface PostMessageReleasesProps {
   comlink: VisualEditingConnection
   perspective: ClientPerspective
-  bundlesPerspective: string[]
 }
 
 const PostMessageReleases: FC<PostMessageReleasesProps> = (props) => {
-  const {comlink, perspective, bundlesPerspective} = props
+  const {comlink, perspective} = props
 
   const releases = useReleases()
 
@@ -18,13 +17,12 @@ const PostMessageReleases: FC<PostMessageReleasesProps> = (props) => {
     const run = async () => {
       comlink.post('presentation/releases', {
         releases: releases.data,
-        bundlesPerspective,
         perspective,
       })
     }
 
     run()
-  }, [bundlesPerspective, comlink, perspective, releases.data])
+  }, [comlink, perspective, releases.data])
 
   return null
 }

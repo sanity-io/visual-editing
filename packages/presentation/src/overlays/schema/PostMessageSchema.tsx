@@ -10,7 +10,6 @@ import {extractSchema} from './extract'
 export interface PostMessageSchemaProps {
   comlink: VisualEditingConnection
   perspective: ClientPerspective
-  bundlesPerspective: string[]
 }
 
 function getDocumentPathArray(paths: UnresolvedPath[]) {
@@ -34,7 +33,7 @@ function getDocumentPathArray(paths: UnresolvedPath[]) {
  * over postMessage so it can be used to enrich the Visual Editing experience
  */
 function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
-  const {comlink, perspective, bundlesPerspective} = props
+  const {comlink, perspective} = props
   const workspace = useWorkspace()
   const theme = useRootTheme()
 
@@ -80,7 +79,7 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
       })
       return {types: newState}
     })
-  }, [comlink, client, perspective, bundlesPerspective])
+  }, [comlink, client, perspective])
 
   return null
 }

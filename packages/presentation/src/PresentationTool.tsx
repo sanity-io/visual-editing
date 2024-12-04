@@ -548,7 +548,6 @@ export default function PresentationTool(props: {
               liveDocument={displayedDocument}
               onDocumentsOnPage={setDocumentsOnPage}
               onLoadersConnection={setLoadersConnection}
-              bundlesPerspective={bundlesPerspective}
             />
           ) : (
             <LoaderQueries
@@ -558,7 +557,6 @@ export default function PresentationTool(props: {
               onDocumentsOnPage={setDocumentsOnPage}
               onLoadersConnection={setLoadersConnection}
               documentsOnPage={documentsOnPage}
-              bundlesPerspective={bundlesPerspective}
             />
           )}
         </Suspense>
@@ -576,11 +574,7 @@ export default function PresentationTool(props: {
       )}
       {visualEditingComlink && (
         <Suspense>
-          <PostMessageSchema
-            comlink={visualEditingComlink}
-            perspective={perspective}
-            bundlesPerspective={bundlesPerspective}
-          />
+          <PostMessageSchema comlink={visualEditingComlink} perspective={perspective} />
         </Suspense>
       )}
       {visualEditingComlink && documentsOnPage.length > 0 && (
@@ -589,7 +583,6 @@ export default function PresentationTool(props: {
             comlink={visualEditingComlink}
             perspective={perspective}
             refs={documentsOnPage}
-            bundlesPerspective={bundlesPerspective}
           />
         </Suspense>
       )}
@@ -605,20 +598,12 @@ export default function PresentationTool(props: {
       )}
       {visualEditingComlink && (
         <Suspense>
-          <PostMessageReleases
-            comlink={visualEditingComlink}
-            perspective={perspective}
-            bundlesPerspective={bundlesPerspective}
-          />
+          <PostMessageReleases comlink={visualEditingComlink} perspective={perspective} />
         </Suspense>
       )}
       {visualEditingComlink && (
         <Suspense>
-          <PostMessageDocumentVersions
-            comlink={visualEditingComlink}
-            perspective={perspective}
-            bundlesPerspective={bundlesPerspective}
-          />
+          <PostMessageDocumentVersions comlink={visualEditingComlink} perspective={perspective} />
         </Suspense>
       )}
       {visualEditingComlink && (

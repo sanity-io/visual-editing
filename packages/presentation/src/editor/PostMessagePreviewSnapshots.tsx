@@ -26,7 +26,6 @@ type Ref = {
 export interface PostMessagePreviewsProps {
   comlink: VisualEditingConnection
   perspective: ClientPerspective
-  bundlesPerspective: string[]
   refs: Ref[]
 }
 

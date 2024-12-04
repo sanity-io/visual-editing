@@ -332,6 +332,7 @@ export const Overlays: FunctionComponent<{
 
     const controller = new AbortController()
     async function fetchDocuments(signal: AbortSignal) {
+      if (signal.aborted) return
       const res = await comlink?.fetch('visual-editing/document-versions', {
         elements: [...new Set(documentIds)],
       })
@@ -385,7 +386,6 @@ export const Overlays: FunctionComponent<{
             rect={rect}
             showActions={!inFrame}
             draggable={draggable}
-            isDragging={isDragging || dragMinimapTransition}
             wasMaybeCollapsed={focused && wasMaybeCollapsed}
             releases={releases}
             versions={versions}
