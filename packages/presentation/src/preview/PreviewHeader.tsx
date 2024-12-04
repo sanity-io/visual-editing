@@ -233,7 +233,6 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
             canUseSharedPreviewAccess={canUseSharedPreviewAccess}
             previewLocationRoute={previewLocationRoute}
             initialUrl={initialUrl}
-            // @ts-expect-error - this is fine
             perspective={perspective}
           />
         </Flex>

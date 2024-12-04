@@ -15,7 +15,7 @@ import {
   type ReactElement,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import {styled} from 'styled-components'
+import {keyframes, styled} from 'styled-components'
 import {PointerEvents} from '../overlay-components/components/PointerEvents'
 import type {
   ElementFocusedState,
@@ -147,19 +147,19 @@ const Labels = styled(Flex)`
   }
 `
 
+const ReleasesKeyframes = keyframes`
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
+`
+
 const Releases = styled.div`
   opacity: 0;
-  animation: o 300ms 500ms ease forwards;
-
-  @keyframes o {
-    from {
-      opacity: 0%;
-    }
-
-    to {
-      opacity: 100%;
-    }
-  }
+  animation: ${ReleasesKeyframes} 300ms 500ms ease forwards;
 `
 
 function createIntentLink(node: SanityNode) {
