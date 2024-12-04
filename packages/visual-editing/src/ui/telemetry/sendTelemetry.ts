@@ -19,7 +19,7 @@ function sendTelemetry<K extends keyof typeof events>(
   name: K,
   data: EventDataMap[K] extends void ? null | undefined : EventDataMap[K],
   comlink: VisualEditingNode | undefined,
-) {
+): void {
   if (!comlink) return
 
   const event = events[name]
