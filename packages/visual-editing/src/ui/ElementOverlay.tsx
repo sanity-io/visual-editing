@@ -52,7 +52,9 @@ export interface ElementOverlayProps {
   showActions: boolean
   wasMaybeCollapsed: boolean
   enableScrollIntoView: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   releases: any[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   versions: any[]
 }
 
@@ -174,6 +176,7 @@ function createIntentLink(node: SanityNode) {
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {element, focused, componentResolver, node, showActions, draggable, releases, versions} =
     props
 
