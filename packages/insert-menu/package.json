@@ -43,13 +43,13 @@
   "dependencies": {
     "@sanity/icons": "^3.5.0",
     "@sanity/ui": "^2.9.0",
-    "lodash.startcase": "^4.4.0"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "^6.11.14",
     "@sanity/types": "^3.65.1",
     "@sanity/ui-workshop": "^2.0.16",
-    "@types/lodash.startcase": "^4.4.9",
+    "@types/lodash": "^4.17.13",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.1",
@@ -61,7 +61,7 @@
     "typescript": "5.7.2"
   },
   "peerDependencies": {
-    "@sanity/types": "^3.65.1",
+    "@sanity/types": "*",
     "react": "^18.3 || >=19.0.0-rc",
     "react-dom": "^18.3 || >=19.0.0-rc",
     "react-is": "^18.3 || >=19.0.0-rc"

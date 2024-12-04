@@ -15,7 +15,7 @@ import {
   Tooltip,
   type MenuItemProps,
 } from '@sanity/ui'
-import startCase from 'lodash.startcase'
+import {startCase} from 'lodash'
 import {createElement, useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
 import {isValidElementType} from 'react-is'
 import {getSchemaTypeIcon} from './getSchemaTypeIcon'
