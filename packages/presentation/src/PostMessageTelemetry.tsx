@@ -19,11 +19,7 @@ const PostMessageDocumentVersions: FC<PostMessageTelemetryProps> = (props) => {
       const {event, data} = message
 
       if (!isDev) {
-        if (data) {
-          telemetry.log(event, data)
-        } else {
-          telemetry.log(event)
-        }
+        data ? telemetry.log(event, data) : telemetry.log(event)
       } else if (debugTelemetry) {
         // eslint-disable-next-line no-console
         console.log('Telemetry debug:', {event, data})
