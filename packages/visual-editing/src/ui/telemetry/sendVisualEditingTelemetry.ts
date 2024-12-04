@@ -24,7 +24,11 @@ function sendVisualEditingTelemetry<K extends keyof typeof events>(
 
   const event = events[name]
 
-  comlink.post('visual-editing/telemetry-log', {event, data})
+  if (!event) {
+    throw new Error(`Telemetry event: ${name} does not exist`)
+  } else {
+    comlink.post('visual-editing/telemetry-log', {event, data})
+  }
 }
 
 export {sendVisualEditingTelemetry}
