@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.16](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.15...insert-menu-v1.0.16) (2024-12-04)
+
+
+### Bug Fixes
+
+* improve lodash bundling ([87d6710](https://github.com/sanity-io/visual-editing/commit/87d671030999f13d5fde95c6f9e54965c76616ba))
+
 ## [1.0.15](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.14...insert-menu-v1.0.15) (2024-11-28)
 
 
