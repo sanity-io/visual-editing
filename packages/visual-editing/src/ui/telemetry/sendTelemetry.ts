@@ -2,8 +2,8 @@ import {defineEvent} from '@sanity/telemetry'
 import type {VisualEditingNode} from '../../types'
 
 const events = {
-  'Drag Sequence Complete': defineEvent({
-    name: 'Drag Sequence Complete',
+  'Visual Editing Drag Sequence Complete': defineEvent({
+    name: 'Visual Editing Drag Sequence Complete',
     description: 'An array is successfully reordered using drag and drop.',
     version: 1,
   }),
@@ -15,7 +15,7 @@ type EventDataMap = {
     : never
 }
 
-function sendVisualEditingTelemetry<K extends keyof typeof events>(
+function sendTelemetry<K extends keyof typeof events>(
   name: K,
   data: EventDataMap[K] extends void ? null | undefined : EventDataMap[K],
   comlink: VisualEditingNode | undefined,
@@ -31,4 +31,4 @@ function sendVisualEditingTelemetry<K extends keyof typeof events>(
   }
 }
 
-export {sendVisualEditingTelemetry}
+export {sendTelemetry}
