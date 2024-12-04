@@ -1,3 +1,4 @@
+import {validateApiPerspective} from '@sanity/client'
 import isEqual from 'fast-deep-equal'
 import {useCallback, useMemo, useRef, useState, type MutableRefObject} from 'react'
 import type {FrameState, PresentationPerspective} from './types'
@@ -24,9 +25,7 @@ export function useDocumentsOnPage(
   DocumentOnPage[],
   (key: string, perspective: PresentationPerspective, state: DocumentOnPage[]) => void,
 ] {
-  if (typeof perspective !== 'string' && !Array.isArray(perspective)) {
-    throw new Error(`Invalid perspective: ${JSON.stringify(perspective)}`)
-  }
+  validateApiPerspective(perspective)
 
   const [published, setPublished] = useState<KeyedDocumentCache>({})
   const [previewDrafts, setPreviewDrafts] = useState<KeyedDocumentCache>({})
