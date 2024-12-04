@@ -1,4 +1,4 @@
-import get from 'lodash.get'
+import {get} from 'lodash'
 import {useEffect, useMemo, useState} from 'react'
 import {isObservable, map, Observable, of, switchMap} from 'rxjs'
 import {
