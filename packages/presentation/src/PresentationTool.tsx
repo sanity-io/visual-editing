@@ -175,9 +175,9 @@ export default function PresentationTool(props: {
   const navigate = useMemo(() => debounce<PresentationNavigate>(_navigate, 50), [_navigate])
 
   const [state, dispatch] = useReducer(presentationReducer, {}, presentationReducerInit)
-  const {bundlesPerspective, perspective: globalPerspective = 'previewDrafts'} = usePerspective()
+  const {perspectiveStack, selectedPerspectiveName = 'previewDrafts'} = usePerspective()
   const perspective = (
-    globalPerspective.startsWith('bundle.') ? bundlesPerspective : globalPerspective
+    selectedPerspectiveName.startsWith('r') ? perspectiveStack : selectedPerspectiveName
   ) as PresentationPerspective
 
   const viewport = useMemo(() => (params.viewport ? 'mobile' : 'desktop'), [params.viewport])
