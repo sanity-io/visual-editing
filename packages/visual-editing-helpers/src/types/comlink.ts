@@ -290,6 +290,15 @@ export type VisualEditingNodeMsg =
         }[]
       }
     }
+  | {
+      type: 'visual-editing/telemetry'
+      data: {
+        name: string
+        description: string
+        version: number
+        method: 'log'
+      }
+    }
 
 /**
  * @public

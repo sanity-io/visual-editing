@@ -80,6 +80,7 @@ const PostMessageReleases = lazy(() => import('./PostMessageReleases'))
 const PostMessageDocumentVersions = lazy(() => import('./PostMessageDocumentVersions'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
 const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
+const PostMessageTelemetry = lazy(() => import('./PostMessageTelemetry'))
 
 const Container = styled(Flex)`
   overflow-x: auto;
@@ -611,6 +612,7 @@ export default function PresentationTool(props: {
           <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
         </Suspense>
       )}
+      {visualEditingComlink && <PostMessageTelemetry comlink={visualEditingComlink} />}
     </>
   )
 }

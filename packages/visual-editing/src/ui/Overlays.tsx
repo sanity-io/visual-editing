@@ -129,7 +129,19 @@ const OverlaysController: FunctionComponent<{
         comlink?.post('visual-editing/toggle', {enabled: false})
       } else if (message.type === 'overlay/dragEnd') {
         const {insertPosition, target, dragGroup, flow, preventInsertDefault} = message
+
         dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
+
+        if (insertPosition) {
+          comlink?.post({
+            type: 'visual-editing/telemetry',
+            data: {
+              name: 'Drag Sequence Complete',
+              description: 'An array is successfully reordered using drag and drop.',
+              version: 1,
+            },
+          })
+        }
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
 
