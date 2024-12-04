@@ -12,15 +12,20 @@ const PostMessageDocumentVersions: FC<PostMessageTelemetryProps> = (props) => {
   const telemetry = useTelemetry()
 
   useEffect(() => {
-    return comlink.on('visual-editing/telemetry', async (data) => {
-      const {method = 'log'} = data
-      console.log(data)
-      switch (method) {
-        case 'log':
-          console.log(telemetry)
-          break
-        default:
-          console.warn(`Invalid telemetry method requested: ${data.method}`)
+    const isDev = process.env['NODE_ENV'] === 'development'
+    const debugTelemetry = process.env['SANITY_STUDIO_PRESENTATION_DEBUG_TELEMETRY'] === 'true'
+
+    return comlink.on('visual-editing/telemetry-log', async (message) => {
+      const {event, data} = message
+
+      if (!isDev) {
+        if (data) {
+          telemetry.log(event, data)
+        } else {
+          telemetry.log(event)
+        }
+      } else if (debugTelemetry) {
+        console.log('Telemetry debug:', {event, data})
       }
     })
   }, [comlink, telemetry])

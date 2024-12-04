@@ -291,12 +291,12 @@ export type VisualEditingNodeMsg =
       }
     }
   | {
-      type: 'visual-editing/telemetry'
+      type: 'visual-editing/telemetry-log'
       data: {
-        name: string
-        description: string
-        version: number
-        method: 'log'
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        event: any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data: any
       }
     }
 

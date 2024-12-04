@@ -41,6 +41,7 @@ import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
 import {SharedStateProvider} from './shared-state/SharedStateProvider.tsx'
+import {sendVisualEditingTelemetry} from './telemetry/sendVisualEditingTelemetry.ts'
 import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
@@ -133,14 +134,7 @@ const OverlaysController: FunctionComponent<{
         dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
 
         if (insertPosition) {
-          comlink?.post({
-            type: 'visual-editing/telemetry',
-            data: {
-              name: 'Drag Sequence Complete',
-              description: 'An array is successfully reordered using drag and drop.',
-              version: 1,
-            },
-          })
+          sendVisualEditingTelemetry('Drag Sequence Complete', null, comlink)
         }
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
