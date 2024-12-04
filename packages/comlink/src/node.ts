@@ -62,9 +62,10 @@ export type NodeActor<S extends Message, R extends Message> = ActorRefFrom<NodeA
 export type Node<S extends Message, R extends Message> = {
   actor: NodeActor<S, R>
   fetch: <T extends S['type'], U extends Extract<S, {type: T}>>(
-    type: T,
-    data?: U['data'],
-    options?: {signal?: AbortSignal; suppressWarnings?: boolean},
+    ...params:
+      | (U['data'] extends undefined ? [T] : never)
+      | [T, U['data']]
+      | [T, U['data'], {signal?: AbortSignal; suppressWarnings?: boolean}]
   ) => S extends U ? (S['type'] extends T ? Promise<S['response']> : never) : never
   machine: NodeActorLogic<S, R>
   on: <T extends R['type'], U extends Extract<R, {type: T}>>(
@@ -72,7 +73,9 @@ export type Node<S extends Message, R extends Message> = {
     handler: (event: U['data']) => U['response'],
   ) => () => void
   onStatus: (handler: (status: Status) => void) => () => void
-  post: <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data?: U['data']) => void
+  post: <T extends S['type'], U extends Extract<S, {type: T}>>(
+    ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
+  ) => void
   start: () => () => void
   stop: () => void
 }
@@ -516,14 +519,17 @@ export const createNode = <S extends Message, R extends Message>(
     return unsubscribe
   }
 
-  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data: U['data']) => {
+  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(
+    type: T,
+    data?: U['data'],
+  ) => {
     const _data = {type, data} as WithoutResponse<U>
     actor.send({type: 'post', data: _data})
   }
 
   const fetch = <T extends S['type'], U extends Extract<S, {type: T}>>(
     type: T,
-    data: U['data'],
+    data?: U['data'],
     options?: {
       responseTimeout?: number
       signal?: AbortSignal

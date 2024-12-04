@@ -62,7 +62,9 @@ export type Connection<S extends Message = Message, R extends Message = Message>
     handler: (event: U['data']) => Promise<U['response']> | U['response'],
   ) => () => void
   onStatus: (handler: (status: Status) => void) => () => void
-  post: <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data?: U['data']) => void
+  post: <T extends S['type'], U extends Extract<S, {type: T}>>(
+    ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
+  ) => void
   setTarget: (target: MessageEventSource) => void
   start: () => () => void
   stop: () => void
@@ -510,7 +512,10 @@ export const createConnection = <S extends Message, R extends Message>(
     actor.send({type: 'target.set', target})
   }
 
-  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data: U['data']) => {
+  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(
+    type: T,
+    data?: U['data'],
+  ) => {
     const _data = {type, data} as WithoutResponse<U>
     actor.send({type: 'post', data: _data})
   }

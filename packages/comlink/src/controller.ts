@@ -29,7 +29,9 @@ export interface ChannelInstance<S extends Message, R extends Message> {
     handler: (event: U) => void,
   ) => () => void
   onStatus: (handler: (event: StatusEvent) => void) => void
-  post: <T extends S['type'], U extends Extract<S, {type: T}>>(type: T, data?: U['data']) => void
+  post: <T extends S['type'], U extends Extract<S, {type: T}>>(
+    ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
+  ) => void
   start: () => () => void
   stop: () => void
 }
@@ -198,7 +200,8 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       connections.add(connection)
     }
 
-    const post: ChannelInstance<S, R>['post'] = (type, data) => {
+    const post: ChannelInstance<S, R>['post'] = (...params) => {
+      const [type, data] = params
       connections.forEach((connection) => {
         connection.post(type, data)
       })
