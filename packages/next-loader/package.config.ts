@@ -21,6 +21,7 @@ export default defineConfig({
     },
   ],
   rollup: {
+    ...baseConfig.rollup,
     output: {
       banner: (chunkInfo) => {
         if (

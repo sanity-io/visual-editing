@@ -1,6 +1,9 @@
 import {defineConfig} from '@sanity/pkg-utils'
 
 export default defineConfig({
+  rollup: {
+    optimizeLodash: true,
+  },
   extract: {
     bundledPackages: ['@repo/visual-editing-helpers'],
     rules: {
