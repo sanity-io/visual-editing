@@ -15,21 +15,30 @@ const PostMessageDocumentVersions: FC<PostMessageDocumentVersionsProps> = (props
 
   // Return the perspective when requested
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let snapshot: null | {data: any; ids: string} = null
     return comlink.on('visual-editing/document-versions', async (data) => {
-      const res = await client.fetch(
-        `
-          *[_id in $ids] {
-            _id,
-            "versions": *[sanity::versionOf(^._id)] {
-              _id
+      if (snapshot === null || snapshot.ids !== JSON.stringify(data.elements)) {
+        const res = await client.fetch(
+          `
+            *[_id in $ids] {
+              _id,
+              "versions": *[sanity::versionOf(^._id)] {
+                _id
+              }
             }
-          }
-        `,
-        {ids: data.elements},
-      )
+          `,
+          {ids: data.elements},
+        )
+        snapshot = {data: res, ids: JSON.stringify(data.elements)}
 
+        return {
+          versions: res,
+          perspective,
+        }
+      }
       return {
-        versions: res,
+        versions: snapshot.data,
         perspective,
       }
     })
