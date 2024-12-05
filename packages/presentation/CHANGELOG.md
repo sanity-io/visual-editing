@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.6](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.5...presentation-v1.19.6) (2024-12-05)
+
+
+### Bug Fixes
+
+* improve the iframe viewport transition ([a195c8e](https://github.com/sanity-io/visual-editing/commit/a195c8e97369fcb166a360d2ba8c2a3f697f7c84))
+
 ## [1.19.5](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.4...presentation-v1.19.5) (2024-12-05)
 
 
