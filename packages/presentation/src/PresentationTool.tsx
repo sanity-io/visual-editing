@@ -555,9 +555,9 @@ export default function PresentationTool(props: {
           </PresentationParamsProvider>
         </PresentationNavigateProvider>
       </PresentationProvider>
-      {controller && (
-        <Suspense>
-          {LIVE_DRAFT_EVENTS_ENABLED ? (
+      <Suspense>
+        {controller &&
+          (LIVE_DRAFT_EVENTS_ENABLED ? (
             <LiveQueries
               controller={controller}
               perspective={perspective}
@@ -574,11 +574,8 @@ export default function PresentationTool(props: {
               onLoadersConnection={setLoadersConnection}
               documentsOnPage={documentsOnPage}
             />
-          )}
-        </Suspense>
-      )}
-      {visualEditingComlink && params.id && params.type && (
-        <Suspense>
+          ))}
+        {visualEditingComlink && params.id && params.type && (
           <PostMessageRefreshMutations
             comlink={visualEditingComlink}
             id={params.id}
@@ -586,46 +583,32 @@ export default function PresentationTool(props: {
             loadersConnection={loadersConnection}
             previewKitConnection={previewKitConnection}
           />
-        </Suspense>
-      )}
-      {visualEditingComlink && (
-        <Suspense>
+        )}
+        {visualEditingComlink && (
           <PostMessageSchema comlink={visualEditingComlink} perspective={perspective} />
-        </Suspense>
-      )}
-      {visualEditingComlink && documentsOnPage.length > 0 && (
-        <Suspense>
+        )}
+        {visualEditingComlink && documentsOnPage.length > 0 && (
           <PostMessagePreviewSnapshots
             comlink={visualEditingComlink}
             perspective={perspective}
             refs={documentsOnPage}
           />
-        </Suspense>
-      )}
-      {visualEditingComlink && (
-        <Suspense>
-          <PostMessageDocuments comlink={visualEditingComlink} />
-        </Suspense>
-      )}
-      {visualEditingComlink && (
-        <Suspense>
-          <PostMessageFeatures comlink={visualEditingComlink} />
-        </Suspense>
-      )}
-      {visualEditingComlink && (
-        <Suspense>
+        )}
+        {visualEditingComlink && <PostMessageDocuments comlink={visualEditingComlink} />}
+        {visualEditingComlink && <PostMessageFeatures comlink={visualEditingComlink} />}
+        {visualEditingComlink && (
           <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
-        </Suspense>
-      )}
-      {params.id && params.type && (
-        <RevisionSwitcher
-          documentId={params.id}
-          documentRevision={params.rev}
-          documentType={params.type}
-          navigate={navigate}
-          perspective={perspective}
-        />
-      )}
+        )}
+        {params.id && params.type && (
+          <RevisionSwitcher
+            documentId={params.id}
+            documentRevision={params.rev}
+            documentType={params.type}
+            navigate={navigate}
+            perspective={perspective}
+          />
+        )}
+      </Suspense>
     </>
   )
 }
