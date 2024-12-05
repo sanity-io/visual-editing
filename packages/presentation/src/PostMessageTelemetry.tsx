@@ -6,27 +6,23 @@ export interface PostMessageTelemetryProps {
   comlink: VisualEditingConnection
 }
 
-const PostMessageDocumentVersions: FC<PostMessageTelemetryProps> = (props) => {
+const PostMessageTelemetry: FC<PostMessageTelemetryProps> = (props) => {
   const {comlink} = props
 
   const telemetry = useTelemetry()
 
   useEffect(() => {
-    const isDev = process.env['NODE_ENV'] === 'development'
-    const debugTelemetry = process.env['SANITY_STUDIO_PRESENTATION_DEBUG_TELEMETRY'] === 'true'
-
     return comlink.on('visual-editing/telemetry-log', async (message) => {
       const {event, data} = message
 
-      if (!isDev) {
-        data ? telemetry.log(event, data) : telemetry.log(event)
-      } else if (debugTelemetry) {
-        // eslint-disable-next-line no-console
-        console.log('Telemetry debug:', {event, data})
-      }
+      console.log(process.env['SANITY_STUDIO_DEBUG_TELEMETRY'])
+      // @ts-ignore
+      console.log(process.env.SANITY_STUDIO_DEBUG_TELEMETRY)
+
+      // data ? telemetry.log(event, data) : telemetry.log(event)
     })
   }, [comlink, telemetry])
 
   return null
 }
-export default memo(PostMessageDocumentVersions)
+export default memo(PostMessageTelemetry)
