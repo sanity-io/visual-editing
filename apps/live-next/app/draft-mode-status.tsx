@@ -15,7 +15,7 @@ export function DraftModeStatus() {
 
   return (
     <div className="fixed bottom-3 right-3 block rounded bg-theme-inverse px-2 py-1 text-xs text-theme-inverse">
-      <p>perspective: {perspective}</p>
+      <p>perspective: {Array.isArray(perspective) ? perspective.join(',') : perspective}</p>
       <p>environment: {environment}</p>
     </div>
   )
