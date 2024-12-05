@@ -1,8 +1,12 @@
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {PageSection} from '../PageSection'
-import {PageData, PageSectionData} from '../types'
+import {PageSectionData} from '../types'
 
-export function Section(props: {page: PageData; section: PageSectionData}) {
+export function Section(props: {
+  page: NonNullable<FrontPageQueryResult>
+  section: PageSectionData
+}) {
   const {page, section} = props
 
   return (

@@ -1,4 +1,5 @@
 import {Image} from '@/components/image'
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing'
@@ -60,7 +61,10 @@ function FeaturedProductsList(props: {
   )
 }
 
-export function FeaturedProducts(props: {page: PageData; section: FeaturedProductsSectionData}) {
+export function FeaturedProducts(props: {
+  page: NonNullable<FrontPageQueryResult>
+  section: FeaturedProductsSectionData
+}) {
   const {page: data, section} = props
 
   return (

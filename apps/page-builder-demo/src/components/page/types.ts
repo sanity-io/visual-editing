@@ -1,79 +1,20 @@
-import type {SanityArrayValue, SanityImageValue} from '@/sanity/types'
+import type {FrontPageQueryResult} from '@/sanity.types'
 
+export type PageSection = NonNullable<NonNullable<FrontPageQueryResult>['sections']>[number]
+
+// @TODO can we be rid of these?
 export interface SectionStyleData {
   variant?: 'default' | 'inverted'
 }
 
-export interface HeroSectionData {
-  _key: string
-  _type: 'hero'
-  headline?: string
-  tagline?: string
-  image?: SanityImageValue
-  subline?: string
-  style?: SectionStyleData
-}
+export type HeroSectionData = Extract<PageSection, {_type: 'hero'}>
 
-export interface IntroSectionData {
-  _key: string
-  _type: 'intro'
-  headline?: string
-  intro?: string
-  style?: SectionStyleData
-  rotations?: {
-    pitch: number
-    yaw: number
-  }
-}
+export type IntroSectionData = Extract<PageSection, {_type: 'intro'}>
 
-export interface FeaturedProductsSectionData {
-  _key: string
-  _type: 'featuredProducts'
-  headline?: string
-  description?: string
-  products?: SanityArrayValue<{
-    _type: 'product'
-    slug?: {current?: string}
-    title?: string
-    media?: SanityImageValue
-  }>[]
-  style?: SectionStyleData
-}
+export type FeaturedProductsSectionData = Extract<PageSection, {_type: 'featuredProducts'}>
 
-export interface FeatureHighlightSectionData {
-  _key: string
-  _type: 'featureHighlight'
-  headline?: string
-  description?: string
-  image?: SanityImageValue
-  product?: {
-    _type: 'product'
-    slug?: {current?: string}
-    title?: string
-    media?: SanityImageValue
-  }
-  style?: SectionStyleData
-  ctas: Array<{title: string; href: string; _key: string}>
-}
+export type FeatureHighlightSectionData = Extract<PageSection, {_type: 'featureHighlight'}>
 
-export interface PageSectionData {
-  _key: string
-  _type: 'section'
-  headline?: string
-  tagline?: string
-  subline?: string
-}
+export type PageSectionData = Extract<PageSection, {_type: 'section'}>
 
-export interface PageData {
-  _type: 'page'
-  _id: string
-  title?: string
-  sections?: Array<PageSection>
-}
-
-export type PageSection =
-  | HeroSectionData
-  | IntroSectionData
-  | FeaturedProductsSectionData
-  | FeatureHighlightSectionData
-  | PageSectionData
+export type {Page as PageData} from '@/sanity.types'

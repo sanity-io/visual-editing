@@ -2,7 +2,6 @@ import {Image} from '@/components/image'
 import {SimpleContent} from '@/components/page'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {sanityFetch} from '@/sanity/live'
-import type {SanityArrayValue, SanityImageValue} from '@/sanity/types'
 import {defineQuery} from 'next-sanity'
 import Link from 'next/link'
 
@@ -17,18 +16,7 @@ const productsPageQuery = defineQuery(`
 `)
 
 export default async function ProductsPage() {
-  // @TODO fix typegen vs manual types issues
-  const {data} = (await sanityFetch({query: productsPageQuery})) as unknown as {
-    data: {
-      _id: string
-      title?: string
-      description?: any[]
-      slug: {
-        current: string
-      }
-      media?: SanityArrayValue<SanityImageValue>
-    }[]
-  }
+  const {data} = await sanityFetch({query: productsPageQuery})
 
   return (
     <main className="mx-auto max-w-4xl">
@@ -42,7 +30,7 @@ export default async function ProductsPage() {
             {data.map((product) => (
               <Link
                 className="block rounded border border-white p-4 hover:border-gray-100 sm:flex sm:gap-5 dark:border-black dark:hover:border-gray-800"
-                href={product.slug?.current && `/product/${product.slug.current}`}
+                href={`/product/${product?.slug?.current}`}
                 key={product._id}
               >
                 <div className="flex-none sm:w-64">

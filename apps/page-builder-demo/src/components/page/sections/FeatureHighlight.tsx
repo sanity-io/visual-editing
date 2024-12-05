@@ -1,11 +1,15 @@
 import {Image} from '@/components/image'
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {stegaClean} from 'next-sanity'
 import Link from 'next/link'
 import {PageSection} from '../PageSection'
 import {FeatureHighlightSectionData, PageData} from '../types'
 
-export function FeatureHighlight(props: {page: PageData; section: FeatureHighlightSectionData}) {
+export function FeatureHighlight(props: {
+  page: NonNullable<FrontPageQueryResult>
+  section: FeatureHighlightSectionData
+}) {
   const {page: data, section} = props
 
   return (

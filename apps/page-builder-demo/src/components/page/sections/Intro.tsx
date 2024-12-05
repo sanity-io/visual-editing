@@ -1,15 +1,16 @@
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import type {SanityDocument} from '@sanity/client'
 import {createDataAttribute, useOptimistic} from '@sanity/visual-editing'
-import React from 'react'
+import React, {useMemo} from 'react'
 import {PageSection} from '../PageSection'
 import {ProductModel} from '../ProductModel'
 import {IntroSectionData, PageData} from '../types'
 
-export function Intro(props: {page: PageData; section: IntroSectionData}) {
+export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: IntroSectionData}) {
   const {page: data, section} = props
 
-  const intro = useOptimistic<string | undefined, SanityDocument<PageData>>(
+  const intro = useOptimistic<string | null | undefined, SanityDocument<PageData>>(
     section.intro,
     (state, action) => {
       if (action.id === data._id) {
@@ -28,24 +29,28 @@ export function Intro(props: {page: PageData; section: IntroSectionData}) {
     },
   )
 
-  const rotations = useOptimistic<
-    {pitch: number; yaw: number} | undefined,
-    SanityDocument<PageData>
-  >(section.rotations, (state, action) => {
-    if (action.id === data._id) {
-      if (!Array.isArray(action.document.sections)) {
-        console.log('WARNING', action.document.sections)
-        return state
+  const _rotations = useOptimistic<{pitch?: number; yaw?: number} | null, SanityDocument<PageData>>(
+    section.rotations,
+    (state, action) => {
+      if (action.id === data._id) {
+        if (!Array.isArray(action.document.sections)) {
+          console.log('WARNING', action.document.sections)
+          return state
+        }
+        const rotations = (
+          action.document.sections?.find((s) => s._key === section._key) as IntroSectionData
+        )?.rotations
+        if (rotations) {
+          return rotations
+        }
       }
-      const rotations = (
-        action.document.sections?.find((s) => s._key === section._key) as IntroSectionData
-      )?.rotations
-      if (rotations) {
-        return rotations
-      }
-    }
-    return state
-  })
+      return state
+    },
+  )
+  const rotations = useMemo(
+    () => ({pitch: _rotations?.pitch ?? 0, yaw: _rotations?.yaw ?? 0}),
+    [_rotations?.pitch, _rotations?.yaw],
+  )
 
   return (
     <PageSection
@@ -86,7 +91,7 @@ export function Intro(props: {page: PageData; section: IntroSectionData}) {
           path: `sections[_key=="${section._key}"].rotations`,
         })()}
       >
-        <ProductModel rotations={rotations || {pitch: 0, yaw: 0}} />
+        <ProductModel rotations={rotations} />
       </div>
     </PageSection>
   )

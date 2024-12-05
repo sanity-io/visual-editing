@@ -1,11 +1,11 @@
 'use client'
 
 import './Slideshow.css'
-import type {SanityArrayValue, SanityImageValue} from '@/sanity/types'
+import type {Product} from '@/sanity.types'
 import {useState} from 'react'
 import {Image} from '../image'
 
-export function Slideshow(props: {images: SanityArrayValue<SanityImageValue>[]}) {
+export function Slideshow(props: {images: NonNullable<Product['media']>}) {
   const {images} = props
   const len = images.length
   const [index, setIndex] = useState(0)

@@ -1,9 +1,10 @@
 import {Image} from '@/components/image'
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {PageSection} from '../PageSection'
-import {HeroSectionData, PageData} from '../types'
+import {HeroSectionData} from '../types'
 
-export function Hero(props: {page: PageData; section: HeroSectionData}) {
+export function Hero(props: {page: NonNullable<FrontPageQueryResult>; section: HeroSectionData}) {
   const {page: data, section} = props
 
   return (

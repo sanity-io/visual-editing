@@ -2,23 +2,7 @@ import {SimpleContent} from '@/components/page'
 import {Slideshow} from '@/components/slideshow'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {sanityFetch} from '@/sanity/live'
-import type {SanityArrayValue, SanityImageValue} from '@/sanity/types'
 import {defineQuery} from 'next-sanity'
-
-export interface ProductData {
-  _id: string
-  title?: string
-  media?: SanityArrayValue<SanityImageValue>[]
-  description?: any[]
-  details?: {
-    _type: 'details'
-    materials?: string
-    collectionNotes?: any[]
-    performance?: any[]
-    ledLifespan?: string
-    certifications?: string[]
-  }
-}
 
 const productSlugsQuery = defineQuery(
   /* groq */ `*[_type == "product" && defined(slug.current)]{"slug": slug.current}`,
@@ -35,13 +19,10 @@ export async function generateStaticParams() {
 const productPageQuery = defineQuery(`*[_type == "product" && slug.current == $slug][0]`)
 
 export default async function ProductPage({params}: {params: Promise<{slug: string}>}) {
-  // @TODO fix typegen vs manual types issues
-  const {data} = (await sanityFetch({
+  const {data} = await sanityFetch({
     query: productPageQuery,
     params,
-  })) as unknown as {
-    data: ProductData | null
-  }
+  })
 
   return (
     <main className="mx-auto max-w-4xl p-5">
