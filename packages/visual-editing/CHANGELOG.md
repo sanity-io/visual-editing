@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.10.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.3...visual-editing-v2.10.4) (2024-12-05)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.1
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.7
+
 ## [2.10.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.2...visual-editing-v2.10.3) (2024-12-02)
 
 
