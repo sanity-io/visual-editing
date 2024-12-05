@@ -207,12 +207,12 @@ export const Preview = memo(
       viewport,
     ])
 
-    const [prevViewport, setPrevViewport] = useState(viewport)
+    const [currentViewport, setCurrentViewport] = useState(viewport)
     const [iframeStyle, setIframeStyle] = useState(iframeVariants[viewport])
     useEffect(() => {
-      if (canUseViewTransition && viewport !== prevViewport) {
+      if (canUseViewTransition && viewport !== currentViewport) {
         const update = () => {
-          setPrevViewport(viewport)
+          setCurrentViewport(viewport)
           setIframeStyle(iframeVariants[viewport])
         }
         if (
@@ -225,7 +225,7 @@ export const Preview = memo(
           update()
         }
       }
-    }, [canUseViewTransition, prefersReducedMotion, prevViewport, viewport])
+    }, [canUseViewTransition, prefersReducedMotion, currentViewport, viewport])
 
     return (
       <MotionConfig transition={prefersReducedMotion ? {duration: 0} : undefined}>
@@ -238,7 +238,7 @@ export const Preview = memo(
               align="center"
               height="fill"
               justify="center"
-              padding={viewport === 'desktop' ? 0 : 2}
+              padding={(canUseViewTransition ? currentViewport : viewport) === 'desktop' ? 0 : 2}
               sizing="border"
               style={{
                 position: 'relative',
