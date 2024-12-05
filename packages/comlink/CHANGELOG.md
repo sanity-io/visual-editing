@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.0...comlink-v2.0.1) (2024-12-05)
+
+
+### Bug Fixes
+
+* **comlink:** require data param if defined on post and fetch methods ([#2262](https://github.com/sanity-io/visual-editing/issues/2262)) ([d2491ad](https://github.com/sanity-io/visual-editing/commit/d2491ad3b7cb373936b9f77273773c7ce330a7f8))
+
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/comlink-v1.1.4...comlink-v2.0.0) (2024-11-28)
 
 

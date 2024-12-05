@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.2...next-loader-v1.2.3) (2024-12-05)
+
+
+### Bug Fixes
+
+* set preview token when a content release perspective is used ([03557ef](https://github.com/sanity-io/visual-editing/commit/03557effe6ee58cdfbd0b77118c80a442f0741fe))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.1
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.7
+
 ## [1.2.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.1...next-loader-v1.2.2) (2024-12-03)
 
 
