@@ -223,7 +223,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       filterResponse: false,
       perspective: perspective as ClientPerspective,
       stega,
-      token: perspective === 'previewDrafts' && serverToken ? serverToken : originalToken,
+      token: perspective !== 'published' && serverToken ? serverToken : originalToken,
       next: {
         revalidate:
           (fetchOptions?.revalidate ?? process.env.NODE_ENV === 'production') ? false : undefined,
