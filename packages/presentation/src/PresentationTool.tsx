@@ -612,7 +612,11 @@ export default function PresentationTool(props: {
           <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
         </Suspense>
       )}
-      {visualEditingComlink && <PostMessageTelemetry comlink={visualEditingComlink} />}
+      {visualEditingComlink && (
+        <Suspense>
+          <PostMessageTelemetry comlink={visualEditingComlink} />
+        </Suspense>
+      )}
     </>
   )
 }
