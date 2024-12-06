@@ -274,6 +274,7 @@ export default function PresentationTool(props: {
       )
     })
 
+    // @todo This won't work for multiple window contexts?
     comlink.on('visual-editing/refreshing', (data) => {
       if (data.source === 'manual') {
         clearTimeout(refreshRef.current)

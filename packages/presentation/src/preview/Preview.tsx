@@ -1,4 +1,3 @@
-import type {Status} from '@sanity/comlink'
 import {
   Button,
   Card,
@@ -34,7 +33,12 @@ import {
   type DispatchPresentationAction,
   type PresentationState,
 } from '../reducers/presentationReducer'
-import type {HeaderOptions, PresentationPerspective, PresentationViewport} from '../types'
+import type {
+  ConnectionStatus,
+  HeaderOptions,
+  PresentationPerspective,
+  PresentationViewport,
+} from '../types'
 import {usePresentationTool} from '../usePresentationTool'
 import {IFrame} from './IFrame'
 import {usePresentationPreviewHeader} from './PreviewHeader'
@@ -48,12 +52,12 @@ export interface PreviewProps extends Pick<PresentationState, 'iframe' | 'visual
   dispatch: DispatchPresentationAction
   header?: HeaderOptions
   initialUrl: URL
-  loadersConnection: Status
+  loadersConnection: ConnectionStatus
   navigatorEnabled: boolean
   onPathChange: (nextPath: string) => void
   onRefresh: (fallback: () => void) => void
   openPopup: (url: string) => void
-  overlaysConnection: Status
+  overlaysConnection: ConnectionStatus
   perspective: PresentationPerspective
   previewUrl?: string
   setPerspective: (perspective: 'previewDrafts' | 'published') => void
@@ -147,9 +151,6 @@ export const Preview = memo(
           setSomethingIsWrong(true)
         }, MAX_TIME_TO_OVERLAYS_CONNECTION)
         return () => clearTimeout(timeout)
-      }
-      if (overlaysConnection === 'disconnected') {
-        setSomethingIsWrong(true)
       }
       return
     }, [loading, overlaysConnection, refreshing, showOverlaysConnectionStatus])
