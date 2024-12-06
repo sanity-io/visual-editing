@@ -67,6 +67,7 @@ export default function ShoesPageClient(props: Props) {
                     width={720}
                     height={720}
                     alt={product.media?.alt || ''}
+                    data-sanity-release-preview="true"
                   />
                 </div>
                 <h2

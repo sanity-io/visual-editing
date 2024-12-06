@@ -76,6 +76,8 @@ const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'
 const PostMessageFeatures = lazy(() => import('./features/PostMessageFeatures'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 const PostMessagePerspective = lazy(() => import('./PostMessagePerspective'))
+const PostMessageReleases = lazy(() => import('./PostMessageReleases'))
+const PostMessageDocumentVersions = lazy(() => import('./PostMessageDocumentVersions'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
 const PostMessageSchema = lazy(() => import('./overlays/schema/PostMessageSchema'))
 
@@ -578,6 +580,12 @@ export default function PresentationTool(props: {
         )}
         {visualEditingComlink && <PostMessageDocuments comlink={visualEditingComlink} />}
         {visualEditingComlink && <PostMessageFeatures comlink={visualEditingComlink} />}
+        {visualEditingComlink && (
+          <PostMessageReleases comlink={visualEditingComlink} perspective={perspective} />
+        )}
+        {visualEditingComlink && (
+          <PostMessageDocumentVersions comlink={visualEditingComlink} perspective={perspective} />
+        )}
         {visualEditingComlink && (
           <PostMessagePerspective comlink={visualEditingComlink} perspective={perspective} />
         )}
