@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.7](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.6...presentation-v1.19.7) (2024-12-06)
+
+
+### Bug Fixes
+
+* prevent infinite refetch on missing main document ([89bb92f](https://github.com/sanity-io/visual-editing/commit/89bb92ff9fff8893b1930445e9f8eb068dda534b))
+
 ## [1.19.6](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.5...presentation-v1.19.6) (2024-12-05)
 
 
