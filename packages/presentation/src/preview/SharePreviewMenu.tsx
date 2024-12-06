@@ -1,4 +1,4 @@
-import type {SyncTag} from '@sanity/client'
+import type {ClientPerspective, SyncTag} from '@sanity/client'
 import {CopyIcon, ShareIcon} from '@sanity/icons'
 import {SanityMonogram} from '@sanity/logos'
 import {fetchSharedAccessQuery} from '@sanity/preview-url-secret/constants'
@@ -38,7 +38,7 @@ export interface SharePreviewMenuProps {
   canUseSharedPreviewAccess: boolean
   previewLocationRoute: string
   initialUrl: PreviewProps['initialUrl']
-  perspective: string
+  perspective: ClientPerspective
 }
 
 const QrCodeLogoSize = 24
@@ -79,7 +79,14 @@ export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
   const busy = enabling || disabling || loading
   const url = useMemo(
     () =>
-      secret ? setSecretSearchParams(initialUrl, secret, previewLocationRoute, perspective) : null,
+      secret
+        ? setSecretSearchParams(
+            initialUrl,
+            secret,
+            previewLocationRoute,
+            Array.isArray(perspective) ? perspective.join(',') : perspective,
+          )
+        : null,
     [initialUrl, perspective, previewLocationRoute, secret],
   )
 

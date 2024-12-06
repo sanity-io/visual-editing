@@ -360,7 +360,6 @@ export const Overlays: FunctionComponent<{
             rect={rect}
             showActions={!inFrame}
             draggable={draggable}
-            isDragging={isDragging || dragMinimapTransition}
             wasMaybeCollapsed={focused && wasMaybeCollapsed}
           />
         )
