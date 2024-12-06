@@ -15,7 +15,7 @@ import {
   type ReactElement,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import {styled} from 'styled-components'
+import {keyframes, styled} from 'styled-components'
 import {PointerEvents} from '../overlay-components/components/PointerEvents'
 import type {
   ElementFocusedState,
@@ -51,6 +51,10 @@ export interface ElementOverlayProps {
   showActions: boolean
   wasMaybeCollapsed: boolean
   enableScrollIntoView: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  releases: any[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  versions: any[]
 }
 
 const Root = styled(Card)`
@@ -140,6 +144,21 @@ const Labels = styled(Flex)`
     color: #fff;
     white-space: nowrap;
   }
+`
+
+const ReleasesKeyframes = keyframes`
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
+`
+
+const Releases = styled.div`
+  opacity: 0;
+  animation: ${ReleasesKeyframes} 300ms 500ms ease forwards;
 `
 
 function createIntentLink(node: SanityNode) {
@@ -245,6 +264,8 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     rect,
     wasMaybeCollapsed,
     enableScrollIntoView,
+    releases,
+    versions,
     draggable,
     node,
     showActions,
@@ -296,6 +317,53 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     scrolledIntoViewRef.current = focused === true
   }, [focused, wasMaybeCollapsed, enableScrollIntoView])
 
+  function getTimeDifferenceInDays(targetDateStr: string): number {
+    const now = new Date()
+
+    const targetDate = new Date(targetDateStr)
+    const timeDifference = targetDate.getTime() - now.getTime()
+    // Convert milliseconds to days
+    return Math.round(timeDifference / (1000 * 60 * 60 * 24))
+  }
+
+  let nearestUpcomingRelease = null
+  let timeTilNextRelease = null
+
+  const showReleasePreview = element.getAttribute('data-sanity-release-preview') === 'true'
+
+  if (showReleasePreview) {
+    const releaseVersions = versions ? versions.filter((v) => v._id.startsWith('versions.')) : []
+    const nearestRelease = releases.find((release) => {
+      return releaseVersions.some((version) => {
+        const releaseName = version._id.split('.').at(1)
+        return releaseName === release.name
+      })
+    })
+
+    if (nearestRelease) {
+      nearestUpcomingRelease = nearestRelease
+      if (nearestRelease.metadata?.releaseType === 'scheduled') {
+        timeTilNextRelease = getTimeDifferenceInDays(
+          nearestUpcomingRelease.metadata.intendedPublishAt,
+        )
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (!showReleasePreview) return
+
+    const handleMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--release-x', e.clientX + 'px')
+      document.documentElement.style.setProperty('--release-y', e.clientY + 'px')
+    }
+    document.addEventListener('mousemove', handleMouseMove)
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [showReleasePreview])
+
   return (
     <>
       <Root
@@ -315,6 +383,41 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
           />
         )}
       </Root>
+      {hovered && showReleasePreview && nearestUpcomingRelease && (
+        <Releases
+          style={{
+            top: '0px',
+            left: '0px',
+            position: 'fixed',
+            transform: `translate(calc(var(--release-x) + 8px), calc(var(--release-y) + 8px))`,
+            display: 'flex',
+            gap: '4px',
+            background: '#fff',
+            border: '1px solid #f1f1f1',
+            borderRadius: '999px',
+            padding: '0.125rem 0.375rem',
+          }}
+        >
+          <div className="flex items-center">
+            <div
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: {asap: '#f24f3e', scheduled: '#9b61f3'}[
+                  nearestUpcomingRelease.metadata.releaseType as string
+                ],
+                flexShrink: 0,
+                marginRight: '0.375rem',
+              }}
+            ></div>
+            <p className="text-xs leading-none">
+              Changes with <i className="font-semibold">{nearestUpcomingRelease.metadata.title}</i>{' '}
+              {timeTilNextRelease ? <span>in {timeTilNextRelease} days</span> : 'ASAP'}
+            </p>
+          </div>
+        </Releases>
+      )}
     </>
   )
 })

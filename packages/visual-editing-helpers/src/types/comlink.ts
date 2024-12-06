@@ -146,6 +146,13 @@ export type VisualEditingControllerMsg =
         value?: Serializable
       }
     }
+  | {
+      type: 'presentation/releases'
+      data: {
+        perspective: ClientPerspective
+        releases: unknown[]
+      }
+    }
 
 /**
  * @public
@@ -270,6 +277,17 @@ export type VisualEditingNodeMsg =
       data: undefined
       response: {
         state: SerializableObject
+      }
+    }
+  | {
+      type: 'visual-editing/document-versions'
+      data: {elements: string[]}
+      response: {
+        perspective: ClientPerspective
+        versions: {
+          _id: string
+          versions: {_id: string}[]
+        }[]
       }
     }
 
