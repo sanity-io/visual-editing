@@ -36,7 +36,7 @@
     "dev": "pkg build --strict",
     "lint": "eslint --cache .",
     "prepack": "turbo run build",
-    "react-compiler-healthcheck": "pnpx react-compiler-healthcheck@latest ./src",
+    "react-compiler-healthcheck": "(cd src && pnpx react-compiler-healthcheck@latest)",
     "test": "vitest --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
