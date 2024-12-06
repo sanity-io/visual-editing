@@ -845,6 +845,24 @@ export type ProductPageQueryResult = {
   }>
 } | null
 
+// Source: ./src/app/project/[slug]/page.tsx
+// Variable: projectSlugsQuery
+// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
+export type ProjectSlugsQueryResult = Array<{
+  slug: string | null
+}>
+// Variable: projectPageQuery
+// Query: *[_type == "project" && slug.current == $slug][0]
+export type ProjectPageQueryResult = {
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+} | null
+
 // Source: ./src/app/pages/[slug]/page.tsx
 // Variable: pageQuery
 // Query: *[_type == "page" && slug.current == $slug][0]{    _type,    _id,    title,    sections[]{  _key,  _type,  _type == 'section' => {    'headline': coalesce(headline, symbol->headline),    'tagline': coalesce(tagline, symbol->tagline),    'subline': coalesce(subline, symbol->subline),  },  _type == 'featureHighlight' => {    headline,    description,    image,    product->{      _type,      _id,      title,      slug,      "media": media[0]    },    style,    ctas  },  _type == 'featuredProducts' => {    headline,    description,    products[]{      _key,      ...(@->{        _type,        _id,        title,        slug,        "media": media[0]      })    },    style  },  _type == 'intro' => {    headline,    intro,    style,    rotations  },  _type == 'hero' => {    headline,    tagline,    subline,    image,    style  }},    style  }
@@ -969,24 +987,6 @@ export type PageSlugsResult = Array<{
   slug: string | null
 }>
 
-// Source: ./src/app/project/[slug]/page.tsx
-// Variable: projectSlugsQuery
-// Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
-export type ProjectSlugsQueryResult = Array<{
-  slug: string | null
-}>
-// Variable: projectPageQuery
-// Query: *[_type == "project" && slug.current == $slug][0]
-export type ProjectPageQueryResult = {
-  _id: string
-  _type: 'project'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-} | null
-
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_id == "siteSettings"][0]{\n  title,\n  description,\n  copyrightText\n}': LayoutQueryResult
@@ -997,9 +997,9 @@ declare module '@sanity/client' {
     '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
     '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
-    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    sections[]{\n      ...,\n      symbol->{_type},\n      'headline': coalesce(headline, symbol->headline),\n      'tagline': coalesce(tagline, symbol->tagline),\n      'subline': coalesce(subline, symbol->subline),\n      'image': coalesce(image, symbol->image),\n      product->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      },\n      products[]{\n        _key,\n        ...(@->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        })\n      }\n    },\n    style\n  }\n": PageQueryResult
-    '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
     '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
     '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    sections[]{\n      ...,\n      symbol->{_type},\n      'headline': coalesce(headline, symbol->headline),\n      'tagline': coalesce(tagline, symbol->tagline),\n      'subline': coalesce(subline, symbol->subline),\n      'image': coalesce(image, symbol->image),\n      product->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      },\n      products[]{\n        _key,\n        ...(@->{\n          _type,\n          _id,\n          title,\n          slug,\n          \"media\": media[0]\n        })\n      }\n    },\n    style\n  }\n": PageQueryResult
+    '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
   }
 }

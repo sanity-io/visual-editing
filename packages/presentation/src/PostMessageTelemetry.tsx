@@ -15,11 +15,8 @@ const PostMessageTelemetry: FC<PostMessageTelemetryProps> = (props) => {
     return comlink.on('visual-editing/telemetry-log', async (message) => {
       const {event, data} = message
 
-      console.log(process.env['SANITY_STUDIO_DEBUG_TELEMETRY'])
-      // @ts-ignore
-      console.log(process.env.SANITY_STUDIO_DEBUG_TELEMETRY)
-
-      // data ? telemetry.log(event, data) : telemetry.log(event)
+      // SANITY_STUDIO_DEBUG_TELEMETRY ensures noop/in-browser logging for telemetry events
+      data ? telemetry.log(event, data) : telemetry.log(event)
     })
   }, [comlink, telemetry])
 
