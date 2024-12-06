@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.4...visual-editing-v2.10.5) (2024-12-06)
+
+
+### Bug Fixes
+
+* **open-in-studio:** set `preview` correctly for hash router studios ([#2296](https://github.com/sanity-io/visual-editing/issues/2296)) ([97a243c](https://github.com/sanity-io/visual-editing/commit/97a243cf75e69eb3acda9507c9986eebc6657eec))
+
 ## [2.10.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.3...visual-editing-v2.10.4) (2024-12-05)
 
 
