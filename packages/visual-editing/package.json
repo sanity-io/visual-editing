@@ -102,6 +102,9 @@
     "src",
     "!src/**/stories/",
     "!src/**/*.md",
+    "!src/**/__tests__/",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
     "CHANGELOG.md"
   ],
   "scripts": {
@@ -112,8 +115,9 @@
     "dev": "pnpm run build:main && pnpm run build:svelte",
     "lint": "eslint --cache .",
     "prepack": "turbo run build",
+    "react-compiler-healthcheck": "(cd src && pnpx react-compiler-healthcheck@latest)",
     "storybook": "storybook dev -p 6006",
-    "test": "vitest --pass-with-no-tests --typecheck"
+    "test": "vitest --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "eslintConfig": {
@@ -121,6 +125,14 @@
       "@repo/eslint-config",
       "plugin:storybook/recommended"
     ],
+    "rules": {
+      "react-compiler/react-compiler": [
+        "error",
+        {
+          "__unstable_donotuse_reportAllBailouts": true
+        }
+      ]
+    },
     "root": true
   },
   "dependencies": {
