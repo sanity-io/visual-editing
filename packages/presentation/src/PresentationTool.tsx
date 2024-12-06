@@ -28,6 +28,7 @@ import {
 import {useDataset, useProjectId, type Path, type SanityDocument, type Tool} from 'sanity'
 import {useRouter, type RouterContextValue} from 'sanity/router'
 import {styled} from 'styled-components'
+import {useEffectEvent} from 'use-effect-event'
 import {
   COMMENTS_INSPECTOR_NAME,
   DEFAULT_TOOL_NAME,
@@ -218,6 +219,10 @@ export default function PresentationTool(props: {
     }
   }, [targetOrigin, isLoading])
 
+  const handleNavigate = useEffectEvent<typeof navigate>(
+    (nextState, nextSearchState, forceReplace) =>
+      navigate(nextState, nextSearchState, forceReplace),
+  )
   useEffect(() => {
     if (!controller) return
 
@@ -234,7 +239,7 @@ export default function PresentationTool(props: {
 
     comlink.on('visual-editing/focus', (data) => {
       if (!('id' in data)) return
-      navigate({
+      handleNavigate({
         type: data.type,
         id: data.id,
         path: data.path,
@@ -244,7 +249,7 @@ export default function PresentationTool(props: {
     comlink.on('visual-editing/navigate', (data) => {
       const {title, url} = data
       if (frameStateRef.current.url !== url) {
-        navigate({}, {preview: url})
+        handleNavigate({}, {preview: url})
       }
       frameStateRef.current = {title, url}
     })
@@ -290,7 +295,7 @@ export default function PresentationTool(props: {
       stop()
       setVisualEditingComlink(null)
     }
-  }, [controller, navigate, setDocumentsOnPage, setOverlaysConnection, targetOrigin])
+  }, [controller, handleNavigate, setDocumentsOnPage, setOverlaysConnection, targetOrigin])
 
   useEffect(() => {
     if (!controller) return
