@@ -1,8 +1,9 @@
 import type {ResponseQueryOptions} from '@sanity/client'
 import {match, type Path} from 'path-to-regexp'
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useClient} from 'sanity'
 import {useRouter, type RouterState} from 'sanity/router'
+import {useEffectEvent} from 'use-effect-event'
 import {API_VERSION} from './constants'
 import type {
   DocumentResolver,
@@ -25,14 +26,19 @@ function getQueryFromResult(
 ): string | undefined {
   if (resolver.resolve) {
     const filter = resolver.resolve(context)?.filter
-    return filter ? `*[${filter}][0]{_id, _type}` : undefined
+    return filter
+      ? `// groq
+*[${filter}][0]{_id, _type}`
+      : undefined
   }
 
   if ('type' in resolver) {
-    return `*[_type == "${resolver.type}"][0]{_id, _type}`
+    return `// groq
+*[_type == "${resolver.type}"][0]{_id, _type}`
   }
 
-  return `*[${fnOrObj(resolver.filter, context)}][0]{_id, _type}`
+  return `// groq
+*[${fnOrObj(resolver.filter, context)}][0]{_id, _type}`
 }
 
 function getParamsFromResult(
@@ -95,33 +101,47 @@ export function useMainDocument(props: {
   const {navigate, navigationHistory, path, previewUrl, resolvers = []} = props
   const {state: routerState} = useRouter()
   const client = useClient({apiVersion: API_VERSION})
+  const relativeUrl =
+    path || routerState._searchParams?.find(([key]) => key === 'preview')?.[1] || ''
 
   const [mainDocumentState, setMainDocumentState] = useState<MainDocumentState | undefined>(
     undefined,
   )
   const mainDocumentIdRef = useRef<string | undefined>(undefined)
 
-  const url = useMemo(() => {
-    const relativeUrl =
-      path || routerState._searchParams?.find(([key]) => key === 'preview')?.[1] || ''
+  const handleResponse = useEffectEvent((doc: MainDocument | undefined, url: URL) => {
+    if (!doc || mainDocumentIdRef.current !== doc._id) {
+      setMainDocumentState({
+        document: doc,
+        path: url.pathname,
+      })
+      mainDocumentIdRef.current = doc?._id
 
+      // We only want to force a navigation to the main document if
+      // the path changed but the document ID did not. An explicit
+      // document navigation should take precedence over displaying
+      // the main document. We determine if an explicit document
+      // navigation has occured by comparing the IDs of the last two
+      // resultant navigation states.
+      if (navigationHistory.at(-1)?.['id'] === navigationHistory.at(-2)?.['id']) {
+        navigate?.({
+          id: doc?._id,
+          type: doc?._type,
+        })
+      }
+    }
+  })
+
+  useEffect(() => {
     const base =
       typeof previewUrl === 'string'
         ? previewUrl
         : typeof previewUrl === 'object'
           ? previewUrl?.origin || location.origin
           : location.origin
+    const url = new URL(relativeUrl, base)
 
-    return new URL(relativeUrl, base)
-  }, [path, previewUrl, routerState._searchParams])
-
-  const clearState = useCallback(() => {
-    setMainDocumentState(undefined)
-    mainDocumentIdRef.current = undefined
-  }, [])
-
-  useEffect(() => {
-    if (resolvers.length && url) {
+    if (resolvers.length) {
       let result:
         | {
             context: DocumentResolverContext
@@ -150,28 +170,7 @@ export function useMainDocument(props: {
 
           client
             .fetch<MainDocument | undefined>(query, params, options)
-            .then((doc) => {
-              if (!doc || mainDocumentIdRef.current !== doc._id) {
-                setMainDocumentState({
-                  document: doc,
-                  path: url.pathname,
-                })
-                mainDocumentIdRef.current = doc?._id
-
-                // We only want to force a navigation to the main document if
-                // the path changed but the document ID did not. An explicit
-                // document navigation should take precedence over displaying
-                // the main document. We determine if an explicit document
-                // navigation has occured by comparing the IDs of the last two
-                // resultant navigation states.
-                if (navigationHistory.at(-1)?.['id'] === navigationHistory.at(-2)?.['id']) {
-                  navigate?.({
-                    id: doc?._id,
-                    type: doc?._type,
-                  })
-                }
-              }
-            })
+            .then((doc) => handleResponse(doc, url))
             .catch((e) => {
               if (e instanceof Error && e.name === 'AbortError') return
               setMainDocumentState({document: undefined, path: url.pathname})
@@ -183,9 +182,10 @@ export function useMainDocument(props: {
         }
       }
     }
-    clearState()
+    setMainDocumentState(undefined)
+    mainDocumentIdRef.current = undefined
     return undefined
-  }, [client, clearState, navigate, navigationHistory, resolvers, url])
+  }, [client, handleResponse, previewUrl, relativeUrl, resolvers])
 
   return mainDocumentState
 }
