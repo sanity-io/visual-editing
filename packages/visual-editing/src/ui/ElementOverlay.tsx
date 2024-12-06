@@ -27,6 +27,7 @@ import type {
   SanityNode,
   SanityStegaNode,
 } from '../types'
+import {getLinkHref} from '../util/getLinkHref'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
 import {useSchema} from './schema/useSchema'
 
@@ -324,7 +325,7 @@ const Link = memo(function Link(props: {href: string}) {
     }, []),
     () => window.location.href,
   )
-  const href = useLinkHref(props.href, referer)
+  const href = useMemo(() => getLinkHref(props.href, referer), [props.href, referer])
 
   return (
     <Box as="a" href={href} target="_blank" rel="noopener noreferrer">
@@ -336,15 +337,3 @@ const Link = memo(function Link(props: {href: string}) {
     </Box>
   )
 })
-
-function useLinkHref(href: string, referer: string) {
-  return useMemo(() => {
-    try {
-      const parsed = new URL(href, typeof location === 'undefined' ? undefined : location.origin)
-      parsed.searchParams.set('preview', referer)
-      return parsed.toString()
-    } catch {
-      return href
-    }
-  }, [href, referer])
-}
