@@ -1,7 +1,6 @@
 import {Page, sectionFragment} from '@/components/page'
 import {sanityFetch} from '@/sanity/live'
 import {defineQuery} from 'next-sanity'
-import {notFound} from 'next/navigation'
 
 const frontPageQuery = defineQuery(`
   *[_id == "siteSettings"][0]{
