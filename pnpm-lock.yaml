@@ -1483,8 +1483,8 @@ importers:
         specifier: workspace:*
         version: link:../comlink
       '@sanity/mutate':
-        specifier: 0.11.0-canary.3
-        version: 0.11.0-canary.3(xstate@5.19.0)
+        specifier: 0.11.1
+        version: 0.11.1(debug@4.4.0)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -4515,15 +4515,6 @@ packages:
   '@sanity/migrate@3.66.0':
     resolution: {integrity: sha512-f3jMGiGUBVS0A7S8T1znENDDCTLDCqzUcIMbiFTolFhOBXu1pnmXP1wlZFCUtZ1mQDP5lTosEDDyIBcor8ZtgQ==}
     engines: {node: '>=18'}
-
-  '@sanity/mutate@0.11.0-canary.3':
-    resolution: {integrity: sha512-zZQo3rsjsTZBlRi+D3S90MebvzWNtdRzb6A0s07gEO2PtCtc5LEUSyPCLvIZiv6e2YMjBmMmuref4IB8VixKnw==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      xstate: ^5.19.0
-    peerDependenciesMeta:
-      xstate:
-        optional: true
 
   '@sanity/mutate@0.11.1':
     resolution: {integrity: sha512-72chdEK8s9h1BLE/n7tOkCOGnrfFV/cH1fpvH/PpcxhpUY7wg6vvL7/durpXLEchWCO1ToS5DcFrCfmy1iKOrw==}
@@ -17274,19 +17265,6 @@ snapshots:
       p-map: 7.0.2
     transitivePeerDependencies:
       - supports-color
-
-  '@sanity/mutate@0.11.0-canary.3(xstate@5.19.0)':
-    dependencies:
-      '@sanity/client': 6.24.1(debug@4.4.0)
-      '@sanity/diff-match-patch': 3.1.1
-      hotscript: 1.0.13
-      lodash: 4.17.21
-      mendoza: 3.0.8
-      rxjs: 7.8.1
-    optionalDependencies:
-      xstate: 5.19.0
-    transitivePeerDependencies:
-      - debug
 
   '@sanity/mutate@0.11.1(debug@4.4.0)':
     dependencies:
