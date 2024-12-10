@@ -1,7 +1,9 @@
 <script lang="ts">
   import {PortableText} from '@portabletext/svelte'
+  import type {SanityDocument} from '@sanity/client'
   import {stegaClean} from '@sanity/client/stega'
   import {createDataAttribute} from '@sanity/visual-editing'
+  import {useOptimistic} from '@sanity/visual-editing/svelte'
   import {page} from '$app/stores'
   import type {ShoeResult} from '$lib/queries'
   import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
@@ -13,7 +15,19 @@
 
   const parentPath = $page.url.pathname.split('/').slice(0, -1).join('/')
 
-  $: [coverImage, ...otherImages] = product?.media || []
+  const {value: media, update: updateMedia} = useOptimistic<
+    ShoeResult['media'],
+    SanityDocument<ShoeResult>
+  >(product.media, (state, action) => {
+    if (action.id === product._id && action.document.media) {
+      return action.document.media
+    }
+    return state
+  })
+
+  $: updateMedia(product.media)
+
+  $: [coverImage, ...otherImages] = $media || []
 </script>
 
 <svelte:head>
