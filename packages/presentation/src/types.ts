@@ -301,3 +301,5 @@ export type VisualEditingConnection = ChannelInstance<
  * @internal
  */
 export type LoaderConnection = ChannelInstance<LoaderControllerMsg, LoaderNodeMsg>
+
+export type ConnectionStatus = 'connected' | 'connecting' | 'reconnecting' | 'idle'

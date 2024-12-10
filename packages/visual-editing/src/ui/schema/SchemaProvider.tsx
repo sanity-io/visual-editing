@@ -90,10 +90,18 @@ export const SchemaProvider: FunctionComponent<
     [comlink],
   )
   useEffect(() => {
-    const controller = new AbortController()
-    fetchSchema(controller.signal)
-    return () => controller.abort()
-  }, [fetchSchema])
+    if (!comlink) return
+
+    const schemaFetch = new AbortController()
+    const unsub = comlink.onStatus(() => {
+      fetchSchema(schemaFetch.signal)
+    }, 'connected')
+
+    return () => {
+      schemaFetch.abort()
+      unsub()
+    }
+  }, [comlink, fetchSchema])
 
   const reportedPathsRef = useRef<UnresolvedPath[]>([])
 

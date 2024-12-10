@@ -1,5 +1,6 @@
-import type {Status, StatusEvent} from '@sanity/comlink'
+import type {StatusEvent} from '@sanity/comlink'
 import {useCallback, useMemo, useState} from 'react'
+import type {ConnectionStatus} from './types'
 
 /**
  * A hook that manages and returns the connection status of multiple channels
@@ -16,10 +17,10 @@ import {useCallback, useMemo, useState} from 'react'
  * The function to update the status takes a `StatusEvent` object which includes
  * the channel and the status
  */
-export function useStatus(): [string, (event: StatusEvent) => void] {
+export function useStatus(): [ConnectionStatus, (event: StatusEvent) => void] {
   // State to keep track of the status of each channel
   const [statusMap, setStatusMap] = useState(
-    new Map<string, {status: Status; hasConnected: boolean}>(),
+    new Map<string, {status: ConnectionStatus; hasConnected: boolean}>(),
   )
 
   // Memoized computation of the overall status based on the status of individual channels
@@ -30,7 +31,7 @@ export function useStatus(): [string, (event: StatusEvent) => void] {
       return 'connected'
     }
     // If the initial connection is being established, return `connecting` status
-    const handshaking = values.filter(({status}) => status === 'handshaking')
+    const handshaking = values.filter(({status}) => status === 'connecting')
     if (handshaking.length) {
       return handshaking.some(({hasConnected}) => !hasConnected) ? 'connecting' : 'reconnecting'
     }
@@ -49,7 +50,8 @@ export function useStatus(): [string, (event: StatusEvent) => void] {
         // Update the status and connection flag for the channel
         const hasConnected =
           next.get(event.connection)?.hasConnected || event.status === 'connected'
-        next.set(event.connection, {status: event.status, hasConnected})
+        const status = event.status === 'handshaking' ? 'connecting' : event.status
+        next.set(event.connection, {status, hasConnected})
       }
       return next
     })

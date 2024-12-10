@@ -1,6 +1,7 @@
 export * from './plugin'
 export type {
   CombinedSearchParams,
+  ConnectionStatus,
   ContextFn,
   DocumentLocation,
   DocumentLocationResolver,

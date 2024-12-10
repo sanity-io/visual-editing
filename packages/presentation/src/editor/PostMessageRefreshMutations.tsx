@@ -1,15 +1,14 @@
-import type {Status} from '@sanity/comlink'
 import {memo, startTransition, useEffect, useMemo, useState} from 'react'
 import {type SanityDocument} from 'sanity'
 import {getPublishedId, useEditState} from '../internals'
-import type {VisualEditingConnection} from '../types'
+import type {ConnectionStatus, VisualEditingConnection} from '../types'
 
 export interface PostMessageRefreshMutationsProps {
   id: string
   type: string
   comlink: VisualEditingConnection
-  previewKitConnection: Status
-  loadersConnection: Status
+  previewKitConnection: ConnectionStatus
+  loadersConnection: ConnectionStatus
 }
 
 function PostMessageRefreshMutations(props: PostMessageRefreshMutationsProps): React.ReactNode {
