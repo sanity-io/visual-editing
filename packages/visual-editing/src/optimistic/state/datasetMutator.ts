@@ -11,7 +11,8 @@ import {
   type DocumentMutatorMachineParentEvent,
 } from '@sanity/mutate/_unstable_machine'
 import {assertEvent, assign, emit, setup, stopChild, type ActorRefFrom} from 'xstate'
-import type {createDocumentMutator} from '../../comlink'
+import type {VisualEditingNode} from '../../types'
+import {createDocumentMutator} from './documentMutator'
 
 export interface DatasetMutatorMachineInput extends Omit<DocumentMutatorMachineInput, 'id'> {
   client: SanityClient
@@ -118,3 +119,12 @@ export const datasetMutatorMachine = setup({
     pristine: {},
   },
 })
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const createDatasetMutator = (comlink: VisualEditingNode) => {
+  return datasetMutatorMachine.provide({
+    actors: {
+      documentMutatorMachine: createDocumentMutator(comlink),
+    },
+  })
+}

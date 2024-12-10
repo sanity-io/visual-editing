@@ -6,7 +6,7 @@ import {
   listeners,
   type EmptyActor,
   type MutatorActor,
-} from './context'
+} from '../optimistic/context'
 
 export function useOptimisticActor(): MutatorActor | EmptyActor {
   const subscribe = useCallback((listener: () => void) => {

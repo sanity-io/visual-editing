@@ -2,7 +2,7 @@ import type {SanityNode} from '@repo/visual-editing-helpers'
 import type {SanityDocument} from '@sanity/client'
 import {at, insert, truncate, type NodePatchList} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
-import type {OptimisticDocument} from '../ui/optimistic-state'
+import type {OptimisticDocument} from '../optimistic/types'
 import {randomKey} from './randomKey'
 
 export function getArrayItemKeyAndParentPath(pathOrNode: string | SanityNode): {
