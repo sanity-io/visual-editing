@@ -1,5 +1,5 @@
 import {createEmptyActor, type ActorRefFrom} from 'xstate'
-import {createDatasetMutator} from '../comlink'
+import {createDatasetMutator} from './state/datasetMutator'
 
 export type MutatorActor = ActorRefFrom<ReturnType<typeof createDatasetMutator>>
 export type EmptyActor = typeof emptyActor
