@@ -20,6 +20,7 @@ import {
   type FunctionComponent,
 } from 'react'
 import {styled} from 'styled-components'
+import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor.ts'
 import type {
   OverlayComponentResolver,
   OverlayEventHandler,
@@ -31,7 +32,6 @@ import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
-import {useOptimisticActor, useOptimisticActorReady} from './optimistic-state/useOptimisticActor'
 import {OverlayDragGroupRect} from './OverlayDragGroupRect'
 import {OverlayDragInsertMarker} from './OverlayDragInsertMarker'
 import {OverlayDragPreview} from './OverlayDragPreview'

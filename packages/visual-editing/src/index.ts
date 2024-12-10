@@ -53,19 +53,6 @@ export type {
   VisualEditingOptions,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
-export type {DatasetMutatorMachineInput} from './ui/optimistic-state/machines/datasetMutatorMachine'
-export {
-  type DocumentsGet,
-  type DocumentsMutate,
-  type OptimisticDocument,
-  type OptimisticDocumentPatches,
-  type OptimisticReducer,
-  type OptimisticReducerAction,
-  type Path,
-  type PathValue,
-  useDocuments,
-  useOptimistic,
-} from './ui/optimistic-state'
 export {useSharedState} from './ui/shared-state/useSharedState'
 export {
   type CreateDataAttribute,
@@ -89,3 +76,22 @@ export {
   createDataAttribute,
 } from '@repo/visual-editing-helpers'
 export {getArrayItemKeyAndParentPath} from './util/mutations'
+
+/**
+ * Deprecated exports: React specific exports moved to `/react`. Generic
+ * optimistic type exports moved to `/optimistic`.
+ * @todo How can these be marked as deprecated OR remove and major?
+ */
+export {useDocuments} from './react/useDocuments'
+export {useOptimistic} from './react/useOptimistic'
+export type {DatasetMutatorMachineInput} from './optimistic/state/datasetMutator'
+export type {
+  DocumentsGet,
+  DocumentsMutate,
+  OptimisticDocument,
+  OptimisticDocumentPatches,
+  OptimisticReducer,
+  OptimisticReducerAction,
+  Path,
+  PathValue,
+} from './optimistic/types'

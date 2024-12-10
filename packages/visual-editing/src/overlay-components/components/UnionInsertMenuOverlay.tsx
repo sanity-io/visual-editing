@@ -11,8 +11,8 @@ import {
   type MouseEvent,
 } from 'react'
 import {styled} from 'styled-components'
+import {useDocuments} from '../../react/useDocuments'
 import type {ElementNode, OverlayComponent} from '../../types'
-import {useDocuments} from '../../ui/optimistic-state/useDocuments'
 import {getArrayInsertPatches} from '../../util/mutations'
 import {InsertMenuPopover} from './InsertMenu'
 
