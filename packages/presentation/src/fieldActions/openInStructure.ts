@@ -10,6 +10,7 @@ import {
   type DocumentFieldActionItem,
 } from '../internals'
 import {PresentationContext} from '../PresentationContext'
+import {DEFAULT_TOOL_NAME} from '../constants'
 
 export const openInStructure = defineDocumentFieldAction({
   name: 'presentation/openInStructure',
@@ -19,8 +20,14 @@ export const openInStructure = defineDocumentFieldAction({
     const presentation = useContext(PresentationContext)
 
     const defaultStructureTool = useMemo(
-      () => findStructureTool(workspace.tools, documentId, documentType),
-      [documentId, documentType, workspace.tools],
+      () =>
+        findStructureTool(
+          workspace.tools,
+          documentId,
+          documentType,
+          presentation?.name || DEFAULT_TOOL_NAME,
+        ),
+      [documentId, documentType, workspace.tools, presentation],
     )
 
     return {
@@ -45,20 +52,23 @@ function findStructureTool(
   tools: Tool[],
   documentId: string,
   documentType: string,
+  presentationToolName?: string,
 ): Tool | undefined {
-  const results = tools.map((t) => {
-    const match = t.canHandleIntent?.(
-      'edit',
-      {
-        id: documentId,
-        type: documentType,
-        mode: 'structure',
-      },
-      {},
-    )
+  const results = tools
+    .filter((t) => t.name !== presentationToolName)
+    .map((t) => {
+      const match = t.canHandleIntent?.(
+        'edit',
+        {
+          id: documentId,
+          type: documentType,
+          mode: 'structure',
+        },
+        {},
+      )
 
-    return {tool: t, match}
-  })
+      return {tool: t, match}
+    })
 
   const modeMatches = results.filter((t) => isRecord(t.match) && t.match['mode'])
 
