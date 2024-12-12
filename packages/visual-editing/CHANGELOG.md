@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.6...visual-editing-v2.10.7) (2024-12-12)
+
+
+### Bug Fixes
+
+* support astro 5 ([f4911ff](https://github.com/sanity-io/visual-editing/commit/f4911ffb39be83ae7eaeb32a4463b5b0920cd2c2))
+
 ## [2.10.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.5...visual-editing-v2.10.6) (2024-12-09)
 
 
