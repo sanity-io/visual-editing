@@ -201,6 +201,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
           : 'previewDrafts'
         : 'published')
     const useCdn = perspective === 'published'
+    const revalidate =
+      (fetchOptions?.revalidate ?? process.env.NODE_ENV === 'production') ? false : undefined
 
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, await params, {
@@ -208,10 +210,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
-      next: {
-        revalidate: fetchOptions?.revalidate,
-        tags: ['sanity:fetch-sync-tags'],
-      },
+      next: {revalidate, tags: ['sanity:fetch-sync-tags']},
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
       tag: [tag, 'fetch-sync-tags'].filter(Boolean).join('.'),
@@ -224,30 +223,12 @@ export function defineLive(config: DefineSanityLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega,
       token: perspective !== 'published' && serverToken ? serverToken : originalToken,
-      next: {
-        revalidate:
-          (fetchOptions?.revalidate ?? process.env.NODE_ENV === 'production') ? false : undefined,
-        tags,
-      },
-      // this is a bit of a hack, but it works as a cache buster for now in case next.js gets "stuck" and doesn't pick up on new/changed/removed tags related to a query
-      // lastLiveEventId: syncTags?.map((tag) => tag.replace('s1:', '')).join(''),
-      // Hash the syncTags to create a consistent, short lastLiveEventId
-      lastLiveEventId: syncTags ? await hashSyncTags(syncTags) : undefined,
+      next: {revalidate, tags},
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
       tag,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags}
-  }
-  // Helper function to hash syncTags using Web Crypto
-  async function hashSyncTags(syncTags: string[]): Promise<string> {
-    const input = syncTags.map((tag) => tag.replace('s1:', '')).join('')
-    const encoder = new TextEncoder()
-    const data = encoder.encode(input)
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-    const hashArray = Array.from(new Uint8Array(hashBuffer))
-    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
-    return hashHex.slice(0, 16)
   }
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
