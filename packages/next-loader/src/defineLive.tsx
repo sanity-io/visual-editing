@@ -210,7 +210,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       returnQuery: false,
       next: {
         revalidate: fetchOptions?.revalidate,
-        // tags: ['sanity'],
+        tags: ['sanity:fetch-sync-tags'],
       },
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
