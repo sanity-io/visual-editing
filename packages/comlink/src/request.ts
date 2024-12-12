@@ -135,6 +135,9 @@ export const createRequestMachine = <
         const {message} = params
 
         sources.forEach((source) => {
+          console.log(`DEBUG: Attempting postMessage to ${targetOrigin}`)
+          console.log(`DEBUG: Source is iframe: ${(source as any).top !== (source as any).self}`)
+
           source.postMessage(message, {targetOrigin})
         })
       },
