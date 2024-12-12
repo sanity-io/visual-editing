@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.4...next-loader-v1.2.5) (2024-12-12)
+
+
+### Bug Fixes
+
+* make sure fetch-sync-tags request is cached ([660f098](https://github.com/sanity-io/visual-editing/commit/660f098f163cfa98da799bbfc2975e89f29cdeaa))
+
 ## [1.2.4](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.3...next-loader-v1.2.4) (2024-12-12)
 
 
