@@ -16,6 +16,8 @@ import {sanitizePerspective} from '../utils'
 // }
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
+  await revalidateTag('sanity:fetch-sync-tags')
+
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
     await revalidateTag(tag)
