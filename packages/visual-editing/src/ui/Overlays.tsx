@@ -133,7 +133,7 @@ const OverlaysController: FunctionComponent<{
         dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
 
         if (insertPosition) {
-          sendTelemetry('Visual Editing Drag Sequence Complete', null, comlink)
+          sendTelemetry('Visual Editing Drag Sequence Completed', null, comlink)
         }
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)

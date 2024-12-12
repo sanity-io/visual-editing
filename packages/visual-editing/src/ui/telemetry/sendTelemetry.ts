@@ -2,8 +2,8 @@ import {defineEvent} from '@sanity/telemetry'
 import type {VisualEditingNode} from '../../types'
 
 const events = {
-  'Visual Editing Drag Sequence Complete': defineEvent({
-    name: 'Visual Editing Drag Sequence Complete',
+  'Visual Editing Drag Sequence Completed': defineEvent({
+    name: 'Visual Editing Drag Sequence Completed',
     description: 'An array is successfully reordered using drag and drop.',
     version: 1,
   }),
