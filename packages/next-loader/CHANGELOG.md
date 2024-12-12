@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.3...next-loader-v1.2.4) (2024-12-12)
+
+
+### Bug Fixes
+
+* **live:** cache sync tag fetch ([#2311](https://github.com/sanity-io/visual-editing/issues/2311)) ([4a8cfec](https://github.com/sanity-io/visual-editing/commit/4a8cfec91bf6b6fd9311e35c84c42ee16bce78dd))
+
 ## [1.2.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.2...next-loader-v1.2.3) (2024-12-05)
 
 
