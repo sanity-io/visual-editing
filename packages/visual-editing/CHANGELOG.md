@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.9...visual-editing-v2.10.10) (2024-12-16)
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2318](https://github.com/sanity-io/visual-editing/issues/2318)) ([6cf2417](https://github.com/sanity-io/visual-editing/commit/6cf2417e18f62ce140160634a4c47c26c26914e1))
+
 ## [2.10.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.8...visual-editing-v2.10.9) (2024-12-16)
 
 
