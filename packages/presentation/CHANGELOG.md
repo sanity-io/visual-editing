@@ -12,6 +12,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.9](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.8...presentation-v1.19.9) (2024-12-16)
+
+
+### Bug Fixes
+
+* **visual-editing:** execute fetches after node connect event ([#2308](https://github.com/sanity-io/visual-editing/issues/2308)) ([c29a4b3](https://github.com/sanity-io/visual-editing/commit/c29a4b376f952badf87159c60f5e95fb1d87da7c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.2
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.8
+
 ## [1.19.8](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.7...presentation-v1.19.8) (2024-12-09)
 
 
