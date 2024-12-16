@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.8...visual-editing-helpers-v0.7.9) (2024-12-16)
+
+
+### Bug Fixes
+
+* add visual-editing telemetry ([#2263](https://github.com/sanity-io/visual-editing/issues/2263)) ([8d2fd18](https://github.com/sanity-io/visual-editing/commit/8d2fd18dfd5bd99d8953acb2d47999892c38eb5d))
+
 ## [0.7.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.7...visual-editing-helpers-v0.7.8) (2024-12-16)
 
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.10.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.8...visual-editing-v2.10.9) (2024-12-16)
+
+
+### Bug Fixes
+
+* add visual-editing telemetry ([#2263](https://github.com/sanity-io/visual-editing/issues/2263)) ([8d2fd18](https://github.com/sanity-io/visual-editing/commit/8d2fd18dfd5bd99d8953acb2d47999892c38eb5d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.9
+
 ## [2.10.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.7...visual-editing-v2.10.8) (2024-12-16)
 
 

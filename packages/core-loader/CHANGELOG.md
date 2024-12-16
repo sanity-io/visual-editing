@@ -18,6 +18,15 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.7.21](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.20...core-loader-v1.7.21) (2024-12-16)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.9
+
 ## [1.7.20](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.19...core-loader-v1.7.20) (2024-12-16)
 
 

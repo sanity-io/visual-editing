@@ -12,6 +12,20 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.10](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.9...presentation-v1.19.10) (2024-12-16)
+
+
+### Bug Fixes
+
+* add visual-editing telemetry ([#2263](https://github.com/sanity-io/visual-editing/issues/2263)) ([8d2fd18](https://github.com/sanity-io/visual-editing/commit/8d2fd18dfd5bd99d8953acb2d47999892c38eb5d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.9
+
 ## [1.19.9](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.8...presentation-v1.19.9) (2024-12-16)
 
 
