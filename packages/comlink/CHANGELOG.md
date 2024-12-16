@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.1...comlink-v2.0.2) (2024-12-16)
+
+
+### Bug Fixes
+
+* **visual-editing:** execute fetches after node connect event ([#2308](https://github.com/sanity-io/visual-editing/issues/2308)) ([c29a4b3](https://github.com/sanity-io/visual-editing/commit/c29a4b376f952badf87159c60f5e95fb1d87da7c))
+
 ## [2.0.1](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.0...comlink-v2.0.1) (2024-12-05)
 
 
