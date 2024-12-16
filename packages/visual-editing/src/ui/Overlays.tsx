@@ -40,6 +40,7 @@ import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
 import {SharedStateProvider} from './shared-state/SharedStateProvider.tsx'
+import {sendTelemetry} from './telemetry/sendTelemetry.ts'
 import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
@@ -128,7 +129,12 @@ const OverlaysController: FunctionComponent<{
         comlink?.post('visual-editing/toggle', {enabled: false})
       } else if (message.type === 'overlay/dragEnd') {
         const {insertPosition, target, dragGroup, flow, preventInsertDefault} = message
+
         dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
+
+        if (insertPosition) {
+          sendTelemetry('Visual Editing Drag Sequence Completed', null, comlink)
+        }
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
 

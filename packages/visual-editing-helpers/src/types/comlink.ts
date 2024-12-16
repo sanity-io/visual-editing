@@ -272,6 +272,15 @@ export type VisualEditingNodeMsg =
         state: SerializableObject
       }
     }
+  | {
+      type: 'visual-editing/telemetry-log'
+      data: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        event: any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data: any
+      }
+    }
 
 /**
  * @public
