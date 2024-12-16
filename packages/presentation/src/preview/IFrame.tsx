@@ -3,7 +3,7 @@ import {motion, type VariantLabels, type Variants} from 'framer-motion'
 import {forwardRef, useId, type ReactEventHandler} from 'react'
 import {styled} from 'styled-components'
 
-const IFrameElement = motion(styled.iframe`
+const IFrameElement = motion.create(styled.iframe`
   box-shadow: 0 0 0 1px var(--card-border-color);
   border: 0;
   max-height: 100%;

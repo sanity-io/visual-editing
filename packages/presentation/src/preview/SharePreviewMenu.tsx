@@ -54,9 +54,9 @@ const StyledSanityMonogram = styled(SanityMonogram)`
   width: ${QrCodeLogoSize}px;
 `
 
-const MotionSpinner = motion(Spinner)
-const MotionText = motion(Text)
-const MotionMonogram = motion(StyledSanityMonogram)
+const MotionSpinner = motion.create(Spinner)
+const MotionText = motion.create(Text)
+const MotionMonogram = motion.create(StyledSanityMonogram)
 
 export const SharePreviewMenu = memo(function SharePreviewMenuComponent(
   props: SharePreviewMenuProps,

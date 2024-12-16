@@ -43,7 +43,7 @@ import {usePresentationTool} from '../usePresentationTool'
 import {IFrame} from './IFrame'
 import {usePresentationPreviewHeader} from './PreviewHeader'
 
-const MotionFlex = motion(Flex)
+const MotionFlex = motion.create(Flex)
 
 export interface PreviewProps extends Pick<PresentationState, 'iframe' | 'visualEditing'> {
   canSharePreviewAccess: boolean
