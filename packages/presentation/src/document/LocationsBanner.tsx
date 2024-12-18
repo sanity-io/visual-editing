@@ -42,6 +42,7 @@ export function LocationsBanner(props: {
 
   const {t} = useTranslation(presentationLocaleNamespace)
   const presentation = useContext(PresentationContext)
+  const presentationName = presentation?.name
   const [expanded, setExpanded] = useState(false)
   const toggle = useCallback(() => {
     if (!len) return
@@ -110,7 +111,7 @@ export function LocationsBanner(props: {
               {locations.map((l, index) => (
                 <LocationItem
                   active={
-                    (options.name || DEFAULT_TOOL_NAME) === presentation?.name &&
+                    (options.name || DEFAULT_TOOL_NAME) === presentationName &&
                     l.href === presentation?.params.preview
                   }
                   documentId={documentId}
