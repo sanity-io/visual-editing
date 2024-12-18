@@ -58,6 +58,15 @@ export function CustomNavigator() {
               <Text>Highline</Text>
             </Stack>
           </Card>
+          <Card
+            as="button"
+            onClick={() => navigate('/dnd')}
+            padding={3}
+            pressed={preview === '/dnd'}
+            radius={2}
+          >
+            <Text>DnD</Text>
+          </Card>
         </Stack>
         <Stack padding={2} space={1}>
           <MenuButton
