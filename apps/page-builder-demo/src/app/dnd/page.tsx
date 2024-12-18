@@ -2,6 +2,7 @@ import {DnDCustomBehaviour} from '@/components/page/DnDCustomBehaviour'
 import {sanityFetch} from '@/sanity/live'
 import {stegaClean} from '@sanity/client/stega'
 import {createDataAttribute, defineQuery} from 'next-sanity'
+import {OptimisticSortOrder} from './OptimisticSortOrder'
 
 const dndPageQuery = defineQuery(`
   *[_type == "dndTestPage"]{
@@ -11,13 +12,11 @@ const dndPageQuery = defineQuery(`
   }[0]
 `)
 export default async function Page() {
-  const {data} = (await sanityFetch({query: dndPageQuery})) as unknown as {
-    data: {
-      _id: string
-      title: string
-      children: Array<any>
-    }
-  }
+  const {data} = await sanityFetch({query: dndPageQuery})
+
+  if (!data) return <h1>404 No dndTestPage found</h1>
+
+  const snapshot = data.children?.map((child) => child._key) || []
   return (
     <>
       <DnDCustomBehaviour />
@@ -26,8 +25,12 @@ export default async function Page() {
         {/* Vertical */}
         <section className="mt-6">
           <h2>Vertical (Flow Auto Calculated)</h2>
-          <div className="mt-4 flex flex-col gap-4">
-            {data.children.map((child) => (
+          <OptimisticSortOrder
+            className="mt-4 flex flex-col gap-4"
+            id={data._id}
+            snapshot={snapshot}
+          >
+            {data.children?.map((child) => (
               <a
                 data-sanity={createDataAttribute({
                   id: data._id,
@@ -39,9 +42,13 @@ export default async function Page() {
                 key={child._key}
               >
                 <p>{child.title}</p>
-                <div>
-                  {child.childrenStrings &&
-                    child.childrenStrings.map((s: string, i: number) => (
+                {child.childrenStrings && (
+                  <OptimisticSortOrder
+                    id={data._id}
+                    snapshot={snapshot}
+                    path={['children', {_key: child._key}, 'childrenStrings']}
+                  >
+                    {child.childrenStrings.map((s: string, i: number) => (
                       <span
                         data-sanity={createDataAttribute({
                           id: data._id,
@@ -53,16 +60,21 @@ export default async function Page() {
                         {s}
                       </span>
                     ))}
-                </div>
+                  </OptimisticSortOrder>
+                )}
               </a>
             ))}
-          </div>
+          </OptimisticSortOrder>
         </section>
         {/* Horizontal */}
         <section className="mt-6">
           <h2>Horizontal (Flow Auto Calculated)</h2>
-          <div className="mt-4 flex flex-row gap-4">
-            {data.children.map((child) => (
+          <OptimisticSortOrder
+            className="mt-4 flex flex-row gap-4"
+            id={data._id}
+            snapshot={snapshot}
+          >
+            {data.children?.map((child) => (
               <div
                 data-sanity={createDataAttribute({
                   id: data._id,
@@ -76,61 +88,94 @@ export default async function Page() {
                 <p>{stegaClean(child.title)}</p>
               </div>
             ))}
-          </div>
+          </OptimisticSortOrder>
         </section>
         {/* Nested + Drag Groups */}
         <section className="mt-6">
           <h2>Nested (Flow Auto Calculated)</h2>
-          {data.children.map((child) => (
-            <div
-              data-sanity={createDataAttribute({
-                id: data._id,
-                type: 'dndTestPage',
-                path: `children[_key=="${child._key}"]`,
-              }).toString()}
-              data-sanity-drag-group="nested-flow-auto-calculated"
-              className="mt-4 border border-solid border-white p-3"
-              key={child._key}
-            >
-              {stegaClean(child.title)}
-              {child.children &&
-                child.children.map((child1: any) => (
-                  <div
+          <OptimisticSortOrder id={data._id} snapshot={snapshot}>
+            {data.children?.map((child) => (
+              <div
+                data-sanity={createDataAttribute({
+                  id: data._id,
+                  type: 'dndTestPage',
+                  path: `children[_key=="${child._key}"]`,
+                }).toString()}
+                data-sanity-drag-group="nested-flow-auto-calculated"
+                className="mt-4 border border-solid border-white p-3"
+                key={child._key}
+              >
+                {stegaClean(child.title)}
+                {child.children && (
+                  <OptimisticSortOrder
                     data-sanity={createDataAttribute({
                       id: data._id,
                       type: 'dndTestPage',
-                      path: `children[_key=="${child._key}"].children[_key=="${child1._key}"]`,
+                      path: `children[_key=="${child._key}"]`,
                     }).toString()}
+                    data-sanity-drag-group="nested-flow-auto-calculated"
                     className="mt-4 border border-solid border-white p-3"
-                    key={child1._key}
+                    key={child._key}
+                    id={data._id}
+                    snapshot={snapshot}
+                    path={['children', {_key: child._key}, 'children']}
                   >
-                    {stegaClean(child1.title)}
-                    <div className="flew-row flex gap-3">
-                      {child1.children &&
-                        child1.children.map((child2: any) => (
-                          <div
-                            data-sanity={createDataAttribute({
-                              id: data._id,
-                              type: 'dndTestPage',
-                              path: `children[_key=="${child._key}"].children[_key=="${child1._key}"].children[_key=="${child2._key}"]`,
-                            }).toString()}
-                            className="mt-4 border border-solid border-white p-3"
-                            key={child2._key}
+                    {child.children.map((child1: any) => (
+                      <div
+                        data-sanity={createDataAttribute({
+                          id: data._id,
+                          type: 'dndTestPage',
+                          path: `children[_key=="${child._key}"].children[_key=="${child1._key}"]`,
+                        }).toString()}
+                        className="mt-4 border border-solid border-white p-3"
+                        key={child1._key}
+                      >
+                        {stegaClean(child1.title)}
+                        {child1.children && (
+                          <OptimisticSortOrder
+                            className="flew-row flex gap-3"
+                            id={data._id}
+                            snapshot={snapshot}
+                            path={[
+                              'children',
+                              {_key: child._key},
+                              'children',
+                              {_key: child1._key},
+                              'children',
+                            ]}
                           >
-                            {stegaClean(child2.title)}
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                ))}
-            </div>
-          ))}
+                            {child1.children.map((child2: any) => (
+                              <div
+                                data-sanity={createDataAttribute({
+                                  id: data._id,
+                                  type: 'dndTestPage',
+                                  path: `children[_key=="${child._key}"].children[_key=="${child1._key}"].children[_key=="${child2._key}"]`,
+                                }).toString()}
+                                className="mt-4 border border-solid border-white p-3"
+                                key={child2._key}
+                              >
+                                {stegaClean(child2.title)}
+                              </div>
+                            ))}
+                          </OptimisticSortOrder>
+                        )}
+                      </div>
+                    ))}
+                  </OptimisticSortOrder>
+                )}
+              </div>
+            ))}
+          </OptimisticSortOrder>
         </section>
         {/* Complex Layout */}
         <section className="mt-6">
           <h2>Complex Layout</h2>
-          <div className="mt-4 grid grid-cols-3 gap-4">
-            {data.children.map((child, index) => (
+          <OptimisticSortOrder
+            className="mt-4 grid grid-cols-3 gap-4"
+            id={data._id}
+            snapshot={snapshot}
+          >
+            {data.children?.map((child, index) => (
               <div
                 data-sanity={createDataAttribute({
                   id: data._id,
@@ -151,13 +196,17 @@ export default async function Page() {
                 </p>
               </div>
             ))}
-          </div>
+          </OptimisticSortOrder>
         </section>
         {/* Large vertical sections */}
         <section className="mt-6">
           <h2>Large vertical sections</h2>
-          <div className="mt-4 flex flex-col gap-4">
-            {data.children.slice(0, 4).map((child, index) => (
+          <OptimisticSortOrder
+            className="mt-4 flex flex-col gap-4"
+            id={data._id}
+            snapshot={snapshot}
+          >
+            {data.children?.slice(0, 4).map((child, index) => (
               <div
                 data-sanity={createDataAttribute({
                   id: data._id,
@@ -177,13 +226,13 @@ export default async function Page() {
                 </p>
               </div>
             ))}
-          </div>
+          </OptimisticSortOrder>
         </section>
         {/* CSS columns */}
         <section className="mt-6">
           <h2>CSS Columns (Flow override)</h2>
-          <div className="mt-4 columns-3 gap-4">
-            {data.children.map((child, index) => (
+          <OptimisticSortOrder className="mt-4 columns-3 gap-4" id={data._id} snapshot={snapshot}>
+            {data.children?.map((child, index) => (
               <div
                 data-sanity={createDataAttribute({
                   id: data._id,
@@ -199,13 +248,17 @@ export default async function Page() {
                 <h3>{stegaClean(child.title)}</h3>
               </div>
             ))}
-          </div>
+          </OptimisticSortOrder>
         </section>
         {/* Custom behaviour (reverse flex flow) */}
         <section className="mt-6">
           <h2>Custom behaviour</h2>
-          <div className="mt-4 flex flex-col gap-4">
-            {data.children.map((child) => (
+          <OptimisticSortOrder
+            className="mt-4 flex flex-col gap-4"
+            id={data._id}
+            snapshot={snapshot}
+          >
+            {data.children?.map((child) => (
               <div
                 data-sanity={createDataAttribute({
                   id: data._id,
@@ -220,13 +273,13 @@ export default async function Page() {
                 <p>{stegaClean(child.title)}</p>
               </div>
             ))}
-          </div>
+          </OptimisticSortOrder>
         </section>
         {/* Inline */}
         <section className="mt-6">
           <h2>Inline</h2>
-          <div className="mt-4">
-            {data.children.map((child) => (
+          <OptimisticSortOrder className="mt-4" id={data._id} snapshot={snapshot}>
+            {data.children?.map((child) => (
               <a
                 data-sanity={createDataAttribute({
                   id: data._id,
@@ -239,7 +292,7 @@ export default async function Page() {
                 {stegaClean(child.title)}
               </a>
             ))}
-          </div>
+          </OptimisticSortOrder>
         </section>
       </div>
     </>
