@@ -1,6 +1,6 @@
 import react from '@astrojs/react'
 import tailwind from '@astrojs/tailwind'
-import vercel from '@astrojs/vercel/serverless'
+import vercel from '@astrojs/vercel'
 import {apiVersion, workspaces} from '@repo/env'
 import {studioUrl as baseUrl} from '@repo/studio-url'
 import sanity from '@sanity/astro'
