@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.10...visual-editing-v2.11.0) (2024-12-19)
+
+
+### Features
+
+* **visual-editing:** add svelte optimistic state support ([#2307](https://github.com/sanity-io/visual-editing/issues/2307)) ([73c7247](https://github.com/sanity-io/visual-editing/commit/73c7247176b32e6b8e39e270808fafb5a8f71121))
+
 ## [2.10.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.9...visual-editing-v2.10.10) (2024-12-16)
 
 
