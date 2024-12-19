@@ -20,7 +20,7 @@ import {
   type FunctionComponent,
 } from 'react'
 import {styled} from 'styled-components'
-import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor.ts'
+import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor'
 import type {
   OverlayComponentResolver,
   OverlayEventHandler,
@@ -28,7 +28,7 @@ import type {
   VisualEditingNode,
 } from '../types'
 import {getDraftId, getPublishedId} from '../util/documents'
-import {sanityNodesExistInSameArray} from '../util/findSanityNodes.ts'
+import {sanityNodesExistInSameArray} from '../util/findSanityNodes'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'
 import {ElementOverlay} from './ElementOverlay'
@@ -39,8 +39,8 @@ import {OverlayMinimapPrompt} from './OverlayMinimapPrompt'
 import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
-import {SharedStateProvider} from './shared-state/SharedStateProvider.tsx'
-import {sendTelemetry} from './telemetry/sendTelemetry.ts'
+import {SharedStateProvider} from './shared-state/SharedStateProvider'
+import {sendTelemetry} from './telemetry/sendTelemetry'
 import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
