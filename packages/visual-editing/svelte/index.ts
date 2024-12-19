@@ -1,4 +1,5 @@
-export * from './hooks'
-export * from './previewStore'
-export * from './types'
+export {handlePreview} from './hooks'
+export {isPreviewing, setPreviewing} from './previewStore'
+export type {VisualEditingProps, HandlePreviewOptions, VisualEditingLocals} from './types'
 export {default as VisualEditing} from './VisualEditing.svelte'
+export {useOptimistic} from './optimistic/useOptimistic'

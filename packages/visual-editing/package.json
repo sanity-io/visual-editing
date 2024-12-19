@@ -40,6 +40,12 @@
       "require": "./dist/next-pages-router/index.cjs",
       "default": "./dist/next-pages-router/index.js"
     },
+    "./optimistic": {
+      "source": "./src/optimistic/index.ts",
+      "import": "./dist/optimistic/index.js",
+      "require": "./dist/optimistic/index.cjs",
+      "default": "./dist/optimistic/index.js"
+    },
     "./react": {
       "source": "./src/react/index.ts",
       "import": "./dist/react/index.js",
@@ -81,6 +87,9 @@
       ],
       "next-pages-router": [
         "./dist/next-pages-router/index.d.ts"
+      ],
+      "optimistic": [
+        "./dist/optimistic/index.d.ts"
       ],
       "react": [
         "./dist/react/index.d.ts"

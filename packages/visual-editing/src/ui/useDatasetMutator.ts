@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react'
 import {createActor} from 'xstate'
+import {setActor, type MutatorActor} from '../optimistic/context'
+import {createSharedListener} from '../optimistic/state/createSharedListener'
+import {createDatasetMutator} from '../optimistic/state/datasetMutator'
 import type {VisualEditingNode} from '../types'
-import {createDatasetMutator} from './comlink'
-import {setActor, type MutatorActor} from './optimistic-state/context'
-import {createSharedListener} from './optimistic-state/machines/createSharedListener'
 
 /**
  * Hook for maintaining a channel between overlays and the presentation tool

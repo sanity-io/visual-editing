@@ -6,7 +6,6 @@ import {
 } from '@sanity/mutate/_unstable_machine'
 import {enqueueActions, fromPromise} from 'xstate'
 import type {VisualEditingNode} from '../../types'
-import {datasetMutatorMachine} from '../optimistic-state/machines/datasetMutatorMachine'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const createDocumentMutator = (comlink: VisualEditingNode) => {
@@ -53,15 +52,6 @@ export const createDocumentMutator = (comlink: VisualEditingNode) => {
     actors: {
       'fetch remote snapshot': fetchSnapshot,
       'submit mutations as transactions': submitMutations,
-    },
-  })
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const createDatasetMutator = (comlink: VisualEditingNode) => {
-  return datasetMutatorMachine.provide({
-    actors: {
-      documentMutatorMachine: createDocumentMutator(comlink),
     },
   })
 }
