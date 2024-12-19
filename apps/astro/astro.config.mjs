@@ -1,6 +1,6 @@
 import react from '@astrojs/react'
 import tailwind from '@astrojs/tailwind'
-import vercel from '@astrojs/vercel/serverless'
+import vercel from '@astrojs/vercel'
 import {apiVersion, workspaces} from '@repo/env'
 import {studioUrl as baseUrl} from '@repo/studio-url'
 import sanity from '@sanity/astro'
@@ -17,18 +17,9 @@ export default defineConfig({
       dataset,
       useCdn: true,
       apiVersion,
+      // studioUrl must be a string for Astro https://github.com/sanity-io/sanity-astro/blob/61f984a207a7cb61b3ed9cf16b3842d17e923689/packages/sanity-astro/src/vite-plugin-sanity-client.ts#L22
       stega: {
-        studioUrl: (sourceDocument) => {
-          if (
-            sourceDocument._projectId === workspaces['cross-dataset-references'].projectId &&
-            sourceDocument._dataset === workspaces['cross-dataset-references'].dataset
-          ) {
-            const {workspace, tool} = workspaces['cross-dataset-references']
-            return {baseUrl, workspace, tool}
-          }
-          const {workspace, tool} = workspaces['astro']
-          return {baseUrl, workspace, tool}
-        },
+        studioUrl: `${baseUrl}/astro/`,
       },
     }),
     react(),
