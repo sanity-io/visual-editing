@@ -1,0 +1,49 @@
+.cards {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+  max-width: 1000px;
+}
+
+.card {
+  width: 100%;
+  aspect-ratio: 2/3;
+  display: block;
+  position: relative;
+  border-radius: 1rem;
+  max-width: 220px;
+}
+
+.delete-btn {
+  cursor: pointer;
+  position: absolute;
+  bottom: -0.75rem;
+  right: -0.75rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  border: 4px solid;
+  border-radius: 100%;
+  background: steelblue;
+  color: white;
+
+  & img {
+    filter: invert();
+  }
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}

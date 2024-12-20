@@ -14,7 +14,7 @@ export function isEmptyActor(actor: MutatorActor | EmptyActor): actor is EmptyAc
   return actor === emptyActor
 }
 
-export function setActor(nextActor: MutatorActor): void {
+export function setActor(nextActor: MutatorActor | EmptyActor): void {
   actor = nextActor
   for (const onActorChange of listeners) {
     onActorChange()

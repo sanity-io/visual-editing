@@ -1,14 +1,14 @@
 {
-  "name": "@sanity/core-loader",
-  "version": "1.7.22-canary.0",
-  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/core-loader#readme",
+  "name": "next-live-transitions",
+  "version": "0.0.1-canary.3",
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/next-live-transitions#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
-    "directory": "packages/core-loader"
+    "directory": "packages/next-live-transitions"
   },
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
@@ -21,35 +21,14 @@
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
-    "./encode-data-attribute": {
-      "source": "./src/encodeDataAttribute.ts",
-      "import": "./dist/encode-data-attribute.js",
-      "require": "./dist/encode-data-attribute.cjs",
-      "default": "./dist/encode-data-attribute.js"
-    },
-    "./create-data-attribute": {
-      "source": "./src/createDataAttribute.ts",
-      "import": "./dist/create-data-attribute.js",
-      "require": "./dist/create-data-attribute.cjs",
-      "default": "./dist/create-data-attribute.js"
-    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "encode-data-attribute": [
-        "./dist/encode-data-attribute.d.ts"
-      ],
-      "create-data-attribute": [
-        "./dist/create-data-attribute.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist",
+    "src",
     "CHANGELOG.md"
   ],
   "scripts": {
@@ -68,26 +47,26 @@
     "root": true
   },
   "dependencies": {
-    "@sanity/client": "^6.24.1",
-    "@sanity/comlink": "workspace:*"
+    "react-live-transitions": "workspace:^"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
-    "@repo/visual-editing-helpers": "workspace:*",
     "@sanity/pkg-utils": "6.12.2",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "async-cache-dedupe": "2.2.0",
+    "@types/react": "^18",
     "eslint": "^8.57.1",
-    "happy-dom": "^15.11.7",
-    "nanostores": "0.10.3",
+    "next": "^15.1.2",
+    "react": "^18.3.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.8"
   },
+  "peerDependencies": {
+    "next": "^14.1 || ^15.0.0-0",
+    "react": "^18.3 || ^19.0.0-0"
+  },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.18"
   },
   "publishConfig": {
     "access": "public"

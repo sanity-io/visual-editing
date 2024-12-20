@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import {createActor} from 'xstate'
-import {setActor, type MutatorActor} from '../optimistic/context'
+import {emptyActor, setActor, type MutatorActor} from '../optimistic/context'
 import {createSharedListener} from '../optimistic/state/createSharedListener'
 import {createDatasetMutator} from '../optimistic/state/datasetMutator'
 import type {VisualEditingNode} from '../types'
@@ -25,6 +25,8 @@ export function useDatasetMutator(
 
     setMutator(mutator)
     mutator.start()
+    // Optimistically set the mutator
+    setActor(mutator)
 
     // Fetch features to determine if optimistic updates are supported
     const featuresFetch = new AbortController()
@@ -35,11 +37,14 @@ export function useDatasetMutator(
           suppressWarnings: true,
         })
         .then((data) => {
-          if (data.features['optimistic']) {
-            setActor(mutator)
+          if (featuresFetch.signal.aborted) return
+          if (!data.features['optimistic']) {
+            setActor(emptyActor)
           }
         })
         .catch(() => {
+          if (featuresFetch.signal.aborted) return
+          setActor(emptyActor)
           // eslint-disable-next-line no-console
           console.warn(
             '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',

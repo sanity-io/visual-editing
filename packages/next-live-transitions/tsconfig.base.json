@@ -1,0 +1,12 @@
+{
+  "extends": "@sanity/pkg-utils/tsconfig/strictest.json",
+  "compilerOptions": {
+    "paths": {
+      "next-live-transitions": ["./src/index"]
+    },
+    "rootDir": ".",
+    "outDir": "dist",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  }
+}
