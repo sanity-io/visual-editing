@@ -65,7 +65,7 @@ import type {
   StructureDocumentPaneParams,
   VisualEditingConnection,
 } from './types'
-import {useDocumentsOnPage} from './useDocumentsOnPage'
+import {useDocumentsOnPage, type DocumentOnPage} from './useDocumentsOnPage'
 import {useMainDocument} from './useMainDocument'
 import {useParams} from './useParams'
 import {usePopups} from './usePopups'
@@ -224,6 +224,24 @@ export default function PresentationTool(props: {
     (nextState, nextSearchState, forceReplace) =>
       navigate(nextState, nextSearchState, forceReplace),
   )
+  const handleSetDocumentsOnPage = useEffectEvent(
+    (
+      key: string,
+      perspective: PresentationPerspective,
+      state: DocumentOnPage[],
+      filterByProjectId?: string,
+      filterByDataset?: string,
+    ) => {
+      if (
+        (filterByProjectId && projectId !== filterByProjectId) ||
+        (filterByDataset && dataset !== filterByDataset)
+      ) {
+        // Ignore event if mismatch when filtering is specified
+        return
+      }
+      setDocumentsOnPage(key, perspective, state)
+    },
+  )
   useEffect(() => {
     if (!controller) return
 
@@ -267,7 +285,7 @@ export default function PresentationTool(props: {
     })
 
     comlink.on('visual-editing/documents', (data) => {
-      setDocumentsOnPage(
+      handleSetDocumentsOnPage(
         'visual-editing',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data.perspective as unknown as any,
@@ -297,7 +315,7 @@ export default function PresentationTool(props: {
       stop()
       setVisualEditingComlink(null)
     }
-  }, [controller, handleNavigate, setDocumentsOnPage, setOverlaysConnection, targetOrigin])
+  }, [controller, handleNavigate, handleSetDocumentsOnPage, setOverlaysConnection])
 
   useEffect(() => {
     if (!controller) return
@@ -315,18 +333,18 @@ export default function PresentationTool(props: {
     comlink.onStatus(setPreviewKitConnection)
 
     comlink.on('preview-kit/documents', (data) => {
-      if (data.projectId === projectId && data.dataset === dataset) {
-        setDocumentsOnPage(
-          'preview-kit',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          data.perspective as unknown as any,
-          data.documents,
-        )
-      }
+      handleSetDocumentsOnPage(
+        'preview-kit',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data.perspective as unknown as any,
+        data.documents,
+        data.projectId,
+        data.dataset,
+      )
     })
 
     return comlink.start()
-  }, [controller, dataset, projectId, setDocumentsOnPage, setPreviewKitConnection, targetOrigin])
+  }, [controller, handleSetDocumentsOnPage, setPreviewKitConnection])
 
   const handleFocusPath = useCallback(
     (nextPath: Path) => {
