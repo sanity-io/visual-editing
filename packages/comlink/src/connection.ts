@@ -466,18 +466,14 @@ export const createConnectionMachine = <
   return connectionMachine
 }
 
-let inspect: ReturnType<typeof createBrowserInspector>['inspect'] | null = null
-
 /**
  * @public
  */
 export const createConnection = <S extends Message, R extends Message>(
   input: ConnectionInput,
   machine: ConnectionActorLogic<S, R> = createConnectionMachine<S, R>(),
+  inspect: ReturnType<typeof createBrowserInspector>['inspect'],
 ): Connection<S, R> => {
-  if (!inspect) {
-    inspect = createBrowserInspector().inspect
-  }
   // eslint-disable-next-line no-console
   console.count('createConnection')
 
