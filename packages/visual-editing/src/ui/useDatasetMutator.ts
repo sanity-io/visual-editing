@@ -26,14 +26,6 @@ export function useDatasetMutator(
     setMutator(mutator)
     mutator.start()
 
-    return () => {
-      mutator.stop()
-      setMutator(undefined)
-    }
-  }, [comlink])
-
-  useEffect(() => {
-    if (!comlink || !mutator) return
     // Fetch features to determine if optimistic updates are supported
     const featuresFetch = new AbortController()
     const unsub = comlink.onStatus(() => {
@@ -56,10 +48,12 @@ export function useDatasetMutator(
     }, 'connected')
 
     return () => {
+      mutator.stop()
       featuresFetch.abort()
       unsub()
+      setMutator(undefined)
     }
-  }, [mutator, comlink])
+  }, [comlink])
 
   return mutator
 }
