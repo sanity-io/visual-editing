@@ -158,7 +158,7 @@ export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
   }, [controller, dataset, onDocumentsOnPage, onLoadersConnection, projectId])
 
   const [cache] = useState(() => new LRUCache<string, SanityDocument>(LIVE_QUERY_CACHE_SIZE))
-  const studioClient = useClient({apiVersion: '2023-10-16'})
+  const studioClient = useClient({apiVersion: 'vX'})
   const clientConfig = useMemo(() => studioClient.config(), [studioClient])
   const client = useMemo(
     () =>
@@ -547,6 +547,10 @@ export function turboChargeResultIfSourceMap<T = unknown>(
       }
       return changedValue
     },
-    perspective,
+    // TODO: Update applySourceDocuments to support releases.
+    Array.isArray(perspective) &&
+      perspective.some((part) => typeof part === 'string' && part.startsWith('r') && part !== 'raw')
+      ? 'previewDrafts'
+      : (perspective as ClientPerspective),
   )
 }

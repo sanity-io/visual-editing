@@ -77,7 +77,17 @@ const PostMessageDocuments: FunctionComponent<PostMessageDocumentsProps> = (prop
 
   useEffect(() => {
     return comlink.on('visual-editing/fetch-snapshot', async (data) => {
-      const snapshot = await client.getDocument(data.documentId, {
+      /**
+       * This is a temporary hack to get around the fact that the `drafts.versions.versionName.id` format is not supported
+       * `versions.` don't have draft documents.
+       *
+       * Where is the drafts. prefix coming from and why it's added to the `versions.` documents?
+       * */
+      const cleanId =
+        data.documentId.includes('versions.') && data.documentId.startsWith('drafts.')
+          ? data.documentId.replace('drafts.', '')
+          : data.documentId
+      const snapshot = await client.getDocument(cleanId, {
         tag: 'document.snapshots',
       })
       return {snapshot}
