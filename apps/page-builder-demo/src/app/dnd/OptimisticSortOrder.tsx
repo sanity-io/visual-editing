@@ -8,8 +8,10 @@ import {useOptimistic} from '@sanity/visual-editing'
 import {Children, isValidElement} from 'react'
 
 /**
- * The way CSS is rendered here is following new patterns in React 19, and doesn't work on React 18
- * https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet
+ * This component is used to apply optimistic state to a list of children. It is used to
+ * provide a smooth user experience when reordering items in a list. The component
+ * expects the children to have a unique key prop, and will reorder the children based
+ * on the optimistic state.
  */
 
 export function OptimisticSortOrder(props: {
@@ -32,10 +34,11 @@ export function OptimisticSortOrder(props: {
       if (action.id !== id) return state
       const value = get(action.document, path) as {_key: string}[]
       if (!value) {
-        console.warn('No value found for path', path, 'in document', action.document)
+        console.error('No value found for path', path, 'in document', action.document)
         return state
       }
       const result = value.map(({_key}) => _key)
+      // Support .slice?.(0, 4) being used to limit the number of items in `page.tsx`
       if (result.length > childrenLength) {
         result.length = childrenLength
       }
@@ -45,7 +48,7 @@ export function OptimisticSortOrder(props: {
 
   if (optimistic) {
     if (optimistic.length < childrenLength) {
-      console.error('Length mismatch on children', optimistic.length, childrenLength, props)
+      // If the optimistic state is shorter than children, then we don't have enough data to accurately reorder the children so we bail
       return children
     }
 
