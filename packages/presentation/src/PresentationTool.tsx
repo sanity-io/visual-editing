@@ -35,6 +35,7 @@ import {
   EDIT_INTENT_MODE,
   LIVE_DRAFT_EVENTS_ENABLED,
 } from './constants'
+import PostMessageFeatures from './features/PostMessageFeatures'
 import {useUnique, useWorkspace, type CommentIntentGetter} from './internals'
 import {debounce} from './lib/debounce'
 import {SharedStateProvider} from './overlays/SharedStateProvider'
@@ -74,7 +75,6 @@ import {useStatus} from './useStatus'
 const LoaderQueries = lazy(() => import('./loader/LoaderQueries'))
 const LiveQueries = lazy(() => import('./loader/LiveQueries'))
 const PostMessageDocuments = lazy(() => import('./overlays/PostMessageDocuments'))
-const PostMessageFeatures = lazy(() => import('./features/PostMessageFeatures'))
 const PostMessageRefreshMutations = lazy(() => import('./editor/PostMessageRefreshMutations'))
 const PostMessagePerspective = lazy(() => import('./PostMessagePerspective'))
 const PostMessagePreviewSnapshots = lazy(() => import('./editor/PostMessagePreviewSnapshots'))
