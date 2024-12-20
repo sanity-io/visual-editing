@@ -81,6 +81,8 @@ export const createController = (input: {targetOrigin: string}): Controller => {
   const {targetOrigin} = input
   const targets = new Set<MessageEventSource>()
   const channels = new Set<Channel>()
+  // eslint-disable-next-line no-console
+  console.count('createController')
 
   const addTarget = (target: MessageEventSource) => {
     // If the target has already been added, return just a noop cleanup
