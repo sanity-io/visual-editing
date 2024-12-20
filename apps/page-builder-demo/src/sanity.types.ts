@@ -871,6 +871,104 @@ export type PageSlugsResult = Array<{
   slug: string | null
 }>
 
+// Source: ./src/app/product/[slug]/page.tsx
+// Variable: productSlugsQuery
+// Query: *[_type == "product" && defined(slug.current)]{"slug": slug.current}
+export type ProductSlugsQueryResult = Array<{
+  slug: string | null
+}>
+// Variable: productPageQuery
+// Query: *[_type == "product" && slug.current == $slug][0]
+export type ProductPageQueryResult = {
+  _id: string
+  _type: 'product'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  media?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  brandReference?: unknown
+  details?: {
+    materials?: string
+    collectionNotes?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    performance?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    ledLifespan?: string
+    certifications?: Array<string>
+  }
+  variants?: Array<{
+    title?: string
+    price?: string
+    sku?: string
+    _type: 'variant'
+    _key: string
+  }>
+} | null
+
 // Source: ./src/app/project/[slug]/page.tsx
 // Variable: projectSlugsQuery
 // Query: *[_type == "project" && defined(slug.current)]{"slug": slug.current}
@@ -996,6 +1094,8 @@ declare module '@sanity/client' {
     '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    \nsections[]{\n  _key,\n  _type,\n  _type == 'section' => {\n    'headline': coalesce(headline, symbol->headline),\n    'tagline': coalesce(tagline, symbol->tagline),\n    'subline': coalesce(subline, symbol->subline),\n  },\n  _type == 'featureHighlight' => {\n    headline,\n    description,\n    image,\n    product->{\n      _type,\n      _id,\n      title,\n      slug,\n      \"media\": media[0]\n    },\n    style,\n    ctas\n  },\n  _type == 'featuredProducts' => {\n    headline,\n    description,\n    products[]{\n      _key,\n      ...(@->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      })\n    },\n    style\n  },\n  _type == 'intro' => {\n    headline,\n    intro,\n    style,\n    rotations\n  },\n  _type == 'hero' => {\n    headline,\n    tagline,\n    subline,\n    image,\n    style\n  }\n},\n    style\n  }\n": PageQueryResult
     '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
+    '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
+    '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
     '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
     '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
