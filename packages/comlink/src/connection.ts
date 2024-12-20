@@ -478,6 +478,8 @@ export const createConnection = <S extends Message, R extends Message>(
   if (!inspect) {
     inspect = createBrowserInspector().inspect
   }
+  // eslint-disable-next-line no-console
+  console.count('createConnection')
 
   const id = input.id || `${input.name}-${uuid()}`
   const actor = createActor(machine, {
