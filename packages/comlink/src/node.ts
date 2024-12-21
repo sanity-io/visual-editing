@@ -529,6 +529,7 @@ export const createNode = <S extends Message, R extends Message>(
     return unsubscribe
   }
 
+  let cachedStatus: Exclude<Status, 'disconnected'>
   const onStatus = (
     handler: (status: Exclude<Status, 'disconnected'>) => void,
     filter?: Exclude<Status, 'disconnected'>,
@@ -537,12 +538,17 @@ export const createNode = <S extends Message, R extends Message>(
       // @ts-expect-error @todo ReceivedEmitEvent causes this
       '_status',
       (event: StatusEmitEvent & {status: Exclude<Status, 'disconnected'>}) => {
+        cachedStatus = event.status
         if (filter && event.status !== filter) {
           return
         }
         handler(event.status)
       },
     )
+    // Call the handler immediately with the current status, if we have one
+    if (cachedStatus) {
+      handler(cachedStatus)
+    }
     return unsubscribe
   }
 
