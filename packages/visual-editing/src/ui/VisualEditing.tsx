@@ -55,20 +55,22 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
   const {components, history, refresh, zIndex} = props
-  const [inFrame, setInFrame] = useState(false)
+  const [inFrame, setInFrame] = useState<boolean | null>(null)
   useEffect(() => setInFrame(window.self !== window.top || window.opener), [])
 
-  const comlink = useComlink(inFrame)
+  const comlink = useComlink(inFrame === true)
   useDatasetMutator(comlink)
 
   return (
     <>
-      <Overlays
-        comlink={comlink}
-        componentResolver={components}
-        inFrame={inFrame}
-        zIndex={zIndex}
-      />
+      {inFrame !== null && (
+        <Overlays
+          comlink={comlink}
+          componentResolver={components}
+          inFrame={inFrame}
+          zIndex={zIndex}
+        />
+      )}
       {comlink && (
         <>
           <History comlink={comlink} history={history} />
