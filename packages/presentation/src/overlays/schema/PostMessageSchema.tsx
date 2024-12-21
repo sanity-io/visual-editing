@@ -40,14 +40,18 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
 
   // Send a representation of the schema to the visual editing context
   useEffect(() => {
-    const schema = extractSchema(workspace, theme)
-    /**
-     * @deprecated switch to explict schema fetching (using
-     * 'visual-editing/schema') at next major
-     */
-    comlink.post('presentation/schema', {schema})
+    try {
+      const schema = extractSchema(workspace, theme)
+      /**
+       * @deprecated switch to explict schema fetching (using
+       * 'visual-editing/schema') at next major
+       */
+      comlink.post('presentation/schema', {schema})
 
-    return comlink.on('visual-editing/schema', () => ({schema}))
+      return comlink.on('visual-editing/schema', () => ({schema}))
+    } catch {
+      return undefined
+    }
   }, [comlink, theme, workspace])
 
   const client = useClient({apiVersion: API_VERSION})
