@@ -45,7 +45,7 @@ export const SharedStateProvider: FunctionComponent<
     console.count('fetching shared state')
     let retries = 0
     async function fetch() {
-      const value = await comlink?.fetch('visual-editing/shared-state', undefined, {
+      const value = await comlink!.fetch('visual-editing/shared-state', undefined, {
         suppressWarnings: true,
       })
       // eslint-disable-next-line no-console

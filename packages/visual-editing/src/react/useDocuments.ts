@@ -178,6 +178,8 @@ export function useDocuments(): {
   mutateDocument: DocumentsMutate
 } {
   const actor = useOptimisticActor() as MutatorActor
+  // eslint-disable-next-line no-console
+  console.log('useDocuments useOptimisticActor()', {actor})
 
   const getDocument: DocumentsGet = useCallback(
     <T extends Record<string, any>>(documentId: string) => {
