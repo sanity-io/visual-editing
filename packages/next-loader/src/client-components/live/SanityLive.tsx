@@ -205,6 +205,8 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         ) {
           clearTimeout(timeout)
           setEnvironment(isMaybePreviewWindow() ? 'presentation-window' : 'presentation-iframe')
+          // eslint-disable-next-line no-console
+          console.count('Presentation Tool detected')
           setLoadComlink(true)
           controller.abort()
         }
