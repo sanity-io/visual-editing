@@ -135,12 +135,7 @@
       "plugin:storybook/recommended"
     ],
     "rules": {
-      "react-compiler/react-compiler": [
-        "error",
-        {
-          "__unstable_donotuse_reportAllBailouts": true
-        }
-      ]
+      "react-compiler/react-compiler": "error"
     },
     "root": true
   },

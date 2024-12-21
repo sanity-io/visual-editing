@@ -43,6 +43,7 @@ export const SharedStateProvider: FunctionComponent<
     if (!comlink) return
     // eslint-disable-next-line no-console
     console.count('fetching shared state')
+    let retries = 0
     async function fetch() {
       const value = await comlink?.fetch('visual-editing/shared-state', undefined, {
         suppressWarnings: true,
@@ -54,12 +55,17 @@ export const SharedStateProvider: FunctionComponent<
       }
     }
     fetch().catch((reason) => {
-      // eslint-disable-next-line no-console
-      console.debug(reason)
-      // eslint-disable-next-line no-console
-      console.warn(
-        '[@sanity/visual-editing]: Failed to fetch shared state. Check your version of `@sanity/presentation` is up-to-date',
-      )
+      if (retries < 3) {
+        retries++
+        setTimeout(fetch, 1000 * retries)
+      } else {
+        // eslint-disable-next-line no-console
+        console.debug(reason)
+        // eslint-disable-next-line no-console
+        console.warn(
+          '[@sanity/visual-editing]: Failed to fetch shared state. Check your version of `@sanity/presentation` is up-to-date',
+        )
+      }
     })
   }, [comlink])
 

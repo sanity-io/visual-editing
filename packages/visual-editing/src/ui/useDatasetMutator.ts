@@ -30,24 +30,32 @@ export function useDatasetMutator(
     const featuresFetch = new AbortController()
     // eslint-disable-next-line no-console
     console.count('send visual-editing/features')
-    comlink
-      .fetch('visual-editing/features', undefined, {
-        signal: featuresFetch.signal,
-        suppressWarnings: true,
-      })
-      .then((data) => {
-        // eslint-disable-next-line no-console
-        console.log('resolved visual-editing/features', {data})
-        if (data.features['optimistic']) {
-          setActor(mutator)
-        }
-      })
-      .catch(() => {
+    let retries = 0
+    async function fetch() {
+      return comlink
+        ?.fetch('visual-editing/features', undefined, {
+          signal: featuresFetch.signal,
+          suppressWarnings: true,
+        })
+        .then((data) => {
+          // eslint-disable-next-line no-console
+          console.log('resolved visual-editing/features', {data})
+          if (data.features['optimistic']) {
+            setActor(mutator)
+          }
+        })
+    }
+    fetch().catch(() => {
+      if (retries < 3) {
+        retries++
+        setTimeout(fetch, 1000 * retries)
+      } else {
         // eslint-disable-next-line no-console
         console.warn(
           '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',
         )
-      })
+      }
+    })
 
     return () => {
       // eslint-disable-next-line no-console
