@@ -1,5 +1,4 @@
 import {decodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
-import {OVERLAY_ID} from '../constants'
 import type {
   ElementNode,
   OverlayElement,
@@ -148,7 +147,7 @@ export function findSanityNodes(
       else if (isElementNode(node)) {
         // Do not traverse script tags
         // Do not traverse the visual editing overlay
-        if (node.tagName === 'SCRIPT' || node.id === OVERLAY_ID) {
+        if (node.tagName === 'SCRIPT' || node.tagName === 'SANITY-VISUAL-EDITING') {
           continue
         }
 

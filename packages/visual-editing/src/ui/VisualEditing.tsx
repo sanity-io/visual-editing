@@ -1,4 +1,5 @@
-import {useEffect, useState, type FunctionComponent} from 'react'
+import {useEffect, useState} from 'react'
+import {createPortal} from 'react-dom'
 import type {VisualEditingOptions} from '../types'
 import {History} from './History'
 import {Meta} from './Meta'
@@ -10,15 +11,30 @@ import {useDatasetMutator} from './useDatasetMutator'
 /**
  * @public
  */
-export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
-  const {components, history, refresh, zIndex} = props
+export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): React.ReactNode => {
+  const {components, history, portal = true, refresh, zIndex} = props
+
   const [inFrame, setInFrame] = useState<boolean | null>(null)
   useEffect(() => setInFrame(window.self !== window.top || Boolean(window.opener)), [])
+
+  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null)
+  useEffect(() => {
+    if (portal === false) return undefined
+    const node = document.createElement('sanity-visual-editing')
+    document.documentElement.appendChild(node)
+    setPortalElement(node)
+    return () => {
+      setPortalElement(null)
+      if (document.documentElement.contains(node)) {
+        document.documentElement.removeChild(node)
+      }
+    }
+  }, [portal])
 
   const comlink = useComlink(inFrame === true)
   useDatasetMutator(comlink)
 
-  return (
+  const children = (
     <>
       {inFrame !== null && (
         <Overlays
@@ -37,5 +53,9 @@ export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) =>
       )}
     </>
   )
+
+  if (portal === false || !portalElement) return children
+
+  return createPortal(children, portalElement)
 }
 VisualEditing.displayName = 'VisualEditing'
