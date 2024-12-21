@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.15](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.14...presentation-v1.19.15) (2024-12-21)
+
+
+### Bug Fixes
+
+* add try/catch for schema extract ([7391946](https://github.com/sanity-io/visual-editing/commit/7391946852a7ea1788f1d6bdca45209f8fd07712))
+
 ## [1.19.14](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.13...presentation-v1.19.14) (2024-12-21)
 
 
