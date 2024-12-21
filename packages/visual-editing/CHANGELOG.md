@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.11.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.0...visual-editing-v2.11.1) (2024-12-21)
+
+
+### Bug Fixes
+
+* improve race condition connectivity handling ([#2342](https://github.com/sanity-io/visual-editing/issues/2342)) ([a98d6cf](https://github.com/sanity-io/visual-editing/commit/a98d6cf079e376ffa6235debb42cc0b51274a958))
+* optimistically set the mutator actor ([5347ac0](https://github.com/sanity-io/visual-editing/commit/5347ac0d17e245f2a7e28ebda7dfadb2b5abb509))
+* preload feature request ([9dfcb4c](https://github.com/sanity-io/visual-editing/commit/9dfcb4c8f7b54d36dd594a29c8baebb22a5cbc0e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.3
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.10
+
 ## [2.11.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.10...visual-editing-v2.11.0) (2024-12-19)
 
 
