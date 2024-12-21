@@ -29,18 +29,15 @@ export function useDocumentsInUse(
       }),
     )
 
-    comlink.onStatus((status) => {
-      if (status === 'connected') {
-        setConnected(true)
-      } else if (status === 'disconnected') {
-        setConnected(false)
-      }
-    })
+    comlink.onStatus(() => {
+      setConnected(true)
+    }, 'connected')
 
     const timeout = setTimeout(() => setComlink(comlink), 0)
     const stop = comlink.start()
     return () => {
       stop()
+      setConnected(false)
       setComlink(null)
       clearTimeout(timeout)
     }
