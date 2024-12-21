@@ -28,13 +28,19 @@ export function useDatasetMutator(
 
     // Fetch features to determine if optimistic updates are supported
     const featuresFetch = new AbortController()
+    // eslint-disable-next-line no-console
+    console.count('send visual-editing/features')
     const unsub = comlink.onStatus(() => {
+      // eslint-disable-next-line no-console
+      console.count('comlink.onStatus')
       comlink
         .fetch('visual-editing/features', undefined, {
           signal: featuresFetch.signal,
           suppressWarnings: true,
         })
         .then((data) => {
+          // eslint-disable-next-line no-console
+          console.log('resolved visual-editing/features', {data})
           if (data.features['optimistic']) {
             setActor(mutator)
           }
@@ -48,6 +54,8 @@ export function useDatasetMutator(
     }, 'connected')
 
     return () => {
+      // eslint-disable-next-line no-console
+      console.log('useDatasetMutator cleanup')
       mutator.stop()
       featuresFetch.abort()
       unsub()

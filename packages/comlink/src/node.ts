@@ -1,4 +1,3 @@
-import {createBrowserInspector} from '@statelyai/inspect'
 import {v4 as uuid} from 'uuid'
 import {
   assertEvent,
@@ -496,7 +495,7 @@ export const createNodeMachine = <
   return nodeMachine
 }
 
-let inspect: ReturnType<typeof createBrowserInspector>['inspect'] | null = null
+// let inspect: ReturnType<typeof createBrowserInspector>['inspect'] | null = null
 
 /**
  * @public
@@ -505,13 +504,15 @@ export const createNode = <S extends Message, R extends Message>(
   input: NodeInput,
   machine: NodeActorLogic<S, R> = createNodeMachine<S, R>(),
 ): Node<S, R> => {
-  if (!inspect) {
-    inspect = createBrowserInspector().inspect
-  }
+  // if (!inspect) {
+  //   inspect = createBrowserInspector().inspect
+  // }
+  // eslint-disable-next-line no-console
+  console.count('createNode')
 
   const actor = createActor(machine, {
     input,
-    inspect,
+    // inspect: (inspectionEvent) => console.log(inspectionEvent),
   })
 
   const on = <T extends R['type'], U extends Extract<R, {type: T}>>(

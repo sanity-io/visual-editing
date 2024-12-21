@@ -1,4 +1,3 @@
-import {createBrowserInspector} from '@statelyai/inspect'
 import {
   cleanupConnection,
   createConnection,
@@ -75,16 +74,10 @@ interface Channel<
 
 const noop = () => {}
 
-let inspect: ReturnType<typeof createBrowserInspector>['inspect'] | null = null
-
 /**
  * @public
  */
 export const createController = (input: {targetOrigin: string}): Controller => {
-  if (!inspect) {
-    inspect = createBrowserInspector().inspect
-  }
-
   const {targetOrigin} = input
   const targets = new Set<MessageEventSource>()
   const channels = new Set<Channel>()
@@ -137,7 +130,6 @@ export const createController = (input: {targetOrigin: string}): Controller => {
           targetOrigin,
         },
         channel.machine,
-        inspect!,
       )
 
       targetConnections.add(connection)
@@ -201,13 +193,12 @@ export const createController = (input: {targetOrigin: string}): Controller => {
             targetOrigin,
           },
           machine,
-          inspect!,
         )
         connections.add(connection)
       })
     } else {
       // If targets have not been added yet, create a connection without a target
-      const connection = createConnection<S, R>({...input, targetOrigin}, machine, inspect!)
+      const connection = createConnection<S, R>({...input, targetOrigin}, machine)
       connections.add(connection)
     }
 

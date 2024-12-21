@@ -1,4 +1,3 @@
-import {createBrowserInspector} from '@statelyai/inspect'
 import {v4 as uuid} from 'uuid'
 import {
   assertEvent,
@@ -472,7 +471,6 @@ export const createConnectionMachine = <
 export const createConnection = <S extends Message, R extends Message>(
   input: ConnectionInput,
   machine: ConnectionActorLogic<S, R> = createConnectionMachine<S, R>(),
-  inspect: ReturnType<typeof createBrowserInspector>['inspect'],
 ): Connection<S, R> => {
   // eslint-disable-next-line no-console
   console.count('createConnection')
@@ -480,7 +478,7 @@ export const createConnection = <S extends Message, R extends Message>(
   const id = input.id || `${input.name}-${uuid()}`
   const actor = createActor(machine, {
     input: {...input, id},
-    inspect,
+    // inspect: (inspectionEvent) => console.log(inspectionEvent),
   })
 
   const on = <T extends R['type'], U extends Extract<R, {type: T}>>(

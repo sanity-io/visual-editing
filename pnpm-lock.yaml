@@ -947,9 +947,6 @@ importers:
 
   packages/comlink:
     dependencies:
-      '@statelyai/inspect':
-        specifier: ^0.4.0
-        version: 0.4.0(ws@8.18.0)(xstate@5.19.0)
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -4333,11 +4330,6 @@ packages:
     engines: {node: '>=8.10'}
     hasBin: true
 
-  '@statelyai/inspect@0.4.0':
-    resolution: {integrity: sha512-VxQldRlKYcu6rzLY83RSXVwMYexkH6hNx85B89YWYyXYWtNGaWHFCwV7a/Kz8FFPeUz8EKVAnyMOg2kNpn07wQ==}
-    peerDependencies:
-      xstate: ^5.5.1
-
   '@storybook/addon-actions@8.4.7':
     resolution: {integrity: sha512-mjtD5JxcPuW74T6h7nqMxWTvDneFtokg88p6kQ5OnC1M259iAXb//yiSZgu/quunMHPCXSiqn4FNOSgASTSbsA==}
     peerDependencies:
@@ -7232,10 +7224,6 @@ packages:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
 
-  event-target-shim@6.0.2:
-    resolution: {integrity: sha512-8q3LsZjRezbFZ2PN+uP+Q7pnHUMmAOziU2vA2OwoFaKIXxlxl38IylhSSgUorWu/rf4er67w0ikBqjBFk/pomA==}
-    engines: {node: '>=10.13.0'}
-
   eventemitter3@5.0.1:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
 
@@ -7340,9 +7328,6 @@ packages:
 
   fast-npm-meta@0.2.2:
     resolution: {integrity: sha512-E+fdxeaOQGo/CMWc9f4uHFfgUPJRAu7N3uB8GBvB3SDPAIWJK4GKyYhkAGFq+GYrcbKNfQIz5VVQyJnDuPPCrg==}
-
-  fast-safe-stringify@2.1.1:
-    resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
 
   fast-uri@3.0.1:
     resolution: {integrity: sha512-MWipKbbYiYI0UC7cl8m/i/IWTqfC8YXsqjzybjddLsFjStroQzsHXkc73JutMvBiXmOvapk+axIl79ig5t55Bw==}
@@ -8563,11 +8548,6 @@ packages:
   isomorphic-dompurify@2.19.0:
     resolution: {integrity: sha512-ppcgeRlEwOQ+v/JDctcjnOsBwEoJlAWVDH5+LisLHphQFeWCrBiVvK6XF4wF0MJM5tJA6RxJSlpbmthnmonxOQ==}
     engines: {node: '>=18'}
-
-  isomorphic-ws@5.0.0:
-    resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
-    peerDependencies:
-      ws: '*'
 
   iterate-iterator@1.0.2:
     resolution: {integrity: sha512-t91HubM4ZDQ70M9wqp+pcNpu8OyJ9UAtXntT/Bcsvp5tZMnz9vRa+IunKXeI8AnfZMTv0jNuVEmGeLSMjVvfPw==}
@@ -10129,9 +10109,6 @@ packages:
   parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
-
-  partysocket@0.0.25:
-    resolution: {integrity: sha512-1oCGA65fydX/FgdnsiBh68buOvfxuteoZVSb3Paci2kRp/7lhF0HyA8EDb5X/O6FxId1e+usPTQNRuzFEvkJbQ==}
 
   pascal-case@3.1.2:
     resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
@@ -11953,10 +11930,6 @@ packages:
 
   summary@2.1.0:
     resolution: {integrity: sha512-nMIjMrd5Z2nuB2RZCKJfFMjgS3fygbeyGk9PxPPaJR1RIcyN9yn4A63Isovzm3ZtQuEkLBVgMdPup8UeLH7aQw==}
-
-  superjson@1.13.3:
-    resolution: {integrity: sha512-mJiVjfd2vokfDxsQPOwJ/PtanO87LhpYY88ubI5dUB1Ab58Txbyje3+jpm+/83R/fevaq/107NNhtYBLuoTrFg==}
-    engines: {node: '>=10'}
 
   superjson@2.2.1:
     resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
@@ -14851,7 +14824,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.0(supports-color@9.4.0)
+      debug: 4.4.0
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.2
@@ -14902,7 +14875,7 @@ snapshots:
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.4.0(supports-color@9.4.0)
+      debug: 4.4.0
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -17599,18 +17572,6 @@ snapshots:
       commander: 4.1.1
       ignore: 5.3.2
       p-map: 4.0.0
-
-  '@statelyai/inspect@0.4.0(ws@8.18.0)(xstate@5.19.0)':
-    dependencies:
-      fast-safe-stringify: 2.1.1
-      isomorphic-ws: 5.0.0(ws@8.18.0)
-      partysocket: 0.0.25
-      safe-stable-stringify: 2.4.3
-      superjson: 1.13.3
-      uuid: 9.0.1
-      xstate: 5.19.0
-    transitivePeerDependencies:
-      - ws
 
   '@storybook/addon-actions@8.4.7(storybook@8.4.7(prettier@3.4.2))':
     dependencies:
@@ -20505,6 +20466,10 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
+  debug@4.4.0:
+    dependencies:
+      ms: 2.1.3
+
   debug@4.4.0(supports-color@9.4.0):
     dependencies:
       ms: 2.1.3
@@ -21410,7 +21375,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.4.0(supports-color@9.4.0)
+      debug: 4.4.0
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -21509,8 +21474,6 @@ snapshots:
   event-source-polyfill@1.0.31: {}
 
   event-target-shim@5.0.1: {}
-
-  event-target-shim@6.0.2: {}
 
   eventemitter3@5.0.1: {}
 
@@ -21692,8 +21655,6 @@ snapshots:
   fast-levenshtein@2.0.6: {}
 
   fast-npm-meta@0.2.2: {}
-
-  fast-safe-stringify@2.1.1: {}
 
   fast-uri@3.0.1: {}
 
@@ -22553,7 +22514,7 @@ snapshots:
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@9.4.0)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -22563,6 +22524,13 @@ snapshots:
     dependencies:
       agent-base: 6.0.2
       debug: 4.4.0(supports-color@9.4.0)
+    transitivePeerDependencies:
+      - supports-color
+
+  https-proxy-agent@7.0.6:
+    dependencies:
+      agent-base: 7.1.3
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -23013,10 +22981,6 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  isomorphic-ws@5.0.0(ws@8.18.0):
-    dependencies:
-      ws: 8.18.0
-
   iterate-iterator@1.0.2: {}
 
   iterate-value@1.0.2:
@@ -23114,7 +23078,7 @@ snapshots:
       form-data: 4.0.1
       html-encoding-sniffer: 4.0.0
       http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.6(supports-color@9.4.0)
+      https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
       nwsapi: 2.2.16
       parse5: 7.2.1
@@ -25481,10 +25445,6 @@ snapshots:
       entities: 4.5.0
 
   parseurl@1.3.3: {}
-
-  partysocket@0.0.25:
-    dependencies:
-      event-target-shim: 6.0.2
 
   pascal-case@3.1.2:
     dependencies:
@@ -28548,10 +28508,6 @@ snapshots:
 
   summary@2.1.0: {}
 
-  superjson@1.13.3:
-    dependencies:
-      copy-anything: 3.0.5
-
   superjson@2.2.1:
     dependencies:
       copy-anything: 3.0.5
@@ -29628,7 +29584,7 @@ snapshots:
   vite-node@2.1.8(@types/node@22.10.2)(terser@5.33.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.0(supports-color@9.4.0)
+      debug: 4.4.0
       es-module-lexer: 1.5.4
       pathe: 1.1.2
       vite: 5.4.11(@types/node@22.10.2)(terser@5.33.0)
@@ -29805,7 +29761,7 @@ snapshots:
       '@vitest/spy': 2.1.8
       '@vitest/utils': 2.1.8
       chai: 5.1.2
-      debug: 4.4.0(supports-color@9.4.0)
+      debug: 4.4.0
       expect-type: 1.1.0
       magic-string: 0.30.17
       pathe: 1.1.2

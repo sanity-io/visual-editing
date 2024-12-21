@@ -40,10 +40,14 @@ export const SharedStateProvider: FunctionComponent<
   }, [comlink])
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.count('fetching shared state')
     async function fetch() {
       const value = await comlink?.fetch('visual-editing/shared-state', undefined, {
         suppressWarnings: true,
       })
+      // eslint-disable-next-line no-console
+      console.log('fetched shared state', {value})
       if (value) {
         store.setState(() => value.state)
       }
