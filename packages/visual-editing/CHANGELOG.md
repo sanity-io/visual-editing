@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.2...visual-editing-v2.11.3) (2024-12-21)
+
+
+### Bug Fixes
+
+* react 19 typings ([a8fb5c2](https://github.com/sanity-io/visual-editing/commit/a8fb5c2fcaf6366877b51625b852ae96fd307370))
+
 ## [2.11.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.1...visual-editing-v2.11.2) (2024-12-21)
 
 

@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.16](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.15...presentation-v1.19.16) (2024-12-21)
+
+
+### Bug Fixes
+
+* react 19 typings ([a8fb5c2](https://github.com/sanity-io/visual-editing/commit/a8fb5c2fcaf6366877b51625b852ae96fd307370))
+
 ## [1.19.15](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.14...presentation-v1.19.15) (2024-12-21)
 
 
