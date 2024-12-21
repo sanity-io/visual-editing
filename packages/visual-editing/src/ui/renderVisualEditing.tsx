@@ -5,7 +5,6 @@
 
 import {StrictMode} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
-import {OVERLAY_ID} from '../constants'
 import type {VisualEditingOptions} from '../types'
 import {VisualEditing} from './VisualEditing'
 
@@ -36,13 +35,7 @@ export function renderVisualEditing(
   })
 
   if (!node) {
-    // eslint-disable-next-line no-warning-comments
-    // @TODO use 'sanity-visual-editing' instead of 'div'
-    node = document.createElement('div')
-    // eslint-disable-next-line no-warning-comments
-    // @TODO after the element is `sanity-visual-editing` instead of `div`, stop setting this ID
-    node.id = OVERLAY_ID
-
+    node = document.createElement('sanity-visual-editing')
     // render sanity-visual-editing after closing </body> tag
     document.body.parentNode!.insertBefore(node, document.body.nextSibling)
   }
@@ -53,7 +46,14 @@ export function renderVisualEditing(
 
   root.render(
     <StrictMode>
-      <VisualEditing components={components} history={history} refresh={refresh} zIndex={zIndex} />
+      <VisualEditing
+        components={components}
+        history={history}
+        refresh={refresh}
+        zIndex={zIndex}
+        // Disabling the portal, as this function is already making sure the overlays render in the right spot
+        portal={false}
+      />
     </StrictMode>,
   )
 }
