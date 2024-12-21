@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.17](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.16...insert-menu-v1.0.17) (2024-12-21)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @types/react to ^18.3.18 ([#2344](https://github.com/sanity-io/visual-editing/issues/2344)) ([7ad4ced](https://github.com/sanity-io/visual-editing/commit/7ad4ced4c6e4ffd2b09a8f75e2d67f5cbd615dfa))
+
 ## [1.0.16](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.15...insert-menu-v1.0.16) (2024-12-04)
 
 
