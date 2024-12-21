@@ -55,37 +55,8 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
   const {components, history, refresh, zIndex} = props
-  // @TODO remove initial state, set it to false
-  const [inFrame, setInFrame] = useState(window.self !== window.top || window.opener)
-  useEffect(() => {
-    const inFrame = window.self !== window.top || window.opener
-    setInFrame(inFrame)
-
-    if (!inFrame) return undefined
-    const controller = new AbortController()
-    // Detect when Presentation Tool is ready to connect
-    window.addEventListener(
-      'message',
-      ({data}: MessageEvent<unknown>) => {
-        if (
-          data &&
-          typeof data === 'object' &&
-          'domain' in data &&
-          data.domain === 'sanity/channels' &&
-          'from' in data &&
-          data.from === 'presentation'
-        ) {
-          // eslint-disable-next-line no-console
-          console.count('Presentation Tool detected in Visual Editing')
-          controller.abort()
-        }
-      },
-      {signal: controller.signal},
-    )
-    return () => {
-      controller.abort()
-    }
-  }, [])
+  const [inFrame, setInFrame] = useState(false)
+  useEffect(() => setInFrame(window.self !== window.top || window.opener), [])
 
   const comlink = useComlink(inFrame)
   useDatasetMutator(comlink)

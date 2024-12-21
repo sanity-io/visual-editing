@@ -75,8 +75,8 @@ export type Node<S extends Message, R extends Message> = {
     handler: (event: U['data']) => U['response'],
   ) => () => void
   onStatus: (
-    handler: (status: Omit<Status, 'disconnected'>) => void,
-    filter?: Omit<Status, 'disconnected'>,
+    handler: (status: Exclude<Status, 'disconnected'>) => void,
+    filter?: Exclude<Status, 'disconnected'>,
   ) => () => void
   post: <T extends S['type'], U extends Extract<S, {type: T}>>(
     ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
@@ -134,7 +134,7 @@ export const createNodeMachine = <
         | HeartbeatEmitEvent
         | MessageEmitEvent<R>
         | ReceivedEmitEvent<R>
-        | (StatusEmitEvent & {status: Omit<Status, 'disconnected'>})
+        | (StatusEmitEvent & {status: Exclude<Status, 'disconnected'>})
       events:
         | {type: 'heartbeat.received'; message: MessageEvent<ProtocolMessage<HeartbeatMessage>>}
         | {type: 'message.received'; message: MessageEvent<ProtocolMessage<R>>}
@@ -249,7 +249,7 @@ export const createNodeMachine = <
         return {
           type: '_status',
           status: params.status,
-        } satisfies StatusEmitEvent & {status: Omit<Status, 'disconnected'>}
+        } satisfies StatusEmitEvent & {status: Exclude<Status, 'disconnected'>}
       }),
       'flush buffer': enqueueActions(({enqueue}) => {
         enqueue.raise(({context}) => ({
@@ -530,13 +530,13 @@ export const createNode = <S extends Message, R extends Message>(
   }
 
   const onStatus = (
-    handler: (status: Omit<Status, 'disconnected'>) => void,
-    filter?: Omit<Status, 'disconnected'>,
+    handler: (status: Exclude<Status, 'disconnected'>) => void,
+    filter?: Exclude<Status, 'disconnected'>,
   ) => {
     const {unsubscribe} = actor.on(
       // @ts-expect-error @todo ReceivedEmitEvent causes this
       '_status',
-      (event: StatusEmitEvent & {status: Omit<Status, 'disconnected'>}) => {
+      (event: StatusEmitEvent & {status: Exclude<Status, 'disconnected'>}) => {
         if (filter && event.status !== filter) {
           return
         }
