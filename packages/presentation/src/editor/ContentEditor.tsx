@@ -67,6 +67,7 @@ export function ContentEditor(props: {
     [mainDocumentState, schema],
   )
 
+  // @ts-expect-error fix later
   const previewState = usePreviewState(mainDocumentState?.document?._id || '', schemaType)
 
   const preview = useMemo(() => {

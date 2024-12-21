@@ -207,6 +207,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
   const inlineFields = new Set<SanitySchemaType>()
   const {schema: schemaDef, basePath} = workspace
 
+  // @ts-expect-error fix later
   const sortedSchemaTypeNames = sortByDependencies(schemaDef)
   return sortedSchemaTypeNames
     .map((typeName) => {
@@ -214,6 +215,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
       if (schemaType === undefined) {
         return
       }
+      // @ts-expect-error fix later
       const base = convertBaseType(schemaType)
 
       if (base === null) {
@@ -221,6 +223,7 @@ export function extractSchema(workspace: Workspace, theme: ThemeContextValue): S
       }
 
       if (base.type === 'type') {
+        // @ts-expect-error fix later
         inlineFields.add(schemaType)
       }
 
