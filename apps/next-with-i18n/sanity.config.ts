@@ -36,6 +36,7 @@ export default defineConfig({
     }),
     documentI18n({ ...config.i18n, schemas }),
     structureTool(),
+    // @ts-expect-error fix later
     visionTool({ defaultApiVersion: config.sanity.apiVersion }),
   ],
 })
