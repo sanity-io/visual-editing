@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import {createActor} from 'xstate'
-import {setActor, type MutatorActor} from '../optimistic/context'
+import {setActor} from '../optimistic/context'
 import {createSharedListener} from '../optimistic/state/createSharedListener'
 import {createDatasetMutator} from '../optimistic/state/datasetMutator'
 import type {VisualEditingNode} from '../types'
@@ -9,11 +9,7 @@ import type {VisualEditingNode} from '../types'
  * Hook for maintaining a channel between overlays and the presentation tool
  * @internal
  */
-export function useDatasetMutator(
-  comlink: VisualEditingNode | undefined,
-): MutatorActor | undefined {
-  const [mutator, setMutator] = useState<MutatorActor>()
-
+export function useDatasetMutator(comlink: VisualEditingNode | undefined): void {
   useEffect(() => {
     if (!comlink) return
     const listener = createSharedListener(comlink)
@@ -23,7 +19,6 @@ export function useDatasetMutator(
       input: {client: {withConfig: () => {}}, sharedListener: listener},
     })
 
-    setMutator(mutator)
     mutator.start()
 
     // Fetch features to determine if optimistic updates are supported
@@ -51,9 +46,6 @@ export function useDatasetMutator(
       mutator.stop()
       featuresFetch.abort()
       unsub()
-      setMutator(undefined)
     }
   }, [comlink])
-
-  return mutator
 }

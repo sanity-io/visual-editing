@@ -1,4 +1,4 @@
-import {type FunctionComponent} from 'react'
+import {useEffect, useState, type FunctionComponent} from 'react'
 import type {VisualEditingOptions} from '../types'
 import {History} from './History'
 import {Meta} from './Meta'
@@ -12,19 +12,22 @@ import {useDatasetMutator} from './useDatasetMutator'
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
   const {components, history, refresh, zIndex} = props
-  const inFrame = window.self !== window.top || window.opener
+  const [inFrame, setInFrame] = useState<boolean | null>(null)
+  useEffect(() => setInFrame(window.self !== window.top || Boolean(window.opener)), [])
 
-  const comlink = useComlink(inFrame)
+  const comlink = useComlink(inFrame === true)
   useDatasetMutator(comlink)
 
   return (
     <>
-      <Overlays
-        comlink={comlink}
-        componentResolver={components}
-        inFrame={inFrame}
-        zIndex={zIndex}
-      />
+      {inFrame !== null && (
+        <Overlays
+          comlink={comlink}
+          componentResolver={components}
+          inFrame={inFrame}
+          zIndex={zIndex}
+        />
+      )}
       {comlink && (
         <>
           <History comlink={comlink} history={history} />
