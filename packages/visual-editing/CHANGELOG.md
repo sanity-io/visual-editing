@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.1...visual-editing-v2.11.2) (2024-12-21)
+
+
+### Bug Fixes
+
+* make `&lt;VisualEditing&gt;` render in portals consistently ([#2345](https://github.com/sanity-io/visual-editing/issues/2345)) ([c25d0af](https://github.com/sanity-io/visual-editing/commit/c25d0af138f10bae24a509743d93bac563c268a1))
+
 ## [2.11.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.0...visual-editing-v2.11.1) (2024-12-21)
 
 
