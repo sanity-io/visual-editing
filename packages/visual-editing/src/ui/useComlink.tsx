@@ -15,7 +15,13 @@ export function useComlink(active: boolean = true): VisualEditingNode | undefine
   const [node, setNode] = useState<VisualEditingNode>()
 
   useEffect(() => {
-    if (!active) return
+    if (!active) {
+      // eslint-disable-next-line no-console
+      console.count('useComlink inactive')
+      return
+    }
+    // eslint-disable-next-line no-console
+    console.count('useComlink active')
     const instance = createNode<VisualEditingNodeMsg, VisualEditingControllerMsg>(
       {
         name: 'visual-editing',

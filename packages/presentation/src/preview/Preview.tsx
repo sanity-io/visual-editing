@@ -156,6 +156,8 @@ export const Preview = memo(
     }, [loading, overlaysConnection, refreshing, showOverlaysConnectionStatus])
 
     const onIFrameLoad = useCallback(() => {
+      // eslint-disable-next-line no-console
+      console.count('onIFrameLoad')
       dispatch({type: ACTION_IFRAME_LOADED})
     }, [dispatch])
 

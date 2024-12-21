@@ -542,6 +542,8 @@ export default function PresentationTool(props: {
                     <Flex direction="column" flex={1} height="fill" ref={setBoundaryElement}>
                       <BoundaryElementProvider element={boundaryElement}>
                         <Preview
+                          // Make sure the iframe is unmounted if the targetOrigin has changed
+                          key={targetOrigin}
                           canSharePreviewAccess={canSharePreviewAccess}
                           canToggleSharePreviewAccess={canToggleSharePreviewAccess}
                           canUseSharedPreviewAccess={canUseSharedPreviewAccess}

@@ -12,6 +12,7 @@ import {useDatasetMutator} from './useDatasetMutator'
  */
 export const VisualEditing: FunctionComponent<VisualEditingOptions> = (props) => {
   const {components, history, refresh, zIndex} = props
+  // @TODO do this detection in a side effect
   const inFrame = window.self !== window.top || window.opener
 
   const comlink = useComlink(inFrame)
