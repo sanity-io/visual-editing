@@ -32,15 +32,19 @@ export function useComlink(active: boolean = true): VisualEditingNode | undefine
       }),
     )
 
+    let timeout = 0
     const stop = instance.start()
     // Wait with forwarding the comlink until the connection is established
     const unsubscribe = instance.onStatus(() => {
       // eslint-disable-next-line no-console
       console.count('comlink.onStatus')
-      setNode(instance)
+      timeout = window.setTimeout(() => {
+        setNode(instance)
+      }, 3_000)
     }, 'connected')
 
     return () => {
+      clearTimeout(timeout)
       unsubscribe()
       stop()
       setNode(undefined)
