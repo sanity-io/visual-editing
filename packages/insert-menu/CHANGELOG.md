@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.18](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.17...insert-menu-v1.0.18) (2024-12-21)
+
+
+### Bug Fixes
+
+* remove direct `@types/react` dep ([2d5ad4c](https://github.com/sanity-io/visual-editing/commit/2d5ad4c6c5db97547350c0cf6097521d6a07906f))
+
 ## [1.0.17](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.16...insert-menu-v1.0.17) (2024-12-21)
 
 
