@@ -472,10 +472,9 @@ export const createConnection = <S extends Message, R extends Message>(
   input: ConnectionInput,
   machine: ConnectionActorLogic<S, R> = createConnectionMachine<S, R>(),
 ): Connection<S, R> => {
-  // eslint-disable-next-line no-console
-  console.count('createConnection')
-
   const id = input.id || `${input.name}-${uuid()}`
+  // eslint-disable-next-line no-console
+  console.count(`createConnection(${id})`)
   const actor = createActor(machine, {
     input: {...input, id},
     // inspect: (inspectionEvent) => console.log(inspectionEvent),

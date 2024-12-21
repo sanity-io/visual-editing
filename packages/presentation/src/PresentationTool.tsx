@@ -206,6 +206,8 @@ export default function PresentationTool(props: {
   const isLoading = state.iframe.status === 'loading'
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.count('PresentationTool trouble?')
     const target = iframeRef.current?.contentWindow
 
     if (!target || isLoading) return
@@ -219,6 +221,11 @@ export default function PresentationTool(props: {
       setController(undefined)
     }
   }, [targetOrigin, isLoading])
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('targetOrigin changed', targetOrigin)
+  }, [targetOrigin])
 
   const handleNavigate = useEffectEvent<typeof navigate>(
     (nextState, nextSearchState, forceReplace) =>
