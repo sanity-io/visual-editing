@@ -12,6 +12,23 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.19.14](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.13...presentation-v1.19.14) (2024-12-21)
+
+
+### Bug Fixes
+
+* improve race condition connectivity handling ([#2342](https://github.com/sanity-io/visual-editing/issues/2342)) ([a98d6cf](https://github.com/sanity-io/visual-editing/commit/a98d6cf079e376ffa6235debb42cc0b51274a958))
+* preload feature request ([9dfcb4c](https://github.com/sanity-io/visual-editing/commit/9dfcb4c8f7b54d36dd594a29c8baebb22a5cbc0e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.3
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.10
+
 ## [1.19.13](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.12...presentation-v1.19.13) (2024-12-18)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.2...comlink-v2.0.3) (2024-12-21)
+
+
+### Bug Fixes
+
+* improve race condition connectivity handling ([#2342](https://github.com/sanity-io/visual-editing/issues/2342)) ([a98d6cf](https://github.com/sanity-io/visual-editing/commit/a98d6cf079e376ffa6235debb42cc0b51274a958))
+
 ## [2.0.2](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.1...comlink-v2.0.2) (2024-12-16)
 
 
