@@ -20,7 +20,9 @@ export function createSharedListener(comlink: VisualEditingNode): Observable<Sha
     .then((data) => {
       incomingConnection$.next(data.event)
     })
-    .catch(() => {
+    .catch((reason) => {
+      // eslint-disable-next-line no-console
+      console.error('Failed to fetch snapshot-welcome', reason)
       // Fail silently as the app may be communicating with a version of
       // Presentation that does not support this feature
     })

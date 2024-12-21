@@ -83,6 +83,8 @@ export const SchemaProvider: FunctionComponent<
         })
         setSchema(response.schema)
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch schema', e)
         // Fail silently as the app may be communicating with a version of
         // Presentation that does not support this feature
       }
@@ -120,6 +122,8 @@ export const SchemaProvider: FunctionComponent<
         setResolvedTypes(response.types)
         reportedPathsRef.current = paths
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch schema union types', e)
         // Fail silently as the app may be communicating with a version of
         // Presentation that does not support this feature
       }

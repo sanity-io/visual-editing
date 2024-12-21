@@ -16,7 +16,9 @@ export function usePerspectiveSync(
       .then((data) => {
         dispatch({type: 'presentation/perspective', data})
       })
-      .catch(() => {
+      .catch((reason) => {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch perspective', reason)
         // Fail silently as the app may be communicating with a version of
         // Presentation that does not support this feature
       })
