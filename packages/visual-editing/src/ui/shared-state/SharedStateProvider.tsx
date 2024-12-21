@@ -40,6 +40,7 @@ export const SharedStateProvider: FunctionComponent<
   }, [comlink])
 
   useEffect(() => {
+    if (!comlink) return
     // eslint-disable-next-line no-console
     console.count('fetching shared state')
     async function fetch() {

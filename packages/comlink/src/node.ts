@@ -508,7 +508,7 @@ export const createNode = <S extends Message, R extends Message>(
   //   inspect = createBrowserInspector().inspect
   // }
   // eslint-disable-next-line no-console
-  console.count('createNode')
+  console.count(`createNode(${input.name})`)
 
   const actor = createActor(machine, {
     input,
