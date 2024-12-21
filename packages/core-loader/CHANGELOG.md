@@ -18,6 +18,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
+## [1.7.22](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.21...core-loader-v1.7.22) (2024-12-21)
+
+
+### Bug Fixes
+
+* improve race condition connectivity handling ([#2342](https://github.com/sanity-io/visual-editing/issues/2342)) ([a98d6cf](https://github.com/sanity-io/visual-editing/commit/a98d6cf079e376ffa6235debb42cc0b51274a958))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.3
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.10
+
 ## [1.7.21](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.20...core-loader-v1.7.21) (2024-12-16)
 
 
