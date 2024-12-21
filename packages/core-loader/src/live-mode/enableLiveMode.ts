@@ -59,13 +59,9 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }),
   )
 
-  comlink.onStatus((status) => {
-    if (status === 'connected') {
-      $connected.set(true)
-    } else if (status === 'disconnected') {
-      $connected.set(false)
-    }
-  })
+  comlink.onStatus(() => {
+    $connected.set(true)
+  }, 'connected')
 
   comlink.on('loader/perspective', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
@@ -239,5 +235,6 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     unsetFetcher?.()
     unlistenConnection()
     stop()
+    $connected.set(false)
   }
 }
