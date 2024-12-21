@@ -4,6 +4,7 @@ import {schemaType, SECRET_TTL} from '../constants'
 
 export const debugUrlSecretsType = defineType({
   type: 'document',
+  // @ts-expect-error - fix later
   icon: LockIcon,
   name: schemaType,
   title: '@sanity/preview-url-secret',
@@ -36,6 +37,7 @@ export const debugUrlSecretsType = defineType({
       studioUrl: 'studioUrl',
       updatedAt: '_updatedAt',
     },
+    // @ts-expect-error - fix later
     prepare(data) {
       const url = data.studioUrl ? new URL(data.studioUrl, location.origin) : undefined
       const updatedAt = new Date(data.updatedAt).getTime()

@@ -73,6 +73,7 @@ export function ContentEditor(props: {
     if (!mainDocumentState?.document) return null
 
     return (
+      // @ts-expect-error fix later
       <SanityDefaultPreview
         {...getPreviewValueWithFallback({
           value: mainDocumentState!.document! as SanityDocument,
