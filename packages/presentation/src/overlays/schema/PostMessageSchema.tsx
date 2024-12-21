@@ -54,6 +54,8 @@ function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
 
   // Resolve union types from an array of unresolved paths
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('PostMessageSchema ready to handle visual-editing/schema-union-types')
     return comlink.on('visual-editing/schema-union-types', async (data) => {
       const documentPathArray = getDocumentPathArray(data.paths)
       const unionTypes = await Promise.all(
