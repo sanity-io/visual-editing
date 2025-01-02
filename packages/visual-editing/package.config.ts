@@ -16,6 +16,7 @@ export default defineConfig({
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],
     },
   },
-  babel: {reactCompiler: true},
+  // @TODO re-enable once Next.js issues with React.useMemoCache has been resolved
+  babel: {reactCompiler: false},
   reactCompilerOptions: {target: '18'},
 })
