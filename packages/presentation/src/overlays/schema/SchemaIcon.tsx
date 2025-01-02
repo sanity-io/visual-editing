@@ -14,7 +14,12 @@ export const SchemaIcon: FunctionComponent<{
   return Icon ? (
     <StyleSheetManager sheet={sheet.instance}>
       <ThemeProvider theme={theme} scheme={scheme} tone={tone}>
-        {isValidElement(Icon) ? Icon : <Icon />}
+        {isValidElement(Icon) ? (
+          Icon
+        ) : (
+          // @ts-expect-error -- @todo: fix typings
+          <Icon />
+        )}
       </ThemeProvider>
     </StyleSheetManager>
   ) : null
