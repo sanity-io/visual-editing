@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.3...visual-editing-v2.11.4) (2025-01-02)
+
+
+### Bug Fixes
+
+* temporarily disable react compiler ([5cbaefa](https://github.com/sanity-io/visual-editing/commit/5cbaefaf0e0e2bb4551be1fa830c220ba1c23ca3))
+
 ## [2.11.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.2...visual-editing-v2.11.3) (2024-12-21)
 
 
