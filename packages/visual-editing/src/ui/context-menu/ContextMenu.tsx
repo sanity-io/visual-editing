@@ -35,8 +35,6 @@ function ContextMenuItem(props: {
       node.action?.()
       onDismiss?.()
 
-      console.log(node.label)
-
       if (node.label === 'Remove') {
         sendTelemetry('Visual Editing Context Menu Item Removed', null)
       } else if (node.label === 'Duplicate') {
@@ -47,7 +45,7 @@ function ContextMenuItem(props: {
         sendTelemetry('Visual Editing Context Menu Item Inserted', null)
       }
     }
-  }, [node, onDismiss])
+  }, [node, onDismiss, sendTelemetry])
 
   if (node.type === 'divider') {
     return <MenuDivider />

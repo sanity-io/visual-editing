@@ -11,7 +11,6 @@ import {
   usePrefersDark,
 } from '@sanity/ui'
 import {
-  createContext,
   useCallback,
   useEffect,
   useMemo,
@@ -19,8 +18,6 @@ import {
   useRef,
   useState,
   type FunctionComponent,
-  type PropsWithChildren,
-  type ReactNode,
 } from 'react'
 import {styled} from 'styled-components'
 import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor'
@@ -157,7 +154,7 @@ const OverlaysController: FunctionComponent<{
 
       dispatch(message)
     },
-    [comlink, dispatch, dispatchDragEndEvent, onDrag],
+    [comlink, dispatch, dispatchDragEndEvent, onDrag, sendTelemetry],
   )
 
   const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp)
