@@ -29,6 +29,7 @@ import {
   getArrayMovePatches,
   getArrayRemovePatches,
 } from '../../util/mutations'
+import {useTelemetry} from '../telemetry/useTelemetry'
 
 export function getArrayRemoveAction(node: SanityNode, doc: OptimisticDocument): () => void {
   if (!node.type) throw new Error('Node type is missing')
@@ -249,9 +250,13 @@ async function getContextMenuUnionItems(context: {
     items.push({
       type: 'custom',
       component: ({boundaryElement}) => {
+        const sendTelemetry = useTelemetry()
+
         const onSelect = (schemaType: SchemaType) => {
           const action = getArrayInsertAction(node, doc, schemaType.name, 'before')
           action()
+
+          sendTelemetry('Visual Editing Context Menu Item Inserted', null)
         }
         return (
           <InsertMenuWrapper
@@ -268,9 +273,13 @@ async function getContextMenuUnionItems(context: {
     items.push({
       type: 'custom',
       component: ({boundaryElement}) => {
+        const sendTelemetry = useTelemetry()
+
         const onSelect = (schemaType: SchemaType) => {
           const action = getArrayInsertAction(node, doc, schemaType.name, 'after')
           action()
+
+          sendTelemetry('Visual Editing Context Menu Item Inserted', null)
         }
         return (
           <InsertMenuWrapper

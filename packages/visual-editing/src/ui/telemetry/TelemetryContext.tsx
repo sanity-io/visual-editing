@@ -12,6 +12,21 @@ export const events = {
     description: 'An item is removed using the Context Menu.',
     version: 1,
   }),
+  'Visual Editing Context Menu Item Duplicated': defineEvent({
+    name: 'Visual Editing Context Menu Item Dupliacted',
+    description: 'An item is duplicated using the Context Menu.',
+    version: 1,
+  }),
+  'Visual Editing Context Menu Item Moved': defineEvent({
+    name: 'Visual Editing Context Menu Item Moved',
+    description: 'An item is moved using the Context Menu.',
+    version: 1,
+  }),
+  'Visual Editing Context Menu Item Inserted': defineEvent({
+    name: 'Visual Editing Context Menu Item Inserted',
+    description: 'An item is inserted using the Context Menu.',
+    version: 1,
+  }),
 }
 
 type EventDataMap = {

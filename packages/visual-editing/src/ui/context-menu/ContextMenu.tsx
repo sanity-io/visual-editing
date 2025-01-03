@@ -35,8 +35,16 @@ function ContextMenuItem(props: {
       node.action?.()
       onDismiss?.()
 
+      console.log(node.label)
+
       if (node.label === 'Remove') {
         sendTelemetry('Visual Editing Context Menu Item Removed', null)
+      } else if (node.label === 'Duplicate') {
+        sendTelemetry('Visual Editing Context Menu Item Duplicated', null)
+      } else if (['Up', 'Down', 'To top', 'To bottom'].includes(node.label)) {
+        sendTelemetry('Visual Editing Context Menu Item Moved', null)
+      } else if (['Insert before', 'Insert after'].includes(node.label)) {
+        sendTelemetry('Visual Editing Context Menu Item Inserted', null)
       }
     }
   }, [node, onDismiss])
