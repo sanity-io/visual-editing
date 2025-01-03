@@ -29,7 +29,6 @@ import {
   getArrayMovePatches,
   getArrayRemovePatches,
 } from '../../util/mutations'
-import {useTelemetry} from '../telemetry/useTelemetry'
 
 export function getArrayRemoveAction(node: SanityNode, doc: OptimisticDocument): () => void {
   if (!node.type) throw new Error('Node type is missing')
@@ -249,9 +248,7 @@ async function getContextMenuUnionItems(context: {
 
     items.push({
       type: 'custom',
-      component: ({boundaryElement}) => {
-        const sendTelemetry = useTelemetry()
-
+      component: ({boundaryElement, sendTelemetry}) => {
         const onSelect = (schemaType: SchemaType) => {
           const action = getArrayInsertAction(node, doc, schemaType.name, 'before')
           action()
@@ -272,9 +269,7 @@ async function getContextMenuUnionItems(context: {
 
     items.push({
       type: 'custom',
-      component: ({boundaryElement}) => {
-        const sendTelemetry = useTelemetry()
-
+      component: ({boundaryElement, sendTelemetry}) => {
         const onSelect = (schemaType: SchemaType) => {
           const action = getArrayInsertAction(node, doc, schemaType.name, 'after')
           action()
