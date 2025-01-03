@@ -142,6 +142,8 @@ const OverlaysController: FunctionComponent<{
         onDrag(message.x, message.y)
 
         return
+      } else if (message.type === 'overlay/dragToggleMinimap' && message.display === true) {
+        sendTelemetry('Visual Editing Drag Minimap Enabled', null)
       } else if (message.type === 'overlay/setCursor') {
         const {element, cursor} = message
 

@@ -455,13 +455,6 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
       display: false,
     })
 
-    handler({
-      type: 'overlay/dragToggleMinimap',
-      display: true,
-    })
-
-    minimapScaleApplied = true
-
     applyMinimapWrapperTransform(
       scaleTarget,
       scaleFactor,
@@ -497,6 +490,8 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
     if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
       window.dispatchEvent(new CustomEvent('unstable_sanity/dragApplyMinimap'))
+
+      minimapScaleApplied = true
 
       setTimeout(() => {
         applyMinimap()
@@ -544,6 +539,8 @@ export function handleOverlayDrag(opts: HandleOverlayDragOpts): void {
 
     if (e.shiftKey && !minimapScaleApplied && !disableMinimap) {
       window.dispatchEvent(new CustomEvent('unstable_sanity/dragApplyMinimap'))
+
+      minimapScaleApplied = true
 
       setTimeout(() => {
         applyMinimap()
