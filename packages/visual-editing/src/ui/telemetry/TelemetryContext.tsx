@@ -7,6 +7,11 @@ export const events = {
     description: 'An array is successfully reordered using drag and drop.',
     version: 1,
   }),
+  'Visual Editing Drag Minimap Enabled': defineEvent({
+    name: 'Visual Editing Drag Minimap Enabled',
+    description: 'The zoomed-out minimap view is enabled during a drag sequence.',
+    version: 1,
+  }),
   'Visual Editing Context Menu Item Removed': defineEvent({
     name: 'Visual Editing Context Menu Item Removed',
     description: 'An item is removed using the Context Menu.',
