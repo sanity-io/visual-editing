@@ -747,6 +747,104 @@ export type ProjectsPageQueryResult = Array<{
   slug?: Slug
 }>
 
+// Source: ./src/app/product/[slug]/page.tsx
+// Variable: productSlugsQuery
+// Query: *[_type == "product" && defined(slug.current)]{"slug": slug.current}
+export type ProductSlugsQueryResult = Array<{
+  slug: string | null
+}>
+// Variable: productPageQuery
+// Query: *[_type == "product" && slug.current == $slug][0]
+export type ProductPageQueryResult = {
+  _id: string
+  _type: 'product'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  media?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  brandReference?: unknown
+  details?: {
+    materials?: string
+    collectionNotes?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    performance?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    ledLifespan?: string
+    certifications?: Array<string>
+  }
+  variants?: Array<{
+    title?: string
+    price?: string
+    sku?: string
+    _type: 'variant'
+    _key: string
+  }>
+} | null
+
 // Source: ./src/app/pages/[slug]/page.tsx
 // Variable: pageQuery
 // Query: *[_type == "page" && slug.current == $slug][0]{    _type,    _id,    title,    sections[]{  _key,  _type,  _type == 'section' => {    'headline': coalesce(headline, symbol->headline),    'tagline': coalesce(tagline, symbol->tagline),    'subline': coalesce(subline, symbol->subline),  },  _type == 'featureHighlight' => {    headline,    description,    image,    product->{      _type,      _id,      title,      slug,      "media": media[0]    },    style,    ctas  },  _type == 'featuredProducts' => {    headline,    description,    products[]{      _key,      ...(@->{        _type,        _id,        title,        slug,        "media": media[0]      })    },    style  },  _type == 'intro' => {    headline,    intro,    style,    rotations  },  _type == 'hero' => {    headline,    tagline,    subline,    image,    style  }},    style  }

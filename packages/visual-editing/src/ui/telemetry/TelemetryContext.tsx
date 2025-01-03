@@ -1,10 +1,15 @@
 import {defineEvent} from '@sanity/telemetry'
-import type {VisualEditingNode} from '../../types'
+import {createContext} from 'react'
 
-const events = {
+export const events = {
   'Visual Editing Drag Sequence Completed': defineEvent({
     name: 'Visual Editing Drag Sequence Completed',
     description: 'An array is successfully reordered using drag and drop.',
+    version: 1,
+  }),
+  'Visual Editing Context Menu Item Removed': defineEvent({
+    name: 'Visual Editing Context Menu Item Removed',
+    description: 'An item is removed using the Context Menu.',
     version: 1,
   }),
 }
@@ -15,20 +20,9 @@ type EventDataMap = {
     : never
 }
 
-function sendTelemetry<K extends keyof typeof events>(
+export type TelemetryContextValue = <K extends keyof typeof events>(
   name: K,
   data: EventDataMap[K] extends void ? null | undefined : EventDataMap[K],
-  comlink: VisualEditingNode | undefined,
-): void {
-  if (!comlink) return
+) => void
 
-  const event = events[name]
-
-  if (!event) {
-    throw new Error(`Telemetry event: ${name} does not exist`)
-  } else {
-    comlink.post('visual-editing/telemetry-log', {event, data})
-  }
-}
-
-export {sendTelemetry}
+export const TelemetryContext = createContext<TelemetryContextValue | undefined>(undefined)
