@@ -40,7 +40,7 @@ export const handleLoadQuery =
 /**
  * @beta
  */
-export const createRequestHandler = ({preview, loadQuery}: HandleOptions = {}): Handle => {
+export const createRequestHandler = ({loadQuery, preview}: HandleOptions = {}): Handle => {
   const client = preview?.client || unstable__serverClient.instance
   if (!client) throw new Error('No Sanity client configured for preview')
   return sequence(handlePreview({client, preview}), handleLoadQuery({loadQuery}))
