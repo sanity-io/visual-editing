@@ -40,7 +40,8 @@ import {overlayStateReducer} from './overlayStateReducer'
 import {PreviewSnapshotsProvider} from './preview/PreviewSnapshotsProvider'
 import {SchemaProvider} from './schema/SchemaProvider'
 import {SharedStateProvider} from './shared-state/SharedStateProvider'
-import {sendTelemetry} from './telemetry/sendTelemetry'
+import {TelemetryProvider} from './telemetry/TelemetryProvider'
+import {useTelemetry} from './telemetry/useTelemetry'
 import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
@@ -117,6 +118,7 @@ const OverlaysController: FunctionComponent<{
 }> = (props) => {
   const {comlink, dispatch, inFrame, onDrag, overlayEnabled, rootElement} = props
   const {dispatchDragEndEvent} = useDragEndEvents()
+  const sendTelemetry = useTelemetry()
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
     (message) => {
@@ -133,12 +135,14 @@ const OverlaysController: FunctionComponent<{
         dispatchDragEndEvent({insertPosition, target, dragGroup, flow, preventInsertDefault})
 
         if (insertPosition) {
-          sendTelemetry('Visual Editing Drag Sequence Completed', null, comlink)
+          sendTelemetry('Visual Editing Drag Sequence Completed', null)
         }
       } else if (message.type === 'overlay/dragUpdateCursorPosition') {
         onDrag(message.x, message.y)
 
         return
+      } else if (message.type === 'overlay/dragToggleMinimap' && message.display === true) {
+        sendTelemetry('Visual Editing Drag Minimap Enabled', null)
       } else if (message.type === 'overlay/setCursor') {
         const {element, cursor} = message
 
@@ -151,7 +155,7 @@ const OverlaysController: FunctionComponent<{
 
       dispatch(message)
     },
-    [comlink, dispatch, dispatchDragEndEvent, onDrag],
+    [comlink, dispatch, dispatchDragEndEvent, onDrag, sendTelemetry],
   )
 
   const controller = useController(rootElement, overlayEventHandler, inFrame)
@@ -384,46 +388,48 @@ export const Overlays: FunctionComponent<{
   ])
 
   return (
-    <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
-      <LayerProvider>
-        <PortalProvider element={rootElement}>
-          <SchemaProvider comlink={comlink} elements={elements}>
-            <PreviewSnapshotsProvider comlink={comlink}>
-              <SharedStateProvider comlink={comlink}>
-                <Root
-                  data-fading-out={fadingOut ? '' : undefined}
-                  data-overlays={overlaysFlash ? '' : undefined}
-                  ref={setRootElement}
-                  $zIndex={zIndex}
-                >
-                  <DocumentReporter documentIds={documentIds} perspective={perspective} />
-                  <OverlaysController
-                    comlink={comlink}
-                    dispatch={dispatch}
-                    inFrame={inFrame}
-                    onDrag={updateDragPreviewCustomProps}
-                    overlayEnabled={overlayEnabled}
-                    rootElement={rootElement}
-                  />
-                  {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
-                  {elementsToRender}
+    <TelemetryProvider comlink={comlink}>
+      <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
+        <LayerProvider>
+          <PortalProvider element={rootElement}>
+            <SchemaProvider comlink={comlink} elements={elements}>
+              <PreviewSnapshotsProvider comlink={comlink}>
+                <SharedStateProvider comlink={comlink}>
+                  <Root
+                    data-fading-out={fadingOut ? '' : undefined}
+                    data-overlays={overlaysFlash ? '' : undefined}
+                    ref={setRootElement}
+                    $zIndex={zIndex}
+                  >
+                    <DocumentReporter documentIds={documentIds} perspective={perspective} />
+                    <OverlaysController
+                      comlink={comlink}
+                      dispatch={dispatch}
+                      inFrame={inFrame}
+                      onDrag={updateDragPreviewCustomProps}
+                      overlayEnabled={overlayEnabled}
+                      rootElement={rootElement}
+                    />
+                    {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
+                    {elementsToRender}
 
-                  {isDragging && !dragMinimapTransition && (
-                    <>
-                      {dragInsertPosition && (
-                        <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
-                      )}
-                      {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
-                      {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
-                    </>
-                  )}
-                  {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-                </Root>
-              </SharedStateProvider>
-            </PreviewSnapshotsProvider>
-          </SchemaProvider>
-        </PortalProvider>
-      </LayerProvider>
-    </ThemeProvider>
+                    {isDragging && !dragMinimapTransition && (
+                      <>
+                        {dragInsertPosition && (
+                          <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                        )}
+                        {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
+                        {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
+                      </>
+                    )}
+                    {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+                  </Root>
+                </SharedStateProvider>
+              </PreviewSnapshotsProvider>
+            </SchemaProvider>
+          </PortalProvider>
+        </LayerProvider>
+      </ThemeProvider>
+    </TelemetryProvider>
   )
 }

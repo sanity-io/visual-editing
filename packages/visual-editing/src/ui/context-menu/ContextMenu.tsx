@@ -17,6 +17,7 @@ import type {ContextMenuNode, ContextMenuProps} from '../../types'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {PopoverPortal} from '../PopoverPortal'
 import {useSchema} from '../schema/useSchema'
+import {useTelemetry} from '../telemetry/useTelemetry'
 import {getContextMenuItems} from './contextMenuItems'
 
 const POPOVER_MARGINS: PopoverMargins = [-4, 4, -4, 4]
@@ -27,13 +28,24 @@ function ContextMenuItem(props: {
   boundaryElement: HTMLDivElement | null
 }) {
   const {node, onDismiss, boundaryElement} = props
+  const sendTelemetry = useTelemetry()
 
   const onClick = useCallback(() => {
     if (node.type === 'action') {
       node.action?.()
       onDismiss?.()
+
+      if (node.label === 'Remove') {
+        sendTelemetry('Visual Editing Context Menu Item Removed', null)
+      } else if (node.label === 'Duplicate') {
+        sendTelemetry('Visual Editing Context Menu Item Duplicated', null)
+      } else if (['Up', 'Down', 'To top', 'To bottom'].includes(node.label)) {
+        sendTelemetry('Visual Editing Context Menu Item Moved', null)
+      } else if (['Insert before', 'Insert after'].includes(node.label)) {
+        sendTelemetry('Visual Editing Context Menu Item Inserted', null)
+      }
     }
-  }, [node, onDismiss])
+  }, [node, onDismiss, sendTelemetry])
 
   if (node.type === 'divider') {
     return <MenuDivider />
@@ -97,7 +109,7 @@ function ContextMenuItem(props: {
 
   if (node.type === 'custom') {
     const {component: Component} = node
-    return <Component boundaryElement={boundaryElement} />
+    return <Component boundaryElement={boundaryElement} sendTelemetry={sendTelemetry} />
   }
 
   return null

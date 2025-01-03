@@ -248,10 +248,12 @@ async function getContextMenuUnionItems(context: {
 
     items.push({
       type: 'custom',
-      component: ({boundaryElement}) => {
+      component: ({boundaryElement, sendTelemetry}) => {
         const onSelect = (schemaType: SchemaType) => {
           const action = getArrayInsertAction(node, doc, schemaType.name, 'before')
           action()
+
+          sendTelemetry('Visual Editing Context Menu Item Inserted', null)
         }
         return (
           <InsertMenuWrapper
@@ -267,10 +269,12 @@ async function getContextMenuUnionItems(context: {
 
     items.push({
       type: 'custom',
-      component: ({boundaryElement}) => {
+      component: ({boundaryElement, sendTelemetry}) => {
         const onSelect = (schemaType: SchemaType) => {
           const action = getArrayInsertAction(node, doc, schemaType.name, 'after')
           action()
+
+          sendTelemetry('Visual Editing Context Menu Item Inserted', null)
         }
         return (
           <InsertMenuWrapper
