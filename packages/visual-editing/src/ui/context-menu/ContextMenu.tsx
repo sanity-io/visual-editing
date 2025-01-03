@@ -109,7 +109,7 @@ function ContextMenuItem(props: {
 
   if (node.type === 'custom') {
     const {component: Component} = node
-    return <Component boundaryElement={boundaryElement} />
+    return <Component boundaryElement={boundaryElement} sendTelemetry={sendTelemetry} />
   }
 
   return null

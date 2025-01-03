@@ -20,6 +20,7 @@ import type {
   PropsWithChildren,
   ReactElement,
 } from 'react'
+import type {TelemetryContextValue} from './ui/telemetry/TelemetryContext'
 
 export type {
   HistoryRefresh,
@@ -490,7 +491,10 @@ export interface ContextMenuGroupNode {
  */
 export interface ContextMenuCustomNode {
   type: 'custom'
-  component: ComponentType<{boundaryElement: HTMLDivElement | null}>
+  component: ComponentType<{
+    boundaryElement: HTMLDivElement | null
+    sendTelemetry: TelemetryContextValue
+  }>
 }
 
 /**

@@ -694,6 +694,19 @@ export type DndPageQueryResult = {
   }> | null
 } | null
 
+// Source: ./src/app/projects/page.tsx
+// Variable: projectsPageQuery
+// Query: *[_type == "project" && defined(slug.current)]
+export type ProjectsPageQueryResult = Array<{
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+}>
+
 // Source: ./src/app/products/page.tsx
 // Variable: productsPageQuery
 // Query: *[_type == "product" && defined(slug.current)]{    _id,    title,    description,    slug,    "media": media[0]  }
@@ -732,19 +745,6 @@ export type ProductsPageQueryResult = Array<{
     _type: 'image'
     _key: string
   } | null
-}>
-
-// Source: ./src/app/projects/page.tsx
-// Variable: projectsPageQuery
-// Query: *[_type == "project" && defined(slug.current)]
-export type ProjectsPageQueryResult = Array<{
-  _id: string
-  _type: 'project'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
 }>
 
 // Source: ./src/app/pages/[slug]/page.tsx
@@ -1090,8 +1090,8 @@ declare module '@sanity/client' {
     '\n  *[_id == "siteSettings"][0]{\n  title,\n  description,\n  copyrightText\n}': LayoutQueryResult
     "\n  *[_id == \"siteSettings\"][0]{\n    frontPage->{\n      _type,\n      _id,\n      title,\n      \nsections[]{\n  _key,\n  _type,\n  _type == 'section' => {\n    'headline': coalesce(headline, symbol->headline),\n    'tagline': coalesce(tagline, symbol->tagline),\n    'subline': coalesce(subline, symbol->subline),\n  },\n  _type == 'featureHighlight' => {\n    headline,\n    description,\n    image,\n    product->{\n      _type,\n      _id,\n      title,\n      slug,\n      \"media\": media[0]\n    },\n    style,\n    ctas\n  },\n  _type == 'featuredProducts' => {\n    headline,\n    description,\n    products[]{\n      _key,\n      ...(@->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      })\n    },\n    style\n  },\n  _type == 'intro' => {\n    headline,\n    intro,\n    style,\n    rotations\n  },\n  _type == 'hero' => {\n    headline,\n    tagline,\n    subline,\n    image,\n    style\n  }\n},\n      style\n    }\n  }.frontPage\n": FrontPageQueryResult
     '\n  *[_type == "dndTestPage"]{\n    _id,\n    title,\n    children\n  }[0]\n': DndPageQueryResult
-    '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
     '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
+    '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    \nsections[]{\n  _key,\n  _type,\n  _type == 'section' => {\n    'headline': coalesce(headline, symbol->headline),\n    'tagline': coalesce(tagline, symbol->tagline),\n    'subline': coalesce(subline, symbol->subline),\n  },\n  _type == 'featureHighlight' => {\n    headline,\n    description,\n    image,\n    product->{\n      _type,\n      _id,\n      title,\n      slug,\n      \"media\": media[0]\n    },\n    style,\n    ctas\n  },\n  _type == 'featuredProducts' => {\n    headline,\n    description,\n    products[]{\n      _key,\n      ...(@->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      })\n    },\n    style\n  },\n  _type == 'intro' => {\n    headline,\n    intro,\n    style,\n    rotations\n  },\n  _type == 'hero' => {\n    headline,\n    tagline,\n    subline,\n    image,\n    style\n  }\n},\n    style\n  }\n": PageQueryResult
     '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
     '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
