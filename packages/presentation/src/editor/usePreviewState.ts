@@ -23,7 +23,6 @@ export default function usePreviewState(documentId: string, schemaType?: SchemaT
     }
     const subscription = getPreviewStateObservable(
       documentPreviewStore,
-      // @ts-expect-error fix later
       schemaType,
       documentId,
       '',
