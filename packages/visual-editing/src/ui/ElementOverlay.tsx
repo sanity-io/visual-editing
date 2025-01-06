@@ -101,7 +101,6 @@ const Root = styled(Card)`
 `
 
 const Actions = styled(Flex)`
-  bottom: 100%;
   cursor: pointer;
   pointer-events: none;
   position: absolute;
@@ -124,7 +123,6 @@ const ActionOpen = styled(Card)`
 `
 
 const Tab = styled(Flex)`
-  bottom: 100%;
   cursor: pointer;
   pointer-events: none;
   position: absolute;
@@ -158,7 +156,7 @@ function createIntentLink(node: SanityNode) {
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {element, focused, componentResolver, node, showActions, draggable} = props
+  const {element, focused, componentResolver, node, showActions, draggable, rect} = props
 
   const {getField, getType} = useSchema()
   const schemaType = getType(node)
@@ -197,16 +195,27 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     <DocumentIcon />
   )
 
+  const floatingStyle = useMemo(() => {
+    // If the element is close to the top of the screen, we want to show the actions below it
+    const isNearTop = rect.y < 20
+    return {
+      top: isNearTop ? '100%' : 0,
+      bottom: isNearTop ? 0 : '100%',
+      paddingTop: isNearTop ? 4 : 0,
+      paddingBottom: isNearTop ? 0 : 4,
+    }
+  }, [rect])
+
   return (
     <>
       {showActions ? (
-        <Actions gap={1} paddingBottom={1} data-sanity-overlay-element>
+        <Actions gap={1} style={floatingStyle} data-sanity-overlay-element>
           <Link href={href} />
         </Actions>
       ) : null}
 
       {title && (
-        <Tab gap={1} paddingBottom={1}>
+        <Tab gap={1} style={floatingStyle}>
           <Labels gap={2} padding={2}>
             {draggable && (
               <Box marginRight={1}>
