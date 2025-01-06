@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.11.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.4...visual-editing-v2.11.5) (2025-01-06)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency xstate to ^5.19.1 ([#2357](https://github.com/sanity-io/visual-editing/issues/2357)) ([98045c9](https://github.com/sanity-io/visual-editing/commit/98045c9283339215b53803df53bbbba11504b644))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.4
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.11
+
 ## [2.11.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.3...visual-editing-v2.11.4) (2025-01-02)
 
 
