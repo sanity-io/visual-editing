@@ -811,7 +811,7 @@ importers:
         specifier: ^2.3.3
         version: 2.3.3(eslint@8.57.1)
       eslint-plugin-react:
-        specifier: ^7.37.2
+        specifier: ^7.37.3
         version: 7.37.3(eslint@8.57.1)
       eslint-plugin-react-compiler:
         specifier: 19.0.0-beta-63e3235-20250105
@@ -1592,8 +1592,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       eslint-plugin-storybook:
-        specifier: ^0.11.1
-        version: 0.11.1(eslint@8.57.1)(typescript@5.7.2)
+        specifier: ^0.11.2
+        version: 0.11.2(eslint@8.57.1)(typescript@5.7.2)
       happy-dom:
         specifier: ^15.11.7
         version: 15.11.7
@@ -7125,11 +7125,11 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
-  eslint-plugin-storybook@0.11.1:
-    resolution: {integrity: sha512-yGKpAYkBm/Q2hZg476vRUAvd9lAccjjSvzU5nYy3BSQbKTPy7uopx7JEpwk2vSuw4weTMZzWF64z9/gp/K5RCg==}
+  eslint-plugin-storybook@0.11.2:
+    resolution: {integrity: sha512-0Z4DUklJrC+GHjCRXa7PYfPzWC15DaVnwaOYenpgXiCEijXPZkLKCms+rHhtoRcWccP7Z8DpOOaP1gc3P9oOwg==}
     engines: {node: '>= 18'}
     peerDependencies:
-      eslint: '>=6'
+      eslint: '>=8'
 
   eslint-plugin-svelte@2.46.1:
     resolution: {integrity: sha512-7xYr2o4NID/f9OEYMqxsEQsCsj4KaMy4q5sANaKkAb6/QeCjYFxRmDm2S3YC3A3pl1kyPZ/syOx/i7LcWYSbIw==}
@@ -21716,7 +21716,7 @@ snapshots:
       string.prototype.matchall: 4.0.12
       string.prototype.repeat: 1.0.0
 
-  eslint-plugin-storybook@0.11.1(eslint@8.57.1)(typescript@5.7.2):
+  eslint-plugin-storybook@0.11.2(eslint@8.57.1)(typescript@5.7.2):
     dependencies:
       '@storybook/csf': 0.1.11
       '@typescript-eslint/utils': 8.10.0(eslint@8.57.1)(typescript@5.7.2)
