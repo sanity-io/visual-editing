@@ -37,6 +37,11 @@ export const events = {
     description: 'An item is inserted using the Insert Menu.',
     version: 1,
   }),
+  'Visual Editing Overlay Clicked': defineEvent({
+    name: 'Visual Editing Overlay Clicked',
+    description: 'An Overlay is clicked.',
+    version: 1,
+  }),
 }
 
 type EventDataMap = {

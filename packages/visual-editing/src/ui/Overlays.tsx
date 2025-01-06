@@ -126,6 +126,8 @@ const OverlaysController: FunctionComponent<{
       if (message.type === 'element/click') {
         const {sanity} = message
         comlink?.post('visual-editing/focus', sanity)
+
+        sendTelemetry('Visual Editing Overlay Clicked', null)
       } else if (message.type === 'overlay/activate') {
         comlink?.post('visual-editing/toggle', {enabled: true})
       } else if (message.type === 'overlay/deactivate') {
