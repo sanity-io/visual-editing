@@ -108,7 +108,7 @@ const HoverArea: FunctionComponent<{
 
       sendTelemetry('Visual Editing Insert Menu Item Inserted', null)
     },
-    [onAddUnion, position],
+    [onAddUnion, position, sendTelemetry],
   )
 
   const align = position === 'top' ? 'flex-start' : position === 'bottom' ? 'flex-end' : 'center'
