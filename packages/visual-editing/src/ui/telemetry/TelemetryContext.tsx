@@ -32,6 +32,11 @@ export const events = {
     description: 'An item is inserted using the Context Menu.',
     version: 1,
   }),
+  'Visual Editing Insert Menu Item Inserted': defineEvent({
+    name: 'Visual Editing Insert Menu Item Inserted',
+    description: 'An item is inserted using the Insert Menu.',
+    version: 1,
+  }),
 }
 
 type EventDataMap = {
