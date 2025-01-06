@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.4](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.3...comlink-v2.0.4) (2025-01-06)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency xstate to ^5.19.1 ([#2357](https://github.com/sanity-io/visual-editing/issues/2357)) ([98045c9](https://github.com/sanity-io/visual-editing/commit/98045c9283339215b53803df53bbbba11504b644))
+
 ## [2.0.3](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.2...comlink-v2.0.3) (2024-12-21)
 
 
