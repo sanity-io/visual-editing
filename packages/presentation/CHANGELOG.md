@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.20.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.17...presentation-v1.20.0) (2025-01-07)
+
+
+### Features
+
+* **presentation:** add __internalApplicationType to tool spec ([#2381](https://github.com/sanity-io/visual-editing/issues/2381)) ([0a5e3ca](https://github.com/sanity-io/visual-editing/commit/0a5e3ca622ac2407f56b5bd641589ea746f667db))
+
 ## [1.19.17](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.16...presentation-v1.19.17) (2025-01-06)
 
 
