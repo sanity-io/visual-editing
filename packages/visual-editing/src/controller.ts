@@ -28,6 +28,7 @@ export function createOverlayController({
   handler,
   overlayElement,
   inFrame,
+  inPopUp,
   optimisticActorReady,
 }: OverlayOptions): OverlayController {
   let activated = false
@@ -41,8 +42,6 @@ export function createOverlayController({
   const measureElements = new WeakMap<ElementNode, ElementNode>()
   // Weakmap for storing user set cursor styles per element
   const cursorMap = new WeakMap<ElementNode, string | undefined>()
-
-  const preventDefault = inFrame
 
   let ro: ResizeObserver
   let io: IntersectionObserver | undefined
@@ -131,7 +130,7 @@ export function createOverlayController({
 
   function setOverlayCursor(element: ElementNode) {
     // Don't set the cursor if mutations are unavailable
-    if (!inFrame || !optimisticActorReady) return
+    if ((!inFrame && !inPopUp) || !optimisticActorReady) return
 
     // Loops through the entire hoverStack, trying to set the cursor if the
     // stack element matches the element passed to the function, otherwise
@@ -191,7 +190,9 @@ export function createOverlayController({
         const target = event.target as ElementNode | null
 
         if (element === getHoveredElement() && element.contains(target)) {
-          if (preventDefault) {
+          // Click events are only supported supported in iframes, not well supported in popups
+          // @TODO presentation tool should report wether it's visible or not, so we can adapt properly and allow multi-window preview workflows
+          if (inFrame) {
             event.preventDefault()
             event.stopPropagation()
           }
@@ -207,7 +208,7 @@ export function createOverlayController({
         }
       },
       contextmenu(event) {
-        if (!('path' in sanity) || !inFrame || !optimisticActorReady) return
+        if (!('path' in sanity) || (!inFrame && !inPopUp) || !optimisticActorReady) return
 
         // This is a temporary check as the context menu only supports array
         // items (for now). We split the path into segments, if a `_key` exists
@@ -217,7 +218,8 @@ export function createOverlayController({
 
         const target = event.target as ElementNode | null
         if (element === getHoveredElement() && element.contains(target)) {
-          if (preventDefault) {
+          // Context menus are supported on both iframes and popups
+          if (inFrame || inPopUp) {
             event.preventDefault()
             event.stopPropagation()
           }
@@ -241,7 +243,7 @@ export function createOverlayController({
         if (element.getAttribute('data-sanity-drag-disable')) return
 
         // disable dnd in non-studio contexts
-        if (!inFrame || !optimisticActorReady) return
+        if ((!inFrame && !inPopUp) || !optimisticActorReady) return
 
         const targetSanityData = elementsMap.get(element)?.sanity
 

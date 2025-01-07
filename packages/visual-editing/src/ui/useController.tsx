@@ -11,6 +11,7 @@ export function useController(
   element: HTMLElement | null,
   handler: OverlayEventHandler,
   inFrame: boolean,
+  inPopUp: boolean,
 ): MutableRefObject<OverlayController | undefined> {
   const overlayController = useRef<OverlayController | undefined>()
 
@@ -23,6 +24,7 @@ export function useController(
       handler,
       overlayElement: element,
       inFrame,
+      inPopUp,
       optimisticActorReady,
     })
 
@@ -30,7 +32,7 @@ export function useController(
       overlayController.current?.destroy()
       overlayController.current = undefined
     }
-  }, [element, handler, inFrame, optimisticActorReady])
+  }, [element, handler, inFrame, inPopUp, optimisticActorReady])
 
   return overlayController
 }

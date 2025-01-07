@@ -25,9 +25,10 @@ function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, ti
 }
 
 function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, actor: MutatorActor) {
-  const inFrame = window.self !== window.top || window.opener
+  const inFrame = window.self !== window.top
+  const inPopUp = Boolean(window.opener)
 
-  if (isEmptyActor(actor) || !inFrame) {
+  if (isEmptyActor(actor) || (!inFrame && !inPopUp)) {
     throw new Error('The `useDocuments` hook cannot be used in this context')
   }
 

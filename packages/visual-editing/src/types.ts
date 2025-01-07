@@ -265,6 +265,7 @@ export interface OverlayOptions {
   handler: OverlayEventHandler
   overlayElement: HTMLElement
   inFrame: boolean
+  inPopUp: boolean
   optimisticActorReady: boolean
 }
 
