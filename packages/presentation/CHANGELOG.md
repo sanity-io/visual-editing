@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.20.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.20.0...presentation-v1.20.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency framer-motion to ^11.16.0 ([#2392](https://github.com/sanity-io/visual-editing/issues/2392)) ([b7893ab](https://github.com/sanity-io/visual-editing/commit/b7893ab361a4bd711a6970f4ced8d450faed5f76))
+
 ## [1.20.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.19.17...presentation-v1.20.0) (2025-01-07)
 
 
