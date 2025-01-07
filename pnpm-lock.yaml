@@ -212,7 +212,7 @@ importers:
     devDependencies:
       '@next/bundle-analyzer':
         specifier: canary
-        version: 15.2.0-canary.0
+        version: 15.2.0-canary.1
       '@repo/prettier-config':
         specifier: workspace:*
         version: link:../../packages/@repo/prettier-config
@@ -221,7 +221,7 @@ importers:
         version: 8.57.1
       eslint-config-next:
         specifier: canary
-        version: 15.2.0-canary.0(eslint@8.57.1)(typescript@5.7.2)
+        version: 15.2.0-canary.1(eslint@8.57.1)(typescript@5.7.2)
       eslint-plugin-react-compiler:
         specifier: 19.0.0-beta-63e3235-20250105
         version: 19.0.0-beta-63e3235-20250105(eslint@8.57.1)
@@ -1250,8 +1250,8 @@ importers:
         specifier: ^6.3.0
         version: 6.3.0
       react-compiler-runtime:
-        specifier: 19.0.0-beta-55955c9-20241229
-        version: 19.0.0-beta-55955c9-20241229(react@18.3.1)
+        specifier: 19.0.0-beta-63e3235-20250105
+        version: 19.0.0-beta-63e3235-20250105(react@18.3.1)
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -3194,8 +3194,8 @@ packages:
   '@next/bundle-analyzer@15.1.4':
     resolution: {integrity: sha512-W8X96jOW0U5VjLVAkFr1P37kH2f/Ma9zzwgX2o3Omft92pI0XHpFG8Xa9YUT3NlhRJCe4ZKznr1VxhSrFNA+BA==}
 
-  '@next/bundle-analyzer@15.2.0-canary.0':
-    resolution: {integrity: sha512-XkpVTcLdwbW475RDJGlxmIdX+Iar7vKqll3sIRWmeEQ3Z5H37TJL7TdCzJHvqpjbawlJ66lEJ1leJwP0bjC/Nw==}
+  '@next/bundle-analyzer@15.2.0-canary.1':
+    resolution: {integrity: sha512-3sb5+VstWi0LtPLbBCy5aG98WCQGBVukgfGu0r7AlpDHfK2Y3m/jw9V5I2jzf/QmQHpc4UtohtJn4qzfykWbyQ==}
 
   '@next/env@15.1.4':
     resolution: {integrity: sha512-2fZ5YZjedi5AGaeoaC0B20zGntEHRhi2SdWcu61i48BllODcAmmtj8n7YarSPt4DaTsJaBFdxQAVEVzgmx2Zpw==}
@@ -3206,8 +3206,8 @@ packages:
   '@next/eslint-plugin-next@15.1.4':
     resolution: {integrity: sha512-HwlEXwCK3sr6zmVGEvWBjW9tBFs1Oe6hTmTLoFQtpm4As5HCdu8jfSE0XJOp7uhfEGLniIx8yrGxEWwNnY0fmQ==}
 
-  '@next/eslint-plugin-next@15.2.0-canary.0':
-    resolution: {integrity: sha512-iM9U/2ILYSTDWGIaTDGFJtvqEltdQCjZEz1KapzQRDzHxJvh/dc0zQUgnzB33khnJ8KmG/zoiTCYL+/h5vTMGA==}
+  '@next/eslint-plugin-next@15.2.0-canary.1':
+    resolution: {integrity: sha512-f/N1B/Z4w0IjE8HJJFwQUxyCAxNocaTfnrxTDUeKzhTQL+v4UjjF+Zf9Tf+p6mmhT42Yi1QF9MlqndA48eokgQ==}
 
   '@next/swc-darwin-arm64@15.1.4':
     resolution: {integrity: sha512-wBEMBs+np+R5ozN1F8Y8d/Dycns2COhRnkxRc+rvnbXke5uZBHkUGFgWxfTXn5rx7OLijuUhyfB+gC/ap58dDw==}
@@ -6971,8 +6971,8 @@ packages:
       typescript:
         optional: true
 
-  eslint-config-next@15.2.0-canary.0:
-    resolution: {integrity: sha512-ghyuA92bgC28wiSIDGvfWoCB8+7dl5eSTs1b9/ROUJs8RYk+hrbGONK5s3s9uif4agAlwckiS/nJ9lVFCJHFYw==}
+  eslint-config-next@15.2.0-canary.1:
+    resolution: {integrity: sha512-QVbFwM3Wz3offPJCMbqxNjzKpa08yC903Hdtfo0+NNqjhWhrWBVQ9jb35p0WdQhWvXdf2ysZUfyWjssoInqq7g==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0 || ^9.0.0
       typescript: '>=3.3.1'
@@ -10881,6 +10881,11 @@ packages:
 
   react-compiler-runtime@19.0.0-beta-55955c9-20241229:
     resolution: {integrity: sha512-I8niUyydqnPVMjqsOEfFwiRlWbndSjgwGhbm5GZuKev3b0HAcUAqAoHNIpp0XSHInlwfn4Zvtbva5TLupEOw+Q==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0 || ^0.0.0-experimental
+
+  react-compiler-runtime@19.0.0-beta-63e3235-20250105:
+    resolution: {integrity: sha512-ojqSg+8uNvomQKpZT+iPgUPWc/ZqFLt9wnoVSNiwVtX51pZgbcgRJnekSYGv0XuyCXQuy4zCz1IaEW+UXjf/ZQ==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0 || ^19.0.0 || ^0.0.0-experimental
 
@@ -15302,7 +15307,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@next/bundle-analyzer@15.2.0-canary.0':
+  '@next/bundle-analyzer@15.2.0-canary.1':
     dependencies:
       webpack-bundle-analyzer: 4.10.1
     transitivePeerDependencies:
@@ -15317,7 +15322,7 @@ snapshots:
     dependencies:
       fast-glob: 3.3.1
 
-  '@next/eslint-plugin-next@15.2.0-canary.0':
+  '@next/eslint-plugin-next@15.2.0-canary.1':
     dependencies:
       fast-glob: 3.3.1
 
@@ -21361,9 +21366,9 @@ snapshots:
       - eslint-plugin-import-x
       - supports-color
 
-  eslint-config-next@15.2.0-canary.0(eslint@8.57.1)(typescript@5.7.2):
+  eslint-config-next@15.2.0-canary.1(eslint@8.57.1)(typescript@5.7.2):
     dependencies:
-      '@next/eslint-plugin-next': 15.2.0-canary.0
+      '@next/eslint-plugin-next': 15.2.0-canary.1
       '@rushstack/eslint-patch': 1.10.4
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.7.2)
@@ -26481,6 +26486,10 @@ snapshots:
   react-compiler-runtime@19.0.0-beta-55955c9-20241229(react@19.0.0):
     dependencies:
       react: 19.0.0
+
+  react-compiler-runtime@19.0.0-beta-63e3235-20250105(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   react-composer@5.0.3(react@18.3.1):
     dependencies:
