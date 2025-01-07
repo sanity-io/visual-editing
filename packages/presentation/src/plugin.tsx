@@ -136,6 +136,7 @@ export const presentationTool = definePlugin<PresentationPluginOptions>((options
         },
         getIntentState,
         router,
+        __internalApplicationType: 'sanity/presentation',
       },
     ],
   }
