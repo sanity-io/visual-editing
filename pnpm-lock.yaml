@@ -1513,8 +1513,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(react@18.3.1)
       valibot:
-        specifier: 0.31.1
-        version: 0.31.1
+        specifier: 0.42.1
+        version: 0.42.1(typescript@5.7.2)
       xstate:
         specifier: ^5.19.1
         version: 5.19.1
@@ -1673,8 +1673,8 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
       valibot:
-        specifier: 0.31.1
-        version: 0.31.1
+        specifier: 0.42.1
+        version: 0.42.1(typescript@5.7.2)
       vitest:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@22.10.2)(happy-dom@16.4.0)(jsdom@25.0.1)(terser@5.33.0)
@@ -12865,11 +12865,16 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
-  valibot@0.31.1:
-    resolution: {integrity: sha512-2YYIhPrnVSz/gfT2/iXVTrSj92HwchCt9Cga/6hX4B26iCz9zkIsGTS0HjDYTZfTi1Un0X6aRvhBi1cfqs/i0Q==}
-
   valibot@0.41.0:
     resolution: {integrity: sha512-igDBb8CTYr8YTQlOKgaN9nSS0Be7z+WRuaeYqGf3Cjz3aKmSnqEmYnkfVjzIuumGqfHpa3fLIvMEAfhrpqN8ng==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  valibot@0.42.1:
+    resolution: {integrity: sha512-3keXV29Ar5b//Hqi4MbSdV7lfVp6zuYLZuA9V1PvQUsXqogr+u5lvLPLk3A4f74VUXDnf/JfWMN6sB+koJ/FFw==}
     peerDependencies:
       typescript: '>=5'
     peerDependenciesMeta:
@@ -29990,9 +29995,11 @@ snapshots:
       kleur: 4.1.5
       sade: 1.8.1
 
-  valibot@0.31.1: {}
-
   valibot@0.41.0(typescript@5.7.2):
+    optionalDependencies:
+      typescript: 5.7.2
+
+  valibot@0.42.1(typescript@5.7.2):
     optionalDependencies:
       typescript: 5.7.2
 
