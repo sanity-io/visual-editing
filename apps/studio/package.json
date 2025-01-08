@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "sanity build --source-maps",
-    "dev": "sanity dev"
+    "dev": "rimraf .sanity && sanity dev"
   },
   "prettier": "@repo/prettier-config",
   "dependencies": {
@@ -25,7 +25,8 @@
   },
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",
-    "babel-plugin-react-compiler": "19.0.0-beta-63e3235-20250105"
+    "babel-plugin-react-compiler": "19.0.0-beta-63e3235-20250105",
+    "rimraf": "^5.0.5"
   },
   "dependenciesMeta": {
     "@repo/sanity-schema": {

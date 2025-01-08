@@ -15,7 +15,11 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
   const {components, history, portal = true, refresh, zIndex} = props
 
   const [inFrame, setInFrame] = useState<boolean | null>(null)
-  useEffect(() => setInFrame(window.self !== window.top || Boolean(window.opener)), [])
+  const [inPopUp, setInPopUp] = useState<boolean | null>(null)
+  useEffect(() => {
+    setInFrame(window.self !== window.top)
+    setInPopUp(Boolean(window.opener))
+  }, [])
 
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null)
   useEffect(() => {
@@ -31,16 +35,17 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
     }
   }, [portal])
 
-  const comlink = useComlink(inFrame === true)
+  const comlink = useComlink(inFrame === true || inPopUp === true)
   useDatasetMutator(comlink)
 
   const children = (
     <>
-      {inFrame !== null && (
+      {inFrame !== null && inPopUp !== null && (
         <Overlays
           comlink={comlink}
           componentResolver={components}
           inFrame={inFrame}
+          inPopUp={inPopUp}
           zIndex={zIndex}
         />
       )}

@@ -111,11 +111,12 @@ const OverlaysController: FunctionComponent<{
   comlink?: VisualEditingNode
   dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void
   inFrame: boolean
+  inPopUp: boolean
   onDrag: (x: number, y: number) => void
   overlayEnabled: boolean
   rootElement: HTMLElement | null
 }> = (props) => {
-  const {comlink, dispatch, inFrame, onDrag, overlayEnabled, rootElement} = props
+  const {comlink, dispatch, inFrame, inPopUp, onDrag, overlayEnabled, rootElement} = props
   const {dispatchDragEndEvent} = useDragEndEvents()
 
   const overlayEventHandler: OverlayEventHandler = useCallback(
@@ -154,7 +155,7 @@ const OverlaysController: FunctionComponent<{
     [comlink, dispatch, dispatchDragEndEvent, onDrag],
   )
 
-  const controller = useController(rootElement, overlayEventHandler, inFrame)
+  const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp)
 
   useEffect(() => {
     if (overlayEnabled) {
@@ -174,9 +175,10 @@ export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
   componentResolver?: OverlayComponentResolver
   inFrame: boolean
+  inPopUp: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {comlink, componentResolver: _componentResolver, inFrame, zIndex} = props
+  const {comlink, componentResolver: _componentResolver, inFrame, inPopUp, zIndex} = props
 
   const [status, setStatus] = useState<Status>()
 
@@ -337,7 +339,7 @@ export const Overlays: FunctionComponent<{
   }, [_componentResolver, optimisticActorReady])
 
   const elementsToRender = useMemo(() => {
-    if ((inFrame && status !== 'connected') || isDragging) {
+    if (((inFrame || inPopUp) && status !== 'connected') || isDragging) {
       return []
     }
 
@@ -364,6 +366,7 @@ export const Overlays: FunctionComponent<{
             hovered={hovered}
             node={sanity}
             rect={rect}
+            // When inside a popup window we want actions to show up on hover, but iframes should hide them
             showActions={!inFrame}
             draggable={draggable}
             isDragging={isDragging || dragMinimapTransition}
@@ -377,6 +380,7 @@ export const Overlays: FunctionComponent<{
     dragShowMinimap,
     elements,
     inFrame,
+    inPopUp,
     isDragging,
     optimisticActorReady,
     status,
@@ -401,6 +405,7 @@ export const Overlays: FunctionComponent<{
                     comlink={comlink}
                     dispatch={dispatch}
                     inFrame={inFrame}
+                    inPopUp={inPopUp}
                     onDrag={updateDragPreviewCustomProps}
                     overlayEnabled={overlayEnabled}
                     rootElement={rootElement}

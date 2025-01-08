@@ -9,6 +9,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
@@ -101,6 +102,7 @@ const Root = styled(Card)`
 `
 
 const Actions = styled(Flex)`
+  bottom: 100%;
   cursor: pointer;
   pointer-events: none;
   position: absolute;
@@ -109,9 +111,32 @@ const Actions = styled(Flex)`
   [data-hovered] & {
     pointer-events: all;
   }
+
+  [data-flipped] & {
+    bottom: auto;
+    top: 100%;
+  }
+`
+
+const Tab = styled(Flex)`
+  bottom: 100%;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+
+  [data-hovered] & {
+    pointer-events: all;
+  }
+
+  [data-flipped] & {
+    bottom: auto;
+    top: 100%;
+  }
 `
 
 const ActionOpen = styled(Card)`
+  cursor: pointer;
   background-color: var(--card-focus-ring-color);
   right: 0;
   border-radius: 3px;
@@ -120,13 +145,6 @@ const ActionOpen = styled(Card)`
     color: #fff;
     white-space: nowrap;
   }
-`
-
-const Tab = styled(Flex)`
-  cursor: pointer;
-  pointer-events: none;
-  position: absolute;
-  left: 0;
 `
 
 const Labels = styled(Flex)`
@@ -156,7 +174,7 @@ function createIntentLink(node: SanityNode) {
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {element, focused, componentResolver, node, showActions, draggable, rect} = props
+  const {element, focused, componentResolver, node, showActions, draggable} = props
 
   const {getField, getType} = useSchema()
   const schemaType = getType(node)
@@ -195,27 +213,15 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     <DocumentIcon />
   )
 
-  const floatingStyle = useMemo(() => {
-    // If the element is close to the top of the screen, we want to show the actions below it
-    const isNearTop = rect.y < 20
-    return {
-      top: isNearTop ? '100%' : 0,
-      bottom: isNearTop ? 0 : '100%',
-      paddingTop: isNearTop ? 4 : 0,
-      paddingBottom: isNearTop ? 0 : 4,
-    }
-  }, [rect])
-
   return (
     <>
       {showActions ? (
-        <Actions gap={1} style={floatingStyle} data-sanity-overlay-element>
+        <Actions gap={1} paddingY={1} data-sanity-overlay-element>
           <Link href={href} />
         </Actions>
       ) : null}
-
       {title && (
-        <Tab gap={1} style={floatingStyle}>
+        <Tab gap={1} paddingY={1}>
           <Labels gap={2} padding={2}>
             {draggable && (
               <Box marginRight={1}>
@@ -244,7 +250,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 }
 
 export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
-  const {focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
+  const {draggable, focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -291,10 +297,26 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     scrolledIntoViewRef.current = focused === true
   }, [focused, wasMaybeCollapsed, enableScrollIntoView])
 
+  const [isNearTop, setIsNearTop] = useState(false)
+  useEffect(() => {
+    if (!ref.current || !hovered) return undefined
+
+    const io = new IntersectionObserver(
+      ([intersection]) => {
+        setIsNearTop(intersection.boundingClientRect.top < 0)
+      },
+      {threshold: 1},
+    )
+    io.observe(ref.current)
+    return () => io.disconnect()
+  }, [hovered, isNearTop])
+
   return (
     <Root
       data-focused={focused ? '' : undefined}
       data-hovered={hovered ? '' : undefined}
+      data-flipped={isNearTop ? '' : undefined}
+      data-draggable={draggable ? '' : undefined}
       ref={ref}
       style={style}
     >
