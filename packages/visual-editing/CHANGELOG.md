@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.5...visual-editing-v2.11.6) (2025-01-08)
+
+
+### Bug Fixes
+
+* support overlay clicks in popups ([#2383](https://github.com/sanity-io/visual-editing/issues/2383)) ([da9413c](https://github.com/sanity-io/visual-editing/commit/da9413c71e81f220133ae5ef48031be84cac09d0))
+
 ## [2.11.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.4...visual-editing-v2.11.5) (2025-01-06)
 
 
