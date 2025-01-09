@@ -129,7 +129,13 @@ describe('previewUrl handling', () => {
     const previewUrl = {
       origin: 'https://my.vercel.app',
       preview: '/preview',
-      previewMode: {enable: '/api/draft'},
+      previewMode: {
+        enable: `/api/draft-mode/enable?${new URLSearchParams({
+          'x-vercel-protection-bypass': 'abc123',
+          // samesitenone is required since the request is from an iframe
+          'x-vercel-set-bypass-cookie': 'samesitenone',
+        })}`,
+      },
     } satisfies PreviewUrlOption
     const resolvePreviewUrl = definePreviewUrl<SanityClient>(previewUrl)
     let resolvedPreviewUrl = await resolvePreviewUrl({
@@ -140,7 +146,7 @@ describe('previewUrl handling', () => {
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"https://my.vercel.app/api/draft?sanity-preview-secret=abc123&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"https://my.vercel.app/api/draft-mode/enable?x-vercel-protection-bypass=abc123&amp;x-vercel-set-bypass-cookie=samesitenone&amp;sanity-preview-secret=abc123&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
     resolvedPreviewUrl = await resolvePreviewUrl({
       client: null as unknown as SanityClient,
@@ -150,7 +156,7 @@ describe('previewUrl handling', () => {
     })
     vi.mocked(suspend).mockReturnValue(resolvedPreviewUrl)
     expect(renderToStaticMarkup(<TestPrinter previewUrl={previewUrl} />)).toMatchInlineSnapshot(
-      `"https://my.vercel.app/api/draft?sanity-preview-secret=dfg456&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
+      `"https://my.vercel.app/api/draft-mode/enable?x-vercel-protection-bypass=abc123&amp;x-vercel-set-bypass-cookie=samesitenone&amp;sanity-preview-secret=dfg456&amp;sanity-preview-perspective=previewDraft&amp;sanity-preview-pathname=%2Fpreview"`,
     )
   })
 

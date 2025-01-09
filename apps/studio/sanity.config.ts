@@ -98,8 +98,19 @@ function definePreviewUrl(
     workspaceName === 'next'
   ) {
     const {origin, pathname} = new URL(previewUrl)
+    // Since the Studio deployment is using Vercel deployment protection, it's safe to inline the bypass secret in the generated bundle/
+    // Without protection there's no safe way of doing this, yet.
+    const bypass = process.env.SANITY_STUDIO_VERCEL_AUTOMATION_BYPASS_SECRET
     const previewMode = {
-      enable: '/api/draft-mode/enable',
+      enable: `/api/draft-mode/enable?${
+        bypass
+          ? new URLSearchParams({
+              'x-vercel-protection-bypass': bypass,
+              // samesitenone is required since the request is from an iframe
+              'x-vercel-set-bypass-cookie': 'samesitenone',
+            })
+          : ''
+      }`,
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }
