@@ -26,19 +26,10 @@ export function useComlink(active: boolean = true): VisualEditingNode | undefine
       }),
     )
 
-    let timeout = 0
+    setNode(instance)
     const stop = instance.start()
-    // Wait with forwarding the comlink until the connection is established
-    const unsubscribe = instance.onStatus(() => {
-      // Due to race conditions in when Presentation Tool loads up components with handlers for comlink, we need to wait a bit before forwarding the comlink instance
-      timeout = window.setTimeout(() => {
-        setNode(instance)
-      }, 3_000)
-    }, 'connected')
 
     return () => {
-      clearTimeout(timeout)
-      unsubscribe()
       stop()
       setNode(undefined)
     }
