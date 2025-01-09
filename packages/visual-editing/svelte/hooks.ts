@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
-import {error, redirect, type Handle} from '@sveltejs/kit'
+import {redirect as defaultRedirect, error, type Handle} from '@sveltejs/kit'
 import type {HandlePreviewOptions} from './types'
 
 /**
@@ -11,6 +11,7 @@ export const handlePreview = ({client, preview}: HandlePreviewOptions): Handle =
   const enablePath = preview?.endpoints?.enable || '/preview/enable'
   const disablePath = preview?.endpoints?.disable || '/preview/disable'
   const secret = preview?.secret || crypto.randomBytes(16).toString('hex')
+  const redirect = preview?.redirect || defaultRedirect
 
   if (!client) throw new Error('No client configured for preview')
 
