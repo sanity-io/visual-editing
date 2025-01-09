@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.5...comlink-v3.0.0) (2025-01-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **comlink:** update internal message types, buffer unhandled messages
+
+### Features
+
+* **comlink:** update internal message types, buffer unhandled messages ([8b80c14](https://github.com/sanity-io/visual-editing/commit/8b80c14702f3ed940a63774e170b71e47050b95a))
+
 ## [2.0.5](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.4...comlink-v2.0.5) (2025-01-09)
 
 

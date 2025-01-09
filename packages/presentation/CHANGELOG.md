@@ -12,6 +12,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.20.4](https://github.com/sanity-io/visual-editing/compare/presentation-v1.20.3...presentation-v1.20.4) (2025-01-09)
+
+
+### Bug Fixes
+
+* use `ComponentType` ([a6260dd](https://github.com/sanity-io/visual-editing/commit/a6260dddd097bd7920519303fb15ae51b6314569))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.13
+
 ## [1.20.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.20.2...presentation-v1.20.3) (2025-01-09)
 
 

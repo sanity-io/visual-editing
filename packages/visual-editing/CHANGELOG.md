@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.11.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.8...visual-editing-v2.11.9) (2025-01-09)
+
+
+### Bug Fixes
+
+* **visual-editing:** fix svelte imports ([#2473](https://github.com/sanity-io/visual-editing/issues/2473)) ([040603e](https://github.com/sanity-io/visual-editing/commit/040603e43195a370d503650f6095813253d9ea82))
+* **visual-editing:** remove unnecessary comlink delay ([98bd6aa](https://github.com/sanity-io/visual-editing/commit/98bd6aa81505379ea6eee8817300b3e4fa8ed8cc))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.13
+
 ## [2.11.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.7...visual-editing-v2.11.8) (2025-01-09)
 
 

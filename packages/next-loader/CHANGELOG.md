@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.12](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.11...next-loader-v1.2.12) (2025-01-09)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.0
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.13
+
 ## [1.2.11](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.10...next-loader-v1.2.11) (2025-01-09)
 
 

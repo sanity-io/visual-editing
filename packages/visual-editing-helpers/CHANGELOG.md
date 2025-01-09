@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.12...visual-editing-helpers-v0.7.13) (2025-01-09)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 3.0.0
+  * peerDependencies
+    * @sanity/comlink bumped to 3.0.0
+
 ## [0.7.12](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.11...visual-editing-helpers-v0.7.12) (2025-01-09)
 
 
