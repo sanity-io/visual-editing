@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.0.7](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.6...preview-url-secret-v2.0.7) (2025-01-09)
+
+
+### Bug Fixes
+
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+
 ## [2.0.6](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.5...preview-url-secret-v2.0.6) (2025-01-09)
 
 

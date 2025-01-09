@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.7.12](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.11...visual-editing-helpers-v0.7.12) (2025-01-09)
+
+
+### Bug Fixes
+
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/comlink bumped to 2.0.5
+  * peerDependencies
+    * @sanity/comlink bumped to 2.0.5
+
 ## [0.7.11](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.10...visual-editing-helpers-v0.7.11) (2025-01-06)
 
 

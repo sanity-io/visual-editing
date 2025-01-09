@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.5](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.4...comlink-v2.0.5) (2025-01-09)
+
+
+### Bug Fixes
+
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+
 ## [2.0.4](https://github.com/sanity-io/visual-editing/compare/comlink-v2.0.3...comlink-v2.0.4) (2025-01-06)
 
 
