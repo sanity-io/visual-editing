@@ -32,7 +32,7 @@ export const handlePreview = ({client, preview}: HandlePreviewOptions): Handle =
         throw error(401, 'Invalid secret')
       }
 
-      const devMode = process.env.NODE_ENV === 'development'
+      const devMode = process.env['NODE_ENV'] === 'development'
       cookies.set(cookieName, secret, {
         httpOnly: true,
         sameSite: devMode ? 'lax' : 'none',
