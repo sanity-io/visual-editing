@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.10](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.9...next-loader-v1.2.10) (2025-01-09)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/preview-url-secret bumped to 2.0.6
+
 ## [1.2.9](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.8...next-loader-v1.2.9) (2025-01-06)
 
 
