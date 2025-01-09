@@ -57,7 +57,6 @@
     "@repo/prettier-config": "workspace:*",
     "@repo/visual-editing-helpers": "workspace:*",
     "@sanity/pkg-utils": "6.13.1",
-    "@sanity/preview-url-secret": "workspace:*",
     "@sanity/visual-editing": "workspace:*",
     "@sveltejs/kit": "^2.15.2",
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
@@ -68,6 +67,7 @@
     "vitest": "^2.1.8"
   },
   "peerDependencies": {
+    "@sanity/visual-editing": "2.x",
     "@sveltejs/kit": "2.x",
     "svelte": "4.x"
   },

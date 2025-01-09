@@ -37,6 +37,12 @@ export interface HandlePreviewOptions {
       enable?: string
       disable?: string
     }
+    /**
+     * For explicitly providing a redirect function in case of mistmatched
+     * Svelte specific dependency versions, not needed in most cases. See
+     * https://github.com/sveltejs/kit/issues/11749 for more information
+     */
+    redirect?: (status: number, location: string | URL) => never
   }
 }
 
