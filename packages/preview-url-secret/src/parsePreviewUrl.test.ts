@@ -3,6 +3,7 @@ import {
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewPerspective,
   urlSearchParamPreviewSecret,
+  urlSearchParamVercelProtectionBypass,
 } from './constants'
 import {parsePreviewUrl} from './parsePreviewUrl'
 
@@ -44,7 +45,7 @@ test('forwards vercel bypass secret to redirect', () => {
   const unsafe = new URL('https://example.com/api/draft-mode/enable')
   unsafe.searchParams.set(urlSearchParamPreviewSecret, 'abc123')
   unsafe.searchParams.set(urlSearchParamPreviewPathname, '/preview?foo=bar#heading1')
-  unsafe.searchParams.set('x-vercel-protection-bypass', 'dfg456')
+  unsafe.searchParams.set(urlSearchParamVercelProtectionBypass, 'dfg456')
   expect(parsePreviewUrl(unsafe.toString())).toEqual({
     redirectTo:
       '/preview?foo=bar&x-vercel-protection-bypass=dfg456&x-vercel-set-bypass-cookie=samesitenone#heading1',

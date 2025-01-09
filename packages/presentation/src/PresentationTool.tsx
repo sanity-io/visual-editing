@@ -13,6 +13,10 @@ import {
   type Controller,
   type Message,
 } from '@sanity/comlink'
+import {
+  urlSearchParamVercelProtectionBypass,
+  urlSearchParamVercelSetBypassCookie,
+} from '@sanity/preview-url-secret/constants'
 import {BoundaryElementProvider, Flex} from '@sanity/ui'
 import {lazy, Suspense, useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react'
 import {useDataset, useProjectId, type Path, type SanityDocument, type Tool} from 'sanity'
@@ -80,9 +84,15 @@ export default function PresentationTool(props: {
   canCreateUrlPreviewSecrets: boolean
   canToggleSharePreviewAccess: boolean
   canUseSharedPreviewAccess: boolean
+  vercelProtectionBypass: string | null
 }): React.JSX.Element {
-  const {canCreateUrlPreviewSecrets, canToggleSharePreviewAccess, canUseSharedPreviewAccess, tool} =
-    props
+  const {
+    canCreateUrlPreviewSecrets,
+    canToggleSharePreviewAccess,
+    canUseSharedPreviewAccess,
+    tool,
+    vercelProtectionBypass,
+  } = props
   const components = tool.options?.components
   const _previewUrl = tool.options?.previewUrl
   const name = tool.name || DEFAULT_TOOL_NAME
@@ -240,7 +250,19 @@ export default function PresentationTool(props: {
     comlink.on('visual-editing/navigate', (data) => {
       const {title, url} = data
       if (frameStateRef.current.url !== url) {
-        handleNavigate({}, {preview: url})
+        try {
+          // Handle bypass params being forwarded to the final URL
+          const [urlWithoutSearch, search] = url.split('?')
+          const searchParams = new URLSearchParams(search)
+          searchParams.delete(urlSearchParamVercelProtectionBypass)
+          searchParams.delete(urlSearchParamVercelSetBypassCookie)
+          handleNavigate(
+            {},
+            {preview: `${urlWithoutSearch}${searchParams.size > 0 ? '?' : ''}${searchParams}`},
+          )
+        } catch {
+          handleNavigate({}, {preview: url})
+        }
       }
       frameStateRef.current = {title, url}
     })
@@ -532,6 +554,7 @@ export default function PresentationTool(props: {
                           toggleOverlay={toggleOverlay}
                           viewport={viewport}
                           visualEditing={state.visualEditing}
+                          vercelProtectionBypass={vercelProtectionBypass}
                         />
                       </BoundaryElementProvider>
                     </Flex>
