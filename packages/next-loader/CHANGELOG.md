@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.11](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.10...next-loader-v1.2.11) (2025-01-09)
+
+
+### Bug Fixes
+
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 2.0.5
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.12
+    * @sanity/preview-url-secret bumped to 2.0.7
+
 ## [1.2.10](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.9...next-loader-v1.2.10) (2025-01-09)
 
 

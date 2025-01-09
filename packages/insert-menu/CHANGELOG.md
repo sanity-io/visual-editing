@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.19](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.18...insert-menu-v1.0.19) (2025-01-09)
+
+
+### Bug Fixes
+
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+
 ## [1.0.18](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.17...insert-menu-v1.0.18) (2024-12-21)
 
 
