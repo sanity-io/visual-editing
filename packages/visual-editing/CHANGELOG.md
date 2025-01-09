@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.11.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.6...visual-editing-v2.11.7) (2025-01-09)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.0.6
+
 ## [2.11.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.5...visual-editing-v2.11.6) (2025-01-08)
 
 

@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.0.6](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.5...preview-url-secret-v2.0.6) (2025-01-09)
+
+
+### Bug Fixes
+
+* forward vercel protection bypass params ([#2468](https://github.com/sanity-io/visual-editing/issues/2468)) ([e3d5baf](https://github.com/sanity-io/visual-editing/commit/e3d5baf9aba752febd9ef2cca8533b612771e45b))
+
 ## [2.0.5](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.4...preview-url-secret-v2.0.5) (2024-12-02)
 
 
