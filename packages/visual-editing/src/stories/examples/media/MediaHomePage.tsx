@@ -23,7 +23,7 @@ function encodeEditUrl(id: string, path: Path, value: string) {
   )
 }
 
-export function MediaHomePage(): JSX.Element {
+export function MediaHomePage(): React.JSX.Element {
   return (
     <>
       <div className="m-auto max-w-5xl">

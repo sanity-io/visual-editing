@@ -286,7 +286,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
     )
   }
 
-  // @ts-expect-error - follow up on this after React 19: https://github.com/vercel/next.js/discussions/67365#discussioncomment-9935377
   const SanityLiveStream: DefinedSanityLiveStreamType = async function SanityLiveStream(props) {
     const {
       query,

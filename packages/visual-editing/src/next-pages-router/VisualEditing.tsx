@@ -6,7 +6,7 @@ const VisualEditingComponent = lazy(() => import('./VisualEditingComponent'))
 /**
  * @public
  */
-export function VisualEditing(props: VisualEditingProps): React.ReactElement {
+export function VisualEditing(props: VisualEditingProps): React.JSX.Element {
   return (
     <Suspense fallback={null}>
       <VisualEditingComponent {...props} />

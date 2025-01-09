@@ -2,7 +2,7 @@ export function Figure(props: {
   caption?: React.ReactNode
   className?: string
   img?: React.ReactNode
-}): JSX.Element {
+}): React.JSX.Element {
   const {caption, className, img} = props
 
   return (

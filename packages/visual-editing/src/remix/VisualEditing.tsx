@@ -8,7 +8,7 @@ const subcribe = () => () => {}
 /**
  * @public
  */
-export function VisualEditing(props: VisualEditingProps): React.ReactElement | null {
+export function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
   const mounted = useSyncExternalStore(
     subcribe,
     () => true,

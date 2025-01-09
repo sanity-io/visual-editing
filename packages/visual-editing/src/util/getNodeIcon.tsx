@@ -22,7 +22,7 @@ type Option =
   | SchemaObjectField
   | SchemaUnionOption
 
-export function getNodeIcon(option: Option | undefined): JSX.Element {
+export function getNodeIcon(option: Option | undefined): React.JSX.Element {
   if (!option) return <CubeIcon />
 
   if (option.type === 'string') {

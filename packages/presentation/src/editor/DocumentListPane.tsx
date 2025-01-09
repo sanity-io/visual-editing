@@ -1,5 +1,5 @@
 import {Card, Code, ErrorBoundary, Flex, Label, Stack} from '@sanity/ui'
-import {useCallback, useEffect, useMemo, useState, type ErrorInfo, type ReactElement} from 'react'
+import {useCallback, useEffect, useMemo, useState, type ErrorInfo} from 'react'
 import {useTranslation} from 'sanity'
 import {styled} from 'styled-components'
 import {ErrorCard} from '../components/ErrorCard'
@@ -39,7 +39,7 @@ export function DocumentListPane(props: {
   onStructureParams: (params: StructureDocumentPaneParams) => void
   searchParams: PresentationSearchParams
   refs: {_id: string; _type: string}[]
-}): ReactElement {
+}): React.JSX.Element {
   const {mainDocumentState, onStructureParams, searchParams, refs} = props
 
   const {t} = useTranslation(presentationLocaleNamespace)

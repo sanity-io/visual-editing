@@ -13,7 +13,7 @@ export function useController(
   inFrame: boolean,
   inPopUp: boolean,
 ): MutableRefObject<OverlayController | undefined> {
-  const overlayController = useRef<OverlayController | undefined>()
+  const overlayController = useRef<OverlayController | undefined>(undefined)
 
   const optimisticActorReady = useOptimisticActorReady()
 

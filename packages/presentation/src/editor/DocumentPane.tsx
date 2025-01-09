@@ -1,13 +1,5 @@
 import {Card, Code, ErrorBoundary, Label, Stack} from '@sanity/ui'
-import {
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  type ErrorInfo,
-  type ReactElement,
-} from 'react'
+import {Suspense, useCallback, useEffect, useMemo, useState, type ErrorInfo} from 'react'
 import {useTranslation, type Path} from 'sanity'
 import {styled} from 'styled-components'
 import {ErrorCard} from '../components/ErrorCard'
@@ -34,7 +26,7 @@ export function DocumentPane(props: {
   onStructureParams: (params: StructureDocumentPaneParams) => void
   structureParams: StructureDocumentPaneParams
   searchParams: PresentationSearchParams
-}): ReactElement {
+}): React.JSX.Element {
   const {documentId, documentType, onFocusPath, onStructureParams, searchParams, structureParams} =
     props
   const {template, templateParams} = structureParams

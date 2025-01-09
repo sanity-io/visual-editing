@@ -1,6 +1,6 @@
 import {WarningOutlineIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
-import {useCallback, useMemo, type HTMLProps, type ReactElement} from 'react'
+import {useCallback, useMemo, type HTMLProps} from 'react'
 import {StateLink} from 'sanity/router'
 import {presentationLocaleNamespace} from '../i18n'
 import {
@@ -31,7 +31,7 @@ export function ContentEditor(props: {
   refs: {_id: string; _type: string}[]
   structureParams: StructureDocumentPaneParams
   searchParams: PresentationSearchParams
-}): ReactElement {
+}): React.JSX.Element {
   const {
     documentId,
     documentType,
@@ -73,7 +73,6 @@ export function ContentEditor(props: {
     if (!mainDocumentState?.document) return null
 
     return (
-      // @ts-expect-error fix later
       <SanityDefaultPreview
         {...getPreviewValueWithFallback({
           value: mainDocumentState!.document! as SanityDocument,

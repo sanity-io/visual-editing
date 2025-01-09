@@ -13,7 +13,7 @@ export interface ResizerElement {
   id: string
   order: number
   type: 'resizer'
-  el: RefObject<HTMLDivElement>
+  el: RefObject<HTMLDivElement | null>
 }
 
 export type ElementMap = Map<string, PanelElement | ResizerElement>

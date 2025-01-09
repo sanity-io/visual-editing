@@ -47,7 +47,6 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
         ...type,
         icon: getNodeIcon(type),
       }))}
-      // @ts-expect-error -- @todo fix typings
       onSelect={onSelect}
       views={views}
     />

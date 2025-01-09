@@ -32,7 +32,7 @@ function getDocumentPathArray(paths: UnresolvedPath[]) {
  * Experimental approach for sending a representation of the workspace schema
  * over postMessage so it can be used to enrich the Visual Editing experience
  */
-function PostMessageSchema(props: PostMessageSchemaProps): JSX.Element | null {
+function PostMessageSchema(props: PostMessageSchemaProps): React.JSX.Element | null {
   const {comlink, perspective} = props
 
   const workspace = useWorkspace()

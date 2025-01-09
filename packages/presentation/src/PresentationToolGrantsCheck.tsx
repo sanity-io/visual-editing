@@ -5,7 +5,7 @@ import {
 } from '@sanity/preview-url-secret/constants'
 import {useToast} from '@sanity/ui'
 import {uuid} from '@sanity/uuid'
-import {useEffect, useState, type ReactElement} from 'react'
+import {useEffect, useState} from 'react'
 import {useGrantsStore, useTranslation, type PermissionCheckResult, type Tool} from 'sanity'
 import {presentationLocaleNamespace} from './i18n'
 import {PresentationSpinner} from './PresentationSpinner'
@@ -14,7 +14,7 @@ import type {PresentationPluginOptions} from './types'
 
 export default function PresentationToolGrantsCheck(props: {
   tool: Tool<PresentationPluginOptions>
-}): ReactElement {
+}): React.JSX.Element {
   const {t} = useTranslation(presentationLocaleNamespace)
   const {previewUrl} = props.tool.options ?? {}
   const {push: pushToast} = useToast()

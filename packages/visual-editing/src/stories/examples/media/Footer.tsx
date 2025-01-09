@@ -1,6 +1,6 @@
 import {Link} from './Link'
 
-export function Footer(): JSX.Element {
+export function Footer(): React.JSX.Element {
   return (
     <div className="p-4 md:p-5 lg:p-6">
       <div className="text-2xl font-extrabold leading-none tracking-tight sm:text-3xl md:text-4xl">

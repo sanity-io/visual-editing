@@ -21,7 +21,7 @@ function encodeEditUrl(path: Path, value: string) {
   )
 }
 
-export function MarketingPage(): JSX.Element {
+export function MarketingPage(): React.JSX.Element {
   return (
     <>
       <div className="sticky left-0 top-0 z-10 bg-white p-4 dark:bg-black">

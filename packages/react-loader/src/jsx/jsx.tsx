@@ -1,4 +1,4 @@
-import type {ForwardRefExoticComponent, HTMLProps, ReactElement, Ref, SVGProps} from 'react'
+import type {ForwardRefExoticComponent, HTMLProps, Ref, SVGProps} from 'react'
 import {forwardRef} from 'react'
 import {htmlElements} from './html'
 import type {SanityElementProps} from './SanityElement'
@@ -35,7 +35,7 @@ const sanity = new Proxy({} as SanityElements, {
       const SanityComponent = forwardRef(function SanityComponent(
         props: SanityElementProps & Omit<HTMLProps<HTMLElement>, 'children' | 'ref'>,
         ref: Ref<HTMLElement>,
-      ): ReactElement {
+      ): React.JSX.Element {
         return <SanityElement {...props} as={prop} ref={ref} />
       })
 
@@ -52,7 +52,7 @@ const sanity = new Proxy({} as SanityElements, {
       const SanityComponent = forwardRef(function SanityComponent(
         props: SanityElementProps & Omit<SVGProps<SVGElement>, 'children' | 'ref'>,
         ref: Ref<SVGElement>,
-      ): ReactElement {
+      ): React.JSX.Element {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <SanityElement {...(props as any)} as={prop} ref={ref} />
       })

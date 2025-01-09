@@ -1,5 +1,5 @@
 import {Box, Button, Card, Container, Flex, Inline, Stack, Text, type CardProps} from '@sanity/ui'
-import type {ReactElement, ReactNode} from 'react'
+import type {ReactNode} from 'react'
 import {useTranslation} from 'sanity'
 import {presentationLocaleNamespace} from '../i18n'
 
@@ -10,7 +10,7 @@ export function ErrorCard(
     onRetry?: () => void
     onContinueAnyway?: () => void
   } & CardProps,
-): ReactElement {
+): React.JSX.Element {
   const {children, message, onRetry, onContinueAnyway, ...restProps} = props
 
   const {t} = useTranslation(presentationLocaleNamespace)

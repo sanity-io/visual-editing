@@ -1,4 +1,3 @@
-import {type ReactElement} from 'react'
 import {type Path} from 'sanity'
 import {StructureToolProvider} from '../internals'
 import type {PresentationSearchParams, StructureDocumentPaneParams} from '../types'
@@ -11,7 +10,7 @@ export function DocumentPanel(props: {
   onStructureParams: (params: StructureDocumentPaneParams) => void
   searchParams: PresentationSearchParams
   structureParams: StructureDocumentPaneParams
-}): ReactElement {
+}): React.JSX.Element {
   const {documentId, documentType, onFocusPath, onStructureParams, searchParams, structureParams} =
     props
   return (

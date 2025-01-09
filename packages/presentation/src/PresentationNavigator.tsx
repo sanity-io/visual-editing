@@ -18,7 +18,7 @@ export interface UsePresentationNavigatorState {
 /** @internal */
 export function usePresentationNavigator(
   props: UsePresentationNavigatorProps,
-): [UsePresentationNavigatorState, () => JSX.Element] {
+): [UsePresentationNavigatorState, () => React.JSX.Element] {
   const {unstable_navigator} = props
 
   const navigatorProvided = !!unstable_navigator?.component

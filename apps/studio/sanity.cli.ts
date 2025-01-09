@@ -2,7 +2,7 @@ import {defineCliConfig} from '@sanity/cli'
 
 export default defineCliConfig({
   reactStrictMode: true,
-  reactCompiler: {target: '18'},
+  reactCompiler: {target: '19'},
   vite: (config) => {
     return {
       ...config,

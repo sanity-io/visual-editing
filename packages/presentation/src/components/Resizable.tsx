@@ -1,13 +1,5 @@
 import {Box, type BoxProps} from '@sanity/ui'
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type FunctionComponent,
-  type HTMLProps,
-} from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState, type HTMLProps} from 'react'
 import {styled} from 'styled-components'
 import {useLocalState} from '../useLocalState'
 import {Resizer} from './Resizer'
@@ -24,9 +16,9 @@ const Root = styled(Box)`
   position: relative;
 `
 
-export const Resizable: FunctionComponent<
-  ResizableProps & BoxProps & Omit<HTMLProps<HTMLDivElement>, 'as'>
-> = function (props) {
+export function Resizable(
+  props: ResizableProps & BoxProps & Omit<HTMLProps<HTMLDivElement>, 'as'>,
+): React.JSX.Element {
   const {
     as: forwardedAs,
     children,
@@ -39,7 +31,7 @@ export const Resizable: FunctionComponent<
     ...restProps
   } = props
   const [element, setElement] = useState<HTMLDivElement | null>(null)
-  const elementWidthRef = useRef<number>()
+  const elementWidthRef = useRef<number>(undefined)
   const [targetWidth, setTargetWidth] = useLocalState<number>('presentation/panel/width', minWidth)
 
   const handleResizeStart = useCallback(() => {

@@ -24,7 +24,7 @@ export interface DisplayedDocumentBroadcasterProps extends PropsWithChildren {
 
 export function DisplayedDocumentBroadcasterProvider(
   props: DisplayedDocumentBroadcasterProps,
-): JSX.Element {
+): React.JSX.Element {
   const {children, setDisplayedDocument, documentId} = props
 
   const context = useCallback<SetDisplayedDocument>(

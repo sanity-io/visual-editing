@@ -6,7 +6,7 @@ export function Link(props: {
   kind?: string
   story?: string
   name?: string
-}): JSX.Element {
+}): React.JSX.Element {
   const {className, kind, story, name, children} = props
 
   return (

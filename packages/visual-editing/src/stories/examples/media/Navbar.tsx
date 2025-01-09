@@ -1,6 +1,6 @@
 import {Link} from './Link'
 
-export function Navbar(): JSX.Element {
+export function Navbar(): React.JSX.Element {
   return (
     <div className="p-4 md:p-5 lg:px-6">
       <div className="text-2xl font-extrabold leading-none tracking-tight sm:text-3xl md:text-4xl">

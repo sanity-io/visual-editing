@@ -14,17 +14,7 @@ import {
   type Message,
 } from '@sanity/comlink'
 import {BoundaryElementProvider, Flex} from '@sanity/ui'
-import {
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-  type ReactElement,
-} from 'react'
+import {lazy, Suspense, useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react'
 import {useDataset, useProjectId, type Path, type SanityDocument, type Tool} from 'sanity'
 import {useRouter, type RouterContextValue} from 'sanity/router'
 import {styled} from 'styled-components'
@@ -90,7 +80,7 @@ export default function PresentationTool(props: {
   canCreateUrlPreviewSecrets: boolean
   canToggleSharePreviewAccess: boolean
   canUseSharedPreviewAccess: boolean
-}): ReactElement {
+}): React.JSX.Element {
   const {canCreateUrlPreviewSecrets, canToggleSharePreviewAccess, canUseSharedPreviewAccess, tool} =
     props
   const components = tool.options?.components
@@ -429,7 +419,7 @@ export default function PresentationTool(props: {
     idRef.current = params.id
   })
 
-  const refreshRef = useRef<number>()
+  const refreshRef = useRef<number>(undefined)
   const handleRefresh = useCallback(
     (fallback: () => void) => {
       dispatch({type: ACTION_IFRAME_REFRESH})

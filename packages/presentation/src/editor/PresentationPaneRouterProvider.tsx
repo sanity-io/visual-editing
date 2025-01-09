@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import {forwardRef, useCallback, useMemo, type PropsWithChildren, type ReactElement} from 'react'
+import {forwardRef, useCallback, useMemo, type PropsWithChildren} from 'react'
 import {StateLink, useRouter} from 'sanity/router'
 import {
   getPublishedId,
@@ -100,7 +100,7 @@ export function PresentationPaneRouterProvider(
     searchParams: PresentationSearchParams
     structureParams: StructureDocumentPaneParams
   }>,
-): ReactElement {
+): React.JSX.Element {
   const {children, onStructureParams, structureParams, searchParams, refs} = props
 
   const {state: routerState, resolvePathFromState} = useRouter()

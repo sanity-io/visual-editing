@@ -462,7 +462,7 @@ export interface ContextMenuProps {
  */
 export interface ContextMenuActionNode {
   type: 'action'
-  icon?: ReactElement | ComponentType
+  icon?: React.JSX.Element | React.ComponentType
   label: string
   hotkeys?: string[]
   action?: () => void
@@ -480,7 +480,7 @@ export interface ContextMenuDividerNode {
  */
 export interface ContextMenuGroupNode {
   type: 'group'
-  icon?: ReactElement | ComponentType
+  icon?: React.JSX.Element | React.ComponentType
   label: string
   items: ContextMenuNode[]
 }

@@ -1,6 +1,6 @@
 import {EditIcon, RevertIcon} from '@sanity/icons'
 import {Card, Code, Stack} from '@sanity/ui'
-import {useCallback, useEffect, useMemo, useRef, useState, type ReactElement} from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {EMPTY, switchMap} from 'rxjs'
 import {
   defineDocumentFieldAction,
@@ -58,7 +58,7 @@ function findFieldMember<N extends FieldMember = FieldMember>(
   return node.members.filter(isFieldMember).find((m) => m.name === name) as N | undefined
 }
 
-export function PageSectionInput(props: ObjectInputProps): ReactElement {
+export function PageSectionInput(props: ObjectInputProps): React.JSX.Element {
   const {
     level,
     onChange,

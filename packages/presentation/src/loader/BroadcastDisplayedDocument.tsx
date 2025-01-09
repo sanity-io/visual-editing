@@ -9,7 +9,7 @@ import {useDisplayedDocumentBroadcaster} from './DisplayedDocumentBroadcaster'
  */
 function BroadcastDisplayedDocument(props: {
   value: Partial<SanityDocument> | null | undefined
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   const setDisplayedDocument = useDisplayedDocumentBroadcaster()
   const params = usePresentationParams(false)
 

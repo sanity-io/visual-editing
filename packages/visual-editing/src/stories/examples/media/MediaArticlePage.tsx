@@ -24,7 +24,7 @@ function encodeEditUrl(path: Path, value: string) {
   )
 }
 
-export function MediaArticlePage(): JSX.Element {
+export function MediaArticlePage(): React.JSX.Element {
   return (
     <>
       <ArticlePage />

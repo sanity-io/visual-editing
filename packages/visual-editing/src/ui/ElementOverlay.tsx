@@ -38,7 +38,7 @@ const isReactElementOverlayComponent = (
     | {component: OverlayComponent; props?: Record<string, unknown>}
     | Array<OverlayComponent | {component: OverlayComponent; props?: Record<string, unknown>}>
     | ReactElement,
-): component is ReactElement => {
+): component is React.JSX.Element => {
   return isValidElement(component)
 }
 

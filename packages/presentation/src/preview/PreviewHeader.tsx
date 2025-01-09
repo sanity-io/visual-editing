@@ -24,15 +24,7 @@ import {
   Tooltip,
   type ButtonTone,
 } from '@sanity/ui'
-import {
-  createElement,
-  useCallback,
-  useMemo,
-  type ComponentType,
-  type FunctionComponent,
-  type ReactNode,
-  type RefObject,
-} from 'react'
+import {createElement, useCallback, useMemo, type ReactNode, type RefObject} from 'react'
 import {useTranslation} from 'sanity'
 import {presentationLocaleNamespace} from '../i18n'
 import {ACTION_IFRAME_RELOAD} from '../reducers/presentationReducer'
@@ -52,19 +44,17 @@ const PERSPECTIVE_TONES: Record<PresentationPerspective, ButtonTone> = {
   published: 'positive',
 }
 
-const PERSPECTIVE_ICONS: Record<PresentationPerspective, ComponentType> = {
+const PERSPECTIVE_ICONS = {
   previewDrafts: EditIcon,
   published: PublishIcon,
-}
+} satisfies Record<PresentationPerspective, unknown>
 
 export interface PreviewHeaderProps extends PreviewProps {
-  iframeRef: RefObject<HTMLIFrameElement>
-  renderDefault: (props: PreviewHeaderProps) => ReactNode
+  iframeRef: RefObject<HTMLIFrameElement | null>
+  renderDefault: (props: PreviewHeaderProps) => React.JSX.Element
 }
 
-const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDefault'>> = (
-  props,
-) => {
+const PreviewHeaderDefault = (props: Omit<PreviewHeaderProps, 'renderDefault'>) => {
   const {
     canSharePreviewAccess,
     canToggleSharePreviewAccess,
@@ -378,9 +368,9 @@ const PreviewHeaderDefault: FunctionComponent<Omit<PreviewHeaderProps, 'renderDe
   )
 }
 
-const PreviewHeader: FunctionComponent<
-  Omit<PreviewHeaderProps, 'renderDefault'> & {options?: HeaderOptions}
-> = (props) => {
+function PreviewHeader(
+  props: Omit<PreviewHeaderProps, 'renderDefault'> & {options?: HeaderOptions},
+) {
   const renderDefault = useCallback((props: Omit<PreviewHeaderProps, 'renderDefault'>) => {
     return createElement(PreviewHeaderDefault, props)
   }, [])

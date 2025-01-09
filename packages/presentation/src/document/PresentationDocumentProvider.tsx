@@ -1,12 +1,4 @@
-import {
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useMemo,
-  useState,
-  type ReactElement,
-  type ReactNode,
-} from 'react'
+import {useCallback, useContext, useLayoutEffect, useMemo, useState, type ReactNode} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import type {PresentationPluginOptions} from '../types'
 import {PresentationDocumentContext} from './PresentationDocumentContext'
@@ -16,7 +8,7 @@ import type {PresentationDocumentContextValue} from './types'
 export function PresentationDocumentProvider(props: {
   children?: ReactNode
   options: PresentationPluginOptions
-}): ReactElement {
+}): React.JSX.Element {
   const {children, options} = props
   const parent = useContext(PresentationDocumentContext)
   const parentRegister = parent?.register

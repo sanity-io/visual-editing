@@ -56,7 +56,7 @@ export interface LoaderQueriesProps {
   ) => void
 }
 
-export default function LoaderQueries(props: LoaderQueriesProps): JSX.Element {
+export default function LoaderQueries(props: LoaderQueriesProps): React.JSX.Element {
   const {
     liveDocument,
     controller,
