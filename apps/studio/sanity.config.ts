@@ -103,13 +103,7 @@ function definePreviewUrl(
     const bypass = process.env.SANITY_STUDIO_VERCEL_AUTOMATION_BYPASS_SECRET
     const previewMode = {
       enable: `/api/draft-mode/enable?${
-        bypass
-          ? new URLSearchParams({
-              'x-vercel-protection-bypass': bypass,
-              // samesitenone is required since the request is from an iframe
-              'x-vercel-set-bypass-cookie': 'samesitenone',
-            })
-          : ''
+        bypass ? new URLSearchParams({'x-vercel-protection-bypass': bypass}) : ''
       }`,
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
