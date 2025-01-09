@@ -30,7 +30,6 @@ import type {
   Message,
   MessageEmitEvent,
   ProtocolMessage,
-  ReceivedEmitEvent,
   RequestData,
   Status,
   StatusEmitEvent,
@@ -40,33 +39,33 @@ import type {
 /**
  * @public
  */
-export type ConnectionActorLogic<S extends Message, R extends Message> = ReturnType<
-  typeof createConnectionMachine<S, R>
+export type ConnectionActorLogic<TSends extends Message, TReceives extends Message> = ReturnType<
+  typeof createConnectionMachine<TSends, TReceives>
 >
 /**
  * @public
  */
-export type ConnectionActor<S extends Message, R extends Message> = ActorRefFrom<
-  ReturnType<typeof createConnectionMachine<S, R>>
+export type ConnectionActor<TSends extends Message, TReceives extends Message> = ActorRefFrom<
+  ReturnType<typeof createConnectionMachine<TSends, TReceives>>
 >
 
 /**
  * @public
  */
-export type Connection<S extends Message = Message, R extends Message = Message> = {
-  actor: ConnectionActor<S, R>
+export type Connection<TSends extends Message = Message, TReceives extends Message = Message> = {
+  actor: ConnectionActor<TSends, TReceives>
   connect: () => void
   disconnect: () => void
   id: string
   name: string
-  machine: ReturnType<typeof createConnectionMachine<S, R>>
-  on: <T extends R['type'], U extends Extract<R, {type: T}>>(
-    type: T,
-    handler: (event: U['data']) => Promise<U['response']> | U['response'],
+  machine: ReturnType<typeof createConnectionMachine<TSends, TReceives>>
+  on: <TType extends TReceives['type'], TMessage extends Extract<TReceives, {type: TType}>>(
+    type: TType,
+    handler: (data: TMessage['data']) => Promise<TMessage['response']> | TMessage['response'],
   ) => () => void
   onStatus: (handler: (status: Status) => void, filter?: Status) => () => void
-  post: <T extends S['type'], U extends Extract<S, {type: T}>>(
-    ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
+  post: <TType extends TSends['type'], TMessage extends Extract<TSends, {type: TType}>>(
+    ...params: (TMessage['data'] extends undefined ? [TType] : never) | [TType, TMessage['data']]
   ) => void
   setTarget: (target: MessageEventSource) => void
   start: () => () => void
@@ -110,9 +109,9 @@ const sendBackAtInterval = fromCallback<
  * @public
  */
 export const createConnectionMachine = <
-  S extends Message, // Sends
-  R extends Message, // Receives
-  V extends WithoutResponse<S> = WithoutResponse<S>,
+  TSends extends Message, // Sends
+  TReceives extends Message, // Receives
+  TSendsWithoutResponse extends WithoutResponse<TSends> = WithoutResponse<TSends>,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => {
   const connectionMachine = setup({
@@ -124,44 +123,43 @@ export const createConnectionMachine = <
         'send syn': 'sendBackAtInterval'
       }
       context: {
-        buffer: Array<V>
+        buffer: Array<TSendsWithoutResponse>
         channelId: string
         connectTo: string
         domain: string
         heartbeat: boolean
         id: string
         name: string
-        requests: Array<RequestActorRef<S>>
+        requests: Array<RequestActorRef<TSends>>
         target: MessageEventSource | undefined
         targetOrigin: string
       }
       emitted:
-        | BufferAddedEmitEvent<V>
-        | BufferFlushedEmitEvent<V>
-        | MessageEmitEvent<R>
-        | ReceivedEmitEvent<R>
+        | BufferAddedEmitEvent<TSendsWithoutResponse>
+        | BufferFlushedEmitEvent<TSendsWithoutResponse>
+        | MessageEmitEvent<TReceives>
         | StatusEmitEvent
       events:
         | {type: 'connect'}
         | {type: 'disconnect'}
-        | {type: 'message.received'; message: MessageEvent<ProtocolMessage<R>>}
-        | {type: 'post'; data: V}
-        | {type: 'response'; respondTo: string; data: Pick<S, 'response'>}
+        | {type: 'message.received'; message: MessageEvent<ProtocolMessage<TReceives>>}
+        | {type: 'post'; data: TSendsWithoutResponse}
+        | {type: 'response'; respondTo: string; data: Pick<TSends, 'response'>}
         | {type: 'request.aborted'; requestId: string}
         | {type: 'request.failed'; requestId: string}
         | {
             type: 'request.success'
             requestId: string
-            response: S['response'] | null
+            response: TSends['response'] | null
             responseTo: string | undefined
           }
-        | {type: 'request'; data: RequestData<S> | RequestData<S>[]}
+        | {type: 'request'; data: RequestData<TSends> | RequestData<TSends>[]}
         | {type: 'syn'}
         | {type: 'target.set'; target: MessageEventSource}
       input: ConnectionInput
     },
     actors: {
-      requestMachine: createRequestMachine<S>(),
+      requestMachine: createRequestMachine<TSends>(),
       listen: createListenLogic(),
       sendBackAtInterval,
     },
@@ -176,9 +174,9 @@ export const createConnectionMachine = <
         enqueue.emit(({event}) => {
           assertEvent(event, 'post')
           return {
-            type: '_buffer.added',
+            type: 'buffer.added',
             message: event.data,
-          } satisfies BufferAddedEmitEvent<V>
+          } satisfies BufferAddedEmitEvent<TSendsWithoutResponse>
         })
       }),
       'create request': assign({
@@ -211,41 +209,18 @@ export const createConnectionMachine = <
         enqueue.emit(({event}) => {
           assertEvent(event, 'message.received')
           return {
-            type: '_message',
-            message: event.message.data,
-          } satisfies MessageEmitEvent<R>
-        })
-        enqueue.emit(({event}) => {
-          assertEvent(event, 'message.received')
-          const emit = {
-            type: event.message.data.type,
+            type: 'message',
             message: event.message.data,
           }
-          return emit
         })
       }),
       'emit status': emit((_, params: {status: Status}) => {
         return {
-          type: '_status',
+          type: 'status',
           status: params.status,
         } satisfies StatusEmitEvent
       }),
-      'flush buffer': enqueueActions(({enqueue}) => {
-        enqueue.raise(({context}) => ({
-          type: 'request',
-          data: context.buffer.map(({data, type}) => ({data, type})),
-        }))
-        enqueue.emit(({context}) => {
-          return {
-            type: '_buffer.flushed',
-            messages: context.buffer,
-          } satisfies BufferFlushedEmitEvent<V>
-        })
-        enqueue.assign({
-          buffer: [],
-        })
-      }),
-      'post': raise(({event}) => {
+      'post message': raise(({event}) => {
         assertEvent(event, 'post')
         return {
           type: 'request' as const,
@@ -272,6 +247,7 @@ export const createConnectionMachine = <
           },
         }
       }),
+
       'send handshake ack': raise({
         type: 'request',
         data: {type: MSG_HANDSHAKE_ACK},
@@ -285,6 +261,21 @@ export const createConnectionMachine = <
       'send handshake syn': raise({
         type: 'request',
         data: {type: MSG_HANDSHAKE_SYN},
+      }),
+      'send pending messages': enqueueActions(({enqueue}) => {
+        enqueue.raise(({context}) => ({
+          type: 'request',
+          data: context.buffer.map(({data, type}) => ({data, type})),
+        }))
+        enqueue.emit(({context}) => {
+          return {
+            type: 'buffer.flushed',
+            messages: context.buffer,
+          } satisfies BufferFlushedEmitEvent<TSendsWithoutResponse>
+        })
+        enqueue.assign({
+          buffer: [],
+        })
       }),
       'set target': assign({
         target: ({event}) => {
@@ -387,7 +378,7 @@ export const createConnectionMachine = <
         exit: 'send handshake ack',
       },
       connected: {
-        entry: ['flush buffer', {type: 'emit status', params: {status: 'connected'}}],
+        entry: ['send pending messages', {type: 'emit status', params: {status: 'connected'}}],
         invoke: {
           id: 'listen for messages',
           src: 'listen',
@@ -397,7 +388,7 @@ export const createConnectionMachine = <
         },
         on: {
           'post': {
-            actions: 'post',
+            actions: 'post message',
           },
           'request': {
             actions: 'create request',
@@ -468,30 +459,61 @@ export const createConnectionMachine = <
 /**
  * @public
  */
-export const createConnection = <S extends Message, R extends Message>(
+export const createConnection = <TSends extends Message, TReceives extends Message>(
   input: ConnectionInput,
-  machine: ConnectionActorLogic<S, R> = createConnectionMachine<S, R>(),
-): Connection<S, R> => {
+  machine: ConnectionActorLogic<TSends, TReceives> = createConnectionMachine<TSends, TReceives>(),
+): Connection<TSends, TReceives> => {
   const id = input.id || `${input.name}-${uuid()}`
   const actor = createActor(machine, {
     input: {...input, id},
   })
 
-  const on = <T extends R['type'], U extends Extract<R, {type: T}>>(
-    type: T,
-    handler: (event: U['data']) => Promise<U['response']> | U['response'],
+  const eventHandlers: Map<
+    string,
+    Set<(event: TReceives['data']) => Promise<TReceives['response']> | TReceives['response']>
+  > = new Map()
+
+  const unhandledMessages: Map<string, Set<ProtocolMessage<Message>>> = new Map()
+
+  const on = <TType extends TReceives['type'], TMessage extends Extract<TReceives, {type: TType}>>(
+    type: TType,
+    handler: (data: TMessage['data']) => Promise<TMessage['response']> | TMessage['response'],
+    options?: {replay?: number},
   ) => {
-    const {unsubscribe} = actor.on(
-      // @ts-expect-error @todo `type` typing
-      type,
-      async (event: {type: T; message: ProtocolMessage<U>}) => {
-        const response = await handler(event.message.data)
+    const handlers = eventHandlers.get(type) || new Set()
+
+    if (!eventHandlers.has(type)) {
+      eventHandlers.set(type, handlers)
+    }
+
+    // Register the new handler
+    handlers.add(handler)
+
+    // Process any unhandled messages for this type
+    const unhandledMessagesForType = unhandledMessages.get(type)
+    if (unhandledMessagesForType) {
+      const replayCount = options?.replay ?? 1
+      const messagesToReplay = Array.from(unhandledMessagesForType).slice(-replayCount)
+
+      // Replay messages to the new handler
+      messagesToReplay.forEach(async ({data, id}) => {
+        const response = await handler(data)
         if (response) {
-          actor.send({type: 'response', respondTo: event.message.id, data: response})
+          actor.send({
+            type: 'response',
+            respondTo: id,
+            data: response,
+          })
         }
-      },
-    )
-    return unsubscribe
+      })
+
+      // Clear the unhandled messages for this type
+      unhandledMessages.delete(type)
+    }
+
+    return () => {
+      handlers.delete(handler)
+    }
   }
 
   const connect = () => {
@@ -503,16 +525,14 @@ export const createConnection = <S extends Message, R extends Message>(
   }
 
   const onStatus = (handler: (status: Status) => void, filter?: Status) => {
-    const {unsubscribe} = actor.on(
-      // @ts-expect-error @todo ReceivedEmitEvent causes this
-      '_status',
-      (event: StatusEmitEvent & {status: Status}) => {
-        if (filter && event.status !== filter) {
-          return
-        }
-        handler(event.status)
-      },
-    )
+    const {unsubscribe} = actor.on('status', (event: StatusEmitEvent & {status: Status}) => {
+      if (filter && event.status !== filter) {
+        return
+      }
+
+      handler(event.status)
+    })
+
     return unsubscribe
   }
 
@@ -520,13 +540,36 @@ export const createConnection = <S extends Message, R extends Message>(
     actor.send({type: 'target.set', target})
   }
 
-  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(
-    type: T,
-    data?: U['data'],
+  const post = <TType extends TSends['type'], TMessage extends Extract<TSends, {type: TType}>>(
+    type: TType,
+    data?: TMessage['data'],
   ) => {
-    const _data = {type, data} as WithoutResponse<U>
+    const _data = {type, data} as WithoutResponse<TMessage>
     actor.send({type: 'post', data: _data})
   }
+
+  actor.on('message', async ({message}) => {
+    const handlers = eventHandlers.get(message.type)
+
+    if (handlers) {
+      // Execute all registered handlers for this message type
+      handlers.forEach(async (handler) => {
+        const response = await handler(message.data)
+        if (response) {
+          actor.send({type: 'response', respondTo: message.id, data: response})
+        }
+      })
+      return
+    }
+
+    // Store unhandled messages for potential replay
+    const unhandledMessagesForType = unhandledMessages.get(message.type)
+    if (unhandledMessagesForType) {
+      unhandledMessagesForType.add(message)
+    } else {
+      unhandledMessages.set(message.type, new Set([message]))
+    }
+  })
 
   const stop = () => {
     actor.stop()

@@ -24,7 +24,7 @@ const throwOnEvent =
 /**
  * @public
  */
-export interface RequestMachineContext<S extends Message> {
+export interface RequestMachineContext<TSends extends Message> {
   channelId: string
   data: MessageData | undefined
   domain: string
@@ -32,8 +32,8 @@ export interface RequestMachineContext<S extends Message> {
   from: string
   id: string
   parentRef: AnyActorRef
-  resolvable: PromiseWithResolvers<S['response']> | undefined
-  response: S['response'] | null
+  resolvable: PromiseWithResolvers<TSends['response']> | undefined
+  response: TSends['response'] | null
   responseTimeout: number | undefined
   responseTo: string | undefined
   signal: AbortSignal | undefined
@@ -47,15 +47,15 @@ export interface RequestMachineContext<S extends Message> {
 /**
  * @public
  */
-export type RequestActorRef<S extends Message> = ActorRefFrom<
-  ReturnType<typeof createRequestMachine<S>>
+export type RequestActorRef<TSends extends Message> = ActorRefFrom<
+  ReturnType<typeof createRequestMachine<TSends>>
 >
 
 /**
  * @public
  */
 export const createRequestMachine = <
-  S extends Message,
+  TSends extends Message,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => {
   return setup({
@@ -63,7 +63,7 @@ export const createRequestMachine = <
       children: {
         'listen for response': 'listen'
       }
-      context: RequestMachineContext<S>
+      context: RequestMachineContext<TSends>
       // @todo Should response types be specified?
       events: {type: 'message'; data: ProtocolMessage<ResponseMessage>} | {type: 'abort'}
       emitted:
@@ -77,12 +77,12 @@ export const createRequestMachine = <
           }
       input: {
         channelId: string
-        data?: S['data']
+        data?: TSends['data']
         domain: string
         expectResponse?: boolean
         from: string
         parentRef: AnyActorRef
-        resolvable?: PromiseWithResolvers<S['response']>
+        resolvable?: PromiseWithResolvers<TSends['response']>
         responseTimeout?: number
         responseTo?: string
         signal?: AbortSignal
@@ -90,11 +90,11 @@ export const createRequestMachine = <
         suppressWarnings?: boolean
         targetOrigin: string
         to: string
-        type: S['type']
+        type: TSends['type']
       }
       output: {
         requestId: string
-        response: S['response'] | null
+        response: TSends['response'] | null
         responseTo: string | undefined
       }
     },

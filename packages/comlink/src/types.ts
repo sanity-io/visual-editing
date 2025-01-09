@@ -39,12 +39,12 @@ export interface Message {
 /**
  * @public
  */
-export interface RequestData<S extends Message> {
+export interface RequestData<TSends extends Message> {
   data?: MessageData
   expectResponse?: boolean
   responseTo?: string
   type: MessageType
-  resolvable?: PromiseWithResolvers<S['response']>
+  resolvable?: PromiseWithResolvers<TSends['response']>
   options?: {
     responseTimeout?: number
     signal?: AbortSignal
@@ -55,7 +55,7 @@ export interface RequestData<S extends Message> {
 /**
  * @public
  */
-export type WithoutResponse<T extends Message> = Omit<T, 'response'>
+export type WithoutResponse<TMessage extends Message> = Omit<TMessage, 'response'>
 
 /**
  * @public
@@ -74,67 +74,60 @@ export interface ListenInput {
 /**
  * @public
  */
-export interface BufferAddedEmitEvent<T extends Message> {
-  type: '_buffer.added'
-  message: T
+export interface BufferAddedEmitEvent<TMessage extends Message> {
+  type: 'buffer.added'
+  message: TMessage
 }
 
 /**
  * @public
  */
-export interface BufferFlushedEmitEvent<T extends Message> {
-  type: '_buffer.flushed'
-  messages: T[]
+export interface BufferFlushedEmitEvent<TMessage extends Message> {
+  type: 'buffer.flushed'
+  messages: TMessage[]
 }
 
 /**
  * @public
  */
 export interface HeartbeatEmitEvent {
-  type: '_heartbeat'
-}
-
-/**
- * @public
- */
-export interface MessageEmitEvent<T extends Message> {
-  type: '_message'
-  message: ProtocolMessage<T>
+  type: 'heartbeat'
 }
 
 /**
  * @public
  */
 export interface StatusEmitEvent {
-  type: '_status'
+  type: 'status'
   status: Status
 }
 
-export type ReceivedEmitEvent<T extends Message> = T extends T
-  ? {type: T['type']; message: ProtocolMessage<T>}
-  : never
+export type MessageEmitEvent<TMessage extends Message> = {
+  type: 'message'
+  message: ProtocolMessage<TMessage>
+}
 
 /**
  * @public
  */
-export type InternalEmitEvent<S extends Message, R extends Message> =
-  | BufferAddedEmitEvent<S>
-  | BufferFlushedEmitEvent<R>
-  | MessageEmitEvent<R>
+export type InternalEmitEvent<TSends extends Message, TReceives extends Message> =
+  | BufferAddedEmitEvent<TSends>
+  | BufferFlushedEmitEvent<TReceives>
+  | MessageEmitEvent<TReceives>
   | StatusEmitEvent
 
 /**
  * @public
  */
-export type ProtocolMessage<T extends Message = Message> = {
+export type ProtocolMessage<TMessage extends Message = Message> = {
   id: string
   channelId: string
-  data?: T['data']
+  data?: TMessage['data']
   domain: string
   from: string
   responseTo?: string
   to: string
-  type: T['type']
+  type: TMessage['type']
 }
 
 /**

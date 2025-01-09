@@ -20,7 +20,7 @@ export const listenInputFromContext =
     },
   ) =>
   <
-    T extends {
+    TContext extends {
       domain: string
       connectTo: string
       name: string
@@ -29,7 +29,7 @@ export const listenInputFromContext =
   >({
     context,
   }: {
-    context: T
+    context: TContext
   }): ListenInput => {
     const {count, include, exclude, responseType = 'message.received'} = config
     return {
@@ -59,8 +59,10 @@ export const listenFilter =
   }
 
 export const eventToMessage =
-  <T>(type: T) =>
-  (event: MessageEvent<ProtocolMessage>): {type: T; message: MessageEvent<ProtocolMessage>} => ({
+  <TType>(type: TType) =>
+  (
+    event: MessageEvent<ProtocolMessage>,
+  ): {type: TType; message: MessageEvent<ProtocolMessage>} => ({
     type,
     message: event,
   })
