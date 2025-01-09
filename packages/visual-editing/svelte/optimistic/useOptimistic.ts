@@ -6,8 +6,12 @@ import {
 } from '@sanity/visual-editing/optimistic'
 import {onMount} from 'svelte'
 import {derived, get, writable, type Readable} from 'svelte/store'
-import {getPublishedId} from '../../src/util/documents'
 import {optimisticActor} from './optimisticActor'
+
+function getPublishedId(id: string): string {
+  const DRAFTS_PREFIX = 'drafts.'
+  return id.startsWith(DRAFTS_PREFIX) ? id.slice(DRAFTS_PREFIX.length) : id
+}
 
 export function useOptimistic<T, U = SanityDocument>(
   initial: T,
