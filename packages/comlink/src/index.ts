@@ -38,7 +38,6 @@ export type {
   MessageEmitEvent,
   MessageType,
   ProtocolMessage,
-  ReceivedEmitEvent,
   RequestData,
   ResponseMessage,
   Status,

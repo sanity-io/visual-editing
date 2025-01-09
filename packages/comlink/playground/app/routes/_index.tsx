@@ -43,17 +43,15 @@ export default function Index() {
 
     setChannel(channel)
 
-    channel.onInternalEvent('_message', (event) => {
-      console.log('_message', event)
-      setReceived((prev) => [event.message, ...prev])
+    channel.onInternalEvent('message', ({message}) => {
+      setReceived((prev) => [message, ...prev])
     })
 
-    channel.onInternalEvent('_buffer.added', (event) => {
-      console.log('_buffer.added', event)
+    channel.onInternalEvent('buffer.added', (event) => {
       setBuffer((prev) => [event.message, ...prev])
     })
 
-    channel.onInternalEvent('_buffer.flushed', () => {
+    channel.onInternalEvent('buffer.flushed', () => {
       setBuffer([])
     })
 

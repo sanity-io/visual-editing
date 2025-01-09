@@ -27,15 +27,15 @@ export default function Frame() {
 
     setNode(node)
 
-    node.actor.on('_message', (event) => {
+    node.actor.on('message', (event) => {
       setReceived((prev) => [event.message, ...prev])
     })
 
-    node.actor.on('_buffer.added', (event) => {
+    node.actor.on('buffer.added', (event) => {
       setBuffered((prev) => [event.message, ...prev])
     })
 
-    node.actor.on('_buffer.flushed', () => {
+    node.actor.on('buffer.flushed', () => {
       setBuffered([])
     })
 

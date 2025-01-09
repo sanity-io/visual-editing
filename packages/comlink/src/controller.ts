@@ -16,21 +16,21 @@ export type ChannelInput = Omit<ConnectionInput, 'target' | 'targetOrigin'>
 /**
  * @public
  */
-export interface ChannelInstance<S extends Message, R extends Message> {
-  on: <T extends R['type'], U extends Extract<R, {type: T}>>(
-    type: T,
-    handler: (event: U['data']) => Promise<U['response']> | U['response'],
+export interface ChannelInstance<TSends extends Message, TReceives extends Message> {
+  on: <TType extends TReceives['type'], TMessage extends Extract<TReceives, {type: TType}>>(
+    type: TType,
+    handler: (data: TMessage['data']) => Promise<TMessage['response']> | TMessage['response'],
   ) => () => void
   onInternalEvent: <
-    T extends InternalEmitEvent<S, R>['type'],
-    U extends Extract<InternalEmitEvent<S, R>, {type: T}>,
+    TType extends InternalEmitEvent<TSends, TReceives>['type'],
+    TEvent extends Extract<InternalEmitEvent<TSends, TReceives>, {type: TType}>,
   >(
-    type: T,
-    handler: (event: U) => void,
+    type: TType,
+    handler: (event: TEvent) => void,
   ) => () => void
   onStatus: (handler: (event: StatusEvent) => void) => void
-  post: <T extends S['type'], U extends Extract<S, {type: T}>>(
-    ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
+  post: <TType extends TSends['type'], TMessage extends Extract<TSends, {type: TType}>>(
+    ...params: (TMessage['data'] extends undefined ? [TType] : never) | [TType, TMessage['data']]
   ) => void
   start: () => () => void
   stop: () => void
@@ -41,33 +41,36 @@ export interface ChannelInstance<S extends Message, R extends Message> {
  */
 export interface Controller {
   addTarget: (target: MessageEventSource) => () => void
-  createChannel: <S extends Message, R extends Message>(
+  createChannel: <TSends extends Message, TReceives extends Message>(
     input: ChannelInput,
-    machine?: ConnectionActorLogic<S, R>,
-  ) => ChannelInstance<S, R>
+    machine?: ConnectionActorLogic<TSends, TReceives>,
+  ) => ChannelInstance<TSends, TReceives>
   destroy: () => void
 }
 
 interface Channel<
-  S extends Message = Message,
-  R extends Message = Message,
-  T extends InternalEmitEvent<S, R>['type'] = InternalEmitEvent<S, R>['type'],
+  TSends extends Message = Message,
+  TReceives extends Message = Message,
+  TType extends InternalEmitEvent<TSends, TReceives>['type'] = InternalEmitEvent<
+    TSends,
+    TReceives
+  >['type'],
 > {
   input: ChannelInput
-  connections: Set<Connection<S, R>>
+  connections: Set<Connection<TSends, TReceives>>
   internalEventSubscribers: Set<{
-    type: T
-    handler: (event: Extract<InternalEmitEvent<S, R>, {type: T}>) => void
+    type: TType
+    handler: (event: Extract<InternalEmitEvent<TSends, TReceives>, {type: TType}>) => void
     unsubscribers: Array<() => void>
   }>
-  machine: ConnectionActorLogic<S, R>
+  machine: ConnectionActorLogic<TSends, TReceives>
   statusSubscribers: Set<{
     handler: (event: StatusEvent) => void
     unsubscribers: Array<() => void>
   }>
   subscribers: Set<{
-    type: R['type']
-    handler: (event: R['data']) => Promise<R['response']> | R['response']
+    type: TReceives['type']
+    handler: (event: TReceives['data']) => Promise<TReceives['response']> | TReceives['response']
     unsubscribers: Array<() => void>
   }>
 }
@@ -137,7 +140,6 @@ export const createController = (input: {targetOrigin: string}): Controller => {
         unsubscribers.push(connection.on(type, handler))
       })
       channel.internalEventSubscribers.forEach(({type, handler, unsubscribers}) => {
-        // @ts-expect-error @todo
         unsubscribers.push(connection.actor.on(type, handler).unsubscribe)
       })
       channel.statusSubscribers.forEach(({handler, unsubscribers}) => {
@@ -164,11 +166,11 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     }
   }
 
-  const createChannel = <S extends Message, R extends Message>(
+  const createChannel = <TSends extends Message, TReceives extends Message>(
     input: ChannelInput,
-    machine: ConnectionActorLogic<S, R> = createConnectionMachine<S, R>(),
-  ): ChannelInstance<S, R> => {
-    const channel: Channel<S, R> = {
+    machine: ConnectionActorLogic<TSends, TReceives> = createConnectionMachine<TSends, TReceives>(),
+  ): ChannelInstance<TSends, TReceives> => {
+    const channel: Channel<TSends, TReceives> = {
       connections: new Set(),
       input,
       internalEventSubscribers: new Set(),
@@ -184,7 +186,7 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     if (targets.size) {
       // If targets have already been added, create a connection for each target
       targets.forEach((target) => {
-        const connection = createConnection<S, R>(
+        const connection = createConnection<TSends, TReceives>(
           {
             ...input,
             target,
@@ -196,18 +198,18 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       })
     } else {
       // If targets have not been added yet, create a connection without a target
-      const connection = createConnection<S, R>({...input, targetOrigin}, machine)
+      const connection = createConnection<TSends, TReceives>({...input, targetOrigin}, machine)
       connections.add(connection)
     }
 
-    const post: ChannelInstance<S, R>['post'] = (...params) => {
+    const post: ChannelInstance<TSends, TReceives>['post'] = (...params) => {
       const [type, data] = params
       connections.forEach((connection) => {
         connection.post(type, data)
       })
     }
 
-    const on: ChannelInstance<S, R>['on'] = (type, handler) => {
+    const on: ChannelInstance<TSends, TReceives>['on'] = (type, handler) => {
       const unsubscribers: Array<() => void> = []
       connections.forEach((connection) => {
         unsubscribers.push(connection.on(type, handler))
@@ -221,11 +223,11 @@ export const createController = (input: {targetOrigin: string}): Controller => {
     }
 
     const onInternalEvent = <
-      T extends InternalEmitEvent<S, R>['type'],
-      U extends Extract<InternalEmitEvent<S, R>, {type: T}>,
+      TType extends InternalEmitEvent<TSends, TReceives>['type'],
+      TEvent extends Extract<InternalEmitEvent<TSends, TReceives>, {type: TType}>,
     >(
-      type: T,
-      handler: (event: U) => void,
+      type: TType,
+      handler: (event: TEvent) => void,
     ) => {
       const unsubscribers: Array<() => void> = []
       connections.forEach((connection) => {

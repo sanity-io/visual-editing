@@ -30,7 +30,6 @@ import type {
   Message,
   MessageEmitEvent,
   ProtocolMessage,
-  ReceivedEmitEvent,
   RequestData,
   Status,
   StatusEmitEvent,
@@ -49,37 +48,43 @@ export interface NodeInput {
 /**
  * @public
  */
-export type NodeActorLogic<S extends Message, R extends Message> = ReturnType<
-  typeof createNodeMachine<S, R>
+export type NodeActorLogic<TSends extends Message, TReceives extends Message> = ReturnType<
+  typeof createNodeMachine<TSends, TReceives>
 >
 
 /**
  * @public
  */
-export type NodeActor<S extends Message, R extends Message> = ActorRefFrom<NodeActorLogic<S, R>>
+export type NodeActor<TSends extends Message, TReceives extends Message> = ActorRefFrom<
+  NodeActorLogic<TSends, TReceives>
+>
 
 /**
  * @public
  */
-export type Node<S extends Message, R extends Message> = {
-  actor: NodeActor<S, R>
-  fetch: <T extends S['type'], U extends Extract<S, {type: T}>>(
+export type Node<TSends extends Message, TReceives extends Message> = {
+  actor: NodeActor<TSends, TReceives>
+  fetch: <TType extends TSends['type'], TMessage extends Extract<TSends, {type: TType}>>(
     ...params:
-      | (U['data'] extends undefined ? [T] : never)
-      | [T, U['data']]
-      | [T, U['data'], {signal?: AbortSignal; suppressWarnings?: boolean}]
-  ) => S extends U ? (S['type'] extends T ? Promise<S['response']> : never) : never
-  machine: NodeActorLogic<S, R>
-  on: <T extends R['type'], U extends Extract<R, {type: T}>>(
-    type: T,
-    handler: (event: U['data']) => U['response'],
+      | (TMessage['data'] extends undefined ? [TType] : never)
+      | [TType, TMessage['data']]
+      | [TType, TMessage['data'], {signal?: AbortSignal; suppressWarnings?: boolean}]
+  ) => TSends extends TMessage
+    ? TSends['type'] extends TType
+      ? Promise<TSends['response']>
+      : never
+    : never
+  machine: NodeActorLogic<TSends, TReceives>
+  on: <TType extends TReceives['type'], TMessage extends Extract<TReceives, {type: TType}>>(
+    type: TType,
+    handler: (event: TMessage['data']) => TMessage['response'],
   ) => () => void
   onStatus: (
     handler: (status: Exclude<Status, 'disconnected'>) => void,
     filter?: Exclude<Status, 'disconnected'>,
   ) => () => void
-  post: <T extends S['type'], U extends Extract<S, {type: T}>>(
-    ...params: (U['data'] extends undefined ? [T] : never) | [T, U['data']]
+  post: <TType extends TSends['type'], TMessage extends Extract<TSends, {type: TType}>>(
+    ...params: (TMessage['data'] extends undefined ? [TType] : never) | [TType, TMessage['data']]
   ) => void
   start: () => () => void
   stop: () => void
@@ -89,9 +94,9 @@ export type Node<S extends Message, R extends Message> = {
  * @public
  */
 export const createNodeMachine = <
-  S extends Message, // Sends
-  R extends Message, // Receives
-  V extends WithoutResponse<S> = WithoutResponse<S>,
+  TSends extends Message, // Sends
+  TReceives extends Message, // Receives
+  TSendsWithoutResponse extends WithoutResponse<TSends> = WithoutResponse<TSends>,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => {
   const nodeMachine = setup({
@@ -105,8 +110,8 @@ export const createNodeMachine = <
       }
       context: {
         buffer: Array<{
-          data: V
-          resolvable?: PromiseWithResolvers<S['response']>
+          data: TSendsWithoutResponse
+          resolvable?: PromiseWithResolvers<TSends['response']>
           options?: {
             signal?: AbortSignal
             suppressWarnings?: boolean
@@ -121,28 +126,27 @@ export const createNodeMachine = <
         // sends an ack message). It should be removed in the next major.
         handshakeBuffer: Array<{
           type: 'message.received'
-          message: MessageEvent<ProtocolMessage<R>>
+          message: MessageEvent<ProtocolMessage<TReceives>>
         }>
         name: string
-        requests: Array<RequestActorRef<S>>
+        requests: Array<RequestActorRef<TSends>>
         target: MessageEventSource | undefined
         targetOrigin: string | null
       }
       emitted:
-        | BufferAddedEmitEvent<V>
-        | BufferFlushedEmitEvent<V>
+        | BufferAddedEmitEvent<TSendsWithoutResponse>
+        | BufferFlushedEmitEvent<TSendsWithoutResponse>
         | HeartbeatEmitEvent
-        | MessageEmitEvent<R>
-        | ReceivedEmitEvent<R>
+        | MessageEmitEvent<TReceives>
         | (StatusEmitEvent & {status: Exclude<Status, 'disconnected'>})
       events:
         | {type: 'heartbeat.received'; message: MessageEvent<ProtocolMessage<HeartbeatMessage>>}
-        | {type: 'message.received'; message: MessageEvent<ProtocolMessage<R>>}
-        | {type: 'handshake.syn'; message: MessageEvent<ProtocolMessage<R>>}
+        | {type: 'message.received'; message: MessageEvent<ProtocolMessage<TReceives>>}
+        | {type: 'handshake.syn'; message: MessageEvent<ProtocolMessage<TReceives>>}
         | {
             type: 'post'
-            data: V
-            resolvable?: PromiseWithResolvers<S['response']>
+            data: TSendsWithoutResponse
+            resolvable?: PromiseWithResolvers<TSends['response']>
             options?: {
               responseTimeout?: number
               signal?: AbortSignal
@@ -154,18 +158,18 @@ export const createNodeMachine = <
         | {
             type: 'request.success'
             requestId: string
-            response: S['response'] | null
+            response: TSends['response'] | null
             responseTo: string | undefined
           }
-        | {type: 'request'; data: RequestData<S> | RequestData<S>[]} // @todo align with 'post' type
+        | {type: 'request'; data: RequestData<TSends> | RequestData<TSends>[]} // @todo align with 'post' type
       input: NodeInput
     },
     actors: {
-      requestMachine: createRequestMachine<S>(),
+      requestMachine: createRequestMachine<TSends>(),
       listen: createListenLogic(),
     },
     actions: {
-      'buffer incoming message': assign({
+      'buffer handshake': assign({
         handshakeBuffer: ({event, context}) => {
           assertEvent(event, 'message.received')
           return [...context.handshakeBuffer, event]
@@ -188,9 +192,9 @@ export const createNodeMachine = <
         enqueue.emit(({event}) => {
           assertEvent(event, 'post')
           return {
-            type: '_buffer.added',
+            type: 'buffer.added',
             message: event.data,
-          } satisfies BufferAddedEmitEvent<V>
+          } satisfies BufferAddedEmitEvent<TSendsWithoutResponse>
         })
       }),
       'create request': assign({
@@ -225,60 +229,25 @@ export const createNodeMachine = <
       }),
       'emit heartbeat': emit(() => {
         return {
-          type: '_heartbeat',
+          type: 'heartbeat',
         } satisfies HeartbeatEmitEvent
       }),
       'emit received message': enqueueActions(({enqueue}) => {
         enqueue.emit(({event}) => {
           assertEvent(event, 'message.received')
           return {
-            type: '_message',
-            message: event.message.data,
-          } satisfies MessageEmitEvent<R>
-        })
-        enqueue.emit(({event}) => {
-          assertEvent(event, 'message.received')
-          const emit = {
-            type: event.message.data.type,
+            type: 'message',
             message: event.message.data,
           }
-          return emit
         })
       }),
       'emit status': emit((_, params: {status: Exclude<Status, 'disconnected'>}) => {
         return {
-          type: '_status',
+          type: 'status',
           status: params.status,
         } satisfies StatusEmitEvent & {status: Exclude<Status, 'disconnected'>}
       }),
-      'flush buffer': enqueueActions(({enqueue}) => {
-        enqueue.raise(({context}) => ({
-          type: 'request',
-          data: context.buffer.map(({data, resolvable, options}) => ({
-            data: data.data,
-            type: data.type,
-            expectResponse: resolvable ? true : false,
-            resolvable,
-            options,
-          })),
-        }))
-        enqueue.emit(({context}) => {
-          return {
-            type: '_buffer.flushed',
-            messages: context.buffer.map(({data}) => data),
-          } satisfies BufferFlushedEmitEvent<V>
-        })
-        enqueue.assign({
-          buffer: [],
-        })
-      }),
-      'flush handshake buffer': enqueueActions(({context, enqueue}) => {
-        context.handshakeBuffer.forEach((event) => enqueue.raise(event))
-        enqueue.assign({
-          handshakeBuffer: [],
-        })
-      }),
-      'post': raise(({event}) => {
+      'post message': raise(({event}) => {
         assertEvent(event, 'post')
         return {
           type: 'request' as const,
@@ -290,6 +259,12 @@ export const createNodeMachine = <
             options: event.options,
           },
         }
+      }),
+      'process pending handshakes': enqueueActions(({context, enqueue}) => {
+        context.handshakeBuffer.forEach((event) => enqueue.raise(event))
+        enqueue.assign({
+          handshakeBuffer: [],
+        })
       }),
       'remove request': enqueueActions(({context, enqueue, event}) => {
         assertEvent(event, ['request.success', 'request.failed', 'request.aborted'])
@@ -310,6 +285,27 @@ export const createNodeMachine = <
       'send handshake syn ack': raise({
         type: 'request',
         data: {type: MSG_HANDSHAKE_SYN_ACK},
+      }),
+      'send pending messages': enqueueActions(({enqueue}) => {
+        enqueue.raise(({context}) => ({
+          type: 'request',
+          data: context.buffer.map(({data, resolvable, options}) => ({
+            data: data.data,
+            type: data.type,
+            expectResponse: resolvable ? true : false,
+            resolvable,
+            options,
+          })),
+        }))
+        enqueue.emit(({context}) => {
+          return {
+            type: 'buffer.flushed',
+            messages: context.buffer.map(({data}) => data),
+          } satisfies BufferFlushedEmitEvent<TSendsWithoutResponse>
+        })
+        enqueue.assign({
+          buffer: [],
+        })
       }),
       'set connection config': assign({
         channelId: ({event}) => {
@@ -427,7 +423,7 @@ export const createNodeMachine = <
             actions: 'buffer message',
           },
           'message.received': {
-            actions: 'buffer incoming message',
+            actions: 'buffer handshake',
           },
           'disconnect': {
             target: 'idle',
@@ -436,8 +432,8 @@ export const createNodeMachine = <
       },
       connected: {
         entry: [
-          'flush handshake buffer',
-          'flush buffer',
+          'process pending handshakes',
+          'send pending messages',
           {type: 'emit status', params: {status: 'connected'}},
         ],
         invoke: [
@@ -477,7 +473,7 @@ export const createNodeMachine = <
             actions: 'create request',
           },
           'post': {
-            actions: 'post',
+            actions: 'post message',
           },
           'disconnect': {
             target: 'idle',
@@ -498,26 +494,51 @@ export const createNodeMachine = <
 /**
  * @public
  */
-export const createNode = <S extends Message, R extends Message>(
+export const createNode = <TSends extends Message, TReceives extends Message>(
   input: NodeInput,
-  machine: NodeActorLogic<S, R> = createNodeMachine<S, R>(),
-): Node<S, R> => {
+  machine: NodeActorLogic<TSends, TReceives> = createNodeMachine<TSends, TReceives>(),
+): Node<TSends, TReceives> => {
   const actor = createActor(machine, {
     input,
   })
 
-  const on = <T extends R['type'], U extends Extract<R, {type: T}>>(
-    type: T,
-    handler: (event: U['data']) => U['response'],
+  const eventHandlers: Map<
+    string,
+    Set<(event: TReceives['data']) => TReceives['response']>
+  > = new Map()
+
+  const unhandledMessages: Map<string, Set<ProtocolMessage<Message>>> = new Map()
+
+  const on = <TType extends TReceives['type'], TMessage extends Extract<TReceives, {type: TType}>>(
+    type: TType,
+    handler: (event: TMessage['data']) => TMessage['response'],
+    options?: {replay?: number},
   ) => {
-    const {unsubscribe} = actor.on(
-      // @ts-expect-error @todo ReceivedEmitEvent causes this
-      type,
-      (event: {type: T; message: ProtocolMessage<U>}) => {
-        handler(event.message.data)
-      },
-    )
-    return unsubscribe
+    const handlers = eventHandlers.get(type) || new Set()
+
+    if (!eventHandlers.has(type)) {
+      eventHandlers.set(type, handlers)
+    }
+
+    // Register the new handler
+    handlers.add(handler)
+
+    // Process any unhandled messages for this type
+    const unhandledMessagesForType = unhandledMessages.get(type)
+    if (unhandledMessagesForType) {
+      const replayCount = options?.replay ?? 1
+      const messagesToReplay = Array.from(unhandledMessagesForType).slice(-replayCount)
+
+      // Replay messages to the new handler
+      messagesToReplay.forEach(({data}) => handler(data))
+
+      // Clear the unhandled messages for this type
+      unhandledMessages.delete(type)
+    }
+
+    return () => {
+      handlers.delete(handler)
+    }
   }
 
   let cachedStatus: Exclude<Status, 'disconnected'>
@@ -526,34 +547,36 @@ export const createNode = <S extends Message, R extends Message>(
     filter?: Exclude<Status, 'disconnected'>,
   ) => {
     const {unsubscribe} = actor.on(
-      // @ts-expect-error @todo ReceivedEmitEvent causes this
-      '_status',
+      'status',
       (event: StatusEmitEvent & {status: Exclude<Status, 'disconnected'>}) => {
         cachedStatus = event.status
         if (filter && event.status !== filter) {
           return
         }
+
         handler(event.status)
       },
     )
+
     // Call the handler immediately with the current status, if we have one
     if (cachedStatus) {
       handler(cachedStatus)
     }
+
     return unsubscribe
   }
 
-  const post = <T extends S['type'], U extends Extract<S, {type: T}>>(
-    type: T,
-    data?: U['data'],
+  const post = <TType extends TSends['type'], TMessage extends Extract<TSends, {type: TType}>>(
+    type: TType,
+    data?: TMessage['data'],
   ) => {
-    const _data = {type, data} as WithoutResponse<U>
+    const _data = {type, data} as WithoutResponse<TMessage>
     actor.send({type: 'post', data: _data})
   }
 
-  const fetch = <T extends S['type'], U extends Extract<S, {type: T}>>(
-    type: T,
-    data?: U['data'],
+  const fetch = <TType extends TSends['type'], TMessage extends Extract<TSends, {type: TType}>>(
+    type: TType,
+    data?: TMessage['data'],
     options?: {
       responseTimeout?: number
       signal?: AbortSignal
@@ -562,8 +585,8 @@ export const createNode = <S extends Message, R extends Message>(
   ) => {
     const {responseTimeout = FETCH_TIMEOUT_DEFAULT, signal, suppressWarnings} = options || {}
 
-    const resolvable = Promise.withResolvers<S['response']>()
-    const _data = {type, data} as WithoutResponse<U>
+    const resolvable = Promise.withResolvers<TSends['response']>()
+    const _data = {type, data} as WithoutResponse<TMessage>
 
     actor.send({
       type: 'post',
@@ -573,6 +596,24 @@ export const createNode = <S extends Message, R extends Message>(
     })
     return resolvable.promise as never
   }
+
+  actor.on('message', ({message}) => {
+    const handlers = eventHandlers.get(message.type)
+
+    if (handlers) {
+      // Execute all registered handlers for this message type
+      handlers.forEach((handler) => handler(message.data))
+      return
+    }
+
+    // Store unhandled messages for potential replay
+    const unhandledMessagesForType = unhandledMessages.get(message.type)
+    if (unhandledMessagesForType) {
+      unhandledMessagesForType.add(message)
+    } else {
+      unhandledMessages.set(message.type, new Set([message]))
+    }
+  })
 
   const stop = () => {
     actor.stop()
