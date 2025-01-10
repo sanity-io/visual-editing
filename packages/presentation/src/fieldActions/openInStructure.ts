@@ -2,6 +2,7 @@ import {MasterDetailIcon} from '@sanity/icons'
 import {useContext, useMemo} from 'react'
 import {type DocumentFieldActionGroup, type DocumentFieldActionProps, type Tool} from 'sanity'
 import {useRouter} from 'sanity/router'
+import {DEFAULT_TOOL_NAME} from '../constants'
 import {
   defineDocumentFieldAction,
   isRecord,
@@ -15,30 +16,34 @@ function useOpenInStructureAction(
   props: DocumentFieldActionProps,
 ): DocumentFieldActionItem | DocumentFieldActionGroup {
   const {documentId, documentType, path} = props
-
   const workspace = useWorkspace()
   const {navigateIntent} = useRouter()
   const presentation = useContext(PresentationContext)
 
   const defaultStructureTool = useMemo(
-    () => findStructureTool(workspace.tools, documentId, documentType),
-    [documentId, documentType, workspace.tools],
+    () =>
+      findStructureTool(
+        workspace.tools,
+        documentId,
+        documentType,
+        presentation?.name || DEFAULT_TOOL_NAME,
+      ),
+    [documentId, documentType, workspace.tools, presentation],
   )
-  const handleAction = () => {
-    navigateIntent('edit', {
-      id: documentId,
-      type: documentType,
-      mode: 'structure',
-      path: pathToString(path),
-    })
-  }
 
   return {
     type: 'action',
     hidden: !presentation || path.length > 0 || !defaultStructureTool,
     icon: defaultStructureTool?.icon || MasterDetailIcon,
     title: `Open in ${defaultStructureTool?.title || 'Structure'}`,
-    onAction: handleAction,
+    onAction() {
+      navigateIntent('edit', {
+        id: documentId,
+        type: documentType,
+        mode: 'structure',
+        path: pathToString(path),
+      })
+    },
     renderAsButton: true,
   }
 }
@@ -52,20 +57,23 @@ function findStructureTool(
   tools: Tool[],
   documentId: string,
   documentType: string,
+  presentationToolName?: string,
 ): Tool | undefined {
-  const results = tools.map((t) => {
-    const match = t.canHandleIntent?.(
-      'edit',
-      {
-        id: documentId,
-        type: documentType,
-        mode: 'structure',
-      },
-      {},
-    )
+  const results = tools
+    .filter((t) => t.name !== presentationToolName)
+    .map((t) => {
+      const match = t.canHandleIntent?.(
+        'edit',
+        {
+          id: documentId,
+          type: documentType,
+          mode: 'structure',
+        },
+        {},
+      )
 
-    return {tool: t, match}
-  })
+      return {tool: t, match}
+    })
 
   const modeMatches = results.filter((t) => isRecord(t.match) && t.match['mode'])
 
