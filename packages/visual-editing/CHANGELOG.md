@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.12.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.9...visual-editing-v2.12.0) (2025-01-10)
+
+
+### Features
+
+* add optional redirect override to svelte preview handler ([#2363](https://github.com/sanity-io/visual-editing/issues/2363)) ([ba2c3b2](https://github.com/sanity-io/visual-editing/commit/ba2c3b2071192c1b88c05aba0267053ccf8c1023))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.1.0
+
 ## [2.11.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.8...visual-editing-v2.11.9) (2025-01-09)
 
 
