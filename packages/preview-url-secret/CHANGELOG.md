@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.1.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.7...preview-url-secret-v2.1.0) (2025-01-10)
+
+
+### Features
+
+* add Vercel Protection Bypass tool ([#2479](https://github.com/sanity-io/visual-editing/issues/2479)) ([7e58143](https://github.com/sanity-io/visual-editing/commit/7e58143e3f70751dbd424641045b218d7e9085b4))
+
 ## [2.0.7](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.0.6...preview-url-secret-v2.0.7) (2025-01-09)
 
 

@@ -28,6 +28,22 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [1.13.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.12.43...svelte-loader-v1.13.0) (2025-01-10)
+
+
+### Features
+
+* add optional redirect override to svelte preview handler ([#2363](https://github.com/sanity-io/visual-editing/issues/2363)) ([ba2c3b2](https://github.com/sanity-io/visual-editing/commit/ba2c3b2071192c1b88c05aba0267053ccf8c1023))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing bumped to 2.12.0
+  * peerDependencies
+    * @sanity/visual-editing bumped from 2.x to 2.12.0
+
 ## [1.12.43](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v1.12.42...svelte-loader-v1.12.43) (2025-01-09)
 
 
