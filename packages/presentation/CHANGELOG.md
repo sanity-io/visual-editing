@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.21.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.21.0...presentation-v1.21.1) (2025-01-10)
+
+
+### Bug Fixes
+
+* **presentation:** prevent openInStructure from from linking to the presentation tool itself ([#1762](https://github.com/sanity-io/visual-editing/issues/1762)) ([fa20300](https://github.com/sanity-io/visual-editing/commit/fa203004c689333bb79f12f007ae85e4d441c7c5))
+
 ## [1.21.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.20.4...presentation-v1.21.0) (2025-01-10)
 
 
