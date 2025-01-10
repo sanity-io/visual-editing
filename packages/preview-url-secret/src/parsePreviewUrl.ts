@@ -2,8 +2,10 @@ import {
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewPerspective,
   urlSearchParamPreviewSecret,
+  urlSearchParamVercelProtectionBypass,
+  urlSearchParamVercelSetBypassCookie,
 } from './constants'
-import type {ParsedPreviewUrl} from './types'
+import type {ParsedPreviewUrl, VercelSetBypassCookieValue} from './types'
 
 /**
  * @internal
@@ -21,13 +23,16 @@ export function parsePreviewUrl(unsafeUrl: string): ParsedPreviewUrl {
     const redirectUrl = new URL(unsafeRedirectTo, 'http://localhost')
 
     // If there's a vercel bypass secret in the redirect URL, we forward it to the redirect to ensure it's set
-    if (url.searchParams.has('x-vercel-protection-bypass')) {
+    if (url.searchParams.has(urlSearchParamVercelProtectionBypass)) {
       redirectUrl.searchParams.set(
-        'x-vercel-protection-bypass',
-        url.searchParams.get('x-vercel-protection-bypass')!,
+        urlSearchParamVercelProtectionBypass,
+        url.searchParams.get(urlSearchParamVercelProtectionBypass)!,
       )
       // samesitenone is required since the request is from an iframe
-      redirectUrl.searchParams.set('x-vercel-set-bypass-cookie', 'samesitenone')
+      redirectUrl.searchParams.set(
+        urlSearchParamVercelSetBypassCookie,
+        'samesitenone' satisfies VercelSetBypassCookieValue,
+      )
     }
 
     const {pathname, search, hash} = redirectUrl

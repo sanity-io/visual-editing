@@ -14,6 +14,7 @@ import {
   type PreviewUrlResolverOptions,
 } from '@sanity/presentation'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {vercelProtectionBypassTool} from '@sanity/vercel-protection-bypass'
 import {visionTool} from '@sanity/vision'
 import {defineConfig, definePlugin, type PluginOptions} from 'sanity'
 import {CustomHeader} from './presentation/CustomHeader'
@@ -22,8 +23,11 @@ import {StegaDebugger} from './presentation/DebugStega'
 
 const debugPlugin = definePlugin({
   name: '@repo/vision',
-  // @ts-expect-error - fix later
-  plugins: [visionTool({defaultApiVersion: apiVersion}), debugSecrets()],
+  plugins: [
+    visionTool({defaultApiVersion: apiVersion}),
+    debugSecrets(),
+    vercelProtectionBypassTool(),
+  ],
   form:
     process.env.SANITY_STUDIO_STEGA_DEBUG === 'true' ? {components: {input: StegaDebugger}} : {},
 })
@@ -98,13 +102,8 @@ function definePreviewUrl(
     workspaceName === 'next'
   ) {
     const {origin, pathname} = new URL(previewUrl)
-    // Since the Studio deployment is using Vercel deployment protection, it's safe to inline the bypass secret in the generated bundle/
-    // Without protection there's no safe way of doing this, yet.
-    const bypass = process.env.SANITY_STUDIO_VERCEL_AUTOMATION_BYPASS_SECRET
     const previewMode = {
-      enable: `/api/draft-mode/enable?${
-        bypass ? new URLSearchParams({'x-vercel-protection-bypass': bypass}) : ''
-      }`,
+      enable: '/api/draft-mode/enable',
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }

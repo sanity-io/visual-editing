@@ -2,6 +2,7 @@ import type {
   PreviewUrlSecretSchemaIdPrefix,
   PreviewUrlSecretSchemaType,
   PreviewUrlSecretSchemaTypeSingleton,
+  VercelProtectionBypassSchemaType,
 } from './types'
 
 /** @internal */
@@ -28,6 +29,12 @@ export const urlSearchParamPreviewPathname = 'sanity-preview-pathname'
 
 /** @internal */
 export const urlSearchParamPreviewPerspective = 'sanity-preview-perspective'
+
+/** @internal */
+export const urlSearchParamVercelProtectionBypass = 'x-vercel-protection-bypass'
+
+/** @internal */
+export const urlSearchParamVercelSetBypassCookie = 'x-vercel-set-bypass-cookie'
 
 /** @internal */
 export const isDev = process.env.NODE_ENV === 'development'
@@ -62,6 +69,17 @@ export const fetchSharedAccessSecretQuery =
 export const deleteExpiredSecretsQuery =
   /* groq */ `*[_type == "${schemaType}" && dateTime(_updatedAt) <= dateTime(now()) - ${SECRET_TTL}]` as const
 
+/** @internal */
+export const vercelProtectionBypassSchemaType =
+  'sanity.vercelProtectionBypass' satisfies VercelProtectionBypassSchemaType
+
+/** @internal */
+export const vercelProtectionBypassSchemaId = `${schemaIdPrefix}.vercel-protection-bypass` as const
+
+/** @internal */
+export const fetchVercelProtectionBypassSecret =
+  /* groq */ `*[_id == "${vercelProtectionBypassSchemaId}" && _type == "${vercelProtectionBypassSchemaType}"][0].secret` as const
+
 /**
  * Used for tagging `client.fetch` queries
  * @internal
@@ -70,3 +88,5 @@ export const tag = 'sanity.preview-url-secret' as const
 
 /** @internal */
 export const perspectiveCookieName = 'sanity-preview-perspective'
+
+export type {VercelSetBypassCookieValue} from './types'

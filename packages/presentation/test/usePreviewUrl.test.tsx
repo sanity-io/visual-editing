@@ -1,3 +1,7 @@
+import {
+  urlSearchParamVercelProtectionBypass,
+  urlSearchParamVercelSetBypassCookie,
+} from '@sanity/preview-url-secret/constants'
 import {definePreviewUrl} from '@sanity/preview-url-secret/define-preview-url'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react'
@@ -131,9 +135,9 @@ describe('previewUrl handling', () => {
       preview: '/preview',
       previewMode: {
         enable: `/api/draft-mode/enable?${new URLSearchParams({
-          'x-vercel-protection-bypass': 'abc123',
+          [urlSearchParamVercelProtectionBypass]: 'abc123',
           // samesitenone is required since the request is from an iframe
-          'x-vercel-set-bypass-cookie': 'samesitenone',
+          [urlSearchParamVercelSetBypassCookie]: 'samesitenone',
         })}`,
       },
     } satisfies PreviewUrlOption

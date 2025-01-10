@@ -57,6 +57,12 @@
       "require": "./dist/toggle-preview-access-sharing.cjs",
       "default": "./dist/toggle-preview-access-sharing.js"
     },
+    "./toggle-vercel-protection-bypass": {
+      "source": "./src/_exports/toggle-vercel-protection-bypass.ts",
+      "import": "./dist/toggle-vercel-protection-bypass.js",
+      "require": "./dist/toggle-vercel-protection-bypass.cjs",
+      "default": "./dist/toggle-vercel-protection-bypass.js"
+    },
     "./without-secret-search-params": {
       "source": "./src/_exports/without-secret-search-params.ts",
       "import": "./dist/without-secret-search-params.js",
@@ -87,6 +93,9 @@
       ],
       "toggle-preview-access-sharing": [
         "./dist/toggle-preview-access-sharing.d.ts"
+      ],
+      "toggle-vercel-protection-bypass": [
+        "./dist/toggle-vercel-protection-bypass.d.ts"
       ],
       "without-secret-search-params": [
         "./dist/without-secret-search-params.d.ts"

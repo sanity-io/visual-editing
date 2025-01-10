@@ -1,4 +1,10 @@
 import {
+  urlSearchParamPreviewPerspective,
+  urlSearchParamVercelProtectionBypass,
+  urlSearchParamVercelSetBypassCookie,
+  type VercelSetBypassCookieValue,
+} from '@sanity/preview-url-secret/constants'
+import {
   Button,
   Card,
   Code,
@@ -66,12 +72,44 @@ export interface PreviewProps extends Pick<PresentationState, 'iframe' | 'visual
   toggleNavigator?: () => void
   toggleOverlay: () => void
   viewport: PresentationViewport
+  vercelProtectionBypass: string | null
 }
 
 export const Preview = memo(
   forwardRef<HTMLIFrameElement, PreviewProps>(function PreviewComponent(props, forwardedRef) {
-    const {dispatch, iframe, header, initialUrl, loadersConnection, overlaysConnection, viewport} =
-      props
+    const {
+      dispatch,
+      iframe,
+      header,
+      initialUrl,
+      loadersConnection,
+      overlaysConnection,
+      perspective,
+      viewport,
+      vercelProtectionBypass,
+    } = props
+
+    const previewUrl = useMemo(() => {
+      const url = new URL(initialUrl)
+      // Always set the perspective that's being used, even if preview mode isn't configured
+      if (!url.searchParams.get(urlSearchParamPreviewPerspective)) {
+        url.searchParams.set(urlSearchParamPreviewPerspective, perspective)
+      }
+
+      if (vercelProtectionBypass || url.searchParams.get(urlSearchParamVercelProtectionBypass)) {
+        // samesitenone is required since the request is from an iframe
+        url.searchParams.set(
+          urlSearchParamVercelSetBypassCookie,
+          'samesitenone' satisfies VercelSetBypassCookieValue,
+        )
+      }
+      // If there's a vercel protection bypass secret in the context, set it if none exists already
+      if (vercelProtectionBypass && !url.searchParams.get(urlSearchParamVercelProtectionBypass)) {
+        url.searchParams.set(urlSearchParamVercelProtectionBypass, vercelProtectionBypass)
+      }
+
+      return url
+    }, [initialUrl, perspective, vercelProtectionBypass])
 
     const {t} = useTranslation(presentationLocaleNamespace)
     const {devMode} = usePresentationTool()
@@ -101,10 +139,10 @@ export const Preview = memo(
         return
       }
 
-      ref.current.src = initialUrl.toString()
+      ref.current.src = previewUrl.toString()
 
       dispatch({type: ACTION_IFRAME_RELOAD})
-    }, [dispatch, initialUrl])
+    }, [dispatch, previewUrl])
     const handleContinueAnyway = useCallback(() => {
       setContinueAnyway(true)
     }, [])
@@ -405,7 +443,7 @@ export const Preview = memo(
                 onLoad={onIFrameLoad}
                 preventClick={preventIframeInteraction}
                 ref={ref}
-                src={initialUrl.toString()}
+                src={previewUrl.toString()}
                 style={iframeStyle}
                 variants={iframeVariants}
               />

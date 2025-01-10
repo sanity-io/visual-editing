@@ -11,6 +11,7 @@ import {presentationLocaleNamespace} from './i18n'
 import {PresentationSpinner} from './PresentationSpinner'
 import PresentationTool from './PresentationTool'
 import type {PresentationPluginOptions} from './types'
+import {useVercelBypassSecret} from './useVercelBypassSecret'
 
 export default function PresentationToolGrantsCheck(props: {
   tool: Tool<PresentationPluginOptions>
@@ -69,16 +70,19 @@ export default function PresentationToolGrantsCheck(props: {
     return () => cancelAnimationFrame(raf)
   }, [canCreateUrlPreviewSecrets, pushToast, t, willGeneratePreviewUrlSecret])
 
+  const [vercelProtectionBypass, vercelProtectionBypassReadyState] = useVercelBypassSecret()
+
   if (
-    willGeneratePreviewUrlSecret &&
-    (!previewAccessSharingCreatePermission ||
-      typeof previewAccessSharingCreatePermission.granted === 'undefined' ||
-      !previewAccessSharingUpdatePermission ||
-      typeof previewAccessSharingUpdatePermission.granted === 'undefined' ||
-      !previewUrlSecretPermission ||
-      !previewAccessSharingReadPermission ||
-      typeof previewAccessSharingReadPermission.granted === 'undefined' ||
-      typeof previewUrlSecretPermission.granted === 'undefined')
+    vercelProtectionBypassReadyState === 'loading' ||
+    (willGeneratePreviewUrlSecret &&
+      (!previewAccessSharingCreatePermission ||
+        typeof previewAccessSharingCreatePermission.granted === 'undefined' ||
+        !previewAccessSharingUpdatePermission ||
+        typeof previewAccessSharingUpdatePermission.granted === 'undefined' ||
+        !previewUrlSecretPermission ||
+        !previewAccessSharingReadPermission ||
+        typeof previewAccessSharingReadPermission.granted === 'undefined' ||
+        typeof previewUrlSecretPermission.granted === 'undefined'))
   ) {
     return <PresentationSpinner />
   }
@@ -86,6 +90,7 @@ export default function PresentationToolGrantsCheck(props: {
   return (
     <PresentationTool
       {...props}
+      vercelProtectionBypass={vercelProtectionBypass}
       canCreateUrlPreviewSecrets={canCreateUrlPreviewSecrets === true}
       canToggleSharePreviewAccess={
         previewAccessSharingCreatePermission?.granted === true &&

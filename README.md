@@ -6,6 +6,10 @@ This repository contains packages to enable Visual Editing with Sanity. Visual E
 
 [`@sanity/presentation`](./packages/presentation/README.md) is a Sanity Studio plugin that lets you work with content directly through preview — be it a website, in-store display, or anything you can point a browser at.
 
+### [Vercel Deployment Protection](https://vercel.com/docs/security/deployment-protection)
+
+Use the [`@sanity/vercel-protection-bypass`](./packages/vercel-protection-bypass) tool to setup Presentation to use [Protection Bypass](https://vercel.com/docs/security/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation#protection-bypass-for-automation) to successfully load deployments that are protected.
+
 ## Overlays & router integration
 
 [`@sanity/visual-editing`](./packages/visual-editing/README.md) is used alongside the Presentation tool to create clickable elements to take editors right from previews to the document and field they want to edit. It's also used to two-way sync the preview URL and integrate with your framework router.

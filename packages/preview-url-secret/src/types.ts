@@ -7,6 +7,9 @@ export type PreviewUrlSecretSchemaIdPrefix = `sanity-preview-url-secret`
 export type PreviewUrlSecretSchemaType = `sanity.previewUrlSecret`
 
 /** @internal */
+export type VercelProtectionBypassSchemaType = `sanity.vercelProtectionBypass`
+
+/** @internal */
 export type PreviewUrlSecretSchemaTypeSingleton = `sanity.previewUrlShareAccess`
 
 /**
@@ -181,3 +184,9 @@ export interface PreviewUrlResolverContext<SanityClientType> {
 export type PreviewUrlResolver<SanityClientType> = (
   context: PreviewUrlResolverContext<SanityClientType>,
 ) => Promise<string>
+
+/**
+ * @see https://vercel.com/docs/security/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation#advanced-configuration
+ * @internal
+ */
+export type VercelSetBypassCookieValue = 'samesitenone' | 'true'
