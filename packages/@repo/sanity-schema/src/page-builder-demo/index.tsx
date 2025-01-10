@@ -7,7 +7,6 @@ import {
   type PresentationPluginOptions,
 } from '@sanity/presentation'
 import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
-import {structureTool} from 'sanity/structure'
 import {PageSectionInput} from './PageSectionInput'
 
 const {dataset, workspace, tool} = workspaces['cross-dataset-references']
@@ -679,6 +678,5 @@ export const pageBuilderDemoPlugin = definePlugin<
       },
       ...config,
     }),
-    structureTool(),
   ],
 }))
