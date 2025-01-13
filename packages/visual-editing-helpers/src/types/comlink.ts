@@ -195,6 +195,13 @@ export type VisualEditingNodeMsg =
       }
     }
   | {
+      type: 'visual-editing/preview-snapshots'
+      data: undefined
+      response: {
+        snapshots: PreviewSnapshot[]
+      }
+    }
+  | {
       type: 'visual-editing/refreshing'
       data: HistoryRefresh
     }
