@@ -1,6 +1,6 @@
 import type {PreviewSnapshot} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
-import {memo, useEffect, useMemo, type FC} from 'react'
+import {memo, useEffect, useMemo, useRef, type FC} from 'react'
 import {
   combineLatest,
   debounceTime,
@@ -83,15 +83,29 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
     )
   }, [documentPreviewStore, refsSubject, schema, perspective])
 
+  const lastSnapshots = useRef<PreviewSnapshot[]>([])
+
+  // Stream preview snapshots when updates are received, and store the last set
+  // of snapshots so they can be returned if explicitly requested
   useEffect(() => {
     const sub = previews$.subscribe((snapshots) => {
       comlink.post('presentation/preview-snapshots', {snapshots})
+      lastSnapshots.current = snapshots
     })
 
     return () => {
       sub.unsubscribe()
     }
   }, [comlink, previews$])
+
+  // Respond to explict requests for preview snapshots. Streaming will not
+  // always suffice as the previews$ subscriber will not be called if the app
+  // reloads but Presentation does not.
+  useEffect(() => {
+    return comlink.on('visual-editing/preview-snapshots', () => ({
+      snapshots: lastSnapshots.current,
+    }))
+  }, [comlink])
 
   useEffect(() => {
     refsSubject.next(refs)
