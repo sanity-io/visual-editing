@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.13...visual-editing-helpers-v0.7.14) (2025-01-14)
+
+
+### Bug Fixes
+
+* explicitly fetch preview snapshots on connect ([#2487](https://github.com/sanity-io/visual-editing/issues/2487)) ([cf07d56](https://github.com/sanity-io/visual-editing/commit/cf07d56b8feca6b815d7609b69c3a51769442263))
+
 ## [0.7.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-helpers-v0.7.12...visual-editing-helpers-v0.7.13) (2025-01-09)
 
 
