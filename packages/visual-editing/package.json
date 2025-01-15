@@ -118,9 +118,9 @@
   ],
   "scripts": {
     "build": "pnpm run build:main --clean && pnpm run build:svelte && pkg check --strict",
-    "build-storybook": "storybook build",
     "build:main": "pkg build --strict",
     "build:svelte": "svelte-kit sync && svelte-package -i ./svelte -o dist-svelte",
+    "build-storybook": "storybook build",
     "dev": "pnpm run build:main && pnpm run build:svelte",
     "lint": "eslint --cache .",
     "prepack": "turbo run build",
