@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.12.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.1...visual-editing-v2.12.2) (2025-01-14)
+
+
+### Bug Fixes
+
+* explicitly fetch preview snapshots on connect ([#2487](https://github.com/sanity-io/visual-editing/issues/2487)) ([cf07d56](https://github.com/sanity-io/visual-editing/commit/cf07d56b8feca6b815d7609b69c3a51769442263))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.14
+
+## [2.12.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.0...visual-editing-v2.12.1) (2025-01-13)
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2483](https://github.com/sanity-io/visual-editing/issues/2483)) ([e059b2e](https://github.com/sanity-io/visual-editing/commit/e059b2ee1461c519b1cc042382762b9a060cd103))
+
 ## [2.12.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.9...visual-editing-v2.12.0) (2025-01-10)
 
 

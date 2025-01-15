@@ -12,6 +12,27 @@ All notable changes to this project will be documented in this file. See
   * devDependencies
     * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
+## [1.21.3](https://github.com/sanity-io/visual-editing/compare/presentation-v1.21.2...presentation-v1.21.3) (2025-01-14)
+
+
+### Bug Fixes
+
+* explicitly fetch preview snapshots on connect ([#2487](https://github.com/sanity-io/visual-editing/issues/2487)) ([cf07d56](https://github.com/sanity-io/visual-editing/commit/cf07d56b8feca6b815d7609b69c3a51769442263))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @repo/visual-editing-helpers bumped to 0.7.14
+
+## [1.21.2](https://github.com/sanity-io/visual-editing/compare/presentation-v1.21.1...presentation-v1.21.2) (2025-01-13)
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2483](https://github.com/sanity-io/visual-editing/issues/2483)) ([e059b2e](https://github.com/sanity-io/visual-editing/commit/e059b2ee1461c519b1cc042382762b9a060cd103))
+
 ## [1.21.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.21.0...presentation-v1.21.1) (2025-01-10)
 
 
