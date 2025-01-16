@@ -1,6 +1,7 @@
 import {get} from 'lodash'
 import {useEffect, useMemo, useState} from 'react'
 import {isObservable, map, Observable, of, switchMap} from 'rxjs'
+import {getDraftId} from 'sanity'
 import {
   isRecord,
   isReference,
@@ -44,8 +45,12 @@ function cleanPreviewable(id: string | undefined, previewable: Previewable) {
 
 function listen(id: string, fields: string[], store: DocumentStore) {
   const projection = fields.join(', ')
-  const query = `*[_id==$id][0]{${projection}}`
-  const params = {id}
+  const query = {
+    fetch: `*[_id==$id][0]{${projection}}`,
+    // TODO: is it more performant to use `||` instead of `in`?
+    listen: `*[_id in [$id,$draftId]]`,
+  }
+  const params = {id, draftId: getDraftId(id)}
   return store.listenQuery(query, params, {
     perspective: 'previewDrafts',
   }) as Observable<SanityDocument | null>
