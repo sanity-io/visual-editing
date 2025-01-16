@@ -2,15 +2,13 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "paths": {
-      "@sanity/preview-url-secret": ["./node_modules/@sanity/preview-url-secret/src"],
-      "@repo/visual-editing-helpers": ["./node_modules/@repo/visual-editing-helpers/src"]
+      "@sanity/preview-url-secret": ["./node_modules/@sanity/preview-url-secret/src"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "./node_modules/@sanity/preview-url-secret/src",
-    "./node_modules/@repo/visual-editing-helpers/src"
+    "./node_modules/@sanity/preview-url-secret/src"
   ],
   "exclude": ["dist", "node_modules"]
 }

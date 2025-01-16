@@ -1,4 +1,4 @@
-import type {VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
+import type {VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 import {useEffect} from 'react'
 import type {OverlayMsg, VisualEditingNode} from '../types'
 

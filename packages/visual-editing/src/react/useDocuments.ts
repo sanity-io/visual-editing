@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {SanityDocument} from '@sanity/client'
 import {createIfNotExists, patch} from '@sanity/mutate'
+import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import {get as getAtPath} from '@sanity/util/paths'
 import {useCallback} from 'react'
 import {isEmptyActor, type MutatorActor} from '../optimistic/context'
@@ -25,8 +26,8 @@ function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, ti
 }
 
 function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, actor: MutatorActor) {
-  const inFrame = window.self !== window.top
-  const inPopUp = Boolean(window.opener)
+  const inFrame = isMaybePreviewIframe()
+  const inPopUp = isMaybePreviewWindow()
 
   if (isEmptyActor(actor) || (!inFrame && !inPopUp)) {
     throw new Error('The `useDocuments` hook cannot be used in this context')

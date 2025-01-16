@@ -16,13 +16,9 @@ export type {
 } from '../types'
 export {VisualEditing} from '../ui/VisualEditing'
 export {
-  createDataAttribute,
-  type CreateDataAttribute,
-  type CreateDataAttributeProps,
   type DocumentSchema,
   type PreviewSnapshot,
   type ResolvedSchemaTypeMap,
-  type SanityStegaNode,
   type SchemaArrayItem,
   type SchemaArrayNode,
   type SchemaBooleanNode,
@@ -46,8 +42,14 @@ export {
   type UnresolvedPath,
   type VisualEditingControllerMsg,
   type VisualEditingNodeMsg,
+} from '@sanity/presentation-comlink'
+export {
+  createDataAttribute,
+  type CreateDataAttribute,
+  type CreateDataAttributeProps,
   type WithRequired,
-} from '@repo/visual-editing-helpers'
+  type SanityStegaNode,
+} from '@sanity/visual-editing-csm'
 export {createDocumentMutator} from '../optimistic/state/documentMutator'
 export {
   createDatasetMutator,

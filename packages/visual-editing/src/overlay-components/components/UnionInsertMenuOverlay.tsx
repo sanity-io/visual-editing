@@ -1,5 +1,5 @@
-import type {SchemaNode, SchemaUnionNode} from '@repo/visual-editing-helpers'
 import {AddIcon} from '@sanity/icons'
+import type {SchemaNode, SchemaUnionNode} from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
 import {Button, Flex} from '@sanity/ui'
 import {

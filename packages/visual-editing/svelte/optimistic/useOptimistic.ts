@@ -1,4 +1,5 @@
 import type {SanityDocument} from '@sanity/types'
+import {DRAFTS_PREFIX} from '@sanity/visual-editing-csm'
 import {
   isEmptyActor,
   type OptimisticReducer,
@@ -9,7 +10,6 @@ import {derived, get, writable, type Readable} from 'svelte/store'
 import {optimisticActor} from './optimisticActor'
 
 function getPublishedId(id: string): string {
-  const DRAFTS_PREFIX = 'drafts.'
   return id.startsWith(DRAFTS_PREFIX) ? id.slice(DRAFTS_PREFIX.length) : id
 }
 

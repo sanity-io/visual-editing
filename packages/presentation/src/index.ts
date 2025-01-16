@@ -50,4 +50,4 @@ export type {
   SerializableArray,
   SerializableObject,
   SerializablePrimitive,
-} from '@repo/visual-editing-helpers'
+} from '@sanity/presentation-comlink'

@@ -3,4 +3,4 @@ export {
   createDataAttribute,
   type CreateDataAttributeProps,
   type WithRequired,
-} from '@repo/visual-editing-helpers'
+} from '@sanity/visual-editing-csm'

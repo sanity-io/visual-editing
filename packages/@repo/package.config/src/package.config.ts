@@ -5,12 +5,11 @@ export default defineConfig({
     optimizeLodash: true,
   },
   extract: {
-    bundledPackages: ['@repo/visual-editing-helpers'],
     rules: {
       'ae-forgotten-export': 'error',
       'ae-incompatible-release-tags': 'warn',
       'ae-internal-missing-underscore': 'off',
-      'ae-missing-release-tag': 'warn',
+      'ae-missing-release-tag': 'off',
     },
   },
   tsconfig: 'tsconfig.build.json',

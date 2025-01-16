@@ -1,8 +1,3 @@
-import {
-  createCompatibilityActors,
-  type LoaderControllerMsg,
-  type LoaderNodeMsg,
-} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import {
   createNode,
@@ -10,6 +5,11 @@ import {
   // type Node,
 } from '@sanity/comlink'
 import {setPerspectiveCookie} from '@sanity/next-loader/server-actions'
+import {
+  createCompatibilityActors,
+  type LoaderControllerMsg,
+  type LoaderNodeMsg,
+} from '@sanity/presentation-comlink'
 import {useRouter} from 'next/navigation.js'
 import {
   useEffect,

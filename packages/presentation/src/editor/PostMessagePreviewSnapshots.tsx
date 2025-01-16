@@ -1,5 +1,5 @@
-import type {PreviewSnapshot} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
+import type {PreviewSnapshot} from '@sanity/presentation-comlink'
 import {memo, useEffect, useMemo, useRef, type FC} from 'react'
 import {
   combineLatest,

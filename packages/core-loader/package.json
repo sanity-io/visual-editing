@@ -69,13 +69,14 @@
   },
   "dependencies": {
     "@sanity/client": "^6.24.3",
-    "@sanity/comlink": "workspace:*"
+    "@sanity/comlink": "workspace:^",
+    "@sanity/presentation-comlink": "workspace:^",
+    "@sanity/visual-editing-csm": "workspace:^"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
-    "@repo/visual-editing-helpers": "workspace:*",
     "@sanity/pkg-utils": "6.13.4",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",

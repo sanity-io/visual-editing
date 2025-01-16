@@ -1,4 +1,4 @@
-import {decodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
+import {decodeSanityNodeData} from '@sanity/visual-editing-csm'
 import type {
   ElementNode,
   OverlayElement,

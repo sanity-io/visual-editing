@@ -1,8 +1,7 @@
 export * from './jsx'
+export {encodeSanityNodeData, type SanityNode} from '@sanity/visual-editing-csm'
 export {
-  encodeSanityNodeData,
   type SanityKey,
-  type SanityNode,
   type SanityNodeContext,
   type SanityPrimitive,
   type SourceNode,
@@ -10,7 +9,7 @@ export {
   type UnwrappedValue,
   wrapData,
   type WrappedValue,
-} from '@repo/visual-editing-helpers/csm'
+} from './wrap'
 export type {
   Any,
   ContentSourceMap,

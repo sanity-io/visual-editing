@@ -53,11 +53,11 @@
       ]
     },
     {
-      "matchDepNames": ["sanity", "@sanity/util"],
+      "matchDepNames": ["sanity", "@sanity/util", "@sanity/types"],
       "matchFileNames": [
         "packages/presentation/package.json",
+        "packages/presentation-comlink/package.json",
         "packages/preview-url-secret/package.json",
-        "packages/visual-editing-helpers/package.json",
         "packages/vercel-protection-bypass/package.json"
       ],
       "matchDepTypes": ["devDependencies", "peerDependencies"],

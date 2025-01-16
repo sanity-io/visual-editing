@@ -1,11 +1,3 @@
-import {
-  createCompatibilityActors,
-  isAltKey,
-  isHotkey,
-  type PreviewKitNodeMsg,
-  type VisualEditingControllerMsg,
-  type VisualEditingNodeMsg,
-} from '@repo/visual-editing-helpers'
 import {studioPath} from '@sanity/client/csm'
 import {
   createConnectionMachine,
@@ -13,6 +5,12 @@ import {
   type Controller,
   type Message,
 } from '@sanity/comlink'
+import {
+  createCompatibilityActors,
+  type PreviewKitNodeMsg,
+  type VisualEditingControllerMsg,
+  type VisualEditingNodeMsg,
+} from '@sanity/presentation-comlink'
 import {
   urlSearchParamVercelProtectionBypass,
   urlSearchParamVercelSetBypassCookie,
@@ -634,4 +632,25 @@ export default function PresentationTool(props: {
       </Suspense>
     </>
   )
+}
+
+function isAltKey(event: KeyboardEvent): boolean {
+  return event.key === 'Alt'
+}
+
+const IS_MAC =
+  typeof window != 'undefined' && /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
+const MODIFIERS: Record<string, 'altKey' | 'ctrlKey' | 'metaKey' | 'shiftKey'> = {
+  alt: 'altKey',
+  ctrl: 'ctrlKey',
+  mod: IS_MAC ? 'metaKey' : 'ctrlKey',
+  shift: 'shiftKey',
+}
+function isHotkey(keys: string[], event: KeyboardEvent): boolean {
+  return keys.every((key) => {
+    if (MODIFIERS[key]) {
+      return event[MODIFIERS[key]]
+    }
+    return event.key === key.toUpperCase()
+  })
 }

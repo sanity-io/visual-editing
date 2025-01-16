@@ -1,6 +1,10 @@
-import {createCompatibilityActors, type PreviewKitNodeMsg} from '@repo/visual-editing-helpers'
 import type {ContentSourceMapDocuments} from '@sanity/client/csm'
 import {createNode, createNodeMachine, type Message, type Node} from '@sanity/comlink'
+import {
+  createCompatibilityActors,
+  isMaybePresentation,
+  type PreviewKitNodeMsg,
+} from '@sanity/presentation-comlink'
 import {useEffect, useState} from 'react'
 
 /**
@@ -16,7 +20,7 @@ export function useDocumentsInUse(
 
   const [connected, setConnected] = useState(false)
   useEffect(() => {
-    if (window.self === window.top && !window.opener) {
+    if (!isMaybePresentation()) {
       return
     }
     const comlink = createNode<PreviewKitNodeMsg, Message>(

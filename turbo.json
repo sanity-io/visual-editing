@@ -5,7 +5,7 @@
   "tasks": {
     "build": {
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
-      "dependsOn": ["@sanity/insert-menu#build", "^build"]
+      "dependsOn": ["^build"]
     },
     "test": {
       "dependsOn": ["^build"],

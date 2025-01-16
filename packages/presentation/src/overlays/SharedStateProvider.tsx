@@ -1,4 +1,4 @@
-import type {Serializable, SerializableObject} from '@repo/visual-editing-helpers'
+import type {Serializable, SerializableObject} from '@sanity/presentation-comlink'
 import {
   useCallback,
   useEffect,

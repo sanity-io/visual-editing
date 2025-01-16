@@ -71,6 +71,10 @@ export {useSharedState} from './ui/shared-state/useSharedState'
 export {
   type CreateDataAttribute,
   type CreateDataAttributeProps,
+  type WithRequired,
+  createDataAttribute,
+} from '@sanity/visual-editing-csm'
+export {
   type DocumentSchema,
   type SchemaArrayItem,
   type SchemaArrayNode,
@@ -86,9 +90,7 @@ export {
   type SchemaUnionNodeOptions,
   type SchemaUnionOption,
   type SchemaUnknownNode,
-  type WithRequired,
-  createDataAttribute,
-} from '@repo/visual-editing-helpers'
+} from '@sanity/presentation-comlink'
 export {getArrayItemKeyAndParentPath} from './util/mutations'
 
 /**

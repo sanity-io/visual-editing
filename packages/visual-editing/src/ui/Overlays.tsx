@@ -1,6 +1,6 @@
-import {isAltKey, isHotkey, type VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import type {Status} from '@sanity/comlink'
+import {type VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 import {
   isHTMLAnchorElement,
   isHTMLElement,
@@ -431,4 +431,25 @@ export const Overlays: FunctionComponent<{
       </LayerProvider>
     </ThemeProvider>
   )
+}
+
+const IS_MAC =
+  typeof window != 'undefined' && /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
+
+const MODIFIERS: Record<string, 'altKey' | 'ctrlKey' | 'metaKey' | 'shiftKey'> = {
+  alt: 'altKey',
+  ctrl: 'ctrlKey',
+  mod: IS_MAC ? 'metaKey' : 'ctrlKey',
+  shift: 'shiftKey',
+}
+function isHotkey(keys: string[], event: KeyboardEvent): boolean {
+  return keys.every((key) => {
+    if (MODIFIERS[key]) {
+      return event[MODIFIERS[key]]
+    }
+    return event.key === key.toUpperCase()
+  })
+}
+function isAltKey(event: KeyboardEvent): boolean {
+  return event.key === 'Alt'
 }

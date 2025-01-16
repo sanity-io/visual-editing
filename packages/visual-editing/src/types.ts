@@ -1,3 +1,4 @@
+import type {Node} from '@sanity/comlink'
 import type {
   DocumentSchema,
   HistoryRefresh,
@@ -11,8 +12,7 @@ import type {
   SchemaUnionOption,
   VisualEditingControllerMsg,
   VisualEditingNodeMsg,
-} from '@repo/visual-editing-helpers'
-import type {Node} from '@sanity/comlink'
+} from '@sanity/presentation-comlink'
 import type {
   ComponentType,
   FunctionComponent,
@@ -26,7 +26,7 @@ export type {
   HistoryUpdate,
   SanityNode,
   SanityStegaNode,
-} from '@repo/visual-editing-helpers'
+} from '@sanity/presentation-comlink'
 
 /**
  * @public
