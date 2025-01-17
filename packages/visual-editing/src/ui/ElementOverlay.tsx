@@ -1,7 +1,7 @@
-import {pathToUrlString} from '@repo/visual-editing-helpers'
 import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {DocumentIcon, DragHandleIcon} from '@sanity/icons'
 import {Box, Card, Flex, Text} from '@sanity/ui'
+import {pathToUrlString} from '@sanity/visual-editing-csm'
 import {
   isValidElement,
   memo,

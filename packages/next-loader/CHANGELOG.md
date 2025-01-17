@@ -3,12 +3,6 @@
 ## [1.2.14](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.13...next-loader-v1.2.14) (2025-01-14)
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.14
-
 ## [1.2.13](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.12...next-loader-v1.2.13) (2025-01-10)
 
 
@@ -26,8 +20,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 3.0.0
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.13
 
 ## [1.2.11](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.10...next-loader-v1.2.11) (2025-01-09)
 
@@ -42,8 +34,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.5
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.12
     * @sanity/preview-url-secret bumped to 2.0.7
 
 ## [1.2.10](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.9...next-loader-v1.2.10) (2025-01-09)
@@ -63,8 +53,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.4
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.11
 
 ## [1.2.8](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.7...next-loader-v1.2.8) (2024-12-21)
 
@@ -74,17 +62,9 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.3
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.10
 
 ## [1.2.7](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.6...next-loader-v1.2.7) (2024-12-16)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.9
 
 ## [1.2.6](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.5...next-loader-v1.2.6) (2024-12-16)
 
@@ -94,8 +74,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.2
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.8
 
 ## [1.2.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.4...next-loader-v1.2.5) (2024-12-12)
 
@@ -124,8 +102,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.1
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.7
 
 ## [1.2.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.1...next-loader-v1.2.2) (2024-12-03)
 
@@ -164,8 +140,6 @@
 ### Dependencies
 
 * The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.6
     * @sanity/preview-url-secret bumped to 2.0.5
 
 ## [1.1.11](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.10...next-loader-v1.1.11) (2024-11-28)
@@ -176,8 +150,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.0
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.5
 
 ## [1.1.10](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.9...next-loader-v1.1.10) (2024-11-27)
 
@@ -195,8 +167,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.4
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.4
 
 ## [1.1.8](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.7...next-loader-v1.1.8) (2024-11-19)
 
@@ -210,8 +180,6 @@
 ### Dependencies
 
 * The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.3
     * @sanity/preview-url-secret bumped to 2.0.4
 
 ## [1.1.7](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.6...next-loader-v1.1.7) (2024-11-14)
@@ -222,8 +190,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.3
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.2
 
 ## [1.1.6](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.5...next-loader-v1.1.6) (2024-11-12)
 
@@ -233,8 +199,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.2
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.1
 
 ## [1.1.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.4...next-loader-v1.1.5) (2024-11-12)
 
@@ -247,8 +211,6 @@
 ### Dependencies
 
 * The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.0
     * @sanity/preview-url-secret bumped to 2.0.3
 
 ## [1.1.4](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.3...next-loader-v1.1.4) (2024-11-07)
@@ -273,27 +235,13 @@
 ### Dependencies
 
 * The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.30
     * @sanity/preview-url-secret bumped to 2.0.1
 
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.1...next-loader-v1.1.2) (2024-11-04)
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.29
-
 ## [1.1.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.1.0...next-loader-v1.1.1) (2024-10-28)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.28
 
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.8...next-loader-v1.1.0) (2024-10-24)
 
@@ -308,8 +256,6 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.1
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.27
 
 ## [1.0.8](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.7...next-loader-v1.0.8) (2024-10-24)
 
@@ -319,17 +265,9 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.0
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.26
 
 ## [1.0.7](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.6...next-loader-v1.0.7) (2024-10-23)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.25
 
 ## [1.0.6](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.5...next-loader-v1.0.6) (2024-10-23)
 
@@ -363,12 +301,6 @@
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.1...next-loader-v1.0.2) (2024-10-21)
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.24
-
 ## [1.0.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.0.0...next-loader-v1.0.1) (2024-10-21)
 
 
@@ -376,12 +308,6 @@
 
 * **comlink:** handle heartbeat compatibility correctly ([#2006](https://github.com/sanity-io/visual-editing/issues/2006)) ([65af1e1](https://github.com/sanity-io/visual-editing/commit/65af1e17aa329d5f5282152d4b77bca8750a539f))
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.23
 
 ## 1.0.0 (2024-10-21)
 
@@ -401,6 +327,4 @@
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.0.0
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.22
     * @sanity/preview-url-secret bumped to 2.0.0

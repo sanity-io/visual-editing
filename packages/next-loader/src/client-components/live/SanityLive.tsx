@@ -7,6 +7,7 @@ import {
   type LiveEventWelcome,
 } from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
+import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation.js'
 import {useEffect, useMemo, useRef, useState} from 'react'
@@ -46,12 +47,6 @@ export interface SanityLiveProps
    */
   onError?: (error: unknown) => void
 }
-
-// @TODO these should be reusable utils in visual-editing-helpers
-
-const isMaybePreviewIframe = () => window !== window.parent
-const isMaybePreviewWindow = () => !!window.opener
-const isMaybePresentation = () => isMaybePreviewIframe() || isMaybePreviewWindow()
 
 const handleError = (error: unknown) => {
   /* eslint-disable no-console */

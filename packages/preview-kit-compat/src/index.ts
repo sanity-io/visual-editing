@@ -1,6 +1,3 @@
 export * from './useDocumentsInUse'
-export {
-  type RevalidateState,
-  useQueryParams,
-  useRevalidate,
-} from '@repo/visual-editing-helpers/hooks'
+export {useQueryParams} from './useQueryParams'
+export {useRevalidate, type RevalidateState} from './useRevalidate'

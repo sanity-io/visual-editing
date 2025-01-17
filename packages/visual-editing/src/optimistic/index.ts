@@ -5,8 +5,6 @@ export type {
   HistoryUpdate,
   PreviewSnapshot,
   ResolvedSchemaTypeMap,
-  SanityNode,
-  SanityStegaNode,
   SchemaArrayItem,
   SchemaArrayNode,
   SchemaBooleanNode,
@@ -30,7 +28,9 @@ export type {
   UnresolvedPath,
   VisualEditingControllerMsg,
   VisualEditingNodeMsg,
-} from '@repo/visual-editing-helpers'
+  SanityNode,
+  SanityStegaNode,
+} from '@sanity/presentation-comlink'
 export type {
   DocumentsGet,
   DocumentsMutate,

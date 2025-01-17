@@ -5,7 +5,7 @@ export default defineConfig({
   ...baseConfig,
   extract: {
     ...baseConfig.extract,
-    bundledPackages: [...baseConfig.extract.bundledPackages, 'nanostores'],
+    bundledPackages: ['nanostores'],
     rules: {
       ...baseConfig.extract.rules,
       'ae-forgotten-export': 'warn',

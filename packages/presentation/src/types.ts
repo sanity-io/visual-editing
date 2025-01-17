@@ -1,11 +1,11 @@
+import type {ClientPerspective, QueryParams} from '@sanity/client'
+import type {ChannelInstance} from '@sanity/comlink'
 import type {
   LoaderControllerMsg,
   LoaderNodeMsg,
   VisualEditingControllerMsg,
   VisualEditingNodeMsg,
-} from '@repo/visual-editing-helpers'
-import type {ClientPerspective, QueryParams} from '@sanity/client'
-import type {ChannelInstance} from '@sanity/comlink'
+} from '@sanity/presentation-comlink'
 import type {
   PreviewUrlResolver,
   PreviewUrlResolverOptions,

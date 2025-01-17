@@ -1,10 +1,3 @@
-import type {
-  SchemaArrayItem,
-  SchemaNumberNode,
-  SchemaObjectField,
-  SchemaStringNode,
-  SchemaUnionOption,
-} from '@repo/visual-editing-helpers'
 import {
   BlockContentIcon,
   CheckmarkCircleIcon,
@@ -14,6 +7,13 @@ import {
   StringIcon,
   ThListIcon,
 } from '@sanity/icons'
+import type {
+  SchemaArrayItem,
+  SchemaNumberNode,
+  SchemaObjectField,
+  SchemaStringNode,
+  SchemaUnionOption,
+} from '@sanity/presentation-comlink'
 
 type Option =
   | SchemaNumberNode

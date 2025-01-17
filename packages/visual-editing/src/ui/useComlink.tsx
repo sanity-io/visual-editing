@@ -1,9 +1,9 @@
+import {createNode, createNodeMachine} from '@sanity/comlink'
 import {
   createCompatibilityActors,
   type VisualEditingControllerMsg,
   type VisualEditingNodeMsg,
-} from '@repo/visual-editing-helpers'
-import {createNode, createNodeMachine} from '@sanity/comlink'
+} from '@sanity/presentation-comlink'
 import {useEffect, useState} from 'react'
 import type {VisualEditingNode} from '../types'
 

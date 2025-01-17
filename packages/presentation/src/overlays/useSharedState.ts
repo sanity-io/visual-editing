@@ -1,4 +1,4 @@
-import type {Serializable} from '@repo/visual-editing-helpers'
+import type {Serializable} from '@sanity/presentation-comlink'
 import {useContext, useEffect} from 'react'
 import {SharedStateContext} from './SharedStateContext'
 

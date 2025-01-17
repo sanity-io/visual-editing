@@ -1,4 +1,3 @@
-import type {LoaderControllerMsg} from '@repo/visual-editing-helpers'
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -6,6 +5,7 @@ import {
   type QueryParams,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
+import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import isEqual from 'fast-deep-equal'
 import {useCallback, useEffect, useState, useSyncExternalStore} from 'react'
 import * as React from 'react'

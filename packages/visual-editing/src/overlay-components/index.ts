@@ -13,7 +13,6 @@ export type {
 } from '../types'
 export type {
   DocumentSchema,
-  SanityNode,
   SchemaArrayItem,
   SchemaArrayNode,
   SchemaBooleanNode,
@@ -28,4 +27,5 @@ export type {
   SchemaUnionNodeOptions,
   SchemaUnionOption,
   SchemaUnknownNode,
-} from '@repo/visual-editing-helpers'
+  SanityNode,
+} from '@sanity/presentation-comlink'

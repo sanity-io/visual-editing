@@ -1,4 +1,4 @@
-import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
+import {DRAFTS_PREFIX} from '@sanity/visual-editing-csm'
 
 export function isDraftId(id: string): boolean {
   return id.startsWith(DRAFTS_PREFIX)

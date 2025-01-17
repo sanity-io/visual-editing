@@ -1,6 +1,6 @@
-import {type LoaderControllerMsg, type LoaderNodeMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
 import {type Node} from '@sanity/comlink'
+import {type LoaderControllerMsg, type LoaderNodeMsg} from '@sanity/presentation-comlink'
 
 /**
  * The Sanity Client perspective used when fetching data in Draft Mode, in the `sanityFetch` calls

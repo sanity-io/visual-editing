@@ -16,14 +16,10 @@ export type {
 export {VisualEditing} from './VisualEditing'
 export type {VisualEditingProps} from './VisualEditingComponent'
 export {
-  createDataAttribute,
-  type CreateDataAttribute,
-  type CreateDataAttributeProps,
   type DocumentSchema,
   type SchemaArrayItem,
   type SchemaNode,
   type SchemaUnionOption,
-  type WithRequired,
   type SchemaArrayNode,
   type SchemaBooleanNode,
   type SchemaInlineNode,
@@ -35,4 +31,10 @@ export {
   type SchemaUnionNode,
   type SchemaUnionNodeOptions,
   type SchemaUnknownNode,
-} from '@repo/visual-editing-helpers'
+} from '@sanity/presentation-comlink'
+export {
+  createDataAttribute,
+  type CreateDataAttributeProps,
+  type CreateDataAttribute,
+  type WithRequired,
+} from '@sanity/visual-editing-csm'

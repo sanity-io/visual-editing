@@ -2,16 +2,13 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "paths": {
-      "@sanity/core-loader": ["./node_modules/@sanity/core-loader/src"],
-      "@repo/visual-editing-helpers": ["./node_modules/@repo/visual-editing-helpers/src"],
-      "@repo/visual-editing-helpers/*": ["./node_modules/@repo/visual-editing-helpers/src/*"]
+      "@sanity/core-loader": ["./node_modules/@sanity/core-loader/src"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "./node_modules/@sanity/core-loader/src",
-    "./node_modules/@repo/visual-editing-helpers/src"
   ],
   "exclude": ["dist", "node_modules"]
 }

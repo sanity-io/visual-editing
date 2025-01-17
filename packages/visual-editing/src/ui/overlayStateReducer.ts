@@ -1,5 +1,5 @@
-import type {SanityNode, VisualEditingControllerMsg} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
+import type {SanityNode, VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 import type {
   DragInsertPosition,
   DragSkeleton,

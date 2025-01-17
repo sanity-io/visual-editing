@@ -6,7 +6,7 @@ import type {
   SchemaType,
   TypeSchema,
   UnresolvedPath,
-} from '@repo/visual-editing-helpers'
+} from '@sanity/presentation-comlink'
 import {
   useCallback,
   useEffect,

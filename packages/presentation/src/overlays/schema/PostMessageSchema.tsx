@@ -1,5 +1,5 @@
-import type {UnresolvedPath} from '@repo/visual-editing-helpers'
 import type {ClientPerspective} from '@sanity/client'
+import type {UnresolvedPath} from '@sanity/presentation-comlink'
 import {useRootTheme} from '@sanity/ui'
 import {memo, useEffect} from 'react'
 import {API_VERSION} from '../../constants'

@@ -1,11 +1,4 @@
 import {
-  createCompatibilityActors,
-  getQueryCacheKey,
-  type LoaderControllerMsg,
-  type LoaderNodeMsg,
-} from '@repo/visual-editing-helpers'
-import {useQueryParams, useRevalidate} from '@repo/visual-editing-helpers/hooks'
-import {
   createClient,
   type ClientPerspective,
   type ContentSourceMap,
@@ -20,6 +13,11 @@ import {
   type Controller,
   type StatusEvent,
 } from '@sanity/comlink'
+import {
+  createCompatibilityActors,
+  type LoaderControllerMsg,
+  type LoaderNodeMsg,
+} from '@sanity/presentation-comlink'
 import isEqual from 'fast-deep-equal'
 // import {createPreviewSecret} from '@sanity/preview-url-secret/create-secret'
 import {memo, useDeferredValue, useEffect, useMemo, useState} from 'react'
@@ -41,6 +39,7 @@ import type {
   PresentationPerspective,
 } from '../types'
 import type {DocumentOnPage} from '../useDocumentsOnPage'
+import {useQueryParams, useRevalidate} from './utils'
 
 export interface LoaderQueriesProps {
   liveDocument: Partial<SanityDocument> | null | undefined
@@ -482,4 +481,8 @@ export function turboChargeResultIfSourceMap<T = unknown>(
     },
     perspective,
   )
+}
+
+function getQueryCacheKey(query: string, params: QueryParams | string): `${string}-${string}` {
+  return `${query}-${typeof params === 'string' ? params : JSON.stringify(params)}`
 }

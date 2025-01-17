@@ -1,4 +1,4 @@
-import type {SerializableObject} from '@repo/visual-editing-helpers'
+import type {SerializableObject} from '@sanity/presentation-comlink'
 
 export interface SharedStateStore<T extends SerializableObject = SerializableObject> {
   getState: () => T

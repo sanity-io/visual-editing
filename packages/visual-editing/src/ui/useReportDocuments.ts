@@ -1,5 +1,5 @@
-import {DRAFTS_PREFIX} from '@repo/visual-editing-helpers/csm'
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
+import {DRAFTS_PREFIX} from '@sanity/visual-editing-csm'
 import {useCallback, useEffect, useRef} from 'react'
 import type {ElementState, SanityNode, VisualEditingNode} from '../types'
 

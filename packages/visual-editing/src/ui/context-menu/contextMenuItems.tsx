@@ -1,10 +1,3 @@
-import type {
-  SanityNode,
-  SchemaArrayItem,
-  SchemaNode,
-  SchemaUnionNode,
-  SchemaUnionOption,
-} from '@repo/visual-editing-helpers'
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -16,6 +9,13 @@ import {
   SortIcon,
   UnpublishIcon,
 } from '@sanity/icons'
+import type {
+  SanityNode,
+  SchemaArrayItem,
+  SchemaNode,
+  SchemaUnionNode,
+  SchemaUnionOption,
+} from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
 import {MenuGroup} from '@sanity/ui'
 import {type FunctionComponent} from 'react'

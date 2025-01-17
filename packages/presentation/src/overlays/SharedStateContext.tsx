@@ -1,4 +1,4 @@
-import type {Serializable} from '@repo/visual-editing-helpers'
+import type {Serializable} from '@sanity/presentation-comlink'
 import {createContext} from 'react'
 
 export interface SharedStateContextValue {

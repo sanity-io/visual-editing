@@ -5,7 +5,7 @@ import type {
   SanityStegaNode,
   SchemaType,
   TypeSchema,
-} from '@repo/visual-editing-helpers'
+} from '@sanity/presentation-comlink'
 import {createContext} from 'react'
 import type {OverlayElementField, OverlayElementParent} from '../../types'
 

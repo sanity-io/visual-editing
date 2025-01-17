@@ -6,26 +6,8 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
-
 ## [1.7.26](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.25...core-loader-v1.7.26) (2025-01-14)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.14
 
 ## [1.7.25](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.24...core-loader-v1.7.25) (2025-01-09)
 
@@ -35,8 +17,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 3.0.0
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.13
 
 ## [1.7.24](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.23...core-loader-v1.7.24) (2025-01-09)
 
@@ -46,8 +26,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.5
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.12
 
 ## [1.7.23](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.22...core-loader-v1.7.23) (2025-01-06)
 
@@ -57,8 +35,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.4
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.11
 
 ## [1.7.22](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.21...core-loader-v1.7.22) (2024-12-21)
 
@@ -73,17 +49,9 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.3
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.10
 
 ## [1.7.21](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.20...core-loader-v1.7.21) (2024-12-16)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.9
 
 ## [1.7.20](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.19...core-loader-v1.7.20) (2024-12-16)
 
@@ -93,8 +61,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.2
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.8
 
 ## [1.7.19](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.18...core-loader-v1.7.19) (2024-12-05)
 
@@ -104,8 +70,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.1
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.7
 
 ## [1.7.18](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.17...core-loader-v1.7.18) (2024-12-03)
 
@@ -136,12 +100,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to ^6.23.0 ([#2244](https://github.com/sanity-io/visual-editing/issues/2244)) ([eeacde8](https://github.com/sanity-io/visual-editing/commit/eeacde893e6534b14344581456e3e2147b84f75b))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.6
-
 ## [1.7.14](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.13...core-loader-v1.7.14) (2024-11-28)
 
 
@@ -150,8 +108,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 2.0.0
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.5
 
 ## [1.7.13](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.12...core-loader-v1.7.13) (2024-11-26)
 
@@ -161,8 +117,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.4
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.4
 
 ## [1.7.12](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.11...core-loader-v1.7.12) (2024-11-19)
 
@@ -172,12 +126,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to ^6.22.5 ([#2185](https://github.com/sanity-io/visual-editing/issues/2185)) ([da0aa32](https://github.com/sanity-io/visual-editing/commit/da0aa328063f1711687f8459ca00fd95a0b69ccb))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.3
-
 ## [1.7.11](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.10...core-loader-v1.7.11) (2024-11-14)
 
 
@@ -186,8 +134,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.3
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.2
 
 ## [1.7.10](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.9...core-loader-v1.7.10) (2024-11-12)
 
@@ -197,8 +143,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.2
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.1
 
 ## [1.7.9](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.8...core-loader-v1.7.9) (2024-11-12)
 
@@ -208,12 +152,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to ^6.22.4 ([#2132](https://github.com/sanity-io/visual-editing/issues/2132)) ([4f96d9a](https://github.com/sanity-io/visual-editing/commit/4f96d9a539094173caf1644a67f168492f3a35c4))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.0
-
 ## [1.7.8](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.7...core-loader-v1.7.8) (2024-11-06)
 
 
@@ -222,29 +160,11 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to ^6.22.3 ([0b78719](https://github.com/sanity-io/visual-editing/commit/0b7871937422d0d8dfe7851bd1603141f0c434c4))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.30
-
 ## [1.7.7](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.6...core-loader-v1.7.7) (2024-11-04)
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.29
-
 ## [1.7.6](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.5...core-loader-v1.7.6) (2024-10-28)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.28
 
 ## [1.7.5](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.4...core-loader-v1.7.5) (2024-10-24)
 
@@ -254,8 +174,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.1
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.27
 
 ## [1.7.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.3...core-loader-v1.7.4) (2024-10-24)
 
@@ -265,17 +183,9 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * dependencies
     * @sanity/comlink bumped to 1.1.0
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.26
 
 ## [1.7.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.2...core-loader-v1.7.3) (2024-10-23)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.25
 
 ## [1.7.2](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.1...core-loader-v1.7.2) (2024-10-21)
 
@@ -285,12 +195,6 @@ All notable changes to this project will be documented in this file. See
 * stop inlining rxjs and `@sanity/comlink` ([#2012](https://github.com/sanity-io/visual-editing/issues/2012)) ([8df6708](https://github.com/sanity-io/visual-editing/commit/8df670861f40a762684f936fb968e3fbde4f63ba))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.24
-
 ## [1.7.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.0...core-loader-v1.7.1) (2024-10-21)
 
 
@@ -298,12 +202,6 @@ All notable changes to this project will be documented in this file. See
 
 * **comlink:** handle heartbeat compatibility correctly ([#2006](https://github.com/sanity-io/visual-editing/issues/2006)) ([65af1e1](https://github.com/sanity-io/visual-editing/commit/65af1e17aa329d5f5282152d4b77bca8750a539f))
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.23
 
 ## [1.7.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.23...core-loader-v1.7.0) (2024-10-21)
 
@@ -322,8 +220,6 @@ All notable changes to this project will be documented in this file. See
 ### Dependencies
 
 * The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.22
     * @sanity/comlink bumped to 1.0.0
 
 ## [1.6.23](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.22...core-loader-v1.6.23) (2024-09-11)
@@ -334,12 +230,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to ^6.21.3 ([#1793](https://github.com/sanity-io/visual-editing/issues/1793)) ([1dc1b1b](https://github.com/sanity-io/visual-editing/commit/1dc1b1b9222e6a2f36d6b807415dc1a9b0a2426a))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.21
-
 ## [1.6.22](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.21...core-loader-v1.6.22) (2024-08-12)
 
 
@@ -347,12 +237,6 @@ All notable changes to this project will be documented in this file. See
 
 * **deps:** update dependency @sanity/client to v6.21.2 ([#1749](https://github.com/sanity-io/visual-editing/issues/1749)) ([b9efdd2](https://github.com/sanity-io/visual-editing/commit/b9efdd2a672fdef518bc22a29a25992c938ba1ef))
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.20
 
 ## [1.6.21](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.20...core-loader-v1.6.21) (2024-08-02)
 
@@ -362,12 +246,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to v6.21.1 ([#1704](https://github.com/sanity-io/visual-editing/issues/1704)) ([32f1ef8](https://github.com/sanity-io/visual-editing/commit/32f1ef8582134a130d6325320274a981217ee2e8))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.18 to 0.6.19
-
 ## [1.6.20](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.19...core-loader-v1.6.20) (2024-07-03)
 
 
@@ -376,29 +254,11 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to v6.20.1 ([#1680](https://github.com/sanity-io/visual-editing/issues/1680)) ([bb89688](https://github.com/sanity-io/visual-editing/commit/bb8968816838a60a32242ce803a3ef804f2f885e))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.17 to 0.6.18
-
 ## [1.6.19](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.18...core-loader-v1.6.19) (2024-06-13)
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.16 to 0.6.17
-
 ## [1.6.18](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.17...core-loader-v1.6.18) (2024-06-07)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.15 to 0.6.16
 
 ## [1.6.17](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.16...core-loader-v1.6.17) (2024-05-30)
 
@@ -408,12 +268,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to v6.19.1 ([#1602](https://github.com/sanity-io/visual-editing/issues/1602)) ([ebaa50c](https://github.com/sanity-io/visual-editing/commit/ebaa50ca0bf6f6324819a9b3ceb85eb1326d7d72))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.14 to 0.6.15
-
 ## [1.6.16](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.15...core-loader-v1.6.16) (2024-05-28)
 
 
@@ -421,12 +275,6 @@ All notable changes to this project will be documented in this file. See
 
 * **deps:** update dependency @sanity/client to v6.19.0 ([#1575](https://github.com/sanity-io/visual-editing/issues/1575)) ([f0094a1](https://github.com/sanity-io/visual-editing/commit/f0094a1ee716f856cc424f82bc68ca2b99881575))
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.13 to 0.6.14
 
 ## [1.6.15](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.14...core-loader-v1.6.15) (2024-05-27)
 
@@ -436,12 +284,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to v6.18.3 ([#1563](https://github.com/sanity-io/visual-editing/issues/1563)) ([609a3b1](https://github.com/sanity-io/visual-editing/commit/609a3b1ad00b0809ba1f926328cee4d082668bf1))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.12 to 0.6.13
-
 ## [1.6.14](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.13...core-loader-v1.6.14) (2024-05-15)
 
 
@@ -450,20 +292,8 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to v6.18.2 ([#1519](https://github.com/sanity-io/visual-editing/issues/1519)) ([78c387e](https://github.com/sanity-io/visual-editing/commit/78c387eba9c29c9a6f6e7d6b392a04a9cd5724ab))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.11 to 0.6.12
-
 ## [1.6.13](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.12...core-loader-v1.6.13) (2024-05-13)
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.10 to 0.6.11
 
 ## [1.6.12](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.11...core-loader-v1.6.12) (2024-05-05)
 
@@ -472,12 +302,6 @@ All notable changes to this project will be documented in this file. See
 
 * **deps:** update dependency @sanity/client to v6.17.2 ([#1449](https://github.com/sanity-io/visual-editing/issues/1449)) ([928b45c](https://github.com/sanity-io/visual-editing/commit/928b45c47c66c5e1ddbe8b00783efd399b9fa17a))
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.9 to 0.6.10
 
 ## [1.6.11](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.10...core-loader-v1.6.11) (2024-04-29)
 
@@ -489,12 +313,6 @@ All notable changes to this project will be documented in this file. See
 ## [1.6.10](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.9...core-loader-v1.6.10) (2024-04-26)
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.8 to 0.6.9
-
 ## [1.6.9](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.8...core-loader-v1.6.9) (2024-04-22)
 
 
@@ -503,12 +321,6 @@ All notable changes to this project will be documented in this file. See
 * **deps:** update dependency @sanity/client to v6.15.20 ([#1385](https://github.com/sanity-io/visual-editing/issues/1385)) ([8ead6bf](https://github.com/sanity-io/visual-editing/commit/8ead6bf64505b194ebe1b084d6f5b6d4f1d7196e))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.7 to 0.6.8
-
 ## [1.6.8](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.7...core-loader-v1.6.8) (2024-04-19)
 
 
@@ -516,12 +328,6 @@ All notable changes to this project will be documented in this file. See
 
 * **deps:** update dependency @sanity/client to v6.15.19 ([#1374](https://github.com/sanity-io/visual-editing/issues/1374)) ([fde2034](https://github.com/sanity-io/visual-editing/commit/fde203405fe8899fd1bd241523853b732c095b37))
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.6 to 0.6.7
 
 ## [1.6.7](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.6...core-loader-v1.6.7) (2024-04-17)
 
@@ -532,12 +338,6 @@ All notable changes to this project will be documented in this file. See
 * inline `async-cache-dedupe` to improve ESM interop ([cb53fbd](https://github.com/sanity-io/visual-editing/commit/cb53fbd1348887443a7aa55808d73e8060865371))
 
 
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.5 to 0.6.6
-
 ## [1.6.6](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.5...core-loader-v1.6.6) (2024-04-16)
 
 
@@ -545,12 +345,6 @@ All notable changes to this project will be documented in this file. See
 
 * **deps:** update dependency @sanity/client to v6.15.13 ([#1327](https://github.com/sanity-io/visual-editing/issues/1327)) ([a52f2c2](https://github.com/sanity-io/visual-editing/commit/a52f2c2180e1da09a8166e516aaeb206e13e13ae))
 
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.4 to 0.6.5
 
 ## [1.6.5](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.4...core-loader-v1.6.5) (2024-04-05)
 
@@ -564,7 +358,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.3 to 0.6.4
 
 ## [1.6.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.3...core-loader-v1.6.4) (2024-04-05)
 
@@ -579,7 +372,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.2 to 0.6.3
 
 ## [1.6.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.6.2...core-loader-v1.6.3) (2024-04-02)
 
@@ -600,7 +392,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.1 to 0.6.2
 
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.5.1...core-loader-v1.6.0) (2024-03-06)
 
@@ -619,7 +410,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
 ## [1.5.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.5.0...core-loader-v1.5.1) (2024-03-01)
 
@@ -645,7 +435,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.5.1 to 0.5.2
 
 ## [1.4.6](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.5...core-loader-v1.4.6) (2024-02-26)
 
@@ -659,7 +448,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.5.0 to 0.5.1
 
 ## [1.4.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.3...core-loader-v1.4.4) (2024-02-21)
 
@@ -673,7 +461,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.3.1 to 0.4.0
 
 ## [1.4.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.2...core-loader-v1.4.3) (2024-02-16)
 
@@ -688,7 +475,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.3.0 to 0.3.1
 
 ## [1.4.2](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.1...core-loader-v1.4.2) (2024-02-15)
 
@@ -703,7 +489,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.6 to 0.3.0
 
 ## [1.4.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.4.0...core-loader-v1.4.1) (2024-02-05)
 
@@ -731,7 +516,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.5 to 0.2.6
 
 ## [1.3.9](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.8...core-loader-v1.3.9) (2024-01-26)
 
@@ -748,7 +532,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.4 to 0.2.5
 
 ## [1.3.8](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.7...core-loader-v1.3.8) (2024-01-22)
 
@@ -769,7 +552,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.2 to 0.2.3
 
 ## [1.3.5](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.4...core-loader-v1.3.5) (2024-01-10)
 
@@ -791,7 +573,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * devDependencies
     * @sanity/channels bumped from 0.3.0 to 0.4.0
-    * @sanity/visual-editing-helpers bumped from 0.2.1 to 0.2.2
 
 ## [1.3.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.3.2...core-loader-v1.3.3) (2024-01-04)
 
@@ -805,7 +586,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.0 to 0.2.1
 
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.2.0...core-loader-v1.3.0) (2023-12-12)
 
@@ -834,7 +614,6 @@ All notable changes to this project will be documented in this file. See
 * The following workspace dependencies were updated
   * devDependencies
     * @sanity/channels bumped from 0.1.0 to 0.2.0
-    * @sanity/visual-editing-helpers bumped from 0.1.3 to 0.1.4
 
 ## [1.1.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.1.2...core-loader-v1.1.3) (2023-12-07)
 
@@ -848,7 +627,6 @@ All notable changes to this project will be documented in this file. See
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.1.1 to 0.1.2
 
 ## [1.1.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.0.3...core-loader-v1.1.0) (2023-12-05)
 

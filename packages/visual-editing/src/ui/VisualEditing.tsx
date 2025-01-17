@@ -1,3 +1,4 @@
+import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import {useEffect, useState} from 'react'
 import {createPortal} from 'react-dom'
 import type {VisualEditingOptions} from '../types'
@@ -17,8 +18,8 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
   const [inFrame, setInFrame] = useState<boolean | null>(null)
   const [inPopUp, setInPopUp] = useState<boolean | null>(null)
   useEffect(() => {
-    setInFrame(window.self !== window.top)
-    setInPopUp(Boolean(window.opener))
+    setInFrame(isMaybePreviewIframe())
+    setInPopUp(isMaybePreviewWindow())
   }, [])
 
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null)

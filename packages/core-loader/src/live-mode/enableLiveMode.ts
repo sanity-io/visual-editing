@@ -1,9 +1,4 @@
 import {
-  createCompatibilityActors,
-  type LoaderControllerMsg,
-  type LoaderNodeMsg,
-} from '@repo/visual-editing-helpers'
-import {
   validateApiPerspective,
   type ClientPerspective,
   type ContentSourceMap,
@@ -13,6 +8,11 @@ import {
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {createNode, createNodeMachine} from '@sanity/comlink'
+import {
+  createCompatibilityActors,
+  type LoaderControllerMsg,
+  type LoaderNodeMsg,
+} from '@sanity/presentation-comlink'
 import {atom, type MapStore} from 'nanostores'
 import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 

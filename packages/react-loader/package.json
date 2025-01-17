@@ -62,6 +62,8 @@
   "files": [
     "dist",
     "src",
+    "!**/*.test.*",
+    "!**/__fixtures__/*",
     "CHANGELOG.md"
   ],
   "scripts": {
@@ -69,7 +71,7 @@
     "dev": "pkg build --strict",
     "lint": "eslint --cache .",
     "prepack": "turbo run build",
-    "test": "vitest --pass-with-no-tests --typecheck"
+    "test": "vitest --typecheck"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "prettier": "@repo/prettier-config",
@@ -81,13 +83,13 @@
   },
   "dependencies": {
     "@sanity/client": "^6.24.3",
-    "@sanity/core-loader": "workspace:*"
+    "@sanity/core-loader": "workspace:*",
+    "@sanity/visual-editing-csm": "workspace:^"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
-    "@repo/visual-editing-helpers": "workspace:*",
     "@sanity/pkg-utils": "6.13.4",
     "@types/react": "^19.0.7",
     "eslint": "^8.57.1",

@@ -1,4 +1,3 @@
-import {encodeSanityNodeData} from '@repo/visual-editing-helpers/csm'
 import {
   jsonPathToStudioPath,
   resolveEditInfo,
@@ -8,6 +7,7 @@ import {
   type StudioPathLike,
 } from '@sanity/client/csm'
 import type {StegaConfig} from '@sanity/client/stega'
+import {encodeSanityNodeData} from '@sanity/visual-editing-csm'
 import type {EncodeDataAttribute} from './types'
 
 /** @public */

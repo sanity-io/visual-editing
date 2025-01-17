@@ -12,7 +12,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.14
 
 ## [2.12.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.0...visual-editing-v2.12.1) (2025-01-13)
 
@@ -50,7 +49,6 @@
   * dependencies
     * @sanity/comlink bumped to 3.0.0
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.13
 
 ## [2.11.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.7...visual-editing-v2.11.8) (2025-01-09)
 
@@ -67,7 +65,6 @@
     * @sanity/comlink bumped to 2.0.5
     * @sanity/preview-url-secret bumped to 2.0.7
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.12
 
 ## [2.11.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.6...visual-editing-v2.11.7) (2025-01-09)
 
@@ -100,7 +97,6 @@
   * dependencies
     * @sanity/comlink bumped to 2.0.4
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.11
 
 ## [2.11.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.11.3...visual-editing-v2.11.4) (2025-01-02)
 
@@ -139,7 +135,6 @@
   * dependencies
     * @sanity/comlink bumped to 2.0.3
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.10
 
 ## [2.11.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.10...visual-editing-v2.11.0) (2024-12-19)
 
@@ -167,7 +162,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.9
 
 ## [2.10.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.7...visual-editing-v2.10.8) (2024-12-16)
 
@@ -183,7 +177,6 @@
   * dependencies
     * @sanity/comlink bumped to 2.0.2
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.8
 
 ## [2.10.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.6...visual-editing-v2.10.7) (2024-12-12)
 
@@ -215,7 +208,6 @@
   * dependencies
     * @sanity/comlink bumped to 2.0.1
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.7
 
 ## [2.10.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.2...visual-editing-v2.10.3) (2024-12-02)
 
@@ -231,7 +223,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 2.0.5
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.6
 
 ## [2.10.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.10.1...visual-editing-v2.10.2) (2024-11-28)
 
@@ -249,7 +240,6 @@
   * dependencies
     * @sanity/comlink bumped to 2.0.0
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.5
 
 ## [2.10.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.9.0...visual-editing-v2.10.0) (2024-11-27)
 
@@ -277,7 +267,6 @@
   * dependencies
     * @sanity/comlink bumped to 1.1.4
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.4
 
 ## [2.8.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.7.2...visual-editing-v2.8.0) (2024-11-19)
 
@@ -298,7 +287,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 2.0.4
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.3
 
 ## [2.7.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.7.1...visual-editing-v2.7.2) (2024-11-15)
 
@@ -316,7 +304,6 @@
   * dependencies
     * @sanity/comlink bumped to 1.1.3
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.2
 
 ## [2.7.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.6.0...visual-editing-v2.7.0) (2024-11-12)
 
@@ -337,7 +324,6 @@
   * dependencies
     * @sanity/comlink bumped to 1.1.2
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.1
 
 ## [2.6.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.5.2...visual-editing-v2.6.0) (2024-11-12)
 
@@ -360,7 +346,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 2.0.3
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.7.0
 
 ## [2.5.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.5.1...visual-editing-v2.5.2) (2024-11-07)
 
@@ -390,7 +375,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 2.0.1
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.30
 
 ## [2.5.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.4...visual-editing-v2.5.0) (2024-11-06)
 
@@ -424,7 +408,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.29
 
 ## [2.4.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.1...visual-editing-v2.4.2) (2024-10-28)
 
@@ -440,7 +423,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.28
 
 ## [2.4.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.4.0...visual-editing-v2.4.1) (2024-10-24)
 
@@ -451,7 +433,6 @@
   * dependencies
     * @sanity/comlink bumped to 1.1.1
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.27
 
 ## [2.4.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.2...visual-editing-v2.4.0) (2024-10-24)
 
@@ -467,7 +448,6 @@
   * dependencies
     * @sanity/comlink bumped to 1.1.0
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.26
 
 ## [2.3.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.3.1...visual-editing-v2.3.2) (2024-10-24)
 
@@ -488,7 +468,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.25
 
 ## [2.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.2.2...visual-editing-v2.3.0) (2024-10-22)
 
@@ -515,7 +494,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.24
 
 ## [2.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.2.0...visual-editing-v2.2.1) (2024-10-21)
 
@@ -529,7 +507,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.23
 
 ## [2.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.10...visual-editing-v2.2.0) (2024-10-21)
 
@@ -553,7 +530,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 2.0.0
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.22
     * @sanity/comlink bumped to 1.0.0
 
 ## [2.1.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.9...visual-editing-v2.1.10) (2024-09-11)
@@ -571,7 +547,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.6.21
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.21
 
 ## [2.1.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.8...visual-editing-v2.1.9) (2024-08-12)
 
@@ -587,7 +562,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.6.20
   * devDependencies
-    * @repo/visual-editing-helpers bumped to 0.6.20
 
 ## [2.1.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.7...visual-editing-v2.1.8) (2024-08-05)
 
@@ -611,7 +585,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.18 to ^1.6.19
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.18 to 0.6.19
 
 ## [2.1.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.5...visual-editing-v2.1.6) (2024-07-03)
 
@@ -627,7 +600,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.17 to ^1.6.18
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.17 to 0.6.18
 
 ## [2.1.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.4...visual-editing-v2.1.5) (2024-06-13)
 
@@ -641,7 +613,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.16 to 0.6.17
 
 ## [2.1.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.3...visual-editing-v2.1.4) (2024-06-07)
 
@@ -656,7 +627,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.15 to 0.6.16
 
 ## [2.1.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.2...visual-editing-v2.1.3) (2024-05-30)
 
@@ -672,7 +642,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.16 to ^1.6.17
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.14 to 0.6.15
 
 ## [2.1.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.1.1...visual-editing-v2.1.2) (2024-05-29)
 
@@ -709,7 +678,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.14 to ^1.6.15
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.13 to 0.6.14
 
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.22...visual-editing-v2.0.0) (2024-05-28)
 
@@ -737,7 +705,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.13 to ^1.6.14
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.12 to 0.6.13
 
 ## [1.8.21](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.20...visual-editing-v1.8.21) (2024-05-15)
 
@@ -760,7 +727,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.12 to ^1.6.13
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.11 to 0.6.12
 
 ## [1.8.19](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.18...visual-editing-v1.8.19) (2024-05-13)
 
@@ -774,7 +740,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.10 to 0.6.11
 
 ## [1.8.18](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.17...visual-editing-v1.8.18) (2024-05-05)
 
@@ -791,7 +756,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.11 to ^1.6.12
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.9 to 0.6.10
 
 ## [1.8.17](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.16...visual-editing-v1.8.17) (2024-05-02)
 
@@ -812,7 +776,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.8 to 0.6.9
 
 ## [1.8.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.14...visual-editing-v1.8.15) (2024-04-22)
 
@@ -828,7 +791,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.10 to ^1.6.11
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.7 to 0.6.8
 
 ## [1.8.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.13...visual-editing-v1.8.14) (2024-04-19)
 
@@ -844,7 +806,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.9 to ^1.6.10
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.6 to 0.6.7
 
 ## [1.8.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.12...visual-editing-v1.8.13) (2024-04-19)
 
@@ -875,7 +836,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.8 to ^1.6.9
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.5 to 0.6.6
 
 ## [1.8.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.9...visual-editing-v1.8.10) (2024-04-16)
 
@@ -899,7 +859,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.7 to ^1.6.8
   * devDependencies
-    * @repo/visual-editing-helpers bumped from 0.6.4 to 0.6.5
 
 ## [1.8.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.7...visual-editing-v1.8.8) (2024-04-11)
 
@@ -922,7 +881,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.6 to ^1.6.7
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.3 to 0.6.4
 
 ## [1.8.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.5...visual-editing-v1.8.6) (2024-04-05)
 
@@ -938,7 +896,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped from ^1.6.5 to ^1.6.6
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.2 to 0.6.3
 
 ## [1.8.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.4...visual-editing-v1.8.5) (2024-04-02)
 
@@ -969,7 +926,6 @@
   * dependencies
     * @sanity/preview-url-secret bumped to 1.6.5
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.1 to 0.6.2
 
 ## [1.8.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.8.1...visual-editing-v1.8.2) (2024-03-18)
 
@@ -1017,7 +973,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.6.0 to 0.6.1
 
 ## [1.6.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.5.2...visual-editing-v1.6.0) (2024-03-06)
 
@@ -1037,7 +992,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.5.2 to 0.6.0
 
 ## [1.5.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.5.1...visual-editing-v1.5.2) (2024-02-27)
 
@@ -1051,7 +1005,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.5.1 to 0.5.2
 
 ## [1.5.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.5.0...visual-editing-v1.5.1) (2024-02-26)
 
@@ -1065,7 +1018,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.5.0 to 0.5.1
 
 ## [1.5.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.4.0...visual-editing-v1.5.0) (2024-02-23)
 
@@ -1079,7 +1031,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.4.0 to 0.5.0
 
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.3.1...visual-editing-v1.4.0) (2024-02-21)
 
@@ -1099,7 +1050,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.3.1 to 0.4.0
 
 ## [1.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.3.0...visual-editing-v1.3.1) (2024-02-16)
 
@@ -1113,7 +1063,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.3.0 to 0.3.1
 
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.2.2...visual-editing-v1.3.0) (2024-02-15)
 
@@ -1132,7 +1081,6 @@
 
 * The following workspace dependencies were updated
   * devDependencies
-    * @sanity/visual-editing-helpers bumped from 0.2.6 to 0.3.0
 
 ## [1.2.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v1.2.1...visual-editing-v1.2.2) (2024-02-09)
 

@@ -1,4 +1,5 @@
 import type {
+  InsertMenuOptions,
   SchemaArrayNode,
   SchemaBooleanNode,
   SchemaInlineNode,
@@ -13,8 +14,7 @@ import type {
   SchemaUnionNodeOptions,
   SchemaUnionOption,
   SchemaUnknownNode,
-} from '@repo/visual-editing-helpers'
-import type {InsertMenuOptions} from '@sanity/insert-menu'
+} from '@sanity/presentation-comlink'
 import type {
   ArraySchemaType,
   NumberSchemaType,
