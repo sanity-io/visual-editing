@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.22.1...presentation-v2.0.0) (2025-01-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* 
+
+### Code Refactoring
+
+* `@sanity/presentation` is now deprecated ([4d087c9](https://github.com/sanity-io/visual-editing/commit/4d087c9edf299fc8f94e31e626c5d843bb2ce5e7))
+
 ## [1.22.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.22.0...presentation-v1.22.1) (2025-01-17)
 
 
