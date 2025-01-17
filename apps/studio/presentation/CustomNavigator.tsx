@@ -1,6 +1,6 @@
 import {AddIcon, BulbOutlineIcon, DocumentIcon, SchemaIcon} from '@sanity/icons'
-import {usePresentationNavigate, usePresentationParams} from '@sanity/presentation'
 import {Box, Button, Card, Flex, Menu, MenuButton, MenuItem, Stack, Text} from '@sanity/ui'
+import {usePresentationNavigate, usePresentationParams} from 'sanity/presentation'
 import {useIntentLink} from 'sanity/router'
 
 export function CustomNavigator() {

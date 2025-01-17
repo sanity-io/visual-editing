@@ -1,12 +1,12 @@
 import {workspaces} from '@repo/env'
 import {ControlsIcon} from '@sanity/icons'
+import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
 import {
   defineDocuments,
   defineLocations,
   presentationTool,
   type PresentationPluginOptions,
-} from '@sanity/presentation'
-import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
+} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 import {PageSectionInput} from './PageSectionInput'
 

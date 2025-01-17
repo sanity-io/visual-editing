@@ -7,7 +7,7 @@
 
 > **Warning**
 >
-> Don't use this package directly, it's an internal package used by `@sanity/preview-kit` to support `@sanity/presentation`
+> Don't use this package directly, it's an internal package used by `@sanity/preview-kit` to support `sanity/presentation`
 
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/preview-kit-compat?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/preview-kit-compat?label=size&style=flat-square

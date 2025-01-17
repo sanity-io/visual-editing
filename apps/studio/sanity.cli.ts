@@ -10,7 +10,6 @@ export default defineCliConfig({
         ...config.resolve,
         alias: {
           ...config.resolve?.alias,
-          '@sanity/presentation': require.resolve('../../packages/presentation/src'),
         },
         dedupe: [...(config.resolve?.dedupe || []), 'sanity'],
       },

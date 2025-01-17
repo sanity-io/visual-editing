@@ -4,7 +4,7 @@ This repository contains packages to enable Visual Editing with Sanity. Visual E
 
 ## Presentation
 
-[`@sanity/presentation`](./packages/presentation/README.md) is a Sanity Studio plugin that lets you work with content directly through preview — be it a website, in-store display, or anything you can point a browser at.
+[`sanity/presentation`](https://www.sanity.io/docs/presentation) is a Sanity Studio plugin that lets you work with content directly through preview — be it a website, in-store display, or anything you can point a browser at.
 
 ### [Vercel Deployment Protection](https://vercel.com/docs/security/deployment-protection)
 

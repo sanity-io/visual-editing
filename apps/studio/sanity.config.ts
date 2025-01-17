@@ -6,17 +6,17 @@ import {
   performanceTestPlugin,
   shoesPlugin,
 } from '@repo/sanity-schema'
+import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {vercelProtectionBypassTool} from '@sanity/vercel-protection-bypass'
+import {visionTool} from '@sanity/vision'
+import {defineConfig, definePlugin, type PluginOptions} from 'sanity'
 import {
   defineDocuments,
   defineLocations,
   presentationTool,
   type PreviewUrlOption,
   type PreviewUrlResolverOptions,
-} from '@sanity/presentation'
-import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
-import {vercelProtectionBypassTool} from '@sanity/vercel-protection-bypass'
-import {visionTool} from '@sanity/vision'
-import {defineConfig, definePlugin, type PluginOptions} from 'sanity'
+} from 'sanity/presentation'
 import {CustomHeader} from './presentation/CustomHeader'
 import {CustomNavigator} from './presentation/CustomNavigator'
 import {StegaDebugger} from './presentation/DebugStega'
