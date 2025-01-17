@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.22.1](https://github.com/sanity-io/visual-editing/compare/presentation-v1.22.0...presentation-v1.22.1) (2025-01-17)
+
+
+### Bug Fixes
+
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.1
+    * @sanity/presentation-comlink bumped to 1.0.0
+  * devDependencies
+    * @sanity/visual-editing-csm bumped to 1.0.0
+
 ## [1.22.0](https://github.com/sanity-io/visual-editing/compare/presentation-v1.21.3...presentation-v1.22.0) (2025-01-16)
 
 
