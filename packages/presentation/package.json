@@ -1,6 +1,6 @@
 {
   "name": "@sanity/presentation",
-  "version": "1.22.1",
+  "version": "1.22.2",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/presentation#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -35,9 +35,7 @@
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
     "lint": "eslint --cache .",
-    "prepack": "turbo run build",
-    "react-compiler-healthcheck": "(cd src && pnpx react-compiler-healthcheck@latest)",
-    "test": "vitest --typecheck"
+    "prepack": "turbo run build"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "prettier": "@repo/prettier-config",
@@ -47,42 +45,13 @@
     ],
     "root": true
   },
-  "dependencies": {
-    "@sanity/client": "^6.24.3",
-    "@sanity/comlink": "workspace:^",
-    "@sanity/icons": "^3.5.7",
-    "@sanity/logos": "^2.1.13",
-    "@sanity/presentation-comlink": "workspace:^",
-    "@sanity/preview-url-secret": "workspace:^",
-    "@sanity/ui": "^2.11.2",
-    "@sanity/uuid": "3.0.2",
-    "fast-deep-equal": "3.1.3",
-    "framer-motion": "^11.18.0",
-    "lodash": "^4.17.21",
-    "mendoza": "3.0.8",
-    "mnemonist": "0.39.8",
-    "path-to-regexp": "^6.3.0",
-    "react-compiler-runtime": "19.0.0-beta-55955c9-20241229",
-    "rxjs": "^7.8.1",
-    "suspend-react": "0.1.3",
-    "use-effect-event": "^1.0.2"
-  },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@sanity/pkg-utils": "6.13.4",
-    "@sanity/visual-editing-csm": "workspace:*",
-    "@types/lodash": "^4.17.14",
-    "babel-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
     "eslint": "^8.57.1",
-    "happy-dom": "^16.6.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "sanity": "3.70.0",
-    "styled-components": "6.1.14",
-    "typescript": "5.7.3",
-    "vitest": "^2.1.8"
+    "typescript": "5.7.3"
   },
   "engines": {
     "node": ">=16.14"

@@ -2,13 +2,6 @@
 import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {CogIcon, DocumentTextIcon, UserIcon} from '@sanity/icons'
-import {
-  defineDocuments,
-  defineLocations,
-  presentationTool,
-  type DocumentLocation,
-  type PresentationPluginOptions,
-} from '@sanity/presentation'
 import {format, parseISO} from 'date-fns'
 import {
   defineArrayMember,
@@ -18,6 +11,13 @@ import {
   type DocumentDefinition,
 } from 'sanity'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {
+  defineDocuments,
+  defineLocations,
+  presentationTool,
+  type DocumentLocation,
+  type PresentationPluginOptions,
+} from 'sanity/presentation'
 import {structureTool, type StructureResolver} from 'sanity/structure'
 
 const homeLocation = {

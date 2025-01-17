@@ -39,7 +39,6 @@ const config = {
     config.resolve.alias = {
       ...config.resolve.alias,
       ...sanityExports,
-      '@sanity/presentation': requireResolve('@sanity/presentation'),
       '@sanity/vision': requireResolve('@sanity/vision'),
     }
     return config

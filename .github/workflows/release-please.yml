@@ -24,8 +24,6 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      # The Live Draft Content API is only available on vX atm
-      PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: false
     steps:
       - uses: actions/create-github-app-token@v1
         id: generate-token

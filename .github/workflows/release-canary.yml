@@ -18,8 +18,6 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      # The Live Draft Content API is much faster than the legacy Listen API based approach for loader live mode
-      PRESENTATION_ENABLE_LIVE_DRAFT_EVENTS: true
     steps:
       - uses: actions/create-github-app-token@v1
         id: generate-token

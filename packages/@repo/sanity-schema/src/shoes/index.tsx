@@ -1,13 +1,13 @@
 import {apiVersion, workspaces} from '@repo/env'
 import {assist} from '@sanity/assist'
+import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
+import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {
   defineDocuments,
   defineLocations,
   presentationTool,
   type PresentationPluginOptions,
-} from '@sanity/presentation'
-import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
-import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 
 const {dataset, workspace, tool} = workspaces['cross-dataset-references']

@@ -1,14 +1,8 @@
 {
   "extends": "./tsconfig.base",
-  "compilerOptions": {
-    "paths": {
-      "@sanity/preview-url-secret": ["./node_modules/@sanity/preview-url-secret/src"]
-    }
-  },
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    "./node_modules/@sanity/preview-url-secret/src"
+    "**/*.tsx"
   ],
   "exclude": ["dist", "node_modules"]
 }
