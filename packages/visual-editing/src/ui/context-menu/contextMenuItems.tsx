@@ -78,6 +78,7 @@ function getDuplicateItem(context: {doc: OptimisticDocument; node: SanityNode}) 
       label: 'Duplicate',
       icon: CopyIcon,
       action: getDuplicateAction(node, doc),
+      telemetryEvent: 'Visual Editing Context Menu Item Duplicated' as const,
     },
   ]
 }
@@ -91,6 +92,7 @@ function getRemoveItems(context: {doc: OptimisticDocument; node: SanityNode}) {
       label: 'Remove',
       icon: RemoveIcon,
       action: getArrayRemoveAction(node, doc),
+      telemetryEvent: 'Visual Editing Context Menu Item Removed' as const,
     },
   ]
 }
@@ -121,6 +123,7 @@ async function getMoveItems(
       label: 'To top',
       icon: PublishIcon,
       action: () => doc.patch(moveFirstPatches),
+      telemetryEvent: 'Visual Editing Context Menu Item Moved',
     })
   }
   if (moveUpPatches.length) {
@@ -129,6 +132,7 @@ async function getMoveItems(
       label: 'Up',
       icon: ArrowUpIcon,
       action: () => doc.patch(moveUpPatches),
+      telemetryEvent: 'Visual Editing Context Menu Item Moved',
     })
   }
   if (moveDownPatches.length) {
@@ -137,6 +141,7 @@ async function getMoveItems(
       label: 'Down',
       icon: ArrowDownIcon,
       action: () => doc.patch(moveDownPatches),
+      telemetryEvent: 'Visual Editing Context Menu Item Moved',
     })
   }
   if (moveLastPatches.length) {
@@ -145,6 +150,7 @@ async function getMoveItems(
       label: 'To bottom',
       icon: UnpublishIcon,
       action: () => doc.patch(moveLastPatches),
+      telemetryEvent: 'Visual Editing Context Menu Item Moved',
     })
   }
 
@@ -179,12 +185,14 @@ async function getContextMenuArrayItems(context: {
     label: 'Insert before',
     icon: InsertAboveIcon,
     action: getArrayInsertAction(node, doc, field.name, 'before'),
+    telemetryEvent: 'Visual Editing Context Menu Item Inserted',
   })
   items.push({
     type: 'action',
     label: 'Insert after',
     icon: InsertBelowIcon,
     action: getArrayInsertAction(node, doc, field.name, 'after'),
+    telemetryEvent: 'Visual Editing Context Menu Item Inserted',
   })
 
   return items
@@ -300,6 +308,7 @@ async function getContextMenuUnionItems(context: {
           icon: getNodeIcon(t),
           label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
           action: getArrayInsertAction(node, doc, t.name, 'before'),
+          telemetryEvent: 'Visual Editing Context Menu Item Inserted',
         }
       }),
     })
@@ -315,6 +324,7 @@ async function getContextMenuUnionItems(context: {
           label: t.name === 'block' ? 'Paragraph' : t.title || t.name,
           icon: getNodeIcon(t),
           action: getArrayInsertAction(node, doc, t.name, 'after'),
+          telemetryEvent: 'Visual Editing Context Menu Item Inserted',
         }
       }),
     })

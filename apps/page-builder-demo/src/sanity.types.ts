@@ -747,104 +747,6 @@ export type ProjectsPageQueryResult = Array<{
   slug?: Slug
 }>
 
-// Source: ./src/app/product/[slug]/page.tsx
-// Variable: productSlugsQuery
-// Query: *[_type == "product" && defined(slug.current)]{"slug": slug.current}
-export type ProductSlugsQueryResult = Array<{
-  slug: string | null
-}>
-// Variable: productPageQuery
-// Query: *[_type == "product" && slug.current == $slug][0]
-export type ProductPageQueryResult = {
-  _id: string
-  _type: 'product'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-  media?: Array<{
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-    _key: string
-  }>
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-  brandReference?: unknown
-  details?: {
-    materials?: string
-    collectionNotes?: Array<{
-      children?: Array<{
-        marks?: Array<string>
-        text?: string
-        _type: 'span'
-        _key: string
-      }>
-      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-      listItem?: 'bullet' | 'number'
-      markDefs?: Array<{
-        href?: string
-        _type: 'link'
-        _key: string
-      }>
-      level?: number
-      _type: 'block'
-      _key: string
-    }>
-    performance?: Array<{
-      children?: Array<{
-        marks?: Array<string>
-        text?: string
-        _type: 'span'
-        _key: string
-      }>
-      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-      listItem?: 'bullet' | 'number'
-      markDefs?: Array<{
-        href?: string
-        _type: 'link'
-        _key: string
-      }>
-      level?: number
-      _type: 'block'
-      _key: string
-    }>
-    ledLifespan?: string
-    certifications?: Array<string>
-  }
-  variants?: Array<{
-    title?: string
-    price?: string
-    sku?: string
-    _type: 'variant'
-    _key: string
-  }>
-} | null
-
 // Source: ./src/app/pages/[slug]/page.tsx
 // Variable: pageQuery
 // Query: *[_type == "page" && slug.current == $slug][0]{    _type,    _id,    title,    sections[]{  _key,  _type,  _type == 'section' => {    'headline': coalesce(headline, symbol->headline),    'tagline': coalesce(tagline, symbol->tagline),    'subline': coalesce(subline, symbol->subline),  },  _type == 'featureHighlight' => {    headline,    description,    image,    product->{      _type,      _id,      title,      slug,      "media": media[0]    },    style,    ctas  },  _type == 'featuredProducts' => {    headline,    description,    products[]{      _key,      ...(@->{        _type,        _id,        title,        slug,        "media": media[0]      })    },    style  },  _type == 'intro' => {    headline,    intro,    style,    rotations  },  _type == 'hero' => {    headline,    tagline,    subline,    image,    style  }},    style  }
@@ -987,6 +889,104 @@ export type ProjectPageQueryResult = {
   slug?: Slug
 } | null
 
+// Source: ./src/app/product/[slug]/page.tsx
+// Variable: productSlugsQuery
+// Query: *[_type == "product" && defined(slug.current)]{"slug": slug.current}
+export type ProductSlugsQueryResult = Array<{
+  slug: string | null
+}>
+// Variable: productPageQuery
+// Query: *[_type == "product" && slug.current == $slug][0]
+export type ProductPageQueryResult = {
+  _id: string
+  _type: 'product'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  media?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  brandReference?: unknown
+  details?: {
+    materials?: string
+    collectionNotes?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    performance?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    ledLifespan?: string
+    certifications?: Array<string>
+  }
+  variants?: Array<{
+    title?: string
+    price?: string
+    sku?: string
+    _type: 'variant'
+    _key: string
+  }>
+} | null
+
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_id == "siteSettings"][0]{\n  title,\n  description,\n  copyrightText\n}': LayoutQueryResult
@@ -994,11 +994,11 @@ declare module '@sanity/client' {
     '\n  *[_type == "dndTestPage"]{\n    _id,\n    title,\n    children\n  }[0]\n': DndPageQueryResult
     '\n  *[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    description,\n    slug,\n    "media": media[0]\n  }\n': ProductsPageQueryResult
     '*[_type == "project" && defined(slug.current)]': ProjectsPageQueryResult
-    '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
-    '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _type,\n    _id,\n    title,\n    \nsections[]{\n  _key,\n  _type,\n  _type == 'section' => {\n    'headline': coalesce(headline, symbol->headline),\n    'tagline': coalesce(tagline, symbol->tagline),\n    'subline': coalesce(subline, symbol->subline),\n  },\n  _type == 'featureHighlight' => {\n    headline,\n    description,\n    image,\n    product->{\n      _type,\n      _id,\n      title,\n      slug,\n      \"media\": media[0]\n    },\n    style,\n    ctas\n  },\n  _type == 'featuredProducts' => {\n    headline,\n    description,\n    products[]{\n      _key,\n      ...(@->{\n        _type,\n        _id,\n        title,\n        slug,\n        \"media\": media[0]\n      })\n    },\n    style\n  },\n  _type == 'intro' => {\n    headline,\n    intro,\n    style,\n    rotations\n  },\n  _type == 'hero' => {\n    headline,\n    tagline,\n    subline,\n    image,\n    style\n  }\n},\n    style\n  }\n": PageQueryResult
     '*[_type == "page" && defined(slug.current)]{"slug": slug.current}': PageSlugsResult
     '*[_type == "project" && defined(slug.current)]{"slug": slug.current}': ProjectSlugsQueryResult
     '*[_type == "project" && slug.current == $slug][0]': ProjectPageQueryResult
+    '*[_type == "product" && defined(slug.current)]{"slug": slug.current}': ProductSlugsQueryResult
+    '*[_type == "product" && slug.current == $slug][0]': ProductPageQueryResult
   }
 }

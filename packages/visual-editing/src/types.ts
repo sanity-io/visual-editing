@@ -20,7 +20,7 @@ import type {
   PropsWithChildren,
   ReactElement,
 } from 'react'
-import type {TelemetryContextValue} from './ui/telemetry/TelemetryContext'
+import type {TelemetryContextValue, TelemetryEventNames} from './ui/telemetry/TelemetryContext'
 
 export type {
   HistoryRefresh,
@@ -467,6 +467,7 @@ export interface ContextMenuActionNode {
   label: string
   hotkeys?: string[]
   action?: () => void
+  telemetryEvent: TelemetryEventNames
 }
 
 /**

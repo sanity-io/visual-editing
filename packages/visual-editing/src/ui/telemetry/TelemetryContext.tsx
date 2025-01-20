@@ -18,7 +18,7 @@ export const events = {
     version: 1,
   }),
   'Visual Editing Context Menu Item Duplicated': defineEvent({
-    name: 'Visual Editing Context Menu Item Dupliacted',
+    name: 'Visual Editing Context Menu Item Duplicated',
     description: 'An item is duplicated using the Context Menu.',
     version: 1,
   }),
@@ -49,6 +49,8 @@ type EventDataMap = {
     ? T
     : never
 }
+
+export type TelemetryEventNames = keyof typeof events
 
 export type TelemetryContextValue = <K extends keyof typeof events>(
   name: K,
