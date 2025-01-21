@@ -13,6 +13,7 @@ import {
 import {styled} from 'styled-components'
 import {useDocuments} from '../../react/useDocuments'
 import type {ElementNode, OverlayComponent} from '../../types'
+import {useTelemetry} from '../../ui/telemetry/useTelemetry'
 import {getArrayInsertPatches} from '../../util/mutations'
 import {InsertMenuPopover} from './InsertMenu'
 
@@ -68,6 +69,8 @@ const HoverArea: FunctionComponent<{
   }, [])
   const ref = useRef<HTMLDivElement | null>(null)
 
+  const sendTelemetry = useTelemetry()
+
   // This function clones and dispatches MouseEvents so that they can be handled
   // by the underlying element. This is useful because we want to handle hover
   // events on the overlay element to display the add button, but let the
@@ -102,8 +105,10 @@ const HoverArea: FunctionComponent<{
       setMenuVisible(false)
       const insertPosition = position === 'top' || position === 'left' ? 'before' : 'after'
       onAddUnion(insertPosition, schemaType.name)
+
+      sendTelemetry('Visual Editing Insert Menu Item Inserted', null)
     },
-    [onAddUnion, position],
+    [onAddUnion, position, sendTelemetry],
   )
 
   const align = position === 'top' ? 'flex-start' : position === 'bottom' ? 'flex-end' : 'center'
