@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.2...vercel-protection-bypass-v1.0.3) (2025-01-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/ui to v2.11.4 ([#2533](https://github.com/sanity-io/visual-editing/issues/2533)) ([800f6fd](https://github.com/sanity-io/visual-editing/commit/800f6fd468dfe79e6db0cb76cfa38e02d2af85df))
+
 ## [1.0.2](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.1...vercel-protection-bypass-v1.0.2) (2025-01-20)
 
 
