@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.5.34](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.5.33...preview-kit-compat-v1.5.34) (2025-01-21)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.1
+
 ## [1.5.33](https://github.com/sanity-io/visual-editing/compare/preview-kit-compat-v1.5.32...preview-kit-compat-v1.5.33) (2025-01-17)
 
 

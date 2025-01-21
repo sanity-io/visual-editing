@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.12.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.4...visual-editing-v2.12.5) (2025-01-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/ui to v2.11.4 ([#2533](https://github.com/sanity-io/visual-editing/issues/2533)) ([800f6fd](https://github.com/sanity-io/visual-editing/commit/800f6fd468dfe79e6db0cb76cfa38e02d2af85df))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.1
+    * @sanity/visual-editing-csm bumped to 1.0.1
+  * devDependencies
+    * @sanity/insert-menu bumped to 1.0.20
+
 ## [2.12.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.3...visual-editing-v2.12.4) (2025-01-20)
 
 
