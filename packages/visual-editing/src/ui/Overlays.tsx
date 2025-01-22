@@ -1,4 +1,5 @@
 import type {ClientPerspective} from '@sanity/client'
+import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import type {Status} from '@sanity/comlink'
 import {type VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 import {
@@ -27,7 +28,6 @@ import type {
   OverlayMsg,
   VisualEditingNode,
 } from '../types'
-import {getDraftId, getPublishedId} from '../util/documents'
 import {sanityNodesExistInSameArray} from '../util/findSanityNodes'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'

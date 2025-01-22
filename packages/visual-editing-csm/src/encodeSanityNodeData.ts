@@ -1,6 +1,5 @@
-import {getPublishedId, studioPath} from '@sanity/client/csm'
+import {getPublishedId, isDraftId, studioPath} from '@sanity/client/csm'
 import type {SanityNode} from '@sanity/visual-editing-types'
-import {DRAFTS_PREFIX} from './constants'
 import {isValidSanityNode} from './isValidSanityNode'
 import {pathToUrlString} from './pathToUrlString'
 
@@ -24,7 +23,7 @@ export function encodeSanityNodeData(node: SanityNode): string | undefined {
     ['base', encodeURIComponent(baseUrl)],
     ['workspace', workspace],
     ['tool', tool],
-    ['isDraft', _id.startsWith(DRAFTS_PREFIX)],
+    ['isDraft', isDraftId(_id)],
   ]
 
   return parts

@@ -1,5 +1,5 @@
+import {getPublishedId} from '@sanity/client/csm'
 import type {SanityDocument} from '@sanity/types'
-import {DRAFTS_PREFIX} from '@sanity/visual-editing-csm'
 import {
   isEmptyActor,
   type OptimisticReducer,
@@ -8,10 +8,6 @@ import {
 import {onMount} from 'svelte'
 import {derived, get, writable, type Readable} from 'svelte/store'
 import {optimisticActor} from './optimisticActor'
-
-function getPublishedId(id: string): string {
-  return id.startsWith(DRAFTS_PREFIX) ? id.slice(DRAFTS_PREFIX.length) : id
-}
 
 export function useOptimistic<T, U = SanityDocument>(
   initial: T,
