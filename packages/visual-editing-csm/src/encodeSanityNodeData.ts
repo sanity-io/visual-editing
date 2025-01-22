@@ -1,4 +1,4 @@
-import {getPublishedId, isDraftId, studioPath} from '@sanity/client/csm'
+import {getPublishedId, studioPath} from '@sanity/client/csm'
 import type {SanityNode} from '@sanity/visual-editing-types'
 import {isValidSanityNode} from './isValidSanityNode'
 import {pathToUrlString} from './pathToUrlString'
@@ -23,16 +23,10 @@ export function encodeSanityNodeData(node: SanityNode): string | undefined {
     ['base', encodeURIComponent(baseUrl)],
     ['workspace', workspace],
     ['tool', tool],
-    ['isDraft', isDraftId(_id)],
   ]
 
   return parts
     .filter(([, value]) => !!value)
-    .map((part) => {
-      const [key, value] = part
-      // For true values, just display the key
-      if (value === true) return key
-      return part.join('=')
-    })
+    .map((part) => part.join('='))
     .join(';')
 }

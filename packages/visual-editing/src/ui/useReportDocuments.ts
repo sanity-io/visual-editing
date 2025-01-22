@@ -1,5 +1,4 @@
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
-import {getDraftId} from '@sanity/client/csm'
 import {useCallback, useEffect, useRef} from 'react'
 import type {ElementState, SanityNode, VisualEditingNode} from '../types'
 
@@ -45,10 +44,7 @@ export function useReportDocuments(
       .map((e) => {
         const {sanity} = e
         if (!('id' in sanity)) return null
-        return {
-          ...sanity,
-          id: 'isDraft' in sanity ? getDraftId(sanity.id) : sanity.id,
-        }
+        return sanity
       })
       .filter((s) => !!s) as SanityNode[]
 

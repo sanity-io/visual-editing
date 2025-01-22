@@ -12,5 +12,4 @@ export const sanityNodeSchema = object({
   tool: optionalLengthyStr,
   type: optionalLengthyStr,
   workspace: optionalLengthyStr,
-  isDraft: optional(string()),
 })
