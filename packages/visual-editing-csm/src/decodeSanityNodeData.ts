@@ -50,9 +50,6 @@ export function decodeSanityString(str: string): SanityNode | undefined {
       case 'dataset':
         acc.dataset = value
         break
-      case 'isDraft':
-        acc.isDraft = ''
-        break
       default:
     }
 

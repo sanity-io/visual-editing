@@ -14,7 +14,6 @@ export type SanityNode = {
   baseUrl: string
   dataset?: string
   id: string
-  isDraft?: string
   path: string
   projectId?: string
   tool?: string

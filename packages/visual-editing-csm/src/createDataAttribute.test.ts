@@ -35,49 +35,49 @@ describe('createDataAttribute', () => {
   test('resolves using function call', () => {
     const scoped = createDataAttribute({id, type})
     expect(scoped(path)).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F"`,
     )
   })
 
   test('resolves using empty function call if path is set', () => {
     const scopedWithPath = createDataAttribute({id, type, path})
     expect(scopedWithPath()).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F"`,
     )
   })
 
   test('resolves using `.toString`', () => {
     const scopedWithPath = createDataAttribute({id, type, path})
     expect(scopedWithPath.toString()).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F"`,
     )
   })
 
   test('resolves using `.toString` after setting path with `.scope`', () => {
     const scoped = createDataAttribute({id, type})
     expect(scoped.scope(path).toString()).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F"`,
     )
   })
 
   test('resolves with a custom basePath', () => {
     const scopedWithBaseUrl = createDataAttribute({id, type, baseUrl})
     expect(scopedWithBaseUrl(path)).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio"`,
     )
   })
 
   test('resolves combined path using attribute and `.scope`', () => {
     const scopedWithPath = createDataAttribute({id, type, path: basePath})
     expect(scopedWithPath.scope(sectionPath).toString()).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F"`,
     )
   })
 
   test('resolves combined path using `.scope` and function call', () => {
     const scoped = createDataAttribute({id, type})
     expect(scoped.scope(basePath)(sectionPath)).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2F"`,
     )
   })
 
@@ -85,7 +85,7 @@ describe('createDataAttribute', () => {
     const scopedWithBaseUrlOnly = createDataAttribute({baseUrl})
     const scoped = scopedWithBaseUrlOnly.combine({id, type})
     expect(scoped(path)).toMatchInlineSnapshot(
-      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio;isDraft"`,
+      `"id=home;type=page;path=sections:0bd049fc047a.style;base=%2Fstudio"`,
     )
   })
 })
