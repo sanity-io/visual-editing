@@ -1,9 +1,9 @@
+import {getPublishedId} from '@sanity/client/csm'
 import type {SanityDocument} from '@sanity/types'
 import {startTransition, useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {isEmptyActor} from '../optimistic/context'
 import type {OptimisticReducer, OptimisticReducerAction} from '../optimistic/types'
-import {getPublishedId} from '../util/documents'
 import {useOptimisticActor} from './useOptimisticActor'
 
 export function useOptimistic<T, U = SanityDocument>(
