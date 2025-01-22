@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.12.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.6...visual-editing-v2.12.7) (2025-01-22)
+
+
+### Bug Fixes
+
+* remove isDraft ([#2537](https://github.com/sanity-io/visual-editing/issues/2537)) ([bfc5aca](https://github.com/sanity-io/visual-editing/commit/bfc5aca9000c987785ef715c8a3d149cc99c7455))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.3
+    * @sanity/visual-editing-csm bumped to 2.0.1
+
 ## [2.12.6](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.5...visual-editing-v2.12.6) (2025-01-22)
 
 
