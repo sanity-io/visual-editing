@@ -1,4 +1,4 @@
-import {createEditUrl} from '@sanity/client/csm'
+import {createEditUrl, getDraftId} from '@sanity/client/csm'
 import {expect, test} from 'vitest'
 import {getLinkHref} from '../getLinkHref'
 
@@ -7,7 +7,7 @@ const id = 'homepage'
 const type = 'page'
 const path = 'title'
 const preview = location.href
-const defaults = {baseUrl, id, type, path, preview}
+const defaults = {baseUrl, id: getDraftId(id), type, path, preview}
 
 const absoluteBaseUrl = 'https://my.sanity.studio'
 const hashBaseUrl = '/studio#'
