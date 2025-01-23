@@ -9,7 +9,6 @@ overrides:
   '@sanity/core-loader': workspace:*
   '@sanity/next-loader': workspace:*
   '@sanity/presentation-comlink': workspace:*
-  '@sanity/preview-kit-compat': workspace:*
   '@sanity/preview-url-secret': workspace:*
   '@sanity/react-loader': workspace:*
   '@sanity/svelte-loader': workspace:*
@@ -255,15 +254,18 @@ importers:
       '@sanity/client':
         specifier: ^6.27.1
         version: 6.27.1(debug@4.4.0)
+      '@sanity/comlink':
+        specifier: workspace:*
+        version: link:../../packages/comlink
       '@sanity/image-url':
         specifier: ^1.1.0
         version: 1.1.0
       '@sanity/next-loader':
         specifier: workspace:*
         version: link:../../packages/next-loader
-      '@sanity/preview-kit-compat':
+      '@sanity/presentation-comlink':
         specifier: workspace:*
-        version: link:../../packages/preview-kit-compat
+        version: link:../../packages/presentation-comlink
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
@@ -504,6 +506,9 @@ importers:
       '@sanity/cli':
         specifier: ^3.71.2
         version: 3.71.2(@types/babel__core@7.20.5)(@types/node@20.8.7)(@types/react@19.0.7)(babel-plugin-react-compiler@19.0.0-beta-decd7b8-20250118)(react@19.0.0)(typescript@5.7.3)
+      '@sanity/comlink':
+        specifier: workspace:*
+        version: link:../../packages/comlink
       '@sanity/demo':
         specifier: ^2.0.0
         version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.17)
@@ -513,9 +518,9 @@ importers:
       '@sanity/next-loader':
         specifier: workspace:*
         version: link:../../packages/next-loader
-      '@sanity/preview-kit-compat':
+      '@sanity/presentation-comlink':
         specifier: workspace:*
-        version: link:../../packages/preview-kit-compat
+        version: link:../../packages/presentation-comlink
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../../packages/preview-url-secret

@@ -131,13 +131,6 @@ export default function ShoesPageClient(props: Props) {
         </li>
         <li>
           <div className="flex items-center">
-            <Link href="/compat" className="mr-2 text-sm font-medium text-gray-900">
-              Preview Kit
-            </Link>
-          </div>
-        </li>
-        <li>
-          <div className="flex items-center">
             <Link href="/only-visual-editing" className="mr-2 text-sm font-medium text-gray-900">
               Visual Editing only
             </Link>
