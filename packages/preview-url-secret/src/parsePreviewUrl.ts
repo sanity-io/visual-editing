@@ -22,6 +22,14 @@ export function parsePreviewUrl(unsafeUrl: string): ParsedPreviewUrl {
   if (unsafeRedirectTo) {
     const redirectUrl = new URL(unsafeRedirectTo, 'http://localhost')
 
+    // If there's a preview perspective in the URL we forward it to the redirect to ensure it's set
+    if (
+      studioPreviewPerspective &&
+      !redirectUrl.searchParams.has(urlSearchParamPreviewPerspective)
+    ) {
+      redirectUrl.searchParams.set(urlSearchParamPreviewPerspective, studioPreviewPerspective)
+    }
+
     // If there's a vercel bypass secret in the redirect URL, we forward it to the redirect to ensure it's set
     if (url.searchParams.has(urlSearchParamVercelProtectionBypass)) {
       redirectUrl.searchParams.set(
