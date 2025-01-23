@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.1.3](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.2...preview-url-secret-v2.1.3) (2025-01-23)
+
+
+### Bug Fixes
+
+* forward perspective to redirect url ([9c4be4b](https://github.com/sanity-io/visual-editing/commit/9c4be4b0b27ee3bd1cda6e94743ee5b86de8b1d5))
+
 ## [2.1.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.1...preview-url-secret-v2.1.2) (2025-01-22)
 
 
