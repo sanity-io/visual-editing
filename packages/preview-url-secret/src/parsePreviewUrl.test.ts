@@ -24,7 +24,7 @@ test('handles relative URLs', () => {
   unsafe.searchParams.set(urlSearchParamPreviewPathname, '/preview?foo=bar')
   unsafe.searchParams.set(urlSearchParamPreviewPerspective, 'published')
   expect(parsePreviewUrl(`${unsafe.pathname}${unsafe.search}`)).toEqual({
-    redirectTo: '/preview?foo=bar',
+    redirectTo: '/preview?foo=bar&sanity-preview-perspective=published',
     secret: 'abc123',
     studioPreviewPerspective: 'published',
   })
