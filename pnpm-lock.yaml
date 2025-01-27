@@ -62,7 +62,7 @@ importers:
         version: 9.1.7
       knip:
         specifier: latest
-        version: 5.43.3(@types/node@22.10.6)(typescript@5.7.3)
+        version: 5.43.5(@types/node@22.10.6)(typescript@5.7.3)
       lint-staged:
         specifier: ^15.2.10
         version: 15.3.0
@@ -1176,8 +1176,8 @@ importers:
         specifier: 3.71.2
         version: 3.71.2(@types/react@19.0.8)(debug@4.4.0)
       '@sanity/ui-workshop':
-        specifier: ^2.0.24
-        version: 2.0.24(@sanity/icons@3.5.7(react@19.0.0))(@sanity/ui@2.11.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0)))(@types/node@22.10.6)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(terser@5.37.0)(yaml@2.7.0)
+        specifier: ^2.0.25
+        version: 2.0.25(@sanity/icons@3.5.7(react@19.0.0))(@sanity/ui@2.11.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0)))(@types/node@22.10.6)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(terser@5.37.0)(yaml@2.7.0)
       '@types/lodash':
         specifier: ^4.17.14
         version: 4.17.14
@@ -4314,8 +4314,8 @@ packages:
     peerDependencies:
       '@types/react': 19.0.8
 
-  '@sanity/ui-workshop@2.0.24':
-    resolution: {integrity: sha512-P6iz1EJhLy/XFPO5hkLY3RJCLtgtaMRj4YJRiz06r0tqyxad71/D65v4rndxQoFgw85vaJZKWM7J8X3zsKeyLA==}
+  '@sanity/ui-workshop@2.0.25':
+    resolution: {integrity: sha512-/sU5CJnOUpi0K97nwciHdvJWwZ0O8tK7X/u1QbNk7vXTlyruvCdeyfij1rphAkOyRb2/efsJvql7zhrjRVCmdw==}
     hasBin: true
     peerDependencies:
       '@sanity/icons': ^2 || ^3
@@ -8840,8 +8840,8 @@ packages:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
 
-  knip@5.43.3:
-    resolution: {integrity: sha512-rCSc7X1jQs+ZIc08lQF3c3nS/nKzsg9UPIbY+qQUMh+FVF5ojdiT3bJNypRlSm2pMLQVeE7XWxXrtT4sdg6nfA==}
+  knip@5.43.5:
+    resolution: {integrity: sha512-B5cexyDF+me8EjmihxF3XASybB+T8HUzZBSZLNr9CGS8WrceMOR5Qa2qdBXwU0MxphAgH2nzLQcKsCuqXYOJUg==}
     engines: {node: '>=18.18.0'}
     hasBin: true
     peerDependencies:
@@ -17299,7 +17299,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@sanity/ui-workshop@2.0.24(@sanity/icons@3.5.7(react@19.0.0))(@sanity/ui@2.11.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0)))(@types/node@22.10.6)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(terser@5.37.0)(yaml@2.7.0)':
+  '@sanity/ui-workshop@2.0.25(@sanity/icons@3.5.7(react@19.0.0))(@sanity/ui@2.11.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0)))(@types/node@22.10.6)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(terser@5.37.0)(yaml@2.7.0)':
     dependencies:
       '@sanity/icons': 3.5.7(react@19.0.0)
       '@sanity/ui': 2.11.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
@@ -17317,7 +17317,7 @@ snapshots:
       mkdirp: 2.1.6
       pako: 2.1.0
       react: 19.0.0
-      react-compiler-runtime: 19.0.0-beta-decd7b8-20250118(react@19.0.0)
+      react-compiler-runtime: 19.0.0-beta-27714ef-20250124(react@19.0.0)
       react-dom: 19.0.0(react@19.0.0)
       rimraf: 4.4.1
       segmented-property: 4.0.0
@@ -23167,7 +23167,7 @@ snapshots:
 
   klona@2.0.6: {}
 
-  knip@5.43.3(@types/node@22.10.6)(typescript@5.7.3):
+  knip@5.43.5(@types/node@22.10.6)(typescript@5.7.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@snyk/github-codeowners': 1.1.0
