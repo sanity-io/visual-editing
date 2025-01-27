@@ -849,8 +849,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(eslint@8.57.1)
       eslint-config-turbo:
-        specifier: ^2.3.3
-        version: 2.3.3(eslint@8.57.1)
+        specifier: ^2.3.4
+        version: 2.3.4(eslint@8.57.1)(turbo@2.3.4)
       eslint-plugin-react:
         specifier: ^7.37.4
         version: 7.37.4(eslint@8.57.1)
@@ -7050,10 +7050,11 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.3.3:
-    resolution: {integrity: sha512-cM9wSBYowQIrjx2MPCzFE6jTnG4vpTPJKZ/O+Ps3CqrmGK/wtNOsY6WHGMwLtKY/nNbgRahAJH6jGVF6k2coOg==}
+  eslint-config-turbo@2.3.4:
+    resolution: {integrity: sha512-MxPl+IKkR7mRGcHoiZAMHYl+RZnjqBsxTLf+IGnx8BrJQe9/CoLT7oBlUxXGvh9bsd5MTaqCxly5h8BE1v/7AA==}
     peerDependencies:
       eslint: '>6.6.0'
+      turbo: '>2.0.0'
 
   eslint-import-resolver-node@0.3.7:
     resolution: {integrity: sha512-gozW2blMLJCeFpBwugLTGyvVjNoeo1knonXAcatC6bjPBZitotxdWf7Gimr25N4c0AAOo4eOUfaG82IJPDpqCA==}
@@ -7202,10 +7203,11 @@ packages:
     peerDependencies:
       eslint: ^7.5.0 || ^8.0.0
 
-  eslint-plugin-turbo@2.3.3:
-    resolution: {integrity: sha512-j8UEA0Z+NNCsjZep9G5u5soDQHcXq/x4amrwulk6eHF1U91H2qAjp5I4jQcvJewmccCJbVp734PkHHTRnosjpg==}
+  eslint-plugin-turbo@2.3.4:
+    resolution: {integrity: sha512-9ncoUJkQGkC28NmlQiS17oB9mrE8XaSulRZiB5pv9vmRbYjOfUwyGhY3EIcoBRdww81igxOzXmAmvNNd6GFBPg==}
     peerDependencies:
       eslint: '>6.6.0'
+      turbo: '>2.0.0'
 
   eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
@@ -20962,10 +20964,11 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-config-turbo@2.3.3(eslint@8.57.1):
+  eslint-config-turbo@2.3.4(eslint@8.57.1)(turbo@2.3.4):
     dependencies:
       eslint: 8.57.1
-      eslint-plugin-turbo: 2.3.3(eslint@8.57.1)
+      eslint-plugin-turbo: 2.3.4(eslint@8.57.1)(turbo@2.3.4)
+      turbo: 2.3.4
 
   eslint-import-resolver-node@0.3.7:
     dependencies:
@@ -21292,10 +21295,11 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-turbo@2.3.3(eslint@8.57.1):
+  eslint-plugin-turbo@2.3.4(eslint@8.57.1)(turbo@2.3.4):
     dependencies:
       dotenv: 16.0.3
       eslint: 8.57.1
+      turbo: 2.3.4
 
   eslint-scope@5.1.1:
     dependencies:
