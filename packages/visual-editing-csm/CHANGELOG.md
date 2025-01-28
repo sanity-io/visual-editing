@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.1...visual-editing-csm-v2.0.2) (2025-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 1.0.4
+
 ## [2.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.0...visual-editing-csm-v2.0.1) (2025-01-22)
 
 
