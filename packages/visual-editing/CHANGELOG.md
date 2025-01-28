@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.12.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.9...visual-editing-v2.12.10) (2025-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.4
+    * @sanity/preview-url-secret bumped to 2.1.4
+    * @sanity/visual-editing-csm bumped to 2.0.2
+
 ## [2.12.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.8...visual-editing-v2.12.9) (2025-01-27)
 
 
