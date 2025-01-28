@@ -240,21 +240,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
       tag = 'next-loader.live',
       onError,
     } = props
-    const {
-      projectId,
-      dataset,
-      apiHost,
-      apiVersion: _apiVersion,
-      useProjectHostname,
-      requestTagPrefix,
-    } = client.config()
+    const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
+      client.config()
     const {isEnabled: isDraftModeEnabled} = await draftMode()
-
-    let apiVersion = _apiVersion
-    // @TODO temporarily handle the Live Draft Content API only being available on vX
-    if (typeof browserToken === 'string' && isDraftModeEnabled) {
-      apiVersion = 'vX'
-    }
 
     return (
       <SanityLiveClientComponent
