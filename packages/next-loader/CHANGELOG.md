@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.21](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.20...next-loader-v1.2.21) (2025-01-28)
+
+
+### Bug Fixes
+
+* remove vX override ([#2581](https://github.com/sanity-io/visual-editing/issues/2581)) ([5e8e0ce](https://github.com/sanity-io/visual-editing/commit/5e8e0ce7f51b11bc9a058a3ca37340d3e822521e))
+
 ## [1.2.20](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.19...next-loader-v1.2.20) (2025-01-28)
 
 
