@@ -17,8 +17,7 @@ setServerClient(
 // Automatically handle draft mode
 export const loadQuery = (async (query, params = {}, options = {}) => {
   const isDraftMode = (await draftMode()).isEnabled
-  const perspective =
-    options.perspective || (await draftMode()).isEnabled ? 'previewDrafts' : 'published'
+  const perspective = options.perspective || (isDraftMode ? 'previewDrafts' : 'published')
   return _loadQuery(query, params, {
     ...options,
     perspective,
