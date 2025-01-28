@@ -20,6 +20,6 @@ const nextConfig: NextConfig = {
 export default withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })(
-  // @ts-expect-error - typings need to be fixed upstream
+  // @ts-ignore - typings need to be fixed upstream
   nextConfig,
 )
