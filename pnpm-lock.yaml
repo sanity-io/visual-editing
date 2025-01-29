@@ -1529,7 +1529,7 @@ importers:
         version: 3.0.6
       '@sanity/demo':
         specifier: ^2.0.0
-        version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@3.4.17)
+        version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@4.0.1)
       '@sanity/insert-menu':
         specifier: workspace:*
         version: link:../insert-menu
@@ -1571,7 +1571,7 @@ importers:
         version: 2.3.9(svelte@4.2.19)(typescript@5.7.3)
       '@tailwindcss/typography':
         specifier: ^0.5.16
-        version: 0.5.16(tailwindcss@3.4.17)
+        version: 0.5.16(tailwindcss@4.0.1)
       '@types/react':
         specifier: 19.0.8
         version: 19.0.8
@@ -1618,8 +1618,8 @@ importers:
         specifier: ^4.2.19
         version: 4.2.19
       tailwindcss:
-        specifier: ^3.4.17
-        version: 3.4.17
+        specifier: ^4.0.1
+        version: 4.0.1
       typescript:
         specifier: 5.7.3
         version: 5.7.3
@@ -12175,6 +12175,9 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
+  tailwindcss@4.0.1:
+    resolution: {integrity: sha512-UK5Biiit/e+r3i0O223bisoS5+y7ZT1PM8Ojn0MxRHzXN1VPZ2KY6Lo6fhu1dOfCfyUAlK7Lt6wSxowRabATBw==}
+
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
@@ -16791,6 +16794,11 @@ snapshots:
       '@sanity/color': 3.0.6
       tailwindcss: 3.4.17
 
+  '@sanity/demo@2.0.0(@sanity/color@3.0.6)(tailwindcss@4.0.1)':
+    dependencies:
+      '@sanity/color': 3.0.6
+      tailwindcss: 4.0.1
+
   '@sanity/diff-match-patch@3.2.0': {}
 
   '@sanity/diff@3.72.1':
@@ -17900,6 +17908,14 @@ snapshots:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.17
+
+  '@tailwindcss/typography@0.5.16(tailwindcss@4.0.1)':
+    dependencies:
+      lodash.castarray: 4.4.0
+      lodash.isplainobject: 4.0.6
+      lodash.merge: 4.6.2
+      postcss-selector-parser: 6.0.10
+      tailwindcss: 4.0.1
 
   '@tanstack/react-table@8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -27965,6 +27981,8 @@ snapshots:
       sucrase: 3.35.0
     transitivePeerDependencies:
       - ts-node
+
+  tailwindcss@4.0.1: {}
 
   tapable@2.2.1: {}
 
