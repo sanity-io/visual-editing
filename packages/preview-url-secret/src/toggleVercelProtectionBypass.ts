@@ -2,7 +2,6 @@ import type {SanityClient, SyncTag} from '@sanity/client'
 import {
   vercelProtectionBypassSchemaId as _id,
   vercelProtectionBypassSchemaType as _type,
-  apiVersion,
   fetchVercelProtectionBypassSecret,
   tag,
 } from './constants'
@@ -10,17 +9,15 @@ import type {SanityClientLike} from './types'
 
 /** @internal */
 export async function enableVercelProtectionBypass(
-  _client: SanityClient,
+  client: SanityClient,
   secret: string,
 ): Promise<void> {
-  const client = _client.withConfig({apiVersion})
   const patch = client.patch(_id).set({secret})
   await client.transaction().createIfNotExists({_id, _type}).patch(patch).commit({tag})
 }
 
 /** @internal */
-export async function disableVercelProtectionBypass(_client: SanityClient): Promise<void> {
-  const client = _client.withConfig({apiVersion})
+export async function disableVercelProtectionBypass(client: SanityClient): Promise<void> {
   const patch = client.patch(_id).set({secret: null})
   await client.transaction().createIfNotExists({_id, _type}).patch(patch).commit({tag})
 }
