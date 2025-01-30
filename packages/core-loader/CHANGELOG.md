@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.7.32](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.31...core-loader-v1.7.32) (2025-01-30)
+
+
+### Bug Fixes
+
+* increase heartbeat interval from 1s to 10s ([#2597](https://github.com/sanity-io/visual-editing/issues/2597)) ([0bf7220](https://github.com/sanity-io/visual-editing/commit/0bf722039909ce700ef6de512d83a212f4590ddd))
+
 ## [1.7.31](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.30...core-loader-v1.7.31) (2025-01-28)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.22](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.21...next-loader-v1.2.22) (2025-01-30)
+
+
+### Bug Fixes
+
+* increase heartbeat interval from 1s to 10s ([#2597](https://github.com/sanity-io/visual-editing/issues/2597)) ([0bf7220](https://github.com/sanity-io/visual-editing/commit/0bf722039909ce700ef6de512d83a212f4590ddd))
+
 ## [1.2.21](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.20...next-loader-v1.2.21) (2025-01-28)
 
 
