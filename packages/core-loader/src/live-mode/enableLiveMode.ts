@@ -22,7 +22,7 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
   setFetcher: SetFetcher
 }
 
-const LISTEN_HEARTBEAT_INTERVAL = 1000
+const LISTEN_HEARTBEAT_INTERVAL = 10_000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const {client, setFetcher, onConnect, onDisconnect} = options

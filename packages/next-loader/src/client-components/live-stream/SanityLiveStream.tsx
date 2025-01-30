@@ -37,7 +37,7 @@ export interface SanityLiveStreamProps
   }) => Promise<React.ReactNode>
 }
 
-const LISTEN_HEARTBEAT_INTERVAL = 1000
+const LISTEN_HEARTBEAT_INTERVAL = 10_000
 
 /**
  * @public
