@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.11](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.10...visual-editing-v2.12.11) (2025-01-30)
+
+
+### Bug Fixes
+
+* allow react-router v6 used by remix v2 ([431654f](https://github.com/sanity-io/visual-editing/commit/431654f929326cfe81e0aaf7c57c8fb73f38cb4b))
+
 ## [2.12.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.9...visual-editing-v2.12.10) (2025-01-28)
 
 
