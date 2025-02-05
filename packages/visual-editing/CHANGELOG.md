@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.13...visual-editing-v2.12.14) (2025-02-05)
+
+
+### Bug Fixes
+
+* remove debug code ([9457805](https://github.com/sanity-io/visual-editing/commit/9457805c51ddd452f093ad939eb86b6f6455a2d6))
+
 ## [2.12.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.12...visual-editing-v2.12.13) (2025-02-05)
 
 
