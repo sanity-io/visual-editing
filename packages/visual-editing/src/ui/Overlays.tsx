@@ -78,26 +78,33 @@ const DocumentReporter: FunctionComponent<{
   perspective: ClientPerspective
 }> = (props) => {
   const {documentIds} = props
+  const [uniqueIds, setUniqueIds] = useState<string[]>([])
+
+  useEffect(() => {
+    setUniqueIds((prev) => {
+      const next = Array.from(new Set(documentIds))
+      return prev.length === next.length &&
+        prev.reduce((acc, prevId) => acc.filter((id) => id !== prevId), next)?.length === 0
+        ? prev
+        : next
+    })
+  }, [documentIds])
   const actor = useOptimisticActor()
 
-  useEffect((): (() => void) => {
-    return observeDocumentIds(actor, documentIds)
-  }, [actor, documentIds])
+  useEffect(() => {
+    for (const id of uniqueIds) {
+      actor.send({type: 'observe', documentId: getDraftId(id)})
+      actor.send({type: 'observe', documentId: getPublishedId(id)})
+    }
+    return () => {
+      for (const id of uniqueIds) {
+        actor.send({type: 'unobserve', documentId: getDraftId(id)})
+        actor.send({type: 'unobserve', documentId: getPublishedId(id)})
+      }
+    }
+  }, [actor, uniqueIds])
 
   return null
-}
-function observeDocumentIds(actor: ReturnType<typeof useOptimisticActor>, documentIds: string[]) {
-  const uniqueIds = Array.from(new Set(documentIds))
-  for (const id of uniqueIds) {
-    actor.send({type: 'observe', documentId: getDraftId(id)})
-    actor.send({type: 'observe', documentId: getPublishedId(id)})
-  }
-  return () => {
-    for (const id of uniqueIds) {
-      actor.send({type: 'unobserve', documentId: getDraftId(id)})
-      actor.send({type: 'unobserve', documentId: getPublishedId(id)})
-    }
-  }
 }
 
 const OverlaysController: FunctionComponent<{
@@ -323,6 +330,7 @@ export const Overlays: FunctionComponent<{
   }, [overlayEnabled])
 
   const documentIds = useMemo(() => {
+    console.log('recalc documentIds')
     return elements.flatMap((element) => ('id' in element.sanity ? [element.sanity.id] : []))
   }, [elements])
 
