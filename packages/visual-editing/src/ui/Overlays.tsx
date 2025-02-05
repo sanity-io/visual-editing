@@ -330,7 +330,6 @@ export const Overlays: FunctionComponent<{
   }, [overlayEnabled])
 
   const documentIds = useMemo(() => {
-    console.log('recalc documentIds')
     return elements.flatMap((element) => ('id' in element.sanity ? [element.sanity.id] : []))
   }, [elements])
 
