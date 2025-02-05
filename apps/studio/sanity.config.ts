@@ -131,6 +131,7 @@ function defineWorkspace(
     projectId,
     dataset,
     plugins,
+    releases: {enabled: true},
   })
 }
 
