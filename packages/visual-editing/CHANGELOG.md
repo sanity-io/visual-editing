@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.12...visual-editing-v2.12.13) (2025-02-05)
+
+
+### Bug Fixes
+
+* **visual-editing:** prevent snapshot overfetching ([#2615](https://github.com/sanity-io/visual-editing/issues/2615)) ([5533a2b](https://github.com/sanity-io/visual-editing/commit/5533a2bf33810a0b515918c5fcfcbbed7d202ffc))
+
 ## [2.12.12](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.11...visual-editing-v2.12.12) (2025-02-04)
 
 
