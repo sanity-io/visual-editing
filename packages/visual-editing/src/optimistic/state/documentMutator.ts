@@ -9,9 +9,16 @@ import type {VisualEditingNode} from '../../types'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const createDocumentMutator = (comlink: VisualEditingNode) => {
+  // @TODO ok this is actually only called once
+  // eslint-disable-next-line no-console
+  console.count('visual-editing/createDocumentMutator')
   const fetchSnapshot = fromPromise(
     async ({input, signal}: {input: {id: string; client: SanityClient}; signal: AbortSignal}) => {
       const {id} = input
+      // eslint-disable-next-line no-console
+      console.count(`visual-editing/fetch-snapshot(${id})`)
+      // @TODO why is this called so much?
+      // @TODO investigate the original state machine
       const {snapshot} = await comlink.fetch(
         'visual-editing/fetch-snapshot',
         {documentId: id},

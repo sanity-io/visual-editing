@@ -66,6 +66,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   comlink.on('loader/perspective', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
       validateApiPerspective(data.perspective)
+      // @TODO data.perspective can be an array, make sure to deep equal check
       $perspective.set(data.perspective === 'raw' ? 'previewDrafts' : data.perspective)
       updateLiveQueries()
     }

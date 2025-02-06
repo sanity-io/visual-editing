@@ -7,6 +7,7 @@ import type {VisualEditingNode} from '../types'
 
 /**
  * Hook for maintaining a channel between overlays and the presentation tool
+ * @TODO is this hook called too much and leading to many datasetMutator cases being setup?
  * @internal
  */
 export function useDatasetMutator(comlink: VisualEditingNode | undefined): void {

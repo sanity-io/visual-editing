@@ -67,6 +67,7 @@ function PresentationComlink(props: {
     comlink.on('loader/perspective', (data) => {
       controller?.abort()
       controller = new AbortController()
+      // @TODO data.perspective can be an array, make sure to deep equal check
       handlePerspectiveChange(data.perspective, controller.signal)
     })
 

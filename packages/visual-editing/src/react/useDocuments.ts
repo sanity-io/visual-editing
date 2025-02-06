@@ -58,6 +58,7 @@ function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, acto
     if (snapshot) {
       resolve(snapshot)
     } else {
+      // @TODO looks like this implementation is causing the agressive over-fetching
       const subscriber = doc.on('ready', (event) => {
         // Assert type here as the original document mutator machine doesn't
         // emit a 'ready' event. We provide a custom action to emit it in this
