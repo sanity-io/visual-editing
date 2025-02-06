@@ -178,14 +178,20 @@ const OverlaysController: FunctionComponent<{
  */
 export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
+  comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
   inFrame: boolean
   inPopUp: boolean
   zIndex?: string | number
 }> = (props) => {
-  const {comlink, componentResolver: _componentResolver, inFrame, inPopUp, zIndex} = props
-
-  const [status, setStatus] = useState<Status>()
+  const {
+    comlink,
+    comlinkStatus,
+    componentResolver: _componentResolver,
+    inFrame,
+    inPopUp,
+    zIndex,
+  } = props
 
   const prefersDark = usePrefersDark()
 
@@ -231,9 +237,6 @@ export const Overlays: FunctionComponent<{
       }),
       comlink?.on('presentation/toggle-overlay', () => {
         setOverlayEnabled((enabled) => !enabled)
-      }),
-      comlink?.onStatus((status) => {
-        setStatus(status as Status)
       }),
     ].filter(Boolean)
 
@@ -344,7 +347,7 @@ export const Overlays: FunctionComponent<{
   }, [_componentResolver, optimisticActorReady])
 
   const elementsToRender = useMemo(() => {
-    if (((inFrame || inPopUp) && status !== 'connected') || isDragging) {
+    if (((inFrame || inPopUp) && comlinkStatus !== 'connected') || isDragging) {
       return []
     }
 
@@ -388,7 +391,7 @@ export const Overlays: FunctionComponent<{
     inPopUp,
     isDragging,
     optimisticActorReady,
-    status,
+    comlinkStatus,
     wasMaybeCollapsed,
   ])
 

@@ -28,7 +28,7 @@ function Example(props: {
     }
   }, [])
 
-  const comlink = useComlink(inFrame === true || inPopUp === true)
+  const [comlink] = useComlink(inFrame === true || inPopUp === true)
 
   return (
     <>

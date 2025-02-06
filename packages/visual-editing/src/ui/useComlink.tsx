@@ -1,4 +1,4 @@
-import {createNode, createNodeMachine} from '@sanity/comlink'
+import {createNode, createNodeMachine, type Status} from '@sanity/comlink'
 import {
   createCompatibilityActors,
   type VisualEditingControllerMsg,
@@ -11,8 +11,9 @@ import type {VisualEditingNode} from '../types'
  * Hook for maintaining a channel between overlays and the presentation tool
  * @internal
  */
-export function useComlink(active: boolean = true): VisualEditingNode | undefined {
+export function useComlink(active: boolean = true): [VisualEditingNode | undefined, Status] {
   const [node, setNode] = useState<VisualEditingNode>()
+  const [status, setStatus] = useState<Status>('idle')
 
   useEffect(() => {
     if (!active) return
@@ -25,15 +26,17 @@ export function useComlink(active: boolean = true): VisualEditingNode | undefine
         actors: createCompatibilityActors<VisualEditingNodeMsg>(),
       }),
     )
+    const unsub = instance.onStatus(() => setStatus('connected'), 'connected')
 
     setNode(instance)
     const stop = instance.start()
 
     return () => {
+      unsub()
       stop()
       setNode(undefined)
     }
   }, [active])
 
-  return node
+  return [node, status]
 }
