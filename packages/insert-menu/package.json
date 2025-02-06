@@ -42,8 +42,9 @@
   "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
     "@sanity/icons": "^3.5.7",
-    "@sanity/ui": "^2.11.8",
-    "lodash": "^4.17.21"
+    "@sanity/ui": "^2.12.1",
+    "lodash": "^4.17.21",
+    "react-compiler-runtime": "19.0.0-beta-714736e-20250131"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "^6.13.4",
@@ -53,6 +54,7 @@
     "@types/react": "^19.0.8",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "babel-plugin-react-compiler": "19.0.0-beta-714736e-20250131",
     "eslint": "^8.57.1",
     "eslint-plugin-import": "^2.31.0",
     "lint-staged": "^15.2.10",

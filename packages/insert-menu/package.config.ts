@@ -7,4 +7,6 @@ export default defineConfig({
   rollup: {
     optimizeLodash: true,
   },
+  babel: {reactCompiler: true},
+  reactCompilerOptions: {target: '18'},
 })

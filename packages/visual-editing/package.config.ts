@@ -3,7 +3,6 @@ import {defineConfig} from '@sanity/pkg-utils'
 
 export default defineConfig({
   ...baseConfig,
-  minify: true,
   // `@sanity/visual-editing` isn't designed to be server side rendered
   runtime: 'browser',
   define: {
