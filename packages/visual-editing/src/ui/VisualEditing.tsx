@@ -36,14 +36,15 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
     }
   }, [portal])
 
-  const comlink = useComlink(inFrame === true || inPopUp === true)
-  useDatasetMutator(comlink)
+  const [comlink, comlinkStatus] = useComlink(inFrame === true || inPopUp === true)
+  useDatasetMutator(comlinkStatus === 'connected' ? comlink : undefined)
 
   const children = (
     <>
       {inFrame !== null && inPopUp !== null && (
         <Overlays
           comlink={comlink}
+          comlinkStatus={comlinkStatus}
           componentResolver={components}
           inFrame={inFrame}
           inPopUp={inPopUp}

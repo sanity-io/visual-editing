@@ -23,29 +23,26 @@ export function useDatasetMutator(comlink: VisualEditingNode | undefined): void 
 
     // Fetch features to determine if optimistic updates are supported
     const featuresFetch = new AbortController()
-    const unsub = comlink.onStatus(() => {
-      comlink
-        .fetch('visual-editing/features', undefined, {
-          signal: featuresFetch.signal,
-          suppressWarnings: true,
-        })
-        .then((data) => {
-          if (data.features['optimistic']) {
-            setActor(mutator)
-          }
-        })
-        .catch(() => {
-          // eslint-disable-next-line no-console
-          console.warn(
-            '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',
-          )
-        })
-    }, 'connected')
+    comlink
+      .fetch('visual-editing/features', undefined, {
+        signal: featuresFetch.signal,
+        suppressWarnings: true,
+      })
+      .then((data) => {
+        if (data.features['optimistic']) {
+          setActor(mutator)
+        }
+      })
+      .catch(() => {
+        // eslint-disable-next-line no-console
+        console.warn(
+          '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',
+        )
+      })
 
     return () => {
       mutator.stop()
       featuresFetch.abort()
-      unsub()
     }
   }, [comlink])
 }
