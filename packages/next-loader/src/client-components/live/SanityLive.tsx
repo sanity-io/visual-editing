@@ -40,7 +40,7 @@ export interface SanityLiveProps
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
-  tag: string
+  tag?: string
   /**
    * Handle errors from the Live Events subscription.
    * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
@@ -84,7 +84,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         ? true
         : window.self === window.top,
     refreshOnReconnect = true,
-    tag,
+    tag = 'next-loader.live',
     onError = handleError,
   } = props
 
