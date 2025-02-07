@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.20...insert-menu-v1.1.0) (2025-02-07)
+
+
+### Features
+
+* reduce bundle size ([#2638](https://github.com/sanity-io/visual-editing/issues/2638)) ([091e7f3](https://github.com/sanity-io/visual-editing/commit/091e7f32fd83070fd10bd97ed7d68705055f2231))
+
 ## [1.0.20](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.0.19...insert-menu-v1.0.20) (2025-01-21)
 
 
