@@ -19,6 +19,10 @@ export default defineConfig({
       source: './src/index.ts',
       import: './dist/index.js',
     },
+    {
+      source: './src/use-cache/index.ts',
+      import: './dist/use-cache/index.js',
+    },
   ],
   rollup: {
     ...baseConfig.rollup,

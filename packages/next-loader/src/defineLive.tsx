@@ -14,6 +14,7 @@ import SanityLiveStreamClientComponent from '@sanity/next-loader/client-componen
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 // import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
 import {cookies, draftMode} from 'next/headers.js'
+import {resolveCookiePerspective} from './resolveCookiePerspective'
 import {sanitizePerspective} from './utils'
 
 /**
@@ -190,16 +191,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
     tag?: string
   }) {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-    const perspective =
-      _perspective ??
-      ((await draftMode()).isEnabled
-        ? (await cookies()).has(perspectiveCookieName)
-          ? sanitizePerspective(
-              (await cookies()).get(perspectiveCookieName)?.value,
-              'previewDrafts',
-            )
-          : 'previewDrafts'
-        : 'published')
+    const perspective = _perspective ?? (await resolveCookiePerspective())
+
     const useCdn = perspective === 'published'
     const revalidate =
       (fetchOptions?.revalidate ?? process.env.NODE_ENV === 'production') ? false : undefined
@@ -237,7 +230,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
-      tag = 'next-loader.live',
+      tag,
       onError,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
@@ -294,13 +287,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
     if (isDraftModeEnabled) {
       const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-      const perspective =
-        (_perspective ?? (await cookies()).has(perspectiveCookieName))
-          ? sanitizePerspective(
-              (await cookies()).get(perspectiveCookieName)?.value,
-              'previewDrafts',
-            )
-          : 'previewDrafts'
+      const perspective = _perspective ?? (await resolveCookiePerspective())
       const {projectId, dataset} = client.config()
       return (
         <SanityLiveStreamClientComponent
