@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.14...visual-editing-v2.12.15) (2025-02-07)
+
+
+### Bug Fixes
+
+* solve race in comlink.onStatus ([#2636](https://github.com/sanity-io/visual-editing/issues/2636)) ([aba2aaa](https://github.com/sanity-io/visual-editing/commit/aba2aaaae9644429f1304757cae1c17b7227dd7c))
+
 ## [2.12.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.13...visual-editing-v2.12.14) (2025-02-05)
 
 
