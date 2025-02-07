@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.13.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.14...visual-editing-v2.13.0) (2025-02-07)
+
+
+### Features
+
+* reduce bundle size ([#2638](https://github.com/sanity-io/visual-editing/issues/2638)) ([091e7f3](https://github.com/sanity-io/visual-editing/commit/091e7f32fd83070fd10bd97ed7d68705055f2231))
+
+
+### Bug Fixes
+
+* solve race in comlink.onStatus ([#2636](https://github.com/sanity-io/visual-editing/issues/2636)) ([aba2aaa](https://github.com/sanity-io/visual-editing/commit/aba2aaaae9644429f1304757cae1c17b7227dd7c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/insert-menu bumped to 1.1.0
+    * @sanity/presentation-comlink bumped to 1.0.5
+    * @sanity/visual-editing-csm bumped to 2.0.3
+
 ## [2.12.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.13...visual-editing-v2.12.14) (2025-02-05)
 
 
