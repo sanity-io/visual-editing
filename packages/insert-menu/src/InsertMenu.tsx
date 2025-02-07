@@ -14,9 +14,9 @@ import {
   TextInput,
   Tooltip,
   type MenuItemProps,
-} from '@sanity/ui'
+} from '@sanity/ui/_visual-editing'
 import {startCase} from 'lodash'
-import {createElement, useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
+import {useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
 import {isValidElementType} from 'react-is'
 import {getSchemaTypeIcon} from './getSchemaTypeIcon'
 import type {InsertMenuOptions} from './InsertMenuOptions'
@@ -258,6 +258,7 @@ type GridMenuItemProps = {
 
 function GridMenuItem(props: GridMenuItemProps) {
   const [failedToLoad, setFailedToLoad] = useState(false)
+  const Icon = props.icon
 
   return (
     <MenuItem padding={0} radius={2} onClick={props.onClick} style={{overflow: 'hidden'}}>
@@ -270,7 +271,7 @@ function GridMenuItem(props: GridMenuItemProps) {
             position: 'relative',
           }}
         >
-          {isValidElementType(props.icon) ? (
+          {isValidElementType(Icon) ? (
             <Flex
               align="center"
               justify="center"
@@ -282,7 +283,9 @@ function GridMenuItem(props: GridMenuItemProps) {
                 height: '100%',
               }}
             >
-              <Text size={1}>{createElement(props.icon)}</Text>
+              <Text size={1}>
+                <Icon />
+              </Text>
             </Flex>
           ) : null}
           {!props.previewImageUrl || failedToLoad ? null : (

@@ -1,4 +1,4 @@
-import {Card, usePrefersDark, useTheme_v2} from '@sanity/ui'
+import {Card, usePrefersDark, useTheme_v2} from '@sanity/ui/_visual-editing'
 import type {FunctionComponent} from 'react'
 import {styled} from 'styled-components'
 import type {DragSkeleton} from '../types'
