@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.13.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.0...visual-editing-v2.13.1) (2025-02-10)
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2651](https://github.com/sanity-io/visual-editing/issues/2651)) ([0692000](https://github.com/sanity-io/visual-editing/commit/069200095a0e0616b9f81c1b20c937e99ad4d8ad))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/insert-menu bumped to 1.1.1
+    * @sanity/presentation-comlink bumped to 1.0.6
+    * @sanity/visual-editing-csm bumped to 2.0.4
+
 ## [2.13.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.12.14...visual-editing-v2.13.0) (2025-02-07)
 
 
