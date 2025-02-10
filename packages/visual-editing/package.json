@@ -75,6 +75,12 @@
       "require": "./dist/overlay-components/index.cjs",
       "default": "./dist/overlay-components/index.js"
     },
+    "./utils": {
+      "source": "./src/util/index.ts",
+      "import": "./dist/util/index.js",
+      "require": "./dist/util/index.cjs",
+      "default": "./dist/util/index.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -102,6 +108,9 @@
       ],
       "svelte": [
         "./dist-svelte/index.d.ts"
+      ],
+      "utils": [
+        "./dist/util/index.d.ts"
       ]
     }
   },
