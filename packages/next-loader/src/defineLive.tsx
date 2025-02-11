@@ -22,6 +22,13 @@ import {sanitizePerspective} from './utils'
 export type DefinedSanityFetchType = <const QueryString extends string>(options: {
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
+  /**
+   * Add custom `next.tags` to the underlying fetch request.
+   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
+   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
+   * @defaultValue `['sanity']`
+   */
+  tags?: string[]
   perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
   tag?: string
@@ -37,6 +44,13 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
 export type DefinedSanityLiveStreamType = <const QueryString extends string>(props: {
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
+  /**
+   * Add custom `next.tags` to the underlying fetch request.
+   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
+   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
+   * @defaultValue `['sanity']`
+   */
+  tags?: string[]
   perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
   tag?: string
@@ -180,12 +194,14 @@ export function defineLive(config: DefineSanityLiveOptions): {
     query,
     params = {},
     stega: _stega,
+    tags = ['sanity'],
     perspective: _perspective,
     tag = 'next-loader.fetch',
   }: {
     query: QueryString
     params?: QueryParams | Promise<QueryParams>
     stega?: boolean
+    tags?: string[]
     perspective?: Exclude<ClientPerspective, 'raw'>
     tag?: string
   }) {
@@ -210,13 +226,13 @@ export function defineLive(config: DefineSanityLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
-      next: {revalidate, tags: ['sanity:fetch-sync-tags']},
+      next: {revalidate, tags: [...tags, 'sanity:fetch-sync-tags']},
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
       tag: [tag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
-    const tags = ['sanity', ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
+    const cacheTags = [...tags, ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
 
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
@@ -228,7 +244,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       cacheMode: useCdn ? 'noStale' : undefined,
       tag,
     })
-    return {data: result, sourceMap: resultSourceMap || null, tags}
+    return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
   }
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
@@ -280,12 +296,18 @@ export function defineLive(config: DefineSanityLiveOptions): {
       params,
       perspective: _perspective,
       stega: _stega,
+      tags,
       children,
       tag = 'next-loader.live-stream.fetch',
     } = props
-    const {data, sourceMap, tags} = await sanityFetch({
+    const {
+      data,
+      sourceMap,
+      tags: cacheTags,
+    } = await sanityFetch({
       query,
       params,
+      tags,
       perspective: _perspective,
       stega: _stega,
       tag,
@@ -310,14 +332,14 @@ export function defineLive(config: DefineSanityLiveOptions): {
           params={await params}
           perspective={perspective}
           stega={stega}
-          initial={children({data, sourceMap, tags})}
+          initial={children({data, sourceMap, tags: cacheTags})}
           // eslint-disable-next-line react/no-children-prop, @typescript-eslint/no-explicit-any
           children={children as unknown as any}
         />
       )
     }
 
-    return children({data, sourceMap, tags})
+    return children({data, sourceMap, tags: cacheTags})
   }
 
   // const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
