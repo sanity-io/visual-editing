@@ -50,10 +50,10 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         `You cannot use other perspectives than "published" unless call "setServerClient" first.`,
       )
     }
-    if (perspective === 'previewDrafts') {
+    if (Array.isArray(perspective) || perspective === 'drafts' || perspective === 'previewDrafts') {
       if (!unstable__serverClient.canPreviewDrafts) {
         throw new Error(
-          `You cannot use "previewDrafts" unless you set a "token" in the "client" instance passed to "setServerClient".`,
+          `You cannot use 'perspective: ${JSON.stringify(perspective)}' unless you set a "token" in the "client" instance passed to "setServerClient".`,
         )
       }
       const {result, resultSourceMap} =

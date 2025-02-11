@@ -25,7 +25,7 @@ export async function loadQuery<QueryResponse>({
     )
   }
 
-  const perspective = isDraftMode ? 'previewDrafts' : 'published'
+  const perspective = isDraftMode ? 'drafts' : 'published'
 
   const options = {
     filterResponse: false,

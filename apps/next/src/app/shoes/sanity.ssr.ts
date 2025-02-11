@@ -17,11 +17,11 @@ setServerClient(
 // Automatically handle draft mode
 export const loadQuery = (async (query, params = {}, options = {}) => {
   const isDraftMode = (await draftMode()).isEnabled
-  const perspective = options.perspective || (isDraftMode ? 'previewDrafts' : 'published')
+  const perspective = options.perspective || (isDraftMode ? 'drafts' : 'published')
   return _loadQuery(query, params, {
     ...options,
     perspective,
-    stega: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview' || perspective === 'previewDrafts',
+    stega: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview' || perspective !== 'published',
     next: {revalidate: isDraftMode ? 0 : 60},
   })
 }) satisfies typeof _loadQuery

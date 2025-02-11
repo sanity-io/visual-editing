@@ -22,7 +22,7 @@ export const handlePreview = ({client, preview}: HandlePreviewOptions): Handle =
     event.locals.preview = event.cookies.get(cookieName) === secret
 
     // Set default perspective and useCdn based on preview status
-    const perspective = event.locals.preview ? 'previewDrafts' : 'published'
+    const perspective = event.locals.preview ? 'drafts' : 'published'
     const useCdn = event.locals.preview ? false : true
 
     // Check if the request is to enable or disable previews

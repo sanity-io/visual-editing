@@ -32,7 +32,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     )
   }
   const {projectId, dataset} = client.config()
-  const $perspective = atom<Exclude<ClientPerspective, 'raw'>>('previewDrafts')
+  const $perspective = atom<Exclude<ClientPerspective, 'raw'>>('drafts')
   const $connected = atom(false)
 
   const cache = new Map<
@@ -66,7 +66,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   comlink.on('loader/perspective', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
       validateApiPerspective(data.perspective)
-      $perspective.set(data.perspective === 'raw' ? 'previewDrafts' : data.perspective)
+      $perspective.set(data.perspective === 'raw' ? 'drafts' : data.perspective)
       updateLiveQueries()
     }
   })

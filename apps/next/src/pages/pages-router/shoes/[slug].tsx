@@ -18,7 +18,7 @@ interface Props extends SharedProps {
 
 export const getStaticProps = (async (context) => {
   const {draftMode = false, params} = context
-  const perspective = (draftMode ? 'previewDrafts' : 'published') satisfies ClientPerspective
+  const perspective = (draftMode ? 'drafts' : 'published') satisfies ClientPerspective
 
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug
   if (!slug) throw new Error('slug is required')

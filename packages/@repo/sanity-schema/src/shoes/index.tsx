@@ -41,7 +41,7 @@ const shoeType = defineType({
               type: document._type,
               slug,
             },
-            {perspective: 'previewDrafts'},
+            {perspective: 'drafts'},
           )
           return result < 2
         },
