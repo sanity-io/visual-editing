@@ -11,7 +11,7 @@ type Props = {
 export default async function ShoePage(props: Props) {
   const params = await props.params
   const initial = loadQuery<ShoeResult>(shoe, params, {
-    perspective: (await draftMode()).isEnabled ? 'previewDrafts' : 'published',
+    perspective: (await draftMode()).isEnabled ? 'drafts' : 'published',
     next: {
       revalidate: (await draftMode()).isEnabled ? 0 : false,
       tags: [`shoe:${params.slug}`],

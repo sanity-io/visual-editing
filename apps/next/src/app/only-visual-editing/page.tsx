@@ -16,7 +16,7 @@ export default async function ShoesPage() {
     {},
     {
       filterResponse: false,
-      perspective: (await draftMode()).isEnabled ? 'previewDrafts' : 'published',
+      perspective: (await draftMode()).isEnabled ? 'drafts' : 'published',
       useCdn: (await draftMode()).isEnabled ? false : true,
       next: {revalidate: false, tags: ['shoe']},
     },

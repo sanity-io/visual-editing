@@ -11,10 +11,9 @@ import {
 import SanityLiveClientComponent from '@sanity/next-loader/client-components/live'
 import SanityLiveStreamClientComponent from '@sanity/next-loader/client-components/live-stream'
 // import {handleDraftModeActionMissing} from '@sanity/next-loader/server-actions'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 // import {validateSecret} from '@sanity/preview-url-secret/validate-secret'
-import {cookies, draftMode} from 'next/headers.js'
-import {sanitizePerspective} from './utils'
+import {draftMode} from 'next/headers.js'
+import {resolveCookiePerspective} from './resolveCookiePerspective'
 
 /**
  * @public
@@ -94,7 +93,7 @@ export interface DefineSanityLiveOptions {
    */
   client: SanityClient
   /**
-   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'previewDrafts'` to work.
+   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'drafts'` to work.
    * This token is not shared with the browser.
    */
   serverToken?: string
@@ -190,16 +189,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     tag?: string
   }) {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-    const perspective =
-      _perspective ??
-      ((await draftMode()).isEnabled
-        ? (await cookies()).has(perspectiveCookieName)
-          ? sanitizePerspective(
-              (await cookies()).get(perspectiveCookieName)?.value,
-              'previewDrafts',
-            )
-          : 'previewDrafts'
-        : 'published')
+    const perspective = _perspective ?? (await resolveCookiePerspective())
     const useCdn = perspective === 'published'
     const revalidate =
       (fetchOptions?.revalidate ?? process.env.NODE_ENV === 'production') ? false : undefined
@@ -256,16 +246,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
         draftModeEnabled={isDraftModeEnabled}
         // handleDraftModeAction={handleDraftModeAction}
-        draftModePerspective={
-          isDraftModeEnabled
-            ? (await cookies()).has(perspectiveCookieName)
-              ? sanitizePerspective(
-                  (await cookies()).get(perspectiveCookieName)?.value,
-                  'previewDrafts',
-                )
-              : 'previewDrafts'
-            : 'published'
-        }
+        draftModePerspective={await resolveCookiePerspective()}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}
@@ -294,13 +275,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
     if (isDraftModeEnabled) {
       const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-      const perspective =
-        (_perspective ?? (await cookies()).has(perspectiveCookieName))
-          ? sanitizePerspective(
-              (await cookies()).get(perspectiveCookieName)?.value,
-              'previewDrafts',
-            )
-          : 'previewDrafts'
+      const perspective = _perspective ?? (await resolveCookiePerspective())
       const {projectId, dataset} = client.config()
       return (
         <SanityLiveStreamClientComponent

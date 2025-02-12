@@ -3,7 +3,7 @@ import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
 /** @internal */
 export function sanitizePerspective(
   _perspective: unknown,
-  fallback: 'previewDrafts' | 'published',
+  fallback: 'drafts' | 'published',
 ): Exclude<ClientPerspective, 'raw'> {
   const perspective =
     typeof _perspective === 'string' && _perspective.includes(',')

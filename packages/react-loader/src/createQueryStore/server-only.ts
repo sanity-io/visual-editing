@@ -29,9 +29,11 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
       _options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
     const useCdn = _options.useCdn || unstable__serverClient.instance!.config().useCdn
 
-    if (perspective === 'previewDrafts' && !unstable__serverClient.canPreviewDrafts) {
+    const previewPerspective =
+      Array.isArray(perspective) || perspective === 'drafts' || perspective === 'previewDrafts'
+    if (previewPerspective && !unstable__serverClient.canPreviewDrafts) {
       throw new Error(
-        `You cannot use "previewDrafts" unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
+        `You cannot use 'perspective: ${JSON.stringify(perspective)}' unless you set a "token" in the "client" instance you're pasing to "setServerClient".`,
       )
     }
 
@@ -42,13 +44,13 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         filterResponse: false,
         next,
         perspective,
-        useCdn: perspective === 'previewDrafts' ? false : useCdn,
+        useCdn: previewPerspective ? false : useCdn,
         stega,
         headers,
         tag,
       })
     const payload = resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
-    if (perspective === 'previewDrafts') {
+    if (previewPerspective) {
       // @ts-expect-error - update typings
       return {...payload, perspective}
     }

@@ -31,7 +31,7 @@ export async function setPerspectiveCookie(perspective: ClientPerspective): Prom
     // throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
     return
   }
-  const sanitizedPerspective = sanitizePerspective(perspective, 'previewDrafts')
+  const sanitizedPerspective = sanitizePerspective(perspective, 'drafts')
   if (perspective !== sanitizedPerspective) {
     throw new Error(`Invalid perspective: ${perspective}`)
   }

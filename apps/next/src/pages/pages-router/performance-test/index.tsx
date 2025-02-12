@@ -33,7 +33,7 @@ function createSanityClient(config: ClientConfig) {
 const sanityClient = createSanityClient({
   useCdn: false,
   token: sanityToken,
-  perspective: 'previewDrafts',
+  perspective: 'drafts',
 })
 // Production
 const cdnSanityClient = createSanityClient({

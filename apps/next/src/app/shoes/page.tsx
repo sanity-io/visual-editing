@@ -9,7 +9,7 @@ export default async function ShoesPage() {
     shoesList,
     {},
     {
-      perspective: (await draftMode()).isEnabled ? 'previewDrafts' : 'published',
+      perspective: (await draftMode()).isEnabled ? 'drafts' : 'published',
       next: {revalidate: (await draftMode()).isEnabled ? 0 : false, tags: ['shoe']},
     },
   )
