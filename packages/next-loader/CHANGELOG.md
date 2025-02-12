@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.24...next-loader-v1.3.0) (2025-02-12)
+
+
+### Features
+
+* **sanityFetch:** support custom cache `tags` ([#2678](https://github.com/sanity-io/visual-editing/issues/2678)) ([6d78b86](https://github.com/sanity-io/visual-editing/commit/6d78b86c828e21b3a78ff8c1de451f94ce8092ff))
+
+
+### Bug Fixes
+
+* replace `previewDrafts` with `drafts` ([#2676](https://github.com/sanity-io/visual-editing/issues/2676)) ([9db9390](https://github.com/sanity-io/visual-editing/commit/9db9390970d66d5df5c9dc79c82c35d7f2cd0726))
+* replace `tag` with `requestTag` ([#2677](https://github.com/sanity-io/visual-editing/issues/2677)) ([0acc262](https://github.com/sanity-io/visual-editing/commit/0acc262bbcd1853d9499fe80c65b3520e112459b))
+
 ## [1.2.24](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.23...next-loader-v1.2.24) (2025-02-10)
 
 

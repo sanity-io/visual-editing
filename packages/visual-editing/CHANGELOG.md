@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.1...visual-editing-v2.13.2) (2025-02-12)
+
+
+### Bug Fixes
+
+* replace `previewDrafts` with `drafts` ([#2676](https://github.com/sanity-io/visual-editing/issues/2676)) ([9db9390](https://github.com/sanity-io/visual-editing/commit/9db9390970d66d5df5c9dc79c82c35d7f2cd0726))
+
 ## [2.13.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.0...visual-editing-v2.13.1) (2025-02-10)
 
 
