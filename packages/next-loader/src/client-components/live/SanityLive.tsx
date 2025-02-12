@@ -2,9 +2,7 @@ import {
   createClient,
   type ClientPerspective,
   type InitializedClientConfig,
-  type LiveEventMessage,
-  type LiveEventRestart,
-  type LiveEventWelcome,
+  type LiveEvent,
 } from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
@@ -40,7 +38,7 @@ export interface SanityLiveProps
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
-  tag: string
+  requestTag: string | undefined
   /**
    * Handle errors from the Live Events subscription.
    * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
@@ -84,7 +82,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         ? true
         : window.self === window.top,
     refreshOnReconnect = true,
-    tag,
+    requestTag = 'next-loader.live',
     onError = handleError,
   } = props
 
@@ -108,39 +106,33 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
    * 1. Handle Live Events and call revalidateTag or router.refresh when needed
    */
   const router = useRouter()
-  const handleLiveEvent = useEffectEvent(
-    (event: LiveEventMessage | LiveEventRestart | LiveEventWelcome) => {
-      if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
-        // eslint-disable-next-line no-console
-        console.info(
-          'Sanity is live with',
-          token
-            ? 'automatic revalidation for draft content changes as well as published content'
-            : draftModeEnabled
-              ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
-              : 'automatic revalidation of published content',
-        )
-      } else if (event.type === 'message') {
-        revalidateSyncTags(event.tags)
-      } else if (event.type === 'restart') {
-        router.refresh()
-      }
-    },
-  )
+  const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
+    if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
+      // eslint-disable-next-line no-console
+      console.info(
+        'Sanity is live with',
+        token
+          ? 'automatic revalidation for draft content changes as well as published content'
+          : draftModeEnabled
+            ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
+            : 'automatic revalidation of published content',
+      )
+    } else if (event.type === 'message') {
+      revalidateSyncTags(event.tags)
+    } else if (event.type === 'restart' || event.type === 'reconnect') {
+      router.refresh()
+    }
+  })
   useEffect(() => {
-    const subscription = client.live.events({includeDrafts: !!token, tag}).subscribe({
-      next: (event) => {
-        if (event.type === 'message' || event.type === 'restart' || event.type === 'welcome') {
-          handleLiveEvent(event)
-        }
-      },
+    const subscription = client.live.events({includeDrafts: !!token, tag: requestTag}).subscribe({
+      next: handleLiveEvent,
       error: (err: unknown) => {
         // console.error('What?', err)
         onError(err)
       },
     })
     return () => subscription.unsubscribe()
-  }, [client.live, handleLiveEvent, onError, tag, token])
+  }, [client.live, handleLiveEvent, onError, requestTag, token])
 
   /**
    * 2. Notify what perspective we're in, when in Draft Mode

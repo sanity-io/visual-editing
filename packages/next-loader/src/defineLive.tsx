@@ -30,7 +30,16 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
   tags?: string[]
   perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
-  tag?: string
+  /**
+   * @deprecated use `requestTag` instead
+   */
+  tag?: never
+  /**
+   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue 'next-loader.fetch'
+   */
+  requestTag?: string
 }) => Promise<{
   data: ClientReturn<QueryString>
   sourceMap: ContentSourceMap | null
@@ -52,7 +61,16 @@ export type DefinedSanityLiveStreamType = <const QueryString extends string>(pro
   tags?: string[]
   perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
-  tag?: string
+  /**
+   * @deprecated use `requestTag` instead
+   */
+  tag?: never
+  /**
+   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue 'next-loader.live-stream.fetch'
+   */
+  requestTag?: string
   children: (result: {
     data: ClientReturn<QueryString>
     sourceMap: ContentSourceMap | null
@@ -86,11 +104,17 @@ export interface DefinedSanityLiveProps {
   refreshOnReconnect?: boolean
 
   /**
-   * Optional request tag for the listener. Use to identify the request in logs.
-   *
-   * @defaultValue `next-loader.live`
+   * @deprecated use `requestTag` instead
    */
-  tag?: string
+  tag?: never
+
+  /**
+   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue 'next-loader.live'
+   */
+  requestTag?: string
+
   /**
    * Handle errors from the Live Events subscription.
    * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
@@ -195,7 +219,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
     stega: _stega,
     tags = ['sanity'],
     perspective: _perspective,
-    tag = 'next-loader.fetch',
+    tag,
+    requestTag = tag ?? 'next-loader.fetch',
   }: {
     query: QueryString
     params?: QueryParams | Promise<QueryParams>
@@ -203,6 +228,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     tags?: string[]
     perspective?: Exclude<ClientPerspective, 'raw'>
     tag?: string
+    requestTag?: string
   }) {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
     const perspective = _perspective ?? (await resolveCookiePerspective())
@@ -219,7 +245,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       next: {revalidate, tags: [...tags, 'sanity:fetch-sync-tags']},
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
-      tag: [tag, 'fetch-sync-tags'].filter(Boolean).join('.'),
+      tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
@@ -232,7 +258,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       next: {revalidate, tags},
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
-      tag,
+      tag: requestTag,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
   }
@@ -243,7 +269,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
-      tag = 'next-loader.live',
+      tag,
+      requestTag = tag,
       onError,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
@@ -258,7 +285,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         apiVersion={apiVersion}
         useProjectHostname={useProjectHostname}
         requestTagPrefix={requestTagPrefix}
-        tag={tag}
+        requestTag={requestTag}
         token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
         draftModeEnabled={isDraftModeEnabled}
         // handleDraftModeAction={handleDraftModeAction}
@@ -279,7 +306,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
       stega: _stega,
       tags,
       children,
-      tag = 'next-loader.live-stream.fetch',
+      tag,
+      requestTag = tag ?? 'next-loader.live-stream.fetch',
     } = props
     const {
       data,
@@ -291,7 +319,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       tags,
       perspective: _perspective,
       stega: _stega,
-      tag,
+      requestTag,
     })
     const {isEnabled: isDraftModeEnabled} = await draftMode()
 
