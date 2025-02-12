@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.7.35](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.34...core-loader-v1.7.35) (2025-02-12)
+
+
+### Bug Fixes
+
+* replace `previewDrafts` with `drafts` ([#2676](https://github.com/sanity-io/visual-editing/issues/2676)) ([9db9390](https://github.com/sanity-io/visual-editing/commit/9db9390970d66d5df5c9dc79c82c35d7f2cd0726))
+
 ## [1.7.34](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.33...core-loader-v1.7.34) (2025-02-10)
 
 
