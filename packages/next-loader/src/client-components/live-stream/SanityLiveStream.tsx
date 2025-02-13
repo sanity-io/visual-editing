@@ -142,7 +142,7 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
       clearInterval(interval)
       unsubscribe()
     }
-  }, [comlink, handleQueryChange, handleQueryHeartbeat])
+  }, [comlink])
 
   if (!comlink || children === undefined) {
     return use(props.initial) as React.JSX.Element

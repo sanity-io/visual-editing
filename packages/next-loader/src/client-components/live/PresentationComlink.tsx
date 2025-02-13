@@ -80,7 +80,7 @@ function PresentationComlink(props: {
       // console.log('stopping comlink')
       stop()
     }
-  }, [handlePerspectiveChange])
+  }, [])
 
   // @TODO come back to this later
   // const handleEnableDraftMode = useEffectEvent(async (signal: AbortSignal) => {

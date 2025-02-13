@@ -132,7 +132,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       },
     })
     return () => subscription.unsubscribe()
-  }, [client.live, handleLiveEvent, onError, requestTag, token])
+  }, [client.live, onError, requestTag, token])
 
   /**
    * 2. Notify what perspective we're in, when in Draft Mode

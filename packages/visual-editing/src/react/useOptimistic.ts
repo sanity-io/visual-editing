@@ -89,7 +89,7 @@ export function useOptimistic<T, U = SanityDocument>(
       rebasedSub.unsubscribe()
       pristineSub.unsubscribe()
     }
-  }, [actor, reduceStateFromAction, updateLastPassthrough])
+  }, [actor])
 
   /**
    * If the passthrough changes, and we are in a dirty state, we rerun the reducers with the new passthrough but the previous event.
@@ -114,7 +114,7 @@ export function useOptimistic<T, U = SanityDocument>(
       setOptimistic(reduceStateFromAction(lastEvent, passthrough))
       setLastPassthrough(passthrough)
     })
-  }, [lastEvent, lastPassthrough, passthrough, pristine, reduceStateFromAction])
+  }, [lastEvent, lastPassthrough, passthrough, pristine])
 
   return pristine ? passthrough : optimistic
 }
