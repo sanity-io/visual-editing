@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.3.0...next-loader-v1.3.1) (2025-02-13)
+
+
+### Bug Fixes
+
+* regression in `1.3` causing tags not to be set ([d4b0562](https://github.com/sanity-io/visual-editing/commit/d4b05627043edd4d7ae36699fe3aae008283ac39))
+
 ## [1.3.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.2.24...next-loader-v1.3.0) (2025-02-12)
 
 
