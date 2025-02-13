@@ -255,7 +255,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega,
       token: perspective !== 'published' && serverToken ? serverToken : originalToken,
-      next: {revalidate, tags},
+      next: {revalidate, tags: cacheTags},
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
       tag: requestTag,
