@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.3...visual-editing-v2.13.4) (2025-02-18)
+
+
+### Bug Fixes
+
+* re-enable the compiler ([09b56bf](https://github.com/sanity-io/visual-editing/commit/09b56bf303ca8a820736e8ff87c8d6f4fbca85f0))
+
 ## [2.13.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.2...visual-editing-v2.13.3) (2025-02-17)
 
 
