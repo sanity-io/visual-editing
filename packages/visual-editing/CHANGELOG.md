@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.4...visual-editing-v2.13.5) (2025-02-18)
+
+
+### Bug Fixes
+
+* make `styled-components` a peer ([7d0e17b](https://github.com/sanity-io/visual-editing/commit/7d0e17b81f60348c1fb91cd49ffa446b783c8ea8))
+
 ## [2.13.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.3...visual-editing-v2.13.4) (2025-02-18)
 
 
