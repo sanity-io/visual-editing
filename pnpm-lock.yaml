@@ -62,7 +62,7 @@ importers:
         version: 9.1.7
       knip:
         specifier: latest
-        version: 5.44.1(@types/node@22.13.4)(typescript@5.7.3)
+        version: 5.44.2(@types/node@22.13.4)(typescript@5.7.3)
       lint-staged:
         specifier: ^15.2.10
         version: 15.4.3
@@ -859,7 +859,7 @@ importers:
         version: 19.0.0-beta-21e868a-20250216(eslint@8.57.1)
       eslint-plugin-react-hooks:
         specifier: experimental
-        version: 0.0.0-experimental-4632e36a-20250216(eslint@8.57.1)
+        version: 0.0.0-experimental-8a7b487e-20250218(eslint@8.57.1)
     devDependencies:
       '@types/eslint':
         specifier: ^8.56.12
@@ -1520,9 +1520,6 @@ importers:
       scroll-into-view-if-needed:
         specifier: ^3.1.0
         version: 3.1.0
-      styled-components:
-        specifier: ^6.1.15
-        version: 6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       use-effect-event:
         specifier: ^1.0.2
         version: 1.0.2(react@19.0.0)
@@ -1623,6 +1620,9 @@ importers:
       storybook:
         specifier: ^8.5.6
         version: 8.5.6(prettier@3.5.1)
+      styled-components:
+        specifier: ^6.1.15
+        version: 6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       svelte:
         specifier: ^4.2.19
         version: 4.2.19
@@ -7382,8 +7382,8 @@ packages:
     peerDependencies:
       eslint: '>=7'
 
-  eslint-plugin-react-hooks@0.0.0-experimental-4632e36a-20250216:
-    resolution: {integrity: sha512-1OAnQV3D7uFH0WynfiGw7imkCb4tV9HbSyGcC+eOTOpDox1e6hW7nLZnUU/Je58G6EHn0ZumPFnn3qVqZ+8gyA==}
+  eslint-plugin-react-hooks@0.0.0-experimental-8a7b487e-20250218:
+    resolution: {integrity: sha512-DCOB8KwyYQiP6Nr9241tuba1djgzPsNb3ZafLTz/UviqJQZR/WFmCD/7RtWVSmXSCvnX24PVTtB59KkpPf48qA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -9079,8 +9079,8 @@ packages:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
 
-  knip@5.44.1:
-    resolution: {integrity: sha512-YJrz7K6AA3SwXJ5LL9ZlzQX9wcihMNwKoGBAaY5kUn4rLNOZ5ehsjFV+xm8gQuIJdjsFIKcFsy0K3U3yM/mabw==}
+  knip@5.44.2:
+    resolution: {integrity: sha512-FbNYckASiU73X61cKE8Uw3QuA+jJozrB8z8tDjbcCRqM9e3ji2+PT5sigSSm3IAVDpqWdhdgsIJVZ2B74Tiqrw==}
     engines: {node: '>=18.18.0'}
     hasBin: true
     peerDependencies:
@@ -21683,7 +21683,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-react-hooks@0.0.0-experimental-4632e36a-20250216(eslint@8.57.1):
+  eslint-plugin-react-hooks@0.0.0-experimental-8a7b487e-20250218(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
 
@@ -23627,7 +23627,7 @@ snapshots:
 
   klona@2.0.6: {}
 
-  knip@5.44.1(@types/node@22.13.4)(typescript@5.7.3):
+  knip@5.44.2(@types/node@22.13.4)(typescript@5.7.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@snyk/github-codeowners': 1.1.0
