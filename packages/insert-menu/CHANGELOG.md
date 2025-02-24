@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.2...insert-menu-v1.1.3) (2025-02-24)
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2745](https://github.com/sanity-io/visual-editing/issues/2745)) ([c185f58](https://github.com/sanity-io/visual-editing/commit/c185f580b323fc168c42ea625d0b7e638d47a6be))
+
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.1...insert-menu-v1.1.2) (2025-02-17)
 
 
