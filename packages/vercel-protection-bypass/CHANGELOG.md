@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.12](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.11...vercel-protection-bypass-v1.0.12) (2025-02-24)
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2745](https://github.com/sanity-io/visual-editing/issues/2745)) ([c185f58](https://github.com/sanity-io/visual-editing/commit/c185f580b323fc168c42ea625d0b7e638d47a6be))
+
 ## [1.0.11](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.10...vercel-protection-bypass-v1.0.11) (2025-02-17)
 
 
