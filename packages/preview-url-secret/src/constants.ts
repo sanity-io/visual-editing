@@ -19,7 +19,7 @@ export const schemaTypeSingleton =
   'sanity.previewUrlShareAccess' satisfies PreviewUrlSecretSchemaTypeSingleton
 
 /** @internal */
-export const apiVersion = '2023-11-09'
+export const apiVersion = '2025-02-19'
 
 /** @internal */
 export const urlSearchParamPreviewSecret = 'sanity-preview-secret'
