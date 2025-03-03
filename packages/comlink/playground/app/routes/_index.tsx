@@ -115,6 +115,24 @@ export default function Index() {
           <MessageControls onSend={onSend}>
             <Button onClick={() => setFrames((curr) => [...curr, uuid()])}>Add Frame</Button>
             <Button onClick={() => setFrames((curr) => curr.toSpliced(-1))}>Remove Frame</Button>
+            <Button
+              onClick={() => {
+                const width = 800
+                const height = 700
+                const features = [
+                  `top=${window.innerHeight / 2 - height / 2}`,
+                  `left=${window.innerWidth / 2 - width / 2}`,
+                  `width=${width}`,
+                  `height=${height}`,
+                  'menubar=no',
+                  'toolbar=no',
+                ]
+                const newWindow = window.open('/frame', '_blank', features.join(','))
+                controller?.addTarget(newWindow!)
+              }}
+            >
+              Add Window
+            </Button>
           </MessageControls>
         </Card>
       </div>
