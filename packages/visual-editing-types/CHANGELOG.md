@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.9...visual-editing-types-v1.0.10) (2025-03-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+
 ## [1.0.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.8...visual-editing-types-v1.0.9) (2025-03-03)
 
 
