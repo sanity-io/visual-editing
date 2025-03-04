@@ -957,8 +957,8 @@ importers:
         specifier: workspace:*
         version: link:../../preview-url-secret
       '@sanity/ui':
-        specifier: 2.15.0
-        version: 2.15.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        specifier: 2.15.2
+        version: 2.15.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing-csm':
         specifier: workspace:*
         version: link:../../visual-editing-csm
@@ -1164,7 +1164,7 @@ importers:
         specifier: ^3.7.0
         version: 3.7.0(react@19.0.0)
       '@sanity/ui':
-        specifier: ^2.15.0
+        specifier: ^2.15.2
         version: 2.15.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       lodash:
         specifier: ^4.17.21
@@ -1440,7 +1440,7 @@ importers:
         specifier: workspace:*
         version: link:../preview-url-secret
       '@sanity/ui':
-        specifier: ^2.15.0
+        specifier: ^2.15.2
         version: 2.15.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       react-compiler-runtime:
         specifier: 19.0.0-beta-40c6c23-20250301
@@ -1498,7 +1498,7 @@ importers:
         specifier: workspace:*
         version: link:../preview-url-secret
       '@sanity/ui':
-        specifier: ^2.15.0
+        specifier: ^2.15.2
         version: 2.15.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing-csm':
         specifier: workspace:*
@@ -4493,15 +4493,6 @@ packages:
       '@sanity/ui': ^1 || ^2
       react: ^18 || ^19
       react-dom: ^18 || ^19
-      styled-components: ^5.2 || ^6
-
-  '@sanity/ui@2.15.0':
-    resolution: {integrity: sha512-K2YcgSBzc7Flw7aKhjpm8vPCYybEV3+gHPCI3Spbx8M51TOPEW/ZxNrTCJQuUTNuHR6qcqcyV8mL2xzEWqyJUw==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18 || >=19.0.0-0
-      react-dom: ^18 || >=19.0.0-0
-      react-is: ^18 || >=19.0.0-0
       styled-components: ^5.2 || ^6
 
   '@sanity/ui@2.15.2':
@@ -17756,24 +17747,6 @@ snapshots:
       - terser
       - tsx
       - yaml
-
-  '@sanity/ui@2.15.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
-    dependencies:
-      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@juggle/resize-observer': 3.4.0
-      '@sanity/color': 3.0.6
-      '@sanity/icons': 3.7.0(react@19.0.0)
-      csstype: 3.1.3
-      framer-motion: 12.4.10(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      react: 19.0.0
-      react-compiler-runtime: 19.0.0-beta-40c6c23-20250301(react@19.0.0)
-      react-dom: 19.0.0(react@19.0.0)
-      react-is: 19.0.0
-      react-refractor: 2.2.0(react@19.0.0)
-      styled-components: 6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      use-effect-event: 1.0.2(react@19.0.0)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
 
   '@sanity/ui@2.15.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
