@@ -1,9 +1,7 @@
 import type {
   DocumentSchema,
-  ResolvedSchemaTypeMap,
   SanityNode,
   SanityStegaNode,
-  SchemaType,
   TypeSchema,
 } from '@sanity/presentation-comlink'
 import {createContext} from 'react'
@@ -18,8 +16,6 @@ export interface SchemaContextValue {
     node: SanityNode | SanityStegaNode | string,
     type?: T,
   ) => T extends 'document' ? DocumentSchema | undefined : TypeSchema | undefined
-  resolvedTypes: ResolvedSchemaTypeMap
-  schema: SchemaType[]
 }
 
 export const SchemaContext = createContext<SchemaContextValue | null>(null)
