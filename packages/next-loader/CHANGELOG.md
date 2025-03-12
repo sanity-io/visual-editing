@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.3.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.3.4...next-loader-v1.3.5) (2025-03-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.10
+  * devDependencies
+    * @sanity/preview-url-secret bumped to 2.1.6
+
 ## [1.3.4](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.3.3...next-loader-v1.3.4) (2025-03-03)
 
 
