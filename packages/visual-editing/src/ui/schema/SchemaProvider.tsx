@@ -9,6 +9,7 @@ import type {
 } from '@sanity/presentation-comlink'
 import {
   useCallback,
+  useDeferredValue,
   useEffect,
   useMemo,
   useRef,
@@ -73,8 +74,10 @@ export const SchemaProvider: FunctionComponent<
 
   const [schema, setSchema] = useState<SchemaType[] | null>(null)
 
-  const fetchSchema = useCallback(
-    async (signal: AbortSignal) => {
+  useEffect(() => {
+    if (!comlink) return
+
+    async function fetchSchema(signal: AbortSignal) {
       if (!comlink) return
       try {
         const response = await comlink.fetch('visual-editing/schema', undefined, {
@@ -86,12 +89,7 @@ export const SchemaProvider: FunctionComponent<
         // Fail silently as the app may be communicating with a version of
         // Presentation that does not support this feature
       }
-    },
-    [comlink],
-  )
-  useEffect(() => {
-    if (!comlink) return
-
+    }
     const schemaFetch = new AbortController()
     const unsub = comlink.onStatus(() => {
       fetchSchema(schemaFetch.signal)
@@ -101,41 +99,49 @@ export const SchemaProvider: FunctionComponent<
       schemaFetch.abort()
       unsub()
     }
-  }, [comlink, fetchSchema])
+  }, [comlink])
 
   const reportedPathsRef = useRef<UnresolvedPath[]>([])
+  const paths = getPathsWithUnresolvedTypes(useDeferredValue(elements))
+  const controllerRef = useRef<AbortController | null>(null)
 
   useEffect(() => {
+    if (!paths.length || !comlink) return
     // We report a list of paths that reference array items using a _key. We need
     // to resolve the types of each of these items so we can map them to the
     // correct schema types. One day CSM might include this data for us.
     const reportPaths = async (paths: UnresolvedPath[], signal: AbortSignal) => {
-      if (!paths.length || !comlink) return
+      const initialReportedPaths = reportedPathsRef.current
       try {
+        reportedPathsRef.current = paths
         const response = await comlink.fetch(
           'visual-editing/schema-union-types',
           {paths},
           {signal, suppressWarnings: true},
         )
+        if (signal.aborted) return
         setResolvedTypes(response.types)
-        reportedPathsRef.current = paths
-      } catch (e) {
+        controllerRef.current = null
+      } catch {
         // Fail silently as the app may be communicating with a version of
         // Presentation that does not support this feature
       }
+      if (signal.aborted) {
+        reportedPathsRef.current = initialReportedPaths
+      }
     }
 
-    const controller = new AbortController()
-    const paths = getPathsWithUnresolvedTypes(elements)
     if (
       paths.some(
         (p) => !reportedPathsRef.current.find(({id, path}) => id === p.id && path === p.path),
       )
     ) {
-      reportPaths(paths, controller.signal)
+      // Abort any previous requests
+      controllerRef.current?.abort()
+      controllerRef.current = new AbortController()
+      reportPaths(paths, controllerRef.current.signal)
     }
-    return () => controller.abort()
-  }, [comlink, elements])
+  }, [comlink, paths])
 
   const getType = useCallback(
     <T extends 'document' | 'type' = 'document'>(
@@ -258,14 +264,7 @@ export const SchemaProvider: FunctionComponent<
     [getType, resolvedTypes],
   )
 
-  const context = useMemo<SchemaContextValue>(
-    () => ({
-      getField,
-      getType,
-      resolvedTypes,
-      schema: schema || [],
-    }),
-    [getField, getType, resolvedTypes, schema],
-  )
+  const context = useMemo<SchemaContextValue>(() => ({getField, getType}), [getField, getType])
+
   return <SchemaContext.Provider value={context}>{children}</SchemaContext.Provider>
 }
