@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.8...visual-editing-v2.13.9) (2025-03-12)
+
+
+### Bug Fixes
+
+* prevent over-fetching schema union types ([#2817](https://github.com/sanity-io/visual-editing/issues/2817)) ([51bf535](https://github.com/sanity-io/visual-editing/commit/51bf53504ada37bfb226827a0555799fabe7169f))
+
 ## [2.13.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.7...visual-editing-v2.13.8) (2025-03-12)
 
 
