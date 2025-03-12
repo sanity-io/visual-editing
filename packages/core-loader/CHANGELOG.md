@@ -6,6 +6,22 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.7.39](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.38...core-loader-v1.7.39) (2025-03-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.10
+    * @sanity/visual-editing-csm bumped to 2.0.8
+
 ## [1.7.38](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.37...core-loader-v1.7.38) (2025-03-03)
 
 
