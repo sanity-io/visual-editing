@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.9...visual-editing-v2.13.10) (2025-03-13)
+
+
+### Bug Fixes
+
+* improve next.js pages router experience ([ce98771](https://github.com/sanity-io/visual-editing/commit/ce98771642bdedbd53bce50f597f7a6f3c62b6a1))
+
 ## [2.13.9](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.8...visual-editing-v2.13.9) (2025-03-12)
 
 
