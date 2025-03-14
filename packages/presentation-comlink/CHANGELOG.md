@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.11](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.10...presentation-comlink-v1.0.11) (2025-03-14)
+
+
+### Bug Fixes
+
+* support upcoming presentation debug features ([00db0db](https://github.com/sanity-io/visual-editing/commit/00db0dbc117c435575acc26de3eae52a9f526eef))
+
 ## [1.0.10](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.9...presentation-comlink-v1.0.10) (2025-03-12)
 
 

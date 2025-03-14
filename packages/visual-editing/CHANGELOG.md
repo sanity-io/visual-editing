@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.13.11](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.10...visual-editing-v2.13.11) (2025-03-14)
+
+
+### Bug Fixes
+
+* support upcoming presentation debug features ([00db0db](https://github.com/sanity-io/visual-editing/commit/00db0dbc117c435575acc26de3eae52a9f526eef))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.11
+
 ## [2.13.10](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.9...visual-editing-v2.13.10) (2025-03-13)
 
 
