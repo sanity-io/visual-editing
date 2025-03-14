@@ -135,6 +135,14 @@ export type VisualEditingControllerMsg =
         value?: Serializable
       }
     }
+  | {
+      /**
+       * Special event where Presentation Tool is unable to connect to a target iframe or popup window, and is asking for status with `targetOrigin: *` to detect
+       * if the URL origin is misconfigured. Presentation doesn't send any data, as any listener can see it.
+       */
+      type: 'presentation/status'
+      data: undefined
+    }
 
 /**
  * @public
@@ -275,6 +283,16 @@ export type VisualEditingNodeMsg =
         event: any
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: any
+      }
+    }
+  | {
+      /**
+       * Special event related to the `presentation/status` event, where comlink is unable to connect,
+       * and we're asking for some status information to detect if the URL origin is misconfigured.
+       */
+      type: 'visual-editing/status'
+      data: {
+        origin: string
       }
     }
 
