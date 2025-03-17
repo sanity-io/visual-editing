@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.12](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.11...presentation-comlink-v1.0.12) (2025-03-17)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 1.0.11
+
 ## [1.0.11](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.10...presentation-comlink-v1.0.11) (2025-03-14)
 
 
