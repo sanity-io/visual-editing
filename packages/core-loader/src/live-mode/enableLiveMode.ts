@@ -31,8 +31,11 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       `Expected \`client\` to be an instance of SanityClient: ${JSON.stringify(client)}`,
     )
   }
-  const {projectId, dataset} = client.config()
-  const $perspective = atom<Exclude<ClientPerspective, 'raw'>>('drafts')
+  const {projectId, dataset, perspective} = client.config()
+
+  const $perspective = atom<Exclude<ClientPerspective, 'raw'>>(
+    perspective && perspective !== 'raw' ? perspective : 'drafts',
+  )
   const $connected = atom(false)
 
   const cache = new Map<
