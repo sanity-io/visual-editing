@@ -10,6 +10,8 @@ export const client = createClient({
   dataset,
   useCdn: false,
   apiVersion,
+  token: typeof process === 'undefined' ? undefined : process.env.SANITY_API_READ_TOKEN,
+  perspective: 'published',
   stega: {
     enabled: true,
     studioUrl: (sourceDocument) => {

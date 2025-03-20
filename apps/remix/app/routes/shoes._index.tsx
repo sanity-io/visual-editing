@@ -1,4 +1,5 @@
 import {Link, useLoaderData} from '@remix-run/react'
+import {ClientPerspective} from '@sanity/client'
 import {useQuery} from '@sanity/react-loader'
 import {json} from '@vercel/remix'
 import {shoesList, type ShoesListResult} from '~/queries'
@@ -6,10 +7,16 @@ import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 import {loadQuery} from '~/sanity.loader.server'
 import {formatCurrency} from '~/utils'
 
-export const loader = async () => {
-  return json({initial: await loadQuery<ShoesListResult>(shoesList)})
-}
+export const loader = async ({request}: {request: Request}) => {
+  const url = new URL(request.url)
+  const perspective = url.searchParams.get('sanity-preview-perspective')?.split(',') as
+    | ClientPerspective
+    | undefined
 
+  return json({
+    initial: await loadQuery<ShoesListResult>(shoesList, {}, {perspective}),
+  })
+}
 export default function ShoesPage() {
   const {initial} = useLoaderData<typeof loader>()
   const {
