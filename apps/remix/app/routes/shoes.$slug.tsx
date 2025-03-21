@@ -8,19 +8,20 @@ import {json, type LoaderFunction} from '@vercel/remix'
 import {shoe, shoesList, type ShoeParams, type ShoeResult, type ShoesListResult} from '~/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 import {loadQuery} from '~/sanity.loader.server'
+import {getPerspective, getSession} from '~/sessions'
 import {formatCurrency} from '~/utils'
 
 export const loader: LoaderFunction = async ({params, request}) => {
-  const url = new URL(request.url)
-  const perspective = url.searchParams.get('sanity-preview-perspective')?.split(',') as
-    | ClientPerspective
-    | undefined
+  const session = await getSession(request.headers.get('Cookie'))
+  const perspective = getPerspective(session)
+  const shoePromise = loadQuery<ShoeResult>(shoe, params, {perspective})
+  const shoesPromise = loadQuery<ShoesListResult>(`${shoesList}[0..3]`, {}, {perspective})
 
   return json({
     params,
     initial: {
-      shoe: await loadQuery<ShoeResult>(shoe, params, {perspective}),
-      shoes: await loadQuery<ShoesListResult>(`${shoesList}[0..3]`, {}, {perspective}),
+      shoe: await shoePromise,
+      shoes: await shoesPromise,
     },
   })
 }

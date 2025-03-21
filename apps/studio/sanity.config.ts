@@ -115,6 +115,14 @@ function definePreviewUrl(
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }
+  if (workspaceName === 'remix') {
+    const {origin, pathname} = new URL(previewUrl)
+    const previewMode = {
+      enable: '/api/preview-mode/enable',
+      disable: '/api/preview-mode/disable',
+    } satisfies PreviewUrlResolverOptions['previewMode']
+    return {origin, preview: pathname, previewMode}
+  }
 
   return previewUrl
 }
@@ -168,7 +176,11 @@ export default defineConfig([
   ]),
   defineWorkspace(workspaces['remix'], [
     shoesPlugin({
-      previewUrl: urls.remix,
+      previewUrl: definePreviewUrl(
+        urls['remix'],
+        workspaces['remix'].workspace,
+        workspaces['remix'].tool,
+      ),
     }),
     debugPlugin(),
   ]),

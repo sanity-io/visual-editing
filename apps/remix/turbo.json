@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
-      "env": ["VERCEL_ENV"],
+      "env": ["NODE_ENV", "VERCEL_ENV", "VERCEL_GIT_COMMIT_SHA", "SANITY_API_READ_TOKEN"],
       "outputs": [".output/**", "api/**", "build/**", "public/build/**"]
     }
   }
