@@ -15,7 +15,7 @@ export default function LiveVisualEditing({perspective}: {perspective: ClientPer
   const onPerspective = useEffectEvent((perspective: Exclude<ClientPerspective, 'raw'>) => {
     const formData = new FormData()
     formData.set('perspective', Array.isArray(perspective) ? perspective.join(',') : perspective)
-    submit(formData, {method: 'post', action: '/api/perspective'})
+    submit(formData, {method: 'post', action: '/api/perspective', navigate: false})
   })
 
   useLiveMode({client, onPerspective})

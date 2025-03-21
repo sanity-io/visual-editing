@@ -1,5 +1,4 @@
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import type {LoaderFunctionArgs} from '@vercel/remix'
 import {client, token} from '~/sanity'
 import {commitSession, getSession} from '~/sessions'
