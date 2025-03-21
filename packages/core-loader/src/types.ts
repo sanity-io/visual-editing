@@ -48,6 +48,10 @@ export interface EnableLiveModeOptions {
    * Fires when a connection is established to a parent Studio window and then lost.
    */
   onDisconnect?: () => void
+  /**
+   * Fires when the perspective changes in the Studio, allowing you to persist the change to a session cookie if needed
+   */
+  onPerspective?: (perspective: Exclude<ClientPerspective, 'raw'>) => void
 }
 
 /** @public */

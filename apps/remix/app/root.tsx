@@ -1,16 +1,21 @@
 import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
-import {json, type LinksFunction} from '@vercel/remix'
+import {validateApiPerspective} from '@sanity/client'
+import {json, type LinksFunction, type LoaderFunctionArgs} from '@vercel/remix'
 import styles from '~/tailwind.css?url'
 import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
+import {getPerspective, getSession} from './sessions'
 
 const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))
 
 export const links: LinksFunction = () => [{rel: 'stylesheet', href: styles}]
 
-export async function loader() {
-  // Simulate a slightly slow API
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+export async function loader({request}: LoaderFunctionArgs) {
+  const session = await getSession(request.headers.get('Cookie'))
+  const previewMode = session.get('preview') === 'true'
+  const perspective = getPerspective(session)
   return json({
+    perspective,
+    previewMode,
     vercelEnv: process.env.VERCEL_ENV || 'development',
     served: new Date().toJSON(),
   })
@@ -29,9 +34,11 @@ export default function App() {
       </head>
       <body>
         <Outlet />
-        <Suspense>
-          <LiveVisualEditing />
-        </Suspense>
+        {data.previewMode && (
+          <Suspense>
+            <LiveVisualEditing perspective={data.perspective} />
+          </Suspense>
+        )}
         <ScrollRestoration />
         <Scripts />
         <span className="fixed bottom-1 left-1 block rounded bg-slate-900 px-2 py-1 text-xs text-slate-100">

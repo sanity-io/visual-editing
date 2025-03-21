@@ -25,7 +25,7 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
 const LISTEN_HEARTBEAT_INTERVAL = 10_000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
-  const {client, setFetcher, onConnect, onDisconnect} = options
+  const {client, setFetcher, onConnect, onDisconnect, onPerspective} = options
   if (!client) {
     throw new Error(
       `Expected \`client\` to be an instance of SanityClient: ${JSON.stringify(client)}`,
@@ -69,7 +69,9 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   comlink.on('loader/perspective', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
       validateApiPerspective(data.perspective)
-      $perspective.set(data.perspective === 'raw' ? 'drafts' : data.perspective)
+      const nextPerspective = data.perspective === 'raw' ? 'drafts' : data.perspective
+      $perspective.set(nextPerspective)
+      onPerspective?.(nextPerspective)
       updateLiveQueries()
     }
   })

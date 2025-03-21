@@ -5,12 +5,14 @@ import imageUrlBuilder from '@sanity/image-url'
 
 const {projectId, dataset} = workspaces['remix']
 
+export const token = typeof process === 'undefined' ? undefined : process.env.SANITY_API_READ_TOKEN
+
 export const client = createClient({
   projectId,
   dataset,
   useCdn: false,
   apiVersion,
-  token: typeof process === 'undefined' ? undefined : process.env.SANITY_API_READ_TOKEN,
+  token,
   perspective: 'published',
   stega: {
     enabled: true,
