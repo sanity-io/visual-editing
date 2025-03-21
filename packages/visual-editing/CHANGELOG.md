@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.12...visual-editing-v2.13.13) (2025-03-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency styled-components to ^6.1.16 ([#2841](https://github.com/sanity-io/visual-editing/issues/2841)) ([abaa57b](https://github.com/sanity-io/visual-editing/commit/abaa57b20debc7772076430ce843be1902252c84))
+
 ## [2.13.12](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.11...visual-editing-v2.13.12) (2025-03-17)
 
 

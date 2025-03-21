@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.7.42](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.41...core-loader-v1.7.42) (2025-03-21)
+
+
+### Bug Fixes
+
+* **core-loader:** use client perspective for enableLiveMode ([#2852](https://github.com/sanity-io/visual-editing/issues/2852)) ([792418b](https://github.com/sanity-io/visual-editing/commit/792418bfd473622e5cbb048d9784a2e4b4029ff0))
+
 ## [1.7.41](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.40...core-loader-v1.7.41) (2025-03-17)
 
 
