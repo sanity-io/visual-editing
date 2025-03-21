@@ -59,6 +59,7 @@ const client = createClient({
   dataset: process.env.SANITY_DATASET,
   useCdn: true,
   apiVersion: process.env.SANITY_API_VERSION,
+  token: typeof process === 'undefined' ? undefined : process.env.SANITY_API_READ_TOKEN,
   stega: {
     enabled: true,
     studioUrl: 'https://my.sanity.studio',
@@ -78,16 +79,22 @@ Then somewhere in your app, you can use the `loadQuery` and `useQuery` utilities
 
 import {json, type LoaderFunction} from '@remix-run/node'
 import {Link, useLoaderData, useParams} from '@remix-run/react'
+import {ClientPerspective} from '@sanity/client'
 import {useQuery} from '~/sanity.loader'
 import {loadQuery} from '~/sanity.loader.server'
 
 interface Product {}
 const query = `*[_type == "product" && slug.current == $slug][0]`
 
-export const loader: LoaderFunction = async ({params}) => {
+export const loader: LoaderFunction = async ({params, request}) => {
+  const url = new URL(request.url)
+  const perspective = url.searchParams.get('sanity-preview-perspective')?.split(',') as
+    | ClientPerspective
+    | undefined
+
   return json({
     params,
-    initial: await loadQuery<Product>(query, params),
+    initial: await loadQuery<Product>(query, params, {perspective}),
   })
 }
 
@@ -115,7 +122,7 @@ import {useLiveMode} from '~/sanity.loader'
 import {useEffect} from 'react'
 
 // A browser client for Live Mode, it's only part of the browser bundle when the `VisualEditing` component is lazy loaded with `React.lazy`
-const client = createClient({
+const _client = createClient({
   projectId: window.ENV.SANITY_PROJECT_ID,
   dataset: window.ENV.SANITY_DATASET,
   useCdn: true,
@@ -127,6 +134,14 @@ const client = createClient({
 })
 
 export default function VisualEditing() {
+  const [searchParams] = useSearchParams()
+  const perspective = searchParams.get('sanity-preview-perspective') as string | undefined
+
+  const client: SanityClient = useMemo(
+    () => _client.withConfig({perspective: perspective?.split(',') as ClientPerspective}),
+    [perspective],
+  )
+
   useEffect(
     () =>
       enableVisualEditing({
