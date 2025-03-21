@@ -1,5 +1,6 @@
 import {PortableText} from '@portabletext/react'
 import {Link, useLoaderData} from '@remix-run/react'
+import {ClientPerspective} from '@sanity/client'
 import {stegaClean} from '@sanity/client/stega'
 import {useQuery} from '@sanity/react-loader'
 import {createDataAttribute} from '@sanity/visual-editing'
@@ -9,12 +10,17 @@ import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 import {loadQuery} from '~/sanity.loader.server'
 import {formatCurrency} from '~/utils'
 
-export const loader: LoaderFunction = async ({params}) => {
+export const loader: LoaderFunction = async ({params, request}) => {
+  const url = new URL(request.url)
+  const perspective = url.searchParams.get('sanity-preview-perspective')?.split(',') as
+    | ClientPerspective
+    | undefined
+
   return json({
     params,
     initial: {
-      shoe: await loadQuery<ShoeResult>(shoe, params),
-      shoes: await loadQuery<ShoesListResult>(`${shoesList}[0..3]`),
+      shoe: await loadQuery<ShoeResult>(shoe, params, {perspective}),
+      shoes: await loadQuery<ShoesListResult>(`${shoesList}[0..3]`, {}, {perspective}),
     },
   })
 }
