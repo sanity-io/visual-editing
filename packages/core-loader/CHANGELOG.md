@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.8.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.42...core-loader-v1.8.0) (2025-03-24)
+
+
+### Features
+
+* **core-loader:** add onPerspective to live mode ([#2853](https://github.com/sanity-io/visual-editing/issues/2853)) ([1acfd65](https://github.com/sanity-io/visual-editing/commit/1acfd6587143144981bba6d505f102e09ad76f1a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.13
+    * @sanity/visual-editing-csm bumped to 2.0.10
+
 ## [1.7.42](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.7.41...core-loader-v1.7.42) (2025-03-21)
 
 
