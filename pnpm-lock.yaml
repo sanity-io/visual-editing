@@ -1498,8 +1498,8 @@ importers:
         specifier: workspace:^
         version: link:../insert-menu
       '@sanity/mutate':
-        specifier: 0.11.0-canary.4
-        version: 0.11.0-canary.4(xstate@5.19.2)
+        specifier: 0.12.4
+        version: 0.12.4(debug@4.4.0)
       '@sanity/presentation-comlink':
         specifier: workspace:*
         version: link:../presentation-comlink
@@ -4495,17 +4495,8 @@ packages:
     resolution: {integrity: sha512-W92XZijEBIZJqfZYjMtVq0JO4100M9G03TNB6qUXsy4SXU5mT/61xwqvgOYjDqKlikD/61ZXSu78k1wvrQPXoQ==}
     engines: {node: '>=18'}
 
-  '@sanity/mutate@0.11.0-canary.4':
-    resolution: {integrity: sha512-82jU3PvxQepY+jVJU1WaXQOf2Q9Q/fOCE2ksJZ4cnH3/WFOsg7RceYoOWb1XKthchTCD9zSBS9DRmb7FQ0Jlsg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      xstate: ^5.19.0
-    peerDependenciesMeta:
-      xstate:
-        optional: true
-
-  '@sanity/mutate@0.12.3':
-    resolution: {integrity: sha512-+nUOlaD6k+XDXyhe76wMuIQ89y2in7roKIE+TSqcl7BfD2aM5pHeEo70Jy2ungkskj0k5cQxRe5YsHyQqY484w==}
+  '@sanity/mutate@0.12.4':
+    resolution: {integrity: sha512-CBPOOTCTyHFyhBL+seWpkGKJIE6lpaFd9yIeTIDt6miluBz6W8OKTNbaU6gPzOztqrr8KbrTaROiQAaMQDndQA==}
     engines: {node: '>=18'}
 
   '@sanity/mutator@3.80.1':
@@ -17370,7 +17361,7 @@ snapshots:
   '@sanity/migrate@3.80.1(@types/react@19.0.11)':
     dependencies:
       '@sanity/client': 6.28.3(debug@4.4.0)
-      '@sanity/mutate': 0.12.3(debug@4.4.0)
+      '@sanity/mutate': 0.12.4(debug@4.4.0)
       '@sanity/types': 3.80.1(@types/react@19.0.11)(debug@4.4.0)
       '@sanity/util': 3.80.1(@types/react@19.0.11)(debug@4.4.0)
       arrify: 2.0.1
@@ -17382,21 +17373,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/mutate@0.11.0-canary.4(xstate@5.19.2)':
-    dependencies:
-      '@sanity/client': 6.28.3(debug@4.4.0)
-      '@sanity/diff-match-patch': 3.2.0
-      hotscript: 1.0.13
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      mendoza: 3.0.8
-      rxjs: 7.8.2
-    optionalDependencies:
-      xstate: 5.19.2
-    transitivePeerDependencies:
-      - debug
-
-  '@sanity/mutate@0.12.3(debug@4.4.0)':
+  '@sanity/mutate@0.12.4(debug@4.4.0)':
     dependencies:
       '@sanity/client': 6.28.3(debug@4.4.0)
       '@sanity/diff-match-patch': 3.2.0
