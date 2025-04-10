@@ -74,10 +74,10 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           headers,
           tag,
         })
-      // @ts-expect-error - update typings
       return resultSourceMap
         ? {data: result, sourceMap: resultSourceMap, perspective}
-        : {data: result, perspective}
+        : // @ts-expect-error - update typings
+          {data: result, perspective}
     }
 
     const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
