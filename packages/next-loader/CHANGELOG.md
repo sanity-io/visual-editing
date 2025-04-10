@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.4.0...next-loader-v1.4.1) (2025-04-10)
+
+
+### Bug Fixes
+
+* speed up experimental query perf ([#2931](https://github.com/sanity-io/visual-editing/issues/2931)) ([e4067ab](https://github.com/sanity-io/visual-editing/commit/e4067ab4f0e3f1e09194ecc7de18b732b0d0db16))
+
 ## [1.4.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.3.10...next-loader-v1.4.0) (2025-04-10)
 
 
