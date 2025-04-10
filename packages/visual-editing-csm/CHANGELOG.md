@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.13](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.12...visual-editing-csm-v2.0.13) (2025-04-10)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency valibot to v1 ([#2935](https://github.com/sanity-io/visual-editing/issues/2935)) ([3e78694](https://github.com/sanity-io/visual-editing/commit/3e78694e00a2434e13811b0d762770a16b610e79))
+
 ## [2.0.12](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.11...visual-editing-csm-v2.0.12) (2025-04-10)
 
 
