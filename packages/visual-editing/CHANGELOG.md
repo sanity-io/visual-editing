@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.13.16](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.15...visual-editing-v2.13.16) (2025-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency styled-components to ^6.1.17 ([#2904](https://github.com/sanity-io/visual-editing/issues/2904)) ([adfb416](https://github.com/sanity-io/visual-editing/commit/adfb416b8a6e76fd553f6f90f1d7a5c648c1ea45))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2897](https://github.com/sanity-io/visual-editing/issues/2897)) ([5c72b41](https://github.com/sanity-io/visual-editing/commit/5c72b41985886c0459230a3b3762a469073ef5f9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/insert-menu bumped to 1.1.9
+    * @sanity/presentation-comlink bumped to 1.0.15
+    * @sanity/visual-editing-csm bumped to 2.0.12
+
 ## [2.13.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.14...visual-editing-v2.13.15) (2025-04-01)
 
 
