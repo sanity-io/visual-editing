@@ -26,7 +26,7 @@ jobs:
       - run: pnpm install --ignore-scripts
       - run: git restore pnpm-lock.yaml
       - run: pnpm build && pnpm lint:fix
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: generate-token
         with:
           app-id: ${{ secrets.ECOSPARK_APP_ID }}
