@@ -2,7 +2,7 @@ import type {ClientPerspective, ClientReturn, ContentSourceMap, QueryParams} fro
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import {dequal} from 'dequal/lite'
-import {startTransition, useEffect, useMemo, useReducer, useSyncExternalStore} from 'react'
+import {useEffect, useMemo, useReducer, useSyncExternalStore} from 'react'
 import {useEffectEvent} from 'use-effect-event'
 import {
   comlinkDataset,
@@ -158,16 +158,14 @@ export function usePresentationQuery<const QueryString extends string>(props: {
           },
         )
       ) {
-        startTransition(() =>
-          dispatch({
-            type: 'query-change',
-            payload: {
-              data: event.result,
-              sourceMap: event.resultSourceMap || null,
-              perspective: event.perspective,
-            },
-          }),
-        )
+        dispatch({
+          type: 'query-change',
+          payload: {
+            data: event.result,
+            sourceMap: event.resultSourceMap || null,
+            perspective: event.perspective,
+          },
+        })
       }
     },
   )
