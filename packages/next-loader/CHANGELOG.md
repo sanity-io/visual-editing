@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.3.10...next-loader-v1.4.0) (2025-04-10)
+
+
+### Features
+
+* **next-loader:** add experimental query hook ([#2914](https://github.com/sanity-io/visual-editing/issues/2914)) ([f1dcb7b](https://github.com/sanity-io/visual-editing/commit/f1dcb7b5f0f06083a35f3f213cd6f6e18ff750b7))
+
 ## [1.3.10](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.3.9...next-loader-v1.3.10) (2025-04-10)
 
 
