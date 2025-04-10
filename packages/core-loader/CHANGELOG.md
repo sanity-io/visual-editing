@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.8.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.3...core-loader-v1.8.4) (2025-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nanostores to v1 ([#2938](https://github.com/sanity-io/visual-editing/issues/2938)) ([4a1c4b3](https://github.com/sanity-io/visual-editing/commit/4a1c4b31f87aefcbc1265e862a30dbd6dff96248))
+
 ## [1.8.3](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.2...core-loader-v1.8.3) (2025-04-10)
 
 
