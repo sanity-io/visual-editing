@@ -42,10 +42,12 @@ export const Refresh: FunctionComponent<
             const promise = refresh(data)
             if (promise === false) return
             comlink.post('visual-editing/refreshing', data)
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             promise?.finally?.(() => {
               comlink.post('visual-editing/refreshed', data)
             }) || comlink.post('visual-editing/refreshed', data)
           }, 1000)
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           promise?.finally?.(() => {
             comlink.post('visual-editing/refreshed', data)
           }) || comlink.post('visual-editing/refreshed', data)

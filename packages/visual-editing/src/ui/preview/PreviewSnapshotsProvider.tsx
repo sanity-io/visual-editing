@@ -27,7 +27,7 @@ export const PreviewSnapshotsProvider: FunctionComponent<
           suppressWarnings: true,
         })
         setPreviewSnapshots(response.snapshots)
-      } catch (e) {
+      } catch {
         // Fail silently as the app may be communicating with a version of
         // Presentation that does not support this feature
       }
