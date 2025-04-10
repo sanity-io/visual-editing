@@ -6,7 +6,7 @@ import {
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
-import isEqual from 'fast-deep-equal'
+import {dequal} from 'dequal/lite'
 import {useCallback, useEffect, useState, useSyncExternalStore} from 'react'
 import * as React from 'react'
 import {useEffectEvent} from 'use-effect-event'
@@ -70,7 +70,7 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
   const handleQueryChange = useEffectEvent(
     (event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data']) => {
       if (
-        isEqual(
+        dequal(
           {
             projectId,
             dataset,

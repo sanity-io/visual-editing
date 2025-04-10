@@ -3,6 +3,8 @@ import {postQuery, settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, ResolvingMetadata} from 'next'
 import {defineQuery, type PortableTextBlock} from 'next-sanity'
+import dynamic from 'next/dynamic'
+import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
 import Avatar from '../../avatar'
@@ -10,6 +12,8 @@ import CoverImage from '../../cover-image'
 import DateComponent from '../../date'
 import MoreStories from '../../more-stories'
 import PortableText from '../../portable-text'
+
+const OptimisticPostContent = dynamic(() => import('./OptimisticPostContent'))
 
 const postSlugs = defineQuery(`*[_type == "post" && defined(slug.current)]{"slug": slug.current}`)
 
@@ -46,6 +50,7 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
   //   sanityFetch({query: settingsQuery}),
   // ])
   const {data: post} = await sanityFetch({query: postQuery, params})
+  const {isEnabled: isDraftModeEnabled} = await draftMode()
 
   return (
     <div className="container mx-auto px-5">
@@ -104,12 +109,20 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
                       </div>
                     </div>
                   </div>
-                  {post.content?.length && post.content.length > 0 && (
-                    <PortableText
-                      className="mx-auto max-w-2xl"
-                      value={post.content as PortableTextBlock[]}
-                    />
-                  )}
+                  {post.content?.length &&
+                    post.content.length > 0 &&
+                    (isDraftModeEnabled ? (
+                      <OptimisticPostContent
+                        id={post._id}
+                        className="mx-auto max-w-2xl"
+                        value={post.content as PortableTextBlock[]}
+                      />
+                    ) : (
+                      <PortableText
+                        className="mx-auto max-w-2xl"
+                        value={post.content as PortableTextBlock[]}
+                      />
+                    ))}
                 </article>
               )
             }}

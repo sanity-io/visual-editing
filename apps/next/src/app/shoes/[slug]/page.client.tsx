@@ -5,33 +5,21 @@ import type {ShoeResult} from '@/types'
 import {formatCurrency} from '@/utils'
 import {PortableText} from '@portabletext/react'
 import {LemonIcon} from '@sanity/icons'
-import {QueryResponseInitial, useQuery} from '@sanity/react-loader'
+import {usePresentationQuery} from '@sanity/next-loader/hooks'
 import Image from 'next/image'
 import Link from 'next/link'
 import {use} from 'react'
 import {urlFor, urlForCrossDatasetReference} from '../utils'
 
 type Props = {
-  params: {slug: string}
-  initial: Promise<QueryResponseInitial<ShoeResult>>
+  params: Promise<{slug: string}>
+  initial: ShoeResult
 }
 
 export default function ShoePage(props: Props) {
-  const {params} = props
-  const initial = use(props.initial)
-
-  const {
-    data: product,
-    error,
-    loading: _loading,
-    encodeDataAttribute,
-  } = useQuery<ShoeResult>(shoe, params, {initial})
-
-  if (error) {
-    throw error
-  }
-
-  const loading = _loading && !!product
+  const params = use(props.params)
+  const optimistic = usePresentationQuery({query: shoe, params})
+  const product = optimistic.data || props.initial
 
   const [coverImage, ...otherImages] = product?.media || []
 
@@ -62,7 +50,7 @@ export default function ShoePage(props: Props) {
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
-              {loading ? 'Loading' : product?.title || 'Untitled'}
+              {product?.title || 'Untitled'}
             </Link>
           </li>
           <li>
@@ -80,10 +68,7 @@ export default function ShoePage(props: Props) {
       {product && (
         <article>
           {coverImage?.asset && (
-            <div
-              data-sanity={encodeDataAttribute('media[0].asset')}
-              className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24"
-            >
+            <div className="mx-auto max-w-2xl px-4 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pt-24">
               <Image
                 className="aspect-video w-full rounded-md object-cover object-center group-hover:opacity-75 lg:rounded-lg"
                 src={urlFor(coverImage)
@@ -105,11 +90,7 @@ export default function ShoePage(props: Props) {
                   const i = _i + 1
 
                   return (
-                    <div
-                      key={(image.asset._ref as string) || i}
-                      data-sanity={encodeDataAttribute(['media', i, 'asset'])}
-                      className="shrink-0 snap-start"
-                    >
+                    <div key={(image.asset._ref as string) || i} className="shrink-0 snap-start">
                       <Image
                         className="h-32 w-40 shrink-0 rounded bg-white shadow-xl lg:rounded-lg"
                         src={urlFor(image)

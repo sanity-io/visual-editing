@@ -16,22 +16,26 @@ import {
   // useState
 } from 'react'
 import {useEffectEvent} from 'use-effect-event'
-import {setComlink} from '../../hooks/context'
+import {setComlink, setComlinkClientConfig} from '../../hooks/context'
 
 function PresentationComlink(props: {
-  // projectId: string
-  // dataset: string
+  projectId: string
+  dataset: string
   // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
   draftModePerspective: ClientPerspective
 }): React.JSX.Element | null {
-  const {draftModeEnabled, draftModePerspective} = props
+  const {projectId, dataset, draftModeEnabled, draftModePerspective} = props
   const router = useRouter()
 
   // const [presentationComlink, setPresentationComlink] = useState<Node<
   //   LoaderControllerMsg,
   //   LoaderNodeMsg
   // > | null>(null)
+
+  useEffect(() => {
+    setComlinkClientConfig(projectId, dataset)
+  }, [dataset, projectId])
 
   const handlePerspectiveChange = useEffectEvent(
     (perspective: ClientPerspective, signal: AbortSignal) => {
