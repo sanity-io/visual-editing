@@ -5,6 +5,7 @@ import {
   type ClientPerspective,
   type ClientReturn,
   type ContentSourceMap,
+  type LiveEventGoAway,
   type QueryParams,
   type SanityClient,
 } from '@sanity/client'
@@ -102,6 +103,14 @@ export interface DefinedSanityLiveProps {
    * @defaultValue `true`
    */
   refreshOnReconnect?: boolean
+  /**
+   * Automatically refresh on an interval when the Live Event API emits a `goaway` event, which indicates that the connection is rejected or closed.
+   * This typically happens if the connection limit is reached, or if the connection is idle for too long.
+   * To disable this long polling fallback behavior set `intervalOnGoAway` to `false` or `0`.
+   * You can also use `onGoAway` to handle the `goaway` event in your own way, and read the reason why the event was emitted.
+   * @defaultValue `30_000` 30 seconds interval
+   */
+  intervalOnGoAway?: number | false
 
   /**
    * @deprecated use `requestTag` instead
@@ -120,6 +129,14 @@ export interface DefinedSanityLiveProps {
    * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
    */
   onError?: (error: unknown) => void
+
+  /**
+   * Handle the `goaway` event if the connection is rejected/closed.
+   * `event.reason` will be a string of why the event was emitted, for example `'connection limit reached'`.
+   * When this happens the `<SanityLive />` will fallback to long polling with a default interval of 30 seconds, providing your own `onGoAway` handler does not change this behavior.
+   * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
+   */
+  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
 }
 
 /**
@@ -272,6 +289,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
       tag,
       requestTag = tag,
       onError,
+      onGoAway,
+      intervalOnGoAway,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
@@ -294,6 +313,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}
         onError={onError}
+        onGoAway={onGoAway}
+        intervalOnGoAway={intervalOnGoAway}
       />
     )
   }

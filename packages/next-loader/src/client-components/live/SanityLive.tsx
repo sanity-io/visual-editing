@@ -3,6 +3,7 @@ import {
   type ClientPerspective,
   type InitializedClientConfig,
   type LiveEvent,
+  type LiveEventGoAway,
 } from '@sanity/client'
 import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
@@ -44,9 +45,11 @@ export interface SanityLiveProps
    * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
    */
   onError?: (error: unknown) => void
+  intervalOnGoAway?: number | false
+  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
 }
 
-const handleError = (error: unknown) => {
+function handleError(error: unknown) {
   /* eslint-disable no-console */
   if (isCorsOriginError(error)) {
     console.warn(
@@ -56,6 +59,24 @@ const handleError = (error: unknown) => {
     )
   } else {
     console.error(error)
+  }
+  /* eslint-enable no-console */
+}
+
+function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false) {
+  /* eslint-disable no-console */
+  if (intervalOnGoAway) {
+    console.warn(
+      'Sanity Live connection closed, switching to long polling set to a interval of',
+      intervalOnGoAway / 1000,
+      'seconds and the server gave this reason:',
+      event.reason,
+    )
+  } else {
+    console.error(
+      'Sanity Live connection closed, automatic revalidation is disabled, the server gave this reason:',
+      event.reason,
+    )
   }
   /* eslint-enable no-console */
 }
@@ -82,8 +103,10 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         ? true
         : window.self === window.top,
     refreshOnReconnect = true,
+    intervalOnGoAway = 30_000,
     requestTag = 'next-loader.live',
     onError = handleError,
+    onGoAway = handleOnGoAway,
   } = props
 
   const client = useMemo(
@@ -101,6 +124,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }),
     [apiHost, apiVersion, dataset, projectId, requestTagPrefix, token, useProjectHostname],
   )
+  const [longPollingInterval, setLongPollingInterval] = useState<number | false>(false)
 
   /**
    * 1. Handle Live Events and call revalidateTag or router.refresh when needed
@@ -117,10 +141,15 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
             ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
             : 'automatic revalidation of published content',
       )
+      // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
+      setLongPollingInterval(false)
     } else if (event.type === 'message') {
       revalidateSyncTags(event.tags)
     } else if (event.type === 'restart' || event.type === 'reconnect') {
       router.refresh()
+    } else if (event.type === 'goaway') {
+      onGoAway(event, intervalOnGoAway)
+      setLongPollingInterval(intervalOnGoAway)
     }
   })
   useEffect(() => {
@@ -219,6 +248,15 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       })
     }
   }, [draftModeEnabled])
+
+  /**
+   * 6. Handle switching to long polling when needed
+   */
+  useEffect(() => {
+    if (!longPollingInterval) return
+    const interval = setInterval(() => router.refresh(), longPollingInterval)
+    return () => clearInterval(interval)
+  }, [longPollingInterval, router])
 
   return (
     <>
