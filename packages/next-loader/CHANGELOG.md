@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.5.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.4.1...next-loader-v1.5.0) (2025-04-11)
+
+
+### Features
+
+* implement long-polling on goaway ([#2942](https://github.com/sanity-io/visual-editing/issues/2942)) ([a014271](https://github.com/sanity-io/visual-editing/commit/a0142718c4084dd6acf4f998ea25d5f4492459cb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.16
+  * devDependencies
+    * @sanity/preview-url-secret bumped to 2.1.8
+
 ## [1.4.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.4.0...next-loader-v1.4.1) (2025-04-10)
 
 

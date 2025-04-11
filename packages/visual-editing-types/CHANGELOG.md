@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.14...visual-editing-types-v1.0.15) (2025-04-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/insert-menu bumped to 1.1.10
+
 ## [1.0.14](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.13...visual-editing-types-v1.0.14) (2025-04-10)
 
 
