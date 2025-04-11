@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.10](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.9...insert-menu-v1.1.10) (2025-04-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+
 ## [1.1.9](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.8...insert-menu-v1.1.9) (2025-04-10)
 
 
