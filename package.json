@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",
+    "@sanity/client": "7.0.0",
     "@sanity/pkg-utils": "6.13.4",
     "@types/node": "^22.8.4",
     "@types/react": "latest",
@@ -58,11 +59,13 @@
   "pnpm": {
     "peerDependencyRules": {
       "allowAny": [
+        "@sanity/client",
         "react",
         "react-dom"
       ]
     },
     "overrides": {
+      "@sanity/client": "$@sanity/client",
       "@sanity/comlink": "workspace:*",
       "@sanity/core-loader": "workspace:*",
       "@sanity/next-loader": "workspace:*",
