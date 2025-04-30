@@ -30,6 +30,38 @@ All notable changes to this project will be documented in this file. See
   * dependencies
     * @sanity/core-loader bumped from 1.6.0 to 1.6.1
 
+## [1.12.0](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.11.7...react-loader-v1.12.0) (2025-04-30)
+
+
+### Features
+
+* **core-loader:** add onPerspective to live mode ([#2853](https://github.com/sanity-io/visual-editing/issues/2853)) ([1acfd65](https://github.com/sanity-io/visual-editing/commit/1acfd6587143144981bba6d505f102e09ad76f1a))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.26.0 ([#2539](https://github.com/sanity-io/visual-editing/issues/2539)) ([668143a](https://github.com/sanity-io/visual-editing/commit/668143a55ab81e29140c7b3aa04ca5501b4acdb9))
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2548](https://github.com/sanity-io/visual-editing/issues/2548)) ([faeb98f](https://github.com/sanity-io/visual-editing/commit/faeb98f5b0f029409c1d5c4e2e0bd4c2e0512cbb))
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+* **deps:** update dependency @sanity/client to ^6.28.4 ([#2884](https://github.com/sanity-io/visual-editing/issues/2884)) ([be6dca0](https://github.com/sanity-io/visual-editing/commit/be6dca0867a2f47abccb0cec837968362f7130f5))
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+* **deps:** update dependency @sanity/client to v7 ([#2964](https://github.com/sanity-io/visual-editing/issues/2964)) ([473f7ed](https://github.com/sanity-io/visual-editing/commit/473f7edc872a6bc926dcbc7ecbb355fb7fa23229))
+* relax semver ([8af6dd0](https://github.com/sanity-io/visual-editing/commit/8af6dd0d5fb3f0cf6fc9f749d8ca2e1b4a2f4abc))
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+* replace `previewDrafts` with `drafts` ([#2676](https://github.com/sanity-io/visual-editing/issues/2676)) ([9db9390](https://github.com/sanity-io/visual-editing/commit/9db9390970d66d5df5c9dc79c82c35d7f2cd0726))
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+* speed up experimental query perf ([#2931](https://github.com/sanity-io/visual-editing/issues/2931)) ([e4067ab](https://github.com/sanity-io/visual-editing/commit/e4067ab4f0e3f1e09194ecc7de18b732b0d0db16))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 1.9.0
+    * @sanity/visual-editing-csm bumped to 3.0.0
+
 ## [1.11.7](https://github.com/sanity-io/visual-editing/compare/react-loader-v1.11.6...react-loader-v1.11.7) (2025-04-30)
 
 

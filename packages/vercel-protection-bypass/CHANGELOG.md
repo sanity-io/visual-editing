@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.20...vercel-protection-bypass-v1.1.0) (2025-04-30)
+
+
+### Features
+
+* add Vercel Protection Bypass tool ([#2479](https://github.com/sanity-io/visual-editing/issues/2479)) ([7e58143](https://github.com/sanity-io/visual-editing/commit/7e58143e3f70751dbd424641045b218d7e9085b4))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+* **deps:** update dependency @sanity/ui to v2.11.4 ([#2533](https://github.com/sanity-io/visual-editing/issues/2533)) ([800f6fd](https://github.com/sanity-io/visual-editing/commit/800f6fd468dfe79e6db0cb76cfa38e02d2af85df))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2483](https://github.com/sanity-io/visual-editing/issues/2483)) ([e059b2e](https://github.com/sanity-io/visual-editing/commit/e059b2ee1461c519b1cc042382762b9a060cd103))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2529](https://github.com/sanity-io/visual-editing/issues/2529)) ([72897c6](https://github.com/sanity-io/visual-editing/commit/72897c6ee5529611788d39626f7bb7329a47a9a5))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2565](https://github.com/sanity-io/visual-editing/issues/2565)) ([74fdcdd](https://github.com/sanity-io/visual-editing/commit/74fdcddacb7ef02748cf729b67c6cdbb4c3647e2))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2604](https://github.com/sanity-io/visual-editing/issues/2604)) ([60f5349](https://github.com/sanity-io/visual-editing/commit/60f534928cca0aaf1bf429f13cc56c5658fa9219))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2651](https://github.com/sanity-io/visual-editing/issues/2651)) ([0692000](https://github.com/sanity-io/visual-editing/commit/069200095a0e0616b9f81c1b20c937e99ad4d8ad))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2694](https://github.com/sanity-io/visual-editing/issues/2694)) ([b80c478](https://github.com/sanity-io/visual-editing/commit/b80c478c7e88d45bf730f67f01cb0bbbe3a70aba))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2745](https://github.com/sanity-io/visual-editing/issues/2745)) ([c185f58](https://github.com/sanity-io/visual-editing/commit/c185f580b323fc168c42ea625d0b7e638d47a6be))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2774](https://github.com/sanity-io/visual-editing/issues/2774)) ([3fed1f2](https://github.com/sanity-io/visual-editing/commit/3fed1f28be50a96ab84a9b38fe09129dcfd35120))
+* **deps:** update React Compiler dependencies 🤖 ✨ ([#2800](https://github.com/sanity-io/visual-editing/issues/2800)) ([371b821](https://github.com/sanity-io/visual-editing/commit/371b821a2dcf0d31f6521e7a67c58586c658861b))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2827](https://github.com/sanity-io/visual-editing/issues/2827)) ([a72e9b8](https://github.com/sanity-io/visual-editing/commit/a72e9b8fb63420ea95038b93ab4315e836255860))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2856](https://github.com/sanity-io/visual-editing/issues/2856)) ([5d1e4bb](https://github.com/sanity-io/visual-editing/commit/5d1e4bbc6e7691873f8902a63fe2f586f9f87193))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2878](https://github.com/sanity-io/visual-editing/issues/2878)) ([664abd9](https://github.com/sanity-io/visual-editing/commit/664abd900471eefa9b2c71163efb36909db1aa71))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2897](https://github.com/sanity-io/visual-editing/issues/2897)) ([5c72b41](https://github.com/sanity-io/visual-editing/commit/5c72b41985886c0459230a3b3762a469073ef5f9))
+* **deps:** upgrade to react compiler RC ([29a886b](https://github.com/sanity-io/visual-editing/commit/29a886b6ff0b498379d6931ad154976f4bcfad29))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.2.0
+
 ## [1.0.20](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.19...vercel-protection-bypass-v1.0.20) (2025-04-30)
 
 

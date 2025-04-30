@@ -1,5 +1,72 @@
 # Changelog
 
+## [2.14.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.19...visual-editing-v2.14.0) (2025-04-30)
+
+
+### Features
+
+* add optional redirect override to svelte preview handler ([#2363](https://github.com/sanity-io/visual-editing/issues/2363)) ([ba2c3b2](https://github.com/sanity-io/visual-editing/commit/ba2c3b2071192c1b88c05aba0267053ccf8c1023))
+* reduce bundle size ([#2638](https://github.com/sanity-io/visual-editing/issues/2638)) ([091e7f3](https://github.com/sanity-io/visual-editing/commit/091e7f32fd83070fd10bd97ed7d68705055f2231))
+
+
+### Bug Fixes
+
+* allow react-router v6 used by remix v2 ([431654f](https://github.com/sanity-io/visual-editing/commit/431654f929326cfe81e0aaf7c57c8fb73f38cb4b))
+* **deps:** require peer dependency @sanity/client to ^7.0.0 ([de3db1f](https://github.com/sanity-io/visual-editing/commit/de3db1f0765b94a792cd44c23ee97f4615efc7cf))
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2548](https://github.com/sanity-io/visual-editing/issues/2548)) ([faeb98f](https://github.com/sanity-io/visual-editing/commit/faeb98f5b0f029409c1d5c4e2e0bd4c2e0512cbb))
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+* **deps:** update dependency @sanity/client to ^6.28.4 ([#2884](https://github.com/sanity-io/visual-editing/issues/2884)) ([be6dca0](https://github.com/sanity-io/visual-editing/commit/be6dca0867a2f47abccb0cec837968362f7130f5))
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+* **deps:** update dependency @sanity/client to v7 ([#2964](https://github.com/sanity-io/visual-editing/issues/2964)) ([473f7ed](https://github.com/sanity-io/visual-editing/commit/473f7edc872a6bc926dcbc7ecbb355fb7fa23229))
+* **deps:** update dependency @sanity/ui to v2.11.4 ([#2533](https://github.com/sanity-io/visual-editing/issues/2533)) ([800f6fd](https://github.com/sanity-io/visual-editing/commit/800f6fd468dfe79e6db0cb76cfa38e02d2af85df))
+* **deps:** update dependency styled-components to ^6.1.16 ([#2841](https://github.com/sanity-io/visual-editing/issues/2841)) ([abaa57b](https://github.com/sanity-io/visual-editing/commit/abaa57b20debc7772076430ce843be1902252c84))
+* **deps:** update dependency styled-components to ^6.1.17 ([#2904](https://github.com/sanity-io/visual-editing/issues/2904)) ([adfb416](https://github.com/sanity-io/visual-editing/commit/adfb416b8a6e76fd553f6f90f1d7a5c648c1ea45))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2483](https://github.com/sanity-io/visual-editing/issues/2483)) ([e059b2e](https://github.com/sanity-io/visual-editing/commit/e059b2ee1461c519b1cc042382762b9a060cd103))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2529](https://github.com/sanity-io/visual-editing/issues/2529)) ([72897c6](https://github.com/sanity-io/visual-editing/commit/72897c6ee5529611788d39626f7bb7329a47a9a5))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2565](https://github.com/sanity-io/visual-editing/issues/2565)) ([74fdcdd](https://github.com/sanity-io/visual-editing/commit/74fdcddacb7ef02748cf729b67c6cdbb4c3647e2))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2604](https://github.com/sanity-io/visual-editing/issues/2604)) ([60f5349](https://github.com/sanity-io/visual-editing/commit/60f534928cca0aaf1bf429f13cc56c5658fa9219))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2651](https://github.com/sanity-io/visual-editing/issues/2651)) ([0692000](https://github.com/sanity-io/visual-editing/commit/069200095a0e0616b9f81c1b20c937e99ad4d8ad))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2694](https://github.com/sanity-io/visual-editing/issues/2694)) ([b80c478](https://github.com/sanity-io/visual-editing/commit/b80c478c7e88d45bf730f67f01cb0bbbe3a70aba))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2745](https://github.com/sanity-io/visual-editing/issues/2745)) ([c185f58](https://github.com/sanity-io/visual-editing/commit/c185f580b323fc168c42ea625d0b7e638d47a6be))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2774](https://github.com/sanity-io/visual-editing/issues/2774)) ([3fed1f2](https://github.com/sanity-io/visual-editing/commit/3fed1f28be50a96ab84a9b38fe09129dcfd35120))
+* **deps:** update React Compiler dependencies 🤖 ✨ ([#2800](https://github.com/sanity-io/visual-editing/issues/2800)) ([371b821](https://github.com/sanity-io/visual-editing/commit/371b821a2dcf0d31f6521e7a67c58586c658861b))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2827](https://github.com/sanity-io/visual-editing/issues/2827)) ([a72e9b8](https://github.com/sanity-io/visual-editing/commit/a72e9b8fb63420ea95038b93ab4315e836255860))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2856](https://github.com/sanity-io/visual-editing/issues/2856)) ([5d1e4bb](https://github.com/sanity-io/visual-editing/commit/5d1e4bbc6e7691873f8902a63fe2f586f9f87193))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2878](https://github.com/sanity-io/visual-editing/issues/2878)) ([664abd9](https://github.com/sanity-io/visual-editing/commit/664abd900471eefa9b2c71163efb36909db1aa71))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2897](https://github.com/sanity-io/visual-editing/issues/2897)) ([5c72b41](https://github.com/sanity-io/visual-editing/commit/5c72b41985886c0459230a3b3762a469073ef5f9))
+* **deps:** upgrade to react compiler RC ([29a886b](https://github.com/sanity-io/visual-editing/commit/29a886b6ff0b498379d6931ad154976f4bcfad29))
+* explicitly fetch preview snapshots on connect ([#2487](https://github.com/sanity-io/visual-editing/issues/2487)) ([cf07d56](https://github.com/sanity-io/visual-editing/commit/cf07d56b8feca6b815d7609b69c3a51769442263))
+* improve next.js pages router experience ([ce98771](https://github.com/sanity-io/visual-editing/commit/ce98771642bdedbd53bce50f597f7a6f3c62b6a1))
+* make `styled-components` a peer ([7d0e17b](https://github.com/sanity-io/visual-editing/commit/7d0e17b81f60348c1fb91cd49ffa446b783c8ea8))
+* prevent over-fetching schema union types ([#2817](https://github.com/sanity-io/visual-editing/issues/2817)) ([51bf535](https://github.com/sanity-io/visual-editing/commit/51bf53504ada37bfb226827a0555799fabe7169f))
+* re-enable the compiler ([09b56bf](https://github.com/sanity-io/visual-editing/commit/09b56bf303ca8a820736e8ff87c8d6f4fbca85f0))
+* remove debug code ([9457805](https://github.com/sanity-io/visual-editing/commit/9457805c51ddd452f093ad939eb86b6f6455a2d6))
+* remove isDraft ([#2537](https://github.com/sanity-io/visual-editing/issues/2537)) ([bfc5aca](https://github.com/sanity-io/visual-editing/commit/bfc5aca9000c987785ef715c8a3d149cc99c7455))
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+* replace `previewDrafts` with `drafts` ([#2676](https://github.com/sanity-io/visual-editing/issues/2676)) ([9db9390](https://github.com/sanity-io/visual-editing/commit/9db9390970d66d5df5c9dc79c82c35d7f2cd0726))
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+* solve race in comlink.onStatus ([#2636](https://github.com/sanity-io/visual-editing/issues/2636)) ([aba2aaa](https://github.com/sanity-io/visual-editing/commit/aba2aaaae9644429f1304757cae1c17b7227dd7c))
+* support overlay clicks in popups ([#2383](https://github.com/sanity-io/visual-editing/issues/2383)) ([da9413c](https://github.com/sanity-io/visual-editing/commit/da9413c71e81f220133ae5ef48031be84cac09d0))
+* support upcoming presentation debug features ([00db0db](https://github.com/sanity-io/visual-editing/commit/00db0dbc117c435575acc26de3eae52a9f526eef))
+* use new `@sanity/client/csm` utils ([#2540](https://github.com/sanity-io/visual-editing/issues/2540)) ([e9ec432](https://github.com/sanity-io/visual-editing/commit/e9ec4329926172cf5af8953dcdf78cbe6b3348ff))
+* **visual-editing:** Don't show "Open in Studio" offscreen when at top of screen ([#2356](https://github.com/sanity-io/visual-editing/issues/2356)) ([140ac4f](https://github.com/sanity-io/visual-editing/commit/140ac4fa733f82dbac542d1ff51124b748cffab7))
+* **visual-editing:** fix svelte imports ([#2473](https://github.com/sanity-io/visual-editing/issues/2473)) ([040603e](https://github.com/sanity-io/visual-editing/commit/040603e43195a370d503650f6095813253d9ea82))
+* **visual-editing:** prevent snapshot overfetching ([#2615](https://github.com/sanity-io/visual-editing/issues/2615)) ([5533a2b](https://github.com/sanity-io/visual-editing/commit/5533a2bf33810a0b515918c5fcfcbbed7d202ffc))
+* **visual-editing:** remove unnecessary comlink delay ([98bd6aa](https://github.com/sanity-io/visual-editing/commit/98bd6aa81505379ea6eee8817300b3e4fa8ed8cc))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 4.0.0
+    * @sanity/insert-menu bumped to 1.2.0
+    * @sanity/presentation-comlink bumped to 1.0.18
+    * @sanity/preview-url-secret bumped to 2.2.0
+    * @sanity/visual-editing-csm bumped to 3.0.0
+
 ## [2.13.19](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.18...visual-editing-v2.13.19) (2025-04-30)
 
 

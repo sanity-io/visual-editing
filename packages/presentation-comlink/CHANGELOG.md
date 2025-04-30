@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.0.18](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.17...presentation-comlink-v1.0.18) (2025-04-30)
+
+
+### Bug Fixes
+
+* **deps:** require peer dependency @sanity/client to ^7.0.0 ([de3db1f](https://github.com/sanity-io/visual-editing/commit/de3db1f0765b94a792cd44c23ee97f4615efc7cf))
+* **deps:** update dependency @sanity/client to ^6.26.0 ([#2539](https://github.com/sanity-io/visual-editing/issues/2539)) ([668143a](https://github.com/sanity-io/visual-editing/commit/668143a55ab81e29140c7b3aa04ca5501b4acdb9))
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2548](https://github.com/sanity-io/visual-editing/issues/2548)) ([faeb98f](https://github.com/sanity-io/visual-editing/commit/faeb98f5b0f029409c1d5c4e2e0bd4c2e0512cbb))
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+* **deps:** update dependency @sanity/client to ^6.28.4 ([#2884](https://github.com/sanity-io/visual-editing/issues/2884)) ([be6dca0](https://github.com/sanity-io/visual-editing/commit/be6dca0867a2f47abccb0cec837968362f7130f5))
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+* **deps:** update dependency @sanity/client to v7 ([#2964](https://github.com/sanity-io/visual-editing/issues/2964)) ([473f7ed](https://github.com/sanity-io/visual-editing/commit/473f7edc872a6bc926dcbc7ecbb355fb7fa23229))
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+* support upcoming presentation debug features ([00db0db](https://github.com/sanity-io/visual-editing/commit/00db0dbc117c435575acc26de3eae52a9f526eef))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 4.0.0
+    * @sanity/visual-editing-types bumped to 1.0.17
+
 ## [1.0.17](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.16...presentation-comlink-v1.0.17) (2025-04-30)
 
 

@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.5.1...next-loader-v1.6.0) (2025-04-30)
+
+
+### Features
+
+* implement long-polling on goaway ([#2942](https://github.com/sanity-io/visual-editing/issues/2942)) ([a014271](https://github.com/sanity-io/visual-editing/commit/a0142718c4084dd6acf4f998ea25d5f4492459cb))
+* **next-loader:** add experimental query hook ([#2914](https://github.com/sanity-io/visual-editing/issues/2914)) ([f1dcb7b](https://github.com/sanity-io/visual-editing/commit/f1dcb7b5f0f06083a35f3f213cd6f6e18ff750b7))
+* **sanityFetch:** support custom cache `tags` ([#2678](https://github.com/sanity-io/visual-editing/issues/2678)) ([6d78b86](https://github.com/sanity-io/visual-editing/commit/6d78b86c828e21b3a78ff8c1de451f94ce8092ff))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.26.0 ([#2539](https://github.com/sanity-io/visual-editing/issues/2539)) ([668143a](https://github.com/sanity-io/visual-editing/commit/668143a55ab81e29140c7b3aa04ca5501b4acdb9))
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2548](https://github.com/sanity-io/visual-editing/issues/2548)) ([faeb98f](https://github.com/sanity-io/visual-editing/commit/faeb98f5b0f029409c1d5c4e2e0bd4c2e0512cbb))
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+* **deps:** update dependency @sanity/client to ^6.28.4 ([#2884](https://github.com/sanity-io/visual-editing/issues/2884)) ([be6dca0](https://github.com/sanity-io/visual-editing/commit/be6dca0867a2f47abccb0cec837968362f7130f5))
+* **deps:** update dependency @sanity/client to v7 ([#2964](https://github.com/sanity-io/visual-editing/issues/2964)) ([473f7ed](https://github.com/sanity-io/visual-editing/commit/473f7edc872a6bc926dcbc7ecbb355fb7fa23229))
+* increase heartbeat interval from 1s to 10s ([#2597](https://github.com/sanity-io/visual-editing/issues/2597)) ([0bf7220](https://github.com/sanity-io/visual-editing/commit/0bf722039909ce700ef6de512d83a212f4590ddd))
+* regression in `1.3` causing tags not to be set ([d4b0562](https://github.com/sanity-io/visual-editing/commit/d4b05627043edd4d7ae36699fe3aae008283ac39))
+* relax semver ([8af6dd0](https://github.com/sanity-io/visual-editing/commit/8af6dd0d5fb3f0cf6fc9f749d8ca2e1b4a2f4abc))
+* remove vX override ([#2581](https://github.com/sanity-io/visual-editing/issues/2581)) ([5e8e0ce](https://github.com/sanity-io/visual-editing/commit/5e8e0ce7f51b11bc9a058a3ca37340d3e822521e))
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+* replace `previewDrafts` with `drafts` ([#2676](https://github.com/sanity-io/visual-editing/issues/2676)) ([9db9390](https://github.com/sanity-io/visual-editing/commit/9db9390970d66d5df5c9dc79c82c35d7f2cd0726))
+* replace `tag` with `requestTag` ([#2677](https://github.com/sanity-io/visual-editing/issues/2677)) ([0acc262](https://github.com/sanity-io/visual-editing/commit/0acc262bbcd1853d9499fe80c65b3520e112459b))
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+* speed up experimental query perf ([#2931](https://github.com/sanity-io/visual-editing/issues/2931)) ([e4067ab](https://github.com/sanity-io/visual-editing/commit/e4067ab4f0e3f1e09194ecc7de18b732b0d0db16))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 4.0.0
+    * @sanity/presentation-comlink bumped to 1.0.18
+  * devDependencies
+    * @sanity/preview-url-secret bumped to 2.2.0
+
 ## [1.5.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.5.0...next-loader-v1.5.1) (2025-04-30)
 
 

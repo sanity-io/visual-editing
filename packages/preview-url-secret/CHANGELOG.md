@@ -6,6 +6,30 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.2.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.9...preview-url-secret-v2.2.0) (2025-04-30)
+
+
+### Features
+
+* add Vercel Protection Bypass tool ([#2479](https://github.com/sanity-io/visual-editing/issues/2479)) ([7e58143](https://github.com/sanity-io/visual-editing/commit/7e58143e3f70751dbd424641045b218d7e9085b4))
+
+
+### Bug Fixes
+
+* **deps:** require peer dependency @sanity/client to ^7.0.0 ([de3db1f](https://github.com/sanity-io/visual-editing/commit/de3db1f0765b94a792cd44c23ee97f4615efc7cf))
+* **deps:** update dependency @sanity/client to ^6.26.0 ([#2539](https://github.com/sanity-io/visual-editing/issues/2539)) ([668143a](https://github.com/sanity-io/visual-editing/commit/668143a55ab81e29140c7b3aa04ca5501b4acdb9))
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2548](https://github.com/sanity-io/visual-editing/issues/2548)) ([faeb98f](https://github.com/sanity-io/visual-editing/commit/faeb98f5b0f029409c1d5c4e2e0bd4c2e0512cbb))
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+* **deps:** update dependency @sanity/client to ^6.28.4 ([#2884](https://github.com/sanity-io/visual-editing/issues/2884)) ([be6dca0](https://github.com/sanity-io/visual-editing/commit/be6dca0867a2f47abccb0cec837968362f7130f5))
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+* **deps:** update dependency @sanity/client to v7 ([#2964](https://github.com/sanity-io/visual-editing/issues/2964)) ([473f7ed](https://github.com/sanity-io/visual-editing/commit/473f7edc872a6bc926dcbc7ecbb355fb7fa23229))
+* forward perspective to redirect url ([9c4be4b](https://github.com/sanity-io/visual-editing/commit/9c4be4b0b27ee3bd1cda6e94743ee5b86de8b1d5))
+* forward vercel protection bypass params ([#2468](https://github.com/sanity-io/visual-editing/issues/2468)) ([e3d5baf](https://github.com/sanity-io/visual-editing/commit/e3d5baf9aba752febd9ef2cca8533b612771e45b))
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+* upgrade `apiVersion` to `2025-02-19` ([#2778](https://github.com/sanity-io/visual-editing/issues/2778)) ([447a717](https://github.com/sanity-io/visual-editing/commit/447a717098f75d80c9df0abd79da194e30aef519))
+
 ## [2.1.9](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.8...preview-url-secret-v2.1.9) (2025-04-30)
 
 
