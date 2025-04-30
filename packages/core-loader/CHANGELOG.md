@@ -6,6 +6,41 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.9.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.6...core-loader-v1.9.0) (2025-04-30)
+
+
+### Features
+
+* **core-loader:** add onPerspective to live mode ([#2853](https://github.com/sanity-io/visual-editing/issues/2853)) ([1acfd65](https://github.com/sanity-io/visual-editing/commit/1acfd6587143144981bba6d505f102e09ad76f1a))
+
+
+### Bug Fixes
+
+* **core-loader:** use client perspective for enableLiveMode ([#2852](https://github.com/sanity-io/visual-editing/issues/2852)) ([792418b](https://github.com/sanity-io/visual-editing/commit/792418bfd473622e5cbb048d9784a2e4b4029ff0))
+* **deps:** update dependency @sanity/client to ^6.26.0 ([#2539](https://github.com/sanity-io/visual-editing/issues/2539)) ([668143a](https://github.com/sanity-io/visual-editing/commit/668143a55ab81e29140c7b3aa04ca5501b4acdb9))
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2548](https://github.com/sanity-io/visual-editing/issues/2548)) ([faeb98f](https://github.com/sanity-io/visual-editing/commit/faeb98f5b0f029409c1d5c4e2e0bd4c2e0512cbb))
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+* **deps:** update dependency @sanity/client to ^6.28.4 ([#2884](https://github.com/sanity-io/visual-editing/issues/2884)) ([be6dca0](https://github.com/sanity-io/visual-editing/commit/be6dca0867a2f47abccb0cec837968362f7130f5))
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+* **deps:** update dependency @sanity/client to v7 ([#2964](https://github.com/sanity-io/visual-editing/issues/2964)) ([473f7ed](https://github.com/sanity-io/visual-editing/commit/473f7edc872a6bc926dcbc7ecbb355fb7fa23229))
+* **deps:** update dependency nanostores to v0.11.4 ([#2917](https://github.com/sanity-io/visual-editing/issues/2917)) ([bc84d08](https://github.com/sanity-io/visual-editing/commit/bc84d0857cc376081eb53eabdee24b176660aa3e))
+* **deps:** update dependency nanostores to v1 ([#2938](https://github.com/sanity-io/visual-editing/issues/2938)) ([4a1c4b3](https://github.com/sanity-io/visual-editing/commit/4a1c4b31f87aefcbc1265e862a30dbd6dff96248))
+* increase heartbeat interval from 1s to 10s ([#2597](https://github.com/sanity-io/visual-editing/issues/2597)) ([0bf7220](https://github.com/sanity-io/visual-editing/commit/0bf722039909ce700ef6de512d83a212f4590ddd))
+* remove isDraft ([#2537](https://github.com/sanity-io/visual-editing/issues/2537)) ([bfc5aca](https://github.com/sanity-io/visual-editing/commit/bfc5aca9000c987785ef715c8a3d149cc99c7455))
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+* replace `previewDrafts` with `drafts` ([#2676](https://github.com/sanity-io/visual-editing/issues/2676)) ([9db9390](https://github.com/sanity-io/visual-editing/commit/9db9390970d66d5df5c9dc79c82c35d7f2cd0726))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 4.0.0
+    * @sanity/presentation-comlink bumped to 1.0.18
+    * @sanity/visual-editing-csm bumped to 3.0.0
+
 ## [1.8.6](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.5...core-loader-v1.8.6) (2025-04-30)
 
 

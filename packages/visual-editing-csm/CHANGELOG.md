@@ -1,5 +1,35 @@
 # Changelog
 
+## [3.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.15...visual-editing-csm-v3.0.0) (2025-04-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove `DRAFTS_PREFIX` export ([#2542](https://github.com/sanity-io/visual-editing/issues/2542))
+
+### Bug Fixes
+
+* **deps:** require peer dependency @sanity/client to ^7.0.0 ([de3db1f](https://github.com/sanity-io/visual-editing/commit/de3db1f0765b94a792cd44c23ee97f4615efc7cf))
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2548](https://github.com/sanity-io/visual-editing/issues/2548)) ([faeb98f](https://github.com/sanity-io/visual-editing/commit/faeb98f5b0f029409c1d5c4e2e0bd4c2e0512cbb))
+* **deps:** update dependency @sanity/client to ^6.27.2 ([#2578](https://github.com/sanity-io/visual-editing/issues/2578)) ([de598b8](https://github.com/sanity-io/visual-editing/commit/de598b8b05fae82755faee31162ecb005af65b02))
+* **deps:** update dependency @sanity/client to ^6.28.2 ([#2779](https://github.com/sanity-io/visual-editing/issues/2779)) ([6336984](https://github.com/sanity-io/visual-editing/commit/63369840603698bace92a6b317b830461f65e3ff))
+* **deps:** update dependency @sanity/client to ^6.28.3 ([#2808](https://github.com/sanity-io/visual-editing/issues/2808)) ([a2f657d](https://github.com/sanity-io/visual-editing/commit/a2f657dd8a3b63a229492eb5790932da7cacace5))
+* **deps:** update dependency @sanity/client to ^6.28.4 ([#2884](https://github.com/sanity-io/visual-editing/issues/2884)) ([be6dca0](https://github.com/sanity-io/visual-editing/commit/be6dca0867a2f47abccb0cec837968362f7130f5))
+* **deps:** update dependency @sanity/client to ^6.29.0 ([2a8ff1e](https://github.com/sanity-io/visual-editing/commit/2a8ff1e9369b8a27bb3c122d5f5f9046be43c5a1))
+* **deps:** update dependency @sanity/client to v7 ([#2964](https://github.com/sanity-io/visual-editing/issues/2964)) ([473f7ed](https://github.com/sanity-io/visual-editing/commit/473f7edc872a6bc926dcbc7ecbb355fb7fa23229))
+* **deps:** Update dependency valibot to v1 ([#2935](https://github.com/sanity-io/visual-editing/issues/2935)) ([3e78694](https://github.com/sanity-io/visual-editing/commit/3e78694e00a2434e13811b0d762770a16b610e79))
+* remove `DRAFTS_PREFIX` export ([#2542](https://github.com/sanity-io/visual-editing/issues/2542)) ([7d463c3](https://github.com/sanity-io/visual-editing/commit/7d463c3ac38db060696da24c94990f85a85802cd))
+* remove isDraft ([#2537](https://github.com/sanity-io/visual-editing/issues/2537)) ([bfc5aca](https://github.com/sanity-io/visual-editing/commit/bfc5aca9000c987785ef715c8a3d149cc99c7455))
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+* use new `@sanity/client/csm` utils ([#2540](https://github.com/sanity-io/visual-editing/issues/2540)) ([e9ec432](https://github.com/sanity-io/visual-editing/commit/e9ec4329926172cf5af8953dcdf78cbe6b3348ff))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 1.0.17
+
 ## [2.0.15](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.14...visual-editing-csm-v2.0.15) (2025-04-30)
 
 

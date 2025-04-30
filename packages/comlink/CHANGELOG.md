@@ -1,5 +1,23 @@
 # Changelog
 
+## [4.0.0](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.2...comlink-v4.0.0) (2025-04-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **comlink:** update internal message types, buffer unhandled messages
+
+### Features
+
+* **comlink:** update internal message types, buffer unhandled messages ([8b80c14](https://github.com/sanity-io/visual-editing/commit/8b80c14702f3ed940a63774e170b71e47050b95a))
+
+
+### Bug Fixes
+
+* **deps:** upgrade to react compiler RC ([29a886b](https://github.com/sanity-io/visual-editing/commit/29a886b6ff0b498379d6931ad154976f4bcfad29))
+* replace `@repo/visual-editing-helpers` ([#2520](https://github.com/sanity-io/visual-editing/issues/2520)) ([7784f6f](https://github.com/sanity-io/visual-editing/commit/7784f6f54eb455ec1fe4ec50c387a87a875aceae))
+* ship react 19 ready typings ([67b9187](https://github.com/sanity-io/visual-editing/commit/67b9187bbfd6d31fca437dd9c9eb80b1f1c296a4))
+
 ## [3.0.2](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.1...comlink-v3.0.2) (2025-04-30)
 
 
