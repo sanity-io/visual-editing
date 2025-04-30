@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.11](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.10...insert-menu-v1.1.11) (2025-04-30)
+
+
+### Bug Fixes
+
+* **deps:** upgrade to react compiler RC ([29a886b](https://github.com/sanity-io/visual-editing/commit/29a886b6ff0b498379d6931ad154976f4bcfad29))
+
 ## [1.1.10](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.9...insert-menu-v1.1.10) (2025-04-11)
 
 
