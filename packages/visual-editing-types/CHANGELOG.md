@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.17](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.16...visual-editing-types-v1.0.17) (2025-04-30)
+
+
+### Bug Fixes
+
+* **deps:** require peer dependency @sanity/client to ^7.0.0 ([de3db1f](https://github.com/sanity-io/visual-editing/commit/de3db1f0765b94a792cd44c23ee97f4615efc7cf))
+
 ## [1.0.16](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.15...visual-editing-types-v1.0.16) (2025-04-30)
 
 
