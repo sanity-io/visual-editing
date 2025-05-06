@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "sanity build --source-maps",
+    "build": "sanity build --source-maps -y",
     "dev": "rimraf .sanity && sanity dev"
   },
   "prettier": "@repo/prettier-config",
