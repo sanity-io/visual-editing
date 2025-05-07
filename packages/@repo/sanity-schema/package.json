@@ -3,12 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "description": "Shared Sanity schema used by the Studio app, as well as for TypeGen in the other apps",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
     "./package.json": "./package.json"
   },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "lint": "eslint --cache ."
+    "build": "pkg build --strict --check --clean",
+    "lint": "eslint --cache .",
+    "prepack": "turbo run build"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "prettier": "@repo/prettier-config",
@@ -24,11 +39,13 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
+    "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@sanity/assist": "4.2.0",
     "@sanity/color-input": "4.0.3",
     "@sanity/comlink": "workspace:^",
     "@sanity/icons": "3.7.0",
+    "@sanity/pkg-utils": "6.13.4",
     "@sanity/presentation-comlink": "workspace:^",
     "@sanity/preview-url-secret": "workspace:^",
     "@sanity/ui": "2.15.16",
