@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.17](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.16...visual-editing-csm-v2.0.17) (2025-05-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v7.1.0 ([#2984](https://github.com/sanity-io/visual-editing/issues/2984)) ([a9f8b89](https://github.com/sanity-io/visual-editing/commit/a9f8b898e4d6d6556336e69c3916ec06456db1f9))
+* **deps:** Update dependency valibot to ^1.1.0 ([#2985](https://github.com/sanity-io/visual-editing/issues/2985)) ([27405cd](https://github.com/sanity-io/visual-editing/commit/27405cd924a6751227401b30b562df7830f6d0ff))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 1.0.18
+
 ## [2.0.16](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.15...visual-editing-csm-v2.0.16) (2025-04-30)
 
 
