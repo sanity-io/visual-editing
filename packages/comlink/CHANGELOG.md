@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.3](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.2...comlink-v3.0.3) (2025-05-07)
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2977](https://github.com/sanity-io/visual-editing/issues/2977)) ([66fb93a](https://github.com/sanity-io/visual-editing/commit/66fb93aafc12537dc58543d972e46b40d58fa5c4))
+
 ## [3.0.2](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.1...comlink-v3.0.2) (2025-04-30)
 
 
