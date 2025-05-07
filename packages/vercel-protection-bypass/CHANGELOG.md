@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.22](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.21...vercel-protection-bypass-v1.0.22) (2025-05-07)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 2.1.11
+
 ## [1.0.21](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.20...vercel-protection-bypass-v1.0.21) (2025-04-30)
 
 
