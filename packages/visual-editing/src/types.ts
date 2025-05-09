@@ -159,12 +159,16 @@ export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
   dragDisabled: boolean
+  targets: ElementChildTarget[]
+  elementType: 'element' | 'group'
 }
 
 /** @public */
 export type OverlayMsgElementUpdate = OverlayMsgElement<'update'> & {
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
+  targets: ElementChildTarget[]
+  elementType: 'element' | 'group'
 }
 
 /** @public */
@@ -299,6 +303,15 @@ export interface ElementState {
   rect: OverlayRect
   sanity: SanityNode | SanityStegaNode
   dragDisabled: boolean
+  targets: ElementChildTarget[]
+  elementType: 'element' | 'group'
+}
+
+/**
+ * @public
+ */
+export interface ElementChildTarget {
+  sanity: SanityNode | SanityStegaNode
 }
 
 /**
@@ -330,13 +343,44 @@ export interface SanityNodeElements {
   element: ElementNode
   measureElement: ElementNode
 }
+
+/**
+ * Type used by node traversal
+ * @internal
+ */
+export type ResolvedElementReason =
+  | 'edit-target'
+  | 'stega-text'
+  | 'stega-attribute'
+  | 'data-attribute'
+
+/**
+ * Object returned by node traversal
+ * @internal
+ */
+export interface ResolvingElement {
+  elements: SanityNodeElements
+  sanity: SanityNode | SanityStegaNode
+  reason: ResolvedElementReason
+  preventGrouping?: boolean
+}
+/**
+ * @internal
+ */
+export interface ResolvedElementTarget {
+  sanity: SanityNode | SanityStegaNode
+  elements: SanityNodeElements
+  reason: ResolvedElementReason
+}
 /**
  * Object returned by node traversal
  * @internal
  */
 export interface ResolvedElement {
   elements: SanityNodeElements
-  sanity: SanityNode | SanityStegaNode
+  commonSanity?: SanityNode | SanityStegaNode
+  targets: ResolvedElementTarget[]
+  type: 'element' | 'group'
 }
 
 /**
@@ -344,10 +388,11 @@ export interface ResolvedElement {
  * @internal
  */
 export interface OverlayElement {
+  type: 'element' | 'group'
   id: string
   elements: SanityNodeElements
   handlers: EventHandlers
-  sanity: SanityNode | SanityStegaNode
+  sanity?: SanityNode | SanityStegaNode
 }
 
 /**
@@ -426,10 +471,41 @@ export type OverlayComponentResolver<
   | undefined
   | void
 
+/** @public  */
+export interface OverlayExtensionDefinitionBase {
+  name: string
+  title?: string
+  icon?: ComponentType
+  guard?: (context: OverlayComponentResolverContext | undefined) => boolean
+}
+
+/** @public  */
+export interface OverlayExtensionExclusiveDefinition extends OverlayExtensionDefinitionBase {
+  type: 'exclusive'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: OverlayComponent<Record<string, unknown>, any>
+}
+/** @public  */
+export interface OverlayExtensionHudDefinition extends OverlayExtensionDefinitionBase {
+  type: 'hud'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: OverlayComponent<Record<string, unknown>, any>
+}
+
+/** @public  */
+export type OverlayExtensionDefinition =
+  | OverlayExtensionExclusiveDefinition
+  | OverlayExtensionHudDefinition
+
 /**
  * @public
  */
 export interface VisualEditingOptions {
+  /**
+   * @alpha
+   * This API is unstable and could change at any time.
+   */
+  extensions?: OverlayExtensionDefinition[]
   /**
    * @alpha
    * This API is unstable and could change at any time.

@@ -33,7 +33,14 @@ export default async function ProductsPage() {
                 href={`/product/${product?.slug?.current}`}
                 key={product._id}
               >
-                <div className="flex-none sm:w-64">
+                <div className="flex-none sm:w-64" data-sanity-edit-group>
+                  <data
+                    data-sanity={dataAttribute({
+                      id: product._id,
+                      type: 'product',
+                      path: 'details.ledLifespan',
+                    }).toString()}
+                  />
                   {product.media?.asset && (
                     <Image
                       alt=""
