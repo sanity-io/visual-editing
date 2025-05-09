@@ -13,6 +13,10 @@ export type {
   SanityNode,
   VisualEditingOptions,
   VisualEditingNode,
+  OverlayExtensionDefinition,
+  OverlayExtensionExclusiveDefinition,
+  OverlayExtensionHudDefinition,
+  OverlayExtensionDefinitionBase,
 } from '../types'
 export {VisualEditing} from '../ui/VisualEditing'
 export {

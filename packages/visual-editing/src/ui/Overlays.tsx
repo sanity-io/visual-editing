@@ -25,6 +25,7 @@ import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisti
 import type {
   OverlayComponentResolver,
   OverlayEventHandler,
+  OverlayExtensionDefinition,
   OverlayMsg,
   VisualEditingNode,
 } from '../types'
@@ -180,6 +181,7 @@ export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
   comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
+  extensionDefinitions?: OverlayExtensionDefinition[]
   inFrame: boolean
   inPopUp: boolean
   zIndex?: string | number
@@ -353,7 +355,7 @@ export const Overlays: FunctionComponent<{
 
     return elements
       .filter((e) => e.activated || e.focused)
-      .map(({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
+      .map(({id, element, focused, hovered, rect, sanity, dragDisabled, targets, elementType}) => {
         const draggable =
           !dragDisabled &&
           !!element.getAttribute('data-sanity') &&
@@ -367,6 +369,7 @@ export const Overlays: FunctionComponent<{
         return (
           <ElementOverlay
             componentResolver={componentResolver}
+            extensionDefinitions={props.extensionDefinitions}
             element={element}
             enableScrollIntoView={!isDragging && !dragMinimapTransition && !dragShowMinimap}
             key={id}
@@ -379,11 +382,14 @@ export const Overlays: FunctionComponent<{
             draggable={draggable}
             isDragging={isDragging || dragMinimapTransition}
             wasMaybeCollapsed={focused && wasMaybeCollapsed}
+            targets={targets}
+            elementType={elementType}
           />
         )
       })
   }, [
     componentResolver,
+    props.extensionDefinitions,
     dragMinimapTransition,
     dragShowMinimap,
     elements,

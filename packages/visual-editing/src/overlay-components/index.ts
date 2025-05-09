@@ -10,6 +10,10 @@ export type {
   OverlayComponentResolverContext,
   OverlayElementField,
   OverlayElementParent,
+  OverlayExtensionDefinition,
+  OverlayExtensionExclusiveDefinition,
+  OverlayExtensionHudDefinition,
+  OverlayExtensionDefinitionBase,
 } from '../types'
 export type {
   DocumentSchema,

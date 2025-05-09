@@ -43,7 +43,7 @@ export function useReportDocuments(
     const nodes = elements
       .map((e) => {
         const {sanity} = e
-        if (!('id' in sanity)) return null
+        if (!sanity || !('id' in sanity)) return null
         return sanity
       })
       .filter((s) => !!s) as SanityNode[]

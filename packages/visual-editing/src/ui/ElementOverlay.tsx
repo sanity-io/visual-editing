@@ -1,12 +1,14 @@
 import {createEditUrl, studioPath} from '@sanity/client/csm'
-import {DocumentIcon, DragHandleIcon} from '@sanity/icons'
-import {Box, Card, Flex, Text} from '@sanity/ui/_visual-editing'
+import {DocumentIcon, DragHandleIcon, EllipsisHorizontalIcon} from '@sanity/icons'
+import {Label, MenuButton} from '@sanity/ui'
+import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui/_visual-editing'
 import {pathToUrlString} from '@sanity/visual-editing-csm'
 import {
   isValidElement,
   memo,
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -19,11 +21,15 @@ import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
 import {PointerEvents} from '../overlay-components/components/PointerEvents'
 import type {
+  ElementChildTarget,
   ElementFocusedState,
   ElementNode,
   OverlayComponent,
   OverlayComponentResolver,
   OverlayComponentResolverContext,
+  OverlayExtensionDefinition,
+  OverlayExtensionExclusiveDefinition,
+  OverlayExtensionHudDefinition,
   OverlayRect,
   SanityNode,
   SanityStegaNode,
@@ -44,6 +50,7 @@ const isReactElementOverlayComponent = (
 
 export interface ElementOverlayProps {
   componentResolver?: OverlayComponentResolver
+  extensionDefinitions?: OverlayExtensionDefinition[]
   draggable: boolean
   element: ElementNode
   focused: ElementFocusedState
@@ -54,6 +61,8 @@ export interface ElementOverlayProps {
   showActions: boolean
   wasMaybeCollapsed: boolean
   enableScrollIntoView: boolean
+  targets: ElementChildTarget[]
+  elementType: 'element' | 'group'
 }
 
 const Root = styled(Card)`
@@ -118,6 +127,40 @@ const Actions = styled(Flex)`
   }
 `
 
+const HUD = styled(Flex)`
+  top: 100%;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+
+  gap: 4px;
+  padding: 4px 0;
+  flex-wrap: wrap;
+
+  [data-hovered] & {
+    pointer-events: all;
+  }
+`
+
+const MenuWrapper = styled(Flex)`
+  top: 0;
+  cursor: pointer;
+  /* pointer-events: none; */
+  position: absolute;
+  right: 0;
+
+  /* background-color: var(--card-focus-ring-color); */
+
+  gap: 4px;
+  padding: 4px;
+  flex-direction: column;
+
+  [data-hovered] & {
+    pointer-events: all;
+  }
+`
+
 const Tab = styled(Flex)`
   bottom: 100%;
   cursor: pointer;
@@ -169,16 +212,16 @@ function createIntentLink(node: SanityNode) {
     tool,
     type: type!,
     id,
-    path: pathToUrlString(studioPath.fromString(path)),
+    path: path ? pathToUrlString(studioPath.fromString(path)) : [],
   })
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {element, focused, componentResolver, node, showActions, draggable} = props
+  const {element, focused, componentResolver, node, showActions, draggable, targets, elementType} =
+    props
 
   const {getField, getType} = useSchema()
   const schemaType = getType(node)
-  const {field, parent} = getField(node)
 
   const href = 'path' in node ? createIntentLink(node) : node.href
 
@@ -186,32 +229,72 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
   const title = useMemo(() => {
     if (!('path' in node)) return undefined
-    return previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title
-  }, [node, previewSnapshots])
+    return (
+      previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title +
+      (targets.length > 1 ? ` [${targets.length}]` : '')
+    )
+  }, [node, previewSnapshots, targets])
 
-  const componentContext = useMemo<OverlayComponentResolverContext | undefined>(() => {
-    if (!('path' in node)) return undefined
-    if (!field || !schemaType) return undefined
-    const type = field.value.type
-
-    return {
-      document: schemaType,
-      element,
-      field,
-      focused: !!focused,
-      node,
-      parent,
-      type,
+  const resolverContexts = useMemo<{
+    legacyComponentContext: OverlayComponentResolverContext | undefined
+    extensionContexts: OverlayComponentResolverContext[]
+  }>(() => {
+    function getContext(
+      node: SanityNode | SanityStegaNode,
+    ): OverlayComponentResolverContext | undefined {
+      const schemaType = getType(node)
+      const {field, parent} = getField(node)
+      // console.log('getContext', {node, field, schemaType})
+      if (!('id' in node)) return undefined
+      if (!field || !schemaType) return undefined
+      const type = field.value.type
+      return {
+        document: schemaType,
+        element,
+        field,
+        focused: !!focused,
+        node,
+        parent,
+        type,
+      }
     }
-  }, [schemaType, element, field, focused, node, parent])
+    // console.log('resolverContexts', {targets})
+    return {
+      legacyComponentContext: elementType === 'element' ? getContext(node) : undefined,
+      extensionContexts: targets
+        .map((target) => getContext(target.sanity))
+        .filter((ctx) => ctx !== undefined),
+    }
+  }, [elementType, node, targets, getType, getField, element, focused])
 
-  const customComponents = useCustomComponents(componentContext, componentResolver)
+  const customComponents = useCustomComponents(
+    resolverContexts.legacyComponentContext,
+    componentResolver,
+  )
+
+  const extensions = useExtensions(resolverContexts.extensionContexts, props.extensionDefinitions)
 
   const icon = schemaType?.icon ? (
     <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
   ) : (
     <DocumentIcon />
   )
+
+  const id = useId()
+  const [exclusiveExtension, setExclusiveExtension] = useState<{
+    extension: OverlayExtensionExclusiveDefinition
+    context: OverlayComponentResolverContext
+  } | null>(null)
+
+  if (exclusiveExtension?.extension?.component && exclusiveExtension?.context) {
+    const ExclusiveExtensionComponent = exclusiveExtension.extension.component
+
+    return (
+      <ExclusiveExtensionComponent {...exclusiveExtension.context} PointerEvents={PointerEvents} />
+    )
+  }
+
+  const hasMenuitems = extensions?.some((extension) => extension.exclusive.length > 0)
 
   return (
     <>
@@ -238,10 +321,75 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         </Tab>
       )}
 
+      <HUD>
+        {extensions?.map((extension, i) =>
+          extension.hud.map((hud) => {
+            const Component = hud.component
+            if (!Component) return null
+            return <Component key={i} PointerEvents={PointerEvents} {...extension.context} />
+          }),
+        )}
+      </HUD>
+      {hasMenuitems && (
+        <PointerEvents>
+          <MenuWrapper>
+            <MenuButton
+              id={id}
+              popover={{
+                animate: true,
+                placement: 'bottom-start',
+                constrainSize: true,
+                tone: 'default',
+              }}
+              button={<Button icon={EllipsisHorizontalIcon} tone="primary" padding={2} />}
+              menu={
+                <PointerEvents>
+                  <Menu>
+                    {extensions?.map((extension) => (
+                      <Stack role="group" space={1} key={extension.context.node.id}>
+                        <Stack padding={3} paddingBottom={2}>
+                          <Label muted size={1}>
+                            {extension.context.document.name}: {extension.context.field?.name}
+                          </Label>
+                        </Stack>
+
+                        {extension.exclusive.map((exclusive) => {
+                          const Component = exclusive.component
+                          if (!Component) return null
+                          return (
+                            <MenuItem
+                              key={exclusive.name}
+                              fontSize={2}
+                              padding={3}
+                              onClick={() =>
+                                setExclusiveExtension({
+                                  extension: exclusive,
+                                  context: extension.context,
+                                })
+                              }
+                            >
+                              {exclusive.title || exclusive.name}
+                            </MenuItem>
+                          )
+                        })}
+                      </Stack>
+                    ))}
+                  </Menu>
+                </PointerEvents>
+              }
+            />
+          </MenuWrapper>
+        </PointerEvents>
+      )}
       {Array.isArray(customComponents)
         ? customComponents.map(({component: Component, props}, i) => {
             return (
-              <Component key={i} PointerEvents={PointerEvents} {...componentContext!} {...props} />
+              <Component
+                key={i}
+                PointerEvents={PointerEvents}
+                {...resolverContexts.legacyComponentContext!}
+                {...props}
+              />
             )
           })
         : customComponents}
@@ -324,6 +472,37 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     </Root>
   )
 })
+
+interface ExtensionInstance {
+  context: OverlayComponentResolverContext
+  hud: OverlayExtensionHudDefinition[]
+  exclusive: OverlayExtensionExclusiveDefinition[]
+}
+
+function useExtensions(
+  componentContexts: OverlayComponentResolverContext[],
+  extensionDefinitions?: OverlayExtensionDefinition[],
+) {
+  return useMemo(
+    () =>
+      componentContexts.map((componentContext) => {
+        const instance: ExtensionInstance = {
+          context: componentContext,
+          hud: [],
+          exclusive: [],
+        }
+
+        extensionDefinitions?.forEach((definition) => {
+          if (!definition.guard?.(componentContext)) return
+          if (definition.type === 'hud') instance.hud.push(definition)
+          if (definition.type === 'exclusive') instance.exclusive.push(definition)
+        })
+
+        return instance
+      }),
+    [componentContexts, extensionDefinitions],
+  )
+}
 
 function useCustomComponents(
   componentContext: OverlayComponentResolverContext | undefined,
