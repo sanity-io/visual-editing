@@ -1,11 +1,13 @@
-import {shoesList, type ShoesListResult} from '$lib/queries'
+import {shoesListQuery} from '$lib/queries'
+import type {ShoesListQueryResult} from '$lib/sanity.types'
 import type {PageServerLoad} from './$types'
 
-export const load: PageServerLoad = async ({locals: {client, preview}}) => {
-  const products = await client.fetch<ShoesListResult>(
-    shoesList,
+export const load: PageServerLoad = async ({locals: {sanity}}) => {
+  const {client, previewEnabled} = sanity
+  const products = await client.fetch<ShoesListQueryResult>(
+    shoesListQuery,
     {},
-    {stega: preview ? true : false},
+    {stega: previewEnabled ? true : false},
   )
   return {products}
 }

@@ -7,9 +7,11 @@
     "build": "vite build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "predev": "pnpm run typegen",
     "dev": "vite dev --port 3004",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typegen": "sanity typegen generate"
   },
   "prettier": "@repo/prettier-config",
   "dependencies": {
@@ -21,11 +23,13 @@
   "devDependencies": {
     "@fontsource/fira-mono": "^5.2.6",
     "@repo/prettier-config": "workspace:*",
+    "@repo/sanity-extracted-schema": "workspace:*",
     "@sanity/client": "catalog:",
     "@sanity/comlink": "workspace:^",
     "@sanity/presentation-comlink": "workspace:^",
     "@sanity/preview-url-secret": "workspace:*",
     "@sanity/svelte-loader": "workspace:*",
+    "@sanity/sveltekit": "^0.0.1",
     "@sanity/visual-editing": "workspace:*",
     "@sanity/visual-editing-csm": "workspace:*",
     "@sveltejs/adapter-auto": "^6.0.1",

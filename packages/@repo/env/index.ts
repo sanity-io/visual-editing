@@ -54,11 +54,17 @@ export const workspaces = {
     workspace: 'svelte',
     tool: 'svelte-basic',
   },
-  'svelte-loaders': {
+  'svelte-query-loader': {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'svelte',
-    tool: 'svelte-loaders',
+    tool: 'svelte-query-loader',
+  },
+  'svelte-live-loader': {
+    projectId: projectId,
+    dataset: datasets.development,
+    workspace: 'svelte',
+    tool: 'svelte-live-loader',
   },
   'cross-dataset-references': {
     projectId: projectId,
