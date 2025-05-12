@@ -1,13 +1,18 @@
 <script lang="ts">
-  import {page} from '$app/stores'
-  import type {ShoesListResult} from '$lib/queries'
+  import {page} from '$app/state'
   import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
+  import type {ShoesListQueryResult} from '$lib/sanity.types'
   import {formatCurrency} from '$lib/utils'
 
-  export let loading: boolean = false
-  export let products: ShoesListResult
+  const {
+    loading = false,
+    products,
+  }: {
+    products?: ShoesListQueryResult
+    loading?: boolean
+  } = $props()
 
-  const basePath = $page.url.pathname
+  const basePath = page.url.pathname
 </script>
 
 <svelte:head>

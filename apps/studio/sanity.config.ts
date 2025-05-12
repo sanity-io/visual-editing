@@ -251,16 +251,16 @@ export default defineConfig([
       ),
     }),
     presentationTool({
-      name: workspaces['svelte-loaders'].tool,
+      name: workspaces['svelte-live-loader'].tool,
       previewUrl: definePreviewUrl(
-        new URL('/shoes-with-loaders', urls.svelte).toString(),
-        workspaces['svelte-loaders'].workspace,
-        workspaces['svelte-loaders'].tool,
+        new URL('/shoes-live-loader', urls.svelte).toString(),
+        workspaces['svelte-live-loader'].workspace,
+        workspaces['svelte-live-loader'].tool,
       ),
       resolve: {
         mainDocuments: defineDocuments([
           {
-            route: '/shoes-with-loaders/shoes/:slug',
+            route: '/shoes-live-loader/shoes/:slug',
             filter: `_type == "shoe" && slug.current == $slug`,
           },
         ]),
@@ -274,11 +274,47 @@ export default defineConfig([
               locations: [
                 {
                   title: doc?.title || 'Untitled',
-                  href: `/shoes-with-loaders/shoes/${doc?.slug}`,
+                  href: `/shoes-live-loader/shoes/${doc?.slug}`,
                 },
                 {
                   title: 'Shoes',
-                  href: '/shoes-with-loaders/shoes',
+                  href: '/shoes-live-loader/shoes',
+                },
+              ],
+            }),
+          }),
+        },
+      },
+    }),
+    presentationTool({
+      name: workspaces['svelte-query-loader'].tool,
+      previewUrl: definePreviewUrl(
+        new URL('/shoes-query-loader', urls.svelte).toString(),
+        workspaces['svelte-query-loader'].workspace,
+        workspaces['svelte-query-loader'].tool,
+      ),
+      resolve: {
+        mainDocuments: defineDocuments([
+          {
+            route: '/shoes-query-loader/shoes/:slug',
+            filter: `_type == "shoe" && slug.current == $slug`,
+          },
+        ]),
+        locations: {
+          shoe: defineLocations({
+            select: {
+              title: 'title',
+              slug: 'slug.current',
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || 'Untitled',
+                  href: `/shoes-query-loader/shoes/${doc?.slug}`,
+                },
+                {
+                  title: 'Shoes',
+                  href: '/shoes-query-loader/shoes',
                 },
               ],
             }),
