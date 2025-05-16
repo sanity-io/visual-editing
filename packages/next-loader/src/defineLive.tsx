@@ -8,6 +8,7 @@ import {
   type LiveEventGoAway,
   type QueryParams,
   type SanityClient,
+  type SyncTag,
 } from '@sanity/client'
 import SanityLiveClientComponent from '@sanity/next-loader/client-components/live'
 import SanityLiveStreamClientComponent from '@sanity/next-loader/client-components/live-stream'
@@ -137,6 +138,11 @@ export interface DefinedSanityLiveProps {
    * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
    */
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
+
+  /**
+   * Override how cache tags are invalidated, you need to pass a server action here.
+   */
+  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void>
 }
 
 /**
@@ -291,6 +297,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       onError,
       onGoAway,
       intervalOnGoAway,
+      revalidateSyncTags,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
@@ -315,6 +322,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         onError={onError}
         onGoAway={onGoAway}
         intervalOnGoAway={intervalOnGoAway}
+        revalidateSyncTags={revalidateSyncTags}
       />
     )
   }

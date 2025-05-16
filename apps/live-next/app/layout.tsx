@@ -5,6 +5,7 @@ import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import {toPlainText, VisualEditing, type PortableTextBlock} from 'next-sanity'
+import {revalidateTag} from 'next/cache'
 import {Inter} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
@@ -91,7 +92,18 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         </section>
         <Toaster />
         {(await draftMode()).isEnabled && <VisualEditing />}
-        <SanityLive refreshOnFocus refreshOnReconnect onError={handleError} />
+        <SanityLive
+          refreshOnFocus
+          refreshOnReconnect
+          onError={handleError}
+          revalidateSyncTags={async (tags) => {
+            'use server'
+
+            for (const tag of tags) {
+              await revalidateTag(`sanity:${tag}`)
+            }
+          }}
+        />
         <SpeedInsights />
       </body>
     </html>

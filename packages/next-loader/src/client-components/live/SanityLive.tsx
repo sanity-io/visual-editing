@@ -4,8 +4,9 @@ import {
   type InitializedClientConfig,
   type LiveEvent,
   type LiveEventGoAway,
+  type SyncTag,
 } from '@sanity/client'
-import {revalidateSyncTags} from '@sanity/next-loader/server-actions'
+import {revalidateSyncTags as defaultRevalidateSyncTags} from '@sanity/next-loader/server-actions'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation.js'
@@ -47,6 +48,7 @@ export interface SanityLiveProps
   onError?: (error: unknown) => void
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
+  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void>
 }
 
 function handleError(error: unknown) {
@@ -107,6 +109,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     requestTag = 'next-loader.live',
     onError = handleError,
     onGoAway = handleOnGoAway,
+    revalidateSyncTags = defaultRevalidateSyncTags,
   } = props
 
   const client = useMemo(
