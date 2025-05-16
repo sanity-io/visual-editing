@@ -146,6 +146,10 @@ const HUD = styled(Flex)`
   [data-hovered] & {
     pointer-events: all;
   }
+
+  [data-flipped] & {
+    top: calc(100% + 2rem);
+  }
 `
 
 const MenuWrapper = styled(Flex)`
