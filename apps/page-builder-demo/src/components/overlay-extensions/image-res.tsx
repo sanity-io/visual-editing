@@ -13,7 +13,6 @@ export const ImageResolutionHUD: OverlayExtensionDefinition = {
   type: 'hud',
   name: 'image-resolution-hud',
   component: function ImageResolutionHUDComponent(props) {
-    console.log('props', props)
     const {getDocument} = useDocuments()
     const doc = getDocument(props.node.id)
     const [resolution, setResolution] = useState<string | undefined>()
@@ -39,7 +38,6 @@ export const ImageResolutionHUD: OverlayExtensionDefinition = {
     )
   },
   guard: (ctx) => {
-    console.log('ctx', ctx)
     // @ts-ignore
     return ctx?.field?.value?.fields?.asset?.value?.dereferencesTo === 'sanity.imageAsset'
   },
