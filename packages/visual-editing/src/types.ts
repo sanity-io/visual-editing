@@ -312,6 +312,7 @@ export interface ElementState {
  */
 export interface ElementChildTarget {
   sanity: SanityNode | SanityStegaNode
+  element: ElementNode
 }
 
 /**
@@ -434,6 +435,10 @@ export interface OverlayComponentResolverContext<
    */
   element: ElementNode
   /**
+   * The element node that the Sanity node data is detected on
+   */
+  targetElement: ElementNode
+  /**
    * The resolved field schema type
    */
   field: OverlayElementField
@@ -483,7 +488,7 @@ export interface OverlayExtensionDefinitionBase {
 export interface OverlayExtensionExclusiveDefinition extends OverlayExtensionDefinitionBase {
   type: 'exclusive'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: OverlayComponent<Record<string, unknown>, any>
+  component?: OverlayComponent<Record<string, unknown> & {closeExclusiveExtension: () => void}, any>
 }
 /** @public  */
 export interface OverlayExtensionHudDefinition extends OverlayExtensionDefinitionBase {

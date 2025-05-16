@@ -383,6 +383,7 @@ export function createOverlayController({
       dragDisabled: !!element.getAttribute('data-sanity-drag-disable'),
       targets: targets.map((target) => ({
         sanity: target.sanity,
+        element: target.elements.element,
       })),
     })
 
@@ -404,6 +405,7 @@ export function createOverlayController({
         sanity: resolvedElement.commonSanity!,
         targets: resolvedElement.targets.map((target) => ({
           sanity: target.sanity,
+          element: target.elements.element,
         })),
       })
     }

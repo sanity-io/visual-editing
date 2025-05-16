@@ -368,6 +368,8 @@ export const Overlays: FunctionComponent<{
 
         return (
           <ElementOverlay
+            comlink={comlink}
+            comlinkStatus={comlinkStatus}
             componentResolver={componentResolver}
             extensionDefinitions={props.extensionDefinitions}
             element={element}
@@ -397,6 +399,7 @@ export const Overlays: FunctionComponent<{
     inPopUp,
     isDragging,
     optimisticActorReady,
+    comlink,
     comlinkStatus,
     wasMaybeCollapsed,
   ])
