@@ -1,9 +1,11 @@
 import {createEditUrl, studioPath} from '@sanity/client/csm'
-import {DocumentIcon, DragHandleIcon, EllipsisHorizontalIcon} from '@sanity/icons'
-import {Label, MenuButton} from '@sanity/ui'
+import type {Status} from '@sanity/comlink'
+import {DocumentIcon, DragHandleIcon, EditIcon, EllipsisVerticalIcon, PlugIcon} from '@sanity/icons'
+import {MenuButton, MenuDivider} from '@sanity/ui'
 import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui/_visual-editing'
 import {pathToUrlString} from '@sanity/visual-editing-csm'
 import {
+  Fragment,
   isValidElement,
   memo,
   useCallback,
@@ -33,6 +35,7 @@ import type {
   OverlayRect,
   SanityNode,
   SanityStegaNode,
+  VisualEditingNode,
 } from '../types'
 import {getLinkHref} from '../util/getLinkHref'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
@@ -49,6 +52,8 @@ const isReactElementOverlayComponent = (
 }
 
 export interface ElementOverlayProps {
+  comlink?: VisualEditingNode
+  comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
   extensionDefinitions?: OverlayExtensionDefinition[]
   draggable: boolean
@@ -144,17 +149,7 @@ const HUD = styled(Flex)`
 `
 
 const MenuWrapper = styled(Flex)`
-  top: 0;
-  cursor: pointer;
-  /* pointer-events: none; */
-  position: absolute;
-  right: 0;
-
-  /* background-color: var(--card-focus-ring-color); */
-
-  gap: 4px;
-  padding: 4px;
-  flex-direction: column;
+  margin: -6px;
 
   [data-hovered] & {
     pointer-events: all;
@@ -217,8 +212,17 @@ function createIntentLink(node: SanityNode) {
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
-  const {element, focused, componentResolver, node, showActions, draggable, targets, elementType} =
-    props
+  const {
+    element,
+    focused,
+    componentResolver,
+    node,
+    showActions,
+    draggable,
+    targets,
+    elementType,
+    comlink,
+  } = props
 
   const {getField, getType} = useSchema()
   const schemaType = getType(node)
@@ -229,11 +233,8 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
   const title = useMemo(() => {
     if (!('path' in node)) return undefined
-    return (
-      previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title +
-      (targets.length > 1 ? ` [${targets.length}]` : '')
-    )
-  }, [node, previewSnapshots, targets])
+    return previewSnapshots.find((snapshot) => snapshot._id === node.id)?.title
+  }, [node, previewSnapshots])
 
   const resolverContexts = useMemo<{
     legacyComponentContext: OverlayComponentResolverContext | undefined
@@ -241,6 +242,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   }>(() => {
     function getContext(
       node: SanityNode | SanityStegaNode,
+      nodeElement?: ElementNode,
     ): OverlayComponentResolverContext | undefined {
       const schemaType = getType(node)
       const {field, parent} = getField(node)
@@ -251,6 +253,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
       return {
         document: schemaType,
         element,
+        targetElement: nodeElement || element,
         field,
         focused: !!focused,
         node,
@@ -262,7 +265,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     return {
       legacyComponentContext: elementType === 'element' ? getContext(node) : undefined,
       extensionContexts: targets
-        .map((target) => getContext(target.sanity))
+        .map((target) => getContext(target.sanity, target.element))
         .filter((ctx) => ctx !== undefined),
     }
   }, [elementType, node, targets, getType, getField, element, focused])
@@ -286,11 +289,19 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     context: OverlayComponentResolverContext
   } | null>(null)
 
+  const closeExclusiveExtension = useCallback(() => {
+    setExclusiveExtension(null)
+  }, [])
+
   if (exclusiveExtension?.extension?.component && exclusiveExtension?.context) {
     const ExclusiveExtensionComponent = exclusiveExtension.extension.component
 
     return (
-      <ExclusiveExtensionComponent {...exclusiveExtension.context} PointerEvents={PointerEvents} />
+      <ExclusiveExtensionComponent
+        {...exclusiveExtension.context}
+        PointerEvents={PointerEvents}
+        closeExclusiveExtension={closeExclusiveExtension}
+      />
     )
   }
 
@@ -298,89 +309,117 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
   return (
     <>
-      {showActions ? (
-        <Actions gap={1} paddingY={1} data-sanity-overlay-element>
-          <Link href={href} />
-        </Actions>
-      ) : null}
-      {title && (
-        <Tab gap={1} paddingY={1}>
-          <Labels gap={2} padding={2}>
-            {draggable && (
-              <Box marginRight={1}>
-                <Text className="drag-handle" size={0}>
-                  <DragHandleIcon />
+      <PointerEvents>
+        {showActions ? (
+          <Actions gap={1} paddingY={1} data-sanity-overlay-element>
+            <Link href={href} />
+          </Actions>
+        ) : null}
+        {(title || hasMenuitems) && (
+          <Tab gap={1} paddingY={1}>
+            <Labels gap={2} padding={2}>
+              {draggable && (
+                <Box marginRight={1}>
+                  <Text className="drag-handle" size={0}>
+                    <DragHandleIcon />
+                  </Text>
+                </Box>
+              )}
+              <Text size={0}>{icon}</Text>
+
+              {title && (
+                <Text size={1} weight="medium">
+                  {title}
                 </Text>
-              </Box>
-            )}
-            <Text size={0}>{icon}</Text>
-            <Text size={1} weight="medium">
-              {title}
-            </Text>
-          </Labels>
-        </Tab>
-      )}
+              )}
 
-      <HUD>
-        {extensions?.map((extension, i) =>
-          extension.hud.map((hud) => {
-            const Component = hud.component
-            if (!Component) return null
-            return <Component key={i} PointerEvents={PointerEvents} {...extension.context} />
-          }),
+              {hasMenuitems && (
+                <Box paddingLeft={2}>
+                  <MenuWrapper>
+                    <MenuButton
+                      id={id}
+                      popover={{
+                        animate: true,
+                        placement: 'bottom-start',
+                        constrainSize: true,
+                        tone: 'default',
+                      }}
+                      button={<Button icon={EllipsisVerticalIcon} tone="primary" padding={2} />}
+                      menu={
+                        <Menu paddingY={0}>
+                          <PointerEvents>
+                            {extensions?.map((extension, index) => (
+                              <Fragment key={extension.context.node.id}>
+                                <Stack role="group" paddingY={1} space={0}>
+                                  <MenuItem
+                                    paddingY={2}
+                                    text={
+                                      <Box paddingY={2}>
+                                        <Text muted size={1} style={{textTransform: 'capitalize'}}>
+                                          {`${extension.context.document.name}: ${extension.context.field?.name}`}
+                                        </Text>
+                                      </Box>
+                                    }
+                                    icon={<EditIcon />}
+                                    onClick={() => {
+                                      if (extension.context.node) {
+                                        comlink?.post(
+                                          'visual-editing/focus',
+                                          extension.context.node,
+                                        )
+                                      }
+                                    }}
+                                  />
+                                  {extension.exclusive.map((exclusive) => {
+                                    const Component = exclusive.component
+                                    if (!Component) return null
+                                    return (
+                                      <MenuItem
+                                        paddingY={2}
+                                        key={exclusive.name}
+                                        icon={exclusive.icon || <PlugIcon />}
+                                        text={
+                                          <Box paddingY={2}>
+                                            <Text size={1}>
+                                              {exclusive.title || exclusive.name}
+                                            </Text>
+                                          </Box>
+                                        }
+                                        onClick={() =>
+                                          setExclusiveExtension({
+                                            extension: exclusive,
+                                            context: extension.context,
+                                          })
+                                        }
+                                      />
+                                    )
+                                  })}
+                                </Stack>
+                                {index < extensions.length - 1 && <MenuDivider />}
+                              </Fragment>
+                            ))}
+                          </PointerEvents>
+                        </Menu>
+                      }
+                    />
+                  </MenuWrapper>
+                </Box>
+              )}
+            </Labels>
+          </Tab>
         )}
-      </HUD>
-      {hasMenuitems && (
-        <PointerEvents>
-          <MenuWrapper>
-            <MenuButton
-              id={id}
-              popover={{
-                animate: true,
-                placement: 'bottom-start',
-                constrainSize: true,
-                tone: 'default',
-              }}
-              button={<Button icon={EllipsisHorizontalIcon} tone="primary" padding={2} />}
-              menu={
-                <PointerEvents>
-                  <Menu>
-                    {extensions?.map((extension) => (
-                      <Stack role="group" space={1} key={extension.context.node.id}>
-                        <Stack padding={3} paddingBottom={2}>
-                          <Label muted size={1}>
-                            {extension.context.document.name}: {extension.context.field?.name}
-                          </Label>
-                        </Stack>
 
-                        {extension.exclusive.map((exclusive) => {
-                          const Component = exclusive.component
-                          if (!Component) return null
-                          return (
-                            <MenuItem
-                              key={exclusive.name}
-                              fontSize={2}
-                              padding={3}
-                              onClick={() =>
-                                setExclusiveExtension({
-                                  extension: exclusive,
-                                  context: extension.context,
-                                })
-                              }
-                            >
-                              {exclusive.title || exclusive.name}
-                            </MenuItem>
-                          )
-                        })}
-                      </Stack>
-                    ))}
-                  </Menu>
-                </PointerEvents>
-              }
-            />
-          </MenuWrapper>
-        </PointerEvents>
-      )}
+        <HUD>
+          {extensions?.map((extension, i) =>
+            extension.hud.map((hud) => {
+              const Component = hud.component
+              if (!Component) return null
+              return <Component key={i} PointerEvents={PointerEvents} {...extension.context} />
+            }),
+          )}
+        </HUD>
+      </PointerEvents>
+
       {Array.isArray(customComponents)
         ? customComponents.map(({component: Component, props}, i) => {
             return (
