@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.5.3...next-loader-v1.6.0) (2025-05-16)
+
+
+### Features
+
+* **SanityLive:** add `revalidateSyncTags` prop to allow overriding revalidation logic ([a00df96](https://github.com/sanity-io/visual-editing/commit/a00df96eccdedeb2785d578cfe3597d376985498))
+
 ## [1.5.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.5.2...next-loader-v1.5.3) (2025-05-07)
 
 
