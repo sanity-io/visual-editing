@@ -88,7 +88,7 @@ export function findCommonSanityData(
 /**
  * Finds nodes containing sanity specific data
  * @param el - A parent element to traverse
- * @returns An array of overlay targets, each with containing HTML elements and a collection of HTML elements with decoded sanity data
+ * @returns An array of overlay targets
  * @internal
  */
 export function findSanityNodes(
@@ -252,21 +252,20 @@ export function findSanityNodes(
 
   return mainResults
     .map((node) => {
-      if (node.targets.length === 0 && node.type === 'group')
-        // Return empty groups for now so the controller can unregister them
+      if (node.targets.length === 0 && node.type === 'group') {
+        // Always return empty groups so the controller can unregister them
         return {
           ...node,
           commonSanity: undefined,
         }
+      }
 
       const commonSanity =
         node.targets.length === 1
           ? node.targets[0].sanity
           : findCommonSanityData(
               node.targets.map(({sanity}) => sanity).filter((n) => n !== undefined),
-            ) ||
-            // TODO: We probably don't want to fallback to the first target's sanity node, but we currently need a node for the overlay element to register
-            node.targets[0].sanity
+            ) || node.targets[0].sanity
 
       if (!commonSanity) return null
 

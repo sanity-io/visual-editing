@@ -378,9 +378,21 @@ export interface ResolvedElementTarget {
  * @internal
  */
 export interface ResolvedElement {
+  /**
+   * The HTML element that the visual overlay should be attached to
+   */
   elements: SanityNodeElements
+  /**
+   * Attempted common sanity node data, may be the first target's sanity node if no common node is found
+   */
   commonSanity?: SanityNode | SanityStegaNode
+  /**
+   * Sanity nodes for the visual overlay, can contain multiple if a group
+   */
   targets: ResolvedElementTarget[]
+  /**
+   * The type of the visual overlay
+   */
   type: 'element' | 'group'
 }
 

@@ -153,7 +153,7 @@ const HUD = styled(Flex)`
 `
 
 const MenuWrapper = styled(Flex)`
-  margin: -6px;
+  margin: -0.5rem;
 
   [data-hovered] & {
     pointer-events: all;
@@ -250,7 +250,6 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     ): OverlayComponentResolverContext | undefined {
       const schemaType = getType(node)
       const {field, parent} = getField(node)
-      // console.log('getContext', {node, field, schemaType})
       if (!('id' in node)) return undefined
       if (!field || !schemaType) return undefined
       const type = field.value.type
@@ -265,7 +264,6 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         type,
       }
     }
-    // console.log('resolverContexts', {targets})
     return {
       legacyComponentContext: elementType === 'element' ? getContext(node) : undefined,
       extensionContexts: targets
