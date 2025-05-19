@@ -35,6 +35,7 @@ import type {
   StatusEmitEvent,
   WithoutResponse,
 } from './types'
+import {createPromiseWithResolvers} from './util'
 
 /**
  * @public
@@ -585,7 +586,7 @@ export const createNode = <TSends extends Message, TReceives extends Message>(
   ) => {
     const {responseTimeout = FETCH_TIMEOUT_DEFAULT, signal, suppressWarnings} = options || {}
 
-    const resolvable = Promise.withResolvers<TSends['response']>()
+    const resolvable = createPromiseWithResolvers<TSends['response']>()
     const _data = {type, data} as WithoutResponse<TMessage>
 
     actor.send({
