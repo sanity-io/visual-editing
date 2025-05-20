@@ -489,7 +489,7 @@ export type OverlayComponentResolver<
   | void
 
 /** @public  */
-export interface OverlayExtensionDefinitionBase {
+export interface OverlayPluginDefinitionBase {
   name: string
   title?: string
   icon?: ComponentType
@@ -497,22 +497,20 @@ export interface OverlayExtensionDefinitionBase {
 }
 
 /** @public  */
-export interface OverlayExtensionExclusiveDefinition extends OverlayExtensionDefinitionBase {
+export interface OverlayPluginExclusiveDefinition extends OverlayPluginDefinitionBase {
   type: 'exclusive'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: OverlayComponent<Record<string, unknown> & {closeExclusiveExtension: () => void}, any>
+  component?: OverlayComponent<Record<string, unknown> & {closeExclusiveView: () => void}, any>
 }
 /** @public  */
-export interface OverlayExtensionHudDefinition extends OverlayExtensionDefinitionBase {
+export interface OverlayPluginHudDefinition extends OverlayPluginDefinitionBase {
   type: 'hud'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component?: OverlayComponent<Record<string, unknown>, any>
 }
 
 /** @public  */
-export type OverlayExtensionDefinition =
-  | OverlayExtensionExclusiveDefinition
-  | OverlayExtensionHudDefinition
+export type OverlayPluginDefinition = OverlayPluginExclusiveDefinition | OverlayPluginHudDefinition
 
 /**
  * @public
@@ -522,7 +520,7 @@ export interface VisualEditingOptions {
    * @alpha
    * This API is unstable and could change at any time.
    */
-  extensions?: OverlayExtensionDefinition[]
+  plugins?: OverlayPluginDefinition[]
   /**
    * @alpha
    * This API is unstable and could change at any time.

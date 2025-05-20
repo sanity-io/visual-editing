@@ -1,5 +1,5 @@
 import {get} from '@sanity/util/paths'
-import {OverlayExtensionDefinition, useDocuments} from '@sanity/visual-editing/react'
+import {OverlayPluginDefinition, useDocuments} from '@sanity/visual-editing/react'
 import {useEffect, useState} from 'react'
 
 export function parseImageAssetId(documentId: string) {
@@ -9,7 +9,7 @@ export function parseImageAssetId(documentId: string) {
   return {type: 'image', assetId, width, height, extension}
 }
 
-export const ImageResolutionHUD: OverlayExtensionDefinition = {
+export const ImageResolutionHUD: OverlayPluginDefinition = {
   type: 'hud',
   name: 'image-resolution-hud',
   component: function ImageResolutionHUDComponent(props) {

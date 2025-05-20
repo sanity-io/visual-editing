@@ -14,7 +14,7 @@ let cleanup: ReturnType<typeof setTimeout> | null = null
 
 export function renderVisualEditing(
   signal: AbortSignal,
-  {components, history, refresh, zIndex, extensions}: VisualEditingOptions,
+  {components, history, refresh, zIndex, plugins}: VisualEditingOptions,
 ): void {
   // Cancel pending cleanups, this is useful to avoid overlays blinking as the parent app transition between URLs, or hot module reload is happening
   if (cleanup) clearTimeout(cleanup)
@@ -48,7 +48,7 @@ export function renderVisualEditing(
     <StrictMode>
       <VisualEditing
         components={components}
-        extensions={extensions}
+        plugins={plugins}
         history={history}
         refresh={refresh}
         zIndex={zIndex}

@@ -66,10 +66,10 @@ export type {
   SanityStegaNode,
   VisualEditingOptions,
   ElementChildTarget,
-  OverlayExtensionDefinition,
-  OverlayExtensionExclusiveDefinition,
-  OverlayExtensionHudDefinition,
-  OverlayExtensionDefinitionBase,
+  OverlayPluginDefinition,
+  OverlayPluginExclusiveDefinition,
+  OverlayPluginHudDefinition,
+  OverlayPluginDefinitionBase,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
 export {useSharedState} from './ui/shared-state/useSharedState'

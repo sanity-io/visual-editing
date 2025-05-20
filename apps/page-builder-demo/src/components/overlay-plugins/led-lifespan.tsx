@@ -1,8 +1,8 @@
 import {get} from '@sanity/util/paths'
-import {OverlayExtensionDefinition, useDocuments} from '@sanity/visual-editing/react'
+import {OverlayPluginDefinition, useDocuments} from '@sanity/visual-editing/react'
 import {useEffect, useState} from 'react'
 
-export const LEDLifespanHUD: OverlayExtensionDefinition = {
+export const LEDLifespanHUD: OverlayPluginDefinition = {
   type: 'hud',
   name: 'led-lifespan-hud',
   component: function LEDLifespanHUDComponent(props) {

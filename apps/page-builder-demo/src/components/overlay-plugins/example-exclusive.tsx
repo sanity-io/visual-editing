@@ -1,10 +1,10 @@
-import {OverlayExtensionDefinition} from '@sanity/visual-editing/react'
+import {OverlayPluginDefinition} from '@sanity/visual-editing/react'
 
-export const ExampleExclusiveExtension: OverlayExtensionDefinition = {
+export const ExampleExclusivePlugin: OverlayPluginDefinition = {
   type: 'exclusive',
   name: 'example-exclusive',
   title: 'Example Exclusive',
-  component: function ExampleExclusiveComponent({closeExclusiveExtension, PointerEvents}) {
+  component: function ExampleExclusiveComponent({closeExclusiveView, PointerEvents}) {
     return (
       <div
         style={{
@@ -19,7 +19,7 @@ export const ExampleExclusiveExtension: OverlayExtensionDefinition = {
       >
         <span>Example Exclusive</span>
         <PointerEvents>
-          <button onClick={() => closeExclusiveExtension()}>Close</button>
+          <button onClick={() => closeExclusiveView()}>Close</button>
         </PointerEvents>
       </div>
     )

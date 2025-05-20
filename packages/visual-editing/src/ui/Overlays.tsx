@@ -25,8 +25,8 @@ import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisti
 import type {
   OverlayComponentResolver,
   OverlayEventHandler,
-  OverlayExtensionDefinition,
   OverlayMsg,
+  OverlayPluginDefinition,
   VisualEditingNode,
 } from '../types'
 import {sanityNodesExistInSameArray} from '../util/findSanityNodes'
@@ -181,7 +181,7 @@ export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
   comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
-  extensionDefinitions?: OverlayExtensionDefinition[]
+  plugins?: OverlayPluginDefinition[]
   inFrame: boolean
   inPopUp: boolean
   zIndex?: string | number
@@ -371,7 +371,7 @@ export const Overlays: FunctionComponent<{
             comlink={comlink}
             comlinkStatus={comlinkStatus}
             componentResolver={componentResolver}
-            extensionDefinitions={props.extensionDefinitions}
+            plugins={props.plugins}
             element={element}
             enableScrollIntoView={!isDragging && !dragMinimapTransition && !dragShowMinimap}
             key={id}
@@ -391,7 +391,7 @@ export const Overlays: FunctionComponent<{
       })
   }, [
     componentResolver,
-    props.extensionDefinitions,
+    props.plugins,
     dragMinimapTransition,
     dragShowMinimap,
     elements,

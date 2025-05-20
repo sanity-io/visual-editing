@@ -1,6 +1,6 @@
-import {OverlayExtensionDefinition} from '@sanity/visual-editing/react'
+import {OverlayPluginDefinition} from '@sanity/visual-editing/react'
 
-export const ExampleHUDExtension: OverlayExtensionDefinition = {
+export const ExampleHUDPlugin: OverlayPluginDefinition = {
   type: 'hud',
   name: 'example-hud',
   title: 'Example HUD',

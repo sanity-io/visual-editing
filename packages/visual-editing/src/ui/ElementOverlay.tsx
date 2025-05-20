@@ -29,9 +29,9 @@ import type {
   OverlayComponent,
   OverlayComponentResolver,
   OverlayComponentResolverContext,
-  OverlayExtensionDefinition,
-  OverlayExtensionExclusiveDefinition,
-  OverlayExtensionHudDefinition,
+  OverlayPluginDefinition,
+  OverlayPluginExclusiveDefinition,
+  OverlayPluginHudDefinition,
   OverlayRect,
   SanityNode,
   SanityStegaNode,
@@ -55,7 +55,7 @@ export interface ElementOverlayProps {
   comlink?: VisualEditingNode
   comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
-  extensionDefinitions?: OverlayExtensionDefinition[]
+  plugins?: OverlayPluginDefinition[]
   draggable: boolean
   element: ElementNode
   focused: ElementFocusedState
@@ -242,7 +242,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
   const resolverContexts = useMemo<{
     legacyComponentContext: OverlayComponentResolverContext | undefined
-    extensionContexts: OverlayComponentResolverContext[]
+    pluginContexts: OverlayComponentResolverContext[]
   }>(() => {
     function getContext(
       node: SanityNode | SanityStegaNode,
@@ -266,7 +266,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     }
     return {
       legacyComponentContext: elementType === 'element' ? getContext(node) : undefined,
-      extensionContexts: targets
+      pluginContexts: targets
         .map((target) => getContext(target.sanity, target.element))
         .filter((ctx) => ctx !== undefined),
     }
@@ -277,7 +277,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     componentResolver,
   )
 
-  const extensions = useExtensions(resolverContexts.extensionContexts, props.extensionDefinitions)
+  const plugins = usePlugins(resolverContexts.pluginContexts, props.plugins)
 
   const icon = schemaType?.icon ? (
     <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
@@ -286,28 +286,28 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   )
 
   const id = useId()
-  const [exclusiveExtension, setExclusiveExtension] = useState<{
-    extension: OverlayExtensionExclusiveDefinition
+  const [activeExclusivePlugin, setActiveExclusivePlugin] = useState<{
+    plugin: OverlayPluginExclusiveDefinition
     context: OverlayComponentResolverContext
   } | null>(null)
 
-  const closeExclusiveExtension = useCallback(() => {
-    setExclusiveExtension(null)
+  const closeExclusivePluginView = useCallback(() => {
+    setActiveExclusivePlugin(null)
   }, [])
 
-  if (exclusiveExtension?.extension?.component && exclusiveExtension?.context) {
-    const ExclusiveExtensionComponent = exclusiveExtension.extension.component
+  if (activeExclusivePlugin?.plugin?.component && activeExclusivePlugin?.context) {
+    const ExclusivePluginComponent = activeExclusivePlugin.plugin.component
 
     return (
-      <ExclusiveExtensionComponent
-        {...exclusiveExtension.context}
+      <ExclusivePluginComponent
+        {...activeExclusivePlugin.context}
         PointerEvents={PointerEvents}
-        closeExclusiveExtension={closeExclusiveExtension}
+        closeExclusiveView={closeExclusivePluginView}
       />
     )
   }
 
-  const hasMenuitems = extensions?.some((extension) => extension.exclusive.length > 0)
+  const hasMenuitems = plugins?.some((plugin) => plugin.exclusive.length > 0)
 
   return (
     <>
@@ -350,29 +350,26 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                       menu={
                         <Menu paddingY={0}>
                           <PointerEvents>
-                            {extensions?.map((extension, index) => (
-                              <Fragment key={extension.context.node.id}>
+                            {plugins?.map((plugin, index) => (
+                              <Fragment key={plugin.context.node.id}>
                                 <Stack role="group" paddingY={1} space={0}>
                                   <MenuItem
                                     paddingY={2}
                                     text={
                                       <Box paddingY={2}>
                                         <Text muted size={1} style={{textTransform: 'capitalize'}}>
-                                          {`${extension.context.document.name}: ${extension.context.field?.name}`}
+                                          {`${plugin.context.document.name}: ${plugin.context.field?.name}`}
                                         </Text>
                                       </Box>
                                     }
                                     icon={<EditIcon />}
                                     onClick={() => {
-                                      if (extension.context.node) {
-                                        comlink?.post(
-                                          'visual-editing/focus',
-                                          extension.context.node,
-                                        )
+                                      if (plugin.context.node) {
+                                        comlink?.post('visual-editing/focus', plugin.context.node)
                                       }
                                     }}
                                   />
-                                  {extension.exclusive.map((exclusive) => {
+                                  {plugin.exclusive.map((exclusive) => {
                                     const Component = exclusive.component
                                     if (!Component) return null
                                     return (
@@ -388,16 +385,16 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                                           </Box>
                                         }
                                         onClick={() =>
-                                          setExclusiveExtension({
-                                            extension: exclusive,
-                                            context: extension.context,
+                                          setActiveExclusivePlugin({
+                                            plugin: exclusive,
+                                            context: plugin.context,
                                           })
                                         }
                                       />
                                     )
                                   })}
                                 </Stack>
-                                {index < extensions.length - 1 && <MenuDivider />}
+                                {index < plugins.length - 1 && <MenuDivider />}
                               </Fragment>
                             ))}
                           </PointerEvents>
@@ -412,11 +409,11 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         )}
 
         <HUD>
-          {extensions?.map((extension, i) =>
-            extension.hud.map((hud) => {
+          {plugins?.map((plugin, i) =>
+            plugin.hud.map((hud) => {
               const Component = hud.component
               if (!Component) return null
-              return <Component key={i} PointerEvents={PointerEvents} {...extension.context} />
+              return <Component key={i} PointerEvents={PointerEvents} {...plugin.context} />
             }),
           )}
         </HUD>
@@ -514,34 +511,34 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   )
 })
 
-interface ExtensionInstance {
+interface PluginInstance {
   context: OverlayComponentResolverContext
-  hud: OverlayExtensionHudDefinition[]
-  exclusive: OverlayExtensionExclusiveDefinition[]
+  hud: OverlayPluginHudDefinition[]
+  exclusive: OverlayPluginExclusiveDefinition[]
 }
 
-function useExtensions(
+function usePlugins(
   componentContexts: OverlayComponentResolverContext[],
-  extensionDefinitions?: OverlayExtensionDefinition[],
+  plugins?: OverlayPluginDefinition[],
 ) {
   return useMemo(
     () =>
       componentContexts.map((componentContext) => {
-        const instance: ExtensionInstance = {
+        const instance: PluginInstance = {
           context: componentContext,
           hud: [],
           exclusive: [],
         }
 
-        extensionDefinitions?.forEach((definition) => {
-          if (!definition.guard?.(componentContext)) return
-          if (definition.type === 'hud') instance.hud.push(definition)
-          if (definition.type === 'exclusive') instance.exclusive.push(definition)
+        plugins?.forEach((plugin) => {
+          if (!plugin.guard?.(componentContext)) return
+          if (plugin.type === 'hud') instance.hud.push(plugin)
+          if (plugin.type === 'exclusive') instance.exclusive.push(plugin)
         })
 
         return instance
       }),
-    [componentContexts, extensionDefinitions],
+    [componentContexts, plugins],
   )
 }
 
