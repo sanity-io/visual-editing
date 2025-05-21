@@ -20,6 +20,7 @@ import {
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
+import {v4 as uuid} from 'uuid'
 import {PointerEvents} from '../overlay-components/components/PointerEvents'
 import type {
   ElementChildTarget,
@@ -354,7 +355,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                         <Menu paddingY={0}>
                           <PointerEvents>
                             {nodePluginCollections?.map((nodePluginCollection, index) => (
-                              <Fragment key={nodePluginCollection.context.node.id}>
+                              <Fragment key={nodePluginCollection.id}>
                                 <Stack role="group" paddingY={1} space={0}>
                                   <MenuItem
                                     paddingY={2}
@@ -416,7 +417,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 
         <HUD>
           {nodePluginCollections?.map((nodePluginCollection) => (
-            <Fragment key={nodePluginCollection.context.node.id}>
+            <Fragment key={nodePluginCollection.id}>
               {nodePluginCollection.hud.map((hud) => {
                 const Component = hud.component
                 if (!Component) return null
@@ -526,6 +527,7 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
 })
 
 interface NodePluginCollection {
+  id: string
   context: OverlayComponentResolverContext
   hud: OverlayPluginHudDefinition[]
   exclusive: OverlayPluginExclusiveDefinition[]
@@ -539,6 +541,7 @@ function useResolvedNodePlugins(
     () =>
       componentContexts.map((componentContext) => {
         const instance: NodePluginCollection = {
+          id: uuid(),
           context: componentContext,
           hud: [],
           exclusive: [],
