@@ -417,19 +417,21 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         )}
 
         <HUD>
-          {nodePluginCollections?.map((nodePluginCollection, i) =>
-            nodePluginCollection.hud.map((hud) => {
-              const Component = hud.component
-              if (!Component) return null
-              return (
-                <Component
-                  key={i}
-                  PointerEvents={PointerEvents}
-                  {...nodePluginCollection.context}
-                />
-              )
-            }),
-          )}
+          {nodePluginCollections?.map((nodePluginCollection) => (
+            <Fragment key={nodePluginCollection.context.node.id}>
+              {nodePluginCollection.hud.map((hud) => {
+                const Component = hud.component
+                if (!Component) return null
+                return (
+                  <Component
+                    key={hud.name}
+                    PointerEvents={PointerEvents}
+                    {...nodePluginCollection.context}
+                  />
+                )
+              })}
+            </Fragment>
+          ))}
         </HUD>
       </PointerEvents>
 
