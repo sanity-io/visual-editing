@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.4](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.3...comlink-v3.0.4) (2025-05-21)
+
+
+### Bug Fixes
+
+* shim Promise.withResolvers ([#2997](https://github.com/sanity-io/visual-editing/issues/2997)) ([3f6565d](https://github.com/sanity-io/visual-editing/commit/3f6565d79c0f29b3f779fa7a9fbe205bdcdbee99))
+
 ## [3.0.3](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.2...comlink-v3.0.3) (2025-05-07)
 
 
