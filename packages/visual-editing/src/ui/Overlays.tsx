@@ -369,7 +369,6 @@ export const Overlays: FunctionComponent<{
         return (
           <ElementOverlay
             comlink={comlink}
-            comlinkStatus={comlinkStatus}
             componentResolver={componentResolver}
             plugins={props.plugins}
             element={element}

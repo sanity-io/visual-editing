@@ -1,5 +1,4 @@
 import {createEditUrl, studioPath} from '@sanity/client/csm'
-import type {Status} from '@sanity/comlink'
 import {DocumentIcon, DragHandleIcon, EditIcon, EllipsisVerticalIcon, PlugIcon} from '@sanity/icons'
 import {MenuButton, MenuDivider} from '@sanity/ui'
 import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui/_visual-editing'
@@ -53,7 +52,6 @@ const isReactElementOverlayComponent = (
 
 export interface ElementOverlayProps {
   comlink?: VisualEditingNode
-  comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
   plugins?: OverlayPluginDefinition[]
   draggable: boolean
