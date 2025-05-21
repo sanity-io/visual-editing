@@ -277,7 +277,10 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     componentResolver,
   )
 
-  const plugins = usePlugins(resolverContexts.pluginContexts, props.plugins)
+  const nodePluginCollections = useResolvedNodePlugins(
+    resolverContexts.pluginContexts,
+    props.plugins,
+  )
 
   const icon = schemaType?.icon ? (
     <div dangerouslySetInnerHTML={{__html: schemaType.icon}} />
@@ -307,7 +310,9 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     )
   }
 
-  const hasMenuitems = plugins?.some((plugin) => plugin.exclusive.length > 0)
+  const hasMenuitems = nodePluginCollections?.some(
+    (nodePluginCollection) => nodePluginCollection.exclusive.length > 0,
+  )
 
   return (
     <>
@@ -350,26 +355,29 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                       menu={
                         <Menu paddingY={0}>
                           <PointerEvents>
-                            {plugins?.map((plugin, index) => (
-                              <Fragment key={plugin.context.node.id}>
+                            {nodePluginCollections?.map((nodePluginCollection, index) => (
+                              <Fragment key={nodePluginCollection.context.node.id}>
                                 <Stack role="group" paddingY={1} space={0}>
                                   <MenuItem
                                     paddingY={2}
                                     text={
                                       <Box paddingY={2}>
                                         <Text muted size={1} style={{textTransform: 'capitalize'}}>
-                                          {`${plugin.context.document.name}: ${plugin.context.field?.name}`}
+                                          {`${nodePluginCollection.context.document.name}: ${nodePluginCollection.context.field?.name}`}
                                         </Text>
                                       </Box>
                                     }
                                     icon={<EditIcon />}
                                     onClick={() => {
-                                      if (plugin.context.node) {
-                                        comlink?.post('visual-editing/focus', plugin.context.node)
+                                      if (nodePluginCollection.context.node) {
+                                        comlink?.post(
+                                          'visual-editing/focus',
+                                          nodePluginCollection.context.node,
+                                        )
                                       }
                                     }}
                                   />
-                                  {plugin.exclusive.map((exclusive) => {
+                                  {nodePluginCollection.exclusive.map((exclusive) => {
                                     const Component = exclusive.component
                                     if (!Component) return null
                                     return (
@@ -387,14 +395,14 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                                         onClick={() =>
                                           setActiveExclusivePlugin({
                                             plugin: exclusive,
-                                            context: plugin.context,
+                                            context: nodePluginCollection.context,
                                           })
                                         }
                                       />
                                     )
                                   })}
                                 </Stack>
-                                {index < plugins.length - 1 && <MenuDivider />}
+                                {index < nodePluginCollections.length - 1 && <MenuDivider />}
                               </Fragment>
                             ))}
                           </PointerEvents>
@@ -409,11 +417,17 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
         )}
 
         <HUD>
-          {plugins?.map((plugin, i) =>
-            plugin.hud.map((hud) => {
+          {nodePluginCollections?.map((nodePluginCollection, i) =>
+            nodePluginCollection.hud.map((hud) => {
               const Component = hud.component
               if (!Component) return null
-              return <Component key={i} PointerEvents={PointerEvents} {...plugin.context} />
+              return (
+                <Component
+                  key={i}
+                  PointerEvents={PointerEvents}
+                  {...nodePluginCollection.context}
+                />
+              )
             }),
           )}
         </HUD>
@@ -511,20 +525,20 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
   )
 })
 
-interface PluginInstance {
+interface NodePluginCollection {
   context: OverlayComponentResolverContext
   hud: OverlayPluginHudDefinition[]
   exclusive: OverlayPluginExclusiveDefinition[]
 }
 
-function usePlugins(
+function useResolvedNodePlugins(
   componentContexts: OverlayComponentResolverContext[],
   plugins?: OverlayPluginDefinition[],
 ) {
   return useMemo(
     () =>
       componentContexts.map((componentContext) => {
-        const instance: PluginInstance = {
+        const instance: NodePluginCollection = {
           context: componentContext,
           hud: [],
           exclusive: [],
