@@ -73,6 +73,7 @@ export interface ElementOverlayProps {
     plugin: OverlayPluginExclusiveDefinition,
     context: OverlayComponentResolverContext,
   ) => void
+  onMenuOpenChange: (open: boolean) => void
 }
 
 const Root = styled(Card)`
@@ -127,7 +128,7 @@ const Actions = styled(Flex)`
   position: absolute;
   right: 0;
 
-  [data-hovered] & {
+  [data-hovered]:not([data-menu-open]) & {
     pointer-events: all;
   }
 
@@ -148,7 +149,7 @@ const HUD = styled(Flex)`
   padding: 4px 0;
   flex-wrap: wrap;
 
-  [data-hovered] & {
+  [data-hovered]:not([data-menu-open]) & {
     pointer-events: all;
   }
 
@@ -160,7 +161,7 @@ const HUD = styled(Flex)`
 const MenuWrapper = styled(Flex)`
   margin: -0.5rem;
 
-  [data-hovered] & {
+  [data-hovered]:not([data-menu-open]) & {
     pointer-events: all;
   }
 `
@@ -172,7 +173,7 @@ const Tab = styled(Flex)`
   position: absolute;
   left: 0;
 
-  [data-hovered] & {
+  [data-hovered]:not([data-menu-open]) & {
     pointer-events: all;
   }
 
@@ -238,6 +239,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     elementType,
     comlink,
     onActivateExclusivePlugin,
+    onMenuOpenChange,
   } = props
 
   const {getField, getType} = useSchema()
@@ -343,6 +345,12 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                         constrainSize: true,
                         tone: 'default',
                       }}
+                      onOpen={() => {
+                        onMenuOpenChange?.(true)
+                      }}
+                      onClose={() => {
+                        onMenuOpenChange?.(false)
+                      }}
                       button={<Button icon={EllipsisVerticalIcon} tone="primary" padding={2} />}
                       menu={
                         <Menu paddingY={0}>
@@ -444,7 +452,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 }
 
 export const ElementOverlay = memo(function ElementOverlay(
-  props: Omit<ElementOverlayProps, 'setActiveExclusivePlugin'>,
+  props: Omit<ElementOverlayProps, 'setActiveExclusivePlugin' | 'onMenuOpenChange'>,
 ) {
   const {draggable, focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
 
@@ -530,16 +538,23 @@ export const ElementOverlay = memo(function ElementOverlay(
 
   const ExclusivePluginComponent = activeExclusivePlugin?.plugin.component
 
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [hovered])
+
   return (
     <>
-      {ExclusivePluginComponent ? (
-        <PopoverBackground onDismiss={closeExclusivePluginView} blockScroll={false} />
+      {menuOpen || ExclusivePluginComponent ? (
+        <PopoverBackground onDismiss={closeExclusivePluginView} blockScroll={menuOpen} />
       ) : null}
       <Root
         data-focused={focused ? '' : undefined}
         data-hovered={hovered ? '' : undefined}
         data-flipped={isNearTop ? '' : undefined}
         data-draggable={draggable ? '' : undefined}
+        data-menu-open={menuOpen ? '' : undefined}
         ref={ref}
         style={style}
       >
@@ -554,9 +569,12 @@ export const ElementOverlay = memo(function ElementOverlay(
               closeExclusiveView={closeExclusivePluginView}
             />
           </ExclusivePluginContainer>
-        ) : null}
-        {hovered && !ExclusivePluginComponent ? (
-          <ElementOverlayInner {...props} onActivateExclusivePlugin={onActivateExclusivePlugin} />
+        ) : hovered ? (
+          <ElementOverlayInner
+            {...props}
+            onActivateExclusivePlugin={onActivateExclusivePlugin}
+            onMenuOpenChange={setMenuOpen}
+          />
         ) : null}
       </Root>
     </>
