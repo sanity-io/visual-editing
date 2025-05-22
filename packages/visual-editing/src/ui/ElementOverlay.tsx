@@ -16,6 +16,7 @@ import {
   useSyncExternalStore,
   type CSSProperties,
   type FunctionComponent,
+  type MouseEventHandler,
   type ReactElement,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -38,6 +39,7 @@ import type {
   VisualEditingNode,
 } from '../types'
 import {getLinkHref} from '../util/getLinkHref'
+import {PopoverBackground} from './PopoverPortal'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
 import {useSchema} from './schema/useSchema'
 
@@ -67,6 +69,10 @@ export interface ElementOverlayProps {
   enableScrollIntoView: boolean
   targets: ElementChildTarget[]
   elementType: 'element' | 'group'
+  onActivateExclusivePlugin?: (
+    plugin: OverlayPluginExclusiveDefinition,
+    context: OverlayComponentResolverContext,
+  ) => void
 }
 
 const Root = styled(Card)`
@@ -201,6 +207,12 @@ const Labels = styled(Flex)`
   }
 `
 
+const ExclusivePluginContainer = styled.div`
+  position: absolute;
+  inset: 0;
+  pointer-events: all;
+`
+
 function createIntentLink(node: SanityNode) {
   const {id, type, path, baseUrl, tool, workspace} = node
 
@@ -225,6 +237,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     targets,
     elementType,
     comlink,
+    onActivateExclusivePlugin,
   } = props
 
   const {getField, getType} = useSchema()
@@ -288,26 +301,6 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   )
 
   const id = useId()
-  const [activeExclusivePlugin, setActiveExclusivePlugin] = useState<{
-    plugin: OverlayPluginExclusiveDefinition
-    context: OverlayComponentResolverContext
-  } | null>(null)
-
-  const closeExclusivePluginView = useCallback(() => {
-    setActiveExclusivePlugin(null)
-  }, [])
-
-  if (activeExclusivePlugin?.plugin?.component && activeExclusivePlugin?.context) {
-    const ExclusivePluginComponent = activeExclusivePlugin.plugin.component
-
-    return (
-      <ExclusivePluginComponent
-        {...activeExclusivePlugin.context}
-        PointerEvents={PointerEvents}
-        closeExclusiveView={closeExclusivePluginView}
-      />
-    )
-  }
 
   const hasMenuitems = nodePluginCollections?.some(
     (nodePluginCollection) => nodePluginCollection.exclusive.length > 0,
@@ -392,10 +385,10 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                                           </Box>
                                         }
                                         onClick={() =>
-                                          setActiveExclusivePlugin({
-                                            plugin: exclusive,
-                                            context: nodePluginCollection.context,
-                                          })
+                                          onActivateExclusivePlugin?.(
+                                            exclusive,
+                                            nodePluginCollection.context,
+                                          )
                                         }
                                       />
                                     )
@@ -450,7 +443,9 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   )
 }
 
-export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlayProps) {
+export const ElementOverlay = memo(function ElementOverlay(
+  props: Omit<ElementOverlayProps, 'setActiveExclusivePlugin'>,
+) {
   const {draggable, focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
 
   const ref = useRef<HTMLDivElement>(null)
@@ -512,17 +507,57 @@ export const ElementOverlay = memo(function ElementOverlay(props: ElementOverlay
     return () => io.disconnect()
   }, [hovered, isNearTop])
 
+  const [activeExclusivePlugin, setActiveExclusivePlugin] = useState<{
+    plugin: OverlayPluginExclusiveDefinition
+    context: OverlayComponentResolverContext
+  } | null>(null)
+
+  const closeExclusivePluginView = useCallback(() => {
+    setActiveExclusivePlugin(null)
+    window.dispatchEvent(new CustomEvent('sanity-overlay/exclusive-plugin-closed'))
+  }, [])
+
+  const onActivateExclusivePlugin = useCallback(
+    (plugin: OverlayPluginExclusiveDefinition, context: OverlayComponentResolverContext) => {
+      setActiveExclusivePlugin({plugin, context})
+    },
+    [],
+  )
+
+  const handleExclusivePluginClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation()
+  }
+
+  const ExclusivePluginComponent = activeExclusivePlugin?.plugin.component
+
   return (
-    <Root
-      data-focused={focused ? '' : undefined}
-      data-hovered={hovered ? '' : undefined}
-      data-flipped={isNearTop ? '' : undefined}
-      data-draggable={draggable ? '' : undefined}
-      ref={ref}
-      style={style}
-    >
-      {hovered && <ElementOverlayInner {...props} />}
-    </Root>
+    <>
+      {ExclusivePluginComponent ? <PopoverBackground onDismiss={closeExclusivePluginView} /> : null}
+      <Root
+        data-focused={focused ? '' : undefined}
+        data-hovered={hovered ? '' : undefined}
+        data-flipped={isNearTop ? '' : undefined}
+        data-draggable={draggable ? '' : undefined}
+        ref={ref}
+        style={style}
+      >
+        {ExclusivePluginComponent ? (
+          <ExclusivePluginContainer
+            data-sanity-overlay-element
+            onClick={handleExclusivePluginClick}
+          >
+            <ExclusivePluginComponent
+              {...activeExclusivePlugin.context}
+              PointerEvents={PointerEvents}
+              closeExclusiveView={closeExclusivePluginView}
+            />
+          </ExclusivePluginContainer>
+        ) : null}
+        {hovered && !ExclusivePluginComponent ? (
+          <ElementOverlayInner {...props} onActivateExclusivePlugin={onActivateExclusivePlugin} />
+        ) : null}
+      </Root>
+    </>
   )
 })
 

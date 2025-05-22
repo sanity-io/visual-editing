@@ -86,6 +86,10 @@ export const elementsReducer = (
       return elements.map((e) => {
         return {...e, focused: e.id === message.id && 'clicked'}
       })
+    case 'overlay/reset-mouse-state':
+      return elements.map((e) => {
+        return {...e, focused: false, hovered: false}
+      })
     case 'overlay/blur':
       return elements.map((e) => {
         return {...e, focused: false}

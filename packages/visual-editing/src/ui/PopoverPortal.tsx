@@ -33,8 +33,22 @@ const PortalBackground = styled.div`
   width: 100%;
 `
 
-export const PopoverPortal: FunctionComponent<{
-  children: React.ReactNode
+type PopoverPortalProps = {
+  children?: React.ReactNode
+  onDismiss?: () => void
+  setBoundaryElement?: (element: HTMLDivElement) => void
+}
+
+export const PopoverPortal: FunctionComponent<PopoverPortalProps> = (props) => {
+  return (
+    <Portal>
+      <PopoverBackground {...props} />
+    </Portal>
+  )
+}
+
+export const PopoverBackground: FunctionComponent<{
+  children?: React.ReactNode
   onDismiss?: () => void
   setBoundaryElement?: (element: HTMLDivElement) => void
 }> = (props) => {
@@ -49,11 +63,9 @@ export const PopoverPortal: FunctionComponent<{
   }
 
   return (
-    <Portal>
-      <PortalContainer data-sanity-overlay-element ref={setBoundaryElement} onClick={handleClick}>
-        <PortalBackground onClickCapture={onDismiss} />
-        {children}
-      </PortalContainer>
-    </Portal>
+    <PortalContainer data-sanity-overlay-element ref={setBoundaryElement} onClick={handleClick}>
+      <PortalBackground onClickCapture={onDismiss} />
+      {children}
+    </PortalContainer>
   )
 }

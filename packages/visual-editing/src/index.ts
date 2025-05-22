@@ -60,6 +60,7 @@ export type {
   OverlayMsgElementUpdate,
   OverlayMsgElementUpdateRect,
   OverlayMsgSetCursor,
+  OverlayMsgResetMouseState,
   OverlayOptions,
   OverlayRect,
   SanityNode,

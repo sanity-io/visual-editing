@@ -219,12 +219,13 @@ export type OverlayMsgDragUpdateGroupRect = Msg<'overlay/dragUpdateGroupRect'> &
 }
 
 /** @public */
-
 export type OverlayMsgDragStartMinimapTransition = Msg<'overlay/dragStartMinimapTransition'>
 
 /** @public */
-
 export type OverlayMsgDragEndMinimapTransition = Msg<'overlay/dragEndMinimapTransition'>
+
+/** @public */
+export type OverlayMsgResetMouseState = Msg<'overlay/reset-mouse-state'>
 
 /**
  * Controller dispatched messages
@@ -255,6 +256,7 @@ export type OverlayMsg =
   | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
   | OverlayMsgSetCursor
+  | OverlayMsgResetMouseState
 
 /**
  * Callback function used for handling dispatched controller messages

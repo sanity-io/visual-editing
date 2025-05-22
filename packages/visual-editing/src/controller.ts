@@ -552,6 +552,13 @@ export function createOverlayController({
     })
   }
 
+  function handleExclusivePluginClosed() {
+    hoverStack = []
+    handler({
+      type: 'overlay/reset-mouse-state',
+    })
+  }
+
   function handleWindowResize() {
     for (const element of elementSet) {
       updateRect(element)
@@ -611,6 +618,10 @@ export function createOverlayController({
   function destroy() {
     window.removeEventListener('click', handleBlur)
     window.removeEventListener('contextmenu', handleBlur)
+    window.removeEventListener(
+      'sanity-overlay/exclusive-plugin-closed',
+      handleExclusivePluginClosed,
+    )
     window.removeEventListener('keydown', handleKeydown)
     window.removeEventListener('resize', handleWindowResize)
     window.removeEventListener('scroll', handleWindowScroll)
@@ -631,6 +642,7 @@ export function createOverlayController({
   function create() {
     window.addEventListener('click', handleBlur)
     window.addEventListener('contextmenu', handleBlur)
+    window.addEventListener('sanity-overlay/exclusive-plugin-closed', handleExclusivePluginClosed)
     window.addEventListener('keydown', handleKeydown)
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('scroll', handleWindowScroll, {
