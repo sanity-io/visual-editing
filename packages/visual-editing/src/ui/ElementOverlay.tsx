@@ -532,7 +532,9 @@ export const ElementOverlay = memo(function ElementOverlay(
 
   return (
     <>
-      {ExclusivePluginComponent ? <PopoverBackground onDismiss={closeExclusivePluginView} /> : null}
+      {ExclusivePluginComponent ? (
+        <PopoverBackground onDismiss={closeExclusivePluginView} blockScroll={false} />
+      ) : null}
       <Root
         data-focused={focused ? '' : undefined}
         data-hovered={hovered ? '' : undefined}

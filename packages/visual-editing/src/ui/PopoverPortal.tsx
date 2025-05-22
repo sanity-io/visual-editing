@@ -1,20 +1,13 @@
 import {Portal} from '@sanity/ui/_visual-editing'
 import {type FunctionComponent, type MouseEvent} from 'react'
-import {styled} from 'styled-components'
+import {css, styled} from 'styled-components'
 
-const PortalContainer = styled.div`
-  height: 100%;
-  inset: 0;
+const scrollBlockStyles = css`
   overflow-y: scroll;
   overscroll-behavior: contain;
-  pointer-events: all;
-  position: fixed;
-  width: 100%;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   &:before {
     content: '';
     display: block;
@@ -24,6 +17,19 @@ const PortalContainer = styled.div`
     width: 100%;
     z-index: -1;
   }
+`
+
+const PortalContainer = styled.div<{$blockScroll: boolean}>`
+  height: 100%;
+  inset: 0;
+  pointer-events: all;
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ${(props) => props.$blockScroll && scrollBlockStyles}
 `
 const PortalBackground = styled.div`
   background: transparent;
@@ -37,6 +43,7 @@ type PopoverPortalProps = {
   children?: React.ReactNode
   onDismiss?: () => void
   setBoundaryElement?: (element: HTMLDivElement) => void
+  blockScroll?: boolean
 }
 
 export const PopoverPortal: FunctionComponent<PopoverPortalProps> = (props) => {
@@ -51,8 +58,9 @@ export const PopoverBackground: FunctionComponent<{
   children?: React.ReactNode
   onDismiss?: () => void
   setBoundaryElement?: (element: HTMLDivElement) => void
+  blockScroll?: boolean
 }> = (props) => {
-  const {children, onDismiss, setBoundaryElement} = props
+  const {children, onDismiss, setBoundaryElement, blockScroll = true} = props
 
   // Prevent the event from propagating to the window, so that the controller's
   // `handleBlur` listener is not triggered. This is needed to prevent the
@@ -63,7 +71,12 @@ export const PopoverBackground: FunctionComponent<{
   }
 
   return (
-    <PortalContainer data-sanity-overlay-element ref={setBoundaryElement} onClick={handleClick}>
+    <PortalContainer
+      data-sanity-overlay-element
+      ref={setBoundaryElement}
+      onClick={handleClick}
+      $blockScroll={blockScroll}
+    >
       <PortalBackground onClickCapture={onDismiss} />
       {children}
     </PortalContainer>
