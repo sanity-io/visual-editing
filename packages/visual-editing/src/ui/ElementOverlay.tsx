@@ -54,6 +54,7 @@ const isReactElementOverlayComponent = (
 }
 
 export interface ElementOverlayProps {
+  id: string
   comlink?: VisualEditingNode
   componentResolver?: OverlayComponentResolver
   plugins?: OverlayPluginDefinition[]
@@ -229,6 +230,7 @@ function createIntentLink(node: SanityNode) {
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   const {
+    id,
     element,
     focused,
     componentResolver,
@@ -302,22 +304,26 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     <DocumentIcon />
   )
 
-  const id = useId()
+  const menuId = useId()
 
   const hasMenuitems = nodePluginCollections?.some(
     (nodePluginCollection) => nodePluginCollection.exclusive.length > 0,
   )
 
+  const handleLabelClick = useCallback(() => {
+    window.dispatchEvent(new CustomEvent('sanity-overlay/label-click', {detail: {id}}))
+  }, [id])
+
   return (
     <>
       <PointerEvents>
         {showActions ? (
-          <Actions gap={1} paddingY={1} data-sanity-overlay-element>
+          <Actions gap={1} paddingY={1}>
             <Link href={href} />
           </Actions>
         ) : null}
         {(title || hasMenuitems) && (
-          <Tab gap={1} paddingY={1}>
+          <Tab gap={1} paddingY={1} onClick={handleLabelClick}>
             <Labels gap={2} padding={2}>
               {draggable && (
                 <Box marginRight={1}>
@@ -338,7 +344,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                 <Box paddingLeft={2}>
                   <MenuWrapper>
                     <MenuButton
-                      id={id}
+                      id={menuId}
                       popover={{
                         animate: true,
                         placement: 'bottom-start',

@@ -374,6 +374,7 @@ export const Overlays: FunctionComponent<{
             element={element}
             enableScrollIntoView={!isDragging && !dragMinimapTransition && !dragShowMinimap}
             key={id}
+            id={id}
             focused={focused}
             hovered={hovered}
             node={sanity}

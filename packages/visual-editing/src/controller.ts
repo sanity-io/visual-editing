@@ -615,6 +615,19 @@ export function createOverlayController({
     activated = false
   }
 
+  function handleHeaderClick(event: CustomEvent<{id: string}>) {
+    const {id} = event.detail
+    const element = elementIdMap.get(id)
+    if (!element) return
+    const sanity = elementsMap.get(element)?.sanity
+    if (!sanity) return
+    handler({
+      type: 'element/click',
+      id,
+      sanity,
+    })
+  }
+
   function destroy() {
     window.removeEventListener('click', handleBlur)
     window.removeEventListener('contextmenu', handleBlur)
@@ -622,6 +635,7 @@ export function createOverlayController({
       'sanity-overlay/exclusive-plugin-closed',
       handleExclusivePluginClosed,
     )
+    window.removeEventListener('sanity-overlay/label-click', handleHeaderClick as EventListener)
     window.removeEventListener('keydown', handleKeydown)
     window.removeEventListener('resize', handleWindowResize)
     window.removeEventListener('scroll', handleWindowScroll)
@@ -643,6 +657,7 @@ export function createOverlayController({
     window.addEventListener('click', handleBlur)
     window.addEventListener('contextmenu', handleBlur)
     window.addEventListener('sanity-overlay/exclusive-plugin-closed', handleExclusivePluginClosed)
+    window.addEventListener('sanity-overlay/label-click', handleHeaderClick as EventListener)
     window.addEventListener('keydown', handleKeydown)
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('scroll', handleWindowScroll, {
