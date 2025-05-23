@@ -373,7 +373,6 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                                         </Text>
                                       </Box>
                                     }
-                                    icon={<EditIcon />}
                                     onClick={() => {
                                       if (nodePluginCollection.context.node) {
                                         comlink?.post(
