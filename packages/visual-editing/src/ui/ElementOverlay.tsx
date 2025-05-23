@@ -342,7 +342,13 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
               )}
 
               {showMenu && (
-                <Box paddingLeft={2}>
+                <Box
+                  paddingLeft={2}
+                  onClick={(e) => {
+                    // Do not propagate and click the label too if clicking menu button
+                    e.stopPropagation()
+                  }}
+                >
                   <MenuWrapper>
                     <MenuButton
                       id={menuId}
