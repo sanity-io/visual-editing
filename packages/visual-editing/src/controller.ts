@@ -182,7 +182,7 @@ export function createOverlayController({
   /**
    * Stores an element’s DOM node and decoded sanity data in state and sets up event handlers
    */
-  function registerElement({elements, sanity}: ResolvedElement) {
+  function registerElement({type, elements, commonSanity, targets}: ResolvedElement) {
     const {element, measureElement} = elements
 
     const eventHandlers: EventHandlers = {
@@ -208,13 +208,13 @@ export function createOverlayController({
         }
       },
       contextmenu(event) {
-        if (!('path' in sanity) || (!inFrame && !inPopUp) || !optimisticActorReady) return
+        if (!('path' in commonSanity!) || (!inFrame && !inPopUp) || !optimisticActorReady) return
 
         // This is a temporary check as the context menu only supports array
         // items (for now). We split the path into segments, if a `_key` exists
         // in last path segment, we assume it's an array item, and so return
         // early if it is some other type.
-        if (!sanity.path.split('.').pop()?.includes('[_key==')) return
+        if (!commonSanity.path.split('.').pop()?.includes('[_key==')) return
 
         const target = event.target as ElementNode | null
         if (element === getHoveredElement() && element.contains(target)) {
@@ -230,7 +230,7 @@ export function createOverlayController({
               x: event.clientX,
               y: event.clientY,
             },
-            sanity,
+            sanity: commonSanity,
           })
         }
       },
@@ -254,7 +254,7 @@ export function createOverlayController({
         )
           return
 
-        const dragGroup = resolveDragAndDropGroup(element, sanity, elementSet, elementsMap)
+        const dragGroup = resolveDragAndDropGroup(element, commonSanity!, elementSet, elementsMap)
 
         if (!dragGroup) return
 
@@ -360,9 +360,10 @@ export function createOverlayController({
 
     const id = uuid()
     const sanityNode = {
+      type,
       id,
       elements,
-      sanity,
+      sanity: commonSanity,
       handlers: eventHandlers,
     }
     elementSet.add(element)
@@ -374,11 +375,16 @@ export function createOverlayController({
 
     handler({
       type: 'element/register',
+      elementType: type,
       id,
       element,
       rect: getRect(element),
-      sanity,
+      sanity: commonSanity!,
       dragDisabled: !!element.getAttribute('data-sanity-drag-disable'),
+      targets: targets.map((target) => ({
+        sanity: target.sanity,
+        element: target.elements.element,
+      })),
     })
 
     if (activated) {
@@ -386,23 +392,45 @@ export function createOverlayController({
     }
   }
 
-  function updateElement({elements, sanity}: ResolvedElement) {
-    const {element} = elements
+  function updateElement(resolvedElement: ResolvedElement) {
+    const {element} = resolvedElement.elements
     const overlayElement = elementsMap.get(element)
     if (overlayElement) {
-      elementsMap.set(element, {...overlayElement, sanity})
+      elementsMap.set(element, {...overlayElement, sanity: resolvedElement.commonSanity})
       handler({
         type: 'element/update',
+        elementType: overlayElement.type,
         id: overlayElement.id,
         rect: getRect(element),
-        sanity: sanity,
+        sanity: resolvedElement.commonSanity!,
+        targets: resolvedElement.targets.map((target) => ({
+          sanity: target.sanity,
+          element: target.elements.element,
+        })),
       })
     }
   }
 
   function parseElements(node: ElementNode | {childNodes: ElementNode[]}) {
     const sanityNodes = findSanityNodes(node)
+
     for (const sanityNode of sanityNodes) {
+      if (sanityNode.type === 'group') {
+        for (const target of sanityNode.targets) {
+          // Any child target of a group should be unregistered if registered as an element
+          const overlayElement = elementsMap.get(target.elements.element)
+          if (overlayElement && overlayElement.type === 'element') {
+            unregisterElement(target.elements.element)
+          }
+        }
+        if (sanityNode.targets.length === 0) {
+          // Group was updated without children, unregister the element
+          unregisterElement(sanityNode.elements.element)
+        }
+      }
+
+      if (!sanityNode.commonSanity) continue
+
       const {element} = sanityNode.elements
       if (elementsMap.has(element)) {
         updateElement(sanityNode)
@@ -447,7 +475,9 @@ export function createOverlayController({
 
       mutationWasInScope = true
       if (isElementNode(node)) {
-        parseElements({childNodes: [node]})
+        const possibleGroupParent = node.parentElement?.closest('[data-sanity-edit-group]') || null
+        const updateNodeTarget = isElementNode(possibleGroupParent) ? possibleGroupParent : node
+        parseElements({childNodes: [updateNodeTarget]})
       }
     }
 
@@ -457,6 +487,11 @@ export function createOverlayController({
     if (mutationWasInScope) {
       for (const element of elementSet) {
         if (!element.isConnected) {
+          unregisterElement(element)
+        }
+        // If the element was a group and is no longer a group, unregister it
+        const overlayElement = elementsMap.get(element)
+        if (overlayElement?.type === 'group' && !element.hasAttribute('data-sanity-edit-group')) {
           unregisterElement(element)
         }
       }
@@ -517,6 +552,13 @@ export function createOverlayController({
     })
   }
 
+  function handleExclusivePluginClosed() {
+    hoverStack = []
+    handler({
+      type: 'overlay/reset-mouse-state',
+    })
+  }
+
   function handleWindowResize() {
     for (const element of elementSet) {
       updateRect(element)
@@ -573,9 +615,27 @@ export function createOverlayController({
     activated = false
   }
 
+  function handleHeaderClick(event: CustomEvent<{id: string}>) {
+    const {id} = event.detail
+    const element = elementIdMap.get(id)
+    if (!element) return
+    const sanity = elementsMap.get(element)?.sanity
+    if (!sanity) return
+    handler({
+      type: 'element/click',
+      id,
+      sanity,
+    })
+  }
+
   function destroy() {
     window.removeEventListener('click', handleBlur)
     window.removeEventListener('contextmenu', handleBlur)
+    window.removeEventListener(
+      'sanity-overlay/exclusive-plugin-closed',
+      handleExclusivePluginClosed,
+    )
+    window.removeEventListener('sanity-overlay/label-click', handleHeaderClick as EventListener)
     window.removeEventListener('keydown', handleKeydown)
     window.removeEventListener('resize', handleWindowResize)
     window.removeEventListener('scroll', handleWindowScroll)
@@ -596,6 +656,8 @@ export function createOverlayController({
   function create() {
     window.addEventListener('click', handleBlur)
     window.addEventListener('contextmenu', handleBlur)
+    window.addEventListener('sanity-overlay/exclusive-plugin-closed', handleExclusivePluginClosed)
+    window.addEventListener('sanity-overlay/label-click', handleHeaderClick as EventListener)
     window.addEventListener('keydown', handleKeydown)
     window.addEventListener('resize', handleWindowResize)
     window.addEventListener('scroll', handleWindowScroll, {

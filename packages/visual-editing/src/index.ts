@@ -60,11 +60,17 @@ export type {
   OverlayMsgElementUpdate,
   OverlayMsgElementUpdateRect,
   OverlayMsgSetCursor,
+  OverlayMsgResetMouseState,
   OverlayOptions,
   OverlayRect,
   SanityNode,
   SanityStegaNode,
   VisualEditingOptions,
+  ElementChildTarget,
+  OverlayPluginDefinition,
+  OverlayPluginExclusiveDefinition,
+  OverlayPluginHudDefinition,
+  OverlayPluginDefinitionBase,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
 export {useSharedState} from './ui/shared-state/useSharedState'

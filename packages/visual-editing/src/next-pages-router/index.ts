@@ -12,6 +12,10 @@ export type {
   OverlayElementParent,
   SanityNode,
   VisualEditingOptions,
+  OverlayPluginDefinition,
+  OverlayPluginExclusiveDefinition,
+  OverlayPluginHudDefinition,
+  OverlayPluginDefinitionBase,
 } from '../types'
 export {VisualEditing} from './VisualEditing'
 export type {VisualEditingProps} from './VisualEditingComponent'

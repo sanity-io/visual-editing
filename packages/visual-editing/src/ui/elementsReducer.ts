@@ -26,6 +26,8 @@ export const elementsReducer = (
           rect: message.rect,
           sanity: message.sanity,
           dragDisabled: message.dragDisabled,
+          targets: message.targets,
+          elementType: message.elementType,
         },
       ]
     }
@@ -39,7 +41,13 @@ export const elementsReducer = (
     case 'element/update': {
       return elements.map((e) => {
         if (e.id === message.id) {
-          return {...e, sanity: message.sanity, rect: message.rect}
+          return {
+            ...e,
+            sanity: message.sanity,
+            rect: message.rect,
+            targets: message.targets,
+            elementType: message.elementType,
+          }
         }
         return e
       })
@@ -77,6 +85,10 @@ export const elementsReducer = (
     case 'element/click':
       return elements.map((e) => {
         return {...e, focused: e.id === message.id && 'clicked'}
+      })
+    case 'overlay/reset-mouse-state':
+      return elements.map((e) => {
+        return {...e, focused: false, hovered: false}
       })
     case 'overlay/blur':
       return elements.map((e) => {

@@ -1,4 +1,5 @@
 import './globals.css'
+import {plugins} from '@/components/overlay-plugins'
 import {components} from '@/components/overlays/resolver'
 import {sanityFetch, SanityLive} from '@/sanity/live'
 import type {Metadata} from 'next'
@@ -53,7 +54,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body className="bg-white text-black dark:bg-black dark:text-white">
         {(await draftMode()).isEnabled && <AlertBanner />}
         <AppLayout data={data}>{children}</AppLayout>
-        {(await draftMode()).isEnabled && <VisualEditing components={components} />}
+        {(await draftMode()).isEnabled && <VisualEditing plugins={plugins} />}
         <SanityLive />
       </body>
     </html>

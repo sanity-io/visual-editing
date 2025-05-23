@@ -159,12 +159,16 @@ export type OverlayMsgElementRegister = OverlayMsgElement<'register'> & {
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
   dragDisabled: boolean
+  targets: ElementChildTarget[]
+  elementType: 'element' | 'group'
 }
 
 /** @public */
 export type OverlayMsgElementUpdate = OverlayMsgElement<'update'> & {
   sanity: SanityNode | SanityStegaNode
   rect: OverlayRect
+  targets: ElementChildTarget[]
+  elementType: 'element' | 'group'
 }
 
 /** @public */
@@ -215,12 +219,13 @@ export type OverlayMsgDragUpdateGroupRect = Msg<'overlay/dragUpdateGroupRect'> &
 }
 
 /** @public */
-
 export type OverlayMsgDragStartMinimapTransition = Msg<'overlay/dragStartMinimapTransition'>
 
 /** @public */
-
 export type OverlayMsgDragEndMinimapTransition = Msg<'overlay/dragEndMinimapTransition'>
+
+/** @public */
+export type OverlayMsgResetMouseState = Msg<'overlay/reset-mouse-state'>
 
 /**
  * Controller dispatched messages
@@ -251,6 +256,7 @@ export type OverlayMsg =
   | OverlayMsgElementUpdate
   | OverlayMsgElementUpdateRect
   | OverlayMsgSetCursor
+  | OverlayMsgResetMouseState
 
 /**
  * Callback function used for handling dispatched controller messages
@@ -299,6 +305,16 @@ export interface ElementState {
   rect: OverlayRect
   sanity: SanityNode | SanityStegaNode
   dragDisabled: boolean
+  targets: ElementChildTarget[]
+  elementType: 'element' | 'group'
+}
+
+/**
+ * @public
+ */
+export interface ElementChildTarget {
+  sanity: SanityNode | SanityStegaNode
+  element: ElementNode
 }
 
 /**
@@ -330,13 +346,56 @@ export interface SanityNodeElements {
   element: ElementNode
   measureElement: ElementNode
 }
+
+/**
+ * Type used by node traversal
+ * @internal
+ */
+export type ResolvedElementReason =
+  | 'edit-target'
+  | 'stega-text'
+  | 'stega-attribute'
+  | 'data-attribute'
+
+/**
+ * Object returned by node traversal
+ * @internal
+ */
+export interface ResolvingElement {
+  elements: SanityNodeElements
+  sanity: SanityNode | SanityStegaNode
+  reason: ResolvedElementReason
+  preventGrouping?: boolean
+}
+/**
+ * @internal
+ */
+export interface ResolvedElementTarget {
+  sanity: SanityNode | SanityStegaNode
+  elements: SanityNodeElements
+  reason: ResolvedElementReason
+}
 /**
  * Object returned by node traversal
  * @internal
  */
 export interface ResolvedElement {
+  /**
+   * The HTML element that the visual overlay should be attached to
+   */
   elements: SanityNodeElements
-  sanity: SanityNode | SanityStegaNode
+  /**
+   * Attempted common sanity node data, may be the first target's sanity node if no common node is found
+   */
+  commonSanity?: SanityNode | SanityStegaNode
+  /**
+   * Sanity nodes for the visual overlay, can contain multiple if a group
+   */
+  targets: ResolvedElementTarget[]
+  /**
+   * The type of the visual overlay
+   */
+  type: 'element' | 'group'
 }
 
 /**
@@ -344,10 +403,11 @@ export interface ResolvedElement {
  * @internal
  */
 export interface OverlayElement {
+  type: 'element' | 'group'
   id: string
   elements: SanityNodeElements
   handlers: EventHandlers
-  sanity: SanityNode | SanityStegaNode
+  sanity?: SanityNode | SanityStegaNode
 }
 
 /**
@@ -389,6 +449,10 @@ export interface OverlayComponentResolverContext<
    */
   element: ElementNode
   /**
+   * The element node that the Sanity node data is detected on
+   */
+  targetElement: ElementNode
+  /**
    * The resolved field schema type
    */
   field: OverlayElementField
@@ -426,10 +490,39 @@ export type OverlayComponentResolver<
   | undefined
   | void
 
+/** @public  */
+export interface OverlayPluginDefinitionBase {
+  name: string
+  title?: string
+  icon?: ComponentType
+  guard?: (context: OverlayComponentResolverContext | undefined) => boolean
+}
+
+/** @public  */
+export interface OverlayPluginExclusiveDefinition extends OverlayPluginDefinitionBase {
+  type: 'exclusive'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: OverlayComponent<Record<string, unknown> & {closeExclusiveView: () => void}, any>
+}
+/** @public  */
+export interface OverlayPluginHudDefinition extends OverlayPluginDefinitionBase {
+  type: 'hud'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: OverlayComponent<Record<string, unknown>, any>
+}
+
+/** @public  */
+export type OverlayPluginDefinition = OverlayPluginExclusiveDefinition | OverlayPluginHudDefinition
+
 /**
  * @public
  */
 export interface VisualEditingOptions {
+  /**
+   * @alpha
+   * This API is unstable and could change at any time.
+   */
+  plugins?: OverlayPluginDefinition[]
   /**
    * @alpha
    * This API is unstable and could change at any time.

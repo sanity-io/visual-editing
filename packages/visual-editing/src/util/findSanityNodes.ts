@@ -3,11 +3,14 @@ import type {
   ElementNode,
   OverlayElement,
   ResolvedElement,
+  ResolvedElementReason,
+  ResolvedElementTarget,
+  ResolvingElement,
   SanityNode,
   SanityStegaNode,
 } from '../types'
 import {findNonInlineElement} from './elements'
-import {testAndDecodeStega} from './stega'
+import {testAndDecodeStega, testVercelStegaRegex} from './stega'
 
 const isElementNode = (node: ChildNode): node is ElementNode => node.nodeType === Node.ELEMENT_NODE
 
@@ -76,7 +79,7 @@ export function findCommonSanityData(
       break
     }
 
-    common.path = findCommonPath(common.path, node.path)
+    common = {...common, path: findCommonPath(common.path, node.path)}
   }
 
   return common
@@ -85,16 +88,22 @@ export function findCommonSanityData(
 /**
  * Finds nodes containing sanity specific data
  * @param el - A parent element to traverse
- * @returns An array of objects, each containing an HTML element and decoded sanity data
+ * @returns An array of overlay targets
  * @internal
  */
 export function findSanityNodes(
   el: ElementNode | ChildNode | {childNodes: Array<ElementNode>},
 ): ResolvedElement[] {
-  const elements: ResolvedElement[] = []
+  const mainResults: Omit<ResolvedElement, 'commonSanity'>[] = []
 
-  function addElement(element: ElementNode, data: SanityStegaNode | string) {
+  function createResolvedElement(
+    element: ElementNode,
+    data: SanityStegaNode | string,
+    reason: ResolvedElementReason,
+    preventGrouping?: boolean,
+  ): ResolvingElement | undefined {
     const sanity = decodeSanityNodeData(data)
+
     if (!sanity) {
       return
     }
@@ -105,81 +114,167 @@ export function findSanityNodes(
       return
     }
 
-    elements.push({
+    return {
       elements: {
         element,
         measureElement,
       },
       sanity,
-    })
+      reason,
+      preventGrouping,
+    }
+  }
+
+  function resolveNode(node: ChildNode): ResolvingElement | undefined {
+    const {nodeType, parentElement, textContent} = node
+    // If an edit target is found, find common paths
+    if (isElementNode(node) && node.dataset?.['sanityEditTarget'] !== undefined) {
+      const nodesInTarget = findSanityNodes(node)
+      const commonData = findCommonSanityData(
+        nodesInTarget
+          .map((node) => (node.type === 'element' ? node.commonSanity : undefined))
+          .filter((n) => n !== undefined),
+      )
+      if (commonData) {
+        return {
+          reason: 'edit-target',
+          elements: {
+            element: node,
+            measureElement: node,
+          },
+          sanity: commonData,
+        }
+      }
+
+      // Check non-empty, child-only text nodes for stega strings
+    } else if (nodeType === Node.TEXT_NODE && parentElement && textContent) {
+      const data = testAndDecodeStega(textContent)
+      if (!data) return
+      return createResolvedElement(parentElement, data, 'stega-text', true)
+    }
+    // Check element nodes for data attributes, alt tags, etc
+    else if (isElementNode(node)) {
+      // Do not traverse script tags
+      // Do not traverse the visual editing overlay
+      if (node.tagName === 'SCRIPT' || node.tagName === 'SANITY-VISUAL-EDITING') {
+        return
+      }
+
+      // Prefer elements with explicit data attributes
+      if (node.dataset?.['sanity']) {
+        return createResolvedElement(
+          node,
+          node.dataset['sanity'],
+          'data-attribute',
+          Boolean(node.textContent && testVercelStegaRegex(node.textContent)),
+        )
+      }
+      // Look for legacy sanity data attributes
+      else if (node.dataset?.['sanityEditInfo']) {
+        return createResolvedElement(
+          node,
+          node.dataset['sanityEditInfo'],
+          'data-attribute',
+          Boolean(node.textContent && testVercelStegaRegex(node.textContent)),
+        )
+      } else if (isImgElement(node)) {
+        const data = testAndDecodeStega(node.alt, true)
+        if (!data) return
+        return createResolvedElement(node, data, 'stega-attribute')
+      } else if (isTimeElement(node)) {
+        const data = testAndDecodeStega(node.dateTime, true)
+        if (!data) return
+        return createResolvedElement(node, data, 'stega-attribute')
+      } else if (isSvgRootElement(node)) {
+        if (!node.ariaLabel) return
+        const data = testAndDecodeStega(node.ariaLabel, true)
+        if (!data) return
+        return createResolvedElement(node, data, 'stega-attribute')
+      }
+    }
+    return
+  }
+
+  function processNode(
+    node: ChildNode,
+    _parentGroup: Omit<ResolvedElement, 'commonSanity'> | undefined,
+  ): void {
+    const resolvedElement = resolveNode(node)
+
+    let parentGroup: Omit<ResolvedElement, 'commonSanity'> | undefined = _parentGroup
+
+    if (isElementNode(node) && node.dataset?.['sanityEditGroup'] !== undefined) {
+      parentGroup = {
+        type: 'group',
+        elements: {
+          element: node,
+          measureElement: node,
+        },
+        targets: [],
+      }
+      mainResults.push(parentGroup)
+    }
+
+    if (resolvedElement) {
+      const target: ResolvedElementTarget = {
+        elements: resolvedElement.elements,
+        sanity: resolvedElement.sanity,
+        reason: resolvedElement.reason,
+      }
+      if (parentGroup && !resolvedElement.preventGrouping) {
+        parentGroup.targets.push(target)
+      } else {
+        mainResults.push({
+          elements: resolvedElement.elements,
+          type: 'element',
+          targets: [target],
+        })
+      }
+    }
+
+    const shouldTraverseNode =
+      isElementNode(node) &&
+      !isImgElement(node) &&
+      !(node.tagName === 'SCRIPT' || node.tagName === 'SANITY-VISUAL-EDITING')
+
+    if (shouldTraverseNode) {
+      for (const childNode of node.childNodes) {
+        processNode(childNode, parentGroup)
+      }
+    }
   }
 
   if (el) {
     for (const node of el.childNodes) {
-      const {nodeType, parentElement, textContent} = node
-      // If an edit target is found, find common paths
-      if (isElementNode(node) && node.dataset?.['sanityEditTarget'] !== undefined) {
-        const nodesInTarget = findSanityNodes(node).map(({sanity}) => sanity)
-        // If there are inconsistent node types, continue
-        if (!nodesInTarget.map((n) => isSanityNode(n)).every((n, _i, arr) => n === arr[0])) {
-          continue
-        }
-
-        const commonData = findCommonSanityData(nodesInTarget)
-
-        if (commonData) {
-          elements.push({
-            elements: {
-              element: node,
-              measureElement: node,
-            },
-            sanity: commonData,
-          })
-        }
-
-        // Check non-empty, child-only text nodes for stega strings
-      } else if (nodeType === Node.TEXT_NODE && parentElement && textContent) {
-        const data = testAndDecodeStega(textContent)
-        if (!data) continue
-        addElement(parentElement, data)
-      }
-      // Check element nodes for data attributes, alt tags, etc
-      else if (isElementNode(node)) {
-        // Do not traverse script tags
-        // Do not traverse the visual editing overlay
-        if (node.tagName === 'SCRIPT' || node.tagName === 'SANITY-VISUAL-EDITING') {
-          continue
-        }
-
-        // Prefer elements with explicit data attributes
-        if (node.dataset?.['sanity']) {
-          addElement(node, node.dataset['sanity'])
-        }
-        // Look for legacy sanity data attributes
-        else if (node.dataset?.['sanityEditInfo']) {
-          addElement(node, node.dataset['sanityEditInfo'])
-        } else if (isImgElement(node)) {
-          const data = testAndDecodeStega(node.alt, true)
-          if (!data) continue
-          addElement(node, data)
-          // No need to recurse for img elements
-          continue
-        } else if (isTimeElement(node)) {
-          const data = testAndDecodeStega(node.dateTime, true)
-          if (!data) continue
-          addElement(node, data)
-        } else if (isSvgRootElement(node)) {
-          if (!node.ariaLabel) continue
-          const data = testAndDecodeStega(node.ariaLabel, true)
-          if (!data) continue
-          addElement(node, data)
-        }
-
-        elements.push(...findSanityNodes(node))
-      }
+      processNode(node, undefined)
     }
   }
-  return elements
+
+  return mainResults
+    .map((node) => {
+      if (node.targets.length === 0 && node.type === 'group') {
+        // Always return empty groups so the controller can unregister them
+        return {
+          ...node,
+          commonSanity: undefined,
+        }
+      }
+
+      const commonSanity =
+        node.targets.length === 1
+          ? node.targets[0].sanity
+          : findCommonSanityData(
+              node.targets.map(({sanity}) => sanity).filter((n) => n !== undefined),
+            ) || node.targets[0].sanity
+
+      if (!commonSanity) return null
+
+      return {
+        ...node,
+        commonSanity,
+      }
+    })
+    .filter((node) => node !== null)
 }
 
 export function isSanityArrayPath(path: string): boolean {
@@ -231,7 +326,7 @@ export function resolveDragAndDropGroup(
     const sharedDragGroup = targetDragGroup !== null ? targetDragGroup === elDragGroup : true
 
     if (
-      elData &&
+      elData?.sanity &&
       !elDragDisabled &&
       isSanityNode(elData.sanity) &&
       sanityNodesExistInSameArray(sanity, elData.sanity) &&

@@ -26,6 +26,7 @@ import type {
   OverlayComponentResolver,
   OverlayEventHandler,
   OverlayMsg,
+  OverlayPluginDefinition,
   VisualEditingNode,
 } from '../types'
 import {sanityNodesExistInSameArray} from '../util/findSanityNodes'
@@ -180,6 +181,7 @@ export const Overlays: FunctionComponent<{
   comlink?: VisualEditingNode
   comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
+  plugins?: OverlayPluginDefinition[]
   inFrame: boolean
   inPopUp: boolean
   zIndex?: string | number
@@ -353,7 +355,7 @@ export const Overlays: FunctionComponent<{
 
     return elements
       .filter((e) => e.activated || e.focused)
-      .map(({id, element, focused, hovered, rect, sanity, dragDisabled}) => {
+      .map(({id, element, focused, hovered, rect, sanity, dragDisabled, targets, elementType}) => {
         const draggable =
           !dragDisabled &&
           !!element.getAttribute('data-sanity') &&
@@ -366,10 +368,13 @@ export const Overlays: FunctionComponent<{
 
         return (
           <ElementOverlay
+            comlink={comlink}
             componentResolver={componentResolver}
+            plugins={props.plugins}
             element={element}
             enableScrollIntoView={!isDragging && !dragMinimapTransition && !dragShowMinimap}
             key={id}
+            id={id}
             focused={focused}
             hovered={hovered}
             node={sanity}
@@ -379,11 +384,14 @@ export const Overlays: FunctionComponent<{
             draggable={draggable}
             isDragging={isDragging || dragMinimapTransition}
             wasMaybeCollapsed={focused && wasMaybeCollapsed}
+            targets={targets}
+            elementType={elementType}
           />
         )
       })
   }, [
     componentResolver,
+    props.plugins,
     dragMinimapTransition,
     dragShowMinimap,
     elements,
@@ -391,6 +399,7 @@ export const Overlays: FunctionComponent<{
     inPopUp,
     isDragging,
     optimisticActorReady,
+    comlink,
     comlinkStatus,
     wasMaybeCollapsed,
   ])
