@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.22...visual-editing-v2.14.0) (2025-05-23)
+
+
+### Features
+
+* Custom Overlay Plugins + Edit Groups ([#2996](https://github.com/sanity-io/visual-editing/issues/2996)) ([a0a0779](https://github.com/sanity-io/visual-editing/commit/a0a077972ab7b522d517eec9ac2a2c7d398ef243))
+
 ## [2.13.22](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.21...visual-editing-v2.13.22) (2025-05-21)
 
 
