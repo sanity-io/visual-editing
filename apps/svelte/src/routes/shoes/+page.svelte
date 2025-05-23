@@ -1,9 +1,10 @@
 <script lang="ts">
   import ShoesListing from '../../components/Shoes.svelte'
-  import type {PageData} from './$types'
+  import type {PageProps} from './$types'
 
-  export let data: PageData
-  $: ({products} = data)
+  const {data}: PageProps = $props()
+
+  const {products} = $derived(data)
 </script>
 
 <ShoesListing {products} />

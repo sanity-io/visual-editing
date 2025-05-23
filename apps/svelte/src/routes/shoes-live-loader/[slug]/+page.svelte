@@ -4,7 +4,7 @@
 
   const {data}: PageProps = $props()
 
-  const {product, params} = $derived(data)
+  const {data: product} = $derived(data)
 </script>
 
-<Shoe {product} slug={params.slug} />
+<Shoe {product} slug={product?.slug?.current} />

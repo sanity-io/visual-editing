@@ -20,7 +20,7 @@ export const client = createClient({
         const {workspace, tool} = workspaces['cross-dataset-references']
         return {baseUrl, workspace, tool}
       }
-      const {workspace, tool} = workspaces['svelte-loaders']
+      const {workspace, tool} = workspaces['svelte-query-loader']
       return {baseUrl, workspace, tool}
     },
   },
