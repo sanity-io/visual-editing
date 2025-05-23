@@ -309,6 +309,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
   const hasMenuitems = nodePluginCollections?.some(
     (nodePluginCollection) => nodePluginCollection.exclusive.length > 0,
   )
+  const showMenu = hasMenuitems || nodePluginCollections?.length > 1
 
   const handleLabelClick = useCallback(() => {
     window.dispatchEvent(new CustomEvent('sanity-overlay/label-click', {detail: {id}}))
@@ -322,7 +323,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
             <Link href={href} />
           </Actions>
         ) : null}
-        {(title || hasMenuitems) && (
+        {(title || showMenu) && (
           <Tab gap={1} paddingY={1} onClick={handleLabelClick}>
             <Labels gap={2} padding={2}>
               {draggable && (
@@ -340,7 +341,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                 </Text>
               )}
 
-              {hasMenuitems && (
+              {showMenu && (
                 <Box paddingLeft={2}>
                   <MenuWrapper>
                     <MenuButton
