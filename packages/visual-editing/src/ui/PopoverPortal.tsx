@@ -77,7 +77,11 @@ export const PopoverBackground: FunctionComponent<{
       onClick={handleClick}
       $blockScroll={blockScroll}
     >
-      <PortalBackground onClickCapture={onDismiss} />
+      <PortalBackground
+        onMouseDownCapture={() => {
+          onDismiss?.()
+        }}
+      />
       {children}
     </PortalContainer>
   )
