@@ -2,6 +2,14 @@ export {PointerEvents} from './components/PointerEvents'
 export {UnionInsertMenuOverlay} from './components/UnionInsertMenuOverlay'
 export {defineOverlayComponent} from './defineOverlayComponent'
 export {defineOverlayComponents} from './defineOverlayComponents'
+export {defineOverlayPlugin} from './defineOverlayPlugin'
+export type {
+  HasRequiredKeys,
+  OverlayPluginUserFn,
+  OverlayPluginDefineFn,
+  OverlayPluginUserFnConfig,
+  OverlayPluginUserFnConfigOptions,
+} from './defineOverlayPlugin'
 export type {
   ElementNode,
   OverlayComponent,
