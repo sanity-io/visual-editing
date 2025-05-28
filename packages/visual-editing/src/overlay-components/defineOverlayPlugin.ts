@@ -55,7 +55,7 @@ export function defineOverlayPlugin<O extends Record<string, unknown> = Record<s
           return false
         }
 
-        return config?.guard?.(context)
+        return config?.guard?.(context) ?? true
       },
     }
   }) as OverlayPluginUserFn<O>
