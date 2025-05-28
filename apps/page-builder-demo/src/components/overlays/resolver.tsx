@@ -3,15 +3,12 @@
 import {OverlayComponent, OverlayComponentResolver} from '@sanity/visual-editing'
 import {
   defineOverlayComponent,
-  PointerEvents,
   UnionInsertMenuOverlay,
 } from '@sanity/visual-editing/unstable_overlay-components'
-import {ExcitingTitleControl} from './ExcitingTitleControl'
 import {OverlayHighlight} from './OverlayHighlight'
-import {ProductModelRotationControl} from './ProductModelRotationControl'
 
 export const components: OverlayComponentResolver = (props) => {
-  const {element, type, node, parent} = props
+  const {element, parent} = props
 
   const components: Array<
     | OverlayComponent<Record<string, unknown>, any>
@@ -20,14 +17,6 @@ export const components: OverlayComponentResolver = (props) => {
         props?: Record<string, unknown>
       }
   > = [OverlayHighlight]
-
-  if (type === 'string' && node.path === 'title') {
-    return <ExcitingTitleControl node={node} PointerEvents={PointerEvents} />
-  }
-
-  if (type === 'object' && node.path.endsWith('rotations')) {
-    components.push(ProductModelRotationControl)
-  }
 
   if (parent?.type === 'union') {
     const parentDataset = element.parentElement?.dataset || {}

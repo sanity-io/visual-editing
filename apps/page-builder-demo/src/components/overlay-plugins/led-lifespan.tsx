@@ -1,8 +1,9 @@
 import {get} from '@sanity/util/paths'
-import {OverlayPluginDefinition, useDocuments} from '@sanity/visual-editing/react'
+import {useDocuments} from '@sanity/visual-editing/react'
+import {defineOverlayPlugin} from '@sanity/visual-editing/unstable_overlay-components'
 import {useEffect, useState} from 'react'
 
-export const LEDLifespanHUD: OverlayPluginDefinition = {
+export const LEDLifespanHUD = defineOverlayPlugin((options) => ({
   type: 'hud',
   name: 'led-lifespan-hud',
   component: function LEDLifespanHUDComponent(props) {
@@ -29,4 +30,4 @@ export const LEDLifespanHUD: OverlayPluginDefinition = {
   guard: (ctx) => {
     return ctx?.field?.name === 'ledLifespan'
   },
-}
+}))
