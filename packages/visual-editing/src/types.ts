@@ -495,7 +495,7 @@ export interface OverlayPluginDefinitionBase {
   name: string
   title?: string
   icon?: ComponentType
-  guard?: (context: OverlayComponentResolverContext | undefined) => boolean
+  guard?: (context: OverlayComponentResolverContext) => boolean
 }
 
 /** @public  */
