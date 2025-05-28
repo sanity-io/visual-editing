@@ -1,7 +1,7 @@
 import {at, set} from '@sanity/mutate'
 import {useDocuments} from '@sanity/visual-editing/react'
 import {defineOverlayPlugin} from '@sanity/visual-editing/unstable_overlay-components'
-import {MouseEventHandler, useCallback, useMemo, useRef, useState} from 'react'
+import {MouseEventHandler, useCallback, useMemo, useRef} from 'react'
 
 function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, timeout: number): F {
   let timer: ReturnType<typeof setTimeout>
@@ -114,7 +114,7 @@ export const Rotate3D = defineOverlayPlugin(() => ({
       </PointerEvents>
     )
   },
-  guard: (props) => {
-    return props?.type === 'object'
+  guard: (context) => {
+    return context.type === 'object'
   },
 }))

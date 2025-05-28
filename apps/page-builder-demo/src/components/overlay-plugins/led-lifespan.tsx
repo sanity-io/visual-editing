@@ -3,7 +3,7 @@ import {useDocuments} from '@sanity/visual-editing/react'
 import {defineOverlayPlugin} from '@sanity/visual-editing/unstable_overlay-components'
 import {useEffect, useState} from 'react'
 
-export const LEDLifespanHUD = defineOverlayPlugin((options) => ({
+export const LEDLifespanHUD = defineOverlayPlugin(() => ({
   type: 'hud',
   name: 'led-lifespan-hud',
   component: function LEDLifespanHUDComponent(props) {

@@ -1,5 +1,5 @@
 import {get} from '@sanity/util/paths'
-import {OverlayPluginDefinition, useDocuments} from '@sanity/visual-editing/react'
+import {useDocuments} from '@sanity/visual-editing/react'
 import {defineOverlayPlugin} from '@sanity/visual-editing/unstable_overlay-components'
 import {useEffect, useState} from 'react'
 
@@ -10,7 +10,7 @@ export function parseImageAssetId(documentId: string) {
   return {type: 'image', assetId, width, height, extension}
 }
 
-export const ImageResolutionHUD = defineOverlayPlugin((options) => ({
+export const ImageResolutionHUD = defineOverlayPlugin(() => ({
   type: 'hud',
   name: 'image-resolution-hud',
   component: function ImageResolutionHUDComponent(props) {
@@ -38,8 +38,8 @@ export const ImageResolutionHUD = defineOverlayPlugin((options) => ({
       </div>
     )
   },
-  guard: (ctx) => {
+  guard: (context) => {
     // @ts-ignore
-    return ctx?.field?.value?.fields?.asset?.value?.dereferencesTo === 'sanity.imageAsset'
+    return context.field?.value?.fields?.asset?.value?.dereferencesTo === 'sanity.imageAsset'
   },
 }))

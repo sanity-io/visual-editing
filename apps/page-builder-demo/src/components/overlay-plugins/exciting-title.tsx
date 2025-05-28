@@ -34,8 +34,8 @@ export const ExcitingTitlePlugin = defineOverlayPlugin<ExcitingTitlePluginOption
         </button>
       )
     },
-    guard: (props) => {
-      return props?.type === 'string'
+    guard: (context) => {
+      return context.type === 'string'
     },
   }),
 )
