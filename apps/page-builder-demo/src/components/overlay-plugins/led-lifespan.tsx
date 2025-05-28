@@ -27,7 +27,7 @@ export const LEDLifespanHUD = defineOverlayPlugin(() => ({
       </div>
     )
   },
-  guard: (ctx) => {
-    return ctx?.field?.name === 'ledLifespan'
+  guard: (context) => {
+    return context.field?.name === 'ledLifespan'
   },
 }))
