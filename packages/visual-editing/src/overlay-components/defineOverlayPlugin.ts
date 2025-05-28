@@ -49,9 +49,13 @@ export function defineOverlayPlugin<O extends Record<string, unknown> = Record<s
     return {
       ...pluginDefinition,
       guard: (context: OverlayComponentResolverContext) => {
-        const userGuardResult = config?.guard?.(context) ?? true
-        const pluginGuardResult = pluginGuard?.(context) ?? true
-        return userGuardResult && pluginGuardResult
+        const pluginGuardResult = pluginGuard?.(context)
+
+        if (pluginGuardResult === false) {
+          return false
+        }
+
+        return config?.guard?.(context)
       },
     }
   }) as OverlayPluginUserFn<O>
