@@ -71,6 +71,7 @@ export type {
   OverlayPluginExclusiveDefinition,
   OverlayPluginHudDefinition,
   OverlayPluginDefinitionBase,
+  OverlayPluginComponent,
 } from './types'
 export {enableVisualEditing} from './ui/enableVisualEditing'
 export {useSharedState} from './ui/shared-state/useSharedState'

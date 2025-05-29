@@ -48,7 +48,7 @@ export const Rotate3D = defineOverlayPlugin(() => ({
   name: 'rotate-3d',
   title: 'Rotate 3D',
   component: function Rotate3DComponent(props) {
-    const {closeExclusiveView, PointerEvents, node} = props
+    const {closeExclusiveView, node} = props
 
     const {getDocument} = useDocuments()
     const doc = getDocument(node.id)
@@ -104,14 +104,12 @@ export const Rotate3D = defineOverlayPlugin(() => ({
     }, [closeExclusiveView, doc])
 
     return (
-      <PointerEvents className="h-full w-full">
-        <div
-          ref={ref}
-          onMouseMove={handleMouseMove}
-          className="h-full w-full"
-          onClick={handleClick}
-        />
-      </PointerEvents>
+      <div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        className="h-full w-full"
+        onClick={handleClick}
+      />
     )
   },
   guard: (context) => {

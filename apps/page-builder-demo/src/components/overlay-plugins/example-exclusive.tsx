@@ -4,7 +4,7 @@ export const ExampleExclusivePlugin: OverlayPluginDefinition = {
   type: 'exclusive',
   name: 'example-exclusive',
   title: 'Example Exclusive',
-  component: function ExampleExclusiveComponent({closeExclusiveView, PointerEvents}) {
+  component: function ExampleExclusiveComponent({closeExclusiveView}) {
     return (
       <div
         style={{
@@ -18,9 +18,7 @@ export const ExampleExclusivePlugin: OverlayPluginDefinition = {
         }}
       >
         <span>Example Exclusive</span>
-        <PointerEvents>
-          <button onClick={() => closeExclusiveView()}>Close</button>
-        </PointerEvents>
+        <button onClick={() => closeExclusiveView()}>Close</button>
       </div>
     )
   },

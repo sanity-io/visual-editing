@@ -22,6 +22,7 @@ export type {
   OverlayPluginExclusiveDefinition,
   OverlayPluginHudDefinition,
   OverlayPluginDefinitionBase,
+  OverlayPluginComponent,
 } from '../types'
 export type {
   DocumentSchema,
