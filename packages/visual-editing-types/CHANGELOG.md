@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.18...visual-editing-types-v1.1.0) (2025-05-29)
+
+
+### Features
+
+* add overlay plugin define helper ([#3026](https://github.com/sanity-io/visual-editing/issues/3026)) ([434aa65](https://github.com/sanity-io/visual-editing/commit/434aa65d5bfd88bc6f3e4831fbd8c9ff5b7d3148))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/insert-menu bumped to 1.1.12
+
 ## [1.0.18](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.0.17...visual-editing-types-v1.0.18) (2025-05-07)
 
 
