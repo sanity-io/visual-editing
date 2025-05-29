@@ -39,7 +39,18 @@ export const ImageResolutionHUD = defineOverlayPlugin(() => ({
     )
   },
   guard: (context) => {
-    // @ts-ignore
-    return context.field?.value?.fields?.asset?.value?.dereferencesTo === 'sanity.imageAsset'
+    const fieldValue = context.field?.value
+
+    if (fieldValue?.type !== 'object') {
+      return false
+    }
+
+    const assetValue = fieldValue.fields.asset?.value
+
+    if (assetValue?.type !== 'object') {
+      return false
+    }
+
+    return assetValue?.dereferencesTo === 'sanity.imageAsset'
   },
 }))
