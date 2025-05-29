@@ -434,13 +434,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
               {nodePluginCollection.hud.map((hud) => {
                 const Component = hud.component
                 if (!Component) return null
-                return (
-                  <Component
-                    key={hud.name}
-                    PointerEvents={PointerEvents}
-                    {...nodePluginCollection.context}
-                  />
-                )
+                return <Component key={hud.name} {...nodePluginCollection.context} />
               })}
             </Fragment>
           ))}
@@ -577,7 +571,6 @@ export const ElementOverlay = memo(function ElementOverlay(
           >
             <ExclusivePluginComponent
               {...activeExclusivePlugin.context}
-              PointerEvents={PointerEvents}
               closeExclusiveView={closeExclusivePluginView}
             />
           </ExclusivePluginContainer>

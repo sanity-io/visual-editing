@@ -495,20 +495,23 @@ export interface OverlayPluginDefinitionBase {
   name: string
   title?: string
   icon?: ComponentType
-  guard?: (context: OverlayComponentResolverContext | undefined) => boolean
+  guard?: (context: OverlayComponentResolverContext) => boolean
 }
 
 /** @public  */
 export interface OverlayPluginExclusiveDefinition extends OverlayPluginDefinitionBase {
   type: 'exclusive'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: OverlayComponent<Record<string, unknown> & {closeExclusiveView: () => void}, any>
+  component?: OverlayPluginComponent<
+    Record<string, unknown> & {closeExclusiveView: () => void},
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any
+  >
 }
 /** @public  */
 export interface OverlayPluginHudDefinition extends OverlayPluginDefinitionBase {
   type: 'hud'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: OverlayComponent<Record<string, unknown>, any>
+  component?: OverlayPluginComponent<Record<string, unknown>, any>
 }
 
 /** @public  */
@@ -615,6 +618,14 @@ export type OverlayComponent<
   T extends Record<string, unknown> = Record<string, unknown>,
   P extends OverlayElementParent = OverlayElementParent,
 > = ComponentType<OverlayComponentProps<P | undefined> & T>
+
+/**
+ * @public
+ */
+export type OverlayPluginComponent<
+  T extends Record<string, unknown> = Record<string, unknown>,
+  P extends OverlayElementParent = OverlayElementParent,
+> = ComponentType<OverlayComponentResolverContext<P | undefined> & T>
 
 export type OverlayElementField =
   | SchemaArrayItem

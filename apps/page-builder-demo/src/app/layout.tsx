@@ -54,7 +54,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body className="bg-white text-black dark:bg-black dark:text-white">
         {(await draftMode()).isEnabled && <AlertBanner />}
         <AppLayout data={data}>{children}</AppLayout>
-        {(await draftMode()).isEnabled && <VisualEditing plugins={plugins} />}
+        {(await draftMode()).isEnabled && (
+          <VisualEditing components={components} plugins={plugins} />
+        )}
         <SanityLive />
       </body>
     </html>

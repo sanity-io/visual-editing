@@ -17,6 +17,7 @@ export type {
   OverlayPluginExclusiveDefinition,
   OverlayPluginHudDefinition,
   OverlayPluginDefinitionBase,
+  OverlayPluginComponent,
 } from '../types'
 export {VisualEditing} from '../ui/VisualEditing'
 export {
