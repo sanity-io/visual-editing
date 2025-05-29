@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.15.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.14.0...visual-editing-v2.15.0) (2025-05-29)
+
+
+### Features
+
+* add overlay plugin define helper ([#3026](https://github.com/sanity-io/visual-editing/issues/3026)) ([434aa65](https://github.com/sanity-io/visual-editing/commit/434aa65d5bfd88bc6f3e4831fbd8c9ff5b7d3148))
+
+
+### Bug Fixes
+
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2994](https://github.com/sanity-io/visual-editing/issues/2994)) ([0388fb0](https://github.com/sanity-io/visual-editing/commit/0388fb0bb9ea6f4fa3686c65d51029aa68104954))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.5
+    * @sanity/insert-menu bumped to 1.1.12
+    * @sanity/presentation-comlink bumped to 1.0.21
+    * @sanity/visual-editing-csm bumped to 2.0.18
+
 ## [2.14.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.13.22...visual-editing-v2.14.0) (2025-05-23)
 
 
