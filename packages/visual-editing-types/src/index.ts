@@ -36,7 +36,7 @@ export interface DocumentSchema {
   name: string
   title?: string
   icon?: string
-  fields: Record<string, SchemaObjectField>
+  fields: Partial<Record<string, SchemaObjectField>>
 }
 
 export interface TypeSchema {
@@ -82,7 +82,7 @@ export interface SchemaNumberNode {
 
 export interface SchemaObjectNode<T extends SchemaNode = SchemaNode> {
   type: 'object'
-  fields: Record<string, SchemaObjectField<T>>
+  fields: Partial<Record<string, SchemaObjectField<T>>>
   rest?: SchemaObjectNode | SchemaUnknownNode | SchemaInlineNode
   dereferencesTo?: string
 }
