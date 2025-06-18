@@ -488,8 +488,8 @@ importers:
         specifier: latest
         version: 15.3.3
       '@react-spring/three':
-        specifier: ^9.7.5
-        version: 9.7.5(@react-three/fiber@9.1.2(@types/react@19.1.8)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(react@19.1.0)(three@0.175.0)
+        specifier: ^10.0.1
+        version: 10.0.1(@react-three/fiber@9.1.2(@types/react@19.1.8)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(react@19.1.0)(three@0.175.0)
       '@react-three/drei':
         specifier: ^10.0.8
         version: 10.0.8(@react-three/fiber@9.1.2(@types/react@19.1.8)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(@types/react@19.1.8)(@types/three@0.176.0)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0)
@@ -4453,33 +4453,33 @@ packages:
     resolution: {integrity: sha512-5xk5MSyQU9CrDho3Rsguj38jhijhD36Mk8S6mZo3huv6PM+t4M/5kJN2KFIxgvt4ONpvOEs1pVIZAV0cL0Vi+Q==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
 
-  '@react-spring/animated@9.7.5':
-    resolution: {integrity: sha512-Tqrwz7pIlsSDITzxoLS3n/v/YCUHQdOIKtOJf4yL6kYVSDTSmVK1LI1Q3M/uu2Sx4X3pIWF3xLUhlsA6SPNTNg==}
+  '@react-spring/animated@10.0.1':
+    resolution: {integrity: sha512-BGL3hA66Y8Qm3KmRZUlfG/mFbDPYajgil2/jOP0VXf2+o2WPVmcDps/eEgdDqgf5Pv9eBbyj7LschLMuSjlW3Q==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@react-spring/core@9.7.5':
-    resolution: {integrity: sha512-rmEqcxRcu7dWh7MnCcMXLvrf6/SDlSokLaLTxiPlAYi11nN3B5oiCUAblO72o+9z/87j2uzxa2Inm8UbLjXA+w==}
+  '@react-spring/core@10.0.1':
+    resolution: {integrity: sha512-KaMMsN1qHuVTsFpg/5ajAVye7OEqhYbCq0g4aKM9bnSZlDBBYpO7Uf+9eixyXN8YEbF+YXaYj9eoWDs+npZ+sA==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@react-spring/rafz@9.7.5':
-    resolution: {integrity: sha512-5ZenDQMC48wjUzPAm1EtwQ5Ot3bLIAwwqP2w2owG5KoNdNHpEJV263nGhCeKKmuA3vG2zLLOdu3or6kuDjA6Aw==}
+  '@react-spring/rafz@10.0.1':
+    resolution: {integrity: sha512-UrzG/d6Is+9i0aCAjsjWRqIlFFiC4lFqFHrH63zK935z2YDU95TOFio4VKGISJ5SG0xq4ULy7c1V3KU+XvL+Yg==}
 
-  '@react-spring/shared@9.7.5':
-    resolution: {integrity: sha512-wdtoJrhUeeyD/PP/zo+np2s1Z820Ohr/BbuVYv+3dVLW7WctoiN7std8rISoYoHpUXtbkpesSKuPIw/6U1w1Pw==}
+  '@react-spring/shared@10.0.1':
+    resolution: {integrity: sha512-KR2tmjDShPruI/GGPfAZOOLvDgkhFseabjvxzZFFggJMPkyICLjO0J6mCIoGtdJSuHywZyc4Mmlgi+C88lS00g==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@react-spring/three@9.7.5':
-    resolution: {integrity: sha512-RxIsCoQfUqOS3POmhVHa1wdWS0wyHAUway73uRLp3GAL5U2iYVNdnzQsep6M2NZ994BlW8TcKuMtQHUqOsy6WA==}
+  '@react-spring/three@10.0.1':
+    resolution: {integrity: sha512-JAgA573EqG1WkDGameWv0HYlPL5KYwVCRhXroBq5Ed0Chc9xXuAZU8fyNg9/uup8Pc32iGSW0PHRt0msvPNg+w==}
     peerDependencies:
       '@react-three/fiber': '>=6.0'
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       three: '>=0.126'
 
-  '@react-spring/types@9.7.5':
-    resolution: {integrity: sha512-HVj7LrZ4ReHWBimBvu2SKND3cDVUPWKLqRTmWe/fNY6o1owGOX0cAHbdPDTMelgBlVbrTKrre6lFkhqGZErK/g==}
+  '@react-spring/types@10.0.1':
+    resolution: {integrity: sha512-Fk1wYVAKL+ZTYK+4YFDpHf3Slsy59pfFFvnnTfRjQQFGlyIo4VejPtDs3CbDiuBjM135YztRyZjIH2VbycB+ZQ==}
 
   '@react-three/drei@10.0.8':
     resolution: {integrity: sha512-ZE9LgtzMWutpfwrUYFM//kdInzkzWT/3keHdqNQ2s/+IBEuNHPII4QJTS6e8Ko2uYdL/mPeCRFcmEKFUNFrhBQ==}
@@ -18326,38 +18326,38 @@ snapshots:
 
   '@portabletext/types@2.0.13': {}
 
-  '@react-spring/animated@9.7.5(react@19.1.0)':
+  '@react-spring/animated@10.0.1(react@19.1.0)':
     dependencies:
-      '@react-spring/shared': 9.7.5(react@19.1.0)
-      '@react-spring/types': 9.7.5
+      '@react-spring/shared': 10.0.1(react@19.1.0)
+      '@react-spring/types': 10.0.1
       react: 19.1.0
 
-  '@react-spring/core@9.7.5(react@19.1.0)':
+  '@react-spring/core@10.0.1(react@19.1.0)':
     dependencies:
-      '@react-spring/animated': 9.7.5(react@19.1.0)
-      '@react-spring/shared': 9.7.5(react@19.1.0)
-      '@react-spring/types': 9.7.5
+      '@react-spring/animated': 10.0.1(react@19.1.0)
+      '@react-spring/shared': 10.0.1(react@19.1.0)
+      '@react-spring/types': 10.0.1
       react: 19.1.0
 
-  '@react-spring/rafz@9.7.5': {}
+  '@react-spring/rafz@10.0.1': {}
 
-  '@react-spring/shared@9.7.5(react@19.1.0)':
+  '@react-spring/shared@10.0.1(react@19.1.0)':
     dependencies:
-      '@react-spring/rafz': 9.7.5
-      '@react-spring/types': 9.7.5
+      '@react-spring/rafz': 10.0.1
+      '@react-spring/types': 10.0.1
       react: 19.1.0
 
-  '@react-spring/three@9.7.5(@react-three/fiber@9.1.2(@types/react@19.1.8)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(react@19.1.0)(three@0.175.0)':
+  '@react-spring/three@10.0.1(@react-three/fiber@9.1.2(@types/react@19.1.8)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(react@19.1.0)(three@0.175.0)':
     dependencies:
-      '@react-spring/animated': 9.7.5(react@19.1.0)
-      '@react-spring/core': 9.7.5(react@19.1.0)
-      '@react-spring/shared': 9.7.5(react@19.1.0)
-      '@react-spring/types': 9.7.5
+      '@react-spring/animated': 10.0.1(react@19.1.0)
+      '@react-spring/core': 10.0.1(react@19.1.0)
+      '@react-spring/shared': 10.0.1(react@19.1.0)
+      '@react-spring/types': 10.0.1
       '@react-three/fiber': 9.1.2(@types/react@19.1.8)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0)
       react: 19.1.0
       three: 0.175.0
 
-  '@react-spring/types@9.7.5': {}
+  '@react-spring/types@10.0.1': {}
 
   '@react-three/drei@10.0.8(@react-three/fiber@9.1.2(@types/react@19.1.8)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(@types/react@19.1.8)(@types/three@0.176.0)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0)':
     dependencies:
