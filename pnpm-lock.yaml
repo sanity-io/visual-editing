@@ -425,7 +425,7 @@ importers:
         version: 3.5.3
       prettier-plugin-packagejson:
         specifier: ^2.5.14
-        version: 2.5.14(prettier@3.5.3)
+        version: 2.5.15(prettier@3.5.3)
       prettier-plugin-tailwindcss:
         specifier: 0.6.11
         version: 0.6.11(@ianvs/prettier-plugin-sort-imports@4.4.2(@vue/compiler-sfc@3.5.15)(prettier@3.5.3))(prettier-plugin-astro@0.14.1)(prettier-plugin-svelte@3.4.0(prettier@3.5.3)(svelte@5.34.5))(prettier@3.5.3)
@@ -890,8 +890,8 @@ importers:
         specifier: 4.4.2
         version: 4.4.2(@vue/compiler-sfc@3.5.15)(prettier@3.5.3)
       '@sanity/prettier-config':
-        specifier: 1.0.3
-        version: 1.0.3(prettier@3.5.3)
+        specifier: 1.0.4
+        version: 1.0.4(prettier@3.5.3)
       prettier:
         specifier: 3.5.3
         version: 3.5.3
@@ -5037,8 +5037,8 @@ packages:
       babel-plugin-react-compiler:
         optional: true
 
-  '@sanity/prettier-config@1.0.3':
-    resolution: {integrity: sha512-daeoWaW67I2t3yIV1s3PI2o8+A7jZnucFQzaIphpFDhHYM/mqjNvEROka300TcZ1Csm4VyPBSvx1IQQ/FkqA5Q==}
+  '@sanity/prettier-config@1.0.4':
+    resolution: {integrity: sha512-ZGqgxb3GZqTtyaXnhl+ms4h10MDeq8HyEdbGWT2grmDwEZIRi8ApNX7bhhIvhN49AOhj43CsGqjvXOtoa5BrDw==}
     peerDependencies:
       prettier: ^3.2.5
 
@@ -12015,8 +12015,8 @@ packages:
     resolution: {integrity: sha512-RiBETaaP9veVstE4vUwSIcdATj6dKmXljouXc/DDNwBSPTp8FRkLGDSGFClKsAFeeg+13SB0Z1JZvbD76bigJw==}
     engines: {node: ^14.15.0 || >=16.0.0}
 
-  prettier-plugin-packagejson@2.5.14:
-    resolution: {integrity: sha512-h+3tSpr2nVpp+YOK1MDIYtYhHVXr8/0V59UUbJpIJFaqi3w4fvUokJo6eV8W+vELrUXIZzJ+DKm5G7lYzrMcKQ==}
+  prettier-plugin-packagejson@2.5.15:
+    resolution: {integrity: sha512-2QSx6y4IT6LTwXtCvXAopENW5IP/aujC8fobEM2pDbs0IGkiVjW/ipPuYAHuXigbNe64aGWF7vIetukuzM3CBw==}
     peerDependencies:
       prettier: '>= 1.16.0'
     peerDependenciesMeta:
@@ -13578,8 +13578,8 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  synckit@0.11.6:
-    resolution: {integrity: sha512-2pR2ubZSV64f/vqm9eLPz/KOvR9Dm+Co/5ChLgeHl0yEDRc6h5hXHoxEQH8Y5Ljycozd3p1k5TTSVdzYGkPvLw==}
+  synckit@0.11.8:
+    resolution: {integrity: sha512-+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
   system-architecture@0.1.0:
@@ -19265,10 +19265,10 @@ snapshots:
       - debug
       - supports-color
 
-  '@sanity/prettier-config@1.0.3(prettier@3.5.3)':
+  '@sanity/prettier-config@1.0.4(prettier@3.5.3)':
     dependencies:
       prettier: 3.5.3
-      prettier-plugin-packagejson: 2.5.14(prettier@3.5.3)
+      prettier-plugin-packagejson: 2.5.15(prettier@3.5.3)
 
   '@sanity/preview-kit@6.1.1(react@19.1.0)':
     dependencies:
@@ -23779,7 +23779,7 @@ snapshots:
       eslint: 8.57.1
       prettier: 3.5.3
       prettier-linter-helpers: 1.0.0
-      synckit: 0.11.6
+      synckit: 0.11.8
     optionalDependencies:
       '@types/eslint': 8.56.12
       eslint-config-prettier: 10.1.5(eslint@8.57.1)
@@ -28688,10 +28688,10 @@ snapshots:
       prettier: 3.5.3
       sass-formatter: 0.7.9
 
-  prettier-plugin-packagejson@2.5.14(prettier@3.5.3):
+  prettier-plugin-packagejson@2.5.15(prettier@3.5.3):
     dependencies:
       sort-package-json: 3.2.1
-      synckit: 0.11.6
+      synckit: 0.11.8
     optionalDependencies:
       prettier: 3.5.3
 
@@ -31110,7 +31110,7 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
-  synckit@0.11.6:
+  synckit@0.11.8:
     dependencies:
       '@pkgr/core': 0.2.7
 
