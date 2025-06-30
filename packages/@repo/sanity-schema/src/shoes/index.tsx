@@ -1,7 +1,7 @@
 import {apiVersion, workspaces} from '@repo/env'
-import {assist} from '@sanity/assist'
+// import {assist} from '@sanity/assist'
 import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
-import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+// import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {
   defineDocuments,
   defineLocations,
@@ -57,10 +57,10 @@ const shoeType = defineType({
           type: 'image',
           options: {
             hotspot: true,
-            aiAssist: {
-              imageDescriptionField: 'alt',
-              imageInstructionField: 'imagePrompt',
-            },
+            // aiAssist: {
+            //   imageDescriptionField: 'alt',
+            //   imageInstructionField: 'imagePrompt',
+            // },
           },
           fields: [
             defineField({
@@ -127,8 +127,8 @@ export const shoesPlugin = definePlugin<
   name: '@repo/sanity-schema/shoes',
   schema: {types: [shoeType]},
   plugins: [
-    assist(),
-    unsplashImageAsset(),
+    // assist(),
+    // unsplashImageAsset(),
     presentationTool({
       resolve: {
         mainDocuments: defineDocuments([

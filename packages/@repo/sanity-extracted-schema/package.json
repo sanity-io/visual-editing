@@ -10,7 +10,8 @@
     "./shoes.json": "./shoes.json"
   },
   "scripts": {
-    "build": "sanity schema extract --workspace cross-dataset-references --path ./cross-dataset-references.json && sanity schema extract --workspace live-demo --path ./live-demo.json && sanity schema extract --workspace page-builder-demo --path ./page-builder-demo.json && sanity schema extract --workspace shoes --path ./shoes.json",
+    "build": "echo TODO",
+    "build_": "sanity schema extract --workspace cross-dataset-references --path ./cross-dataset-references.json && sanity schema extract --workspace live-demo --path ./live-demo.json && sanity schema extract --workspace page-builder-demo --path ./page-builder-demo.json && sanity schema extract --workspace shoes --path ./shoes.json",
     "lint": "eslint --cache ."
   },
   "browserslist": "extends @sanity/browserslist-config",

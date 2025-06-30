@@ -122,7 +122,7 @@ export function PageSectionInput(props: ObjectInputProps): React.JSX.Element {
   )
 
   return (
-    <Stack space={5}>
+    <Stack gap={5}>
       {symbolFieldMember && (
         <Card padding={4} style={{margin: '-20px -20px -20px'}}>
           <ObjectInputMember
