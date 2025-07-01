@@ -258,22 +258,22 @@ const settingsType = defineType({
         }),
       ],
     }),
-    defineField({
-      type: 'object',
-      name: 'theme',
-      fields: [
-        {
-          type: 'color',
-          name: 'background',
-          title: 'Background Color',
-        },
-        {
-          type: 'color',
-          name: 'text',
-          title: 'Text Color',
-        },
-      ],
-    }),
+    // defineField({
+    //   type: 'object',
+    //   name: 'theme',
+    //   fields: [
+    //     {
+    //       type: 'color',
+    //       name: 'background',
+    //       title: 'Background Color',
+    //     },
+    //     {
+    //       type: 'color',
+    //       name: 'text',
+    //       title: 'Text Color',
+    //     },
+    //   ],
+    // }),
     defineField({
       name: 'footer',
       description: 'This is a block of text that will be displayed at the bottom of the page.',
