@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.6](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.5...comlink-v3.0.6) (2025-07-10)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency xstate to ^5.19.4 ([#3011](https://github.com/sanity-io/visual-editing/issues/3011)) ([33111d6](https://github.com/sanity-io/visual-editing/commit/33111d68d938036e58c99b2b53aa66025ced25fd))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#3030](https://github.com/sanity-io/visual-editing/issues/3030)) ([5e009da](https://github.com/sanity-io/visual-editing/commit/5e009da0952fdff4f56516dc96c5ed628945451e))
+
 ## [3.0.5](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.4...comlink-v3.0.5) (2025-05-29)
 
 

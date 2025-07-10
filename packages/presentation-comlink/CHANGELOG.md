@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.22](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.21...presentation-comlink-v1.0.22) (2025-07-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v7.6.0 ([#3020](https://github.com/sanity-io/visual-editing/issues/3020)) ([039b859](https://github.com/sanity-io/visual-editing/commit/039b859f2190453e2d7530f2f9c99ba1209e4808))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.6
+    * @sanity/visual-editing-types bumped to 1.1.1
+
 ## [1.0.21](https://github.com/sanity-io/visual-editing/compare/presentation-comlink-v1.0.20...presentation-comlink-v1.0.21) (2025-05-29)
 
 
