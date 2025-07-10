@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.6.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.6.2...next-loader-v1.6.3) (2025-07-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to v7.6.0 ([#3020](https://github.com/sanity-io/visual-editing/issues/3020)) ([039b859](https://github.com/sanity-io/visual-editing/commit/039b859f2190453e2d7530f2f9c99ba1209e4808))
+* **deps:** Update dependency use-effect-event to ^2.0.2 ([#3059](https://github.com/sanity-io/visual-editing/issues/3059)) ([a2e0e9c](https://github.com/sanity-io/visual-editing/commit/a2e0e9cc62788416b9768612863b3e7b10a6d9ae))
+* **deps:** Update dependency use-effect-event to v2 ([#3025](https://github.com/sanity-io/visual-editing/issues/3025)) ([f7a76d2](https://github.com/sanity-io/visual-editing/commit/f7a76d2501c7b8607d40b0fd351830d0b116bdf8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.6
+    * @sanity/presentation-comlink bumped to 1.0.22
+  * devDependencies
+    * @sanity/preview-url-secret bumped to 2.1.12
+
 ## [1.6.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.6.1...next-loader-v1.6.2) (2025-05-29)
 
 
