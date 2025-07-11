@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.7](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.6...comlink-v3.0.7) (2025-07-11)
+
+
+### Bug Fixes
+
+* **deps:** bump xstate to 5.20 ([5a5c004](https://github.com/sanity-io/visual-editing/commit/5a5c004fdb41f16e616787b960537a0c6d969173))
+
 ## [3.0.6](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.5...comlink-v3.0.6) (2025-07-10)
 
 

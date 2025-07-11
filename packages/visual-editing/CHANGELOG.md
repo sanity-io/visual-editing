@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.15.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.15.1...visual-editing-v2.15.2) (2025-07-11)
+
+
+### Bug Fixes
+
+* **deps:** bump xstate to 5.20 ([5a5c004](https://github.com/sanity-io/visual-editing/commit/5a5c004fdb41f16e616787b960537a0c6d969173))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.7
+    * @sanity/presentation-comlink bumped to 1.0.23
+
 ## [2.15.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.15.0...visual-editing-v2.15.1) (2025-07-10)
 
 
