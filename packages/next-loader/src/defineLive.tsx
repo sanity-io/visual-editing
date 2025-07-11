@@ -157,12 +157,12 @@ export interface DefineSanityLiveOptions {
    * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'drafts'` to work.
    * This token is not shared with the browser.
    */
-  serverToken?: string
+  serverToken?: string | false
   /**
    * Optional. This token is shared with the browser, and should only have access to query published documents.
    * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
    */
-  browserToken?: string
+  browserToken?: string | false
   /**
    * Fetch options used by `sanityFetch`
    */
@@ -216,17 +216,17 @@ export function defineLive(config: DefineSanityLiveOptions): {
     throw new Error('`client` is required for `defineLive` to function')
   }
 
-  if (process.env.NODE_ENV !== 'production' && !serverToken) {
+  if (process.env.NODE_ENV !== 'production' && !serverToken && serverToken !== false) {
     // eslint-disable-next-line no-console
     console.warn(
-      'No `serverToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events',
+      'No `serverToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events. You can silence this warning by setting `serverToken: false`.',
     )
   }
 
-  if (process.env.NODE_ENV !== 'production' && !browserToken) {
+  if (process.env.NODE_ENV !== 'production' && !browserToken && browserToken !== false) {
     // eslint-disable-next-line no-console
     console.warn(
-      'No `browserToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `browserToken`. It is shared with the browser so it should only have Viewer rights or lower',
+      'No `browserToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `browserToken`. It is shared with the browser so it should only have Viewer rights or lower. You can silence this warning by setting `browserToken: false`.',
     )
   }
 
