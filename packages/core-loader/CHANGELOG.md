@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.8.12](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.11...core-loader-v1.8.12) (2025-07-11)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.7
+    * @sanity/presentation-comlink bumped to 1.0.23
+
 ## [1.8.11](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.10...core-loader-v1.8.11) (2025-07-10)
 
 
