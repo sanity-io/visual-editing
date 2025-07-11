@@ -2,34 +2,11 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>sanity-io/renovate-config"],
   "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"],
-  "baseBranches": ["$default", "canary"],
   "packageRules": [
     {
       "description": "Enable automerge with GitHub merge queues (note that this doesn't bypass required checks and code reviews)",
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
-    },
-    {
-      "group": {
-        "semanticCommitType": "chore"
-      },
-      "matchDepTypes": [
-        "dependencies",
-        "devDependencies",
-        "engines",
-        "optionalDependencies",
-        "peerDependencies"
-      ],
-      "matchManagers": ["npm"],
-      "semanticCommitType": "chore",
-      "description": "Group all dependencies from the app directory",
-      "matchFileNames": ["apps/**/package.json", "packages/comlink/playground/package.json"],
-      "groupName": "App dependencies"
-    },
-    {
-      "matchDepNames": ["next", "@next/bundle-analyzer", "eslint-config-next"],
-      "matchFileNames": ["apps/live-next/package.json"],
-      "followTag": "canary"
     },
     {
       "matchDepTypes": ["dependencies", "devDependencies"],
@@ -81,11 +58,6 @@
     {
       "matchPackageNames": ["eslint-plugin-react-hooks"],
       "description": "Disable until 5.2 is out",
-      "enabled": false
-    },
-    {
-      "matchPackageNames": ["three"],
-      "description": "Disable as minors are breaking changes",
       "enabled": false
     },
     {
