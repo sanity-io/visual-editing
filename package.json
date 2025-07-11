@@ -33,14 +33,8 @@
     ]
   },
   "prettier": "@repo/prettier-config",
-  "dependencies": {
-    "@sanity/types": "3.93.0",
-    "@sanity/util": "3.93.0",
-    "groq": "3.93.0"
-  },
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",
-    "@sanity/client": "7.6.0",
     "@sanity/pkg-utils": "6.13.4",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
@@ -63,7 +57,7 @@
       ]
     },
     "overrides": {
-      "@sanity/client": "$@sanity/client",
+      "@sanity/client": "catalog:",
       "@sanity/comlink": "workspace:*",
       "@sanity/core-loader": "workspace:*",
       "@sanity/next-loader": "workspace:*",
@@ -71,14 +65,14 @@
       "@sanity/preview-url-secret": "workspace:*",
       "@sanity/react-loader": "workspace:*",
       "@sanity/svelte-loader": "workspace:*",
-      "@sanity/types": "$@sanity/types",
-      "@sanity/util": "$@sanity/util",
+      "@sanity/types": "catalog:",
+      "@sanity/util": "catalog:",
       "@sanity/visual-editing": "workspace:*",
       "@sanity/visual-editing-csm": "workspace:*",
       "@types/react": "catalog:",
       "@types/react-dom": "catalog:",
       "eslint-plugin-react-hooks": "catalog:",
-      "groq": "$groq",
+      "groq": "catalog:",
       "sanity": "catalog:"
     }
   }

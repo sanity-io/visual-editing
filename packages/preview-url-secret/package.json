@@ -131,7 +131,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
-    "@sanity/client": "^7.6.0",
+    "@sanity/client": "catalog:",
     "@sanity/icons": "catalog:",
     "@sanity/pkg-utils": "6.13.4",
     "eslint": "^8.57.1",
@@ -140,7 +140,7 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@sanity/client": "^7.6.0"
+    "@sanity/client": "catalog:"
   },
   "engines": {
     "node": ">=18"
