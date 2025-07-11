@@ -77,7 +77,9 @@ const Page = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           <h4 className="text-lg font-bold">{floor?.title}</h4>
 
           <div className="flex flex-wrap justify-around gap-4">
-            {floor?.spaces?.map((space: any) => <SpaceCard space={space} key={space._id} />)}
+            {floor?.spaces?.map((space: any) => (
+              <SpaceCard space={space} key={space._id} />
+            ))}
           </div>
         </div>
       ))}

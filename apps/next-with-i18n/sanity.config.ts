@@ -1,9 +1,9 @@
 import schemas from '@/sanity/schemas'
-import { visionTool } from '@sanity/vision'
-import { assist } from '@sanity/assist'
-import { documentI18n, pages } from '@tinloof/sanity-studio'
-import { defineConfig, type BaseSchemaDefinition } from 'sanity'
-import { structureTool } from 'sanity/structure'
+import {assist} from '@sanity/assist'
+import {visionTool} from '@sanity/vision'
+import {documentI18n, pages} from '@tinloof/sanity-studio'
+import {defineConfig, type BaseSchemaDefinition} from 'sanity'
+import {structureTool} from 'sanity/structure'
 import StudioLogo from './components/StudioLogo'
 import config from './config'
 
@@ -34,9 +34,9 @@ export default defineConfig({
       creatablePages: ['page'],
       i18n: config.i18n,
     }),
-    documentI18n({ ...config.i18n, schemas }),
+    documentI18n({...config.i18n, schemas}),
     structureTool(),
-    visionTool({ defaultApiVersion: config.sanity.apiVersion }),
+    visionTool({defaultApiVersion: config.sanity.apiVersion}),
   ],
 })
 
@@ -46,8 +46,6 @@ export default defineConfig({
  */
 function extractTranslatableSchemaTypes(schemas: BaseSchemaDefinition[]) {
   return schemas
-    .filter((schema: any) =>
-      schema?.fields?.find((field) => field.name === 'locale'),
-    )
+    .filter((schema: any) => schema?.fields?.find((field) => field.name === 'locale'))
     .map((schema) => schema.name)
 }
