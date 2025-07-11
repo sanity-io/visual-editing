@@ -27,6 +27,15 @@ catalogs:
     prettier:
       specifier: ^3.6.2
       version: 3.6.2
+    react:
+      specifier: ^19.1.0
+      version: 19.1.0
+    react-dom:
+      specifier: ^19.1.0
+      version: 19.1.0
+    react-is:
+      specifier: ^19.1.0
+      version: 19.1.0
     rxjs:
       specifier: ^7.8.2
       version: 7.8.2
@@ -153,10 +162,10 @@ importers:
         specifier: ^0.11.1
         version: 0.11.1(astro@5.9.4(@types/node@24.0.13)(db0@0.3.2)(encoding@0.1.13)(ioredis@5.6.1)(jiti@2.4.2)(rollup@4.41.1)(terser@5.40.0)(typescript@5.8.3)(yaml@2.8.0))
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       sanity:
         specifier: ^3.99.0
@@ -232,10 +241,10 @@ importers:
         specifier: ^8.5.6
         version: 8.5.6
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       server-only:
         specifier: ^0.0.1
@@ -341,10 +350,10 @@ importers:
         specifier: 8.5.6
         version: 8.5.6
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       styled-components:
         specifier: 6.1.19
@@ -438,10 +447,10 @@ importers:
         specifier: 8.5.6
         version: 8.5.6
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       sanity:
         specifier: ^3.99.0
@@ -595,10 +604,10 @@ importers:
         specifier: 8.5.6
         version: 8.5.6
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       server-only:
         specifier: ^0.0.1
@@ -664,10 +673,10 @@ importers:
         specifier: ^5.1.28
         version: 5.1.28
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       source-map-support:
         specifier: ^0.5.21
@@ -749,10 +758,10 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       sanity:
         specifier: ^3.99.0
@@ -1084,10 +1093,10 @@ importers:
         specifier: ^5.1.28
         version: 5.1.28
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
     devDependencies:
       '@remix-run/dev':
@@ -1243,13 +1252,13 @@ importers:
         specifier: ^15.2.10
         version: 15.5.2
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       react-is:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       typescript:
         specifier: 'catalog:'
@@ -1298,7 +1307,7 @@ importers:
         specifier: ^15.3.3
         version: 15.3.5(@babel/core@7.28.0)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       typescript:
         specifier: 'catalog:'
@@ -1409,7 +1418,7 @@ importers:
         specifier: 3.1.3
         version: 3.1.3
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       typescript:
         specifier: 'catalog:'
@@ -1501,7 +1510,7 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       sanity:
         specifier: ^3.99.0
@@ -1637,13 +1646,13 @@ importers:
         specifier: ^0.9.3
         version: 0.9.3
       react:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-dom:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       react-is:
-        specifier: ^19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-router:
         specifier: ^7.6.2
