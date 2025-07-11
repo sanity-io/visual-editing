@@ -1,6 +1,6 @@
 import appConfig from '@/config'
-import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
+import type {NextRequest} from 'next/server'
+import {NextResponse} from 'next/server'
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -8,8 +8,7 @@ export async function middleware(request: NextRequest) {
 
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = appConfig.i18n.locales.every(
-    (locale) =>
-      !pathname.startsWith(`/${locale.id}/`) && pathname !== `/${locale.id}`,
+    (locale) => !pathname.startsWith(`/${locale.id}/`) && pathname !== `/${locale.id}`,
   )
 
   // Redirect if there is no locale

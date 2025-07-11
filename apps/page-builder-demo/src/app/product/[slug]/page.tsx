@@ -113,7 +113,9 @@ export default async function ProductPage({params}: {params: Promise<{slug: stri
                 <div className="mt-4">
                   <div className="font-bold">Certifications</div>
                   <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {data?.details.certifications.map((d, idx) => <div key={idx}>{d}</div>)}
+                    {data?.details.certifications.map((d, idx) => (
+                      <div key={idx}>{d}</div>
+                    ))}
                   </div>
                 </div>
               )}

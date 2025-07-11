@@ -1,5 +1,5 @@
 import config from '@/config'
-import { Metadata } from 'next'
+import {Metadata} from 'next'
 import Studio from './Studio'
 
 export const dynamic = 'force-static'

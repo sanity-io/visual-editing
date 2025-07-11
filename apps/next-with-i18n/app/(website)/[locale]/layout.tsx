@@ -1,12 +1,10 @@
 import 'tailwindcss/tailwind.css'
-
-import { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { draftMode } from 'next/headers'
-import { VisualEditing } from 'next-sanity'
-import { revalidatePath, revalidateTag } from 'next/cache'
-
 import config from '@/config'
+import {Metadata} from 'next'
+import {VisualEditing} from 'next-sanity'
+import {revalidatePath, revalidateTag} from 'next/cache'
+import {Inter} from 'next/font/google'
+import {draftMode} from 'next/headers'
 
 export const metadata: Metadata = {
   title: `${config.siteName} - Website`,
@@ -21,10 +19,10 @@ export default async function RootLayout({
   params,
   children,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{locale: string}>
   children: React.ReactNode
 }) {
-  const { locale } = await params
+  const {locale} = await params
   return (
     <html lang={locale} className={sans.variable}>
       <body>
@@ -34,9 +32,7 @@ export default async function RootLayout({
             refresh={async (payload) => {
               'use server'
               if (!(await draftMode()).isEnabled) {
-                console.debug(
-                  'Skipped manual refresh because draft mode is not enabled',
-                )
+                console.debug('Skipped manual refresh because draft mode is not enabled')
                 return
               }
               if (payload.source === 'mutation') {

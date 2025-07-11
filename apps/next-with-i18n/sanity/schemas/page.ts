@@ -1,6 +1,6 @@
 import config from '@/config'
-import { definePathname } from '@tinloof/sanity-studio'
-import { defineType } from 'sanity'
+import {definePathname} from '@tinloof/sanity-studio'
+import {defineType} from 'sanity'
 
 export default defineType({
   type: 'document',
@@ -28,7 +28,7 @@ export default defineType({
       name: 'body',
       title: 'Body',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'}],
     },
   ],
 })

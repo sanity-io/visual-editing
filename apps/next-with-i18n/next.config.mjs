@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-const { default: sanityPkg } = await import('sanity/package.json', {
-  with: { type: 'json' },
+const {default: sanityPkg} = await import('sanity/package.json', {
+  with: {type: 'json'},
 })
 
 function requireResolve(id) {
@@ -19,7 +19,7 @@ sanityExports['sanity'] = requireResolve('sanity')
 /** @type {import('next').NextConfig} */
 const config = {
   images: {
-    remotePatterns: [{ hostname: 'cdn.sanity.io' }],
+    remotePatterns: [{hostname: 'cdn.sanity.io'}],
   },
   typescript: {
     // Set this to false if you want production builds to abort if there's type errors

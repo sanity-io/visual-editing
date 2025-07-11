@@ -1,11 +1,9 @@
-import type { QueryParams } from 'next-sanity'
-import type { UnfilteredResponseQueryOptions } from '@sanity/client'
-
-import { draftMode } from 'next/headers'
+import type {UnfilteredResponseQueryOptions} from '@sanity/client'
+import type {QueryParams} from 'next-sanity'
+import {draftMode} from 'next/headers'
 import 'server-only'
-
-import { client } from '@/data/sanity/client'
 import config from '@/config'
+import {client} from '@/data/sanity/client'
 
 const DEFAULT_PARAMS = {} as QueryParams
 
@@ -20,9 +18,7 @@ export async function loadQuery<QueryResponse>({
   const token = config.sanity.token
 
   if (isDraftMode && !token) {
-    throw new Error(
-      'The `SANITY_API_READ_TOKEN` environment variable is required in Draft Mode.',
-    )
+    throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required in Draft Mode.')
   }
 
   const perspective = isDraftMode ? 'drafts' : 'published'
