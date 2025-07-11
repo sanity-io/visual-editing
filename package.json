@@ -36,9 +36,7 @@
   "dependencies": {
     "@sanity/types": "3.93.0",
     "@sanity/util": "3.93.0",
-    "@sanity/vision": "3.93.0",
-    "groq": "3.93.0",
-    "sanity": "catalog:"
+    "groq": "3.93.0"
   },
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",
@@ -75,14 +73,13 @@
       "@sanity/svelte-loader": "workspace:*",
       "@sanity/types": "$@sanity/types",
       "@sanity/util": "$@sanity/util",
-      "@sanity/vision": "$@sanity/vision",
       "@sanity/visual-editing": "workspace:*",
       "@sanity/visual-editing-csm": "workspace:*",
       "@types/react": "$@types/react",
       "@types/react-dom": "$@types/react-dom",
       "eslint-plugin-react-hooks": "0.0.0-experimental-d55cc79b-20250228",
       "groq": "$groq",
-      "sanity": "$sanity"
+      "sanity": "catalog:"
     }
   }
 }
