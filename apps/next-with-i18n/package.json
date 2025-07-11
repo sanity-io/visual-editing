@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@repo/env": "workspace:*",
-    "@sanity/assist": "^4.3.0",
+    "@sanity/assist": "catalog:",
     "@sanity/client": "^7.6.0",
     "@sanity/next-loader": "workspace:*",
     "@sanity/preview-url-secret": "workspace:*",
     "@sanity/vision": "3.93.0",
-    "@tailwindcss/typography": "0.5.16",
+    "@tailwindcss/typography": "catalog:tailwind3",
     "@tinloof/sanity-studio": "1.10.0",
     "classnames": "2.5.1",
     "lucide-react": "^0.517.0",
@@ -29,7 +29,7 @@
     "next-sanity": "9.12.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "sanity": "3.93.0",
+    "sanity": "catalog:",
     "server-only": "0.0.1"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-packagejson": "^2.5.15",
     "prettier-plugin-tailwindcss": "0.6.12",
-    "tailwindcss": "3.4.17",
-    "typescript": "5.8.3"
+    "tailwindcss": "catalog:tailwind3",
+    "typescript": "catalog:"
   }
 }
