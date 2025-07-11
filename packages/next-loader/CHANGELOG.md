@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.7.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.6.3...next-loader-v1.7.0) (2025-07-11)
+
+
+### Features
+
+* allow silencing `serverToken` and `browserToken` warnings ([1250c30](https://github.com/sanity-io/visual-editing/commit/1250c30cce78d4fd6a83207b759a1979f0a30ee4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.7
+    * @sanity/presentation-comlink bumped to 1.0.23
+
 ## [1.6.3](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.6.2...next-loader-v1.6.3) (2025-07-10)
 
 
