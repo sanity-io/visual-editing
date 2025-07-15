@@ -809,8 +809,8 @@ importers:
   apps/svelte:
     dependencies:
       '@portabletext/svelte':
-        specifier: ^2.1.12
-        version: 2.1.12(svelte@5.36.0)
+        specifier: ^3.0.0
+        version: 3.0.0(svelte@5.36.0)
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/@repo/env
@@ -4689,10 +4689,10 @@ packages:
     peerDependencies:
       react: ^17 || ^18 || >=19.0.0-0
 
-  '@portabletext/svelte@2.1.12':
-    resolution: {integrity: sha512-rlx6GAWiumKpCV9HqGTRXVYC/bCRUekHSPNzcHJZG/PGmBqymQtPDZ4W5aVmBHxu5P9vNo8Y9IxIhNBoina9Fg==}
+  '@portabletext/svelte@3.0.0':
+    resolution: {integrity: sha512-1PTbasjgyYdA/vpt4BCs3Nc0Fr8pqJQRuI6llhpNe+JgZ1EoSstzzjkSSGn9TtPW7yPls5i/7QksqhYTjUDocw==}
     peerDependencies:
-      svelte: '>=3.47.0 <5.0.0'
+      svelte: ^5.0.0
 
   '@portabletext/to-html@2.0.14':
     resolution: {integrity: sha512-wW2et59PoOT/mc56C4U3z+DKAx1yjieN/gp2q9szTfTwusMpb6mclR9+EPIfGrcQWdwGn6PEN7nxVFXnqlZ/0A==}
@@ -18500,7 +18500,7 @@ snapshots:
       '@portabletext/types': 2.0.13
       react: 19.1.0
 
-  '@portabletext/svelte@2.1.12(svelte@5.36.0)':
+  '@portabletext/svelte@3.0.0(svelte@5.36.0)':
     dependencies:
       '@portabletext/toolkit': 2.0.17
       svelte: 5.36.0
