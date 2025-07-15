@@ -942,8 +942,8 @@ importers:
         specifier: ^4.5.1
         version: 4.5.1(@prettier/plugin-oxc@0.0.4)(@vue/compiler-sfc@3.5.17)(prettier@3.6.2)
       '@sanity/prettier-config':
-        specifier: ^1.0.6
-        version: 1.0.6(prettier@3.6.2)
+        specifier: ^2.0.0
+        version: 2.0.0(prettier@3.6.2)
       prettier:
         specifier: 'catalog:'
         version: 3.6.2
@@ -5285,8 +5285,8 @@ packages:
       babel-plugin-react-compiler:
         optional: true
 
-  '@sanity/prettier-config@1.0.6':
-    resolution: {integrity: sha512-pbkaHa33gJjRhhDr7be5WJ+c2PNEUCcrNNsgAA0W3a/pAkdrNujC09Gzvi/JkydgjliP/T2KLeuPCBlzftuzKw==}
+  '@sanity/prettier-config@2.0.0':
+    resolution: {integrity: sha512-iTGLenR4T1DU0QJhMIMVw61C4DeZyKhpYNmkTOToO1dX8fBuew8JqKWe9S4Ojk8rB9Y5MCNgl5haVjOzFcWPtw==}
     peerDependencies:
       prettier: ^3.6.0
 
@@ -18302,8 +18302,7 @@ snapshots:
   '@oxc-parser/binding-win32-x64-msvc@0.76.0':
     optional: true
 
-  '@oxc-project/types@0.74.0':
-    optional: true
+  '@oxc-project/types@0.74.0': {}
 
   '@oxc-project/types@0.76.0': {}
 
@@ -18510,7 +18509,6 @@ snapshots:
   '@prettier/plugin-oxc@0.0.4':
     dependencies:
       oxc-parser: 0.74.0
-    optional: true
 
   '@react-spring/animated@10.0.1(react@19.1.0)':
     dependencies:
@@ -19362,8 +19360,9 @@ snapshots:
       - debug
       - supports-color
 
-  '@sanity/prettier-config@1.0.6(prettier@3.6.2)':
+  '@sanity/prettier-config@2.0.0(prettier@3.6.2)':
     dependencies:
+      '@prettier/plugin-oxc': 0.0.4
       prettier: 3.6.2
       prettier-plugin-packagejson: 2.5.15(prettier@3.6.2)
 
@@ -27832,7 +27831,6 @@ snapshots:
       '@oxc-parser/binding-wasm32-wasi': 0.74.0
       '@oxc-parser/binding-win32-arm64-msvc': 0.74.0
       '@oxc-parser/binding-win32-x64-msvc': 0.74.0
-    optional: true
 
   oxc-parser@0.76.0:
     dependencies:
