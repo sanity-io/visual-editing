@@ -346,4 +346,3 @@ export default defineConfig({
 [gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/preview-url-secret?label=gzip%20size&style=flat-square
 [size-badge]: https://img.shields.io/bundlephobia/min/@sanity/preview-url-secret?label=size&style=flat-square
 [bundlephobia]: https://bundlephobia.com/package/@sanity/preview-url-secret
-
