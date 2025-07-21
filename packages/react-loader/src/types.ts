@@ -14,7 +14,7 @@ import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-
 
 export type * from '@sanity/core-loader'
 
-export type WithEncodeDataAttribute = {
+type WithEncodeDataAttribute = {
   encodeDataAttribute: EncodeDataAttributeFunction
 }
 

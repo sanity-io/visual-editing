@@ -3,8 +3,9 @@ import type {QueryStore, QueryStoreState} from '@sanity/core-loader'
 import isEqual from 'fast-deep-equal'
 import {useEffect, useMemo, useState, useSyncExternalStore} from 'react'
 import {defineStudioUrlStore} from './defineStudioUrlStore'
-import type {UseQueryOptions, WithEncodeDataAttribute} from './types'
+import type {UseQueryOptions} from './types'
 import {useEncodeDataAttribute} from './useEncodeDataAttribute'
+import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
 
 export function defineUseQuery({
   createFetcherStore,
@@ -15,7 +16,9 @@ export function defineUseQuery({
   query: string,
   params?: QueryParams,
   options?: UseQueryOptions<QueryResponseResult>,
-) => QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute {
+) => QueryStoreState<QueryResponseResult, QueryResponseError> & {
+  encodeDataAttribute: EncodeDataAttributeFunction
+} {
   const DEFAULT_PARAMS = {}
   return <QueryResponseResult, QueryResponseError>(
     query: string,

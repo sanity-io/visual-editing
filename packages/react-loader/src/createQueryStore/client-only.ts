@@ -22,7 +22,8 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     ...options,
   })
   const studioUrlStore = defineStudioUrlStore(options.client)
-  const useQuery = defineUseQuery({createFetcherStore, studioUrlStore})
+  // @ts-expect-error - update typings
+  const useQuery: QueryStore['useQuery'] = defineUseQuery({createFetcherStore, studioUrlStore})
   const useLiveMode: UseLiveModeHook = defineUseLiveMode({
     enableLiveMode,
     setStudioUrl: studioUrlStore.setStudioUrl,
@@ -38,7 +39,6 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
 
   return {
     loadQuery,
-    // @ts-expect-error - update typings
     useQuery,
     setServerClient,
     useLiveMode,
