@@ -226,7 +226,7 @@ type ViewToggleProps = {
 
 function ViewToggle(props: ViewToggleProps) {
   const viewIndex = props.views.findIndex((view) => view.selected)
-  const nextView = props.views[viewIndex + 1] ?? props.views[0]
+  const nextView = props.views[viewIndex + 1] ?? props.views[0]!
 
   return (
     <Tooltip
