@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.8](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.7...comlink-v3.0.8) (2025-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+
 ## [3.0.7](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.6...comlink-v3.0.7) (2025-07-11)
 
 

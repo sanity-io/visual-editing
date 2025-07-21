@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.15.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.15.3...visual-editing-v2.15.4) (2025-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.8
+    * @sanity/insert-menu bumped to 1.1.13
+    * @sanity/presentation-comlink bumped to 1.0.25
+    * @sanity/preview-url-secret bumped to 2.1.14
+    * @sanity/visual-editing-csm bumped to 2.0.21
+
 ## [2.15.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.15.2...visual-editing-v2.15.3) (2025-07-17)
 
 

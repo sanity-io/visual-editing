@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.1.2...visual-editing-types-v1.1.3) (2025-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/insert-menu bumped to 1.1.13
+
 ## [1.1.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.1.1...visual-editing-types-v1.1.2) (2025-07-17)
 
 
