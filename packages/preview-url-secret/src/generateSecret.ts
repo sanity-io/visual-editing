@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /** @internal */
 export function generateUrlSecret(): string {
   // Try using WebCrypto if available
@@ -10,7 +11,7 @@ export function generateUrlSecret(): string {
     let key = ''
     for (let i = 0; i < array.length; i++) {
       // Convert each byte to a 2-digit hexadecimal number
-      key += array[i].toString(16).padStart(2, '0')
+      key += array[i]!.toString(16).padStart(2, '0')
     }
 
     // Replace '+' and '/' from base64url to '-' and '_'

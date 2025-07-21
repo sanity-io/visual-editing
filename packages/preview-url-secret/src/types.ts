@@ -47,23 +47,23 @@ export interface PreviewUrlValidateUrlResult {
   /**
    * If the URL is valid, and there's a parameter for what preview path to redirect to, it will be here
    */
-  redirectTo?: string
+  redirectTo?: string | undefined
   /**
    * If the URL is valid, and the studio URL is known and valid, then its origin will be here
    */
-  studioOrigin?: string
+  studioOrigin?: string | undefined
   /**
    * The initial perspective the Studio was using when starting to load the preview.
    * It can change over time and should also be handled with `postMessage` listeners.
    * The value can be arbitrary and has to be validated to make sure it's a valid perspective.
    */
-  studioPreviewPerspective?: string | null
+  studioPreviewPerspective?: string | null | undefined
 }
 
 /** @internal */
 export interface ParsedPreviewUrl {
   secret: string
-  redirectTo?: string
+  redirectTo?: string | undefined
   studioPreviewPerspective: string | null
 }
 

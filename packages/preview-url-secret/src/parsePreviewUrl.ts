@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewPerspective,
@@ -17,7 +18,7 @@ export function parsePreviewUrl(unsafeUrl: string): ParsedPreviewUrl {
     throw new Error('Missing secret')
   }
   const studioPreviewPerspective = url.searchParams.get(urlSearchParamPreviewPerspective)
-  let redirectTo = undefined
+  let redirectTo: string | undefined
   const unsafeRedirectTo = url.searchParams.get(urlSearchParamPreviewPathname)
   if (unsafeRedirectTo) {
     const redirectUrl = new URL(unsafeRedirectTo, 'http://localhost')
