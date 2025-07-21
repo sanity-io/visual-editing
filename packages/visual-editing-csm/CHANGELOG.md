@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.21](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.20...visual-editing-csm-v2.0.21) (2025-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 1.1.3
+
 ## [2.0.20](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.19...visual-editing-csm-v2.0.20) (2025-07-17)
 
 

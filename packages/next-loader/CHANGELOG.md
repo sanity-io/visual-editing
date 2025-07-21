@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.7.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.7.1...next-loader-v1.7.2) (2025-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/comlink bumped to 3.0.8
+    * @sanity/presentation-comlink bumped to 1.0.25
+  * devDependencies
+    * @sanity/preview-url-secret bumped to 2.1.14
+
 ## [1.7.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.7.0...next-loader-v1.7.1) (2025-07-17)
 
 

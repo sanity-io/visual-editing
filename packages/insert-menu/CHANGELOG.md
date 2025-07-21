@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.13](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.12...insert-menu-v1.1.13) (2025-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+
 ## [1.1.12](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.11...insert-menu-v1.1.12) (2025-05-29)
 
 
