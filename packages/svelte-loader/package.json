@@ -1,6 +1,6 @@
 {
   "name": "@sanity/svelte-loader",
-  "version": "1.13.52",
+  "version": "1.13.53-canary.0",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/svelte-loader#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -34,7 +34,7 @@
   "scripts": {
     "build": "svelte-package -i src -o dist",
     "dev": "pnpm run build",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },

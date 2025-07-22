@@ -1,6 +1,6 @@
 {
   "name": "@sanity/comlink",
-  "version": "3.0.9",
+  "version": "3.0.9-canary.16",
   "keywords": [
     "sanity.io",
     "postmessage"
@@ -38,7 +38,7 @@
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
