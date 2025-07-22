@@ -1,7 +1,8 @@
 import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {DocumentIcon, DragHandleIcon, EllipsisVerticalIcon, PlugIcon} from '@sanity/icons'
 import {MenuButton, MenuDivider} from '@sanity/ui'
-import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui/_visual-editing'
+import {vars} from '@sanity/ui/css'
+import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui'
 import {pathToUrlString} from '@sanity/visual-editing-csm'
 import {
   Fragment,
@@ -91,9 +92,9 @@ const Root = styled(Card)`
   --overlay-box-shadow: inset 0 0 0 1px transparent;
 
   [data-overlays] & {
-    --overlay-bg: color-mix(in srgb, transparent 95%, var(--card-focus-ring-color));
+    --overlay-bg: color-mix(in srgb, transparent 95%, ${vars.color.focusRing});
     --overlay-box-shadow: inset 0 0 0 2px
-      color-mix(in srgb, transparent 50%, var(--card-focus-ring-color));
+      color-mix(in srgb, transparent 50%, ${vars.color.focusRing});
   }
 
   [data-fading-out] & {
@@ -106,16 +107,16 @@ const Root = styled(Card)`
   }
 
   &[data-focused] {
-    --overlay-box-shadow: inset 0 0 0 1px var(--card-focus-ring-color);
+    --overlay-box-shadow: inset 0 0 0 1px ${vars.color.focusRing};
   }
 
   &[data-hovered]:not([data-focused]) {
     transition: none;
-    --overlay-box-shadow: inset 0 0 0 2px var(--card-focus-ring-color);
+    --overlay-box-shadow: inset 0 0 0 2px ${vars.color.focusRing};
   }
 
   /* [data-unmounted] & {
-    --overlay-box-shadow: inset 0 0 0 1px var(--card-focus-ring-color);
+    --overlay-box-shadow: inset 0 0 0 1px ${vars.color.focusRing};
   } */
 
   :link {
@@ -187,7 +188,7 @@ const Tab = styled(Flex)`
 
 const ActionOpen = styled(Card)`
   cursor: pointer;
-  background-color: var(--card-focus-ring-color);
+  background-color: ${vars.color.focusRing};
   right: 0;
   border-radius: 3px;
 
@@ -200,7 +201,7 @@ const ActionOpen = styled(Card)`
 const Labels = styled(Flex)`
   display: flex;
   align-items: center;
-  background-color: var(--card-focus-ring-color);
+  background-color: ${vars.color.focusRing};
   right: 0;
   border-radius: 3px;
   & [data-ui='Text'],
@@ -380,7 +381,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                           <PointerEvents>
                             {nodePluginCollections?.map((nodePluginCollection, index) => (
                               <Fragment key={nodePluginCollection.id}>
-                                <Stack role="group" paddingY={1} space={0}>
+                                <Stack role="group" paddingY={1} gap={0}>
                                   <MenuItem
                                     paddingY={2}
                                     text={

@@ -1,4 +1,4 @@
-import {Portal} from '@sanity/ui/_visual-editing'
+import {Portal} from '@sanity/ui'
 import {type FunctionComponent, type MouseEvent} from 'react'
 import {css, styled} from 'styled-components'
 
