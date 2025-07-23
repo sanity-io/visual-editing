@@ -3,7 +3,7 @@ import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import type {Status} from '@sanity/comlink'
 import {type VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 import {
-  Card,
+  Root as UiRoot,
   isHTMLAnchorElement,
   isHTMLElement,
   LayerProvider,
@@ -46,7 +46,7 @@ import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
 import {useReportDocuments} from './useReportDocuments'
 
-const Root = styled.div<{
+const Root = styled(UiRoot)<{
   $zIndex?: string | number
 }>`
   background-color: transparent;
@@ -405,48 +405,49 @@ export const Overlays: FunctionComponent<{
 
   return (
     <TelemetryProvider comlink={comlink}>
-      <Card scheme={prefersDark ? 'dark' : 'light'} tone="transparent">
-        <LayerProvider>
-          <PortalProvider element={rootElement}>
-            <SchemaProvider comlink={comlink} elements={elements}>
-              <PreviewSnapshotsProvider comlink={comlink}>
-                <SharedStateProvider comlink={comlink}>
-                  <Root
-                    data-fading-out={fadingOut ? '' : undefined}
-                    data-overlays={overlaysFlash ? '' : undefined}
-                    ref={setRootElement}
-                    $zIndex={zIndex}
-                  >
-                    <DocumentReporter documentIds={documentIds} perspective={perspective} />
-                    <OverlaysController
-                      comlink={comlink}
-                      dispatch={dispatch}
-                      inFrame={inFrame}
-                      inPopUp={inPopUp}
-                      onDrag={updateDragPreviewCustomProps}
-                      overlayEnabled={overlayEnabled}
-                      rootElement={rootElement}
-                    />
-                    {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
-                    {elementsToRender}
+      <LayerProvider>
+        <PortalProvider element={rootElement}>
+          <SchemaProvider comlink={comlink} elements={elements}>
+            <PreviewSnapshotsProvider comlink={comlink}>
+              <SharedStateProvider comlink={comlink}>
+                <Root
+                  as="div"
+                  scheme={prefersDark ? 'dark' : 'light'}
+                  tone="transparent"
+                  data-fading-out={fadingOut ? '' : undefined}
+                  data-overlays={overlaysFlash ? '' : undefined}
+                  ref={setRootElement}
+                  $zIndex={zIndex}
+                >
+                  <DocumentReporter documentIds={documentIds} perspective={perspective} />
+                  <OverlaysController
+                    comlink={comlink}
+                    dispatch={dispatch}
+                    inFrame={inFrame}
+                    inPopUp={inPopUp}
+                    onDrag={updateDragPreviewCustomProps}
+                    overlayEnabled={overlayEnabled}
+                    rootElement={rootElement}
+                  />
+                  {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
+                  {elementsToRender}
 
-                    {isDragging && !dragMinimapTransition && (
-                      <>
-                        {dragInsertPosition && (
-                          <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
-                        )}
-                        {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
-                        {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
-                      </>
-                    )}
-                    {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
-                  </Root>
-                </SharedStateProvider>
-              </PreviewSnapshotsProvider>
-            </SchemaProvider>
-          </PortalProvider>
-        </LayerProvider>
-      </Card>
+                  {isDragging && !dragMinimapTransition && (
+                    <>
+                      {dragInsertPosition && (
+                        <OverlayDragInsertMarker dragInsertPosition={dragInsertPosition} />
+                      )}
+                      {dragShowMinimapPrompt && <OverlayMinimapPrompt />}
+                      {dragGroupRect && <OverlayDragGroupRect dragGroupRect={dragGroupRect} />}
+                    </>
+                  )}
+                  {isDragging && dragSkeleton && <OverlayDragPreview skeleton={dragSkeleton} />}
+                </Root>
+              </SharedStateProvider>
+            </PreviewSnapshotsProvider>
+          </SchemaProvider>
+        </PortalProvider>
+      </LayerProvider>
     </TelemetryProvider>
   )
 }
