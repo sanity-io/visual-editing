@@ -1,7 +1,7 @@
 import {createEditUrl, studioPath} from '@sanity/client/csm'
 import {DocumentIcon, DragHandleIcon, EllipsisVerticalIcon, PlugIcon} from '@sanity/icons'
 import {MenuButton, MenuDivider} from '@sanity/ui'
-import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui/_visual-editing'
+import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui'
 import {pathToUrlString} from '@sanity/visual-editing-csm'
 import {
   Fragment,
@@ -370,7 +370,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                           <PointerEvents>
                             {nodePluginCollections?.map((nodePluginCollection, index) => (
                               <Fragment key={nodePluginCollection.id}>
-                                <Stack role="group" paddingY={1} space={0}>
+                                <Stack role="group" paddingY={1} gap={0}>
                                   <MenuItem
                                     paddingY={2}
                                     text={
