@@ -13,6 +13,8 @@ export default defineConfig({
     treeshake: {
       preset: 'smallest',
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],
+      // @TODO only mark css imports as side effects
+      moduleSideEffects: true,
     },
   },
   babel: {reactCompiler: true},

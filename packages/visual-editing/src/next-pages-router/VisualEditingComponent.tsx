@@ -8,7 +8,6 @@ import type {
   VisualEditingOptions,
 } from '../types'
 import {enableVisualEditing} from '../ui/enableVisualEditing'
-import '@sanity/ui/css/index.css'
 
 /**
  * @public
