@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.15.4...visual-editing-v3.0.0) (2025-07-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** update dependency @sanity/ui to v3 (main) ([#3150](https://github.com/sanity-io/visual-editing/issues/3150))
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/ui to v3 (main) ([#3150](https://github.com/sanity-io/visual-editing/issues/3150)) ([6da470d](https://github.com/sanity-io/visual-editing/commit/6da470daa1591521a7b091b817fb5e39d6f4b562))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/insert-menu bumped to 2.0.0
+    * @sanity/presentation-comlink bumped to 1.0.26
+    * @sanity/visual-editing-csm bumped to 2.0.22
+
 ## [2.15.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.15.3...visual-editing-v2.15.4) (2025-07-21)
 
 

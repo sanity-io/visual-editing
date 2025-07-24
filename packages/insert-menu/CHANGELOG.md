@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.13...insert-menu-v2.0.0) (2025-07-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** update dependency @sanity/ui to v3 (main) ([#3150](https://github.com/sanity-io/visual-editing/issues/3150))
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/ui to v3 (main) ([#3150](https://github.com/sanity-io/visual-editing/issues/3150)) ([6da470d](https://github.com/sanity-io/visual-editing/commit/6da470daa1591521a7b091b817fb5e39d6f4b562))
+
 ## [1.1.13](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.12...insert-menu-v1.1.13) (2025-07-21)
 
 
