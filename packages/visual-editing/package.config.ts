@@ -18,5 +18,5 @@ export default defineConfig({
     },
   },
   babel: {reactCompiler: true},
-  reactCompilerOptions: {target: '18'},
+  reactCompilerOptions: {target: '19'},
 })
