@@ -1589,9 +1589,6 @@ importers:
       next:
         specifier: '>= 13 || >=14.3.0-canary.0 <14.3.0 || >=15.0.0-rc'
         version: 15.4.7(@babel/core@7.28.3)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      react-compiler-runtime:
-        specifier: 'catalog:'
-        version: 19.1.0-rc.2(react@19.1.1)
       rxjs:
         specifier: 'catalog:'
         version: 7.8.2
@@ -1605,9 +1602,6 @@ importers:
         specifier: 'catalog:'
         version: 5.20.2
     devDependencies:
-      '@remix-run/react':
-        specifier: ^2.17.0
-        version: 2.17.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.8.3)
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../@repo/eslint-config
