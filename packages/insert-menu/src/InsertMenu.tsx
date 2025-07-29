@@ -54,6 +54,7 @@ const ALL_ITEMS_GROUP_NAME = 'all-items'
 
 const gridStyle: CSSProperties = {
   gridTemplateColumns: 'repeat(auto-fill, minmax(118px, 1fr))',
+  alignItems: 'start',
 }
 
 /** @alpha */
