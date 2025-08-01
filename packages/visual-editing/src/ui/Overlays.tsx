@@ -281,15 +281,26 @@ export const Overlays: FunctionComponent<{
       }
     }
 
+    let altPressed = false
+
     const handleKeyUp = (e: KeyboardEvent) => {
-      if (isAltKey(e)) {
+      if (isAltKey(e) && altPressed) {
+        altPressed = false
         setOverlayEnabled((enabled) => !enabled)
       }
     }
 
     const handleKeydown = (e: KeyboardEvent) => {
       if (isAltKey(e)) {
-        setOverlayEnabled((enabled) => !enabled)
+        // Don't handle Alt if it's part of a complex shortcut
+        if (e.ctrlKey || e.metaKey || e.shiftKey) {
+          return
+        }
+
+        if (!altPressed) {
+          altPressed = true
+          setOverlayEnabled((enabled) => !enabled)
+        }
       }
 
       if (isHotkey(['mod', '\\'], e)) {
@@ -297,14 +308,24 @@ export const Overlays: FunctionComponent<{
       }
     }
 
+    // Reset Alt state if window loses focus
+    const handleWindowBlur = () => {
+      if (altPressed) {
+        altPressed = false
+        setOverlayEnabled((enabled) => !enabled) // Toggle back
+      }
+    }
+
     window.addEventListener('click', handleClick)
     window.addEventListener('keydown', handleKeydown)
     window.addEventListener('keyup', handleKeyUp)
+    window.addEventListener('blur', handleWindowBlur)
 
     return () => {
       window.removeEventListener('click', handleClick)
       window.removeEventListener('keydown', handleKeydown)
       window.removeEventListener('keyup', handleKeyUp)
+      window.removeEventListener('blur', handleWindowBlur)
     }
   }, [setOverlayEnabled])
 
