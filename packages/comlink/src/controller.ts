@@ -33,6 +33,7 @@ export interface ChannelInstance<TSends extends Message, TReceives extends Messa
     ...params: (TMessage['data'] extends undefined ? [TType] : never) | [TType, TMessage['data']]
   ) => void
   start: () => () => void
+  pause: () => () => void
   stop: () => void
 }
 
@@ -278,12 +279,20 @@ export const createController = (input: {targetOrigin: string}): Controller => {
       return stop
     }
 
+    const pause = () => {
+      const connections = channel.connections as unknown as Set<Connection>
+      connections.forEach(cleanupConnection)
+
+      return start
+    }
+
     return {
       on,
       onInternalEvent,
       onStatus,
       post,
       start,
+      pause,
       stop,
     }
   }
