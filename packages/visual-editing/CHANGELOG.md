@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.0.0...visual-editing-v3.0.1) (2025-08-01)
+
+
+### Bug Fixes
+
+* don't interfere with dev keyboard shortcuts ([0a5d93b](https://github.com/sanity-io/visual-editing/commit/0a5d93be2b1d348261179efa86b6a0e340106ef5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/insert-menu bumped to 2.0.1
+    * @sanity/presentation-comlink bumped to 1.0.27
+    * @sanity/visual-editing-csm bumped to 2.0.23
+
 ## [3.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v2.15.4...visual-editing-v3.0.0) (2025-07-24)
 
 

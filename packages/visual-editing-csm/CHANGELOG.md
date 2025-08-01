@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.23](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.22...visual-editing-csm-v2.0.23) (2025-08-01)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 1.1.5
+
 ## [2.0.22](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.21...visual-editing-csm-v2.0.22) (2025-07-24)
 
 

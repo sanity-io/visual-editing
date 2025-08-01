@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/sanity-io/visual-editing/compare/insert-menu-v2.0.0...insert-menu-v2.0.1) (2025-08-01)
+
+
+### Bug Fixes
+
+* **insert-menu:** grid items alignment is off for long titles ([#3170](https://github.com/sanity-io/visual-editing/issues/3170)) ([536ebc8](https://github.com/sanity-io/visual-editing/commit/536ebc8be538bc59ecd82b3bb46146839140fcf8))
+
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/insert-menu-v1.1.13...insert-menu-v2.0.0) (2025-07-24)
 
 
