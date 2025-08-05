@@ -18,38 +18,27 @@
     ".": {
       "source": "./src/index.server-only.ts",
       "react-server": "./dist/index.js",
-      "import": "./dist/index.server-only.js",
-      "require": "./dist/index.server-only.cjs",
       "default": "./dist/index.server-only.js"
     },
     "./hooks": {
       "source": "./src/hooks/index.ts",
-      "import": "./dist/hooks.js",
-      "require": "./dist/hooks.cjs",
       "default": "./dist/hooks.js"
     },
     "./client-components/live": {
       "source": "./src/client-components/live/index.ts",
-      "import": "./dist/client-components/live.js",
-      "require": "./dist/client-components/live.cjs",
       "default": "./dist/client-components/live.js"
     },
     "./client-components/live-stream": {
       "source": "./src/client-components/live-stream/index.ts",
-      "import": "./dist/client-components/live-stream.js",
-      "require": "./dist/client-components/live-stream.cjs",
       "default": "./dist/client-components/live-stream.js"
     },
     "./server-actions": {
       "source": "./src/server-actions/index.ts",
-      "import": "./dist/server-actions.js",
-      "require": "./dist/server-actions.cjs",
       "default": "./dist/server-actions.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.server-only.cjs",
-  "module": "./dist/index.server-only.js",
+  "main": "./dist/index.server-only.js",
   "types": "./dist/index.server-only.d.ts",
   "typesVersions": {
     "*": {
