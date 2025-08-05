@@ -36,7 +36,7 @@ export type WrappedValue<T> = T extends string
       ? SourceNode<boolean>
       : T extends Array<unknown>
         ? Array<WrappedValue<T[number]>>
-        : T extends {} // eslint-disable-line @typescript-eslint/ban-types
+        : T extends {}
           ? {[P in keyof T]: P extends SanityKey ? T[P] : WrappedValue<T[P]>}
           : T extends string
             ? string
@@ -56,7 +56,7 @@ export type UnwrappedValue<W = WrappedValue<unknown>> =
         ? boolean
         : W extends Array<unknown>
           ? Array<UnwrappedValue<W[number]>>
-          : W extends {} // eslint-disable-line @typescript-eslint/ban-types
+          : W extends {}
             ? {
                 [P in keyof W]: P extends SanityKey ? W[P] : UnwrappedValue<W[P]>
               }
