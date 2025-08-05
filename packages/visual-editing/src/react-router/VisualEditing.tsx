@@ -3,6 +3,7 @@ import type {VisualEditingProps} from './VisualEditingComponent'
 
 const VisualEditingComponent = lazy(() => import('./VisualEditingComponent'))
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const subcribe = () => () => {}
 
 /**

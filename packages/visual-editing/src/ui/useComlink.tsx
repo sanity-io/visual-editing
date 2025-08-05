@@ -11,7 +11,7 @@ import type {VisualEditingNode} from '../types'
  * Hook for maintaining a channel between overlays and the presentation tool
  * @internal
  */
-export function useComlink(active: boolean = true): [VisualEditingNode | undefined, Status] {
+export function useComlink(active = true): [VisualEditingNode | undefined, Status] {
   const [node, setNode] = useState<VisualEditingNode>()
   const [status, setStatus] = useState<Status>('idle')
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {v4 as uuid} from 'uuid'
 import {
   assertEvent,
@@ -98,7 +99,6 @@ export const createNodeMachine = <
   TSends extends Message, // Sends
   TReceives extends Message, // Receives
   TSendsWithoutResponse extends WithoutResponse<TSends> = WithoutResponse<TSends>,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 >() => {
   const nodeMachine = setup({
     types: {} as {

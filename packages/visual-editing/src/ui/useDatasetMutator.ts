@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {useEffect} from 'react'
 import {createActor} from 'xstate'
 import {setActor} from '../optimistic/context'

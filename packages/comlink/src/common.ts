@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {bufferCount, concatMap, defer, filter, fromEvent, map, pipe, take} from 'rxjs'
 import {fromEventObservable} from 'xstate'
 import type {ListenInput, ProtocolMessage} from './types'
@@ -76,7 +77,6 @@ export const messageEvents$ = defer(() =>
  */
 export const createListenLogic = (
   compatMap?: (event: MessageEvent<ProtocolMessage>) => MessageEvent<ProtocolMessage>,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 ) =>
   fromEventObservable(({input}: {input: ListenInput}) => {
     return messageEvents$.pipe(

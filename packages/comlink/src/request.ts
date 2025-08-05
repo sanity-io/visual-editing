@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {EMPTY, filter, fromEvent, map, take, takeUntil, type Observable} from 'rxjs'
 import {v4 as uuid} from 'uuid'
 import {
@@ -54,10 +55,7 @@ export type RequestActorRef<TSends extends Message> = ActorRefFrom<
 /**
  * @public
  */
-export const createRequestMachine = <
-  TSends extends Message,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
->() => {
+export const createRequestMachine = <TSends extends Message>() => {
   return setup({
     types: {} as {
       children: {
