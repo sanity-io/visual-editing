@@ -35,7 +35,7 @@
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
     "dev:workshop": "workshop dev",
-    "lint": "eslint --cache .",
+    "lint": "eslint .",
     "prepack": "turbo run build",
     "ts:check": "tsc --noEmit"
   },

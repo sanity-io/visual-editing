@@ -38,7 +38,7 @@
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "lint": "eslint --cache .",
+    "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },

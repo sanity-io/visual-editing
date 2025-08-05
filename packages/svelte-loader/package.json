@@ -34,7 +34,7 @@
   "scripts": {
     "build": "svelte-package -i src -o dist",
     "dev": "pnpm run build",
-    "lint": "eslint --cache .",
+    "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
   },
