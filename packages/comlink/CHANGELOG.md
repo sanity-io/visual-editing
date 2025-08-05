@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.9](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.8...comlink-v3.0.9) (2025-08-05)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency isbot to ^5.1.29 ([#3185](https://github.com/sanity-io/visual-editing/issues/3185)) ([c6e8698](https://github.com/sanity-io/visual-editing/commit/c6e8698ad1ac10253fc6049e59c69b0314e2aa28))
+
 ## [3.0.8](https://github.com/sanity-io/visual-editing/compare/comlink-v3.0.7...comlink-v3.0.8) (2025-07-21)
 
 
