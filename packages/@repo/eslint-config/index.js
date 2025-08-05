@@ -35,6 +35,8 @@ module.exports = {
     ],
     '@typescript-eslint/explicit-module-boundary-types': 'error',
     '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-empty-object-type': 'off',
+    '@typescript-eslint/ban-types': 'off',
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-compiler/react-compiler': 'error',
