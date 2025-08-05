@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "sanity schema extract --workspace cross-dataset-references --path ./cross-dataset-references.json && sanity schema extract --workspace live-demo --path ./live-demo.json && sanity schema extract --workspace page-builder-demo --path ./page-builder-demo.json && sanity schema extract --workspace shoes --path ./shoes.json",
-    "lint": "eslint --cache ."
+    "lint": "eslint ."
   },
   "browserslist": "extends @sanity/browserslist-config",
   "prettier": "@repo/prettier-config",

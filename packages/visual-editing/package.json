@@ -122,7 +122,7 @@
     "build:main": "pkg build --strict",
     "build:svelte": "svelte-kit sync && svelte-package -i ./svelte -o dist-svelte",
     "dev": "pnpm run build:main && pnpm run build:svelte",
-    "lint": "eslint --cache .",
+    "lint": "eslint .",
     "prepack": "turbo run build",
     "react-compiler-healthcheck": "(cd src && pnpx react-compiler-healthcheck@latest)",
     "storybook": "storybook dev -p 6006",
