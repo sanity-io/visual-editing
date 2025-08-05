@@ -488,8 +488,8 @@ importers:
   apps/nuxt:
     dependencies:
       '@nuxtjs/sanity':
-        specifier: ^1.13.3
-        version: 1.13.3(magicast@0.3.5)
+        specifier: ^1.14.1
+        version: 1.14.1(magicast@0.3.5)
       '@nuxtjs/tailwindcss':
         specifier: ^6.14.0
         version: 6.14.0(magicast@0.3.5)
@@ -4073,9 +4073,9 @@ packages:
     peerDependencies:
       vue: ^3.3.4
 
-  '@nuxtjs/sanity@1.13.3':
-    resolution: {integrity: sha512-qZNPqlsaUWABhezryUbls/H40tXDrayNVAj8f4QPCEJqKyvQGZ8kG7nagjrwOkModl+cn56fVP/q47AYfkFbZA==}
-    engines: {node: ^18.20.4 || ^20.9.0 || ^22.0.0 || >=23.0.0}
+  '@nuxtjs/sanity@1.14.1':
+    resolution: {integrity: sha512-qnbzy3CkPq84wrwF6z/KMOp2scegCLyToC6+Wu097pPrlz7+soFafgJ+pxFsCFRgi0yI/wKomGCHSIUFq/qRkw==}
+    engines: {node: ^20.9.0 || ^22.0.0 || >=23.0.0}
 
   '@nuxtjs/tailwindcss@6.14.0':
     resolution: {integrity: sha512-30RyDK++LrUVRgc2A85MktGWIZoRQgeQKjE4CjjD64OXNozyl+4ScHnnYgqVToMM6Ch2ZG2W4wV2J0EN6F0zkQ==}
@@ -10698,8 +10698,8 @@ packages:
       '@types/three': '>=0.134.0'
       three: '>=0.134.0'
 
-  magic-regexp@0.8.0:
-    resolution: {integrity: sha512-lOSLWdE156csDYwCTIGiAymOLN7Epu/TU5e/oAnISZfU6qP+pgjkE+xbVjVn3yLPKN8n1G2yIAYTAM5KRk6/ow==}
+  magic-regexp@0.10.0:
+    resolution: {integrity: sha512-Uly1Bu4lO1hwHUW0CQeSWuRtzCMNO00CmXtS8N6fyvB3B979GOEEeAkiTUDsmbYLAbvpUS/Kt5c4ibosAzVyVg==}
 
   magic-string-ast@1.0.0:
     resolution: {integrity: sha512-8rbuNizut2gW94kv7pqgt0dvk+AHLPVIm0iJtpSgQJ9dx21eWx5SBel8z3jp1xtC0j6/iyK3AWGhAR1H61s7LA==}
@@ -11696,9 +11696,6 @@ packages:
 
   ofetch@1.4.1:
     resolution: {integrity: sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw==}
-
-  ohash@1.1.6:
-    resolution: {integrity: sha512-TBu7PtV8YkAZn0tSxobKY2n2aAQva936lhRrj6957aDaCf9IEtqsKbgMzXE/F/sjqYOwmrukeORHNLe5glk7Cg==}
 
   ohash@2.0.11:
     resolution: {integrity: sha512-RdR9FQrFwNBNXAr4GixM8YaRZRJ5PUWbKYbE5eOsrwAjJW0q2REGcf79oYPsLyskQCZG1PLN+S/K1V00joZAoQ==}
@@ -18221,23 +18218,25 @@ snapshots:
       - vue-tsc
       - yaml
 
-  '@nuxtjs/sanity@1.13.3(magicast@0.3.5)':
+  '@nuxtjs/sanity@1.14.1(magicast@0.3.5)':
     dependencies:
       '@nuxt/kit': 3.17.7(magicast@0.3.5)
       '@portabletext/types': 2.0.13
       '@sanity/client': 7.8.2(debug@4.4.1)
+      '@sanity/comlink': link:packages/comlink
       '@sanity/core-loader': link:packages/core-loader
+      '@sanity/presentation-comlink': link:packages/presentation-comlink
       '@sanity/preview-url-secret': link:packages/preview-url-secret
       '@sanity/visual-editing': link:packages/visual-editing
       consola: 3.4.2
       defu: 6.1.4
       jiti: 2.4.2
       knitwork: 1.2.0
-      magic-regexp: 0.8.0
+      magic-regexp: 0.10.0
       mlly: 1.7.4
       ofetch: 1.4.1
-      ohash: 1.1.6
-      pathe: 1.1.2
+      ohash: 2.0.11
+      pathe: 2.0.3
     transitivePeerDependencies:
       - debug
       - magicast
@@ -26776,7 +26775,7 @@ snapshots:
       '@types/three': 0.178.1
       three: 0.178.0
 
-  magic-regexp@0.8.0:
+  magic-regexp@0.10.0:
     dependencies:
       estree-walker: 3.0.3
       magic-string: 0.30.17
@@ -26784,7 +26783,7 @@ snapshots:
       regexp-tree: 0.1.27
       type-level-regexp: 0.1.17
       ufo: 1.6.1
-      unplugin: 1.16.1
+      unplugin: 2.3.5
 
   magic-string-ast@1.0.0:
     dependencies:
@@ -28456,8 +28455,6 @@ snapshots:
       destr: 2.0.5
       node-fetch-native: 1.6.6
       ufo: 1.6.1
-
-  ohash@1.1.6: {}
 
   ohash@2.0.11: {}
 
