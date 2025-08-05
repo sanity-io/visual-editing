@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.7.5...next-loader-v2.0.0) (2025-08-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* stop generating CJS
+
+### Bug Fixes
+
+* stop generating CJS ([ed6ba1a](https://github.com/sanity-io/visual-editing/commit/ed6ba1a2e1b87aa3cf6cef71c81a0b860b869c5a))
+
 ## [1.7.5](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.7.4...next-loader-v1.7.5) (2025-08-05)
 
 
