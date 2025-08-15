@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.0.2...visual-editing-v3.0.3) (2025-08-15)
+
+
+### Bug Fixes
+
+* don't throw useEffectEvent errors from useOptimistic ([3b4f635](https://github.com/sanity-io/visual-editing/commit/3b4f63567de6d961a5a6277fe7235b8ba9e82286))
+
 ## [3.0.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.0.1...visual-editing-v3.0.2) (2025-08-05)
 
 
