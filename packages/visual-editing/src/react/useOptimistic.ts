@@ -1,7 +1,6 @@
 import {getPublishedId} from '@sanity/client/csm'
 import type {SanityDocument} from '@sanity/types'
-import {startTransition, useEffect, useState} from 'react'
-import {useEffectEvent} from 'use-effect-event'
+import {startTransition, useEffect, useInsertionEffect, useRef, useState} from 'react'
 import {isEmptyActor} from '../optimistic/context'
 import type {OptimisticReducer, OptimisticReducerAction} from '../optimistic/types'
 import {useOptimisticActor} from './useOptimisticActor'
@@ -20,11 +19,15 @@ export function useOptimistic<T, U = SanityDocument>(
   /**
    * This action is used in two `useEffect` hooks, it needs access to the provided `reducer`,
    * but doesn't want to cause re-renders if `reducer` changes identity.
-   * The `useEffectEvent` hook ensures that the `reducer` value is never stale when used, and doesn't trigger setup and teardown of
+   * The `useInsertionEffect` hook ensures that the `reducer` value is never stale when used, and doesn't trigger setup and teardown of
    * `useEffect` deps to make it happen.
    */
-  const reduceStateFromAction = useEffectEvent(
-    (action: OptimisticReducerAction<U>, prevState: T) => {
+  const reduceStateFromActionRef = useRef<
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ((action: OptimisticReducerAction<U>, prevState: T) => T) | null
+  >(null)
+  useInsertionEffect(() => {
+    reduceStateFromActionRef.current = (action: OptimisticReducerAction<U>, prevState: T) => {
       const reducers = Array.isArray(reducer) ? reducer : [reducer]
       return reducers.reduce(
         (acc, reducer) =>
@@ -36,14 +39,17 @@ export function useOptimistic<T, U = SanityDocument>(
           }),
         prevState,
       )
-    },
-  )
+    }
+  }, [reducer])
 
   /**
    * Records the last passthrough value when reducers ran in response to a rebased event.
    * This allows us to later know when reducers should run should the passthrough change.
    */
-  const updateLastPassthrough = useEffectEvent(() => setLastPassthrough(passthrough))
+  const updateLastPassthroughRef = useRef<() => void>(() => setLastPassthrough(passthrough))
+  useInsertionEffect(() => {
+    updateLastPassthroughRef.current = () => setLastPassthrough(passthrough)
+  }, [passthrough])
 
   /**
    * Handle rebase events, which runs the provided reducers,
@@ -72,9 +78,13 @@ export function useOptimistic<T, U = SanityDocument>(
         // @todo This should eventually be emitted by the state machine
         type: 'mutate' as const,
       }
-      setOptimistic((prevState) => reduceStateFromAction(event, prevState))
+      setOptimistic((prevState) =>
+        reduceStateFromActionRef.current
+          ? reduceStateFromActionRef.current(event, prevState)
+          : prevState,
+      )
       setLastEvent(event)
-      updateLastPassthrough()
+      updateLastPassthroughRef.current()
       setPristine(false)
 
       clearTimeout(pristineTimeout)
@@ -111,7 +121,11 @@ export function useOptimistic<T, U = SanityDocument>(
 
     // Marking it in a startTransition allows react to interrupt the resulting render, should a new rebase happen
     startTransition(() => {
-      setOptimistic(reduceStateFromAction(lastEvent, passthrough))
+      setOptimistic(
+        reduceStateFromActionRef.current
+          ? reduceStateFromActionRef.current(lastEvent, passthrough)
+          : passthrough,
+      )
       setLastPassthrough(passthrough)
     })
   }, [lastEvent, lastPassthrough, passthrough, pristine])
