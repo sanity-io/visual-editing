@@ -11,7 +11,7 @@ import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
 import {Toaster} from 'sonner'
 import AlertBanner from './alert-banner'
-import {handleError} from './cors'
+import {handleError} from './client-actions'
 import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
 
@@ -101,6 +101,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 
             for (const tag of tags) {
               await revalidateTag(`sanity:${tag}`)
+              console.log('revalidated tag', `sanity:${tag}`)
             }
           }}
         />

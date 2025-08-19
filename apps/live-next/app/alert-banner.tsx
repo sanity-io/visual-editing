@@ -3,7 +3,7 @@
 import {useIsPresentationTool} from '@sanity/next-loader/hooks'
 import {useRouter} from 'next/navigation'
 import {useTransition} from 'react'
-import {disableDraftMode} from './actions'
+import {disableDraftMode} from './server-actions'
 
 export default function AlertBanner() {
   const router = useRouter()
