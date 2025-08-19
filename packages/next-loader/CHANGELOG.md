@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v2.0.0...next-loader-v2.1.0) (2025-08-19)
+
+
+### Features
+
+* support router handler revalidation ([e98dd9e](https://github.com/sanity-io/visual-editing/commit/e98dd9e34369328f36989d05653d38f868c62929))
+
+
+### Bug Fixes
+
+* allow setting fetchOptions.revalidate ([a2d4f63](https://github.com/sanity-io/visual-editing/commit/a2d4f63760ed65335a3b048cc19cf9295f2e7188)), closes [#3211](https://github.com/sanity-io/visual-editing/issues/3211)
+
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v1.7.5...next-loader-v2.0.0) (2025-08-05)
 
 
