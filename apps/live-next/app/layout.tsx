@@ -11,7 +11,7 @@ import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
 import {Toaster} from 'sonner'
 import AlertBanner from './alert-banner'
-import {handleError} from './client-actions'
+import {handleError} from './actions.client'
 import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
 
