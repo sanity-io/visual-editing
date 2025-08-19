@@ -1,5 +1,6 @@
 'use client'
 
+import {type SyncTag} from '@sanity/client'
 import {isCorsOriginError} from '@sanity/next-loader'
 import {toast} from 'sonner'
 
@@ -28,7 +29,7 @@ export function handleError(error: unknown) {
   }
 }
 
-export async function revalidateSyncTags(tags: SyncTag[]) {
+export async function revalidateSyncTags(tags: SyncTag[]): Promise<'refresh'> {
   const url = new URL('/api/revalidate-sync-tags', window.location.origin)
   for (const tag of tags) {
     url.searchParams.append('tag', tag)
