@@ -141,8 +141,9 @@ export interface DefinedSanityLiveProps {
 
   /**
    * Override how cache tags are invalidated, you need to pass a server action here.
+   * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
    */
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void>
+  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
 }
 
 /**

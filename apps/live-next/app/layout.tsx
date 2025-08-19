@@ -11,7 +11,7 @@ import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
 import {Toaster} from 'sonner'
 import AlertBanner from './alert-banner'
-import {handleError} from './actions.client'
+import {handleError, revalidateSyncTags} from './actions.client'
 import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
 
@@ -96,14 +96,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           refreshOnFocus
           refreshOnReconnect
           onError={handleError}
-          revalidateSyncTags={async (tags) => {
-            'use server'
-
-            for (const tag of tags) {
-              await revalidateTag(`sanity:${tag}`)
-              console.log('revalidated tag', `sanity:${tag}`)
-            }
-          }}
+          revalidateSyncTags={revalidateSyncTags}
         />
         <SpeedInsights />
       </body>
