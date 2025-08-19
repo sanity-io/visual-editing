@@ -257,7 +257,11 @@ export function defineLive(config: DefineSanityLiveOptions): {
     const perspective = _perspective ?? (await resolveCookiePerspective())
     const useCdn = perspective === 'published'
     const revalidate =
-      (fetchOptions?.revalidate ?? process.env.NODE_ENV === 'production') ? false : undefined
+      fetchOptions?.revalidate !== undefined
+        ? fetchOptions.revalidate
+        : process.env.NODE_ENV === 'production'
+          ? false
+          : undefined
 
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, await params, {
