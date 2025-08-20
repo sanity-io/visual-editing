@@ -1,6 +1,6 @@
 {
   "name": "@sanity/react-loader",
-  "version": "1.11.18",
+  "version": "1.11.16-canary.15",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/react-loader#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -69,7 +69,7 @@
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "test": "vitest --typecheck"
   },

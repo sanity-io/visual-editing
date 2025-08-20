@@ -1,6 +1,6 @@
 {
   "name": "@sanity/insert-menu",
-  "version": "2.0.1",
+  "version": "1.1.14-canary.15",
   "description": "",
   "keywords": [],
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/insert-menu#readme",
@@ -35,7 +35,7 @@
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
     "dev:workshop": "workshop dev",
-    "lint": "eslint .",
+    "lint": "eslint --cache .",
     "prepack": "turbo run build",
     "ts:check": "tsc --noEmit"
   },
@@ -70,6 +70,6 @@
     "react-is": "^18.3 || >=19.0.0-rc"
   },
   "engines": {
-    "node": ">=20.19"
+    "node": ">=18.0.0"
   }
 }
