@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v2.0.0...vercel-protection-bypass-v2.0.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* use stable react, next and sanity peer dep ranges ([e58d995](https://github.com/sanity-io/visual-editing/commit/e58d995d57beba1e74f9ec7a2c15831c5cc04446))
+
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/vercel-protection-bypass-v1.0.26...vercel-protection-bypass-v2.0.0) (2025-07-24)
 
 
