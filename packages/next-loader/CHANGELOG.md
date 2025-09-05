@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.1.1](https://github.com/sanity-io/visual-editing/compare/next-loader-v2.1.0...next-loader-v2.1.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* use stable react, next and sanity peer dep ranges ([e58d995](https://github.com/sanity-io/visual-editing/commit/e58d995d57beba1e74f9ec7a2c15831c5cc04446))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/presentation-comlink bumped to 1.0.29
+
 ## [2.1.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v2.0.0...next-loader-v2.1.0) (2025-08-19)
 
 
