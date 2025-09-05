@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.0.3...visual-editing-v3.0.4) (2025-09-05)
+
+
+### Bug Fixes
+
+* use stable react, next and sanity peer dep ranges ([e58d995](https://github.com/sanity-io/visual-editing/commit/e58d995d57beba1e74f9ec7a2c15831c5cc04446))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/insert-menu bumped to 2.0.2
+    * @sanity/presentation-comlink bumped to 1.0.29
+    * @sanity/visual-editing-csm bumped to 2.0.24
+
 ## [3.0.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.0.2...visual-editing-v3.0.3) (2025-08-15)
 
 

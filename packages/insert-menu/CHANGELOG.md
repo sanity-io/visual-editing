@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/sanity-io/visual-editing/compare/insert-menu-v2.0.1...insert-menu-v2.0.2) (2025-09-05)
+
+
+### Bug Fixes
+
+* use stable react, next and sanity peer dep ranges ([e58d995](https://github.com/sanity-io/visual-editing/commit/e58d995d57beba1e74f9ec7a2c15831c5cc04446))
+
 ## [2.0.1](https://github.com/sanity-io/visual-editing/compare/insert-menu-v2.0.0...insert-menu-v2.0.1) (2025-08-01)
 
 
