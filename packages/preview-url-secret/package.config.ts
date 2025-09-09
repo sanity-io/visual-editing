@@ -3,5 +3,4 @@ import {defineConfig} from '@sanity/pkg-utils'
 
 export default defineConfig({
   ...baseConfig,
-  external: ['@sanity/icons', 'sanity'],
 })

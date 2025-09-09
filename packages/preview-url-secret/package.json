@@ -140,7 +140,17 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@sanity/client": "catalog:"
+    "@sanity/client": "catalog:",
+    "@sanity/icons": "*",
+    "sanity": "*"
+  },
+  "peerDependenciesMeta": {
+    "@sanity/icons": {
+      "optional": true
+    },
+    "sanity": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=18"
