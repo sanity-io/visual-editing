@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.1.15](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.14...preview-url-secret-v2.1.15) (2025-09-09)
+
+
+### Bug Fixes
+
+* declare `@sanity/icons`, `sanity`, as optional peer deps ([0e0b8d3](https://github.com/sanity-io/visual-editing/commit/0e0b8d3cbc8376847ae76c552656f8271f324e8e))
+
 ## [2.1.14](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.13...preview-url-secret-v2.1.14) (2025-07-21)
 
 
