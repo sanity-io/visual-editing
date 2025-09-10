@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v2.1.2...next-loader-v3.0.0) (2025-09-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* implement prefetching & preconnect to the LCAPI host
+
+### Features
+
+* implement prefetching & preconnect to the LCAPI host ([193874e](https://github.com/sanity-io/visual-editing/commit/193874e0e1581d710e441d26a4edaf91ff19d6dc))
+
 ## [2.1.2](https://github.com/sanity-io/visual-editing/compare/next-loader-v2.1.1...next-loader-v2.1.2) (2025-09-09)
 
 
