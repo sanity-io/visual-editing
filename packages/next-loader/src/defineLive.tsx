@@ -1,6 +1,7 @@
 /// <reference types="next" />
 /// <reference types="react/experimental" />
 
+import {prefetchDNS, preconnect} from 'react-dom'
 import {
   type ClientPerspective,
   type ClientReturn,
@@ -307,6 +308,11 @@ export function defineLive(config: DefineSanityLiveOptions): {
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
     const {isEnabled: isDraftModeEnabled} = await draftMode()
+
+    // Preconnect to the Live Event API origin, or at least prefetch the DNS if preconenct is not supported
+    const {origin} = new URL(client.getUrl('', false))
+    preconnect(origin)
+    prefetchDNS(origin)
 
     return (
       <SanityLiveClientComponent

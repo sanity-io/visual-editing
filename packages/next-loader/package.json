@@ -90,15 +90,18 @@
     "@sanity/pkg-utils": "catalog:",
     "@sanity/preview-url-secret": "workspace:^",
     "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "eslint": "^8.57.1",
     "next": "^15.5.2",
     "react": "catalog:",
+    "react-dom": "catalog:",
     "typescript": "catalog:",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "next": "^14.1 || ^15",
-    "react": "^18.3 || ^19"
+    "next": "^15.1",
+    "react": "^18.3 || ^19",
+    "react-dom": "^18.3 || ^19"
   },
   "engines": {
     "node": ">=18.18"
