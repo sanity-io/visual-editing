@@ -228,6 +228,7 @@ const InsertMenuWrapper: FunctionComponent<{
           'top',
         ],
         preventOverflow: true,
+        // @ts-expect-error -- @todo fix this
         width,
         __unstable_margins: [4, 4, 4, 4],
       }}
