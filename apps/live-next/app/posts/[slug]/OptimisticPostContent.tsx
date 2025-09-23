@@ -3,10 +3,13 @@
 import CustomPortableText from '@/app/portable-text'
 import {useIsPresentationTool, usePresentationQuery} from '@sanity/next-loader/hooks'
 import {defineQuery, type PortableTextBlock} from 'next-sanity'
+import {sanityFetch} from '@/sanity/lib/live'
 
 interface Props extends React.ComponentProps<typeof CustomPortableText> {
   id: string
 }
+
+console.log({sanityFetch})
 
 const OPTIMISTIC_POST_CONTENT_QUERY = defineQuery(`*[_id == $id && _type == "post"][0].content`)
 

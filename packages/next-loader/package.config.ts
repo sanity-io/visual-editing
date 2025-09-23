@@ -14,12 +14,6 @@ const MODULE_PATHS_WHICH_USE_SERVER_DIRECTIVE_SHOULD_BE_ADDED = [
 
 export default defineConfig({
   ...baseConfig,
-  bundles: [
-    {
-      source: './src/index.ts',
-      import: './dist/index.js',
-    },
-  ],
   rollup: {
     ...baseConfig.rollup,
     output: {
@@ -41,6 +35,8 @@ export default defineConfig({
         return ''
       },
     },
+    // This is a workaround to prevent the server-only import from being removed
+    treeshake: {moduleSideEffects: true},
   },
   extract: {
     rules: {

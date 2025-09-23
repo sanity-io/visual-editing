@@ -16,9 +16,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "source": "./src/index.server-only.ts",
-      "react-server": "./dist/index.js",
-      "default": "./dist/index.server-only.js"
+      "source": "./src/index.ts",
+      "default": "./dist/index.js"
     },
     "./hooks": {
       "source": "./src/hooks/index.ts",
@@ -38,8 +37,8 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.server-only.js",
-  "types": "./dist/index.server-only.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
       "client-components/live": [
@@ -81,6 +80,7 @@
     "@sanity/comlink": "workspace:^",
     "@sanity/presentation-comlink": "workspace:^",
     "dequal": "^2.0.3",
+    "server-only": "0.0.1",
     "use-effect-event": "catalog:"
   },
   "devDependencies": {
