@@ -1,4 +1,4 @@
-import {VisualEditing} from 'next-sanity'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {unstable_cache} from 'next/cache'
 import dynamic from 'next/dynamic'
 import '../../tailwind.css'

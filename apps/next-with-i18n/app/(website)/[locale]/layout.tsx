@@ -1,7 +1,7 @@
 import 'tailwindcss/tailwind.css'
 import config from '@/config'
 import {Metadata} from 'next'
-import {VisualEditing} from 'next-sanity'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {revalidatePath, revalidateTag} from 'next/cache'
 import {Inter} from 'next/font/google'
 import {draftMode} from 'next/headers'

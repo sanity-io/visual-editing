@@ -89,7 +89,7 @@ npm i next-sanity
 In your root `layout.tsx`, assuming you're using [Draft Mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) to toggle when to enable Visual Editing, add the `VisualEditing` component:
 
 ```tsx
-import {VisualEditing} from 'next-sanity'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -276,7 +276,7 @@ The implementation makes use of [Server Actions][server-actions], here's the def
 
 ```tsx
 // app/layout.tsx
-import {VisualEditing} from 'next-sanity'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {revalidatePath, revalidateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 

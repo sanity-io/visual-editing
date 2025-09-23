@@ -1,7 +1,7 @@
 'use client'
 
 import {useLiveMode} from '@sanity/react-loader'
-import {VisualEditing} from 'next-sanity'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {client} from './sanity.client'
 
 // Always enable stega in Live Mode

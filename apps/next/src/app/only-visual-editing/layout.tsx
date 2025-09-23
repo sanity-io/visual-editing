@@ -1,5 +1,5 @@
 import {VercelToolbar} from '@vercel/toolbar/next'
-import {VisualEditing} from 'next-sanity'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {revalidatePath, revalidateTag, unstable_cache} from 'next/cache'
 import {draftMode} from 'next/headers'
 import '../../tailwind.css'
