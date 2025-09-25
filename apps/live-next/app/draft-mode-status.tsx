@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  useDraftModeEnvironment,
-  useDraftModePerspective,
-  useIsLivePreview,
-} from '@sanity/next-loader/hooks'
+import {useDraftModeEnvironment, useDraftModePerspective, useIsLivePreview} from 'next-sanity/hooks'
 
 export function DraftModeStatus() {
   const isLivePreview = useIsLivePreview()

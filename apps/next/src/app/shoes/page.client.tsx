@@ -3,7 +3,7 @@
 import {shoesList} from '@/queries'
 import type {ShoesListResult} from '@/types'
 import {formatCurrency} from '@/utils'
-import {usePresentationQuery} from '@sanity/next-loader/hooks'
+import {usePresentationQuery} from 'next-sanity/hooks'
 import Image from 'next/image'
 import Link from 'next/link'
 import {urlFor, urlForCrossDatasetReference} from './utils'

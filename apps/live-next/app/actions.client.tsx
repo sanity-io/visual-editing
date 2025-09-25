@@ -1,7 +1,7 @@
 'use client'
 
 import {type SyncTag} from '@sanity/client'
-import {isCorsOriginError} from '@sanity/next-loader'
+import {isCorsOriginError} from 'next-sanity'
 import {toast} from 'sonner'
 
 export function handleError(error: unknown) {
