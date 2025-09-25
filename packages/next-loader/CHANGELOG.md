@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v3.0.0...next-loader-v4.0.0) (2025-09-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* retire `@sanity/next-loader`
+
+### Features
+
+* retire `@sanity/next-loader` ([2d78995](https://github.com/sanity-io/visual-editing/commit/2d7899554c49fa1975c82f98975d4d069020e370))
+
 ## [3.0.0](https://github.com/sanity-io/visual-editing/compare/next-loader-v2.1.2...next-loader-v3.0.0) (2025-09-10)
 
 
