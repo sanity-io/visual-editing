@@ -1278,22 +1278,6 @@ importers:
         version: 5.9.2
 
   packages/next-loader:
-    dependencies:
-      '@sanity/client':
-        specifier: ^7.11.2
-        version: 7.11.2(debug@4.4.3)
-      '@sanity/comlink':
-        specifier: workspace:*
-        version: link:../comlink
-      '@sanity/presentation-comlink':
-        specifier: workspace:*
-        version: link:../presentation-comlink
-      dequal:
-        specifier: ^2.0.3
-        version: 2.0.3
-      use-effect-event:
-        specifier: 'catalog:'
-        version: 2.0.3(react@19.1.1)
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
