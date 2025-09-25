@@ -1,14 +1,23 @@
-# @sanity/next-loader
-
-[![npm stat](https://img.shields.io/npm/dm/@sanity/next-loader.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@sanity/next-loader)
-[![npm version](https://img.shields.io/npm/v/@sanity/next-loader.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/next-loader)
-[![gzip size][gzip-badge]][bundlephobia]
-[![size][size-badge]][bundlephobia]
-
 > [!WARNING]  
-> This package is not meant to be used directly, it's a dependency of [`next-sanity`].
+> This package is replaced by [`next-sanity`].
+
+## Migrate to [`next-sanity`]
+
+Replace the dependency:
+
+```sh
+npm uninstall @sanity/next-loader
+npm install next-sanity
+```
+
+Replace import statements:
+
+```diff
+-import { defineLive, isCorsOriginError } from '@sanity/next-loader'
+-import { usePresentationQuery } from '@sanity/next-loader/hooks'
++import { isCorsOriginError } from 'next-sanity'
++import { defineLive } from 'next-sanity/live'
++import { usePresentationQuery } from 'next-sanity/hooks'
+```
 
 [`next-sanity`]: https://github.com/sanity-io/next-sanity
-[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/next-loader?label=gzip%20size&style=flat-square
-[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/next-loader?label=size&style=flat-square
-[bundlephobia]: https://bundlephobia.com/package/@sanity/next-loader

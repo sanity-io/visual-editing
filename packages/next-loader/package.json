@@ -16,46 +16,13 @@
   "type": "module",
   "exports": {
     ".": {
-      "source": "./src/index.server-only.ts",
-      "react-server": "./dist/index.js",
-      "default": "./dist/index.server-only.js"
-    },
-    "./hooks": {
-      "source": "./src/hooks/index.ts",
-      "default": "./dist/hooks.js"
-    },
-    "./client-components/live": {
-      "source": "./src/client-components/live/index.ts",
-      "default": "./dist/client-components/live.js"
-    },
-    "./client-components/live-stream": {
-      "source": "./src/client-components/live-stream/index.ts",
-      "default": "./dist/client-components/live-stream.js"
-    },
-    "./server-actions": {
-      "source": "./src/server-actions/index.ts",
-      "default": "./dist/server-actions.js"
+      "source": "./src/index.ts",
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.server-only.js",
-  "types": "./dist/index.server-only.d.ts",
-  "typesVersions": {
-    "*": {
-      "client-components/live": [
-        "./dist/client-components/live.d.ts"
-      ],
-      "client-components/live-stream": [
-        "./dist/client-components/live-stream.d.ts"
-      ],
-      "hooks": [
-        "./dist/hooks.d.ts"
-      ],
-      "server-action": [
-        "./dist/server-action/index.d.ts"
-      ]
-    }
-  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "src",
@@ -75,13 +42,6 @@
       "@repo/eslint-config"
     ],
     "root": true
-  },
-  "dependencies": {
-    "@sanity/client": "catalog:",
-    "@sanity/comlink": "workspace:^",
-    "@sanity/presentation-comlink": "workspace:^",
-    "dequal": "^2.0.3",
-    "use-effect-event": "catalog:"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
