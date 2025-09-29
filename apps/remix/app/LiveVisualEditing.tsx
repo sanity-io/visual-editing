@@ -18,7 +18,13 @@ export default function LiveVisualEditing({perspective}: {perspective: ClientPer
     submit(formData, {method: 'post', action: '/api/perspective', navigate: false})
   })
 
-  useLiveMode({client, onPerspective})
+  const onDecideParameters = useEffectEvent((decideParameters: string) => {
+    const formData = new FormData()
+    formData.set('decideParameters', decideParameters)
+    submit(formData, {method: 'post', action: '/api/decide-parameters', navigate: false})
+  })
+
+  useLiveMode({client, onPerspective, onDecideParameters})
 
   const components: OverlayComponentResolver = (props) => {
     const {type, node} = props

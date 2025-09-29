@@ -4,15 +4,16 @@ import {json} from '@vercel/remix'
 import {shoesList, type ShoesListResult} from '~/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 import {loadQuery} from '~/sanity.loader.server'
-import {getPerspective, getSession} from '~/sessions'
+import {getDecideParameters, getPerspective, getSession} from '~/sessions'
 import {formatCurrency} from '~/utils'
 
 export const loader = async ({request}: {request: Request}) => {
   const session = await getSession(request.headers.get('Cookie'))
   const perspective = getPerspective(session)
+  const decideParameters = getDecideParameters(session)
 
   return json({
-    initial: await loadQuery<ShoesListResult>(shoesList, {}, {perspective}),
+    initial: await loadQuery<ShoesListResult>(shoesList, {}, {perspective, decideParameters}),
   })
 }
 export default function ShoesPage() {

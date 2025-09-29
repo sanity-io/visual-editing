@@ -9,7 +9,7 @@ import {
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {vercelProtectionBypassTool} from '@sanity/vercel-protection-bypass'
 import {visionTool} from '@sanity/vision'
-import {defineConfig, definePlugin, type PluginOptions} from 'sanity'
+import {DECISION_PARAMETERS_SCHEMA, defineConfig, definePlugin, type PluginOptions} from 'sanity'
 import {
   defineDocuments,
   defineLocations,
@@ -139,6 +139,11 @@ function defineWorkspace(
     projectId,
     dataset,
     plugins,
+    [DECISION_PARAMETERS_SCHEMA]: {
+      audiences: ['aud-a', 'aud-b', 'aud-c'],
+      locales: ['en-GB', 'en-US'],
+      ages: ['20-29', '30-39'],
+    },
     releases: {enabled: true},
   })
 }

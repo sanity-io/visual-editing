@@ -143,6 +143,12 @@ export type VisualEditingControllerMsg =
       type: 'presentation/status'
       data: undefined
     }
+  | {
+      type: 'presentation/decide-parameters'
+      data: {
+        decideParameters: string
+      }
+    }
 
 /**
  * @public
@@ -295,6 +301,13 @@ export type VisualEditingNodeMsg =
         origin: string
       }
     }
+  | {
+      type: 'visual-editing/fetch-decide-parameters'
+      data: undefined
+      response: {
+        decideParameters: string
+      }
+    }
 
 /**
  * @public
@@ -306,6 +319,14 @@ export type LoaderControllerMsg =
         projectId: string
         dataset: string
         perspective: ClientPerspective
+      }
+    }
+  | {
+      type: 'loader/decide-parameters'
+      data: {
+        projectId: string
+        dataset: string
+        decideParameters: string
       }
     }
   | {
@@ -333,6 +354,7 @@ export type LoaderNodeMsg =
         projectId: string
         dataset: string
         perspective: ClientPerspective
+        decideParameters: string
         query: string
         params: QueryParams
         /**
@@ -352,6 +374,7 @@ export type LoaderNodeMsg =
         projectId: string
         dataset: string
         perspective: ClientPerspective
+        decideParameters: string
         documents: ContentSourceMapDocuments
       }
     }

@@ -25,7 +25,7 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
 const LISTEN_HEARTBEAT_INTERVAL = 10_000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
-  const {client, setFetcher, onConnect, onDisconnect, onPerspective} = options
+  const {client, setFetcher, onConnect, onDisconnect, onPerspective, onDecideParameters} = options
   if (!client) {
     throw new Error(
       `Expected \`client\` to be an instance of SanityClient: ${JSON.stringify(client)}`,
@@ -36,6 +36,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const $perspective = atom<Exclude<ClientPerspective, 'raw'>>(
     perspective && perspective !== 'raw' ? perspective : 'drafts',
   )
+  const $decideParameters = atom<string>('')
   const $connected = atom(false)
 
   const cache = new Map<
@@ -44,6 +45,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       projectId: string
       dataset: string
       perspective: ClientPerspective
+      decideParameters: string
       query: string
       params: QueryParams
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,7 +60,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       connectTo: 'presentation',
     },
     createNodeMachine<LoaderNodeMsg, LoaderControllerMsg>().provide({
-      actors: createCompatibilityActors<LoaderNodeMsg>(),
+      actors: createCompatibilityActors<LoaderNodeMsg>() as any,
     }),
   )
 
@@ -76,16 +78,34 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
     }
   })
 
+  comlink.on('loader/decide-parameters', (data) => {
+    if (data.projectId === projectId && data.dataset === dataset) {
+      $decideParameters.set(data.decideParameters)
+      onDecideParameters?.(data.decideParameters)
+
+      // IMPORTANT: Clear cache when decideParameters change to avoid stale conditional content
+      cache.clear()
+
+      // Force queries to refetch with new decideParameters
+      for (const {$fetch} of liveQueries) {
+        $fetch.setKey('loading', true)
+      }
+      updateLiveQueries()
+    }
+  })
+
   comlink.on('loader/query-change', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
       const {perspective, query, params} = data
+      const decideParameters = $decideParameters.get()
       if (
         data.result !== undefined &&
         data.resultSourceMap !== undefined &&
         (client as SanityClient).config().stega.enabled
       ) {
-        cache.set(JSON.stringify({perspective, query, params}), {
+        cache.set(JSON.stringify({perspective, decideParameters, query, params}), {
           ...data,
+          decideParameters,
           result: stegaEncodeSourceMap(
             data.result,
             data.resultSourceMap,
@@ -93,7 +113,10 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
           ),
         })
       } else {
-        cache.set(JSON.stringify({perspective, query, params}), data)
+        cache.set(JSON.stringify({perspective, decideParameters, query, params}), {
+          ...data,
+          decideParameters,
+        })
       }
 
       updateLiveQueries()
@@ -106,8 +129,10 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       unsetFetcher = setFetcher({
         hydrate: (query, params, initial) => {
           const perspective = initial?.perspective || $perspective.get()
+          const decideParameters = $decideParameters.get()
           const key = JSON.stringify({
             perspective,
+            decideParameters,
             query,
             params,
           })
@@ -119,6 +144,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
               data: snapshot.result,
               sourceMap: snapshot.resultSourceMap,
               perspective,
+              decideParameters,
             }
           }
 
@@ -130,6 +156,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             data: initial?.data,
             sourceMap: initial?.sourceMap,
             perspective: initial?.perspective || 'published',
+            decideParameters: initial?.decideParameters || decideParameters,
           }
         },
         fetch: <QueryResponseResult, QueryResponseError>(
@@ -193,11 +220,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       throw new Error('No connection')
     }
     const perspective = $perspective.get()
+    const decideParameters = $decideParameters.get()
     for (const {query, params, $fetch} of liveQueries) {
       comlink.post('loader/query-listen', {
         projectId: projectId!,
         dataset: dataset!,
         perspective,
+        decideParameters,
         query,
         params,
         heartbeat: LISTEN_HEARTBEAT_INTERVAL,
@@ -210,11 +239,15 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   }
   function updateLiveQueries() {
     const perspective = $perspective.get()
+    const decideParameters = $decideParameters.get()
     const documentsOnPage: ContentSourceMapDocuments = []
+    let hasQueriesWithoutCache = false
+
     // Loop over liveQueries and apply cache
     for (const {query, params, $fetch} of liveQueries) {
-      const key = JSON.stringify({perspective, query, params})
+      const key = JSON.stringify({perspective, decideParameters, query, params})
       const value = cache.get(key)
+
       if (value) {
         $fetch.set({
           data: value.result,
@@ -224,12 +257,20 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
           sourceMap: value.resultSourceMap,
         })
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
+      } else {
+        hasQueriesWithoutCache = true
       }
+    }
+
+    // If some queries don't have cached data, emit query-listen to trigger fresh queries
+    if (hasQueriesWithoutCache) {
+      emitQueryListen()
     }
     comlink.post('loader/documents', {
       projectId: projectId!,
       dataset: dataset!,
       perspective,
+      decideParameters,
       documents: documentsOnPage,
     })
   }

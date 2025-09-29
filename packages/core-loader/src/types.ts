@@ -12,6 +12,7 @@ export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
   data?: QueryResponseResult
   sourceMap?: ContentSourceMap
   perspective?: ClientPerspective
+  decideParameters?: string
 }
 
 /**
@@ -52,6 +53,10 @@ export interface EnableLiveModeOptions {
    * Fires when the perspective changes in the Studio, allowing you to persist the change to a session cookie if needed
    */
   onPerspective?: (perspective: Exclude<ClientPerspective, 'raw'>) => void
+  /**
+   * Fires when the decide parameters change in the Studio, allowing you to persist the change to a session cookie if needed
+   */
+  onDecideParameters?: (decideParameters: string) => void
 }
 
 /** @public */
@@ -67,7 +72,7 @@ export interface Fetcher {
     params: QueryParams,
     initial?: Pick<
       QueryStoreState<QueryResponseResult, QueryResponseError>,
-      'data' | 'sourceMap' | 'perspective'
+      'data' | 'sourceMap' | 'perspective' | 'decideParameters'
     >,
   ) => QueryStoreState<QueryResponseResult, QueryResponseError>
   fetch: <QueryResponseResult, QueryResponseError>(

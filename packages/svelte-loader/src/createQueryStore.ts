@@ -35,7 +35,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: Parameters<LoadQuery>[1] = {},
     options: Parameters<LoadQuery>[2] = {},
   ): Promise<QueryResponseInitial<QueryResponseResult>> => {
-    const {headers, tag} = options
+    const {headers, tag, decideParameters} = options
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
     const stega = options.stega ?? unstable__serverClient.instance?.config().stega ?? false
@@ -56,14 +56,30 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           `You cannot use 'perspective: ${JSON.stringify(perspective)}' unless you set a "token" in the "client" instance passed to "setServerClient".`,
         )
       }
+      let parsedDecideParameters = undefined
+      if (decideParameters && decideParameters.trim()) {
+        try {
+          parsedDecideParameters = JSON.parse(decideParameters)
+        } catch (error) {
+          console.error('[DECIDE] svelte-loader JSON parse FAILED:', decideParameters, error)
+        }
+      }
+
+      // Clean tag - only alphanumeric, underscores, dashes, dots allowed
+      const decideTag = parsedDecideParameters
+        ? `decide_${Object.keys(parsedDecideParameters).join('_')}_set`
+        : 'decide_none'
+      const tagWithDecide = tag ? `${tag}_${decideTag}` : decideTag
+
       const {result, resultSourceMap} =
         await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
           filterResponse: false,
           resultSourceMap: 'withKeyArraySelector',
           perspective,
+          decideParameters: parsedDecideParameters,
           useCdn: false,
           headers,
-          tag,
+          tag: tagWithDecide,
           stega,
         })
       return {data: result, sourceMap: resultSourceMap, perspective}
@@ -72,7 +88,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     const useCdn = options.useCdn || unstable__serverClient.instance!.config().useCdn
 
     const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
-      JSON.stringify({query, params, perspective, useCdn, stega}),
+      JSON.stringify({query, params, perspective, decideParameters, useCdn, stega}),
     )
 
     // @ts-expect-error - update typings

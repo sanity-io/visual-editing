@@ -45,6 +45,7 @@ import {TelemetryProvider} from './telemetry/TelemetryProvider'
 import {useTelemetry} from './telemetry/useTelemetry'
 import {useController} from './useController'
 import {usePerspectiveSync} from './usePerspectiveSync'
+import {useDecideParametersSync} from './useDecideParametersSync'
 import {useReportDocuments} from './useReportDocuments'
 
 const Root = styled.div<{
@@ -246,6 +247,7 @@ export const Overlays: FunctionComponent<{
   }, [comlink])
 
   usePerspectiveSync(comlink, dispatch)
+  useDecideParametersSync(comlink, dispatch)
 
   useReportDocuments(comlink, elements, perspective)
 

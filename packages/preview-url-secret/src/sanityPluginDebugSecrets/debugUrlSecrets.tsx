@@ -36,9 +36,9 @@ export const debugUrlSecretsType = defineType({
       studioUrl: 'studioUrl',
       updatedAt: '_updatedAt',
     },
-    prepare(data) {
+    prepare(data: {source?: string; studioUrl?: string; updatedAt?: string}) {
       const url = data.studioUrl ? new URL(data.studioUrl, location.origin) : undefined
-      const updatedAt = new Date(data.updatedAt).getTime()
+      const updatedAt = new Date(data.updatedAt || new Date()).getTime()
       const expiresAt = new Date(updatedAt + 1000 * SECRET_TTL)
       const expired = expiresAt < new Date()
       const icon = expired ? CloseCircleIcon : CheckmarkCircleIcon

@@ -21,3 +21,10 @@ export function getPerspective(session: Session): ClientPerspective {
   validateApiPerspective(perspective)
   return perspective
 }
+
+export function getDecideParameters(session: Session): string {
+  if (!session.has('decideParameters')) {
+    return ''
+  }
+  return session.get('decideParameters')
+}

@@ -1,6 +1,6 @@
 import {apiVersion, workspaces} from '@repo/env'
 import {assist} from '@sanity/assist'
-import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineLocalDecideField, definePlugin, defineType} from 'sanity'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {
   defineDocuments,
@@ -35,7 +35,7 @@ const shoeType = defineType({
           }
           const client = getClient({apiVersion})
           const query = /* groq */ `count(*[_type == $type && slug.current == $slug])`
-          const result = await client.fetch<number>(
+          const result = await client.fetch(
             query,
             {
               type: document._type,
@@ -85,10 +85,10 @@ const shoeType = defineType({
       title: 'Description',
       of: [{type: 'block'}],
     }),
-    defineField({
+    defineLocalDecideField({
       type: 'number',
       name: 'price',
-      title: 'Price',
+      title: 'Pridsdce',
     }),
     defineField({
       title: 'Brand',
