@@ -47,7 +47,7 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
         ...type,
         icon: getNodeIcon(type),
       }))}
-      onSelect={onSelect}
+      onSelect={onSelect as any}
       views={views}
     />
   )

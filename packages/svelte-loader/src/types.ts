@@ -125,7 +125,9 @@ export type UseLiveMode = (
 export type LoadQueryOptions = Pick<
   ResponseQueryOptions,
   'perspective' | 'cache' | 'next' | 'useCdn' | 'tag' | 'headers' | 'stega'
->
+> & {
+  decideParameters?: string
+}
 
 /** @public */
 export type LoadQuery = <QueryResponseResult>(

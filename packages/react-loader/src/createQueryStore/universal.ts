@@ -46,6 +46,8 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           false)
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
+    const decideParameters = options.decideParameters ? JSON.parse(options.decideParameters) : undefined
+
 
     if (typeof document !== 'undefined') {
       throw new Error(
@@ -64,12 +66,18 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         )
       }
 
+      // Transform audiences -> audience for client compatibility
+      const transformedDecideParameters = decideParameters && typeof decideParameters === 'object' && decideParameters.audiences
+        ? { ...decideParameters, audience: decideParameters.audiences }
+        : decideParameters
+
       const {result, resultSourceMap} =
         await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
           filterResponse: false,
           resultSourceMap: 'withKeyArraySelector',
           stega,
           perspective,
+          decideParameters: transformedDecideParameters,
           useCdn: false,
           headers,
           tag,
@@ -81,7 +89,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     }
 
     const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
-      JSON.stringify({query, params, perspective, options: {stega}}),
+      JSON.stringify({query, params, perspective, decideParameters: options.decideParameters, options: {stega}}),
     )
     // @ts-expect-error - update typings
     return resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}

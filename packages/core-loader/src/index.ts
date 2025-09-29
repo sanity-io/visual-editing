@@ -44,6 +44,7 @@ export interface QueryStore {
       data: QueryResponseResult
       sourceMap?: ContentSourceMap
       perspective?: ClientPerspective
+      decideParameters?: string
     },
   ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
   /**
@@ -103,11 +104,17 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           `You have to set the Sanity client with \`setServerClient\` before any data fetching is done`,
         )
       }
-      const {query, params = {}, perspective, useCdn, stega} = JSON.parse(key)
+      const {query, params = {}, perspective, decideParameters, useCdn, stega} = JSON.parse(key)
+      // Transform audiences -> audience for client compatibility
+      const transformedDecideParameters = decideParameters && typeof decideParameters === 'object' && decideParameters.audiences
+        ? { ...decideParameters, audience: decideParameters.audiences }
+        : decideParameters
+
       const {result, resultSourceMap} = await client.fetch(query, params, {
         tag,
         filterResponse: false,
         perspective,
+        decideParameters: transformedDecideParameters,
         useCdn,
         stega,
       })
@@ -127,6 +134,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         data: initial?.data,
         sourceMap: initial?.sourceMap,
         perspective: initialPerspective,
+        decideParameters: initial?.decideParameters,
       }),
       fetch: (query, params, $fetch, controller) => {
         if (controller.signal.aborted) return
@@ -143,6 +151,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
             $fetch.setKey('data', response.result as any)
             $fetch.setKey('sourceMap', response.resultSourceMap)
             $fetch.setKey('perspective', initialPerspective)
+            $fetch.setKey('decideParameters', undefined)
           })
           .catch((reason) => {
             $fetch.setKey('error', reason)
@@ -179,7 +188,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     params: QueryParams = {},
     initial?: Pick<
       QueryStoreState<QueryResponseResult, QueryResponseError>,
-      'data' | 'sourceMap' | 'perspective'
+      'data' | 'sourceMap' | 'perspective' | 'decideParameters'
     >,
   ): MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>> => {
     const fetcher = $fetcher.get()
@@ -197,6 +206,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
             data: initial?.data,
             sourceMap: initial?.sourceMap,
             perspective: initial?.perspective,
+            decideParameters: initial?.decideParameters,
           },
     )
 

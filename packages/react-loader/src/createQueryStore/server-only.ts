@@ -24,7 +24,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     sourceMap: ContentSourceMap | undefined
     perspective?: ClientPerspective
   }> => {
-    const {cache, next, stega, headers, tag} = _options
+    const {cache, next, stega, headers, tag, decideParameters} = _options
     const perspective =
       _options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
     const useCdn = _options.useCdn || unstable__serverClient.instance!.config().useCdn
@@ -37,6 +37,16 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
       )
     }
 
+    let parsedDecideParameters = undefined
+    if (decideParameters && decideParameters.trim()) {
+      try {
+        parsedDecideParameters = JSON.parse(decideParameters)
+      } catch (error) {
+        console.error('[DECIDE] react-loader JSON parse FAILED:', decideParameters, error)
+      }
+    }
+
+
     const {result, resultSourceMap} =
       await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,6 +54,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         filterResponse: false,
         next,
         perspective,
+        decideParameters: parsedDecideParameters,
         useCdn: previewPerspective ? false : useCdn,
         stega,
         headers,

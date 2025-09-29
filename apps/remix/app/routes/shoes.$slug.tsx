@@ -1,6 +1,5 @@
 import {PortableText} from '@portabletext/react'
 import {Link, useLoaderData} from '@remix-run/react'
-import {ClientPerspective} from '@sanity/client'
 import {stegaClean} from '@sanity/client/stega'
 import {useQuery} from '@sanity/react-loader'
 import {createDataAttribute} from '@sanity/visual-editing'
@@ -8,19 +7,23 @@ import {json, type LoaderFunction} from '@vercel/remix'
 import {shoe, shoesList, type ShoeParams, type ShoeResult, type ShoesListResult} from '~/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 import {loadQuery} from '~/sanity.loader.server'
-import {getPerspective, getSession} from '~/sessions'
+import {getDecideParameters, getPerspective, getSession} from '~/sessions'
 import {formatCurrency} from '~/utils'
 
 export const loader: LoaderFunction = async ({params, request}) => {
   const session = await getSession(request.headers.get('Cookie'))
   const perspective = getPerspective(session)
-  const shoePromise = loadQuery<ShoeResult>(shoe, params, {perspective})
-  const shoesPromise = loadQuery<ShoesListResult>(`${shoesList}[0..3]`, {}, {perspective})
+  const decideParameters = getDecideParameters(session)
+
+  const shoePromise = loadQuery<ShoeResult>(shoe, params, {perspective, decideParameters})
+  const shoesPromise = loadQuery<ShoesListResult>(`${shoesList}[0..3]`, {}, {perspective, decideParameters})
+
+  const shoeResult = await shoePromise
 
   return json({
     params,
     initial: {
-      shoe: await shoePromise,
+      shoe: shoeResult,
       shoes: await shoesPromise,
     },
   })
@@ -154,7 +157,7 @@ export default function ShoePage() {
             <div className="mt-4 flex flex-col gap-y-6 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {product.price ? formatCurrency(product.price) : 'FREE'}
+                {typeof product.price === 'object' ? JSON.stringify(product.price) : (product.price || 'FREE')}
               </p>
 
               {product.brand?.name && (

@@ -23,7 +23,7 @@ export function useComlink(active = true): [VisualEditingNode | undefined, Statu
         connectTo: 'presentation',
       },
       createNodeMachine<VisualEditingNodeMsg, VisualEditingControllerMsg>().provide({
-        actors: createCompatibilityActors<VisualEditingNodeMsg>(),
+        actors: createCompatibilityActors<VisualEditingNodeMsg>() as any,
       }),
     )
     const unsub = instance.onStatus(() => setStatus('connected'), 'connected')
