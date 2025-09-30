@@ -2,36 +2,44 @@
   import {PortableText} from '@portabletext/svelte'
   import type {SanityDocument} from '@sanity/client'
   import {stegaClean} from '@sanity/client/stega'
+  import {useOptimistic} from '@sanity/sveltekit'
   import {createDataAttribute} from '@sanity/visual-editing'
-  import {useOptimistic} from '@sanity/visual-editing/svelte'
   import {page} from '$app/stores'
-  import type {ShoeResult} from '$lib/queries'
   import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
+  import type {ShoeQueryResult} from '$lib/sanity.types'
   import {formatCurrency} from '$lib/utils'
 
-  export let product: ShoeResult
-  export let slug: string
-  export let loading: boolean = false
+  const {
+    loading = false,
+    product,
+    slug,
+  }: {
+    loading?: boolean
+    product?: ShoeQueryResult
+    slug?: string
+  } = $props()
 
   const parentPath = $page.url.pathname.split('/').slice(0, -1).join('/')
 
   const {value: media, update: updateMedia} = useOptimistic<
-    ShoeResult['media'],
-    SanityDocument<ShoeResult>
-  >(product.media, (state, action) => {
-    if (action.id === product._id && action.document.media) {
+    NonNullable<ShoeQueryResult>['media'],
+    SanityDocument<NonNullable<ShoeQueryResult>>
+  >(product!.media!, (state, action) => {
+    if (action.id === product?._id && action.document.media) {
       return action.document.media
     }
     return state
   })
 
-  $: updateMedia(product.media)
+  $effect(() => {
+    updateMedia(product!.media)
+  })
 
-  $: [coverImage, ...otherImages] = $media || []
+  const [coverImage, ...otherImages] = $derived($media || [])
 </script>
 
 <svelte:head>
-  <title>{product.title}</title>
+  <title>{product?.title}</title>
 </svelte:head>
 
 <div class="min-h-screen bg-white">
