@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.0.5...visual-editing-v3.1.0) (2025-10-15)
+
+
+### Features
+
+* allow next v16 ([732241a](https://github.com/sanity-io/visual-editing/commit/732241ade30945c1c1f0aa6b77f7c83634b86f2c))
+
 ## [3.0.5](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.0.4...visual-editing-v3.0.5) (2025-09-09)
 
 
