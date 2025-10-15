@@ -1,6 +1,6 @@
 import {EditIcon, RevertIcon} from '@sanity/icons'
 import {Card, Code, Stack} from '@sanity/ui'
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {startTransition, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {EMPTY, switchMap} from 'rxjs'
 import {
   defineDocumentFieldAction,
@@ -26,7 +26,7 @@ function useReferenceEditState(documentId?: string): EditStateFor | undefined {
   const [editState, setEditState] = useState<EditStateFor | undefined>()
 
   useEffect(() => {
-    setEditState(undefined)
+    startTransition(() => setEditState(undefined))
 
     if (!documentId) return undefined
 

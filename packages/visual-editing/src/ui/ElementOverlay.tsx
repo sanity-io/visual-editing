@@ -7,6 +7,7 @@ import {
   Fragment,
   isValidElement,
   memo,
+  startTransition,
   useCallback,
   useEffect,
   useId,
@@ -547,7 +548,7 @@ export const ElementOverlay = memo(function ElementOverlay(
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    setMenuOpen(false)
+    startTransition(() => setMenuOpen(false))
   }, [hovered])
 
   return (
