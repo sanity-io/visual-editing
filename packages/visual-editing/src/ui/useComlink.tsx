@@ -4,7 +4,7 @@ import {
   type VisualEditingControllerMsg,
   type VisualEditingNodeMsg,
 } from '@sanity/presentation-comlink'
-import {useEffect, useState} from 'react'
+import {startTransition, useEffect, useState} from 'react'
 import type {VisualEditingNode} from '../types'
 
 /**
@@ -28,13 +28,13 @@ export function useComlink(active = true): [VisualEditingNode | undefined, Statu
     )
     const unsub = instance.onStatus(() => setStatus('connected'), 'connected')
 
-    setNode(instance)
+    startTransition(() => setNode(instance))
     const stop = instance.start()
 
     return () => {
       unsub()
       stop()
-      setNode(undefined)
+      startTransition(() => setNode(undefined))
     }
   }, [active])
 

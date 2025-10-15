@@ -1,4 +1,4 @@
-import {FunctionComponent, PropsWithChildren, useEffect, useState} from 'react'
+import {FunctionComponent, PropsWithChildren, startTransition, useEffect, useState} from 'react'
 
 export const Card: FunctionComponent<
   PropsWithChildren<{
@@ -22,7 +22,7 @@ export const Card: FunctionComponent<
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    setIsVisible(true)
+    startTransition(() => setIsVisible(true))
   }, [])
 
   return (

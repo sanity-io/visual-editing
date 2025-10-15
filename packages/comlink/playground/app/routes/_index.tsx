@@ -6,7 +6,7 @@ import {
   type ProtocolMessage,
   type WithoutResponse,
 } from '@sanity/comlink'
-import {useCallback, useEffect, useMemo, useState} from 'react'
+import {startTransition, useCallback, useEffect, useMemo, useState} from 'react'
 import {v4 as uuid} from 'uuid'
 import {Button} from '../components/Button'
 import {Card} from '../components/Card'
@@ -33,7 +33,7 @@ export default function Index() {
 
   useEffect(() => {
     const controller = createController({targetOrigin: '*'})
-    setController(controller)
+    startTransition(() => setController(controller))
 
     const channel = controller.createChannel<ControllerMessage, NodeMessage>({
       connectTo: 'iframe',
@@ -41,7 +41,7 @@ export default function Index() {
       name: 'window',
     })
 
-    setChannel(channel)
+    startTransition(() => setChannel(channel))
 
     channel.onInternalEvent('message', ({message}) => {
       setReceived((prev) => [message, ...prev])

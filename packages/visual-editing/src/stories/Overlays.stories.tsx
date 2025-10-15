@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react'
-import {useEffect, useState} from 'react'
+import {startTransition, useEffect, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Overlays} from '../ui/Overlays'
 import {useComlink} from '../ui/useComlink'
@@ -19,9 +19,9 @@ function Example(props: {
   useEffect(() => {
     const node = document.createElement('sanity-visual-editing')
     document.documentElement.appendChild(node)
-    setPortalElement(node)
+    startTransition(() => setPortalElement(node))
     return () => {
-      setPortalElement(null)
+      startTransition(() => setPortalElement(null))
       if (document.documentElement.contains(node)) {
         document.documentElement.removeChild(node)
       }

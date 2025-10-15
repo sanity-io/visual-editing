@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: lts/*
-      - run: pnpm -r up --ignore-scripts react-compiler-runtime@rc babel-plugin-react-compiler@rc esint-plugin-react-compiler@rc eslint-plugin-react-hooks@experimental
+      - run: pnpm -r up --ignore-scripts react-compiler-runtime@latest babel-plugin-react-compiler@latest esint-plugin-react-compiler@latest eslint-plugin-react-hooks@latest
       - uses: actions/create-github-app-token@v2
         id: generate-token
         with:

@@ -1,5 +1,5 @@
 import {createNode, type Node, type ProtocolMessage, type WithoutResponse} from '@sanity/comlink'
-import {useCallback, useEffect, useState} from 'react'
+import {startTransition, useCallback, useEffect, useState} from 'react'
 import {Button} from '../components/Button'
 import {Card} from '../components/Card'
 import {MessageControls} from '../components/MessageControls'
@@ -25,7 +25,7 @@ export default function Frame() {
       connectTo: 'window',
     })
 
-    setNode(node)
+    startTransition(() => setNode(node))
 
     node.actor.on('message', (event) => {
       setReceived((prev) => [event.message, ...prev])

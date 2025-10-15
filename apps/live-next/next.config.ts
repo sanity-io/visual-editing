@@ -12,9 +12,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'source.unsplash.com'}],
   },
 
-  experimental: {
-    reactCompiler: true,
-  },
+  reactCompiler: true,
 } satisfies NextConfig
 
 export default withBundleAnalyzer({

@@ -7,7 +7,7 @@
     "debug": "NEXT_PRIVATE_DEBUG_CACHE=1 next build --profile && NEXT_PRIVATE_DEBUG_CACHE=1 next start -p 3009",
     "predev": "npm run typegen",
     "dev": "next dev -p 3009",
-    "lint": "next lint",
+    "lint": "eslint .",
     "start": "next start",
     "typegen": "sanity typegen generate"
   },
@@ -26,7 +26,7 @@
     "@types/react-dom": "catalog:",
     "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "^10.4.21",
-    "babel-plugin-react-compiler": "19.1.0-rc.3",
+    "babel-plugin-react-compiler": "1.0.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.23.12",
     "next": "canary",
@@ -43,7 +43,6 @@
     "@next/bundle-analyzer": "canary",
     "@repo/prettier-config": "workspace:*",
     "eslint": "^8.57.1",
-    "eslint-config-next": "canary",
-    "eslint-plugin-react-compiler": "catalog:"
+    "eslint-config-next": "canary"
   }
 }

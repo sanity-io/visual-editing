@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {startTransition, useEffect, useRef, useState} from 'react'
 import {useLocation, useNavigate, useRevalidator} from 'react-router'
 import {type HistoryAdapterNavigate, type HistoryRefresh, type VisualEditingOptions} from '../types'
 import {enableVisualEditing} from '../ui/enableVisualEditing'
@@ -36,11 +36,13 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
   }, [navigateRemix])
   useEffect(() => {
     if (revalidatorPromise && revalidator.state === 'loading') {
-      setRevalidatorLoading(true)
+      startTransition(() => setRevalidatorLoading(true))
     } else if (revalidatorPromise && revalidatorLoading && revalidator.state === 'idle') {
       revalidatorPromise()
-      setRevalidatorPromise(null)
-      setRevalidatorLoading(false)
+      startTransition(() => {
+        setRevalidatorPromise(null)
+        setRevalidatorLoading(false)
+      })
     }
   }, [revalidatorLoading, revalidator.state, revalidatorPromise])
   useEffect(() => {

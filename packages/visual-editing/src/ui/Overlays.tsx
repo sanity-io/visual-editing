@@ -12,6 +12,7 @@ import {
   usePrefersDark,
 } from '@sanity/ui/_visual-editing'
 import {
+  startTransition,
   useCallback,
   useEffect,
   useMemo,
@@ -82,13 +83,15 @@ const DocumentReporter: FunctionComponent<{
   const [uniqueIds, setUniqueIds] = useState<string[]>([])
 
   useEffect(() => {
-    setUniqueIds((prev) => {
-      const next = Array.from(new Set(documentIds))
-      return prev.length === next.length &&
-        prev.reduce((acc, prevId) => acc.filter((id) => id !== prevId), next)?.length === 0
-        ? prev
-        : next
-    })
+    startTransition(() =>
+      setUniqueIds((prev) => {
+        const next = Array.from(new Set(documentIds))
+        return prev.length === next.length &&
+          prev.reduce((acc, prevId) => acc.filter((id) => id !== prevId), next)?.length === 0
+          ? prev
+          : next
+      }),
+    )
   }, [documentIds])
   const actor = useOptimisticActor()
 
@@ -348,8 +351,10 @@ export const Overlays: FunctionComponent<{
       })
     } else if (fadeOutTimeoutRef.current) {
       clearTimeout(fadeOutTimeoutRef.current)
-      setOverlaysFlash(false)
-      setFadingOut(false)
+      startTransition(() => {
+        setOverlaysFlash(false)
+        setFadingOut(false)
+      })
     }
 
     return

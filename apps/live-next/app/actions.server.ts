@@ -1,7 +1,7 @@
 'use server'
 
 // import {verifyPreviewSecret} from '@/sanity/lib/live'
-import {revalidatePath, revalidateTag} from 'next/cache'
+import {revalidatePath, updateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
 // @TODO revisit this later
@@ -43,5 +43,5 @@ export async function purgeEverything() {
 }
 
 export async function purgeSanity() {
-  revalidateTag('sanity')
+  updateTag('sanity')
 }
