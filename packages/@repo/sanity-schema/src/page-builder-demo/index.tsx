@@ -30,8 +30,7 @@ const productType = defineType({
     defineField({
       type: 'array',
       name: 'media',
-      title: <>Media</>,
-      // title: 'Media',
+      title: 'Media',
       of: [
         {
           type: 'image',

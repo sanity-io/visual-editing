@@ -43,7 +43,7 @@ export const debugUrlSecretsType = defineType({
       const expired = expiresAt < new Date()
       const icon = expired ? CloseCircleIcon : CheckmarkCircleIcon
       return {
-        title: url ? `${url.host}${url.pathname}` : data.source,
+        title: url ? `${url.host}${url.pathname}` : (data.source || 'Unknown'),
         subtitle: expired
           ? 'Expired'
           : `Expires in ${Math.round((expiresAt.getTime() - Date.now()) / (1000 * 60))} minutes`,
