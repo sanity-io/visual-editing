@@ -63,7 +63,14 @@ function HeroPost({
         </div>
         <div>
           {excerpt && <p className="mb-4 text-pretty text-lg leading-relaxed">{excerpt}</p>}
-          {author && <Avatar name={author.name} picture={author.picture} />}
+          {author && (
+            <Avatar
+              id={author._id}
+              originalId={author._originalId}
+              name={author.name}
+              picture={author.picture}
+            />
+          )}
         </div>
       </div>
     </article>

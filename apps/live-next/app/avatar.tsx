@@ -3,13 +3,19 @@ import {urlForImage} from '@/sanity/lib/utils'
 import {Image} from 'next-sanity/image'
 
 interface Props {
+  id: string
+  originalId: string | null
   name: string
   picture: Exclude<Author['picture'], undefined> | null
 }
 
-export default function Avatar({name, picture}: Props) {
+export default function Avatar({id, originalId, name, picture}: Props) {
   return (
-    <div className="flex items-center text-xl">
+    <div
+      className="flex items-center text-xl"
+      data-sanity-id={id}
+      data-sanity-original-id={originalId}
+    >
       {picture?.asset?._ref ? (
         <div className="mr-4 h-12 w-12">
           <Image
