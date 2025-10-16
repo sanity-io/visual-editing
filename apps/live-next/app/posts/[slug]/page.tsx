@@ -100,7 +100,12 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
                   <div className="mx-auto max-w-2xl">
                     <div className="mb-6 block md:hidden">
                       {post.author && (
-                        <Avatar name={post.author.name} picture={post.author.picture} />
+                        <Avatar
+                          id={post.author._id}
+                          originalId={post.author._originalId}
+                          name={post.author.name}
+                          picture={post.author.picture}
+                        />
                       )}
                     </div>
                     <div className="mb-6 text-lg">
