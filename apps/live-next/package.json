@@ -7,7 +7,6 @@
     "debug": "NEXT_PRIVATE_DEBUG_CACHE=1 next build --profile && NEXT_PRIVATE_DEBUG_CACHE=1 next start -p 3009",
     "predev": "npm run typegen",
     "dev": "next dev -p 3009",
-    "lint": "eslint .",
     "start": "next start",
     "typegen": "sanity typegen generate"
   },
