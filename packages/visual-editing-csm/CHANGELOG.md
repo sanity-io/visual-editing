@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.26](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.25...visual-editing-csm-v2.0.26) (2025-10-16)
+
+
+### Bug Fixes
+
+* handle `perspective` for "Open in Studio" links ([#3259](https://github.com/sanity-io/visual-editing/issues/3259)) ([39d5369](https://github.com/sanity-io/visual-editing/commit/39d536957632a9b58cce1fb043053dec0dc3d2ce))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 1.1.8
+
 ## [2.0.25](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.24...visual-editing-csm-v2.0.25) (2025-10-15)
 
 
