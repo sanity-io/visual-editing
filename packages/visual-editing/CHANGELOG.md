@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.2.0...visual-editing-v3.2.1) (2025-10-16)
+
+
+### Bug Fixes
+
+* comlink has moved to a new repo ([8ee9b2d](https://github.com/sanity-io/visual-editing/commit/8ee9b2dda4eefe5635356109eeda05043110cb7c))
+
 ## [3.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.1.0...visual-editing-v3.2.0) (2025-10-15)
 
 
