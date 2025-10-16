@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [1.8.20](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.19...core-loader-v1.8.20) (2025-10-16)
+
+
+### Bug Fixes
+
+* comlink has moved to a new repo ([8ee9b2d](https://github.com/sanity-io/visual-editing/commit/8ee9b2dda4eefe5635356109eeda05043110cb7c))
+
 ## [1.8.19](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.18...core-loader-v1.8.19) (2025-10-15)
 
 
