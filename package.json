@@ -2,7 +2,7 @@
   "name": "visual-editing-monorepo",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter='!./apps/*' --filter='!./packages/comlink/playground'",
+    "build": "turbo run build --filter='!./apps/*'",
     "build:astro": "turbo run build --filter=./apps/astro",
     "dev": "turbo run build --filter='!./apps/*' && turbo watch dev --filter='./packages/*' --filter='./packages/@repo/*' --filter=./apps/* --filter=!next-with-i18n",
     "dev:astro": "turbo run build --filter=apps-astro^... --filter=apps-studio^... && turbo watch dev --filter=apps-astro... --filter=apps-studio...",
@@ -58,9 +58,7 @@
     },
     "overrides": {
       "@sanity/client": "catalog:",
-      "@sanity/comlink": "workspace:*",
       "@sanity/core-loader": "workspace:*",
-      "@sanity/presentation-comlink": "workspace:*",
       "@sanity/preview-url-secret": "workspace:*",
       "@sanity/react-loader": "workspace:*",
       "@sanity/svelte-loader": "workspace:*",
