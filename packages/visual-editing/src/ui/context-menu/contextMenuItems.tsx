@@ -17,7 +17,7 @@ import type {
   SchemaUnionOption,
 } from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
-import {MenuGroup} from '@sanity/ui/_visual-editing'
+import {MenuGroup} from '@sanity/ui'
 import {type FunctionComponent} from 'react'
 import type {OptimisticDocument} from '../../optimistic'
 import {InsertMenu} from '../../overlay-components/components/InsertMenu'
@@ -228,10 +228,11 @@ const InsertMenuWrapper: FunctionComponent<{
           'top',
         ],
         preventOverflow: true,
+        // @ts-expect-error -- @todo fix this
         width,
         __unstable_margins: [4, 4, 4, 4],
       }}
-      space={2}
+      gap={2}
       text={label}
     >
       <InsertMenu node={parent} onSelect={onSelect} />

@@ -1,4 +1,4 @@
-import {Card, usePrefersDark, useTheme_v2} from '@sanity/ui/_visual-editing'
+import {Card, usePrefersDark} from '@sanity/ui'
 import type {FunctionComponent} from 'react'
 import {styled} from 'styled-components'
 import type {DragSkeleton} from '../types'
@@ -75,9 +75,8 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
   const offsetY = skeleton.offsetY * scaleFactor
 
   const prefersDark = usePrefersDark()
-  const theme = useTheme_v2()
 
-  const radius = theme.radius[~~map(skeleton.w, 0, 1920, 1, theme.radius.length - 2)]
+  // const radius = theme.radius[~~map(skeleton.w, 0, 1920, 1, theme.radius.length - 2)]
 
   const imageRects = skeleton.childRects.filter((r) => r.tagName === 'IMG')
   const textRects = skeleton.childRects.filter((r) => r.tagName !== 'IMG')
@@ -91,7 +90,7 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
       $scaleFactor={scaleFactor}
     >
       <Card
-        radius={radius}
+        // radius={radius}
         shadow={4}
         overflow="hidden"
         tone="transparent"
@@ -107,8 +106,8 @@ export const OverlayDragPreview: FunctionComponent<{skeleton: DragSkeleton}> = (
                 y={r.y}
                 width={r.w}
                 height={r.h}
-                fill={theme.color.skeleton.from}
-              ></rect>
+                // fill={theme.color.skeleton.from}
+              />
             ))}
           </svg>
         </div>

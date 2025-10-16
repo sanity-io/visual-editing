@@ -3,14 +3,13 @@ import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import type {Status} from '@sanity/comlink'
 import {type VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 import {
+  Root as UiRoot,
   isHTMLAnchorElement,
   isHTMLElement,
   LayerProvider,
   PortalProvider,
-  studioTheme,
-  ThemeProvider,
   usePrefersDark,
-} from '@sanity/ui/_visual-editing'
+} from '@sanity/ui'
 import {
   startTransition,
   useCallback,
@@ -440,7 +439,7 @@ export function Overlays(props: {
 
   return (
     <TelemetryProvider comlink={comlink}>
-      <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
+      <UiRoot as="div" scheme={prefersDark ? 'dark' : 'light'} style={{display: 'contents'}}>
         <LayerProvider>
           <PortalProvider element={rootElement}>
             <SchemaProvider comlink={comlink} elements={elements}>
@@ -481,7 +480,7 @@ export function Overlays(props: {
             </SchemaProvider>
           </PortalProvider>
         </LayerProvider>
-      </ThemeProvider>
+      </UiRoot>
     </TelemetryProvider>
   )
 }

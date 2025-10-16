@@ -1,3 +1,5 @@
+import '@sanity/ui/css/index.css'
+
 import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import {startTransition, useEffect, useState} from 'react'
 import {createPortal} from 'react-dom'
