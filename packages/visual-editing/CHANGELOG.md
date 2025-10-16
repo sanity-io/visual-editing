@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.2.2...visual-editing-v3.2.3) (2025-10-16)
+
+
+### Bug Fixes
+
+* show overlays inside of non-presentation iframes ([#3261](https://github.com/sanity-io/visual-editing/issues/3261)) ([7e089cf](https://github.com/sanity-io/visual-editing/commit/7e089cf9bc200083a1eca4ec0413ed82b92478ed))
+
 ## [3.2.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.2.1...visual-editing-v3.2.2) (2025-10-16)
 
 
