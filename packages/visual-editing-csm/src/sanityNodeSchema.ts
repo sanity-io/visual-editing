@@ -1,4 +1,4 @@
-import {minLength, object, optional, pipe, string} from 'valibot'
+import {minLength, object, optional, pipe, string, fallback} from 'valibot'
 
 const lengthyStr = pipe(string(), minLength(1))
 const optionalLengthyStr = optional(lengthyStr)
@@ -12,4 +12,5 @@ export const sanityNodeSchema = object({
   tool: optionalLengthyStr,
   type: optionalLengthyStr,
   workspace: optionalLengthyStr,
+  perspective: fallback(string(), 'drafts'),
 })

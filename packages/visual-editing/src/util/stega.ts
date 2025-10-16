@@ -18,6 +18,7 @@ function decodeStega(str: string, isAltText = false): SanityStegaNode | null {
       return null
     }
     if (isAltText) {
+      // @TODO hmmmm is this correct?
       decoded.href = decoded.href?.replace('.alt', '')
     }
     return decoded

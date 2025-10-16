@@ -30,6 +30,8 @@ export interface CreateDataAttributeProps {
   type?: string
   /** The studio workspace, optional */
   workspace?: string
+  /** The studio perspective, optional, used for "Open in Studio" links */
+  perspective?: string
 }
 
 /**
@@ -102,6 +104,7 @@ export function createDataAttribute<T extends CreateDataAttributeProps>(
       type: props.type,
       id: props.id,
       path: typeof props.path === 'string' ? props.path : studioPath.toString(props.path),
+      perspective: props.perspective,
     } satisfies SanityNode
 
     return encodeSanityNodeData(attrs)!

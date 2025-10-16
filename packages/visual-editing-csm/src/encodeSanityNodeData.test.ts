@@ -9,6 +9,7 @@ test('node data returns an encoded string', async () => {
     baseUrl: 'https://some.sanity.studio',
     tool: 'desk',
     workspace: 'docs',
+    perspective: 'drafts',
   }
 
   const output =
@@ -25,6 +26,7 @@ test('incomplete node data returns undefined', async () => {
     baseUrl: 'https://some.sanity.studio',
     tool: 'desk',
     workspace: 'docs',
+    perspective: 'drafts',
   }
 
   expect(encodeSanityNodeData(input)).toBeUndefined()

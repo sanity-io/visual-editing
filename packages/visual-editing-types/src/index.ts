@@ -12,9 +12,10 @@ export type {Path} from '@sanity/client/csm'
  */
 export type SanityNode = {
   baseUrl: string
-  dataset?: string
   id: string
   path: string
+  perspective?: string
+  dataset?: string
   projectId?: string
   tool?: string
   type?: string

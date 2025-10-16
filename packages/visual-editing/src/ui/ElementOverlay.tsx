@@ -217,16 +217,25 @@ const ExclusivePluginContainer = styled.div`
 `
 
 function createIntentLink(node: SanityNode) {
-  const {id, type, path, baseUrl, tool, workspace} = node
+  const {id, type, path, baseUrl, tool, workspace, perspective} = node
 
-  return createEditUrl({
+  const [url, search] = createEditUrl({
     baseUrl,
     workspace,
     tool,
     type: type!,
     id,
     path: path ? pathToUrlString(studioPath.fromString(path)) : [],
-  })
+  }).split('?')
+  const searchParams = new URLSearchParams(search)
+  const resolvedPerspective = perspective || searchParams.get('perspective')
+  if (resolvedPerspective === 'drafts') {
+    // 'drafts' is not a valid search param in the studio URL, having no `perspective` is the same as 'drafts'
+    searchParams.delete('perspective')
+  } else if (resolvedPerspective) {
+    searchParams.set('perspective', resolvedPerspective)
+  }
+  return `${url}?${searchParams}`
 }
 
 const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {

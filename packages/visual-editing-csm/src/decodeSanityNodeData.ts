@@ -38,6 +38,9 @@ export function decodeSanityString(str: string): SanityNode | undefined {
       case 'base':
         acc.baseUrl = decodeURIComponent(value)
         break
+      case 'perspective':
+        acc.perspective = value
+        break
       case 'tool':
         acc.tool = value
         break
@@ -103,6 +106,7 @@ export function decodeSanityNodeData(
   if (typeof data === 'object' && data !== null) {
     return decodeSanityObject(data)
   }
+  // @TODO maybe check if the string starts with `{` before attempting to JSON parse it?
   try {
     const obj = JSON.parse(data)
     return decodeSanityObject(obj)
