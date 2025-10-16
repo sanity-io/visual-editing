@@ -91,7 +91,12 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
                   </h1>
                   <div className="hidden md:mb-12 md:block">
                     {post.author && (
-                      <Avatar name={post.author.name} picture={post.author.picture} />
+                      <Avatar
+                        id={post.author._id}
+                        originalId={post.author._originalId}
+                        name={post.author.name}
+                        picture={post.author.picture}
+                      />
                     )}
                   </div>
                   <div className="mb-8 sm:mx-0 md:mb-16">
