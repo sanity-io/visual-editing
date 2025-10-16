@@ -180,7 +180,7 @@ const OverlaysController: FunctionComponent<{
 /**
  * @internal
  */
-export const Overlays: FunctionComponent<{
+export function Overlays(props: {
   comlink?: VisualEditingNode
   comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
@@ -188,7 +188,7 @@ export const Overlays: FunctionComponent<{
   inFrame: boolean
   inPopUp: boolean
   zIndex?: string | number
-}> = (props) => {
+}): React.JSX.Element {
   const {
     comlink,
     comlinkStatus,
@@ -374,8 +374,19 @@ export const Overlays: FunctionComponent<{
     return optimisticActorReady ? _componentResolver : undefined
   }, [_componentResolver, optimisticActorReady])
 
+  /**
+   * 'showActions' is a bit of a misnomer, it only shows the "Open in Studio" link, it's separate from the custom overlays and custom actions.
+   * The "Open in Studio" link should be visible in all, but one, scenarios:
+   * When inside Presentation Tool, and its preview iframe, it doesn't make sense to show the "Open in Studio" link,
+   * since we're already in the studio.
+   */
+  const [shouldHideActions, setShouldHideActions] = useState(false)
+  if (!shouldHideActions && inFrame && comlinkStatus === 'connected') {
+    setShouldHideActions(true)
+  }
+
   const elementsToRender = useMemo(() => {
-    if (((inFrame || inPopUp) && comlinkStatus !== 'connected') || isDragging) {
+    if (isDragging) {
       return []
     }
 
@@ -405,8 +416,7 @@ export const Overlays: FunctionComponent<{
             hovered={hovered}
             node={sanity}
             rect={rect}
-            // When inside a popup window we want actions to show up on hover, but iframes should hide them
-            showActions={!inFrame}
+            showActions={!shouldHideActions}
             draggable={draggable}
             isDragging={isDragging || dragMinimapTransition}
             wasMaybeCollapsed={focused && wasMaybeCollapsed}
@@ -416,17 +426,15 @@ export const Overlays: FunctionComponent<{
         )
       })
   }, [
+    comlink,
     componentResolver,
-    props.plugins,
     dragMinimapTransition,
     dragShowMinimap,
     elements,
-    inFrame,
-    inPopUp,
     isDragging,
     optimisticActorReady,
-    comlink,
-    comlinkStatus,
+    props.plugins,
+    shouldHideActions,
     wasMaybeCollapsed,
   ])
 
