@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.1.7...visual-editing-types-v1.1.8) (2025-10-16)
+
+
+### Bug Fixes
+
+* handle `perspective` for "Open in Studio" links ([#3259](https://github.com/sanity-io/visual-editing/issues/3259)) ([39d5369](https://github.com/sanity-io/visual-editing/commit/39d536957632a9b58cce1fb043053dec0dc3d2ce))
+
 ## [1.1.7](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.1.6...visual-editing-types-v1.1.7) (2025-10-15)
 
 
