@@ -5,16 +5,20 @@ import {Image} from 'next-sanity/image'
 interface Props {
   id: string
   originalId: string | null
+  projectId: unknown
+  dataset: unknown
   name: string
   picture: Exclude<Author['picture'], undefined> | null
 }
 
-export default function Avatar({id, originalId, name, picture}: Props) {
+export default function Avatar({id, originalId, projectId, dataset, name, picture}: Props) {
   return (
     <div
       className="flex items-center text-xl"
       data-sanity-id={id}
       data-sanity-original-id={originalId}
+      data-sanity-project-id={projectId}
+      data-sanity-dataset={dataset}
     >
       {picture?.asset?._ref ? (
         <div className="mr-4 h-12 w-12">

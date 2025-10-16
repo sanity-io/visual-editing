@@ -94,6 +94,8 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
                       <Avatar
                         id={post.author._id}
                         originalId={post.author._originalId}
+                        projectId={post.author.projectId}
+                        dataset={post.author.dataset}
                         name={post.author.name}
                         picture={post.author.picture}
                       />
@@ -108,6 +110,8 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
                         <Avatar
                           id={post.author._id}
                           originalId={post.author._originalId}
+                          projectId={post.author.projectId}
+                          dataset={post.author.dataset}
                           name={post.author.name}
                           picture={post.author.picture}
                         />

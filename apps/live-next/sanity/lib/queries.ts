@@ -10,7 +10,7 @@ const postFields = /* groq */ `
   excerpt,
   coverImage,
   "date": coalesce(date, _updatedAt),
-  "author": author->{_id, _originalId, "name": coalesce(name, "Anonymous"), picture},
+  "author": author->{_id, _originalId, "projectId": sanity::projectId(), "dataset": sanity::dataset(), "name": coalesce(name, "Anonymous"), picture},
 `
 
 export const heroQuery = defineQuery(`

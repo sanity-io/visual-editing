@@ -36,6 +36,8 @@ export default async function MoreStories(params: {skip: string; limit: number})
                     <Avatar
                       id={author._id}
                       originalId={author._originalId}
+                      projectId={author.projectId}
+                      dataset={author.dataset}
                       name={author.name}
                       picture={author.picture}
                     />
