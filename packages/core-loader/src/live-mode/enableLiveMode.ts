@@ -13,6 +13,7 @@ import {
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
+import type {WritableAtom} from 'nanostores'
 import {atom, type MapStore} from 'nanostores'
 import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 
@@ -20,12 +21,13 @@ import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
   ssr: boolean
   setFetcher: SetFetcher
+  $decideParameters: WritableAtom<string>
 }
 
 const LISTEN_HEARTBEAT_INTERVAL = 10_000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
-  const {client, setFetcher, onConnect, onDisconnect, onPerspective, onDecideParameters} = options
+  const {client, setFetcher, onConnect, onDisconnect, onPerspective, onDecideParameters, $decideParameters} = options
   if (!client) {
     throw new Error(
       `Expected \`client\` to be an instance of SanityClient: ${JSON.stringify(client)}`,
@@ -36,7 +38,6 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const $perspective = atom<Exclude<ClientPerspective, 'raw'>>(
     perspective && perspective !== 'raw' ? perspective : 'drafts',
   )
-  const $decideParameters = atom<string>('')
   const $connected = atom(false)
 
   const cache = new Map<
@@ -96,8 +97,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
 
   comlink.on('loader/query-change', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
-      const {perspective, query, params} = data
-      const decideParameters = $decideParameters.get()
+      const {perspective, query, params, decideParameters} = data
       if (
         data.result !== undefined &&
         data.resultSourceMap !== undefined &&
@@ -129,7 +129,12 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       unsetFetcher = setFetcher({
         hydrate: (query, params, initial) => {
           const perspective = initial?.perspective || $perspective.get()
-          const decideParameters = $decideParameters.get()
+
+          if (initial?.decideParameters && initial.decideParameters.trim()) {
+            $decideParameters.set(initial.decideParameters)
+          }
+          const decideParameters = initial?.decideParameters || $decideParameters.get()
+
           const key = JSON.stringify({
             perspective,
             decideParameters,
@@ -235,6 +240,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         $fetch.setKey('loading', true)
       }
       $fetch.setKey('perspective', perspective)
+      $fetch.setKey('decideParameters', decideParameters)
     }
   }
   function updateLiveQueries() {
@@ -255,6 +261,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
           loading: false,
           perspective,
           sourceMap: value.resultSourceMap,
+          decideParameters,
         })
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
       } else {

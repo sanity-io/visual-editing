@@ -10,7 +10,7 @@ export function defineUseLiveMode({
 }: Pick<QueryStore, 'enableLiveMode'> & {
   setStudioUrl: (studioUrl: StudioUrl | ResolveStudioUrl | undefined) => void
 }): UseLiveModeHook {
-  return ({allowStudioOrigin, client, onConnect, onDisconnect, onPerspective, studioUrl}) => {
+  return ({allowStudioOrigin, client, onConnect, onDisconnect, onPerspective, onDecideParameters, studioUrl}) => {
     useEffect(() => {
       if (allowStudioOrigin) {
         // eslint-disable-next-line no-console
@@ -21,9 +21,10 @@ export function defineUseLiveMode({
         onConnect,
         onDisconnect,
         onPerspective,
+        onDecideParameters,
       })
       return () => disableLiveMode()
-    }, [allowStudioOrigin, client, onConnect, onDisconnect, onPerspective])
+    }, [allowStudioOrigin, client, onConnect, onDisconnect, onPerspective, onDecideParameters])
     useEffect(() => {
       setStudioUrl(
         (studioUrl ?? typeof client === 'object')

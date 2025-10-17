@@ -5,7 +5,7 @@ import type {LazyEnableLiveModeOptions} from './enableLiveMode'
 export const defineEnableLiveMode: (
   config: Omit<LazyEnableLiveModeOptions, Exclude<keyof EnableLiveModeOptions, 'client'>>,
 ) => EnableLiveMode = (config) => {
-  const {ssr, setFetcher} = config
+  const {ssr, setFetcher, $decideParameters} = config
 
   return (options) => {
     if (runtime === 'server') {
@@ -20,7 +20,7 @@ export const defineEnableLiveMode: (
     let disableLiveMode: (() => void) | undefined
     import('./enableLiveMode').then(({enableLiveMode}) => {
       if (controller.signal.aborted) return
-      disableLiveMode = enableLiveMode({...options, client, setFetcher, ssr})
+      disableLiveMode = enableLiveMode({...options, client, setFetcher, ssr, $decideParameters})
     })
     return () => {
       controller.abort()

@@ -105,16 +105,21 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         )
       }
       const {query, params = {}, perspective, decideParameters, useCdn, stega} = JSON.parse(key)
-      // Transform audiences -> audience for client compatibility
-      const transformedDecideParameters = decideParameters && typeof decideParameters === 'object' && decideParameters.audiences
-        ? { ...decideParameters, audience: decideParameters.audiences }
-        : decideParameters
+
+      let parsedDecideParameters: Record<string, string | number> | undefined = decideParameters
+      if (typeof decideParameters === 'string' && decideParameters.trim()) {
+        try {
+          parsedDecideParameters = JSON.parse(decideParameters)
+        } catch {
+          // Failed to parse decideParameters
+        }
+      }
 
       const {result, resultSourceMap} = await client.fetch(query, params, {
         tag,
         filterResponse: false,
         perspective,
-        decideParameters: transformedDecideParameters,
+        decideParameters: parsedDecideParameters,
         useCdn,
         stega,
       })
@@ -122,36 +127,57 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     })
   }
 
+  const $decideParameters = atom<string>('')
+
   function createDefaultFetcher(): Fetcher {
     const initialPerspective = client?.config().perspective || 'published'
 
-    unstable__cache.instance = createDefaultCache(client)
-
     return {
-      hydrate: (_query, _params, initial) => ({
-        loading: initial?.data === undefined || initial?.sourceMap === undefined,
-        error: undefined,
-        data: initial?.data,
-        sourceMap: initial?.sourceMap,
-        perspective: initialPerspective,
-        decideParameters: initial?.decideParameters,
-      }),
+      hydrate: (_query, _params, initial) => {
+        if (initial?.decideParameters && initial.decideParameters.trim()) {
+          $decideParameters.set(initial.decideParameters)
+        }
+
+        const finalDecideParameters = initial?.decideParameters || $decideParameters.get()
+
+        return {
+          loading: initial?.data === undefined || initial?.sourceMap === undefined,
+          error: undefined,
+          data: initial?.data,
+          sourceMap: initial?.sourceMap,
+          perspective: initialPerspective,
+          decideParameters: finalDecideParameters,
+        }
+      },
       fetch: (query, params, $fetch, controller) => {
         if (controller.signal.aborted) return
 
         const finishTask = startTask()
 
+        const decideParameters = $decideParameters.get()
+
         $fetch.setKey('loading', true)
         $fetch.setKey('error', undefined)
+
+        // Build cache key with all parameters (perspective, decideParameters, etc)
+        const cacheKey = JSON.stringify({
+          query,
+          params,
+          perspective: initialPerspective,
+          decideParameters,
+          useCdn: client?.config().useCdn,
+          stega: client?.config().stega,
+        })
+
         unstable__cache
-          .instance!.fetch(JSON.stringify({query, params}))
+          .instance!.fetch(cacheKey)
           .then((response) => {
             if (controller.signal.aborted) return
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             $fetch.setKey('data', response.result as any)
             $fetch.setKey('sourceMap', response.resultSourceMap)
             $fetch.setKey('perspective', initialPerspective)
-            $fetch.setKey('decideParameters', undefined)
+            $fetch.setKey('decideParameters', decideParameters)
           })
           .catch((reason) => {
             $fetch.setKey('error', reason)
@@ -173,6 +199,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
   const enableLiveMode = defineEnableLiveMode({
     client: client || undefined,
     ssr,
+    $decideParameters,
     setFetcher: (fetcher) => {
       const originalFetcher = $fetcher.get()
       $fetcher.set(fetcher)

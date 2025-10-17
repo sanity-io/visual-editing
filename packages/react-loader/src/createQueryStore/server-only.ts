@@ -23,6 +23,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
     perspective?: ClientPerspective
+    decideParameters?: string
   }> => {
     const {cache, next, stega, headers, tag, decideParameters} = _options
     const perspective =
@@ -37,15 +38,14 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
       )
     }
 
-    let parsedDecideParameters = undefined
+    let parsedDecideParameters: Record<string, string | number> | undefined = undefined
     if (decideParameters && decideParameters.trim()) {
       try {
         parsedDecideParameters = JSON.parse(decideParameters)
       } catch (error) {
-        console.error('[DECIDE] react-loader JSON parse FAILED:', decideParameters, error)
+        console.error('Failed to parse decideParameters:', decideParameters, error)
       }
     }
-
 
     const {result, resultSourceMap} =
       await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
@@ -60,13 +60,14 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         headers,
         tag,
       })
+
     const payload = resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
     if (previewPerspective) {
       // @ts-expect-error - update typings
-      return {...payload, perspective}
+      return {...payload, perspective, decideParameters: _options.decideParameters}
     }
     // @ts-expect-error - update typings
-    return payload
+    return {...payload, decideParameters: _options.decideParameters}
   }
 
   const useQuery: QueryStore['useQuery'] = () => {

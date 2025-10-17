@@ -88,7 +88,7 @@ const shoeType = defineType({
     defineLocalDecideField({
       type: 'number',
       name: 'price',
-      title: 'Pridsdce',
+      title: 'Price',
     }),
     defineField({
       title: 'Brand',

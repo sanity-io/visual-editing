@@ -83,6 +83,11 @@ export function defineUseQuery({
           if (prev.perspective !== snapshot.perspective) {
             return snapshot
           }
+
+          if (prev.decideParameters !== snapshot.decideParameters) {
+            return snapshot
+          }
+
           return prev
         })
       })

@@ -335,6 +335,7 @@ export type LoaderControllerMsg =
         projectId: string
         dataset: string
         perspective: ClientPerspective
+        decideParameters: string
         query: string
         params: QueryParams
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

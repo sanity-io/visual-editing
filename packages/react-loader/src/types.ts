@@ -31,6 +31,10 @@ export interface QueryResponseInitial<QueryResponseResult> {
    * The perspective used to fetch the data, if not provided it'll assume 'published'
    */
   perspective?: ClientPerspective
+  /**
+   * The decideParameters used to fetch the data, if any
+   */
+  decideParameters?: string
 }
 
 export interface UseQueryOptions<QueryResponseResult = unknown> {

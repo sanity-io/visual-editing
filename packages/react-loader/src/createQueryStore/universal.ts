@@ -1,4 +1,4 @@
-import type {QueryParams} from '@sanity/client'
+import type {ContentSourceMap, QueryParams} from '@sanity/client'
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
@@ -46,8 +46,17 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           false)
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
-    const decideParameters = options.decideParameters ? JSON.parse(options.decideParameters) : undefined
+    const useCdn = options.useCdn || unstable__serverClient.instance?.config().useCdn || false
 
+    // Parse decideParameters once, consistently for all code paths
+    let parsedDecideParameters: Record<string, string | number> | undefined = undefined
+    if (options.decideParameters && options.decideParameters.trim()) {
+      try {
+        parsedDecideParameters = JSON.parse(options.decideParameters)
+      } catch {
+        // Failed to parse decideParameters
+      }
+    }
 
     if (typeof document !== 'undefined') {
       throw new Error(
@@ -66,33 +75,32 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         )
       }
 
-      // Transform audiences -> audience for client compatibility
-      const transformedDecideParameters = decideParameters && typeof decideParameters === 'object' && decideParameters.audiences
-        ? { ...decideParameters, audience: decideParameters.audiences }
-        : decideParameters
+      const response = await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
+        filterResponse: false,
+        resultSourceMap: 'withKeyArraySelector',
+        stega,
+        perspective,
+        decideParameters: parsedDecideParameters,
+        useCdn: false,
+        headers,
+        tag,
+      })
 
-      const {result, resultSourceMap} =
-        await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
-          filterResponse: false,
-          resultSourceMap: 'withKeyArraySelector',
-          stega,
-          perspective,
-          decideParameters: transformedDecideParameters,
-          useCdn: false,
-          headers,
-          tag,
-        })
+      // Type assertion for RawQueryResponse when filterResponse is false
+      const {result, resultSourceMap} = response as {result: QueryResponseResult; resultSourceMap?: ContentSourceMap}
+
       return resultSourceMap
-        ? {data: result, sourceMap: resultSourceMap, perspective}
+        ? {data: result, sourceMap: resultSourceMap, perspective, decideParameters: options.decideParameters}
         : // @ts-expect-error - update typings
-          {data: result, perspective}
+          {data: result, perspective, decideParameters: options.decideParameters}
     }
 
-    const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
-      JSON.stringify({query, params, perspective, decideParameters: options.decideParameters, options: {stega}}),
-    )
+    const cacheKey = JSON.stringify({query, params, perspective, decideParameters: options.decideParameters, useCdn, stega})
+
+    const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(cacheKey)
+
     // @ts-expect-error - update typings
-    return resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
+    return resultSourceMap ? {data: result, sourceMap: resultSourceMap, decideParameters: options.decideParameters} : {data: result, decideParameters: options.decideParameters}
   }
 
   return {
