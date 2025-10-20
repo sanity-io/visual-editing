@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.2.3...visual-editing-v3.2.4) (2025-10-20)
+
+
+### Bug Fixes
+
+* if in frame open links in same frame ([ee88227](https://github.com/sanity-io/visual-editing/commit/ee882274352858a583e4c1b1368471e780f5d0fb))
+
 ## [3.2.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v3.2.2...visual-editing-v3.2.3) (2025-10-16)
 
 
