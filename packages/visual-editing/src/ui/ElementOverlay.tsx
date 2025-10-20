@@ -55,6 +55,7 @@ const isReactElementOverlayComponent = (
 }
 
 export interface ElementOverlayProps {
+  inFrame: boolean
   id: string
   comlink?: VisualEditingNode
   componentResolver?: OverlayComponentResolver
@@ -252,6 +253,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
     comlink,
     onActivateExclusivePlugin,
     onMenuOpenChange,
+    inFrame,
   } = props
 
   const {getField, getType} = useSchema()
@@ -330,7 +332,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
       <PointerEvents>
         {showActions ? (
           <Actions gap={1} paddingY={1}>
-            <Link href={href} />
+            <Link inFrame={inFrame} href={href} />
           </Actions>
         ) : null}
         {(title || showMenu) && (
@@ -470,7 +472,8 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
 export const ElementOverlay = memo(function ElementOverlay(
   props: Omit<ElementOverlayProps, 'setActiveExclusivePlugin' | 'onMenuOpenChange'>,
 ) {
-  const {draggable, focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView} = props
+  const {draggable, focused, hovered, rect, wasMaybeCollapsed, enableScrollIntoView, inFrame} =
+    props
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -587,6 +590,7 @@ export const ElementOverlay = memo(function ElementOverlay(
         ) : hovered ? (
           <ElementOverlayInner
             {...props}
+            inFrame={inFrame}
             onActivateExclusivePlugin={onActivateExclusivePlugin}
             onMenuOpenChange={setMenuOpen}
           />
@@ -651,7 +655,8 @@ function useCustomComponents(
   }, [componentResolver, componentContext])
 }
 
-const Link = memo(function Link(props: {href: string}) {
+const Link = memo(function Link(props: {href: string; inFrame: boolean}) {
+  const {inFrame} = props
   const referer = useSyncExternalStore(
     useCallback((onStoreChange) => {
       const handlePopState = () => onStoreChange()
@@ -663,7 +668,12 @@ const Link = memo(function Link(props: {href: string}) {
   const href = useMemo(() => getLinkHref(props.href, referer), [props.href, referer])
 
   return (
-    <Box as="a" href={href} target="_blank" rel="noopener noreferrer">
+    <Box
+      as="a"
+      href={href}
+      target={inFrame ? undefined : '_blank'}
+      rel={inFrame ? 'noopener' : 'noopener noreferrer'}
+    >
       <ActionOpen padding={2}>
         <Text size={1} weight="medium">
           Open in Studio

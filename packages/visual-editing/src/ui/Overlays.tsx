@@ -422,6 +422,7 @@ export function Overlays(props: {
             wasMaybeCollapsed={focused && wasMaybeCollapsed}
             targets={targets}
             elementType={elementType}
+            inFrame={inFrame}
           />
         )
       })
@@ -431,6 +432,7 @@ export function Overlays(props: {
     dragMinimapTransition,
     dragShowMinimap,
     elements,
+    inFrame,
     isDragging,
     optimisticActorReady,
     props.plugins,
