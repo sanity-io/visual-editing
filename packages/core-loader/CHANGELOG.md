@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.0.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.21...core-loader-v2.0.0) (2025-10-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Update dependency @sanity/presentation-comlink to v2 ([#3272](https://github.com/sanity-io/visual-editing/issues/3272))
+* **deps:** Update dependency @sanity/comlink to v4 ([#3271](https://github.com/sanity-io/visual-editing/issues/3271))
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/comlink to v4 ([#3271](https://github.com/sanity-io/visual-editing/issues/3271)) ([a9f6ba7](https://github.com/sanity-io/visual-editing/commit/a9f6ba713accd0ac901ce6275cf4f3746654d9bb))
+* **deps:** Update dependency @sanity/presentation-comlink to v2 ([#3272](https://github.com/sanity-io/visual-editing/issues/3272)) ([ffa0f6a](https://github.com/sanity-io/visual-editing/commit/ffa0f6a104de9f87f9bf58490e15d8f39e921ebf))
+
 ## [1.8.21](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.20...core-loader-v1.8.21) (2025-10-16)
 
 
