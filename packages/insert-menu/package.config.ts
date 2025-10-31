@@ -8,5 +8,5 @@ export default defineConfig({
     optimizeLodash: true,
   },
   babel: {reactCompiler: true},
-  reactCompilerOptions: {target: '18'},
+  reactCompilerOptions: {target: '19'},
 })

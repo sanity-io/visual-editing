@@ -1,6 +1,6 @@
 {
   "name": "@sanity/visual-editing",
-  "version": "4.0.0",
+  "version": "5.0.0-canary.1",
   "keywords": [
     "sanity.io",
     "visual-editing",
@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
-  "sideEffects": false,
+  "sideEffects": true,
   "type": "module",
   "exports": {
     ".": {
@@ -58,12 +58,6 @@
       "require": "./dist/react-router/index.cjs",
       "default": "./dist/react-router/index.js"
     },
-    "./remix": {
-      "source": "./src/remix/index.ts",
-      "import": "./dist/remix/index.js",
-      "require": "./dist/remix/index.cjs",
-      "default": "./dist/remix/index.js"
-    },
     "./svelte": {
       "types": "./dist-svelte/index.d.ts",
       "svelte": "./dist-svelte/index.js",
@@ -96,9 +90,6 @@
       ],
       "react-router": [
         "./dist/react-router/index.d.ts"
-      ],
-      "remix": [
-        "./dist/remix/index.d.ts"
       ],
       "svelte": [
         "./dist-svelte/index.d.ts"
@@ -143,18 +134,17 @@
     "@sanity/mutate": "0.11.0-canary.4",
     "@sanity/presentation-comlink": "^2.0.0",
     "@sanity/preview-url-secret": "workspace:^",
-    "@sanity/ui": "catalog:",
+    "@sanity/ui": "4.0.0-static.35",
     "@sanity/visual-editing-csm": "workspace:^",
     "@vercel/stega": "0.1.2",
     "get-random-values-esm": "^1.0.2",
-    "react-compiler-runtime": "1.0.0",
     "rxjs": "catalog:",
     "scroll-into-view-if-needed": "^3.1.0",
+    "styled-components": "npm:@sanity/css-in-js@6.1.18-32",
     "use-effect-event": "catalog:",
     "xstate": "catalog:"
   },
   "devDependencies": {
-    "@remix-run/react": "^2.17.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@sanity/client": "catalog:",
@@ -180,11 +170,9 @@
     "ls-engines": "^0.9.3",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-is": "catalog:",
     "react-router": "^7.7.1",
     "rimraf": "^5.0.5",
     "storybook": "^8.6.14",
-    "styled-components": "catalog:",
     "svelte": "^5.37.3",
     "tailwindcss": "catalog:tailwind3",
     "typescript": "catalog:",
@@ -192,21 +180,15 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@remix-run/react": ">= 2",
     "@sanity/client": "catalog:",
     "@sveltejs/kit": ">= 2",
-    "next": ">= 13 || >=14.3.0-canary.0 <14.3.0 || >=15.0.0-rc || >=16.0.0-0",
-    "react": "^18.3 || ^19",
-    "react-dom": "^18.3 || ^19",
-    "react-is": "^18.3 || ^19",
+    "next": "^15.1 || >=16.0.0-0",
+    "react": "^19",
+    "react-dom": "^19",
     "react-router": ">= 6 || >= 7",
-    "styled-components": "catalog:",
     "svelte": ">= 4"
   },
   "peerDependenciesMeta": {
-    "@remix-run/react": {
-      "optional": true
-    },
     "@sanity/client": {
       "optional": true
     },

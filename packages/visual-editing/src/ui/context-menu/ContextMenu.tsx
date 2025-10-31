@@ -10,7 +10,7 @@ import {
   Stack,
   Text,
   type PopoverMargins,
-} from '@sanity/ui/_visual-editing'
+} from '@sanity/ui'
 import {useCallback, useEffect, useMemo, useState, type FunctionComponent} from 'react'
 import {useDocuments} from '../../react/useDocuments'
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
@@ -52,7 +52,7 @@ function ContextMenuItem(props: {
         hotkeys={node.hotkeys}
         icon={node.icon}
         padding={2}
-        space={2}
+        gap={2}
         text={node.label}
         disabled={!node.action}
         onClick={onClick}
@@ -86,7 +86,7 @@ function ContextMenuItem(props: {
           preventOverflow: true,
           __unstable_margins: POPOVER_MARGINS,
         }}
-        space={2}
+        gap={2}
         text={node.label}
       >
         {node.items.map((item, itemIndex) => (
@@ -169,7 +169,7 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
             <Flex gap={2} padding={2}>
               <Box flex="none">{items ? <Text size={1}>{icon}</Text> : <Spinner size={1} />}</Box>
 
-              <Stack flex={1} space={2}>
+              <Stack flex={1} gap={2}>
                 <Text size={1} weight="semibold">
                   {items ? title : 'Loading...'}
                 </Text>

@@ -1,6 +1,6 @@
 {
   "name": "@sanity/insert-menu",
-  "version": "2.1.0",
+  "version": "3.0.0-canary.5",
   "description": "",
   "keywords": [],
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/insert-menu#readme",
@@ -42,9 +42,7 @@
   "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
     "@sanity/icons": "catalog:",
-    "@sanity/ui": "catalog:",
-    "lodash": "^4.17.21",
-    "react-compiler-runtime": "1.0.0"
+    "@sanity/ui": "4.0.0-static.35"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "catalog:",
@@ -65,11 +63,11 @@
   },
   "peerDependencies": {
     "@sanity/types": "*",
-    "react": "^18.3 || ^19",
-    "react-dom": "^18.3 || ^19",
-    "react-is": "^18.3 || ^19"
+    "react": "^19",
+    "react-dom": "^19",
+    "react-is": "^19"
   },
   "engines": {
-    "node": ">=20.19"
+    "node": ">=18.0.0"
   }
 }
