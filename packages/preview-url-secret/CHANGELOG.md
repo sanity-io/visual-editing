@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [2.1.16](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.15...preview-url-secret-v2.1.16) (2025-11-20)
+
+
+### Bug Fixes
+
+* deprecate `subcribeToVercelProtectionBypass` ([270c8b1](https://github.com/sanity-io/visual-editing/commit/270c8b17012b9dc1c88a101fb4516a864e0e2537))
+
 ## [2.1.15](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.14...preview-url-secret-v2.1.15) (2025-09-09)
 
 
