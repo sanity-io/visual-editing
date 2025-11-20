@@ -8,7 +8,7 @@ This repository contains packages to enable Visual Editing with Sanity. Visual E
 
 ### [Vercel Deployment Protection](https://vercel.com/docs/security/deployment-protection)
 
-Use the [`@sanity/vercel-protection-bypass`](./packages/vercel-protection-bypass) tool to setup Presentation to use [Protection Bypass](https://vercel.com/docs/security/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation#protection-bypass-for-automation) to successfully load deployments that are protected.
+Use the [`@sanity/vercel-protection-bypass`](https://github.com/sanity-io/plugins/tree/main/packages/%40sanity/vercel-protection-bypass#readme) tool to setup Presentation to use [Protection Bypass](https://vercel.com/docs/security/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation#protection-bypass-for-automation) to successfully load deployments that are protected.
 
 ## Overlays & router integration
 

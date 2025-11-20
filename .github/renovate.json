@@ -32,10 +32,7 @@
     },
     {
       "matchDepNames": ["sanity", "@sanity/util", "@sanity/types"],
-      "matchFileNames": [
-        "packages/preview-url-secret/package.json",
-        "packages/vercel-protection-bypass/package.json"
-      ],
+      "matchFileNames": ["packages/preview-url-secret/package.json"],
       "matchDepTypes": ["devDependencies", "peerDependencies"],
       "schedule": ["at any time"],
       "rangeStrategy": "bump",
