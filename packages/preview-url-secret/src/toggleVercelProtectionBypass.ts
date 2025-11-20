@@ -23,7 +23,7 @@ export async function disableVercelProtectionBypass(client: SanityClient): Promi
 }
 
 /** @internal */
-export function subcribeToVercelProtectionBypass(
+export function subscribeToVercelProtectionBypass(
   client: SanityClient,
   onChange: (secret: string | null) => void,
 ): () => void {
@@ -69,3 +69,9 @@ export function subcribeToVercelProtectionBypass(
 }
 
 export type {SanityClientLike}
+
+/**
+ * @internal
+ * @deprecated Use `subscribeToVercelProtectionBypass` instead.
+ */
+export {subscribeToVercelProtectionBypass as subcribeToVercelProtectionBypass}
