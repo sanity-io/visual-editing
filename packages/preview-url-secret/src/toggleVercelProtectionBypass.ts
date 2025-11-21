@@ -8,15 +8,6 @@ import {
 import type {SanityClientLike} from './types'
 
 /** @internal */
-export async function enableVercelProtectionBypass(
-  client: SanityClient,
-  secret: string,
-): Promise<void> {
-  const patch = client.patch(_id).set({secret})
-  await client.transaction().createIfNotExists({_id, _type}).patch(patch).commit({tag})
-}
-
-/** @internal */
 export async function disableVercelProtectionBypass(client: SanityClient): Promise<void> {
   const patch = client.patch(_id).set({secret: null})
   await client.transaction().createIfNotExists({_id, _type}).patch(patch).commit({tag})
