@@ -1,10 +1,5 @@
 import type {SanityClient, SyncTag} from '@sanity/client'
-import {
-  vercelProtectionBypassSchemaId as _id,
-  vercelProtectionBypassSchemaType as _type,
-  fetchVercelProtectionBypassSecret,
-  tag,
-} from './constants'
+import {fetchVercelProtectionBypassSecret} from './constants'
 import type {SanityClientLike} from './types'
 
 /** @internal */
@@ -54,9 +49,3 @@ export function subscribeToVercelProtectionBypass(
 }
 
 export type {SanityClientLike}
-
-/**
- * @internal
- * @deprecated Use `subscribeToVercelProtectionBypass` instead.
- */
-export {subscribeToVercelProtectionBypass as subcribeToVercelProtectionBypass}
