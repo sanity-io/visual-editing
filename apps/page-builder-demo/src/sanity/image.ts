@@ -1,5 +1,5 @@
 import {workspaces} from '@repo/env'
-import createImageUrlBuilder from '@sanity/image-url'
+import {createImageUrlBuilder} from '@sanity/image-url'
 
 const {projectId, dataset} = workspaces['page-builder-demo']
 
