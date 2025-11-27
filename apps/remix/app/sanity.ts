@@ -1,7 +1,7 @@
 import {apiVersion, workspaces} from '@repo/env'
 import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
+import {createImageUrlBuilder} from '@sanity/image-url'
 
 const {projectId, dataset} = workspaces['remix']
 
@@ -30,12 +30,12 @@ export const client = createClient({
   },
 })
 
-const builder = imageUrlBuilder({projectId, dataset})
+const builder = createImageUrlBuilder({projectId, dataset})
 export function urlFor(source: any) {
   return builder.image(source).auto('format').fit('max')
 }
 
-const crossDatasetBuilder = imageUrlBuilder({
+const crossDatasetBuilder = createImageUrlBuilder({
   projectId: workspaces['cross-dataset-references'].projectId,
   dataset: workspaces['cross-dataset-references'].dataset,
 })

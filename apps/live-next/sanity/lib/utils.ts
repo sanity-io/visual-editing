@@ -1,5 +1,5 @@
 import {dataset, projectId} from '@/sanity/lib/api'
-import createImageUrlBuilder from '@sanity/image-url'
+import {createImageUrlBuilder} from '@sanity/image-url'
 
 const imageBuilder = createImageUrlBuilder({
   projectId: projectId || '',
