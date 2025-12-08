@@ -4,16 +4,13 @@
   "scripts": {
     "build": "next build",
     "dev": "next -p 3232",
-    "format": "npx prettier --write . --ignore-path .gitignore",
     "lint": "next lint",
     "lint:fix": "npm run format && npm run lint -- --fix",
     "start": "next start",
     "type-check": "tsc --noEmit"
   },
-  "prettier": "@repo/prettier-config",
   "dependencies": {
     "@repo/env": "workspace:*",
-    "@repo/prettier-config": "workspace:*",
     "@sanity/assist": "catalog:",
     "@sanity/client": "catalog:",
     "@sanity/preview-url-secret": "workspace:*",
@@ -27,8 +24,6 @@
     "classnames": "2.5.1",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.7",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.3",
     "lucide-react": "^0.536.0",
     "next": "^15.5.7",
     "next-sanity": "11.3.0",

@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalDependencies": [".npmrc", ".prettierrc.cjs", "**/.env.*local"],
+  "globalDependencies": [".npmrc", "**/.env.*local"],
   "tasks": {
     "build": {
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],

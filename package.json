@@ -13,12 +13,10 @@
     "dev:page-builder-demo": "turbo run build --filter=page-builder-demo^... --filter=apps-studio^... && turbo watch dev --filter=page-builder-demo... --filter=apps-studio...",
     "dev:remix": "turbo run build --filter=apps-remix^... --filter=apps-studio^... && turbo watch dev --filter=apps-remix... --filter=apps-studio...",
     "dev:svelte": "turbo run build --filter=apps-svelte^... --filter=apps-studio^... && turbo watch dev --filter=apps-svelte... --filter=apps-studio...",
-    "format": "prettier --cache --write .",
-    "format:staged": "pretty-quick --staged",
+    "format": "oxfmt . --no-error-on-unmatched-pattern",
     "knip": "knip",
     "lint": "turbo run lint",
     "lint:fix": "pnpm lint -- --fix",
-    "prepare": "husky",
     "preview": "turbo run preview",
     "release:canary": "zx scripts/release-canary.mjs",
     "release:corel": "zx scripts/release-corel.mjs",
@@ -27,22 +25,13 @@
     "test": "turbo run test",
     "turbo:fix": "turbo daemon clean"
   },
-  "lint-staged": {
-    "*": [
-      "pnpm format:staged"
-    ]
-  },
-  "prettier": "@repo/prettier-config",
   "devDependencies": {
-    "@repo/prettier-config": "workspace:*",
     "@sanity/pkg-utils": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "husky": "^9.1.6",
     "knip": "^5.62.0",
-    "lint-staged": "^15.2.10",
-    "pretty-quick": "^4.2.2",
+    "oxfmt": "^0.17.0",
     "turbo": "2.5.6",
     "typescript": "catalog:",
     "zx": "8.1.6"

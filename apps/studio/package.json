@@ -6,7 +6,6 @@
     "build": "sanity build --source-maps -y && sanity manifest extract",
     "dev": "rimraf .sanity && sanity dev"
   },
-  "prettier": "@repo/prettier-config",
   "dependencies": {
     "@repo/env": "workspace:*",
     "@repo/sanity-schema": "workspace:*",
@@ -26,7 +25,6 @@
     "typescript": "catalog:"
   },
   "devDependencies": {
-    "@repo/prettier-config": "workspace:*",
     "babel-plugin-react-compiler": "1.0.0",
     "rimraf": "^5.0.5"
   }

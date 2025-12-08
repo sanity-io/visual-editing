@@ -26,7 +26,6 @@
     "prepack": "turbo run build"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": "@repo/prettier-config",
   "eslintConfig": {
     "extends": [
       "@repo/eslint-config"
@@ -40,7 +39,6 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
-    "@repo/prettier-config": "workspace:*",
     "@sanity/assist": "catalog:",
     "@sanity/color-input": "catalog:",
     "@sanity/icons": "catalog:",

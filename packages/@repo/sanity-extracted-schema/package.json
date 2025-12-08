@@ -14,7 +14,6 @@
     "lint": "eslint ."
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "prettier": "@repo/prettier-config",
   "eslintConfig": {
     "extends": [
       "@repo/eslint-config"
@@ -27,7 +26,6 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/prettier-config": "workspace:*",
     "eslint": "^8.57.1",
     "sanity": "catalog:",
     "styled-components": "catalog:",

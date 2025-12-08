@@ -33,7 +33,6 @@ if (process.env.NPM_CONFIG_PROVENANCE !== 'true') {
       const {name, ...rest} = await fs.readJson(`./${workspace}/package.json`)
       if (prev.has(name)) {
         await fs.writeJson(`./${workspace}/package.json`, {name, ...rest, version: prev.get(name)})
-        await $`prettier --write ./${workspace}/package.json`
       }
     }
     process.exit(0)
