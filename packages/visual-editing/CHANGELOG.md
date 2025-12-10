@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.0.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v4.0.2...visual-editing-v4.0.3) (2025-12-10)
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@vercel/stega` ([4b8a95c](https://github.com/sanity-io/visual-editing/commit/4b8a95c760487d45c89349d9692a923a4d96dd9c))
+* remove get-random-values-esm as dependency ([#3288](https://github.com/sanity-io/visual-editing/issues/3288)) ([d49d977](https://github.com/sanity-io/visual-editing/commit/d49d97756a5848116b329f011a2206eaac3ac506))
+
 ## [4.0.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v4.0.1...visual-editing-v4.0.2) (2025-11-21)
 
 
