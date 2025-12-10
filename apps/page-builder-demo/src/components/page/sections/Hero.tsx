@@ -1,6 +1,8 @@
-import {Image} from '@/components/image'
 import type {FrontPageQueryResult} from '@/sanity.types'
+
+import {Image} from '@/components/image'
 import {dataAttribute} from '@/sanity/dataAttribute'
+
 import {PageSection} from '../PageSection'
 import {HeroSectionData} from '../types'
 

@@ -1,5 +1,7 @@
-import {shoesList} from '@/queries'
 import {draftMode} from 'next/headers'
+
+import {shoesList} from '@/queries'
+
 import {client} from '../shoes/sanity.client'
 import ShoesPageClient from './page.client'
 

@@ -1,11 +1,13 @@
 'use client'
 
-import type {DndTestPage} from '@/sanity.types'
 import type {SanityDocument} from '@sanity/client'
+
 import {type StudioPathLike} from '@sanity/client/csm'
 import {get} from '@sanity/util/paths'
 import {useOptimistic} from '@sanity/visual-editing'
 import {Children, isValidElement} from 'react'
+
+import type {DndTestPage} from '@/sanity.types'
 
 /**
  * This component is used to apply optimistic state to a list of children. It is used to

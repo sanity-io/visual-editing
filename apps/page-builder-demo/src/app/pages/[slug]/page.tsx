@@ -1,6 +1,7 @@
+import {defineQuery} from 'next-sanity'
+
 import {Page, sectionFragment} from '@/components/page'
 import {sanityFetch} from '@/sanity/live'
-import {defineQuery} from 'next-sanity'
 
 const pageQuery = defineQuery(`
   *[_type == "page" && slug.current == $slug][0]{

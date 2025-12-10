@@ -1,5 +1,6 @@
 import {validateApiPerspective} from '@sanity/client'
 import {json, type ActionFunctionArgs} from '@vercel/remix'
+
 import {commitSession, getSession} from '../sessions'
 
 export async function action({request}: ActionFunctionArgs) {

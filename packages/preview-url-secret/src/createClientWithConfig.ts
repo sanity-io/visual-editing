@@ -1,5 +1,6 @@
-import {apiVersion} from './constants'
 import type {SanityClientLike} from './types'
+
+import {apiVersion} from './constants'
 
 /**
  * Validates the passed in client instance, then clones it and reconfigures it to fit the needs and spec of

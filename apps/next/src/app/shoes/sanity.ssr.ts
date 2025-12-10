@@ -1,5 +1,6 @@
 import {loadQuery as _loadQuery, setServerClient} from '@sanity/react-loader'
 import {draftMode} from 'next/headers'
+
 import {client} from './sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN

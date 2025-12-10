@@ -1,8 +1,10 @@
 import type {ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
+
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
+
 import type {QueryStore as BaseQueryStore, QueryStore} from '../types'
 
 export type * from '../types'

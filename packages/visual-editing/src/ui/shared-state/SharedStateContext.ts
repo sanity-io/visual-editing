@@ -1,4 +1,5 @@
 import {createContext} from 'react'
+
 import type {VisualEditingNode} from '../../types'
 import type {SharedStateStore} from './sharedStateStore'
 

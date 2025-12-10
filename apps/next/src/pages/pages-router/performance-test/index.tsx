@@ -43,7 +43,7 @@ const cdnSanityClient = createSanityClient({
 })
 
 export const getStaticProps = (async (context) => {
-  const {draftMode = false} = context
+  const { draftMode = false} = context
   const {query, params} = getPageQuery('ISSUE-BUILDING')
   const client = draftMode ? sanityClient : cdnSanityClient
 

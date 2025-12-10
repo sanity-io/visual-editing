@@ -1,8 +1,12 @@
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
 import type {SanityDocument} from '@sanity/client'
+
 import {createDataAttribute, useOptimistic} from '@sanity/visual-editing'
 import React, {useMemo} from 'react'
+
+import type {FrontPageQueryResult} from '@/sanity.types'
+
+import {dataAttribute} from '@/sanity/dataAttribute'
+
 import {PageSection} from '../PageSection'
 import {ProductModel} from '../ProductModel'
 import {IntroSectionData, PageData} from '../types'

@@ -1,14 +1,19 @@
-import {loadQuery} from '@/components/sanity.ssr'
-import {shoe} from '@/queries'
-import type {ShoeResult} from '@/types'
-import {formatCurrency} from '@/utils'
+import type {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next'
+
 import {PortableText} from '@portabletext/react'
 import {ClientPerspective, ContentSourceMap} from '@sanity/client'
 import {useQuery} from '@sanity/react-loader'
-import type {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import type {ShoeResult} from '@/types'
+
+import {loadQuery} from '@/components/sanity.ssr'
+import {shoe} from '@/queries'
+import {formatCurrency} from '@/utils'
+
 import type {SharedProps} from '../../_app'
+
 import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
 
 interface Props extends SharedProps {
@@ -17,7 +22,7 @@ interface Props extends SharedProps {
 }
 
 export const getStaticProps = (async (context) => {
-  const {draftMode = false, params} = context
+  const { draftMode = false, params} = context
   const perspective = (draftMode ? 'drafts' : 'published') satisfies ClientPerspective
 
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug

@@ -1,9 +1,13 @@
 'use client'
 
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
 import type {SanityDocument} from '@sanity/client'
+
 import {useOptimistic} from '@sanity/visual-editing'
+
+import type {FrontPageQueryResult} from '@/sanity.types'
+
+import {dataAttribute} from '@/sanity/dataAttribute'
+
 import {FeaturedProducts} from './sections/FeaturedProducts'
 import {FeatureHighlight} from './sections/FeatureHighlight'
 import {Hero} from './sections/Hero'

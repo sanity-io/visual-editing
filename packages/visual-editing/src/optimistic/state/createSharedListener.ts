@@ -1,5 +1,6 @@
 import {type ListenEvent} from '@sanity/client'
 import {merge, ReplaySubject, Subject, type Observable, type ObservedValueOf} from 'rxjs'
+
 import type {VisualEditingNode} from '../../types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

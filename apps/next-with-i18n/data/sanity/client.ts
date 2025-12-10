@@ -1,5 +1,6 @@
-import config from '@/config'
 import {ClientPerspective, createClient} from '@sanity/client'
+
+import config from '@/config'
 
 const clientConfig = {
   projectId: config.sanity.projectId,

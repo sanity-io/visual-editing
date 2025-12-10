@@ -1,4 +1,5 @@
 import {shoesList} from '@/queries'
+
 import ShoesPageClient from './page.client'
 import {sanityFetch} from './sanity.live'
 

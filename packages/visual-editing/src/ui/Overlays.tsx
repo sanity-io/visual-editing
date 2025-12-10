@@ -1,6 +1,7 @@
 import type {ClientPerspective} from '@sanity/client'
-import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import type {Status} from '@sanity/comlink'
+
+import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import {type VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 import {
   isHTMLAnchorElement,
@@ -22,7 +23,7 @@ import {
   type FunctionComponent,
 } from 'react'
 import {styled} from 'styled-components'
-import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor'
+
 import type {
   OverlayComponentResolver,
   OverlayEventHandler,
@@ -30,6 +31,8 @@ import type {
   OverlayPluginDefinition,
   VisualEditingNode,
 } from '../types'
+
+import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor'
 import {sanityNodesExistInSameArray} from '../util/findSanityNodes'
 import {useDragEndEvents} from '../util/useDragEvents'
 import {ContextMenu} from './context-menu/ContextMenu'

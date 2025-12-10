@@ -8,6 +8,7 @@ import type {
   Point2D,
   SanityNode,
 } from '../types'
+
 import {
   findClosestIntersection,
   getRect,

@@ -5,6 +5,7 @@ import {stegaClean} from '@sanity/client/stega'
 import {useQuery} from '@sanity/react-loader'
 import {createDataAttribute} from '@sanity/visual-editing'
 import {json, type LoaderFunction} from '@vercel/remix'
+
 import {shoe, shoesList, type ShoeParams, type ShoeResult, type ShoesListResult} from '~/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 import {loadQuery} from '~/sanity.loader.server'

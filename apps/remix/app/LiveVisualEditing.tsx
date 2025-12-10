@@ -3,9 +3,11 @@ import {ClientPerspective} from '@sanity/client'
 import {useLiveMode} from '@sanity/react-loader'
 import {OverlayComponentResolver} from '@sanity/visual-editing'
 import {VisualEditing} from '@sanity/visual-editing/remix'
-import {client as _client} from '~/sanity'
 import {useMemo} from 'react'
 import {useEffectEvent} from 'use-effect-event'
+
+import {client as _client} from '~/sanity'
+
 import {CustomControlsComponent} from './CustomControlsComponent'
 
 export default function LiveVisualEditing({perspective}: {perspective: ClientPerspective}) {

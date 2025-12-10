@@ -6,10 +6,12 @@ import {
   type ContentSourceMap,
   type ContentSourceMapParsedPath,
 } from '@sanity/client/csm'
+
+import type {SanityKey, SanityNodeContext, WrappedValue} from './types'
+
 import {SANITY_KEYS} from './constants'
 import {isArray, isRecord} from './helpers'
 import {resolveSanityNode} from './resolveSanityNode'
-import type {SanityKey, SanityNodeContext, WrappedValue} from './types'
 
 /** @public */
 export function wrapData<T>(

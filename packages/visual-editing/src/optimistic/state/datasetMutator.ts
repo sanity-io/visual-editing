@@ -11,7 +11,9 @@ import {
   type DocumentMutatorMachineParentEvent,
 } from '@sanity/mutate/_unstable_machine'
 import {assertEvent, assign, emit, setup, stopChild, type ActorRefFrom} from 'xstate'
+
 import type {VisualEditingNode} from '../../types'
+
 import {createDocumentMutator} from './documentMutator'
 
 export interface DatasetMutatorMachineInput extends Omit<DocumentMutatorMachineInput, 'id'> {
@@ -101,14 +103,14 @@ export const datasetMutatorMachine = setup({
   }),
 
   on: {
-    'sync': {actions: ['emit sync event']},
-    'mutation': {actions: ['emit mutation event']},
+    sync: {actions: ['emit sync event']},
+    mutation: {actions: ['emit mutation event']},
     'rebased.*': {actions: ['emit rebased event']},
-    'pristine': {actions: ['emit pristine event']},
-    'observe': {
+    pristine: {actions: ['emit pristine event']},
+    observe: {
       actions: ['add document actor'],
     },
-    'unobserve': {
+    unobserve: {
       actions: ['stop remote snapshot', 'remove remote snapshot from context'],
     },
   },

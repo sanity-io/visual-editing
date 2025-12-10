@@ -1,8 +1,9 @@
+import type {PreviewHeaderProps} from 'sanity/presentation'
+
 import {CheckmarkIcon, CloseIcon, EllipsisVerticalIcon} from '@sanity/icons'
 import {Button, Menu, MenuButton, MenuItem} from '@sanity/ui'
 import {useState, type FunctionComponent} from 'react'
 import {useSharedState} from 'sanity/presentation'
-import type {PreviewHeaderProps} from 'sanity/presentation'
 
 export const CustomHeader: FunctionComponent<PreviewHeaderProps> = (props) => {
   const [enabled, setEnabled] = useState(false)

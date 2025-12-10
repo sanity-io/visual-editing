@@ -1,5 +1,6 @@
-import {urlForImage} from '@/sanity/lib/utils'
 import {Image} from 'next-sanity/image'
+
+import {urlForImage} from '@/sanity/lib/utils'
 
 interface CoverImageProps {
   image: any

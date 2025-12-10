@@ -1,12 +1,15 @@
-import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
-import {postQuery, settingsQuery} from '@/sanity/lib/queries'
-import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, ResolvingMetadata} from 'next'
+
 import {defineQuery, type PortableTextBlock} from 'next-sanity'
 import dynamic from 'next/dynamic'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
+
+import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
+import {postQuery, settingsQuery} from '@/sanity/lib/queries'
+import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+
 import Avatar from '../../avatar'
 import CoverImage from '../../cover-image'
 import DateComponent from '../../date'

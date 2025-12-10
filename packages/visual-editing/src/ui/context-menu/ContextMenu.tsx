@@ -12,8 +12,10 @@ import {
   type PopoverMargins,
 } from '@sanity/ui/_visual-editing'
 import {useCallback, useEffect, useMemo, useState, type FunctionComponent} from 'react'
-import {useDocuments} from '../../react/useDocuments'
+
 import type {ContextMenuNode, ContextMenuProps} from '../../types'
+
+import {useDocuments} from '../../react/useDocuments'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {PopoverPortal} from '../PopoverPortal'
 import {useSchema} from '../schema/useSchema'

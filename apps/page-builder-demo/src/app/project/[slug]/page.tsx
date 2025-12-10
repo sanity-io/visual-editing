@@ -1,5 +1,6 @@
-import {sanityFetch} from '@/sanity/live'
 import {defineQuery} from 'next-sanity'
+
+import {sanityFetch} from '@/sanity/live'
 
 export interface ProjectData {
   _id: string

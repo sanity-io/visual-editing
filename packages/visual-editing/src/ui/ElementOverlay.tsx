@@ -23,7 +23,7 @@ import {
 import scrollIntoView from 'scroll-into-view-if-needed'
 import {styled} from 'styled-components'
 import {v4 as uuid} from 'uuid'
-import {PointerEvents} from '../overlay-components/components/PointerEvents'
+
 import type {
   ElementChildTarget,
   ElementFocusedState,
@@ -39,6 +39,8 @@ import type {
   SanityStegaNode,
   VisualEditingNode,
 } from '../types'
+
+import {PointerEvents} from '../overlay-components/components/PointerEvents'
 import {getLinkHref} from '../util/getLinkHref'
 import {PopoverBackground} from './PopoverPortal'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'

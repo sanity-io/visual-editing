@@ -1,6 +1,9 @@
 import type {SerializableObject} from '@sanity/presentation-comlink'
+
 import {useEffect, useMemo, type FunctionComponent, type PropsWithChildren} from 'react'
+
 import type {VisualEditingNode} from '../../types'
+
 import {SharedStateContext} from './SharedStateContext'
 
 const createStore = (initialState: SerializableObject) => {

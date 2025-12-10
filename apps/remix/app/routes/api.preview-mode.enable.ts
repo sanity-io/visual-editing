@@ -1,5 +1,7 @@
-import {validatePreviewUrl} from '@sanity/preview-url-secret'
 import type {LoaderFunctionArgs} from '@vercel/remix'
+
+import {validatePreviewUrl} from '@sanity/preview-url-secret'
+
 import {client, token} from '~/sanity'
 import {commitSession, getSession} from '~/sessions'
 
@@ -33,7 +35,7 @@ export async function loader({request}: LoaderFunctionArgs) {
   return new Response(null, {
     status: 307,
     headers: {
-      'Location': `${redirectTo}?${url.searchParams}`,
+      Location: `${redirectTo}?${url.searchParams}`,
       'Set-Cookie': await commitSession(session),
     },
   })

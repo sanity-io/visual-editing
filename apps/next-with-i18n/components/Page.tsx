@@ -1,5 +1,6 @@
-import type {PagePayload} from '@/types'
 import {PortableText, type PortableTextComponents} from 'next-sanity'
+
+import type {PagePayload} from '@/types'
 
 export interface PageProps {
   data: PagePayload | null

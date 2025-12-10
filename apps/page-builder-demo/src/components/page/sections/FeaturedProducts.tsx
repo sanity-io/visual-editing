@@ -1,9 +1,13 @@
-import {Image} from '@/components/image'
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
 import type {SanityDocument} from '@sanity/client'
+
 import {useOptimistic} from '@sanity/visual-editing'
 import Link from 'next/link'
+
+import type {FrontPageQueryResult} from '@/sanity.types'
+
+import {Image} from '@/components/image'
+import {dataAttribute} from '@/sanity/dataAttribute'
+
 import {PageSection} from '../PageSection'
 import {FeaturedProductsSectionData, PageData} from '../types'
 

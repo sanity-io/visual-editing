@@ -1,4 +1,5 @@
 import {decodeSanityNodeData} from '@sanity/visual-editing-csm'
+
 import type {
   ElementNode,
   OverlayElement,
@@ -9,6 +10,7 @@ import type {
   SanityNode,
   SanityStegaNode,
 } from '../types'
+
 import {findNonInlineElement} from './elements'
 import {testAndDecodeStega, testVercelStegaRegex} from './stega'
 

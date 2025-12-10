@@ -1,17 +1,20 @@
 import './globals.css'
-import {sanityFetch, SanityLive} from '@/sanity/lib/live'
-import {settingsQuery} from '@/sanity/lib/queries'
-import {resolveOpenGraphImage} from '@/sanity/lib/utils'
-import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
+
+import {SpeedInsights} from '@vercel/speed-insights/next'
 import {toPlainText, type PortableTextBlock} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {Inter} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
 import {Toaster} from 'sonner'
-import AlertBanner from './alert-banner'
+
+import {sanityFetch, SanityLive} from '@/sanity/lib/live'
+import {settingsQuery} from '@/sanity/lib/queries'
+import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+
 import {handleError, revalidateSyncTags} from './actions.client'
+import AlertBanner from './alert-banner'
 import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
 

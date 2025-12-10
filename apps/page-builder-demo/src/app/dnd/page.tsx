@@ -1,7 +1,9 @@
-import {DnDCustomBehaviour} from '@/components/page/DnDCustomBehaviour'
-import {sanityFetch} from '@/sanity/live'
 import {stegaClean} from '@sanity/client/stega'
 import {createDataAttribute, defineQuery} from 'next-sanity'
+
+import {DnDCustomBehaviour} from '@/components/page/DnDCustomBehaviour'
+import {sanityFetch} from '@/sanity/live'
+
 import {OptimisticSortOrder} from './OptimisticSortOrder'
 
 const dndPageQuery = defineQuery(`

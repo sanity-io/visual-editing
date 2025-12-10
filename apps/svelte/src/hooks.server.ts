@@ -1,3 +1,5 @@
+import {SANITY_API_READ_TOKEN} from '$env/static/private'
+import {serverClient} from '$lib/server/sanity'
 import {
   handleLiveLoader,
   handlePreviewMode,
@@ -6,8 +8,6 @@ import {
 } from '@sanity/sveltekit'
 import {redirect} from '@sveltejs/kit'
 import {sequence} from '@sveltejs/kit/hooks'
-import {SANITY_API_READ_TOKEN} from '$env/static/private'
-import {serverClient} from '$lib/server/sanity'
 
 setServerClient(serverClient)
 

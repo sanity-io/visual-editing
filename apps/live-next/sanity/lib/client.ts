@@ -1,7 +1,8 @@
-import {apiVersion, dataset, projectId} from '@/sanity/lib/api'
 import {workspaces} from '@repo/env'
 import {studioUrl as baseUrl} from '@repo/studio-url'
 import {createClient} from 'next-sanity'
+
+import {apiVersion, dataset, projectId} from '@/sanity/lib/api'
 
 export const client = createClient({
   projectId,

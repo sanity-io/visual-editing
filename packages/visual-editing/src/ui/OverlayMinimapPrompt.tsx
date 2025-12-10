@@ -1,6 +1,7 @@
+import type {FunctionComponent} from 'react'
+
 import {ExpandIcon} from '@sanity/icons'
 import {Card, Flex, Hotkeys, Text} from '@sanity/ui/_visual-editing'
-import type {FunctionComponent} from 'react'
 import {styled} from 'styled-components'
 
 const Root = styled(Card)`

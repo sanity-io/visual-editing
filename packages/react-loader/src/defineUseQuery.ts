@@ -1,11 +1,14 @@
 import type {QueryParams} from '@sanity/client'
 import type {QueryStore, QueryStoreState} from '@sanity/core-loader'
+import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
+
 import isEqual from 'fast-deep-equal'
 import {useEffect, useMemo, useState, useSyncExternalStore} from 'react'
-import {defineStudioUrlStore} from './defineStudioUrlStore'
+
 import type {UseQueryOptions} from './types'
+
+import {defineStudioUrlStore} from './defineStudioUrlStore'
 import {useEncodeDataAttribute} from './useEncodeDataAttribute'
-import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
 
 export function defineUseQuery({
   createFetcherStore,

@@ -1,8 +1,11 @@
 import type {SanityClient} from '@sanity/client'
+
 import {uuid} from '@sanity/uuid'
+
+import type {SanityClientLike} from './types'
+
 import {apiVersion, deleteExpiredSecretsQuery, schemaType, SECRET_TTL, tag} from './constants'
 import {generateUrlSecret} from './generateSecret'
-import type {SanityClientLike} from './types'
 
 /** @internal */
 export async function createPreviewSecret(

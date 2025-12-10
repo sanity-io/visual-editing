@@ -1,8 +1,11 @@
-import {getPublishedId} from '@sanity/client/csm'
 import type {SanityDocument} from '@sanity/types'
+
+import {getPublishedId} from '@sanity/client/csm'
 import {startTransition, useEffect, useInsertionEffect, useRef, useState} from 'react'
-import {isEmptyActor} from '../optimistic/context'
+
 import type {OptimisticReducer, OptimisticReducerAction} from '../optimistic/types'
+
+import {isEmptyActor} from '../optimistic/context'
 import {useOptimisticActor} from './useOptimisticActor'
 
 export function useOptimistic<T, U = SanityDocument>(
@@ -23,8 +26,8 @@ export function useOptimistic<T, U = SanityDocument>(
    * `useEffect` deps to make it happen.
    */
   const reduceStateFromActionRef = useRef<
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ((action: OptimisticReducerAction<U>, prevState: T) => T) | null
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ((action: OptimisticReducerAction<U>, prevState: T) => T) | null
   >(null)
   useInsertionEffect(() => {
     reduceStateFromActionRef.current = (action: OptimisticReducerAction<U>, prevState: T) => {

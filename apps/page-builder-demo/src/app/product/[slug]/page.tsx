@@ -1,8 +1,9 @@
+import {defineQuery} from 'next-sanity'
+
 import {SimpleContent} from '@/components/page'
 import {Slideshow} from '@/components/slideshow'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {sanityFetch} from '@/sanity/live'
-import {defineQuery} from 'next-sanity'
 
 const productSlugsQuery = defineQuery(
   /* groq */ `*[_type == "product" && defined(slug.current)]{"slug": slug.current}`,

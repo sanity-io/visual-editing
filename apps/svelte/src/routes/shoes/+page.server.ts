@@ -1,5 +1,7 @@
-import {shoesListQuery} from '$lib/queries'
 import type {ShoesListQueryResult} from '$lib/sanity.types'
+
+import {shoesListQuery} from '$lib/queries'
+
 import type {PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async ({locals: {sanity}}) => {

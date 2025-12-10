@@ -1,5 +1,6 @@
 import {createEditUrl, studioPathToJsonPath, type Path} from '@sanity/client/csm'
 import {vercelStegaCombine} from '@vercel/stega'
+
 import {Figure} from './Figure'
 import {Footer} from './Footer'
 import {Navbar} from './Navbar'

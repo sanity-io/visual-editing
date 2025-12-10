@@ -1,12 +1,17 @@
-import {shoesList} from '@/queries'
-import type {ShoesListResult} from '@/types'
-import {formatCurrency} from '@/utils'
 import type {ClientPerspective, ContentSourceMap} from '@sanity/client'
+
 import {useQuery} from '@sanity/react-loader'
 import {GetStaticProps, InferGetStaticPropsType} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import type {ShoesListResult} from '@/types'
+
+import {shoesList} from '@/queries'
+import {formatCurrency} from '@/utils'
+
 import type {SharedProps} from '../../_app'
+
 import {loadQuery} from '../../../components/sanity.ssr'
 import {urlFor, urlForCrossDatasetReference} from '../../../components/utils'
 
@@ -15,7 +20,7 @@ interface Props extends SharedProps {
 }
 
 export const getStaticProps = (async (context) => {
-  const {draftMode = false} = context
+  const { draftMode = false} = context
   const perspective = (draftMode ? 'drafts' : 'published') satisfies ClientPerspective
   const initial = await loadQuery<ShoesListResult>(shoesList, {}, {perspective})
   return {props: {draftMode, initial}, revalidate: 1}

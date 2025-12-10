@@ -1,5 +1,7 @@
 import type {VisualEditingControllerMsg} from '@sanity/presentation-comlink'
+
 import {useEffect} from 'react'
+
 import type {OverlayMsg, VisualEditingNode} from '../types'
 
 export function usePerspectiveSync(

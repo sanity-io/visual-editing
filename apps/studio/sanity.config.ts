@@ -17,6 +17,7 @@ import {
   type PreviewUrlOption,
   type PreviewUrlResolverOptions,
 } from 'sanity/presentation'
+
 import {CustomHeader} from './presentation/CustomHeader'
 import {CustomNavigator} from './presentation/CustomNavigator'
 import {StegaDebugger} from './presentation/DebugStega'
@@ -48,7 +49,7 @@ function resolvePreviewUrl(
   return fallback
 }
 const urls = {
-  'astro': resolvePreviewUrl(
+  astro: resolvePreviewUrl(
     process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL,
     (endsWith) => `https://visual-editing-astro-git-${endsWith}/shoes`,
     'http://localhost:3006/shoes',
@@ -68,7 +69,7 @@ const urls = {
     (endsWith) => `https://visual-editing-next-git-${endsWith}/pages-router/shoes`,
     'http://localhost:3001/pages-router/shoes',
   ),
-  'nuxt': resolvePreviewUrl(
+  nuxt: resolvePreviewUrl(
     process.env.SANITY_STUDIO_NUXT_PREVIEW_URL,
     (endsWith) => `https://visual-editing-nuxt-git-${endsWith}/shoes`,
     'http://localhost:3003/shoes',
@@ -78,12 +79,12 @@ const urls = {
     (endsWith) => `https://visual-editing-page-builder-demo-git-${endsWith}`,
     'http://localhost:3005',
   ),
-  'remix': resolvePreviewUrl(
+  remix: resolvePreviewUrl(
     process.env.SANITY_STUDIO_REMIX_PREVIEW_URL,
     (endsWith) => `https://visual-editing-remix-git-${endsWith}/shoes`,
     'http://localhost:3000/shoes',
   ),
-  'svelte': resolvePreviewUrl(
+  svelte: resolvePreviewUrl(
     process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL,
     (endsWith) => `https://visual-editing-svelte-git-${endsWith}`,
     'http://localhost:3004',

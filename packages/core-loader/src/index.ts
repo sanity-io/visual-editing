@@ -1,10 +1,13 @@
 import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
 import type {SanityStegaClient} from '@sanity/client/stega'
+
 import {createCache, type Cache} from 'async-cache-dedupe'
 import {atom, map, onMount, startTask, type MapStore} from 'nanostores'
+
+import type {EnableLiveMode, Fetcher, QueryStoreState} from './types'
+
 import {runtime} from './env'
 import {defineEnableLiveMode} from './live-mode'
-import type {EnableLiveMode, Fetcher, QueryStoreState} from './types'
 
 export type {MapStore}
 
@@ -82,7 +85,7 @@ function cloneClientWithConfig(newClient: SanityClient): SanityClient {
 
 /** @public */
 export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore => {
-  const {ssr = false, tag = 'core-loader'} = options
+  const { ssr = false, tag = 'core-loader'} = options
   if (ssr && options.client) {
     throw new TypeError(
       '`client` option is not allowed when `ssr: true`, use `setServerClient` from your server entry point instead',

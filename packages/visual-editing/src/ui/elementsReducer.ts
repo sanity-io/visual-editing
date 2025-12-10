@@ -1,4 +1,5 @@
 import type {VisualEditingControllerMsg} from '@sanity/presentation-comlink'
+
 import type {ElementState, OverlayMsg} from '../types'
 
 /**

@@ -1,5 +1,6 @@
 import {useLocation, useNavigate, useRevalidator} from '@remix-run/react'
 import {startTransition, useEffect, useRef, useState} from 'react'
+
 import {type HistoryAdapterNavigate, type HistoryRefresh, type VisualEditingOptions} from '../types'
 import {enableVisualEditing} from '../ui/enableVisualEditing'
 

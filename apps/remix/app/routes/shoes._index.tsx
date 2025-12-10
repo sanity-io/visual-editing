@@ -1,6 +1,7 @@
 import {Link, useLoaderData} from '@remix-run/react'
 import {useQuery} from '@sanity/react-loader'
 import {json} from '@vercel/remix'
+
 import {shoesList, type ShoesListResult} from '~/queries'
 import {urlFor, urlForCrossDatasetReference} from '~/sanity'
 import {loadQuery} from '~/sanity.loader.server'

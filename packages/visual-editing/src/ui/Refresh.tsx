@@ -1,4 +1,5 @@
 import {useEffect, useRef, type FunctionComponent} from 'react'
+
 import type {VisualEditingNode, VisualEditingOptions} from '../types'
 
 /**

@@ -1,8 +1,11 @@
 import type {SanityDocument} from '@sanity/client'
-import {at, insert, truncate, type NodePatchList} from '@sanity/mutate'
 import type {SanityNode} from '@sanity/presentation-comlink'
+
+import {at, insert, truncate, type NodePatchList} from '@sanity/mutate'
 import {get} from '@sanity/util/paths'
+
 import type {OptimisticDocument} from '../optimistic/types'
+
 import {randomKey} from './randomKey'
 
 export function getArrayItemKeyAndParentPath(pathOrNode: string | SanityNode): {

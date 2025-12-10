@@ -1,4 +1,5 @@
 import {lazy, Suspense, useSyncExternalStore} from 'react'
+
 import type {VisualEditingProps} from './VisualEditingComponent'
 
 const VisualEditingComponent = lazy(() => import('./VisualEditingComponent'))

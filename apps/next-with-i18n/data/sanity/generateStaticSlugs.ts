@@ -1,7 +1,8 @@
 import 'server-only'
+import {groq} from 'next-sanity'
+
 import config from '@/config'
 import {client} from '@/data/sanity/client'
-import {groq} from 'next-sanity'
 
 // Used in `generateStaticParams`
 export function generateStaticPaths(types: string[]) {

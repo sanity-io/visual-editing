@@ -1,5 +1,6 @@
-import {sanityFetch} from '@sanity/sveltekit'
 import {shoesListQuery} from '$lib/queries'
+import {sanityFetch} from '@sanity/sveltekit'
+
 import type {PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async (event) => {
