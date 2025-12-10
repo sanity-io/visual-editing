@@ -1,6 +1,8 @@
 import type {SanityClient, SyncTag} from '@sanity/client'
-import {fetchVercelProtectionBypassSecret} from './constants'
+
 import type {SanityClientLike} from './types'
+
+import {fetchVercelProtectionBypassSecret} from './constants'
 
 /** @internal */
 export function subscribeToVercelProtectionBypass(

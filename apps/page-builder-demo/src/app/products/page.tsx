@@ -1,9 +1,10 @@
+import {defineQuery} from 'next-sanity'
+import Link from 'next/link'
+
 import {Image} from '@/components/image'
 import {SimpleContent} from '@/components/page'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {sanityFetch} from '@/sanity/live'
-import {defineQuery} from 'next-sanity'
-import Link from 'next/link'
 
 const productsPageQuery = defineQuery(`
   *[_type == "product" && defined(slug.current)]{

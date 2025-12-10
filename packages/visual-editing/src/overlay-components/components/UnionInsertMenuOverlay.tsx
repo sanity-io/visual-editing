@@ -1,6 +1,7 @@
-import {AddIcon} from '@sanity/icons'
 import type {SchemaNode, SchemaUnionNode} from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
+
+import {AddIcon} from '@sanity/icons'
 import {Button, Flex} from '@sanity/ui/_visual-editing'
 import {
   useCallback,
@@ -11,8 +12,10 @@ import {
   type MouseEvent,
 } from 'react'
 import {styled} from 'styled-components'
-import {useDocuments} from '../../react/useDocuments'
+
 import type {ElementNode, OverlayComponent} from '../../types'
+
+import {useDocuments} from '../../react/useDocuments'
 import {useTelemetry} from '../../ui/telemetry/useTelemetry'
 import {getArrayInsertPatches} from '../../util/mutations'
 import {InsertMenuPopover} from './InsertMenu'
@@ -161,7 +164,7 @@ export const UnionInsertMenuOverlay: OverlayComponent<
   },
   SchemaUnionNode<SchemaNode>
 > = (props) => {
-  const {direction = 'vertical', element, hoverAreaExtent, node, parent} = props
+  const { direction = 'vertical', element, hoverAreaExtent, node, parent} = props
 
   const {getDocument} = useDocuments()
 

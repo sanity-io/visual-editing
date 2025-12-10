@@ -25,7 +25,7 @@ module.exports = {
       },
     ],
     'quote-props': ['warn', 'consistent-as-needed'],
-    'strict': ['warn', 'global'],
+    strict: ['warn', 'global'],
   },
   overrides: [
     {

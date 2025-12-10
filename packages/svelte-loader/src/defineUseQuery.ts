@@ -1,10 +1,13 @@
 import type {QueryParams} from '@sanity/client'
 import type {QueryStore, QueryStoreState} from '@sanity/core-loader'
+
 import isEqual from 'fast-deep-equal'
 import {onMount} from 'svelte'
 import {derived, get, writable} from 'svelte/store'
-import {defineStudioUrlStore} from './defineStudioUrlStore'
+
 import type {UseQuery, UseQueryOptions} from './types'
+
+import {defineStudioUrlStore} from './defineStudioUrlStore'
 import {useEncodeDataAttribute} from './useEncodeDataAttribute'
 
 export function defineUseQuery({

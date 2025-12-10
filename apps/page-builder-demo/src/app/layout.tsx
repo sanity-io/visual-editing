@@ -1,12 +1,15 @@
 import './globals.css'
-import {plugins} from '@/components/overlay-plugins'
-import {components} from '@/components/overlays/resolver'
-import {sanityFetch, SanityLive} from '@/sanity/live'
 import type {Metadata} from 'next'
+
 import {defineQuery} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {IBM_Plex_Mono, Inter, Libre_Caslon_Text} from 'next/font/google'
 import {draftMode} from 'next/headers'
+
+import {plugins} from '@/components/overlay-plugins'
+import {components} from '@/components/overlays/resolver'
+import {sanityFetch, SanityLive} from '@/sanity/live'
+
 import AlertBanner from './alert-banner'
 import {AppLayout} from './AppLayout'
 

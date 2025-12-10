@@ -1,9 +1,11 @@
 import type {InsertMenuOptions} from '@sanity/insert-menu'
-import {InsertMenu as SanityInsertMenu} from '@sanity/insert-menu'
 import type {SchemaUnionNode} from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
+
+import {InsertMenu as SanityInsertMenu} from '@sanity/insert-menu'
 import {Popover} from '@sanity/ui/_visual-editing'
 import {type FunctionComponent} from 'react'
+
 import {PopoverPortal} from '../../ui/PopoverPortal'
 import {getNodeIcon} from '../../util/getNodeIcon'
 

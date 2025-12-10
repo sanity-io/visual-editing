@@ -1,7 +1,9 @@
 import type {SanityClient} from '@sanity/client'
+
+import type {SanityClientLike} from './types'
+
 import {schemaIdSingleton as _id, schemaTypeSingleton as _type, apiVersion, tag} from './constants'
 import {generateUrlSecret} from './generateSecret'
-import type {SanityClientLike} from './types'
 
 /** @internal */
 export async function enablePreviewAccessSharing(

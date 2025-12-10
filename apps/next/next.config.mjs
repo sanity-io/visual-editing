@@ -1,6 +1,6 @@
-import {createRequire} from 'node:module'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
+import {createRequire} from 'node:module'
 
 const require = createRequire(import.meta.url)
 

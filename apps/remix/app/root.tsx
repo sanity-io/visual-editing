@@ -1,8 +1,10 @@
 import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
 import {validateApiPerspective} from '@sanity/client'
 import {json, type LinksFunction, type LoaderFunctionArgs} from '@vercel/remix'
-import styles from '~/tailwind.css?url'
 import {lazy, Suspense, useEffect, useMemo, useState, useSyncExternalStore} from 'react'
+
+import styles from '~/tailwind.css?url'
+
 import {getPerspective, getSession} from './sessions'
 
 const LiveVisualEditing = lazy(() => import('./LiveVisualEditing'))

@@ -1,4 +1,5 @@
 import type {Path} from '@sanity/client/csm'
+
 import {isArray} from './isArray'
 
 /** @internal */

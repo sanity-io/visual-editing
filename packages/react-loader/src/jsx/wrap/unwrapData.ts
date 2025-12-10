@@ -1,7 +1,8 @@
+import type {SanityKey, UnwrappedValue, WrappedValue} from './types'
+
 import {SANITY_KEYS} from './constants'
 import {isArray, isRecord} from './helpers'
 import {isSourceNode} from './isSourceNode'
-import type {SanityKey, UnwrappedValue, WrappedValue} from './types'
 
 /** @public */
 export function unwrapData<

@@ -1,3 +1,12 @@
+import type {
+  SanityNode,
+  SchemaArrayItem,
+  SchemaNode,
+  SchemaUnionNode,
+  SchemaUnionOption,
+} from '@sanity/presentation-comlink'
+import type {SchemaType} from '@sanity/types'
+
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -9,19 +18,13 @@ import {
   SortIcon,
   UnpublishIcon,
 } from '@sanity/icons'
-import type {
-  SanityNode,
-  SchemaArrayItem,
-  SchemaNode,
-  SchemaUnionNode,
-  SchemaUnionOption,
-} from '@sanity/presentation-comlink'
-import type {SchemaType} from '@sanity/types'
 import {MenuGroup} from '@sanity/ui/_visual-editing'
 import {type FunctionComponent} from 'react'
+
 import type {OptimisticDocument} from '../../optimistic'
-import {InsertMenu} from '../../overlay-components/components/InsertMenu'
 import type {ContextMenuNode, OverlayElementField, OverlayElementParent} from '../../types'
+
+import {InsertMenu} from '../../overlay-components/components/InsertMenu'
 import {getNodeIcon} from '../../util/getNodeIcon'
 import {
   getArrayDuplicatePatches,

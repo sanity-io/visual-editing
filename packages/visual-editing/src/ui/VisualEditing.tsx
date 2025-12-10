@@ -1,7 +1,9 @@
 import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import {startTransition, useEffect, useState} from 'react'
 import {createPortal} from 'react-dom'
+
 import type {VisualEditingOptions} from '../types'
+
 import {History} from './History'
 import {Meta} from './Meta'
 import {Overlays} from './Overlays'

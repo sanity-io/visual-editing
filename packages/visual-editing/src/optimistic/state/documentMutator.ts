@@ -1,10 +1,12 @@
 import type {SanityClient} from '@sanity/client'
+
 import {SanityEncoder, type Transaction} from '@sanity/mutate'
 import {
   documentMutatorMachine,
   type DocumentMutatorMachineParentEvent,
 } from '@sanity/mutate/_unstable_machine'
 import {enqueueActions, fromPromise} from 'xstate'
+
 import type {VisualEditingNode} from '../../types'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

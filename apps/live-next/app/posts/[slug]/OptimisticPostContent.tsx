@@ -1,8 +1,9 @@
 'use client'
 
-import CustomPortableText from '@/app/portable-text'
-import {useIsPresentationTool, usePresentationQuery} from 'next-sanity/hooks'
 import {defineQuery, type PortableTextBlock} from 'next-sanity'
+import {useIsPresentationTool, usePresentationQuery} from 'next-sanity/hooks'
+
+import CustomPortableText from '@/app/portable-text'
 
 interface Props extends React.ComponentProps<typeof CustomPortableText> {
   id: string

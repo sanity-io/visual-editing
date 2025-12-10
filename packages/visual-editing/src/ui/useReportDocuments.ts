@@ -1,5 +1,7 @@
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
+
 import {useCallback, useEffect, useRef} from 'react'
+
 import type {ElementState, SanityNode, VisualEditingNode} from '../types'
 
 function isEqualSets(a: Set<string>, b: Set<string>) {

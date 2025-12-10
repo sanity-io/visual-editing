@@ -1,5 +1,6 @@
 import 'server-only'
 import {defineLive} from 'next-sanity/live'
+
 import {client} from './client'
 
 const serverToken = process.env.SANITY_API_READ_TOKEN

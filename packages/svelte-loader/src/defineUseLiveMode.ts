@@ -1,7 +1,9 @@
 import type {SanityClient} from '@sanity/client'
 import type {QueryStore} from '@sanity/core-loader'
-import {defineStudioUrlStore} from './defineStudioUrlStore'
+
 import type {UseLiveMode} from './types'
+
+import {defineStudioUrlStore} from './defineStudioUrlStore'
 
 export function defineUseLiveMode({
   enableLiveMode,

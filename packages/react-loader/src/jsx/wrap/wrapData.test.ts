@@ -1,6 +1,8 @@
 import {expect, test} from 'vitest'
-import * as fixtures from './__fixtures__/responses'
+
 import type {SanityNodeContext} from './types'
+
+import * as fixtures from './__fixtures__/responses'
 import {wrapData} from './wrapData'
 
 test('wrap an array of documents with source maps', () => {

@@ -1,4 +1,5 @@
 import {definePlugin} from 'sanity'
+
 import {schemaType} from '../constants'
 import {debugUrlSecretsType} from './debugUrlSecrets'
 

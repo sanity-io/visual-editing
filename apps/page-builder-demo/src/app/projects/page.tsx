@@ -1,6 +1,7 @@
-import {sanityFetch} from '@/sanity/live'
 import {defineQuery} from 'next-sanity'
 import Link from 'next/link'
+
+import {sanityFetch} from '@/sanity/live'
 
 const projectsPageQuery = defineQuery(`*[_type == "project" && defined(slug.current)]`)
 

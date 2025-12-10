@@ -1,12 +1,14 @@
 import {useRouter} from 'next/router.js'
 import {useEffect, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
+
 import type {
   HistoryAdapterNavigate,
   HistoryRefresh,
   HistoryUpdate,
   VisualEditingOptions,
 } from '../types'
+
 import {enableVisualEditing} from '../ui/enableVisualEditing'
 
 /**

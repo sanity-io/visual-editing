@@ -1,4 +1,5 @@
 import {useContext} from 'react'
+
 import {SchemaContext, type SchemaContextValue} from './SchemaContext'
 
 export function useSchema(): SchemaContextValue {

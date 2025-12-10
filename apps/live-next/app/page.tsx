@@ -1,8 +1,11 @@
-import type {HeroQueryResult} from '@/sanity.types'
-import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
-import {heroQuery, settingsQuery} from '@/sanity/lib/queries'
 import Link from 'next/link'
 import {Suspense} from 'react'
+
+import type {HeroQueryResult} from '@/sanity.types'
+
+import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
+import {heroQuery, settingsQuery} from '@/sanity/lib/queries'
+
 import {AnimatedH1} from './animated-h1'
 import Avatar from './avatar'
 import CoverImage from './cover-image'

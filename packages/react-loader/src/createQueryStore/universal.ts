@@ -1,11 +1,10 @@
 import type {QueryParams} from '@sanity/client'
+
 import {
   createQueryStore as createCoreQueryStore,
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
-import {defineStudioUrlStore} from '../defineStudioUrlStore'
-import {defineUseLiveMode} from '../defineUseLiveMode'
-import {defineUseQuery} from '../defineUseQuery'
+
 import type {
   NonUndefinedGuard,
   QueryResponseInitial,
@@ -14,6 +13,10 @@ import type {
   UseQueryOptionsDefinedInitial,
   UseQueryOptionsUndefinedInitial,
 } from '../types'
+
+import {defineStudioUrlStore} from '../defineStudioUrlStore'
+import {defineUseLiveMode} from '../defineUseLiveMode'
+import {defineUseQuery} from '../defineUseQuery'
 
 export type * from '../types'
 

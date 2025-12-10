@@ -1,4 +1,5 @@
 import {describe, expect, test} from 'vitest'
+
 import {urlStringToPath} from './urlStringToPath'
 
 describe('urlStringToPath should convert', () => {

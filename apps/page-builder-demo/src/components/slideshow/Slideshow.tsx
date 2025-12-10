@@ -1,8 +1,10 @@
 'use client'
 
 import './Slideshow.css'
-import type {Product} from '@/sanity.types'
 import {useState} from 'react'
+
+import type {Product} from '@/sanity.types'
+
 import {Image} from '../image'
 
 export function Slideshow(props: {images: NonNullable<Product['media']>}) {

@@ -4,27 +4,27 @@ export const projectId = 'hiomol4a'
 // https://www.sanity.io/organizations/oSyH1iET5/project/hiomol4a/datasets
 export const datasets = {
   // @TODO unknown, demo data?
-  'production': 'production',
+  production: 'production',
   // Test data, used for e2e during development
-  'development': 'development',
+  development: 'development',
   // Also test data, used with cross dataset references to ensure we fully support it
   'cross-dataset-references': 'cross-dataset-references',
   // demo dataset used for early prototyping
   'page-builder-demo': 'preview-poc',
   // Used for testing the Next.js official Sanity Blog starter
-  'blog': 'blog',
+  blog: 'blog',
 } as const
 
 export const apiVersion = '2025-03-20' as const
 
 export const workspaces = {
-  'astro': {
+  astro: {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'astro',
     tool: 'presentation',
   },
-  'remix': {
+  remix: {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'remix',
@@ -42,7 +42,7 @@ export const workspaces = {
     workspace: 'next',
     tool: 'pages-router',
   },
-  'nuxt': {
+  nuxt: {
     projectId: projectId,
     dataset: datasets.development,
     workspace: 'nuxt',

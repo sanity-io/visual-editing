@@ -1,5 +1,7 @@
 import type {AppProps} from 'next/app'
+
 import dynamic from 'next/dynamic'
+
 import '../tailwind.css'
 
 const VisualEditing = dynamic(() => import('../components/VisualEditing'))

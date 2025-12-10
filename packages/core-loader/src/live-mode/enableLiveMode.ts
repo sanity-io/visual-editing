@@ -14,6 +14,7 @@ import {
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
 import {atom, type MapStore} from 'nanostores'
+
 import type {EnableLiveModeOptions, QueryStoreState, SetFetcher} from '../types'
 
 /** @internal */

@@ -1,11 +1,14 @@
 'use client'
 
-import {shoesList} from '@/queries'
-import type {ShoesListResult} from '@/types'
-import {formatCurrency} from '@/utils'
 import {usePresentationQuery} from 'next-sanity/hooks'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import type {ShoesListResult} from '@/types'
+
+import {shoesList} from '@/queries'
+import {formatCurrency} from '@/utils'
+
 import {urlFor, urlForCrossDatasetReference} from './utils'
 
 type Props = {

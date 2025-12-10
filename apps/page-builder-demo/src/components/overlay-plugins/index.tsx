@@ -1,6 +1,7 @@
 'use client'
 
 import {OverlayPluginDefinition} from '@sanity/visual-editing/react'
+
 import {ExcitingTitlePlugin} from './exciting-title'
 import {ImageResolutionHUD} from './image-res'
 import {LEDLifespanHUD} from './led-lifespan'

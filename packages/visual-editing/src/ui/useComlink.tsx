@@ -5,6 +5,7 @@ import {
   type VisualEditingNodeMsg,
 } from '@sanity/presentation-comlink'
 import {startTransition, useEffect, useState} from 'react'
+
 import type {VisualEditingNode} from '../types'
 
 /**

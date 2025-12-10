@@ -1,5 +1,6 @@
-import {client} from '@/components/sanity.client'
 import {defineEnableDraftMode} from 'next-sanity/draft-mode'
+
+import {client} from '@/components/sanity.client'
 
 export const {GET} = defineEnableDraftMode({
   client: client.withConfig({

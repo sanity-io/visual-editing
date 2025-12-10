@@ -1,4 +1,5 @@
 import {PagePayload} from '@/types'
+
 import {loadQuery} from './loadQuery'
 import {PAGE_QUERY} from './queries'
 

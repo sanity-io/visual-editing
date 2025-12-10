@@ -1,5 +1,6 @@
 import type {ClientPerspective} from '@sanity/client'
 import type {SanityNode, VisualEditingControllerMsg} from '@sanity/presentation-comlink'
+
 import type {
   DragInsertPosition,
   DragSkeleton,
@@ -7,6 +8,7 @@ import type {
   OverlayMsg,
   OverlayRect,
 } from '../types'
+
 import {elementsReducer} from './elementsReducer'
 
 export interface OverlayState {

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {SanityDocument} from '@sanity/client'
+
 import {type Mutation, type NodePatchList} from '@sanity/mutate'
 
 export type Path<T, K extends keyof T> = K extends string
@@ -51,7 +52,7 @@ export type OptimisticDocument<T extends Record<string, any> = Record<string, an
    * @deprecated - use `getSnapshot` instead
    */
   get: {
-    (): SanityDocument<T> | undefined
+    (): SanityDocument<T> | undefined;
     <P extends Path<T, keyof T>>(path: P): PathValue<T, P> | undefined
   }
   /**

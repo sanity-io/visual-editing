@@ -1,4 +1,5 @@
 import {describe, expect, test} from 'vitest'
+
 import {decodeSanityString, decodeSanityNodeData} from './decodeSanityNodeData'
 
 test('an encoded string returns node data', async () => {

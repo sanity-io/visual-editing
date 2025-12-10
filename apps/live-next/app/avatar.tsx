@@ -1,6 +1,8 @@
-import type {Author} from '@/sanity.types'
-import {urlForImage} from '@/sanity/lib/utils'
 import {Image} from 'next-sanity/image'
+
+import type {Author} from '@/sanity.types'
+
+import {urlForImage} from '@/sanity/lib/utils'
 
 interface Props {
   id: string

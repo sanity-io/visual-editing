@@ -9,7 +9,7 @@ type ExcitingTitlePluginOptions = {
 }
 
 export const ExcitingTitlePlugin = defineOverlayPlugin<ExcitingTitlePluginOptions>(
-  ({append = '!', buttonText = '🎉'}) => ({
+  ({ append = '!', buttonText = '🎉'}) => ({
     type: 'hud',
     name: 'exciting-title',
     title: 'Exciting Title 🎉',

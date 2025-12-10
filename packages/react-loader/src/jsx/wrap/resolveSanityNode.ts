@@ -1,3 +1,5 @@
+import type {SanityNode} from '@sanity/visual-editing-csm'
+
 import {
   getPublishedId,
   jsonPathToStudioPath,
@@ -7,7 +9,7 @@ import {
   type ContentSourceMap,
   type ContentSourceMapParsedPath,
 } from '@sanity/client/csm'
-import type {SanityNode} from '@sanity/visual-editing-csm'
+
 import type {SanityNodeContext} from './types'
 
 /** @internal */

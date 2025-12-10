@@ -1,6 +1,8 @@
-import {encodeSanityNodeData} from '@sanity/visual-editing-csm'
 import type {HTMLProps, Ref} from 'react'
+
+import {encodeSanityNodeData} from '@sanity/visual-editing-csm'
 import {forwardRef} from 'react'
+
 import type {SourceNode} from './wrap'
 
 export interface SanityElementProps {

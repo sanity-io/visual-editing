@@ -1,6 +1,7 @@
 import './tailwind.css'
-import {withThemeByClassName} from '@storybook/addon-themes'
 import type {Preview} from '@storybook/react'
+
+import {withThemeByClassName} from '@storybook/addon-themes'
 
 const darkModeMq = window.matchMedia('(prefers-color-scheme: dark)')
 

@@ -1,5 +1,6 @@
 import type {UnfilteredResponseQueryOptions} from '@sanity/client'
 import type {QueryParams} from 'next-sanity'
+
 import {draftMode} from 'next/headers'
 import 'server-only'
 import config from '@/config'

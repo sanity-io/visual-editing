@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {useEffect} from 'react'
 import {createActor} from 'xstate'
+
+import type {VisualEditingNode} from '../types'
+
 import {setActor} from '../optimistic/context'
 import {createSharedListener} from '../optimistic/state/createSharedListener'
 import {createDatasetMutator} from '../optimistic/state/datasetMutator'
-import type {VisualEditingNode} from '../types'
 
 /**
  * Hook for maintaining a channel between overlays and the presentation tool

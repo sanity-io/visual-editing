@@ -118,7 +118,7 @@ export interface QueryStore {
       query: string,
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
-    ): QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute
+    ): QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute;
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
       query: string,
       params?: QueryParams,

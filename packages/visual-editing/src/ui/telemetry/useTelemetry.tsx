@@ -1,4 +1,5 @@
 import {useContext} from 'react'
+
 import {TelemetryContext, type TelemetryContextValue} from './TelemetryContext'
 
 export function useTelemetry(): TelemetryContextValue {

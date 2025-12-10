@@ -1,6 +1,8 @@
-import {studioPath} from '@sanity/client/csm'
 import type {SanityNode, SanityStegaNode} from '@sanity/visual-editing-types'
+
+import {studioPath} from '@sanity/client/csm'
 import {minLength, object, optional, parse, pipe, record, safeParse, string, unknown} from 'valibot'
+
 import {isValidSanityNode} from './isValidSanityNode'
 import {sanityNodeSchema} from './sanityNodeSchema'
 import {urlStringToPath} from './urlStringToPath'
@@ -21,43 +23,46 @@ const sanityLegacyNodeSchema = object({
 export function decodeSanityString(str: string): SanityNode | undefined {
   const segments = str.split(';')
 
-  const data = segments.reduce((acc, segment) => {
-    const [key, value] = segment.split('=')
-    if (!key || (segment.includes('=') && !value)) return acc
+  const data = segments.reduce(
+    (acc, segment) => {
+      const [key, value] = segment.split('=')
+      if (!key || (segment.includes('=') && !value)) return acc
 
-    switch (key) {
-      case 'id':
-        acc.id = value
-        break
-      case 'type':
-        acc.type = value
-        break
-      case 'path':
-        acc.path = studioPath.toString(urlStringToPath(value))
-        break
-      case 'base':
-        acc.baseUrl = decodeURIComponent(value)
-        break
-      case 'perspective':
-        acc.perspective = value
-        break
-      case 'tool':
-        acc.tool = value
-        break
-      case 'workspace':
-        acc.workspace = value
-        break
-      case 'projectId':
-        acc.projectId = value
-        break
-      case 'dataset':
-        acc.dataset = value
-        break
-      default:
-    }
+      switch (key) {
+        case 'id':
+          acc.id = value
+          break
+        case 'type':
+          acc.type = value
+          break
+        case 'path':
+          acc.path = studioPath.toString(urlStringToPath(value))
+          break
+        case 'base':
+          acc.baseUrl = decodeURIComponent(value)
+          break
+        case 'perspective':
+          acc.perspective = value
+          break
+        case 'tool':
+          acc.tool = value
+          break
+        case 'workspace':
+          acc.workspace = value
+          break
+        case 'projectId':
+          acc.projectId = value
+          break
+        case 'dataset':
+          acc.dataset = value
+          break
+        default:
+      }
 
-    return acc
-  }, {} as Partial<SanityNode>)
+      return acc
+    },
+    {} as Partial<SanityNode>,
+  )
 
   if (!isValidSanityNode(data)) return undefined
 

@@ -1,7 +1,10 @@
+import Link from 'next/link'
+
 import type {MoreStoriesQueryResult} from '@/sanity.types'
+
 import {SanityLiveStream} from '@/sanity/lib/live'
 import {moreStoriesQuery} from '@/sanity/lib/queries'
-import Link from 'next/link'
+
 import Avatar from './avatar'
 import CoverImage from './cover-image'
 import DateComponent from './date'

@@ -1,4 +1,5 @@
 import type {LoaderFunctionArgs} from '@vercel/remix'
+
 import {destroySession, getSession} from '~/sessions'
 
 export async function loader({request}: LoaderFunctionArgs) {
@@ -7,7 +8,7 @@ export async function loader({request}: LoaderFunctionArgs) {
   return new Response(null, {
     status: 307,
     headers: {
-      'Location': '/',
+      Location: '/',
       'Set-Cookie': await destroySession(session),
     },
   })

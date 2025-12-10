@@ -1,5 +1,6 @@
 import type {ContentSourceMap} from '@sanity/client'
 import type {ResolveStudioUrl, StudioPathLike, StudioUrl} from '@sanity/client/csm'
+
 import {
   defineEncodeDataAttribute,
   type EncodeDataAttributeFunction,

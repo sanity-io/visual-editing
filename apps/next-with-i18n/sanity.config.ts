@@ -1,9 +1,11 @@
-import schemas from '@/sanity/schemas'
 import {assist} from '@sanity/assist'
 import {visionTool} from '@sanity/vision'
 import {documentI18n, pages} from '@tinloof/sanity-studio'
 import {defineConfig, type BaseSchemaDefinition} from 'sanity'
 import {structureTool} from 'sanity/structure'
+
+import schemas from '@/sanity/schemas'
+
 import StudioLogo from './components/StudioLogo'
 import config from './config'
 

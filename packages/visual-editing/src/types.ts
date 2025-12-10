@@ -20,6 +20,7 @@ import type {
   PropsWithChildren,
   ReactElement,
 } from 'react'
+
 import type {TelemetryContextValue, TelemetryEventNames} from './ui/telemetry/TelemetryContext'
 
 export type {
@@ -606,8 +607,9 @@ export type ContextMenuNode =
 /**
  * @public
  */
-export interface OverlayComponentProps<P extends OverlayElementParent = OverlayElementParent>
-  extends OverlayComponentResolverContext<P> {
+export interface OverlayComponentProps<
+  P extends OverlayElementParent = OverlayElementParent,
+> extends OverlayComponentResolverContext<P> {
   PointerEvents: FunctionComponent<PropsWithChildren<HTMLAttributes<HTMLDivElement>>>
 }
 

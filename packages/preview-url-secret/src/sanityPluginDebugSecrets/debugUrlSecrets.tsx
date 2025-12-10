@@ -1,5 +1,6 @@
 import {CheckmarkCircleIcon, CloseCircleIcon, LockIcon} from '@sanity/icons'
 import {defineType} from 'sanity'
+
 import {schemaType, SECRET_TTL} from '../constants'
 
 export const debugUrlSecretsType = defineType({

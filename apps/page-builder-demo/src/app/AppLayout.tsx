@@ -1,11 +1,12 @@
 'use client'
 
-import type {LayoutQueryResult} from '@/sanity.types'
 import {CloseIcon, MenuIcon} from '@sanity/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {useState} from 'react'
+
+import type {LayoutQueryResult} from '@/sanity.types'
 
 const links = [
   // {

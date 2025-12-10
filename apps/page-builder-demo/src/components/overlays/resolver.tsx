@@ -5,6 +5,7 @@ import {
   defineOverlayComponent,
   UnionInsertMenuOverlay,
 } from '@sanity/visual-editing/unstable_overlay-components'
+
 import {OverlayHighlight} from './OverlayHighlight'
 
 export const components: OverlayComponentResolver = (props) => {

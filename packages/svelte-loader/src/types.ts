@@ -6,14 +6,15 @@ import type {
   SanityClient,
 } from '@sanity/client'
 import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
+import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
+import type {HandlePreviewOptions, VisualEditingLocals} from '@sanity/visual-editing/svelte'
+import type {Readable} from 'svelte/store'
+
 import {
   createQueryStore as createCoreQueryStore,
   type EnableLiveModeOptions,
   type QueryStoreState,
 } from '@sanity/core-loader'
-import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
-import type {HandlePreviewOptions, VisualEditingLocals} from '@sanity/visual-editing/svelte'
-import type {Readable} from 'svelte/store'
 
 export type * from '@sanity/core-loader'
 export type {HandlePreviewOptions, VisualEditingLocals} from '@sanity/visual-editing/svelte'
@@ -149,7 +150,7 @@ export interface QueryStore {
           },
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
-    ): Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>
+    ): Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>;
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
       query:
         | string

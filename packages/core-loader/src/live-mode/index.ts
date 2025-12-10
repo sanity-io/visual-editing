@@ -1,6 +1,7 @@
-import {runtime} from '../env'
 import type {EnableLiveMode, EnableLiveModeOptions} from '../types'
 import type {LazyEnableLiveModeOptions} from './enableLiveMode'
+
+import {runtime} from '../env'
 
 export const defineEnableLiveMode: (
   config: Omit<LazyEnableLiveModeOptions, Exclude<keyof EnableLiveModeOptions, 'client'>>,

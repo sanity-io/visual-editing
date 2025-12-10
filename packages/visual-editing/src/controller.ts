@@ -1,4 +1,5 @@
 import {v4 as uuid} from 'uuid'
+
 import type {
   ElementNode,
   EventHandlers,
@@ -7,6 +8,7 @@ import type {
   OverlayOptions,
   ResolvedElement,
 } from './types'
+
 import {handleOverlayDrag} from './util/dragAndDrop'
 import {findOverlayElement, isElementNode} from './util/elements'
 import {
