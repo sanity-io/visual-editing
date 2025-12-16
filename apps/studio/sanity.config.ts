@@ -112,7 +112,6 @@ function definePreviewUrl(
     return {origin, preview: pathname, previewMode}
   }
 
-
   return previewUrl
 }
 

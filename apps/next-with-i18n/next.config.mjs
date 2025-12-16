@@ -16,7 +16,6 @@ const config = {
       fullUrl: true,
     },
   },
-
 }
 
 export default config
