@@ -2,21 +2,19 @@
 
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.1.8...visual-editing-types-v2.0.0) (2025-12-16)
 
-
 ### ⚠ BREAKING CHANGES
 
-* drop CJS, only ESM is supported
+- drop CJS, only ESM is supported
 
 ### Bug Fixes
 
-* drop CJS, only ESM is supported ([cd7e68a](https://github.com/sanity-io/visual-editing/commit/cd7e68acd377d5f75c29165be25bdf996ac14050))
-
+- drop CJS, only ESM is supported ([cd7e68a](https://github.com/sanity-io/visual-editing/commit/cd7e68acd377d5f75c29165be25bdf996ac14050))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/insert-menu bumped to 3.0.0
+- The following workspace dependencies were updated
+  - devDependencies
+    - @sanity/insert-menu bumped to 3.0.0
 
 ## [1.1.8](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.1.7...visual-editing-types-v1.1.8) (2025-10-16)
 

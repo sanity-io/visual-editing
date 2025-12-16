@@ -7,18 +7,16 @@ All notable changes to this project will be documented in this file. See
 
 ## [2.0.1](https://github.com/sanity-io/visual-editing/compare/core-loader-v2.0.0...core-loader-v2.0.1) (2025-12-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/comlink to ^4.0.1 ([f5cc4b8](https://github.com/sanity-io/visual-editing/commit/f5cc4b8214b5e565fd3f9cb37dcbc2f2569bd273))
-* **deps:** Update dependency @sanity/presentation-comlink to ^2.0.1 ([3303056](https://github.com/sanity-io/visual-editing/commit/3303056e59d26523a0d0a9ce6bbbeb36297f68be))
-
+- **deps:** update dependency @sanity/comlink to ^4.0.1 ([f5cc4b8](https://github.com/sanity-io/visual-editing/commit/f5cc4b8214b5e565fd3f9cb37dcbc2f2569bd273))
+- **deps:** Update dependency @sanity/presentation-comlink to ^2.0.1 ([3303056](https://github.com/sanity-io/visual-editing/commit/3303056e59d26523a0d0a9ce6bbbeb36297f68be))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/visual-editing-csm bumped to 3.0.0
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/visual-editing-csm bumped to 3.0.0
 
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/core-loader-v1.8.21...core-loader-v2.0.0) (2025-10-26)
 

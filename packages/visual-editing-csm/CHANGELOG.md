@@ -2,21 +2,19 @@
 
 ## [3.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.26...visual-editing-csm-v3.0.0) (2025-12-16)
 
-
 ### ⚠ BREAKING CHANGES
 
-* drop CJS, only ESM is supported
+- drop CJS, only ESM is supported
 
 ### Bug Fixes
 
-* drop CJS, only ESM is supported ([cd7e68a](https://github.com/sanity-io/visual-editing/commit/cd7e68acd377d5f75c29165be25bdf996ac14050))
-
+- drop CJS, only ESM is supported ([cd7e68a](https://github.com/sanity-io/visual-editing/commit/cd7e68acd377d5f75c29165be25bdf996ac14050))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/visual-editing-types bumped to 2.0.0
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/visual-editing-types bumped to 2.0.0
 
 ## [2.0.26](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.25...visual-editing-csm-v2.0.26) (2025-10-16)
 
