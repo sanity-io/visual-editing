@@ -19,7 +19,6 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
@@ -28,8 +27,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
@@ -43,33 +41,37 @@
   "dependencies": {
     "@sanity/icons": "catalog:",
     "@sanity/ui": "catalog:",
-    "lodash": "^4.17.21",
-    "react-compiler-runtime": "1.0.0"
+    "lodash-es": "^4.17.22",
+    "react-is": "^19.2.3"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "catalog:",
     "@sanity/types": "catalog:",
     "@sanity/ui-workshop": "^3.4.0",
-    "@types/lodash": "^4.17.20",
+    "@types/lodash-es": "^4.17.12",
     "@types/react": "catalog:",
+    "@types/react-is": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
-    "babel-plugin-react-compiler": "1.0.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^8.57.1",
     "eslint-plugin-import": "^2.32.0",
     "lint-staged": "^15.2.10",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-is": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {
     "@sanity/types": "*",
-    "react": "^18.3 || ^19",
-    "react-dom": "^18.3 || ^19",
-    "react-is": "^18.3 || ^19"
+    "react": "^19.2"
   },
   "engines": {
-    "node": ">=20.19"
+    "node": ">=20.19 <22 || >=22.12"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
+    }
   }
 }

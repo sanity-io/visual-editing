@@ -4,9 +4,6 @@ import {defineConfig} from '@sanity/pkg-utils'
 export default defineConfig({
   // the path to the tsconfig file for distributed builds
   tsconfig: 'tsconfig.dist.json',
-  rollup: {
-    optimizeLodash: true,
-  },
   babel: {reactCompiler: true},
-  reactCompilerOptions: {target: '18'},
+  reactCompilerOptions: {target: '19'},
 })
