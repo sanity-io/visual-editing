@@ -323,7 +323,7 @@ If your application is using `revalidateTag` then it's common to add the tag `al
       return
     }
     if (payload.source === 'manual') {
-      await revalidateTag('all')
+      await revalidateTag('all', {expire: 0})
     }
   }}
 />
@@ -342,11 +342,11 @@ If you're using `revalidateTag`, [and the GROQ webhook pattern][https://github.c
       return
     }
     if (payload.source === 'manual') {
-      await revalidateTag('all')
+      await revalidateTag('all', {expire: 0})
     }
     if (payload.source === 'mutation') {
       // Call `revalidateTag` in the same way as ./app/api/revalidate/route.ts
-      await revalidateTag(payload.document._type)
+      await revalidateTag(payload.document._type, {expire: 0})
     }
   }}
 />

@@ -40,10 +40,10 @@ export default async function RootLayout({
                 if (payload.document.slug?.current) {
                   const tag = `${payload.document._type}:${payload.document.slug.current}`
                   console.log('Revalidate slug', tag)
-                  await revalidateTag(tag)
+                  await revalidateTag(tag, {expire: 0})
                 }
                 console.log('Revalidate tag', payload.document._type)
-                return revalidateTag(payload.document._type)
+                return revalidateTag(payload.document._type, {expire: 0})
               }
               await revalidatePath('/', 'layout')
             }}
