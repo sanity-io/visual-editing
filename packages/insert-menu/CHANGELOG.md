@@ -2,14 +2,13 @@
 
 ## [3.0.0](https://github.com/sanity-io/visual-editing/compare/insert-menu-v2.1.0...insert-menu-v3.0.0) (2025-12-16)
 
-
 ### ⚠ BREAKING CHANGES
 
-* require React 19.2
+- require React 19.2
 
 ### Features
 
-* require React 19.2 ([3958a34](https://github.com/sanity-io/visual-editing/commit/3958a34655ff120fdf92603d730d4b8e68807d73))
+- require React 19.2 ([3958a34](https://github.com/sanity-io/visual-editing/commit/3958a34655ff120fdf92603d730d4b8e68807d73))
 
 ## [2.1.0](https://github.com/sanity-io/visual-editing/compare/insert-menu-v2.0.2...insert-menu-v2.1.0) (2025-10-15)
 
