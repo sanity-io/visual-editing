@@ -25,37 +25,31 @@
     ".": {
       "source": "./src/index.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./create-data-attribute": {
       "source": "./src/create-data-attribute.ts",
       "import": "./dist/create-data-attribute/index.js",
-      "require": "./dist/create-data-attribute/index.cjs",
       "default": "./dist/create-data-attribute/index.js"
     },
     "./next-pages-router": {
       "source": "./src/next-pages-router/index.ts",
       "import": "./dist/next-pages-router/index.js",
-      "require": "./dist/next-pages-router/index.cjs",
       "default": "./dist/next-pages-router/index.js"
     },
     "./optimistic": {
       "source": "./src/optimistic/index.ts",
       "import": "./dist/optimistic/index.js",
-      "require": "./dist/optimistic/index.cjs",
       "default": "./dist/optimistic/index.js"
     },
     "./react": {
       "source": "./src/react/index.ts",
       "import": "./dist/react/index.js",
-      "require": "./dist/react/index.cjs",
       "default": "./dist/react/index.js"
     },
     "./react-router": {
       "source": "./src/react-router/index.ts",
       "import": "./dist/react-router/index.js",
-      "require": "./dist/react-router/index.cjs",
       "default": "./dist/react-router/index.js"
     },
     "./svelte": {
@@ -66,36 +60,13 @@
     "./unstable_overlay-components": {
       "source": "./src/overlay-components/index.ts",
       "import": "./dist/overlay-components/index.js",
-      "require": "./dist/overlay-components/index.cjs",
       "default": "./dist/overlay-components/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "create-data-attribute": [
-        "./dist/create-data-attribute/index.d.ts"
-      ],
-      "next-pages-router": [
-        "./dist/next-pages-router/index.d.ts"
-      ],
-      "optimistic": [
-        "./dist/optimistic/index.d.ts"
-      ],
-      "react": [
-        "./dist/react/index.d.ts"
-      ],
-      "react-router": [
-        "./dist/react-router/index.d.ts"
-      ],
-      "svelte": [
-        "./dist-svelte/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist",
     "dist-svelte",
@@ -209,6 +180,20 @@
     "node": ">=20.19"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": "./dist/index.js",
+      "./create-data-attribute": "./dist/create-data-attribute/index.js",
+      "./next-pages-router": "./dist/next-pages-router/index.js",
+      "./optimistic": "./dist/optimistic/index.js",
+      "./react": "./dist/react/index.js",
+      "./react-router": "./dist/react-router/index.js",
+      "./svelte": {
+        "types": "./dist-svelte/index.d.ts",
+        "svelte": "./dist-svelte/index.js",
+        "default": "./dist-svelte/index.js"
+      },
+      "./unstable_overlay-components": "./dist/overlay-components/index.js",
+      "./package.json": "./package.json"
+    }
   }
 }
