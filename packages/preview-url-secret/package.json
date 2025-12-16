@@ -130,7 +130,6 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@sanity/client": "catalog:",
-    "@sanity/icons": "catalog:",
     "@sanity/pkg-utils": "catalog:",
     "eslint": "^8.57.1",
     "sanity": "catalog:",
@@ -138,17 +137,7 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@sanity/client": "catalog:",
-    "@sanity/icons": "*",
-    "sanity": "*"
-  },
-  "peerDependenciesMeta": {
-    "@sanity/icons": {
-      "optional": true
-    },
-    "sanity": {
-      "optional": true
-    }
+    "@sanity/client": "catalog:"
   },
   "engines": {
     "node": ">=18"

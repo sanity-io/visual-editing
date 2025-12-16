@@ -6,7 +6,7 @@ import {
   performanceTestPlugin,
   shoesPlugin,
 } from '@repo/sanity-schema'
-import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {debugSecrets} from '@sanity/debug-preview-url-secret-plugin'
 import {vercelProtectionBypassTool} from '@sanity/vercel-protection-bypass'
 import {visionTool} from '@sanity/vision'
 import {defineConfig, definePlugin, type PluginOptions} from 'sanity'

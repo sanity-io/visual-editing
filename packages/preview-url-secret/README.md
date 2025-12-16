@@ -327,10 +327,16 @@ You don't have to check `isValid` before using it, as it'll be `undefined` if th
 
 ## Debugging generated secrets
 
-You can view the generated url secrets that are in your dataset by adding the debug plugin to your `sanity.config.ts`:
+You can view the generated url secrets that are in your dataset by installing the debug plugin:
+
+```sh
+npm install @sanity/debug-preview-url-secret-plugin
+```
+
+And adding it to your `sanity.config.ts`:
 
 ```ts
-import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
+import {debugSecrets} from '@sanity/debug-preview-url-secret-plugin'
 import {defineConfig} from 'sanity'
 
 export default defineConfig({
