@@ -1,6 +1,5 @@
 import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
 
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
@@ -36,6 +35,4 @@ const nextConfig = {
   },
 }
 
-export default withVercelToolbar()(
-  nextConfig
-)
+export default withVercelToolbar()(nextConfig)
