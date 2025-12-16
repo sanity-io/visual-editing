@@ -18,90 +18,48 @@
     ".": {
       "source": "./src/index.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./constants": {
       "source": "./src/_exports/constants.ts",
       "import": "./dist/constants.js",
-      "require": "./dist/constants.cjs",
       "default": "./dist/constants.js"
     },
     "./create-secret": {
       "source": "./src/_exports/create-secret.ts",
       "import": "./dist/create-secret.js",
-      "require": "./dist/create-secret.cjs",
       "default": "./dist/create-secret.js"
     },
     "./define-preview-url": {
       "source": "./src/_exports/define-preview-url.ts",
       "import": "./dist/define-preview-url.js",
-      "require": "./dist/define-preview-url.cjs",
       "default": "./dist/define-preview-url.js"
     },
     "./get-redirect-to": {
       "source": "./src/_exports/get-redirect-to.ts",
       "import": "./dist/get-redirect-to.js",
-      "require": "./dist/get-redirect-to.cjs",
       "default": "./dist/get-redirect-to.js"
-    },
-    "./sanity-plugin-debug-secrets": {
-      "source": "./src/_exports/sanity-plugin-debug-secrets.ts",
-      "import": "./dist/sanity-plugin-debug-secrets.js",
-      "require": "./dist/sanity-plugin-debug-secrets.cjs",
-      "default": "./dist/sanity-plugin-debug-secrets.js"
     },
     "./toggle-preview-access-sharing": {
       "source": "./src/_exports/toggle-preview-access-sharing.ts",
       "import": "./dist/toggle-preview-access-sharing.js",
-      "require": "./dist/toggle-preview-access-sharing.cjs",
       "default": "./dist/toggle-preview-access-sharing.js"
     },
     "./toggle-vercel-protection-bypass": {
       "source": "./src/_exports/toggle-vercel-protection-bypass.ts",
       "import": "./dist/toggle-vercel-protection-bypass.js",
-      "require": "./dist/toggle-vercel-protection-bypass.cjs",
       "default": "./dist/toggle-vercel-protection-bypass.js"
     },
     "./without-secret-search-params": {
       "source": "./src/_exports/without-secret-search-params.ts",
       "import": "./dist/without-secret-search-params.js",
-      "require": "./dist/without-secret-search-params.cjs",
       "default": "./dist/without-secret-search-params.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "constants": [
-        "./dist/constants.d.ts"
-      ],
-      "create-secret": [
-        "./dist/create-secret.d.ts"
-      ],
-      "define-preview-url": [
-        "./dist/define-preview-url.d.ts"
-      ],
-      "get-redirect-to": [
-        "./dist/get-redirect-to.d.ts"
-      ],
-      "sanity-plugin-debug-secrets": [
-        "./dist/sanity-plugin-debug-secrets.d.ts"
-      ],
-      "toggle-preview-access-sharing": [
-        "./dist/toggle-preview-access-sharing.d.ts"
-      ],
-      "toggle-vercel-protection-bypass": [
-        "./dist/toggle-vercel-protection-bypass.d.ts"
-      ],
-      "without-secret-search-params": [
-        "./dist/without-secret-search-params.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist",
     "src",
@@ -132,7 +90,6 @@
     "@sanity/client": "catalog:",
     "@sanity/pkg-utils": "catalog:",
     "eslint": "^8.57.1",
-    "sanity": "catalog:",
     "typescript": "catalog:",
     "vitest": "^3.2.4"
   },
@@ -140,9 +97,19 @@
     "@sanity/client": "catalog:"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.19 <22 || >=22.12"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": "./dist/index.js",
+      "./constants": "./dist/constants.js",
+      "./create-secret": "./dist/create-secret.js",
+      "./define-preview-url": "./dist/define-preview-url.js",
+      "./get-redirect-to": "./dist/get-redirect-to.js",
+      "./toggle-preview-access-sharing": "./dist/toggle-preview-access-sharing.js",
+      "./toggle-vercel-protection-bypass": "./dist/toggle-vercel-protection-bypass.js",
+      "./without-secret-search-params": "./dist/without-secret-search-params.js",
+      "./package.json": "./package.json"
+    }
   }
 }
