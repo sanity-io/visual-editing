@@ -79,11 +79,6 @@ const urls = {
     (endsWith) => `https://visual-editing-page-builder-demo-git-${endsWith}`,
     'http://localhost:3005',
   ),
-  remix: resolvePreviewUrl(
-    process.env.SANITY_STUDIO_REMIX_PREVIEW_URL,
-    (endsWith) => `https://visual-editing-remix-git-${endsWith}/shoes`,
-    'http://localhost:3000/shoes',
-  ),
   svelte: resolvePreviewUrl(
     process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL,
     (endsWith) => `https://visual-editing-svelte-git-${endsWith}`,
@@ -116,14 +111,7 @@ function definePreviewUrl(
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }
-  if (workspaceName === 'remix') {
-    const {origin, pathname} = new URL(previewUrl)
-    const previewMode = {
-      enable: '/api/preview-mode/enable',
-      disable: '/api/preview-mode/disable',
-    } satisfies PreviewUrlResolverOptions['previewMode']
-    return {origin, preview: pathname, previewMode}
-  }
+
 
   return previewUrl
 }
@@ -171,16 +159,6 @@ export default defineConfig([
         urls['live-next'],
         workspaces['live-demo'].workspace,
         workspaces['live-demo'].tool,
-      ),
-    }),
-    debugPlugin(),
-  ]),
-  defineWorkspace(workspaces['remix'], [
-    shoesPlugin({
-      previewUrl: definePreviewUrl(
-        urls['remix'],
-        workspaces['remix'].workspace,
-        workspaces['remix'].tool,
       ),
     }),
     debugPlugin(),

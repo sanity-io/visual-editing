@@ -24,12 +24,6 @@ export const workspaces = {
     workspace: 'astro',
     tool: 'presentation',
   },
-  remix: {
-    projectId: projectId,
-    dataset: datasets.development,
-    workspace: 'remix',
-    tool: 'presentation',
-  },
   'next-app-router': {
     projectId: projectId,
     dataset: datasets.development,

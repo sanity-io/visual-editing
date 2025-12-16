@@ -20,7 +20,7 @@ npm install @sanity/visual-editing react react-dom
   - [Next.js](#nextjs)
     - [App Router](#app-router)
     - [Pages Router](#pages-router)
-  - [Remix](#remix)
+  - [React Router](#react-router)
   - [React.js](#reactjs)
 - [Refresh API](#refresh-api)
   - [Plain JS](#plain-js-1)
@@ -29,7 +29,7 @@ npm install @sanity/visual-editing react react-dom
   - [Next.js App Router](#nextjs-app-router)
     - [`source: 'manual'`](#source-manual-1)
     - [`source: 'mutation'`](#source-mutation-1)
-  - [Remix](#remix-1)
+  - [React Router](#react-router-1)
   - [SvelteKit](#sveltekit)
 - [Manually configuring "Edit in Sanity Studio" elements](#manually-configuring-edit-in-sanity-studio-elements)
   - [`data-sanity-edit-target`](#data-sanity-edit-target)
@@ -134,14 +134,14 @@ export default function App({Component, pageProps}: AppProps) {
 }
 ```
 
-### Remix
+### React Router
 
-For Remix apps you should use `VisualEditing` from `@sanity/visual-editing/remix` in your `app/root.tsx`:
+For React Router apps you should use `VisualEditing` from `@sanity/visual-editing/react-router` in your `app/root.tsx`:
 
 ```tsx
-import {json} from '@remix-run/node'
-import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@remix-run/react'
-import {VisualEditing} from '@sanity/visual-editing/remix'
+import {json} from '@react-router/node'
+import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@react-router'
+import {VisualEditing} from '@sanity/visual-editing/react-router'
 
 export const loader = () => {
   return json({
@@ -208,7 +208,7 @@ For some frameworks, like Next.js App Router, Remix and soon SvelteKit, there's 
 - When to use:
   - When you're using a framework that has a refresh API that provides a better experience than a full page reload.
     - [Next.js App Router][next-app-router]
-    - [Remix][remix]
+    - [React Router][react-router]
     - [SvelteKit][sveltekit]
   - You have data fetching used in your app that it's either impractical or too costly to refactor to use [Loaders][loaders] or [Preview Kit][preview-kit].
   - You have other data fetching than Content Lake GROQ queries, for example GraphQL or REST APIs that you want to refresh.
@@ -354,7 +354,7 @@ If you're using `revalidateTag`, [and the GROQ webhook pattern][https://github.c
 
 You can use `payload.livePreviewEnabled` and `payload.document` to better target scenarios where you want to `revalidateTag` or when it may already be handled by a `useQuery` hook from `@sanity/react-loader` already, or a `useLiveQuery` hook from `next-sanity/preview` or `@sanity/preview-kit`.
 
-### [Remix][remix]
+### [React Router][react-router]
 
 For Remix apps the implementation is much like the one for [Next.js App Router][next-app-router] when it comes to what happens depending on the `source` and `livePreviewEnabled` properties of the payload.
 
@@ -362,8 +362,8 @@ Remix doesn't have [Server Actions][server-actions] yet, under the hood the [`us
 
 ```tsx
 // app/root.tsx
-import {useRevalidator} from '@remix-run/react'
-import {VisualEditing} from '@sanity/visual-editing/remix'
+import {useRevalidator} from 'react-router'
+import {VisualEditing} from '@sanity/visual-editing/react-router'
 
 export default function App() {
   const {ENV} = useLoaderData<typeof loader>()
@@ -451,6 +451,6 @@ enableVisualEditing({
 [loaders]: https://www.sanity.io/docs/loaders-and-overlays
 [preview-kit]: https://www.sanity.io/plugins/preview-kit
 [next-app-router]: https://nextjs.org/docs/app
-[remix]: https://remix.run/
+[react-router]: https://reactrouter.com/
 [sveltekit]: https://kit.svelte.dev/
 [server-actions]: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
