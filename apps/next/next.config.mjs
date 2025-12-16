@@ -1,8 +1,5 @@
-import withBundleAnalyzer from '@next/bundle-analyzer'
 import {withVercelToolbar} from '@vercel/toolbar/plugins/next'
-import {createRequire} from 'node:module'
 
-const require = createRequire(import.meta.url)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -40,7 +37,5 @@ const nextConfig = {
 }
 
 export default withVercelToolbar()(
-  withBundleAnalyzer({
-    enabled: process.env.ANALYZE === 'true',
-  })(nextConfig),
+  nextConfig
 )
