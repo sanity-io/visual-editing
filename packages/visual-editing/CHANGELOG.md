@@ -1,5 +1,37 @@
 # Changelog
 
+## [5.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v4.0.3...visual-editing-v5.0.0) (2025-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop CJS, only ESM is supported
+* require react 19.2 or later
+* require next.js v16 or later
+* Migrate to `react-router@7` and replace the  `@sanity/visual-editing/remix` imports with `@sanity/visual-editing/react-router`
+
+### Features
+
+* require react 19.2 or later ([15f01ef](https://github.com/sanity-io/visual-editing/commit/15f01ef60e39801b78ad4021037509bd722b75fd))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/comlink to ^4.0.1 ([f5cc4b8](https://github.com/sanity-io/visual-editing/commit/f5cc4b8214b5e565fd3f9cb37dcbc2f2569bd273))
+* **deps:** Update dependency @sanity/presentation-comlink to ^2.0.1 ([3303056](https://github.com/sanity-io/visual-editing/commit/3303056e59d26523a0d0a9ce6bbbeb36297f68be))
+* drop CJS, only ESM is supported ([7da75a7](https://github.com/sanity-io/visual-editing/commit/7da75a7a1d5674eead47eced42ba8e96dc767918))
+* remove remix ([e5e814f](https://github.com/sanity-io/visual-editing/commit/e5e814fd87b51e78f86fbb62b87cf38fb37ce8ab))
+* require next.js v16 or later ([e2ca298](https://github.com/sanity-io/visual-editing/commit/e2ca298f2ada9912836e876f9794f89ef076dce2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/insert-menu bumped to 3.0.0
+    * @sanity/preview-url-secret bumped to 4.0.0
+    * @sanity/visual-editing-csm bumped to 3.0.0
+
 ## [4.0.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v4.0.2...visual-editing-v4.0.3) (2025-12-10)
 
 ### Bug Fixes

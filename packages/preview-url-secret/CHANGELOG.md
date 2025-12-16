@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v3.0.0...preview-url-secret-v4.0.0) (2025-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop CJS, only ESM is supported
+* Use `@sanity/debug-preview-url-secret-plugin` instead of `@sanity/preview-url-secret/sanity-plugin-debug-secrets`
+
+### Bug Fixes
+
+* drop CJS, only ESM is supported ([fd6f14b](https://github.com/sanity-io/visual-editing/commit/fd6f14b6272b7c33df101af5a1e42ec66f1075a8))
+* remove `@sanity/preview-url-secret/sanity-plugin-debug-secrets` ([2fda6e6](https://github.com/sanity-io/visual-editing/commit/2fda6e6d4a24403807c95b5db1f41e93c58b3e25))
+
 ## [3.0.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v2.1.16...preview-url-secret-v3.0.0) (2025-11-21)
 
 ### ⚠ BREAKING CHANGES
