@@ -1,6 +1,5 @@
 import {useRouter} from 'next/router.js'
-import {useEffect, useState} from 'react'
-import {useEffectEvent} from 'use-effect-event'
+import {useEffect, useState, useEffectEvent} from 'react'
 
 import type {
   HistoryAdapterNavigate,
