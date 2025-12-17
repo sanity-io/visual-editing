@@ -2,13 +2,12 @@
 
 ## [5.0.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.0.1...visual-editing-v5.0.2) (2025-12-17)
 
-
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/insert-menu bumped to 3.0.1
-    * @sanity/visual-editing-csm bumped to 3.0.2
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/insert-menu bumped to 3.0.1
+    - @sanity/visual-editing-csm bumped to 3.0.2
 
 ## [5.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.0.0...visual-editing-v5.0.1) (2025-12-16)
 
