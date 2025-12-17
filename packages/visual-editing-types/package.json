@@ -17,7 +17,6 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
@@ -50,6 +49,7 @@
     "@sanity/client": "catalog:",
     "@sanity/insert-menu": "workspace:^",
     "@sanity/pkg-utils": "catalog:",
+    "@sanity/tsconfig": "catalog:",
     "@sanity/types": "catalog:",
     "eslint": "^8.57.1",
     "typescript": "catalog:"

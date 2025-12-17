@@ -1,15 +1,7 @@
 import {defineConfig} from '@sanity/pkg-utils'
 
 export default defineConfig({
-  rollup: {
-    optimizeLodash: true,
-  },
-  extract: {
-    rules: {
-      'ae-incompatible-release-tags': 'warn',
-      'ae-internal-missing-underscore': 'off',
-      'ae-missing-release-tag': 'off',
-    },
-  },
+  extract: {enabled: false, checkTypes: false},
   tsconfig: 'tsconfig.build.json',
+  dts: 'rolldown',
 })

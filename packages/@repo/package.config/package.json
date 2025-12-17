@@ -5,6 +5,7 @@
   "description": "Shared @sanity/pkg-utils configuration",
   "main": "./src/package.config.ts",
   "types": "./src/package.config.ts",
+  "type": "module",
   "scripts": {
     "check:types": "tsc --noEmit --skipLibCheck src/package.config.ts"
   }
