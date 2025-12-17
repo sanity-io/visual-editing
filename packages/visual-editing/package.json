@@ -24,32 +24,26 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./create-data-attribute": {
       "source": "./src/create-data-attribute.ts",
-      "import": "./dist/create-data-attribute/index.js",
       "default": "./dist/create-data-attribute/index.js"
     },
     "./next-pages-router": {
       "source": "./src/next-pages-router/index.ts",
-      "import": "./dist/next-pages-router/index.js",
       "default": "./dist/next-pages-router/index.js"
     },
     "./optimistic": {
       "source": "./src/optimistic/index.ts",
-      "import": "./dist/optimistic/index.js",
       "default": "./dist/optimistic/index.js"
     },
     "./react": {
       "source": "./src/react/index.ts",
-      "import": "./dist/react/index.js",
       "default": "./dist/react/index.js"
     },
     "./react-router": {
       "source": "./src/react-router/index.ts",
-      "import": "./dist/react-router/index.js",
       "default": "./dist/react-router/index.js"
     },
     "./svelte": {
@@ -59,7 +53,6 @@
     },
     "./unstable_overlay-components": {
       "source": "./src/overlay-components/index.ts",
-      "import": "./dist/overlay-components/index.js",
       "default": "./dist/overlay-components/index.js"
     },
     "./package.json": "./package.json"

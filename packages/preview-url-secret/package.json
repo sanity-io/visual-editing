@@ -17,42 +17,34 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./constants": {
       "source": "./src/_exports/constants.ts",
-      "import": "./dist/constants.js",
       "default": "./dist/constants.js"
     },
     "./create-secret": {
       "source": "./src/_exports/create-secret.ts",
-      "import": "./dist/create-secret.js",
       "default": "./dist/create-secret.js"
     },
     "./define-preview-url": {
       "source": "./src/_exports/define-preview-url.ts",
-      "import": "./dist/define-preview-url.js",
       "default": "./dist/define-preview-url.js"
     },
     "./get-redirect-to": {
       "source": "./src/_exports/get-redirect-to.ts",
-      "import": "./dist/get-redirect-to.js",
       "default": "./dist/get-redirect-to.js"
     },
     "./toggle-preview-access-sharing": {
       "source": "./src/_exports/toggle-preview-access-sharing.ts",
-      "import": "./dist/toggle-preview-access-sharing.js",
       "default": "./dist/toggle-preview-access-sharing.js"
     },
     "./toggle-vercel-protection-bypass": {
       "source": "./src/_exports/toggle-vercel-protection-bypass.ts",
-      "import": "./dist/toggle-vercel-protection-bypass.js",
       "default": "./dist/toggle-vercel-protection-bypass.js"
     },
     "./without-secret-search-params": {
       "source": "./src/_exports/without-secret-search-params.ts",
-      "import": "./dist/without-secret-search-params.js",
       "default": "./dist/without-secret-search-params.js"
     },
     "./package.json": "./package.json"

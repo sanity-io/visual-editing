@@ -7,4 +7,5 @@ export default defineConfig({
     'process.env.NODE_ENV': process.env['VERCEL_ENV'] || process.env['NODE_ENV'] || 'development',
     'process.env.VERCEL_BRANCH_URL': process.env['VERCEL_BRANCH_URL'],
   },
+  dts: 'api-extractor'
 })
