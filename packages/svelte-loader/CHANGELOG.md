@@ -23,6 +23,19 @@ All notable changes to this project will be documented in this file. See
   - devDependencies
     - @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [2.0.6](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v2.0.5...svelte-loader-v2.0.6) (2025-12-17)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/core-loader bumped to 2.0.3
+  * devDependencies
+    * @sanity/visual-editing bumped to 5.0.2
+  * peerDependencies
+    * @sanity/visual-editing bumped to 5.0.2
+
 ## [2.0.5](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v2.0.4...svelte-loader-v2.0.5) (2025-12-16)
 
 

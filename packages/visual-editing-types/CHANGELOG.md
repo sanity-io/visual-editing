@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v2.0.0...visual-editing-types-v2.0.1) (2025-12-17)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/insert-menu bumped to 3.0.1
+
 ## [2.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v1.1.8...visual-editing-types-v2.0.0) (2025-12-16)
 
 ### ⚠ BREAKING CHANGES
