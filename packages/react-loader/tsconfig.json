@@ -2,9 +2,9 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "paths": {
-      "@sanity/core-loader": ["./node_modules/@sanity/core-loader/src"],
-    },
+      "@sanity/core-loader": ["./node_modules/@sanity/core-loader/src"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", "./node_modules/@sanity/core-loader/src"],
-  "exclude": ["dist", "node_modules"],
+  "exclude": ["dist", "node_modules"]
 }

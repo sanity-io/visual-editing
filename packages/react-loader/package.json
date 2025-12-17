@@ -10,43 +10,43 @@
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/react-loader"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.cjs",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
-      "deno": "./dist/index.js",
-      "edge": "./dist/index.js",
-      "edge-light": "./dist/index.js",
-      "worker": "./dist/index.js",
-      "react-server": "./dist/rsc/index.react-server.js",
       "browser": {
         "source": "./src/index.browser.ts",
         "require": "./dist/index.browser.cjs",
         "import": "./dist/index.browser.js"
       },
-      "require": "./dist/index.cjs",
+      "deno": "./dist/index.js",
+      "edge": "./dist/index.js",
+      "edge-light": "./dist/index.js",
       "import": "./dist/index.js",
+      "react-server": "./dist/rsc/index.react-server.js",
+      "require": "./dist/index.cjs",
+      "source": "./src/index.ts",
+      "worker": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./jsx": {
-      "source": "./src/jsx/index.ts",
       "import": "./dist/jsx.js",
       "require": "./dist/jsx.cjs",
+      "source": "./src/jsx/index.ts",
       "default": "./dist/jsx.js"
     },
+    "./package.json": "./package.json",
     "./rsc": {
-      "source": "./src/rsc/index.ts",
-      "react-server": "./dist/rsc/index.react-server.js",
       "import": "./dist/rsc/index.js",
+      "react-server": "./dist/rsc/index.react-server.js",
       "require": "./dist/rsc/index.cjs",
+      "source": "./src/rsc/index.ts",
       "default": "./dist/rsc/index.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
-  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
@@ -60,11 +60,11 @@
     }
   },
   "files": [
-    "dist",
-    "src",
     "!**/*.test.*",
     "!**/__fixtures__/*",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
@@ -72,13 +72,6 @@
     "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --typecheck"
-  },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
   },
   "dependencies": {
     "@sanity/client": "catalog:",
@@ -99,6 +92,13 @@
   },
   "peerDependencies": {
     "react": "^18.3 || ^19"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
   },
   "engines": {
     "node": ">=18"

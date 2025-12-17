@@ -22,7 +22,7 @@ interface Props extends SharedProps {
 }
 
 export const getStaticProps = (async (context) => {
-  const { draftMode = false, params} = context
+  const {draftMode = false, params} = context
   const perspective = (draftMode ? 'drafts' : 'published') satisfies ClientPerspective
 
   const slug = Array.isArray(params!.slug) ? params!.slug[0] : params!.slug

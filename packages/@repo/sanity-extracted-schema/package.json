@@ -13,13 +13,6 @@
     "build": "sanity schema extract --workspace cross-dataset-references --path ./cross-dataset-references.json && sanity schema extract --workspace live-demo --path ./live-demo.json && sanity schema extract --workspace page-builder-demo --path ./page-builder-demo.json && sanity schema extract --workspace shoes --path ./shoes.json",
     "lint": "eslint ."
   },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  },
   "dependencies": {
     "@repo/env": "workspace:*",
     "@repo/sanity-schema": "workspace:*"
@@ -31,5 +24,12 @@
     "sanity": "catalog:",
     "styled-components": "catalog:",
     "typescript": "catalog:"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
   }
 }

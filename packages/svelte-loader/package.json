@@ -10,26 +10,26 @@
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/svelte-loader"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
       "import": "./dist/index.js",
+      "source": "./src/index.ts",
       "svelte": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
+    "CHANGELOG.md",
     "dist",
-    "src",
-    "CHANGELOG.md"
+    "src"
   ],
   "scripts": {
     "build": "svelte-package -i src -o dist",
@@ -37,13 +37,6 @@
     "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
-  },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
   },
   "dependencies": {
     "@sanity/client": "catalog:",
@@ -68,6 +61,13 @@
     "@sanity/visual-editing": "workspace:^",
     "@sveltejs/kit": "2.x",
     "svelte": "4.x || 5.x"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
   },
   "engines": {
     "node": ">=18"

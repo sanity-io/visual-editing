@@ -134,7 +134,7 @@ function createDocumentPatch<T extends Record<string, any>>(id: string, actor: M
     const result = getDocumentsAndSnapshot<T>(id, actor)
     const {draftDoc, draftId, getSnapshot, publishedId} = result
 
-    const { commit = true} = options || {}
+    const {commit = true} = options || {}
 
     const context = {
       draftId,
@@ -202,7 +202,7 @@ export function useDocuments(): {
   const mutateDocument: DocumentsMutate = useCallback(
     (id, mutations, options) => {
       const {draftDoc} = getDocumentsAndSnapshot(id, actor)
-      const { commit = true} = options || {}
+      const {commit = true} = options || {}
 
       draftDoc.send({
         type: 'mutate',

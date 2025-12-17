@@ -12,10 +12,11 @@
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/insert-menu"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.cjs",
   "exports": {
     ".": {
       "source": "./src/index.ts",
@@ -23,7 +24,6 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -37,7 +37,6 @@
     "prepack": "turbo run build",
     "ts:check": "tsc --noEmit"
   },
-  "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
     "@sanity/icons": "catalog:",
     "@sanity/ui": "catalog:",
@@ -66,6 +65,7 @@
     "@sanity/types": "*",
     "react": "^19.2"
   },
+  "browserslist": "extends @sanity/browserslist-config",
   "engines": {
     "node": ">=20.19 <22 || >=22.12"
   },

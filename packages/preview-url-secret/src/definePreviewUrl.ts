@@ -22,7 +22,7 @@ export function definePreviewUrl<SanityClientType>(
     origin = typeof location === 'undefined' ? 'https://localhost' : location.origin,
   } = options
   const enableUrl = previewMode?.enable || draftMode?.enable
-  let { preview = '/'} = options
+  let {preview = '/'} = options
   const productionUrl = new URL(preview, origin)
   const enablePreviewModeUrl = enableUrl ? new URL(enableUrl, origin) : undefined
 

@@ -10,10 +10,11 @@
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/visual-editing-types"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
       "source": "./src/index.ts",
@@ -21,27 +22,19 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "src",
     "!**/*.test.*",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
     "lint": "eslint .",
     "prepack": "turbo run build"
-  },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -62,6 +55,13 @@
     "@sanity/types": {
       "optional": true
     }
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
   },
   "engines": {
     "node": ">=20.19 <22 || >=22.12"
