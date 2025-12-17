@@ -1,10 +1,10 @@
 {
-  "extends": "@sanity/pkg-utils/tsconfig/strictest.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/vite-react/tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
-    "types": ["vite/client"],
-    "noPropertyAccessFromIndexSignature": false,
+    "types": ["vite/client"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
