@@ -2,12 +2,11 @@
 
 ## [5.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.0.0...visual-editing-v5.0.1) (2025-12-16)
 
-
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/visual-editing-csm bumped to 3.0.1
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/visual-editing-csm bumped to 3.0.1
 
 ## [5.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v4.0.3...visual-editing-v5.0.0) (2025-12-16)
 
