@@ -10,10 +10,11 @@
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/preview-url-secret"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
       "source": "./src/index.ts",
@@ -35,6 +36,7 @@
       "source": "./src/_exports/get-redirect-to.ts",
       "default": "./dist/get-redirect-to.js"
     },
+    "./package.json": "./package.json",
     "./toggle-preview-access-sharing": {
       "source": "./src/_exports/toggle-preview-access-sharing.ts",
       "default": "./dist/toggle-preview-access-sharing.js"
@@ -46,18 +48,16 @@
     "./without-secret-search-params": {
       "source": "./src/_exports/without-secret-search-params.ts",
       "default": "./dist/without-secret-search-params.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
-  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "src",
-    "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
-    "CHANGELOG.md"
+    "!src/**/*.test.ts",
+    "CHANGELOG.md",
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
@@ -65,13 +65,6 @@
     "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
-  },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
   },
   "dependencies": {
     "@sanity/uuid": "3.0.2"
@@ -88,6 +81,13 @@
   },
   "peerDependencies": {
     "@sanity/client": "catalog:"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
   },
   "engines": {
     "node": ">=20.19 <22 || >=22.12"

@@ -164,7 +164,7 @@ export const UnionInsertMenuOverlay: OverlayComponent<
   },
   SchemaUnionNode<SchemaNode>
 > = (props) => {
-  const { direction = 'vertical', element, hoverAreaExtent, node, parent} = props
+  const {direction = 'vertical', element, hoverAreaExtent, node, parent} = props
 
   const {getDocument} = useDocuments()
 

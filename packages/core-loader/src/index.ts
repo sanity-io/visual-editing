@@ -85,7 +85,7 @@ function cloneClientWithConfig(newClient: SanityClient): SanityClient {
 
 /** @public */
 export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore => {
-  const { ssr = false, tag = 'core-loader'} = options
+  const {ssr = false, tag = 'core-loader'} = options
   if (ssr && options.client) {
     throw new TypeError(
       '`client` option is not allowed when `ssr: true`, use `setServerClient` from your server entry point instead',

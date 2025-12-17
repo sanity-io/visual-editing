@@ -20,7 +20,7 @@ interface Props extends SharedProps {
 }
 
 export const getStaticProps = (async (context) => {
-  const { draftMode = false} = context
+  const {draftMode = false} = context
   const perspective = (draftMode ? 'drafts' : 'published') satisfies ClientPerspective
   const initial = await loadQuery<ShoesListResult>(shoesList, {}, {perspective})
   return {props: {draftMode, initial}, revalidate: 1}

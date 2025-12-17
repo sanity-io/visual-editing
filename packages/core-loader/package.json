@@ -10,32 +10,32 @@
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/core-loader"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.cjs",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
+      "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./encode-data-attribute": {
-      "source": "./src/encodeDataAttribute.ts",
-      "import": "./dist/encode-data-attribute.js",
-      "require": "./dist/encode-data-attribute.cjs",
-      "default": "./dist/encode-data-attribute.js"
-    },
     "./create-data-attribute": {
-      "source": "./src/createDataAttribute.ts",
       "import": "./dist/create-data-attribute.js",
       "require": "./dist/create-data-attribute.cjs",
+      "source": "./src/createDataAttribute.ts",
       "default": "./dist/create-data-attribute.js"
+    },
+    "./encode-data-attribute": {
+      "import": "./dist/encode-data-attribute.js",
+      "require": "./dist/encode-data-attribute.cjs",
+      "source": "./src/encodeDataAttribute.ts",
+      "default": "./dist/encode-data-attribute.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
@@ -49,8 +49,8 @@
     }
   },
   "files": [
-    "dist",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "dist"
   ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
@@ -58,13 +58,6 @@
     "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --pass-with-no-tests --typecheck"
-  },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
   },
   "dependencies": {
     "@sanity/client": "catalog:",
@@ -85,6 +78,13 @@
     "nanostores": "1.0.1",
     "typescript": "catalog:",
     "vitest": "^3.2.4"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
   },
   "engines": {
     "node": ">=18"

@@ -2,11 +2,11 @@
   "name": "@sanity/visual-editing",
   "version": "5.0.3",
   "keywords": [
-    "sanity.io",
-    "visual-editing",
+    "overlays",
     "presentation",
     "preview",
-    "overlays"
+    "sanity.io",
+    "visual-editing"
   ],
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing#readme",
   "bugs": {
@@ -17,10 +17,11 @@
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/visual-editing"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
       "source": "./src/index.ts",
@@ -38,6 +39,7 @@
       "source": "./src/optimistic/index.ts",
       "default": "./dist/optimistic/index.js"
     },
+    "./package.json": "./package.json",
     "./react": {
       "source": "./src/react/index.ts",
       "default": "./dist/react/index.js"
@@ -54,22 +56,20 @@
     "./unstable_overlay-components": {
       "source": "./src/overlay-components/index.ts",
       "default": "./dist/overlay-components/index.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
-  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "dist-svelte",
-    "src",
-    "!src/**/stories/",
     "!src/**/*.md",
-    "!src/**/__tests__/",
     "!src/**/*.test.ts",
     "!src/**/*.test.tsx",
-    "CHANGELOG.md"
+    "!src/**/__tests__/",
+    "!src/**/stories/",
+    "CHANGELOG.md",
+    "dist",
+    "dist-svelte",
+    "src"
   ],
   "scripts": {
     "build": "pnpm run build:main --clean && pnpm run build:svelte && pkg check --strict",
@@ -82,14 +82,6 @@
     "react-compiler-healthcheck": "(cd src && pnpx react-compiler-healthcheck@latest)",
     "storybook": "storybook dev -p 6006",
     "test": "vitest --typecheck"
-  },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config",
-      "plugin:storybook/recommended"
-    ],
-    "root": true
   },
   "dependencies": {
     "@sanity/comlink": "^4.0.1",
@@ -169,6 +161,14 @@
     "svelte": {
       "optional": true
     }
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config",
+      "plugin:storybook/recommended"
+    ],
+    "root": true
   },
   "engines": {
     "node": ">=20.19"

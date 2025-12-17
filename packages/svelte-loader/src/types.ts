@@ -150,7 +150,7 @@ export interface QueryStore {
           },
       params?: QueryParams,
       options?: UseQueryOptionsUndefinedInitial,
-    ): Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>;
+    ): Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>
     <QueryResponseResult = unknown, QueryResponseError = unknown>(
       query:
         | string

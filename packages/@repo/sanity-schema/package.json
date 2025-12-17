@@ -6,16 +6,16 @@
   "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.cjs",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
+      "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
@@ -24,13 +24,6 @@
     "build": "pkg build --strict --check --clean",
     "lint": "eslint .",
     "prepack": "turbo run build"
-  },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
   },
   "dependencies": {
     "@repo/env": "workspace:*",
@@ -63,5 +56,12 @@
     "rxjs": "catalog:",
     "sanity": "catalog:",
     "sanity-plugin-asset-source-unsplash": "catalog:"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
   }
 }

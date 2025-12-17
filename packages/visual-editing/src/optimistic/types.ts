@@ -52,7 +52,7 @@ export type OptimisticDocument<T extends Record<string, any> = Record<string, an
    * @deprecated - use `getSnapshot` instead
    */
   get: {
-    (): SanityDocument<T> | undefined;
+    (): SanityDocument<T> | undefined
     <P extends Path<T, keyof T>>(path: P): PathValue<T, P> | undefined
   }
   /**
