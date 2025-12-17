@@ -11,10 +11,9 @@
 
 ## [3.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v3.0.0...visual-editing-csm-v3.0.1) (2025-12-16)
 
-
 ### Bug Fixes
 
-* **deps:** upgrade non-major ([57c6e99](https://github.com/sanity-io/visual-editing/commit/57c6e99370090b9afc3d5cdef650f6b66bab952b))
+- **deps:** upgrade non-major ([57c6e99](https://github.com/sanity-io/visual-editing/commit/57c6e99370090b9afc3d5cdef650f6b66bab952b))
 
 ## [3.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v2.0.26...visual-editing-csm-v3.0.0) (2025-12-16)
 
