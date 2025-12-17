@@ -2,17 +2,15 @@
 
 ## [2.0.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v2.0.1...visual-editing-types-v2.0.2) (2025-12-17)
 
-
 ### Bug Fixes
 
-* use `@sanity/tsconfig` and upgrade `@sanity/pkg-utils` ([#3318](https://github.com/sanity-io/visual-editing/issues/3318)) ([e624b3b](https://github.com/sanity-io/visual-editing/commit/e624b3b9000c881b8a5834ea7c2258f3acda943f))
-
+- use `@sanity/tsconfig` and upgrade `@sanity/pkg-utils` ([#3318](https://github.com/sanity-io/visual-editing/issues/3318)) ([e624b3b](https://github.com/sanity-io/visual-editing/commit/e624b3b9000c881b8a5834ea7c2258f3acda943f))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * devDependencies
-    * @sanity/insert-menu bumped to 3.0.2
+- The following workspace dependencies were updated
+  - devDependencies
+    - @sanity/insert-menu bumped to 3.0.2
 
 ## [2.0.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v2.0.0...visual-editing-types-v2.0.1) (2025-12-17)
 
