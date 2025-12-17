@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.0.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v3.0.2...visual-editing-csm-v3.0.3) (2025-12-17)
+
+
+### Bug Fixes
+
+* use `@sanity/tsconfig` and upgrade `@sanity/pkg-utils` ([#3318](https://github.com/sanity-io/visual-editing/issues/3318)) ([e624b3b](https://github.com/sanity-io/visual-editing/commit/e624b3b9000c881b8a5834ea7c2258f3acda943f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 2.0.2
+
 ## [3.0.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v3.0.1...visual-editing-csm-v3.0.2) (2025-12-17)
 
 ### Dependencies

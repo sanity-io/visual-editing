@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v4.0.0...preview-url-secret-v4.0.1) (2025-12-17)
+
+
+### Bug Fixes
+
+* use `@sanity/tsconfig` and upgrade `@sanity/pkg-utils` ([#3318](https://github.com/sanity-io/visual-editing/issues/3318)) ([e624b3b](https://github.com/sanity-io/visual-editing/commit/e624b3b9000c881b8a5834ea7c2258f3acda943f))
+
 ## [4.0.0](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v3.0.0...preview-url-secret-v4.0.0) (2025-12-16)
 
 ### ⚠ BREAKING CHANGES
