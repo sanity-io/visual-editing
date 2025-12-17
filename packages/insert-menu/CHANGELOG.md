@@ -2,10 +2,9 @@
 
 ## [3.0.1](https://github.com/sanity-io/visual-editing/compare/insert-menu-v3.0.0...insert-menu-v3.0.1) (2025-12-17)
 
-
 ### Bug Fixes
 
-* downgrade `lodash-es` to `^4.17.21` ([6893959](https://github.com/sanity-io/visual-editing/commit/6893959a40544fe214aaaae425d92d7907c61123))
+- downgrade `lodash-es` to `^4.17.21` ([6893959](https://github.com/sanity-io/visual-editing/commit/6893959a40544fe214aaaae425d92d7907c61123))
 
 ## [3.0.0](https://github.com/sanity-io/visual-editing/compare/insert-menu-v2.1.0...insert-menu-v3.0.0) (2025-12-16)
 
