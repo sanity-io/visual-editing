@@ -319,17 +319,8 @@ function GridMenuItem(props: GridMenuItemProps) {
             }}
           />
         </Box>
-        <Box flex={1} padding={2} style={{overflow: 'hidden'}}>
-          <Text
-            size={1}
-            weight="medium"
-            style={{
-              display: 'block',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
+        <Box flex="none" paddingX={2} paddingY={1}>
+          <Text size={1} weight="medium">
             {props.schemaType.title ?? props.schemaType.name}
           </Text>
         </Box>
