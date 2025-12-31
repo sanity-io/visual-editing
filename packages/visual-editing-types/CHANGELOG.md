@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v2.0.2...visual-editing-types-v2.0.3) (2025-12-31)
+
+
+### Bug Fixes
+
+* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/insert-menu bumped to 3.0.3
+
 ## [2.0.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-types-v2.0.1...visual-editing-types-v2.0.2) (2025-12-17)
 
 ### Bug Fixes

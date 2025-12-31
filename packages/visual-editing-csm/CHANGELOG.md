@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.0.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v3.0.3...visual-editing-csm-v3.0.4) (2025-12-31)
+
+
+### Bug Fixes
+
+* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/visual-editing-types bumped to 2.0.3
+
 ## [3.0.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-csm-v3.0.2...visual-editing-csm-v3.0.3) (2025-12-17)
 
 ### Bug Fixes
