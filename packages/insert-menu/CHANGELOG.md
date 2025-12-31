@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.3](https://github.com/sanity-io/visual-editing/compare/insert-menu-v3.0.2...insert-menu-v3.0.3) (2025-12-31)
+
+
+### Bug Fixes
+
+* **insert-menu:** truncate long text in GridMenuItem ([#3324](https://github.com/sanity-io/visual-editing/issues/3324)) ([664f358](https://github.com/sanity-io/visual-editing/commit/664f358e79988bcf1c7386c17f8f0b2447b38e9f))
+* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
+
 ## [3.0.2](https://github.com/sanity-io/visual-editing/compare/insert-menu-v3.0.1...insert-menu-v3.0.2) (2025-12-17)
 
 ### Bug Fixes
