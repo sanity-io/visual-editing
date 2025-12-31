@@ -51,9 +51,6 @@ catalogs:
     typescript:
       specifier: 5.9.3
       version: 5.9.3
-    xstate:
-      specifier: ^5.25.0
-      version: 5.25.0
   tailwind3:
     '@tailwindcss/typography':
       specifier: ^0.5.16
@@ -879,10 +876,10 @@ importers:
   packages/insert-menu:
     dependencies:
       '@sanity/icons':
-        specifier: 'catalog:'
+        specifier: ^3.7.4
         version: 3.7.4(react@19.2.3)
       '@sanity/ui':
-        specifier: 'catalog:'
+        specifier: ^3.1.11
         version: 3.1.11(@emotion/is-prop-valid@1.2.2)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(styled-components@6.1.19(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       lodash-es:
         specifier: ^4.17.21
@@ -1069,7 +1066,7 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       '@sanity/icons':
-        specifier: 'catalog:'
+        specifier: ^3.7.4
         version: 3.7.4(react@19.2.3)
       '@sanity/insert-menu':
         specifier: workspace:^
@@ -1084,25 +1081,25 @@ importers:
         specifier: workspace:*
         version: link:../preview-url-secret
       '@sanity/ui':
-        specifier: 'catalog:'
+        specifier: ^3.1.11
         version: 3.1.11(@emotion/is-prop-valid@1.2.2)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(styled-components@6.1.19(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       '@sanity/visual-editing-csm':
         specifier: workspace:*
         version: link:../visual-editing-csm
       '@vercel/stega':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       next:
         specifier: '>=16.0.0-0'
         version: 16.0.10(@babel/core@7.28.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       rxjs:
-        specifier: 'catalog:'
+        specifier: ^7.8.2
         version: 7.8.2
       scroll-into-view-if-needed:
         specifier: ^3.1.0
         version: 3.1.0
       xstate:
-        specifier: 'catalog:'
+        specifier: ^5.25.0
         version: 5.25.0
     devDependencies:
       '@repo/eslint-config':
