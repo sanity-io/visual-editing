@@ -25,21 +25,19 @@ All notable changes to this project will be documented in this file. See
 
 ## [2.0.8](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v2.0.7...svelte-loader-v2.0.8) (2025-12-31)
 
-
 ### Bug Fixes
 
-* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
-
+- replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/core-loader bumped to 2.0.5
-  * devDependencies
-    * @sanity/visual-editing bumped to 5.0.4
-  * peerDependencies
-    * @sanity/visual-editing bumped to 5.0.4
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/core-loader bumped to 2.0.5
+  - devDependencies
+    - @sanity/visual-editing bumped to 5.0.4
+  - peerDependencies
+    - @sanity/visual-editing bumped to 5.0.4
 
 ## [2.0.7](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v2.0.6...svelte-loader-v2.0.7) (2025-12-17)
 

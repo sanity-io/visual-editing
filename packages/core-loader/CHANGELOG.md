@@ -7,17 +7,15 @@ All notable changes to this project will be documented in this file. See
 
 ## [2.0.5](https://github.com/sanity-io/visual-editing/compare/core-loader-v2.0.4...core-loader-v2.0.5) (2025-12-31)
 
-
 ### Bug Fixes
 
-* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
-
+- replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/visual-editing-csm bumped to 3.0.4
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/visual-editing-csm bumped to 3.0.4
 
 ## [2.0.4](https://github.com/sanity-io/visual-editing/compare/core-loader-v2.0.3...core-loader-v2.0.4) (2025-12-17)
 

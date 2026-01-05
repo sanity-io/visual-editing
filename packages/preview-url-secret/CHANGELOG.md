@@ -7,10 +7,9 @@ All notable changes to this project will be documented in this file. See
 
 ## [4.0.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v4.0.1...preview-url-secret-v4.0.2) (2025-12-31)
 
-
 ### Bug Fixes
 
-* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
+- replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
 
 ## [4.0.1](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v4.0.0...preview-url-secret-v4.0.1) (2025-12-17)
 
