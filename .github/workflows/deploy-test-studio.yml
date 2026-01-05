@@ -20,8 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
+          cache: pnpm
           node-version: lts/*
       - run: pnpm install --ignore-scripts
       - run: pnpm turbo build --filter=apps-studio^...
@@ -29,3 +30,12 @@ jobs:
         working-directory: apps/studio
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY_TOKEN }}
+          SANITY_STUDIO_VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.SANITY_STUDIO_VERCEL_AUTOMATION_BYPASS_SECRET }}
+          SANITY_STUDIO_ASTRO_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_ASTRO_PREVIEW_URL }}
+          SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_NEXT_PAGES_ROUTER_PREVIEW_URL }}
+          SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL }}
+          SANITY_STUDIO_REMIX_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_REMIX_PREVIEW_URL }}
+          SANITY_STUDIO_SVELTE_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_SVELTE_PREVIEW_URL }}
+          SANITY_STUDIO_NUXT_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_NUXT_PREVIEW_URL }}
+          SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_NEXT_APP_ROUTER_PREVIEW_URL }}
+          SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL: ${{ secrets.SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL }}
