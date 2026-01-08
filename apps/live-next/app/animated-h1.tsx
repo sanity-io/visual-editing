@@ -1,46 +1,9 @@
 'use client'
 
-import {AnimatePresence, motion, Variants} from 'motion/react'
+import {AnimatePresence, motion} from 'motion/react'
 import {stegaClean} from 'next-sanity'
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: (i = 1) => ({
-    transition: {
-      staggerChildren: 0.3 * i,
-      delayChildren: 0.4 * i,
-    },
-  }),
-  exit: (i = 1) => ({
-    transition: {
-      staggerChildren: 0.3 * i,
-      staggerDirection: -1,
-      delayChildren: 0.4 * i,
-    },
-  }),
-}
 
-const characterVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    scale: 0,
-    width: 0,
-    transition: {type: 'spring', bounce: 0},
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    width: 'auto',
-    transition: {type: 'spring', bounce: 0},
-  },
-  exit: {
-    opacity: 0,
-    scale: 0,
-    width: 0,
-    transition: {type: 'spring', bounce: 0},
-  },
-}
 
 export function AnimatedH1({text: stegaText, className}: {text: string; className: string}) {
   const text = stegaClean(stegaText)
@@ -54,7 +17,27 @@ export function AnimatedH1({text: stegaText, className}: {text: string; classNam
         <motion.span
           key={key}
           style={{display: 'inline-block', position: 'relative'}}
-          variants={characterVariants}
+          variants={{
+            hidden: {
+              opacity: 0,
+              scale: 0,
+              width: 0,
+              transition: {type: 'spring', bounce: 0},
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              width: 'auto',
+              transition: {type: 'spring', bounce: 0},
+            },
+            exit: {
+              opacity: 0,
+              scale: 0,
+              width: 0,
+              transition: {type: 'spring', bounce: 0},
+            },
+          }}
           initial="hidden"
           animate="visible"
           exit="exit"
@@ -72,7 +55,22 @@ export function AnimatedH1({text: stegaText, className}: {text: string; classNam
     <>
       <motion.h1
         className={className}
-        variants={containerVariants}
+        variants={{
+          hidden: {},
+          visible: (i = 1) => ({
+            transition: {
+              staggerChildren: 0.3 * i,
+              delayChildren: 0.4 * i,
+            },
+          }),
+          exit: (i = 1) => ({
+            transition: {
+              staggerChildren: 0.3 * i,
+              staggerDirection: -1,
+              delayChildren: 0.4 * i,
+            },
+          }),
+        }}
         initial="hidden"
         animate="visible"
         exit="exit"
