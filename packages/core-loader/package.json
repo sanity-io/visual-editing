@@ -5,16 +5,32 @@
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
   },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/core-loader"
   },
-  "author": "Sanity.io <hello@sanity.io>",
-  "license": "MIT",
-  "sideEffects": false,
+  "files": [
+    "CHANGELOG.md",
+    "dist"
+  ],
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "encode-data-attribute": [
+        "./dist/encode-data-attribute.d.ts"
+      ],
+      "create-data-attribute": [
+        "./dist/create-data-attribute.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -36,22 +52,9 @@
     },
     "./package.json": "./package.json"
   },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "encode-data-attribute": [
-        "./dist/encode-data-attribute.d.ts"
-      ],
-      "create-data-attribute": [
-        "./dist/create-data-attribute.d.ts"
-      ]
-    }
+  "publishConfig": {
+    "access": "public"
   },
-  "files": [
-    "CHANGELOG.md",
-    "dist"
-  ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
@@ -88,8 +91,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
