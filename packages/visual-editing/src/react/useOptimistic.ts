@@ -26,8 +26,8 @@ export function useOptimistic<T, U = SanityDocument>(
    * `useEffect` deps to make it happen.
    */
   const reduceStateFromActionRef = useRef<
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ((action: OptimisticReducerAction<U>, prevState: T) => T) | null
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ((action: OptimisticReducerAction<U>, prevState: T) => T) | null
   >(null)
   useInsertionEffect(() => {
     reduceStateFromActionRef.current = (action: OptimisticReducerAction<U>, prevState: T) => {

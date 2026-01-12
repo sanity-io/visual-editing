@@ -47,13 +47,13 @@
               :alt="product.media?.alt || ''"
             />
           </div>
-          <h2 class="mb-8 mt-4 text-sm text-gray-700" :style="{['textWrap' as any]: 'balance'}">
+          <h2 class="mt-4 mb-8 text-sm text-gray-700" :style="{['textWrap' as any]: 'balance'}">
             {{ product.title }}
           </h2>
           <p class="absolute bottom-0 left-0 mt-1 text-lg font-medium text-gray-900">
             {{ product.price ? formatCurrency(product.price) : 'FREE' }}
           </p>
-          <div v-if="product.brand" class="absolute bottom-0.5 right-0 flex items-center gap-x-2">
+          <div v-if="product.brand" class="absolute right-0 bottom-0.5 flex items-center gap-x-2">
             <img
               class="h-6 w-6 rounded-full bg-gray-50"
               width="24"

@@ -3,8 +3,6 @@
 import {AnimatePresence, motion} from 'motion/react'
 import {stegaClean} from 'next-sanity'
 
-
-
 export function AnimatedH1({text: stegaText, className}: {text: string; className: string}) {
   const text = stegaClean(stegaText)
   const transformChars = (text: string) => {

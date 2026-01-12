@@ -7,9 +7,9 @@
     "build": "vite build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "predev": "pnpm run typegen",
     "dev": "vite dev --port 3004",
     "lint": "eslint .",
+    "predev": "pnpm run typegen",
     "preview": "vite preview",
     "typegen": "sanity typegen generate"
   },

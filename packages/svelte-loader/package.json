@@ -5,16 +5,23 @@
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
   },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/svelte-loader"
   },
-  "author": "Sanity.io <hello@sanity.io>",
-  "license": "MIT",
-  "sideEffects": false,
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "src"
+  ],
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -24,13 +31,9 @@
     },
     "./package.json": "./package.json"
   },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "CHANGELOG.md",
-    "dist",
-    "src"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "svelte-package -i src -o dist",
     "dev": "pnpm run build",
@@ -71,8 +74,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
