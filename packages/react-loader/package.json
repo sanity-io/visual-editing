@@ -5,16 +5,35 @@
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
   },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
     "directory": "packages/react-loader"
   },
-  "author": "Sanity.io <hello@sanity.io>",
-  "license": "MIT",
-  "sideEffects": false,
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "src",
+    "!**/*.test.*",
+    "!**/__fixtures__/*"
+  ],
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "jsx": [
+        "./dist/jsx.d.ts"
+      ],
+      "rsc": [
+        "./dist/rsc/index.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "browser": {
@@ -47,25 +66,9 @@
       "default": "./dist/rsc/index.js"
     }
   },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "jsx": [
-        "./dist/jsx.d.ts"
-      ],
-      "rsc": [
-        "./dist/rsc/index.d.ts"
-      ]
-    }
+  "publishConfig": {
+    "access": "public"
   },
-  "files": [
-    "!**/*.test.*",
-    "!**/__fixtures__/*",
-    "CHANGELOG.md",
-    "dist",
-    "src"
-  ],
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
@@ -102,8 +105,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

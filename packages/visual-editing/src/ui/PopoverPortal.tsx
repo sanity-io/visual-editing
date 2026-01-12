@@ -7,7 +7,7 @@ const scrollBlockStyles = css`
   overscroll-behavior: contain;
   -ms-overflow-style: none;
   scrollbar-width: none;
-
+  
   &:before {
     content: '';
     display: block;
