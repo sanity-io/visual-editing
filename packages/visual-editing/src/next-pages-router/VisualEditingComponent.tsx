@@ -21,7 +21,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditingComponent(props: VisualEditingProps): null {
-  const {components, refresh: refreshProp, zIndex} = props
+  const {components, refresh: refreshProp, zIndex, onPerspectiveChange} = props
 
   const router = useRouter()
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
@@ -73,6 +73,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       components,
       zIndex,
       refresh,
+      onPerspectiveChange,
       history: {
         subscribe: (_navigate) => {
           setNavigate(() => _navigate)
@@ -82,7 +83,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [components, zIndex])
+  }, [components, zIndex, onPerspectiveChange])
 
   const {asPath, basePath, locale, isReady} = useRouter()
   useEffect(() => {

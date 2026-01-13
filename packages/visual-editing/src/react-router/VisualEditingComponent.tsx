@@ -23,7 +23,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditingComponent(props: VisualEditingProps): null {
-  const {components, refresh, zIndex} = props
+  const {components, refresh, zIndex, onPerspectiveChange} = props
 
   const navigateRemix = useNavigate()
   const navigateRemixRef = useRef(navigateRemix)
@@ -50,6 +50,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
     const disable = enableVisualEditing({
       components,
       zIndex,
+      onPerspectiveChange,
       refresh: (payload) => {
         function refreshDefault() {
           if (payload.source === 'mutation' && payload.livePreviewEnabled) {
@@ -79,7 +80,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [components, refresh, revalidator, zIndex])
+  }, [components, refresh, revalidator, zIndex, onPerspectiveChange])
 
   const location = useLocation()
   useEffect(() => {

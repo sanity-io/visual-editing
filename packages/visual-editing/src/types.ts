@@ -1,3 +1,4 @@
+import type {ClientPerspective} from '@sanity/client'
 import type {Node} from '@sanity/comlink'
 import type {
   DocumentSchema,
@@ -536,6 +537,10 @@ export interface VisualEditingOptions {
    * The history adapter is used for Sanity Presentation to navigate URLs in the preview frame.
    */
   history?: HistoryAdapter
+  /**
+   * This event can be used to make sure server side data fetching uses the same client perspective as the Sanity Studio that is driving the visual editing.
+   */
+  onPerspectiveChange?: (perspective: ClientPerspective) => void
   /**
    * The refresh API allows smarter refresh logic than the default `location.reload()` behavior.
    */
