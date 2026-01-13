@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.0.4...visual-editing-v5.1.0) (2026-01-13)
+
+
+### Features
+
+* add `onPerspectiveChange` event ([#3333](https://github.com/sanity-io/visual-editing/issues/3333)) ([db9dff8](https://github.com/sanity-io/visual-editing/commit/db9dff84f93f75ab9ff90bf9186282dbbf96bf50))
+
 ## [5.0.4](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.0.3...visual-editing-v5.0.4) (2025-12-31)
 
 ### Bug Fixes
