@@ -187,6 +187,7 @@ export function Overlays(props: {
   comlink?: VisualEditingNode
   comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
+  onPerspectiveChange?: (perspective: ClientPerspective) => Promise<void> | void
   plugins?: OverlayPluginDefinition[]
   inFrame: boolean
   inPopUp: boolean
@@ -199,6 +200,7 @@ export function Overlays(props: {
     inFrame,
     inPopUp,
     zIndex,
+    onPerspectiveChange,
   } = props
 
   const prefersDark = usePrefersDark()
@@ -252,6 +254,13 @@ export function Overlays(props: {
   }, [comlink])
 
   usePerspectiveSync(comlink, dispatch)
+
+  useEffect(() => {
+    if (!onPerspectiveChange) return undefined
+
+    const raf = requestAnimationFrame(() => startTransition(() => onPerspectiveChange(perspective)))
+    return () => cancelAnimationFrame(raf)
+  }, [onPerspectiveChange, perspective])
 
   useReportDocuments(comlink, elements, perspective)
 

@@ -15,7 +15,7 @@ import {useDatasetMutator} from './useDatasetMutator'
  * @public
  */
 export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): React.ReactNode => {
-  const {components, plugins, history, portal = true, refresh, zIndex} = props
+  const {components, plugins, history, portal = true, refresh, zIndex, onPerspectiveChange} = props
 
   const [inFrame, setInFrame] = useState<boolean | null>(null)
   const [inPopUp, setInPopUp] = useState<boolean | null>(null)
@@ -50,6 +50,7 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
           comlink={comlink}
           comlinkStatus={comlinkStatus}
           componentResolver={components}
+          onPerspectiveChange={onPerspectiveChange}
           plugins={plugins}
           inFrame={inFrame}
           inPopUp={inPopUp}
