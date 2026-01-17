@@ -36,33 +36,33 @@
   },
   "exports": {
     ".": {
+      "source": "./src/index.ts",
+      "deno": "./dist/index.js",
+      "edge": "./dist/index.js",
+      "edge-light": "./dist/index.js",
+      "worker": "./dist/index.js",
+      "react-server": "./dist/rsc/index.react-server.js",
       "browser": {
         "source": "./src/index.browser.ts",
         "require": "./dist/index.browser.cjs",
         "import": "./dist/index.browser.js"
       },
-      "deno": "./dist/index.js",
-      "edge": "./dist/index.js",
-      "edge-light": "./dist/index.js",
-      "import": "./dist/index.js",
-      "react-server": "./dist/rsc/index.react-server.js",
       "require": "./dist/index.cjs",
-      "source": "./src/index.ts",
-      "worker": "./dist/index.js",
+      "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./jsx": {
+      "source": "./src/jsx/index.ts",
       "import": "./dist/jsx.js",
       "require": "./dist/jsx.cjs",
-      "source": "./src/jsx/index.ts",
       "default": "./dist/jsx.js"
     },
     "./package.json": "./package.json",
     "./rsc": {
-      "import": "./dist/rsc/index.js",
-      "react-server": "./dist/rsc/index.react-server.js",
-      "require": "./dist/rsc/index.cjs",
       "source": "./src/rsc/index.ts",
+      "react-server": "./dist/rsc/index.react-server.js",
+      "import": "./dist/rsc/index.js",
+      "require": "./dist/rsc/index.cjs",
       "default": "./dist/rsc/index.js"
     }
   },
