@@ -6,6 +6,8 @@
   "bracketSpacing": false,
   "experimentalSortImports": {},
   "experimentalTailwindcss": {},
-  "experimentalSortPackageJson": {"sortScripts": true},
+  // Disabled: alphabetizes `exports` field, but export condition order is significant.
+  // See: https://nodejs.org/api/packages.html#conditional-exports
+  "experimentalSortPackageJson": false,
   "ignorePatterns": ["dist/**", "pnpm-lock.yaml", ".changeset/*.md"],
 }
