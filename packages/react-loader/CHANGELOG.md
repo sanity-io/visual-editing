@@ -31,10 +31,9 @@ All notable changes to this project will be documented in this file. See
 
 ## [2.0.6](https://github.com/sanity-io/visual-editing/compare/react-loader-v2.0.5...react-loader-v2.0.6) (2026-01-19)
 
-
 ### Bug Fixes
 
-* **react-loader:** Restore export condition ordering for worker/edge environments ([#3338](https://github.com/sanity-io/visual-editing/issues/3338)) ([b831ae0](https://github.com/sanity-io/visual-editing/commit/b831ae0537fa97f36a3c60939ae52453339513e0)), closes [#3337](https://github.com/sanity-io/visual-editing/issues/3337)
+- **react-loader:** Restore export condition ordering for worker/edge environments ([#3338](https://github.com/sanity-io/visual-editing/issues/3338)) ([b831ae0](https://github.com/sanity-io/visual-editing/commit/b831ae0537fa97f36a3c60939ae52453339513e0)), closes [#3337](https://github.com/sanity-io/visual-editing/issues/3337)
 
 ## [2.0.5](https://github.com/sanity-io/visual-editing/compare/react-loader-v2.0.4...react-loader-v2.0.5) (2025-12-31)
 
