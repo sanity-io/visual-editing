@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.0...visual-editing-v5.1.1) (2026-01-23)
+
+
+### Bug Fixes
+
+* bump to a stable version of `@sanity/mutate` ([#3347](https://github.com/sanity-io/visual-editing/issues/3347)) ([793dced](https://github.com/sanity-io/visual-editing/commit/793dced0b5ff14ac73bc9e69ee13915162d5ee15))
+
 ## [5.1.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.0.4...visual-editing-v5.1.0) (2026-01-13)
 
 
