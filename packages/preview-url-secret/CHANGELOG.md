@@ -7,10 +7,9 @@ All notable changes to this project will be documented in this file. See
 
 ## [4.0.3](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v4.0.2...preview-url-secret-v4.0.3) (2026-02-03)
 
-
 ### Bug Fixes
 
-* **deps:** update non-major ([bce7118](https://github.com/sanity-io/visual-editing/commit/bce71184463bc8fc8e5e55d14db660c3eb5fb35f))
+- **deps:** update non-major ([bce7118](https://github.com/sanity-io/visual-editing/commit/bce71184463bc8fc8e5e55d14db660c3eb5fb35f))
 
 ## [4.0.2](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v4.0.1...preview-url-secret-v4.0.2) (2025-12-31)
 

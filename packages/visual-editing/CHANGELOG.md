@@ -2,19 +2,17 @@
 
 ## [5.1.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.1...visual-editing-v5.1.2) (2026-02-03)
 
-
 ### Bug Fixes
 
-* **deps:** update non-major ([bce7118](https://github.com/sanity-io/visual-editing/commit/bce71184463bc8fc8e5e55d14db660c3eb5fb35f))
-
+- **deps:** update non-major ([bce7118](https://github.com/sanity-io/visual-editing/commit/bce71184463bc8fc8e5e55d14db660c3eb5fb35f))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/insert-menu bumped to 3.0.4
-    * @sanity/preview-url-secret bumped to 4.0.3
-    * @sanity/visual-editing-csm bumped to 3.0.5
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/insert-menu bumped to 3.0.4
+    - @sanity/preview-url-secret bumped to 4.0.3
+    - @sanity/visual-editing-csm bumped to 3.0.5
 
 ## [5.1.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.0...visual-editing-v5.1.1) (2026-01-23)
 
