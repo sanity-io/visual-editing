@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.4](https://github.com/sanity-io/visual-editing/compare/insert-menu-v3.0.3...insert-menu-v3.0.4) (2026-02-03)
+
+
+### Bug Fixes
+
+* **deps:** update non-major ([bce7118](https://github.com/sanity-io/visual-editing/commit/bce71184463bc8fc8e5e55d14db660c3eb5fb35f))
+
 ## [3.0.3](https://github.com/sanity-io/visual-editing/compare/insert-menu-v3.0.2...insert-menu-v3.0.3) (2025-12-31)
 
 ### Bug Fixes
