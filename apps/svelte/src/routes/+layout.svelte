@@ -5,7 +5,7 @@
   import type {LayoutProps} from './$types'
 
   const {children, data}: LayoutProps = $props()
-  const {previewEnabled} = data
+  const previewEnabled = $derived(data.previewEnabled)
 </script>
 
 <div class="app">

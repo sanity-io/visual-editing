@@ -4,6 +4,7 @@
   import {stegaClean} from '@sanity/client/stega'
   import {useOptimistic} from '@sanity/sveltekit'
   import {createDataAttribute} from '@sanity/visual-editing'
+  import {untrack} from 'svelte'
   import {page} from '$app/stores'
   import {urlFor, urlForCrossDatasetReference} from '$lib/sanity'
   import type {ShoeQueryResult} from '$lib/sanity.types'
@@ -21,11 +22,14 @@
 
   const parentPath = $page.url.pathname.split('/').slice(0, -1).join('/')
 
+  const initialMedia = untrack(() => product!.media!)
+  const productId = $derived(product?._id)
+
   const {value: media, update: updateMedia} = useOptimistic<
     NonNullable<ShoeQueryResult>['media'],
     SanityDocument<NonNullable<ShoeQueryResult>>
-  >(product!.media!, (state, action) => {
-    if (action.id === product?._id && action.document.media) {
+  >(initialMedia, (state, action) => {
+    if (action.id === productId && action.document.media) {
       return action.document.media
     }
     return state
