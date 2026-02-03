@@ -17,10 +17,11 @@ jobs:
     name: Are there issues that linters can fix? 🤔
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
+          cache: pnpm
           node-version: lts/*
       - run: pnpm install --ignore-scripts
       - run: git restore pnpm-lock.yaml
