@@ -72,10 +72,7 @@ const urls = {
 }
 
 // Some apps have a Preview Mode, some don't
-function definePreviewUrl(
-  previewUrl: string,
-  workspaceName: string,
-): PreviewUrlOption {
+function definePreviewUrl(previewUrl: string, workspaceName: string): PreviewUrlOption {
   if (
     workspaceName === 'live-demo' ||
     workspaceName === 'page-builder-demo' ||
@@ -129,10 +126,7 @@ export default defineConfig([
   ]),
   defineWorkspace(workspaces['live-demo'], [
     liveDemoPlugin({
-      previewUrl: definePreviewUrl(
-        urls['live-next'],
-        workspaces['live-demo'].workspace,
-      ),
+      previewUrl: definePreviewUrl(urls['live-next'], workspaces['live-demo'].workspace),
     }),
     debugPlugin(),
   ]),
@@ -189,10 +183,7 @@ export default defineConfig([
     performanceTestPlugin(),
     presentationTool({
       previewUrl: {
-        ...(definePreviewUrl(
-          urls['next-pages-router'],
-          'next',
-        ) as PreviewUrlResolverOptions),
+        ...(definePreviewUrl(urls['next-pages-router'], 'next') as PreviewUrlResolverOptions),
         preview: '/pages-router/performance-test',
       },
     }),
