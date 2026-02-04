@@ -275,6 +275,9 @@ importers:
 
   apps/page-builder-demo:
     dependencies:
+      '@portabletext/react':
+        specifier: ^6.0.2
+        version: 6.0.2(react@19.2.4)
       '@react-spring/three':
         specifier: ^10.0.3
         version: 10.0.3(@react-three/fiber@9.5.0(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.182.0))(react@19.2.4)(three@0.182.0)
