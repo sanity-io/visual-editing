@@ -49,11 +49,6 @@ function resolvePreviewUrl(
   return fallback
 }
 const urls = {
-  astro: resolvePreviewUrl(
-    process.env.SANITY_STUDIO_ASTRO_PREVIEW_URL,
-    (endsWith) => `https://visual-editing-astro-git-${endsWith}/shoes`,
-    'http://localhost:3006/shoes',
-  ),
   'live-next': resolvePreviewUrl(
     process.env.SANITY_STUDIO_LIVE_NEXT_PREVIEW_URL,
     (endsWith) => `https://live-visual-editing-next-git-${endsWith}`,
@@ -69,20 +64,10 @@ const urls = {
     (endsWith) => `https://visual-editing-next-git-${endsWith}/pages-router/shoes`,
     'http://localhost:3001/pages-router/shoes',
   ),
-  nuxt: resolvePreviewUrl(
-    process.env.SANITY_STUDIO_NUXT_PREVIEW_URL,
-    (endsWith) => `https://visual-editing-nuxt-git-${endsWith}/shoes`,
-    'http://localhost:3003/shoes',
-  ),
   'page-builder-demo': resolvePreviewUrl(
     process.env.SANITY_STUDIO_PAGE_BUILDER_DEMO_PREVIEW_URL,
     (endsWith) => `https://visual-editing-page-builder-demo-git-${endsWith}`,
     'http://localhost:3005',
-  ),
-  svelte: resolvePreviewUrl(
-    process.env.SANITY_STUDIO_SVELTE_PREVIEW_URL,
-    (endsWith) => `https://visual-editing-svelte-git-${endsWith}`,
-    'http://localhost:3004',
   ),
 }
 
@@ -90,7 +75,6 @@ const urls = {
 function definePreviewUrl(
   previewUrl: string,
   workspaceName: string,
-  toolName: string,
 ): PreviewUrlOption {
   if (
     workspaceName === 'live-demo' ||
@@ -100,14 +84,6 @@ function definePreviewUrl(
     const {origin, pathname} = new URL(previewUrl)
     const previewMode = {
       enable: '/api/draft-mode/enable',
-    } satisfies PreviewUrlResolverOptions['previewMode']
-    return {origin, preview: pathname, previewMode}
-  }
-  if (workspaceName === 'svelte' || workspaceName === 'nuxt') {
-    const {origin, pathname} = new URL(previewUrl)
-    const previewMode = {
-      enable: '/preview/enable',
-      disable: '/preview/disable',
     } satisfies PreviewUrlResolverOptions['previewMode']
     return {origin, preview: pathname, previewMode}
   }
@@ -137,7 +113,6 @@ export default defineConfig([
       previewUrl: definePreviewUrl(
         urls['page-builder-demo'],
         workspaces['page-builder-demo'].workspace,
-        workspaces['page-builder-demo'].tool,
       ),
       components: {
         unstable_header: {
@@ -157,7 +132,6 @@ export default defineConfig([
       previewUrl: definePreviewUrl(
         urls['live-next'],
         workspaces['live-demo'].workspace,
-        workspaces['live-demo'].tool,
       ),
     }),
     debugPlugin(),
@@ -168,7 +142,6 @@ export default defineConfig([
       previewUrl: definePreviewUrl(
         urls['next-app-router'],
         workspaces['next-app-router'].workspace,
-        workspaces['next-app-router'].tool,
       ),
     }),
     presentationTool({
@@ -176,7 +149,6 @@ export default defineConfig([
       previewUrl: definePreviewUrl(
         urls['next-pages-router'],
         workspaces['next-pages-router'].workspace,
-        workspaces['next-pages-router'].tool,
       ),
       resolve: {
         mainDocuments: defineDocuments([
@@ -209,105 +181,6 @@ export default defineConfig([
     }),
     debugPlugin(),
   ]),
-  defineWorkspace(workspaces['nuxt'], [
-    shoesPlugin({
-      previewUrl: definePreviewUrl(
-        urls['nuxt'],
-        workspaces['nuxt'].workspace,
-        workspaces['nuxt'].tool,
-      ),
-    }),
-    debugPlugin(),
-  ]),
-  defineWorkspace(workspaces['svelte-basic'], [
-    shoesPlugin({
-      name: workspaces['svelte-basic'].tool,
-      previewUrl: definePreviewUrl(
-        new URL('/shoes', urls.svelte).toString(),
-        workspaces['svelte-basic'].workspace,
-        workspaces['svelte-basic'].tool,
-      ),
-    }),
-    presentationTool({
-      name: workspaces['svelte-live-loader'].tool,
-      previewUrl: definePreviewUrl(
-        new URL('/shoes-live-loader', urls.svelte).toString(),
-        workspaces['svelte-live-loader'].workspace,
-        workspaces['svelte-live-loader'].tool,
-      ),
-      resolve: {
-        mainDocuments: defineDocuments([
-          {
-            route: '/shoes-live-loader/shoes/:slug',
-            filter: `_type == "shoe" && slug.current == $slug`,
-          },
-        ]),
-        locations: {
-          shoe: defineLocations({
-            select: {
-              title: 'title',
-              slug: 'slug.current',
-            },
-            resolve: (doc) => ({
-              locations: [
-                {
-                  title: doc?.title || 'Untitled',
-                  href: `/shoes-live-loader/shoes/${doc?.slug}`,
-                },
-                {
-                  title: 'Shoes',
-                  href: '/shoes-live-loader/shoes',
-                },
-              ],
-            }),
-          }),
-        },
-      },
-    }),
-    presentationTool({
-      name: workspaces['svelte-query-loader'].tool,
-      previewUrl: definePreviewUrl(
-        new URL('/shoes-query-loader', urls.svelte).toString(),
-        workspaces['svelte-query-loader'].workspace,
-        workspaces['svelte-query-loader'].tool,
-      ),
-      resolve: {
-        mainDocuments: defineDocuments([
-          {
-            route: '/shoes-query-loader/shoes/:slug',
-            filter: `_type == "shoe" && slug.current == $slug`,
-          },
-        ]),
-        locations: {
-          shoe: defineLocations({
-            select: {
-              title: 'title',
-              slug: 'slug.current',
-            },
-            resolve: (doc) => ({
-              locations: [
-                {
-                  title: doc?.title || 'Untitled',
-                  href: `/shoes-query-loader/shoes/${doc?.slug}`,
-                },
-                {
-                  title: 'Shoes',
-                  href: '/shoes-query-loader/shoes',
-                },
-              ],
-            }),
-          }),
-        },
-      },
-    }),
-    debugPlugin(),
-  ]),
-  defineWorkspace(workspaces['astro'], [
-    shoesPlugin({
-      previewUrl: urls.astro,
-    }),
-    debugPlugin(),
-  ]),
   defineWorkspace(workspaces['cross-dataset-references'], [
     crossDatasetReferencesPlugin(),
     debugPlugin(),
@@ -319,7 +192,6 @@ export default defineConfig([
         ...(definePreviewUrl(
           urls['next-pages-router'],
           'next',
-          'pages-router',
         ) as PreviewUrlResolverOptions),
         preview: '/pages-router/performance-test',
       },

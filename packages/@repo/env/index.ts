@@ -18,12 +18,6 @@ export const datasets = {
 export const apiVersion = '2025-03-20' as const
 
 export const workspaces = {
-  astro: {
-    projectId: projectId,
-    dataset: datasets.development,
-    workspace: 'astro',
-    tool: 'presentation',
-  },
   'next-app-router': {
     projectId: projectId,
     dataset: datasets.development,
@@ -35,30 +29,6 @@ export const workspaces = {
     dataset: datasets.development,
     workspace: 'next',
     tool: 'pages-router',
-  },
-  nuxt: {
-    projectId: projectId,
-    dataset: datasets.development,
-    workspace: 'nuxt',
-    tool: 'presentation',
-  },
-  'svelte-basic': {
-    projectId: projectId,
-    dataset: datasets.development,
-    workspace: 'svelte',
-    tool: 'svelte-basic',
-  },
-  'svelte-query-loader': {
-    projectId: projectId,
-    dataset: datasets.development,
-    workspace: 'svelte',
-    tool: 'svelte-query-loader',
-  },
-  'svelte-live-loader': {
-    projectId: projectId,
-    dataset: datasets.development,
-    workspace: 'svelte',
-    tool: 'svelte-live-loader',
   },
   'cross-dataset-references': {
     projectId: projectId,
