@@ -1,6 +1,6 @@
 'use client'
 
-import {useIsPresentationTool} from 'next-sanity/hooks'
+import {useIsPresentationTool} from '@sanity/visual-editing/react'
 import {useRouter} from 'next/navigation'
 import {useTransition} from 'react'
 

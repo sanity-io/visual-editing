@@ -74,3 +74,5 @@ export type {
 export {useOptimistic} from './useOptimistic'
 export {useOptimisticActor} from './useOptimisticActor'
 export {useDocuments} from './useDocuments'
+export {useVisualEditingEnvironment} from './useVisualEditingEnvironment'
+export {useIsPresentationTool} from './useIsPresentationTool'

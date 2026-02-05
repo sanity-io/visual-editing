@@ -1,6 +1,6 @@
 'use client'
 
-import {useDraftModeEnvironment} from 'next-sanity/hooks'
+import {useVisualEditingEnvironment} from '@sanity/visual-editing/react'
 import {useRouter} from 'next/navigation'
 import {useTransition} from 'react'
 
@@ -10,8 +10,8 @@ export default function AlertBanner() {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
 
-  const env = useDraftModeEnvironment()
-  const shouldShow = env !== 'checking' && env !== 'presentation-iframe'
+  const env = useVisualEditingEnvironment()
+  const shouldShow = env !== null && env !== 'presentation-iframe'
 
   if (!shouldShow) return null
 

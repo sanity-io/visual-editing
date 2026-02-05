@@ -1,7 +1,7 @@
 import type {SanityDocument} from '@sanity/client'
 
-import {createDataAttribute, useOptimistic} from '@sanity/visual-editing'
-import React, {useMemo} from 'react'
+import {createDataAttribute, useOptimistic} from '@sanity/visual-editing/react'
+import {useMemo} from 'react'
 
 import type {FrontPageQueryResult} from '@/sanity.types'
 

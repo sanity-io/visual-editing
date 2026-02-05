@@ -3,10 +3,9 @@
   "private": true,
   "scripts": {
     "build": "turbo run build --filter='!./apps/*'",
-    "dev": "turbo run build --filter='!./apps/*' && turbo watch dev --filter='./packages/*' --filter='./packages/@repo/*' --filter=./apps/* --filter=!next-with-i18n",
+    "dev": "turbo run build --filter='!./apps/*' && turbo watch dev --filter='./packages/*' --filter='./packages/@repo/*' --filter=./apps/*",
     "dev:live-next": "turbo run build --filter=live-next^... --filter=apps-studio^... && turbo watch dev --filter=live-next... --filter=apps-studio...",
     "dev:next": "turbo run build --filter=apps-next^... --filter=apps-studio^... && turbo watch dev --filter=apps-next... --filter=apps-studio...",
-    "dev:next-with-i18n": "turbo run build --filter=next-with-i18n^... && turbo watch dev --filter=next-with-i18n...",
     "dev:page-builder-demo": "turbo run build --filter=page-builder-demo^... --filter=apps-studio^... && turbo watch dev --filter=page-builder-demo... --filter=apps-studio...",
     "format": "oxfmt . --no-error-on-unmatched-pattern",
     "knip": "knip",

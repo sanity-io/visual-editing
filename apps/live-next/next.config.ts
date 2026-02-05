@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   },
 
   reactCompiler: true,
+  experimental: {viewTransition: true},
 } satisfies NextConfig
 
 export default nextConfig
