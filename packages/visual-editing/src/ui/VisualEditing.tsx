@@ -51,7 +51,10 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
     } else if (inFrame || inPopUp) {
       // If thre might be a presentation tool present wait a little bit before setting the status, give comlink a moment to handshake
       const timeout = setTimeout(() => setEnvironment('standalone'), 1_000)
-      return () => clearTimeout(timeout)
+      return () => {
+        clearTimeout(timeout)
+        setEnvironment(null)
+      }
     } else {
       // No iframe or popup window means we are for sure in standalone mode
       setEnvironment('standalone')
