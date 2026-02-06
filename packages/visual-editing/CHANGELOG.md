@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.2.0...visual-editing-v5.2.1) (2026-02-06)
+
+
+### Bug Fixes
+
+* always unset env on unmount ([c482b4b](https://github.com/sanity-io/visual-editing/commit/c482b4b4845623230683b2d3ec9a1eb1636d42ef))
+
 ## [5.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.2...visual-editing-v5.2.0) (2026-02-06)
 
 
