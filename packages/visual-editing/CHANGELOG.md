@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.2...visual-editing-v5.2.0) (2026-02-06)
+
+
+### Features
+
+* **react:** port experimental hooks from next-sanity ([#3368](https://github.com/sanity-io/visual-editing/issues/3368)) ([efc897a](https://github.com/sanity-io/visual-editing/commit/efc897aa38957b6c3029d084ab79b753666f320e))
+
 ## [5.1.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.1...visual-editing-v5.1.2) (2026-02-03)
 
 ### Bug Fixes
