@@ -4,6 +4,7 @@ import {createPortal} from 'react-dom'
 
 import type {VisualEditingOptions} from '../types'
 
+import {setEnvironment} from './environment/context'
 import {History} from './History'
 import {Meta} from './Meta'
 import {Overlays} from './Overlays'
@@ -42,6 +43,21 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
 
   const [comlink, comlinkStatus] = useComlink(inFrame === true || inPopUp === true)
   useDatasetMutator(comlinkStatus === 'connected' ? comlink : undefined)
+
+  useEffect(() => {
+    if (comlinkStatus === 'connected') {
+      // Once we have connected over comlink we know for sure that presentation is present and can set env status
+      setEnvironment(inPopUp ? 'presentation-window' : 'presentation-iframe')
+    } else if (inFrame || inPopUp) {
+      // If thre might be a presentation tool present wait a little bit before setting the status, give comlink a moment to handshake
+      const timeout = setTimeout(() => setEnvironment('standalone'), 1_000)
+      return () => clearTimeout(timeout)
+    } else {
+      // No iframe or popup window means we are for sure in standalone mode
+      setEnvironment('standalone')
+    }
+    return () => setEnvironment(null)
+  }, [comlinkStatus, inPopUp, inFrame])
 
   const children = (
     <>

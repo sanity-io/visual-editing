@@ -1,11 +1,13 @@
 import './globals.css'
 import type {Metadata} from 'next'
 
+import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
+import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import {toPlainText, type PortableTextBlock} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {Inter} from 'next/font/google'
-import {draftMode} from 'next/headers'
+import {cookies, draftMode} from 'next/headers'
 import {Suspense} from 'react'
 import {Toaster} from 'sonner'
 
@@ -75,6 +77,8 @@ async function Footer() {
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {data} = await sanityFetch({query: settingsQuery})
+  const {isEnabled: isDraftModeEnabled} = await draftMode()
+  const perspective = isDraftModeEnabled ? await resolvePerspectiveFromCookies() : 'published'
   return (
     <html
       lang="en"
@@ -86,15 +90,15 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     >
       <body>
         <section className="min-h-screen">
-          {(await draftMode()).isEnabled && <AlertBanner />}
-          <DraftModeStatus />
+          {isDraftModeEnabled && <AlertBanner />}
+          <DraftModeStatus perspective={perspective as string} />
           <main>{children}</main>
           <Suspense>
             <Footer />
           </Suspense>
         </section>
         <Toaster />
-        {(await draftMode()).isEnabled && <VisualEditing />}
+        {isDraftModeEnabled && <VisualEditing />}
         <SanityLive
           refreshOnFocus
           refreshOnReconnect
@@ -105,4 +109,30 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       </body>
     </html>
   )
+}
+
+async function resolvePerspectiveFromCookies(): Promise<Exclude<ClientPerspective, 'raw'>> {
+  const jar = await cookies()
+  return jar.has(perspectiveCookieName)
+    ? sanitizePerspective(jar.get(perspectiveCookieName)?.value, 'drafts')
+    : 'drafts'
+}
+
+function sanitizePerspective(
+  _perspective: unknown,
+  fallback: 'drafts' | 'published',
+): Exclude<ClientPerspective, 'raw'> {
+  const perspective =
+    typeof _perspective === 'string' && _perspective.includes(',')
+      ? _perspective.split(',')
+      : _perspective
+  try {
+    validateApiPerspective(perspective)
+    return perspective === 'raw'
+      ? fallback
+      : (Array.isArray(perspective) ? perspective.filter(Boolean) : perspective) || fallback
+  } catch (err) {
+    console.warn(`Invalid perspective:`, _perspective, perspective, err)
+    return fallback
+  }
 }

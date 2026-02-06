@@ -2,7 +2,7 @@
 
 import type {SanityDocument} from '@sanity/client'
 
-import {useOptimistic} from '@sanity/visual-editing'
+import {useOptimistic} from '@sanity/visual-editing/react'
 
 import type {FrontPageQueryResult} from '@/sanity.types'
 

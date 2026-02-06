@@ -4,7 +4,7 @@ import type {SanityDocument} from '@sanity/client'
 
 import {type StudioPathLike} from '@sanity/client/csm'
 import {get} from '@sanity/util/paths'
-import {useOptimistic} from '@sanity/visual-editing'
+import {useOptimistic} from '@sanity/visual-editing/react'
 import {Children, isValidElement} from 'react'
 
 import type {DndTestPage} from '@/sanity.types'
