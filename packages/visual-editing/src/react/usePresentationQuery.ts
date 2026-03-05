@@ -27,6 +27,11 @@ export type UsePresentationQueryReturnsActive<QueryString extends string> = {
   perspective: ClientPerspective
 }
 
+/**
+ * Returns the inactive state when no Presentation Tool connection is available,
+ * or the active state with query results when connected.
+ * @alpha
+ */
 export type UsePresentationQueryReturns<QueryString extends string> =
   | UsePresentationQueryReturnsInactive
   | UsePresentationQueryReturnsActive<QueryString>
