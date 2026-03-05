@@ -1,8 +1,7 @@
 'use client'
 
-import {useIsPresentationTool} from '@sanity/visual-editing/react'
+import {useIsPresentationTool, usePresentationQuery} from '@sanity/visual-editing/react'
 import {defineQuery, type PortableTextBlock} from 'next-sanity'
-import {usePresentationQuery} from 'next-sanity/hooks'
 
 import CustomPortableText from '@/app/portable-text'
 

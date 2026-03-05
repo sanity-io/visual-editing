@@ -6,6 +6,7 @@ import type {VisualEditingOptions} from '../types'
 
 import {setEnvironment} from './environment/context'
 import {History} from './History'
+import {LoaderComlink} from './LoaderComlink'
 import {Meta} from './Meta'
 import {Overlays} from './Overlays'
 import {Refresh} from './Refresh'
@@ -83,6 +84,7 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
           {refresh && <Refresh comlink={comlink} refresh={refresh} />}
         </>
       )}
+      {comlinkStatus === 'connected' && <LoaderComlink />}
     </>
   )
 

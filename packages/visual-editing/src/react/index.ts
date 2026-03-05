@@ -76,3 +76,9 @@ export {useOptimisticActor} from './useOptimisticActor'
 export {useDocuments} from './useDocuments'
 export {useVisualEditingEnvironment} from './useVisualEditingEnvironment'
 export {useIsPresentationTool} from './useIsPresentationTool'
+export {usePresentationQuery} from './usePresentationQuery'
+export type {
+  UsePresentationQueryReturns,
+  UsePresentationQueryReturnsActive,
+  UsePresentationQueryReturnsInactive,
+} from './usePresentationQuery'
