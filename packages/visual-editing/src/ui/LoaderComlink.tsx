@@ -6,7 +6,11 @@ import {
 } from '@sanity/presentation-comlink'
 import {useEffect} from 'react'
 
-import {setLoaderClientConfig, setLoaderComlink, setLoaderPerspective} from './loader-comlink/context'
+import {
+  setLoaderClientConfig,
+  setLoaderComlink,
+  setLoaderPerspective,
+} from './loader-comlink/context'
 
 /**
  * Creates a loader comlink node that connects to the Presentation Tool.
