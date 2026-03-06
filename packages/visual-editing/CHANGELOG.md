@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.2.1...visual-editing-v5.3.0) (2026-03-06)
+
+
+### Features
+
+* add usePresentationQuery hook to @sanity/visual-editing/react ([#3375](https://github.com/sanity-io/visual-editing/issues/3375)) ([f0d7cf3](https://github.com/sanity-io/visual-editing/commit/f0d7cf3e24fc249213b616ababd75523074cda1c))
+
 ## [5.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.2.0...visual-editing-v5.2.1) (2026-02-06)
 
 
