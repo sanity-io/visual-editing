@@ -14,7 +14,7 @@ import {setLoaderClientConfig, setLoaderComlink, setLoaderPerspective} from './l
  * for running queries and receiving live updates.
  * @internal
  */
-export function LoaderComlink(): null {
+export default function LoaderComlink(): null {
   useEffect(() => {
     const loaderComlink = createNode<LoaderNodeMsg, LoaderControllerMsg>(
       {
