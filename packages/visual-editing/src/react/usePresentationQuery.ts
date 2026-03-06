@@ -3,7 +3,7 @@ import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {dequal} from 'dequal/lite'
-import {useEffect, useMemo, useReducer, useRef, useSyncExternalStore} from 'react'
+import {useEffect, useEffectEvent, useMemo, useReducer, useSyncExternalStore} from 'react'
 
 import {
   addQueryListener,
@@ -120,17 +120,8 @@ export function usePresentationQuery<const QueryString extends string>(props: {
   // Register this hook instance as a query listener so LoaderComlink is mounted
   useEffect(() => addQueryListener(), [])
 
-  // Use refs to access latest values inside effects without re-creating intervals/subscriptions
-  const latestRef = useRef({projectId, dataset, perspective, query, params})
-  useEffect(() => {
-    latestRef.current = {projectId, dataset, perspective, query, params}
-  })
-
-  useEffect(() => {
-    if (!comlink) return
-
-    const sendHeartbeat = () => {
-      const {projectId, dataset, perspective, query, params} = latestRef.current
+  const handleQueryHeartbeat = useEffectEvent(
+    (comlink: NonNullable<typeof comlinkSnapshot>) => {
       if (!projectId || !dataset || !perspective) return
       comlink.post('loader/query-listen', {
         projectId,
@@ -140,12 +131,11 @@ export function usePresentationQuery<const QueryString extends string>(props: {
         params,
         heartbeat: LISTEN_HEARTBEAT_INTERVAL,
       })
-    }
+    },
+  )
 
-    const handleQueryChange = (
-      event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data'],
-    ) => {
-      const {projectId, dataset, query, params} = latestRef.current
+  const handleQueryChange = useEffectEvent(
+    (event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data']) => {
       if (
         dequal(
           {projectId, dataset, query, params},
@@ -166,13 +156,17 @@ export function usePresentationQuery<const QueryString extends string>(props: {
           },
         })
       }
-    }
+    },
+  )
+
+  useEffect(() => {
+    if (!comlink) return
 
     const unsubscribe = comlink.on('loader/query-change', handleQueryChange)
 
     // Send initial heartbeat immediately
-    sendHeartbeat()
-    const interval = setInterval(sendHeartbeat, LISTEN_HEARTBEAT_INTERVAL)
+    handleQueryHeartbeat(comlink)
+    const interval = setInterval(() => handleQueryHeartbeat(comlink), LISTEN_HEARTBEAT_INTERVAL)
 
     return () => {
       clearInterval(interval)
