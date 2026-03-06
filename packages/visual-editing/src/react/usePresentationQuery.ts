@@ -6,6 +6,7 @@ import {dequal} from 'dequal/lite'
 import {useEffect, useMemo, useReducer, useRef, useSyncExternalStore} from 'react'
 
 import {
+  addQueryListener,
   comlink as comlinkSnapshot,
   comlinkDataset,
   comlinkPerspective,
@@ -115,6 +116,9 @@ export function usePresentationQuery<const QueryString extends string>(props: {
     () => comlinkPerspective,
     () => null,
   )
+
+  // Register this hook instance as a query listener so LoaderComlink is mounted
+  useEffect(() => addQueryListener(), [])
 
   // Use refs to access latest values inside effects without re-creating intervals/subscriptions
   const latestRef = useRef({projectId, dataset, perspective, query, params})
