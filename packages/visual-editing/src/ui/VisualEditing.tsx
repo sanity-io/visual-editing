@@ -1,5 +1,5 @@
 import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-comlink'
-import {lazy, startTransition, Suspense, useEffect, useState, useSyncExternalStore} from 'react'
+import {lazy, startTransition, Suspense, useDeferredValue, useEffect, useState, useSyncExternalStore} from 'react'
 import {createPortal} from 'react-dom'
 
 import type {VisualEditingOptions} from '../types'
@@ -50,11 +50,11 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
   const [comlink, comlinkStatus] = useComlink(inFrame === true || inPopUp === true)
   useDatasetMutator(comlinkStatus === 'connected' ? comlink : undefined)
 
-  const hasQueryListeners = useSyncExternalStore(
+  const hasQueryListeners = useDeferredValue(useSyncExternalStore(
     subscribeQueryListenerStatus,
     getQueryListenerStatus,
     () => false,
-  )
+  ), false)
 
   useEffect(() => {
     if (comlinkStatus === 'connected') {
@@ -96,7 +96,7 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
         </>
       )}
       {comlinkStatus === 'connected' && hasQueryListeners && (
-        <Suspense fallback={null}>
+        <Suspense>
           <LoaderComlink />
         </Suspense>
       )}
