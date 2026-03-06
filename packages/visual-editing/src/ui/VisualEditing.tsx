@@ -1,16 +1,22 @@
 import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-comlink'
-import {startTransition, useEffect, useState} from 'react'
+import {lazy, startTransition, Suspense, useDeferredValue, useEffect, useState, useSyncExternalStore} from 'react'
 import {createPortal} from 'react-dom'
 
 import type {VisualEditingOptions} from '../types'
 
 import {setEnvironment} from './environment/context'
 import {History} from './History'
+import {
+  getQueryListenerStatus,
+  subscribeQueryListenerStatus,
+} from './loader-comlink/context'
 import {Meta} from './Meta'
 import {Overlays} from './Overlays'
 import {Refresh} from './Refresh'
 import {useComlink} from './useComlink'
 import {useDatasetMutator} from './useDatasetMutator'
+
+const LoaderComlink = lazy(() => import('./LoaderComlink'))
 
 /**
  * @public
@@ -43,6 +49,12 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
 
   const [comlink, comlinkStatus] = useComlink(inFrame === true || inPopUp === true)
   useDatasetMutator(comlinkStatus === 'connected' ? comlink : undefined)
+
+  const hasQueryListeners = useDeferredValue(useSyncExternalStore(
+    subscribeQueryListenerStatus,
+    getQueryListenerStatus,
+    () => false,
+  ), false)
 
   useEffect(() => {
     if (comlinkStatus === 'connected') {
@@ -82,6 +94,11 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
           <Meta comlink={comlink} />
           {refresh && <Refresh comlink={comlink} refresh={refresh} />}
         </>
+      )}
+      {comlinkStatus === 'connected' && hasQueryListeners && (
+        <Suspense>
+          <LoaderComlink />
+        </Suspense>
       )}
     </>
   )
