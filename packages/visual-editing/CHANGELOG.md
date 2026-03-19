@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.0...visual-editing-v5.3.1) (2026-03-19)
+
+
+### Bug Fixes
+
+* **deps:** upgrade `@sanity/client` to v7.18.0 ([f8bbe8e](https://github.com/sanity-io/visual-editing/commit/f8bbe8e70003f8bbf93a33f8355381d488b9f8db))
+* **stega:** fails decoding content containing zero width space chars ([#3380](https://github.com/sanity-io/visual-editing/issues/3380)) ([0cd1d9f](https://github.com/sanity-io/visual-editing/commit/0cd1d9fe13314e6af82275af564f231570358109))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @sanity/preview-url-secret bumped to 4.0.4
+    * @sanity/visual-editing-csm bumped to 3.0.6
+
 ## [5.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.2.1...visual-editing-v5.3.0) (2026-03-06)
 
 
