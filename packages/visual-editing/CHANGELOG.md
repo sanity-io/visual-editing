@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.2...visual-editing-v5.3.3) (2026-03-25)
+
+
+### Bug Fixes
+
+* move `onPerspectiveChange` to event handler instead of useEffect ([4821bfb](https://github.com/sanity-io/visual-editing/commit/4821bfbe61a46afb4ac190b8ec4c8b1d429cec82))
+
 ## [5.3.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.1...visual-editing-v5.3.2) (2026-03-25)
 
 
