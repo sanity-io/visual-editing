@@ -1,9 +1,9 @@
+import type {ClientPerspective} from '@sanity/client'
 import type {VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 
 import {useEffect, useEffectEvent} from 'react'
 
 import type {OverlayMsg, VisualEditingNode} from '../types'
-import type { ClientPerspective } from '@sanity/client'
 
 export function usePerspectiveSync(
   comlink: VisualEditingNode | undefined,

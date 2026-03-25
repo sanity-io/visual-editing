@@ -120,19 +120,17 @@ export function usePresentationQuery<const QueryString extends string>(props: {
   // Register this hook instance as a query listener so LoaderComlink is mounted
   useEffect(() => addQueryListener(), [])
 
-  const handleQueryHeartbeat = useEffectEvent(
-    (comlink: NonNullable<typeof comlinkSnapshot>) => {
-      if (!projectId || !dataset || !perspective) return
-      comlink.post('loader/query-listen', {
-        projectId,
-        dataset,
-        perspective,
-        query,
-        params,
-        heartbeat: LISTEN_HEARTBEAT_INTERVAL,
-      })
-    },
-  )
+  const handleQueryHeartbeat = useEffectEvent((comlink: NonNullable<typeof comlinkSnapshot>) => {
+    if (!projectId || !dataset || !perspective) return
+    comlink.post('loader/query-listen', {
+      projectId,
+      dataset,
+      perspective,
+      query,
+      params,
+      heartbeat: LISTEN_HEARTBEAT_INTERVAL,
+    })
+  })
 
   const handleQueryChange = useEffectEvent(
     (event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data']) => {

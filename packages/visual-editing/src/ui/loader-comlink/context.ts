@@ -25,10 +25,7 @@ export function setLoaderComlink(
 }
 
 /** @internal */
-export function setLoaderClientConfig(
-  projectId: string | null,
-  dataset: string | null,
-): void {
+export function setLoaderClientConfig(projectId: string | null, dataset: string | null): void {
   comlinkProjectId = projectId
   comlinkDataset = dataset
   for (const listener of comlinkListeners) {
