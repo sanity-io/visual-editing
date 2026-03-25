@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.1...visual-editing-v5.3.2) (2026-03-25)
+
+
+### Bug Fixes
+
+* only call `onPerspectiveChange` once the perspective is known ([01fb825](https://github.com/sanity-io/visual-editing/commit/01fb8253d341e5a5f06c46c23773399b4bfa39c3))
+
 ## [5.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.0...visual-editing-v5.3.1) (2026-03-19)
 
 
