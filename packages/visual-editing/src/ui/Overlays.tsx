@@ -80,7 +80,7 @@ function raf2(fn: () => void) {
 
 const DocumentReporter: FunctionComponent<{
   documentIds: string[]
-  perspective: ClientPerspective | null
+  perspective: ClientPerspective
 }> = (props) => {
   const {documentIds} = props
   const [uniqueIds, setUniqueIds] = useState<string[]>([])
@@ -466,7 +466,7 @@ export function Overlays(props: {
                     ref={setRootElement}
                     $zIndex={zIndex}
                   >
-                    <DocumentReporter documentIds={documentIds} perspective={perspective} />
+                    <DocumentReporter documentIds={documentIds} perspective={perspective ?? 'published'} />
                     <OverlaysController
                       comlink={comlink}
                       dispatch={dispatch}
