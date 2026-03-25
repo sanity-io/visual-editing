@@ -80,7 +80,7 @@ function raf2(fn: () => void) {
 
 const DocumentReporter: FunctionComponent<{
   documentIds: string[]
-  perspective: ClientPerspective
+  perspective: ClientPerspective | null
 }> = (props) => {
   const {documentIds} = props
   const [uniqueIds, setUniqueIds] = useState<string[]>([])
@@ -229,7 +229,7 @@ export function Overlays(props: {
     elements: [],
     focusPath: '',
     isDragging: false,
-    perspective: 'published',
+    perspective: null,
     wasMaybeCollapsed: false,
     dragMinimapTransition: false,
     dragGroupRect: null,
@@ -256,13 +256,13 @@ export function Overlays(props: {
   usePerspectiveSync(comlink, dispatch)
 
   useEffect(() => {
-    if (!onPerspectiveChange) return undefined
+    if (!onPerspectiveChange || perspective === null) return undefined
 
     const raf = requestAnimationFrame(() => startTransition(() => onPerspectiveChange(perspective)))
     return () => cancelAnimationFrame(raf)
   }, [onPerspectiveChange, perspective])
 
-  useReportDocuments(comlink, elements, perspective)
+  useReportDocuments(comlink, elements, perspective ?? 'published')
 
   const updateDragPreviewCustomProps = useCallback(
     (x: number, y: number) => {

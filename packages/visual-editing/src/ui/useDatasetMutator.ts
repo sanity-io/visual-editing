@@ -18,7 +18,6 @@ export function useDatasetMutator(comlink: VisualEditingNode | undefined): void 
     const listener = createSharedListener(comlink)
     const datasetMutator = createDatasetMutator(comlink)
     const mutator = createActor(datasetMutator, {
-      // @ts-expect-error @todo
       input: {client: {withConfig: () => {}}, sharedListener: listener},
     })
 
