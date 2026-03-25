@@ -229,7 +229,7 @@ export function Overlays(props: {
     elements: [],
     focusPath: '',
     isDragging: false,
-    perspective: null,
+    perspective: 'published',
     wasMaybeCollapsed: false,
     dragMinimapTransition: false,
     dragGroupRect: null,
@@ -253,16 +253,9 @@ export function Overlays(props: {
     return () => unsubs.forEach((unsub) => unsub!())
   }, [comlink])
 
-  usePerspectiveSync(comlink, dispatch)
+  usePerspectiveSync(comlink, dispatch, onPerspectiveChange)
 
-  useEffect(() => {
-    if (!onPerspectiveChange || perspective === null) return undefined
-
-    const raf = requestAnimationFrame(() => startTransition(() => onPerspectiveChange(perspective)))
-    return () => cancelAnimationFrame(raf)
-  }, [onPerspectiveChange, perspective])
-
-  useReportDocuments(comlink, elements, perspective ?? 'published')
+  useReportDocuments(comlink, elements, perspective)
 
   const updateDragPreviewCustomProps = useCallback(
     (x: number, y: number) => {
@@ -466,7 +459,7 @@ export function Overlays(props: {
                     ref={setRootElement}
                     $zIndex={zIndex}
                   >
-                    <DocumentReporter documentIds={documentIds} perspective={perspective ?? 'published'} />
+                    <DocumentReporter documentIds={documentIds} perspective={perspective} />
                     <OverlaysController
                       comlink={comlink}
                       dispatch={dispatch}

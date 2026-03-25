@@ -1,13 +1,19 @@
 import type {VisualEditingControllerMsg} from '@sanity/presentation-comlink'
 
-import {useEffect} from 'react'
+import {useEffect, useEffectEvent} from 'react'
 
 import type {OverlayMsg, VisualEditingNode} from '../types'
+import type { ClientPerspective } from '@sanity/client'
 
 export function usePerspectiveSync(
   comlink: VisualEditingNode | undefined,
   dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void,
+  onPerspectiveChange?: (perspective: ClientPerspective) => void,
 ): void {
+  const handlePerspective = useEffectEvent((data: {perspective: ClientPerspective}) => {
+    dispatch({type: 'presentation/perspective', data})
+    onPerspectiveChange?.(data.perspective)
+  })
   useEffect(() => {
     const controller = new AbortController()
     comlink
@@ -16,7 +22,7 @@ export function usePerspectiveSync(
         suppressWarnings: true,
       })
       .then((data) => {
-        dispatch({type: 'presentation/perspective', data})
+        handlePerspective(data)
       })
       .catch(() => {
         // Fail silently as the app may be communicating with a version of
@@ -24,7 +30,7 @@ export function usePerspectiveSync(
       })
 
     const unsub = comlink?.on('presentation/perspective', (data) => {
-      dispatch({type: 'presentation/perspective', data})
+      handlePerspective(data)
     })
 
     return () => {
