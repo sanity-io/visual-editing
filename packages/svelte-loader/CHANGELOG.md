@@ -23,6 +23,35 @@ All notable changes to this project will be documented in this file. See
   - devDependencies
     - @sanity/visual-editing bumped from 1.7.0 to 1.7.1
 
+## [3.0.0](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v2.0.17...svelte-loader-v3.0.0) (2026-03-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* @sanity/core-loader bumped to 2.0.0
+
+### Bug Fixes
+
+* @sanity/core-loader bumped to 2.0.0 ([e762ade](https://github.com/sanity-io/visual-editing/commit/e762adeca00e3416a5b81b19d3e12c577176a4b2))
+* **deps:** update dependency @sanity/client to ^7.8.0 ([95f2802](https://github.com/sanity-io/visual-editing/commit/95f2802ab1220a55eebd8816098fe6ae80982370))
+* **deps:** update dependency @sanity/client to v7.1.0 ([#2984](https://github.com/sanity-io/visual-editing/issues/2984)) ([a9f8b89](https://github.com/sanity-io/visual-editing/commit/a9f8b898e4d6d6556336e69c3916ec06456db1f9))
+* **deps:** update dependency @sanity/client to v7.6.0 ([#3020](https://github.com/sanity-io/visual-editing/issues/3020)) ([039b859](https://github.com/sanity-io/visual-editing/commit/039b859f2190453e2d7530f2f9c99ba1209e4808))
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+* **deps:** Update dependency @sanity/visual-editing to v2.15.0 ([#3021](https://github.com/sanity-io/visual-editing/issues/3021)) ([1e93df5](https://github.com/sanity-io/visual-editing/commit/1e93df5c89be5e57aca4154192c8c0208941bc8c))
+* **deps:** update non-major ([bce7118](https://github.com/sanity-io/visual-editing/commit/bce71184463bc8fc8e5e55d14db660c3eb5fb35f))
+* **deps:** upgrade `@sanity/client` to v7.18.0 ([f8bbe8e](https://github.com/sanity-io/visual-editing/commit/f8bbe8e70003f8bbf93a33f8355381d488b9f8db))
+* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
+* use `@sanity/tsconfig` and upgrade `@sanity/pkg-utils` ([#3318](https://github.com/sanity-io/visual-editing/issues/3318)) ([e624b3b](https://github.com/sanity-io/visual-editing/commit/e624b3b9000c881b8a5834ea7c2258f3acda943f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @sanity/visual-editing bumped to 6.0.0
+  * peerDependencies
+    * @sanity/visual-editing bumped to 6.0.0
+
 ## [2.0.17](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v2.0.16...svelte-loader-v2.0.17) (2026-03-25)
 
 
