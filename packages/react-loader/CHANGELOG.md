@@ -1,33 +1,4 @@
-<!-- markdownlint-disable --><!-- textlint-disable -->
-
-# 📓 Changelog
-
-All notable changes to this project will be documented in this file. See
-[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
-
-### Dependencies
-
-- The following workspace dependencies were updated
-  - dependencies
-    - @sanity/core-loader bumped from 1.4.3 to 1.4.4
-
-### Dependencies
-
-- The following workspace dependencies were updated
-  - dependencies
-    - @sanity/core-loader bumped from 1.4.4 to 1.4.5
-
-### Dependencies
-
-- The following workspace dependencies were updated
-  - dependencies
-    - @sanity/core-loader bumped from 1.5.1 to 1.6.0
-
-### Dependencies
-
-- The following workspace dependencies were updated
-  - dependencies
-    - @sanity/core-loader bumped from 1.6.0 to 1.6.1
+# Changelog
 
 ## [2.0.8](https://github.com/sanity-io/visual-editing/compare/react-loader-v2.0.7...react-loader-v2.0.8) (2026-03-19)
 

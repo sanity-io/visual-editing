@@ -1,9 +1,4 @@
-<!-- markdownlint-disable --><!-- textlint-disable -->
-
-# 📓 Changelog
-
-All notable changes to this project will be documented in this file. See
-[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+# Changelog
 
 ## [2.0.7](https://github.com/sanity-io/visual-editing/compare/core-loader-v2.0.6...core-loader-v2.0.7) (2026-03-19)
 

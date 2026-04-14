@@ -1,27 +1,4 @@
-<!-- markdownlint-disable --><!-- textlint-disable -->
-
-# 📓 Changelog
-
-All notable changes to this project will be documented in this file. See
-[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
-
-### Dependencies
-
-- The following workspace dependencies were updated
-  - dependencies
-    - @sanity/core-loader bumped from 1.4.3 to 1.4.4
-
-### Dependencies
-
-- The following workspace dependencies were updated
-  - dependencies
-    - @sanity/core-loader bumped from 1.4.4 to 1.4.5
-
-### Dependencies
-
-- The following workspace dependencies were updated
-  - devDependencies
-    - @sanity/visual-editing bumped from 1.7.0 to 1.7.1
+# Changelog
 
 ## [2.0.17](https://github.com/sanity-io/visual-editing/compare/svelte-loader-v2.0.16...svelte-loader-v2.0.17) (2026-03-25)
 

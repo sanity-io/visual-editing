@@ -1,9 +1,4 @@
-<!-- markdownlint-disable --><!-- textlint-disable -->
-
-# 📓 Changelog
-
-All notable changes to this project will be documented in this file. See
-[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+# Changelog
 
 ## [4.0.4](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v4.0.3...preview-url-secret-v4.0.4) (2026-03-19)
 
