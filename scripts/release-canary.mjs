@@ -2,6 +2,7 @@
 import 'zx/globals'
 
 const entries = await fs.readdir('./packages', {withFileTypes: true})
+// Only top-level package dirs (skips scoped dirs like @repo/ which contain only private packages)
 const workspaces = entries
   .filter((e) => e.isDirectory() && !e.name.startsWith('@') && !e.name.startsWith('.'))
   .map((e) => `packages/${e.name}`)
