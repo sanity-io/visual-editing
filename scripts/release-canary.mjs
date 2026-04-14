@@ -1,8 +1,10 @@
 #!/usr/bin/env zx
 import 'zx/globals'
 
-const {packages} = await fs.readJson('./release-please-config.json')
-const workspaces = Object.keys(packages)
+const entries = await fs.readdir('./packages', {withFileTypes: true})
+const workspaces = entries
+  .filter((e) => e.isDirectory() && !e.name.startsWith('@') && !e.name.startsWith('.'))
+  .map((e) => `packages/${e.name}`)
 
 echo`found ${chalk.blue(workspaces.length)} workspaces to publish canaries for`
 

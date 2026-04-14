@@ -17,9 +17,12 @@
     "report:react-compiler-healthcheck": "turbo run react-compiler-healthcheck",
     "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
     "test": "turbo run test",
+    "release": "changeset publish",
     "turbo:fix": "turbo daemon clean"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
     "@sanity/pkg-utils": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
