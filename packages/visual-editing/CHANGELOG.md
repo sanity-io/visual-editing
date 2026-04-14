@@ -1,5 +1,70 @@
 # Changelog
 
+## [6.0.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.3...visual-editing-v6.0.0) (2026-04-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop CJS, only ESM is supported
+* require react 19.2 or later
+* require next.js v16 or later
+* Migrate to `react-router@7` and replace the  `@sanity/visual-editing/remix` imports with `@sanity/visual-editing/react-router`
+* **deps:** Update dependency @sanity/presentation-comlink to v2 ([#3272](https://github.com/sanity-io/visual-editing/issues/3272))
+* **deps:** Update dependency @sanity/comlink to v4 ([#3271](https://github.com/sanity-io/visual-editing/issues/3271))
+* **deps:** update dependency @sanity/ui to v3 (main) ([#3150](https://github.com/sanity-io/visual-editing/issues/3150))
+
+### Features
+
+* add `onPerspectiveChange` event ([#3333](https://github.com/sanity-io/visual-editing/issues/3333)) ([db9dff8](https://github.com/sanity-io/visual-editing/commit/db9dff84f93f75ab9ff90bf9186282dbbf96bf50))
+* add overlay plugin define helper ([#3026](https://github.com/sanity-io/visual-editing/issues/3026)) ([434aa65](https://github.com/sanity-io/visual-editing/commit/434aa65d5bfd88bc6f3e4831fbd8c9ff5b7d3148))
+* add usePresentationQuery hook to @sanity/visual-editing/react ([#3375](https://github.com/sanity-io/visual-editing/issues/3375)) ([f0d7cf3](https://github.com/sanity-io/visual-editing/commit/f0d7cf3e24fc249213b616ababd75523074cda1c))
+* allow next v16 ([732241a](https://github.com/sanity-io/visual-editing/commit/732241ade30945c1c1f0aa6b77f7c83634b86f2c))
+* Custom Overlay Plugins + Edit Groups ([#2996](https://github.com/sanity-io/visual-editing/issues/2996)) ([a0a0779](https://github.com/sanity-io/visual-editing/commit/a0a077972ab7b522d517eec9ac2a2c7d398ef243))
+* **react:** port experimental hooks from next-sanity ([#3368](https://github.com/sanity-io/visual-editing/issues/3368)) ([efc897a](https://github.com/sanity-io/visual-editing/commit/efc897aa38957b6c3029d084ab79b753666f320e))
+* require react 19.2 or later ([15f01ef](https://github.com/sanity-io/visual-editing/commit/15f01ef60e39801b78ad4021037509bd722b75fd))
+* upgrade to react compiler v1 ([#3255](https://github.com/sanity-io/visual-editing/issues/3255)) ([89565e6](https://github.com/sanity-io/visual-editing/commit/89565e6304d710f5970630a0e40519998725d31e))
+
+
+### Bug Fixes
+
+* always unset env on unmount ([c482b4b](https://github.com/sanity-io/visual-editing/commit/c482b4b4845623230683b2d3ec9a1eb1636d42ef))
+* bump to a stable version of `@sanity/mutate` ([#3347](https://github.com/sanity-io/visual-editing/issues/3347)) ([793dced](https://github.com/sanity-io/visual-editing/commit/793dced0b5ff14ac73bc9e69ee13915162d5ee15))
+* comlink has moved to a new repo ([8ee9b2d](https://github.com/sanity-io/visual-editing/commit/8ee9b2dda4eefe5635356109eeda05043110cb7c))
+* **deps:** bump xstate to 5.20 ([5a5c004](https://github.com/sanity-io/visual-editing/commit/5a5c004fdb41f16e616787b960537a0c6d969173))
+* **deps:** require peer dependency @sanity/client to ^7.0.0 ([de3db1f](https://github.com/sanity-io/visual-editing/commit/de3db1f0765b94a792cd44c23ee97f4615efc7cf))
+* **deps:** update dependency @sanity/client to ^7.8.0 ([95f2802](https://github.com/sanity-io/visual-editing/commit/95f2802ab1220a55eebd8816098fe6ae80982370))
+* **deps:** update dependency @sanity/client to v7.1.0 ([#2984](https://github.com/sanity-io/visual-editing/issues/2984)) ([a9f8b89](https://github.com/sanity-io/visual-editing/commit/a9f8b898e4d6d6556336e69c3916ec06456db1f9))
+* **deps:** update dependency @sanity/client to v7.6.0 ([#3020](https://github.com/sanity-io/visual-editing/issues/3020)) ([039b859](https://github.com/sanity-io/visual-editing/commit/039b859f2190453e2d7530f2f9c99ba1209e4808))
+* **deps:** update dependency @sanity/comlink to ^4.0.1 ([f5cc4b8](https://github.com/sanity-io/visual-editing/commit/f5cc4b8214b5e565fd3f9cb37dcbc2f2569bd273))
+* **deps:** Update dependency @sanity/comlink to v4 ([#3271](https://github.com/sanity-io/visual-editing/issues/3271)) ([a9f6ba7](https://github.com/sanity-io/visual-editing/commit/a9f6ba713accd0ac901ce6275cf4f3746654d9bb))
+* **deps:** update dependency @sanity/pkg-utils to v7 ([#3125](https://github.com/sanity-io/visual-editing/issues/3125)) ([58d123b](https://github.com/sanity-io/visual-editing/commit/58d123bace5c58f634f239bea88e1d975ec5c963))
+* **deps:** Update dependency @sanity/presentation-comlink to ^2.0.1 ([3303056](https://github.com/sanity-io/visual-editing/commit/3303056e59d26523a0d0a9ce6bbbeb36297f68be))
+* **deps:** Update dependency @sanity/presentation-comlink to v2 ([#3272](https://github.com/sanity-io/visual-editing/issues/3272)) ([ffa0f6a](https://github.com/sanity-io/visual-editing/commit/ffa0f6a104de9f87f9bf58490e15d8f39e921ebf))
+* **deps:** update dependency @sanity/ui to v3 (main) ([#3150](https://github.com/sanity-io/visual-editing/issues/3150)) ([6da470d](https://github.com/sanity-io/visual-editing/commit/6da470daa1591521a7b091b817fb5e39d6f4b562))
+* **deps:** update dependency styled-components to ^6.1.19 ([#3010](https://github.com/sanity-io/visual-editing/issues/3010)) ([1070331](https://github.com/sanity-io/visual-editing/commit/1070331964e801e38eb6b10361bd1ff4d80b2752))
+* **deps:** Update dependency use-effect-event to ^2.0.2 ([#3059](https://github.com/sanity-io/visual-editing/issues/3059)) ([a2e0e9c](https://github.com/sanity-io/visual-editing/commit/a2e0e9cc62788416b9768612863b3e7b10a6d9ae))
+* **deps:** Update dependency use-effect-event to v2 ([#3025](https://github.com/sanity-io/visual-editing/issues/3025)) ([f7a76d2](https://github.com/sanity-io/visual-editing/commit/f7a76d2501c7b8607d40b0fd351830d0b116bdf8))
+* **deps:** Update dependency xstate to ^5.19.4 ([#3011](https://github.com/sanity-io/visual-editing/issues/3011)) ([33111d6](https://github.com/sanity-io/visual-editing/commit/33111d68d938036e58c99b2b53aa66025ced25fd))
+* **deps:** update non-major ([bce7118](https://github.com/sanity-io/visual-editing/commit/bce71184463bc8fc8e5e55d14db660c3eb5fb35f))
+* **deps:** update react compiler dependencies 🤖 ✨ ([#2994](https://github.com/sanity-io/visual-editing/issues/2994)) ([0388fb0](https://github.com/sanity-io/visual-editing/commit/0388fb0bb9ea6f4fa3686c65d51029aa68104954))
+* **deps:** upgrade `@sanity/client` to v7.18.0 ([f8bbe8e](https://github.com/sanity-io/visual-editing/commit/f8bbe8e70003f8bbf93a33f8355381d488b9f8db))
+* **deps:** upgrade `@vercel/stega` ([4b8a95c](https://github.com/sanity-io/visual-editing/commit/4b8a95c760487d45c89349d9692a923a4d96dd9c))
+* don't interfere with dev keyboard shortcuts ([0a5d93b](https://github.com/sanity-io/visual-editing/commit/0a5d93be2b1d348261179efa86b6a0e340106ef5))
+* don't throw useEffectEvent errors from useOptimistic ([3b4f635](https://github.com/sanity-io/visual-editing/commit/3b4f63567de6d961a5a6277fe7235b8ba9e82286))
+* drop CJS, only ESM is supported ([7da75a7](https://github.com/sanity-io/visual-editing/commit/7da75a7a1d5674eead47eced42ba8e96dc767918))
+* handle `perspective` for "Open in Studio" links ([#3259](https://github.com/sanity-io/visual-editing/issues/3259)) ([39d5369](https://github.com/sanity-io/visual-editing/commit/39d536957632a9b58cce1fb043053dec0dc3d2ce))
+* if in frame open links in same frame ([ee88227](https://github.com/sanity-io/visual-editing/commit/ee882274352858a583e4c1b1368471e780f5d0fb))
+* move `onPerspectiveChange` to event handler instead of useEffect ([4821bfb](https://github.com/sanity-io/visual-editing/commit/4821bfbe61a46afb4ac190b8ec4c8b1d429cec82))
+* only call `onPerspectiveChange` once the perspective is known ([01fb825](https://github.com/sanity-io/visual-editing/commit/01fb8253d341e5a5f06c46c23773399b4bfa39c3))
+* remove get-random-values-esm as dependency ([#3288](https://github.com/sanity-io/visual-editing/issues/3288)) ([d49d977](https://github.com/sanity-io/visual-editing/commit/d49d97756a5848116b329f011a2206eaac3ac506))
+* remove remix ([e5e814f](https://github.com/sanity-io/visual-editing/commit/e5e814fd87b51e78f86fbb62b87cf38fb37ce8ab))
+* replace some `catalog:` prefixes with regular semver ([0f7fe31](https://github.com/sanity-io/visual-editing/commit/0f7fe31b1a889cb6f07f5bc4626df726a7ae7e43))
+* require next.js v16 or later ([e2ca298](https://github.com/sanity-io/visual-editing/commit/e2ca298f2ada9912836e876f9794f89ef076dce2))
+* show overlays inside of non-presentation iframes ([#3261](https://github.com/sanity-io/visual-editing/issues/3261)) ([7e089cf](https://github.com/sanity-io/visual-editing/commit/7e089cf9bc200083a1eca4ec0413ed82b92478ed))
+* **stega:** fails decoding content containing zero width space chars ([#3380](https://github.com/sanity-io/visual-editing/issues/3380)) ([0cd1d9f](https://github.com/sanity-io/visual-editing/commit/0cd1d9fe13314e6af82275af564f231570358109))
+* use `@sanity/tsconfig` and upgrade `@sanity/pkg-utils` ([#3318](https://github.com/sanity-io/visual-editing/issues/3318)) ([e624b3b](https://github.com/sanity-io/visual-editing/commit/e624b3b9000c881b8a5834ea7c2258f3acda943f))
+* use stable react, next and sanity peer dep ranges ([e58d995](https://github.com/sanity-io/visual-editing/commit/e58d995d57beba1e74f9ec7a2c15831c5cc04446))
+
 ## [5.3.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.2...visual-editing-v5.3.3) (2026-03-25)
 
 
