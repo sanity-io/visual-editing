@@ -1,6 +1,6 @@
+import {vercelStegaCombine} from '@vercel/stega'
 import {expect, test} from 'vitest'
 
-import {vercelStegaCombine} from '@vercel/stega'
 import {testAndDecodeStega} from '../stega'
 
 test('it handles trailing zero-width space characters', () => {

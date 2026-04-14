@@ -2,54 +2,47 @@
 
 ## [5.3.3](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.2...visual-editing-v5.3.3) (2026-03-25)
 
-
 ### Bug Fixes
 
-* move `onPerspectiveChange` to event handler instead of useEffect ([4821bfb](https://github.com/sanity-io/visual-editing/commit/4821bfbe61a46afb4ac190b8ec4c8b1d429cec82))
+- move `onPerspectiveChange` to event handler instead of useEffect ([4821bfb](https://github.com/sanity-io/visual-editing/commit/4821bfbe61a46afb4ac190b8ec4c8b1d429cec82))
 
 ## [5.3.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.1...visual-editing-v5.3.2) (2026-03-25)
 
-
 ### Bug Fixes
 
-* only call `onPerspectiveChange` once the perspective is known ([01fb825](https://github.com/sanity-io/visual-editing/commit/01fb8253d341e5a5f06c46c23773399b4bfa39c3))
+- only call `onPerspectiveChange` once the perspective is known ([01fb825](https://github.com/sanity-io/visual-editing/commit/01fb8253d341e5a5f06c46c23773399b4bfa39c3))
 
 ## [5.3.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.3.0...visual-editing-v5.3.1) (2026-03-19)
 
-
 ### Bug Fixes
 
-* **deps:** upgrade `@sanity/client` to v7.18.0 ([f8bbe8e](https://github.com/sanity-io/visual-editing/commit/f8bbe8e70003f8bbf93a33f8355381d488b9f8db))
-* **stega:** fails decoding content containing zero width space chars ([#3380](https://github.com/sanity-io/visual-editing/issues/3380)) ([0cd1d9f](https://github.com/sanity-io/visual-editing/commit/0cd1d9fe13314e6af82275af564f231570358109))
-
+- **deps:** upgrade `@sanity/client` to v7.18.0 ([f8bbe8e](https://github.com/sanity-io/visual-editing/commit/f8bbe8e70003f8bbf93a33f8355381d488b9f8db))
+- **stega:** fails decoding content containing zero width space chars ([#3380](https://github.com/sanity-io/visual-editing/issues/3380)) ([0cd1d9f](https://github.com/sanity-io/visual-editing/commit/0cd1d9fe13314e6af82275af564f231570358109))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * dependencies
-    * @sanity/preview-url-secret bumped to 4.0.4
-    * @sanity/visual-editing-csm bumped to 3.0.6
+- The following workspace dependencies were updated
+  - dependencies
+    - @sanity/preview-url-secret bumped to 4.0.4
+    - @sanity/visual-editing-csm bumped to 3.0.6
 
 ## [5.3.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.2.1...visual-editing-v5.3.0) (2026-03-06)
 
-
 ### Features
 
-* add usePresentationQuery hook to @sanity/visual-editing/react ([#3375](https://github.com/sanity-io/visual-editing/issues/3375)) ([f0d7cf3](https://github.com/sanity-io/visual-editing/commit/f0d7cf3e24fc249213b616ababd75523074cda1c))
+- add usePresentationQuery hook to @sanity/visual-editing/react ([#3375](https://github.com/sanity-io/visual-editing/issues/3375)) ([f0d7cf3](https://github.com/sanity-io/visual-editing/commit/f0d7cf3e24fc249213b616ababd75523074cda1c))
 
 ## [5.2.1](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.2.0...visual-editing-v5.2.1) (2026-02-06)
 
-
 ### Bug Fixes
 
-* always unset env on unmount ([c482b4b](https://github.com/sanity-io/visual-editing/commit/c482b4b4845623230683b2d3ec9a1eb1636d42ef))
+- always unset env on unmount ([c482b4b](https://github.com/sanity-io/visual-editing/commit/c482b4b4845623230683b2d3ec9a1eb1636d42ef))
 
 ## [5.2.0](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.2...visual-editing-v5.2.0) (2026-02-06)
 
-
 ### Features
 
-* **react:** port experimental hooks from next-sanity ([#3368](https://github.com/sanity-io/visual-editing/issues/3368)) ([efc897a](https://github.com/sanity-io/visual-editing/commit/efc897aa38957b6c3029d084ab79b753666f320e))
+- **react:** port experimental hooks from next-sanity ([#3368](https://github.com/sanity-io/visual-editing/issues/3368)) ([efc897a](https://github.com/sanity-io/visual-editing/commit/efc897aa38957b6c3029d084ab79b753666f320e))
 
 ## [5.1.2](https://github.com/sanity-io/visual-editing/compare/visual-editing-v5.1.1...visual-editing-v5.1.2) (2026-02-03)
 
