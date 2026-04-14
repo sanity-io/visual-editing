@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.9
+
+### Patch Changes
+
+- [#3386](https://github.com/sanity-io/visual-editing/pull/3386) [`2b09955`](https://github.com/sanity-io/visual-editing/commit/2b09955d5dc783d861f256d6728e1be4ebcf8729) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - fix(deps): update @sanity/client to ^7.21.0
+
+- Updated dependencies [[`2b09955`](https://github.com/sanity-io/visual-editing/commit/2b09955d5dc783d861f256d6728e1be4ebcf8729)]:
+  - @sanity/visual-editing-csm@3.0.7
+  - @sanity/core-loader@2.0.8
+
 ## [2.0.8](https://github.com/sanity-io/visual-editing/compare/react-loader-v2.0.7...react-loader-v2.0.8) (2026-03-19)
 
 ### Bug Fixes

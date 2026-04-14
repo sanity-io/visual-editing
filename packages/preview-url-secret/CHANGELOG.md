@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.5
+
+### Patch Changes
+
+- [#3386](https://github.com/sanity-io/visual-editing/pull/3386) [`2b09955`](https://github.com/sanity-io/visual-editing/commit/2b09955d5dc783d861f256d6728e1be4ebcf8729) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - fix(deps): update @sanity/client to ^7.21.0
+
 ## [4.0.4](https://github.com/sanity-io/visual-editing/compare/preview-url-secret-v4.0.3...preview-url-secret-v4.0.4) (2026-03-19)
 
 ### Bug Fixes
