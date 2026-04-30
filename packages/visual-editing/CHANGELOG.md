@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.3.5
+
+### Patch Changes
+
+- [`82a9bc1`](https://github.com/sanity-io/visual-editing/commit/82a9bc1e5179ac7c7e4a878cbe0339362dd22e06) Thanks [@stipsan](https://github.com/stipsan)! - Update Sanity dependency ranges.
+
+- Updated dependencies [[`82a9bc1`](https://github.com/sanity-io/visual-editing/commit/82a9bc1e5179ac7c7e4a878cbe0339362dd22e06)]:
+  - @sanity/insert-menu@3.0.6
+  - @sanity/preview-url-secret@4.0.6
+  - @sanity/visual-editing-csm@3.0.8
+
 ## 5.3.4
 
 ### Patch Changes

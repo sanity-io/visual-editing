@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.19
+
+### Patch Changes
+
+- [`82a9bc1`](https://github.com/sanity-io/visual-editing/commit/82a9bc1e5179ac7c7e4a878cbe0339362dd22e06) Thanks [@stipsan](https://github.com/stipsan)! - Update Sanity dependency ranges.
+
+- Updated dependencies [[`82a9bc1`](https://github.com/sanity-io/visual-editing/commit/82a9bc1e5179ac7c7e4a878cbe0339362dd22e06)]:
+  - @sanity/core-loader@2.0.9
+  - @sanity/visual-editing@5.3.5
+
 ## 2.0.18
 
 ### Patch Changes
