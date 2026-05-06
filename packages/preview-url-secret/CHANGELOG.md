@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.6
+
+### Patch Changes
+
+- [`82a9bc1`](https://github.com/sanity-io/visual-editing/commit/82a9bc1e5179ac7c7e4a878cbe0339362dd22e06) Thanks [@stipsan](https://github.com/stipsan)! - Update Sanity dependency ranges.
+
 ## 4.0.5
 
 ### Patch Changes
