@@ -16,7 +16,7 @@ import {
   type MenuItemProps,
 } from '@sanity/ui/_visual-editing'
 import {startCase} from 'lodash-es'
-import {useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
+import {startTransition, useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
 import {isValidElementType} from 'react-is'
 
 import type {InsertMenuOptions} from './InsertMenuOptions'
@@ -124,9 +124,10 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                     fontSize={1}
                     icon={SearchIcon}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      send({type: 'change query', query: event.target.value})
+                      startTransition(() => send({type: 'change query', query: event.target.value}))
                     }}
                     placeholder={props.labels['insert-menu.search.placeholder']}
+                    // @TODO React.useOptimistic here to allow transitions for everything but still have sync controlled state
                     value={state.query}
                   />
                 </Box>
@@ -136,7 +137,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                   <ViewToggle
                     views={state.views}
                     onToggle={(name) => {
-                      send({type: 'toggle view', name})
+                      startTransition(() => send({type: 'toggle view', name}))
                     }}
                     labels={props.labels}
                   />
@@ -157,7 +158,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
                     label={group.title ?? startCase(group.name)}
                     selected={group.selected}
                     onClick={() => {
-                      send({type: 'select group', name: group.name})
+                      startTransition(() => send({type: 'select group', name: group.name}))
                     }}
                   />
                 ))}

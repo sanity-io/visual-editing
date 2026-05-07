@@ -240,13 +240,13 @@ export function Overlays(props: {
   useEffect(() => {
     const unsubs = [
       comlink?.on('presentation/focus', (data) => {
-        dispatch({type: 'presentation/focus', data})
+        startTransition(() => dispatch({type: 'presentation/focus', data}))
       }),
       comlink?.on('presentation/blur', (data) => {
-        dispatch({type: 'presentation/blur', data})
+        startTransition(() => dispatch({type: 'presentation/blur', data}))
       }),
       comlink?.on('presentation/toggle-overlay', () => {
-        setOverlayEnabled((enabled) => !enabled)
+        startTransition(() => setOverlayEnabled((enabled) => !enabled))
       }),
     ].filter(Boolean)
 

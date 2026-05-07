@@ -1,4 +1,4 @@
-import {lazy, Suspense, useSyncExternalStore} from 'react'
+import {lazy, Suspense, useDeferredValue, useSyncExternalStore} from 'react'
 
 import type {VisualEditingProps} from './VisualEditingComponent'
 
@@ -11,11 +11,11 @@ const subcribe = () => () => {}
  * @public
  */
 export function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
-  const mounted = useSyncExternalStore(
+  const mounted = useDeferredValue(useSyncExternalStore(
     subcribe,
     () => true,
     () => false,
-  )
+  ), false)
 
   // Don't render Suspense while hydration, this enables compatibility with React v17 apps
   // where Suspense where a browser-only API

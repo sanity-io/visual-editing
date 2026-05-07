@@ -9,6 +9,7 @@ import {
   memo,
   startTransition,
   useCallback,
+  useDeferredValue,
   useEffect,
   useId,
   useMemo,
@@ -659,14 +660,14 @@ function useCustomComponents(
 
 const Link = memo(function Link(props: {href: string; inFrame: boolean}) {
   const {inFrame} = props
-  const referer = useSyncExternalStore(
+  const referer = useDeferredValue(useSyncExternalStore(
     useCallback((onStoreChange) => {
       const handlePopState = () => onStoreChange()
       window.addEventListener('popstate', handlePopState)
       return () => window.removeEventListener('popstate', handlePopState)
     }, []),
     () => window.location.href,
-  )
+  ))
   const href = useMemo(() => getLinkHref(props.href, referer), [props.href, referer])
 
   return (
