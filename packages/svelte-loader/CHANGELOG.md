@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.20
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @sanity/visual-editing@5.3.6
+
 ## 2.0.19
 
 ### Patch Changes

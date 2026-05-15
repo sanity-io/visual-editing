@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.7
+
+### Patch Changes
+
+- [#3405](https://github.com/sanity-io/visual-editing/pull/3405) [`c0a2525`](https://github.com/sanity-io/visual-editing/commit/c0a2525bbfa3eb6c27b60c670a1ce2cc51a199dc) Thanks [@jordanl17](https://github.com/jordanl17)! - fix(insert-menu): prevent icon/preview overlap in grid menu items
+
 ## 3.0.6
 
 ### Patch Changes
