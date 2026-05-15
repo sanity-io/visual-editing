@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.3.6
+
+### Patch Changes
+
+- Updated dependencies [[`c0a2525`](https://github.com/sanity-io/visual-editing/commit/c0a2525bbfa3eb6c27b60c670a1ce2cc51a199dc)]:
+  - @sanity/insert-menu@3.0.7
+
 ## 5.3.5
 
 ### Patch Changes
