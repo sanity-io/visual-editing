@@ -262,6 +262,7 @@ type GridMenuItemProps = {
 function GridMenuItem(props: GridMenuItemProps) {
   const [failedToLoad, setFailedToLoad] = useState(false)
   const Icon = props.icon
+  const hasPreviewImage = Boolean(props.previewImageUrl) && !failedToLoad
 
   return (
     <MenuItem padding={0} radius={2} onClick={props.onClick} style={{overflow: 'hidden'}}>
@@ -274,7 +275,7 @@ function GridMenuItem(props: GridMenuItemProps) {
             position: 'relative',
           }}
         >
-          {isValidElementType(Icon) ? (
+          {isValidElementType(Icon) && !hasPreviewImage ? (
             <Flex
               align="center"
               justify="center"
@@ -291,7 +292,7 @@ function GridMenuItem(props: GridMenuItemProps) {
               </Text>
             </Flex>
           ) : null}
-          {!props.previewImageUrl || failedToLoad ? null : (
+          {hasPreviewImage ? (
             <img
               src={props.previewImageUrl}
               style={{
@@ -305,7 +306,7 @@ function GridMenuItem(props: GridMenuItemProps) {
                 setFailedToLoad(true)
               }}
             />
-          )}
+          ) : null}
 
           <div
             style={{
