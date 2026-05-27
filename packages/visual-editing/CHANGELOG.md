@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.4.1
+
+### Patch Changes
+
+- [#3411](https://github.com/sanity-io/visual-editing/pull/3411) [`93a955c`](https://github.com/sanity-io/visual-editing/commit/93a955cf46411c04e8f3ab3d4f0ceb6539d1639c) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Bump `@sanity/mutate` dependency from `^0.16.1` to `^0.18.0`
+
+- [#3417](https://github.com/sanity-io/visual-editing/pull/3417) [`4b9f4e0`](https://github.com/sanity-io/visual-editing/commit/4b9f4e02c923d0139b90c82fff79483e71c6ff7b) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Add `babel-plugin-styled-components` for improved debugging and optimization of styled-components
+
 ## 5.4.0
 
 ### Minor Changes
