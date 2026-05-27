@@ -27,17 +27,3 @@ export function handleError(error: unknown) {
     })
   }
 }
-
-export async function action(unsafeTags: string[]): Promise<'refresh'> {
-  const url = new URL('/api/revalidate-sync-tags', window.location.origin)
-  for (const tag of unsafeTags) {
-    url.searchParams.append('tag', tag)
-  }
-  const response = await fetch(url, {method: 'POST'})
-  if (!response.ok) {
-    throw new Error('Failed to revalidate sync tags')
-  }
-  const json = await response.json()
-  console.log('revalidated sync tags', unsafeTags, json)
-  return 'refresh'
-}

@@ -15,7 +15,7 @@ import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 
-import {handleError, action} from './actions.client'
+import {handleError} from './actions.client'
 import AlertBanner from './alert-banner'
 import {DraftModeStatus} from './draft-mode-status'
 import PortableText from './portable-text'
@@ -101,7 +101,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         {isDraftModeEnabled && <VisualEditing />}
         <SanityLive
           onError={handleError}
-          action={action}
         />
         <SpeedInsights />
       </body>
