@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.21
+
+### Patch Changes
+
+- Updated dependencies [[`05151f6`](https://github.com/sanity-io/visual-editing/commit/05151f66240c847fecbded28970ce5ca8650a034)]:
+  - @sanity/visual-editing@5.4.0
+
 ## 2.0.20
 
 ### Patch Changes
