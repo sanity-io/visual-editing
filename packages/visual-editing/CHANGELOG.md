@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.4.0
+
+### Minor Changes
+
+- [`05151f6`](https://github.com/sanity-io/visual-editing/commit/05151f66240c847fecbded28970ce5ca8650a034) Thanks [@stipsan](https://github.com/stipsan)! - Report to Presentation Tool wether `onPerspectiveChange` is provided
+
 ## 5.3.6
 
 ### Patch Changes
