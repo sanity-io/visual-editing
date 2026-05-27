@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.23
+
+### Patch Changes
+
+- Updated dependencies [[`5772cca`](https://github.com/sanity-io/visual-editing/commit/5772ccac5b165e6c3aff1b127b0b0419588e5197)]:
+  - @sanity/core-loader@2.0.11
+  - @sanity/visual-editing@5.4.2
+
 ## 2.0.22
 
 ### Patch Changes

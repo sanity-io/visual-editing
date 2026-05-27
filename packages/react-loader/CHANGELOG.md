@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.12
+
+### Patch Changes
+
+- [`5772cca`](https://github.com/sanity-io/visual-editing/commit/5772ccac5b165e6c3aff1b127b0b0419588e5197) Thanks [@stipsan](https://github.com/stipsan)! - Fix regression in generated `.d.ts`
+
+  [An issue in `rolldown-plugin-dts` caused some typings to be missing.](https://github.com/sxzz/rolldown-plugin-dts/issues/227)
+
+- Updated dependencies [[`5772cca`](https://github.com/sanity-io/visual-editing/commit/5772ccac5b165e6c3aff1b127b0b0419588e5197)]:
+  - @sanity/core-loader@2.0.11
+
 ## 2.0.11
 
 ### Patch Changes
