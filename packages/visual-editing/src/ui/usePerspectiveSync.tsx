@@ -18,10 +18,14 @@ export function usePerspectiveSync(
   useEffect(() => {
     const controller = new AbortController()
     comlink
-      ?.fetch('visual-editing/fetch-perspective', {handlesPerspectiveChange}, {
-        signal: controller.signal,
-        suppressWarnings: true,
-      })
+      ?.fetch(
+        'visual-editing/fetch-perspective',
+        {handlesPerspectiveChange},
+        {
+          signal: controller.signal,
+          suppressWarnings: true,
+        },
+      )
       .then((data) => {
         handlePerspective(data)
       })
