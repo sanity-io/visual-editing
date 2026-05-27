@@ -11,8 +11,8 @@ export let actor: MutatorActor | EmptyActor = emptyActor
 
 export const listeners = new Set<() => void>()
 
-export function isEmptyActor(a: MutatorActor | EmptyActor): a is EmptyActor {
-  return a === emptyActor
+export function isEmptyActor(actor: MutatorActor | EmptyActor): actor is EmptyActor {
+  return actor === emptyActor
 }
 
 export function setActor(nextActor: MutatorActor): void {
