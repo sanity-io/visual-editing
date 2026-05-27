@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  jsonPathToStudioPath,
-  studioPath,
-  type ContentSourceMap,
-  type ContentSourceMapParsedPath,
-} from '@sanity/client/csm'
+import {jsonPathToStudioPath, studioPath} from '@sanity/client/csm'
 
 import type {SanityKey, SanityNodeContext, WrappedValue} from './types'
 
@@ -17,9 +12,9 @@ import {resolveSanityNode} from './resolveSanityNode'
 export function wrapData<T>(
   context: SanityNodeContext,
   value: T,
-  sourceMap: ContentSourceMap | undefined,
-  resultPath: ContentSourceMapParsedPath = [],
-  keyedResultPath: ContentSourceMapParsedPath = [],
+  sourceMap: import('@sanity/client/csm').ContentSourceMap | undefined,
+  resultPath: import('@sanity/client/csm').ContentSourceMapParsedPath = [],
+  keyedResultPath: import('@sanity/client/csm').ContentSourceMapParsedPath = [],
 ): WrappedValue<T> {
   if (value === undefined) {
     return undefined as WrappedValue<T>

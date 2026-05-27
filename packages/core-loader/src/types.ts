@@ -1,6 +1,4 @@
 import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
-import type {StudioPathLike} from '@sanity/client/csm'
-import type {SanityStegaClient, StegaConfig} from '@sanity/client/stega'
 import type {MapStore} from 'nanostores'
 
 export type {ContentSourceMap, MapStore, QueryParams}
@@ -21,8 +19,10 @@ export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
 export type EncodeDataAttribute<QueryResponseResult = unknown> = (
   result: QueryResponseResult,
   sourceMap: ContentSourceMap | undefined,
-  studioUrl: Exclude<StegaConfig['studioUrl'], undefined> | undefined,
-  path: StudioPathLike,
+  studioUrl:
+    | Exclude<import('@sanity/client/stega').StegaConfig['studioUrl'], undefined>
+    | undefined,
+  path: import('@sanity/client/csm').StudioPathLike,
 ) => string | undefined
 
 /** @public */
@@ -39,7 +39,7 @@ export interface EnableLiveModeOptions {
    * @example `import {createClient} from '@sanity/preview-kit/client'`
    * @example `import {createClient} from 'next-sanity'`
    */
-  client?: SanityClient | SanityStegaClient
+  client?: SanityClient | import('@sanity/client/stega').SanityStegaClient
   /**
    * Fires when a connection is established to a parent Studio window.
    */

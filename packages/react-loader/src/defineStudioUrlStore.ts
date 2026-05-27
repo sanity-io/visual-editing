@@ -1,8 +1,10 @@
 import type {SanityClient} from '@sanity/client'
-import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
 import type {CreateQueryStoreOptions} from '@sanity/core-loader'
 
-type StudioUrlLike = StudioUrl | ResolveStudioUrl | undefined
+type StudioUrlLike =
+  | import('@sanity/client/csm').StudioUrl
+  | import('@sanity/client/csm').ResolveStudioUrl
+  | undefined
 
 export function defineStudioUrlStore(client: CreateQueryStoreOptions['client']): {
   subscribe: (callback: () => void) => () => void

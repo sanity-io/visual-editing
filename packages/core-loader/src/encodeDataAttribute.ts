@@ -1,12 +1,8 @@
-import type {StegaConfig} from '@sanity/client/stega'
-
 import {
   jsonPathToStudioPath,
   resolveEditInfo,
   studioPath,
   studioPathToJsonPath,
-  type ContentSourceMap,
-  type StudioPathLike,
 } from '@sanity/client/csm'
 import {encodeSanityNodeData} from '@sanity/visual-editing-csm'
 
@@ -52,8 +48,8 @@ export type {EncodeDataAttribute}
  * @public
  */
 export type EncodeDataAttributeFunction = {
-  (path: StudioPathLike): string | undefined
-  scope: (path: StudioPathLike) => EncodeDataAttributeFunction
+  (path: import('@sanity/client/csm').StudioPathLike): string | undefined
+  scope: (path: import('@sanity/client/csm').StudioPathLike) => EncodeDataAttributeFunction
 }
 
 /**
@@ -61,11 +57,13 @@ export type EncodeDataAttributeFunction = {
  */
 export function defineEncodeDataAttribute<QueryResponseResult = unknown>(
   result: QueryResponseResult,
-  sourceMap: ContentSourceMap | undefined,
-  studioUrl: Exclude<StegaConfig['studioUrl'], undefined> | undefined,
-  basePath?: StudioPathLike,
+  sourceMap: import('@sanity/client/csm').ContentSourceMap | undefined,
+  studioUrl:
+    | Exclude<import('@sanity/client/stega').StegaConfig['studioUrl'], undefined>
+    | undefined,
+  basePath?: import('@sanity/client/csm').StudioPathLike,
 ): EncodeDataAttributeFunction {
-  const parse = (path?: StudioPathLike) => {
+  const parse = (path?: import('@sanity/client/csm').StudioPathLike) => {
     if (!path) return []
     return typeof path === 'string' ? studioPath.fromString(path) : path
   }
@@ -74,11 +72,11 @@ export function defineEncodeDataAttribute<QueryResponseResult = unknown>(
 
   // This function should encode the given attribute based on the result, sourceMap, and studioUrl
   return Object.assign(
-    (path: StudioPathLike) =>
+    (path: import('@sanity/client/csm').StudioPathLike) =>
       encodeDataAttribute(result, sourceMap, studioUrl, [...parsedBasePath, ...parse(path)]),
     // The scope method creates a scoped version of encodeDataAttribute
     {
-      scope: (scope: StudioPathLike) =>
+      scope: (scope: import('@sanity/client/csm').StudioPathLike) =>
         defineEncodeDataAttribute(result, sourceMap, studioUrl, [
           ...parsedBasePath,
           ...parse(scope),

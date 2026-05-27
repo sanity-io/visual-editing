@@ -4,12 +4,7 @@
  */
 
 import {type SanityClient} from '@sanity/client'
-import {
-  createSharedListener,
-  documentMutatorMachine,
-  type DocumentMutatorMachineInput,
-  type DocumentMutatorMachineParentEvent,
-} from '@sanity/mutate/_unstable_machine'
+import {createSharedListener, documentMutatorMachine} from '@sanity/mutate/_unstable_machine'
 import {
   assertEvent,
   assign,
@@ -24,10 +19,15 @@ import type {VisualEditingNode} from '../../types'
 
 import {createDocumentMutator} from './documentMutator'
 
-export interface DatasetMutatorMachineInput extends Omit<DocumentMutatorMachineInput, 'id'> {
+export interface DatasetMutatorMachineInput extends Omit<
+  import('@sanity/mutate/_unstable_machine').DocumentMutatorMachineInput,
+  'id'
+> {
   client: SanityClient
   /** A shared listener can be provided, if not it'll be created using `client.listen()` */
-  sharedListener?: ReturnType<typeof createSharedListener>
+  sharedListener?: ReturnType<
+    typeof import('@sanity/mutate/_unstable_machine').createSharedListener
+  >
 }
 
 const datasetMutatorMachine = setup({
@@ -43,9 +43,9 @@ const datasetMutatorMachine = setup({
       | {type: 'unobserve'; documentId: string}
       | {type: 'add document actor'; documentId: string}
       | {type: 'stop document actor'; documentId: string}
-      | DocumentMutatorMachineParentEvent
+      | import('@sanity/mutate/_unstable_machine').DocumentMutatorMachineParentEvent
     input: DatasetMutatorMachineInput
-    emitted: DocumentMutatorMachineParentEvent
+    emitted: import('@sanity/mutate/_unstable_machine').DocumentMutatorMachineParentEvent
   },
   actions: {
     'emit sync event': emit(({event}) => {
