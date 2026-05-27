@@ -1,5 +1,4 @@
 import type {SanityClient} from '@sanity/client'
-import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
 import type {QueryStore} from '@sanity/core-loader'
 
 import {useEffect} from 'react'
@@ -10,7 +9,12 @@ export function defineUseLiveMode({
   enableLiveMode,
   setStudioUrl,
 }: Pick<QueryStore, 'enableLiveMode'> & {
-  setStudioUrl: (studioUrl: StudioUrl | ResolveStudioUrl | undefined) => void
+  setStudioUrl: (
+    studioUrl:
+      | import('@sanity/client/csm').StudioUrl
+      | import('@sanity/client/csm').ResolveStudioUrl
+      | undefined,
+  ) => void
 }): UseLiveModeHook {
   return ({allowStudioOrigin, client, onConnect, onDisconnect, onPerspective, studioUrl}) => {
     useEffect(() => {

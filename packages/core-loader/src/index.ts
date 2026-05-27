@@ -1,5 +1,4 @@
 import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
-import type {SanityStegaClient} from '@sanity/client/stega'
 
 import {createCache, type Cache} from 'async-cache-dedupe'
 import {atom, map, onMount, startTask, type MapStore} from 'nanostores'
@@ -24,7 +23,7 @@ export interface CreateQueryStoreOptions {
    * @example `import {createClient} from '@sanity/preview-kit/client'`
    * @example `import {createClient} from 'next-sanity'`
    */
-  client: SanityClient | SanityStegaClient | false
+  client: SanityClient | import('@sanity/client/stega').SanityStegaClient | false
   /**
    * If you want all data fetching to be done server-side in production, set this to `true` and `client: false`.
    * Then, in your server entry file, you can set the Sanity client with `setServerClient`.
@@ -53,7 +52,7 @@ export interface QueryStore {
    * When `ssr: true` you call this in your server entry point that imports the result of `createQueryStore` instance.
    * It's required to call it before any data fetching is done.
    */
-  setServerClient: (client: SanityClient | SanityStegaClient) => void
+  setServerClient: (client: SanityClient | import('@sanity/client/stega').SanityStegaClient) => void
   enableLiveMode: EnableLiveMode
   /** @internal */
   unstable__cache: {

@@ -6,8 +6,6 @@ import {
   resolvedKeyedSourcePath,
   resolveMapping,
   studioPath,
-  type ContentSourceMap,
-  type ContentSourceMapParsedPath,
 } from '@sanity/client/csm'
 
 import type {SanityNodeContext} from './types'
@@ -15,9 +13,9 @@ import type {SanityNodeContext} from './types'
 /** @internal */
 export function resolveSanityNode(
   context: SanityNodeContext,
-  csm: ContentSourceMap,
-  resultPath: ContentSourceMapParsedPath,
-  keyedResultPath: ContentSourceMapParsedPath,
+  csm: import('@sanity/client/csm').ContentSourceMap,
+  resultPath: import('@sanity/client/csm').ContentSourceMapParsedPath,
+  keyedResultPath: import('@sanity/client/csm').ContentSourceMapParsedPath,
 ): SanityNode | undefined {
   const {mapping, pathSuffix} = resolveMapping(resultPath, csm) || {}
 

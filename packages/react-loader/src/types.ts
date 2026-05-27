@@ -4,7 +4,6 @@ import type {
   QueryParams,
   ResponseQueryOptions,
 } from '@sanity/client'
-import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
 import type {
   createQueryStore as createCoreQueryStore,
   EnableLiveModeOptions,
@@ -99,7 +98,10 @@ export type UseLiveModeHook = (
     /**
      * Set this option to activate `encodeDataAttribute` on `useQuery` hooks when stega isn't used.
      */
-    studioUrl?: StudioUrl | ResolveStudioUrl | undefined
+    studioUrl?:
+      | import('@sanity/client/csm').StudioUrl
+      | import('@sanity/client/csm').ResolveStudioUrl
+      | undefined
   },
 ) => void
 
