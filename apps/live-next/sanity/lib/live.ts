@@ -16,8 +16,6 @@ if (!browserToken) {
 export const {
   sanityFetch,
   SanityLive,
-  SanityLiveStream,
-  // verifyPreviewSecret
 } = defineLive({
   client,
   serverToken,
