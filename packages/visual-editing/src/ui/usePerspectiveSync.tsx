@@ -10,6 +10,7 @@ export function usePerspectiveSync(
   dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void,
   onPerspectiveChange?: (perspective: ClientPerspective) => void,
 ): void {
+  const handlesPerspectiveChange = !!onPerspectiveChange
   const handlePerspective = useEffectEvent((data: {perspective: ClientPerspective}) => {
     dispatch({type: 'presentation/perspective', data})
     onPerspectiveChange?.(data.perspective)
@@ -17,7 +18,7 @@ export function usePerspectiveSync(
   useEffect(() => {
     const controller = new AbortController()
     comlink
-      ?.fetch('visual-editing/fetch-perspective', undefined, {
+      ?.fetch('visual-editing/fetch-perspective', {handlesPerspectiveChange}, {
         signal: controller.signal,
         suppressWarnings: true,
       })
@@ -37,5 +38,5 @@ export function usePerspectiveSync(
       unsub?.()
       controller.abort()
     }
-  }, [comlink, dispatch])
+  }, [comlink, dispatch, handlesPerspectiveChange])
 }
