@@ -3,7 +3,7 @@ import {Suspense} from 'react'
 
 import type {HeroQueryResult} from '@/sanity.types'
 
-import {sanityFetch, SanityLiveStream} from '@/sanity/lib/live'
+import {sanityFetch} from '@/sanity/lib/live'
 import {heroQuery, settingsQuery} from '@/sanity/lib/queries'
 
 import {AnimatedH1} from './animated-h1'
@@ -83,39 +83,24 @@ function HeroPost({
 }
 
 export default async function Page() {
-  // const [{data: settings}, {data: heroPost}] = await Promise.all([
-  //   sanityFetch({query: settingsQuery}),
-  //   sanityFetch({query: heroQuery}),
-  // ])
-  const {data: heroPost} = await sanityFetch({query: heroQuery})
+  const [{data: settings}, {data: heroPost}] = await Promise.all([
+    sanityFetch({query: settingsQuery}),
+    sanityFetch({query: heroQuery}),
+  ])
 
   return (
     <div className="container mx-auto px-5">
-      <SanityLiveStream query={settingsQuery}>
-        {async ({data: settings}) => {
-          'use server'
-          return <Intro title={settings?.title} description={settings?.description} />
-        }}
-      </SanityLiveStream>
-      <SanityLiveStream query={heroQuery}>
-        {async ({data: heroPost}) => {
-          'use server'
-          return (
-            <>
-              {heroPost && (
-                <HeroPost
-                  title={heroPost.title}
-                  slug={heroPost.slug}
-                  coverImage={heroPost.coverImage}
-                  excerpt={heroPost.excerpt}
-                  date={heroPost.date}
-                  author={heroPost.author}
-                />
-              )}
-            </>
-          )
-        }}
-      </SanityLiveStream>
+      <Intro title={settings?.title} description={settings?.description} />
+      {heroPost && (
+        <HeroPost
+          title={heroPost.title}
+          slug={heroPost.slug}
+          coverImage={heroPost.coverImage}
+          excerpt={heroPost.excerpt}
+          date={heroPost.date}
+          author={heroPost.author}
+        />
+      )}
       {heroPost?._id && (
         <aside>
           <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
