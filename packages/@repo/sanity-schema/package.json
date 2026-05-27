@@ -20,6 +20,16 @@
     },
     "./package.json": "./package.json"
   },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  },
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "lint": "eslint .",

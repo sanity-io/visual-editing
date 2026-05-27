@@ -13,12 +13,7 @@ if (!browserToken) {
   throw new Error('Missing SANITY_API_BROWSER_TOKEN')
 }
 
-export const {
-  sanityFetch,
-  SanityLive,
-  SanityLiveStream,
-  // verifyPreviewSecret
-} = defineLive({
+export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken,
   browserToken,
