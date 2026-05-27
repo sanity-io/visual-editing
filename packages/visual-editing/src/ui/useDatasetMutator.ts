@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import type {SanityClient} from '@sanity/client'
 import {useEffect} from 'react'
 import {createActor} from 'xstate'
 
@@ -18,7 +19,10 @@ export function useDatasetMutator(comlink: VisualEditingNode | undefined): void 
     const listener = createSharedListener(comlink)
     const datasetMutator = createDatasetMutator(comlink)
     const mutator = createActor(datasetMutator, {
-      input: {client: {withConfig: () => {}}, sharedListener: listener},
+      input: {
+        client: {withConfig: () => {}} as unknown as SanityClient,
+        sharedListener: listener as ReturnType<typeof import('@sanity/mutate/_unstable_machine').createSharedListener>,
+      },
     })
 
     mutator.start()

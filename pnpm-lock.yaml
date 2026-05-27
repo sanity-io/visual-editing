@@ -828,7 +828,7 @@ importers:
         version: link:../insert-menu
       '@sanity/mutate':
         specifier: ^0.16.1
-        version: 0.16.1(xstate@5.31.0)
+        version: 0.16.1(xstate@5.31.1)
       '@sanity/presentation-comlink':
         specifier: ^2.0.1
         version: 2.0.1(@sanity/client@7.22.0)(@sanity/types@5.23.0(@types/react@19.2.13))
@@ -857,8 +857,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       xstate:
-        specifier: ^5.26.0
-        version: 5.31.0
+        specifier: ^5.31.1
+        version: 5.31.1
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -12170,6 +12170,9 @@ packages:
   xstate@5.31.0:
     resolution: {integrity: sha512-5B+0DqC0uNUrcLUEY3pn3iNy+swvK2E0ZpYp5gnV3oxMX5y87vzXkU5YXv9CAtyG5c5FOJ1SzvTWHrwE8fMZNQ==}
 
+  xstate@5.31.1:
+    resolution: {integrity: sha512-3P7t7GQ61BvLu+8Cj6Zq7rcS34vecL9pvfN2ucUWmIFIUG+rAREviOs4Xy4OO3BuJHSz6RLU8eqDXxSbVotjDQ==}
+
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -15568,11 +15571,11 @@ snapshots:
       '@portabletext/patches': 2.0.4
       '@portabletext/schema': 2.1.1
       '@portabletext/to-html': 5.0.2
-      '@xstate/react': 6.1.0(@types/react@19.2.13)(react@19.2.5)(xstate@5.31.0)
+      '@xstate/react': 6.1.0(@types/react@19.2.13)(react@19.2.5)(xstate@5.31.1)
       debug: 4.4.3(supports-color@8.1.1)
       react: 19.2.5
       scroll-into-view-if-needed: 3.1.0
-      xstate: 5.31.0
+      xstate: 5.31.1
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
@@ -15598,19 +15601,19 @@ snapshots:
   '@portabletext/plugin-character-pair-decorator@7.0.26(@portabletext/editor@6.6.3(@types/react@19.2.13)(react@19.2.5))(@types/react@19.2.13)(react@19.2.5)':
     dependencies:
       '@portabletext/editor': 6.6.3(@types/react@19.2.13)(react@19.2.5)
-      '@xstate/react': 6.1.0(@types/react@19.2.13)(react@19.2.5)(xstate@5.31.0)
+      '@xstate/react': 6.1.0(@types/react@19.2.13)(react@19.2.5)(xstate@5.31.1)
       react: 19.2.5
       remeda: 2.33.4
-      xstate: 5.31.0
+      xstate: 5.31.1
     transitivePeerDependencies:
       - '@types/react'
 
   '@portabletext/plugin-input-rule@4.0.26(@portabletext/editor@6.6.3(@types/react@19.2.13)(react@19.2.5))(@types/react@19.2.13)(react@19.2.5)':
     dependencies:
       '@portabletext/editor': 6.6.3(@types/react@19.2.13)(react@19.2.5)
-      '@xstate/react': 6.1.0(@types/react@19.2.13)(react@19.2.5)(xstate@5.31.0)
+      '@xstate/react': 6.1.0(@types/react@19.2.13)(react@19.2.5)(xstate@5.31.1)
       react: 19.2.5
-      xstate: 5.31.0
+      xstate: 5.31.1
     transitivePeerDependencies:
       - '@types/react'
 
@@ -16592,7 +16595,7 @@ snapshots:
     dependencies:
       rxjs: 7.8.2
       uuid: 11.1.0
-      xstate: 5.31.0
+      xstate: 5.31.1
 
   '@sanity/comlink@4.0.1':
     dependencies:
@@ -16784,6 +16787,19 @@ snapshots:
       rxjs: 7.8.2
     optionalDependencies:
       xstate: 5.31.0
+
+  '@sanity/mutate@0.16.1(xstate@5.31.1)':
+    dependencies:
+      '@sanity/client': 7.22.0
+      '@sanity/diff-match-patch': 3.2.0
+      '@sanity/uuid': 3.0.2
+      hotscript: 1.0.13
+      lodash: 4.17.23
+      mendoza: 3.0.8
+      nanoid: 5.1.6
+      rxjs: 7.8.2
+    optionalDependencies:
+      xstate: 5.31.1
 
   '@sanity/mutator@5.23.0(@types/react@19.2.13)':
     dependencies:
@@ -18606,6 +18622,16 @@ snapshots:
       use-sync-external-store: 1.6.0(react@19.2.5)
     optionalDependencies:
       xstate: 5.31.0
+    transitivePeerDependencies:
+      - '@types/react'
+
+  '@xstate/react@6.1.0(@types/react@19.2.13)(react@19.2.5)(xstate@5.31.1)':
+    dependencies:
+      react: 19.2.5
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.13)(react@19.2.5)
+      use-sync-external-store: 1.6.0(react@19.2.5)
+    optionalDependencies:
+      xstate: 5.31.1
     transitivePeerDependencies:
       - '@types/react'
 
@@ -26554,6 +26580,8 @@ snapshots:
   xmlchars@2.2.0: {}
 
   xstate@5.31.0: {}
+
+  xstate@5.31.1: {}
 
   xtend@4.0.2: {}
 
