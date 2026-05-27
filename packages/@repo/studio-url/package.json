@@ -18,6 +18,12 @@
     },
     "./package.json": "./package.json"
   },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
+    }
+  },
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "lint": "eslint .",
