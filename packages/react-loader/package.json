@@ -24,16 +24,6 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "jsx": [
-        "./dist/jsx.d.ts"
-      ],
-      "rsc": [
-        "./dist/rsc/index.d.ts"
-      ]
-    }
-  },
   "exports": {
     ".": {
       "source": "./src/index.ts",
@@ -44,11 +34,11 @@
       "react-server": "./dist/rsc/index.react-server.js",
       "browser": {
         "source": "./src/index.browser.ts",
-        "require": "./dist/index.browser.cjs",
-        "import": "./dist/index.browser.js"
+        "import": "./dist/index.browser.js",
+        "require": "./dist/index.browser.cjs"
       },
-      "require": "./dist/index.cjs",
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./jsx": {
@@ -76,11 +66,11 @@
         "worker": "./dist/index.js",
         "react-server": "./dist/rsc/index.react-server.js",
         "browser": {
-          "require": "./dist/index.browser.cjs",
-          "import": "./dist/index.browser.js"
+          "import": "./dist/index.browser.js",
+          "require": "./dist/index.browser.cjs"
         },
-        "require": "./dist/index.cjs",
         "import": "./dist/index.js",
+        "require": "./dist/index.cjs",
         "default": "./dist/index.js"
       },
       "./jsx": {
