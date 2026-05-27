@@ -969,8 +969,8 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
       uuid:
-        specifier: 11.1.0
-        version: 11.1.0
+        specifier: 13.0.1
+        version: 13.0.1
       vitest:
         specifier: ^3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@25.2.0)(happy-dom@18.0.1)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.0.1))(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.22.3)(yaml@2.8.3)
@@ -12705,6 +12705,10 @@ packages:
 
   uuid@13.0.0:
     resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
+    hasBin: true
+
+  uuid@13.0.1:
+    resolution: {integrity: sha512-9ezox2roIft6ExBVTVqibSd5dc5/47Sw/uY6b4SjQUT2TzQ0tltNquWA46y4xPQmdZYqvnio22SgWd41M86+jw==}
     hasBin: true
 
   uuid@8.3.2:
@@ -28728,6 +28732,8 @@ snapshots:
   uuid@11.1.0: {}
 
   uuid@13.0.0: {}
+
+  uuid@13.0.1: {}
 
   uuid@8.3.2: {}
 
