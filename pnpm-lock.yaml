@@ -827,8 +827,8 @@ importers:
         specifier: workspace:^
         version: link:../insert-menu
       '@sanity/mutate':
-        specifier: ^0.16.1
-        version: 0.16.1(xstate@5.31.0)
+        specifier: ^0.18.0
+        version: 0.18.0(xstate@5.31.0)
       '@sanity/presentation-comlink':
         specifier: ^2.0.1
         version: 2.0.1(@sanity/client@7.22.0)(@sanity/types@5.23.0(@types/react@19.2.13))
@@ -2779,6 +2779,10 @@ packages:
     resolution: {integrity: sha512-RQgQ4uQ+pLbqXfOmieB91ejmLwvSgv9nLx6sT6sD83s7umBypgg+OIBOBbEUiJXrfpnp9j0mRhYYdzp9uqq3lA==}
     engines: {node: '>=12'}
 
+  '@isaacs/ttlcache@2.1.5':
+    resolution: {integrity: sha512-VwGZqqjAWPICTmxUZnbpEfO60LhPWzquik+bmyXGY7pYRn6diEvCI5i6Ca+J6o2y4vS73HrpuMTo2dOvUevH8w==}
+    engines: {node: '>=12'}
+
   '@joshwooding/vite-plugin-react-docgen-typescript@0.5.0':
     resolution: {integrity: sha512-qYDdL7fPwLRI+bJNurVcis+tNgJmvWjH4YTBGXTA8xMuxFrnAz6E5o35iyzyKbq5J5Lr8mJGfrR5GXl+WGwhgQ==}
     peerDependencies:
@@ -4577,6 +4581,14 @@ packages:
   '@sanity/mutate@0.16.1':
     resolution: {integrity: sha512-400OooNtiafgJEOCzj0E5atuWlaKp1z6LU/LB/xZUVVywNj3WuT52U6qeVOfGlZeWKhYMCdGFX2ZnMbIrME95w==}
     engines: {node: '>=18'}
+    peerDependencies:
+      xstate: ^5.19.0
+    peerDependenciesMeta:
+      xstate:
+        optional: true
+
+  '@sanity/mutate@0.18.0':
+    resolution: {integrity: sha512-P77Pw6csAJqzNJzZJaluy/t9jpWS5bcCiBrn6tDY4Fz5ZQSKWwIG8lcku5P/bcULqfCLirf5uH7+V0oEaCshaw==}
     peerDependencies:
       xstate: ^5.19.0
     peerDependenciesMeta:
@@ -8741,6 +8753,9 @@ packages:
   lodash@4.17.23:
     resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
+
   log-symbols@7.0.1:
     resolution: {integrity: sha512-ja1E3yCr9i/0hmBVaM0bfwDjnGy8I/s6PP4DFp+yP+a+mrHO4Rm7DtmnqROTUkHIkqffC84YY7AeqX6oFk0WFg==}
     engines: {node: '>=18'}
@@ -9110,6 +9125,11 @@ packages:
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@5.1.11:
+    resolution: {integrity: sha512-v+KEsUv2ps74PaSKv0gHTxTCgMXOIfBEbaqa6w6ISIGC7ZsvHN4N9oJ8d4cmf0n5oTzQz2SLmThbQWhjd/8eKg==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   nanoid@5.1.6:
@@ -14349,6 +14369,8 @@ snapshots:
 
   '@isaacs/ttlcache@1.4.1': {}
 
+  '@isaacs/ttlcache@2.1.5': {}
+
   '@joshwooding/vite-plugin-react-docgen-typescript@0.5.0(typescript@5.9.3)(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       glob: 10.5.0
@@ -16781,6 +16803,20 @@ snapshots:
       lodash: 4.17.23
       mendoza: 3.0.8
       nanoid: 5.1.6
+      rxjs: 7.8.2
+    optionalDependencies:
+      xstate: 5.31.0
+
+  '@sanity/mutate@0.18.0(xstate@5.31.0)':
+    dependencies:
+      '@isaacs/ttlcache': 2.1.5
+      '@sanity/client': 7.22.0
+      '@sanity/diff-match-patch': 3.2.0
+      '@sanity/uuid': 3.0.2
+      hotscript: 1.0.13
+      lodash: 4.18.1
+      mendoza: 3.0.8
+      nanoid: 5.1.11
       rxjs: 7.8.2
     optionalDependencies:
       xstate: 5.31.0
@@ -22007,6 +22043,8 @@ snapshots:
 
   lodash@4.17.23: {}
 
+  lodash@4.18.1: {}
+
   log-symbols@7.0.1:
     dependencies:
       is-unicode-supported: 2.1.0
@@ -22400,6 +22438,8 @@ snapshots:
   nano-pubsub@3.0.0: {}
 
   nanoid@3.3.11: {}
+
+  nanoid@5.1.11: {}
 
   nanoid@5.1.6: {}
 
