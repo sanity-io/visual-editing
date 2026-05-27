@@ -61,7 +61,7 @@ function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, acto
     if (snapshot) {
       resolve(snapshot)
     } else {
-      const subscriber = doc.on('ready', (event) => {
+      const subscriber = doc.on('ready', (event: any) => {
         // Assert type here as the original document mutator machine doesn't
         // emit a 'ready' event. We provide a custom action to emit it in this
         // package's internal `createDatasetMutator` function. <3 xstate.

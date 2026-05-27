@@ -17,6 +17,7 @@ import {
   setup,
   stopChild,
   type ActorRefFrom,
+  type AnyStateMachine,
 } from 'xstate'
 
 import type {VisualEditingNode} from '../../types'
@@ -129,7 +130,7 @@ const datasetMutatorMachine = setup({
   },
 })
 
-export const createDatasetMutator = (comlink: VisualEditingNode) => {
+export const createDatasetMutator = (comlink: VisualEditingNode): AnyStateMachine => {
   return datasetMutatorMachine.provide({
     actors: {
       documentMutatorMachine: createDocumentMutator(comlink),
