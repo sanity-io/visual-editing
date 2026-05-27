@@ -99,9 +99,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         </section>
         <Toaster />
         {isDraftModeEnabled && <VisualEditing />}
-        <SanityLive
-          onError={handleError}
-        />
+        <SanityLive onError={handleError} />
         <SpeedInsights />
       </body>
     </html>
