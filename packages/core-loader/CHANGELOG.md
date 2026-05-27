@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.10
+
+### Patch Changes
+
+- [#3417](https://github.com/sanity-io/visual-editing/pull/3417) [`4b9f4e0`](https://github.com/sanity-io/visual-editing/commit/4b9f4e02c923d0139b90c82fff79483e71c6ff7b) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Add `publishConfig.exports` to improve package resolution for consumers by stripping the `source` export condition from published builds
+
 ## 2.0.9
 
 ### Patch Changes
