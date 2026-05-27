@@ -15,7 +15,7 @@ import type {
   PathValue,
 } from '../optimistic/types'
 
-import {isEmptyActor, type MutatorActor} from '../optimistic/context'
+import {isEmptyActor, type EmptyActor, type MutatorActor} from '../optimistic/context'
 import {useOptimisticActor} from './useOptimisticActor'
 
 function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, timeout: number): F {
@@ -28,7 +28,10 @@ function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, ti
   }) as F
 }
 
-function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, actor: MutatorActor) {
+function getDocumentsAndSnapshot<T extends Record<string, any>>(
+  id: string,
+  actor: MutatorActor | EmptyActor,
+) {
   const inFrame = isMaybePreviewIframe()
   const inPopUp = isMaybePreviewWindow()
 

@@ -72,7 +72,7 @@ export function useOptimistic<T, U = SanityDocument>(
      */
     let pristineTimeout: ReturnType<typeof setTimeout>
 
-    const rebasedSub = actor.on('rebased.local', (_event: any) => {
+    const rebasedSub = actor.on('rebased.local', (_event) => {
       const event = {
         // @todo You shall not cast
         document: _event.document as U,
