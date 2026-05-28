@@ -7,7 +7,6 @@ import type {
   HistoryUpdate,
   VisualEditingOptions,
 } from '../types'
-
 import {enableVisualEditing} from '../ui/enableVisualEditing'
 
 /**

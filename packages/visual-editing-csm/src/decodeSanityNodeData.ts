@@ -1,6 +1,5 @@
-import type {SanityNode, SanityStegaNode} from '@sanity/visual-editing-types'
-
 import {studioPath} from '@sanity/client/csm'
+import type {SanityNode, SanityStegaNode} from '@sanity/visual-editing-types'
 import {minLength, object, optional, parse, pipe, record, safeParse, string, unknown} from 'valibot'
 
 import {isValidSanityNode} from './isValidSanityNode'

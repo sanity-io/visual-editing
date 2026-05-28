@@ -1,8 +1,7 @@
-import type {Metadata} from 'next'
-
 import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {VercelToolbar} from '@vercel/toolbar/next'
+import type {Metadata} from 'next'
 import {revalidatePath, unstable_cache, refresh, revalidateTag} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
 

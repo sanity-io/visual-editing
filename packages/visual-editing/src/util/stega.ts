@@ -1,5 +1,4 @@
 import type {SanityStegaNode} from '@sanity/presentation-comlink'
-
 import {vercelStegaDecode} from '@vercel/stega'
 
 import {VERCEL_STEGA_REGEX} from '../constants'

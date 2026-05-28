@@ -1,10 +1,8 @@
 import type {SanityDocument} from '@sanity/client'
-
 import {createDataAttribute, useOptimistic} from '@sanity/visual-editing/react'
 import {useMemo} from 'react'
 
 import type {FrontPageQueryResult} from '@/sanity.types'
-
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'

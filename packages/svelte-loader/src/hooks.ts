@@ -1,12 +1,10 @@
 import type {SanityClient} from '@sanity/client'
-
 import {handlePreview} from '@sanity/visual-editing/svelte'
 import {type Handle} from '@sveltejs/kit'
 import {sequence} from '@sveltejs/kit/hooks'
 
-import type {HandleOptions} from './types'
-
 import {loadQuery as defaultLoadQuery, unstable__serverClient} from './createQueryStore'
+import type {HandleOptions} from './types'
 
 /**
  * @beta

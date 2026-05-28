@@ -8,7 +8,6 @@ import type {
   OverlayMsg,
   OverlayRect,
 } from '../types'
-
 import {elementsReducer} from './elementsReducer'
 
 export interface OverlayState {

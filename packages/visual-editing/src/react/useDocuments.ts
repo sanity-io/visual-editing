@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {SanityDocument} from '@sanity/client'
-
 import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import {createIfNotExists, patch} from '@sanity/mutate'
 import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import {get as getAtPath} from '@sanity/util/paths'
 import {useCallback} from 'react'
 
+import {isEmptyActor, type MutatorActor} from '../optimistic/context'
 import type {
   DocumentsGet,
   DocumentsMutate,
@@ -14,8 +14,6 @@ import type {
   Path,
   PathValue,
 } from '../optimistic/types'
-
-import {isEmptyActor, type MutatorActor} from '../optimistic/context'
 import {useOptimisticActor} from './useOptimisticActor'
 
 function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, timeout: number): F {

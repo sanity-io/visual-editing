@@ -7,9 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {use} from 'react'
 
-import type {ShoeResult} from '@/types'
-
 import {shoe} from '@/queries'
+import type {ShoeResult} from '@/types'
 import {formatCurrency} from '@/utils'
 
 import {urlFor, urlForCrossDatasetReference} from '../utils'

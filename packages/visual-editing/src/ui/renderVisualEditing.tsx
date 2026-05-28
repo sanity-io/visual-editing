@@ -7,7 +7,6 @@ import {StrictMode} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
 
 import type {VisualEditingOptions} from '../types'
-
 import {VisualEditing} from './VisualEditing'
 
 let node: HTMLElement | null = null

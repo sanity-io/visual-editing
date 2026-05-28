@@ -1,9 +1,8 @@
 import {useEffect, useRef, type MutableRefObject} from 'react'
 
-import type {OverlayController, OverlayEventHandler} from '../types'
-
 import {createOverlayController} from '../controller'
 import {useOptimisticActorReady} from '../react/useOptimisticActor'
+import type {OverlayController, OverlayEventHandler} from '../types'
 
 /**
  * Hook for using an overlay controller

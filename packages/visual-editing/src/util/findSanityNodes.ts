@@ -10,7 +10,6 @@ import type {
   SanityNode,
   SanityStegaNode,
 } from '../types'
-
 import {findNonInlineElement} from './elements'
 import {testAndDecodeStega, testVercelStegaRegex} from './stega'
 

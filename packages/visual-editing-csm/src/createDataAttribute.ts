@@ -1,6 +1,5 @@
-import type {SanityNode} from '@sanity/visual-editing-types'
-
 import {studioPath, type StudioPathLike} from '@sanity/client/csm'
+import type {SanityNode} from '@sanity/visual-editing-types'
 
 import {encodeSanityNodeData} from './encodeSanityNodeData'
 

@@ -4,7 +4,6 @@ import type {
   SanityStegaNode,
   TypeSchema,
 } from '@sanity/presentation-comlink'
-
 import {createContext} from 'react'
 
 import type {OverlayElementField, OverlayElementParent} from '../../types'

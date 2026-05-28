@@ -1,5 +1,4 @@
 import type {SanityClient} from '@sanity/client'
-
 import {SanityEncoder, type Transaction} from '@sanity/mutate'
 import {
   documentMutatorMachine,

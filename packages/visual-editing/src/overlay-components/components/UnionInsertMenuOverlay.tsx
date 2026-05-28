@@ -1,7 +1,6 @@
+import {AddIcon} from '@sanity/icons'
 import type {SchemaNode, SchemaUnionNode} from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
-
-import {AddIcon} from '@sanity/icons'
 import {Button, Flex} from '@sanity/ui/_visual-editing'
 import {
   useCallback,
@@ -13,9 +12,8 @@ import {
 } from 'react'
 import {styled} from 'styled-components'
 
-import type {ElementNode, OverlayComponent} from '../../types'
-
 import {useDocuments} from '../../react/useDocuments'
+import type {ElementNode, OverlayComponent} from '../../types'
 import {useTelemetry} from '../../ui/telemetry/useTelemetry'
 import {getArrayInsertPatches} from '../../util/mutations'
 import {InsertMenuPopover} from './InsertMenu'

@@ -8,7 +8,6 @@ import type {
   OverlayOptions,
   ResolvedElement,
 } from './types'
-
 import {handleOverlayDrag} from './util/dragAndDrop'
 import {findOverlayElement, isElementNode} from './util/elements'
 import {

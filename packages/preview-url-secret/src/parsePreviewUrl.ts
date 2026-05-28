@@ -1,5 +1,3 @@
-import type {ParsedPreviewUrl, VercelSetBypassCookieValue} from './types'
-
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   urlSearchParamPreviewPathname,
@@ -8,6 +6,7 @@ import {
   urlSearchParamVercelProtectionBypass,
   urlSearchParamVercelSetBypassCookie,
 } from './constants'
+import type {ParsedPreviewUrl, VercelSetBypassCookieValue} from './types'
 
 /**
  * @internal

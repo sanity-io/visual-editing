@@ -2,7 +2,6 @@ import Link from 'next/link'
 import {Suspense} from 'react'
 
 import type {HeroQueryResult} from '@/sanity.types'
-
 import {sanityFetch} from '@/sanity/lib/live'
 import {heroQuery, settingsQuery} from '@/sanity/lib/queries'
 

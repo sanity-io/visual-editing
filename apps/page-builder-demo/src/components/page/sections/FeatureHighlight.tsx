@@ -1,9 +1,8 @@
 import {stegaClean} from 'next-sanity'
 import Link from 'next/link'
 
-import type {FrontPageQueryResult} from '@/sanity.types'
-
 import {Image} from '@/components/image'
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'

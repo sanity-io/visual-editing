@@ -1,6 +1,5 @@
 import type {SanityClient} from '@sanity/client'
 import type {QueryStore} from '@sanity/core-loader'
-
 import {useEffect} from 'react'
 
 import type {UseLiveModeHook} from './types'
