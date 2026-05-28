@@ -34,6 +34,7 @@ export function usePerspectiveSync(
         // Presentation that does not support this feature
       })
 
+      // @TODO also handle cleverly please
     const unsub = comlink?.on('presentation/perspective', (data) => {
       handlePerspective(data)
     })
