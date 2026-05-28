@@ -25,7 +25,7 @@ catalogs:
       specifier: ^3.2.0
       version: 3.2.0
     '@sanity/vision':
-      specifier: ^5.23.0
+      specifier: ^5.27.0
       version: 5.27.0
     '@types/node':
       specifier: ^24.10.11
@@ -71,15 +71,15 @@ overrides:
   '@sanity/preview-url-secret': workspace:*
   '@sanity/react-loader': workspace:*
   '@sanity/svelte-loader': workspace:*
-  '@sanity/types': ^5.23.0
-  '@sanity/util': ^5.23.0
+  '@sanity/types': ^5.27.0
+  '@sanity/util': ^5.27.0
   '@sanity/visual-editing': workspace:*
   '@sanity/visual-editing-csm': workspace:*
   '@types/react': ^19.2.15
   '@types/react-dom': ^19.2.3
   eslint-plugin-react-hooks: ^7.0.1
-  groq: ^5.23.0
-  sanity: ^5.23.0
+  groq: ^5.27.0
+  sanity: ^5.27.0
 
 importers:
 
@@ -312,7 +312,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
       '@sanity/util':
-        specifier: ^5.23.0
+        specifier: ^5.27.0
         version: 5.27.0(@types/react@19.2.15)
       '@sanity/visual-editing':
         specifier: workspace:*
@@ -414,7 +414,7 @@ importers:
         specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
       sanity:
-        specifier: ^5.23.0
+        specifier: ^5.27.0
         version: 5.27.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@1.3.2(@noble/hashes@2.2.0)(@types/node@25.9.1)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0))(@types/node@25.9.1)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(jiti@2.7.0)(lightningcss@1.32.0)(oxfmt@0.28.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(styled-components@6.4.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(terser@5.48.0)(typescript@5.9.3)
       styled-components:
         specifier: 'catalog:'
@@ -491,7 +491,7 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       sanity:
-        specifier: ^5.23.0
+        specifier: ^5.27.0
         version: 5.27.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@1.3.2(@noble/hashes@2.2.0)(@types/node@25.9.1)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0))(@types/node@25.9.1)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(jiti@2.7.0)(lightningcss@1.32.0)(oxfmt@0.28.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(styled-components@6.4.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(terser@5.48.0)(typescript@5.9.3)
       styled-components:
         specifier: 'catalog:'
@@ -552,7 +552,7 @@ importers:
         specifier: 'catalog:'
         version: 7.8.2
       sanity:
-        specifier: ^5.23.0
+        specifier: ^5.27.0
         version: 5.27.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@1.3.2(@noble/hashes@2.2.0)(@types/node@25.9.1)(lightningcss@1.32.0)(terser@5.48.0)(yaml@2.9.0))(@types/node@25.9.1)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(jiti@2.7.0)(lightningcss@1.32.0)(oxfmt@0.28.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(styled-components@6.4.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(terser@5.48.0)(typescript@5.9.3)
       sanity-plugin-asset-source-unsplash:
         specifier: 'catalog:'
@@ -653,7 +653,7 @@ importers:
         specifier: 'catalog:'
         version: 2.1.0
       '@sanity/types':
-        specifier: ^5.23.0
+        specifier: ^5.27.0
         version: 5.27.0(@types/react@19.2.15)
       '@sanity/ui-workshop':
         specifier: ^3.4.0
@@ -1030,7 +1030,7 @@ importers:
         specifier: 'catalog:'
         version: 2.1.0
       '@sanity/types':
-        specifier: ^5.23.0
+        specifier: ^5.27.0
         version: 5.27.0(@types/react@19.2.15)
       eslint:
         specifier: ^8.57.1
@@ -3998,7 +3998,7 @@ packages:
       '@sanity/mutator': ^5 || ^6.0.0-0
       react: ^19.2
       react-dom: ^19.2
-      sanity: ^5.23.0
+      sanity: ^5.27.0
       styled-components: ^6.1
 
   '@sanity/bifur-client@1.0.0':
@@ -4050,7 +4050,7 @@ packages:
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
-      sanity: ^5.23.0
+      sanity: ^5.27.0
       styled-components: ^6.1
 
   '@sanity/color@3.0.6':
@@ -4066,7 +4066,7 @@ packages:
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
-      sanity: ^5.23.0
+      sanity: ^5.27.0
 
   '@sanity/demo@2.0.0':
     resolution: {integrity: sha512-is2eMnU6eRJYuEKGtFVVWCoc41GqKaPza1stq7d1epC5dioLmZGxCZkAAlhilSsBNaDbQPQEnPPR66Rh2QCv9g==}
@@ -4270,13 +4270,13 @@ packages:
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
-      sanity: ^5.23.0
+      sanity: ^5.27.0
 
   '@sanity/vision@5.27.0':
     resolution: {integrity: sha512-djZIUO1LKai2ASWDeRKjZhPZh8DAu4jqIml8xiGxcsE70UpW98j6JjRVQVNJm92OPnOJsFaFH0M+6jS4egZrbw==}
     peerDependencies:
       react: ^19.2.2
-      sanity: ^5.23.0
+      sanity: ^5.27.0
       styled-components: ^6.1.15
 
   '@sanity/visual-editing-types@1.1.8':
@@ -4284,7 +4284,7 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^7.22.0
-      '@sanity/types': ^5.23.0
+      '@sanity/types': ^5.27.0
     peerDependenciesMeta:
       '@sanity/types':
         optional: true
@@ -8227,7 +8227,7 @@ packages:
       next: ^16.0.0-0
       react: ^19.2.3
       react-dom: ^19.2.3
-      sanity: ^5.23.0
+      sanity: ^5.27.0
       styled-components: ^6.1
 
   next@16.2.6:
@@ -9331,7 +9331,7 @@ packages:
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
-      sanity: ^5.23.0
+      sanity: ^5.27.0
       styled-components: ^6.1
 
   sanity@5.27.0:
