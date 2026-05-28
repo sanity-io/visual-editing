@@ -1,5 +1,4 @@
 import type {PreviewSnapshot} from '@sanity/presentation-comlink'
-
 import {createContext} from 'react'
 
 export type PreviewSnapshotsContextValue = PreviewSnapshot[]

@@ -2,9 +2,8 @@ import {at, insert, remove} from '@sanity/mutate'
 import {get as getFromPath} from '@sanity/util/paths'
 import {useCallback, useEffect} from 'react'
 
-import type {DragEndEvent, DragInsertPosition} from '../types'
-
 import {useDocuments} from '../react/useDocuments'
+import type {DragEndEvent, DragInsertPosition} from '../types'
 import {getArrayItemKeyAndParentPath} from './mutations'
 
 // Finds the node that the drag end event was relative to, and the relative

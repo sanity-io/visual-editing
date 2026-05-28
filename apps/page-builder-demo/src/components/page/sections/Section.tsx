@@ -1,5 +1,4 @@
 import type {FrontPageQueryResult} from '@/sanity.types'
-
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'

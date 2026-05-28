@@ -1,7 +1,6 @@
 import {useCallback, type FunctionComponent, type PropsWithChildren} from 'react'
 
 import type {VisualEditingNode} from '../../types'
-
 import {events, TelemetryContext, type TelemetryContextValue} from './TelemetryContext'
 
 export const TelemetryProvider: FunctionComponent<

@@ -1,10 +1,8 @@
 import type {ForwardRefExoticComponent, HTMLProps, Ref, SVGProps} from 'react'
-
 import {forwardRef} from 'react'
 
-import type {SanityElementProps} from './SanityElement'
-
 import {htmlElements} from './html'
+import type {SanityElementProps} from './SanityElement'
 import {SanityElement} from './SanityElement'
 import {svgElements} from './svg'
 

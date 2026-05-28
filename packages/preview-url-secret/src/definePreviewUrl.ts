@@ -1,14 +1,13 @@
-import type {
-  PreviewUrlResolver,
-  PreviewUrlResolverContext,
-  PreviewUrlResolverOptions,
-} from './types'
-
 import {
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewPerspective,
   urlSearchParamPreviewSecret,
 } from './constants'
+import type {
+  PreviewUrlResolver,
+  PreviewUrlResolverContext,
+  PreviewUrlResolverOptions,
+} from './types'
 
 /**
  * @internal

@@ -1,6 +1,5 @@
-import type {SanityNode} from '@sanity/visual-editing-types'
-
 import {getPublishedId, studioPath} from '@sanity/client/csm'
+import type {SanityNode} from '@sanity/visual-editing-types'
 
 import {isValidSanityNode} from './isValidSanityNode'
 import {pathToUrlString} from './pathToUrlString'

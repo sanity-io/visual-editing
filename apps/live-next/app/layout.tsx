@@ -1,9 +1,8 @@
 import './globals.css'
-import type {Metadata} from 'next'
-
 import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SpeedInsights} from '@vercel/speed-insights/next'
+import type {Metadata} from 'next'
 import {toPlainText, type PortableTextBlock} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {Inter} from 'next/font/google'

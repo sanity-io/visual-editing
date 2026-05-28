@@ -1,6 +1,5 @@
-import type {SanityDocument} from '@sanity/types'
-
 import {getPublishedId} from '@sanity/client/csm'
+import type {SanityDocument} from '@sanity/types'
 import {
   isEmptyActor,
   type OptimisticReducer,

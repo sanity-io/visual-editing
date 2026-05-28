@@ -16,7 +16,6 @@ import {
 } from 'xstate'
 
 import type {VisualEditingNode} from '../../types'
-
 import {createDocumentMutator} from './documentMutator'
 
 export interface DatasetMutatorMachineInput extends Omit<

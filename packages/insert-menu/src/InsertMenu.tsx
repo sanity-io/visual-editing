@@ -19,9 +19,8 @@ import {startCase} from 'lodash-es'
 import {useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
 import {isValidElementType} from 'react-is'
 
-import type {InsertMenuOptions} from './InsertMenuOptions'
-
 import {getSchemaTypeIcon} from './getSchemaTypeIcon'
+import type {InsertMenuOptions} from './InsertMenuOptions'
 
 type InsertMenuGroup = NonNullable<InsertMenuOptions['groups']>[number] & {selected: boolean}
 type InsertMenuViews = NonNullable<InsertMenuOptions['views']>

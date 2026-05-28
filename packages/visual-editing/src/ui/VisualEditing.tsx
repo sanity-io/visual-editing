@@ -11,7 +11,6 @@ import {
 import {createPortal} from 'react-dom'
 
 import type {VisualEditingOptions} from '../types'
-
 import {setEnvironment} from './environment/context'
 import {History} from './History'
 import {getQueryListenerStatus, subscribeQueryListenerStatus} from './loader-comlink/context'

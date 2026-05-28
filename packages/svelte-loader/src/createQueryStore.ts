@@ -3,11 +3,10 @@ import {
   type CreateQueryStoreOptions,
 } from '@sanity/core-loader'
 
-import type {LoadQuery, QueryResponseInitial, QueryStore, UseLiveMode} from './types'
-
 import {defineStudioUrlStore} from './defineStudioUrlStore'
 import {defineUseLiveMode} from './defineUseLiveMode'
 import {defineUseQuery} from './defineUseQuery'
+import type {LoadQuery, QueryResponseInitial, QueryStore, UseLiveMode} from './types'
 
 /**
  * Create a query store

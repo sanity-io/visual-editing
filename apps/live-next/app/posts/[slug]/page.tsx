@@ -1,5 +1,4 @@
 import type {Metadata, ResolvingMetadata} from 'next'
-
 import {defineQuery, type PortableTextBlock} from 'next-sanity'
 import dynamic from 'next/dynamic'
 import {draftMode} from 'next/headers'

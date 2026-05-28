@@ -9,7 +9,6 @@ import type {
   Path as PathDeprecated,
   PathValue as PathValueDeprecated,
 } from './optimistic/types'
-
 import {useDocuments as useDocumentsDeprecated} from './react/useDocuments'
 import {useOptimistic as useOptimisticDeprecated} from './react/useOptimistic'
 

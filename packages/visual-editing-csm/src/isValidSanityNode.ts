@@ -1,5 +1,4 @@
 import type {SanityNode} from '@sanity/visual-editing-types'
-
 import {is} from 'valibot'
 
 import {sanityNodeSchema} from './sanityNodeSchema'

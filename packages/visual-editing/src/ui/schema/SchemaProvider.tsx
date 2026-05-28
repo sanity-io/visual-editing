@@ -7,7 +7,6 @@ import type {
   TypeSchema,
   UnresolvedPath,
 } from '@sanity/presentation-comlink'
-
 import {
   useCallback,
   useDeferredValue,
@@ -25,7 +24,6 @@ import type {
   OverlayElementParent,
   VisualEditingNode,
 } from '../../types'
-
 import {SchemaContext, type SchemaContextValue} from './SchemaContext'
 
 function isSanityNode(node: SanityNode | SanityStegaNode): node is SanityNode {

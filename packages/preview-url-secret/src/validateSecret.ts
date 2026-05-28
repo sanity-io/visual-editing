@@ -1,11 +1,10 @@
+import {fetchSecretQuery, fetchSharedAccessSecretQuery, tag} from './constants'
 import type {
   FetchPublicSecretQueryResponse,
   FetchSecretQueryParams,
   FetchSecretQueryResponse,
   SanityClientLike,
 } from './types'
-
-import {fetchSecretQuery, fetchSharedAccessSecretQuery, tag} from './constants'
 
 export type {SanityClientLike}
 
