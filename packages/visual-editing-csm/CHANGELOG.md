@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.9
+
+### Patch Changes
+
+- [#3452](https://github.com/sanity-io/visual-editing/pull/3452) [`3554859`](https://github.com/sanity-io/visual-editing/commit/3554859a38fcd5f8966ca80979ef1cbb3b7dc80f) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.22.1
+
+- Updated dependencies [[`3554859`](https://github.com/sanity-io/visual-editing/commit/3554859a38fcd5f8966ca80979ef1cbb3b7dc80f)]:
+  - @sanity/visual-editing-types@2.0.8
+
 ## 3.0.8
 
 ### Patch Changes

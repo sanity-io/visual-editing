@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.4.3
+
+### Patch Changes
+
+- [#3452](https://github.com/sanity-io/visual-editing/pull/3452) [`3554859`](https://github.com/sanity-io/visual-editing/commit/3554859a38fcd5f8966ca80979ef1cbb3b7dc80f) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.22.1
+
+- Updated dependencies [[`862b21b`](https://github.com/sanity-io/visual-editing/commit/862b21ba6d9c5d838cee3785111c484e3c77cd79), [`3554859`](https://github.com/sanity-io/visual-editing/commit/3554859a38fcd5f8966ca80979ef1cbb3b7dc80f)]:
+  - @sanity/insert-menu@3.0.8
+  - @sanity/preview-url-secret@4.0.7
+  - @sanity/visual-editing-csm@3.0.9
+
 ## 5.4.2
 
 ### Patch Changes

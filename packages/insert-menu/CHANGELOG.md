@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.8
+
+### Patch Changes
+
+- [#3432](https://github.com/sanity-io/visual-editing/pull/3432) [`862b21b`](https://github.com/sanity-io/visual-editing/commit/862b21ba6d9c5d838cee3785111c484e3c77cd79) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): Update dependency lodash-es to ^4.18.1
+
 ## 3.0.7
 
 ### Patch Changes
