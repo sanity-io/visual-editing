@@ -1,4 +1,4 @@
-import {useCallback, useContext, useSyncExternalStore} from 'react'
+import {useCallback, useContext, useDeferredValue, useSyncExternalStore} from 'react'
 
 import {SharedStateContext} from './SharedStateContext'
 
@@ -12,10 +12,10 @@ export function useSharedState<
 
   const {store} = context
 
-  const value = useSyncExternalStore(
+  const value = useDeferredValue(useSyncExternalStore(
     store.subscribe,
     useCallback(() => store.getState()[key] as T, [key, store]),
-  )
+  ))
 
   return value
 }
