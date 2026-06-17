@@ -831,7 +831,7 @@ importers:
         version: link:../insert-menu
       '@sanity/mutate':
         specifier: ^0.18.0
-        version: 0.18.0(xstate@5.32.0)
+        version: 0.18.0(xstate@5.32.1)
       '@sanity/presentation-comlink':
         specifier: ^2.1.0
         version: 2.1.0(@sanity/client@7.22.1)(@sanity/types@5.31.1(@types/react@19.2.15))
@@ -860,8 +860,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       xstate:
-        specifier: ^5.31.1
-        version: 5.32.0
+        specifier: ^5.32.1
+        version: 5.32.1
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -10750,6 +10750,9 @@ packages:
   xstate@5.32.0:
     resolution: {integrity: sha512-zsk73aWGmxn9z34P0kbiod5JwTvdYRW3+IDxITq8sd9+VWwMyW7BUzpplnYy9mIEXa6V8IMDv7Hy4m0mhT5+2Q==}
 
+  xstate@5.32.1:
+    resolution: {integrity: sha512-IGX9q5vEOplWjVq79edfgjJfVV/lXCup9p/fQGgUabAveZrlRwWJ/mC2iZEE7wswXbWITBCoS7gmoFfcuWAwsQ==}
+
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -13592,11 +13595,11 @@ snapshots:
       '@portabletext/patches': 2.0.4
       '@portabletext/schema': 2.2.0
       '@portabletext/to-html': 5.0.2
-      '@xstate/react': 6.1.0(@types/react@19.2.15)(react@19.2.6)(xstate@5.32.0)
+      '@xstate/react': 6.1.0(@types/react@19.2.15)(react@19.2.6)(xstate@5.32.1)
       debug: 4.4.3(supports-color@8.1.1)
       react: 19.2.6
       scroll-into-view-if-needed: 3.1.0
-      xstate: 5.32.0
+      xstate: 5.32.1
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
@@ -13622,19 +13625,19 @@ snapshots:
   '@portabletext/plugin-character-pair-decorator@7.0.29(@portabletext/editor@6.6.5(@types/react@19.2.15)(react@19.2.6))(@types/react@19.2.15)(react@19.2.6)':
     dependencies:
       '@portabletext/editor': 6.6.5(@types/react@19.2.15)(react@19.2.6)
-      '@xstate/react': 6.1.0(@types/react@19.2.15)(react@19.2.6)(xstate@5.32.0)
+      '@xstate/react': 6.1.0(@types/react@19.2.15)(react@19.2.6)(xstate@5.32.1)
       react: 19.2.6
       remeda: 2.37.0
-      xstate: 5.32.0
+      xstate: 5.32.1
     transitivePeerDependencies:
       - '@types/react'
 
   '@portabletext/plugin-input-rule@4.0.28(@portabletext/editor@6.6.5(@types/react@19.2.15)(react@19.2.6))(@types/react@19.2.15)(react@19.2.6)':
     dependencies:
       '@portabletext/editor': 6.6.5(@types/react@19.2.15)(react@19.2.6)
-      '@xstate/react': 6.1.0(@types/react@19.2.15)(react@19.2.6)(xstate@5.32.0)
+      '@xstate/react': 6.1.0(@types/react@19.2.15)(react@19.2.6)(xstate@5.32.1)
       react: 19.2.6
-      xstate: 5.32.0
+      xstate: 5.32.1
     transitivePeerDependencies:
       - '@types/react'
 
@@ -14826,6 +14829,20 @@ snapshots:
       rxjs: 7.8.2
     optionalDependencies:
       xstate: 5.32.0
+
+  '@sanity/mutate@0.18.0(xstate@5.32.1)':
+    dependencies:
+      '@isaacs/ttlcache': 2.1.5
+      '@sanity/client': 7.22.1
+      '@sanity/diff-match-patch': 3.2.0
+      '@sanity/uuid': 3.0.2
+      hotscript: 1.0.13
+      lodash: 4.18.1
+      mendoza: 3.0.8
+      nanoid: 5.1.11
+      rxjs: 7.8.2
+    optionalDependencies:
+      xstate: 5.32.1
 
   '@sanity/mutator@5.31.1(@types/react@19.2.15)':
     dependencies:
@@ -16483,6 +16500,16 @@ snapshots:
       use-sync-external-store: 1.6.0(react@19.2.6)
     optionalDependencies:
       xstate: 5.32.0
+    transitivePeerDependencies:
+      - '@types/react'
+
+  '@xstate/react@6.1.0(@types/react@19.2.15)(react@19.2.6)(xstate@5.32.1)':
+    dependencies:
+      react: 19.2.6
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.15)(react@19.2.6)
+      use-sync-external-store: 1.6.0(react@19.2.6)
+    optionalDependencies:
+      xstate: 5.32.1
     transitivePeerDependencies:
       - '@types/react'
 
@@ -23013,6 +23040,8 @@ snapshots:
   xmlchars@2.2.0: {}
 
   xstate@5.32.0: {}
+
+  xstate@5.32.1: {}
 
   xtend@4.0.2: {}
 
