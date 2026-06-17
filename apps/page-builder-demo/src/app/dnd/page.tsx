@@ -178,7 +178,7 @@ export default async function Page() {
                   key={child._key}
                 >
                   <h3>{stegaClean(child.title)}</h3>
-                  <img src="https://placehold.co/600x400" alt="" className="mb-4 mt-4" />
+                  <img src="https://placehold.co/600x400" alt="" className="mt-4 mb-4" />
                   <p className="mt-3">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente repudiandae
                     distinctio, repellat officia quam odio repellendus, dolore nulla fuga corporis
@@ -206,7 +206,7 @@ export default async function Page() {
                   key={child._key}
                 >
                   <h3>{stegaClean(child.title)}</h3>
-                  <img src="https://placehold.co/600x400" alt="" className="mb-4 mt-4" />
+                  <img src="https://placehold.co/600x400" alt="" className="mt-4 mb-4" />
                   <p className="mt-3">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente repudiandae
                     distinctio, repellat officia quam odio repellendus, dolore nulla fuga corporis

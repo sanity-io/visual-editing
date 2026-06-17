@@ -34,7 +34,7 @@ export default function Avatar({id, originalId, projectId, dataset, name, pictur
       ) : (
         <div className="mr-1">By </div>
       )}
-      <div className="text-pretty text-xl font-bold">{name}</div>
+      <div className="text-xl font-bold text-pretty">{name}</div>
     </div>
   )
 }

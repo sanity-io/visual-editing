@@ -24,7 +24,7 @@ function encodeEditUrl(path: Path, value: string) {
 export function MarketingPage(): React.JSX.Element {
   return (
     <>
-      <div className="sticky left-0 top-0 z-10 bg-white p-4 dark:bg-black">
+      <div className="sticky top-0 left-0 z-10 bg-white p-4 dark:bg-black">
         <div className="m-auto max-w-6xl">
           <div className="text-2xl font-extrabold tracking-tight">
             <span className="text-purple-500">●</span> Marketing
@@ -35,7 +35,7 @@ export function MarketingPage(): React.JSX.Element {
       <div className="min-h-[60vh] bg-purple-200 dark:bg-purple-800">
         <div className="m-auto h-full max-w-6xl px-4 py-6">
           <div className="flex h-full gap-6">
-            <div className="prose flex-1 py-6 md:prose-lg lg:prose-xl dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-snug">
+            <div className="prose md:prose-lg lg:prose-xl dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-snug flex-1 py-6">
               <h1 className="tracking-tight">
                 {encodeEditUrl(
                   [{_key: 'a'}, 'title'],
@@ -61,7 +61,7 @@ export function MarketingPage(): React.JSX.Element {
           <div className="flex h-full gap-6">
             <div className="flex-1 rounded-lg bg-black dark:bg-white" />
 
-            <div className="prose flex-1 py-6 md:prose-lg lg:prose-xl dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-snug">
+            <div className="prose md:prose-lg lg:prose-xl dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-snug flex-1 py-6">
               <h2 className="leading-none">
                 {encodeEditUrl(
                   [{_key: 'b'}, 'title'],
@@ -83,7 +83,7 @@ export function MarketingPage(): React.JSX.Element {
       <div className="min-h-[40vh] border-b border-gray-200 dark:border-gray-900">
         <div className="m-auto h-full max-w-6xl px-4 py-6">
           <div className="flex h-full gap-6">
-            <div className="prose flex-1 py-6 md:prose-lg lg:prose-xl dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-snug">
+            <div className="prose md:prose-lg lg:prose-xl dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-snug flex-1 py-6">
               <h2 className="leading-none">
                 {encodeEditUrl(
                   [{_key: 'c'}, 'title'],

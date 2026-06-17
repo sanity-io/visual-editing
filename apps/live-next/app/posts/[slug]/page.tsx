@@ -56,7 +56,7 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
   return (
     <div className="container mx-auto px-5">
       {settings?.title && (
-        <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+        <h2 className="mt-10 mb-16 text-2xl leading-tight font-bold tracking-tight md:text-4xl md:tracking-tighter">
           <Link href="/" className="hover:underline">
             {settings.title}
           </Link>
@@ -65,7 +65,7 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
       {post?._id ? (
         <>
           <article>
-            <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+            <h1 className="mb-12 text-6xl leading-tight font-bold tracking-tighter text-balance md:text-7xl md:leading-none lg:text-8xl">
               {post.title}
             </h1>
             <div className="hidden md:mb-12 md:block">
@@ -118,8 +118,8 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
               ))}
           </article>
           <aside>
-            <hr className="border-accent-2 mb-24 mt-28" />
-            <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+            <hr className="border-accent-2 mt-28 mb-24" />
+            <h2 className="mb-8 text-6xl leading-tight font-bold tracking-tighter md:text-7xl">
               Recent Stories
             </h2>
             <Suspense>
@@ -128,7 +128,7 @@ export default async function PostPage({params}: {params: Promise<{slug: string}
           </aside>
         </>
       ) : (
-        <h1 className="mb-12 text-balance text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="mb-12 text-6xl leading-tight font-bold tracking-tighter text-balance md:text-7xl md:leading-none lg:text-8xl">
           404 - Post not found with slug: {(await params).slug}
         </h1>
       )}

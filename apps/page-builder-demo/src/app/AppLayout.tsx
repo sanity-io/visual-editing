@@ -30,9 +30,9 @@ export function AppLayout(props: {children: React.ReactNode; data: LayoutQueryRe
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="relative z-40 p-4 transition-all duration-500 hover:bg-white hover:bg-opacity-50 sm:px-5 md:px-6">
+      <div className="hover:bg-opacity-50 relative z-40 p-4 transition-all duration-500 hover:bg-white sm:px-5 md:px-6">
         <div className="-mx-3 flex items-center justify-between gap-2">
-          <Link className="text-md flex-none p-3 text-xl font-extrabold leading-none" href="/">
+          <Link className="text-md flex-none p-3 text-xl leading-none font-extrabold" href="/">
             {data?.title}
           </Link>
 
@@ -65,7 +65,7 @@ export function AppLayout(props: {children: React.ReactNode; data: LayoutQueryRe
         <div className="-mx-3">
           <div className="flex justify-between p-4">
             <Link
-              className="block p-3 text-xl font-extrabold leading-none"
+              className="block p-3 text-xl leading-none font-extrabold"
               href="/"
               onClick={() => {
                 setMenuOpen(false)

@@ -20,15 +20,15 @@ function Intro(props: {title: string | null | undefined; description: any}) {
   }
 
   return (
-    <section className="mb-16 mt-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
+    <section className="mt-16 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
       {title && (
         <AnimatedH1
-          className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl"
+          className="text-6xl leading-tight font-bold tracking-tighter text-balance lg:pr-8 lg:text-8xl"
           text={title}
         />
       )}
       {description?.length > 0 && (
-        <h2 className="mt-5 text-pretty text-center text-lg lg:pl-8 lg:text-left">
+        <h2 className="mt-5 text-center text-lg text-pretty lg:pl-8 lg:text-left">
           <PortableText className="prose-lg" value={description} />
         </h2>
       )}
@@ -54,7 +54,7 @@ function HeroPost({
       </Link>
       <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
         <div>
-          <h3 className="mb-4 text-pretty text-4xl leading-tight lg:text-6xl">
+          <h3 className="mb-4 text-4xl leading-tight text-pretty lg:text-6xl">
             <Link href={`/posts/${slug}`} className="hover:underline">
               {title}
             </Link>
@@ -64,7 +64,7 @@ function HeroPost({
           </div>
         </div>
         <div>
-          {excerpt && <p className="mb-4 text-pretty text-lg leading-relaxed">{excerpt}</p>}
+          {excerpt && <p className="mb-4 text-lg leading-relaxed text-pretty">{excerpt}</p>}
           {author && (
             <Avatar
               id={author._id}
@@ -102,7 +102,7 @@ export default async function Page() {
       )}
       {heroPost?._id && (
         <aside>
-          <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+          <h2 className="mb-8 text-6xl leading-tight font-bold tracking-tighter md:text-7xl">
             More Stories
           </h2>
           <Suspense>
