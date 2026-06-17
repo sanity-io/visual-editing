@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.4.4
+
+### Patch Changes
+
+- [#3468](https://github.com/sanity-io/visual-editing/pull/3468) [`005c677`](https://github.com/sanity-io/visual-editing/commit/005c6776acdd8d2e5b7cf98578286379fcad7c0e) Thanks [@jordanl17](https://github.com/jordanl17)! - fix(visual-editing): report documents on the page in visual order
+
 ## 5.4.3
 
 ### Patch Changes
