@@ -5,11 +5,12 @@ import type {ElementState} from '../../types'
 import {orderSanityNodesByPosition} from '../orderSanityNodesByPosition'
 
 function makeElement(
-  overrides: Partial<ElementState> & {
+  overrides: Partial<Omit<ElementState, 'rect'>> & {
     rect: {x: number; y: number}
     sanity: ElementState['sanity']
   },
 ): ElementState {
+  const {rect, ...rest} = overrides
   return {
     id: 'element-id',
     activated: false,
@@ -19,8 +20,8 @@ function makeElement(
     dragDisabled: false,
     targets: [],
     elementType: 'element',
-    rect: {w: 100, h: 50, ...overrides.rect},
-    ...overrides,
+    ...rest,
+    rect: {w: 100, h: 50, ...rect},
   }
 }
 
