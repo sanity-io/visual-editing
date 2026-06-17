@@ -19,7 +19,7 @@ export default async function MoreStories(params: {skip: string; limit: number})
             <Link href={`/posts/${slug}`} className="group mb-5 block">
               <CoverImage image={coverImage} priority={false} />
             </Link>
-            <h3 className="mb-3 text-balance text-3xl leading-snug">
+            <h3 className="mb-3 text-3xl leading-snug text-balance">
               <Link href={`/posts/${slug}`} className="hover:underline">
                 {title}
               </Link>
@@ -27,7 +27,7 @@ export default async function MoreStories(params: {skip: string; limit: number})
             <div className="mb-4 text-lg">
               <DateComponent dateString={post.date} />
             </div>
-            {excerpt && <p className="mb-4 text-pretty text-lg leading-relaxed">{excerpt}</p>}
+            {excerpt && <p className="mb-4 text-lg leading-relaxed text-pretty">{excerpt}</p>}
             {author && (
               <Avatar
                 id={author._id}

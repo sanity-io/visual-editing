@@ -9,7 +9,7 @@ export function DraftModeStatus({perspective}: {perspective: string}) {
   if (environment === null) return null
 
   return (
-    <div className="fixed bottom-3 right-3 block rounded bg-theme-inverse px-2 py-1 text-xs text-theme-inverse">
+    <div className="bg-theme-inverse text-theme-inverse fixed right-3 bottom-3 block rounded px-2 py-1 text-xs">
       <p className="will-change-contents">
         perspective:{' '}
         <ViewTransition>

@@ -61,7 +61,7 @@ export default function ShoesPageClient(props: Props) {
                 />
               </div>
               <h2
-                className="mb-8 mt-4 text-sm text-gray-700"
+                className="mt-4 mb-8 text-sm text-gray-700"
                 style={{['textWrap' as any]: 'balance'}}
               >
                 {product.title}
@@ -70,7 +70,7 @@ export default function ShoesPageClient(props: Props) {
                 {product.price ? formatCurrency(product.price) : 'FREE'}
               </p>
               {product.brand && (
-                <div className="absolute bottom-0.5 right-0 flex items-center gap-x-2">
+                <div className="absolute right-0 bottom-0.5 flex items-center gap-x-2">
                   <Image
                     className="h-6 w-6 rounded-full bg-gray-50"
                     src={

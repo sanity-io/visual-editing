@@ -54,7 +54,7 @@ function ArticlePage() {
             </a>
           </div>
 
-          <h1 className="my-3 text-pretty text-4xl font-extrabold leading-none tracking-tight sm:text-6xl md:text-8xl">
+          <h1 className="my-3 text-4xl leading-none font-extrabold tracking-tight text-pretty sm:text-6xl md:text-8xl">
             {encodeEditUrl(['heading'], 'The power of newsletters')}
           </h1>
 

@@ -32,7 +32,7 @@ export function FeatureHighlight(props: {
         </div>
 
         <div className="inset-0 z-10 flex items-end p-4 sm:p-5 md:absolute md:flex-row md:p-6 md:pb-8">
-          <div className="flex flex-col gap-4 bg-opacity-80 backdrop-blur-lg md:max-w-md md:p-5 md:text-white">
+          <div className="bg-opacity-80 flex flex-col gap-4 backdrop-blur-lg md:max-w-md md:p-5 md:text-white">
             <h1 className="text-2xl font-bold">{section.headline}</h1>
             {section.description && <p className="font-serif text-base">{section.description}</p>}
             <div className="flex gap-2">
@@ -44,7 +44,7 @@ export function FeatureHighlight(props: {
                       type: data._type,
                       path: `sections[_key=="${section._key}"].ctas[_key=="${cta._key}"]`,
                     }).toString()}
-                    className="border px-3 py-2 text-sm text-current md:border-none md:bg-black md:bg-opacity-30 dark:border-gray-600"
+                    className="md:bg-opacity-30 border px-3 py-2 text-sm text-current md:border-none md:bg-black dark:border-gray-600"
                     key={cta._key}
                   >
                     {stegaClean(cta.title)}
