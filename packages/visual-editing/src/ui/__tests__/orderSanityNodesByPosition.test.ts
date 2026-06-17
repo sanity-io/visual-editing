@@ -1,7 +1,6 @@
 import {expect, test} from 'vitest'
 
 import type {ElementState} from '../../types'
-
 import {orderSanityNodesByPosition} from '../orderSanityNodesByPosition'
 
 function makeElement(
