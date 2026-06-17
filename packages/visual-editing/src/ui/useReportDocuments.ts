@@ -1,9 +1,7 @@
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
-
 import {useCallback, useEffect, useRef} from 'react'
 
 import type {ElementState, VisualEditingNode} from '../types'
-
 import {orderSanityNodesByPosition} from './orderSanityNodesByPosition'
 
 /**
