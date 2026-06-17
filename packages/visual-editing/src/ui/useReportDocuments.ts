@@ -1,14 +1,10 @@
 import type {ClientPerspective, ContentSourceMapDocuments} from '@sanity/client'
+
 import {useCallback, useEffect, useRef} from 'react'
 
-import type {ElementState, SanityNode, VisualEditingNode} from '../types'
+import type {ElementState, VisualEditingNode} from '../types'
 
-function isEqualSets(a: Set<string>, b: Set<string>) {
-  if (a === b) return true
-  if (a.size !== b.size) return false
-  for (const value of a) if (!b.has(value)) return false
-  return true
-}
+import {orderSanityNodesByPosition} from './orderSanityNodesByPosition'
 
 /**
  * Hook for reporting in use documents to Presentation
@@ -21,7 +17,7 @@ export function useReportDocuments(
 ): void {
   const lastReported = useRef<
     | {
-        nodeIds: Set<string>
+        orderedIds: string[]
         perspective: ClientPerspective
       }
     | undefined
@@ -40,33 +36,29 @@ export function useReportDocuments(
   useEffect(() => {
     // Report only nodes of type `SanityNode`. Untransformed `SanityStegaNode`
     // nodes without an `id`, are not reported as they will not contain the
-    // necessary document data.
-    const nodes = elements
-      .map((e) => {
-        const {sanity} = e
-        if (!sanity || !('id' in sanity)) return null
-        return sanity
-      })
-      .filter((s) => !!s) as SanityNode[]
+    // necessary document data. Nodes are sorted by visual position so the
+    // reported order reflects appearance on the page.
+    const orderedNodes = orderSanityNodesByPosition(elements)
+    const orderedIds = orderedNodes.map((node) => node.id)
 
-    const nodeIds = new Set<string>(nodes.map((e) => e.id))
     // Report if:
     // - Documents not yet reported
-    // - Document IDs changed
+    // - Document IDs changed or their visual order changed
     // - Perspective changed
-    if (
-      !lastReported.current ||
-      !isEqualSets(nodeIds, lastReported.current.nodeIds) ||
-      perspective !== lastReported.current.perspective
-    ) {
-      const documentsOnPage: ContentSourceMapDocuments = Array.from(nodeIds).map((_id) => {
-        const node = nodes.find((node) => node.id === _id)!
-        const {type, projectId: _projectId, dataset: _dataset} = node
+    const lastOrderedIds = lastReported.current?.orderedIds
+    const orderChanged =
+      !lastOrderedIds ||
+      lastOrderedIds.length !== orderedIds.length ||
+      orderedIds.some((id, index) => id !== lastOrderedIds[index])
+
+    if (orderChanged || perspective !== lastReported.current?.perspective) {
+      const documentsOnPage: ContentSourceMapDocuments = orderedNodes.map((node) => {
+        const {id: _id, type, projectId: _projectId, dataset: _dataset} = node
         return _projectId && _dataset
           ? {_id, _type: type!, _projectId, _dataset}
           : {_id, _type: type!}
       })
-      lastReported.current = {nodeIds, perspective}
+      lastReported.current = {orderedIds, perspective}
       reportDocuments(documentsOnPage, perspective)
     }
   }, [elements, perspective, reportDocuments])
