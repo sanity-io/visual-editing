@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useSyncExternalStore} from 'react'
+import {useCallback, useDeferredValue, useMemo, useSyncExternalStore} from 'react'
 
 import {
   actor,
@@ -15,11 +15,11 @@ export function useOptimisticActor(): MutatorActor | EmptyActor {
     return () => listeners.delete(listener)
   }, [])
 
-  const actorRef = useSyncExternalStore(
+  const actorRef = useDeferredValue(useSyncExternalStore(
     subscribe,
     () => actor,
     () => emptyActor,
-  )
+  ), emptyActor)
 
   return actorRef
 }

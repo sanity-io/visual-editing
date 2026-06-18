@@ -2,7 +2,7 @@ import type {ClientPerspective, ClientReturn, ContentSourceMap, QueryParams} fro
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import {dequal} from 'dequal/lite'
-import {useEffect, useEffectEvent, useMemo, useReducer, useSyncExternalStore} from 'react'
+import {startTransition, useDeferredValue, useEffect, useEffectEvent, useMemo, useReducer, useSyncExternalStore} from 'react'
 
 import {
   addQueryListener,
@@ -92,29 +92,29 @@ export function usePresentationQuery<const QueryString extends string>(props: {
   const [state, dispatch] = useReducer(reducer, initialState)
   const {query, params = EMPTY_QUERY_PARAMS, stega = true} = props
 
-  const comlink = useSyncExternalStore(
+  const comlink = useDeferredValue(useSyncExternalStore(
     subscribe,
     () => comlinkSnapshot,
     () => null,
-  )
+  ), null)
 
-  const projectId = useSyncExternalStore(
+  const projectId = useDeferredValue(useSyncExternalStore(
     subscribe,
     () => comlinkProjectId,
     () => null,
-  )
+  ), null)
 
-  const dataset = useSyncExternalStore(
+  const dataset = useDeferredValue(useSyncExternalStore(
     subscribe,
     () => comlinkDataset,
     () => null,
-  )
+  ), null)
 
-  const perspective = useSyncExternalStore(
+  const perspective = useDeferredValue(useSyncExternalStore(
     subscribe,
     () => comlinkPerspective,
     () => null,
-  )
+  ),null)
 
   // Register this hook instance as a query listener so LoaderComlink is mounted
   useEffect(() => addQueryListener(), [])
@@ -144,14 +144,14 @@ export function usePresentationQuery<const QueryString extends string>(props: {
           },
         )
       ) {
-        dispatch({
+        startTransition(() => dispatch({
           type: 'query-change',
           payload: {
             data: event.result,
             sourceMap: event.resultSourceMap || null,
             perspective: event.perspective,
           },
-        })
+        }))
       }
     },
   )
