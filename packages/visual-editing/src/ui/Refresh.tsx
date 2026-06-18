@@ -17,6 +17,7 @@ export const Refresh: FunctionComponent<
 
   useEffect(
     () =>
+      // handle in a clever way please
       comlink.on('presentation/refresh', (data) => {
         if (data.source === 'manual') {
           clearTimeout(manualRefreshRef.current)
