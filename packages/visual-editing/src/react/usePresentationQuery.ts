@@ -73,7 +73,7 @@ const initialState: UsePresentationQueryReturnsInactive = {
 }
 
 const EMPTY_QUERY_PARAMS: QueryParams = {}
-const LISTEN_HEARTBEAT_INTERVAL = 10_000
+const LISTEN_HEARTBEAT_INTERVAL = 20_000
 
 /**
  * Experimental hook that can run queries in Presentation Tool.
