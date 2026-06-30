@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.0.10
+
+### Patch Changes
+
+- [#3457](https://github.com/sanity-io/visual-editing/pull/3457) [`659d8bd`](https://github.com/sanity-io/visual-editing/commit/659d8bdc62a93b271a73fe9bd236d6b721e6a03e) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): Update dependency valibot to ^1.4.1
+
+- [#3477](https://github.com/sanity-io/visual-editing/pull/3477) [`0332f7f`](https://github.com/sanity-io/visual-editing/commit/0332f7faba74f349c7b3ce6ea8270350469307de) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.23.0
+
+- Updated dependencies [[`0332f7f`](https://github.com/sanity-io/visual-editing/commit/0332f7faba74f349c7b3ce6ea8270350469307de)]:
+  - @sanity/visual-editing-types@2.0.9
+
 ## 3.0.9
 
 ### Patch Changes
