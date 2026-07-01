@@ -44,12 +44,13 @@
     "ts:check": "tsc --noEmit"
   },
   "dependencies": {
-    "@sanity/icons": "^3.7.4",
-    "@sanity/ui": "^3.2.0",
+    "@sanity/icons": "catalog:",
+    "@sanity/ui": "catalog:",
     "lodash-es": "^4.18.1",
     "react-is": "^19.2.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@sanity/pkg-utils": "catalog:",
     "@sanity/tsconfig": "catalog:",
     "@sanity/types": "catalog:",
@@ -60,9 +61,10 @@
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
-    "eslint": "^8.57.1",
+    "eslint": "^9.39.4",
     "eslint-plugin-import": "^2.32.0",
-    "lint-staged": "^15.5.2",
+    "globals": "^17.7.0",
+    "lint-staged": "^17.0.8",
     "react": "catalog:",
     "react-dom": "catalog:",
     "typescript": "catalog:"

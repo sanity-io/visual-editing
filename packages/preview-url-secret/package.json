@@ -80,7 +80,7 @@
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "dependencies": {
-    "@sanity/uuid": "3.0.2"
+    "@sanity/uuid": "3.0.3"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -88,20 +88,14 @@
     "@sanity/client": "catalog:",
     "@sanity/pkg-utils": "catalog:",
     "@sanity/tsconfig": "catalog:",
-    "eslint": "^8.57.1",
+    "eslint": "^9.39.4",
     "typescript": "catalog:",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.9"
   },
   "peerDependencies": {
     "@sanity/client": "^7.23.0"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  },
   "engines": {
     "node": ">=20.19 <22 || >=22.12"
   }
