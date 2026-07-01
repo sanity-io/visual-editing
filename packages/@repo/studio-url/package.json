@@ -34,13 +34,8 @@
     "@repo/package.config": "workspace:*",
     "@sanity/pkg-utils": "catalog:",
     "@sanity/tsconfig": "catalog:",
+    "eslint": "^9.39.4",
     "typescript": "catalog:"
   },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  }
+  "browserslist": "extends @sanity/browserslist-config"
 }

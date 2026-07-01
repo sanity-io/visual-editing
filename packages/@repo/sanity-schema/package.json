@@ -37,8 +37,7 @@
   },
   "dependencies": {
     "@repo/env": "workspace:*",
-    "date-fns": "^4.3.0",
-    "react": "catalog:"
+    "date-fns": "^4.4.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -47,13 +46,14 @@
     "@sanity/color-input": "catalog:",
     "@sanity/icons": "catalog:",
     "@sanity/pkg-utils": "catalog:",
-    "@sanity/preview-url-secret": "workspace:^",
+    "@sanity/preview-url-secret": "workspace:*",
     "@sanity/tsconfig": "catalog:",
     "@sanity/ui": "catalog:",
     "@sanity/visual-editing-csm": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "eslint": "^8.57.1",
+    "eslint": "^9.39.4",
+    "react": "catalog:",
     "rxjs": "catalog:",
     "sanity": "catalog:",
     "sanity-plugin-asset-source-unsplash": "catalog:",
@@ -64,15 +64,10 @@
     "@sanity/color-input": "catalog:",
     "@sanity/icons": "catalog:",
     "@sanity/ui": "catalog:",
+    "react": "^19.2",
     "rxjs": "catalog:",
     "sanity": "catalog:",
     "sanity-plugin-asset-source-unsplash": "catalog:"
   },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  }
+  "browserslist": "extends @sanity/browserslist-config"
 }

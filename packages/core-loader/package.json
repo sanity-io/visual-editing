@@ -71,10 +71,10 @@
     "test": "vitest --pass-with-no-tests --typecheck"
   },
   "dependencies": {
-    "@sanity/client": "^7.23.0",
+    "@sanity/client": "catalog:",
     "@sanity/comlink": "^4.0.1",
     "@sanity/presentation-comlink": "^2.1.0",
-    "@sanity/visual-editing-csm": "workspace:^"
+    "@sanity/visual-editing-csm": "workspace:*"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -83,20 +83,14 @@
     "@sanity/tsconfig": "catalog:",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
-    "async-cache-dedupe": "2.2.0",
-    "eslint": "^8.57.1",
-    "happy-dom": "^18.0.1",
-    "nanostores": "1.0.1",
+    "async-cache-dedupe": "3.4.0",
+    "eslint": "^9.39.4",
+    "happy-dom": "^20.10.6",
+    "nanostores": "1.4.0",
     "typescript": "catalog:",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.9"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  },
   "engines": {
     "node": ">=18"
   }

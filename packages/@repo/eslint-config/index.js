@@ -1,43 +1,54 @@
-/** @type {import('eslint').Linter.Config} */
-module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'turbo',
-  ],
-  rules: {
-    'no-console': 'error',
-    'no-warning-comments': [
-      'warn',
-      {
-        location: 'start',
-        terms: ['todo', '@todo', 'fixme'],
+'use strict'
+
+const js = require('@eslint/js')
+const tsPlugin = require('@typescript-eslint/eslint-plugin')
+const reactPlugin = require('eslint-plugin-react')
+const reactHooksPlugin = require('eslint-plugin-react-hooks')
+const turboConfig = require('eslint-config-turbo/flat').default
+const globals = require('globals')
+
+/** @type {import('eslint').Linter.Config[]} */
+module.exports = [
+  js.configs.recommended,
+  ...tsPlugin.configs['flat/recommended'],
+  tsPlugin.configs['flat/eslint-recommended'],
+  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs.flat['jsx-runtime'],
+  reactHooksPlugin.configs.flat.recommended,
+  ...turboConfig,
+  {
+    files: ['**/*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.node,
       },
-    ],
-    '@typescript-eslint/explicit-module-boundary-types': 'error',
-    '@typescript-eslint/no-empty-interface': 'off',
-    '@typescript-eslint/no-empty-object-type': 'off',
-    '@typescript-eslint/ban-types': 'off',
-    'react-hooks/exhaustive-deps': 'error',
-    'react-hooks/rules-of-hooks': 'error',
-    'react/prop-types': 'off',
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
   },
-}
+  {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+    rules: {
+      'no-console': 'error',
+      'no-warning-comments': [
+        'warn',
+        {
+          location: 'start',
+          terms: ['todo', '@todo', 'fixme'],
+        },
+      ],
+      '@typescript-eslint/explicit-module-boundary-types': 'error',
+      '@typescript-eslint/no-empty-interface': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      'react-hooks/exhaustive-deps': 'error',
+      'react-hooks/rules-of-hooks': 'error',
+      'react/prop-types': 'off',
+    },
+  },
+]

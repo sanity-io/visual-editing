@@ -20,16 +20,10 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@sanity/tsconfig": "catalog:",
-    "eslint": "^8.57.1",
+    "eslint": "^9.39.4",
     "sanity": "catalog:",
     "styled-components": "catalog:",
     "typescript": "catalog:"
   },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  }
+  "browserslist": "extends @sanity/browserslist-config"
 }
