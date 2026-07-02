@@ -1,6 +1,25 @@
 import type {StudioPathLike} from '@sanity/client/csm'
-import type {InsertMenuOptions} from '@sanity/insert-menu'
 import type {ArrayOptions, PreviewValue} from '@sanity/types'
+
+/** @alpha This API may change */
+interface InsertMenuOptions {
+  /**
+   * @defaultValue `'auto'`
+   * `filter: 'auto'` automatically turns on filtering if there are more than 5
+   * schema types added to the menu.
+   */
+  filter?: 'auto' | boolean | undefined
+  groups?: Array<{name: string; title?: string; of?: Array<string>}> | undefined
+  /** defaultValue `true` */
+  showIcons?: boolean | undefined
+  /** @defaultValue `[{name: 'list'}]` */
+  views?:
+    | Array<
+        | {name: 'list'}
+        | {name: 'grid'; previewImageUrl?: (schemaTypeName: string) => string | undefined}
+      >
+    | undefined
+}
 
 export type {InsertMenuOptions}
 
