@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.9
+
+### Patch Changes
+
+- [#3491](https://github.com/sanity-io/visual-editing/pull/3491) [`5901b6a`](https://github.com/sanity-io/visual-editing/commit/5901b6a3404ee37e8bf33dcbc3dcc010e5ea9d3e) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/icons to v5
+
 ## 3.0.8
 
 ### Patch Changes
