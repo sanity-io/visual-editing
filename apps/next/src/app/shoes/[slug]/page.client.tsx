@@ -1,7 +1,7 @@
 'use client'
 
 import {PortableText} from '@portabletext/react'
-import {LemonIcon} from '@sanity/icons'
+import {LemonIcon} from '@sanity/icons/Lemon'
 import {usePresentationQuery} from 'next-sanity/hooks'
 import Image from 'next/image'
 import Link from 'next/link'

@@ -13,8 +13,8 @@ catalogs:
       specifier: ^6.0.7
       version: 6.0.7
     '@sanity/icons':
-      specifier: ^3.7.4
-      version: 3.7.4
+      specifier: ^5.0.0
+      version: 5.0.0
     '@sanity/pkg-utils':
       specifier: ^10.5.7
       version: 10.5.7
@@ -220,7 +220,7 @@ importers:
         version: 7.23.0
       '@sanity/icons':
         specifier: 'catalog:'
-        version: 3.7.4(react@19.2.7)
+        version: 5.0.0(react@19.2.7)
       '@sanity/image-url':
         specifier: ^2.1.1
         version: 2.1.1
@@ -313,7 +313,7 @@ importers:
         version: 2.0.0(@sanity/color@3.0.6)(tailwindcss@4.3.1)
       '@sanity/icons':
         specifier: 'catalog:'
-        version: 3.7.4(react@19.2.7)
+        version: 5.0.0(react@19.2.7)
       '@sanity/image-url':
         specifier: ^2.1.1
         version: 2.1.1
@@ -394,7 +394,7 @@ importers:
         version: 2.0.9(react@19.2.7)(sanity@6.1.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@2.0.1(@noble/hashes@2.2.0)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.1)(terser@5.48.0)(yaml@2.9.0))(@types/node@25.9.1)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.52.0(svelte@5.55.10(@typescript-eslint/types@8.61.1)))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rolldown@1.1.1)(styled-components@6.4.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(terser@5.48.0)(typescript@5.9.3))
       '@sanity/icons':
         specifier: 'catalog:'
-        version: 3.7.4(react@19.2.7)
+        version: 5.0.0(react@19.2.7)
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
@@ -538,7 +538,7 @@ importers:
         version: 6.0.7(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.7(react@19.2.7))(react-is@19.2.7)(react@19.2.7)(sanity@6.1.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@2.0.1(@noble/hashes@2.2.0)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.1)(terser@5.48.0)(yaml@2.9.0))(@types/node@25.9.1)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.52.0(svelte@5.55.10(@typescript-eslint/types@8.61.1)))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rolldown@1.1.1)(styled-components@6.4.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(terser@5.48.0)(typescript@5.9.3))(styled-components@6.4.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7))
       '@sanity/icons':
         specifier: 'catalog:'
-        version: 3.7.4(react@19.2.7)
+        version: 5.0.0(react@19.2.7)
       '@sanity/pkg-utils':
         specifier: 'catalog:'
         version: 10.5.7(@types/babel__core@7.20.5)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(oxc-resolver@11.19.1(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0))(typescript@5.9.3)
@@ -649,8 +649,8 @@ importers:
   packages/insert-menu:
     dependencies:
       '@sanity/icons':
-        specifier: ^3.7.4
-        version: 3.7.4(react@19.2.7)
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.2.7)
       '@sanity/ui':
         specifier: ^3.2.0
         version: 3.2.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.7(react@19.2.7))(react-is@19.2.7)(react@19.2.7)(styled-components@6.4.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7))
@@ -839,8 +839,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       '@sanity/icons':
-        specifier: ^3.7.4
-        version: 3.7.4(react@19.2.7)
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.2.7)
       '@sanity/insert-menu':
         specifier: workspace:^
         version: link:../insert-menu
@@ -4480,6 +4480,12 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18.3 || ^19.0.0-0
+
+  '@sanity/icons@5.0.0':
+    resolution: {integrity: sha512-fINQLovVnCANwQbQ63iO2mUVh2ZX3T4h3hiSEaIStvladI5tmrGAuT+XbUuk3jTmBwOHDGD0EL9lpsghGAS+Sg==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19
 
   '@sanity/id-utils@1.0.0':
     resolution: {integrity: sha512-2sb7tbdMDuUuVyocJPKG0gZBiOML/ovCe+mJiLrv1j69ODOfa2LfUjDVR+dRw/A/+XuxoJSSP8ebG7NiwTOgIA==}
@@ -15325,6 +15331,10 @@ snapshots:
   '@sanity/generate-help-url@4.0.0': {}
 
   '@sanity/icons@3.7.4(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+
+  '@sanity/icons@5.0.0(react@19.2.7)':
     dependencies:
       react: 19.2.7
 

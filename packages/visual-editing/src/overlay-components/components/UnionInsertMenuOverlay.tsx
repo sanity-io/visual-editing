@@ -1,4 +1,4 @@
-import {AddIcon} from '@sanity/icons'
+import {AddIcon} from '@sanity/icons/Add'
 import type {SchemaNode, SchemaUnionNode} from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
 import {Button, Flex} from '@sanity/ui/_visual-editing'

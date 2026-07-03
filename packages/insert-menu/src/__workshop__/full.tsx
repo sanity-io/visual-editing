@@ -1,11 +1,9 @@
-import {
-  CommentIcon,
-  DesktopIcon,
-  DocumentVideoIcon,
-  EnvelopeIcon,
-  InfoOutlineIcon,
-  SyncIcon,
-} from '@sanity/icons'
+import {CommentIcon} from '@sanity/icons/Comment'
+import {DesktopIcon} from '@sanity/icons/Desktop'
+import {DocumentVideoIcon} from '@sanity/icons/DocumentVideo'
+import {EnvelopeIcon} from '@sanity/icons/Envelope'
+import {InfoOutlineIcon} from '@sanity/icons/InfoOutline'
+import {SyncIcon} from '@sanity/icons/Sync'
 import type {ObjectSchemaType} from '@sanity/types'
 import {Box, Card, LayerProvider} from '@sanity/ui'
 import {useAction, useSelect} from '@sanity/ui-workshop'
