@@ -1,14 +1,12 @@
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CopyIcon,
-  InsertAboveIcon,
-  InsertBelowIcon,
-  PublishIcon,
-  RemoveIcon,
-  SortIcon,
-  UnpublishIcon,
-} from '@sanity/icons'
+import {ArrowDownIcon} from '@sanity/icons/ArrowDown'
+import {ArrowUpIcon} from '@sanity/icons/ArrowUp'
+import {CopyIcon} from '@sanity/icons/Copy'
+import {InsertAboveIcon} from '@sanity/icons/InsertAbove'
+import {InsertBelowIcon} from '@sanity/icons/InsertBelow'
+import {PublishIcon} from '@sanity/icons/Publish'
+import {RemoveIcon} from '@sanity/icons/Remove'
+import {SortIcon} from '@sanity/icons/Sort'
+import {UnpublishIcon} from '@sanity/icons/Unpublish'
 import type {
   SanityNode,
   SchemaArrayItem,

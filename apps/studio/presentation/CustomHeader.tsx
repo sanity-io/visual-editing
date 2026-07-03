@@ -1,4 +1,6 @@
-import {CheckmarkIcon, CloseIcon, EllipsisVerticalIcon} from '@sanity/icons'
+import {CheckmarkIcon} from '@sanity/icons/Checkmark'
+import {CloseIcon} from '@sanity/icons/Close'
+import {EllipsisVerticalIcon} from '@sanity/icons/EllipsisVertical'
 import {Button, Menu, MenuButton, MenuItem} from '@sanity/ui'
 import {useState, type FunctionComponent} from 'react'
 import type {PreviewHeaderProps} from 'sanity/presentation'
