@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.14
+
+### Patch Changes
+
+- [#3477](https://github.com/sanity-io/visual-editing/pull/3477) [`0332f7f`](https://github.com/sanity-io/visual-editing/commit/0332f7faba74f349c7b3ce6ea8270350469307de) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.23.0
+
+- Updated dependencies [[`659d8bd`](https://github.com/sanity-io/visual-editing/commit/659d8bdc62a93b271a73fe9bd236d6b721e6a03e), [`0332f7f`](https://github.com/sanity-io/visual-editing/commit/0332f7faba74f349c7b3ce6ea8270350469307de), [`ae57240`](https://github.com/sanity-io/visual-editing/commit/ae57240927e2d2d1a51e4d6bd6a15e0620398fe1)]:
+  - @sanity/visual-editing-csm@3.0.10
+  - @sanity/core-loader@2.0.13
+
 ## 2.0.13
 
 ### Patch Changes
