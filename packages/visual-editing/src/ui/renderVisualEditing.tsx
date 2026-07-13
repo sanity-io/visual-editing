@@ -15,7 +15,16 @@ let cleanup: ReturnType<typeof setTimeout> | null = null
 
 export function renderVisualEditing(
   signal: AbortSignal,
-  {components, history, refresh, zIndex, plugins, onPerspectiveChange}: VisualEditingOptions,
+  {
+    components,
+    history,
+    keepStegaOnCopy,
+    refresh,
+    zIndex,
+    plugins,
+    onPerspectiveChange,
+    onSuspiciousStega,
+  }: VisualEditingOptions,
 ): void {
   // Cancel pending cleanups, this is useful to avoid overlays blinking as the parent app transition between URLs, or hot module reload is happening
   if (cleanup) clearTimeout(cleanup)
@@ -51,9 +60,11 @@ export function renderVisualEditing(
         components={components}
         plugins={plugins}
         history={history}
+        keepStegaOnCopy={keepStegaOnCopy}
         refresh={refresh}
         zIndex={zIndex}
         onPerspectiveChange={onPerspectiveChange}
+        onSuspiciousStega={onSuspiciousStega}
         // Disabling the portal, as this function is already making sure the overlays render in the right spot
         portal={false}
       />

@@ -65,6 +65,7 @@ export type {
   OverlayRect,
   SanityNode,
   SanityStegaNode,
+  SuspiciousStegaReport,
   VisualEditingOptions,
   ElementChildTarget,
   OverlayPluginDefinition,

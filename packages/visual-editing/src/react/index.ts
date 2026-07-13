@@ -11,6 +11,7 @@ export type {
   OverlayElementField,
   OverlayElementParent,
   SanityNode,
+  SuspiciousStegaReport,
   VisualEditingOptions,
   VisualEditingNode,
   OverlayPluginDefinition,
