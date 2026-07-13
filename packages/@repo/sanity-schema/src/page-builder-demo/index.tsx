@@ -1,5 +1,5 @@
 import {workspaces} from '@repo/env'
-import {ControlsIcon} from '@sanity/icons'
+import {ControlsIcon} from '@sanity/icons/Controls'
 import {defineArrayMember, defineField, definePlugin, defineType} from 'sanity'
 import {
   defineDocuments,

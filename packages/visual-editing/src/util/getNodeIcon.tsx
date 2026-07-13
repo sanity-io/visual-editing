@@ -1,12 +1,10 @@
-import {
-  BlockContentIcon,
-  CheckmarkCircleIcon,
-  CubeIcon,
-  ImageIcon,
-  NumberIcon,
-  StringIcon,
-  ThListIcon,
-} from '@sanity/icons'
+import {BlockContentIcon} from '@sanity/icons/BlockContent'
+import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {CubeIcon} from '@sanity/icons/Cube'
+import {ImageIcon} from '@sanity/icons/Image'
+import {NumberIcon} from '@sanity/icons/Number'
+import {StringIcon} from '@sanity/icons/String'
+import {ThListIcon} from '@sanity/icons/ThList'
 import type {
   SchemaArrayItem,
   SchemaNumberNode,

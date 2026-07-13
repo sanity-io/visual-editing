@@ -1,4 +1,7 @@
-import {AddIcon, BulbOutlineIcon, DocumentIcon, SchemaIcon} from '@sanity/icons'
+import {AddIcon} from '@sanity/icons/Add'
+import {BulbOutlineIcon} from '@sanity/icons/BulbOutline'
+import {DocumentIcon} from '@sanity/icons/Document'
+import {SchemaIcon} from '@sanity/icons/Schema'
 import {Box, Button, Card, Flex, Menu, MenuButton, MenuItem, Stack, Text} from '@sanity/ui'
 import {usePresentationNavigate, usePresentationParams} from 'sanity/presentation'
 import {useIntentLink} from 'sanity/router'

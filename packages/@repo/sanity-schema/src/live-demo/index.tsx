@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
-import {CogIcon, DocumentTextIcon, UserIcon} from '@sanity/icons'
+import {CogIcon} from '@sanity/icons/Cog'
+import {DocumentTextIcon} from '@sanity/icons/DocumentText'
+import {UserIcon} from '@sanity/icons/User'
 import {format, parseISO} from 'date-fns'
 import {
   defineArrayMember,

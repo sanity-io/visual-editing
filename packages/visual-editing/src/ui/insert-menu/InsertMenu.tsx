@@ -1,4 +1,6 @@
-import {SearchIcon, ThLargeIcon, UlistIcon} from '@sanity/icons'
+import {SearchIcon} from '@sanity/icons/Search'
+import {ThLargeIcon} from '@sanity/icons/ThLarge'
+import {UlistIcon} from '@sanity/icons/Ulist'
 import {type SchemaType} from '@sanity/types'
 import {
   Box,
