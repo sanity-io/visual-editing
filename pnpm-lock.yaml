@@ -788,9 +788,6 @@ importers:
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
-      '@sanity/types':
-        specifier: ^6.1.0
-        version: 6.1.0(@types/react@19.2.17)
       '@sanity/ui':
         specifier: ^3.2.0
         version: 3.2.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.7(react@19.2.7))(react-is@19.2.7)(react@19.2.7)(styled-components@6.4.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7))
@@ -840,6 +837,9 @@ importers:
       '@sanity/tsconfig':
         specifier: 'catalog:'
         version: 2.1.0
+      '@sanity/types':
+        specifier: ^6.1.0
+        version: 6.1.0(@types/react@19.2.17)
       '@storybook/addon-essentials':
         specifier: ^8.6.18
         version: 8.6.18(@types/react@19.2.17)(storybook@8.6.18(prettier@3.8.4))
