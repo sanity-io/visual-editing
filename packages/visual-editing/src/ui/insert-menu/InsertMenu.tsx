@@ -1,7 +1,12 @@
+/**
+ * Vendored from the former `@sanity/insert-menu` package. A studio-native
+ * variant of this module lives in the `sanity` package
+ * (`packages/sanity/src/insert-menu`) and must be kept in sync with it.
+ */
 import {SearchIcon} from '@sanity/icons/Search'
 import {ThLargeIcon} from '@sanity/icons/ThLarge'
 import {UlistIcon} from '@sanity/icons/Ulist'
-import {type SchemaType} from '@sanity/types'
+import {type InsertMenuOptions, type SchemaType} from '@sanity/types'
 import {
   Box,
   Button,
@@ -22,7 +27,6 @@ import {useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
 import {isValidElementType} from 'react-is'
 
 import {getSchemaTypeIcon} from './getSchemaTypeIcon'
-import type {InsertMenuOptions} from './InsertMenuOptions'
 
 type InsertMenuGroup = NonNullable<InsertMenuOptions['groups']>[number] & {selected: boolean}
 type InsertMenuViews = NonNullable<InsertMenuOptions['views']>
