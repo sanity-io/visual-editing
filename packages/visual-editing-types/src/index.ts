@@ -1,31 +1,5 @@
 import type {StudioPathLike} from '@sanity/client/csm'
-import type {ArrayOptions, PreviewValue} from '@sanity/types'
-
-/**
- * Counterpart of the `InsertMenuOptions` type exported by `@sanity/types`,
- * which powers `ArrayOptions['insertMenu']` in studio schemas. The two must be
- * kept in sync. It is defined locally here because `@sanity/types` is an
- * optional peer dependency of this package.
- * @alpha This API may change
- */
-interface InsertMenuOptions {
-  /**
-   * @defaultValue `'auto'`
-   * `filter: 'auto'` automatically turns on filtering if there are more than 5
-   * schema types added to the menu.
-   */
-  filter?: 'auto' | boolean | undefined
-  groups?: Array<{name: string; title?: string; of?: Array<string>}> | undefined
-  /** defaultValue `true` */
-  showIcons?: boolean | undefined
-  /** @defaultValue `[{name: 'list'}]` */
-  views?:
-    | Array<
-        | {name: 'list'}
-        | {name: 'grid'; previewImageUrl?: (schemaTypeName: string) => string | undefined}
-      >
-    | undefined
-}
+import type {ArrayOptions, InsertMenuOptions, PreviewValue} from '@sanity/types'
 
 export type {InsertMenuOptions}
 
