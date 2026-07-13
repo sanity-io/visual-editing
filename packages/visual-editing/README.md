@@ -447,14 +447,14 @@ Providing the callback opts in to the detection logic — when it isn't provided
 
 Reported placements (`report.kind`):
 
-| `kind` | What it means |
-| --- | --- |
-| `attribute` | Stega in an attribute such as `class` (selectors no longer match), `id` (broken anchors and `getElementById`), `href`/`src` and other URL attributes (the invisible characters end up percent-encoded in requests), `style`, `name`, `value` or `data-*` (broken equality checks). |
-| `head` | Stega anywhere inside `<head>`, e.g. rendering `data.title` in `<title>` or `meta[content]`. It's never visible, so it's pure bloat that also corrupts SEO and social metadata. |
-| `script` | Stega inside a `<script>` element, e.g. JSON-LD structured data or embedded state. |
-| `style` | Stega inside a `<style>` element, breaking selectors or values. |
-| `form-value` | Stega in a form field value (e.g. `<textarea>` content), where it would be submitted along with user input. |
-| `url` | Stega in the page URL itself, meaning the page was reached through a link that had stega encoded into it. |
+| `kind`       | What it means                                                                                                                                                                                                                                                                      |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `attribute`  | Stega in an attribute such as `class` (selectors no longer match), `id` (broken anchors and `getElementById`), `href`/`src` and other URL attributes (the invisible characters end up percent-encoded in requests), `style`, `name`, `value` or `data-*` (broken equality checks). |
+| `head`       | Stega anywhere inside `<head>`, e.g. rendering `data.title` in `<title>` or `meta[content]`. It's never visible, so it's pure bloat that also corrupts SEO and social metadata.                                                                                                    |
+| `script`     | Stega inside a `<script>` element, e.g. JSON-LD structured data or embedded state.                                                                                                                                                                                                 |
+| `style`      | Stega inside a `<style>` element, breaking selectors or values.                                                                                                                                                                                                                    |
+| `form-value` | Stega in a form field value (e.g. `<textarea>` content), where it would be submitted along with user input.                                                                                                                                                                        |
+| `url`        | Stega in the page URL itself, meaning the page was reached through a link that had stega encoded into it.                                                                                                                                                                          |
 
 The fix is usually to clean the value before rendering it with [`stegaClean` from `@sanity/client/stega`](https://www.sanity.io/docs/stega), or to exclude the field from stega encoding entirely using your client's `stega.filter` configuration.
 

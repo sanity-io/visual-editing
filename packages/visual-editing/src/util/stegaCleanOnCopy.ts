@@ -1,8 +1,6 @@
 import {stegaClean, testVercelStegaRegex} from './stega'
 
-function isTextField(
-  element: Element | null,
-): element is HTMLInputElement | HTMLTextAreaElement {
+function isTextField(element: Element | null): element is HTMLInputElement | HTMLTextAreaElement {
   return element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement
 }
 
