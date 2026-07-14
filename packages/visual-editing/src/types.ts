@@ -520,6 +520,52 @@ export interface OverlayPluginHudDefinition extends OverlayPluginDefinitionBase 
 export type OverlayPluginDefinition = OverlayPluginExclusiveDefinition | OverlayPluginHudDefinition
 
 /**
+ * A report of a stega payload found somewhere it will always cause a bug or unnecessary bloat.
+ * Reports are produced when the `onSuspiciousStega` callback is provided to Visual Editing.
+ * @public
+ */
+export interface SuspiciousStegaReport {
+  /**
+   * Where the stega payload was found:
+   * - `attribute` — in an element attribute where stega always causes problems, such as `class`
+   *   (selectors no longer match), `id` (broken anchors and `getElementById`), `href`/`src` and
+   *   other URL attributes (the invisible characters end up percent-encoded in requests),
+   *   `style`, `name`, `value` or `data-*` attributes (broken equality checks).
+   * - `head` — anywhere inside `<head>`, e.g. `<title>` or `meta[content]`. Content in `<head>`
+   *   is never rendered, so the payload is pure bloat and corrupts SEO/social metadata.
+   * - `script` — inside a `<script>` element, e.g. JSON-LD or embedded state.
+   * - `style` — inside a `<style>` element, breaking selectors or values.
+   * - `form-value` — in a form field value (e.g. `<textarea>` content), where it would be
+   *   submitted along with user input.
+   * - `url` — in the page URL itself, meaning the page was reached through a link that had
+   *   stega encoded into it.
+   */
+  kind: 'attribute' | 'head' | 'script' | 'style' | 'form-value' | 'url'
+  /**
+   * The element the stega payload was found on or in. Undefined for `url` reports.
+   */
+  element?: Element
+  /**
+   * The name of the attribute containing the stega payload, if it was found in an attribute.
+   */
+  attribute?: string
+  /**
+   * The raw value containing the stega payload.
+   */
+  value: string
+  /**
+   * The value with the stega payload stripped — what the value should have been. Apply
+   * `stegaClean` from `@sanity/client/stega` to the source value to fix the issue.
+   */
+  cleaned: string
+  /**
+   * The decoded edit info, if the payload could be decoded. Points to the document and field
+   * that produced the value.
+   */
+  sanity?: SanityNode | SanityStegaNode
+}
+
+/**
  * @public
  */
 export interface VisualEditingOptions {
@@ -538,9 +584,26 @@ export interface VisualEditingOptions {
    */
   history?: HistoryAdapter
   /**
+   * While Visual Editing is enabled, stega-encoded metadata (invisible characters) is
+   * automatically stripped from clipboard data when content is copied from the page, so copied
+   * text can be pasted into other tools without the hidden characters tagging along.
+   * Set this option to `true` to opt out and keep stega in copied content.
+   */
+  keepStegaOnCopy?: boolean
+  /**
    * This event can be used to make sure server side data fetching uses the same client perspective as the Sanity Studio that is driving the visual editing.
    */
   onPerspectiveChange?: (perspective: ClientPerspective) => void
+  /**
+   * Reports stega payloads found in places where they always cause bugs or bloat, such as
+   * `class`, `href`, `src`, `id` and other attributes, inside `<head>` (e.g. `<title>`),
+   * `<script>` or `<style>` contents, form values, or the page URL.
+   * Providing the callback opts in to the detection logic — when it isn't provided no scanning
+   * runs. Reports are deduped and batched, and include the decoded edit info when available so
+   * the source field can be tracked down and cleaned with `stegaClean` from
+   * `@sanity/client/stega`.
+   */
+  onSuspiciousStega?: (reports: SuspiciousStegaReport[]) => void
   /**
    * The refresh API allows smarter refresh logic than the default `location.reload()` behavior.
    */

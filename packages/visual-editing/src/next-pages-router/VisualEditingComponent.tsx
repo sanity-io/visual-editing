@@ -5,6 +5,7 @@ import type {
   HistoryAdapterNavigate,
   HistoryRefresh,
   HistoryUpdate,
+  SuspiciousStegaReport,
   VisualEditingOptions,
 } from '../types'
 import {enableVisualEditing} from '../ui/enableVisualEditing'
@@ -20,7 +21,14 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditingComponent(props: VisualEditingProps): null {
-  const {components, refresh: refreshProp, zIndex, onPerspectiveChange} = props
+  const {
+    components,
+    keepStegaOnCopy,
+    refresh: refreshProp,
+    zIndex,
+    onPerspectiveChange,
+    onSuspiciousStega: onSuspiciousStegaProp,
+  } = props
 
   const router = useRouter()
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
@@ -67,12 +75,18 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
         throw new Error(`Unknown event type: ${event.type}`)
     }
   })
+  const onSuspiciousStega = useEffectEvent((reports: SuspiciousStegaReport[]) =>
+    onSuspiciousStegaProp?.(reports),
+  )
+  const hasSuspiciousStegaCallback = typeof onSuspiciousStegaProp === 'function'
   useEffect(() => {
     const disable = enableVisualEditing({
       components,
+      keepStegaOnCopy,
       zIndex,
       refresh,
       onPerspectiveChange,
+      onSuspiciousStega: hasSuspiciousStegaCallback ? onSuspiciousStega : undefined,
       history: {
         subscribe: (_navigate) => {
           setNavigate(() => _navigate)
@@ -82,7 +96,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [components, zIndex, onPerspectiveChange])
+  }, [components, keepStegaOnCopy, zIndex, onPerspectiveChange, hasSuspiciousStegaCallback])
 
   const {asPath, basePath, locale, isReady} = useRouter()
   useEffect(() => {

@@ -5,12 +5,15 @@ import {
   Suspense,
   useDeferredValue,
   useEffect,
+  useEffectEvent,
   useState,
   useSyncExternalStore,
 } from 'react'
 import {createPortal} from 'react-dom'
 
-import type {VisualEditingOptions} from '../types'
+import type {SuspiciousStegaReport, VisualEditingOptions} from '../types'
+import {enableStegaCleanOnCopy} from '../util/stegaCleanOnCopy'
+import {observeSuspiciousStega} from '../util/suspiciousStega'
 import {setEnvironment} from './environment/context'
 import {History} from './History'
 import {getQueryListenerStatus, subscribeQueryListenerStatus} from './loader-comlink/context'
@@ -26,7 +29,17 @@ const LoaderComlink = lazy(() => import('./LoaderComlink'))
  * @public
  */
 export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): React.ReactNode => {
-  const {components, plugins, history, portal = true, refresh, zIndex, onPerspectiveChange} = props
+  const {
+    components,
+    plugins,
+    history,
+    keepStegaOnCopy,
+    portal = true,
+    refresh,
+    zIndex,
+    onPerspectiveChange,
+    onSuspiciousStega,
+  } = props
 
   const [inFrame, setInFrame] = useState<boolean | null>(null)
   const [inPopUp, setInPopUp] = useState<boolean | null>(null)
@@ -36,6 +49,20 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
       setInPopUp(isMaybePreviewWindow())
     })
   }, [])
+
+  useEffect(() => {
+    if (keepStegaOnCopy) return undefined
+    return enableStegaCleanOnCopy()
+  }, [keepStegaOnCopy])
+
+  const handleSuspiciousStega = useEffectEvent((reports: SuspiciousStegaReport[]) =>
+    onSuspiciousStega?.(reports),
+  )
+  const hasSuspiciousStegaCallback = typeof onSuspiciousStega === 'function'
+  useEffect(() => {
+    if (!hasSuspiciousStegaCallback) return undefined
+    return observeSuspiciousStega(handleSuspiciousStega)
+  }, [hasSuspiciousStegaCallback])
 
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null)
   useEffect(() => {

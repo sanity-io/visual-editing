@@ -1,7 +1,12 @@
-import {startTransition, useEffect, useRef, useState} from 'react'
+import {startTransition, useEffect, useEffectEvent, useRef, useState} from 'react'
 import {useLocation, useNavigate, useRevalidator} from 'react-router'
 
-import {type HistoryAdapterNavigate, type HistoryRefresh, type VisualEditingOptions} from '../types'
+import {
+  type HistoryAdapterNavigate,
+  type HistoryRefresh,
+  type SuspiciousStegaReport,
+  type VisualEditingOptions,
+} from '../types'
 import {enableVisualEditing} from '../ui/enableVisualEditing'
 
 /**
@@ -23,7 +28,14 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditingComponent(props: VisualEditingProps): null {
-  const {components, refresh, zIndex, onPerspectiveChange} = props
+  const {
+    components,
+    keepStegaOnCopy,
+    refresh,
+    zIndex,
+    onPerspectiveChange,
+    onSuspiciousStega: onSuspiciousStegaProp,
+  } = props
 
   const navigateRemix = useNavigate()
   const navigateRemixRef = useRef(navigateRemix)
@@ -46,11 +58,17 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       })
     }
   }, [revalidatorLoading, revalidator.state, revalidatorPromise])
+  const onSuspiciousStega = useEffectEvent((reports: SuspiciousStegaReport[]) =>
+    onSuspiciousStegaProp?.(reports),
+  )
+  const hasSuspiciousStegaCallback = typeof onSuspiciousStegaProp === 'function'
   useEffect(() => {
     const disable = enableVisualEditing({
       components,
+      keepStegaOnCopy,
       zIndex,
       onPerspectiveChange,
+      onSuspiciousStega: hasSuspiciousStegaCallback ? onSuspiciousStega : undefined,
       refresh: (payload) => {
         function refreshDefault() {
           if (payload.source === 'mutation' && payload.livePreviewEnabled) {
@@ -80,7 +98,15 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [components, refresh, revalidator, zIndex, onPerspectiveChange])
+  }, [
+    components,
+    keepStegaOnCopy,
+    refresh,
+    revalidator,
+    zIndex,
+    onPerspectiveChange,
+    hasSuspiciousStegaCallback,
+  ])
 
   const location = useLocation()
   useEffect(() => {

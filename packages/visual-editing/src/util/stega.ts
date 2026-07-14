@@ -12,6 +12,15 @@ export function testVercelStegaRegex(input: string): boolean {
   return VERCEL_STEGA_REGEX.test(input)
 }
 
+/**
+ * Strips all stega-encoded metadata (sequences of invisible characters) from a string
+ * @param input
+ */
+export function stegaClean(input: string): string {
+  VERCEL_STEGA_REGEX.lastIndex = 0
+  return input.replace(VERCEL_STEGA_REGEX, '')
+}
+
 function decodeStega(str: string, isAltText = false): SanityStegaNode | null {
   try {
     const decoded = vercelStegaDecode<SanityStegaNode>(str)

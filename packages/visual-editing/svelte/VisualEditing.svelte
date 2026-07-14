@@ -10,6 +10,19 @@
    * You can call the refreshDefault argument to trigger the default refresh behavior so you don't have to reimplement it.
    */
   export let refresh: VisualEditingProps['refresh'] = undefined
+  /**
+   * While Visual Editing is enabled, stega-encoded metadata (invisible characters) is
+   * automatically stripped from clipboard data when content is copied from the page.
+   * Set this prop to `true` to opt out and keep stega in copied content.
+   */
+  export let keepStegaOnCopy: VisualEditingProps['keepStegaOnCopy'] = undefined
+  /**
+   * Reports stega payloads found in places where they always cause bugs or bloat, such as
+   * `class`, `href`, `src` and other attributes, inside `<head>`, `<script>` or `<style>`
+   * contents, form values, or the page URL. Providing the callback opts in to the detection
+   * logic — when it isn't provided no scanning runs.
+   */
+  export let onSuspiciousStega: VisualEditingProps['onSuspiciousStega'] = undefined
 
   let navigate: HistoryAdapterNavigate | undefined
   let navigatingFromUpdate = false
@@ -17,6 +30,10 @@
   onMount(() =>
     enableVisualEditing({
       zIndex,
+      keepStegaOnCopy,
+      onSuspiciousStega: onSuspiciousStega
+        ? (reports) => onSuspiciousStega?.(reports)
+        : undefined,
       refresh: (payload) => {
         function refreshDefault() {
           if (payload.source === 'mutation' && payload.livePreviewEnabled) {

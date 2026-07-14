@@ -31,6 +31,8 @@ npm install @sanity/visual-editing react react-dom
     - [`source: 'mutation'`](#source-mutation-1)
   - [React Router](#react-router-1)
   - [SvelteKit](#sveltekit)
+- [Stega and the clipboard](#stega-and-the-clipboard)
+- [Detecting stega in unsafe places](#detecting-stega-in-unsafe-places)
 - [Manually configuring "Edit in Sanity Studio" elements](#manually-configuring-edit-in-sanity-studio-elements)
   - [`data-sanity-edit-target`](#data-sanity-edit-target)
 - [Change the z-index of overlay elements](#change-the-z-index-of-overlay-elements)
@@ -410,6 +412,51 @@ If you only want to configure **when** revalidation is called, and not the actua
 ### [SvelteKit][sveltekit]
 
 A first class implementation for SvelteKit is coming soon.
+
+## Stega and the clipboard
+
+Visual editing locates editable content by looking for [stega-encoded metadata](https://www.sanity.io/docs/stega) — sequences of invisible characters appended to strings. Those characters would normally tag along when content is copied from a preview and pasted into other tools, showing up as unexpected garbage in plain text fields, URLs, spreadsheets and the like.
+
+To prevent this, while Visual Editing is enabled, `copy` events are intercepted and stega metadata is automatically stripped from the clipboard (both the `text/plain` and `text/html` flavors). Copies that don't contain stega are left completely untouched, and `copy` handlers of your own that call `event.preventDefault()` take precedence.
+
+If you want to keep the stega metadata in copied content, opt out with `keepStegaOnCopy`:
+
+```tsx
+<VisualEditing keepStegaOnCopy />
+```
+
+```ts
+enableVisualEditing({keepStegaOnCopy: true})
+```
+
+## Detecting stega in unsafe places
+
+Stega metadata is designed to live in rendered text (and a few attributes such as `img[alt]`, `time[datetime]` and `aria-label` on `svg`). If it ends up anywhere else — usually because a content value was rendered somewhere it shouldn't be without cleaning it first — it will always cause bugs or bloat. Provide the `onSuspiciousStega` callback to detect and report these cases:
+
+```tsx
+<VisualEditing
+  onSuspiciousStega={(reports) => {
+    for (const report of reports) {
+      console.warn(`Stega found in ${report.kind}`, report)
+    }
+  }}
+/>
+```
+
+Providing the callback opts in to the detection logic — when it isn't provided, no scanning runs. The scan happens during browser idle time: an initial audit of the document, then incremental checks of DOM changes. Reports are deduped and batched, and each report includes the offending `element`, the raw `value`, the `cleaned` value it should have been, and — when the payload can be decoded — the `sanity` edit info pointing to the document and field that produced the value.
+
+Reported placements (`report.kind`):
+
+| `kind`       | What it means                                                                                                                                                                                                                                                                      |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `attribute`  | Stega in an attribute such as `class` (selectors no longer match), `id` (broken anchors and `getElementById`), `href`/`src` and other URL attributes (the invisible characters end up percent-encoded in requests), `style`, `name`, `value` or `data-*` (broken equality checks). |
+| `head`       | Stega anywhere inside `<head>`, e.g. rendering `data.title` in `<title>` or `meta[content]`. It's never visible, so it's pure bloat that also corrupts SEO and social metadata.                                                                                                    |
+| `script`     | Stega inside a `<script>` element, e.g. JSON-LD structured data or embedded state.                                                                                                                                                                                                 |
+| `style`      | Stega inside a `<style>` element, breaking selectors or values.                                                                                                                                                                                                                    |
+| `form-value` | Stega in a form field value (e.g. `<textarea>` content), where it would be submitted along with user input.                                                                                                                                                                        |
+| `url`        | Stega in the page URL itself, meaning the page was reached through a link that had stega encoded into it.                                                                                                                                                                          |
+
+The fix is usually to clean the value before rendering it with [`stegaClean` from `@sanity/client/stega`](https://www.sanity.io/docs/stega), or to exclude the field from stega encoding entirely using your client's `stega.filter` configuration.
 
 ## Manually configuring "Edit in Sanity Studio" elements
 
