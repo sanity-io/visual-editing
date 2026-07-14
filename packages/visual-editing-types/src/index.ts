@@ -1,6 +1,5 @@
 import type {StudioPathLike} from '@sanity/client/csm'
-import type {InsertMenuOptions} from '@sanity/insert-menu'
-import type {ArrayOptions, PreviewValue} from '@sanity/types'
+import type {ArrayOptions, InsertMenuOptions, PreviewValue} from '@sanity/types'
 
 export type {InsertMenuOptions}
 
