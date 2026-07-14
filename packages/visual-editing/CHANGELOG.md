@@ -1,5 +1,22 @@
 # Changelog
 
+## 5.5.0
+
+### Minor Changes
+
+- [#3492](https://github.com/sanity-io/visual-editing/pull/3492) [`af8dfbe`](https://github.com/sanity-io/visual-editing/commit/af8dfbe86da993f36d42257d39392ef5a1c502bc) Thanks [@stipsan](https://github.com/stipsan)! - feat: strip stega from clipboard on copy, and report suspicious stega placements
+
+  While Visual Editing is enabled, `copy` events are now intercepted and stega-encoded metadata (invisible characters) is stripped from the clipboard, so content copied from a preview can be pasted into other tools without the hidden characters tagging along. Copies without stega are left untouched, and the behavior can be disabled with the new `keepStegaOnCopy` option.
+
+  Also adds an opt-in `onSuspiciousStega` callback that reports stega payloads found in places where they always cause bugs or bloat, such as `class`, `href`, `src`, `id` and other attributes, inside `<head>` (e.g. `<title>`), `<script>` or `<style>` contents, form values, or the page URL. Reports are deduped, batched, and include the decoded edit info when available so the source field can be tracked down.
+
+### Patch Changes
+
+- [#3490](https://github.com/sanity-io/visual-editing/pull/3490) [`5f90d36`](https://github.com/sanity-io/visual-editing/commit/5f90d36e0312e526b493d3c9f07db46dd6d2f610) Thanks [@stipsan](https://github.com/stipsan)! - Inline `@sanity/insert-menu` instead of depending on the standalone package
+
+- Updated dependencies []:
+  - @sanity/visual-editing-csm@3.0.11
+
 ## 5.4.5
 
 ### Patch Changes

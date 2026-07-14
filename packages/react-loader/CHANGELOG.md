@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.15
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @sanity/visual-editing-csm@3.0.11
+  - @sanity/core-loader@2.0.14
+
 ## 2.0.14
 
 ### Patch Changes
