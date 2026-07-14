@@ -4,7 +4,7 @@ import {Popover} from '@sanity/ui/_visual-editing'
 import {type FunctionComponent} from 'react'
 
 import {PopoverPortal} from '../../ui/PopoverPortal'
-import {InsertMenu as SanityInsertMenu} from '../../ui/insert-menu/InsertMenu'
+import {InsertMenu as VendoredInsertMenu} from '../../ui/insert-menu/InsertMenu'
 import {getNodeIcon} from '../../util/getNodeIcon'
 
 // @todo How can this be localised?
@@ -39,7 +39,7 @@ export const InsertMenu: FunctionComponent<InsertMenuProps> = (props) => {
   })
 
   return (
-    <SanityInsertMenu
+    <VendoredInsertMenu
       {...insertMenuOptions}
       labels={labels}
       // @ts-expect-error -- @todo map typings
