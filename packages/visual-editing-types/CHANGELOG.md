@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.10
+
+### Patch Changes
+
+- [#3490](https://github.com/sanity-io/visual-editing/pull/3490) [`5f90d36`](https://github.com/sanity-io/visual-editing/commit/5f90d36e0312e526b493d3c9f07db46dd6d2f610) Thanks [@stipsan](https://github.com/stipsan)! - Re-export `InsertMenuOptions` from `@sanity/types` instead of `@sanity/insert-menu`
+
 ## 2.0.9
 
 ### Patch Changes

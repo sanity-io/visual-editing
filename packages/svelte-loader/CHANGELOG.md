@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.27
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @sanity/core-loader@2.0.14
+
 ## 2.0.26
 
 ### Patch Changes
