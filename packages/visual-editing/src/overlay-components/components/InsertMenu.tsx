@@ -3,8 +3,8 @@ import type {InsertMenuOptions, SchemaType} from '@sanity/types'
 import {Popover} from '@sanity/ui/_visual-editing'
 import {type FunctionComponent} from 'react'
 
-import {PopoverPortal} from '../../ui/PopoverPortal'
 import {InsertMenu as VendoredInsertMenu} from '../../ui/insert-menu/InsertMenu'
+import {PopoverPortal} from '../../ui/PopoverPortal'
 import {getNodeIcon} from '../../util/getNodeIcon'
 
 // @todo How can this be localised?
