@@ -36,6 +36,7 @@
         : undefined,
       refresh: (payload) => {
         function refreshDefault() {
+          // @TODO handle
           if (payload.source === 'mutation' && payload.livePreviewEnabled) {
             return false
           }

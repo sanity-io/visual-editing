@@ -58,6 +58,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       case 'manual':
         return routerRefresh()
       case 'mutation':
+        // @TODO handle
         return payload.livePreviewEnabled ? skipRefresh() : mutationRefresh()
       default:
         throw new Error('Unknown refresh source', {cause: payload})
