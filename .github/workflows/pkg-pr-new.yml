@@ -1,0 +1,233 @@
+name: Publish Pull Requests with pkg.pr.new
+
+on:
+  pull_request:
+    types: [opened, synchronize, labeled, reopened]
+
+concurrency:
+  group: pkg-pr-new-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  publish:
+    if: >
+      github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'trigger: preview')
+
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: pnpm
+          node-version: lts/*
+
+      - run: pnpm install --ignore-scripts
+
+      - name: Build packages
+        run: pnpm build --filter=!./apps/*
+
+      - name: Detect changed packages from changesets
+        id: changed-packages
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          mapfile -t changeset_files < <(
+            git diff --name-only "origin/$BASE_REF"...HEAD -- '.changeset/*.md'
+          )
+
+          filtered_changeset_files=()
+          for file in "${changeset_files[@]}"; do
+            if [[ "$file" == ".changeset/README.md" ]]; then
+              continue
+            fi
+            if [[ "$file" == .changeset/*.md ]]; then
+              filtered_changeset_files+=("$file")
+            fi
+          done
+          changeset_files=("${filtered_changeset_files[@]}")
+
+          if [ ${#changeset_files[@]} -eq 0 ]; then
+            echo "has_changed_packages=false" >> "$GITHUB_OUTPUT"
+            echo "package_paths=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          parser_script="$(mktemp)"
+          cat > "$parser_script" <<'NODE'
+          const fs = require('node:fs')
+          const files = process.argv.slice(2)
+          const paths = new Set()
+
+          for (const file of files) {
+            const content = fs.readFileSync(file, 'utf8')
+            const match = content.match(/^---\n([\s\S]*?)\n---/)
+            if (!match) continue
+
+            for (const line of match[1].split('\n')) {
+              const packageMatch = line.match(/^\s*['"]([^'"]+)['"]\s*:\s*(major|minor|patch)\s*$/)
+              if (!packageMatch) continue
+
+              const packageName = packageMatch[1]
+              let packagePath = null
+
+              if (packageName.startsWith('@sanity/')) {
+                packagePath = `./packages/${packageName.slice('@sanity/'.length)}`
+              }
+
+              if (packagePath && fs.existsSync(packagePath)) {
+                paths.add(packagePath)
+              }
+            }
+          }
+
+          for (const path of [...paths].sort()) {
+            console.log(path)
+          }
+          NODE
+
+          mapfile -t packages < <(node "$parser_script" "${changeset_files[@]}")
+          rm -f "$parser_script"
+
+          if [ ${#packages[@]} -eq 0 ]; then
+            echo "has_changed_packages=false" >> "$GITHUB_OUTPUT"
+            echo "package_paths=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "has_changed_packages=true" >> "$GITHUB_OUTPUT"
+          echo "package_paths=${packages[*]}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish preview packages
+        if: steps.changed-packages.outputs.has_changed_packages == 'true'
+        env:
+          PACKAGE_PATHS: ${{ steps.changed-packages.outputs.package_paths }}
+        run: pnpm pkg-pr-new publish $PACKAGE_PATHS --pnpm --no-template --comment=off --json output.json
+
+      - name: Post or update comment
+        uses: actions/github-script@v7
+        env:
+          HAS_CHANGED_PACKAGES: ${{ steps.changed-packages.outputs.has_changed_packages }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('node:fs')
+
+            const hasChangedPackages = process.env.HAS_CHANGED_PACKAGES === 'true'
+            const output = hasChangedPackages
+              ? JSON.parse(fs.readFileSync('output.json', 'utf8'))
+              : {packages: []}
+
+            const PACKAGE_MANAGERS = [
+              {
+                name: 'pnpm',
+                installCommand: 'pnpm install',
+                logoUrl: 'https://avatars.githubusercontent.com/u/21320719?s=200&v=4',
+              },
+              {
+                name: 'npm',
+                installCommand: 'npm install',
+                logoUrl: 'https://avatars.githubusercontent.com/u/6078720?s=200&v=4',
+              },
+            ]
+
+            const BOT_COMMENT_IDENTIFIER = '<!-- pkg.pr.new -->'
+            const BACKTICKS = '```'
+
+            function renderPackages(pkgManager, pkgs) {
+              return pkgs
+                .map(
+                  (pkg) =>
+                    `##### :package: \`${pkg.name}\`
+            ${BACKTICKS}sh
+            ${pkgManager.installCommand} ${pkg.url}
+            ${BACKTICKS}
+            `,
+                )
+                .join('\n')
+            }
+
+            function renderInstallInstructions() {
+              return PACKAGE_MANAGERS.map(
+                (pkgManager) =>
+                  `<details${pkgManager.name === 'pnpm' ? ' open' : ''}>
+            <summary>Using ${pkgManager.name}</summary>
+
+            ${renderPackages(pkgManager, output.packages)}
+
+            </details>`,
+              ).join('\n')
+            }
+
+            const sha = context.payload.pull_request?.head?.sha ?? context.sha
+
+            const body = hasChangedPackages
+              ? `## Preview this PR with [pkg.pr.new](https://pkg.pr.new)
+
+            ${renderInstallInstructions()}
+
+            [View Commit](${`https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${sha}`}) (${sha})
+
+            ${BOT_COMMENT_IDENTIFIER}
+            `
+              : `## Preview this PR with [pkg.pr.new](https://pkg.pr.new)
+
+            No packages were published, no changesets were found.
+
+            [View Commit](${`https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${sha}`}) (${sha})
+
+            ${BOT_COMMENT_IDENTIFIER}
+            `
+
+            async function findBotComment(issueNumber) {
+              if (!issueNumber) return null
+              const comments = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+              })
+              return comments.data.find((comment) => comment.body.includes(BOT_COMMENT_IDENTIFIER))
+            }
+
+            async function createOrUpdateComment(issueNumber) {
+              if (!issueNumber) {
+                console.log('No issue number provided. Cannot post or update comment.')
+                return
+              }
+
+              const existingComment = await findBotComment(issueNumber)
+              if (existingComment) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: existingComment.id,
+                  body,
+                })
+              } else {
+                await github.rest.issues.createComment({
+                  issue_number: issueNumber,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body,
+                })
+              }
+            }
+
+            if (context.eventName === 'pull_request') {
+              await createOrUpdateComment(context.issue.number)
+            } else {
+              throw new Error('This job can only run for pull requests')
+            }
