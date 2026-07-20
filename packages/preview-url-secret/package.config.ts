@@ -3,5 +3,5 @@ import {defineConfig} from '@sanity/pkg-utils'
 
 export default defineConfig({
   ...baseConfig,
-  strictOptions: {noSanityClientPeerDependency: 'off'}
+  strictOptions: {noSanityClientPeerDependency: 'off'},
 })

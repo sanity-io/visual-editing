@@ -17,5 +17,5 @@ export default defineConfig({
   },
   babel: {reactCompiler: true},
   reactCompilerOptions: {target: '19'},
-  strictOptions: {noSanityClientPeerDependency: 'off'}
+  strictOptions: {noSanityClientPeerDependency: 'off'},
 })
