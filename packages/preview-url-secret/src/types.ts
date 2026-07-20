@@ -58,6 +58,11 @@ export interface PreviewUrlValidateUrlResult {
    * The value can be arbitrary and has to be validated to make sure it's a valid perspective.
    */
   studioPreviewPerspective?: string | null | undefined
+  /**
+   * The initial editing variant the Studio was using when starting to load the preview.
+   * It can change over time and should also be handled with `postMessage` listeners.
+   */
+  studioPreviewVariant?: string | null | undefined
 }
 
 /** @internal */
@@ -65,6 +70,7 @@ export interface ParsedPreviewUrl {
   secret: string
   redirectTo?: string | undefined
   studioPreviewPerspective: string | null
+  studioPreviewVariant: string | null
 }
 
 /** @public */
@@ -168,6 +174,10 @@ export interface PreviewUrlResolverContext<SanityClientType> {
    * The value can be arbitrary and has to be validated to make sure it's a valid perspective.
    */
   studioPreviewPerspective: string
+  /**
+   * The initial editing variant the Studio was using when starting to load the preview.
+   */
+  studioPreviewVariant?: string
   /**
    * If the user navigated to a preview path already, this will be the path
    */

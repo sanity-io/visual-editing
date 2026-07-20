@@ -31,6 +31,9 @@ export const urlSearchParamPreviewPathname = 'sanity-preview-pathname'
 export const urlSearchParamPreviewPerspective = 'sanity-preview-perspective'
 
 /** @internal */
+export const urlSearchParamPreviewVariant = 'sanity-preview-variant'
+
+/** @internal */
 export const urlSearchParamVercelProtectionBypass = 'x-vercel-protection-bypass'
 
 /** @internal */
@@ -88,5 +91,8 @@ export const tag = 'sanity.preview-url-secret' as const
 
 /** @internal */
 export const perspectiveCookieName = 'sanity-preview-perspective'
+
+/** @internal */
+export const variantCookieName = 'sanity-preview-variant'
 
 export type {VercelSetBypassCookieValue} from './types'

@@ -3,6 +3,7 @@ import {
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewPerspective,
   urlSearchParamPreviewSecret,
+  urlSearchParamPreviewVariant,
   urlSearchParamVercelProtectionBypass,
   urlSearchParamVercelSetBypassCookie,
 } from './constants'
@@ -18,6 +19,7 @@ export function parsePreviewUrl(unsafeUrl: string): ParsedPreviewUrl {
     throw new Error('Missing secret')
   }
   const studioPreviewPerspective = url.searchParams.get(urlSearchParamPreviewPerspective)
+  const studioPreviewVariant = url.searchParams.get(urlSearchParamPreviewVariant) || null
   let redirectTo: string | undefined
   const unsafeRedirectTo = url.searchParams.get(urlSearchParamPreviewPathname)
   if (unsafeRedirectTo) {
@@ -29,6 +31,10 @@ export function parsePreviewUrl(unsafeUrl: string): ParsedPreviewUrl {
       !redirectUrl.searchParams.has(urlSearchParamPreviewPerspective)
     ) {
       redirectUrl.searchParams.set(urlSearchParamPreviewPerspective, studioPreviewPerspective)
+    }
+
+    if (studioPreviewVariant && !redirectUrl.searchParams.has(urlSearchParamPreviewVariant)) {
+      redirectUrl.searchParams.set(urlSearchParamPreviewVariant, studioPreviewVariant)
     }
 
     // If there's a vercel bypass secret in the redirect URL, we forward it to the redirect to ensure it's set
@@ -47,5 +53,5 @@ export function parsePreviewUrl(unsafeUrl: string): ParsedPreviewUrl {
     const {pathname, search, hash} = redirectUrl
     redirectTo = `${pathname}${search}${hash}`
   }
-  return {secret, redirectTo, studioPreviewPerspective}
+  return {secret, redirectTo, studioPreviewPerspective, studioPreviewVariant}
 }
