@@ -15,7 +15,15 @@ export function defineUseLiveMode({
       | undefined,
   ) => void
 }): UseLiveModeHook {
-  return ({allowStudioOrigin, client, onConnect, onDisconnect, onPerspective, onVariant, studioUrl}) => {
+  return ({
+    allowStudioOrigin,
+    client,
+    onConnect,
+    onDisconnect,
+    onPerspective,
+    onVariant,
+    studioUrl,
+  }) => {
     useEffect(() => {
       if (allowStudioOrigin) {
         // eslint-disable-next-line no-console

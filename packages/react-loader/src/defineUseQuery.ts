@@ -27,7 +27,10 @@ export function defineUseQuery({
     options: UseQueryOptions<QueryResponseResult> = {},
   ) => {
     const initial = useMemo(
-      () => (options.initial ? {perspective: 'published' as const, variant: undefined, ...options.initial} : undefined),
+      () =>
+        options.initial
+          ? {perspective: 'published' as const, variant: undefined, ...options.initial}
+          : undefined,
       [options.initial],
     )
     const $params = useMemo(() => JSON.stringify(params), [params])
