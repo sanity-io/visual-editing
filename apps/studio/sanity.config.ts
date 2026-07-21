@@ -101,6 +101,9 @@ function defineWorkspace(
     dataset,
     plugins,
     releases: {enabled: true},
+    beta: {
+      variants: {enabled: true},
+    },
   })
 }
 
