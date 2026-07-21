@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.5.1
+
+### Patch Changes
+
+- Updated dependencies [[`e979583`](https://github.com/sanity-io/visual-editing/commit/e97958331ca985b42202d7816958f68f8df8a6a9)]:
+  - @sanity/preview-url-secret@4.1.0
+
 ## 5.5.0
 
 ### Minor Changes

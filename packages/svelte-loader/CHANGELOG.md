@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.0.28
+
 ## 2.0.27
 
 ### Patch Changes
