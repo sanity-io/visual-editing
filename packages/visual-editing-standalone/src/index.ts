@@ -3,7 +3,7 @@ export {
   type CreateDataAttributeProps,
   type WithRequired,
   createDataAttribute,
-} from '@sanity/visual-editing/create-data-attribute'
+} from './_createDataAttribute'
 export type {
   DisableVisualEditing,
   HistoryAdapter,
@@ -12,5 +12,5 @@ export type {
   HistoryUpdate,
   SuspiciousStegaReport,
   VisualEditingOptions,
-} from '@sanity/visual-editing/enable-visual-editing'
-export {enableVisualEditing} from '@sanity/visual-editing/enable-visual-editing'
+} from './_enableVisualEditing'
+export {enableVisualEditing} from './_enableVisualEditing'

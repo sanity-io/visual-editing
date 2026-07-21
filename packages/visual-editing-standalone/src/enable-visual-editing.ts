@@ -6,5 +6,5 @@ export type {
   HistoryUpdate,
   SuspiciousStegaReport,
   VisualEditingOptions,
-} from '@sanity/visual-editing/enable-visual-editing'
-export {enableVisualEditing} from '@sanity/visual-editing/enable-visual-editing'
+} from './_enableVisualEditing'
+export {enableVisualEditing} from './_enableVisualEditing'

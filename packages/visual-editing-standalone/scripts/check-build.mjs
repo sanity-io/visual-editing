@@ -2,9 +2,13 @@ import {readdir, readFile} from 'node:fs/promises'
 import {extname, join, relative} from 'node:path'
 import {fileURLToPath, pathToFileURL} from 'node:url'
 
+import {init, parse} from 'es-module-lexer'
+
 const packageDirectory = fileURLToPath(new URL('..', import.meta.url))
 const packageJsonPath = join(packageDirectory, 'package.json')
 const distDirectory = join(packageDirectory, 'dist')
+
+await init
 
 async function listFiles(directory) {
   const entries = await readdir(directory, {withFileTypes: true})
@@ -38,16 +42,15 @@ const errors = []
 
 for (const file of moduleFiles) {
   const source = await readFile(file, 'utf8')
-  const moduleSpecifierPattern = /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?)['"]([^'"]+)['"]/gu
+  const [imports] = parse(source)
 
-  for (const match of source.matchAll(moduleSpecifierPattern)) {
-    const specifier = match[1]
+  for (const {n: specifier} of imports) {
     if (!specifier?.startsWith('.')) {
       errors.push(`${relative(packageDirectory, file)} imports "${specifier}"`)
     }
   }
 
-  if (file.endsWith('.js') && /\brequire\s*\(/u.test(source)) {
+  if (file.endsWith('.js') && /(?<![\w$.])require\s*\(/u.test(source)) {
     errors.push(`${relative(packageDirectory, file)} contains a CommonJS require() call`)
   }
 }

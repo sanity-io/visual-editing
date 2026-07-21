@@ -1,4 +1,5 @@
 import baseConfig from '@repo/package.config'
+import commonjs from '@rollup/plugin-commonjs'
 import {defineConfig} from '@sanity/pkg-utils'
 
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
   },
   rollup: {
     ...baseConfig.rollup,
+    plugins: [commonjs({transformMixedEsModules: true})],
     treeshake: {
       preset: 'smallest',
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],

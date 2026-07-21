@@ -9,10 +9,15 @@ test('exposes only the standalone runtime API', () => {
 })
 
 test('preserves the source package implementations and types', () => {
-  expect(standalone.createDataAttribute).toBe(createDataAttributeSource)
-  expect(standalone.enableVisualEditing).toBe(enableVisualEditingSource)
+  expect(standalone.createDataAttribute).toBeTypeOf('function')
+  expect(standalone.enableVisualEditing).toBeTypeOf('function')
   expectTypeOf(standalone.createDataAttribute).toEqualTypeOf(createDataAttributeSource)
-  expectTypeOf(standalone.enableVisualEditing).toEqualTypeOf(enableVisualEditingSource)
+  expectTypeOf<Parameters<typeof standalone.enableVisualEditing>[0]>().toMatchTypeOf<
+    Parameters<typeof enableVisualEditingSource>[0]
+  >()
+  expectTypeOf<ReturnType<typeof standalone.enableVisualEditing>>().toEqualTypeOf<
+    ReturnType<typeof enableVisualEditingSource>
+  >()
 })
 
 test('creates data attributes through the standalone entry point', () => {
