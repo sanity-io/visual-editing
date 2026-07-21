@@ -14,6 +14,8 @@ Use the [`@sanity/vercel-protection-bypass`](https://github.com/sanity-io/plugin
 
 [`@sanity/visual-editing`](./packages/visual-editing/README.md) is used alongside the Presentation tool to create clickable elements to take editors right from previews to the document and field they want to edit. It's also used to two-way sync the preview URL and integrate with your framework router.
 
+For Vue, Svelte, Astro, vanilla JavaScript, and other non-React environments, [`@sanity/visual-editing-standalone`](./packages/visual-editing-standalone/README.md) provides the essential Visual Editing APIs as a self-contained ESM build with no runtime or peer dependencies.
+
 ## Loaders
 
 Loaders provide a convenient, unified way of loading data from Content Lake: A single front end data fetching implementation across production, development and preview states, for both server and client side rendering. They do the heavy lifting in integrating live content updates, perspective switching and Overlay rendering in your application.

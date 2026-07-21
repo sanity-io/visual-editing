@@ -13,6 +13,13 @@ This package is used with the [Presentation](https://www.sanity.io/docs/presenta
 npm install @sanity/visual-editing react react-dom
 ```
 
+> [!TIP]
+> Building a Vue, Svelte, Astro, vanilla JavaScript, or other non-React application?
+> Use [`@sanity/visual-editing-standalone`](../visual-editing-standalone/README.md)
+> for a self-contained ESM build that does not install React peer dependencies.
+> React applications should keep using this package to avoid bundling a second
+> React runtime.
+
 ## Table of contents
 
 - [Usage](#usage)
