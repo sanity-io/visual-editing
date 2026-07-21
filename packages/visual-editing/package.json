@@ -44,6 +44,10 @@
       "source": "./src/create-data-attribute.ts",
       "default": "./dist/create-data-attribute/index.js"
     },
+    "./enable-visual-editing": {
+      "source": "./src/enable-visual-editing.ts",
+      "default": "./dist/enable-visual-editing/index.js"
+    },
     "./next-pages-router": {
       "source": "./src/next-pages-router/index.ts",
       "default": "./dist/next-pages-router/index.js"
@@ -75,6 +79,7 @@
     "exports": {
       ".": "./dist/index.js",
       "./create-data-attribute": "./dist/create-data-attribute/index.js",
+      "./enable-visual-editing": "./dist/enable-visual-editing/index.js",
       "./next-pages-router": "./dist/next-pages-router/index.js",
       "./optimistic": "./dist/optimistic/index.js",
       "./react": "./dist/react/index.js",

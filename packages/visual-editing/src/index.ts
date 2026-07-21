@@ -74,7 +74,7 @@ export type {
   OverlayPluginDefinitionBase,
   OverlayPluginComponent,
 } from './types'
-export {enableVisualEditing} from './ui/enableVisualEditing'
+export {enableVisualEditing} from './enable-visual-editing'
 export {useSharedState} from './ui/shared-state/useSharedState'
 export {
   type CreateDataAttribute,
