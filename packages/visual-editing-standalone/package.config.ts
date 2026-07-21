@@ -13,7 +13,10 @@ export default defineConfig({
   },
   rollup: {
     ...baseConfig.rollup,
-    plugins: [commonjs({transformMixedEsModules: true})],
+    plugins: (plugins) =>
+      plugins.map((plugin) =>
+        plugin.name === 'commonjs' ? commonjs({transformMixedEsModules: true}) : plugin,
+      ),
     treeshake: {
       preset: 'smallest',
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],
