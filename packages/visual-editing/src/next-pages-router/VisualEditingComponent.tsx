@@ -98,7 +98,14 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [components, keepStegaOnCopy, zIndex, onPerspectiveChange, onVariantChange, hasSuspiciousStegaCallback])
+  }, [
+    components,
+    keepStegaOnCopy,
+    zIndex,
+    onPerspectiveChange,
+    onVariantChange,
+    hasSuspiciousStegaCallback,
+  ])
 
   const {asPath, basePath, locale, isReady} = useRouter()
   useEffect(() => {
