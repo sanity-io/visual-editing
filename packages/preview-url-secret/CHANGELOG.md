@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.0
+
+### Minor Changes
+
+- [#3507](https://github.com/sanity-io/visual-editing/pull/3507) [`e979583`](https://github.com/sanity-io/visual-editing/commit/e97958331ca985b42202d7816958f68f8df8a6a9) Thanks [@pedrobonamin](https://github.com/pedrobonamin)! - Add editing variant support: new `urlSearchParamPreviewVariant` and `variantCookieName` constants, `studioPreviewVariant` parsed, forwarded and returned by `parsePreviewUrl` / `validatePreviewUrl`, and variant handling in `withoutSecretSearchParams`, `setSecretSearchParams` and `definePreviewUrl`.
+
 ## 4.0.8
 
 ### Patch Changes
