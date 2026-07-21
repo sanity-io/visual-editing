@@ -4,7 +4,7 @@ export default defineCliConfig({
   api: {projectId: 'hiomol4a', dataset: 'development'},
   reactStrictMode: true,
   reactCompiler: {target: '19'},
-  deployment: {appId: 'kp75luobnkn8sgzxcjran97e', autoUpdates: true},
+  deployment: {appId: 'kp75luobnkn8sgzxcjran97e', autoUpdates: false},
   studioHost: 'visual-editing-test',
   vite: (config) => {
     return {

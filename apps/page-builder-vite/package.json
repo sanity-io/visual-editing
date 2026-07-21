@@ -1,0 +1,34 @@
+{
+  "name": "page-builder-vite",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --port 3007",
+    "preview": "vite preview --port 3007",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portabletext/react": "^6.2.0",
+    "@repo/env": "workspace:*",
+    "@repo/studio-url": "workspace:*",
+    "@sanity/client": "catalog:",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/react-loader": "workspace:*",
+    "@sanity/visual-editing": "workspace:*",
+    "clsx": "^2.1.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router": "^7.15.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.4",
+    "tailwindcss": "catalog:tailwind3",
+    "typescript": "catalog:",
+    "vite": "^7.3.4"
+  }
+}

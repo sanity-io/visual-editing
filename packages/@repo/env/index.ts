@@ -42,6 +42,13 @@ export const workspaces = {
     workspace: 'page-builder-demo',
     tool: 'presentation',
   },
+  // Same dataset as page-builder-demo, previewed through a Vite SPA that uses the core loaders
+  'page-builder-vite': {
+    projectId: projectId,
+    dataset: datasets['page-builder-demo'],
+    workspace: 'page-builder-vite',
+    tool: 'presentation',
+  },
   'live-demo': {
     projectId: projectId,
     dataset: datasets.blog,

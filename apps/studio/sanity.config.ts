@@ -69,6 +69,11 @@ const urls = {
     (endsWith) => `https://visual-editing-page-builder-demo-git-${endsWith}`,
     'http://localhost:3005',
   ),
+  'page-builder-vite': resolvePreviewUrl(
+    process.env.SANITY_STUDIO_PAGE_BUILDER_VITE_PREVIEW_URL,
+    (endsWith) => `https://visual-editing-page-builder-vite-git-${endsWith}`,
+    'http://localhost:3007',
+  ),
 }
 
 // Some apps have a Preview Mode, some don't
@@ -101,6 +106,9 @@ function defineWorkspace(
     dataset,
     plugins,
     releases: {enabled: true},
+    beta: {
+      variants: {enabled: true},
+    },
   })
 }
 
@@ -121,6 +129,17 @@ export default defineConfig([
           component: CustomNavigator,
         },
       },
+    }),
+    debugPlugin(),
+  ]),
+  // Same dataset as page-builder-demo, previewed through the Vite SPA that uses
+  // the core loaders (@sanity/react-loader), which receive perspective/variant over comlink
+  defineWorkspace(workspaces['page-builder-vite'], [
+    pageBuilderDemoPlugin({
+      previewUrl: definePreviewUrl(
+        urls['page-builder-vite'],
+        workspaces['page-builder-vite'].workspace,
+      ),
     }),
     debugPlugin(),
   ]),
