@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.6.0
+
+### Minor Changes
+
+- [#3500](https://github.com/sanity-io/visual-editing/pull/3500) [`12a7ed2`](https://github.com/sanity-io/visual-editing/commit/12a7ed2c7f8aefefc1a527ed584bcc73393881c6) Thanks [@pedrobonamin](https://github.com/pedrobonamin)! - Pass editing variants through loaders and visual editing alongside perspective.
+
+### Patch Changes
+
+- [#3506](https://github.com/sanity-io/visual-editing/pull/3506) [`de13256`](https://github.com/sanity-io/visual-editing/commit/de1325647a998c36e64447925b6bf8877d147985) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency styled-components to ^6.4.4
+
 ## 5.5.1
 
 ### Patch Changes
