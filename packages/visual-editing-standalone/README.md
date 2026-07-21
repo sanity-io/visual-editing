@@ -3,11 +3,16 @@
 Self-contained, ESM-only Visual Editing for applications that do not otherwise
 use React.
 
-The package exposes the framework-neutral `enableVisualEditing` and
-`createDataAttribute` APIs. All runtime code—including the internal React
-renderer, React DOM, styled-components, and Sanity UI—is compiled into
-package-internal ESM chunks. Installing it adds no production or peer
-dependencies.
+The entire API is a single entry point:
+
+```ts
+import {createDataAttribute, enableVisualEditing} from '@sanity/visual-editing-standalone'
+```
+
+All runtime code—including the internal React renderer, React DOM,
+styled-components, and Sanity UI—is compiled into package-internal ESM chunks.
+Installing it adds no production or peer dependencies, and the exact bundled
+versions are listed in the `inlinedDependencies` field of `package.json`.
 
 ## When to use this package
 
@@ -61,8 +66,11 @@ const disableVisualEditing = enableVisualEditing({
 disableVisualEditing()
 ```
 
-The overlay renderer stays in a separate package-internal chunk and is loaded
-only when `enableVisualEditing()` is called.
+The overlay renderer stays in a separate lazy chunk that only loads when
+`enableVisualEditing()` is called. Applications that only import
+`createDataAttribute` never load it, and since the package is side-effect free
+any bundler can tree-shake the unused `enableVisualEditing` export away
+entirely.
 
 The standalone options are framework-neutral. React-based custom overlay
 components and plugins remain available from `@sanity/visual-editing`.
@@ -82,16 +90,6 @@ const dataSanity = createDataAttribute({
   path: 'mainImage',
 }).toString()
 ```
-
-For server-rendered code that only creates attributes, use the focused subpath
-so the overlay graph is not traversed:
-
-```ts
-import {createDataAttribute} from '@sanity/visual-editing-standalone/create-data-attribute'
-```
-
-`enableVisualEditing` also has a focused
-`@sanity/visual-editing-standalone/enable-visual-editing` entry.
 
 ## Load from esm.sh
 

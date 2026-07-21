@@ -104,6 +104,9 @@ export type DisableVisualEditing = () => void
 
 /**
  * Enables Visual Editing overlays on a page with Content Source Map encoding.
+ *
+ * The overlay renderer (and its inlined React runtime) stays in a separate
+ * lazy chunk that only loads when this function is called.
  * @public
  */
 export function enableVisualEditing(options: VisualEditingOptions = {}): DisableVisualEditing {
