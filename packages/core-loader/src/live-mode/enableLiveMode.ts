@@ -77,6 +77,9 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       const nextVariant = data.variant || undefined
       $variant.set(nextVariant)
       onVariant?.(nextVariant)
+      // Re-emit `loader/query-listen` right away so the controller subscribes with the
+      // new perspective/variant immediately, instead of waiting for the next heartbeat
+      emitQueryListen()
       updateLiveQueries()
     }
   })
