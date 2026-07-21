@@ -15,7 +15,12 @@ export default defineConfig({
     ...baseConfig.rollup,
     plugins: (plugins) =>
       plugins.map((plugin) =>
-        plugin.name === 'commonjs' ? commonjs({transformMixedEsModules: true}) : plugin,
+        plugin.name === 'commonjs'
+          ? commonjs({
+              extensions: ['.js', '.mjs'],
+              transformMixedEsModules: true,
+            })
+          : plugin,
       ),
     treeshake: {
       preset: 'smallest',
