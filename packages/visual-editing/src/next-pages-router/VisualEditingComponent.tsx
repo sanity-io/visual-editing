@@ -27,6 +27,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
     refresh: refreshProp,
     zIndex,
     onPerspectiveChange,
+    onVariantChange,
     onSuspiciousStega: onSuspiciousStegaProp,
   } = props
 
@@ -86,6 +87,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       zIndex,
       refresh,
       onPerspectiveChange,
+      onVariantChange,
       onSuspiciousStega: hasSuspiciousStegaCallback ? onSuspiciousStega : undefined,
       history: {
         subscribe: (_navigate) => {
@@ -96,7 +98,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       },
     })
     return () => disable()
-  }, [components, keepStegaOnCopy, zIndex, onPerspectiveChange, hasSuspiciousStegaCallback])
+  }, [components, keepStegaOnCopy, zIndex, onPerspectiveChange, onVariantChange, hasSuspiciousStegaCallback])
 
   const {asPath, basePath, locale, isReady} = useRouter()
   useEffect(() => {

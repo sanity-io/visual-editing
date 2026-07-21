@@ -13,6 +13,8 @@ export let comlinkProjectId: string | null = null
 export let comlinkDataset: string | null = null
 /** @internal */
 export let comlinkPerspective: ClientPerspective | null = null
+/** @internal */
+export let comlinkVariant: string | null = null
 
 /** @internal */
 export function setLoaderComlink(
@@ -36,6 +38,14 @@ export function setLoaderClientConfig(projectId: string | null, dataset: string 
 /** @internal */
 export function setLoaderPerspective(perspective: ClientPerspective | null): void {
   comlinkPerspective = perspective
+  for (const listener of comlinkListeners) {
+    listener()
+  }
+}
+
+/** @internal */
+export function setLoaderVariant(variant: string | null): void {
+  comlinkVariant = variant
   for (const listener of comlinkListeners) {
     listener()
   }

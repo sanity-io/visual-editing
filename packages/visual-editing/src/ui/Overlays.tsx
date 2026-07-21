@@ -186,6 +186,7 @@ export function Overlays(props: {
   comlinkStatus?: Status
   componentResolver?: OverlayComponentResolver
   onPerspectiveChange?: (perspective: ClientPerspective) => Promise<void> | void
+  onVariantChange?: (variant: string | undefined) => Promise<void> | void
   plugins?: OverlayPluginDefinition[]
   inFrame: boolean
   inPopUp: boolean
@@ -199,6 +200,7 @@ export function Overlays(props: {
     inPopUp,
     zIndex,
     onPerspectiveChange,
+    onVariantChange,
   } = props
 
   const prefersDark = usePrefersDark()
@@ -213,6 +215,7 @@ export function Overlays(props: {
       elements,
       isDragging,
       perspective,
+      variant,
       wasMaybeCollapsed,
       dragMinimapTransition,
       dragGroupRect,
@@ -228,6 +231,7 @@ export function Overlays(props: {
     focusPath: '',
     isDragging: false,
     perspective: 'published',
+    variant: undefined,
     wasMaybeCollapsed: false,
     dragMinimapTransition: false,
     dragGroupRect: null,
@@ -251,9 +255,9 @@ export function Overlays(props: {
     return () => unsubs.forEach((unsub) => unsub!())
   }, [comlink])
 
-  usePerspectiveSync(comlink, dispatch, onPerspectiveChange)
+  usePerspectiveSync(comlink, dispatch, onPerspectiveChange, onVariantChange)
 
-  useReportDocuments(comlink, elements, perspective)
+  useReportDocuments(comlink, elements, perspective, variant)
 
   const updateDragPreviewCustomProps = useCallback(
     (x: number, y: number) => {

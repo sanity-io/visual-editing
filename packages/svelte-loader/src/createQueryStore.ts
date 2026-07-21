@@ -39,6 +39,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     const {headers, tag} = options
     const perspective =
       options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
+    const variant = options.variant || undefined
     const stega = options.stega ?? unstable__serverClient.instance?.config().stega ?? false
 
     if (typeof document !== 'undefined') {
@@ -62,18 +63,19 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           filterResponse: false,
           resultSourceMap: 'withKeyArraySelector',
           perspective,
+          variant,
           useCdn: false,
           headers,
           tag,
           stega,
         })
-      return {data: result, sourceMap: resultSourceMap, perspective}
+      return {data: result, sourceMap: resultSourceMap, perspective, variant}
     }
 
     const useCdn = options.useCdn || unstable__serverClient.instance!.config().useCdn
 
     const {result, resultSourceMap} = await unstable__cache.instance.fetch<QueryResponseResult>(
-      JSON.stringify({query, params, perspective, useCdn, stega}),
+      JSON.stringify({query, params, perspective, variant, useCdn, stega}),
     )
 
     // @ts-expect-error - update typings

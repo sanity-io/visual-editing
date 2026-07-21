@@ -10,6 +10,7 @@ import {
   comlinkDataset,
   comlinkPerspective,
   comlinkProjectId,
+  comlinkVariant,
   subscribe,
 } from '../ui/loader-comlink/context'
 
@@ -18,6 +19,7 @@ export type UsePresentationQueryReturnsInactive = {
   data: null
   sourceMap: null
   perspective: null
+  variant: null
 }
 
 /** @alpha */
@@ -25,6 +27,7 @@ export type UsePresentationQueryReturnsActive<QueryString extends string> = {
   data: ClientReturn<QueryString>
   sourceMap: ContentSourceMap | null
   perspective: ClientPerspective
+  variant: string | undefined
 }
 
 /**
@@ -60,6 +63,10 @@ function reducer<QueryString extends string>(
             perspective: dequal(state.perspective, payload.perspective)
               ? (state.perspective as Exclude<ClientPerspective, 'raw'>)
               : payload.perspective,
+            variant:
+              'variant' in state && dequal(state.variant, payload.variant)
+                ? state.variant
+                : payload.variant,
           }
     default:
       return state
@@ -70,6 +77,7 @@ const initialState: UsePresentationQueryReturnsInactive = {
   data: null,
   sourceMap: null,
   perspective: null,
+  variant: null,
 }
 
 const EMPTY_QUERY_PARAMS: QueryParams = {}
@@ -116,6 +124,12 @@ export function usePresentationQuery<const QueryString extends string>(props: {
     () => null,
   )
 
+  const variant = useSyncExternalStore(
+    subscribe,
+    () => comlinkVariant,
+    () => null,
+  )
+
   // Register this hook instance as a query listener so LoaderComlink is mounted
   useEffect(() => addQueryListener(), [])
 
@@ -125,6 +139,7 @@ export function usePresentationQuery<const QueryString extends string>(props: {
       projectId,
       dataset,
       perspective,
+      variant: variant ?? undefined,
       query,
       params,
       heartbeat: LISTEN_HEARTBEAT_INTERVAL,
@@ -150,6 +165,7 @@ export function usePresentationQuery<const QueryString extends string>(props: {
             data: event.result,
             sourceMap: event.resultSourceMap || null,
             perspective: event.perspective,
+            variant: event.variant || undefined,
           },
         })
       }

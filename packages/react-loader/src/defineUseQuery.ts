@@ -27,7 +27,7 @@ export function defineUseQuery({
     options: UseQueryOptions<QueryResponseResult> = {},
   ) => {
     const initial = useMemo(
-      () => (options.initial ? {perspective: 'published' as const, ...options.initial} : undefined),
+      () => (options.initial ? {perspective: 'published' as const, variant: undefined, ...options.initial} : undefined),
       [options.initial],
     )
     const $params = useMemo(() => JSON.stringify(params), [params])
@@ -91,6 +91,10 @@ export function defineUseQuery({
             //   prev.perspective,
             //   snapshot.perspective,
             // )
+            return snapshot
+          }
+
+          if (prev.variant !== snapshot.variant) {
             return snapshot
           }
 

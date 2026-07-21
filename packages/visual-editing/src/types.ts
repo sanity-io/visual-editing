@@ -595,6 +595,12 @@ export interface VisualEditingOptions {
    */
   onPerspectiveChange?: (perspective: ClientPerspective) => void
   /**
+   * Fires when the editing variant changes in the Studio, with the bare variant id,
+   * or undefined when the variant is cleared. Allows persisting the change to a
+   * session cookie so server-side fetches can apply it.
+   */
+  onVariantChange?: (variant: string | undefined) => void
+  /**
    * Reports stega payloads found in places where they always cause bugs or bloat, such as
    * `class`, `href`, `src`, `id` and other attributes, inside `<head>` (e.g. `<title>`),
    * `<script>` or `<style>` contents, form values, or the page URL.
