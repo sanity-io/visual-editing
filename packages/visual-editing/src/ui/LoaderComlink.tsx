@@ -10,6 +10,7 @@ import {
   setLoaderClientConfig,
   setLoaderComlink,
   setLoaderPerspective,
+  setLoaderVariant,
 } from './loader-comlink/context'
 
 /**
@@ -33,6 +34,7 @@ export default function LoaderComlink(): null {
     loaderComlink.on('loader/perspective', (data) => {
       setLoaderClientConfig(data.projectId, data.dataset)
       setLoaderPerspective(data.perspective)
+      setLoaderVariant(data.variant ?? null)
     })
 
     const stop = loaderComlink.start()
@@ -43,6 +45,7 @@ export default function LoaderComlink(): null {
       setLoaderComlink(null)
       setLoaderClientConfig(null, null)
       setLoaderPerspective(null)
+      setLoaderVariant(null)
     }
   }, [])
 

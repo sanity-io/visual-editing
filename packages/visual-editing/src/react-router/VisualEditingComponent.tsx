@@ -34,6 +34,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
     refresh,
     zIndex,
     onPerspectiveChange,
+    onVariantChange,
     onSuspiciousStega: onSuspiciousStegaProp,
   } = props
 
@@ -68,6 +69,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       keepStegaOnCopy,
       zIndex,
       onPerspectiveChange,
+      onVariantChange,
       onSuspiciousStega: hasSuspiciousStegaCallback ? onSuspiciousStega : undefined,
       refresh: (payload) => {
         function refreshDefault() {
@@ -105,6 +107,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
     revalidator,
     zIndex,
     onPerspectiveChange,
+    onVariantChange,
     hasSuspiciousStegaCallback,
   ])
 

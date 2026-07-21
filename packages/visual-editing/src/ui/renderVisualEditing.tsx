@@ -23,6 +23,7 @@ export function renderVisualEditing(
     zIndex,
     plugins,
     onPerspectiveChange,
+    onVariantChange,
     onSuspiciousStega,
   }: VisualEditingOptions,
 ): void {
@@ -64,6 +65,7 @@ export function renderVisualEditing(
         refresh={refresh}
         zIndex={zIndex}
         onPerspectiveChange={onPerspectiveChange}
+        onVariantChange={onVariantChange}
         onSuspiciousStega={onSuspiciousStega}
         // Disabling the portal, as this function is already making sure the overlays render in the right spot
         portal={false}

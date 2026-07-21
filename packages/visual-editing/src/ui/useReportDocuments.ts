@@ -12,20 +12,27 @@ export function useReportDocuments(
   comlink: VisualEditingNode | undefined,
   elements: ElementState[],
   perspective: ClientPerspective,
+  variant: string | undefined,
 ): void {
   const lastReported = useRef<
     | {
         orderedIds: string[]
         perspective: ClientPerspective
+        variant: string | undefined
       }
     | undefined
   >(undefined)
 
   const reportDocuments = useCallback(
-    (documents: ContentSourceMapDocuments, perspective: ClientPerspective) => {
+    (
+      documents: ContentSourceMapDocuments,
+      perspective: ClientPerspective,
+      variant: string | undefined,
+    ) => {
       comlink?.post('visual-editing/documents', {
         documents,
         perspective,
+        variant,
       })
     },
     [comlink],
@@ -42,22 +49,26 @@ export function useReportDocuments(
     // Report if:
     // - Documents not yet reported
     // - Document IDs changed or their visual order changed
-    // - Perspective changed
+    // - Perspective or variant changed
     const lastOrderedIds = lastReported.current?.orderedIds
     const orderChanged =
       !lastOrderedIds ||
       lastOrderedIds.length !== orderedIds.length ||
       orderedIds.some((id, index) => id !== lastOrderedIds[index])
 
-    if (orderChanged || perspective !== lastReported.current?.perspective) {
+    if (
+      orderChanged ||
+      perspective !== lastReported.current?.perspective ||
+      variant !== lastReported.current?.variant
+    ) {
       const documentsOnPage: ContentSourceMapDocuments = orderedNodes.map((node) => {
         const {id: _id, type, projectId: _projectId, dataset: _dataset} = node
         return _projectId && _dataset
           ? {_id, _type: type!, _projectId, _dataset}
           : {_id, _type: type!}
       })
-      lastReported.current = {orderedIds, perspective}
-      reportDocuments(documentsOnPage, perspective)
+      lastReported.current = {orderedIds, perspective, variant}
+      reportDocuments(documentsOnPage, perspective, variant)
     }
-  }, [elements, perspective, reportDocuments])
+  }, [elements, perspective, variant, reportDocuments])
 }

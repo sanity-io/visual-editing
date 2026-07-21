@@ -26,7 +26,7 @@ export interface LazyEnableLiveModeOptions extends EnableLiveModeOptions {
 const LISTEN_HEARTBEAT_INTERVAL = 20_000
 
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
-  const {client, setFetcher, onConnect, onDisconnect, onPerspective} = options
+  const {client, setFetcher, onConnect, onDisconnect, onPerspective, onVariant} = options
   if (!client) {
     throw new Error(
       `Expected \`client\` to be an instance of SanityClient: ${JSON.stringify(client)}`,
@@ -37,6 +37,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const $perspective = atom<Exclude<ClientPerspective, 'raw'>>(
     perspective && perspective !== 'raw' ? perspective : 'drafts',
   )
+  const $variant = atom<string | undefined>(undefined)
   const $connected = atom(false)
 
   const cache = new Map<
@@ -73,6 +74,9 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       const nextPerspective = data.perspective === 'raw' ? 'drafts' : data.perspective
       $perspective.set(nextPerspective)
       onPerspective?.(nextPerspective)
+      const nextVariant = data.variant || undefined
+      $variant.set(nextVariant)
+      onVariant?.(nextVariant)
       updateLiveQueries()
     }
   })
@@ -80,12 +84,14 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   comlink.on('loader/query-change', (data) => {
     if (data.projectId === projectId && data.dataset === dataset) {
       const {perspective, query, params} = data
+      const variant = data.variant || undefined
+      const cacheKey = JSON.stringify({perspective, variant, query, params})
       if (
         data.result !== undefined &&
         data.resultSourceMap !== undefined &&
         (client as SanityClient).config().stega.enabled
       ) {
-        cache.set(JSON.stringify({perspective, query, params}), {
+        cache.set(cacheKey, {
           ...data,
           result: stegaEncodeSourceMap(
             data.result,
@@ -94,7 +100,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
           ),
         })
       } else {
-        cache.set(JSON.stringify({perspective, query, params}), data)
+        cache.set(cacheKey, data)
       }
 
       updateLiveQueries()
@@ -107,8 +113,10 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       unsetFetcher = setFetcher({
         hydrate: (query, params, initial) => {
           const perspective = initial?.perspective || $perspective.get()
+          const variant = initial?.variant || $variant.get()
           const key = JSON.stringify({
             perspective,
+            variant,
             query,
             params,
           })
@@ -120,6 +128,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
               data: snapshot.result,
               sourceMap: snapshot.resultSourceMap,
               perspective,
+              variant,
             }
           }
 
@@ -131,6 +140,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
             data: initial?.data,
             sourceMap: initial?.sourceMap,
             perspective: initial?.perspective || 'published',
+            variant: initial?.variant,
           }
         },
         fetch: <QueryResponseResult, QueryResponseError>(
@@ -194,11 +204,13 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       throw new Error('No connection')
     }
     const perspective = $perspective.get()
+    const variant = $variant.get()
     for (const {query, params, $fetch} of liveQueries) {
       comlink.post('loader/query-listen', {
         projectId: projectId!,
         dataset: dataset!,
         perspective,
+        variant,
         query,
         params,
         heartbeat: LISTEN_HEARTBEAT_INTERVAL,
@@ -207,14 +219,16 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
         $fetch.setKey('loading', true)
       }
       $fetch.setKey('perspective', perspective)
+      $fetch.setKey('variant', variant)
     }
   }
   function updateLiveQueries() {
     const perspective = $perspective.get()
+    const variant = $variant.get()
     const documentsOnPage: ContentSourceMapDocuments = []
     // Loop over liveQueries and apply cache
     for (const {query, params, $fetch} of liveQueries) {
-      const key = JSON.stringify({perspective, query, params})
+      const key = JSON.stringify({perspective, variant, query, params})
       const value = cache.get(key)
       if (value) {
         $fetch.set({
@@ -222,6 +236,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
           error: undefined,
           loading: false,
           perspective,
+          variant,
           sourceMap: value.resultSourceMap,
         })
         documentsOnPage.push(...(value.resultSourceMap?.documents ?? []))
@@ -231,6 +246,7 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       projectId: projectId!,
       dataset: dataset!,
       perspective,
+      variant,
       documents: documentsOnPage,
     })
   }

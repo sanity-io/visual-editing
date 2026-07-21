@@ -36,6 +36,7 @@ export function defineUseQuery({
     const initial = options.initial
       ? {
           perspective: 'published' as const,
+          variant: undefined,
           ...options.initial,
         }
       : undefined
@@ -69,6 +70,10 @@ export function defineUseQuery({
         }
 
         if (prev.perspective !== snapshot.perspective) {
+          $writeable.set(snapshot)
+        }
+
+        if (prev.variant !== snapshot.variant) {
           $writeable.set(snapshot)
         }
 

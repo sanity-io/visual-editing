@@ -24,10 +24,12 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     data: QueryResponseResult
     sourceMap: ContentSourceMap | undefined
     perspective?: ClientPerspective
+    variant?: string
   }> => {
     const {cache, next, stega, headers, tag} = _options
     const perspective =
       _options.perspective || unstable__serverClient.instance?.config().perspective || 'published'
+    const variant = _options.variant || undefined
     const useCdn = _options.useCdn || unstable__serverClient.instance!.config().useCdn
 
     const previewPerspective =
@@ -45,6 +47,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
         filterResponse: false,
         next,
         perspective,
+        variant,
         useCdn: previewPerspective ? false : useCdn,
         stega,
         headers,
@@ -53,7 +56,11 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     const payload = resultSourceMap ? {data: result, sourceMap: resultSourceMap} : {data: result}
     if (previewPerspective) {
       // @ts-expect-error - update typings
-      return {...payload, perspective}
+      return {...payload, perspective, variant}
+    }
+    if (variant) {
+      // @ts-expect-error - update typings
+      return {...payload, variant}
     }
     // @ts-expect-error - update typings
     return payload
