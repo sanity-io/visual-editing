@@ -38,6 +38,7 @@ export async function validatePreviewUrl(
   )
   const redirectTo = isValid ? parsedPreviewUrl.redirectTo : undefined
   const studioPreviewPerspective = isValid ? parsedPreviewUrl.studioPreviewPerspective : undefined
+  const studioPreviewVariant = isValid ? parsedPreviewUrl.studioPreviewVariant : undefined
   let studioOrigin: string | undefined
   if (isValid) {
     try {
@@ -53,7 +54,7 @@ export async function validatePreviewUrl(
     }
   }
 
-  return {isValid, redirectTo, studioOrigin, studioPreviewPerspective}
+  return {isValid, redirectTo, studioOrigin, studioPreviewPerspective, studioPreviewVariant}
 }
 
 export type {PreviewUrlValidateUrlResult, SanityClientLike}

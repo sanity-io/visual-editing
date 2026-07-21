@@ -2,6 +2,7 @@ import {
   urlSearchParamPreviewPathname,
   urlSearchParamPreviewPerspective,
   urlSearchParamPreviewSecret,
+  urlSearchParamPreviewVariant,
   urlSearchParamVercelProtectionBypass,
   urlSearchParamVercelSetBypassCookie,
 } from './constants'
@@ -13,6 +14,7 @@ export function withoutSecretSearchParams(url: URL): URL {
   searchParams.delete(urlSearchParamPreviewPathname)
   searchParams.delete(urlSearchParamPreviewSecret)
   searchParams.delete(urlSearchParamPreviewPerspective)
+  searchParams.delete(urlSearchParamPreviewVariant)
   searchParams.delete(urlSearchParamVercelProtectionBypass)
   searchParams.delete(urlSearchParamVercelSetBypassCookie)
   return newUrl
@@ -29,6 +31,7 @@ export function setSecretSearchParams(
   secret: string | null,
   redirectTo: string,
   perspective: string,
+  variant?: string,
 ): URL {
   const newUrl = new URL(url)
   const {searchParams} = newUrl
@@ -39,6 +42,11 @@ export function setSecretSearchParams(
   }
   // Always set the perspective that's being used
   searchParams.set(urlSearchParamPreviewPerspective, perspective)
+  if (variant) {
+    searchParams.set(urlSearchParamPreviewVariant, variant)
+  } else {
+    searchParams.delete(urlSearchParamPreviewVariant)
+  }
 
   return newUrl
 }
