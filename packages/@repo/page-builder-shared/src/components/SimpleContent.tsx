@@ -1,11 +1,13 @@
 import {
   PortableText,
-  PortableTextBlockComponent,
-  PortableTextComponents,
-  PortableTextTypeComponent,
+  type PortableTextBlockComponent,
+  type PortableTextComponents,
+  type PortableTextTypeComponent,
 } from '@portabletext/react'
+import type {ReactElement} from 'react'
 
-export function SimpleContent(props: {value: any[]}) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function SimpleContent(props: {value: any[]}): ReactElement {
   const {value} = props
 
   return <PortableText value={value} components={components} />
@@ -19,7 +21,6 @@ const Block: PortableTextBlockComponent = (props) => {
 
 const Span: PortableTextTypeComponent = (props) => {
   return props.value.text.value
-  // return <sanity.span>{props.value.text}</sanity.span>
 }
 
 const components: Partial<PortableTextComponents> = {

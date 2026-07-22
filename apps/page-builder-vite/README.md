@@ -6,6 +6,11 @@ A Vite + React SPA duplicate of `apps/page-builder-demo` that uses the **core lo
 It targets the same project/dataset (`hiomol4a` / `preview-poc`) and renders the same
 page-builder content (front page, `/pages/:slug`, `/products`, `/product/:slug`).
 
+The page-builder components, GROQ queries and generated types are shared with
+`apps/page-builder-demo` through the internal `@repo/page-builder-shared` package;
+framework-specific pieces (link component, image renderer, `dataAttribute`) are
+injected via its `PageBuilderProvider`.
+
 ## Why
 
 The core loaders receive the perspective **and editing variant** directly from

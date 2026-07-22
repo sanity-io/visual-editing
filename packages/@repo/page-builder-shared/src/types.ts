@@ -1,4 +1,4 @@
-import type {FrontPageQueryResult} from '@/sanity.types'
+import type {FrontPageQueryResult} from './sanity.types'
 
 export type PageSection = NonNullable<NonNullable<FrontPageQueryResult>['sections']>[number]
 
@@ -12,4 +12,4 @@ export type FeatureHighlightSectionData = Extract<PageSection, {_type: 'featureH
 
 export type PageSectionData = Extract<PageSection, {_type: 'section'}>
 
-export type {Page as PageData} from '@/sanity.types'
+export type {Page as PageData} from './sanity.types'

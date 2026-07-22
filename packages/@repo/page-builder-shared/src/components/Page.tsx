@@ -1,18 +1,21 @@
+'use client'
+
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
+import type {ReactElement} from 'react'
 
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
-
+import {usePageBuilder} from '../context'
+import type {FrontPageQueryResult} from '../sanity.types'
+import type {PageData, PageSection} from '../types'
 import {FeaturedProducts} from './sections/FeaturedProducts'
 import {FeatureHighlight} from './sections/FeatureHighlight'
 import {Hero} from './sections/Hero'
 import {Intro} from './sections/Intro'
 import {Section} from './sections/Section'
-import type {PageData, PageSection} from './types'
 
-export function Page(props: {data: FrontPageQueryResult; loading?: boolean}) {
+export function Page(props: {data: FrontPageQueryResult; loading?: boolean}): ReactElement {
   const {data, loading} = props
+  const {dataAttribute} = usePageBuilder()
 
   const sections = useOptimistic<PageSection[] | null | undefined, SanityDocument<PageData>>(
     data?.sections,

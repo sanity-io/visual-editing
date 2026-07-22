@@ -1,18 +1,19 @@
-import {stegaClean} from 'next-sanity'
-import Link from 'next/link'
+'use client'
 
-import {Image} from '@/components/image'
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
+import {stegaClean} from '@sanity/client/stega'
+import type {ReactElement} from 'react'
 
+import {usePageBuilder} from '../../context'
+import type {FrontPageQueryResult} from '../../sanity.types'
+import type {FeatureHighlightSectionData} from '../../types'
 import {PageSection} from '../PageSection'
-import {FeatureHighlightSectionData, PageData} from '../types'
 
 export function FeatureHighlight(props: {
   page: NonNullable<FrontPageQueryResult>
   section: FeatureHighlightSectionData
-}) {
+}): ReactElement {
   const {page: data, section} = props
+  const {dataAttribute, Image, Link} = usePageBuilder()
 
   return (
     <PageSection
@@ -37,7 +38,7 @@ export function FeatureHighlight(props: {
             {section.description && <p className="font-serif text-base">{section.description}</p>}
             <div className="flex gap-2">
               {section.ctas &&
-                section.ctas.map((cta, i) => (
+                section.ctas.map((cta) => (
                   <button
                     data-sanity={dataAttribute({
                       id: data._id,

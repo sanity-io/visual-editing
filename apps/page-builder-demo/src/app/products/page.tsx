@@ -1,20 +1,9 @@
-import {defineQuery} from 'next-sanity'
+import {productsPageQuery, SimpleContent} from '@repo/page-builder-shared'
 import Link from 'next/link'
 
 import {Image} from '@/components/image'
-import {SimpleContent} from '@/components/page'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {sanityFetch} from '@/sanity/live'
-
-const productsPageQuery = defineQuery(`
-  *[_type == "product" && defined(slug.current)]{
-    _id,
-    title,
-    description,
-    slug,
-    "media": media[0]
-  }
-`)
 
 export default async function ProductsPage() {
   const {data} = await sanityFetch({query: productsPageQuery})

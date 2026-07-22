@@ -1,8 +1,8 @@
 import './globals.css'
+import {layoutQuery} from '@repo/page-builder-shared'
 import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
 import {perspectiveCookieName, variantCookieName} from '@sanity/preview-url-secret/constants'
 import type {Metadata} from 'next'
-import {defineQuery} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {IBM_Plex_Mono, Inter, Libre_Caslon_Text} from 'next/font/google'
 import {cookies, draftMode} from 'next/headers'
@@ -14,6 +14,7 @@ import {sanityFetch, SanityLive} from '@/sanity/live'
 import AlertBanner from './alert-banner'
 import {AppLayout} from './AppLayout'
 import {DraftModeStatus} from './draft-mode-status'
+import {DemoPageBuilderProvider} from './page-builder'
 
 const serif = Libre_Caslon_Text({
   variable: '--font-serif',
@@ -32,13 +33,6 @@ const mono = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['500', '700'],
 })
-
-const layoutQuery = defineQuery(`
-  *[_id == "siteSettings"][0]{
-  title,
-  description,
-  copyrightText
-}`)
 
 export async function generateMetadata(): Promise<Metadata> {
   const {data} = await sanityFetch({query: layoutQuery, stega: false})
@@ -63,7 +57,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body className="bg-white text-black dark:bg-black dark:text-white">
         {isDraftModeEnabled && <AlertBanner />}
         <DraftModeStatus perspective={perspective} variant={variant} />
-        <AppLayout data={data}>{children}</AppLayout>
+        <DemoPageBuilderProvider>
+          <AppLayout data={data}>{children}</AppLayout>
+        </DemoPageBuilderProvider>
         {isDraftModeEnabled && <VisualEditing components={components} plugins={plugins} />}
         <SanityLive />
       </body>

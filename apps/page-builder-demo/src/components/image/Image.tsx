@@ -1,7 +1,6 @@
+import {imageUrlBuilder} from '@repo/page-builder-shared'
 import {Image as NextImage} from 'next-sanity/image'
 import {HTMLProps} from 'react'
-
-import {imageUrlBuilder} from '@/sanity/image'
 
 export function Image(
   props: {

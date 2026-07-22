@@ -1,7 +1,6 @@
+import type {LayoutQueryResult} from '@repo/page-builder-shared'
 import type {ReactNode} from 'react'
 import {Link, useLocation} from 'react-router'
-
-import type {LayoutQueryResult} from '@/sanity.types'
 
 const links = [
   {

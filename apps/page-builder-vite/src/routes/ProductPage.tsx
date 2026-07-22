@@ -1,12 +1,14 @@
+import {
+  Image,
+  productPageQuery,
+  SimpleContent,
+  type ProductPageQueryResult,
+} from '@repo/page-builder-shared'
 import {useMemo} from 'react'
 import {useParams} from 'react-router'
 
-import {Image} from '@/components/Image'
-import {SimpleContent} from '@/components/SimpleContent'
-import type {ProductPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {useQuery} from '@/sanity/loader'
-import {productPageQuery} from '@/sanity/queries'
 
 export function ProductPage() {
   const {slug} = useParams<{slug: string}>()

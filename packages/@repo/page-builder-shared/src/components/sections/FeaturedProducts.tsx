@@ -1,13 +1,13 @@
+'use client'
+
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
-import {Link} from 'react-router'
+import type {ReactElement} from 'react'
 
-import {Image} from '@/components/Image'
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
-
+import {usePageBuilder} from '../../context'
+import type {FrontPageQueryResult} from '../../sanity.types'
+import type {FeaturedProductsSectionData, PageData} from '../../types'
 import {PageSection} from '../PageSection'
-import type {FeaturedProductsSectionData, PageData} from '../types'
 
 function FeaturedProductsList(props: {
   id: string
@@ -16,6 +16,7 @@ function FeaturedProductsList(props: {
   products: FeaturedProductsSectionData['products']
 }) {
   const {products: _products, id, type, sectionKey} = props
+  const {dataAttribute, Image, Link} = usePageBuilder()
 
   const products = useOptimistic<
     FeaturedProductsSectionData['products'] | undefined,
@@ -26,6 +27,7 @@ function FeaturedProductsList(props: {
       if (section && section._type === 'featuredProducts') {
         return section.products
           ?.map(
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             (section: {_key: string} | undefined) => state?.find((s) => s._key === section?._key)!,
           )
           .filter(Boolean)
@@ -43,7 +45,7 @@ function FeaturedProductsList(props: {
             path: `sections[_key=="${sectionKey}"].products[_key=="${product._key}"]`,
           }).toString()}
           className="group block w-64 flex-none"
-          to={`/product/${product.slug?.current}`}
+          href={`/product/${product.slug?.current}`}
           key={product._key}
         >
           {product.media?.asset && (
@@ -65,8 +67,9 @@ function FeaturedProductsList(props: {
 export function FeaturedProducts(props: {
   page: NonNullable<FrontPageQueryResult>
   section: FeaturedProductsSectionData
-}) {
+}): ReactElement {
   const {page: data, section} = props
+  const {dataAttribute} = usePageBuilder()
 
   return (
     <PageSection

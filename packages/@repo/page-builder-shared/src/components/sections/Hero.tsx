@@ -1,12 +1,18 @@
-import {Image} from '@/components/Image'
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
+'use client'
 
+import type {ReactElement} from 'react'
+
+import {usePageBuilder} from '../../context'
+import type {FrontPageQueryResult} from '../../sanity.types'
+import type {HeroSectionData} from '../../types'
 import {PageSection} from '../PageSection'
-import type {HeroSectionData} from '../types'
 
-export function Hero(props: {page: NonNullable<FrontPageQueryResult>; section: HeroSectionData}) {
+export function Hero(props: {
+  page: NonNullable<FrontPageQueryResult>
+  section: HeroSectionData
+}): ReactElement {
   const {page: data, section} = props
+  const {dataAttribute, Image} = usePageBuilder()
 
   return (
     <PageSection
@@ -16,6 +22,7 @@ export function Hero(props: {page: NonNullable<FrontPageQueryResult>; section: H
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
       className="relative flex items-center justify-center px-4 py-6 sm:px-5 sm:py-7 md:px-7 md:py-9"
+      style={{cursor: 'crosshair'}} // Useful for testing overlay cursor overrides
       variant={section.style?.variant}
     >
       <div className="relative z-10 p-5 text-center backdrop-blur-xl">

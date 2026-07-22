@@ -4,7 +4,7 @@ const {theme} = require('@sanity/demo/tailwind')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{ts,tsx}', '../../packages/@repo/page-builder-shared/src/**/*.{ts,tsx}'],
   theme: {
     ...theme,
     fontFamily: {

@@ -1,13 +1,9 @@
-import {defineQuery} from 'next-sanity'
+import {productPageQuery, productSlugsQuery, SimpleContent} from '@repo/page-builder-shared'
 
-import {SimpleContent} from '@/components/page'
 import {Slideshow} from '@/components/slideshow'
 import {dataAttribute} from '@/sanity/dataAttribute'
 import {sanityFetch} from '@/sanity/live'
 
-const productSlugsQuery = defineQuery(
-  /* groq */ `*[_type == "product" && defined(slug.current)]{"slug": slug.current}`,
-)
 export async function generateStaticParams() {
   const {data} = await sanityFetch({
     query: productSlugsQuery,
@@ -16,8 +12,6 @@ export async function generateStaticParams() {
   })
   return data
 }
-
-const productPageQuery = defineQuery(`*[_type == "product" && slug.current == $slug][0]`)
 
 export default async function ProductPage({params}: {params: Promise<{slug: string}>}) {
   const {data} = await sanityFetch({

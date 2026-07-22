@@ -1,4 +1,4 @@
-import {defineQuery} from 'next-sanity'
+import {projectPageQuery, projectSlugsQuery} from '@repo/page-builder-shared'
 
 import {sanityFetch} from '@/sanity/live'
 
@@ -12,9 +12,6 @@ export interface ProjectPageData {
   project: ProjectData | null
 }
 
-const projectSlugsQuery = defineQuery(
-  /* groq */ `*[_type == "project" && defined(slug.current)]{"slug": slug.current}`,
-)
 export async function generateStaticParams() {
   const {data} = await sanityFetch({
     query: projectSlugsQuery,
@@ -23,8 +20,6 @@ export async function generateStaticParams() {
   })
   return data
 }
-
-const projectPageQuery = defineQuery(`*[_type == "project" && slug.current == $slug][0]`)
 
 export default async function ProjectPage({params}: {params: Promise<{slug: string}>}) {
   // @TODO fix typegen vs manual types issues

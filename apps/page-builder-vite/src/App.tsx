@@ -1,4 +1,10 @@
-import {Outlet, createBrowserRouter, RouterProvider} from 'react-router'
+import {
+  PageBuilderProvider,
+  layoutQuery,
+  type LayoutQueryResult,
+  type LinkProps,
+} from '@repo/page-builder-shared'
+import {Link, Outlet, createBrowserRouter, RouterProvider} from 'react-router'
 
 import {AppLayout} from '@/components/AppLayout'
 import {LiveVisualEditing} from '@/components/LiveVisualEditing'
@@ -7,16 +13,21 @@ import {FrontPage} from '@/routes/FrontPage'
 import {ProductPage} from '@/routes/ProductPage'
 import {ProductsPage} from '@/routes/ProductsPage'
 import {SlugPage} from '@/routes/SlugPage'
-import type {LayoutQueryResult} from '@/sanity.types'
+import {dataAttribute} from '@/sanity/dataAttribute'
 import {useQuery} from '@/sanity/loader'
 import {previewParams} from '@/sanity/previewParams'
-import {layoutQuery} from '@/sanity/queries'
+
+// The shared components use `href`, react-router links use `to`
+function RouterLink(props: LinkProps) {
+  const {href, ...rest} = props
+  return <Link to={href} {...rest} />
+}
 
 function Root() {
   const {data, perspective, variant} = useQuery<LayoutQueryResult>(layoutQuery)
 
   return (
-    <>
+    <PageBuilderProvider dataAttribute={dataAttribute} Link={RouterLink}>
       <AppLayout data={data ?? null}>
         <Outlet />
       </AppLayout>
@@ -27,7 +38,7 @@ function Root() {
         variant={variant ?? previewParams?.variant}
       />
       <LiveVisualEditing />
-    </>
+    </PageBuilderProvider>
   )
 }
 
