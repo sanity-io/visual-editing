@@ -6,6 +6,6 @@ const {projectId, dataset} = workspaces['live-demo']
 export default defineCliConfig({
   api: {projectId, dataset},
   typegen: {
-    schema: './node_modules/@repo/sanity-extracted-schema/live-demo.json',
+    schema: './schema.json',
   },
 })

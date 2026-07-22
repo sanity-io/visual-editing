@@ -6,7 +6,7 @@ const {projectId, dataset} = workspaces['page-builder-demo']
 export default defineCliConfig({
   api: {projectId, dataset},
   typegen: {
-    schema: './node_modules/@repo/sanity-extracted-schema/page-builder-demo.json',
+    schema: './schema.json',
     generates: './src/sanity.types.ts',
   },
 })
