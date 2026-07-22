@@ -1,6 +1,6 @@
 {
   "name": "@sanity/visual-editing",
-  "version": "5.6.0",
+  "version": "5.7.0",
   "keywords": [
     "overlays",
     "presentation",
@@ -44,6 +44,10 @@
       "source": "./src/create-data-attribute.ts",
       "default": "./dist/create-data-attribute/index.js"
     },
+    "./enable-visual-editing": {
+      "source": "./src/enable-visual-editing.ts",
+      "default": "./dist/enable-visual-editing/index.js"
+    },
     "./next-pages-router": {
       "source": "./src/next-pages-router/index.ts",
       "default": "./dist/next-pages-router/index.js"
@@ -75,6 +79,7 @@
     "exports": {
       ".": "./dist/index.js",
       "./create-data-attribute": "./dist/create-data-attribute/index.js",
+      "./enable-visual-editing": "./dist/enable-visual-editing/index.js",
       "./next-pages-router": "./dist/next-pages-router/index.js",
       "./optimistic": "./dist/optimistic/index.js",
       "./react": "./dist/react/index.js",
@@ -102,7 +107,7 @@
   },
   "dependencies": {
     "@sanity/comlink": "^4.0.1",
-    "@sanity/icons": "^5.1.0",
+    "@sanity/icons": "^5.2.0",
     "@sanity/mutate": "^0.18.1",
     "@sanity/presentation-comlink": "^2.2.0",
     "@sanity/preview-url-secret": "workspace:^",

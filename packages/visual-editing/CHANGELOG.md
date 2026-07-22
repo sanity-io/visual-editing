@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.7.0
+
+### Minor Changes
+
+- [#3510](https://github.com/sanity-io/visual-editing/pull/3510) [`380b473`](https://github.com/sanity-io/visual-editing/commit/380b47334811a0aed59bf114c126f856b0b99c25) Thanks [@stipsan](https://github.com/stipsan)! - Add a `@sanity/visual-editing/enable-visual-editing` export that exposes
+  `enableVisualEditing` and its option types without going through the root
+  entry point
+
+### Patch Changes
+
+- Updated dependencies [[`a38e573`](https://github.com/sanity-io/visual-editing/commit/a38e5739d875db5115077a171e34ddd1ed1622e5)]:
+  - @sanity/preview-url-secret@4.1.1
+  - @sanity/visual-editing-csm@3.0.12
+
 ## 5.6.0
 
 ### Minor Changes

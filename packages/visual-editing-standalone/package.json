@@ -1,0 +1,137 @@
+{
+  "name": "@sanity/visual-editing-standalone",
+  "version": "1.0.0",
+  "description": "Self-contained ESM build of Sanity Visual Editing for non-React applications",
+  "keywords": [
+    "esm",
+    "overlays",
+    "presentation",
+    "preview",
+    "sanity.io",
+    "visual-editing"
+  ],
+  "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/visual-editing-standalone#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/visual-editing/issues"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/visual-editing.git",
+    "directory": "packages/visual-editing-standalone"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown",
+    "lint": "eslint .",
+    "prepack": "turbo run build",
+    "test": "vitest --typecheck"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@sanity/client": "catalog:",
+    "@sanity/tsconfig": "catalog:",
+    "@sanity/tsdown-config": "^0.19.6",
+    "@sanity/visual-editing": "workspace:*",
+    "eslint": "^8.57.1",
+    "tsdown": "^0.22.13",
+    "typescript": "catalog:",
+    "unrun": "^0.3.1",
+    "vitest": "^3.2.4"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "root": true
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "inlinedDependencies": {
+    "@emotion/is-prop-valid": "1.4.0",
+    "@emotion/memoize": "0.9.0",
+    "@floating-ui/core": "1.7.5",
+    "@floating-ui/dom": "1.7.6",
+    "@floating-ui/react-dom": "2.1.8",
+    "@floating-ui/utils": "0.2.11",
+    "@juggle/resize-observer": "3.4.0",
+    "@sanity/client": "7.24.0",
+    "@sanity/color": "3.0.6",
+    "@sanity/comlink": "4.0.1",
+    "@sanity/diff-match-patch": "3.2.0",
+    "@sanity/icons": [
+      "3.8.0",
+      "5.1.0"
+    ],
+    "@sanity/media-library-types": "1.6.0",
+    "@sanity/mutate": "0.18.1",
+    "@sanity/presentation-comlink": "2.2.0",
+    "@sanity/types": "6.5.0",
+    "@sanity/ui": "3.3.5",
+    "@sanity/visual-editing-types": "1.1.8",
+    "@vercel/stega": "1.1.0",
+    "character-entities-legacy": "3.0.0",
+    "character-reference-invalid": "2.0.1",
+    "comma-separated-tokens": "2.0.3",
+    "compute-scroll-into-view": "3.1.1",
+    "decode-named-character-reference": "1.3.0",
+    "framer-motion": "12.42.2",
+    "hast-util-parse-selector": "4.0.0",
+    "hastscript": "9.0.1",
+    "is-alphabetical": "2.0.1",
+    "is-alphanumerical": "2.0.1",
+    "is-decimal": "2.0.1",
+    "is-hexadecimal": "2.0.1",
+    "lodash": "4.18.1",
+    "lodash-es": "4.18.1",
+    "mendoza": "3.0.8",
+    "motion": "12.42.2",
+    "motion-dom": "12.42.2",
+    "motion-utils": "12.39.0",
+    "nanoid": "5.1.16",
+    "parse-entities": "4.0.2",
+    "property-information": "7.1.0",
+    "react": "19.2.7",
+    "react-compiler-runtime": "1.0.0",
+    "react-dom": "19.2.7",
+    "react-is": "19.2.7",
+    "react-refractor": "4.0.0",
+    "refractor": "5.0.0",
+    "rxjs": "7.8.2",
+    "scheduler": "0.27.0",
+    "scroll-into-view-if-needed": "3.1.0",
+    "space-separated-tokens": "2.0.2",
+    "styled-components": "6.4.4",
+    "stylis": "4.3.6",
+    "tslib": "2.8.1",
+    "unist-util-filter": "5.0.1",
+    "unist-util-is": "6.0.1",
+    "unist-util-visit-parents": "6.0.2",
+    "use-effect-event": "2.0.3",
+    "uuid": [
+      "11.1.1",
+      "13.0.1"
+    ],
+    "valibot": "1.4.2",
+    "xstate": "5.32.5"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
+    }
+  }
+}
