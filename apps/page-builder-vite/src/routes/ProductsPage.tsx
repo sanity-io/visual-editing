@@ -1,12 +1,16 @@
-import {productsPageQuery, SimpleContent} from '@repo/page-builder-shared'
-import Link from 'next/link'
+import {
+  Image,
+  productsPageQuery,
+  SimpleContent,
+  type ProductsPageQueryResult,
+} from '@repo/page-builder-shared'
+import {Link} from 'react-router'
 
-import {Image} from '@/components/image'
 import {dataAttribute} from '@/sanity/dataAttribute'
-import {sanityFetch} from '@/sanity/live'
+import {useQuery} from '@/sanity/loader'
 
-export default async function ProductsPage() {
-  const {data} = await sanityFetch({query: productsPageQuery})
+export function ProductsPage() {
+  const {data} = useQuery<ProductsPageQueryResult>(productsPageQuery)
 
   return (
     <main className="mx-auto max-w-4xl">
@@ -15,22 +19,15 @@ export default async function ProductsPage() {
       </div>
 
       <div>
-        {data?.length > 0 && (
+        {data && data.length > 0 && (
           <div className="flex flex-col gap-2">
             {data.map((product) => (
               <Link
                 className="block rounded border border-white p-4 hover:border-gray-100 sm:flex sm:gap-5 dark:border-black dark:hover:border-gray-800"
-                href={`/product/${product?.slug?.current}`}
+                to={`/product/${product?.slug?.current}`}
                 key={product._id}
               >
-                <div className="flex-none sm:w-64" data-sanity-edit-group>
-                  <data
-                    data-sanity={dataAttribute({
-                      id: product._id,
-                      type: 'product',
-                      path: 'details.ledLifespan',
-                    }).toString()}
-                  />
+                <div className="flex-none sm:w-64">
                   {product.media?.asset && (
                     <Image
                       alt=""

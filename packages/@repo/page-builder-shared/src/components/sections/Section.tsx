@@ -1,14 +1,18 @@
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
+'use client'
 
+import type {ReactElement} from 'react'
+
+import {usePageBuilder} from '../../context'
+import type {FrontPageQueryResult} from '../../sanity.types'
+import type {PageSectionData} from '../../types'
 import {PageSection} from '../PageSection'
-import {PageSectionData} from '../types'
 
 export function Section(props: {
   page: NonNullable<FrontPageQueryResult>
   section: PageSectionData
-}) {
+}): ReactElement {
   const {page, section} = props
+  const {dataAttribute} = usePageBuilder()
 
   return (
     <PageSection

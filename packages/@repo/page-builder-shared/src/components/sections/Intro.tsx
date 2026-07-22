@@ -1,23 +1,26 @@
+'use client'
+
 import type {SanityDocument} from '@sanity/client'
-import {createDataAttribute, useOptimistic} from '@sanity/visual-editing/react'
-import {useMemo} from 'react'
+import {useOptimistic} from '@sanity/visual-editing/react'
+import {useMemo, type ReactElement} from 'react'
 
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
-
+import {usePageBuilder} from '../../context'
+import type {FrontPageQueryResult} from '../../sanity.types'
+import type {IntroSectionData, PageData} from '../../types'
 import {PageSection} from '../PageSection'
-import {ProductModel} from '../ProductModel'
-import {IntroSectionData, PageData} from '../types'
 
-export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: IntroSectionData}) {
+export function Intro(props: {
+  page: NonNullable<FrontPageQueryResult>
+  section: IntroSectionData
+}): ReactElement {
   const {page: data, section} = props
+  const {dataAttribute, IntroModel} = usePageBuilder()
 
   const intro = useOptimistic<string | null | undefined, SanityDocument<PageData>>(
     section.intro,
     (state, action) => {
       if (action.id === data._id) {
         if (!Array.isArray(action.document.sections)) {
-          console.log('WARNING', action.document.sections)
           return state
         }
         const intro = (
@@ -36,7 +39,6 @@ export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: 
     (state, action) => {
       if (action.id === data._id) {
         if (!Array.isArray(action.document.sections)) {
-          console.log('WARNING', action.document.sections)
           return state
         }
         const rotations = (
@@ -84,17 +86,19 @@ export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: 
           </div>
         )}
       </div>
-      <div
-        style={{height: '40rem', width: '100%'}}
-        className="mt-5"
-        data-sanity={createDataAttribute({
-          id: data._id,
-          type: data._type,
-          path: `sections[_key=="${section._key}"].rotations`,
-        })()}
-      >
-        <ProductModel rotations={rotations} />
-      </div>
+      {IntroModel && (
+        <div
+          style={{height: '40rem', width: '100%'}}
+          className="mt-5"
+          data-sanity={dataAttribute({
+            id: data._id,
+            type: data._type,
+            path: `sections[_key=="${section._key}"].rotations`,
+          }).toString()}
+        >
+          <IntroModel rotations={rotations} />
+        </div>
+      )}
     </PageSection>
   )
 }

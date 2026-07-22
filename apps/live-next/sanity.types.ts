@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol
+
 // Source: node_modules/@repo/sanity-extracted-schema/live-demo.json
 export type SanityImageAssetReference = {
   _ref: string
@@ -465,8 +467,6 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint
 
-export declare const internalGroqTypeReferenceTo: unique symbol
-
 // Source: app/posts/[slug]/OptimisticPostContent.tsx
 // Variable: OPTIMISTIC_POST_CONTENT_QUERY
 // Query: *[_id == $id && _type == "post"][0].content
@@ -596,8 +596,8 @@ export type HeroQueryResult = {
   author: {
     _id: string
     _originalId: null
-    projectId: unknown
-    dataset: unknown
+    projectId: string | null
+    dataset: string | null
     name: string | 'Anonymous'
     picture: {
       asset?: SanityImageAssetReference
@@ -631,8 +631,8 @@ export type MoreStoriesQueryResult = Array<{
   author: {
     _id: string
     _originalId: null
-    projectId: unknown
-    dataset: unknown
+    projectId: string | null
+    dataset: string | null
     name: string | 'Anonymous'
     picture: {
       asset?: SanityImageAssetReference
@@ -684,8 +684,8 @@ export type PostQueryResult = {
   author: {
     _id: string
     _originalId: null
-    projectId: unknown
-    dataset: unknown
+    projectId: string | null
+    dataset: string | null
     name: string | 'Anonymous'
     picture: {
       asset?: SanityImageAssetReference

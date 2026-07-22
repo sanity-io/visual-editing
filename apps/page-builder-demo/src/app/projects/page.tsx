@@ -1,9 +1,7 @@
-import {defineQuery} from 'next-sanity'
+import {projectsPageQuery} from '@repo/page-builder-shared'
 import Link from 'next/link'
 
 import {sanityFetch} from '@/sanity/live'
-
-const projectsPageQuery = defineQuery(`*[_type == "project" && defined(slug.current)]`)
 
 export default async function ProjectsPage() {
   // @TODO fix typegen vs manual types issues

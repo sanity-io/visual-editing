@@ -1,12 +1,18 @@
-import {Image} from '@/components/image'
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
+'use client'
 
+import type {ReactElement} from 'react'
+
+import {usePageBuilder} from '../../context'
+import type {FrontPageQueryResult} from '../../sanity.types'
+import type {HeroSectionData} from '../../types'
 import {PageSection} from '../PageSection'
-import {HeroSectionData} from '../types'
 
-export function Hero(props: {page: NonNullable<FrontPageQueryResult>; section: HeroSectionData}) {
+export function Hero(props: {
+  page: NonNullable<FrontPageQueryResult>
+  section: HeroSectionData
+}): ReactElement {
   const {page: data, section} = props
+  const {dataAttribute, Image} = usePageBuilder()
 
   return (
     <PageSection

@@ -1,22 +1,10 @@
-import {defineQuery} from 'next-sanity'
+import {Page, pageQuery, pageSlugsQuery} from '@repo/page-builder-shared'
 
-import {Page, sectionFragment} from '@/components/page'
 import {sanityFetch} from '@/sanity/live'
 
-const pageQuery = defineQuery(`
-  *[_type == "page" && slug.current == $slug][0]{
-    _type,
-    _id,
-    title,
-    ${sectionFragment},
-    style
-  }
-`)
-
-const pageSlugs = defineQuery(`*[_type == "page" && defined(slug.current)]{"slug": slug.current}`)
 export async function generateStaticParams() {
   const {data} = await sanityFetch({
-    query: pageSlugs,
+    query: pageSlugsQuery,
     perspective: 'published',
     stega: false,
   })

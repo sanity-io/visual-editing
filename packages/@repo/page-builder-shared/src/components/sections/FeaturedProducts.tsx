@@ -1,13 +1,13 @@
+'use client'
+
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
-import Link from 'next/link'
+import type {ReactElement} from 'react'
 
-import {Image} from '@/components/image'
-import type {FrontPageQueryResult} from '@/sanity.types'
-import {dataAttribute} from '@/sanity/dataAttribute'
-
+import {usePageBuilder} from '../../context'
+import type {FrontPageQueryResult} from '../../sanity.types'
+import type {FeaturedProductsSectionData, PageData} from '../../types'
 import {PageSection} from '../PageSection'
-import {FeaturedProductsSectionData, PageData} from '../types'
 
 function FeaturedProductsList(props: {
   id: string
@@ -16,17 +16,18 @@ function FeaturedProductsList(props: {
   products: FeaturedProductsSectionData['products']
 }) {
   const {products: _products, id, type, sectionKey} = props
+  const {dataAttribute, Image, Link} = usePageBuilder()
 
   const products = useOptimistic<
     FeaturedProductsSectionData['products'] | undefined,
     SanityDocument<PageData>
   >(_products, (state, action) => {
-    console.log(action)
     if (action.id === id && action.document.sections) {
       const section = action.document.sections.find((section) => section._key === sectionKey)
       if (section && section._type === 'featuredProducts') {
         return section.products
           ?.map(
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             (section: {_key: string} | undefined) => state?.find((s) => s._key === section?._key)!,
           )
           .filter(Boolean)
@@ -66,8 +67,9 @@ function FeaturedProductsList(props: {
 export function FeaturedProducts(props: {
   page: NonNullable<FrontPageQueryResult>
   section: FeaturedProductsSectionData
-}) {
+}): ReactElement {
   const {page: data, section} = props
+  const {dataAttribute} = usePageBuilder()
 
   return (
     <PageSection
