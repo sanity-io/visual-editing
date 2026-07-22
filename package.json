@@ -15,6 +15,7 @@
     "report:react-compiler-healthcheck": "turbo run react-compiler-healthcheck",
     "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
     "test": "turbo run test",
+    "typegen": "pnpm --filter=@repo/sanity-schema extract && pnpm --filter=apps-next --filter=live-next --filter=page-builder-demo typegen && pnpm format",
     "release": "changeset publish",
     "turbo:fix": "turbo daemon clean"
   },
