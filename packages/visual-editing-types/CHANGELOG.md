@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.11
+
+### Patch Changes
+
+- [#3515](https://github.com/sanity-io/visual-editing/pull/3515) [`a38e573`](https://github.com/sanity-io/visual-editing/commit/a38e5739d875db5115077a171e34ddd1ed1622e5) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.24.0
+
 ## 2.0.10
 
 ### Patch Changes
