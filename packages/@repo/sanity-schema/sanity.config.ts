@@ -1,11 +1,11 @@
+// This config is only used by `sanity schema extract` (see the `extract` script in package.json).
+// It intentionally only loads the schema plugins, without the debug plugins the Studio app adds,
+// so the extracted schemas (and the types generated from them) stay free of debug document types.
+
 import {workspaces} from '@repo/env'
-import {
-  crossDatasetReferencesPlugin,
-  liveDemoPlugin,
-  pageBuilderDemoPlugin,
-  shoesPlugin,
-} from '@repo/sanity-schema'
 import {defineConfig} from 'sanity'
+
+import {liveDemoPlugin, pageBuilderDemoPlugin, shoesPlugin} from './src'
 
 export default defineConfig([
   {
@@ -13,7 +13,6 @@ export default defineConfig([
     name: workspaces['page-builder-demo'].workspace,
     basePath: `/${workspaces['page-builder-demo'].workspace}`,
     plugins: [
-      // @ts-expect-error - TODO: Fix types
       pageBuilderDemoPlugin({
         previewUrl: '/',
       }),
@@ -24,19 +23,9 @@ export default defineConfig([
     name: 'shoes',
     basePath: `/shoes`,
     plugins: [
-      // @ts-expect-error - TODO: Fix types
       shoesPlugin({
         previewUrl: '/',
       }),
-    ],
-  },
-  {
-    ...workspaces['cross-dataset-references'],
-    name: workspaces['cross-dataset-references'].workspace,
-    basePath: `/${workspaces['cross-dataset-references'].workspace}`,
-    plugins: [
-      // @ts-expect-error - TODO: Fix types
-      crossDatasetReferencesPlugin(),
     ],
   },
   {
@@ -44,7 +33,6 @@ export default defineConfig([
     name: 'live-demo',
     basePath: `/live-demo`,
     plugins: [
-      // @ts-expect-error - TODO: Fix types
       liveDemoPlugin({
         previewUrl: '/',
       }),

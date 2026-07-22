@@ -6,9 +6,13 @@ export default mergeConfig(
     tsconfig: 'tsconfig.dist.json',
     // The published artifact is browser-only, like `@sanity/visual-editing` itself.
     platform: 'browser',
-    // Match `@sanity/visual-editing`: force production branches so React,
-    // styled-components, and friends drop their development-only code paths.
-    define: {'process.env.NODE_ENV': JSON.stringify('production')},
+    // Fold all common production guards before minification and tree shaking.
+    define: {
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'import.meta.env.DEV': 'false',
+      'import.meta.env.PROD': 'true',
+      'import.meta.env.MODE': JSON.stringify('production'),
+    },
     deps: {
       // This package is deliberately self-contained: bundle every dependency,
       // including the lazy-loaded React runtime, into package-internal chunks.
@@ -19,39 +23,17 @@ export default mergeConfig(
     },
   }),
   {
-    // Rolldown equivalent of Rollup's `preset: 'smallest'` used by
-    // `@sanity/visual-editing`, plus pure-function hints so unused React /
-    // styled-components call sites can be eliminated. Do not set
-    // `propertyWriteSideEffects: false` — it drops writes the overlay UI needs
-    // and leaves an empty `sanity-visual-editing` root at runtime.
-    //
-    // Aggressive treeshake also keeps the dts bundler from hoisting rxjs
-    // `/// <reference path>` / `Symbol.observable` artifacts into `index.d.ts`,
-    // so no declaration-cleanup plugin is needed.
+    // React mutates internal fields while scheduling renders, so property writes must remain
+    // observable. Module pruning and pure factory hints provide the safe tree-shaking wins.
     treeshake: {
       moduleSideEffects: false,
-      propertyReadSideEffects: false,
-      unknownGlobalSideEffects: false,
-      manualPureFunctions: [
-        'createElement',
-        'forwardRef',
-        'memo',
-        'styled',
-        'jsx',
-        'jsxs',
-        'jsxDEV',
-        '_jsx',
-        '_jsxs',
-        'css',
-        'keyframes',
-        'createGlobalStyle',
-        'cloneElement',
-        'createContext',
-        'lazy',
-        'createRef',
-      ],
+      manualPureFunctions: ['createElement', 'forwardRef', 'lazy', 'memo', 'styled'],
     },
-    // Self-contained browser chunks are the final payload (npm / esm.sh).
-    minify: true,
+    // Unlike a typical library, consumers download this package's bundled dependencies.
+    minify: {
+      compress: true,
+      mangle: true,
+      codegen: true,
+    },
   },
 ) satisfies UserConfig

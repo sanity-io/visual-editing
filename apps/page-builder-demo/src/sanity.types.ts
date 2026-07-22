@@ -12,7 +12,9 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: node_modules/@repo/sanity-extracted-schema/page-builder-demo.json
+export declare const internalGroqTypeReferenceTo: unique symbol
+
+// Source: schema.json
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
@@ -477,8 +479,6 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint
-
-export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: src/app/dnd/page.tsx
 // Variable: dndPageQuery
