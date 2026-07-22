@@ -23,17 +23,34 @@ export default mergeConfig(
     },
   }),
   {
-    // React mutates internal fields while scheduling renders, so property writes must remain
-    // observable. Module pruning and pure factory hints provide the safe tree-shaking wins.
+    // Rolldown equivalent of Rollup's `preset: 'smallest'`, plus React /
+    // styled-components pure-factory hints. Property *writes* must stay
+    // observable (React scheduling), but property *reads* alone can be treated
+    // as pure — combining both assumptions is what corrupts renders.
     treeshake: {
       moduleSideEffects: false,
-      manualPureFunctions: ['createElement', 'forwardRef', 'lazy', 'memo', 'styled'],
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+      manualPureFunctions: [
+        'createElement',
+        'forwardRef',
+        'lazy',
+        'memo',
+        'styled',
+        'jsx',
+        'jsxs',
+        'jsxDEV',
+        '_jsx',
+        '_jsxs',
+        'css',
+        'keyframes',
+        'createGlobalStyle',
+        'cloneElement',
+        'createContext',
+        'createRef',
+      ],
     },
-    // Unlike a typical library, consumers download this package's bundled dependencies.
-    minify: {
-      compress: true,
-      mangle: true,
-      codegen: true,
-    },
+    // Equivalent to `{compress, mangle, codegen: true}` — full Oxc minify.
+    minify: true,
   },
 ) satisfies UserConfig
