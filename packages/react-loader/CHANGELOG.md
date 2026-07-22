@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`a38e573`](https://github.com/sanity-io/visual-editing/commit/a38e5739d875db5115077a171e34ddd1ed1622e5)]:
+  - @sanity/visual-editing-csm@3.0.12
+  - @sanity/core-loader@2.1.1
+
 ## 2.1.0
 
 ### Minor Changes
