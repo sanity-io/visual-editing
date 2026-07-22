@@ -4,37 +4,6 @@ import {parseAst} from 'rolldown/parseAst'
 import {mergeConfig, type UserConfig} from 'tsdown'
 
 /**
- * The bundled declarations re-export types from `@sanity/visual-editing`, whose type graph
- * transitively visits `rxjs` (via `@sanity/types` and `@sanity/client`). None of the rxjs
- * declarations survive into this package's public API, but the dts bundler still hoists two
- * file-level artifacts from the visited files: dangling `/// <reference path="..." />`
- * directives (a TS6053 error for `skipLibCheck: false` consumers, as the referenced files
- * don't exist in `dist`) and a `Symbol.observable` global augmentation this package should
- * not ship. Externalizing the packages instead would leak bare type imports, so strip the
- * artifacts from the emitted declarations and fail the build if anything similar remains.
- */
-const RE_REFERENCE_DIRECTIVE = /^\/{3}\s*<reference\s+path=[^\n]*\n/gm
-const RE_RXJS_GLOBAL_AUGMENTATION =
-  /(?:\/\*\*[^*]*(?:\*(?!\/)[^*]*)*\*\/\n)?declare global \{\n\s*interface SymbolConstructor \{\n\s*readonly observable: symbol;\n\s*\}\n\}\n/g
-
-const cleanBundledDeclarations: NonNullable<UserConfig['plugins']> = [
-  {
-    name: 'clean-bundled-declarations',
-    generateBundle(_options, bundle) {
-      for (const chunk of Object.values(bundle)) {
-        if (chunk.type !== 'chunk' || !chunk.fileName.endsWith('.d.ts')) continue
-        chunk.code = chunk.code
-          .replace(RE_REFERENCE_DIRECTIVE, '')
-          .replace(RE_RXJS_GLOBAL_AUGMENTATION, '')
-        if (/\/{3}\s*<reference|declare global/.test(chunk.code)) {
-          this.error(`Unexpected reference directive or global augmentation in ${chunk.fileName}`)
-        }
-      }
-    },
-  },
-]
-
-/**
  * `@sanity/ui` publishes prebuilt files where every component is followed by a top-level
  * `Component.displayName = '...'` assignment. Rolldown keeps assignment statements it cannot
  * prove side-effect-free, and the assignment references the component, so each one pins its
@@ -174,7 +143,7 @@ export default mergeConfig(
     },
   }),
   {
-    plugins: [...treeshakableVendorDisplayNames, ...cleanBundledDeclarations],
+    plugins: treeshakableVendorDisplayNames,
     /**
      * The bundle inlines prebuilt library dists (React via CJS interop, `@sanity/ui`,
      * `styled-components`, ...) whose component factory calls carry no `@__PURE__`
@@ -195,6 +164,23 @@ export default mergeConfig(
         'memo',
         'styled',
       ],
+      /**
+       * The bundled declarations re-export types from `@sanity/visual-editing`, whose type
+       * graph transitively visits `rxjs` (via `@sanity/types` and `@sanity/client`) and
+       * `xstate`. Both ship file-level artifacts that `rolldown-plugin-dts` would otherwise
+       * hoist into this package's declarations: dangling `/// <reference path="..." />`
+       * directives (a TS6053 error for `skipLibCheck: false` consumers, as the referenced
+       * files don't exist in `dist`) and `Symbol.observable` global augmentations this
+       * package should not ship. Externalizing the packages instead would leak bare type
+       * imports.
+       *
+       * The dts plugin models global augmentations as module side effects, so declaring all
+       * `.d.ts` modules side-effect free lets rolldown tree-shake the augmentations away —
+       * along with the barrel modules that carry the reference directives — while every type
+       * this package actually re-exports is kept. In other words: bundled declarations
+       * deliberately never ship global scope changes.
+       */
+      moduleSideEffects: [{test: /\.d\.[cm]?ts$/, sideEffects: false}],
     },
   },
 ) satisfies UserConfig
