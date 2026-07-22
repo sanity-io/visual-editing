@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.7.1
+
+### Patch Changes
+
+- [#3526](https://github.com/sanity-io/visual-editing/pull/3526) [`fb82f68`](https://github.com/sanity-io/visual-editing/commit/fb82f68170e7de4bd3c0e47f155815a008918512) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/icons to ^5.2.0
+
+- [#3527](https://github.com/sanity-io/visual-editing/pull/3527) [`ebd718d`](https://github.com/sanity-io/visual-editing/commit/ebd718d80e95245baea46a986fe9e1bd90511afc) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/ui to ^3.4.0
+
 ## 5.7.0
 
 ### Minor Changes
