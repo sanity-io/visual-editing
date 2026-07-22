@@ -37,7 +37,15 @@ export default mergeConfig(
     tsconfig: 'tsconfig.dist.json',
     // The published artifact is browser-only, like `@sanity/visual-editing` itself.
     platform: 'browser',
-    define: {'process.env.NODE_ENV': JSON.stringify('production')},
+    // Source maps dwarf this self-contained distribution and are not loaded by its CDN use case.
+    sourcemap: false,
+    // Fold all common production guards before minification and tree shaking.
+    define: {
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'import.meta.env.DEV': 'false',
+      'import.meta.env.PROD': 'true',
+      'import.meta.env.MODE': JSON.stringify('production'),
+    },
     deps: {
       // This package is deliberately self-contained: bundle every dependency,
       // including the lazy-loaded React runtime, into package-internal chunks.
@@ -47,5 +55,21 @@ export default mergeConfig(
       onlyImport: [],
     },
   }),
-  {plugins: cleanBundledDeclarations},
+  {
+    plugins: cleanBundledDeclarations,
+    // These dependencies are compiled for a side-effect-free browser package. Keep only
+    // observable code and the React/styled component factories that reach the public entry.
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      propertyWriteSideEffects: false,
+      manualPureFunctions: ['createElement', 'forwardRef', 'lazy', 'memo', 'styled'],
+    },
+    // Unlike a typical library, consumers download this package's bundled dependencies.
+    minify: {
+      compress: true,
+      mangle: true,
+      codegen: true,
+    },
+  },
 ) satisfies UserConfig
