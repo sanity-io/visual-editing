@@ -32,7 +32,7 @@
   },
   "scripts": {
     "build": "pkg build --strict --check --clean",
-    "extract": "sanity schema extract --workspace shoes --path ../../../apps/next/schema.json && sanity schema extract --workspace live-demo --path ../../../apps/live-next/schema.json && sanity schema extract --workspace page-builder-demo --path ../../../apps/page-builder-demo/schema.json",
+    "extract": "sanity schema extract --force --workspace shoes --path ../../../apps/next/schema.json && sanity schema extract --force --workspace live-demo --path ../../../apps/live-next/schema.json && sanity schema extract --force --workspace page-builder-demo --path ../../../apps/page-builder-demo/schema.json",
     "lint": "eslint .",
     "prepack": "turbo run build"
   },
