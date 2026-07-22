@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+### Minor Changes
+
+- [#3500](https://github.com/sanity-io/visual-editing/pull/3500) [`12a7ed2`](https://github.com/sanity-io/visual-editing/commit/12a7ed2c7f8aefefc1a527ed584bcc73393881c6) Thanks [@pedrobonamin](https://github.com/pedrobonamin)! - Pass editing variants through loaders and visual editing alongside perspective.
+
 ## 2.0.14
 
 ### Patch Changes

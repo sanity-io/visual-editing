@@ -8,18 +8,23 @@ export function usePerspectiveSync(
   comlink: VisualEditingNode | undefined,
   dispatch: (value: OverlayMsg | VisualEditingControllerMsg) => void,
   onPerspectiveChange?: (perspective: ClientPerspective) => void,
+  onVariantChange?: (variant: string | undefined) => void,
 ): void {
   const handlesPerspectiveChange = !!onPerspectiveChange
-  const handlePerspective = useEffectEvent((data: {perspective: ClientPerspective}) => {
-    dispatch({type: 'presentation/perspective', data})
-    onPerspectiveChange?.(data.perspective)
-  })
+  const handlesVariantChange = !!onVariantChange
+  const handlePerspective = useEffectEvent(
+    (data: {perspective: ClientPerspective; variant?: string}) => {
+      dispatch({type: 'presentation/perspective', data})
+      onPerspectiveChange?.(data.perspective)
+      onVariantChange?.(data.variant || undefined)
+    },
+  )
   useEffect(() => {
     const controller = new AbortController()
     comlink
       ?.fetch(
         'visual-editing/fetch-perspective',
-        {handlesPerspectiveChange},
+        {handlesPerspectiveChange, handlesVariantChange},
         {
           signal: controller.signal,
           suppressWarnings: true,
@@ -41,5 +46,5 @@ export function usePerspectiveSync(
       unsub?.()
       controller.abort()
     }
-  }, [comlink, dispatch, handlesPerspectiveChange])
+  }, [comlink, dispatch, handlesPerspectiveChange, handlesVariantChange])
 }

@@ -38,6 +38,7 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
     refresh,
     zIndex,
     onPerspectiveChange,
+    onVariantChange,
     onSuspiciousStega,
   } = props
 
@@ -112,6 +113,7 @@ export const VisualEditing = (props: VisualEditingOptions & {portal: boolean}): 
           comlinkStatus={comlinkStatus}
           componentResolver={components}
           onPerspectiveChange={onPerspectiveChange}
+          onVariantChange={onVariantChange}
           plugins={plugins}
           inFrame={inFrame}
           inPopUp={inPopUp}

@@ -10,7 +10,15 @@ export function defineUseLiveMode({
 }: Pick<QueryStore, 'enableLiveMode'> & {
   studioUrlStore: ReturnType<typeof defineStudioUrlStore>
 }): UseLiveMode {
-  return ({allowStudioOrigin, client, onConnect, onDisconnect, studioUrl} = {}) => {
+  return ({
+    allowStudioOrigin,
+    client,
+    onConnect,
+    onDisconnect,
+    onPerspective,
+    onVariant,
+    studioUrl,
+  } = {}) => {
     if (allowStudioOrigin) {
       // eslint-disable-next-line no-console
       console.warn('`allowStudioOrigin` is deprecated and no longer needed')
@@ -27,6 +35,8 @@ export function defineUseLiveMode({
       client,
       onConnect,
       onDisconnect,
+      onPerspective,
+      onVariant,
     })
   }
 }

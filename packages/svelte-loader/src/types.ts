@@ -43,6 +43,10 @@ export interface QueryResponseInitial<QueryResponseResult> {
    * The perspective used to fetch the data, if not provided it'll assume 'published'
    */
   perspective?: ClientPerspective
+  /**
+   * The editing variant used to fetch the data, if any
+   */
+  variant?: string
   encodeDataAttribute?: EncodeDataAttributeFunction
 }
 
@@ -125,7 +129,9 @@ export type UseLiveMode = (
 export type LoadQueryOptions = Pick<
   ResponseQueryOptions,
   'perspective' | 'cache' | 'next' | 'useCdn' | 'tag' | 'headers' | 'stega'
->
+> & {
+  variant?: string
+}
 
 /** @public */
 export type LoadQuery = <QueryResponseResult>(

@@ -22,6 +22,7 @@ export interface OverlayState {
   elements: ElementState[]
   wasMaybeCollapsed: boolean
   perspective: ClientPerspective
+  variant: string | undefined
   isDragging: boolean
   dragInsertPosition: DragInsertPosition
   dragSkeleton: DragSkeleton | null
@@ -40,6 +41,7 @@ export function overlayStateReducer(
     contextMenu,
     focusPath,
     perspective,
+    variant,
     isDragging,
     dragInsertPosition,
     dragShowMinimap,
@@ -62,6 +64,7 @@ export function overlayStateReducer(
 
   if (type === 'presentation/perspective') {
     perspective = message.data.perspective
+    variant = message.data.variant || undefined
   }
 
   if (type === 'element/contextmenu') {
@@ -128,6 +131,7 @@ export function overlayStateReducer(
     isDragging,
     focusPath,
     perspective,
+    variant,
     wasMaybeCollapsed,
     dragShowMinimap,
     dragShowMinimapPrompt,

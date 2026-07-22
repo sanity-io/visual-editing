@@ -52,7 +52,7 @@ catalogs:
       specifier: ^7.0.19
       version: 7.0.19
     styled-components:
-      specifier: ^6.4.3
+      specifier: ^6.4.4
       version: 6.4.4
     typescript:
       specifier: 5.9.3
@@ -69,7 +69,7 @@ catalogs:
       version: 4.3.3
 
 overrides:
-  '@sanity/client': ^7.23.2
+  '@sanity/client': ^7.24.0
   '@sanity/core-loader': workspace:*
   '@sanity/preview-url-secret': workspace:*
   '@sanity/react-loader': workspace:*
@@ -134,7 +134,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/@repo/studio-url
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/image-url':
         specifier: ^2.1.1
@@ -219,7 +219,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/@repo/studio-url
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/icons':
         specifier: 'catalog:'
@@ -309,7 +309,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/@repo/studio-url
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/demo':
         specifier: ^2.0.0
@@ -390,7 +390,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/@repo/sanity-schema
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/debug-preview-url-secret-plugin':
         specifier: ^2.0.19
@@ -600,14 +600,14 @@ importers:
   packages/core-loader:
     dependencies:
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/comlink':
         specifier: ^4.0.1
         version: 4.0.1
       '@sanity/presentation-comlink':
-        specifier: ^2.1.0
-        version: 2.1.0(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))
+        specifier: ^2.2.0
+        version: 2.2.0(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))
       '@sanity/visual-editing-csm':
         specifier: workspace:*
         version: link:../visual-editing-csm
@@ -662,7 +662,7 @@ importers:
         specifier: workspace:*
         version: link:../@repo/package.config
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/pkg-utils':
         specifier: 'catalog:'
@@ -683,7 +683,7 @@ importers:
   packages/react-loader:
     dependencies:
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/core-loader':
         specifier: workspace:*
@@ -726,7 +726,7 @@ importers:
   packages/svelte-loader:
     dependencies:
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/core-loader':
         specifier: workspace:*
@@ -784,8 +784,8 @@ importers:
         specifier: ^0.18.1
         version: 0.18.1(xstate@5.32.5)
       '@sanity/presentation-comlink':
-        specifier: ^2.1.0
-        version: 2.1.0(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))
+        specifier: ^2.2.0
+        version: 2.2.0(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -830,7 +830,7 @@ importers:
         specifier: workspace:*
         version: link:../@repo/package.config
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/demo':
         specifier: ^2.0.0
@@ -960,7 +960,7 @@ importers:
         specifier: workspace:*
         version: link:../@repo/package.config
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/pkg-utils':
         specifier: 'catalog:'
@@ -1020,7 +1020,7 @@ importers:
         specifier: workspace:*
         version: link:../@repo/package.config
       '@sanity/client':
-        specifier: ^7.23.2
+        specifier: ^7.24.0
         version: 7.24.0
       '@sanity/pkg-utils':
         specifier: 'catalog:'
@@ -4542,7 +4542,7 @@ packages:
     resolution: {integrity: sha512-jbnR3z93+hrddl0xPDuQotJYnVNtQPl969LZXo6opMZuy/uG64jwodp76pnJmq8Y9aHqR2fLk/ne7R4iBv8PhA==}
     engines: {node: '>=20.19.1 <22 || >=22.12'}
     peerDependencies:
-      '@sanity/client': ^7.23.2
+      '@sanity/client': ^7.24.0
 
   '@sanity/insert-menu@3.0.8':
     resolution: {integrity: sha512-O3g3ZpvRYLw4VBly4fKUzEK+2Mze8iBZfLpRjh8BgjLWSZ/9XCwrRUMJvKZ6z9qQI8zHRqwZQNslgEjETTTZ6w==}
@@ -4607,6 +4607,10 @@ packages:
 
   '@sanity/presentation-comlink@2.1.0':
     resolution: {integrity: sha512-XwbGSK/cNW/awPfT8GssDTZoTlmg/7bcz1feCdfSDjOvNmlNfSqu/uPJZgKPnM0n54bFTUy8cs2zTKm1kc8nVA==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+
+  '@sanity/presentation-comlink@2.2.0':
+    resolution: {integrity: sha512-uHiiJNWER36S/M2R9B7iwf+R2GMV267kQCfIpQiGX+2C3aHwjFHjaEiPBF0aPOyBkHV2OfB3l7XSzyLIXYuQHQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
   '@sanity/prism-groq@1.1.2':
@@ -4716,7 +4720,7 @@ packages:
     resolution: {integrity: sha512-4Hu3J8qDLanymnSapRzKwHlQl6SCsBbkL1o5fSMVbWVHvTk/j2uGLLNTsjASICTqUwSm3fwWlyahzCy2uS/LvQ==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^7.23.2
+      '@sanity/client': ^7.24.0
       '@sanity/types': ^6.5.0
     peerDependenciesMeta:
       '@sanity/types':
@@ -8556,7 +8560,7 @@ packages:
     resolution: {integrity: sha512-72iTgqZbdvCDXzXam7PTiVFux1lMtDz7aMq6W4uBwGoVKkNforv+1LvzqZ/GfhuChXesex8VCFa+ooqABGb5NA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
-      '@sanity/client': ^7.23.2
+      '@sanity/client': ^7.24.0
       next: ^16.0.0-0
       react: ^19.2.3
       react-dom: ^19.2.3
@@ -15238,6 +15242,14 @@ snapshots:
       - vue-tsc
 
   '@sanity/presentation-comlink@2.1.0(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))':
+    dependencies:
+      '@sanity/comlink': 4.0.1
+      '@sanity/visual-editing-types': 1.1.8(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))
+    transitivePeerDependencies:
+      - '@sanity/client'
+      - '@sanity/types'
+
+  '@sanity/presentation-comlink@2.2.0(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))':
     dependencies:
       '@sanity/comlink': 4.0.1
       '@sanity/visual-editing-types': 1.1.8(@sanity/client@7.24.0)(@sanity/types@6.5.0(@types/react@19.2.17))

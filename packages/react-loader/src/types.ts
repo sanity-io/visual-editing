@@ -30,6 +30,10 @@ export interface QueryResponseInitial<QueryResponseResult> {
    * The perspective used to fetch the data, if not provided it'll assume 'published'
    */
   perspective?: ClientPerspective
+  /**
+   * The editing variant used to fetch the data, if any
+   */
+  variant?: string
 }
 
 export interface UseQueryOptions<QueryResponseResult = unknown> {
@@ -112,7 +116,9 @@ export interface QueryStore {
     options?: Pick<
       ResponseQueryOptions,
       'perspective' | 'cache' | 'next' | 'useCdn' | 'stega' | 'tag' | 'headers'
-    >,
+    > & {
+      variant?: string
+    },
   ) => Promise<QueryResponseInitial<QueryResponseResult>>
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
