@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.7.2
+
+### Patch Changes
+
+- [#3535](https://github.com/sanity-io/visual-editing/pull/3535) [`a31f1e7`](https://github.com/sanity-io/visual-editing/commit/a31f1e73b1809390dbc9228825c0bcda04e951cc) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/ui to ^3.4.3, whose dist no longer pins unused components with `displayName` assignments — the standalone build's displayName-rewriting workaround plugin is removed
+
 ## 5.7.1
 
 ### Patch Changes
