@@ -57,11 +57,10 @@ export default mergeConfig(
   }),
   {
     plugins: cleanBundledDeclarations,
-    // These dependencies are compiled for a side-effect-free browser package. Keep property
-    // reads observable: combining both property assumptions corrupts React's render scheduling.
+    // React mutates internal fields while scheduling renders, so property writes must remain
+    // observable. Module pruning and pure factory hints provide the safe tree-shaking wins.
     treeshake: {
       moduleSideEffects: false,
-      propertyWriteSideEffects: false,
       manualPureFunctions: ['createElement', 'forwardRef', 'lazy', 'memo', 'styled'],
     },
     // Unlike a typical library, consumers download this package's bundled dependencies.
