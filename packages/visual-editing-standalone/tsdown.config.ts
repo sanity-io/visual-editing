@@ -117,8 +117,12 @@ export default mergeConfig(
     tsconfig: 'tsconfig.dist.json',
     // The published artifact is browser-only, like `@sanity/visual-editing` itself.
     platform: 'browser',
+    // Fold all common production guards before minification and tree shaking.
     define: {
       'process.env.NODE_ENV': JSON.stringify('production'),
+      'import.meta.env.DEV': 'false',
+      'import.meta.env.PROD': 'true',
+      'import.meta.env.MODE': JSON.stringify('production'),
       /**
        * `styled-components` reads its escape hatches from `process.env` (statically) and from
        * bare globals (`typeof SC_DISABLE_SPEEDY == 'boolean'`). Pin them all to their browser
@@ -144,18 +148,21 @@ export default mergeConfig(
   }),
   {
     plugins: treeshakableVendorDisplayNames,
-    /**
-     * The bundle inlines prebuilt library dists (React via CJS interop, `@sanity/ui`,
-     * `styled-components`, ...) whose component factory calls carry no `@__PURE__`
-     * annotations, so rolldown has to assume every `forwardRef(...)`/`styled(...)`/`lazy(...)`
-     * call is side-effectful and keep each component `@sanity/ui` defines — not just the ones
-     * the overlays render. Declaring the factories pure lets the unused components (and their
-     * entire dependency subgraphs, like the lazy-loaded `refractor` syntax-highlighter chunk
-     * behind `@sanity/ui`'s `Code` component) tree-shake away.
-     */
+    // React mutates internal fields while scheduling renders, so property writes must remain
+    // observable. Module pruning and pure factory hints provide the safe tree-shaking wins:
+    // the inlined prebuilt dists (React via CJS interop, `@sanity/ui`, `styled-components`)
+    // carry no `@__PURE__` annotations on their component factory calls, so without the pure
+    // hints every component `@sanity/ui` defines would stay in the bundle — not just the ones
+    // the overlays render. `moduleSideEffects: false` also covers the bundled declarations:
+    // it lets rolldown-plugin-dts tree-shake vendor `Symbol.observable` global augmentations
+    // (rxjs and xstate each ship one) and the barrel modules carrying dangling
+    // `/// <reference path="..." />` directives, which would otherwise be hoisted into this
+    // package's `.d.ts` output.
     treeshake: {
+      moduleSideEffects: false,
       manualPureFunctions: [
         'createContext',
+        'createElement',
         'createGlobalStyle',
         'css',
         'forwardRef',
@@ -164,23 +171,12 @@ export default mergeConfig(
         'memo',
         'styled',
       ],
-      /**
-       * The bundled declarations re-export types from `@sanity/visual-editing`, whose type
-       * graph transitively visits `rxjs` (via `@sanity/types` and `@sanity/client`) and
-       * `xstate`. Both ship file-level artifacts that `rolldown-plugin-dts` would otherwise
-       * hoist into this package's declarations: dangling `/// <reference path="..." />`
-       * directives (a TS6053 error for `skipLibCheck: false` consumers, as the referenced
-       * files don't exist in `dist`) and `Symbol.observable` global augmentations this
-       * package should not ship. Externalizing the packages instead would leak bare type
-       * imports.
-       *
-       * The dts plugin models global augmentations as module side effects, so declaring all
-       * `.d.ts` modules side-effect free lets rolldown tree-shake the augmentations away —
-       * along with the barrel modules that carry the reference directives — while every type
-       * this package actually re-exports is kept. In other words: bundled declarations
-       * deliberately never ship global scope changes.
-       */
-      moduleSideEffects: [{test: /\.d\.[cm]?ts$/, sideEffects: false}],
+    },
+    // Unlike a typical library, consumers download this package's bundled dependencies.
+    minify: {
+      compress: true,
+      mangle: true,
+      codegen: true,
     },
   },
 ) satisfies UserConfig
