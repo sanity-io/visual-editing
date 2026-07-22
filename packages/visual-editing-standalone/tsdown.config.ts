@@ -32,36 +32,11 @@ const cleanBundledDeclarations: NonNullable<UserConfig['plugins']> = [
   },
 ]
 
-/**
- * Drop emitted source maps from the published artifact. This package is consumed as a
- * self-contained browser bundle (often via esm.sh); the maps dominate on-disk `dist` size
- * and are not useful to those consumers. tsdown/`@sanity/tsdown-config` still emit maps for
- * this build even when `sourcemap: false` is set, so strip them here.
- */
-const stripSourceMaps: NonNullable<UserConfig['plugins']> = [
-  {
-    name: 'strip-source-maps',
-    generateBundle(_options, bundle) {
-      for (const [fileName, chunk] of Object.entries(bundle)) {
-        if (fileName.endsWith('.map')) {
-          delete bundle[fileName]
-          continue
-        }
-        if (chunk.type === 'chunk') {
-          chunk.code = chunk.code.replace(/\n?\/\/# sourceMappingURL=.*$/gm, '')
-          chunk.map = null
-        }
-      }
-    },
-  },
-]
-
 export default mergeConfig(
   await defineConfig({
     tsconfig: 'tsconfig.dist.json',
     // The published artifact is browser-only, like `@sanity/visual-editing` itself.
     platform: 'browser',
-    sourcemap: false,
     // Fold production branches (React, styled-components, motion, etc.) so the
     // subsequent treeshake pass can drop development-only code.
     define: {
@@ -80,7 +55,7 @@ export default mergeConfig(
     },
   }),
   {
-    plugins: [...cleanBundledDeclarations, ...stripSourceMaps],
+    plugins: cleanBundledDeclarations,
     // Mirror `@sanity/visual-editing`'s `preset: 'smallest'` + pure React/styled
     // helpers so unused lodash/rxjs/motion/icon exports can be eliminated from
     // the fully-bundled standalone artifact.
