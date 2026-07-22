@@ -12,7 +12,9 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: node_modules/@repo/sanity-extracted-schema/shoes.json
+export declare const internalGroqTypeReferenceTo: unique symbol
+
+// Source: schema.json
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
@@ -343,14 +345,6 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint
-
-export declare const internalGroqTypeReferenceTo: unique symbol
-
-type ArrayOf<T> = Array<
-  T & {
-    _key: string
-  }
->
 
 // Source: src/queries.ts
 // Variable: shoesList

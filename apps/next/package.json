@@ -5,12 +5,12 @@
   "scripts": {
     "build": "sanity typegen generate && next build",
     "dev": "next dev -p 3001",
-    "start": "next start"
+    "start": "next start",
+    "typegen": "sanity typegen generate"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
     "@repo/env": "workspace:*",
-    "@repo/sanity-extracted-schema": "workspace:*",
     "@repo/studio-url": "workspace:*",
     "@sanity/client": "catalog:",
     "@sanity/icons": "catalog:",

@@ -6,8 +6,7 @@ export default mergeConfig(
     tsconfig: 'tsconfig.dist.json',
     // The published artifact is browser-only, like `@sanity/visual-editing` itself.
     platform: 'browser',
-    // Fold production branches (React, styled-components, motion, etc.) so the
-    // subsequent treeshake pass can drop development-only code.
+    // Fold all common production guards before minification and tree shaking.
     define: {
       'process.env.NODE_ENV': JSON.stringify('production'),
       'import.meta.env.DEV': 'false',
@@ -24,30 +23,13 @@ export default mergeConfig(
     },
   }),
   {
-    // Mirror `@sanity/visual-editing`'s `preset: 'smallest'` + pure React/styled
-    // helpers so unused lodash/rxjs/motion/icon exports can be eliminated from
-    // the fully-bundled standalone artifact.
+    // React mutates internal fields while scheduling renders, so property writes must remain
+    // observable. Module pruning and pure factory hints provide the safe tree-shaking wins.
     treeshake: {
       moduleSideEffects: false,
-      propertyReadSideEffects: false,
-      propertyWriteSideEffects: false,
-      unknownGlobalSideEffects: false,
-      manualPureFunctions: [
-        'createElement',
-        'cloneElement',
-        'createContext',
-        'forwardRef',
-        'lazy',
-        'memo',
-        'startTransition',
-        'styled',
-        'css',
-        'keyframes',
-        'createGlobalStyle',
-      ],
+      manualPureFunctions: ['createElement', 'forwardRef', 'lazy', 'memo', 'styled'],
     },
-    // `@sanity/tsdown-config` leaves mangle/codegen off for typical libraries;
-    // this package ships a self-contained browser bundle, so enable both.
+    // Unlike a typical library, consumers download this package's bundled dependencies.
     minify: {
       compress: true,
       mangle: true,

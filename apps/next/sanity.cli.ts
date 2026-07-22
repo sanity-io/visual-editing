@@ -6,7 +6,7 @@ const {projectId, dataset} = workspaces['next-app-router']
 export default defineCliConfig({
   api: {projectId, dataset},
   typegen: {
-    schema: './node_modules/@repo/sanity-extracted-schema/shoes.json',
+    schema: './schema.json',
     generates: './src/types.ts',
   },
 })
