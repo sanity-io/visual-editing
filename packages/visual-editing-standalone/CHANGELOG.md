@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+### Patch Changes
+
+- [#3533](https://github.com/sanity-io/visual-editing/pull/3533) [`46e18e9`](https://github.com/sanity-io/visual-editing/commit/46e18e90af4a4946fbb713ffde10f658a31cb8df) Thanks [@stipsan](https://github.com/stipsan)! - Reduce the standalone browser distribution size with production defines, aggressive tree shaking, and full minification.
+
 ## 1.0.1
 
 ### Patch Changes
