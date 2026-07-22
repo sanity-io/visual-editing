@@ -32,12 +32,44 @@ const cleanBundledDeclarations: NonNullable<UserConfig['plugins']> = [
   },
 ]
 
+/**
+ * Drop emitted source maps from the published artifact. This package is consumed as a
+ * self-contained browser bundle (often via esm.sh); the maps dominate on-disk `dist` size
+ * and are not useful to those consumers. tsdown/`@sanity/tsdown-config` still emit maps for
+ * this build even when `sourcemap: false` is set, so strip them here.
+ */
+const stripSourceMaps: NonNullable<UserConfig['plugins']> = [
+  {
+    name: 'strip-source-maps',
+    generateBundle(_options, bundle) {
+      for (const [fileName, chunk] of Object.entries(bundle)) {
+        if (fileName.endsWith('.map')) {
+          delete bundle[fileName]
+          continue
+        }
+        if (chunk.type === 'chunk') {
+          chunk.code = chunk.code.replace(/\n?\/\/# sourceMappingURL=.*$/gm, '')
+          chunk.map = null
+        }
+      }
+    },
+  },
+]
+
 export default mergeConfig(
   await defineConfig({
     tsconfig: 'tsconfig.dist.json',
     // The published artifact is browser-only, like `@sanity/visual-editing` itself.
     platform: 'browser',
-    define: {'process.env.NODE_ENV': JSON.stringify('production')},
+    sourcemap: false,
+    // Fold production branches (React, styled-components, motion, etc.) so the
+    // subsequent treeshake pass can drop development-only code.
+    define: {
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'import.meta.env.DEV': 'false',
+      'import.meta.env.PROD': 'true',
+      'import.meta.env.MODE': JSON.stringify('production'),
+    },
     deps: {
       // This package is deliberately self-contained: bundle every dependency,
       // including the lazy-loaded React runtime, into package-internal chunks.
@@ -47,5 +79,36 @@ export default mergeConfig(
       onlyImport: [],
     },
   }),
-  {plugins: cleanBundledDeclarations},
+  {
+    plugins: [...cleanBundledDeclarations, ...stripSourceMaps],
+    // Mirror `@sanity/visual-editing`'s `preset: 'smallest'` + pure React/styled
+    // helpers so unused lodash/rxjs/motion/icon exports can be eliminated from
+    // the fully-bundled standalone artifact.
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      propertyWriteSideEffects: false,
+      unknownGlobalSideEffects: false,
+      manualPureFunctions: [
+        'createElement',
+        'cloneElement',
+        'createContext',
+        'forwardRef',
+        'lazy',
+        'memo',
+        'startTransition',
+        'styled',
+        'css',
+        'keyframes',
+        'createGlobalStyle',
+      ],
+    },
+    // `@sanity/tsdown-config` leaves mangle/codegen off for typical libraries;
+    // this package ships a self-contained browser bundle, so enable both.
+    minify: {
+      compress: true,
+      mangle: true,
+      codegen: true,
+    },
+  },
 ) satisfies UserConfig
