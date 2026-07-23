@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3
+
+### Patch Changes
+
+- [#3535](https://github.com/sanity-io/visual-editing/pull/3535) [`a31f1e7`](https://github.com/sanity-io/visual-editing/commit/a31f1e73b1809390dbc9228825c0bcda04e951cc) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/ui to ^3.4.3, whose dist no longer pins unused components with `displayName` assignments — the standalone build's displayName-rewriting workaround plugin is removed
+
+- [#3535](https://github.com/sanity-io/visual-editing/pull/3535) [`a31f1e7`](https://github.com/sanity-io/visual-editing/commit/a31f1e73b1809390dbc9228825c0bcda04e951cc) Thanks [@stipsan](https://github.com/stipsan)! - Shrink the self-contained dist by 11% with tsdown treeshake and define options: unused `@sanity/ui` components (including the lazy refractor syntax-highlighter chunk) now tree-shake away, `styled-components` escape hatches are pinned to browser production defaults so no `process` references remain, and the bundled declarations drop vendor `Symbol.observable` global augmentations and dangling reference directives at the module level.
+
 ## 1.0.2
 
 ### Patch Changes
