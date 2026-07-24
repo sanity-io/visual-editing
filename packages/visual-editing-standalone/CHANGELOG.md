@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5
+
+### Patch Changes
+
+- [#3534](https://github.com/sanity-io/visual-editing/pull/3534) [`a1fea20`](https://github.com/sanity-io/visual-editing/commit/a1fea208007654ef785ba52b2234a685eb77ea60) Thanks [@stipsan](https://github.com/stipsan)! - Tighten standalone treeshake further (`propertyReadSideEffects` / `unknownGlobalSideEffects` / more pure factories) and use `minify: true` for the same full Oxc minify pass.
+
 ## 1.0.4
 
 ### Patch Changes
