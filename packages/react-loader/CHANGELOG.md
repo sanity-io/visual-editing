@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.2
+
+### Patch Changes
+
+- [#3548](https://github.com/sanity-io/visual-editing/pull/3548) [`e98a4a2`](https://github.com/sanity-io/visual-editing/commit/e98a4a2d4868b298f3d50eb92cbb848d15ba2225) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): bump shared dependencies to latest (sanity ^6.6.0, react ^19.2.8, typescript 6.0.3, @sanity/pkg-utils ^11.0.13, styled-components ^6.4.4)
+
+- Updated dependencies [[`e98a4a2`](https://github.com/sanity-io/visual-editing/commit/e98a4a2d4868b298f3d50eb92cbb848d15ba2225)]:
+  - @sanity/core-loader@2.1.2
+  - @sanity/visual-editing-csm@3.0.13
+
 ## 2.1.1
 
 ### Patch Changes
