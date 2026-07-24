@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.4
+
+### Patch Changes
+
+- [#3548](https://github.com/sanity-io/visual-editing/pull/3548) [`e98a4a2`](https://github.com/sanity-io/visual-editing/commit/e98a4a2d4868b298f3d50eb92cbb848d15ba2225) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): bump shared dependencies to latest (sanity ^6.6.0, react ^19.2.8, typescript 6.0.3, @sanity/pkg-utils ^11.0.13, styled-components ^6.4.4)
+
+## 1.0.3
+
+### Patch Changes
+
+- [#3535](https://github.com/sanity-io/visual-editing/pull/3535) [`a31f1e7`](https://github.com/sanity-io/visual-editing/commit/a31f1e73b1809390dbc9228825c0bcda04e951cc) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/ui to ^3.4.3, whose dist no longer pins unused components with `displayName` assignments — the standalone build's displayName-rewriting workaround plugin is removed
+
+- [#3535](https://github.com/sanity-io/visual-editing/pull/3535) [`a31f1e7`](https://github.com/sanity-io/visual-editing/commit/a31f1e73b1809390dbc9228825c0bcda04e951cc) Thanks [@stipsan](https://github.com/stipsan)! - Shrink the self-contained dist by 11% with tsdown treeshake and define options: unused `@sanity/ui` components (including the lazy refractor syntax-highlighter chunk) now tree-shake away, `styled-components` escape hatches are pinned to browser production defaults so no `process` references remain, and the bundled declarations drop vendor `Symbol.observable` global augmentations and dangling reference directives at the module level.
+
 ## 1.0.2
 
 ### Patch Changes
