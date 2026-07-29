@@ -74,6 +74,28 @@ describe('urlStringToPath should convert', () => {
     ])
   })
 
+  test('an all-numeric key too large to be an array index to an object', () => {
+    expect(urlStringToPath('array:342330179449')).toEqual([
+      'array',
+      {
+        _key: '342330179449',
+      },
+    ])
+  })
+
+  test('the largest index-shaped number to a number', () => {
+    expect(urlStringToPath('array:999999999')).toEqual(['array', 999999999])
+  })
+
+  test('one past the largest index-shaped number to an object', () => {
+    expect(urlStringToPath('array:1000000000')).toEqual([
+      'array',
+      {
+        _key: '1000000000',
+      },
+    ])
+  })
+
   test('a key with a tuple', () => {
     expect(urlStringToPath('array:123,456')).toEqual(['array', [123, 456]])
   })
