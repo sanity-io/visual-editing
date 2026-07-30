@@ -21,7 +21,7 @@ import {
   TextInput,
   Tooltip,
   type MenuItemProps,
-} from '@sanity/ui/_visual-editing'
+} from '@sanity/ui'
 import {startCase} from 'lodash-es'
 import {useReducer, useState, type ChangeEvent, type CSSProperties} from 'react'
 import {isValidElementType} from 'react-is'

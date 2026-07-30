@@ -10,7 +10,7 @@ import {
   Stack,
   Text,
   type PopoverMargins,
-} from '@sanity/ui/_visual-editing'
+} from '@sanity/ui'
 import {useCallback, useEffect, useMemo, useState, type FunctionComponent} from 'react'
 
 import {useDocuments} from '../../react/useDocuments'

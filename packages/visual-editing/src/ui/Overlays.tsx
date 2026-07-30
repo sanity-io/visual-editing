@@ -10,7 +10,7 @@ import {
   studioTheme,
   ThemeProvider,
   usePrefersDark,
-} from '@sanity/ui/_visual-editing'
+} from '@sanity/ui'
 import {
   startTransition,
   useCallback,

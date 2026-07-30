@@ -3,8 +3,7 @@ import {DocumentIcon} from '@sanity/icons/Document'
 import {DragHandleIcon} from '@sanity/icons/DragHandle'
 import {EllipsisVerticalIcon} from '@sanity/icons/EllipsisVertical'
 import {PlugIcon} from '@sanity/icons/Plug'
-import {MenuButton, MenuDivider} from '@sanity/ui'
-import {Box, Button, Card, Flex, Menu, MenuItem, Stack, Text} from '@sanity/ui/_visual-editing'
+import {Box, Button, Card, Flex, Menu, MenuButton, MenuDivider, MenuItem, Stack, Text} from '@sanity/ui'
 import {pathToUrlString} from '@sanity/visual-editing-csm'
 import {
   Fragment,
