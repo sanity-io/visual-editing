@@ -28,7 +28,6 @@ export async function createPreviewSecret(
       // Garbage collect expired secrets
       await client.delete({query: deleteExpiredSecretsQuery})
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error('Failed to delete expired secrets', err)
     }
   }

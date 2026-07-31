@@ -480,7 +480,6 @@ export interface OverlayComponentResolverContext<
  * @public
  */
 export type OverlayComponentResolver<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends OverlayComponent = OverlayComponent<Record<string, unknown>, any>,
 > = (
   context: OverlayComponentResolverContext,
@@ -505,14 +504,12 @@ export interface OverlayPluginExclusiveDefinition extends OverlayPluginDefinitio
   type: 'exclusive'
   component?: OverlayPluginComponent<
     Record<string, unknown> & {closeExclusiveView: () => void},
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any
   >
 }
 /** @public  */
 export interface OverlayPluginHudDefinition extends OverlayPluginDefinitionBase {
   type: 'hud'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component?: OverlayPluginComponent<Record<string, unknown>, any>
 }
 

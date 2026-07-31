@@ -16,6 +16,7 @@ export function defineUseLiveMode({
   ) => void
 }): UseLiveModeHook {
   return ({
+    // oxlint-disable-next-line typescript/no-deprecated
     allowStudioOrigin,
     client,
     onConnect,
@@ -26,7 +27,6 @@ export function defineUseLiveMode({
   }) => {
     useEffect(() => {
       if (allowStudioOrigin) {
-        // eslint-disable-next-line no-console
         console.warn('`allowStudioOrigin` is deprecated and no longer needed')
       }
       const disableLiveMode = enableLiveMode({

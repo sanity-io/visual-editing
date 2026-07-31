@@ -40,6 +40,7 @@ export interface EnableLiveModeOptions {
    * @example `import {createClient} from '@sanity/preview-kit/client'`
    * @example `import {createClient} from 'next-sanity'`
    */
+  // oxlint-disable-next-line typescript/no-deprecated
   client?: SanityClient | import('@sanity/client/stega').SanityStegaClient
   /**
    * Fires when a connection is established to a parent Studio window.

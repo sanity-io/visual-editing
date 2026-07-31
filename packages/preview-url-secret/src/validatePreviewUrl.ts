@@ -22,7 +22,6 @@ export async function validatePreviewUrl(
     parsedPreviewUrl = parsePreviewUrl(previewUrl)
   } catch (error) {
     if (isDev) {
-      // eslint-disable-next-line no-console
       console.error('Failed to parse preview URL', error, {
         previewUrl,
         client,
@@ -34,6 +33,7 @@ export async function validatePreviewUrl(
   const {isValid, studioUrl} = await validateSecret(
     client,
     parsedPreviewUrl.secret,
+    // oxlint-disable-next-line typescript/no-deprecated
     disableCacheNoStore,
   )
   const redirectTo = isValid ? parsedPreviewUrl.redirectTo : undefined
@@ -45,7 +45,6 @@ export async function validatePreviewUrl(
       studioOrigin = new URL(studioUrl!).origin
     } catch (error) {
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.error('Failed to parse studioUrl', error, {
           previewUrl,
           studioUrl,

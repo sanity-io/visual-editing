@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {SanityDocument} from '@sanity/client'
 import {type Mutation, type NodePatchList} from '@sanity/mutate'
 

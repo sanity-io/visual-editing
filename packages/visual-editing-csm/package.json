@@ -39,7 +39,6 @@
   "scripts": {
     "build": "pkg build --strict --check --clean",
     "dev": "pkg build --strict",
-    "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --typecheck"
   },
@@ -48,12 +47,10 @@
     "valibot": "^1.4.2"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@sanity/client": "catalog:",
     "@sanity/pkg-utils": "catalog:",
     "@sanity/tsconfig": "catalog:",
-    "eslint": "^8.57.1",
     "typescript": "catalog:",
     "vitest": "^3.2.4"
   },
@@ -61,12 +58,6 @@
     "@sanity/client": "^7.24.0"
   },
   "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  },
   "engines": {
     "node": ">=20.19 <22 || >=22.12"
   }

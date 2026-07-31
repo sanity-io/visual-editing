@@ -53,6 +53,7 @@ function ContextMenuItem(props: {
         hotkeys={node.hotkeys}
         icon={node.icon}
         padding={2}
+        // oxlint-disable-next-line typescript/no-deprecated
         space={2}
         text={node.label}
         disabled={!node.action}
@@ -87,6 +88,7 @@ function ContextMenuItem(props: {
           preventOverflow: true,
           __unstable_margins: POPOVER_MARGINS,
         }}
+        // oxlint-disable-next-line typescript/no-deprecated
         space={2}
         text={node.label}
       >
@@ -170,7 +172,11 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = (props) => {
             <Flex gap={2} padding={2}>
               <Box flex="none">{items ? <Text size={1}>{icon}</Text> : <Spinner size={1} />}</Box>
 
-              <Stack flex={1} space={2}>
+              <Stack
+                flex={1}
+                // oxlint-disable-next-line typescript/no-deprecated
+                space={2}
+              >
                 <Text size={1} weight="semibold">
                   {items ? title : 'Loading...'}
                 </Text>

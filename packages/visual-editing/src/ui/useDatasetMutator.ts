@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import {useEffect} from 'react'
 import {createActor} from 'xstate'
 
@@ -35,7 +34,6 @@ export function useDatasetMutator(comlink: VisualEditingNode | undefined): void 
         }
       })
       .catch(() => {
-        // eslint-disable-next-line no-console
         console.warn(
           '[@sanity/visual-editing] Package version mismatch detected: Please update your Sanity studio to prevent potential compatibility issues.',
         )

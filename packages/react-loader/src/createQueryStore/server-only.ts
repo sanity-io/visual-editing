@@ -42,7 +42,6 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
 
     const {result, resultSourceMap} =
       await unstable__serverClient.instance!.fetch<QueryResponseResult>(query, params, {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cache: (cache ?? next) ? undefined : ('no-store' as any),
         filterResponse: false,
         next,

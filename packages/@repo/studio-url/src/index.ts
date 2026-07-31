@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// oxlint-disable-next-line typescript/ban-ts-comment, typescript/prefer-ts-expect-error -- has to be exact @ts-ignore for string replacement to work
 // @ts-ignore has to be exact for string replacement to work
 const envUrl = process.env.VERCEL_BRANCH_URL
 const isStablePreviewBranch = envUrl?.includes('-git-preview')
@@ -7,7 +7,7 @@ const isLinearBranch = envUrl?.includes('-git-crx-')
 
 /** @public */
 export const studioUrl =
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // oxlint-disable-next-line typescript/ban-ts-comment, typescript/prefer-ts-expect-error -- has to be exact @ts-ignore for string replacement to work
   // @ts-ignore has to be exact for string replacement to work
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3333'

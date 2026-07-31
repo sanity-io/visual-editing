@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {SanityDocument} from '@sanity/client'
 import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import {createIfNotExists, patch} from '@sanity/mutate'
@@ -105,6 +104,7 @@ function createDocumentGet<T extends Record<string, any>>(id: string, actor: Mut
   return <P extends Path<T, keyof T>>(
     path?: P,
   ): PathValue<T, P> | SanityDocument<T> | undefined => {
+    // oxlint-disable-next-line typescript/no-deprecated
     const {snapshot} = getDocumentsAndSnapshot<T>(id, actor)
 
     return path
@@ -141,6 +141,7 @@ function createDocumentPatch<T extends Record<string, any>>(id: string, actor: M
        * @deprecated - use `getSnapshot` instead
        */
       get snapshot() {
+        // oxlint-disable-next-line typescript/no-deprecated
         return result.snapshot
       },
       getSnapshot,
@@ -187,8 +188,8 @@ export function useDocuments(): {
       return {
         id: documentId,
         commit: createDocumentCommit(documentId, actor),
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore - Type instantiation is excessively deep and possibly infinite.
+        // @ts-expect-error - Type instantiation is excessively deep and possibly infinite.
+        // oxlint-disable-next-line typescript/no-deprecated
         get: createDocumentGet(documentId, actor),
         getSnapshot: createDocumentGetSnapshot<T>(documentId, actor),
         patch: createDocumentPatch<T>(documentId, actor),

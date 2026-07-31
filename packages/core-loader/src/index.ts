@@ -21,6 +21,7 @@ export interface CreateQueryStoreOptions {
    * @example `import {createClient} from '@sanity/preview-kit/client'`
    * @example `import {createClient} from 'next-sanity'`
    */
+  // oxlint-disable-next-line typescript/no-deprecated
   client: SanityClient | import('@sanity/client/stega').SanityStegaClient | false
   /**
    * If you want all data fetching to be done server-side in production, set this to `true` and `client: false`.
@@ -50,6 +51,7 @@ export interface QueryStore {
    * When `ssr: true` you call this in your server entry point that imports the result of `createQueryStore` instance.
    * It's required to call it before any data fetching is done.
    */
+  // oxlint-disable-next-line typescript/no-deprecated
   setServerClient: (client: SanityClient | import('@sanity/client/stega').SanityStegaClient) => void
   enableLiveMode: EnableLiveMode
   /** @internal */
@@ -139,7 +141,6 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
           .instance!.fetch(JSON.stringify({query, params}))
           .then((response) => {
             if (controller.signal.aborted) return
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             $fetch.setKey('data', response.result as any)
             $fetch.setKey('sourceMap', response.resultSourceMap)
             $fetch.setKey('perspective', initialPerspective)

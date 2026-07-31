@@ -91,7 +91,6 @@ const datasetMutatorMachine = setup({
         assertEvent(event, 'unobserve')
         // Removing a non-existing documentId is a no-op
         if (!context.documents[event.documentId]) return context.documents
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const {[event.documentId]: _, ...documents} = context.documents
         return documents
       },

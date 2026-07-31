@@ -37,7 +37,6 @@ export function subscribeToVercelProtectionBypass(
         }
       }
     },
-    // eslint-disable-next-line no-console
     error: (reason) => console.error(reason),
   })
 

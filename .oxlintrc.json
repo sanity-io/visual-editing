@@ -1,0 +1,98 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "options": {
+    "typeAware": true,
+    // typeCheck reports project TypeScript diagnostics that are already covered by
+    // package `test`/`vitest --typecheck` and are noisy across Svelte/pkg-utils configs
+    "typeCheck": false,
+    "denyWarnings": true,
+    "reportUnusedDisableDirectives": "error"
+  },
+  "ignorePatterns": [
+    "**/dist",
+    "**/dist-svelte",
+    "**/storybook-static",
+    "**/legacy",
+    "**/next-env.d.ts",
+    "**/sanity.types.ts",
+    // Apps were not covered by the previous per-package eslint setup
+    "apps/**",
+    // Oxlint has limited Svelte support; Svelte files keep framework-native checking
+    "**/*.svelte"
+  ],
+  "plugins": ["react", "unicorn", "typescript", "oxc", "import", "node"],
+  "jsPlugins": ["eslint-plugin-storybook"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "error"
+  },
+  "rules": {
+    "typescript/ban-ts-comment": "error",
+    "typescript/prefer-ts-expect-error": "error",
+    "typescript/switch-exhaustiveness-check": "error",
+    "typescript/no-deprecated": "error",
+    "typescript/no-explicit-any": "off",
+    "typescript/no-empty-object-type": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+    "typescript/no-unnecessary-type-assertion": "off",
+    "typescript/no-unnecessary-type-parameters": "off",
+    "typescript/no-redundant-type-constituents": "off",
+    "typescript/no-unnecessary-boolean-literal-compare": "off",
+    "typescript/no-unnecessary-template-expression": "off",
+    "typescript/no-unnecessary-type-arguments": "off",
+    // Type-checked rules that were not part of the previous eslint config
+    "typescript/no-base-to-string": "off",
+    "typescript/no-floating-promises": "off",
+    "typescript/await-thenable": "off",
+    "typescript/no-misused-spread": "off",
+    "typescript/restrict-template-expressions": "off",
+    "typescript/no-useless-default-assignment": "off",
+    "react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/jsx-key": "error",
+    "react/react-compiler": "error",
+    "eslint/no-console": ["error", {"allow": ["warn", "error"]}],
+    "eslint/no-shadow": "off",
+    "import/no-unassigned-import": ["error", {"allow": ["**/*.css", "server-only"]}],
+    "consistent-return": "off",
+    "consistent-function-scoping": "off",
+    "eslint/no-underscore-dangle": "off",
+    // Requires polyfills for older browsers
+    "no-array-reverse": "off",
+    "no-array-sort": "off",
+    // Common in list rendering; not enforced by previous config
+    "react/no-array-index-key": "off",
+    // Perf suggestions that are often intentional
+    "oxc/no-map-spread": "off",
+    "oxc/no-accumulating-spread": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.stories.{js,jsx,mjs,cjs,ts,tsx}", "**/*.story.{js,jsx,mjs,cjs,ts,tsx}"],
+      "rules": {
+        "storybook/await-interactions": "error",
+        "storybook/context-in-play-function": "error",
+        "storybook/default-exports": "error",
+        "storybook/hierarchy-separator": "error",
+        "storybook/no-redundant-story-name": "error",
+        // Storybook 8 in this repo imports from @storybook/react
+        "storybook/no-renderer-packages": "off",
+        "storybook/prefer-pascal-case": "error",
+        "storybook/story-exports": "error",
+        "storybook/use-storybook-expect": "error",
+        "storybook/use-storybook-testing-library": "error"
+      }
+    },
+    {
+      "files": ["**/.storybook/main.{js,cjs,mjs,ts}"],
+      "rules": {
+        "storybook/no-uninstalled-addons": [
+          "error",
+          {"packageJsonLocation": "./packages/visual-editing/package.json"}
+        ]
+      }
+    }
+  ]
+}

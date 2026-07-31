@@ -449,7 +449,12 @@ export function Overlays(props: {
 
   return (
     <TelemetryProvider comlink={comlink}>
-      <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme} tone="transparent">
+      <ThemeProvider
+        scheme={prefersDark ? 'dark' : 'light'}
+        // oxlint-disable-next-line typescript/no-deprecated
+        theme={studioTheme}
+        tone="transparent"
+      >
         <LayerProvider>
           <PortalProvider element={rootElement}>
             <SchemaProvider comlink={comlink} elements={elements}>

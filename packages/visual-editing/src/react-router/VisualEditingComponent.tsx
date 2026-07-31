@@ -73,6 +73,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       onSuspiciousStega: hasSuspiciousStegaCallback ? onSuspiciousStega : undefined,
       refresh: (payload) => {
         function refreshDefault() {
+          // oxlint-disable-next-line typescript/no-deprecated
           if (payload.source === 'mutation' && payload.livePreviewEnabled) {
             return false
           }

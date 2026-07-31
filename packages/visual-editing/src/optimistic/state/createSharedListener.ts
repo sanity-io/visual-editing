@@ -3,7 +3,6 @@ import {merge, ReplaySubject, Subject, type Observable, type ObservedValueOf} fr
 
 import type {VisualEditingNode} from '../../types'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SharedListenEvent = ListenEvent<Record<string, any>>
 
 /**

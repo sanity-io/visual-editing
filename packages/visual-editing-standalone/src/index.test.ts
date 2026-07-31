@@ -20,6 +20,7 @@ test('preserves the source package implementations and types', () => {
   expect(standalone.createDataAttribute).toBeTypeOf('function')
   expect(standalone.enableVisualEditing).toBeTypeOf('function')
   expectTypeOf(standalone.createDataAttribute).toEqualTypeOf(createDataAttributeSource)
+  // oxlint-disable-next-line typescript/no-deprecated
   expectTypeOf<Parameters<typeof standalone.enableVisualEditing>[0]>().toMatchTypeOf<
     Parameters<typeof enableVisualEditingSource>[0]
   >()

@@ -11,6 +11,7 @@ export const elementsReducer = (
   message: OverlayMsg | VisualEditingControllerMsg,
 ): ElementState[] => {
   const {type} = message
+  // oxlint-disable-next-line typescript/switch-exhaustiveness-check -- overlay/presentation msgs are intentionally ignored
   switch (type) {
     case 'element/register': {
       const elementExists = !!elements.find((e) => e.id === message.id)

@@ -9,8 +9,8 @@
     "dev:page-builder-demo": "turbo run build --filter=page-builder-demo^... --filter=apps-studio^... && turbo watch dev --filter=page-builder-demo... --filter=apps-studio...",
     "format": "oxfmt . --no-error-on-unmatched-pattern",
     "knip": "knip",
-    "lint": "turbo run lint",
-    "lint:fix": "pnpm lint -- --fix",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix --fix-suggestions",
     "preview": "turbo run preview",
     "report:react-compiler-healthcheck": "turbo run react-compiler-healthcheck",
     "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
@@ -26,8 +26,11 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "eslint-plugin-storybook": "^10.5.5",
     "knip": "^5.88.1",
     "oxfmt": "^0.60.0",
+    "oxlint": "^1.76.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "pkg-pr-new": "^0.0.60",
     "turbo": "^2.10.5",
     "typescript": "catalog:"
@@ -53,7 +56,6 @@
       "@sanity/visual-editing-csm": "workspace:*",
       "@types/react": "catalog:",
       "@types/react-dom": "catalog:",
-      "eslint-plugin-react-hooks": "catalog:",
       "groq": "catalog:",
       "sanity": "catalog:"
     }

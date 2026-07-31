@@ -123,6 +123,7 @@ export function PageSectionInput(props: ObjectInputProps): React.JSX.Element {
   )
 
   return (
+    // oxlint-disable-next-line typescript/no-deprecated
     <Stack space={5}>
       {symbolFieldMember && (
         <Card padding={4} style={{margin: '-20px -20px -20px'}}>

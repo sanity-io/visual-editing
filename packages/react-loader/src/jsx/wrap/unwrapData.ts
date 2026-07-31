@@ -4,11 +4,9 @@ import {isSourceNode} from './isSourceNode'
 import type {SanityKey, UnwrappedValue, WrappedValue} from './types'
 
 /** @public */
-export function unwrapData<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  T = any,
-  S extends WrappedValue<T> = WrappedValue<T>,
->(wrapper: S): UnwrappedValue<S> {
+export function unwrapData<T = any, S extends WrappedValue<T> = WrappedValue<T>>(
+  wrapper: S,
+): UnwrappedValue<S> {
   if (wrapper === undefined) {
     return undefined as UnwrappedValue<S>
   }

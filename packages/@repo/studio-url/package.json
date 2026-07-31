@@ -26,21 +26,13 @@
   },
   "scripts": {
     "build": "pkg build --strict --check --clean",
-    "lint": "eslint .",
     "prepack": "turbo run build"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@sanity/pkg-utils": "catalog:",
     "@sanity/tsconfig": "catalog:",
     "typescript": "catalog:"
   },
-  "browserslist": "extends @sanity/browserslist-config",
-  "eslintConfig": {
-    "extends": [
-      "@repo/eslint-config"
-    ],
-    "root": true
-  }
+  "browserslist": "extends @sanity/browserslist-config"
 }
