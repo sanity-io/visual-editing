@@ -13,6 +13,11 @@ export default defineConfig({
     treeshake: {
       preset: 'smallest',
       manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],
+      // The `smallest` preset sets `moduleSideEffects: false`, which would strip
+      // the side-effect-only `import '@sanity/ui/styles.css'` (required since
+      // @sanity/ui@4.0.0-next.5 ships static styles as a stylesheet). Keep CSS
+      // imports so the stylesheet reaches consumers' bundlers.
+      moduleSideEffects: (id) => id.endsWith('.css'),
     },
   },
   babel: {reactCompiler: true},

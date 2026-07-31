@@ -74,5 +74,14 @@ export default mergeConfig(
     // Unlike a typical library, consumers download this package's bundled dependencies.
     // `true` enables the full Oxc pass — equivalent to `{compress, mangle, codegen: true}`.
     minify: true,
+    // `@sanity/ui@4.0.0-next.5` ships static styles as `@sanity/ui/styles.css`, which the
+    // bundled `@sanity/visual-editing` overlays import. Extract it into a package-internal
+    // `.css` asset and keep the `import` in the JS output (`inject`) so consumers' bundlers
+    // load the stylesheet automatically — no external `@sanity/ui` dependency required, in
+    // keeping with this package's self-contained distribution.
+    css: {
+      inject: true,
+      minify: true,
+    },
   },
 ) satisfies UserConfig

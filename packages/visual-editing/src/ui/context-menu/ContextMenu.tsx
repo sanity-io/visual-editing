@@ -1,16 +1,6 @@
-import {
-  Box,
-  Flex,
-  Menu,
-  MenuDivider,
-  MenuGroup,
-  MenuItem,
-  Popover,
-  Spinner,
-  Stack,
-  Text,
-  type PopoverMargins,
-} from '@sanity/ui'
+import {Box, Flex, Spinner, Stack, Text} from '@sanity/ui'
+import {Menu, MenuDivider, MenuGroup, MenuItem} from '@sanity/ui/menu'
+import {Popover, type PopoverMargins} from '@sanity/ui/popover'
 import {useCallback, useEffect, useMemo, useState, type FunctionComponent} from 'react'
 
 import {useDocuments} from '../../react/useDocuments'

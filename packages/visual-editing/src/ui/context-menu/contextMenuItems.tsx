@@ -15,7 +15,7 @@ import type {
   SchemaUnionOption,
 } from '@sanity/presentation-comlink'
 import type {SchemaType} from '@sanity/types'
-import {MenuGroup} from '@sanity/ui'
+import {MenuGroup} from '@sanity/ui/menu'
 import {type FunctionComponent} from 'react'
 
 import type {OptimisticDocument} from '../../optimistic'

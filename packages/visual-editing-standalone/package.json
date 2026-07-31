@@ -25,11 +25,14 @@
     "dist"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "build": "tsdown",
@@ -44,6 +47,7 @@
     "@sanity/tsconfig": "catalog:",
     "@sanity/tsdown-config": "^0.19.6",
     "@sanity/visual-editing": "workspace:*",
+    "@tsdown/css": "0.22.14",
     "eslint": "^8.57.1",
     "tsdown": "^0.22.13",
     "typescript": "catalog:",
@@ -67,7 +71,6 @@
     "@floating-ui/dom": "1.8.0",
     "@floating-ui/react-dom": "2.1.9",
     "@floating-ui/utils": "0.2.12",
-    "@juggle/resize-observer": "3.4.0",
     "@sanity/client": "7.24.0",
     "@sanity/color": "3.0.8",
     "@sanity/comlink": "4.0.1",
@@ -76,7 +79,7 @@
     "@sanity/mutate": "0.18.1",
     "@sanity/presentation-comlink": "2.2.0",
     "@sanity/types": "6.6.0",
-    "@sanity/ui": "4.0.0-next.3",
+    "@sanity/ui": "4.0.0-next.5",
     "@sanity/visual-editing-types": "1.1.8",
     "@vercel/stega": "1.1.0",
     "compute-scroll-into-view": "3.1.1",
@@ -108,7 +111,8 @@
   "publishConfig": {
     "exports": {
       ".": "./dist/index.js",
-      "./package.json": "./package.json"
+      "./package.json": "./package.json",
+      "./style.css": "./dist/style.css"
     }
   }
 }
