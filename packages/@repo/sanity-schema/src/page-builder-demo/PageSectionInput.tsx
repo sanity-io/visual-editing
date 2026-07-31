@@ -1,7 +1,6 @@
 import {EditIcon} from '@sanity/icons/Edit'
 import {RevertIcon} from '@sanity/icons/Revert'
-import {Card, Stack} from '@sanity/ui'
-import {Code} from '@sanity/ui/code'
+import {Card, Code, Stack} from '@sanity/ui'
 import {startTransition, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {EMPTY, switchMap} from 'rxjs'
 import {
