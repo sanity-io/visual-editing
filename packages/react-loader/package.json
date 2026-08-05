@@ -88,8 +88,8 @@
     }
   },
   "scripts": {
-    "build": "pkg build --strict --check --clean && node ./scripts/restore-exports-order.mjs",
-    "dev": "pkg build --strict && node ./scripts/restore-exports-order.mjs",
+    "build": "pkg build --strict --check --clean",
+    "dev": "pkg build --strict",
     "lint": "eslint .",
     "prepack": "turbo run build",
     "test": "vitest --typecheck"
