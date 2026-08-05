@@ -5,6 +5,8 @@ import {defineConfig} from '@sanity/pkg-utils'
  * pkg-utils v12 re-inserts `browser`/`node` before custom conditions when regenerating
  * exports. Condition order is significant — server conditions must win over `browser` in
  * SSR (see #3337). Wrap the exports composer so the authored order is restored on write.
+ *
+ * Remove once the upstream fix lands: https://github.com/sanity-io/pkg-utils/pull/3237
  */
 const EXPORTS_ORDER = [
   'source',
