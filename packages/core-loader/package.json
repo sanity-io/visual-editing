@@ -23,21 +23,21 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "source": "./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
-      "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./create-data-attribute": {
+      "source": "./src/createDataAttribute.ts",
       "import": "./dist/create-data-attribute.js",
       "require": "./dist/create-data-attribute.cjs",
-      "source": "./src/createDataAttribute.ts",
       "default": "./dist/create-data-attribute.js"
     },
     "./encode-data-attribute": {
+      "source": "./src/encodeDataAttribute.ts",
       "import": "./dist/encode-data-attribute.js",
       "require": "./dist/encode-data-attribute.cjs",
-      "source": "./src/encodeDataAttribute.ts",
       "default": "./dist/encode-data-attribute.js"
     },
     "./package.json": "./package.json"
@@ -99,5 +99,12 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "inlinedDependencies": {
+    "async-cache-dedupe": "2.2.0",
+    "mnemonist": "0.39.8",
+    "nanostores": "1.0.1",
+    "obliterator": "2.0.5",
+    "safe-stable-stringify": "2.5.0"
   }
 }

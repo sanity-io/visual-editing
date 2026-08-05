@@ -8,14 +8,6 @@ export default defineConfig({
   define: {
     'process.env.NODE_ENV': 'production',
   },
-  rollup: {
-    ...baseConfig.rollup,
-    treeshake: {
-      preset: 'smallest',
-      manualPureFunctions: ['createElement', 'forwardRef', 'memo', 'styled'],
-    },
-  },
-  babel: {reactCompiler: true},
-  reactCompilerOptions: {target: '19'},
+  reactCompiler: {target: '19'},
   strictOptions: {noSanityClientPeerDependency: 'off'},
 })

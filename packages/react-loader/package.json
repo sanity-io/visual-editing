@@ -27,16 +27,16 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "deno": "./dist/index.js",
-      "edge": "./dist/index.js",
-      "edge-light": "./dist/index.js",
-      "worker": "./dist/index.js",
-      "react-server": "./dist/rsc/index.react-server.js",
       "browser": {
         "source": "./src/index.browser.ts",
         "import": "./dist/index.browser.js",
         "require": "./dist/index.browser.cjs"
       },
+      "deno": "./dist/index.js",
+      "edge": "./dist/index.js",
+      "edge-light": "./dist/index.js",
+      "worker": "./dist/index.js",
+      "react-server": "./dist/rsc/index.react-server.js",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
@@ -60,15 +60,15 @@
     "access": "public",
     "exports": {
       ".": {
+        "browser": {
+          "import": "./dist/index.browser.js",
+          "require": "./dist/index.browser.cjs"
+        },
         "deno": "./dist/index.js",
         "edge": "./dist/index.js",
         "edge-light": "./dist/index.js",
         "worker": "./dist/index.js",
         "react-server": "./dist/rsc/index.react-server.js",
-        "browser": {
-          "import": "./dist/index.browser.js",
-          "require": "./dist/index.browser.cjs"
-        },
         "import": "./dist/index.js",
         "require": "./dist/index.cjs",
         "default": "./dist/index.js"
@@ -123,5 +123,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "inlinedDependencies": {
+    "fast-deep-equal": "3.1.3"
   }
 }
