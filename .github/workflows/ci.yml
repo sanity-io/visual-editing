@@ -40,9 +40,11 @@ jobs:
       matrix:
         # https://nodejs.org/en/about/releases/
         # https://pnpm.io/installation#compatibility
+        # @sanity/pkg-utils@12 requires Node ^22.18 || >=24.11 to run builds
+        # (test dependsOn ^build). Drop lts/-1 (Node 20) until that changes.
         # @TODO re-enable `current` once it recovers
-        # node: [lts/-1, lts/*, current]
-        node: [lts/-1, lts/*]
+        # node: [lts/*, current]
+        node: [lts/*]
         os: [ubuntu-latest]
         # Also test the LTS on mac and windows
         include:
