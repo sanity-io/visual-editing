@@ -68,13 +68,12 @@
       "default": "./dist/react-router/index.js"
     },
     "./svelte": {
-      "types": "./dist-svelte/index.d.ts",
       "svelte": "./dist-svelte/index.js",
       "default": "./dist-svelte/index.js"
     },
     "./unstable_overlay-components": {
       "source": "./src/overlay-components/index.ts",
-      "default": "./dist/overlay-components/index.js"
+      "default": "./dist/unstable_overlay-components/index.js"
     }
   },
   "publishConfig": {
@@ -84,15 +83,14 @@
       "./enable-visual-editing": "./dist/enable-visual-editing/index.js",
       "./next-pages-router": "./dist/next-pages-router/index.js",
       "./optimistic": "./dist/optimistic/index.js",
+      "./package.json": "./package.json",
       "./react": "./dist/react/index.js",
       "./react-router": "./dist/react-router/index.js",
       "./svelte": {
-        "types": "./dist-svelte/index.d.ts",
         "svelte": "./dist-svelte/index.js",
         "default": "./dist-svelte/index.js"
       },
-      "./unstable_overlay-components": "./dist/overlay-components/index.js",
-      "./package.json": "./package.json"
+      "./unstable_overlay-components": "./dist/unstable_overlay-components/index.js"
     }
   },
   "scripts": {
@@ -203,5 +201,10 @@
   },
   "engines": {
     "node": ">=20.19"
+  },
+  "inlinedDependencies": {
+    "@sanity/telemetry": "1.1.0",
+    "@sanity/util": "6.6.0",
+    "uuid": "13.0.1"
   }
 }
