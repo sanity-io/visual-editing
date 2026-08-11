@@ -1,12 +1,16 @@
-import {stegaClean} from 'next-sanity'
+import {type StegaBranded, stegaClean} from 'next-sanity'
 
 import {Image} from '@/components/image'
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
-import {HeroSectionData, PageQueryData} from '../types'
+import {HeroSectionData} from '../types'
 
-export function Hero(props: {page: NonNullable<PageQueryData>; section: HeroSectionData}) {
+export function Hero(props: {
+  page: NonNullable<StegaBranded<FrontPageQueryResult>>
+  section: HeroSectionData
+}) {
   const {page: data, section} = props
 
   return (

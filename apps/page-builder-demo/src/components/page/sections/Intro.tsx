@@ -1,15 +1,19 @@
 import type {SanityDocument} from '@sanity/client'
 import {createDataAttribute, useOptimistic} from '@sanity/visual-editing/react'
-import {stegaClean} from 'next-sanity'
+import {type StegaBranded, stegaClean} from 'next-sanity'
 import {useMemo} from 'react'
 
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
 import {ProductModel} from '../ProductModel'
-import {IntroSectionData, PageData, PageQueryData} from '../types'
+import {IntroSectionData, PageData} from '../types'
 
-export function Intro(props: {page: NonNullable<PageQueryData>; section: IntroSectionData}) {
+export function Intro(props: {
+  page: NonNullable<StegaBranded<FrontPageQueryResult>>
+  section: IntroSectionData
+}) {
   const {page: data, section} = props
 
   const intro = useOptimistic<string | null | undefined, SanityDocument<PageData>>(

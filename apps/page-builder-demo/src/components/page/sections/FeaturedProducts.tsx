@@ -1,13 +1,14 @@
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
 import Link from 'next/link'
-import {stegaClean} from 'next-sanity'
+import {type StegaBranded, stegaClean} from 'next-sanity'
 
 import {Image} from '@/components/image'
+import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
-import {FeaturedProductsSectionData, PageData, PageQueryData} from '../types'
+import {FeaturedProductsSectionData, PageData} from '../types'
 
 function FeaturedProductsList(props: {
   id: string
@@ -63,7 +64,7 @@ function FeaturedProductsList(props: {
 }
 
 export function FeaturedProducts(props: {
-  page: NonNullable<PageQueryData>
+  page: NonNullable<StegaBranded<FrontPageQueryResult>>
   section: FeaturedProductsSectionData
 }) {
   const {page: data, section} = props
