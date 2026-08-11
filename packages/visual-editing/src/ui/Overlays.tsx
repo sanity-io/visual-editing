@@ -238,6 +238,11 @@ export function Overlays(props: {
     dragGroupRect: null,
   })
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
+  const handleRootElementRef = useCallback((element: HTMLElement | null) => {
+    // React 19 detaches refs when Suspense hides a subtree. Updating state in
+    // that detach path can repeatedly hide and reveal the subtree.
+    if (element) setRootElement(element)
+  }, [])
   const [overlayEnabled, setOverlayEnabled] = useState(true)
 
   useEffect(() => {
@@ -464,7 +469,7 @@ export function Overlays(props: {
                   <Root
                     data-fading-out={fadingOut ? '' : undefined}
                     data-overlays={overlaysFlash ? '' : undefined}
-                    ref={setRootElement}
+                    ref={handleRootElementRef}
                     $zIndex={zIndex}
                   >
                     <DocumentReporter documentIds={documentIds} perspective={perspective} />
