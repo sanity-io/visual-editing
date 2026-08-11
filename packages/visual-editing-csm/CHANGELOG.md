@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.15
+
+### Patch Changes
+
+- [#3560](https://github.com/sanity-io/visual-editing/pull/3560) [`30ddf14`](https://github.com/sanity-io/visual-editing/commit/30ddf1414558d60f2b1178764f1d952dddc9c4c5) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/client to ^7.26.2
+
+- Updated dependencies [[`30ddf14`](https://github.com/sanity-io/visual-editing/commit/30ddf1414558d60f2b1178764f1d952dddc9c4c5)]:
+  - @sanity/visual-editing-types@2.0.14
+
 ## 3.0.14
 
 ### Patch Changes

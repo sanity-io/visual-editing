@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.4
+
+### Patch Changes
+
+- [#3560](https://github.com/sanity-io/visual-editing/pull/3560) [`30ddf14`](https://github.com/sanity-io/visual-editing/commit/30ddf1414558d60f2b1178764f1d952dddc9c4c5) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/client to ^7.26.2
+
+- [#3572](https://github.com/sanity-io/visual-editing/pull/3572) [`46291d1`](https://github.com/sanity-io/visual-editing/commit/46291d1e713233bf5febfc8d082d1d82c2f329a5) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/comlink to ^4.0.3
+
+- [#3573](https://github.com/sanity-io/visual-editing/pull/3573) [`6e88ecc`](https://github.com/sanity-io/visual-editing/commit/6e88ecc8ba5ff771d82a5359087c18c38fa07493) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/presentation-comlink to ^2.2.3
+
+- [#3587](https://github.com/sanity-io/visual-editing/pull/3587) [`af1c91e`](https://github.com/sanity-io/visual-editing/commit/af1c91e998a18fc591e2ed1a6331807e26ee7f62) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/presentation-comlink to ^2.2.3
+
+- Updated dependencies [[`30ddf14`](https://github.com/sanity-io/visual-editing/commit/30ddf1414558d60f2b1178764f1d952dddc9c4c5)]:
+  - @sanity/visual-editing-csm@3.0.15
+
 ## 2.1.3
 
 ### Patch Changes
