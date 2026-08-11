@@ -11,12 +11,7 @@ catalog:
   '@sanity/pkg-utils': ^12.0.1
   '@sanity/tsconfig': 2.2.1
   '@sanity/types': ^6.6.0
-  # Studio-side consumers (apps/studio, @repo/sanity-schema) render inside the
-  # `sanity` React tree, so they have to stay on the same major as `sanity`
-  # depends on (still `^3.5.1` as of sanity@6.9.1). `@sanity/visual-editing`
-  # and `-standalone` depend on ^4.0.0 directly instead, since they run in the
-  # preview frame, not in the Studio.
-  '@sanity/ui': ^3.4.3
+  '@sanity/ui': ^4.0.0
   '@sanity/util': ^6.6.0
   '@sanity/vision': ^6.6.0
   '@types/node': ^24.13.3

@@ -22,8 +22,8 @@ catalogs:
       specifier: 2.2.1
       version: 2.2.1
     '@sanity/ui':
-      specifier: ^3.4.3
-      version: 3.4.3
+      specifier: ^4.0.0
+      version: 4.0.1
     '@sanity/vision':
       specifier: ^6.6.0
       version: 6.6.0
@@ -393,7 +393,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/preview-url-secret
       '@sanity/ui':
-        specifier: 'catalog:'
+        specifier: ^3.4.3
         version: 3.4.3(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.8(react@19.2.8))(react-is@19.2.8)(react@19.2.8)(styled-components@6.4.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       '@sanity/vercel-protection-bypass':
         specifier: ^5.0.19
@@ -515,7 +515,7 @@ importers:
         specifier: 'catalog:'
         version: 2.2.1
       '@sanity/ui':
-        specifier: 'catalog:'
+        specifier: ^3.4.3
         version: 3.4.3(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.8(react@19.2.8))(react-is@19.2.8)(react@19.2.8)(styled-components@6.4.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       '@sanity/visual-editing-csm':
         specifier: workspace:*
@@ -759,7 +759,7 @@ importers:
         specifier: ^6.6.0
         version: 6.6.0(@types/react@19.2.17)
       '@sanity/ui':
-        specifier: ^4.0.0
+        specifier: 'catalog:'
         version: 4.0.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.4.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       '@sanity/visual-editing-csm':
         specifier: workspace:*
@@ -15346,7 +15346,7 @@ snapshots:
     dependencies:
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@juggle/resize-observer': 3.4.0
-      '@sanity/color': 3.0.7
+      '@sanity/color': 3.0.8
       '@sanity/icons': 5.2.1(react@19.2.8)
       csstype: 3.2.3
       motion: 12.42.2(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
