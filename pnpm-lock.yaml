@@ -533,8 +533,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       '@sanity/presentation-comlink':
-        specifier: ^2.2.0
-        version: 2.2.0(@sanity/client@7.26.2)(@sanity/types@6.9.1(@types/react@19.2.17))
+        specifier: ^2.2.3
+        version: 2.2.3
       '@sanity/visual-editing-csm':
         specifier: workspace:*
         version: link:../visual-editing-csm
@@ -681,8 +681,8 @@ importers:
         specifier: ^0.18.1
         version: 0.18.1(xstate@5.32.5)
       '@sanity/presentation-comlink':
-        specifier: ^2.2.0
-        version: 2.2.0(@sanity/client@7.26.2)(@sanity/types@6.9.1(@types/react@19.2.17))
+        specifier: ^2.2.3
+        version: 2.2.3
       '@sanity/preview-url-secret':
         specifier: workspace:*
         version: link:../preview-url-secret
@@ -4497,8 +4497,8 @@ packages:
       babel-plugin-react-compiler:
         optional: true
 
-  '@sanity/presentation-comlink@2.2.0':
-    resolution: {integrity: sha512-uHiiJNWER36S/M2R9B7iwf+R2GMV267kQCfIpQiGX+2C3aHwjFHjaEiPBF0aPOyBkHV2OfB3l7XSzyLIXYuQHQ==}
+  '@sanity/presentation-comlink@2.2.3':
+    resolution: {integrity: sha512-XRsLYFNq6DhMm+Ddt+lWzV4nuARmteYAYHrrbKFzpOpt9hCBsLjWbvTELxohEzhIFNoxbVBaRcY6GDB1/ANRFw==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
   '@sanity/prism-groq@1.1.2':
@@ -4652,16 +4652,6 @@ packages:
     peerDependencies:
       react: ^19.2.2
       sanity: ^6.9.1
-
-  '@sanity/visual-editing-types@1.1.8':
-    resolution: {integrity: sha512-4Hu3J8qDLanymnSapRzKwHlQl6SCsBbkL1o5fSMVbWVHvTk/j2uGLLNTsjASICTqUwSm3fwWlyahzCy2uS/LvQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@sanity/client': ^7.26.2
-      '@sanity/types': ^6.9.1
-    peerDependenciesMeta:
-      '@sanity/types':
-        optional: true
 
   '@sanity/webhook@4.0.4':
     resolution: {integrity: sha512-c8LmzR5Wx93zJ10ohhp0XlmPrTNSFyvPcLbNY/sN45Wj5VOngz4FbBMbX9j64sSQLt+676U6OhiVfjs1yw3YCw==}
@@ -14845,13 +14835,12 @@ snapshots:
       - vite
       - vue-tsc
 
-  '@sanity/presentation-comlink@2.2.0(@sanity/client@7.26.2)(@sanity/types@6.9.1(@types/react@19.2.17))':
+  '@sanity/presentation-comlink@2.2.3':
     dependencies:
+      '@sanity/client': 7.26.2
       '@sanity/comlink': 4.0.3
-      '@sanity/visual-editing-types': 1.1.8(@sanity/client@7.26.2)(@sanity/types@6.9.1(@types/react@19.2.17))
-    transitivePeerDependencies:
-      - '@sanity/client'
-      - '@sanity/types'
+      '@sanity/visual-editing-types': link:packages/visual-editing-types
+      xstate: 5.32.5
 
   '@sanity/prism-groq@1.1.2': {}
 
@@ -15281,12 +15270,6 @@ snapshots:
       - codemirror
       - react-dom
       - styled-components
-
-  '@sanity/visual-editing-types@1.1.8(@sanity/client@7.26.2)(@sanity/types@6.9.1(@types/react@19.2.17))':
-    dependencies:
-      '@sanity/client': 7.26.2
-    optionalDependencies:
-      '@sanity/types': 6.9.1(@types/react@19.2.17)
 
   '@sanity/webhook@4.0.4': {}
 
@@ -20139,7 +20122,7 @@ snapshots:
       '@sanity/migrate': 8.0.2(@types/react@19.2.17)(xstate@5.32.5)
       '@sanity/mutate': 0.18.1(xstate@5.32.5)
       '@sanity/mutator': 6.9.1(@types/react@19.2.17)
-      '@sanity/presentation-comlink': 2.2.0(@sanity/client@7.26.2)(@sanity/types@6.9.1(@types/react@19.2.17))
+      '@sanity/presentation-comlink': 2.2.3
       '@sanity/preview-url-secret': link:packages/preview-url-secret
       '@sanity/prism-groq': 1.1.2
       '@sanity/schema': 6.9.1(@types/react@19.2.17)
@@ -20287,7 +20270,7 @@ snapshots:
       '@sanity/migrate': 8.0.2(@types/react@19.2.17)(xstate@5.32.5)
       '@sanity/mutate': 0.18.1(xstate@5.32.5)
       '@sanity/mutator': 6.9.1(@types/react@19.2.17)
-      '@sanity/presentation-comlink': 2.2.0(@sanity/client@7.26.2)(@sanity/types@6.9.1(@types/react@19.2.17))
+      '@sanity/presentation-comlink': 2.2.3
       '@sanity/preview-url-secret': link:packages/preview-url-secret
       '@sanity/prism-groq': 1.1.2
       '@sanity/schema': 6.9.1(@types/react@19.2.17)
