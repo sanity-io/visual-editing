@@ -87,8 +87,10 @@ describe('Overlays', () => {
     await act(render)
     expect(container.textContent).toContain('Loading')
 
-    suspender.resume()
-    await act(render)
+    await act(async () => {
+      suspender.resume()
+      render()
+    })
     expect(container.childElementCount).toBeGreaterThan(0)
     expect(container.textContent).not.toContain('Loading')
   })
