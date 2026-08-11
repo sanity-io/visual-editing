@@ -8,7 +8,9 @@
     "dist"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -50,7 +52,7 @@
     "@sanity/pkg-utils": "catalog:",
     "@sanity/preview-url-secret": "workspace:^",
     "@sanity/tsconfig": "catalog:",
-    "@sanity/ui": "^3.4.3",
+    "@sanity/ui": "catalog:",
     "@sanity/visual-editing-csm": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -65,7 +67,7 @@
     "@sanity/assist": "catalog:",
     "@sanity/color-input": "catalog:",
     "@sanity/icons": "catalog:",
-    "@sanity/ui": "^3.4.3",
+    "@sanity/ui": "catalog:",
     "rxjs": "catalog:",
     "sanity": "catalog:",
     "sanity-plugin-asset-source-unsplash": "catalog:"
