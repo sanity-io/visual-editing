@@ -22,7 +22,7 @@ export function FeatureHighlight(props: {
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
       className=""
-      variant={stegaClean(section.style?.variant)}
+      variant={section.style?.variant}
     >
       <div className="relative w-full overflow-hidden">
         <div className="">

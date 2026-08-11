@@ -1,7 +1,7 @@
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
 import Link from 'next/link'
-import {type StegaBranded, stegaClean} from 'next-sanity'
+import type {StegaBranded} from 'next-sanity'
 
 import {Image} from '@/components/image'
 import type {FrontPageQueryResult} from '@/sanity.types'
@@ -76,7 +76,7 @@ export function FeaturedProducts(props: {
         type: data._type,
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
-      variant={stegaClean(section.style?.variant)}
+      variant={section.style?.variant}
     >
       <div className="flex w-full flex-col gap-4 p-4 pb-7 sm:px-5 md:flex-row md:px-6 md:pb-8">
         <div className="w-full flex-shrink-0 md:max-w-44">
