@@ -1,30 +1,28 @@
 import {act, type ReactNode, Suspense} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
-import {afterAll, afterEach, beforeAll, describe, expect, test} from 'vitest'
+import {afterAll, afterEach, beforeAll, describe, expect, test, vi} from 'vitest'
 
 import {Overlays} from './Overlays'
+
+const controllerRoots = vi.hoisted(() => [] as (HTMLElement | null)[])
+vi.mock('./useController', () => ({
+  useController: (rootElement: HTMLElement | null) => {
+    controllerRoots.push(rootElement)
+    return {current: null}
+  },
+}))
 
 const actEnvironment = globalThis as typeof globalThis & {
   IS_REACT_ACT_ENVIRONMENT?: boolean
 }
 const originalActEnvironment = actEnvironment.IS_REACT_ACT_ENVIRONMENT
-const originalFonts = Object.getOwnPropertyDescriptor(document, 'fonts')
 
 beforeAll(() => {
   actEnvironment.IS_REACT_ACT_ENVIRONMENT = true
-  Object.defineProperty(document, 'fonts', {
-    configurable: true,
-    value: {ready: Promise.resolve()},
-  })
 })
 
 afterAll(() => {
   actEnvironment.IS_REACT_ACT_ENVIRONMENT = originalActEnvironment
-  if (originalFonts) {
-    Object.defineProperty(document, 'fonts', originalFonts)
-  } else {
-    Reflect.deleteProperty(document, 'fonts')
-  }
 })
 
 function createSuspender() {
@@ -63,6 +61,7 @@ describe('Overlays', () => {
       }
     })
     mounted.length = 0
+    controllerRoots.length = 0
   })
 
   test('can be hidden and revealed by Suspense', async () => {
@@ -84,6 +83,8 @@ describe('Overlays', () => {
     await act(render)
     expect(container.childElementCount).toBeGreaterThan(0)
     expect(container.textContent).not.toContain('Loading')
+    expect(controllerRoots.at(-1)).toBeInstanceOf(HTMLElement)
+    controllerRoots.length = 0
 
     suspender.suspend()
     await act(render)
@@ -95,5 +96,6 @@ describe('Overlays', () => {
     })
     expect(container.childElementCount).toBeGreaterThan(0)
     expect(container.textContent).not.toContain('Loading')
+    expect(controllerRoots).not.toContain(null)
   })
 })
