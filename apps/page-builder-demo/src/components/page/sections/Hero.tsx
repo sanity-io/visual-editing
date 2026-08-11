@@ -1,11 +1,12 @@
+import {stegaClean} from 'next-sanity'
+
 import {Image} from '@/components/image'
-import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
-import {HeroSectionData} from '../types'
+import {HeroSectionData, PageQueryData} from '../types'
 
-export function Hero(props: {page: NonNullable<FrontPageQueryResult>; section: HeroSectionData}) {
+export function Hero(props: {page: NonNullable<PageQueryData>; section: HeroSectionData}) {
   const {page: data, section} = props
 
   return (
@@ -17,7 +18,7 @@ export function Hero(props: {page: NonNullable<FrontPageQueryResult>; section: H
       }).toString()}
       className="relative flex items-center justify-center px-4 py-6 sm:px-5 sm:py-7 md:px-7 md:py-9"
       style={{cursor: 'crosshair'}} // Useful for testing overlay cursor overrides
-      variant={section.style?.variant}
+      variant={stegaClean(section.style?.variant)}
     >
       <div className="relative z-10 p-5 text-center backdrop-blur-xl">
         {section.headline ? (

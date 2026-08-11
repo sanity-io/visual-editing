@@ -1,13 +1,13 @@
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
 import Link from 'next/link'
+import {stegaClean} from 'next-sanity'
 
 import {Image} from '@/components/image'
-import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
-import {FeaturedProductsSectionData, PageData} from '../types'
+import {FeaturedProductsSectionData, PageData, PageQueryData} from '../types'
 
 function FeaturedProductsList(props: {
   id: string
@@ -63,7 +63,7 @@ function FeaturedProductsList(props: {
 }
 
 export function FeaturedProducts(props: {
-  page: NonNullable<FrontPageQueryResult>
+  page: NonNullable<PageQueryData>
   section: FeaturedProductsSectionData
 }) {
   const {page: data, section} = props
@@ -75,7 +75,7 @@ export function FeaturedProducts(props: {
         type: data._type,
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
-      variant={section.style?.variant}
+      variant={stegaClean(section.style?.variant)}
     >
       <div className="flex w-full flex-col gap-4 p-4 pb-7 sm:px-5 md:flex-row md:px-6 md:pb-8">
         <div className="w-full flex-shrink-0 md:max-w-44">

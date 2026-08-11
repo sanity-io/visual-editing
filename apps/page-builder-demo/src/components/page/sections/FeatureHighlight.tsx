@@ -2,14 +2,13 @@ import {stegaClean} from 'next-sanity'
 import Link from 'next/link'
 
 import {Image} from '@/components/image'
-import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
-import type {FeatureHighlightSectionData} from '../types'
+import type {FeatureHighlightSectionData, PageQueryData} from '../types'
 
 export function FeatureHighlight(props: {
-  page: NonNullable<FrontPageQueryResult>
+  page: NonNullable<PageQueryData>
   section: FeatureHighlightSectionData
 }) {
   const {page: data, section} = props
@@ -22,7 +21,7 @@ export function FeatureHighlight(props: {
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
       className=""
-      variant={section.style?.variant}
+      variant={stegaClean(section.style?.variant)}
     >
       <div className="relative w-full overflow-hidden">
         <div className="">

@@ -1,15 +1,15 @@
 import type {SanityDocument} from '@sanity/client'
 import {createDataAttribute, useOptimistic} from '@sanity/visual-editing/react'
+import {stegaClean} from 'next-sanity'
 import {useMemo} from 'react'
 
-import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
 import {ProductModel} from '../ProductModel'
-import {IntroSectionData, PageData} from '../types'
+import {IntroSectionData, PageData, PageQueryData} from '../types'
 
-export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: IntroSectionData}) {
+export function Intro(props: {page: NonNullable<PageQueryData>; section: IntroSectionData}) {
   const {page: data, section} = props
 
   const intro = useOptimistic<string | null | undefined, SanityDocument<PageData>>(
@@ -61,7 +61,7 @@ export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: 
         type: data._type,
         path: `sections[_key=="${section._key}"]`,
       }).toString()}
-      variant={section.style?.variant}
+      variant={stegaClean(section.style?.variant)}
     >
       <div className="flex w-full flex-col gap-4 p-4 pb-7 sm:px-5 md:flex-row md:px-6 md:pb-8">
         {section.headline && (
