@@ -12,7 +12,7 @@ import {
   studioTheme,
   ThemeProvider,
   usePrefersDark,
-} from '@sanity/ui/_visual-editing'
+} from '@sanity/ui'
 import type {Meta, StoryObj} from '@storybook/react'
 import {fn} from '@storybook/test'
 

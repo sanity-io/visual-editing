@@ -1,6 +1,6 @@
 import type {SchemaUnionNode} from '@sanity/presentation-comlink'
 import type {InsertMenuOptions, SchemaType} from '@sanity/types'
-import {Popover} from '@sanity/ui/_visual-editing'
+import {Popover} from '@sanity/ui/popover'
 import {type FunctionComponent} from 'react'
 
 import {InsertMenu as VendoredInsertMenu} from '../../ui/insert-menu/InsertMenu'

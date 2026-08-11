@@ -31,7 +31,9 @@
     "!src/**/stories/"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -110,7 +112,7 @@
     "@sanity/presentation-comlink": "^2.2.0",
     "@sanity/preview-url-secret": "workspace:^",
     "@sanity/types": "catalog:",
-    "@sanity/ui": "^3.4.3",
+    "@sanity/ui": "catalog:",
     "@sanity/visual-editing-csm": "workspace:^",
     "@vercel/stega": "^1.1.0",
     "dequal": "^2.0.3",
@@ -198,7 +200,7 @@
     "root": true
   },
   "engines": {
-    "node": ">=20.19"
+    "node": ">=22.12"
   },
   "inlinedDependencies": {
     "@sanity/telemetry": "1.1.0",

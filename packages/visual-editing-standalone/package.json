@@ -25,11 +25,14 @@
     "dist"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "build": "tsdown",
@@ -44,6 +47,7 @@
     "@sanity/tsconfig": "catalog:",
     "@sanity/tsdown-config": "^0.19.6",
     "@sanity/visual-editing": "workspace:*",
+    "@tsdown/css": "^0.22.14",
     "eslint": "^8.57.1",
     "tsdown": "^0.22.13",
     "typescript": "catalog:",
@@ -61,35 +65,31 @@
     "node": ">=20.19"
   },
   "inlinedDependencies": {
-    "@emotion/is-prop-valid": "1.4.0",
-    "@emotion/memoize": "0.9.0",
     "@floating-ui/core": "1.8.0",
     "@floating-ui/dom": "1.8.0",
     "@floating-ui/react-dom": "2.1.9",
     "@floating-ui/utils": "0.2.12",
-    "@juggle/resize-observer": "3.4.0",
     "@sanity/client": "7.24.0",
-    "@sanity/color": "3.0.7",
+    "@sanity/color": "3.0.8",
     "@sanity/comlink": "4.0.1",
     "@sanity/diff-match-patch": "3.2.0",
     "@sanity/icons": "5.2.1",
     "@sanity/mutate": "0.18.1",
     "@sanity/presentation-comlink": "2.2.0",
     "@sanity/types": "6.6.0",
-    "@sanity/ui": "3.4.3",
+    "@sanity/ui": "4.0.1",
     "@sanity/visual-editing-types": "1.1.8",
     "@vercel/stega": "1.1.0",
     "compute-scroll-into-view": "3.1.1",
-    "framer-motion": "12.42.2",
+    "framer-motion": "13.1.0",
     "lodash": "4.18.1",
     "lodash-es": "4.18.1",
     "mendoza": "3.0.8",
-    "motion": "12.42.2",
-    "motion-dom": "12.42.2",
-    "motion-utils": "12.39.0",
+    "motion": "13.1.0",
+    "motion-dom": "13.0.0",
+    "motion-utils": "13.0.0",
     "nanoid": "5.1.16",
     "react": "19.2.8",
-    "react-compiler-runtime": "1.0.0",
     "react-dom": "19.2.8",
     "react-is": "19.2.8",
     "rxjs": "7.8.2",
@@ -109,7 +109,8 @@
   "publishConfig": {
     "exports": {
       ".": "./dist/index.js",
-      "./package.json": "./package.json"
+      "./package.json": "./package.json",
+      "./style.css": "./dist/style.css"
     }
   }
 }

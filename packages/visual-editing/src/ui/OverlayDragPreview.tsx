@@ -1,4 +1,4 @@
-import {Card, usePrefersDark, useTheme_v2} from '@sanity/ui/_visual-editing'
+import {Card, usePrefersDark, useTheme_v2} from '@sanity/ui'
 import type {FunctionComponent} from 'react'
 import {styled} from 'styled-components'
 
