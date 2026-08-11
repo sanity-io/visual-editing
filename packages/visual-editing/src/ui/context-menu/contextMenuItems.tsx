@@ -230,8 +230,7 @@ const InsertMenuWrapper: FunctionComponent<{
         width,
         __unstable_margins: [4, 4, 4, 4],
       }}
-      // oxlint-disable-next-line typescript/no-deprecated
-      space={2}
+      gap={2}
       text={label}
     >
       <InsertMenu node={parent} onSelect={onSelect} />

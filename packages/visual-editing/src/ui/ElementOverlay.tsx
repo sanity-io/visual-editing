@@ -386,12 +386,7 @@ const ElementOverlayInner: FunctionComponent<ElementOverlayProps> = (props) => {
                           <PointerEvents>
                             {nodePluginCollections?.map((nodePluginCollection, index) => (
                               <Fragment key={nodePluginCollection.id}>
-                                <Stack
-                                  role="group"
-                                  paddingY={1}
-                                  // oxlint-disable-next-line typescript/no-deprecated
-                                  space={0}
-                                >
+                                <Stack role="group" paddingY={1} gap={0}>
                                   <MenuItem
                                     paddingY={2}
                                     text={

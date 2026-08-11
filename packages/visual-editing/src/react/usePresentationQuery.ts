@@ -50,24 +50,22 @@ function reducer<QueryString extends string>(
 ): UsePresentationQueryReturns<QueryString> {
   switch (type) {
     case 'query-change':
-      return dequal(state, payload)
-        ? state
-        : {
-            ...state,
-            data: dequal(state.data, payload.data)
-              ? (state.data as ClientReturn<QueryString>)
-              : payload.data,
-            sourceMap: dequal(state.sourceMap, payload.sourceMap)
-              ? state.sourceMap
-              : payload.sourceMap,
-            perspective: dequal(state.perspective, payload.perspective)
-              ? (state.perspective as Exclude<ClientPerspective, 'raw'>)
-              : payload.perspective,
-            variant:
-              'variant' in state && dequal(state.variant, payload.variant)
-                ? state.variant
-                : payload.variant,
-          }
+      if (dequal(state, payload)) return state
+
+      const current = state.perspective === null ? undefined : state
+      return {
+        data: current && dequal(current.data, payload.data) ? current.data : payload.data,
+        sourceMap:
+          current && dequal(current.sourceMap, payload.sourceMap)
+            ? current.sourceMap
+            : payload.sourceMap,
+        perspective:
+          current && dequal(current.perspective, payload.perspective)
+            ? current.perspective
+            : payload.perspective,
+        variant:
+          current && dequal(current.variant, payload.variant) ? current.variant : payload.variant,
+      }
     default:
       return state
   }

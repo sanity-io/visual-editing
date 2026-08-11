@@ -2,9 +2,7 @@
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "options": {
     "typeAware": true,
-    // typeCheck reports project TypeScript diagnostics that are already covered by
-    // package `test`/`vitest --typecheck` and are noisy across Svelte/pkg-utils configs
-    "typeCheck": false,
+    "typeCheck": true,
     "denyWarnings": true,
     "reportUnusedDisableDirectives": "error"
   },

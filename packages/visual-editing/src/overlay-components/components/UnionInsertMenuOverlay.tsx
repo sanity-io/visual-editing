@@ -180,9 +180,9 @@ export const UnionInsertMenuOverlay: OverlayComponent<
   return (
     <Flex
       height="fill"
-      width="fill"
       direction={direction === 'horizontal' ? 'row' : 'column'}
       justify="space-between"
+      style={{width: '100%'}}
     >
       <HoverArea
         element={element}
