@@ -1,5 +1,6 @@
 import type {SanityDocument} from '@sanity/client'
 import {createDataAttribute, useOptimistic} from '@sanity/visual-editing/react'
+import type {StegaBranded} from 'next-sanity'
 import {useMemo} from 'react'
 
 import type {FrontPageQueryResult} from '@/sanity.types'
@@ -9,7 +10,10 @@ import {PageSection} from '../PageSection'
 import {ProductModel} from '../ProductModel'
 import {IntroSectionData, PageData} from '../types'
 
-export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: IntroSectionData}) {
+export function Intro(props: {
+  page: NonNullable<StegaBranded<FrontPageQueryResult>>
+  section: IntroSectionData
+}) {
   const {page: data, section} = props
 
   const intro = useOptimistic<string | null | undefined, SanityDocument<PageData>>(

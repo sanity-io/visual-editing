@@ -2,6 +2,7 @@
 
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
+import type {StegaBranded} from 'next-sanity'
 
 import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
@@ -13,7 +14,7 @@ import {Intro} from './sections/Intro'
 import {Section} from './sections/Section'
 import {PageData, PageSection} from './types'
 
-export function Page(props: {data: FrontPageQueryResult}) {
+export function Page(props: {data: StegaBranded<FrontPageQueryResult>}) {
   const {data} = props
 
   const sections = useOptimistic<PageSection[] | null | undefined, SanityDocument<PageData>>(

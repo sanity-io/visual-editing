@@ -1,6 +1,7 @@
 import type {SanityDocument} from '@sanity/client'
 import {useOptimistic} from '@sanity/visual-editing/react'
 import Link from 'next/link'
+import type {StegaBranded} from 'next-sanity'
 
 import {Image} from '@/components/image'
 import type {FrontPageQueryResult} from '@/sanity.types'
@@ -63,7 +64,7 @@ function FeaturedProductsList(props: {
 }
 
 export function FeaturedProducts(props: {
-  page: NonNullable<FrontPageQueryResult>
+  page: NonNullable<StegaBranded<FrontPageQueryResult>>
   section: FeaturedProductsSectionData
 }) {
   const {page: data, section} = props

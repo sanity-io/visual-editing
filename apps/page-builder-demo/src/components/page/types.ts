@@ -1,6 +1,10 @@
+import type {StegaBranded} from 'next-sanity'
+
 import type {FrontPageQueryResult} from '@/sanity.types'
 
-export type PageSection = NonNullable<NonNullable<FrontPageQueryResult>['sections']>[number]
+export type PageSection = NonNullable<
+  NonNullable<StegaBranded<FrontPageQueryResult>>['sections']
+>[number]
 
 // @TODO can we be rid of these?
 export interface SectionStyleData {

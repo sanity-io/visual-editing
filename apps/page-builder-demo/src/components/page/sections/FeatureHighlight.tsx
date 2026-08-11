@@ -1,4 +1,4 @@
-import {stegaClean} from 'next-sanity'
+import {type StegaBranded, stegaClean} from 'next-sanity'
 import Link from 'next/link'
 
 import {Image} from '@/components/image'
@@ -9,7 +9,7 @@ import {PageSection} from '../PageSection'
 import type {FeatureHighlightSectionData} from '../types'
 
 export function FeatureHighlight(props: {
-  page: NonNullable<FrontPageQueryResult>
+  page: NonNullable<StegaBranded<FrontPageQueryResult>>
   section: FeatureHighlightSectionData
 }) {
   const {page: data, section} = props
