@@ -8,13 +8,23 @@ const actEnvironment = globalThis as typeof globalThis & {
   IS_REACT_ACT_ENVIRONMENT?: boolean
 }
 const originalActEnvironment = actEnvironment.IS_REACT_ACT_ENVIRONMENT
+const originalFonts = Object.getOwnPropertyDescriptor(document, 'fonts')
 
 beforeAll(() => {
   actEnvironment.IS_REACT_ACT_ENVIRONMENT = true
+  Object.defineProperty(document, 'fonts', {
+    configurable: true,
+    value: {ready: Promise.resolve()},
+  })
 })
 
 afterAll(() => {
   actEnvironment.IS_REACT_ACT_ENVIRONMENT = originalActEnvironment
+  if (originalFonts) {
+    Object.defineProperty(document, 'fonts', originalFonts)
+  } else {
+    Reflect.deleteProperty(document, 'fonts')
+  }
 })
 
 function createSuspender() {
