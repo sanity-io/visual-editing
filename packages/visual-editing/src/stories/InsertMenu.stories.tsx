@@ -105,8 +105,11 @@ function InsertMenuStory(props: InsertMenuStoryArgs) {
           : 'auto'
 
   return (
-    // oxlint-disable-next-line typescript/no-deprecated
-    <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme}>
+    <ThemeProvider
+      scheme={prefersDark ? 'dark' : 'light'}
+      // oxlint-disable-next-line typescript/no-deprecated
+      theme={studioTheme}
+    >
       <Box padding={4}>
         <Card radius={3} shadow={3}>
           <LayerProvider>
