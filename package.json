@@ -10,7 +10,7 @@
     "format": "oxfmt . --no-error-on-unmatched-pattern",
     "knip": "knip",
     "lint": "oxlint",
-    "lint:fix": "oxlint --fix --fix-suggestions",
+    "lint:fix": "oxlint --fix",
     "preview": "turbo run preview",
     "report:react-compiler-healthcheck": "turbo run react-compiler-healthcheck",
     "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
