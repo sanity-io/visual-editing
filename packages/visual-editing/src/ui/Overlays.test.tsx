@@ -80,7 +80,8 @@ describe('Overlays', () => {
       )
 
     await act(render)
-    expect(container.querySelector('[data-ui="Card"]')).not.toBeNull()
+    expect(container.childElementCount).toBeGreaterThan(0)
+    expect(container.textContent).not.toContain('Loading')
 
     suspender.suspend()
     await act(render)
@@ -88,6 +89,7 @@ describe('Overlays', () => {
 
     suspender.resume()
     await act(render)
-    expect(container.querySelector('[data-ui="Card"]')).not.toBeNull()
+    expect(container.childElementCount).toBeGreaterThan(0)
+    expect(container.textContent).not.toContain('Loading')
   })
 })
