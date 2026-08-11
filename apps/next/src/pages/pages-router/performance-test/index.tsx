@@ -48,7 +48,7 @@ export const getStaticProps = (async (context) => {
   const client = draftMode ? sanityClient : cdnSanityClient
 
   const data = await client.fetch(query, params, {
-    stega: draftMode ? true : false,
+    stega: draftMode,
   })
 
   return {
@@ -59,7 +59,7 @@ export const getStaticProps = (async (context) => {
 const Page = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const {query, params} = props
   const hook = useQuery<any>(query, params, {
-    // @ts-expect-error
+    // @ts-expect-error -- this performance fixture intentionally starts without initial data
     initial: null,
   })
   const data = hook.data || props.data

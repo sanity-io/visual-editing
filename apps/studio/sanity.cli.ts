@@ -5,7 +5,6 @@ export default defineCliConfig({
   reactStrictMode: true,
   reactCompiler: {target: '19'},
   deployment: {appId: 'kp75luobnkn8sgzxcjran97e', autoUpdates: true},
-  studioHost: 'visual-editing-test',
   vite: (config) => {
     return {
       ...config,

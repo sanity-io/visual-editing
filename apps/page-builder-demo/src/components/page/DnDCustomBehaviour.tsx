@@ -1,6 +1,6 @@
 'use client'
 
-import {at, createIfNotExists, insert, patch, remove} from '@sanity/mutate'
+import {at, insert, remove} from '@sanity/mutate'
 import {get as getFromPath} from '@sanity/util/paths'
 import {getArrayItemKeyAndParentPath, useDocuments} from '@sanity/visual-editing'
 import {useEffect} from 'react'
@@ -18,6 +18,7 @@ function getReferenceNodeAndInsertPosition(position: any) {
 }
 
 export function DnDCustomBehaviour() {
+  // oxlint-disable-next-line typescript/no-deprecated -- this fixture exercises the legacy custom DnD API
   const {getDocument} = useDocuments()
 
   useEffect(() => {

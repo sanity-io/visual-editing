@@ -98,7 +98,6 @@ export const Rotate3D = defineOverlayPlugin(() => ({
     )
 
     const handleClick = useCallback(() => {
-      console.log('COMMIT!?')
       closeExclusiveView()
       doc.commit()
     }, [closeExclusiveView, doc])

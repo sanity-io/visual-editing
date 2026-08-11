@@ -397,6 +397,7 @@ export type ShoeResult = {
 } | null
 
 // Query TypeMap
+// oxlint-disable-next-line import/no-unassigned-import -- activates the SanityQueries module augmentation
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {

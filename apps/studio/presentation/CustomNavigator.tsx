@@ -15,7 +15,7 @@ export function CustomNavigator() {
   return (
     <Card flex={1} height="fill">
       <Flex height="fill" direction="column" justify="space-between" flex={1}>
-        <Stack padding={2} space={1}>
+        <Stack gap={1} padding={2}>
           <Card
             as="button"
             onClick={() => navigate('/')}
@@ -55,7 +55,7 @@ export function CustomNavigator() {
             pressed={preview === '/product/highline'}
             radius={2}
           >
-            <Stack space={2}>
+            <Stack gap={2}>
               <Text size={0} muted>
                 Product
               </Text>
@@ -72,11 +72,10 @@ export function CustomNavigator() {
             <Text>DnD</Text>
           </Card>
         </Stack>
-        <Stack padding={2} space={1}>
+        <Stack gap={1} padding={2}>
           <MenuButton
             button={<Button icon={AddIcon} text="New Document" mode="ghost" />}
             id="create-menu-button"
-            placement="top-start"
             menu={
               <Menu>
                 <MenuItem
@@ -102,7 +101,7 @@ export function CustomNavigator() {
                         <DocumentIcon />
                       </Text>
                     </Box>
-                    <Stack flex={1} space={2}>
+                    <Stack flex={1} gap={2}>
                       <Text size={1} weight="medium">
                         Page (Basic)
                       </Text>
@@ -129,7 +128,7 @@ export function CustomNavigator() {
                         <SchemaIcon />
                       </Text>
                     </Box>
-                    <Stack flex={1} space={2}>
+                    <Stack flex={1} gap={2}>
                       <Text size={1} weight="medium">
                         Project
                       </Text>
@@ -156,7 +155,7 @@ export function CustomNavigator() {
                         <BulbOutlineIcon />
                       </Text>
                     </Box>
-                    <Stack flex={1} space={2}>
+                    <Stack flex={1} gap={2}>
                       <Text size={1} weight="medium">
                         Product
                       </Text>
@@ -168,7 +167,7 @@ export function CustomNavigator() {
                 </MenuItem>
               </Menu>
             }
-            popover={{portal: true}}
+            popover={{placement: 'top-start', portal: true}}
           />
         </Stack>
       </Flex>

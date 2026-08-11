@@ -13,8 +13,6 @@
     "**/legacy",
     "**/next-env.d.ts",
     "**/sanity.types.ts",
-    // Apps were not covered by the previous per-package eslint setup
-    "apps/**",
     // Oxlint has limited Svelte support; Svelte files keep framework-native checking
     "**/*.svelte"
   ],
@@ -67,6 +65,14 @@
     "oxc/no-accumulating-spread": "off"
   },
   "overrides": [
+    {
+      "files": [
+        "apps/next/**/*.{js,jsx,mjs,ts,tsx}",
+        "apps/live-next/**/*.{js,jsx,mjs,ts,tsx}",
+        "apps/page-builder-demo/**/*.{js,jsx,mjs,ts,tsx}"
+      ],
+      "plugins": ["nextjs"]
+    },
     {
       "files": ["**/*.stories.{js,jsx,mjs,cjs,ts,tsx}", "**/*.story.{js,jsx,mjs,cjs,ts,tsx}"],
       "rules": {

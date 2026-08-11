@@ -13,9 +13,7 @@ type Props = {
 }
 
 export default function ShoesPageClient(props: Props) {
-  const {data: products, sourceMap} = props
-
-  console.log({products, sourceMap})
+  const {data: products} = props
 
   return (
     <div className="min-h-screen bg-white">

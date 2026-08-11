@@ -1,5 +1,6 @@
 import {stegaClean} from '@sanity/client/stega'
 import {createDataAttribute, defineQuery} from 'next-sanity'
+import Image from 'next/image'
 
 import {DnDCustomBehaviour} from '@/components/page/DnDCustomBehaviour'
 import {sanityFetch} from '@/sanity/live'
@@ -166,7 +167,7 @@ export default async function Page() {
           <h2>Complex Layout</h2>
           <div className="mt-4 grid grid-cols-3 gap-4 [&>*:nth-child(1)]:col-span-2 [&>*:nth-child(4)]:col-span-2">
             <OptimisticSortOrder id={data._id}>
-              {data.children?.map((child, index) => (
+              {data.children?.map((child) => (
                 <div
                   data-sanity={createDataAttribute({
                     id: data._id,
@@ -178,7 +179,14 @@ export default async function Page() {
                   key={child._key}
                 >
                   <h3>{stegaClean(child.title)}</h3>
-                  <img src="https://placehold.co/600x400" alt="" className="mt-4 mb-4" />
+                  <Image
+                    src="https://placehold.co/600x400"
+                    alt=""
+                    className="mt-4 mb-4"
+                    height={400}
+                    unoptimized
+                    width={600}
+                  />
                   <p className="mt-3">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente repudiandae
                     distinctio, repellat officia quam odio repellendus, dolore nulla fuga corporis
@@ -206,7 +214,14 @@ export default async function Page() {
                   key={child._key}
                 >
                   <h3>{stegaClean(child.title)}</h3>
-                  <img src="https://placehold.co/600x400" alt="" className="mt-4 mb-4" />
+                  <Image
+                    src="https://placehold.co/600x400"
+                    alt=""
+                    className="mt-4 mb-4"
+                    height={400}
+                    unoptimized
+                    width={600}
+                  />
                   <p className="mt-3">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente repudiandae
                     distinctio, repellat officia quam odio repellendus, dolore nulla fuga corporis

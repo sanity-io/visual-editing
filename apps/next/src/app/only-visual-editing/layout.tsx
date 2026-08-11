@@ -17,8 +17,6 @@ export const metadata: Metadata = {
 export async function actionPerspectiveChange(perspective: ClientPerspective): Promise<void> {
   'use server'
 
-  console.log('actionPerspectiveChange', perspective)
-
   const {isEnabled} = await draftMode()
   if (!isEnabled) {
     console.warn('Draft mode is not enabled, skipping actionStudioPerspective')
@@ -34,11 +32,6 @@ export async function actionPerspectiveChange(perspective: ClientPerspective): P
   const jar = await cookies()
   const nextPerspective = Array.isArray(perspective) ? perspective.join(',') : perspective
   if (nextPerspective === jar.get(perspectiveCookieName)?.value) {
-    console.log('Perspective is the same, skipping', {
-      perspective,
-      nextPerspective,
-      prevPerspective: jar.get(perspectiveCookieName)?.value,
-    })
     return
   }
 
@@ -68,16 +61,13 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                 return
               }
               if (payload.source === 'manual') {
-                console.log('Revalidating everything')
                 return revalidatePath('/only-visual-editing', 'layout')
               }
               if (payload.source === 'mutation') {
                 if (payload.document.slug?.current) {
                   const tag = `${payload.document._type}:${payload.document.slug.current}`
-                  console.log('Revalidate slug', tag)
                   await revalidateTag(tag, {expire: 0})
                 }
-                console.log('Revalidate tag', payload.document._type)
                 return revalidateTag(payload.document._type, {expire: 0})
               }
             }}

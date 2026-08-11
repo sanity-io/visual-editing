@@ -9,7 +9,7 @@ import {
   type VisualEditingOptions,
 } from '@sanity/visual-editing/react'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation'
-import {useCallback, useEffect, useMemo, useState, useEffectEvent} from 'react'
+import {useCallback, useEffect, useMemo, useState} from 'react'
 
 /**
  * @public
@@ -27,18 +27,21 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
   const router = useRouter()
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
 
-  const handleHistoryUpdate = useEffectEvent((update: HistoryUpdate) => {
-    switch (update.type) {
-      case 'push':
-        return router.push(update.url)
-      case 'pop':
-        return router.back()
-      case 'replace':
-        return router.replace(update.url)
-      default:
-        throw new Error(`Unknown update type`, {cause: update})
-    }
-  })
+  const handleHistoryUpdate = useCallback(
+    (update: HistoryUpdate) => {
+      switch (update.type) {
+        case 'push':
+          return router.push(update.url)
+        case 'pop':
+          return router.back()
+        case 'replace':
+          return router.replace(update.url)
+        default:
+          throw new Error(`Unknown update type`, {cause: update})
+      }
+    },
+    [router],
+  )
   const history = useMemo<HistoryAdapter>(
     () => ({
       subscribe: (_navigate) => {
@@ -47,7 +50,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       },
       update: handleHistoryUpdate,
     }),
-    [],
+    [handleHistoryUpdate],
   )
 
   const pathname = usePathname()
