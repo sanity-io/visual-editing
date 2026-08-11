@@ -5,14 +5,7 @@ import {EnvelopeIcon} from '@sanity/icons/Envelope'
 import {InfoOutlineIcon} from '@sanity/icons/InfoOutline'
 import {SyncIcon} from '@sanity/icons/Sync'
 import type {ObjectSchemaType} from '@sanity/types'
-import {
-  Box,
-  Card,
-  LayerProvider,
-  studioTheme,
-  ThemeProvider,
-  usePrefersDark,
-} from '@sanity/ui/_visual-editing'
+import {Box, Card, LayerProvider, studioTheme, ThemeProvider, usePrefersDark} from '@sanity/ui'
 import type {Meta, StoryObj} from '@storybook/react'
 import {fn} from '@storybook/test'
 

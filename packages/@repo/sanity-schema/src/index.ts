@@ -1,3 +1,5 @@
+import '@sanity/ui/styles.css'
+
 export * from './cross-dataset-references'
 export * from './live-demo'
 export * from './page-builder-demo'

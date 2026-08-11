@@ -1,3 +1,4 @@
+import '@sanity/ui/styles.css'
 import {apiVersion, workspaces} from '@repo/env'
 import {
   crossDatasetReferencesPlugin,

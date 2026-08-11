@@ -9,9 +9,15 @@ test('exposes only the standalone runtime API', () => {
   expect(Object.keys(standalone).sort()).toEqual(['createDataAttribute', 'enableVisualEditing'])
 })
 
-test('has a single root entry point and no runtime dependencies', () => {
-  expect(Object.keys(pkg.exports).sort()).toEqual(['.', './package.json'])
-  expect(Object.keys(pkg.publishConfig.exports).sort()).toEqual(['.', './package.json'])
+test('exposes only the root entry point plus its stylesheet, and no runtime dependencies', () => {
+  // `@sanity/ui@4` ships static styles as a stylesheet, extracted into a
+  // package-internal `./style.css` asset (see `tsdown.config.ts` `css.inject`).
+  expect(Object.keys(pkg.exports).sort()).toEqual(['.', './package.json', './style.css'])
+  expect(Object.keys(pkg.publishConfig.exports).sort()).toEqual([
+    '.',
+    './package.json',
+    './style.css',
+  ])
   expect(pkg).not.toHaveProperty('dependencies')
   expect(pkg).not.toHaveProperty('peerDependencies')
 })

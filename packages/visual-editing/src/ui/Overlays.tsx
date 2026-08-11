@@ -1,3 +1,4 @@
+import '@sanity/ui/styles.css'
 import type {ClientPerspective} from '@sanity/client'
 import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import type {Status} from '@sanity/comlink'
@@ -10,7 +11,7 @@ import {
   studioTheme,
   ThemeProvider,
   usePrefersDark,
-} from '@sanity/ui/_visual-editing'
+} from '@sanity/ui'
 import {
   startTransition,
   useCallback,

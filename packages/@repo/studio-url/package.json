@@ -9,7 +9,7 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
@@ -34,5 +34,6 @@
     "@sanity/tsconfig": "catalog:",
     "typescript": "catalog:"
   },
-  "browserslist": "extends @sanity/browserslist-config"
+  "browserslist": "extends @sanity/browserslist-config",
+  "module": "./dist/index.js"
 }

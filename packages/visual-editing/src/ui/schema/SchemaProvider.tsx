@@ -207,7 +207,6 @@ export const SchemaProvider: FunctionComponent<
         if ('fields' in schemaType) {
           const objectField = schemaType.fields[next]
           if (!objectField && 'rest' in schemaType) {
-            // oxlint-disable-next-line react/react-compiler -- recursive call into rest schema; false positive MemoDependencies
             return fieldFromPath(schemaType.rest, path, schemaType, prevPath)
           }
           if (!rest.length) {

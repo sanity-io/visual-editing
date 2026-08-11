@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`957dcf6`](https://github.com/sanity-io/visual-editing/commit/957dcf6d43eb2179b365273241ce866bf1ab28c7), [`b6ced53`](https://github.com/sanity-io/visual-editing/commit/b6ced53e2a64b8f16ca9807023929af4f589d488)]:
+  - @sanity/visual-editing@6.0.0
+  - @sanity/core-loader@2.1.3
+
 ## 2.1.4
 
 ### Patch Changes

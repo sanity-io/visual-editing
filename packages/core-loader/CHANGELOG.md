@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.3
+
+### Patch Changes
+
+- [#3567](https://github.com/sanity-io/visual-editing/pull/3567) [`957dcf6`](https://github.com/sanity-io/visual-editing/commit/957dcf6d43eb2179b365273241ce866bf1ab28c7) Thanks [@stipsan](https://github.com/stipsan)! - Build with `@sanity/pkg-utils` v12 (tsdown). Internal build-tooling change; export paths for consumers are unchanged aside from dropping a broken `types` condition on the `./svelte` export that pointed at a non-existent `dist-svelte/index.d.ts`.
+
+- Updated dependencies [[`84c76e8`](https://github.com/sanity-io/visual-editing/commit/84c76e80b9a60343277f71bbfb6131987e8dabf3), [`957dcf6`](https://github.com/sanity-io/visual-editing/commit/957dcf6d43eb2179b365273241ce866bf1ab28c7)]:
+  - @sanity/visual-editing-csm@3.0.14
+
 ## 2.1.2
 
 ### Patch Changes

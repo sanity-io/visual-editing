@@ -8,14 +8,16 @@
     "dist"
   ],
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "source": "./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
-      "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
@@ -67,5 +69,6 @@
     "sanity": "catalog:",
     "sanity-plugin-asset-source-unsplash": "catalog:"
   },
-  "browserslist": "extends @sanity/browserslist-config"
+  "browserslist": "extends @sanity/browserslist-config",
+  "module": "./dist/index.js"
 }

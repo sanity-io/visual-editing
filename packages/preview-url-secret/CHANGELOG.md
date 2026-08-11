@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.3
+
+### Patch Changes
+
+- [#3567](https://github.com/sanity-io/visual-editing/pull/3567) [`957dcf6`](https://github.com/sanity-io/visual-editing/commit/957dcf6d43eb2179b365273241ce866bf1ab28c7) Thanks [@stipsan](https://github.com/stipsan)! - Build with `@sanity/pkg-utils` v12 (tsdown). Internal build-tooling change; export paths for consumers are unchanged aside from dropping a broken `types` condition on the `./svelte` export that pointed at a non-existent `dist-svelte/index.d.ts`.
+
 ## 4.1.2
 
 ### Patch Changes
