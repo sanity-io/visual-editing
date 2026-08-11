@@ -17,7 +17,7 @@ export default function CoverImage(props: CoverImageProps) {
       alt={source?.alt || ''}
       src={urlForImage(source)?.height(1000).width(2000).url() as string}
       sizes="100vw"
-      priority={priority}
+      preload={priority}
     />
   ) : (
     <div className="bg-slate-50" style={{paddingTop: '50%'}} />

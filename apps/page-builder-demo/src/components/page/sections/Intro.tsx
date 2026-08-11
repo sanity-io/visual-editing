@@ -17,7 +17,7 @@ export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: 
     (state, action) => {
       if (action.id === data._id) {
         if (!Array.isArray(action.document.sections)) {
-          console.log('WARNING', action.document.sections)
+          console.warn('Expected document sections to be an array', action.document.sections)
           return state
         }
         const intro = (
@@ -36,7 +36,7 @@ export function Intro(props: {page: NonNullable<FrontPageQueryResult>; section: 
     (state, action) => {
       if (action.id === data._id) {
         if (!Array.isArray(action.document.sections)) {
-          console.log('WARNING', action.document.sections)
+          console.warn('Expected document sections to be an array', action.document.sections)
           return state
         }
         const rotations = (

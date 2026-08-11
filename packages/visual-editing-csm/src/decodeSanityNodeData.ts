@@ -88,7 +88,6 @@ function decodeSanityObject(
       }
       return sanityLegacyNode.output
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error('Failed to parse sanity node', err)
       return sanityLegacyNode.output
     }

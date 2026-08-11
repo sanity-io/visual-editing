@@ -257,7 +257,6 @@ export const SchemaProvider: FunctionComponent<
       try {
         return fieldFromPath(schemaType, nodePath, undefined)
       } catch (e) {
-        // eslint-disable-next-line no-console
         if (e instanceof Error) console.warn(e.message)
         return {field: undefined, parent: undefined}
       }

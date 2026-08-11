@@ -13,13 +13,14 @@ const stegaClient = client.withConfig({
 })
 
 export default async function ShoesPage() {
+  const {isEnabled} = await draftMode()
   const {result, resultSourceMap} = await stegaClient.fetch(
     shoesList,
     {},
     {
       filterResponse: false,
-      perspective: (await draftMode()).isEnabled ? 'drafts' : 'published',
-      useCdn: (await draftMode()).isEnabled ? false : true,
+      perspective: isEnabled ? 'drafts' : 'published',
+      useCdn: !isEnabled,
       next: {revalidate: false, tags: ['shoe']},
     },
   )

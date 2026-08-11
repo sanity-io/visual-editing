@@ -54,7 +54,6 @@ export function getArrayItemKeyAndParentPath(pathOrNode: string | SanityNode): {
 
 export function getArrayDuplicatePatches(
   node: SanityNode,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   snapshot: SanityDocument<Record<string, any>>,
   position: 'before' | 'after' = 'after',
 ): NodePatchList {
@@ -68,7 +67,6 @@ export function getArrayDuplicatePatches(
 
 export function getArrayRemovePatches(
   node: SanityNode,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   snapshot: SanityDocument<Record<string, any>>,
 ): NodePatchList {
   const {path: arrayPath, key: itemKey} = getArrayItemKeyAndParentPath(node)

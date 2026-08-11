@@ -8,7 +8,6 @@ import {enqueueActions, fromPromise} from 'xstate'
 
 import type {VisualEditingNode} from '../../types'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const createDocumentMutator = (comlink: VisualEditingNode) => {
   const fetchSnapshot = fromPromise(
     async ({input, signal}: {input: {id: string; client: SanityClient}; signal: AbortSignal}) => {

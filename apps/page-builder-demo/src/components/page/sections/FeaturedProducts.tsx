@@ -21,15 +21,14 @@ function FeaturedProductsList(props: {
     FeaturedProductsSectionData['products'] | undefined,
     SanityDocument<PageData>
   >(_products, (state, action) => {
-    console.log(action)
     if (action.id === id && action.document.sections) {
       const section = action.document.sections.find((section) => section._key === sectionKey)
       if (section && section._type === 'featuredProducts') {
         return section.products
           ?.map((section: {_key: string} | undefined) =>
-            state?.find((s) => s._key === section?._key)!,
+            state?.find((product) => product._key === section?._key),
           )
-          .filter(Boolean)
+          .filter((product) => product !== undefined)
       }
     }
     return state

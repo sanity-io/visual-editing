@@ -25,7 +25,7 @@ export const handlePreview = ({client, preview}: HandlePreviewOptions): Handle =
 
     // Set default perspective and useCdn based on preview status
     const perspective = event.locals.preview ? 'drafts' : 'published'
-    const useCdn = event.locals.preview ? false : true
+    const useCdn = !event.locals.preview
 
     // Check if the request is to enable or disable previews
     if (event.url.pathname === enablePath) {

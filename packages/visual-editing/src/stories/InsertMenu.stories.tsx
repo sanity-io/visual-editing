@@ -26,6 +26,7 @@ const schemaTypes: ObjectSchemaType[] = [
     title: 'Hero',
     icon: DesktopIcon,
     fields: [],
+    // oxlint-disable-next-line typescript/no-deprecated
     __experimental_search: [],
   },
   {
@@ -34,6 +35,7 @@ const schemaTypes: ObjectSchemaType[] = [
     title: 'Logos',
     icon: SyncIcon,
     fields: [],
+    // oxlint-disable-next-line typescript/no-deprecated
     __experimental_search: [],
   },
   {
@@ -42,6 +44,7 @@ const schemaTypes: ObjectSchemaType[] = [
     title: 'Testimonials',
     icon: CommentIcon,
     fields: [],
+    // oxlint-disable-next-line typescript/no-deprecated
     __experimental_search: [],
   },
   {
@@ -50,6 +53,7 @@ const schemaTypes: ObjectSchemaType[] = [
     title: 'Apropos',
     icon: InfoOutlineIcon,
     fields: [],
+    // oxlint-disable-next-line typescript/no-deprecated
     __experimental_search: [],
   },
   {
@@ -58,6 +62,7 @@ const schemaTypes: ObjectSchemaType[] = [
     title: 'Newsletter',
     icon: EnvelopeIcon,
     fields: [],
+    // oxlint-disable-next-line typescript/no-deprecated
     __experimental_search: [],
   },
   {
@@ -65,6 +70,7 @@ const schemaTypes: ObjectSchemaType[] = [
     name: 'videos',
     icon: DocumentVideoIcon,
     fields: [],
+    // oxlint-disable-next-line typescript/no-deprecated
     __experimental_search: [],
   },
 ]
@@ -99,7 +105,11 @@ function InsertMenuStory(props: InsertMenuStoryArgs) {
           : 'auto'
 
   return (
-    <ThemeProvider scheme={prefersDark ? 'dark' : 'light'} theme={studioTheme}>
+    <ThemeProvider
+      scheme={prefersDark ? 'dark' : 'light'}
+      // oxlint-disable-next-line typescript/no-deprecated
+      theme={studioTheme}
+    >
       <Box padding={4}>
         <Card radius={3} shadow={3}>
           <LayerProvider>

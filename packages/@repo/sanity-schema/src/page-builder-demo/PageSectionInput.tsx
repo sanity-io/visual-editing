@@ -124,7 +124,7 @@ export function PageSectionInput(props: ObjectInputProps): React.JSX.Element {
   )
 
   return (
-    <Stack space={5}>
+    <Stack gap={5}>
       {symbolFieldMember && (
         <Card padding={4} style={{margin: '-20px -20px -20px'}}>
           <ObjectInputMember
@@ -137,7 +137,7 @@ export function PageSectionInput(props: ObjectInputProps): React.JSX.Element {
         </Card>
       )}
 
-      <FormFieldSet inputId="" level={level + 1} title="Overrides">
+      <FormFieldSet inputId="" level={level + 1} path={path} title="Overrides">
         {props.members.map((mem) => {
           if (isFieldMember(mem) && mem.name === 'symbol') {
             return null

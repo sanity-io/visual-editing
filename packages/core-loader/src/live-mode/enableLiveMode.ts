@@ -48,7 +48,6 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       perspective: ClientPerspective
       query: string
       params: QueryParams
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       result: any
       resultSourceMap?: ContentSourceMap | undefined
     }
@@ -183,13 +182,11 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const liveQueries = new Set<{
     query: string
     params: QueryParams
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $fetch: MapStore<QueryStoreState<any, any>>
   }>()
   const addLiveQuery = (
     query: string,
     params: QueryParams,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $fetch: MapStore<QueryStoreState<any, any>>,
   ) => {
     const liveQuery = {query, params, $fetch}

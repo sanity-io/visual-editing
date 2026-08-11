@@ -83,7 +83,10 @@ function checkTextNode(node: Node, inHead: boolean, sink: ReportSink): void {
     // Outside of `<head>`, text nodes are only suspicious in containers where they are never
     // rendered or where they act as a form value. Stega in rendered text is expected — it's
     // how visual editing locates editable content
-    switch (parentElement?.tagName.toUpperCase()) {
+    if (!parentElement) {
+      return
+    }
+    switch (parentElement.tagName.toUpperCase()) {
       case 'SCRIPT':
         kind = 'script'
         break

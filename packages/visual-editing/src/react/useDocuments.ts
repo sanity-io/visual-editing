@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {SanityDocument} from '@sanity/client'
 import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import {createIfNotExists, patch} from '@sanity/mutate'
@@ -6,7 +5,7 @@ import {isMaybePreviewIframe, isMaybePreviewWindow} from '@sanity/presentation-c
 import {get as getAtPath} from '@sanity/util/paths'
 import {useCallback} from 'react'
 
-import {isEmptyActor, type MutatorActor} from '../optimistic/context'
+import {isEmptyActor, type EmptyActor, type MutatorActor} from '../optimistic/context'
 import type {
   DocumentsGet,
   DocumentsMutate,
@@ -26,7 +25,12 @@ function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, ti
   }) as F
 }
 
-function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, actor: MutatorActor) {
+type OptimisticActor = MutatorActor | EmptyActor
+
+function getDocumentsAndSnapshot<T extends Record<string, any>>(
+  id: string,
+  actor: OptimisticActor,
+) {
   const inFrame = isMaybePreviewIframe()
   const inPopUp = isMaybePreviewWindow()
 
@@ -59,7 +63,7 @@ function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, acto
     if (snapshot) {
       resolve(snapshot)
     } else {
-      const subscriber = doc.on('ready', (event) => {
+      const subscriber = doc.on('ready', (event: unknown) => {
         // Assert type here as the original document mutator machine doesn't
         // emit a 'ready' event. We provide a custom action to emit it in this
         // package's internal `createDatasetMutator` function. <3 xstate.
@@ -91,7 +95,7 @@ function getDocumentsAndSnapshot<T extends Record<string, any>>(id: string, acto
   }
 }
 
-function createDocumentCommit<T extends Record<string, any>>(id: string, actor: MutatorActor) {
+function createDocumentCommit<T extends Record<string, any>>(id: string, actor: OptimisticActor) {
   return (): void => {
     const {draftDoc} = getDocumentsAndSnapshot<T>(id, actor)
     draftDoc.send({type: 'submit'})
@@ -101,10 +105,11 @@ function createDocumentCommit<T extends Record<string, any>>(id: string, actor: 
 /**
  * @deprecated - superseded by `createDocumentGetSnapshot`
  */
-function createDocumentGet<T extends Record<string, any>>(id: string, actor: MutatorActor) {
+function createDocumentGet<T extends Record<string, any>>(id: string, actor: OptimisticActor) {
   return <P extends Path<T, keyof T>>(
     path?: P,
   ): PathValue<T, P> | SanityDocument<T> | undefined => {
+    // oxlint-disable-next-line typescript/no-deprecated
     const {snapshot} = getDocumentsAndSnapshot<T>(id, actor)
 
     return path
@@ -115,13 +120,13 @@ function createDocumentGet<T extends Record<string, any>>(id: string, actor: Mut
 
 function createDocumentGetSnapshot<T extends Record<string, any>>(
   id: string,
-  actor: MutatorActor,
+  actor: OptimisticActor,
 ): () => Promise<SanityDocument<T> | null> {
   const {getSnapshot} = getDocumentsAndSnapshot<T>(id, actor)
   return getSnapshot
 }
 
-function createDocumentPatch<T extends Record<string, any>>(id: string, actor: MutatorActor) {
+function createDocumentPatch<T extends Record<string, any>>(id: string, actor: OptimisticActor) {
   return async (
     patches: OptimisticDocumentPatches<T>,
     options?: {commit?: boolean | {debounce: number}},
@@ -141,6 +146,7 @@ function createDocumentPatch<T extends Record<string, any>>(id: string, actor: M
        * @deprecated - use `getSnapshot` instead
        */
       get snapshot() {
+        // oxlint-disable-next-line typescript/no-deprecated
         return result.snapshot
       },
       getSnapshot,
@@ -180,15 +186,15 @@ export function useDocuments(): {
   getDocument: DocumentsGet
   mutateDocument: DocumentsMutate
 } {
-  const actor = useOptimisticActor() as MutatorActor
+  const actor = useOptimisticActor()
 
   const getDocument: DocumentsGet = useCallback(
     <T extends Record<string, any>>(documentId: string) => {
       return {
         id: documentId,
         commit: createDocumentCommit(documentId, actor),
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore - Type instantiation is excessively deep and possibly infinite.
+        // @ts-expect-error - Type instantiation is excessively deep and possibly infinite.
+        // oxlint-disable-next-line typescript/no-deprecated
         get: createDocumentGet(documentId, actor),
         getSnapshot: createDocumentGetSnapshot<T>(documentId, actor),
         patch: createDocumentPatch<T>(documentId, actor),

@@ -17,10 +17,12 @@ export function definePreviewUrl<SanityClientType>(
   options: PreviewUrlResolverOptions,
 ): PreviewUrlResolver<SanityClientType> {
   const {
+    // oxlint-disable-next-line typescript/no-deprecated
     draftMode,
     previewMode,
     origin = typeof location === 'undefined' ? 'https://localhost' : location.origin,
   } = options
+  // oxlint-disable-next-line typescript/no-deprecated
   const enableUrl = previewMode?.enable || draftMode?.enable
   let {preview = '/'} = options
   const productionUrl = new URL(preview, origin)

@@ -11,14 +11,14 @@ import {styled} from 'styled-components'
 export function StegaDebugger(props: InputProps): React.JSX.Element {
   if (isDocumentSchemaType(props.schemaType)) {
     return (
-      <Stack space={2}>
+      <Stack gap={2}>
         <DocumentDebugger />
         {props.renderDefault(props)}
       </Stack>
     )
   }
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {props.renderDefault(props)}
       <InputDebugger {...props} />
     </Stack>
@@ -52,7 +52,7 @@ function DocumentDebugger() {
         background: 'white',
       }}
     >
-      <Stack space={2}>
+      <Stack gap={2}>
         <Label size={0}>current focus path</Label>
         <Box overflow="auto" padding={1}>
           <Code size={0}>{studioPath.toString(focusPath) || 'undefined'}</Code>
@@ -63,7 +63,6 @@ function DocumentDebugger() {
 }
 
 function InputDebugger(props: InputProps) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const value = props.value as any
   const paneRouter = usePaneRouter()
   const {
@@ -111,7 +110,6 @@ function InputDebugger(props: InputProps) {
       stegaEncodeSourceMap({[sourcePath]: value}, resultSourceMap, {
         enabled: true,
         studioUrl: '/stega',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any),
     [resultSourceMap, value],
   )
@@ -123,10 +121,10 @@ function InputDebugger(props: InputProps) {
 
   return (
     <Card padding={2} tone="default" border>
-      <Stack space={4}>
+      <Stack gap={4}>
         <Label size={0}>edit links that updates focus path</Label>
         <Box overflow="auto" padding={1}>
-          <Stack space={2}>
+          <Stack gap={2}>
             {stegaEditLinks?.map(({href}: any) => {
               const [, relativePath] = href.split('/intent/edit/')
               const [pathname] = relativePath.split('?')
@@ -138,10 +136,8 @@ function InputDebugger(props: InputProps) {
                   key={href}
                   href={href}
                   tone="primary"
-                  size={0}
                   fontSize={0}
                   padding={2}
-                  // eslint-disable-next-line react/jsx-no-bind
                   onClick={(event) => {
                     if (prettyPath) {
                       event.preventDefault()

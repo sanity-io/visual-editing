@@ -13,6 +13,7 @@ export function useController(
   handler: OverlayEventHandler,
   inFrame: boolean,
   inPopUp: boolean,
+  // oxlint-disable-next-line typescript/no-deprecated
 ): MutableRefObject<OverlayController | undefined> {
   const overlayController = useRef<OverlayController | undefined>(undefined)
 

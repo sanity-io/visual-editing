@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {definePlugin} from 'sanity'
 import {structureTool} from 'sanity/structure'
 

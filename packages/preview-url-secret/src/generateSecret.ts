@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /** @internal */
 export function generateUrlSecret(): string {
   // Try using WebCrypto if available

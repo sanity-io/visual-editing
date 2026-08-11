@@ -198,7 +198,6 @@ export const response2: Fixture<{
     } | null
   } | null
   content: null
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sections: any[]
 }> = {
   result: {

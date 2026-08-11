@@ -43,14 +43,14 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       await router.replace(router.asPath, undefined, {scroll: false, shallow: false})
     }
     const skipRefresh = (): false => {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.debug(
         'Live preview is setup, mutation is skipped assuming its handled by the live preview',
       )
       return false
     }
     const mutationRefresh = () => {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.debug('No loaders in live mode detected, reloading server props')
       return routerRefresh()
     }
@@ -59,6 +59,7 @@ export default function VisualEditingComponent(props: VisualEditingProps): null 
       case 'manual':
         return routerRefresh()
       case 'mutation':
+        // oxlint-disable-next-line typescript/no-deprecated
         return payload.livePreviewEnabled ? skipRefresh() : mutationRefresh()
       default:
         throw new Error('Unknown refresh source', {cause: payload})

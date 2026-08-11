@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {jsonPathToStudioPath, studioPath} from '@sanity/client/csm'
 
 import {SANITY_KEYS} from './constants'

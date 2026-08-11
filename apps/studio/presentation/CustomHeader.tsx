@@ -17,7 +17,7 @@ export const CustomHeader: FunctionComponent<PreviewHeaderProps> = (props) => {
       {props.renderDefault(props)}
       <MenuButton
         button={
-          <Button fontSize={1} icon={EllipsisVerticalIcon} mode="bleed" padding={2} space={2} />
+          <Button fontSize={1} gap={2} icon={EllipsisVerticalIcon} mode="bleed" padding={2} />
         }
         id="custom-menu"
         menu={

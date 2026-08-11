@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {assist} from '@sanity/assist'
 import {colorInput} from '@sanity/color-input'
 import {CogIcon} from '@sanity/icons/Cog'

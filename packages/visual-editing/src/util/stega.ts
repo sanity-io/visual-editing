@@ -33,7 +33,6 @@ function decodeStega(str: string, isAltText = false): SanityStegaNode | null {
     }
     return decoded
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error('Failed to decode stega for string: ', str, 'with the original error: ', err)
     return null
   }

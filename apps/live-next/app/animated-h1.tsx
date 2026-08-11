@@ -1,6 +1,6 @@
 'use client'
 
-import {AnimatePresence, motion} from 'motion/react'
+import {AnimatePresence, motion, stagger} from 'motion/react'
 import {stegaClean} from 'next-sanity'
 
 export function AnimatedH1({text: stegaText, className}: {text: string; className: string}) {
@@ -57,15 +57,12 @@ export function AnimatedH1({text: stegaText, className}: {text: string; classNam
           hidden: {},
           visible: (i = 1) => ({
             transition: {
-              staggerChildren: 0.3 * i,
-              delayChildren: 0.4 * i,
+              delayChildren: stagger(0.3 * i, {startDelay: 0.4 * i}),
             },
           }),
           exit: (i = 1) => ({
             transition: {
-              staggerChildren: 0.3 * i,
-              staggerDirection: -1,
-              delayChildren: 0.4 * i,
+              delayChildren: stagger(0.3 * i, {from: 'last', startDelay: 0.4 * i}),
             },
           }),
         }}

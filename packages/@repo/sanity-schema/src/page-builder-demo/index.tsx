@@ -604,7 +604,6 @@ export const pageBuilderDemoPlugin = definePlugin<
         title: 'Basic page',
         schemaType: 'page',
         parameters: [{name: 'title', title: 'Page Title', type: 'string'}],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         value: (params: any) => {
           return {
             title: params.title,

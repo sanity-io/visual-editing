@@ -24,7 +24,7 @@ function Object({
   const {rotation: animatedRotation} = useSpring({rotation})
 
   return (
-    // @ts-ignore: https://github.com/pmndrs/react-spring/issues/1515
+    // @ts-expect-error -- https://github.com/pmndrs/react-spring/issues/1515
     <animated.primitive
       castShadow
       ref={main}

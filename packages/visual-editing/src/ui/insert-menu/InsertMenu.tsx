@@ -141,7 +141,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
           {/* tabs */}
           {showingTabs ? (
             <Box paddingTop={1} paddingX={1}>
-              <TabList space={1}>
+              <TabList gap={1}>
                 {state.groups.map((group) => (
                   <Tab
                     id={`${group.name}-tab`}
@@ -182,7 +182,7 @@ export function InsertMenu(props: InsertMenuProps): React.JSX.Element {
               ))}
             </Grid>
           ) : (
-            <Stack flex={1} space={1}>
+            <Stack flex={1} gap={1}>
               {filteredSchemaTypes.map((schemaType) => (
                 <MenuItem
                   key={schemaType.name}

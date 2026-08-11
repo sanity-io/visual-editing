@@ -6,7 +6,7 @@ import type {FrontPageQueryResult} from '@/sanity.types'
 import {dataAttribute} from '@/sanity/dataAttribute'
 
 import {PageSection} from '../PageSection'
-import {FeatureHighlightSectionData, PageData} from '../types'
+import type {FeatureHighlightSectionData} from '../types'
 
 export function FeatureHighlight(props: {
   page: NonNullable<FrontPageQueryResult>
@@ -37,7 +37,7 @@ export function FeatureHighlight(props: {
             {section.description && <p className="font-serif text-base">{section.description}</p>}
             <div className="flex gap-2">
               {section.ctas &&
-                section.ctas.map((cta, i) => (
+                section.ctas.map((cta) => (
                   <button
                     data-sanity={dataAttribute({
                       id: data._id,

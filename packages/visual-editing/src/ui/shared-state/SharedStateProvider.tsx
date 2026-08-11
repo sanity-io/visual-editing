@@ -50,9 +50,8 @@ export const SharedStateProvider: FunctionComponent<
       }
     }
     fetch().catch((reason) => {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.debug(reason)
-      // eslint-disable-next-line no-console
       console.warn(
         '[@sanity/visual-editing]: Failed to fetch shared state. Check your version of `sanity` is up-to-date',
       )

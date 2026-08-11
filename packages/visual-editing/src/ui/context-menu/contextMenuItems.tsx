@@ -230,7 +230,7 @@ const InsertMenuWrapper: FunctionComponent<{
         width,
         __unstable_margins: [4, 4, 4, 4],
       }}
-      space={2}
+      gap={2}
       text={label}
     >
       <InsertMenu node={parent} onSelect={onSelect} />
