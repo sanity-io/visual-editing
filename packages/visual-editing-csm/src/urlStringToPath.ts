@@ -1,6 +1,10 @@
 import type {Path} from '@sanity/client/csm'
 
-const RE_SEGMENT_WITH_INDEX = /^([\w-]+):(0|[1-9][0-9]*)$/
+// An all-digit segment is ambiguous, as `pathToUrlString` serialises an array
+// index and a `_key` identically. Cap indexes at 9 digits so that longer
+// numbers, which no array can be indexed by anyway, fall through to
+// RE_SEGMENT_WITH_KEY.
+const RE_SEGMENT_WITH_INDEX = /^([\w-]+):(0|[1-9][0-9]{0,8})$/
 const RE_SEGMENT_WITH_TUPLE = /^([\w-]+):([0-9]+),([0-9]+)$/
 const RE_SEGMENT_WITH_KEY = /^([\w-]+):([\w-]+)$/
 
