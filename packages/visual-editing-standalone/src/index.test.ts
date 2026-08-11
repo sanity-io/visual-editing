@@ -10,7 +10,7 @@ test('exposes only the standalone runtime API', () => {
 })
 
 test('exposes only the root entry point plus its stylesheet, and no runtime dependencies', () => {
-  // `@sanity/ui@4.0.0-next.5` ships static styles as a stylesheet, extracted into a
+  // `@sanity/ui@4` ships static styles as a stylesheet, extracted into a
   // package-internal `./style.css` asset (see `tsdown.config.ts` `css.inject`).
   expect(Object.keys(pkg.exports).sort()).toEqual(['.', './package.json', './style.css'])
   expect(Object.keys(pkg.publishConfig.exports).sort()).toEqual([
