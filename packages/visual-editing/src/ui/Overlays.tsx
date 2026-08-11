@@ -1,5 +1,4 @@
 import '@sanity/ui/styles.css'
-
 import type {ClientPerspective} from '@sanity/client'
 import {getDraftId, getPublishedId} from '@sanity/client/csm'
 import type {Status} from '@sanity/comlink'
