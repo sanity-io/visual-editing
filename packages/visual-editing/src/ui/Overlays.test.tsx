@@ -32,11 +32,13 @@ function createSuspender() {
   let resolve: (() => void) | undefined
   let promise: Promise<void> | undefined
 
+  const Component = ({children}: {children: ReactNode}) => {
+    if (suspended) throw promise
+    return children
+  }
+
   return {
-    Component({children}: {children: ReactNode}) {
-      if (suspended) throw promise
-      return children
-    },
+    Component,
     suspend() {
       suspended = true
       promise = new Promise<void>((_resolve) => {
