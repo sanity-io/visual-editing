@@ -35,7 +35,8 @@
       "browser": {
         "source": "./src/index.browser.ts",
         "import": "./dist/index.browser.js",
-        "require": "./dist/index.browser.cjs"
+        "require": "./dist/index.browser.cjs",
+        "default": "./dist/index.browser.js"
       },
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
@@ -67,7 +68,8 @@
         "react-server": "./dist/rsc/index.react-server.js",
         "browser": {
           "import": "./dist/index.browser.js",
-          "require": "./dist/index.browser.cjs"
+          "require": "./dist/index.browser.cjs",
+          "default": "./dist/index.browser.js"
         },
         "import": "./dist/index.js",
         "require": "./dist/index.cjs",
