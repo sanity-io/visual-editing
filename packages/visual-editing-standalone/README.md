@@ -14,6 +14,13 @@ styled-components, and Sanity UI—is compiled into package-internal ESM chunks.
 Installing it adds no production or peer dependencies, and the exact bundled
 versions are listed in the `inlinedDependencies` field of `package.json`.
 
+The overlays' static stylesheet is embedded the same way: the dist contains no
+`.css` import statements (which only bundlers understand), and the styles are
+applied to the document automatically when the overlay chunk loads, through the
+CSSOM so pages with a strict `style-src` Content Security Policy keep working.
+A `./style.css` export with the same rules also exists, though importing it is
+never required.
+
 ## When to use this package
 
 Use this package with Vue, Nuxt, Svelte, Astro, vanilla JavaScript, or another

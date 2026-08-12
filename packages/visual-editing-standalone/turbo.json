@@ -4,6 +4,9 @@
   "tasks": {
     "dev": {
       "persistent": false
+    },
+    "test": {
+      "dependsOn": ["^build", "build"]
     }
   }
 }

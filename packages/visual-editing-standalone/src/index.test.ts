@@ -10,8 +10,9 @@ test('exposes only the standalone runtime API', () => {
 })
 
 test('exposes only the root entry point plus its stylesheet, and no runtime dependencies', () => {
-  // `@sanity/ui@4` ships static styles as a stylesheet, extracted into a
-  // package-internal `./style.css` asset (see `tsdown.config.ts` `css.inject`).
+  // `@sanity/ui@4` ships static styles as a stylesheet, extracted into a package-internal
+  // `./style.css` asset. The dist applies it at runtime by itself (see `src/injectStyles.ts`),
+  // so the export is optional — kept for consumers that prefer a static stylesheet.
   expect(Object.keys(pkg.exports).sort()).toEqual(['.', './package.json', './style.css'])
   expect(Object.keys(pkg.publishConfig.exports).sort()).toEqual([
     '.',

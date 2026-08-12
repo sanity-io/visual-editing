@@ -1,5 +1,12 @@
+import {fileURLToPath} from 'node:url'
+
 import {defineConfig} from '@sanity/tsdown-config'
 import {mergeConfig, type UserConfig} from 'tsdown'
+
+/**
+ * The module swapped in for `@sanity/ui/styles.css` imports — see the `plugins` note below.
+ */
+const injectStylesModule = fileURLToPath(new URL('./src/injectStyles.ts', import.meta.url))
 
 export default mergeConfig(
   await defineConfig({
@@ -74,14 +81,57 @@ export default mergeConfig(
     // Unlike a typical library, consumers download this package's bundled dependencies.
     // `true` enables the full Oxc pass — equivalent to `{compress, mangle, codegen: true}`.
     minify: true,
-    // `@sanity/ui@4` ships static styles as `@sanity/ui/styles.css`, which the
-    // bundled `@sanity/visual-editing` overlays import. Extract it into a package-internal
-    // `.css` asset and keep the `import` in the JS output (`inject`) so consumers' bundlers
-    // load the stylesheet automatically — no external `@sanity/ui` dependency required, in
-    // keeping with this package's self-contained distribution.
+    // Processes the stylesheets `injectStyles.ts` pulls in: the plain import is extracted
+    // into the `dist/style.css` asset behind the (optional) `./style.css` export, and the
+    // `?inline` import receives the same minified text for the runtime injection. `inject`
+    // stays off — a `import './style.css'` statement in the output would throw in every
+    // native ESM environment (see the plugin below).
     css: {
-      inject: true,
       minify: true,
     },
+    plugins: [
+      /**
+       * `@sanity/ui@4` ships its static styles as `@sanity/ui/styles.css`, which the bundled
+       * `@sanity/visual-editing` overlays import. Leaving a stylesheet import statement in
+       * the published JS only works behind bundlers: native ESM consumers — `<script
+       * type="module">`, import maps, and CDNs like esm.sh — cannot execute `text/css`, so
+       * `enableVisualEditing()` would crash as soon as the lazy overlay chunk loads. (This
+       * regressed the esm.sh usage documented in the README when 1.1.0 adopted
+       * `@sanity/ui@4`: esm.sh rewrites the specifier to a `.css.mjs` URL that redirects to
+       * the raw stylesheet, which browsers refuse to run as a module.)
+       *
+       * Redirect the stylesheet import to `src/injectStyles.ts` instead, which inlines the
+       * processed stylesheet text into the same lazy chunk position the import statement
+       * held and applies it to the document at runtime, keeping the dist free of `.css`
+       * import statements — self-contained in the same sense as the bundled JS dependencies.
+       *
+       * `injectStyles.ts` itself imports the stylesheet twice; both resolve back through
+       * this hook with `importer === injectStylesModule` and pass through to the real file:
+       * - `@sanity/ui/styles.css` (side-effect import) keeps the stylesheet in the CSS
+       *   pipeline so `dist/style.css` is still emitted for the `./style.css` export
+       *   (`css.inject` is off, so no import statement reaches the output), and
+       * - `@sanity/ui/styles.css?inline` provides the processed text (`@tsdown/css` strips
+       *   `?inline` and re-resolves the clean id through this hook before reading the file).
+       */
+      {
+        name: 'redirect-stylesheets-to-runtime-injection',
+        resolveId: {
+          filter: {id: /^@sanity\/ui\/styles\.css$/},
+          handler: (_id: string, importer: string | undefined) =>
+            importer === injectStylesModule ? null : injectStylesModule,
+        },
+        transform: {
+          filter: {id: /injectStyles\.ts$/},
+          handler(code: string, id: string) {
+            // `tsdown:deps` re-resolves imports through `this.resolve` and drops the
+            // `moduleSideEffects` of the resolution, and this config sets
+            // `treeshake.moduleSideEffects: false` — so declare here that the injector,
+            // imported for its side effect only, must not be tree-shaken away.
+            if (id === injectStylesModule) return {code, map: null, moduleSideEffects: true}
+            return null
+          },
+        },
+      },
+    ],
   },
 ) satisfies UserConfig
