@@ -1,7 +1,13 @@
-import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
+import type {ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
+import type {SanityClientLike} from '@sanity/visual-editing-types'
 import type {MapStore} from 'nanostores'
 
 export type {ContentSourceMap, MapStore, QueryParams}
+export type {
+  SanityClientLike,
+  SanityClientLikeConfig,
+  SanityClientLikeQueryOptions,
+} from '@sanity/visual-editing-types'
 
 /** @public */
 export interface QueryStoreState<QueryResponseResult, QueryResponseError> {
@@ -33,15 +39,13 @@ export interface EnableLiveModeOptions {
    */
   allowStudioOrigin?: 'same-origin' | `https://${string}` | `http://${string}` | string
   /**
-   * You may use any client that is an `instanceof SanityClient` or `instanceof SanityStegaClient`.
    * Required when `ssr: true`, optional otherwise.
    * @example `import {createClient} from '@sanity/client'`
    * @example `import {createClient} from '@sanity/client/stega'`
    * @example `import {createClient} from '@sanity/preview-kit/client'`
    * @example `import {createClient} from 'next-sanity'`
    */
-  // oxlint-disable-next-line typescript/no-deprecated
-  client?: SanityClient | import('@sanity/client/stega').SanityStegaClient
+  client?: SanityClientLike
   /**
    * Fires when a connection is established to a parent Studio window.
    */

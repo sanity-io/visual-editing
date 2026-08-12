@@ -73,11 +73,14 @@
     "@sanity/client": "^7.26.2",
     "@sanity/comlink": "^4.0.3",
     "@sanity/presentation-comlink": "^2.2.3",
-    "@sanity/visual-editing-csm": "workspace:^"
+    "@sanity/visual-editing-csm": "workspace:^",
+    "@sanity/visual-editing-types": "workspace:^"
   },
   "devDependencies": {
     "@repo/package.config": "workspace:*",
+    "@sanity/client-v8": "npm:@sanity/client@^8.0.0",
     "@sanity/pkg-utils": "catalog:",
+    "@sanity/preview-url-secret": "workspace:^",
     "@sanity/tsconfig": "catalog:",
     "async-cache-dedupe": "2.2.0",
     "happy-dom": "^18.0.1",

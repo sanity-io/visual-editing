@@ -1,4 +1,4 @@
-import type {SanityClient} from '@sanity/client'
+import type {SanityClientLike} from '@sanity/core-loader'
 import {handlePreview} from '@sanity/visual-editing/svelte'
 import {type Handle} from '@sveltejs/kit'
 import {sequence} from '@sveltejs/kit/hooks'
@@ -15,7 +15,7 @@ export const handleLoadQuery =
     loadQuery,
   }: {
     loadQuery?: HandleOptions['loadQuery']
-    client?: SanityClient
+    client?: SanityClientLike
   }): Handle =>
   async ({event, resolve}) => {
     const client = _client || event.locals.client

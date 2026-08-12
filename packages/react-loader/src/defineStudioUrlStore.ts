@@ -1,4 +1,3 @@
-import type {SanityClient} from '@sanity/client'
 import type {CreateQueryStoreOptions} from '@sanity/core-loader'
 
 type StudioUrlLike =
@@ -13,7 +12,7 @@ export function defineStudioUrlStore(client: CreateQueryStoreOptions['client']):
   setStudioUrl: (nextStudioUrl: StudioUrlLike) => void
 } {
   let studioUrl: StudioUrlLike =
-    typeof client === 'object' ? (client as SanityClient)?.config().stega.studioUrl : undefined
+    typeof client === 'object' ? client?.config().stega.studioUrl : undefined
   const serverSnapshot = studioUrl
   const subscribers = new Set<() => void>()
   return {

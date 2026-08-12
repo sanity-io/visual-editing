@@ -4,7 +4,6 @@ import {
   type ContentSourceMap,
   type ContentSourceMapDocuments,
   type QueryParams,
-  type SanityClient,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {createNode, createNodeMachine} from '@sanity/comlink'
@@ -28,9 +27,7 @@ const LISTEN_HEARTBEAT_INTERVAL = 20_000
 export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
   const {client, setFetcher, onConnect, onDisconnect, onPerspective, onVariant} = options
   if (!client) {
-    throw new Error(
-      `Expected \`client\` to be an instance of SanityClient: ${JSON.stringify(client)}`,
-    )
+    throw new Error(`Expected \`client\` to be a Sanity client: ${JSON.stringify(client)}`)
   }
   const {projectId, dataset, perspective} = client.config()
 
@@ -91,15 +88,11 @@ export function enableLiveMode(options: LazyEnableLiveModeOptions): () => void {
       if (
         data.result !== undefined &&
         data.resultSourceMap !== undefined &&
-        (client as SanityClient).config().stega.enabled
+        client.config().stega.enabled
       ) {
         cache.set(cacheKey, {
           ...data,
-          result: stegaEncodeSourceMap(
-            data.result,
-            data.resultSourceMap,
-            (client as SanityClient).config().stega,
-          ),
+          result: stegaEncodeSourceMap(data.result, data.resultSourceMap, client.config().stega),
         })
       } else {
         cache.set(cacheKey, data)

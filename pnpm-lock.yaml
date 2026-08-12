@@ -538,13 +538,22 @@ importers:
       '@sanity/visual-editing-csm':
         specifier: workspace:*
         version: link:../visual-editing-csm
+      '@sanity/visual-editing-types':
+        specifier: workspace:^
+        version: link:../visual-editing-types
     devDependencies:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../@repo/package.config
+      '@sanity/client-v8':
+        specifier: npm:@sanity/client@^8.0.0
+        version: '@sanity/client@8.0.0(vitest@3.2.7(@types/node@24.13.3)(happy-dom@18.0.1)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.3.0))(lightningcss@1.33.0)(tsx@4.23.12)(yaml@2.9.0))'
       '@sanity/pkg-utils':
         specifier: 'catalog:'
         version: 12.1.2(@tsdown/css@0.22.14)(@types/node@24.13.3)(babel-plugin-react-compiler@1.0.0)(oxc-resolver@11.24.2)(typescript@6.0.3)(unrun@0.3.1)(vite@7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.12)(yaml@2.9.0))
+      '@sanity/preview-url-secret':
+        specifier: workspace:*
+        version: link:../preview-url-secret
       '@sanity/tsconfig':
         specifier: 'catalog:'
         version: 2.2.1
@@ -695,6 +704,9 @@ importers:
       '@sanity/visual-editing-csm':
         specifier: workspace:*
         version: link:../visual-editing-csm
+      '@sanity/visual-editing-types':
+        specifier: workspace:^
+        version: link:../visual-editing-types
       '@vercel/stega':
         specifier: ^1.1.0
         version: 1.1.0
@@ -3968,6 +3980,10 @@ packages:
     resolution: {integrity: sha512-iEkGiHbrxCnT/A30A6pH+vX4otP3lLp935Vwuv0/YrnETxrKCn6PnsZU+TfTm6ZEZ9kZGs8wKP5yBLmZw5S6OQ==}
     engines: {node: '>=20'}
 
+  '@sanity/client@8.0.0':
+    resolution: {integrity: sha512-PL2zaAkTz8fL93cEFNsmLFmaFl0/xyslnA3pdYXegdP9v1A+GRwXV3delEPaNmRn520CCDAnCrB7Bz3D//uyQQ==}
+    engines: {node: '>=22.12.0'}
+
   '@sanity/codegen@7.0.3':
     resolution: {integrity: sha512-t3Svo28RWX7OOvj4DkNX0fSWpzt+94pslKwvkKhSs4Lw24Ta1hYkE1a+OgwUjKBbw2Za54V7NpMwNlXjPEr2Fw==}
     engines: {node: '>=20.19 <22 || >=22.12'}
@@ -6314,6 +6330,10 @@ packages:
     resolution: {integrity: sha512-EKN1vKAMcZ8MlYMpaNuxN6R9yakzH6uajHcHVTqWJzvu5pWw9DyhbP35HH8MVBQ+dZjAfDxk+A8NiR9KWaXiyQ==}
     engines: {node: '>=18.0.0'}
 
+  eventsource-parser@4.0.0:
+    resolution: {integrity: sha512-aIpvYxbqTx4KYWw73KpCt1Rh22tEAJ144F1qR76CT3Ex+LNMEPKf5HFrK5Yz9fMP1EVT0GrfA35VZvWQhMPuSQ==}
+    engines: {node: '>=22.12'}
+
   eventsource@2.0.2:
     resolution: {integrity: sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==}
     engines: {node: '>=12.0.0'}
@@ -6321,6 +6341,10 @@ packages:
   eventsource@4.1.1:
     resolution: {integrity: sha512-D6bTRWh6KahHTK/m4WnjPQyEinNPf9eFLEZSEoj7d6fTibspnAVYfzHvirL7u/aoX5d9YYfIkBVAhmigUELk9w==}
     engines: {node: '>=20.0.0'}
+
+  eventsource@5.0.0:
+    resolution: {integrity: sha512-iNd5IgeR56Om1Aje0ACZTd5oRQ+u5i6RfRkKdIuhlykeH3o+f0vIiiT0i9t1SXABfTnsfxVPadAB2T4cLS32Sw==}
+    engines: {node: '>=22.12.0'}
 
   execa@5.1.1:
     resolution: {integrity: sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==}
@@ -6543,6 +6567,15 @@ packages:
   get-it@8.8.3:
     resolution: {integrity: sha512-IfkbWqOGO2kd2Ccgiz/NIzk3bcwjtVqBm3RNa3j/veHg2q7c1DgS3EXrCrvIWH0jbNTbhkdblnxBP7Dm8CiH+A==}
     engines: {node: '>=14.0.0'}
+
+  get-it@9.4.1:
+    resolution: {integrity: sha512-WEYs8b65nMYdYvbi0AwlyfRWrnkto1xLG1YqxFGKrU4yb7Vd06ryIS5XAFrBgRnYwsoszsZEsUGimQMQE7ztVA==}
+    engines: {node: '>=22.12.0'}
+    peerDependencies:
+      vitest: '>=2.0.0'
+    peerDependenciesMeta:
+      vitest:
+        optional: true
 
   get-json@1.1.0:
     resolution: {integrity: sha512-IjoEwpXyyEsRtwBSZ0SYA6By6oVBnakpftFHAAkSSlLYRZ1NPGFS/r+6fSgbk7t6njfEuYVMbD1pe4ex6vgLcw==}
@@ -13003,6 +13036,16 @@ snapshots:
       nanoid: 3.3.18
       rxjs: 7.8.2
 
+  '@sanity/client@8.0.0(vitest@3.2.7(@types/node@24.13.3)(happy-dom@18.0.1)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.3.0))(lightningcss@1.33.0)(tsx@4.23.12)(yaml@2.9.0))':
+    dependencies:
+      eventsource: 5.0.0
+      get-it: 9.4.1(vitest@3.2.7(@types/node@24.13.3)(happy-dom@18.0.1)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.3.0))(lightningcss@1.33.0)(tsx@4.23.12)(yaml@2.9.0))
+      nanoid: 6.0.1
+      obug: 2.1.4
+      rxjs: 7.8.2
+    transitivePeerDependencies:
+      - vitest
+
   '@sanity/codegen@7.0.3(@oclif/core@4.13.3)(@sanity/cli-core@2.8.1(@noble/hashes@2.3.0)(@types/node@24.13.3)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(yaml@2.9.0))(oxfmt@0.63.0(svelte@5.56.9(@typescript-eslint/types@8.67.0)))(react@19.2.8)':
     dependencies:
       '@babel/core': 7.29.7
@@ -16079,11 +16122,17 @@ snapshots:
 
   eventsource-parser@3.1.1: {}
 
+  eventsource-parser@4.0.0: {}
+
   eventsource@2.0.2: {}
 
   eventsource@4.1.1:
     dependencies:
       eventsource-parser: 3.1.1
+
+  eventsource@5.0.0:
+    dependencies:
+      eventsource-parser: 4.0.0
 
   execa@5.1.1:
     dependencies:
@@ -16332,6 +16381,12 @@ snapshots:
       is-retry-allowed: 2.2.0
       through2: 4.0.2
       tunnel-agent: 0.6.0
+
+  get-it@9.4.1(vitest@3.2.7(@types/node@24.13.3)(happy-dom@18.0.1)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.3.0))(lightningcss@1.33.0)(tsx@4.23.12)(yaml@2.9.0)):
+    dependencies:
+      undici: 7.29.0
+    optionalDependencies:
+      vitest: 3.2.7(@types/node@24.13.3)(happy-dom@18.0.1)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.3.0))(lightningcss@1.33.0)(tsx@4.23.12)(yaml@2.9.0)
 
   get-json@1.1.0:
     dependencies:
