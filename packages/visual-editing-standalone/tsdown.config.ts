@@ -1,12 +1,5 @@
-import {fileURLToPath} from 'node:url'
-
 import {defineConfig} from '@sanity/tsdown-config'
 import {mergeConfig, type UserConfig} from 'tsdown'
-
-/**
- * The module swapped in for `@sanity/ui/styles.css` imports — see the `plugins` note below.
- */
-const injectStylesModule = fileURLToPath(new URL('./src/injectStyles.ts', import.meta.url))
 
 export default mergeConfig(
   await defineConfig({
@@ -40,6 +33,32 @@ export default mergeConfig(
       onlyBundle: false,
       // Fail the build if any bare import were to leak into the output.
       onlyImport: [],
+    },
+    // `@sanity/ui@4` ships its static styles as `@sanity/ui/styles.css`, which the bundled
+    // `@sanity/visual-editing` overlays import. Extract it into `dist/style.css` behind the
+    // conditional `./style.css` export (`exports.nodeCompat` with a no-op JS shim for
+    // runtimes that cannot load `.css` files), and prepend the self-referential
+    // `import "@sanity/visual-editing-standalone/style.css"` to the entry (`inject`) — the
+    // same conditional-export pattern `@sanity/ui` itself publishes. This keeps every
+    // consumer working without an external `@sanity/ui` dependency:
+    //
+    // - bundlers resolve the `browser`/`style` conditions to the stylesheet and load it
+    //   automatically, like any CSS import;
+    // - Node (SSR module evaluation) resolves the `node`/`default` conditions to the shim
+    //   instead of crashing on a `.css` file;
+    // - esm.sh externalizes the import into a URL that resolves to the shim as well
+    //   (verified: `esm.sh/@sanity/ui@4.0.2/styles.css?target=es2022` 301s to the
+    //   `styles-css.js` shim), so native ESM consumers never execute `text/css` — they add
+    //   the stylesheet with a `<link>` tag as documented in the README.
+    //
+    // Passing `css` here (rather than through `mergeConfig` below) is load-bearing: only the
+    // `defineConfig` option wires up `cssNodeCompatPlugin`. The raw `@tsdown/css` `inject`
+    // emits a relative `import './style.css'` statement instead, which crashes every native
+    // ESM consumer as soon as the lazy overlay chunk loads — esm.sh rewrites it to a
+    // `.css.mjs` URL that redirects to the raw `text/css` file, which browsers refuse to run
+    // as a module (the 1.1.0 regression).
+    css: {
+      minify: true,
     },
   }),
   {
@@ -81,57 +100,5 @@ export default mergeConfig(
     // Unlike a typical library, consumers download this package's bundled dependencies.
     // `true` enables the full Oxc pass — equivalent to `{compress, mangle, codegen: true}`.
     minify: true,
-    // Processes the stylesheets `injectStyles.ts` pulls in: the plain import is extracted
-    // into the `dist/style.css` asset behind the (optional) `./style.css` export, and the
-    // `?inline` import receives the same minified text for the runtime injection. `inject`
-    // stays off — a `import './style.css'` statement in the output would throw in every
-    // native ESM environment (see the plugin below).
-    css: {
-      minify: true,
-    },
-    plugins: [
-      /**
-       * `@sanity/ui@4` ships its static styles as `@sanity/ui/styles.css`, which the bundled
-       * `@sanity/visual-editing` overlays import. Leaving a stylesheet import statement in
-       * the published JS only works behind bundlers: native ESM consumers — `<script
-       * type="module">`, import maps, and CDNs like esm.sh — cannot execute `text/css`, so
-       * `enableVisualEditing()` would crash as soon as the lazy overlay chunk loads. (This
-       * regressed the esm.sh usage documented in the README when 1.1.0 adopted
-       * `@sanity/ui@4`: esm.sh rewrites the specifier to a `.css.mjs` URL that redirects to
-       * the raw stylesheet, which browsers refuse to run as a module.)
-       *
-       * Redirect the stylesheet import to `src/injectStyles.ts` instead, which inlines the
-       * processed stylesheet text into the same lazy chunk position the import statement
-       * held and applies it to the document at runtime, keeping the dist free of `.css`
-       * import statements — self-contained in the same sense as the bundled JS dependencies.
-       *
-       * `injectStyles.ts` itself imports the stylesheet twice; both resolve back through
-       * this hook with `importer === injectStylesModule` and pass through to the real file:
-       * - `@sanity/ui/styles.css` (side-effect import) keeps the stylesheet in the CSS
-       *   pipeline so `dist/style.css` is still emitted for the `./style.css` export
-       *   (`css.inject` is off, so no import statement reaches the output), and
-       * - `@sanity/ui/styles.css?inline` provides the processed text (`@tsdown/css` strips
-       *   `?inline` and re-resolves the clean id through this hook before reading the file).
-       */
-      {
-        name: 'redirect-stylesheets-to-runtime-injection',
-        resolveId: {
-          filter: {id: /^@sanity\/ui\/styles\.css$/},
-          handler: (_id: string, importer: string | undefined) =>
-            importer === injectStylesModule ? null : injectStylesModule,
-        },
-        transform: {
-          filter: {id: /injectStyles\.ts$/},
-          handler(code: string, id: string) {
-            // `tsdown:deps` re-resolves imports through `this.resolve` and drops the
-            // `moduleSideEffects` of the resolution, and this config sets
-            // `treeshake.moduleSideEffects: false` — so declare here that the injector,
-            // imported for its side effect only, must not be tree-shaken away.
-            if (id === injectStylesModule) return {code, map: null, moduleSideEffects: true}
-            return null
-          },
-        },
-      },
-    ],
   },
 ) satisfies UserConfig

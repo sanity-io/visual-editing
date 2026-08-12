@@ -14,12 +14,15 @@ styled-components, and Sanity UI—is compiled into package-internal ESM chunks.
 Installing it adds no production or peer dependencies, and the exact bundled
 versions are listed in the `inlinedDependencies` field of `package.json`.
 
-The overlays' static stylesheet is embedded the same way: the dist contains no
-`.css` import statements (which only bundlers understand), and the styles are
-applied to the document automatically when the overlay chunk loads, through the
-CSSOM so pages with a strict `style-src` Content Security Policy keep working.
-A `./style.css` export with the same rules also exists, though importing it is
-never required.
+The overlays' static stylesheet ships as a conditional `./style.css` export —
+the same pattern `@sanity/ui` publishes — and the entry imports it
+self-referentially. Bundlers resolve the `browser`/`style` conditions to the
+stylesheet and load it automatically, like any CSS import. Node and other
+runtimes that cannot load `.css` files resolve the `node`/`default` conditions
+to a no-op JS shim instead of crashing, which also makes the import harmless
+during server-side module evaluation. Native ESM environments such as esm.sh
+resolve the shim too — add the stylesheet with a `<link>` tag as shown in
+[Load from esm.sh](#load-from-esmsh).
 
 ## When to use this package
 
@@ -75,9 +78,9 @@ disableVisualEditing()
 
 The overlay renderer stays in a separate lazy chunk that only loads when
 `enableVisualEditing()` is called. Applications that only import
-`createDataAttribute` never load it, and since the package is side-effect free
-any bundler can tree-shake the unused `enableVisualEditing` export away
-entirely.
+`createDataAttribute` never load it, and any bundler can tree-shake the unused
+`enableVisualEditing` export away entirely — the entry's stylesheet import is
+the package's only side effect (declared in `sideEffects`).
 
 The standalone options are framework-neutral. React-based custom overlay
 components and plugins remain available from `@sanity/visual-editing`.
@@ -100,9 +103,12 @@ const dataSanity = createDataAttribute({
 
 ## Load from esm.sh
 
-The package can be loaded directly as a browser module:
+The package can be loaded directly as a browser module. esm.sh resolves the
+entry's stylesheet import to the no-op shim, so include the stylesheet itself
+with a `<link>` tag:
 
 ```html
+<link rel="stylesheet" href="https://esm.sh/@sanity/visual-editing-standalone@1/dist/style.css" />
 <script type="module">
   import {
     createDataAttribute,
@@ -119,6 +125,14 @@ The package can be loaded directly as a browser module:
   enableVisualEditing()
 </script>
 ```
+
+Without the `<link>` the overlays still function, but the few static rules —
+the loading-spinner animation, screen-reader-only hiding, and label ellipsis —
+are missing.
+
+When serving the package yourself (import maps, no bundler), map the
+`@sanity/visual-editing-standalone/style.css` specifier to the shim at
+`dist/style-css.js` and add the same `<link>` to `dist/style.css`.
 
 Pin an exact package version in production when deterministic CDN output is
 required.

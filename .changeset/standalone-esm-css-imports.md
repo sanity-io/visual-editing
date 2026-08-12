@@ -2,6 +2,8 @@
 '@sanity/visual-editing-standalone': patch
 ---
 
-fix: restore native ESM compatibility (esm.sh, import maps) that 1.1.0 lost to a stylesheet import statement
+fix: restore native ESM (esm.sh) compatibility that 1.1.0 lost to a stylesheet import statement
 
-`@sanity/ui@4`'s static stylesheet was wired up as an `import './style.css'` statement in the lazy overlay chunk, which only bundlers understand: browsers refuse to execute `text/css` as a module, so `enableVisualEditing()` crashed with `Failed to fetch dynamically imported module` when the package was loaded from esm.sh or any other native ESM setup. The stylesheet text is now embedded in the overlay chunk and applied to the document at runtime through the CSSOM (compatible with strict `style-src` Content Security Policies), keeping the dist free of `.css` import statements — self-contained in native ESM environments and behind bundlers alike. The `./style.css` export remains available, but importing it is never required.
+`@sanity/ui@4`'s static stylesheet was wired up as a relative `import './style.css'` statement in the lazy overlay chunk, which only bundlers understand: esm.sh rewrites the specifier to a URL that redirects to the raw `text/css` file, which browsers refuse to run as a module, so `enableVisualEditing()` crashed with `Failed to fetch dynamically imported module` in every native ESM setup.
+
+The stylesheet is now published behind a conditional `./style.css` export — the same pattern `@sanity/ui` itself uses — and imported self-referentially from the entry: bundlers resolve the `browser`/`style` conditions to the stylesheet and load it automatically, while Node and native ESM consumers (including esm.sh) resolve a no-op JS shim instead of crashing. When loading from esm.sh, add the stylesheet with `<link rel="stylesheet" href="https://esm.sh/@sanity/visual-editing-standalone@1/dist/style.css" />` as documented in the README.
