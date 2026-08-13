@@ -128,22 +128,9 @@ export default mergeConfig(
         'styled',
       ],
     },
-    plugins: [
-      {
-        name: 'css-export-types',
-        generateBundle(_outputOptions, bundle) {
-          const hasStylesheet = Object.values(bundle).some(
-            (file) => file.type === 'asset' && file.fileName === 'styles.css',
-          )
-          if (!hasStylesheet) return
-          this.emitFile({
-            type: 'asset',
-            fileName: 'styles.css.d.ts',
-            source: '// Type declarations for the `./styles.css` side-effect import.\nexport {}\n',
-          })
-        },
-      },
-    ],
+    // Copied into dist after the Rolldown pass and before publint. generateBundle is too
+    // early: the CSS asset is not in the bundle yet when this config's plugins run.
+    copy: ['src/styles.css.d.ts'],
     exports: {
       customExports(exports) {
         return insertStylesCssExport(exports)
