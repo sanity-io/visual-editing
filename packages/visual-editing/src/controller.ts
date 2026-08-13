@@ -191,14 +191,17 @@ export function createOverlayController({
       click(event) {
         const target = event.target as ElementNode | null
 
+        if (!activated) {
+          return
+        }
+
         if (element !== getHoveredElement() || !element.contains(target)) {
           return
         }
 
         // Hovered overlay + primary click: activate the overlay instead of
         // following the link. Modifier clicks (and non-primary buttons) must
-        // not intercept — nor do we once overlays are toggled off (handlers
-        // are removed in `deactivate`).
+        // not intercept — nor do we once overlays are toggled off.
         if (isModifiedClick(event)) {
           return
         }
@@ -218,7 +221,13 @@ export function createOverlayController({
         }
       },
       contextmenu(event) {
-        if (!('path' in commonSanity!) || (!inFrame && !inPopUp) || !optimisticActorReady) return
+        if (
+          !activated ||
+          !('path' in commonSanity!) ||
+          (!inFrame && !inPopUp) ||
+          !optimisticActorReady
+        )
+          return
 
         // This is a temporary check as the context menu only supports array
         // items (for now). We split the path into segments, if a `_key` exists
@@ -245,6 +254,8 @@ export function createOverlayController({
         }
       },
       mousedown(event) {
+        if (!activated) return
+
         if (event.currentTarget !== hoverStack.at(-1)) return
 
         if (element.getAttribute('data-sanity-drag-disable')) return

@@ -147,6 +147,7 @@ describe('createOverlayController click interception', () => {
   })
 
   test('does not intercept once overlays are deactivated', () => {
+    // `preventDefault` is gated on `activated`, not merely `inFrame`.
     const link = mountLink()
     const controller = mountController(true)
     hover(link)
