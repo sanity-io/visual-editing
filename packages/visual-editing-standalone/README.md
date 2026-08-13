@@ -15,6 +15,12 @@ when one is available. A framework integration can also configure preview
 mode, data loading, and live updates.
 
 - **React:** Use [`@sanity/visual-editing`](../visual-editing/README.md).
+- **Next.js App Router:** Use
+  [`next-sanity`](https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-app-router).
+- **Next.js Pages Router:** Use
+  [`@sanity/visual-editing/next-pages-router`](https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-pages-router).
+- **Astro:** Use
+  [`@sanity/astro`](https://www.sanity.io/docs/visual-editing/astro-visual-editing).
 - **SvelteKit:** Use
   [`@sanity/sveltekit`](https://www.sanity.io/docs/visual-editing/visual-editing-with-sveltekit).
 - **Nuxt:** Use
