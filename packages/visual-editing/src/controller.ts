@@ -17,6 +17,7 @@ import {
   resolveDragAndDropGroup,
 } from './util/findSanityNodes'
 import {getRect} from './util/geometry'
+import {isModifiedClick} from './util/isModifiedClick'
 
 /**
  * Creates a controller which dispatches overlay related events
@@ -190,22 +191,30 @@ export function createOverlayController({
       click(event) {
         const target = event.target as ElementNode | null
 
-        if (element === getHoveredElement() && element.contains(target)) {
-          // Click events are only supported supported in iframes, not well supported in popups
-          // @TODO presentation tool should report wether it's visible or not, so we can adapt properly and allow multi-window preview workflows
-          if (inFrame) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
+        if (element !== getHoveredElement() || !element.contains(target)) {
+          return
+        }
 
-          const sanity = elementsMap.get(element)?.sanity
-          if (sanity && !activeDragSequence) {
-            handler({
-              type: 'element/click',
-              id,
-              sanity,
-            })
-          }
+        // Hovered overlay + primary click: activate the overlay instead of
+        // following the link. Modifier clicks (and non-primary buttons) must
+        // not intercept — nor do we once overlays are toggled off (handlers
+        // are removed in `deactivate`).
+        if (isModifiedClick(event)) {
+          return
+        }
+
+        if (inFrame) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        const sanity = elementsMap.get(element)?.sanity
+        if (sanity && !activeDragSequence) {
+          handler({
+            type: 'element/click',
+            id,
+            sanity,
+          })
         }
       },
       contextmenu(event) {
@@ -236,9 +245,6 @@ export function createOverlayController({
         }
       },
       mousedown(event) {
-        // prevent iframe from taking focus
-        event.preventDefault()
-
         if (event.currentTarget !== hoverStack.at(-1)) return
 
         if (element.getAttribute('data-sanity-drag-disable')) return
@@ -258,6 +264,10 @@ export function createOverlayController({
         const dragGroup = resolveDragAndDropGroup(element, commonSanity!, elementSet, elementsMap)
 
         if (!dragGroup) return
+
+        // Prevent text selection once a drag can start. Do not cancel every
+        // mousedown — that also blocked focus and caret placement.
+        event.preventDefault()
 
         handleOverlayDrag({
           element,
@@ -541,7 +551,6 @@ export function createOverlayController({
 
     if (element) {
       if (element.dataset['sanityOverlayElement'] === 'capture') {
-        event.preventDefault()
         event.stopPropagation()
       }
       return

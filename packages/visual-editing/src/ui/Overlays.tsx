@@ -16,12 +16,14 @@ import {
   startTransition,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useReducer,
   useRef,
   useState,
   type FunctionComponent,
 } from 'react'
+import {flushSync} from 'react-dom'
 import {styled} from 'styled-components'
 
 import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor'
@@ -168,7 +170,7 @@ const OverlaysController: FunctionComponent<{
 
   const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (overlayEnabled) {
       controller.current?.activate()
     } else {
@@ -299,10 +301,18 @@ export function Overlays(props: {
 
     let altPressed = false
 
+    const toggleOverlayEnabled = () => {
+      // Apply activate/deactivate in this turn so a following click is not
+      // intercepted after overlays have been toggled off (e.g. Alt+click).
+      flushSync(() => {
+        setOverlayEnabled((enabled) => !enabled)
+      })
+    }
+
     const handleKeyUp = (e: KeyboardEvent) => {
       if (isAltKey(e) && altPressed) {
         altPressed = false
-        setOverlayEnabled((enabled) => !enabled)
+        toggleOverlayEnabled()
       }
     }
 
@@ -315,12 +325,12 @@ export function Overlays(props: {
 
         if (!altPressed) {
           altPressed = true
-          setOverlayEnabled((enabled) => !enabled)
+          toggleOverlayEnabled()
         }
       }
 
       if (isHotkey(['mod', '\\'], e)) {
-        setOverlayEnabled((enabled) => !enabled)
+        toggleOverlayEnabled()
       }
     }
 
@@ -328,7 +338,7 @@ export function Overlays(props: {
     const handleWindowBlur = () => {
       if (altPressed) {
         altPressed = false
-        setOverlayEnabled((enabled) => !enabled) // Toggle back
+        toggleOverlayEnabled()
       }
     }
 
