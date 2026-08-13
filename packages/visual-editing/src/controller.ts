@@ -33,6 +33,7 @@ export function createOverlayController({
   inFrame,
   inPopUp,
   optimisticActorReady,
+  shouldHideActions = false,
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
@@ -200,15 +201,17 @@ export function createOverlayController({
           return
         }
 
-        // Hovered overlay + primary click: activate the overlay instead of
-        // following the link. Modifier clicks (and non-primary buttons) must
-        // not intercept, and the flag is off once overlays are toggled off or
-        // "Open in Studio" is shown.
+        // Modifier clicks (and non-primary buttons) are always left to the
+        // page: open-in-new-tab and friends must keep working.
         if (isModifiedClick(event)) {
           return
         }
 
-        if (inFrame) {
+        // Hovered overlay + primary click in Presentation activates the
+        // overlay instead of following the link. When the "Open in Studio"
+        // action is shown, click-to-edit is not the affordance, so the click
+        // is left alone.
+        if (inFrame && shouldHideActions) {
           event.preventDefault()
           event.stopPropagation()
         }

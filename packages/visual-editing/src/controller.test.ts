@@ -76,11 +76,12 @@ describe('createOverlayController click interception', () => {
       el.remove()
     }
     mounted.length = 0
-    setInterceptClicks(false)
+    // Restore the module default (overlays start enabled)
+    setInterceptClicks(true)
     vi.unstubAllGlobals()
   })
 
-  function mountController(inFrame = true) {
+  function mountController(inFrame = true, shouldHideActions = true) {
     const overlayElement = document.createElement('div')
     document.body.appendChild(overlayElement)
     mounted.push(overlayElement)
@@ -91,6 +92,7 @@ describe('createOverlayController click interception', () => {
       inFrame,
       inPopUp: false,
       optimisticActorReady: true,
+      shouldHideActions,
     })
 
     activateObserved()
@@ -166,6 +168,23 @@ describe('createOverlayController click interception', () => {
     expect(event.defaultPrevented).toBe(false)
     expect(onBubble).toHaveBeenCalledTimes(1)
     expect(messagesOfType(messages, 'element/click')).toHaveLength(0)
+  })
+
+  test('does not cancel clicks when the Open in Studio action is shown', () => {
+    const link = mountLink()
+    mountController(true, false)
+    hover(link)
+
+    const onBubble = vi.fn()
+    link.addEventListener('click', onBubble)
+
+    const event = new MouseEvent('click', {bubbles: true, cancelable: true, button: 0})
+    link.dispatchEvent(event)
+
+    // Click-to-edit still reports the click, but navigation is not blocked
+    expect(event.defaultPrevented).toBe(false)
+    expect(onBubble).toHaveBeenCalledTimes(1)
+    expect(messagesOfType(messages, 'element/click')).toHaveLength(1)
   })
 
   test('does not cancel mousedown on a hovered link', () => {

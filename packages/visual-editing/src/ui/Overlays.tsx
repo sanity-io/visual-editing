@@ -122,8 +122,18 @@ const OverlaysController: FunctionComponent<{
   onDrag: (x: number, y: number) => void
   overlayEnabled: boolean
   rootElement: HTMLElement | null
+  shouldHideActions: boolean
 }> = (props) => {
-  const {comlink, dispatch, inFrame, inPopUp, onDrag, overlayEnabled, rootElement} = props
+  const {
+    comlink,
+    dispatch,
+    inFrame,
+    inPopUp,
+    onDrag,
+    overlayEnabled,
+    rootElement,
+    shouldHideActions,
+  } = props
   const {dispatchDragEndEvent} = useDragEndEvents()
   const sendTelemetry = useTelemetry()
 
@@ -167,7 +177,13 @@ const OverlaysController: FunctionComponent<{
     [comlink, dispatch, dispatchDragEndEvent, onDrag, sendTelemetry],
   )
 
-  const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp)
+  const controller = useController(
+    rootElement,
+    overlayEventHandler,
+    inFrame,
+    inPopUp,
+    shouldHideActions,
+  )
 
   useEffect(() => {
     if (overlayEnabled) {
@@ -175,6 +191,9 @@ const OverlaysController: FunctionComponent<{
     } else {
       controller.current?.deactivate()
     }
+    // The toggle event handlers already wrote the flag synchronously; this
+    // keeps it consistent on (re)mount.
+    setInterceptClicks(overlayEnabled)
   }, [controller, overlayEnabled])
 
   return null
@@ -245,6 +264,16 @@ export function Overlays(props: {
     if (element) setRootElement(element)
   }, [])
   const [overlayEnabled, setOverlayEnabled] = useState(true)
+  const overlayEnabledRef = useRef(overlayEnabled)
+  const toggleOverlayEnabled = useCallback(() => {
+    const enabled = !overlayEnabledRef.current
+    overlayEnabledRef.current = enabled
+    // Written here, inside the event handler, instead of during render:
+    // renders can happen in the background, while the flag must apply to
+    // clicks in the same interaction (e.g. Alt+click).
+    setInterceptClicks(enabled)
+    setOverlayEnabled(enabled)
+  }, [])
 
   useEffect(() => {
     const unsubs = [
@@ -255,12 +284,12 @@ export function Overlays(props: {
         dispatch({type: 'presentation/blur', data})
       }),
       comlink?.on('presentation/toggle-overlay', () => {
-        setOverlayEnabled((enabled) => !enabled)
+        toggleOverlayEnabled()
       }),
     ].filter(Boolean)
 
     return () => unsubs.forEach((unsub) => unsub!())
-  }, [comlink])
+  }, [comlink, toggleOverlayEnabled])
 
   usePerspectiveSync(comlink, dispatch, onPerspectiveChange, onVariantChange)
 
@@ -303,7 +332,7 @@ export function Overlays(props: {
     const handleKeyUp = (e: KeyboardEvent) => {
       if (isAltKey(e) && altPressed) {
         altPressed = false
-        setOverlayEnabled((enabled) => !enabled)
+        toggleOverlayEnabled()
       }
     }
 
@@ -316,12 +345,12 @@ export function Overlays(props: {
 
         if (!altPressed) {
           altPressed = true
-          setOverlayEnabled((enabled) => !enabled)
+          toggleOverlayEnabled()
         }
       }
 
       if (isHotkey(['mod', '\\'], e)) {
-        setOverlayEnabled((enabled) => !enabled)
+        toggleOverlayEnabled()
       }
     }
 
@@ -329,7 +358,7 @@ export function Overlays(props: {
     const handleWindowBlur = () => {
       if (altPressed) {
         altPressed = false
-        setOverlayEnabled((enabled) => !enabled) // Toggle back
+        toggleOverlayEnabled() // Toggle back
       }
     }
 
@@ -344,7 +373,7 @@ export function Overlays(props: {
       window.removeEventListener('keyup', handleKeyUp)
       window.removeEventListener('blur', handleWindowBlur)
     }
-  }, [setOverlayEnabled])
+  }, [toggleOverlayEnabled])
 
   const [overlaysFlash, setOverlaysFlash] = useState(false)
   const [fadingOut, setFadingOut] = useState(false)
@@ -398,11 +427,6 @@ export function Overlays(props: {
   if (!shouldHideActions && inFrame && comlinkStatus === 'connected') {
     setShouldHideActions(true)
   }
-
-  // Write directly so a following click is not intercepted in the same turn
-  // once overlays are toggled off (e.g. Alt+click), even before listeners are
-  // removed by the controller deactivate effect.
-  setInterceptClicks(!shouldHideActions && overlayEnabled)
 
   const elementsToRender = useMemo(() => {
     if (isDragging) {
@@ -487,6 +511,7 @@ export function Overlays(props: {
                       onDrag={updateDragPreviewCustomProps}
                       overlayEnabled={overlayEnabled}
                       rootElement={rootElement}
+                      shouldHideActions={shouldHideActions}
                     />
                     {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                     {elementsToRender}

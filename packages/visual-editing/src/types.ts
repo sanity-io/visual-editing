@@ -276,6 +276,12 @@ export interface OverlayOptions {
   inFrame: boolean
   inPopUp: boolean
   optimisticActorReady: boolean
+  /**
+   * True when the "Open in Studio" action is hidden (Presentation is
+   * connected). Only then are hovered primary clicks cancelled so they
+   * activate the overlay instead of navigating.
+   */
+  shouldHideActions?: boolean
 }
 
 /**
