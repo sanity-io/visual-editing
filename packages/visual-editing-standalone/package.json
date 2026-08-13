@@ -31,13 +31,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./style.css": {
-      "types": "./dist/style-css.d.ts",
-      "browser": "./dist/style.css",
-      "style": "./dist/style.css",
-      "node": "./dist/style-css.js",
-      "default": "./dist/style-css.js"
-    },
+    "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -105,13 +99,7 @@
   "publishConfig": {
     "exports": {
       ".": "./dist/index.js",
-      "./style.css": {
-        "types": "./dist/style-css.d.ts",
-        "browser": "./dist/style.css",
-        "style": "./dist/style.css",
-        "node": "./dist/style-css.js",
-        "default": "./dist/style-css.js"
-      },
+      "./styles.css": "./dist/styles.css",
       "./package.json": "./package.json"
     }
   }
