@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.0
+
+### Minor Changes
+
+- [#3621](https://github.com/sanity-io/visual-editing/pull/3621) [`541ec31`](https://github.com/sanity-io/visual-editing/commit/541ec3111f5115bd187609dad1418ac88a0d5e0f) Thanks [@stipsan](https://github.com/stipsan)! - Add `onVariantChange` to `enableVisualEditing` options, matching `@sanity/visual-editing`, so non-React apps can persist the Studio editing variant for server-side fetches.
+
+### Patch Changes
+
+- [#3622](https://github.com/sanity-io/visual-editing/pull/3622) [`804430c`](https://github.com/sanity-io/visual-editing/commit/804430cf34ce9bdbe9b51b275b6fb3f8ff9d2b64) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/ui to ^4.0.3
+
+- [#3598](https://github.com/sanity-io/visual-editing/pull/3598) [`4fa3f63`](https://github.com/sanity-io/visual-editing/commit/4fa3f63509192d4666f740163cf941fe6c612400) Thanks [@stipsan](https://github.com/stipsan)! - fix: prevent a React 19 update loop when Visual Editing overlays are hidden by Suspense
+
+- [#3618](https://github.com/sanity-io/visual-editing/pull/3618) [`7d940e1`](https://github.com/sanity-io/visual-editing/commit/7d940e1f5c389b6a26106c907855e6eb85e88bde) Thanks [@stipsan](https://github.com/stipsan)! - fix: restore native ESM (esm.sh) compatibility that 1.1.0 lost to a stylesheet import statement
+
+  `@sanity/ui@4`'s static stylesheet was wired up as a relative `import './style.css'` statement in the lazy overlay chunk, which only bundlers understand: esm.sh rewrites the specifier to a URL that redirects to the raw `text/css` file, which browsers refuse to run as a module, so `enableVisualEditing()` crashed with `Failed to fetch dynamically imported module` in every native ESM setup.
+
+  The stylesheet is now published behind a conditional `./style.css` export — the same pattern `@sanity/ui` itself uses — and imported self-referentially from the entry: bundlers resolve the `browser`/`style` conditions to the stylesheet and load it automatically, while Node and native ESM consumers (including esm.sh) resolve a no-op JS shim instead of crashing. When loading from esm.sh, add the stylesheet with `<link rel="stylesheet" href="https://esm.sh/@sanity/visual-editing-standalone@1/dist/style.css" />` as documented in the README.
+
 ## 1.1.0
 
 ### Minor Changes

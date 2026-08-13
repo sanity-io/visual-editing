@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.0.2
+
+### Patch Changes
+
+- [#3622](https://github.com/sanity-io/visual-editing/pull/3622) [`804430c`](https://github.com/sanity-io/visual-editing/commit/804430cf34ce9bdbe9b51b275b6fb3f8ff9d2b64) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/ui to ^4.0.3
+
+- [#3616](https://github.com/sanity-io/visual-editing/pull/3616) [`b3c15f4`](https://github.com/sanity-io/visual-editing/commit/b3c15f4849b3dd8088a12486aeb4d8f14717ad79) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency styled-components to ^6.5.2
+
+- [#3598](https://github.com/sanity-io/visual-editing/pull/3598) [`4fa3f63`](https://github.com/sanity-io/visual-editing/commit/4fa3f63509192d4666f740163cf941fe6c612400) Thanks [@stipsan](https://github.com/stipsan)! - fix: prevent a React 19 update loop when Visual Editing overlays are hidden by Suspense
+
 ## 6.0.1
 
 ### Patch Changes
