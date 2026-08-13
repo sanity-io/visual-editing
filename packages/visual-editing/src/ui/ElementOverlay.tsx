@@ -24,7 +24,7 @@ import {
   type ReactElement,
 } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import {styled} from 'styled-components'
+import {css, styled} from 'styled-components'
 import {v4 as uuid} from 'uuid'
 
 import {PointerEvents} from '../overlay-components/components/PointerEvents'
@@ -44,6 +44,7 @@ import type {
   VisualEditingNode,
 } from '../types'
 import {getLinkHref} from '../util/getLinkHref'
+import {CSS_ANCHOR_POSITIONING_SUPPORTS, supportsCssAnchorPositioning} from './cssAnchorPositioning'
 import {PopoverBackground} from './PopoverPortal'
 import {usePreviewSnapshots} from './preview/usePreviewSnapshots'
 import {useSchema} from './schema/useSchema'
@@ -83,14 +84,35 @@ export interface ElementOverlayProps {
   onMenuOpenChange: (open: boolean) => void
 }
 
+/**
+ * Shared CSS-anchor chrome: `position: fixed` so overflow fallbacks are
+ * measured against the preview iframe/viewport, not this overlay box.
+ * Requires no `transform`/`will-change: transform` on ancestors (those would
+ * make `fixed` descendants use the overlay as their containing block).
+ */
+const overlayChromeAnchorPositioning = (insets: ReturnType<typeof css>) => css`
+  @supports ${CSS_ANCHOR_POSITIONING_SUPPORTS} {
+    position: fixed;
+    position-anchor: --sanity-ve-overlay;
+    inset: auto;
+    ${insets}
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+    position-try: flip-block, flip-inline, flip-block flip-inline;
+  }
+`
+
 const Root = styled(Card)`
   background-color: var(--overlay-bg);
   border-radius: 3px;
   pointer-events: none;
   position: absolute;
-  will-change: transform;
+  overflow: visible;
   box-shadow: var(--overlay-box-shadow);
   transition: none;
+
+  /* Scoped so each overlay's labels bind to this box, not the last overlay on the page. */
+  anchor-name: --sanity-ve-overlay;
+  anchor-scope: --sanity-ve-overlay;
 
   --overlay-bg: transparent;
   --overlay-box-shadow: inset 0 0 0 1px transparent;
@@ -143,6 +165,11 @@ const Actions = styled(Flex)`
     bottom: auto;
     top: 100%;
   }
+
+  ${overlayChromeAnchorPositioning(css`
+    bottom: anchor(top);
+    right: anchor(right);
+  `)}
 `
 
 const HUD = styled(Flex)`
@@ -163,6 +190,11 @@ const HUD = styled(Flex)`
   [data-flipped] & {
     top: calc(100% + 2rem);
   }
+
+  ${overlayChromeAnchorPositioning(css`
+    top: anchor(bottom);
+    left: anchor(left);
+  `)}
 `
 
 const MenuWrapper = styled(Flex)`
@@ -188,6 +220,11 @@ const Tab = styled(Flex)`
     bottom: auto;
     top: 100%;
   }
+
+  ${overlayChromeAnchorPositioning(css`
+    bottom: anchor(top);
+    left: anchor(left);
+  `)}
 `
 
 const ActionOpen = styled(Card)`
@@ -487,7 +524,8 @@ export const ElementOverlay = memo(function ElementOverlay(
     () => ({
       width: `${rect.w}px`,
       height: `${rect.h}px`,
-      transform: `translate(${rect.x}px, ${rect.y}px)`,
+      top: `${rect.y}px`,
+      left: `${rect.x}px`,
     }),
     [rect],
   )
@@ -526,7 +564,13 @@ export const ElementOverlay = memo(function ElementOverlay(
 
   const [isNearTop, setIsNearTop] = useState(false)
   useEffect(() => {
-    if (!ref.current || !hovered) return undefined
+    // CSS anchor positioning flips chrome against the viewport as the preview
+    // scrolls; the IntersectionObserver heuristic is only a fallback.
+    if (supportsCssAnchorPositioning()) return undefined
+    if (!ref.current || !hovered) {
+      setIsNearTop(false)
+      return undefined
+    }
 
     const io = new IntersectionObserver(
       ([intersection]) => {
@@ -536,7 +580,7 @@ export const ElementOverlay = memo(function ElementOverlay(
     )
     io.observe(ref.current)
     return () => io.disconnect()
-  }, [hovered, isNearTop])
+  }, [hovered])
 
   const [activeExclusivePlugin, setActiveExclusivePlugin] = useState<{
     plugin: OverlayPluginExclusiveDefinition
