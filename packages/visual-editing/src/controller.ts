@@ -32,6 +32,7 @@ export function createOverlayController({
   inFrame,
   inPopUp,
   optimisticActorReady,
+  showActions = false,
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
@@ -201,12 +202,13 @@ export function createOverlayController({
 
         // Hovered overlay + primary click: activate the overlay instead of
         // following the link. Modifier clicks (and non-primary buttons) must
-        // not intercept — nor do we once overlays are toggled off.
+        // not intercept — nor do we once overlays are toggled off, or when
+        // "Open in Studio" is shown (click-to-edit is not the affordance).
         if (isModifiedClick(event)) {
           return
         }
 
-        if (inFrame) {
+        if (inFrame && !showActions) {
           event.preventDefault()
           event.stopPropagation()
         }

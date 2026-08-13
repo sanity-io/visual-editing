@@ -77,7 +77,7 @@ describe('createOverlayController click interception', () => {
     vi.unstubAllGlobals()
   })
 
-  function mountController(inFrame = true) {
+  function mountController(inFrame = true, showActions = false) {
     const overlayElement = document.createElement('div')
     document.body.appendChild(overlayElement)
     mounted.push(overlayElement)
@@ -88,6 +88,7 @@ describe('createOverlayController click interception', () => {
       inFrame,
       inPopUp: false,
       optimisticActorReady: true,
+      showActions,
     })
 
     activateObserved()
@@ -173,6 +174,22 @@ describe('createOverlayController click interception', () => {
     link.dispatchEvent(event)
 
     expect(event.defaultPrevented).toBe(false)
+  })
+
+  test('does not intercept when Open in Studio actions are shown', () => {
+    const link = mountLink()
+    mountController(true, true)
+    hover(link)
+
+    const onBubble = vi.fn()
+    link.addEventListener('click', onBubble)
+
+    const event = new MouseEvent('click', {bubbles: true, cancelable: true, button: 0})
+    link.dispatchEvent(event)
+
+    expect(event.defaultPrevented).toBe(false)
+    expect(onBubble).toHaveBeenCalledTimes(1)
+    expect(messagesOfType(messages, 'element/click')).toHaveLength(1)
   })
 
   test('does not block navigation when the overlay is not hovered', () => {

@@ -276,6 +276,11 @@ export interface OverlayOptions {
   inFrame: boolean
   inPopUp: boolean
   optimisticActorReady: boolean
+  /**
+   * When true, the overlay shows an "Open in Studio" action. Clicks must not be
+   * cancelled — following a link or the action itself is the intended behavior.
+   */
+  showActions?: boolean
 }
 
 /**

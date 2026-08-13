@@ -123,8 +123,10 @@ const OverlaysController: FunctionComponent<{
   onDrag: (x: number, y: number) => void
   overlayEnabled: boolean
   rootElement: HTMLElement | null
+  showActions: boolean
 }> = (props) => {
-  const {comlink, dispatch, inFrame, inPopUp, onDrag, overlayEnabled, rootElement} = props
+  const {comlink, dispatch, inFrame, inPopUp, onDrag, overlayEnabled, rootElement, showActions} =
+    props
   const {dispatchDragEndEvent} = useDragEndEvents()
   const sendTelemetry = useTelemetry()
 
@@ -168,7 +170,7 @@ const OverlaysController: FunctionComponent<{
     [comlink, dispatch, dispatchDragEndEvent, onDrag, sendTelemetry],
   )
 
-  const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp)
+  const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp, showActions)
 
   useLayoutEffect(() => {
     if (overlayEnabled) {
@@ -491,6 +493,7 @@ export function Overlays(props: {
                       onDrag={updateDragPreviewCustomProps}
                       overlayEnabled={overlayEnabled}
                       rootElement={rootElement}
+                      showActions={!shouldHideActions}
                     />
                     {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                     {elementsToRender}
