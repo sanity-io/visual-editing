@@ -193,4 +193,44 @@ describe('createOverlayController click interception', () => {
     expect(onBubble).toHaveBeenCalledTimes(1)
     expect(messagesOfType(messages, 'element/click')).toHaveLength(0)
   })
+
+  test('clicks outside overlay UI blur the overlays', () => {
+    mountController(true)
+
+    document.body.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true}))
+
+    expect(messagesOfType(messages, 'overlay/blur')).toHaveLength(1)
+  })
+
+  test('clicks on overlay UI elements do not blur the overlays', () => {
+    mountController(true)
+
+    // React renders the boolean JSX attribute as `data-sanity-overlay-element="true"`
+    const overlayUi = document.createElement('div')
+    overlayUi.setAttribute('data-sanity-overlay-element', 'true')
+    document.body.appendChild(overlayUi)
+    mounted.push(overlayUi)
+
+    const event = new MouseEvent('click', {bubbles: true, cancelable: true})
+    overlayUi.dispatchEvent(event)
+
+    expect(event.defaultPrevented).toBe(false)
+    expect(messagesOfType(messages, 'overlay/blur')).toHaveLength(0)
+  })
+
+  test('userland capture overlay elements swallow the click', () => {
+    mountController(true)
+
+    // Userland can mark its own DOM with `data-sanity-overlay-element="capture"`
+    const captureUi = document.createElement('div')
+    captureUi.setAttribute('data-sanity-overlay-element', 'capture')
+    document.body.appendChild(captureUi)
+    mounted.push(captureUi)
+
+    const event = new MouseEvent('click', {bubbles: true, cancelable: true})
+    captureUi.dispatchEvent(event)
+
+    expect(event.defaultPrevented).toBe(true)
+    expect(messagesOfType(messages, 'overlay/blur')).toHaveLength(0)
+  })
 })

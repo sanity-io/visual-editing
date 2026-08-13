@@ -560,10 +560,17 @@ export function createOverlayController({
   }
 
   function handleBlur(event: MouseEvent) {
-    // Clicks on overlay UI are not a blur of the content overlays. This used to
-    // also stopPropagation when `dataset.sanityOverlayElement === 'capture'`,
-    // but no component sets that value, so the branch was dead.
-    if (findOverlayElement(event.target)) {
+    const element = findOverlayElement(event.target)
+
+    if (element) {
+      // `data-sanity-overlay-element="capture"` is a userland opt-in (e.g. via
+      // `<PointerEvents data-sanity-overlay-element="capture">`): clicks on
+      // that UI are swallowed so page defaults (like a wrapping link) don't
+      // run. Bare `data-sanity-overlay-element` only skips the overlay blur.
+      if (element.dataset['sanityOverlayElement'] === 'capture') {
+        event.preventDefault()
+        event.stopPropagation()
+      }
       return
     }
 
