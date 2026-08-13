@@ -34,6 +34,32 @@ export default mergeConfig(
       // Fail the build if any bare import were to leak into the output.
       onlyImport: [],
     },
+    // `@sanity/ui@4` ships its static styles as `@sanity/ui/styles.css`, which the bundled
+    // `@sanity/visual-editing` overlays import. Extract it into `dist/style.css` behind the
+    // conditional `./style.css` export (`exports.nodeCompat` with a no-op JS shim for
+    // runtimes that cannot load `.css` files), and prepend the self-referential
+    // `import "@sanity/visual-editing-standalone/style.css"` to the entry (`inject`) — the
+    // same conditional-export pattern `@sanity/ui` itself publishes. This keeps every
+    // consumer working without an external `@sanity/ui` dependency:
+    //
+    // - bundlers resolve the `browser`/`style` conditions to the stylesheet and load it
+    //   automatically, like any CSS import;
+    // - Node (SSR module evaluation) resolves the `node`/`default` conditions to the shim
+    //   instead of crashing on a `.css` file;
+    // - esm.sh externalizes the import into a URL that resolves to the shim as well
+    //   (verified: `esm.sh/@sanity/ui@4.0.2/styles.css?target=es2022` 301s to the
+    //   `styles-css.js` shim), so native ESM consumers never execute `text/css` — they add
+    //   the stylesheet with a `<link>` tag as documented in the README.
+    //
+    // Passing `css` here (rather than through `mergeConfig` below) is load-bearing: only the
+    // `defineConfig` option wires up `cssNodeCompatPlugin`. The raw `@tsdown/css` `inject`
+    // emits a relative `import './style.css'` statement instead, which crashes every native
+    // ESM consumer as soon as the lazy overlay chunk loads — esm.sh rewrites it to a
+    // `.css.mjs` URL that redirects to the raw `text/css` file, which browsers refuse to run
+    // as a module (the 1.1.0 regression).
+    css: {
+      minify: true,
+    },
   }),
   {
     // React mutates internal fields while scheduling renders, so property *writes* must remain
@@ -74,14 +100,5 @@ export default mergeConfig(
     // Unlike a typical library, consumers download this package's bundled dependencies.
     // `true` enables the full Oxc pass — equivalent to `{compress, mangle, codegen: true}`.
     minify: true,
-    // `@sanity/ui@4` ships static styles as `@sanity/ui/styles.css`, which the
-    // bundled `@sanity/visual-editing` overlays import. Extract it into a package-internal
-    // `.css` asset and keep the `import` in the JS output (`inject`) so consumers' bundlers
-    // load the stylesheet automatically — no external `@sanity/ui` dependency required, in
-    // keeping with this package's self-contained distribution.
-    css: {
-      inject: true,
-      minify: true,
-    },
   },
 ) satisfies UserConfig
