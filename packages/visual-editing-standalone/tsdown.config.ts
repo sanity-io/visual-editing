@@ -1,6 +1,38 @@
 import {defineConfig} from '@sanity/tsdown-config'
 import {mergeConfig, type UserConfig} from 'tsdown'
 
+/**
+ * `./styles.css` stays a CSS file at runtime (`default` → the stylesheet) so esm.sh
+ * `<link rel="stylesheet" href="…/styles.css">` still 301s to `text/css`. A `types`
+ * condition is required on top: TypeScript 6 `noUncheckedSideEffectImports` otherwise
+ * forces every consumer to `declare module '@sanity/visual-editing-standalone/styles.css'`.
+ *
+ * `{nodeCompat: true}` is the wrong tool — it points `default` at a JS shim, and esm.sh
+ * follows `default` (see `@sanity/ui/styles.css` → `styles-css.js`).
+ */
+const stylesCssExport = {
+  types: './dist/styles.css.d.ts',
+  default: './dist/styles.css',
+} as const
+
+/** Place `./styles.css` before `./package.json`, matching tsdown-config's `insertCssExport`. */
+function insertStylesCssExport(exports: Record<string, unknown>): Record<string, unknown> {
+  const next: Record<string, unknown> = {}
+  let inserted = false
+  for (const [key, value] of Object.entries(exports)) {
+    if (key === './styles.css') continue
+    if (key === './package.json' && !inserted) {
+      next['./styles.css'] = stylesCssExport
+      inserted = true
+    }
+    next[key] = value
+  }
+  if (!inserted) {
+    next['./styles.css'] = stylesCssExport
+  }
+  return next
+}
+
 export default mergeConfig(
   await defineConfig({
     tsconfig: 'tsconfig.dist.json',
@@ -36,8 +68,8 @@ export default mergeConfig(
     },
     // `@sanity/ui@4` ships its static styles as `@sanity/ui/styles.css`, which the bundled
     // `@sanity/visual-editing` overlays import. Extract it into `dist/styles.css` behind a
-    // plain `./styles.css` export — named after the `@sanity/ui` subpath it repackages —
-    // that consumers load themselves: with a bundler
+    // `./styles.css` export — named after the `@sanity/ui` subpath it repackages — that
+    // consumers load themselves: with a bundler
     // (`import '@sanity/visual-editing-standalone/styles.css'`) or a `<link>` tag, as
     // documented in the README.
     //
@@ -48,12 +80,13 @@ export default mergeConfig(
     // externalized by esm.sh's build to a `style.css.mjs` URL that redirects to the raw
     // `text/css` file, which browsers refuse to run as a module. 1.2.0 was the worse of the
     // two — the import sat in the entry, so even `import {createDataAttribute}` crashed.
-    // And since nothing references the stylesheet anymore, the export needs no Node shim
-    // (`exports.nodeCompat`) either — a plain string export is enough. TypeScript picks up
-    // `dist/styles.css.d.ts` next to it (copied below), so consumers do not need a
-    // `types` condition or a local `declare module`.
+    //
+    // `css.exports` stays off so we can declare the subpath ourselves: `types` → a
+    // side-effect `.d.ts`, `default` → the stylesheet. A plain string export has no types
+    // (Nuxt then needs `declare module`), and `exports.nodeCompat` would point `default`
+    // at a JS shim, which esm.sh serves for `<link>` tags.
     css: {
-      exports: true,
+      exports: false,
       fileName: 'styles.css',
       inject: false,
       minify: true,
@@ -95,9 +128,14 @@ export default mergeConfig(
         'styled',
       ],
     },
-    // Sibling of `dist/styles.css` so TypeScript types `import '…/styles.css'` from the
-    // plain string export. Copied after the Rolldown pass (generateBundle is too early).
+    // Copied into dist after the Rolldown pass and before publint. generateBundle is too
+    // early: the CSS asset is not in the bundle yet when this config's plugins run.
     copy: ['src/styles.css.d.ts'],
+    exports: {
+      customExports(exports) {
+        return insertStylesCssExport(exports)
+      },
+    },
     // Unlike a typical library, consumers download this package's bundled dependencies.
     // `true` enables the full Oxc pass — equivalent to `{compress, mangle, codegen: true}`.
     minify: true,
