@@ -1,5 +1,39 @@
 # Changelog
 
+## 2.0.0
+
+### Major Changes
+
+- [#3627](https://github.com/sanity-io/visual-editing/pull/3627) [`0947fd6`](https://github.com/sanity-io/visual-editing/commit/0947fd6e3df626028770724105c1f0e8ebd7f29e) Thanks [@stipsan](https://github.com/stipsan)! - feat!: require importing the stylesheet, now exported as `./styles.css`
+
+  The published JS no longer references the overlays' static stylesheet at all. Both automatic wirings shipped so far broke native ESM consumers: the relative `import './style.css'` of 1.1.0 and the self-referential `import '@sanity/visual-editing-standalone/style.css'` of 1.2.0 were each externalized by esm.sh's build to a `style.css.mjs` URL that redirects to the raw `text/css` file, which browsers refuse to run as a module — 1.2.0 crashed on the entry itself, taking `createDataAttribute` down with it.
+
+  Instead, import the stylesheet explicitly, once, wherever Visual Editing is enabled. With a bundler:
+
+  ```ts
+  import "@sanity/visual-editing-standalone/styles.css";
+  ```
+
+  Or, when loading from esm.sh, with a `<link>` tag:
+
+  ```html
+  <link
+    rel="stylesheet"
+    href="https://esm.sh/@sanity/visual-editing-standalone@2/styles.css"
+  />
+  ```
+
+  Breaking changes:
+
+  - The stylesheet export is renamed from `./style.css` to `./styles.css`, matching the `@sanity/ui@4` subpath it repackages, and is now a plain export (the Node no-op shim behind the former conditional export is gone — nothing imports the stylesheet at runtime anymore).
+  - The stylesheet is no longer loaded automatically. Skipping it does not break the overlays, but the loading-spinner animation, screen-reader-only hiding, and label ellipsis rules go missing.
+
+### Patch Changes
+
+- [#3625](https://github.com/sanity-io/visual-editing/pull/3625) [`f7f1542`](https://github.com/sanity-io/visual-editing/commit/f7f154239d2b2f259a66de7c075196cf54f05de2) Thanks [@stipsan](https://github.com/stipsan)! - Keep visual editing overlay labels on-screen while the preview scrolls by positioning them with CSS anchor positioning when the browser supports it.
+
+  Browsers without `anchor-name` / `position-try-fallbacks` keep the previous IntersectionObserver flip above/below the overlay.
+
 ## 1.2.0
 
 ### Minor Changes
