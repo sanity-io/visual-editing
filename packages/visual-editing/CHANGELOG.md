@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.0.4
+
+### Patch Changes
+
+- [#3633](https://github.com/sanity-io/visual-editing/pull/3633) [`d3903c2`](https://github.com/sanity-io/visual-editing/commit/d3903c2f09f0b27017136f5471a33ecdc7629d4b) Thanks [@stipsan](https://github.com/stipsan)! - Stop intercepting preview clicks when a modifier key is held, overlays are toggled off, or the "Open in Studio" action is shown, so Next.js `<Link>` and open-in-new-tab work without capture-phase `router.push` workarounds. Hovered primary clicks in Presentation still `preventDefault` to activate the overlay instead of navigating; the overlay toggle handlers write a module-level `interceptClicks` flag synchronously so toggling off applies to clicks in the same interaction. Unconditional `mousedown` `preventDefault` (the iframe-focus trick) is limited to drag start. Userland `data-sanity-overlay-element="capture"` elements keep swallowing clicks.
+
 ## 6.0.3
 
 ### Patch Changes
