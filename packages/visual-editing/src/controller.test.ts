@@ -2,6 +2,7 @@ import {createDataAttribute} from '@sanity/visual-editing-csm'
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest'
 
 import {createOverlayController} from './controller'
+import {setInterceptClicks} from './interceptClicks'
 import type {OverlayController, OverlayMsg} from './types'
 
 const sanityAttr = createDataAttribute({
@@ -40,6 +41,7 @@ describe('createOverlayController click interception', () => {
     observed.clear()
     ioCallback = undefined
     messages = []
+    setInterceptClicks(true)
     vi.stubGlobal(
       'IntersectionObserver',
       class {
@@ -74,10 +76,11 @@ describe('createOverlayController click interception', () => {
       el.remove()
     }
     mounted.length = 0
+    setInterceptClicks(false)
     vi.unstubAllGlobals()
   })
 
-  function mountController(inFrame = true, showActions = false) {
+  function mountController(inFrame = true) {
     const overlayElement = document.createElement('div')
     document.body.appendChild(overlayElement)
     mounted.push(overlayElement)
@@ -88,7 +91,6 @@ describe('createOverlayController click interception', () => {
       inFrame,
       inPopUp: false,
       optimisticActorReady: true,
-      showActions,
     })
 
     activateObserved()
@@ -147,12 +149,13 @@ describe('createOverlayController click interception', () => {
     expect(messagesOfType(messages, 'element/click')).toHaveLength(0)
   })
 
-  test('does not intercept once overlays are deactivated', () => {
-    // `preventDefault` is gated on `activated`, not merely `inFrame`.
+  test('does not intercept once overlays are toggled off', () => {
+    // `preventDefault` is gated on `interceptClicks`, not merely `inFrame` or
+    // the controller being activated.
     const link = mountLink()
-    const controller = mountController(true)
+    mountController(true)
     hover(link)
-    controller.deactivate()
+    setInterceptClicks(false)
 
     const onBubble = vi.fn()
     link.addEventListener('click', onBubble)
@@ -174,22 +177,6 @@ describe('createOverlayController click interception', () => {
     link.dispatchEvent(event)
 
     expect(event.defaultPrevented).toBe(false)
-  })
-
-  test('does not intercept when Open in Studio actions are shown', () => {
-    const link = mountLink()
-    mountController(true, true)
-    hover(link)
-
-    const onBubble = vi.fn()
-    link.addEventListener('click', onBubble)
-
-    const event = new MouseEvent('click', {bubbles: true, cancelable: true, button: 0})
-    link.dispatchEvent(event)
-
-    expect(event.defaultPrevented).toBe(false)
-    expect(onBubble).toHaveBeenCalledTimes(1)
-    expect(messagesOfType(messages, 'element/click')).toHaveLength(1)
   })
 
   test('does not block navigation when the overlay is not hovered', () => {

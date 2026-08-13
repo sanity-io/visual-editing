@@ -16,16 +16,15 @@ import {
   startTransition,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useReducer,
   useRef,
   useState,
   type FunctionComponent,
 } from 'react'
-import {flushSync} from 'react-dom'
 import {styled} from 'styled-components'
 
+import {setInterceptClicks} from '../interceptClicks'
 import {useOptimisticActor, useOptimisticActorReady} from '../react/useOptimisticActor'
 import type {
   OverlayComponentResolver,
@@ -123,10 +122,8 @@ const OverlaysController: FunctionComponent<{
   onDrag: (x: number, y: number) => void
   overlayEnabled: boolean
   rootElement: HTMLElement | null
-  showActions: boolean
 }> = (props) => {
-  const {comlink, dispatch, inFrame, inPopUp, onDrag, overlayEnabled, rootElement, showActions} =
-    props
+  const {comlink, dispatch, inFrame, inPopUp, onDrag, overlayEnabled, rootElement} = props
   const {dispatchDragEndEvent} = useDragEndEvents()
   const sendTelemetry = useTelemetry()
 
@@ -170,9 +167,9 @@ const OverlaysController: FunctionComponent<{
     [comlink, dispatch, dispatchDragEndEvent, onDrag, sendTelemetry],
   )
 
-  const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp, showActions)
+  const controller = useController(rootElement, overlayEventHandler, inFrame, inPopUp)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (overlayEnabled) {
       controller.current?.activate()
     } else {
@@ -303,18 +300,10 @@ export function Overlays(props: {
 
     let altPressed = false
 
-    const toggleOverlayEnabled = () => {
-      // Apply activate/deactivate in this turn so a following click is not
-      // intercepted after overlays have been toggled off (e.g. Alt+click).
-      flushSync(() => {
-        setOverlayEnabled((enabled) => !enabled)
-      })
-    }
-
     const handleKeyUp = (e: KeyboardEvent) => {
       if (isAltKey(e) && altPressed) {
         altPressed = false
-        toggleOverlayEnabled()
+        setOverlayEnabled((enabled) => !enabled)
       }
     }
 
@@ -327,12 +316,12 @@ export function Overlays(props: {
 
         if (!altPressed) {
           altPressed = true
-          toggleOverlayEnabled()
+          setOverlayEnabled((enabled) => !enabled)
         }
       }
 
       if (isHotkey(['mod', '\\'], e)) {
-        toggleOverlayEnabled()
+        setOverlayEnabled((enabled) => !enabled)
       }
     }
 
@@ -340,7 +329,7 @@ export function Overlays(props: {
     const handleWindowBlur = () => {
       if (altPressed) {
         altPressed = false
-        toggleOverlayEnabled()
+        setOverlayEnabled((enabled) => !enabled) // Toggle back
       }
     }
 
@@ -409,6 +398,11 @@ export function Overlays(props: {
   if (!shouldHideActions && inFrame && comlinkStatus === 'connected') {
     setShouldHideActions(true)
   }
+
+  // Write directly so a following click is not intercepted in the same turn
+  // once overlays are toggled off (e.g. Alt+click), even before listeners are
+  // removed by the controller deactivate effect.
+  setInterceptClicks(!shouldHideActions && overlayEnabled)
 
   const elementsToRender = useMemo(() => {
     if (isDragging) {
@@ -493,7 +487,6 @@ export function Overlays(props: {
                       onDrag={updateDragPreviewCustomProps}
                       overlayEnabled={overlayEnabled}
                       rootElement={rootElement}
-                      showActions={!shouldHideActions}
                     />
                     {contextMenu && <ContextMenu {...contextMenu} onDismiss={closeContextMenu} />}
                     {elementsToRender}

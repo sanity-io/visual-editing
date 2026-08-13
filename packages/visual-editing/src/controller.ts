@@ -1,5 +1,6 @@
 import {v4 as uuid} from 'uuid'
 
+import {interceptClicks} from './interceptClicks'
 import type {
   ElementNode,
   EventHandlers,
@@ -32,7 +33,6 @@ export function createOverlayController({
   inFrame,
   inPopUp,
   optimisticActorReady,
-  showActions = false,
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
@@ -192,7 +192,7 @@ export function createOverlayController({
       click(event) {
         const target = event.target as ElementNode | null
 
-        if (!activated) {
+        if (!interceptClicks) {
           return
         }
 
@@ -202,13 +202,13 @@ export function createOverlayController({
 
         // Hovered overlay + primary click: activate the overlay instead of
         // following the link. Modifier clicks (and non-primary buttons) must
-        // not intercept — nor do we once overlays are toggled off, or when
-        // "Open in Studio" is shown (click-to-edit is not the affordance).
+        // not intercept, and the flag is off once overlays are toggled off or
+        // "Open in Studio" is shown.
         if (isModifiedClick(event)) {
           return
         }
 
-        if (inFrame && !showActions) {
+        if (inFrame) {
           event.preventDefault()
           event.stopPropagation()
         }
@@ -224,7 +224,7 @@ export function createOverlayController({
       },
       contextmenu(event) {
         if (
-          !activated ||
+          !interceptClicks ||
           !('path' in commonSanity!) ||
           (!inFrame && !inPopUp) ||
           !optimisticActorReady
@@ -256,7 +256,7 @@ export function createOverlayController({
         }
       },
       mousedown(event) {
-        if (!activated) return
+        if (!interceptClicks) return
 
         if (event.currentTarget !== hoverStack.at(-1)) return
 
