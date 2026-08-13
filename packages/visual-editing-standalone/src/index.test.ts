@@ -33,6 +33,9 @@ test('preserves the source package implementations and types', () => {
   expectTypeOf<ReturnType<typeof standalone.enableVisualEditing>>().toEqualTypeOf<
     ReturnType<typeof enableVisualEditingSource>
   >()
+  expectTypeOf<
+    NonNullable<Parameters<typeof standalone.enableVisualEditing>[0]>['onVariantChange']
+  >().toEqualTypeOf<((variant: string | undefined) => void) | undefined>()
 })
 
 test('creates data attributes through the standalone entry point', () => {
