@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.0.3
+
+### Patch Changes
+
+- [#3625](https://github.com/sanity-io/visual-editing/pull/3625) [`f7f1542`](https://github.com/sanity-io/visual-editing/commit/f7f154239d2b2f259a66de7c075196cf54f05de2) Thanks [@stipsan](https://github.com/stipsan)! - Keep visual editing overlay labels on-screen while the preview scrolls by positioning them with CSS anchor positioning when the browser supports it.
+
+  Browsers without `anchor-name` / `position-try-fallbacks` keep the previous IntersectionObserver flip above/below the overlay.
+
 ## 6.0.2
 
 ### Patch Changes
