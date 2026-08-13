@@ -1,5 +1,6 @@
 import {v4 as uuid} from 'uuid'
 
+import {interceptClicks} from './interceptClicks'
 import type {
   ElementNode,
   EventHandlers,
@@ -17,6 +18,7 @@ import {
   resolveDragAndDropGroup,
 } from './util/findSanityNodes'
 import {getRect} from './util/geometry'
+import {isModifiedClick} from './util/isModifiedClick'
 
 /**
  * Creates a controller which dispatches overlay related events
@@ -31,6 +33,7 @@ export function createOverlayController({
   inFrame,
   inPopUp,
   optimisticActorReady,
+  shouldHideActions = false,
 }: OverlayOptions): OverlayController {
   let activated = false
   // Map for getting element by ID
@@ -190,26 +193,46 @@ export function createOverlayController({
       click(event) {
         const target = event.target as ElementNode | null
 
-        if (element === getHoveredElement() && element.contains(target)) {
-          // Click events are only supported supported in iframes, not well supported in popups
-          // @TODO presentation tool should report wether it's visible or not, so we can adapt properly and allow multi-window preview workflows
-          if (inFrame) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
+        if (!interceptClicks) {
+          return
+        }
 
-          const sanity = elementsMap.get(element)?.sanity
-          if (sanity && !activeDragSequence) {
-            handler({
-              type: 'element/click',
-              id,
-              sanity,
-            })
-          }
+        if (element !== getHoveredElement() || !element.contains(target)) {
+          return
+        }
+
+        // Modifier clicks (and non-primary buttons) are always left to the
+        // page: open-in-new-tab and friends must keep working.
+        if (isModifiedClick(event)) {
+          return
+        }
+
+        // Hovered overlay + primary click in Presentation activates the
+        // overlay instead of following the link. When the "Open in Studio"
+        // action is shown, click-to-edit is not the affordance, so the click
+        // is left alone.
+        if (inFrame && shouldHideActions) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        const sanity = elementsMap.get(element)?.sanity
+        if (sanity && !activeDragSequence) {
+          handler({
+            type: 'element/click',
+            id,
+            sanity,
+          })
         }
       },
       contextmenu(event) {
-        if (!('path' in commonSanity!) || (!inFrame && !inPopUp) || !optimisticActorReady) return
+        if (
+          !interceptClicks ||
+          !('path' in commonSanity!) ||
+          (!inFrame && !inPopUp) ||
+          !optimisticActorReady
+        )
+          return
 
         // This is a temporary check as the context menu only supports array
         // items (for now). We split the path into segments, if a `_key` exists
@@ -236,8 +259,7 @@ export function createOverlayController({
         }
       },
       mousedown(event) {
-        // prevent iframe from taking focus
-        event.preventDefault()
+        if (!interceptClicks) return
 
         if (event.currentTarget !== hoverStack.at(-1)) return
 
@@ -258,6 +280,10 @@ export function createOverlayController({
         const dragGroup = resolveDragAndDropGroup(element, commonSanity!, elementSet, elementsMap)
 
         if (!dragGroup) return
+
+        // Prevent text selection once a drag can start. Do not cancel every
+        // mousedown — that also blocked focus and caret placement.
+        event.preventDefault()
 
         handleOverlayDrag({
           element,
@@ -540,6 +566,10 @@ export function createOverlayController({
     const element = findOverlayElement(event.target)
 
     if (element) {
+      // `data-sanity-overlay-element="capture"` is a userland opt-in (e.g. via
+      // `<PointerEvents data-sanity-overlay-element="capture">`): clicks on
+      // that UI are swallowed so page defaults (like a wrapping link) don't
+      // run. Bare `data-sanity-overlay-element` only skips the overlay blur.
       if (element.dataset['sanityOverlayElement'] === 'capture') {
         event.preventDefault()
         event.stopPropagation()
