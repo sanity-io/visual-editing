@@ -10,9 +10,9 @@ test('exposes only the standalone runtime API', () => {
 })
 
 test('exposes only the root entry point plus its stylesheet, and no runtime dependencies', () => {
-  // `@sanity/ui@4` ships static styles as a stylesheet, extracted into the `./styles.css`
-  // export that consumers must import themselves — see the `css` option in
-  // `tsdown.config.ts` and the shape assertions in `dist.test.ts`.
+  // `@sanity/ui@4` ships static styles as a stylesheet, extracted into the typed
+  // `./styles.css` export that consumers must import themselves — see the `css`
+  // option in `tsdown.config.ts` and the shape assertions in `dist.test.ts`.
   expect(Object.keys(pkg.exports).sort()).toEqual(['.', './package.json', './styles.css'])
   expect(Object.keys(pkg.publishConfig.exports).sort()).toEqual([
     '.',
@@ -37,6 +37,10 @@ test('preserves the source package implementations and types', () => {
   expectTypeOf<
     NonNullable<Parameters<typeof standalone.enableVisualEditing>[0]>['onVariantChange']
   >().toEqualTypeOf<((variant: string | undefined) => void) | undefined>()
+})
+
+test('types the stylesheet as a side-effect module', () => {
+  expectTypeOf<typeof import('@sanity/visual-editing-standalone/styles.css')>().toEqualTypeOf<{}>()
 })
 
 test('creates data attributes through the standalone entry point', () => {
