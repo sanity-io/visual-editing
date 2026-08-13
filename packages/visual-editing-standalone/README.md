@@ -16,7 +16,10 @@ applications.
 npm install @sanity/visual-editing-standalone
 ```
 
-You do not need to install React.
+> [!TIP]
+> Does your application use React? Use
+> [`@sanity/visual-editing`](../visual-editing/README.md) instead. It also
+> supports custom overlay components and plugins.
 
 ### 2. Enable Visual Editing
 
@@ -84,11 +87,3 @@ const dataSanity = createDataAttribute({
   path: 'mainImage',
 }).toString()
 ```
-
-## React applications
-
-Use [`@sanity/visual-editing`](../visual-editing/README.md) instead. This
-standalone package includes its own copy of React.
-
-Use `@sanity/visual-editing` also if you need custom overlay components or
-plugins.
