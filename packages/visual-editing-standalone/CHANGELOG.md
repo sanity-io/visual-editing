@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+### Patch Changes
+
+- [#3630](https://github.com/sanity-io/visual-editing/pull/3630) [`1b5e8be`](https://github.com/sanity-io/visual-editing/commit/1b5e8be938dcd84545d75b205cd285e9f505e079) Thanks [@stipsan](https://github.com/stipsan)! - Ship TypeScript types for the `./styles.css` export so consumers can `import '@sanity/visual-editing-standalone/styles.css'` without a local `declare module`. The runtime export stays the stylesheet (`default` still points at `dist/styles.css`) so esm.sh `<link>` tags keep resolving to `text/css`.
+
 ## 2.0.0
 
 ### Major Changes
