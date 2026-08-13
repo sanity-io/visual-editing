@@ -1,12 +1,27 @@
 # `@sanity/visual-editing-standalone`
 
-Add Sanity Visual Editing to Vue, Nuxt, Svelte, Astro, or plain JavaScript
-applications.
+Add click-to-edit overlays to a non-React application that does not have a
+framework integration.
 
 > [!IMPORTANT]
 > Import `@sanity/visual-editing-standalone/styles.css` wherever you enable
 > Visual Editing. The overlays need these styles for accessibility, labels,
 > and loading indicators.
+
+## Choose the right integration
+
+Use a [framework-specific guide](https://www.sanity.io/docs/visual-editing/introduction-to-visual-editing#framework-quickstarts)
+when one is available. A framework integration can also configure preview
+mode, data loading, and live updates.
+
+- **React:** Use [`@sanity/visual-editing`](../visual-editing/README.md).
+- **SvelteKit:** Use
+  [`@sanity/sveltekit`](https://www.sanity.io/docs/visual-editing/visual-editing-with-sveltekit).
+- **Nuxt:** Use
+  [`@nuxtjs/sanity`](https://www.sanity.io/docs/visual-editing/visual-editing-with-nuxt).
+
+Use this standalone package when your application does not use React and no
+framework integration handles Visual Editing for you.
 
 ## Quick start
 
@@ -15,11 +30,6 @@ applications.
 ```bash
 npm install @sanity/visual-editing-standalone
 ```
-
-> [!TIP]
-> Does your application use React? Use
-> [`@sanity/visual-editing`](../visual-editing/README.md) instead. It also
-> supports custom overlay components and plugins.
 
 ### 2. Enable Visual Editing
 
