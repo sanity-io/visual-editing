@@ -14,7 +14,7 @@ import pkg from '../package.json'
  * `import '<pkg>/style.css'` of 1.2.0 were each externalized by esm.sh's build to a
  * `style.css.mjs` URL that redirects to the raw `text/css` file, which browsers refuse to
  * run as a module. The contract since 2.0.0: the published JS never references the
- * stylesheet — consumers import the `./styles.css` export themselves.
+ * stylesheet — consumers import the typed `./styles.css` export themselves.
  */
 const distDir = fileURLToPath(new URL('../dist', import.meta.url))
 
@@ -36,16 +36,27 @@ test('ships no stylesheet imports in the dist JS', () => {
   }
 })
 
-test('emits the stylesheet behind the plain ./styles.css export', () => {
+test('emits the stylesheet behind a typed ./styles.css export', () => {
   const styleSheet = join(distDir, 'styles.css')
   expect(existsSync(styleSheet), 'dist/styles.css must exist').toBe(true)
   expect(readFileSync(styleSheet, 'utf8')).toContain('{')
 
-  expect(pkg.exports['./styles.css']).toBe('./dist/styles.css')
-  expect(pkg.publishConfig.exports['./styles.css']).toBe('./dist/styles.css')
+  const types = join(distDir, 'styles.css.d.ts')
+  expect(existsSync(types), 'dist/styles.css.d.ts must exist').toBe(true)
+  expect(readFileSync(types, 'utf8')).toContain('export {}')
+
+  // `default` stays the stylesheet so esm.sh `<link href="…/styles.css">` 301s to
+  // `text/css`. `types` is what makes `import '<pkg>/styles.css'` type-check under
+  // TypeScript 6 `noUncheckedSideEffectImports` without a consumer `declare module`.
+  const stylesCssExport = {
+    types: './dist/styles.css.d.ts',
+    default: './dist/styles.css',
+  }
+  expect(pkg.exports['./styles.css']).toEqual(stylesCssExport)
+  expect(pkg.publishConfig.exports['./styles.css']).toEqual(stylesCssExport)
 })
 
-test('ships neither the removed ./style.css export nor its Node shim', () => {
+test('ships neither the removed ./style.css export nor a Node CSS shim', () => {
   expect(pkg.exports).not.toHaveProperty('./style.css')
   expect(pkg.publishConfig.exports).not.toHaveProperty('./style.css')
 
@@ -53,4 +64,6 @@ test('ships neither the removed ./style.css export nor its Node shim', () => {
   expect(files).not.toContain('style.css')
   expect(files).not.toContain('style-css.js')
   expect(files).not.toContain('style-css.d.ts')
+  expect(files).not.toContain('styles-css.js')
+  expect(files).not.toContain('styles-css.d.ts')
 })
