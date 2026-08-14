@@ -52,6 +52,12 @@
       "rangeStrategy": "bump"
     },
     {
+      "description": "Keep styled-components peer range on ^6.1 for consumer compatibility",
+      "matchDepNames": ["styled-components"],
+      "matchDepTypes": ["peerDependencies"],
+      "rangeStrategy": "widen"
+    },
+    {
       "matchPackageNames": ["eslint-plugin-react-hooks"],
       "description": "Disable until 5.2 is out",
       "enabled": false
