@@ -1,5 +1,6 @@
 import type {SanityClient} from '@sanity/client'
 import type {HistoryRefresh, VisualEditingOptions} from '@sanity/visual-editing'
+import type {SanityClientLike} from '@sanity/visual-editing-types'
 
 /** @public */
 export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history' | 'refresh'> {
@@ -16,9 +17,10 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 /** @public */
 export interface HandlePreviewOptions {
   /**
-   * The Sanity client instance for fetching data and listening to mutations
+   * The Sanity client instance to use for validating the preview URL, and to put on
+   * `event.locals.client` with the preview perspective applied
    */
-  client: SanityClient
+  client: SanityClientLike
   preview?: {
     /**
      * The preview secret to use for verifying preview access
@@ -46,8 +48,24 @@ export interface HandlePreviewOptions {
   }
 }
 
-/** @public */
-export interface VisualEditingLocals {
-  client: SanityClient
+/**
+ * `handlePreview` accepts any client shaped like `SanityClientLike`, but puts whichever one it was
+ * given on `event.locals.client`. The type parameter defaults to `SanityClient` so the full client
+ * API stays available. If your app resolves a different copy of `@sanity/client` than this package
+ * does, pass your own client type to avoid a mismatch:
+ * @example
+ * ```ts
+ * import type {SanityClient} from '@sanity/client'
+ *
+ * declare global {
+ *   namespace App {
+ *     interface Locals extends VisualEditingLocals<SanityClient> {}
+ *   }
+ * }
+ * ```
+ * @public
+ */
+export interface VisualEditingLocals<TClient extends SanityClientLike = SanityClient> {
+  client: TClient
   preview: boolean
 }

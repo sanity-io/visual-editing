@@ -10,6 +10,7 @@ import {
   createQueryStore as createCoreQueryStore,
   type EnableLiveModeOptions,
   type QueryStoreState,
+  type SanityClientLike,
 } from '@sanity/core-loader'
 import type {EncodeDataAttributeFunction} from '@sanity/core-loader/encode-data-attribute'
 import type {HandlePreviewOptions, VisualEditingLocals} from '@sanity/visual-editing/svelte'
@@ -178,10 +179,7 @@ export interface QueryStore {
     // ): QueryStoreState<QueryResponseResult, QueryResponseError>
   }
   useLiveMode: UseLiveMode
-  unstable__serverClient: {
-    instance: SanityClient | undefined
-    canPreviewDrafts?: boolean | undefined
-  }
+  unstable__serverClient: ReturnType<typeof createCoreQueryStore>['unstable__serverClient']
 }
 
 /** @public */
@@ -195,7 +193,12 @@ export interface HandleOptions {
   loadQuery?: LoadQuery
 }
 
-/** @public */
-export interface LoaderLocals extends VisualEditingLocals {
+/**
+ * See {@link VisualEditingLocals} for when to pass `TClient` explicitly.
+ * @public
+ */
+export interface LoaderLocals<
+  TClient extends SanityClientLike = SanityClient,
+> extends VisualEditingLocals<TClient> {
   loadQuery: LoadQuery
 }

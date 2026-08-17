@@ -1,10 +1,10 @@
-import type {ClientPerspective, ContentSourceMap, QueryParams, SanityClient} from '@sanity/client'
+import type {ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
 import {createCache, type Cache} from 'async-cache-dedupe'
 import {atom, map, onMount, startTask, type MapStore} from 'nanostores'
 
 import {runtime} from './env'
 import {defineEnableLiveMode} from './live-mode'
-import type {EnableLiveMode, Fetcher, QueryStoreState} from './types'
+import type {EnableLiveMode, Fetcher, QueryStoreState, SanityClientLike} from './types'
 
 export type {MapStore}
 
@@ -15,14 +15,12 @@ export type {WritableAtom} from 'nanostores'
 export interface CreateQueryStoreOptions {
   /**
    * The Sanity client to use for fetching data, or `false` if `ssr: true` and it's set with `setServerClient` later
-   * You may use any client that is an `instanceof SanityClient` or `instanceof SanityStegaClient`.
    * @example `import {createClient} from '@sanity/client'`
    * @example `import {createClient} from '@sanity/client/stega'`
    * @example `import {createClient} from '@sanity/preview-kit/client'`
    * @example `import {createClient} from 'next-sanity'`
    */
-  // oxlint-disable-next-line typescript/no-deprecated
-  client: SanityClient | import('@sanity/client/stega').SanityStegaClient | false
+  client: SanityClientLike | false
   /**
    * If you want all data fetching to be done server-side in production, set this to `true` and `client: false`.
    * Then, in your server entry file, you can set the Sanity client with `setServerClient`.
@@ -51,8 +49,7 @@ export interface QueryStore {
    * When `ssr: true` you call this in your server entry point that imports the result of `createQueryStore` instance.
    * It's required to call it before any data fetching is done.
    */
-  // oxlint-disable-next-line typescript/no-deprecated
-  setServerClient: (client: SanityClient | import('@sanity/client/stega').SanityStegaClient) => void
+  setServerClient: (client: SanityClientLike) => void
   enableLiveMode: EnableLiveMode
   /** @internal */
   unstable__cache: {
@@ -68,7 +65,7 @@ export interface QueryStore {
     /**
      * Only set if `ssr: true` and `setServerClient` has been called.
      */
-    instance: SanityClient | undefined
+    instance: SanityClientLike | undefined
     /**
      * Will be `true` if the client given to `setServerClient` has a token configured.
      */
@@ -76,7 +73,7 @@ export interface QueryStore {
   }
 }
 
-function cloneClientWithConfig(newClient: SanityClient): SanityClient {
+function cloneClientWithConfig(newClient: SanityClientLike): SanityClientLike {
   return newClient.withConfig({
     allowReconfigure: false,
   })
@@ -96,9 +93,9 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
   if (!ssr && !options.client) {
     throw new TypeError(`\`client\` is required`)
   }
-  let client = ssr ? undefined : cloneClientWithConfig(options.client as SanityClient)
+  let client = ssr || !options.client ? undefined : cloneClientWithConfig(options.client)
 
-  function createDefaultCache(client: SanityClient | undefined) {
+  function createDefaultCache(client: SanityClientLike | undefined) {
     return createCache().define('fetch', async (key: string) => {
       if (!client) {
         throw new Error(
@@ -232,7 +229,7 @@ export const createQueryStore = (options: CreateQueryStoreOptions): QueryStore =
     if (!ssr) {
       throw new Error('`setServerClient` can only be called when `ssr: true`')
     }
-    unstable__serverClient.instance = client = cloneClientWithConfig(newClient as SanityClient)
+    unstable__serverClient.instance = client = cloneClientWithConfig(newClient)
     unstable__serverClient.canPreviewDrafts = !!client.config().token
     $fetcher.set(createDefaultFetcher())
   }
