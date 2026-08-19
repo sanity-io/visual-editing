@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.16
+
+### Patch Changes
+
+- Updated dependencies [[`8748e20`](https://github.com/sanity-io/visual-editing/commit/8748e20f7a89635f33c0eba4d79d6987a2a6939d)]:
+  - @sanity/visual-editing-types@2.1.0
+
 ## 3.0.15
 
 ### Patch Changes
