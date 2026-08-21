@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.5
+
+### Patch Changes
+
+- [#3643](https://github.com/sanity-io/visual-editing/pull/3643) [`ae2c174`](https://github.com/sanity-io/visual-editing/commit/ae2c1749f04a69a98b1c5cc72537da82671389ea) Thanks [@rexxars](https://github.com/rexxars)! - fix(deps): widen allowed `@sanity/client` peer dep
+
 ## 4.1.4
 
 ### Patch Changes
