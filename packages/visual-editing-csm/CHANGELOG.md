@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.17
+
+### Patch Changes
+
+- [#3643](https://github.com/sanity-io/visual-editing/pull/3643) [`ae2c174`](https://github.com/sanity-io/visual-editing/commit/ae2c1749f04a69a98b1c5cc72537da82671389ea) Thanks [@rexxars](https://github.com/rexxars)! - fix(deps): widen allowed `@sanity/client` peer dep
+
+- Updated dependencies [[`ae2c174`](https://github.com/sanity-io/visual-editing/commit/ae2c1749f04a69a98b1c5cc72537da82671389ea)]:
+  - @sanity/visual-editing-types@2.1.1
+
 ## 3.0.16
 
 ### Patch Changes

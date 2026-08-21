@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @sanity/core-loader@2.2.1
+
 ## 3.1.0
 
 ### Minor Changes
