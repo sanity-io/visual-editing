@@ -41,8 +41,8 @@
   `app.d.ts` to avoid a mismatch:
 
   ```ts
-  import type { SanityClient } from "@sanity/client";
-  import type { LoaderLocals } from "@sanity/svelte-loader";
+  import type {SanityClient} from '@sanity/client'
+  import type {LoaderLocals} from '@sanity/svelte-loader'
 
   declare global {
     namespace App {
