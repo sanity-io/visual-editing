@@ -17,16 +17,13 @@
   Instead, import the stylesheet explicitly, once, wherever Visual Editing is enabled. With a bundler:
 
   ```ts
-  import "@sanity/visual-editing-standalone/styles.css";
+  import '@sanity/visual-editing-standalone/styles.css'
   ```
 
   Or, when loading from esm.sh, with a `<link>` tag:
 
   ```html
-  <link
-    rel="stylesheet"
-    href="https://esm.sh/@sanity/visual-editing-standalone@2/styles.css"
-  />
+  <link rel="stylesheet" href="https://esm.sh/@sanity/visual-editing-standalone@2/styles.css" />
   ```
 
   Breaking changes:
