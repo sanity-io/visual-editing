@@ -65,6 +65,48 @@ export function decodeSanityString(str: string): SanityNode | undefined {
   return data
 }
 
+const EDIT_INTENT_MARKER = '/intent/edit/'
+
+/**
+ * Recovers sanity node data from the edit intent segment of an href, i.e.
+ * `/intent/edit/<router params>?<search params>`. `new URL(href)` cannot be
+ * trusted to locate the search params of the edit intent: if the studio
+ * baseUrl itself contains a query string or a hash, the edit intent search
+ * params end up inside another search param or inside the URL hash. The raw
+ * href still contains the intact edit intent, so parse it from the string
+ * instead.
+ */
+function decodeEditIntentSegment(href: string): SanityNode | undefined {
+  const markerIndex = href.indexOf(EDIT_INTENT_MARKER)
+  if (markerIndex === -1) return undefined
+  try {
+    const segment = href.slice(markerIndex + EDIT_INTENT_MARKER.length)
+    const searchIndex = segment.indexOf('?')
+    const routerParams = searchIndex === -1 ? segment : segment.slice(0, searchIndex)
+    const data: Record<string, string> = {}
+    for (const routerParam of routerParams.split(';')) {
+      const separatorIndex = routerParam.indexOf('=')
+      if (separatorIndex === -1) continue
+      const key = routerParam.slice(0, separatorIndex)
+      if (key === 'id' || key === 'type' || key === 'path' || key === 'tool') {
+        data[key] = decodeURIComponent(routerParam.slice(separatorIndex + 1))
+      }
+    }
+    if (searchIndex !== -1) {
+      // Search params take precedence: unlike the router params they also
+      // carry `baseUrl`, `workspace`, `perspective`, `projectId` and `dataset`
+      Object.assign(data, Object.fromEntries(new URLSearchParams(segment.slice(searchIndex + 1))))
+    }
+    // Everything before the edit intent is the studio baseUrl, possibly
+    // followed by a workspace name
+    data['baseUrl'] ??= href.slice(0, markerIndex) || '/'
+    const sanityNode = safeParse(sanityNodeSchema, data)
+    return sanityNode.success ? sanityNode.output : undefined
+  } catch {
+    return undefined
+  }
+}
+
 /**
  * Transforms stringified JSON into sanity node data
  * @param str - JSON sanity data
@@ -78,16 +120,21 @@ function decodeSanityObject(
   }
   const sanityLegacyNode = safeParse(sanityLegacyNodeSchema, data)
   if (sanityLegacyNode.success) {
+    const {href} = sanityLegacyNode.output
     try {
       const url = new URL(
-        sanityLegacyNode.output.href,
+        href,
         typeof document === 'undefined' ? 'https://example.com' : location.origin,
       )
       if (url.searchParams.size > 0) {
         return parse(sanityNodeSchema, Object.fromEntries(url.searchParams.entries()))
       }
-      return sanityLegacyNode.output
+      return decodeEditIntentSegment(href) ?? sanityLegacyNode.output
     } catch (err) {
+      const recoveredSanityNode = decodeEditIntentSegment(href)
+      if (recoveredSanityNode) {
+        return recoveredSanityNode
+      }
       console.error('Failed to parse sanity node', err)
       return sanityLegacyNode.output
     }
