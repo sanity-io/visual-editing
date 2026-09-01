@@ -1,4 +1,5 @@
-import {describe, expect, test} from 'vitest'
+import {createEditUrl} from '@sanity/client/csm'
+import {afterEach, describe, expect, test, vi} from 'vitest'
 
 import {decodeSanityString, decodeSanityNodeData} from './decodeSanityNodeData'
 
@@ -62,5 +63,105 @@ describe('decodeSanityNodeData', () => {
     ],
   ])('%j => %j', (input, output) => {
     expect(decodeSanityNodeData(input)).toEqual(output)
+  })
+})
+
+describe('decodeSanityNodeData with hrefs where the URL search params are unusable', () => {
+  const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+  afterEach(() => {
+    consoleErrorSpy.mockClear()
+  })
+
+  test('recovers when the studio baseUrl contains a query string', () => {
+    // The `?` in the baseUrl swallows the `baseUrl` search param of the edit
+    // intent url, e.g. `https://example.com/studio?variant=abc/intent/edit/...`
+    const baseUrl = 'https://example.com/studio?variant=abc'
+    const href = createEditUrl({
+      baseUrl,
+      workspace: 'staging',
+      tool: 'presentation',
+      id: 'drafts.abc123',
+      type: 'guildVideo',
+      path: 'sections[_key=="xyz"].title',
+    })
+
+    expect(decodeSanityNodeData({origin: 'sanity.io', href})).toEqual({
+      baseUrl,
+      workspace: 'staging',
+      tool: 'presentation',
+      id: 'abc123',
+      type: 'guildVideo',
+      path: 'sections[_key=="xyz"].title',
+      perspective: 'drafts',
+    })
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
+  })
+
+  test('recovers when the studio baseUrl contains a query string and a hash', () => {
+    const baseUrl = 'https://example.com/studio?variant=abc#'
+    const href = createEditUrl({baseUrl, id: 'abc123', type: 'guildVideo', path: 'title'})
+
+    expect(decodeSanityNodeData({origin: 'sanity.io', href})).toEqual({
+      baseUrl,
+      id: 'abc123',
+      type: 'guildVideo',
+      path: 'title',
+      perspective: 'published',
+    })
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
+  })
+
+  test('recovers when the studio baseUrl uses hash routing', () => {
+    // The edit intent url ends up entirely inside the URL hash, e.g.
+    // `/studio#/intent/edit/...`, leaving the URL search params empty
+    const baseUrl = '/studio#'
+    const href = createEditUrl({baseUrl, id: 'drafts.abc123', type: 'guildVideo', path: 'title'})
+
+    expect(decodeSanityNodeData({origin: 'sanity.io', href})).toEqual({
+      baseUrl,
+      id: 'abc123',
+      type: 'guildVideo',
+      path: 'title',
+      perspective: 'drafts',
+    })
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
+  })
+
+  test.each([
+    [
+      `/studio/intent/edit/mode=presentation;id=abc123;type=guildVideo;path=${encodeURIComponent('sections[_key=="xyz"].title')};tool=presentation`,
+      {
+        baseUrl: '/studio',
+        id: 'abc123',
+        type: 'guildVideo',
+        path: 'sections[_key=="xyz"].title',
+        tool: 'presentation',
+        perspective: 'drafts',
+      },
+    ],
+    [
+      '/intent/edit/mode=presentation;id=abc123;type=guildVideo;path=title',
+      {
+        baseUrl: '/',
+        id: 'abc123',
+        type: 'guildVideo',
+        path: 'title',
+        perspective: 'drafts',
+      },
+    ],
+  ])('recovers from the router params when the search segment is absent (%s)', (href, output) => {
+    expect(decodeSanityNodeData({origin: 'sanity.io', href})).toEqual(output)
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
+  })
+
+  test('keeps legacy behaviour for hrefs without an edit intent', () => {
+    const node = {origin: 'sanity.io', href: '/some/page'}
+    expect(decodeSanityNodeData(node)).toEqual(node)
+  })
+
+  test('keeps legacy behaviour and logs when recovery fails', () => {
+    const node = {origin: 'sanity.io', href: '/some/page?foo=bar'}
+    expect(decodeSanityNodeData(node)).toEqual(node)
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to parse sanity node', expect.anything())
   })
 })
