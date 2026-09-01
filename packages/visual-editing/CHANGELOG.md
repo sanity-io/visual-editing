@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.1.2
+
+### Patch Changes
+
+- [#3636](https://github.com/sanity-io/visual-editing/pull/3636) [`3607f90`](https://github.com/sanity-io/visual-editing/commit/3607f90da1ccd355734142ee07c8d9642e24ed71) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency styled-components to ^6.5.3
+
+- [#3656](https://github.com/sanity-io/visual-editing/pull/3656) [`72840d5`](https://github.com/sanity-io/visual-editing/commit/72840d57bc713ad78f5d9bbdbe5b7cd0580672a5) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency xstate to ^5.32.6
+- Updated dependencies [[`3b8e806`](https://github.com/sanity-io/visual-editing/commit/3b8e806f7bf53afbba2c55f603292f001ea985ff)]:
+  - @sanity/visual-editing-csm@3.0.18
+
 ## 6.1.1
 
 ### Patch Changes
@@ -41,8 +51,8 @@
   `app.d.ts` to avoid a mismatch:
 
   ```ts
-  import type { SanityClient } from "@sanity/client";
-  import type { LoaderLocals } from "@sanity/svelte-loader";
+  import type {SanityClient} from '@sanity/client'
+  import type {LoaderLocals} from '@sanity/svelte-loader'
 
   declare global {
     namespace App {

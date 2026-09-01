@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @sanity/core-loader@2.2.2
+
 ## 3.1.1
 
 ### Patch Changes
@@ -37,8 +44,8 @@
   `app.d.ts` to avoid a mismatch:
 
   ```ts
-  import type { SanityClient } from "@sanity/client";
-  import type { LoaderLocals } from "@sanity/svelte-loader";
+  import type {SanityClient} from '@sanity/client'
+  import type {LoaderLocals} from '@sanity/svelte-loader'
 
   declare global {
     namespace App {

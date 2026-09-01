@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`3b8e806`](https://github.com/sanity-io/visual-editing/commit/3b8e806f7bf53afbba2c55f603292f001ea985ff)]:
+  - @sanity/visual-editing-csm@3.0.18
+
 ## 2.2.1
 
 ### Patch Changes
@@ -38,8 +45,8 @@
   `app.d.ts` to avoid a mismatch:
 
   ```ts
-  import type { SanityClient } from "@sanity/client";
-  import type { LoaderLocals } from "@sanity/svelte-loader";
+  import type {SanityClient} from '@sanity/client'
+  import type {LoaderLocals} from '@sanity/svelte-loader'
 
   declare global {
     namespace App {
