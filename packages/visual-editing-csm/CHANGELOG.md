@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.18
+
+### Patch Changes
+
+- [#3659](https://github.com/sanity-io/visual-editing/pull/3659) [`3b8e806`](https://github.com/sanity-io/visual-editing/commit/3b8e806f7bf53afbba2c55f603292f001ea985ff) Thanks [@stipsan](https://github.com/stipsan)! - `decodeSanityNodeData` now recovers document metadata from the `/intent/edit/` segment of stega hrefs when the URL search params are unusable, e.g. when the configured `studioUrl` contains a query string or uses hash routing. Previously such hrefs decoded into a legacy node without an `id`, leaving the Presentation documents panel empty and making overlay clicks do nothing ([sanity-io/sanity#14454](https://github.com/sanity-io/sanity/issues/14454))
+
 ## 3.0.17
 
 ### Patch Changes
