@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.1.3
+
+### Patch Changes
+
+- [#3619](https://github.com/sanity-io/visual-editing/pull/3619) [`13166c3`](https://github.com/sanity-io/visual-editing/commit/13166c3fec324525bb2e3d3ff699c93abc7562c7) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/client to v8
+
+- [#3619](https://github.com/sanity-io/visual-editing/pull/3619) [`13166c3`](https://github.com/sanity-io/visual-editing/commit/13166c3fec324525bb2e3d3ff699c93abc7562c7) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/client to ^8.5.0
+- Updated dependencies [[`13166c3`](https://github.com/sanity-io/visual-editing/commit/13166c3fec324525bb2e3d3ff699c93abc7562c7), [`13166c3`](https://github.com/sanity-io/visual-editing/commit/13166c3fec324525bb2e3d3ff699c93abc7562c7)]:
+  - @sanity/core-loader@2.2.3
+
 ## 3.1.2
 
 ### Patch Changes
