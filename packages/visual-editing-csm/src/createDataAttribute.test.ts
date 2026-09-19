@@ -13,24 +13,24 @@ describe('createDataAttribute', () => {
   test('throws if id is omitted', () => {
     const scopedWithoutId = createDataAttribute({type})
     // @ts-expect-error expected throw
-    expect(() => scopedWithoutId(path)).toThrowError('required')
+    expect(() => scopedWithoutId(path)).toThrow('required')
   })
 
   test('throws if type is omitted', () => {
     const scopedWithoutType = createDataAttribute({id})
     // @ts-expect-error expected throw
-    expect(() => scopedWithoutType(path)).toThrowError('required')
+    expect(() => scopedWithoutType(path)).toThrow('required')
   })
 
   test('throws if path is omitted', () => {
     const scoped = createDataAttribute({id, type})
     // @ts-expect-error expected throw
-    expect(() => scoped()).toThrowError('required')
+    expect(() => scoped()).toThrow('required')
   })
 
   test('throws if `.toString` is used without a path', () => {
     const scopedWithPath = createDataAttribute({id, type})
-    expect(() => scopedWithPath.toString()).toThrowError('required')
+    expect(() => scopedWithPath.toString()).toThrow('required')
   })
 
   test('resolves using function call', () => {

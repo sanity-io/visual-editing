@@ -7,7 +7,7 @@ import {SyncIcon} from '@sanity/icons/Sync'
 import type {ObjectSchemaType} from '@sanity/types'
 import {Box, Card, LayerProvider, studioTheme, ThemeProvider, usePrefersDark} from '@sanity/ui'
 import type {Meta, StoryObj} from '@storybook/react'
-import {fn} from '@storybook/test'
+import {fn} from 'storybook/test'
 
 import {InsertMenu, type InsertMenuProps} from '../ui/insert-menu/InsertMenu'
 

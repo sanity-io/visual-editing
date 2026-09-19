@@ -2,7 +2,7 @@
 
 import {CloseIcon} from '@sanity/icons/Close'
 import {MenuIcon} from '@sanity/icons/Menu'
-import clsx from 'clsx'
+import {clsx} from 'clsx'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {useState} from 'react'

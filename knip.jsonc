@@ -1,4 +1,43 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "ignoreWorkspaces": ["apps/**"]
+  "ignoreWorkspaces": ["apps/**"],
+  "ignoreFiles": ["packages/*/dist/**", "packages/*/dist-svelte/**"],
+  "ignoreBinaries": ["sanity"],
+  "ignoreIssues": {
+    "packages/visual-editing/package.json": ["optionalPeerDependencies"],
+    "pnpm-workspace.yaml": ["catalog"],
+  },
+  "workspaces": {
+    "packages/@repo/sanity-schema": {
+      "entry": ["package.config.ts"],
+    },
+    "packages/@repo/studio-url": {
+      "entry": ["package.config.ts"],
+    },
+    "packages/core-loader": {
+      "entry": ["package.config.ts"],
+      "ignoreDependencies": [
+        // Generated declarations expose a transitive async-cache-dedupe type.
+        "ioredis",
+      ],
+    },
+    "packages/preview-url-secret": {
+      "entry": ["package.config.ts"],
+    },
+    "packages/react-loader": {
+      "entry": ["package.config.ts"],
+    },
+    "packages/visual-editing-csm": {
+      "entry": ["package.config.ts"],
+    },
+    "packages/visual-editing-types": {
+      "entry": ["package.config.ts"],
+    },
+    "packages/visual-editing": {
+      "entry": ["package.config.ts", ".storybook/*.ts", "vitest.config.ts"],
+      "ignoreDependencies": ["@storybook/addon-links"],
+      "storybook": false,
+      "vitest": false,
+    },
+  },
 }

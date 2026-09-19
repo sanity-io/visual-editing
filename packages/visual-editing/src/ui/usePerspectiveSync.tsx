@@ -46,5 +46,5 @@ export function usePerspectiveSync(
       unsub?.()
       controller.abort()
     }
-  }, [comlink, dispatch, handlesPerspectiveChange, handlesVariantChange])
+  }, [comlink, handlesPerspectiveChange, handlesVariantChange])
 }

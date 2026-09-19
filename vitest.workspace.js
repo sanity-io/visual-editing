@@ -1,6 +1,5 @@
 import {defineWorkspace} from 'vitest/config'
 
-// oxlint-disable-next-line typescript/no-deprecated
 export default defineWorkspace([
   './packages/preview-url-secret/vitest.config.ts',
   './packages/react-loader/vitest.config.ts',

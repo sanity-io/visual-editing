@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import {clsx} from 'clsx'
 import {type StegaBranded, stegaClean} from 'next-sanity'
 import {HTMLProps} from 'react'
 

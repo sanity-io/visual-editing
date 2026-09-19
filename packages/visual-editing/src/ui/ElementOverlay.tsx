@@ -609,6 +609,7 @@ export const ElementOverlay = memo(function ElementOverlay(
 
   useEffect(() => {
     startTransition(() => setMenuOpen(false))
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Hover changes trigger menu closure.
   }, [hovered])
 
   return (
