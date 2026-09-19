@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "sanity build --source-maps -y && sanity manifest extract",
+    "build": "pnpm turbo run build --filter=apps-studio^... && sanity build --source-maps -y && sanity manifest extract",
     "dev": "rimraf .sanity && sanity dev"
   },
   "dependencies": {
