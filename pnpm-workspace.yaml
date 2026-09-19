@@ -3,30 +3,44 @@ packages:
   - packages/*
   - packages/@repo/*
 
+allowBuilds:
+  '@swc/core': false
+  better-sqlite3: false
+  esbuild: false
+  protobufjs: false
+  sharp: false
+  unrs-resolver: false
+
 catalog:
-  '@sanity/assist': ^6.1.21
-  '@sanity/client': ^8.5.0
+  '@sanity/assist': ^6.2.0
+  '@sanity/client': ^8.6.2
   '@sanity/color-input': ^6.1.4
-  '@sanity/icons': ^5.2.1
+  '@sanity/icons': ^5.2.2
   '@sanity/pkg-utils': ^12.3.4
   '@sanity/tsconfig': 2.2.1
-  '@sanity/types': ^6.12.0
-  '@sanity/ui': ^4.0.7
-  '@sanity/util': ^6.12.0
-  '@sanity/vision': ^6.12.0
+  '@sanity/types': ^6.15.0
+  '@sanity/ui': ^4.2.1
+  '@sanity/util': ^6.15.0
+  '@sanity/vision': ^6.15.0
   '@types/node': ^24.13.3
-  '@types/react': ^19.2.18
-  '@types/react-dom': ^19.2.5
+  '@types/react': ^19.3.0
+  '@types/react-dom': ^19.3.0
   babel-plugin-react-compiler: ^1.0.0
-  groq: ^6.12.0
-  react: ^19.2.8
-  react-dom: ^19.2.8
+  groq: ^6.15.0
+  knip: ^6.37.0
+  oxfmt: ^0.68.0
+  oxlint: ^1.83.0
+  oxlint-tsgolint: ^7.0.2002
+  react: ^19.3.0
+  react-dom: ^19.3.0
   rxjs: ^7.8.2
-  sanity: ^6.12.0
+  sanity: ^6.15.0
   sanity-plugin-asset-source-unsplash: ^7.0.25
   styled-components: ^6.5.3
-  typescript: 6.0.3
-  xstate: ^5.32.6
+  turbo: ^2.10.12
+  typescript: 7.0.2
+  vitest: ^4.1.11
+  xstate: ^5.33.2
 
 catalogs:
   tailwind3:
@@ -34,6 +48,76 @@ catalogs:
     '@tailwindcss/typography': ^0.5.20
     tailwindcss: ^4.3.3
 
+catalogMode: prefer
+dedupeDirectDeps: true
+dedupePeers: true
 linkWorkspacePackages: deep
 
+minimumReleaseAge: 1440
+minimumReleaseAgeExcludePrune: true
+minimumReleaseAgeExclude:
+  - '@oxfmt/*'
+  - '@oxlint/*'
+  - '@oxlint-tsgolint/*'
+  - '@portabletext/*'
+  - '@sanity/*'
+  - '@types/*'
+  - '@typescript/*'
+  - '@vite/*'
+  - '@vitejs/*'
+  - '@vitest/*'
+  - '@yuku-codegen/*'
+  - '@yuku-parser/*'
+  - '@yuku-toolchain/*'
+  - get-it
+  - groq
+  - groq-js
+  - oxfmt
+  - oxlint
+  - oxlint-tsgolint
+  - react
+  - react-dom
+  - react-is
+  - rolldown
+  - rolldown-plugin-dts
+  - tsdown
+  - verkit
+  - vite
+  - vitest
+  - yuku-*
+
+overrides:
+  '@sanity/client': 'catalog:'
+  '@sanity/core-loader': 'workspace:*'
+  '@sanity/preview-url-secret': 'workspace:*'
+  '@sanity/react-loader': 'workspace:*'
+  '@sanity/svelte-loader': 'workspace:*'
+  '@sanity/types': 'catalog:'
+  '@sanity/util': 'catalog:'
+  '@sanity/visual-editing': 'workspace:*'
+  '@sanity/visual-editing-csm': 'workspace:*'
+  '@types/react': 'catalog:'
+  '@types/react-dom': 'catalog:'
+  groq: 'catalog:'
+  sanity: 'catalog:'
+
+peerDependencyRules:
+  allowAny:
+    - '@sanity/client'
+    - react
+    - react-dom
+
 preferWorkspacePackages: true
+
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - '@octokit/endpoint@9.0.6'
+  - '@octokit/plugin-paginate-rest@9.2.2'
+  - chokidar@4.0.3
+  - react-redux@9.2.0
+  - reselect@5.1.1
+  - rxjs@7.8.2
+  - semver@5.7.2 || 6.3.1
+  - undici@5.29.0
+  - undici-types@6.21.0
+  - vite@6.4.1
