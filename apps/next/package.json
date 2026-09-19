@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "sanity typegen generate && next build",
+    "build": "pnpm turbo run build --filter=apps-next^... && sanity typegen generate && next build",
     "dev": "next dev -p 3001",
     "start": "next start",
     "typegen": "sanity typegen generate"
