@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build --filter='!./apps/*'",
+    "check:deps": "knip --dependencies",
     "dev": "turbo run build --filter='!./apps/*' && turbo watch dev --filter='./packages/*' --filter='./packages/@repo/*' --filter=./apps/*",
     "dev:live-next": "turbo run build --filter=live-next^... --filter=apps-studio^... && turbo watch dev --filter=live-next... --filter=apps-studio...",
     "dev:next": "turbo run build --filter=apps-next^... --filter=apps-studio^... && turbo watch dev --filter=apps-next... --filter=apps-studio...",
@@ -26,38 +27,14 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "eslint-plugin-storybook": "^10.5.5",
-    "knip": "^5.88.1",
-    "oxfmt": "^0.63.0",
-    "oxlint": "^1.76.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "pkg-pr-new": "^0.0.87",
-    "turbo": "^2.10.9",
+    "eslint-plugin-storybook": "^10.6.0",
+    "knip": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "pkg-pr-new": "^0.0.88",
+    "turbo": "catalog:",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.34.5",
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowAny": [
-        "@sanity/client",
-        "react",
-        "react-dom"
-      ]
-    },
-    "overrides": {
-      "@sanity/client": "catalog:",
-      "@sanity/core-loader": "workspace:*",
-      "@sanity/preview-url-secret": "workspace:*",
-      "@sanity/react-loader": "workspace:*",
-      "@sanity/svelte-loader": "workspace:*",
-      "@sanity/types": "catalog:",
-      "@sanity/util": "catalog:",
-      "@sanity/visual-editing": "workspace:*",
-      "@sanity/visual-editing-csm": "workspace:*",
-      "@types/react": "catalog:",
-      "@types/react-dom": "catalog:",
-      "groq": "catalog:",
-      "sanity": "catalog:"
-    }
-  }
+  "packageManager": "pnpm@12.3.4"
 }
