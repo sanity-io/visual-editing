@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "pnpm turbo run build --filter=page-builder-demo^... && next build",
+    "build": "next build",
     "dev": "next dev -p 3005",
     "predev": "npm run typegen",
     "start": "next start",
