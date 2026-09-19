@@ -96,7 +96,7 @@
   },
   "scripts": {
     "build": "pnpm run build:main --clean && pnpm run build:svelte && pkg check --strict",
-    "build-storybook": "pnpm turbo run build --filter='@sanity/visual-editing...' && storybook build",
+    "build-storybook": "storybook build",
     "build:main": "pkg build --strict",
     "build:svelte": "svelte-kit sync && svelte-package -i ./svelte -o dist-svelte",
     "dev": "pnpm run build:main && pnpm run build:svelte",
