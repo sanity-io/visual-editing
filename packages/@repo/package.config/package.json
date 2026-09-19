@@ -8,5 +8,8 @@
   "types": "./src/package.config.ts",
   "scripts": {
     "check:types": "tsc --noEmit --skipLibCheck src/package.config.ts"
+  },
+  "dependencies": {
+    "@sanity/pkg-utils": "catalog:"
   }
 }
