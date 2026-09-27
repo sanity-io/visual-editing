@@ -742,3 +742,49 @@ describe('scoping', () => {
     )
   })
 })
+
+describe('keyed result paths', () => {
+  const encode = defineEncodeDataAttribute(result, resultSourceMap, '/studio')
+
+  test('resolves a keyed array item', () => {
+    expect(encode(['page', 'sections', {_key: '0bd049fc047a'}, 'style'])).toBe(
+      encode(['page', 'sections', 4, 'style']),
+    )
+  })
+
+  test('resolves keyed string paths', () => {
+    expect(encode('page.sections[_key=="0bd049fc047a"].style')).toBe(
+      encode('page.sections[4].style'),
+    )
+  })
+
+  test('resolves nested keys through a recursively scoped encoder', () => {
+    const scoped = encode.scope(['page', 'sections', {_key: 'e77f7c827ba4'}]).scope('products')
+    const expected = encode('page.sections[3].products[1].title')
+    expect(expected).toBeDefined()
+    expect(scoped([{_key: 'drafts.462efcc6-3c8b-47c6-8474-5544e1a4acde'}, 'title'])).toBe(expected)
+  })
+
+  test('ignores null and primitive array entries when resolving a key', () => {
+    const changedResult = {
+      ...result,
+      page: {...result.page, sections: [null, 'text', 42, ...result.page.sections.slice(3)]},
+    }
+    const encodeChanged = defineEncodeDataAttribute(changedResult, resultSourceMap, '/studio')
+    expect(encodeChanged(['page', 'sections', {_key: '0bd049fc047a'}, 'style'])).toBe(
+      encode('page.sections[4].style'),
+    )
+  })
+
+  test('does not generate an edit link for a missing key', () => {
+    expect(encode(['page', 'sections', {_key: 'missing'}, 'style'])).toBeUndefined()
+  })
+
+  test('does not resolve a key against a non-array value', () => {
+    expect(encode(['page', {_key: 'missing'}, 'style'])).toBeUndefined()
+  })
+
+  test('does not throw when an intermediate result is null', () => {
+    expect(encode(['page', 'sections', 0, 'products', {_key: 'missing'}, 'title'])).toBeUndefined()
+  })
+})
