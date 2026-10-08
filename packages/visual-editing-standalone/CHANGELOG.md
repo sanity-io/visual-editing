@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.2
+
+### Patch Changes
+
+- [#3665](https://github.com/sanity-io/visual-editing/pull/3665) [`9598bd2`](https://github.com/sanity-io/visual-editing/commit/9598bd26eeaddceef6d0c884e086ae3fd33c70f7) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency react-is to ^19.3.0
+
 ## 2.0.1
 
 ### Patch Changes
