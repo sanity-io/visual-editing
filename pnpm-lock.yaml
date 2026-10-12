@@ -115,8 +115,8 @@ catalogs:
       specifier: ^8.12.0
       version: 8.12.0
     '@sanity/color-input':
-      specifier: ^6.1.4
-      version: 6.1.4
+      specifier: ^6.1.7
+      version: 6.1.7
     '@sanity/icons':
       specifier: ^5.2.3
       version: 5.2.3
@@ -646,7 +646,7 @@ importers:
         version: 6.2.0(@types/react@19.3.0)(react-dom@19.3.0)(react@19.3.0)(sanity@6.15.0)(styled-components@6.5.3)(vitest@4.1.11)
       '@sanity/color-input':
         specifier: 'catalog:'
-        version: 6.1.4(react-dom@19.3.0)(react@19.3.0)(sanity@6.15.0)(styled-components@6.5.3)
+        version: 6.1.7(react-dom@19.3.0)(react@19.3.0)(sanity@6.15.0)(styled-components@6.5.3)
       '@sanity/icons':
         specifier: 'catalog:'
         version: 5.2.3(react@19.3.0)
@@ -4348,8 +4348,8 @@ packages:
       oxfmt:
         optional: true
 
-  '@sanity/color-input@6.1.4':
-    resolution: {integrity: sha512-kqyK1Pa8kFi9xIYSLlTdxeF04cQ1kr7PSBKXoFIbCfyDKEtcQuNu9GH3QZmwuRBvZ9Sp8UI5YPJ1RZPmkrlyFA==}
+  '@sanity/color-input@6.1.7':
+    resolution: {integrity: sha512-db/Z5ufhMyVPXSY1XEq0knbJMANH3fMZr99UdZm8/HI/JG+24W9fm2SNCTM2w2kAD68+pj8kohKtk8++dpgkAA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
@@ -4612,6 +4612,14 @@ packages:
 
   '@sanity/ui@4.4.0':
     resolution: {integrity: sha512-1xEHO8jRbRi2SBpmznPJV82oYDpUR/Am2ZGb8+IkF0sgCfnWhZlDKwvSBYppujrOFj4+WifORpHs2I7hs0Odtw==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19.2
+      react-dom: ^19.2
+      styled-components: ^6.1 || ^7.0.0-0
+
+  '@sanity/ui@4.4.4':
+    resolution: {integrity: sha512-jv0k8fLdJYEu7WvAJEqYXTtuOamS4F+nGZWMHCjqyJAZ4l0TgVt3qXJ66AvzxqWp73TIdreBEP35kiIU2pDmsg==}
     engines: {node: '>=22.12'}
     peerDependencies:
       react: ^19.2
@@ -6764,6 +6772,17 @@ packages:
       react-dom:
         optional: true
 
+  framer-motion@14.1.0:
+    resolution: {integrity: sha512-QsdZSdWoyQfUmgi+GZfow8Du5COG6VRYEo9FlgKUPgH87/Le/fYekHCAKwLdYKHdCZcZfWHg4iOxlD6RoqXciQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   fs-extra@11.3.6:
     resolution: {integrity: sha512-w8ZNZr2mKIc7qeNaQ9AVPT1+iFaI+Avd4xudVOvdDJ8VytREi1Ft5Ih7hd9jjehod8vAM5GMsfQ/TpPf4EyoEA==}
     engines: {node: '>=14.14'}
@@ -7647,11 +7666,17 @@ packages:
   motion-dom@14.0.0:
     resolution: {integrity: sha512-aU3ApXo1yTpeUi3JU+jbDk2TELjxPE3MbBMUP7nZHlARb6RweJK+ojmLjpuB0YsY6zhbBl1YWGo8LMsI1/Llqw==}
 
+  motion-dom@14.1.0:
+    resolution: {integrity: sha512-FyFLkNUAAETzCvf851mZcl+v+kaZrKq+UM+XmkY4G8n+ny/WYfiWh9j0fhSQ1KOKVQrM9/cLO11THO2k71HJlg==}
+
   motion-utils@13.3.0:
     resolution: {integrity: sha512-sgSschQp7EseHInIlR7hBbMuvet3RA0bs28KPZAXJcGKGdxHGvh1ogpYDilY3bOMtl73EqPNmp75sAKHYPU5sg==}
 
   motion-utils@14.0.0:
     resolution: {integrity: sha512-jBsyjVxTTRZNeuvd/v+btVXr90LQkYl4HhRu9T2ARc+PMnvkmjsjRVeAg4Qm10b6TlTw+kykWI8gu/6LuvpLSQ==}
+
+  motion-utils@14.1.0:
+    resolution: {integrity: sha512-xd4FeWOnnXsJHmAaRCLNbOS7mEaNOangjMt3Pl241H07f1kxW48fADQ/8O5hLLNhf1qdlozgY3PPAHBdOoU7AA==}
 
   motion@13.4.0:
     resolution: {integrity: sha512-aiNSA29N+vgV5p5cJSB5cFzx8KTuuxB99z8zGtxsaqlwKtBK6sq8YgPRpkVQLkbJMOcLDU0q/ShdT95qpBy/0g==}
@@ -7666,6 +7691,17 @@ packages:
 
   motion@14.0.0:
     resolution: {integrity: sha512-oGc2lkge2lkRZCP+J8/JsnYu4NFjqP1MtXirNdetn3QbvK2JqwM9A200EdT4C598KfzDhjLT12zF21xDM4Oilw==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
+  motion@14.1.0:
+    resolution: {integrity: sha512-lsCsW9uJ+iMJj8MSiLccpUC+ZUpoSspaX6Pm78KrnZKMioCPAPG6WeG1d1d/Ywg+z1mny+STP6VyEYW+3nAqNw==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -12660,10 +12696,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@sanity/color-input@6.1.4(react-dom@19.3.0)(react@19.3.0)(sanity@6.15.0)(styled-components@6.5.3)':
+  '@sanity/color-input@6.1.7(react-dom@19.3.0)(react@19.3.0)(sanity@6.15.0)(styled-components@6.5.3)':
     dependencies:
       '@sanity/icons': 5.2.3(react@19.3.0)
-      '@sanity/ui': 4.4.0(react-dom@19.3.0)(react@19.3.0)(styled-components@6.5.3)
+      '@sanity/ui': 4.4.4(react-dom@19.3.0)(react@19.3.0)(styled-components@6.5.3)
       '@vanilla-extract/dynamic': 2.1.5
       lodash-es: 4.18.1
       react: 19.3.0
@@ -13132,6 +13168,22 @@ snapshots:
       clsx: 2.1.1
       csstype: 3.2.3
       motion: 14.0.0(react-dom@19.3.0)(react@19.3.0)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+      react-is: 19.3.0
+      react-refractor: 4.0.0(react@19.3.0)
+      styled-components: 6.5.3(react-dom@19.3.0)(react@19.3.0)
+      use-effect-event: 2.0.4(react@19.3.0)
+
+  '@sanity/ui@4.4.4(react-dom@19.3.0)(react@19.3.0)(styled-components@6.5.3)':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.0)(react@19.3.0)
+      '@sanity/color': 3.0.9
+      '@sanity/icons': 5.2.3(react@19.3.0)
+      '@vanilla-extract/dynamic': 2.1.5
+      clsx: 2.1.1
+      csstype: 3.2.3
+      motion: 14.1.0(react-dom@19.3.0)(react@19.3.0)
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
       react-is: 19.3.0
@@ -15219,6 +15271,15 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
+  framer-motion@14.1.0(react-dom@19.3.0)(react@19.3.0):
+    dependencies:
+      motion-dom: 14.1.0
+      motion-utils: 14.1.0
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+
   fs-extra@11.3.6:
     dependencies:
       graceful-fs: 4.2.11
@@ -16007,9 +16068,15 @@ snapshots:
     dependencies:
       motion-utils: 14.0.0
 
+  motion-dom@14.1.0:
+    dependencies:
+      motion-utils: 14.1.0
+
   motion-utils@13.3.0: {}
 
   motion-utils@14.0.0: {}
+
+  motion-utils@14.1.0: {}
 
   motion@13.4.0(react-dom@19.3.0)(react@19.3.0):
     dependencies:
@@ -16022,6 +16089,14 @@ snapshots:
   motion@14.0.0(react-dom@19.3.0)(react@19.3.0):
     dependencies:
       framer-motion: 14.0.0(react-dom@19.3.0)(react@19.3.0)
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+
+  motion@14.1.0(react-dom@19.3.0)(react@19.3.0):
+    dependencies:
+      framer-motion: 14.1.0(react-dom@19.3.0)(react@19.3.0)
       tslib: 2.8.1
     optionalDependencies:
       react: 19.3.0
