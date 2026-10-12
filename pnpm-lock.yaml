@@ -998,8 +998,8 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
       uuid:
-        specifier: 14.0.2
-        version: 14.0.2
+        specifier: 14.0.3
+        version: 14.0.3
       vite:
         specifier: 'catalog:'
         version: 8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.1)
@@ -9203,6 +9203,10 @@ packages:
     resolution: {integrity: sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ==}
     hasBin: true
 
+  uuid@14.0.3:
+    resolution: {integrity: sha512-Sc5u1VVln93y1Xnz4R+CunOZc7R9LUcTmhj7Rc7Eg3HVcf7rVn2FOoa812fe0W8p3jD7xeoGSYbfqCGGH2B6xw==}
+    hasBin: true
+
   uuidv7@0.4.4:
     resolution: {integrity: sha512-jjRGChg03uGp9f6wQYSO8qXkweJwRbA5WRuEQE8xLIiehIzIIi23qZSzsyvZPCPoFqkeLtZuz7Plt1LGukAInA==}
     hasBin: true
@@ -13066,7 +13070,7 @@ snapshots:
     optionalDependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@rolldown/plugin-babel': 0.2.4(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.9)(vite@8.3.0)
-      '@tsdown/css': 0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)
+      '@tsdown/css': 0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)(yaml@2.9.1)
       babel-plugin-react-compiler: 1.0.0
     transitivePeerDependencies:
       - '@types/node'
@@ -13690,20 +13694,6 @@ snapshots:
   '@tinyhttp/url@1.3.0': {}
 
   '@tsconfig/vite-react@7.0.2': {}
-
-  '@tsdown/css@0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)':
-    dependencies:
-      lightningcss: 1.33.0
-      postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.28)(tsx@4.23.13)(yaml@2.9.1)
-      rolldown: 1.2.9
-      tsdown: 0.23.0(@tsdown/css@0.23.0)(oxc-resolver@11.24.2)(publint@0.3.24)(tsx@4.23.13)(typescript@6.0.3)(unrun@0.3.1)
-    optionalDependencies:
-      postcss: 8.5.28
-    transitivePeerDependencies:
-      - jiti
-      - tsx
-      - yaml
-    optional: true
 
   '@tsdown/css@0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)(yaml@2.9.1)':
     dependencies:
@@ -17577,7 +17567,7 @@ snapshots:
       unconfig-core: 7.5.0
       verkit: 0.3.2
     optionalDependencies:
-      '@tsdown/css': 0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)
+      '@tsdown/css': 0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)(yaml@2.9.1)
       publint: 0.3.24
       tsx: 4.23.13
       typescript: 6.0.3
@@ -17605,7 +17595,7 @@ snapshots:
       unconfig-core: 7.5.0
       verkit: 0.4.1
     optionalDependencies:
-      '@tsdown/css': 0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)
+      '@tsdown/css': 0.23.0(jiti@2.7.0)(postcss@8.5.28)(tsdown@0.23.0)(tsx@4.23.13)(yaml@2.9.1)
       publint: 0.3.24
       tsx: 4.23.13
       typescript: 6.0.3
@@ -17779,6 +17769,8 @@ snapshots:
   uuid@11.1.1: {}
 
   uuid@14.0.2: {}
+
+  uuid@14.0.3: {}
 
   uuidv7@0.4.4: {}
 
