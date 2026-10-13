@@ -42,14 +42,14 @@ PUBLIC_SANITY_STUDIO_URL="..."
 Create and export an instance of Sanity client using the previously defined environment variables.
 
 ```ts
-// src/lib/sanity.ts
-import {createClient} from '@sanity/client'
 import {
   PUBLIC_SANITY_API_VERSION,
   PUBLIC_SANITY_DATASET,
   PUBLIC_SANITY_PROJECT_ID,
   PUBLIC_SANITY_STUDIO_URL,
 } from '$env/static/public'
+// src/lib/sanity.ts
+import {createClient} from '@sanity/client'
 
 export const client = createClient({
   projectId: PUBLIC_SANITY_PROJECT_ID,
@@ -87,9 +87,9 @@ The loader package also exports an optional `createRequestHandler` for creating 
 - Sets and configures `locals.loadQuery`, the function we will use to fetch data on the server.
 
 ```ts
+import {serverClient} from '$lib/server/sanity'
 // src/hooks.server.ts
 import {createRequestHandler, setServerClient} from '@sanity/svelte-loader'
-import {serverClient} from '$lib/server/sanity'
 
 setServerClient(serverClient)
 
@@ -134,6 +134,7 @@ We then access the passed `preview` value via the `LoadEvent.data` property, and
 ```ts
 // src/routes/+layout.ts
 import {setPreviewing} from '@sanity/svelte-loader'
+
 import type {LayoutLoad} from './$types'
 
 export const load: LayoutLoad = ({data: {preview}}) => {
@@ -179,6 +180,7 @@ Create a server `load` function for our page that will handle fetching data from
 ```ts
 // src/routes/[slug]/+page.server.ts
 import {pageQuery, type PageResult} from '$lib/queries'
+
 import type {PageServerLoad} from './$types'
 
 export const load: PageServerLoad = async ({params, locals: {loadQuery}}) => {
