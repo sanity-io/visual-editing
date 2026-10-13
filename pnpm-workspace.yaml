@@ -23,13 +23,14 @@ catalog:
   '@sanity/telemetry': ^1.1.0
   '@sanity/tsconfig': 2.2.1
   '@sanity/types': ^6.15.0
-  '@sanity/ui': ^4.4.0
+  '@sanity/ui': ^4.4.4
   '@sanity/util': ^6.15.0
   '@sanity/vision': ^6.15.0
   '@sveltejs/adapter-auto': ^8.0.0
   '@sveltejs/kit': ^2.70.3
   '@sveltejs/package': ^3.0.0
   '@sveltejs/vite-plugin-svelte': ^7.3.0
+  '@tsdown/css': ^0.23.1
   '@types/node': ^24.13.3
   '@types/react': ^19.3.0
   '@types/react-dom': ^19.3.0
@@ -45,8 +46,9 @@ catalog:
   rxjs: ^7.8.2
   sanity: ^6.15.0
   sanity-plugin-asset-source-unsplash: ^7.0.27
-  styled-components: ^6.5.3
+  styled-components: ^6.6.0
   svelte: ^5.57.0
+  tsdown: ^0.23.1
   turbo: ^2.11.7
   typescript: 6.0.3
   vite: ^8.3.0
@@ -91,6 +93,7 @@ minimumReleaseAgeExclude:
   - react
   - react-dom
   - react-is
+  - styled-components
   - rolldown
   - rolldown-plugin-dts
   - tsdown
