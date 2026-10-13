@@ -148,8 +148,8 @@ export default function App({Component, pageProps}: AppProps) {
 For React Router apps you should use `VisualEditing` from `@sanity/visual-editing/react-router` in your `app/root.tsx`:
 
 ```tsx
-import {json} from '@react-router/node'
 import {Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData} from '@react-router'
+import {json} from '@react-router/node'
 import {VisualEditing} from '@sanity/visual-editing/react-router'
 
 export const loader = () => {
@@ -370,9 +370,9 @@ For Remix apps the implementation is much like the one for [Next.js App Router][
 Remix doesn't have [Server Actions][server-actions] yet, under the hood the [`useRevalidator`](https://remix.run/docs/en/main/hooks/use-revalidator) hook is used. Here's the default internal implementation (simplified):
 
 ```tsx
+import {VisualEditing} from '@sanity/visual-editing/react-router'
 // app/root.tsx
 import {useRevalidator} from 'react-router'
-import {VisualEditing} from '@sanity/visual-editing/react-router'
 
 export default function App() {
   const {ENV} = useLoaderData<typeof loader>()
