@@ -96,8 +96,14 @@ const overlayChromeAnchorPositioning = (insets: ReturnType<typeof css>) => css`
     position-anchor: --sanity-ve-overlay;
     inset: auto;
     ${insets}
-    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
-    position-try: flip-block, flip-inline, flip-block flip-inline;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+    position-try:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
   }
 `
 
