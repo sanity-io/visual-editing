@@ -1,5 +1,17 @@
 # Changelog
 
+## 6.1.4
+
+### Patch Changes
+
+- [#3710](https://github.com/sanity-io/visual-editing/pull/3710) [`4de667c`](https://github.com/sanity-io/visual-editing/commit/4de667c4f50be5483cbf87ce83720636bf913672) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency vite to ^8.3.4
+
+- [#3738](https://github.com/sanity-io/visual-editing/pull/3738) [`5a0b8d7`](https://github.com/sanity-io/visual-editing/commit/5a0b8d769b935d019675dbc477688e5b0b0ca681) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency styled-components to ^6.6.0
+
+- [#3748](https://github.com/sanity-io/visual-editing/pull/3748) [`9ee705a`](https://github.com/sanity-io/visual-editing/commit/9ee705a1acc0f32af4a784caa49fc3fbbda83bfe) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update react monorepo to ^19.3.1
+- Updated dependencies [[`e328098`](https://github.com/sanity-io/visual-editing/commit/e3280986b5fd16df14663caba4a8227971b0039f)]:
+  - @sanity/visual-editing-csm@3.0.19
+
 ## 6.1.3
 
 ### Patch Changes

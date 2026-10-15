@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.4
+
+### Patch Changes
+
+- [#3718](https://github.com/sanity-io/visual-editing/pull/3718) [`c376033`](https://github.com/sanity-io/visual-editing/commit/c3760338c8a6bf3dba2329c33ef44e728110faac) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency nanostores to v1.5.5
+
+- [#3729](https://github.com/sanity-io/visual-editing/pull/3729) [`6962d15`](https://github.com/sanity-io/visual-editing/commit/6962d155a2a0aaffadf48dca0621f979937c9163) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency async-cache-dedupe to v3
+- Updated dependencies [[`e328098`](https://github.com/sanity-io/visual-editing/commit/e3280986b5fd16df14663caba4a8227971b0039f)]:
+  - @sanity/visual-editing-csm@3.0.19
+
 ## 2.2.3
 
 ### Patch Changes
