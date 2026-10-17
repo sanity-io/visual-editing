@@ -244,8 +244,8 @@ catalogs:
       specifier: ^7.8.2
       version: 7.8.2
     sanity-plugin-asset-source-unsplash:
-      specifier: ^7.0.27
-      version: 7.0.27
+      specifier: ^7.0.29
+      version: 7.0.29
     styled-components:
       specifier: ^6.6.0
       version: 6.6.0
@@ -736,7 +736,7 @@ importers:
         version: 6.19.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.4.0)(@rolldown/plugin-babel@0.2.4)(@sanity/workflow-blueprint@0.36.0)(@types/node@24.13.6)(@types/react-dom@19.3.0)(@types/react@19.3.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(jiti@2.7.0)(oxfmt@0.73.0)(react-dom@19.3.1)(react-router@7.18.4)(react@19.3.1)(rolldown@1.2.13)(styled-components@6.6.0)(supports-color@8.1.1)(tsx@4.23.15)(typescript@6.0.3)(vitest@4.1.11)
       sanity-plugin-asset-source-unsplash:
         specifier: 'catalog:'
-        version: 7.0.27(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
+        version: 7.0.29(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
       styled-components:
         specifier: 'catalog:'
         version: 6.6.0(react-dom@19.3.1)(react@19.3.1)
@@ -4685,6 +4685,14 @@ packages:
       react-dom: ^19.2
       styled-components: ^6.1 || ^7.0.0-0
 
+  '@sanity/ui@4.4.6':
+    resolution: {integrity: sha512-fu6KmXRFmzwrXkSBp0O/u7ptlfzDrQ86Z0zJ6NQiIhCWIdInv45dyYN9PgzhaLx705GdOF21ERbJ8iv9BIVBbg==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19.2
+      react-dom: ^19.2
+      styled-components: ^6.1 || ^7.0.0-0
+
   '@sanity/ui@5.0.0-alpha.14':
     resolution: {integrity: sha512-h+IdfVMoDpnwYxk1Z+RFal7yRKgukWHY3QQtf2P9dKTIFCSzKr4CIGyKuBfFFTe58cUBRMfHllRU2b/hlhHF6A==}
     engines: {node: '>=20.19 <22 || >=22.12'}
@@ -8308,8 +8316,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sanity-plugin-asset-source-unsplash@7.0.27:
-    resolution: {integrity: sha512-PAtIhXx608que3YUwvu7mVjLcgf8CXYwKuScg7ExOE0LNmKJkBeUPZ9bpcTSKWlvsjogg88x1YQ/l23dzFYwJg==}
+  sanity-plugin-asset-source-unsplash@7.0.29:
+    resolution: {integrity: sha512-WpOPzSHK9YGBh2mKSAuSENdZ7xwVbZLcJxHxhzlh/froDMEnKAuXT91x8+cdRb7aEIUMj/msKxQWUyeiFpWOug==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
@@ -12939,6 +12947,21 @@ snapshots:
       styled-components: 6.6.0(react-dom@19.3.1)(react@19.3.1)
       use-effect-event: 2.0.4(react@19.3.1)
 
+  '@sanity/ui@4.4.6(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.1)(react@19.3.1)
+      '@sanity/color': 3.0.9
+      '@sanity/icons': 5.2.3(react@19.3.1)
+      clsx: 2.1.1
+      csstype: 3.2.3
+      motion: 14.2.0(react-dom@19.3.1)(react@19.3.1)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      react-is: 19.3.1
+      react-refractor: 4.0.0(react@19.3.1)
+      styled-components: 6.6.0(react-dom@19.3.1)(react@19.3.1)
+      use-effect-event: 2.0.4(react@19.3.1)
+
   '@sanity/ui@5.0.0-alpha.14(react-dom@19.3.1)(react@19.3.1)':
     dependencies:
       '@sanity-labs/design-tokens': 0.0.2-alpha.6
@@ -16675,10 +16698,10 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sanity-plugin-asset-source-unsplash@7.0.27(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0):
+  sanity-plugin-asset-source-unsplash@7.0.29(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0):
     dependencies:
       '@sanity/icons': 5.2.3(react@19.3.1)
-      '@sanity/ui': 4.4.4(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
+      '@sanity/ui': 4.4.6(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
       lodash-es: 4.18.1
       react: 19.3.1
       react-photo-album: 3.6.1(@types/react@19.3.0)(react@19.3.1)
