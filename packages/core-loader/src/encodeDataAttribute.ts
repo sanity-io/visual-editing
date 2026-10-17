@@ -20,6 +20,22 @@ export const encodeDataAttribute: EncodeDataAttribute<unknown> = (
   }
   const resultPath = studioPathToJsonPath(studioPathLike)
 
+  // Source-map mappings use result indices, while callers may address items by key.
+  let value: unknown = result
+  for (const [index, segment] of resultPath.entries()) {
+    if (typeof segment === 'object') {
+      if (!Array.isArray(value)) return undefined
+      const resolvedIndex = value.findIndex(
+        (item) => item !== null && typeof item === 'object' && item._key === segment._key,
+      )
+      if (resolvedIndex === -1) return undefined
+      resultPath[index] = {...segment, _index: resolvedIndex}
+      value = value[resolvedIndex]
+    } else {
+      value = studioPath.get(value, [segment])
+    }
+  }
+
   const editInfo = resolveEditInfo({
     resultPath,
     resultSourceMap: sourceMap,
