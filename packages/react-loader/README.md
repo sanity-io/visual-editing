@@ -52,6 +52,7 @@ Later in the server side of the app, you setup the client. The `.server.ts` suff
 ```ts
 // ./src/app/sanity.loader.server.ts
 import {createClient} from '@sanity/client'
+
 import {loadQuery, setServerClient} from './sanity.loader'
 
 const client = createClient({
@@ -78,6 +79,7 @@ Then somewhere in your app, you can use the `loadQuery` and `useQuery` utilities
 
 import {json, type LoaderFunction} from '@remix-run/node'
 import {Link, useLoaderData, useParams} from '@remix-run/react'
+
 import {useQuery} from '~/sanity.loader'
 import {loadQuery} from '~/sanity.loader.server'
 
@@ -111,8 +113,9 @@ Enabling Live Mode is done by adding `useLiveMode` to the same component you're 
 ```tsx
 // ./src/app/VisualEditing.tsx
 import {enableVisualEditing, type HistoryUpdate} from '@sanity/visual-editing'
-import {useLiveMode} from '~/sanity.loader'
 import {useEffect} from 'react'
+
+import {useLiveMode} from '~/sanity.loader'
 
 // A browser client for Live Mode, it's only part of the browser bundle when the `VisualEditing` component is lazy loaded with `React.lazy`
 const client = createClient({
@@ -163,6 +166,7 @@ You then use it in your template:
 import {json, type LoaderFunction} from '@remix-run/node'
 import {Link, useLoaderData, useParams} from '@remix-run/react'
 import {useQuery} from '@sanity/react-loader'
+
 import {loadQuery} from '~/sanity.loader.server'
 
 interface Product {}

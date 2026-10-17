@@ -123,10 +123,11 @@ Create an API token with viewer rights, and put it in an environment variable na
 ```ts
 // ./app/api/draft/route.ts
 
-import {client} from '@/sanity/lib/client'
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
 import {draftMode} from 'next/headers'
 import {redirect} from 'next/navigation'
+
+import {client} from '@/sanity/lib/client'
 
 const clientWithToken = client.withConfig({
   // Required, otherwise the URL preview secret can't be validated
@@ -167,9 +168,10 @@ Create an API token with viewer rights, and put it in an environment variable na
 ```ts
 // ./pages/api/draft.ts
 
-import {client} from '@/sanity/lib/client'
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
 import type {NextApiRequest, NextApiResponse} from 'next'
+
+import {client} from '@/sanity/lib/client'
 
 const clientWithToken = client.withConfig({
   // Required, otherwise the URL preview secret can't be validated
@@ -241,6 +243,7 @@ Create an API token with viewer rights, and put it in an environment variable na
 
 import {redirect, type LoaderFunctionArgs} from '@remix-run/node'
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
+
 import {client} from '~/sanity/client'
 import {commitSession, getSession} from '~/sessions'
 
@@ -277,6 +280,7 @@ It's also handy to make a resource route to disable draft mode, so you have an e
 // ./app/routes/api.disable-draft.ts
 
 import {redirect, type LoaderFunctionArgs} from '@remix-run/node'
+
 import {destroySession, getSession} from '~/sessions'
 
 export const loader = async ({request}: LoaderFunctionArgs) => {

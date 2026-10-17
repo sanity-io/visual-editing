@@ -1,6 +1,6 @@
 {
   "name": "@sanity/core-loader",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "homepage": "https://github.com/sanity-io/visual-editing/tree/main/packages/core-loader#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/visual-editing/issues"
@@ -78,13 +78,13 @@
   },
   "devDependencies": {
     "@repo/package.config": "workspace:*",
-    "@sanity/client-v8": "npm:@sanity/client@^8.0.0",
+    "@sanity/client-v8": "npm:@sanity/client@^8.9.0",
     "@sanity/pkg-utils": "catalog:",
     "@sanity/preview-url-secret": "workspace:^",
     "@sanity/tsconfig": "catalog:",
-    "async-cache-dedupe": "2.2.0",
+    "async-cache-dedupe": "3.4.0",
     "happy-dom": "^18.0.1",
-    "nanostores": "1.0.1",
+    "nanostores": "1.5.5",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
@@ -93,9 +93,9 @@
     "node": ">=18"
   },
   "inlinedDependencies": {
-    "async-cache-dedupe": "2.2.0",
-    "mnemonist": "0.39.8",
-    "nanostores": "1.0.1",
+    "async-cache-dedupe": "3.4.0",
+    "mnemonist": "0.40.5",
+    "nanostores": "1.5.5",
     "obliterator": "2.0.5",
     "safe-stable-stringify": "2.5.0"
   }

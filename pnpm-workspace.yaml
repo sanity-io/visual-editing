@@ -14,45 +14,47 @@ allowBuilds:
 
 catalog:
   '@sanity/assist': ^6.2.0
-  '@sanity/client': ^8.6.2
-  '@sanity/cli': ^8.12.0
-  '@sanity/color-input': ^6.1.4
-  '@sanity/icons': ^5.2.2
+  '@sanity/client': ^8.9.0
+  '@sanity/cli': ^8.16.0
+  '@sanity/color-input': ^6.1.7
+  '@sanity/icons': ^5.2.3
   '@sanity/mutate': ^0.18.2
-  '@sanity/pkg-utils': ^12.3.4
+  '@sanity/pkg-utils': ^13.0.11
   '@sanity/telemetry': ^1.1.0
   '@sanity/tsconfig': 2.2.1
-  '@sanity/types': ^6.15.0
-  '@sanity/ui': ^4.2.1
-  '@sanity/util': ^6.15.0
-  '@sanity/vision': ^6.15.0
-  '@sveltejs/adapter-auto': ^7.0.1
+  '@sanity/types': ^6.19.0
+  '@sanity/ui': ^4.4.4
+  '@sanity/util': ^6.19.0
+  '@sanity/vision': ^6.19.0
+  '@sveltejs/adapter-auto': ^8.0.0
   '@sveltejs/kit': ^2.70.3
-  '@sveltejs/package': ^2.5.8
+  '@sveltejs/package': ^3.0.0
   '@sveltejs/vite-plugin-svelte': ^7.3.0
+  '@tsdown/css': ^0.23.1
   '@types/node': ^24.13.3
   '@types/react': ^19.3.0
   '@types/react-dom': ^19.3.0
   '@types/three': ^0.186.0
   babel-plugin-react-compiler: ^1.0.0
-  groq: ^6.15.0
-  knip: ^6.37.0
-  oxfmt: ^0.68.0
-  oxlint: ^1.83.0
-  oxlint-tsgolint: ^7.0.2002
-  react: ^19.3.0
-  react-dom: ^19.3.0
+  groq: ^6.19.0
+  knip: ^6.41.0
+  oxfmt: ^0.73.0
+  oxlint: ^1.88.0
+  oxlint-tsgolint: ^7.0.2004
+  react: ^19.3.1
+  react-dom: ^19.3.1
   rxjs: ^7.8.2
-  sanity: ^6.15.0
-  sanity-plugin-asset-source-unsplash: ^7.0.25
-  styled-components: ^6.5.3
+  sanity: ^6.19.0
+  sanity-plugin-asset-source-unsplash: ^7.0.27
+  styled-components: ^6.6.0
   svelte: ^5.57.0
-  turbo: ^2.10.12
+  tsdown: ^0.23.1
+  turbo: ^2.11.8
   typescript: 6.0.3
-  vite: ^8.3.0
+  vite: ^8.3.4
   vitest: ^4.1.11
   xstate: ^5.33.2
-  pnpm: 12.3.4
+  pnpm: 12.11.2
 
 catalogs:
   tailwind3:
@@ -73,6 +75,9 @@ minimumReleaseAgeExclude:
   - '@oxlint-tsgolint/*'
   - '@portabletext/*'
   - '@sanity/*'
+  - '@sanity/tsdown-config'
+  - '@tanstack/react-virtual'
+  - '@tanstack/virtual-core'
   - '@types/*'
   - '@typescript/*'
   - '@vite/*'
@@ -81,17 +86,23 @@ minimumReleaseAgeExclude:
   - '@yuku-codegen/*'
   - '@yuku-parser/*'
   - '@yuku-toolchain/*'
+  - framer-motion
   - get-it
   - groq
   - groq-js
+  - motion
+  - motion-dom
+  - motion-utils
   - oxfmt
   - oxlint
   - oxlint-tsgolint
   - react
   - react-dom
   - react-is
+  - styled-components
   - rolldown
   - rolldown-plugin-dts
+  - sanity
   - tsdown
   - verkit
   - vite
