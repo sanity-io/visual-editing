@@ -172,8 +172,8 @@ catalogs:
       specifier: ^8.16.0
       version: 8.16.0
     '@sanity/color-input':
-      specifier: ^6.1.7
-      version: 6.1.7
+      specifier: ^6.1.8
+      version: 6.1.8
     '@sanity/icons':
       specifier: ^5.2.3
       version: 5.2.3
@@ -709,7 +709,7 @@ importers:
         version: 6.2.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)
       '@sanity/color-input':
         specifier: 'catalog:'
-        version: 6.1.7(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
+        version: 6.1.8(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
       '@sanity/icons':
         specifier: 'catalog:'
         version: 5.2.3(react@19.3.1)
@@ -4421,8 +4421,8 @@ packages:
       oxfmt:
         optional: true
 
-  '@sanity/color-input@6.1.7':
-    resolution: {integrity: sha512-db/Z5ufhMyVPXSY1XEq0knbJMANH3fMZr99UdZm8/HI/JG+24W9fm2SNCTM2w2kAD68+pj8kohKtk8++dpgkAA==}
+  '@sanity/color-input@6.1.8':
+    resolution: {integrity: sha512-4S7c+1iyuhrpO1RCI8UXEoBq5O4WKRvWmdhSZk6jfE03nG6eylfWJ7yWGMZu4MxDjtzOuAxCEcPM/lSufr846Q==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
@@ -4679,6 +4679,14 @@ packages:
 
   '@sanity/ui@4.4.4':
     resolution: {integrity: sha512-jv0k8fLdJYEu7WvAJEqYXTtuOamS4F+nGZWMHCjqyJAZ4l0TgVt3qXJ66AvzxqWp73TIdreBEP35kiIU2pDmsg==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19.2
+      react-dom: ^19.2
+      styled-components: ^6.1 || ^7.0.0-0
+
+  '@sanity/ui@4.4.6':
+    resolution: {integrity: sha512-fu6KmXRFmzwrXkSBp0O/u7ptlfzDrQ86Z0zJ6NQiIhCWIdInv45dyYN9PgzhaLx705GdOF21ERbJ8iv9BIVBbg==}
     engines: {node: '>=22.12'}
     peerDependencies:
       react: ^19.2
@@ -12467,10 +12475,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@sanity/color-input@6.1.7(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)':
+  '@sanity/color-input@6.1.8(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)':
     dependencies:
       '@sanity/icons': 5.2.3(react@19.3.1)
-      '@sanity/ui': 4.4.4(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
+      '@sanity/ui': 4.4.6(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
       '@vanilla-extract/dynamic': 2.1.5
       lodash-es: 4.18.1
       react: 19.3.1
@@ -12935,6 +12943,21 @@ snapshots:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       react-is: 19.3.0
+      react-refractor: 4.0.0(react@19.3.1)
+      styled-components: 6.6.0(react-dom@19.3.1)(react@19.3.1)
+      use-effect-event: 2.0.4(react@19.3.1)
+
+  '@sanity/ui@4.4.6(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.1)(react@19.3.1)
+      '@sanity/color': 3.0.9
+      '@sanity/icons': 5.2.3(react@19.3.1)
+      clsx: 2.1.1
+      csstype: 3.2.3
+      motion: 14.2.0(react-dom@19.3.1)(react@19.3.1)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      react-is: 19.3.1
       react-refractor: 4.0.0(react@19.3.1)
       styled-components: 6.6.0(react-dom@19.3.1)(react@19.3.1)
       use-effect-event: 2.0.4(react@19.3.1)
