@@ -31,6 +31,29 @@ jobs:
       - run: pnpm build --filter=!./apps/*
       - run: pnpm lint
 
+  build-apps:
+    # Builds the example apps to catch breakages (undeclared deps, framework/tailwind bumps)
+    # that the package-only `build` job and the shared turbo cache would otherwise hide.
+    # No SANITY_API_READ_TOKEN secret exists, so the Next apps run in compile mode
+    # (Turbopack compile + PostCSS/Tailwind, no build-time Sanity fetch); the studio app
+    # builds fully. `--force` bypasses the turbo cache so latent breakage is not masked.
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          cache: pnpm
+          node-version: lts/*
+      - run: pnpm install --ignore-scripts
+      - run: pnpm turbo run build --filter=apps-studio --filter=apps-next^... --filter=live-next^... --filter=page-builder-demo^... --force
+      - run: pnpm --filter=apps-next exec next build --experimental-build-mode=compile
+      - run: pnpm --filter=live-next exec next build --experimental-build-mode=compile
+      - run: pnpm --filter=page-builder-demo exec next build --experimental-build-mode=compile
+
   test:
     needs: build
     timeout-minutes: 15
