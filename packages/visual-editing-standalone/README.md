@@ -1,78 +1,66 @@
 # `@sanity/visual-editing-standalone`
 
-Self-contained, ESM-only Visual Editing for applications that do not otherwise
-use React.
+Add click-to-edit overlays to a non-React application that does not have a
+framework integration.
 
-The entire API is a single entry point:
+> [!IMPORTANT]
+> Import `@sanity/visual-editing-standalone/styles.css` wherever you enable
+> Visual Editing. The overlays need these styles for accessibility, labels,
+> and loading indicators.
 
-```ts
-import {createDataAttribute, enableVisualEditing} from '@sanity/visual-editing-standalone'
-```
+## Choose the right integration
 
-All runtime code—including the internal React renderer, React DOM,
-styled-components, and Sanity UI—is compiled into package-internal ESM chunks.
-Installing it adds no production or peer dependencies, and the exact bundled
-versions are listed in the `inlinedDependencies` field of `package.json`.
+Use a [framework-specific guide](https://www.sanity.io/docs/visual-editing/introduction-to-visual-editing#framework-quickstarts)
+when one is available. A framework integration can also configure preview
+mode, data loading, and live updates.
 
-The overlays' static stylesheet ships as the `./styles.css` export — named
-after the `@sanity/ui@4` subpath it repackages — and must be imported
-explicitly, as shown in [Import the stylesheet](#import-the-stylesheet). The
-published JS never references the stylesheet itself, so the package loads in
-every ESM runtime — bundlers, Node, esm.sh, import maps — without CSS-handling
-support.
+- **React:** Use [`@sanity/visual-editing`](../visual-editing/README.md).
+- **Next.js App Router:** Use
+  [`next-sanity`](https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-app-router).
+- **Next.js Pages Router:** Use
+  [`@sanity/visual-editing/next-pages-router`](https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-pages-router).
+- **Astro:** Use
+  [`@sanity/astro`](https://www.sanity.io/docs/visual-editing/astro-visual-editing).
+- **SvelteKit:** Use
+  [`@sanity/sveltekit`](https://www.sanity.io/docs/visual-editing/visual-editing-with-sveltekit).
+- **Nuxt:** Use
+  [`@nuxtjs/sanity`](https://www.sanity.io/docs/visual-editing/visual-editing-with-nuxt).
 
-## When to use this package
+Use this standalone package when your application does not use React and no
+framework integration handles Visual Editing for you.
 
-Use this package with Vue, Nuxt, Svelte, Astro, vanilla JavaScript, or another
-ESM-native environment where installing and bundling the React dependency graph
-is undesirable.
+## Quick start
 
-React applications should use
-[`@sanity/visual-editing`](../visual-editing/README.md) instead. This package
-embeds its own React runtime, so using it in a React application would ship a
-second copy.
+### 1. Install
 
-The word "standalone" describes this package's self-contained distribution. It
-is unrelated to the `standalone` value reported by Visual Editing environment
-APIs.
-
-## Install
-
-```sh
+```bash
 npm install @sanity/visual-editing-standalone
 ```
 
-No React packages need to be installed alongside it.
+### 2. Enable Visual Editing
 
-## Import the stylesheet
-
-Import the overlays' static styles once, wherever Visual Editing is enabled:
-
-```ts
-import '@sanity/visual-editing-standalone/styles.css'
-```
-
-Bundlers handle the import like any other stylesheet. Without a bundler, add a
-`<link>` tag instead, as in the [esm.sh example](#load-from-esmsh) below.
-
-Skipping the stylesheet does not break the overlays, but the loading-spinner
-animation, screen-reader-only hiding, and label ellipsis rules go missing.
-
-## Enable Visual Editing
-
-Only load Visual Editing in the browser while draft or preview mode is active:
+Import the stylesheet and call `enableVisualEditing()` in the browser. Do this
+only while draft or preview mode is active.
 
 ```ts
 import '@sanity/visual-editing-standalone/styles.css'
 import {enableVisualEditing} from '@sanity/visual-editing-standalone'
 
+enableVisualEditing()
+```
+
+`enableVisualEditing()` returns a cleanup function. Call it when preview mode
+stops or the page unloads.
+
+## Use a client-side router
+
+Pass a history adapter if your application controls navigation:
+
+```ts
 const disableVisualEditing = enableVisualEditing({
   history: {
     subscribe: (navigate) => {
-      const onPopState = () => {
-        navigate({type: 'pop', url: location.href})
-      }
-
+      const onPopState = () => navigate({type: 'pop', url: location.href})
       addEventListener('popstate', onPopState)
       return () => removeEventListener('popstate', onPopState)
     },
@@ -83,23 +71,27 @@ const disableVisualEditing = enableVisualEditing({
     },
   },
 })
-
-// Call this when preview mode is disabled or the page is torn down.
-disableVisualEditing()
 ```
 
-The overlay renderer stays in a separate lazy chunk that only loads when
-`enableVisualEditing()` is called. Applications that only import
-`createDataAttribute` never load it, and since the JS is side-effect free any
-bundler can tree-shake the unused `enableVisualEditing` export away entirely.
+## Use esm.sh
 
-The standalone options are framework-neutral. React-based custom overlay
-components and plugins remain available from `@sanity/visual-editing`.
+Add the stylesheet with a `<link>` tag. Then load the JavaScript module.
+
+```html
+<link rel="stylesheet" href="https://esm.sh/@sanity/visual-editing-standalone@2/styles.css" />
+<script type="module">
+  import {enableVisualEditing} from 'https://esm.sh/@sanity/visual-editing-standalone@2'
+
+  enableVisualEditing()
+</script>
+```
+
+Use an exact version in production to keep the CDN output stable.
 
 ## Create data attributes
 
-Use `createDataAttribute` for values that cannot carry stega encoding, such as
-images, numbers, and booleans:
+Use `createDataAttribute` for values that cannot contain stega encoding, such
+as images, numbers, and booleans:
 
 ```ts
 import {createDataAttribute} from '@sanity/visual-editing-standalone'
@@ -111,30 +103,3 @@ const dataSanity = createDataAttribute({
   path: 'mainImage',
 }).toString()
 ```
-
-## Load from esm.sh
-
-The package can be loaded directly as a browser module — add the stylesheet
-with a `<link>` tag:
-
-```html
-<link rel="stylesheet" href="https://esm.sh/@sanity/visual-editing-standalone@2/styles.css" />
-<script type="module">
-  import {
-    createDataAttribute,
-    enableVisualEditing,
-  } from 'https://esm.sh/@sanity/visual-editing-standalone@2'
-
-  document.querySelector('h1').dataset.sanity = createDataAttribute({
-    baseUrl: 'https://example.sanity.studio',
-    id: 'post-1',
-    type: 'post',
-    path: 'title',
-  }).toString()
-
-  enableVisualEditing()
-</script>
-```
-
-Pin an exact package version in production when deterministic CDN output is
-required.
