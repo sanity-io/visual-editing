@@ -1,4 +1,11 @@
-import type {ClientPerspective, ClientReturn, ContentSourceMap, QueryParams} from '@sanity/client'
+import type {
+  ClientParams,
+  ClientPerspective,
+  ClientReturn,
+  ContentSourceMap,
+  QueryParams,
+  QueryWithoutParams,
+} from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import {dequal} from 'dequal/lite'
@@ -92,7 +99,10 @@ const LISTEN_HEARTBEAT_INTERVAL = 20_000
  */
 export function usePresentationQuery<const QueryString extends string>(props: {
   query: QueryString
-  params?: QueryParams | Promise<QueryParams>
+  params?:
+    | ClientParams<QueryString>
+    | QueryWithoutParams
+    | Promise<ClientParams<QueryString> | QueryWithoutParams>
   stega?: boolean
 }): UsePresentationQueryReturns<QueryString> {
   const [state, dispatch] = useReducer(reducer, initialState)
