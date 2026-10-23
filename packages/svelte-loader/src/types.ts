@@ -1,13 +1,14 @@
 import type {
   ClientPerspective,
   ContentSourceMap,
-  QueryParams,
   ResponseQueryOptions,
   SanityClient,
 } from '@sanity/client'
 import type {ResolveStudioUrl, StudioUrl} from '@sanity/client/csm'
 import {
   createQueryStore as createCoreQueryStore,
+  type BrandedQueryParams,
+  type BrandedQueryResult,
   type EnableLiveModeOptions,
   type QueryStoreState,
   type SanityClientLike,
@@ -24,17 +25,24 @@ export type WithEncodeDataAttribute = {
   encodeDataAttribute: EncodeDataAttributeFunction
 }
 
-export type UseQuery = <QueryResponseResult = unknown, QueryResponseError = unknown>(
+export type UseQuery = <
+  QueryResponseResult = unknown,
+  QueryResponseError = unknown,
+  const QueryString extends string = string,
+>(
   query:
-    | string
+    | QueryString
     | {
-        query: string
-        params?: QueryParams
-        options?: UseQueryOptions<QueryResponseResult>
+        query: QueryString
+        params?: BrandedQueryParams<QueryString>
+        options?: UseQueryOptions<BrandedQueryResult<QueryString, QueryResponseResult>>
       },
-  params?: QueryParams,
-  options?: UseQueryOptions<QueryResponseResult>,
-) => Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>
+  params?: BrandedQueryParams<QueryString>,
+  options?: UseQueryOptions<BrandedQueryResult<QueryString, QueryResponseResult>>,
+) => Readable<
+  QueryStoreState<BrandedQueryResult<QueryString, QueryResponseResult>, QueryResponseError> &
+    WithEncodeDataAttribute
+>
 
 /** @public */
 export interface QueryResponseInitial<QueryResponseResult> {
@@ -135,41 +143,57 @@ export type LoadQueryOptions = Pick<
 }
 
 /** @public */
-export type LoadQuery = <QueryResponseResult>(
-  query: string,
-  params?: QueryParams,
+export type LoadQuery = <QueryResponseResult = unknown, const QueryString extends string = string>(
+  query: QueryString,
+  params?: BrandedQueryParams<QueryString>,
   options?: LoadQueryOptions,
-) => Promise<QueryResponseInitial<QueryResponseResult>>
+) => Promise<QueryResponseInitial<BrandedQueryResult<QueryString, QueryResponseResult>>>
 
 /** @public */
 export interface QueryStore {
   loadQuery: LoadQuery
   setServerClient: ReturnType<typeof createCoreQueryStore>['setServerClient']
   useQuery: {
-    <QueryResponseResult = unknown, QueryResponseError = unknown>(
+    <
+      QueryResponseResult = unknown,
+      QueryResponseError = unknown,
+      const QueryString extends string = string,
+    >(
       query:
-        | string
+        | QueryString
         | {
-            query: string
-            params?: QueryParams
+            query: QueryString
+            params?: BrandedQueryParams<QueryString>
             options?: UseQueryOptionsUndefinedInitial
           },
-      params?: QueryParams,
+      params?: BrandedQueryParams<QueryString>,
       options?: UseQueryOptionsUndefinedInitial,
-    ): Readable<QueryStoreState<QueryResponseResult, QueryResponseError> & WithEncodeDataAttribute>
-    <QueryResponseResult = unknown, QueryResponseError = unknown>(
-      query:
-        | string
-        | {
-            query: string
-            params?: QueryParams
-            options?: UseQueryOptionsDefinedInitial<QueryResponseResult>
-          },
-      params?: QueryParams,
-      options?: UseQueryOptionsDefinedInitial<QueryResponseResult>,
     ): Readable<
-      Omit<QueryStoreState<QueryResponseResult, QueryResponseError>, 'data'> & {
-        data: QueryResponseResult
+      QueryStoreState<BrandedQueryResult<QueryString, QueryResponseResult>, QueryResponseError> &
+        WithEncodeDataAttribute
+    >
+    <
+      QueryResponseResult = unknown,
+      QueryResponseError = unknown,
+      const QueryString extends string = string,
+    >(
+      query:
+        | QueryString
+        | {
+            query: QueryString
+            params?: BrandedQueryParams<QueryString>
+            options?: UseQueryOptionsDefinedInitial<
+              BrandedQueryResult<QueryString, QueryResponseResult>
+            >
+          },
+      params?: BrandedQueryParams<QueryString>,
+      options?: UseQueryOptionsDefinedInitial<BrandedQueryResult<QueryString, QueryResponseResult>>,
+    ): Readable<
+      Omit<
+        QueryStoreState<BrandedQueryResult<QueryString, QueryResponseResult>, QueryResponseError>,
+        'data'
+      > & {
+        data: BrandedQueryResult<QueryString, QueryResponseResult>
       } & WithEncodeDataAttribute
     >
     // <QueryResponseResult = unknown, QueryResponseError = unknown>(

@@ -1,8 +1,49 @@
-import type {ClientPerspective, ContentSourceMap, QueryParams} from '@sanity/client'
+import type {
+  ClientParams,
+  ClientPerspective,
+  ClientReturn,
+  ContentSourceMap,
+  QueryParams,
+  QueryWithoutParams,
+} from '@sanity/client'
 import type {SanityClientLike} from '@sanity/visual-editing-types'
 import type {MapStore} from 'nanostores'
 
 export type {ContentSourceMap, MapStore, QueryParams}
+
+/**
+ * The result type for a query of type `QueryString`.
+ *
+ * A query carrying a `__groqResult` brand, such as the default export of a `.groq` file
+ * imported through `@sanity-labs/groq-content-mapper`, resolves to the branded result through
+ * `ClientReturn` from `@sanity/client`. Any other query resolves to `Fallback`, so unbranded
+ * queries type exactly as they did before the brand existed, including queries registered in
+ * `SanityQueries`.
+ *
+ * @remarks
+ * Reading the brand is experimental and follows `ClientReturn` in `@sanity/client`.
+ *
+ * @experimental
+ * @public
+ */
+export type BrandedQueryResult<
+  QueryString extends string,
+  Fallback = unknown,
+> = QueryString extends {readonly __groqResult?: unknown}
+  ? ClientReturn<QueryString, Fallback>
+  : Fallback
+
+/**
+ * The params type accepted alongside a query of type `QueryString`. Params passed with a query
+ * carrying a `__groqParams` brand are checked against it, other queries accept any
+ * `QueryParams`. Leaving params out, or passing `{}`, is accepted for every query.
+ *
+ * @experimental
+ * @public
+ */
+export type BrandedQueryParams<QueryString extends string> =
+  | ClientParams<QueryString>
+  | QueryWithoutParams
 export type {
   SanityClientLike,
   SanityClientLikeConfig,
