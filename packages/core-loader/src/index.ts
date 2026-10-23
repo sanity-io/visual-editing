@@ -4,7 +4,14 @@ import {atom, map, onMount, startTask, type MapStore} from 'nanostores'
 
 import {runtime} from './env'
 import {defineEnableLiveMode} from './live-mode'
-import type {EnableLiveMode, Fetcher, QueryStoreState, SanityClientLike} from './types'
+import type {
+  BrandedQueryParams,
+  BrandedQueryResult,
+  EnableLiveMode,
+  Fetcher,
+  QueryStoreState,
+  SanityClientLike,
+} from './types'
 
 export type {MapStore}
 
@@ -32,19 +39,25 @@ export interface CreateQueryStoreOptions {
 
 /** @public */
 export interface QueryStore {
-  createFetcherStore: <QueryResponseResult = unknown, QueryResponseError = unknown>(
-    query: string,
-    params?: QueryParams,
+  createFetcherStore: <
+    QueryResponseResult = unknown,
+    QueryResponseError = unknown,
+    const QueryString extends string = string,
+  >(
+    query: QueryString,
+    params?: BrandedQueryParams<QueryString>,
     /**
      * Initial `data` and `sourceMap`, used with SSR hydration and is required if `ssr: true`
      * and an optional speed optimization if `ssr: false`
      */
     initial?: {
-      data: QueryResponseResult
+      data: BrandedQueryResult<QueryString, QueryResponseResult>
       sourceMap?: ContentSourceMap
       perspective?: ClientPerspective
     },
-  ) => MapStore<QueryStoreState<QueryResponseResult, QueryResponseError>>
+  ) => MapStore<
+    QueryStoreState<BrandedQueryResult<QueryString, QueryResponseResult>, QueryResponseError>
+  >
   /**
    * When `ssr: true` you call this in your server entry point that imports the result of `createQueryStore` instance.
    * It's required to call it before any data fetching is done.
