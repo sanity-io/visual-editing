@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.3
+
+### Patch Changes
+
+- [#3756](https://github.com/sanity-io/visual-editing/pull/3756) [`d3ec726`](https://github.com/sanity-io/visual-editing/commit/d3ec7262719af2509f882a9e68a396ea4ecdf4a1) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): bundle `@sanity/client@8.11.0`
+
+- [#3755](https://github.com/sanity-io/visual-editing/pull/3755) [`3734e08`](https://github.com/sanity-io/visual-editing/commit/3734e08cb993ae258eb1cd6eacb5b4146a967f8c) Thanks [@danielroe](https://github.com/danielroe)! - Remove the `browserslist` field, which extended the undeclared `@sanity/browserslist-config` and made autoprefixer fail on `styles.css` in consuming apps.
+
 ## 2.0.2
 
 ### Patch Changes

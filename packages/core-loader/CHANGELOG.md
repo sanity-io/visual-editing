@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.3.0
+
+### Minor Changes
+
+- [#3756](https://github.com/sanity-io/visual-editing/pull/3756) [`d3ec726`](https://github.com/sanity-io/visual-editing/commit/d3ec7262719af2509f882a9e68a396ea4ecdf4a1) Thanks [@stipsan](https://github.com/stipsan)! - feat: infer types from branded `.groq` queries in `createFetcherStore`
+
+  Your queries can now bring their own types. Pass `createFetcherStore` a query branded with `__groqResult` and `__groqParams`, like the default export of a `.groq` file imported through [`@sanity-labs/groq-content-mapper`](https://github.com/sanity-labs/groq-content-mapper), and the store's `data` is typed and its params are checked, with no generic and no `SanityQueries` entry.
+
+  Before, you named the type yourself:
+
+  ```ts
+  const $posts = createFetcherStore<PostsQueryResult>(postsQuery, {type: 'post'})
+  ```
+
+  After, the query knows:
+
+  ```ts
+  import postsQuery from './posts.groq' with {type: 'text'}
+
+  const $posts = createFetcherStore(postsQuery, {type: 'post'})
+  //    ^? MapStore<QueryStoreState<PostsQueryResult, unknown>>, and a typo in `type` won't compile
+  ```
+
+  The new `BrandedQueryResult` and `BrandedQueryParams` types build on `ClientReturn` and `ClientParams` from `@sanity/client@^8.11.0`, which is now the minimum. Reading the brand is experimental, as it is in `@sanity/client`. Plain strings, `defineQuery`, `SanityQueries` registrations and explicit generics type exactly as before, and an explicit generic still wins over the brand.
+
+### Patch Changes
+
+- [#3718](https://github.com/sanity-io/visual-editing/pull/3718) [`c376033`](https://github.com/sanity-io/visual-editing/commit/c3760338c8a6bf3dba2329c33ef44e728110faac) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency nanostores to v1.5.5
+
+- [#3729](https://github.com/sanity-io/visual-editing/pull/3729) [`6962d15`](https://github.com/sanity-io/visual-editing/commit/6962d155a2a0aaffadf48dca0621f979937c9163) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency async-cache-dedupe to v3
+- Updated dependencies [[`e328098`](https://github.com/sanity-io/visual-editing/commit/e3280986b5fd16df14663caba4a8227971b0039f)]:
+  - @sanity/visual-editing-csm@3.0.19
+
 ## 2.2.3
 
 ### Patch Changes

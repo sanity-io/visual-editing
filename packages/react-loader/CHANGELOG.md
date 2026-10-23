@@ -1,5 +1,56 @@
 # Changelog
 
+## 2.3.0
+
+### Minor Changes
+
+- [#3756](https://github.com/sanity-io/visual-editing/pull/3756) [`d3ec726`](https://github.com/sanity-io/visual-editing/commit/d3ec7262719af2509f882a9e68a396ea4ecdf4a1) Thanks [@stipsan](https://github.com/stipsan)! - feat: infer types from branded `.groq` queries in `loadQuery` and `useQuery`
+
+  Delete those generics. `loadQuery` and `useQuery` now read the result and params types straight off a branded query, like the default export of a `.groq` file imported through [`@sanity-labs/groq-content-mapper`](https://github.com/sanity-labs/groq-content-mapper).
+
+  Before:
+
+  ```ts
+  const initial = await loadQuery<PostQueryResult>(postQuery, {slug})
+  const {data} = useQuery<PostQueryResult>(postQuery, {slug}, {initial})
+  ```
+
+  After:
+
+  ```ts
+  import postQuery from './post.groq' with {type: 'text'}
+
+  const initial = await loadQuery(postQuery, {slug})
+  const {data} = useQuery(postQuery, {slug}, {initial})
+  //     ^? PostQueryResult, and forgetting `slug` (or misspelling it) is a type error
+  ```
+
+  To try it, add the mapper to your `tsconfig.json` and type-check with `tsc --noEmit --runExternalCode` (TypeScript 7.1 or later):
+
+  ```jsonc
+  {
+    "contentMappers": [
+      {
+        "package": "@sanity-labs/groq-content-mapper",
+        "extensions": [".groq"],
+        "options": {
+          "schema": "./schema.json", // the file `sanity schema extract` writes by default
+          // "schemas": [{"include": "src/queries/shop", "schema": "./shop.json"}], // only when querying more than one project or dataset
+        },
+      },
+    ],
+  }
+  ```
+
+  Reading the brand is experimental, as it is in `@sanity/client`, and needs `@sanity/client@^8.11.0`, which is now the minimum. Plain strings, `defineQuery`, `SanityQueries` registrations, `initial`-driven inference and explicit generics type exactly as before, and an explicit generic still wins over the brand.
+
+### Patch Changes
+
+- [#3748](https://github.com/sanity-io/visual-editing/pull/3748) [`9ee705a`](https://github.com/sanity-io/visual-editing/commit/9ee705a1acc0f32af4a784caa49fc3fbbda83bfe) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update react monorepo to ^19.3.1
+- Updated dependencies [[`d3ec726`](https://github.com/sanity-io/visual-editing/commit/d3ec7262719af2509f882a9e68a396ea4ecdf4a1), [`e328098`](https://github.com/sanity-io/visual-editing/commit/e3280986b5fd16df14663caba4a8227971b0039f), [`c376033`](https://github.com/sanity-io/visual-editing/commit/c3760338c8a6bf3dba2329c33ef44e728110faac), [`6962d15`](https://github.com/sanity-io/visual-editing/commit/6962d155a2a0aaffadf48dca0621f979937c9163)]:
+  - @sanity/core-loader@2.3.0
+  - @sanity/visual-editing-csm@3.0.19
+
 ## 2.2.3
 
 ### Patch Changes

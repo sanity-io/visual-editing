@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.19
+
+### Patch Changes
+
+- [#3709](https://github.com/sanity-io/visual-editing/pull/3709) [`e328098`](https://github.com/sanity-io/visual-editing/commit/e3280986b5fd16df14663caba4a8227971b0039f) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency valibot to ^1.5.0
+
 ## 3.0.18
 
 ### Patch Changes
