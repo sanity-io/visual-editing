@@ -172,8 +172,8 @@ catalogs:
       specifier: ^8.16.0
       version: 8.16.0
     '@sanity/color-input':
-      specifier: ^6.1.7
-      version: 6.1.7
+      specifier: ^6.1.8
+      version: 6.1.8
     '@sanity/icons':
       specifier: ^5.2.3
       version: 5.2.3
@@ -709,7 +709,7 @@ importers:
         version: 6.2.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)
       '@sanity/color-input':
         specifier: 'catalog:'
-        version: 6.1.7(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
+        version: 6.1.8(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
       '@sanity/icons':
         specifier: 'catalog:'
         version: 5.2.3(react@19.3.1)
@@ -785,7 +785,7 @@ importers:
         version: link:../@repo/package.config
       '@sanity/client-v8':
         specifier: npm:@sanity/client@^8.9.0
-        version: '@sanity/client@8.9.0(vitest@4.1.11)'
+        version: '@sanity/client@8.11.0(vitest@4.1.11)'
       '@sanity/pkg-utils':
         specifier: 'catalog:'
         version: 13.0.11(@babel/runtime@7.29.7)(@tsdown/css@0.23.1)(@types/node@24.13.6)(babel-plugin-react-compiler@1.0.0)(oxc-resolver@11.24.2)(rolldown@1.2.13)(supports-color@8.1.1)(typescript@6.0.3)(unrun@0.3.1)(vite@8.3.4)
@@ -4412,10 +4412,6 @@ packages:
     resolution: {integrity: sha512-veR3k1ZKFqfB0QbmqNSVYedGb9WTwux2ifF+Xy5V5Uef/iMo79LSQCtPPliPUAM1XgOz/u1uyrHxH/1BC/MAPA==}
     engines: {node: '>=22.12.0'}
 
-  '@sanity/client@8.9.0':
-    resolution: {integrity: sha512-V6kFNH6xvz29ot66zTVVyzZ34dIGzVJHzQJXEV2ljGVZEelHRoMayhErsTDac/ZR7ej8Spz39qEMYCaJWg176g==}
-    engines: {node: '>=22.12.0'}
-
   '@sanity/codegen@8.2.0':
     resolution: {integrity: sha512-bMJuhbXLwMGZfnwenRBa4umhWoO5VTZQhAiXBcO/rwgnzEtA9mF5fv9SYcqX7mj8O3l35XeeETUdi1qZYVg1GQ==}
     engines: {node: '>=22.12'}
@@ -4425,8 +4421,8 @@ packages:
       oxfmt:
         optional: true
 
-  '@sanity/color-input@6.1.7':
-    resolution: {integrity: sha512-db/Z5ufhMyVPXSY1XEq0knbJMANH3fMZr99UdZm8/HI/JG+24W9fm2SNCTM2w2kAD68+pj8kohKtk8++dpgkAA==}
+  '@sanity/color-input@6.1.8':
+    resolution: {integrity: sha512-4S7c+1iyuhrpO1RCI8UXEoBq5O4WKRvWmdhSZk6jfE03nG6eylfWJ7yWGMZu4MxDjtzOuAxCEcPM/lSufr846Q==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
@@ -12495,15 +12491,6 @@ snapshots:
     transitivePeerDependencies:
       - vitest
 
-  '@sanity/client@8.9.0(vitest@4.1.11)':
-    dependencies:
-      eventsource: 5.1.2
-      get-it: 9.6.1(vitest@4.1.11)
-      obug: 3.0.0
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - vitest
-
   '@sanity/codegen@8.2.0(oxfmt@0.73.0)(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
@@ -12534,7 +12521,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@sanity/color-input@6.1.7(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)':
+  '@sanity/color-input@6.1.8(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)':
     dependencies:
       '@sanity/icons': 5.2.3(react@19.3.1)
       '@sanity/ui': 4.4.10(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
