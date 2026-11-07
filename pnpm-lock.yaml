@@ -268,8 +268,8 @@ catalogs:
       specifier: ^4.1.11
       version: 4.1.11
     xstate:
-      specifier: ^5.33.2
-      version: 5.33.2
+      specifier: ^5.33.3
+      version: 5.33.3
   tailwind3:
     '@tailwindcss/postcss':
       specifier: ^4.3.3
@@ -785,7 +785,7 @@ importers:
         version: link:../@repo/package.config
       '@sanity/client-v8':
         specifier: npm:@sanity/client@^8.9.0
-        version: '@sanity/client@8.9.0(vitest@4.1.11)'
+        version: '@sanity/client@8.11.0(vitest@4.1.11)'
       '@sanity/pkg-utils':
         specifier: 'catalog:'
         version: 13.0.11(@babel/runtime@7.29.7)(@tsdown/css@0.23.1)(@types/node@24.13.6)(babel-plugin-react-compiler@1.0.0)(oxc-resolver@11.24.2)(rolldown@1.2.13)(supports-color@8.1.1)(typescript@6.0.3)(unrun@0.3.1)(vite@8.3.4)
@@ -923,7 +923,7 @@ importers:
         version: 5.2.3(react@19.3.1)
       '@sanity/mutate':
         specifier: ^0.18.2
-        version: 0.18.2(vitest@4.1.11)(xstate@5.33.2)
+        version: 0.18.2(vitest@4.1.11)(xstate@5.33.3)
       '@sanity/presentation-comlink':
         specifier: ^2.2.3
         version: 2.2.3(vitest@4.1.11)
@@ -965,7 +965,7 @@ importers:
         version: 3.1.0
       xstate:
         specifier: 'catalog:'
-        version: 5.33.2
+        version: 5.33.3
     devDependencies:
       '@repo/package.config':
         specifier: workspace:*
@@ -4410,10 +4410,6 @@ packages:
 
   '@sanity/client@8.11.0':
     resolution: {integrity: sha512-veR3k1ZKFqfB0QbmqNSVYedGb9WTwux2ifF+Xy5V5Uef/iMo79LSQCtPPliPUAM1XgOz/u1uyrHxH/1BC/MAPA==}
-    engines: {node: '>=22.12.0'}
-
-  '@sanity/client@8.9.0':
-    resolution: {integrity: sha512-V6kFNH6xvz29ot66zTVVyzZ34dIGzVJHzQJXEV2ljGVZEelHRoMayhErsTDac/ZR7ej8Spz39qEMYCaJWg176g==}
     engines: {node: '>=22.12.0'}
 
   '@sanity/codegen@8.2.0':
@@ -9288,6 +9284,9 @@ packages:
   xstate@5.33.2:
     resolution: {integrity: sha512-8tC7yXgeCvpT8gKEeEje6ikJJG1wpnoLiXe+HfECW8m10ubMd3QxKOwWA8KxPJVBcLwfdRoMKYxIBGYKmo37/A==}
 
+  xstate@5.33.3:
+    resolution: {integrity: sha512-AnDRjS/GyKHmbA1PyhVCYBqYsA7EGe3KGgeD0ht3NFsXzoz7leX/HQDFX9QlHFJ/ltLHPsgChJYwPzRvB/0b4g==}
+
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -12495,15 +12494,6 @@ snapshots:
     transitivePeerDependencies:
       - vitest
 
-  '@sanity/client@8.9.0(vitest@4.1.11)':
-    dependencies:
-      eventsource: 5.1.2
-      get-it: 9.6.1(vitest@4.1.11)
-      obug: 3.0.0
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - vitest
-
   '@sanity/codegen@8.2.0(oxfmt@0.73.0)(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
@@ -12695,6 +12685,22 @@ snapshots:
       rxjs: 7.8.2
     optionalDependencies:
       xstate: 5.33.2
+    transitivePeerDependencies:
+      - vitest
+
+  '@sanity/mutate@0.18.2(vitest@4.1.11)(xstate@5.33.3)':
+    dependencies:
+      '@isaacs/ttlcache': 2.1.5
+      '@sanity/client': 8.11.0(vitest@4.1.11)
+      '@sanity/diff-match-patch': 3.2.0
+      '@sanity/uuid': 3.0.3
+      hotscript: 1.0.13
+      lodash: 4.18.1
+      mendoza: 3.0.8
+      nanoid: 5.1.16
+      rxjs: 7.8.2
+    optionalDependencies:
+      xstate: 5.33.3
     transitivePeerDependencies:
       - vitest
 
@@ -17753,6 +17759,8 @@ snapshots:
   xmlchars@2.2.0: {}
 
   xstate@5.33.2: {}
+
+  xstate@5.33.3: {}
 
   xtend@4.0.2: {}
 
