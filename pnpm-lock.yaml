@@ -166,8 +166,8 @@ settings:
 catalogs:
   default:
     '@sanity/assist':
-      specifier: ^6.2.0
-      version: 6.2.0
+      specifier: ^6.2.6
+      version: 6.2.6
     '@sanity/cli':
       specifier: ^8.16.0
       version: 8.16.0
@@ -706,7 +706,7 @@ importers:
         version: link:../package.config
       '@sanity/assist':
         specifier: 'catalog:'
-        version: 6.2.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)
+        version: 6.2.6(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)
       '@sanity/color-input':
         specifier: 'catalog:'
         version: 6.1.7(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
@@ -785,7 +785,7 @@ importers:
         version: link:../@repo/package.config
       '@sanity/client-v8':
         specifier: npm:@sanity/client@^8.9.0
-        version: '@sanity/client@8.9.0(vitest@4.1.11)'
+        version: '@sanity/client@8.11.0(vitest@4.1.11)'
       '@sanity/pkg-utils':
         specifier: 'catalog:'
         version: 13.0.11(@babel/runtime@7.29.7)(@tsdown/css@0.23.1)(@types/node@24.13.6)(babel-plugin-react-compiler@1.0.0)(oxc-resolver@11.24.2)(rolldown@1.2.13)(supports-color@8.1.1)(typescript@6.0.3)(unrun@0.3.1)(vite@8.3.4)
@@ -4335,8 +4335,8 @@ packages:
     resolution: {integrity: sha512-dlEmALjQ5iyQG0O8ZVmkkE3wUYCKfRmiyMvuuGN5SF9buAHxmseBOKJ/Iy2DU/8ef70mtUXlzeCRSlTN/nmZsg==}
     engines: {node: '>=18'}
 
-  '@sanity/assist@6.2.0':
-    resolution: {integrity: sha512-MHuVSY9L8mps6pkOv1IIp9jn9wt2zk9GDGf1AlhWPfH2qeiT/HAoSWZ80sdfjAJabkgMETJ1NVXqCjiSLKT3Aw==}
+  '@sanity/assist@6.2.6':
+    resolution: {integrity: sha512-skdyZ9I7Tq8l0eOBhmX+X1qtst3gvqFDiBUjSMPHnK9tCWpryv8HV86MgE4j2b6AR0vCxDJHAbs5RJ7ETezpwA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
@@ -4410,10 +4410,6 @@ packages:
 
   '@sanity/client@8.11.0':
     resolution: {integrity: sha512-veR3k1ZKFqfB0QbmqNSVYedGb9WTwux2ifF+Xy5V5Uef/iMo79LSQCtPPliPUAM1XgOz/u1uyrHxH/1BC/MAPA==}
-    engines: {node: '>=22.12.0'}
-
-  '@sanity/client@8.9.0':
-    resolution: {integrity: sha512-V6kFNH6xvz29ot66zTVVyzZ34dIGzVJHzQJXEV2ljGVZEelHRoMayhErsTDac/ZR7ej8Spz39qEMYCaJWg176g==}
     engines: {node: '>=22.12.0'}
 
   '@sanity/codegen@8.2.0':
@@ -12250,13 +12246,13 @@ snapshots:
 
   '@sanity/asset-utils@2.3.0': {}
 
-  '@sanity/assist@6.2.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)':
+  '@sanity/assist@6.2.6(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)':
     dependencies:
       '@portabletext/types': 4.0.2
       '@sanity/client': 8.11.0(vitest@4.1.11)
       '@sanity/color': 3.0.9
       '@sanity/icons': 5.2.3(react@19.3.1)
-      '@sanity/mutator': 6.15.0(@types/react@19.3.0)(vitest@4.1.11)
+      '@sanity/mutator': 6.19.0(@types/react@19.3.0)(vitest@4.1.11)
       '@sanity/ui': 4.4.10(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
       date-fns: 4.4.0
       dequal: 2.0.3
@@ -12490,15 +12486,6 @@ snapshots:
     dependencies:
       eventsource: 5.1.3
       get-it: 9.6.2(vitest@4.1.11)
-      obug: 3.0.0
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - vitest
-
-  '@sanity/client@8.9.0(vitest@4.1.11)':
-    dependencies:
-      eventsource: 5.1.2
-      get-it: 9.6.1(vitest@4.1.11)
       obug: 3.0.0
       rxjs: 7.8.2
     transitivePeerDependencies:
