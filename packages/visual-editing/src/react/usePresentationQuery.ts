@@ -9,7 +9,7 @@ import type {
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import {dequal} from 'dequal/lite'
-import {useEffect, useEffectEvent, useMemo, useReducer, useSyncExternalStore} from 'react'
+import {useEffect, useEffectEvent, useMemo, useReducer, useState, useSyncExternalStore} from 'react'
 
 import {
   addQueryListener,
@@ -88,6 +88,38 @@ const initialState: UsePresentationQueryReturnsInactive = {
 const EMPTY_QUERY_PARAMS: QueryParams = {}
 const LISTEN_HEARTBEAT_INTERVAL = 20_000
 
+function isThenable(value: unknown): boolean {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'then' in value &&
+    typeof value.then === 'function'
+  )
+}
+
+/**
+ * Returns a referentially stable params value when only the object identity changed.
+ * Thenables are stored once so a promise created during render cannot retrigger forever;
+ * the listen effect reads the latest thenable separately.
+ */
+function useStableQueryParams<T>(params: T): T {
+  const [stableParams, setStableParams] = useState(params)
+  const paramsAreThenable = isThenable(params)
+  const stableAreThenable = isThenable(stableParams)
+
+  if (paramsAreThenable || stableAreThenable) {
+    if (paramsAreThenable !== stableAreThenable) {
+      setStableParams(params)
+      return params
+    }
+    return stableParams
+  }
+
+  if (stableParams === params || dequal(stableParams, params)) return stableParams
+  setStableParams(params)
+  return params
+}
+
 /**
  * Experimental hook that can run queries in Presentation Tool.
  * Query results are sent back over postMessage whenever the query results change.
@@ -107,6 +139,7 @@ export function usePresentationQuery<const QueryString extends string>(props: {
 }): UsePresentationQueryReturns<QueryString> {
   const [state, dispatch] = useReducer(reducer, initialState)
   const {query, params = EMPTY_QUERY_PARAMS, stega = true} = props
+  const stableParams = useStableQueryParams(params)
 
   const comlink = useSyncExternalStore(
     subscribe,
@@ -141,18 +174,8 @@ export function usePresentationQuery<const QueryString extends string>(props: {
   // Register this hook instance as a query listener so LoaderComlink is mounted
   useEffect(() => addQueryListener(), [])
 
-  const handleQueryHeartbeat = useEffectEvent((comlink: NonNullable<typeof comlinkSnapshot>) => {
-    if (!projectId || !dataset || !perspective) return
-    comlink.post('loader/query-listen', {
-      projectId,
-      dataset,
-      perspective,
-      variant: variant ?? undefined,
-      query,
-      params,
-      heartbeat: LISTEN_HEARTBEAT_INTERVAL,
-    })
-  })
+  // Latest params for thenables, whose identity is not a safe effect dependency.
+  const readParams = useEffectEvent(() => params)
 
   const handleQueryChange = useEffectEvent(
     (event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data']) => {
@@ -182,18 +205,31 @@ export function usePresentationQuery<const QueryString extends string>(props: {
 
   useEffect(() => {
     if (!comlink) return
-
-    const unsubscribe = comlink.on('loader/query-change', handleQueryChange)
-
-    // Send initial heartbeat immediately
-    handleQueryHeartbeat(comlink)
-    const interval = setInterval(() => handleQueryHeartbeat(comlink), LISTEN_HEARTBEAT_INTERVAL)
-
-    return () => {
-      clearInterval(interval)
-      unsubscribe()
-    }
+    return comlink.on('loader/query-change', handleQueryChange)
   }, [comlink])
+
+  useEffect(() => {
+    // The comlink connects before Presentation sends project, dataset, and perspective.
+    // Re-listen as soon as those values, the variant, the query, or its params are available.
+    // The heartbeat is only a keepalive, not the first chance to subscribe.
+    if (!comlink || !projectId || !dataset || !perspective) return
+
+    const listen = () => {
+      comlink.post('loader/query-listen', {
+        projectId,
+        dataset,
+        perspective,
+        variant: variant ?? undefined,
+        query,
+        params: isThenable(stableParams) ? readParams() : stableParams,
+        heartbeat: LISTEN_HEARTBEAT_INTERVAL,
+      })
+    }
+
+    listen()
+    const interval = setInterval(listen, LISTEN_HEARTBEAT_INTERVAL)
+    return () => clearInterval(interval)
+  }, [comlink, dataset, perspective, projectId, query, stableParams, variant])
 
   return useMemo(() => {
     if (stega && state.sourceMap) {
