@@ -166,8 +166,8 @@ settings:
 catalogs:
   default:
     '@sanity/assist':
-      specifier: ^6.2.0
-      version: 6.2.0
+      specifier: ^6.3.0
+      version: 6.3.0
     '@sanity/cli':
       specifier: ^8.16.0
       version: 8.16.0
@@ -706,7 +706,7 @@ importers:
         version: link:../package.config
       '@sanity/assist':
         specifier: 'catalog:'
-        version: 6.2.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)
+        version: 6.3.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)
       '@sanity/color-input':
         specifier: 'catalog:'
         version: 6.1.7(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
@@ -4335,8 +4335,8 @@ packages:
     resolution: {integrity: sha512-dlEmALjQ5iyQG0O8ZVmkkE3wUYCKfRmiyMvuuGN5SF9buAHxmseBOKJ/Iy2DU/8ef70mtUXlzeCRSlTN/nmZsg==}
     engines: {node: '>=18'}
 
-  '@sanity/assist@6.2.0':
-    resolution: {integrity: sha512-MHuVSY9L8mps6pkOv1IIp9jn9wt2zk9GDGf1AlhWPfH2qeiT/HAoSWZ80sdfjAJabkgMETJ1NVXqCjiSLKT3Aw==}
+  '@sanity/assist@6.3.0':
+    resolution: {integrity: sha512-43+femv0PqNoN5X9ZIl8WZrnTvxkho0Yx53G6QEp2QztWvH3vuOzeSFrrY2AylhYhpFP6BMNY8k+xf+uvs2QJQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
@@ -12254,13 +12254,13 @@ snapshots:
 
   '@sanity/asset-utils@2.3.0': {}
 
-  '@sanity/assist@6.2.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)':
+  '@sanity/assist@6.3.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)(vitest@4.1.11)':
     dependencies:
       '@portabletext/types': 4.0.2
       '@sanity/client': 8.11.0(vitest@4.1.11)
       '@sanity/color': 3.0.9
       '@sanity/icons': 5.2.3(react@19.3.1)
-      '@sanity/mutator': 6.15.0(@types/react@19.3.0)(vitest@4.1.11)
+      '@sanity/mutator': 6.19.0(@types/react@19.3.0)(vitest@4.1.11)
       '@sanity/ui': 4.4.11(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
       date-fns: 4.4.0
       dequal: 2.0.3
