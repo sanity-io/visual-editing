@@ -158,10 +158,12 @@ export function usePresentationQuery<const QueryString extends string>(props: {
     (event: Extract<LoaderControllerMsg, {type: 'loader/query-change'}>['data']) => {
       if (
         dequal(
-          {projectId, dataset, query, params},
+          {projectId, dataset, perspective, variant: variant || null, query, params},
           {
             projectId: event.projectId,
             dataset: event.dataset,
+            perspective: event.perspective,
+            variant: event.variant || null,
             query: event.query,
             params: event.params,
           },
@@ -182,18 +184,24 @@ export function usePresentationQuery<const QueryString extends string>(props: {
 
   useEffect(() => {
     if (!comlink) return
+    return comlink.on('loader/query-change', handleQueryChange)
+  }, [comlink])
 
-    const unsubscribe = comlink.on('loader/query-change', handleQueryChange)
+  // The comlink is published before the Presentation tool has sent project, dataset and
+  // perspective, so the listen has to be re-sent once they arrive (and whenever they, or the
+  // query, change) rather than on the next heartbeat. Serialized so that new references with
+  // the same content (perspective arrays, inline params objects) don't re-send.
+  const listenKey =
+    projectId && dataset && perspective
+      ? JSON.stringify([projectId, dataset, perspective, variant, query, params])
+      : null
+  useEffect(() => {
+    if (!comlink || !listenKey) return
 
-    // Send initial heartbeat immediately
     handleQueryHeartbeat(comlink)
     const interval = setInterval(() => handleQueryHeartbeat(comlink), LISTEN_HEARTBEAT_INTERVAL)
-
-    return () => {
-      clearInterval(interval)
-      unsubscribe()
-    }
-  }, [comlink])
+    return () => clearInterval(interval)
+  }, [comlink, listenKey])
 
   return useMemo(() => {
     if (stega && state.sourceMap) {
