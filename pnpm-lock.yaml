@@ -388,8 +388,8 @@ importers:
         specifier: 16.3.0-preview.8
         version: 16.3.0-preview.8(@babel/core@7.29.7)(@types/node@24.13.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1)(react@19.3.1)
       next-sanity:
-        specifier: ^13.3.4
-        version: 13.3.4(@sanity/client@8.11.0)(next@16.3.0-preview.8)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
+        specifier: ^13.4.0
+        version: 13.4.0(@sanity/client@8.11.0)(next@16.3.0-preview.8)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
       postcss:
         specifier: ^8.5.28
         version: 8.5.28
@@ -467,8 +467,8 @@ importers:
         specifier: ^16.2.11
         version: 16.3.5(@babel/core@7.29.7)(@types/node@24.13.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1)(react@19.3.1)
       next-sanity:
-        specifier: ^13.3.4
-        version: 13.3.4(@sanity/client@8.11.0)(next@16.3.5)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
+        specifier: ^13.4.0
+        version: 13.4.0(@sanity/client@8.11.0)(next@16.3.5)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
       postcss:
         specifier: 8.5.28
         version: 8.5.28
@@ -564,8 +564,8 @@ importers:
         specifier: ^16.2.11
         version: 16.3.5(@babel/core@7.29.7)(@types/node@24.13.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1)(react@19.3.1)
       next-sanity:
-        specifier: ^13.3.4
-        version: 13.3.4(@sanity/client@8.11.0)(next@16.3.5)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
+        specifier: ^13.4.0
+        version: 13.4.0(@sanity/client@8.11.0)(next@16.3.5)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0)
       postcss:
         specifier: 8.5.28
         version: 8.5.28
@@ -785,7 +785,7 @@ importers:
         version: link:../@repo/package.config
       '@sanity/client-v8':
         specifier: npm:@sanity/client@^8.9.0
-        version: '@sanity/client@8.9.0(vitest@4.1.11)'
+        version: '@sanity/client@8.11.0(vitest@4.1.11)'
       '@sanity/pkg-utils':
         specifier: 'catalog:'
         version: 13.0.11(@babel/runtime@7.29.7)(@tsdown/css@0.23.1)(@types/node@24.13.6)(babel-plugin-react-compiler@1.0.0)(oxc-resolver@11.24.2)(rolldown@1.2.13)(supports-color@8.1.1)(typescript@6.0.3)(unrun@0.3.1)(vite@8.3.4)
@@ -4412,10 +4412,6 @@ packages:
     resolution: {integrity: sha512-veR3k1ZKFqfB0QbmqNSVYedGb9WTwux2ifF+Xy5V5Uef/iMo79LSQCtPPliPUAM1XgOz/u1uyrHxH/1BC/MAPA==}
     engines: {node: '>=22.12.0'}
 
-  '@sanity/client@8.9.0':
-    resolution: {integrity: sha512-V6kFNH6xvz29ot66zTVVyzZ34dIGzVJHzQJXEV2ljGVZEelHRoMayhErsTDac/ZR7ej8Spz39qEMYCaJWg176g==}
-    engines: {node: '>=22.12.0'}
-
   '@sanity/codegen@8.2.0':
     resolution: {integrity: sha512-bMJuhbXLwMGZfnwenRBa4umhWoO5VTZQhAiXBcO/rwgnzEtA9mF5fv9SYcqX7mj8O3l35XeeETUdi1qZYVg1GQ==}
     engines: {node: '>=22.12'}
@@ -7615,8 +7611,8 @@ packages:
     resolution: {integrity: sha512-myRT3DiWPHqho5PrJaIRyaMv2kgYf0mUVgBNOYMuCH5Ki1yEiQaf/ZJuQ62nvpc44wL5WDbTX7yGJi1Neevw8w==}
     engines: {node: '>= 0.6'}
 
-  next-sanity@13.3.4:
-    resolution: {integrity: sha512-aT7Tq03tXkrjKWYKNUc/nPUrG9UR5GznP/GyQg5Y0InGCpw8EAvdoqolEZ071rOFcFZ9tolZkcS3HHLkNsbeuA==}
+  next-sanity@13.4.0:
+    resolution: {integrity: sha512-YliZsaWV1E/u59cByXWLIH5HgB+IbQHdcaCDowlKhkxDCCH1MZyoy+uPj28INHSUc1HULNjxtE3S7PJiVnjfvg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       '@sanity/client': ^8.11.0
@@ -12495,15 +12491,6 @@ snapshots:
     transitivePeerDependencies:
       - vitest
 
-  '@sanity/client@8.9.0(vitest@4.1.11)':
-    dependencies:
-      eventsource: 5.1.2
-      get-it: 9.6.1(vitest@4.1.11)
-      obug: 3.0.0
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - vitest
-
   '@sanity/codegen@8.2.0(oxfmt@0.73.0)(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
@@ -15883,7 +15870,7 @@ snapshots:
 
   negotiator@0.6.4: {}
 
-  next-sanity@13.3.4(@sanity/client@8.11.0)(next@16.3.0-preview.8)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0):
+  next-sanity@13.4.0(@sanity/client@8.11.0)(next@16.3.0-preview.8)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0):
     dependencies:
       '@portabletext/react': 7.0.1(react@19.3.1)
       '@sanity/client': 8.11.0(vitest@4.1.11)
@@ -15899,7 +15886,7 @@ snapshots:
       sanity: 6.19.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.4.0)(@rolldown/plugin-babel@0.2.4)(@sanity/workflow-blueprint@0.36.0)(@types/node@24.13.6)(@types/react-dom@19.3.0)(@types/react@19.3.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(jiti@2.7.0)(oxfmt@0.73.0)(react-dom@19.3.1)(react-router@7.18.4)(react@19.3.1)(rolldown@1.2.13)(styled-components@6.6.0)(supports-color@8.1.1)(tsx@4.23.15)(typescript@6.0.3)(vitest@4.1.11)
       styled-components: 6.6.0(react-dom@19.3.1)(react@19.3.1)
 
-  next-sanity@13.3.4(@sanity/client@8.11.0)(next@16.3.5)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0):
+  next-sanity@13.4.0(@sanity/client@8.11.0)(next@16.3.5)(react-dom@19.3.1)(react@19.3.1)(sanity@6.19.0)(styled-components@6.6.0):
     dependencies:
       '@portabletext/react': 7.0.1(react@19.3.1)
       '@sanity/client': 8.11.0(vitest@4.1.11)
