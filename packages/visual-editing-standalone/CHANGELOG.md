@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.4
+
+### Patch Changes
+
+- [#3763](https://github.com/sanity-io/visual-editing/pull/3763) [`c6899ab`](https://github.com/sanity-io/visual-editing/commit/c6899ab95a7c11d5d9f2c1144cb9e0b4e3ab878d) Thanks [@stipsan](https://github.com/stipsan)! - Upgrade `@sanity/ui` to ^4.4.11 so constrained overlay context-menu submenus (Insert before / Insert after) no longer collapse to zero width.
+
 ## 2.0.3
 
 ### Patch Changes

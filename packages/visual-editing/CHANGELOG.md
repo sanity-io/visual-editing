@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.2.1
+
+### Patch Changes
+
+- [#3763](https://github.com/sanity-io/visual-editing/pull/3763) [`c6899ab`](https://github.com/sanity-io/visual-editing/commit/c6899ab95a7c11d5d9f2c1144cb9e0b4e3ab878d) Thanks [@stipsan](https://github.com/stipsan)! - Upgrade `@sanity/ui` to ^4.4.11 so constrained overlay context-menu submenus (Insert before / Insert after) no longer collapse to zero width.
+
+- [#3761](https://github.com/sanity-io/visual-editing/pull/3761) [`ae5b667`](https://github.com/sanity-io/visual-editing/commit/ae5b6670ef78d03c65ad8f388de0a45772cc11d6) Thanks [@stipsan](https://github.com/stipsan)! - Fix `usePresentationQuery` taking up to 20 seconds to return data in Presentation. The query is now registered as soon as the project, dataset and perspective arrive from Presentation (and again right away when the perspective, variant, query or params change), instead of waiting for the next heartbeat. Results for a perspective or variant that is no longer active are ignored.
+
+- [#3771](https://github.com/sanity-io/visual-editing/pull/3771) [`07f2d7a`](https://github.com/sanity-io/visual-editing/commit/07f2d7a7d6541d6768184fe2a0ee99f064461b9e) Thanks [@stipsan](https://github.com/stipsan)! - Ship TypeScript declarations for `@sanity/svelte-loader` and `@sanity/visual-editing/svelte` again. Since the switch to `@sanity/tsconfig` (which enables `noEmitOnError`), `svelte-package` silently emitted no `.d.ts` files, so imports such as `import type {LoaderLocals} from '@sanity/svelte-loader'` failed with "Could not find a declaration file for module".
+
 ## 6.2.0
 
 ### Minor Changes
