@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // svelte-package forces rootDir to ./svelte; with outDir ./dist, self-imports of `@sanity/visual-editing` would resolve to ./svelte/index.ts
+    "outDir": "dist-svelte"
+  }
+}
