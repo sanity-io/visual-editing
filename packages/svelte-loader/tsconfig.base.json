@@ -3,6 +3,8 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
+    // svelte2tsx emits code that only svelte-check knows to ignore errors in, so noEmitOnError makes svelte-package silently skip every .d.ts
+    "noEmitOnError": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false
   }

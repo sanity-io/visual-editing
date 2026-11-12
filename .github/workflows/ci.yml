@@ -30,6 +30,7 @@ jobs:
       - run: pnpm install --ignore-scripts
       - run: pnpm build --filter=!./apps/*
       - run: pnpm lint
+      - run: pnpm lint:packed
 
   build-apps:
     # Builds the example apps to catch breakages (undeclared deps, framework/tailwind bumps)

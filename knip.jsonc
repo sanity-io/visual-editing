@@ -8,6 +8,12 @@
     "pnpm-workspace.yaml": ["catalog"],
   },
   "workspaces": {
+    ".": {
+      "ignoreDependencies": [
+        // Invoked inside the `sh -c` of the `lint:packed` script, which knip doesn't parse.
+        "publint",
+      ],
+    },
     "packages/@repo/sanity-schema": {
       "entry": ["package.config.ts"],
     },

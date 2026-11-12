@@ -12,6 +12,7 @@
     "knip": "knip",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "lint:packed": "pnpm --recursive --filter='./packages/*' exec sh -c 'out=$(mktemp -d) && pnpm pack --config.ignore-scripts=true --pack-destination \"$out\" > /dev/null && publint run \"$out\"/*.tgz --strict'",
     "preview": "turbo run preview",
     "report:react-compiler-healthcheck": "turbo run react-compiler-healthcheck",
     "storybook:visual-editing": "turbo run build --filter='@sanity/visual-editing^...' && turbo watch dev storybook --filter='@sanity/visual-editing...'",
@@ -31,6 +32,7 @@
     "oxlint-tsgolint": "catalog:",
     "pkg-pr-new": "^0.0.91",
     "pnpm": "catalog:",
+    "publint": "^0.3.25",
     "turbo": "catalog:",
     "typescript": "catalog:"
   },
