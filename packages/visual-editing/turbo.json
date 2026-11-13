@@ -5,6 +5,9 @@
     "build": {
       "env": ["NODE_ENV"]
     },
+    "test": {
+      "dependsOn": ["build"]
+    },
     "build-storybook": {
       "dependsOn": ["build"],
       "outputs": ["storybook-static/**"]
