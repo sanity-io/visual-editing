@@ -268,8 +268,8 @@ catalogs:
       specifier: ^4.1.11
       version: 4.1.11
     xstate:
-      specifier: ^5.33.2
-      version: 5.33.2
+      specifier: ^5.33.4
+      version: 5.33.4
   tailwind3:
     '@tailwindcss/postcss':
       specifier: ^4.3.3
@@ -926,7 +926,7 @@ importers:
         version: 5.2.3(react@19.3.1)
       '@sanity/mutate':
         specifier: ^0.18.2
-        version: 0.18.2(vitest@4.1.11)(xstate@5.33.2)
+        version: 0.18.2(vitest@4.1.11)(xstate@5.33.4)
       '@sanity/presentation-comlink':
         specifier: ^2.2.3
         version: 2.2.3(vitest@4.1.11)
@@ -968,7 +968,7 @@ importers:
         version: 3.1.0
       xstate:
         specifier: 'catalog:'
-        version: 5.33.2
+        version: 5.33.4
     devDependencies:
       '@repo/package.config':
         specifier: workspace:*
@@ -9294,6 +9294,9 @@ packages:
   xstate@5.33.2:
     resolution: {integrity: sha512-8tC7yXgeCvpT8gKEeEje6ikJJG1wpnoLiXe+HfECW8m10ubMd3QxKOwWA8KxPJVBcLwfdRoMKYxIBGYKmo37/A==}
 
+  xstate@5.33.4:
+    resolution: {integrity: sha512-eGNMu3BNqU0Z85P+ouYG5OCZqIABU+QsW6vUieFt9p9gOGs3C+BL10Exg7XdRPSXPQKlP6XoYpYf93r9VmW8mQ==}
+
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -12699,6 +12702,22 @@ snapshots:
       rxjs: 7.8.2
     optionalDependencies:
       xstate: 5.33.2
+    transitivePeerDependencies:
+      - vitest
+
+  '@sanity/mutate@0.18.2(vitest@4.1.11)(xstate@5.33.4)':
+    dependencies:
+      '@isaacs/ttlcache': 2.1.5
+      '@sanity/client': 8.11.0(vitest@4.1.11)
+      '@sanity/diff-match-patch': 3.2.0
+      '@sanity/uuid': 3.0.3
+      hotscript: 1.0.13
+      lodash: 4.18.1
+      mendoza: 3.0.8
+      nanoid: 5.1.16
+      rxjs: 7.8.2
+    optionalDependencies:
+      xstate: 5.33.4
     transitivePeerDependencies:
       - vitest
 
@@ -17749,6 +17768,8 @@ snapshots:
   xmlchars@2.2.0: {}
 
   xstate@5.33.2: {}
+
+  xstate@5.33.4: {}
 
   xtend@4.0.2: {}
 
