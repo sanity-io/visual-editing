@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalDependencies": [".npmrc", "**/.env.*local"],
+  "globalDependencies": [".npmrc", "**/.env.*local", "pnpm-lock.yaml"],
   "tasks": {
     "build": {
       "outputs": [".svelte-kit/**", "dist/**", "dist-svelte/**"],
