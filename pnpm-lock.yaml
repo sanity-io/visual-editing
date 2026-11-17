@@ -732,8 +732,8 @@ snapshots:
 			"devDependencies": {
 				"@repo/package.config": "workspace:*",
 				"@sanity/client-v8": {
-					"specifier": "npm:@sanity/client@^8.9.0",
-					"version": "@sanity/client@8.11.0",
+					"specifier": "npm:@sanity/client@^8.16.0",
+					"version": "@sanity/client@8.16.0",
 				},
 				"@sanity/pkg-utils": "catalog:",
 				"@sanity/preview-url-secret": "workspace:*",
@@ -7349,7 +7349,7 @@ snapshots:
 			},
 			"dependencies": {
 				"@portabletext/types": "4.0.2",
-				"@sanity/client": "8.11.0",
+				"@sanity/client": "8.16.0",
 				"@sanity/color": "3.0.9",
 				"@sanity/icons": "5.2.3",
 				"@sanity/mutator": "6.15.0",
@@ -7725,6 +7725,23 @@ snapshots:
 			"dependencies": {
 				"eventsource": "5.1.3",
 				"get-it": "9.6.2",
+				"obug": "3.0.0",
+				"rxjs": "7.8.2",
+			},
+		},
+
+		"@sanity/client@8.16.0": {
+			"integrity": "sha512-x6VKopU1Rt2mp3YBQRBIyWE2ebzqc4sMwUbQJJzIzNS0TMnNURvHe/z1qo/bDIph37B5vYvfWIT7Js6SPAQkUQ==",
+			"engines": {"node": ">=22.12.0"},
+			"peerDependencies": {
+				"vitest": {
+					"version": "4.1.11",
+					"below": true,
+				},
+			},
+			"dependencies": {
+				"eventsource": "5.1.5",
+				"get-it": "9.7.0",
 				"obug": "3.0.0",
 				"rxjs": "7.8.2",
 			},
@@ -12443,6 +12460,11 @@ snapshots:
 			"engines": {"node": ">=22.12"},
 		},
 
+		"eventsource-parser@4.1.3": {
+			"integrity": "sha512-jZVIVilXZfAx6H20ZKKEj5dabbpD9ETmMj3uHsjMmgBzBHB6tsHrmdWB4mAiy3amtN6MOoVkfXRQu4wf1n88Rw==",
+			"engines": {"node": ">=22.12"},
+		},
+
 		"eventsource@2.0.2": {
 			"integrity": "sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==",
 			"engines": {"node": ">=12.0.0"},
@@ -12461,6 +12483,14 @@ snapshots:
 			"engines": {"node": ">=22.12.0"},
 			"dependencies": {
 				"eventsource-parser": "4.1.2",
+			},
+		},
+
+		"eventsource@5.1.5": {
+			"integrity": "sha512-Z41ZPzy7CM1NgAKgrG6pzPdOSimaly20ZY3+6opMQw/VEso+xhPWX4asJT2WAX8zPyFitV3C1+WJMWSLKSlAWg==",
+			"engines": {"node": ">=22.12.0"},
+			"dependencies": {
+				"eventsource-parser": "4.1.3",
 			},
 		},
 
@@ -12844,6 +12874,21 @@ snapshots:
 
 		"get-it@9.6.2": {
 			"integrity": "sha512-eAg+xPVjPXbmFL/ahF08LKmuVVC+ixXCSrb0gtaWOZ9aIsMoa0QATttbtoSoqnVSBV6nh9jCdsOk5pLhN2qUOA==",
+			"engines": {"node": ">=22.12.0"},
+			"peerDependencies": {
+				"vitest": {
+					"specifier": ">=2.0.0",
+					"version": "4.1.11",
+					"optional": true,
+				},
+			},
+			"dependencies": {
+				"undici": "7.30.1",
+			},
+		},
+
+		"get-it@9.7.0": {
+			"integrity": "sha512-kUpzj2TuBNzPMddmW/FdTwuBl3DQRTfF3TPt/r/9C0XnulD+EDoGOkAhyvlh6hOKJdddxSYhnLWe5c0RQrQByw==",
 			"engines": {"node": ">=22.12.0"},
 			"peerDependencies": {
 				"vitest": {
