@@ -54,7 +54,7 @@ catalog:
   vite: ^8.3.4
   vitest: ^4.1.11
   xstate: ^5.33.2
-  pnpm: 12.11.2
+  pnpm: 12.21.0
 
 catalogs:
   tailwind3:
@@ -66,6 +66,9 @@ catalogMode: prefer
 dedupeDirectDeps: true
 dedupePeers: true
 linkWorkspacePackages: deep
+
+lockfile:
+  format: v13
 
 minimumReleaseAge: 1440
 minimumReleaseAgeExcludePrune: true
