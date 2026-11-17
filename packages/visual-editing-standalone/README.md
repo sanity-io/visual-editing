@@ -23,9 +23,13 @@ support.
 
 ## When to use this package
 
-Use this package with Vue, Nuxt, Svelte, Astro, vanilla JavaScript, or another
-ESM-native environment where installing and bundling the React dependency graph
-is undesirable.
+Use this package with Angular, Vue, Nuxt, Svelte, Astro, vanilla JavaScript, or
+another ESM-native environment where installing and bundling the React
+dependency graph is undesirable.
+
+For Angular, see
+[`sanity-template-angular-clean`](https://github.com/sanity-io/sanity-template-angular-clean)
+for a working example.
 
 React applications should use
 [`@sanity/visual-editing`](../visual-editing/README.md) instead. This package
