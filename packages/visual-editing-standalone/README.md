@@ -58,6 +58,8 @@ import '@sanity/visual-editing-standalone/styles.css'
 
 Bundlers handle the import like any other stylesheet. Without a bundler, add a
 `<link>` tag instead, as in the [esm.sh example](#load-from-esmsh) below.
+Angular CLI does not support stylesheet imports from TypeScript, so add the
+file to the `styles` array in `angular.json` instead.
 
 Skipping the stylesheet does not break the overlays, but the loading-spinner
 animation, screen-reader-only hiding, and label ellipsis rules go missing.
