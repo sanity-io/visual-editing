@@ -220,8 +220,8 @@ snapshots:
 					"version": "2.70.3",
 				},
 				"@sveltejs/package": {
-					"specifier": "^3.0.0",
-					"version": "3.0.0",
+					"specifier": "^3.0.3",
+					"version": "3.0.3",
 				},
 				"@sveltejs/vite-plugin-svelte": {
 					"specifier": "^7.3.0",
@@ -9494,8 +9494,8 @@ snapshots:
 			"engines": {"node": ">= 18.0.0"},
 		},
 
-		"@sveltejs/package@3.0.0": {
-			"integrity": "sha512-iZXRdFKR6fh6b95TygyYwF1ZyX0V9PwstvgwYfhIcMjgyN5Uegvqpr5Xkmi55uEnw9TW7cmzrfLAX8tbU2ZEvw==",
+		"@sveltejs/package@3.0.3": {
+			"integrity": "sha512-aOEPwEPZfsWau3RvtEQCORKpfwlJNBmIPY34hvhO4ZwqQMSqvP+FQRLvlgHbSdXervl88SapjlFoMim+l8IAXQ==",
 			"engines": {"node": ">=22"},
 			"hasBin": true,
 			"peerDependencies": {
@@ -9511,8 +9511,7 @@ snapshots:
 			},
 			"dependencies": {
 				"@sveltejs/load-config": "0.2.3",
-				"chokidar": "5.0.0",
-				"semver": "7.8.5",
+				"chokidar": "6.0.0",
 				"svelte2tsx": "0.7.61",
 			},
 		},
@@ -11535,6 +11534,14 @@ snapshots:
 		"chokidar@5.0.0": {
 			"integrity": "sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw==",
 			"engines": {"node": ">= 20.19.0"},
+			"dependencies": {
+				"readdirp": "5.1.1",
+			},
+		},
+
+		"chokidar@6.0.0": {
+			"integrity": "sha512-Ec2Z7wpcKBiMpR7DxteoqS/sq5G5d2A4fpxzPv6+fD7xNNdrTghn7L11YwV5EN1B3i72Erc3XVT5FkWIDx90+A==",
+			"engines": {"node": ">= 22.22"},
 			"dependencies": {
 				"readdirp": "5.1.1",
 			},
