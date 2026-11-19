@@ -23,9 +23,13 @@ support.
 
 ## When to use this package
 
-Use this package with Vue, Nuxt, Svelte, Astro, vanilla JavaScript, or another
-ESM-native environment where installing and bundling the React dependency graph
-is undesirable.
+Use this package with Angular, Vue, Nuxt, Svelte, Astro, vanilla JavaScript, or
+another ESM-native environment where installing and bundling the React
+dependency graph is undesirable.
+
+For Angular, see
+[`sanity-template-angular-clean`](https://github.com/sanity-io/sanity-template-angular-clean)
+for a working example.
 
 React applications should use
 [`@sanity/visual-editing`](../visual-editing/README.md) instead. This package
@@ -54,6 +58,8 @@ import '@sanity/visual-editing-standalone/styles.css'
 
 Bundlers handle the import like any other stylesheet. Without a bundler, add a
 `<link>` tag instead, as in the [esm.sh example](#load-from-esmsh) below.
+Angular CLI does not support stylesheet imports from TypeScript, so add the
+file to the `styles` array in `angular.json` instead.
 
 Skipping the stylesheet does not break the overlays, but the loading-spinner
 animation, screen-reader-only hiding, and label ellipsis rules go missing.
