@@ -978,8 +978,8 @@ snapshots:
 				},
 				"@sanity/tsconfig": "catalog:",
 				"@sanity/tsdown-config": {
-					"specifier": "^0.28.8",
-					"version": "0.28.8",
+					"specifier": "^0.31.6",
+					"version": "0.31.6",
 				},
 				"@sanity/visual-editing": "workspace:*",
 				"@tsdown/css": "catalog:",
@@ -7371,7 +7371,10 @@ snapshots:
 					"version": "7.29.14",
 					"optional": true,
 				},
-				"rolldown": "^1.0.0-rc.5",
+				"rolldown": {
+					"specifier": "^1.0.0-rc.5",
+					"version": "1.3.3",
+				},
 				"vite": {
 					"specifier": "^8.0.0",
 					"version": "8.3.8",
@@ -7382,23 +7385,6 @@ snapshots:
 				"artichokie": "0.4.5",
 				"picomatch": "4.0.7",
 			},
-			"snapshots": [
-				{
-					"peerDependencies": {
-						"rolldown": {
-							"version": "1.2.19",
-						},
-					},
-					"optional": true,
-				},
-				{
-					"peerDependencies": {
-						"rolldown": {
-							"version": "1.3.3",
-						},
-					},
-				},
-			],
 		},
 
 		"@rolldown/pluginutils@1.1.1": {
@@ -8780,67 +8766,6 @@ snapshots:
 			"integrity": "sha512-1HbvN+W2bWixgXQnvJ9rev5vJaSbN62d+r0Y2pN6XsK6/MP9JfVyF90elBuIrDENTGgVmxB403+gZow45wq+Pg==",
 		},
 
-		"@sanity/tsdown-config@0.28.8": {
-			"integrity": "sha512-y7nIiYKw6PuQBP0gbvR9C3Bq+733Vdg5oBLVebleuYstsWBZXo6j2TR6zg89JzZveXJqdthO9VNKLMQeWBggqg==",
-			"engines": {"node": "^22.18.0 || ^24.11.0 || >=26.0.0"},
-			"peerDependencies": {
-				"@babel/core": {
-					"specifier": "*",
-					"version": "7.29.13",
-					"optional": true,
-				},
-				"@rolldown/plugin-babel": {
-					"specifier": "*",
-					"version": "0.3.1",
-					"optional": true,
-				},
-				"@tsdown/css": {
-					"specifier": "*",
-					"version": "0.23.7",
-					"optional": true,
-				},
-				"@types/node": {
-					"version": "26.6.6",
-					"below": true,
-				},
-				"babel-plugin-react-compiler": {
-					"specifier": "*",
-					"version": "1.0.0",
-					"optional": true,
-				},
-				"oxc-transform-react": {
-					"specifier": "*",
-					"optional": true,
-				},
-				"tsdown": {
-					"specifier": "^0.23.0",
-					"version": "0.23.7",
-				},
-				"typescript": {
-					"specifier": "6.x || 7.x",
-					"version": "6.0.3",
-				},
-				"vite": {
-					"version": "8.3.8",
-					"below": true,
-				},
-			},
-			"dependencies": {
-				"@microsoft/api-extractor": "7.60.1",
-				"@microsoft/tsdoc-config": "0.18.3",
-				"@sanity/browserslist-config": "1.0.5",
-				"@sanity/vanilla-extract-tsdown-plugin": "0.4.8",
-				"@typescript/typescript6": "6.0.2",
-				"@vitejs/plugin-react": "6.3.0",
-				"browserslist": "4.29.6",
-				"jsonc-parser": "3.3.1",
-				"lightningcss": "1.33.0",
-				"package-manager-detector": "1.9.0",
-				"publint": "0.3.25",
-				"rolldown": "1.2.19",
-			},
-		},
-
 		"@sanity/tsdown-config@0.31.6": {
 			"integrity": "sha512-oQi/YrWnC6hHyOLGnndIBW/DZuFo7TsBRePv7pJnVRCAYsIuUuksP+arK/O+YZqBLCOaCJqKWgyuMhfS/NoLVg==",
 			"engines": {"node": "^22.18.0 || ^24.11.0 || >=26.0.0"},
@@ -9041,17 +8966,6 @@ snapshots:
 			},
 		},
 
-		"@sanity/vanilla-extract-integration@0.1.26": {
-			"integrity": "sha512-7mQRN3bfLxHLwtSRaMGCjOeTCtvuk5QNXbBXu0DdG3X2ZxR0si3Zz4vNxaEi480kGtuKshvTWnjFKdpj2Yyu6g==",
-			"engines": {"node": ">=20.19 <22 || >=22.12"},
-			"dependencies": {
-				"@vanilla-extract/css": "1.21.3",
-				"javascript-stringify": "2.1.0",
-				"rolldown": "1.2.19",
-				"yuku-parser": "0.19.0",
-			},
-		},
-
 		"@sanity/vanilla-extract-integration@0.2.5": {
 			"integrity": "sha512-8kyfzx15ydeOXRpe4oSLU9LoRoRHDVoPVBmhpxkrSVp+/KsDdS0L7eb4L8gsxHjZNgUOQqcwbz0qYJePaO46Sw==",
 			"engines": {"node": ">=20.19 <22 || >=22.12"},
@@ -9061,22 +8975,6 @@ snapshots:
 				"javascript-stringify": "2.1.0",
 				"rolldown": "1.3.3",
 				"yuku-parser": "0.19.0",
-			},
-		},
-
-		"@sanity/vanilla-extract-rolldown-plugin@0.4.15": {
-			"integrity": "sha512-IPK7mzUNE+no0ApycT/oPAYXvCUb9bzzBtKML+Tga2sTy01mn750Nx/YGYhqxhlE4rRwKtLN4d1jX/pOtd6dZg==",
-			"engines": {"node": ">=20.19 <22 || >=22.12"},
-			"peerDependencies": {
-				"rolldown": {
-					"specifier": "^1.0.0",
-					"version": "1.2.19",
-					"optional": true,
-				},
-			},
-			"dependencies": {
-				"@sanity/vanilla-extract-integration": "0.1.26",
-				"lightningcss": "1.33.0",
 			},
 		},
 
@@ -9093,24 +8991,6 @@ snapshots:
 			"dependencies": {
 				"@sanity/vanilla-extract-integration": "0.2.5",
 				"lightningcss": "1.33.0",
-			},
-		},
-
-		"@sanity/vanilla-extract-tsdown-plugin@0.4.8": {
-			"integrity": "sha512-mlmZb5Vfm52/D6sgQEK/0DFJ/dNmH9OONiYl/Wvk5TdpDHnaMGRpQ3ANnUlcGiUkXr0jAOqqW/a04IJwKUxAsw==",
-			"engines": {"node": ">=20.19 <22 || >=22.12"},
-			"peerDependencies": {
-				"rolldown": {
-					"version": "1.2.19",
-					"below": true,
-				},
-				"tsdown": {
-					"specifier": "^0.23.0",
-					"version": "0.23.7",
-				},
-			},
-			"dependencies": {
-				"@sanity/vanilla-extract-rolldown-plugin": "0.4.15",
 			},
 		},
 
@@ -11058,9 +10938,6 @@ snapshots:
 				"@rolldown/plugin-babel": {
 					"specifier": "^0.1.7 || ^0.2.0 || ^0.3.0",
 					"version": "0.3.1",
-					"with": {
-						"rolldown": "1.3.3",
-					},
 					"optional": true,
 				},
 				"babel-plugin-react-compiler": {
