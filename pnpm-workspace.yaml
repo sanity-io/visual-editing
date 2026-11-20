@@ -15,7 +15,7 @@ allowBuilds:
 catalog:
   '@sanity/assist': ^6.3.0
   '@sanity/client': ^8.17.0
-  '@sanity/cli': ^8.32.0
+  '@sanity/cli': ^8.32.1
   '@sanity/color-input': ^6.1.10
   '@sanity/icons': ^5.4.0
   '@sanity/mutate': ^0.18.2
@@ -161,6 +161,8 @@ trustPolicyExclude:
   - '@octokit/endpoint@9.0.6'
   - '@octokit/plugin-paginate-rest@9.2.2'
   - '@pierre/theme@2.0.0'
+  # 8.3.1 shipped with provenance; 8.3.3 (pulled in by @sanity/cli@8.32.1) did not
+  - '@sanity/codegen@8.3.3'
   - chokidar@4.0.3
   - react-redux@9.2.0
   - reselect@5.1.1
