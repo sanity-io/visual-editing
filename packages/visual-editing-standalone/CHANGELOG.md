@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.5
+
+### Patch Changes
+
+- [#3774](https://github.com/sanity-io/visual-editing/pull/3774) [`2aed56e`](https://github.com/sanity-io/visual-editing/commit/2aed56e1ab64486ae3703fb9ce1b7a785904fc73) Thanks [@stipsan](https://github.com/stipsan)! - Upgrade `@sanity/ui` to ^4.4.12 so a `Popover` whose child forwards a null ref no longer crashes. A closed `Tooltip` does that.
+
 ## 2.0.4
 
 ### Patch Changes
