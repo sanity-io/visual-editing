@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.2.2
+
+### Patch Changes
+
+- [#3774](https://github.com/sanity-io/visual-editing/pull/3774) [`2aed56e`](https://github.com/sanity-io/visual-editing/commit/2aed56e1ab64486ae3703fb9ce1b7a785904fc73) Thanks [@stipsan](https://github.com/stipsan)! - Upgrade `@sanity/ui` to ^4.4.12 so a `Popover` whose child forwards a null ref no longer crashes. A closed `Tooltip` does that.
+
+- [#3769](https://github.com/sanity-io/visual-editing/pull/3769) [`0827a6a`](https://github.com/sanity-io/visual-editing/commit/0827a6a041d3650b8d75f5bb3d8bed8557733203) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency scroll-into-view-if-needed to ^3.2.1
+
 ## 6.2.1
 
 ### Patch Changes
