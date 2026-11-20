@@ -195,8 +195,8 @@ snapshots:
 					"version": "0.18.2",
 				},
 				"@sanity/pkg-utils": {
-					"specifier": "^13.0.20",
-					"version": "13.0.20",
+					"specifier": "^14.0.0",
+					"version": "14.0.0",
 				},
 				"@sanity/telemetry": {
 					"specifier": "^1.1.0",
@@ -8516,8 +8516,8 @@ snapshots:
 			},
 		},
 
-		"@sanity/pkg-utils@13.0.20": {
-			"integrity": "sha512-4r/m2oYwjh9ll4iwF3zGN2IXwaYa/LfOREbqljqj6DgR9+qjr1HtbAW58o1u3z1JWhtRWvMPNDQ78D4DFRTKCA==",
+		"@sanity/pkg-utils@14.0.0": {
+			"integrity": "sha512-LtfkAN43dT9B6eLozmXPhuBRwbNptUFQg4iRmH0fOM1F7WsTY/vFBz3RBfpxmmar3cE/xQ0DB15ZhUPNVAgLhg==",
 			"engines": {"node": "^22.18.0 || ^24.11.0 || >=26.0.0"},
 			"hasBin": true,
 			"peerDependencies": {
@@ -8573,7 +8573,7 @@ snapshots:
 				"@rolldown/plugin-babel": "0.3.1",
 				"@sanity/browserslist-config": "1.0.5",
 				"@sanity/parse-package-json": "2.3.7",
-				"@sanity/tsdown-config": "0.31.6",
+				"@sanity/tsdown-config": "0.32.0",
 				"@typescript/typescript6": "6.0.2",
 				"browserslist": "4.29.6",
 				"browserslist-to-esbuild": "2.1.1",
@@ -8941,6 +8941,70 @@ snapshots:
 				"@microsoft/tsdoc-config": "0.18.3",
 				"@sanity/browserslist-config": "1.0.5",
 				"@sanity/vanilla-extract-tsdown-plugin": "0.5.5",
+				"@typescript/typescript6": "6.0.2",
+				"@vitejs/plugin-react": "6.3.0",
+				"browserslist": "4.29.6",
+				"jsonc-parser": "3.3.1",
+				"lightningcss": "1.33.0",
+				"package-manager-detector": "1.9.0",
+				"publint": "0.3.25",
+				"rolldown": "1.3.3",
+			},
+		},
+
+		"@sanity/tsdown-config@0.32.0": {
+			"integrity": "sha512-eGVOzH5qwVEJg6VM268oSM02ATkqIDSURc5EbJitFc1W7FopkG9lyweQTflrNtALSBDfsmZgRe/PtGak6C0CcA==",
+			"engines": {"node": "^22.18.0 || ^24.11.0 || >=26.0.0"},
+			"peerDependencies": {
+				"@babel/core": {
+					"specifier": "*",
+					"version": "7.29.13",
+					"optional": true,
+				},
+				"@rolldown/plugin-babel": {
+					"specifier": "*",
+					"version": "0.3.1",
+					"optional": true,
+				},
+				"@sanity/pandacss-tsdown-plugin": {
+					"specifier": "*",
+					"optional": true,
+				},
+				"@tsdown/css": {
+					"specifier": "*",
+					"version": "0.23.7",
+					"optional": true,
+				},
+				"@types/node": {
+					"version": "26.6.6",
+					"below": true,
+				},
+				"babel-plugin-react-compiler": {
+					"specifier": "*",
+					"version": "1.0.0",
+					"optional": true,
+				},
+				"oxc-transform-react": {
+					"specifier": "*",
+					"optional": true,
+				},
+				"tsdown": {
+					"specifier": "^0.23.0",
+					"version": "0.23.7",
+				},
+				"typescript": {
+					"specifier": "6.x || 7.x",
+					"version": "6.0.3",
+				},
+				"vite": {
+					"version": "8.3.8",
+					"below": true,
+				},
+			},
+			"dependencies": {
+				"@microsoft/api-extractor": "7.60.1",
+				"@microsoft/tsdoc-config": "0.18.3",
+				"@sanity/browserslist-config": "1.0.5",
 				"@typescript/typescript6": "6.0.2",
 				"@vitejs/plugin-react": "6.3.0",
 				"browserslist": "4.29.6",
