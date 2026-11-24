@@ -191,8 +191,8 @@ snapshots:
 					"version": "5.4.0",
 				},
 				"@sanity/mutate": {
-					"specifier": "^0.18.2",
-					"version": "0.18.2",
+					"specifier": "^0.18.4",
+					"version": "0.18.4",
 				},
 				"@sanity/pkg-utils": {
 					"specifier": "^14.0.0",
@@ -823,8 +823,8 @@ snapshots:
 				},
 				"@sanity/icons": "catalog:",
 				"@sanity/mutate": {
-					"specifier": "^0.18.2",
-					"version": "0.18.2",
+					"specifier": "^0.18.4",
+					"version": "0.18.4",
 				},
 				"@sanity/presentation-comlink": {
 					"specifier": "^2.2.3",
@@ -8456,7 +8456,7 @@ snapshots:
 			},
 			"dependencies": {
 				"@sanity/client": "8.17.0",
-				"@sanity/mutate": "0.18.2",
+				"@sanity/mutate": "0.18.4",
 				"@sanity/types": "6.24.0",
 				"@sanity/util": "6.24.0",
 				"arrify": "3.0.0",
@@ -8468,15 +8468,15 @@ snapshots:
 			},
 		},
 
-		"@sanity/mutate@0.18.2": {
-			"integrity": "sha512-1z199kB46I1F+3z7Z0bwKepUf81BAZ766jhpozVfC8nHaN/ceqQby7lh95KbrwqnlpxbIRu7dWpzXMBdTvm1xA==",
+		"@sanity/mutate@0.18.4": {
+			"integrity": "sha512-qgCdYf8BQz8DyRnotsDX9tgV9R14w+CqS5U7wpzb0Oc21/9QKgwRmrzYLWf9pHNvlnR+lq2Vulq+Aa/xc1ABtA==",
 			"peerDependencies": {
 				"vitest": {
 					"version": "4.1.12",
 					"below": true,
 				},
 				"xstate": {
-					"specifier": "^5.19.0",
+					"specifier": "^5.33.4",
 					"version": "5.33.4",
 					"optional": true,
 				},
@@ -8487,9 +8487,8 @@ snapshots:
 				"@sanity/diff-match-patch": "3.2.1",
 				"@sanity/uuid": "3.0.3",
 				"hotscript": "1.0.13",
-				"lodash": "4.18.1",
-				"mendoza": "3.0.8",
-				"nanoid": "5.1.16",
+				"mendoza": "6.0.0",
+				"nanoid": "6.0.2",
 				"rxjs": "7.8.2",
 			},
 		},
@@ -8846,7 +8845,7 @@ snapshots:
 				"@sanity/image-url": "2.2.0",
 				"@sanity/json-match": "1.0.5",
 				"@sanity/message-protocol": "0.24.0",
-				"@sanity/mutate": "0.18.2",
+				"@sanity/mutate": "0.18.4",
 				"@sanity/telemetry": "1.1.0",
 				"@sanity/types": "6.24.0",
 				"@sentry/browser": "11.14.0",
@@ -8892,7 +8891,7 @@ snapshots:
 				"@sanity/image-url": "2.2.0",
 				"@sanity/json-match": "1.0.5",
 				"@sanity/message-protocol": "0.24.0",
-				"@sanity/mutate": "0.18.2",
+				"@sanity/mutate": "0.18.4",
 				"@sanity/telemetry": "1.1.0",
 				"@sanity/types": "6.24.0",
 				"@sentry/browser": "11.14.0",
@@ -14587,10 +14586,6 @@ snapshots:
 			"integrity": "sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==",
 		},
 
-		"lodash@4.18.1": {
-			"integrity": "sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==",
-		},
-
 		"log-symbols@7.0.1": {
 			"integrity": "sha512-ja1E3yCr9i/0hmBVaM0bfwDjnGy8I/s6PP4DFp+yP+a+mrHO4Rm7DtmnqROTUkHIkqffC84YY7AeqX6oFk0WFg==",
 			"engines": {"node": ">=18"},
@@ -14738,6 +14733,11 @@ snapshots:
 		"mendoza@3.0.8": {
 			"integrity": "sha512-iwxgEpSOx9BDLJMD0JAzNicqo9xdrvzt6w/aVwBKMndlA6z/DH41+o60H2uHB0vCR1Xr37UOgu9xFWJHvYsuKw==",
 			"engines": {"node": ">=14.18"},
+		},
+
+		"mendoza@6.0.0": {
+			"integrity": "sha512-hgHqpcF6iAB7M49nCrfmWZJMYssEXBgXTgIB9VIp3UxE9HCnAjziu3fHhQesaqvgzOwpddeNMqat/JzNiZjJPQ==",
+			"engines": {"node": ">=22.12.0"},
 		},
 
 		"meow@13.2.0": {
@@ -14987,12 +14987,6 @@ snapshots:
 		"nanoid@3.3.20": {
 			"integrity": "sha512-uKdg2G3GNCKQn9byYOpxbGqrT2fGO5KRt5J/8b3pok8rT6qxGWF6hxMyJiEYtAf+FVyYuD9hRaDqX5uPFYJ4ZQ==",
 			"engines": {"node": "^10 || ^12 || ^13.7 || ^14 || >=15.0.1"},
-			"hasBin": true,
-		},
-
-		"nanoid@5.1.16": {
-			"integrity": "sha512-kVrnsrJqMR8+oLJnGEmSWw9BivK5mt7H3FZatVRjrc5wGqFYuBxX1yG7+A7Gi5AefkX6t/oCkizcQgpu0cY1dQ==",
-			"engines": {"node": "^18 || >=20"},
 			"hasBin": true,
 		},
 
@@ -16799,7 +16793,7 @@ snapshots:
 				"@sanity/media-library-types": "1.8.0",
 				"@sanity/message-protocol": "0.24.0",
 				"@sanity/migrate": "8.0.5",
-				"@sanity/mutate": "0.18.2",
+				"@sanity/mutate": "0.18.4",
 				"@sanity/mutator": "6.24.0",
 				"@sanity/presentation-comlink": "2.2.3",
 				"@sanity/preview-url-secret": "link:packages/preview-url-secret",
