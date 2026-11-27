@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.2
+
+No changes in this release.
+
 ## 3.2.1
 
 ### Patch Changes
