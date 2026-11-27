@@ -6,13 +6,8 @@ import {startTransition, useCallback, useEffect, useMemo, useRef, useState} from
 import {EMPTY, switchMap} from 'rxjs'
 import {
   defineDocumentFieldAction,
-  FormFieldSet,
-  getPublishedId,
-  ObjectInputMember,
   set,
   unset,
-  useDocumentPreviewStore,
-  useDocumentStore,
   type DocumentFieldActionItem,
   type EditStateFor,
   type FieldMember,
@@ -21,6 +16,15 @@ import {
   type ObjectInputProps,
   type ObjectMember,
 } from 'sanity'
+import {
+  getPublishedId,
+  useDocumentPreviewStore,
+  useDocumentStore,
+} from 'sanity/_dangerously_use_private_internals_that_do_not_follow_semver'
+import {
+  FormFieldSet,
+  ObjectInputMember,
+} from 'sanity/_dangerously_use_private_internals_that_do_not_follow_semver-2'
 
 function useReferenceEditState(documentId?: string): EditStateFor | undefined {
   const documentStore = useDocumentStore()

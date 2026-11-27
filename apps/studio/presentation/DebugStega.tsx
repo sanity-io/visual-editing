@@ -5,7 +5,8 @@ import {Code} from '@sanity/ui/code'
 import {vercelStegaDecodeAll} from '@vercel/stega'
 import {useMemo} from 'react'
 import {isDocumentSchemaType, type InputProps} from 'sanity'
-import {useDocumentPane, usePaneRouter} from 'sanity/structure'
+import {usePaneRouter} from 'sanity/_dangerously_use_private_internals_that_do_not_follow_semver-structure'
+import {useDocumentPane} from 'sanity/structure'
 import {styled} from 'styled-components'
 
 export function StegaDebugger(props: InputProps): React.JSX.Element {
