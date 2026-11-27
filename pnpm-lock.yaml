@@ -195,8 +195,8 @@ snapshots:
 					"version": "0.18.4",
 				},
 				"@sanity/pkg-utils": {
-					"specifier": "^14.1.0",
-					"version": "14.1.0",
+					"specifier": "^14.1.1",
+					"version": "14.1.1",
 				},
 				"@sanity/telemetry": {
 					"specifier": "^1.1.0",
@@ -8412,8 +8412,8 @@ snapshots:
 			},
 		},
 
-		"@sanity/pkg-utils@14.1.0": {
-			"integrity": "sha512-YCBV5FEeIN9nNeTKvROnp2e2ucFwDAPlqdoDuNTGQxyV2v6HufY/L1gDIJHngYwCkdfcF+bFF5OZJr2YjB9/+A==",
+		"@sanity/pkg-utils@14.1.1": {
+			"integrity": "sha512-DYE5/LkV3CBiB7HrHIVNderFTcTAH48OfvDd72BVSC4Op+vMHVMkd5cnCF1dHu4jNNneZqYZhXt20NR2PSN7zg==",
 			"engines": {"node": "^22.18.0 || ^24.11.0 || >=26.0.0"},
 			"hasBin": true,
 			"peerDependencies": {
@@ -8469,7 +8469,7 @@ snapshots:
 				"@rolldown/plugin-babel": "0.3.1",
 				"@sanity/browserslist-config": "1.0.5",
 				"@sanity/parse-package-json": "2.3.7",
-				"@sanity/tsdown-config": "0.33.0",
+				"@sanity/tsdown-config": "0.33.1",
 				"@typescript/typescript6": "6.0.2",
 				"browserslist": "4.29.6",
 				"browserslist-to-esbuild": "2.1.1",
@@ -8785,6 +8785,70 @@ snapshots:
 
 		"@sanity/tsdown-config@0.33.0": {
 			"integrity": "sha512-W1UNjMdQwx4YlG1VjOvH31VRfdcNy5qk9q+46i30D4dZ4do9eA0BFEKLQ6NjajLkr+wczNcHM+f8UDuh9kOlvg==",
+			"engines": {"node": "^22.18.0 || ^24.11.0 || >=26.0.0"},
+			"peerDependencies": {
+				"@babel/core": {
+					"specifier": "*",
+					"version": "7.29.13",
+					"optional": true,
+				},
+				"@rolldown/plugin-babel": {
+					"specifier": "*",
+					"version": "0.3.1",
+					"optional": true,
+				},
+				"@sanity/pandacss-tsdown-plugin": {
+					"specifier": "*",
+					"optional": true,
+				},
+				"@tsdown/css": {
+					"specifier": "*",
+					"version": "0.23.7",
+					"optional": true,
+				},
+				"@types/node": {
+					"version": "26.6.11",
+					"below": true,
+				},
+				"babel-plugin-react-compiler": {
+					"specifier": "*",
+					"version": "1.0.0",
+					"optional": true,
+				},
+				"oxc-transform-react": {
+					"specifier": "*",
+					"optional": true,
+				},
+				"tsdown": {
+					"specifier": "^0.23.0",
+					"version": "0.23.7",
+				},
+				"typescript": {
+					"specifier": "6.x || 7.x",
+					"version": "6.0.3",
+				},
+				"vite": {
+					"version": "8.4.0",
+					"below": true,
+				},
+			},
+			"dependencies": {
+				"@microsoft/api-extractor": "7.60.1",
+				"@microsoft/tsdoc-config": "0.18.3",
+				"@sanity/browserslist-config": "1.0.5",
+				"@typescript/typescript6": "6.0.2",
+				"@vitejs/plugin-react": "6.3.0",
+				"browserslist": "4.29.6",
+				"jsonc-parser": "3.3.1",
+				"lightningcss": "1.33.0",
+				"package-manager-detector": "1.9.0",
+				"publint": "0.3.25",
+				"rolldown": "1.3.3",
+			},
+		},
+
+		"@sanity/tsdown-config@0.33.1": {
+			"integrity": "sha512-n/SM3DZPnhAuJ7ZJJRKRm0cHGkBIUZEpmdfyB+Ku0AWli1hRK4uhIdNdMio+/SumUadB8fIP+tamG2YtjPldQg==",
 			"engines": {"node": "^22.18.0 || ^24.11.0 || >=26.0.0"},
 			"peerDependencies": {
 				"@babel/core": {
